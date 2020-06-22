@@ -22,7 +22,7 @@ ROOT_DIR="$(cd $(dirname "${BASH_SOURCE}")/../.. && pwd -P)"
 
 function install-packages {
   say "\nInstall packages that are dependencies of the test to improve performance"
-  go test -i github.com/kubernetes/dashboard/src/app/backend/...
+  go test -i github.com/kubernetes/dashboard/v2/src/app/backend/...
   echo "OK!"
 }
 
@@ -35,7 +35,7 @@ function create-coverage-report-file {
 
 function run-coverage-tests {
   say "\nRun coverage tests of all project packages"
-  for PKG in $(go list github.com/kubernetes/dashboard/src/app/backend/... | grep -v vendor); do
+  for PKG in $(go list github.com/kubernetes/dashboard/v2/src/app/backend/... | grep -v vendor); do
     go test -coverprofile=profile.out -covermode=atomic ${PKG}
     if [ -f profile.out ]; then
         cat profile.out >> ${GO_COVERAGE_FILE}

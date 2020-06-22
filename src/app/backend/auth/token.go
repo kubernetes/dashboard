@@ -15,7 +15,7 @@
 package auth
 
 import (
-	authApi "github.com/kubernetes/dashboard/src/app/backend/auth/api"
+	authApi "github.com/kubernetes/dashboard/v2/src/app/backend/auth/api"
 	"k8s.io/client-go/tools/clientcmd/api"
 )
 

@@ -15,7 +15,7 @@
 package endpoint
 
 import (
-	"github.com/kubernetes/dashboard/src/app/backend/api"
+	"github.com/kubernetes/dashboard/v2/src/app/backend/api"
 	v1 "k8s.io/api/core/v1"
 )
 

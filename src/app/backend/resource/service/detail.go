@@ -18,8 +18,8 @@ import (
 	"context"
 	"log"
 
-	"github.com/kubernetes/dashboard/src/app/backend/errors"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/endpoint"
+	"github.com/kubernetes/dashboard/v2/src/app/backend/errors"
+	"github.com/kubernetes/dashboard/v2/src/app/backend/resource/endpoint"
 	v1 "k8s.io/api/core/v1"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	k8sClient "k8s.io/client-go/kubernetes"

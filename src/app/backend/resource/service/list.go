@@ -17,10 +17,10 @@ package service
 import (
 	"log"
 
-	"github.com/kubernetes/dashboard/src/app/backend/api"
-	"github.com/kubernetes/dashboard/src/app/backend/errors"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
+	"github.com/kubernetes/dashboard/v2/src/app/backend/api"
+	"github.com/kubernetes/dashboard/v2/src/app/backend/errors"
+	"github.com/kubernetes/dashboard/v2/src/app/backend/resource/common"
+	"github.com/kubernetes/dashboard/v2/src/app/backend/resource/dataselect"
 	v1 "k8s.io/api/core/v1"
 	client "k8s.io/client-go/kubernetes"
 )

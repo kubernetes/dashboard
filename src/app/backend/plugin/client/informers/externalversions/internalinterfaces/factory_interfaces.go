@@ -19,7 +19,7 @@ package internalinterfaces
 import (
 	time "time"
 
-	versioned "github.com/kubernetes/dashboard/src/app/backend/plugin/client/clientset/versioned"
+	versioned "github.com/kubernetes/dashboard/v2/src/app/backend/plugin/client/clientset/versioned"
 	v1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	runtime "k8s.io/apimachinery/pkg/runtime"
 	cache "k8s.io/client-go/tools/cache"

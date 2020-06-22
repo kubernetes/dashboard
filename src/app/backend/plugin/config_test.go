@@ -20,13 +20,13 @@ import (
 	"net/http/httptest"
 	"testing"
 
-	"github.com/kubernetes/dashboard/src/app/backend/plugin/apis/v1alpha1"
+	"github.com/kubernetes/dashboard/v2/src/app/backend/plugin/apis/v1alpha1"
 
 	"github.com/emicklei/go-restful"
-	authApi "github.com/kubernetes/dashboard/src/app/backend/auth/api"
-	clientapi "github.com/kubernetes/dashboard/src/app/backend/client/api"
-	"github.com/kubernetes/dashboard/src/app/backend/plugin/client/clientset/versioned"
-	fakePluginClientset "github.com/kubernetes/dashboard/src/app/backend/plugin/client/clientset/versioned/fake"
+	authApi "github.com/kubernetes/dashboard/v2/src/app/backend/auth/api"
+	clientapi "github.com/kubernetes/dashboard/v2/src/app/backend/client/api"
+	"github.com/kubernetes/dashboard/v2/src/app/backend/plugin/client/clientset/versioned"
+	fakePluginClientset "github.com/kubernetes/dashboard/v2/src/app/backend/plugin/client/clientset/versioned/fake"
 	v1 "k8s.io/api/authorization/v1"
 	coreV1 "k8s.io/api/core/v1"
 	"k8s.io/apiextensions-apiserver/pkg/client/clientset/clientset"

@@ -17,9 +17,9 @@
 package fake
 
 import (
-	clientset "github.com/kubernetes/dashboard/src/app/backend/plugin/client/clientset/versioned"
-	dashboardv1alpha1 "github.com/kubernetes/dashboard/src/app/backend/plugin/client/clientset/versioned/typed/apis/v1alpha1"
-	fakedashboardv1alpha1 "github.com/kubernetes/dashboard/src/app/backend/plugin/client/clientset/versioned/typed/apis/v1alpha1/fake"
+	clientset "github.com/kubernetes/dashboard/v2/src/app/backend/plugin/client/clientset/versioned"
+	dashboardv1alpha1 "github.com/kubernetes/dashboard/v2/src/app/backend/plugin/client/clientset/versioned/typed/apis/v1alpha1"
+	fakedashboardv1alpha1 "github.com/kubernetes/dashboard/v2/src/app/backend/plugin/client/clientset/versioned/typed/apis/v1alpha1/fake"
 	"k8s.io/apimachinery/pkg/runtime"
 	"k8s.io/apimachinery/pkg/watch"
 	"k8s.io/client-go/discovery"

@@ -17,7 +17,7 @@ package event
 import (
 	"strings"
 
-	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
+	"github.com/kubernetes/dashboard/v2/src/app/backend/resource/common"
 	api "k8s.io/api/core/v1"
 	"k8s.io/apimachinery/pkg/types"
 )

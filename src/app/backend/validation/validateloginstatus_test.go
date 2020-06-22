@@ -22,7 +22,7 @@ import (
 	"testing"
 
 	restful "github.com/emicklei/go-restful"
-	"github.com/kubernetes/dashboard/src/app/backend/client"
+	"github.com/kubernetes/dashboard/v2/src/app/backend/client"
 )
 
 func TestValidateLoginStatus(t *testing.T) {

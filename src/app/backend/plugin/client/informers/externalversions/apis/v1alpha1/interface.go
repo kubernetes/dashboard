@@ -17,7 +17,7 @@
 package v1alpha1
 
 import (
-	internalinterfaces "github.com/kubernetes/dashboard/src/app/backend/plugin/client/informers/externalversions/internalinterfaces"
+	internalinterfaces "github.com/kubernetes/dashboard/v2/src/app/backend/plugin/client/informers/externalversions/internalinterfaces"
 )
 
 // Interface provides access to all the informers in this group version.

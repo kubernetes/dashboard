@@ -17,7 +17,7 @@ package errors_test
 import (
 	"testing"
 
-	"github.com/kubernetes/dashboard/src/app/backend/errors"
+	"github.com/kubernetes/dashboard/v2/src/app/backend/errors"
 )
 
 func TestLocalizeError(t *testing.T) {

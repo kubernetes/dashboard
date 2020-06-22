@@ -17,7 +17,7 @@ package args
 import (
 	"net"
 
-	"github.com/kubernetes/dashboard/src/app/backend/cert/api"
+	"github.com/kubernetes/dashboard/v2/src/app/backend/cert/api"
 )
 
 var Holder = &holder{}

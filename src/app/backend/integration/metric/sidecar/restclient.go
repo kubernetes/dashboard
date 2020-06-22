@@ -17,7 +17,7 @@ package sidecar
 import (
 	"context"
 
-	"github.com/kubernetes/dashboard/src/app/backend/args"
+	"github.com/kubernetes/dashboard/v2/src/app/backend/args"
 	"k8s.io/client-go/rest"
 )
 

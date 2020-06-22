@@ -15,9 +15,9 @@
 package job
 
 import (
-	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/event"
+	"github.com/kubernetes/dashboard/v2/src/app/backend/resource/common"
+	"github.com/kubernetes/dashboard/v2/src/app/backend/resource/dataselect"
+	"github.com/kubernetes/dashboard/v2/src/app/backend/resource/event"
 	client "k8s.io/client-go/kubernetes"
 )
 

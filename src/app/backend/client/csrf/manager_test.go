@@ -21,8 +21,8 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/client-go/kubernetes/fake"
 
-	"github.com/kubernetes/dashboard/src/app/backend/client/api"
-	"github.com/kubernetes/dashboard/src/app/backend/client/csrf"
+	"github.com/kubernetes/dashboard/v2/src/app/backend/client/api"
+	"github.com/kubernetes/dashboard/v2/src/app/backend/client/csrf"
 )
 
 func TestCsrfTokenManager_Token(t *testing.T) {

@@ -1,4 +1,4 @@
-module github.com/kubernetes/dashboard
+module github.com/kubernetes/dashboard/v2
 
 go 1.13
 

@@ -23,11 +23,11 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/client-go/rest"
 
-	"github.com/kubernetes/dashboard/src/app/backend/api"
-	"github.com/kubernetes/dashboard/src/app/backend/errors"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/customresourcedefinition/types"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
+	"github.com/kubernetes/dashboard/v2/src/app/backend/api"
+	"github.com/kubernetes/dashboard/v2/src/app/backend/errors"
+	"github.com/kubernetes/dashboard/v2/src/app/backend/resource/common"
+	"github.com/kubernetes/dashboard/v2/src/app/backend/resource/customresourcedefinition/types"
+	"github.com/kubernetes/dashboard/v2/src/app/backend/resource/dataselect"
 )
 
 // GetCustomResourceObjectList gets objects for a CR.

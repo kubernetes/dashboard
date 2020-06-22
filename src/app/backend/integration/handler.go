@@ -18,7 +18,7 @@ import (
 	"net/http"
 
 	restful "github.com/emicklei/go-restful"
-	"github.com/kubernetes/dashboard/src/app/backend/integration/api"
+	"github.com/kubernetes/dashboard/v2/src/app/backend/integration/api"
 )
 
 // IntegrationHandler manages all endpoints related to integrated applications, such as state.

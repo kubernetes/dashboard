@@ -19,7 +19,7 @@ import (
 	"reflect"
 	"testing"
 
-	"github.com/kubernetes/dashboard/src/app/backend/resource/logs"
+	"github.com/kubernetes/dashboard/v2/src/app/backend/resource/logs"
 	v1 "k8s.io/api/core/v1"
 )
 

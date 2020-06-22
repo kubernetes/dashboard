@@ -19,7 +19,7 @@ package versioned
 import (
 	"fmt"
 
-	dashboardv1alpha1 "github.com/kubernetes/dashboard/src/app/backend/plugin/client/clientset/versioned/typed/apis/v1alpha1"
+	dashboardv1alpha1 "github.com/kubernetes/dashboard/v2/src/app/backend/plugin/client/clientset/versioned/typed/apis/v1alpha1"
 	discovery "k8s.io/client-go/discovery"
 	rest "k8s.io/client-go/rest"
 	flowcontrol "k8s.io/client-go/util/flowcontrol"

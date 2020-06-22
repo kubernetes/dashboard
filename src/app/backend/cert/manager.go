@@ -19,7 +19,7 @@ import (
 	"log"
 	"os"
 
-	certapi "github.com/kubernetes/dashboard/src/app/backend/cert/api"
+	certapi "github.com/kubernetes/dashboard/v2/src/app/backend/cert/api"
 )
 
 // Manager is used to implement cert/api/types.Manager interface. See Manager for more information.

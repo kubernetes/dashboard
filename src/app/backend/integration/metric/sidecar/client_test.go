@@ -28,10 +28,10 @@ import (
 
 	"errors"
 
-	"github.com/kubernetes/dashboard/src/app/backend/api"
-	"github.com/kubernetes/dashboard/src/app/backend/client"
-	integrationapi "github.com/kubernetes/dashboard/src/app/backend/integration/api"
-	metricapi "github.com/kubernetes/dashboard/src/app/backend/integration/metric/api"
+	"github.com/kubernetes/dashboard/v2/src/app/backend/api"
+	"github.com/kubernetes/dashboard/v2/src/app/backend/client"
+	integrationapi "github.com/kubernetes/dashboard/v2/src/app/backend/integration/api"
+	metricapi "github.com/kubernetes/dashboard/v2/src/app/backend/integration/metric/api"
 	"k8s.io/apimachinery/pkg/types"
 	"k8s.io/client-go/kubernetes"
 	"k8s.io/client-go/rest"

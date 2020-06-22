@@ -21,9 +21,9 @@ import (
 	sync "sync"
 	time "time"
 
-	versioned "github.com/kubernetes/dashboard/src/app/backend/plugin/client/clientset/versioned"
-	apis "github.com/kubernetes/dashboard/src/app/backend/plugin/client/informers/externalversions/apis"
-	internalinterfaces "github.com/kubernetes/dashboard/src/app/backend/plugin/client/informers/externalversions/internalinterfaces"
+	versioned "github.com/kubernetes/dashboard/v2/src/app/backend/plugin/client/clientset/versioned"
+	apis "github.com/kubernetes/dashboard/v2/src/app/backend/plugin/client/informers/externalversions/apis"
+	internalinterfaces "github.com/kubernetes/dashboard/v2/src/app/backend/plugin/client/informers/externalversions/internalinterfaces"
 	v1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	runtime "k8s.io/apimachinery/pkg/runtime"
 	schema "k8s.io/apimachinery/pkg/runtime/schema"

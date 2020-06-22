@@ -23,8 +23,8 @@ import (
 
 	"github.com/emicklei/go-restful"
 
-	"github.com/kubernetes/dashboard/src/app/backend/plugin/apis/v1alpha1"
-	fakePluginClientset "github.com/kubernetes/dashboard/src/app/backend/plugin/client/clientset/versioned/fake"
+	"github.com/kubernetes/dashboard/v2/src/app/backend/plugin/apis/v1alpha1"
+	fakePluginClientset "github.com/kubernetes/dashboard/v2/src/app/backend/plugin/client/clientset/versioned/fake"
 	coreV1 "k8s.io/api/core/v1"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	v1 "k8s.io/apimachinery/pkg/apis/meta/v1"

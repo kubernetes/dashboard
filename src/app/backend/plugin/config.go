@@ -18,7 +18,7 @@ import (
 	"net/http"
 
 	"github.com/emicklei/go-restful"
-	"github.com/kubernetes/dashboard/src/app/backend/handler/parser"
+	"github.com/kubernetes/dashboard/v2/src/app/backend/handler/parser"
 	apiErrors "k8s.io/apimachinery/pkg/api/errors"
 )
 

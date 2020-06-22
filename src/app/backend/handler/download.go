@@ -19,7 +19,7 @@ import (
 
 	restful "github.com/emicklei/go-restful"
 
-	"github.com/kubernetes/dashboard/src/app/backend/errors"
+	"github.com/kubernetes/dashboard/v2/src/app/backend/errors"
 )
 
 func handleDownload(response *restful.Response, result io.ReadCloser) {

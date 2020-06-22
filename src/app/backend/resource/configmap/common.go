@@ -15,7 +15,7 @@
 package configmap
 
 import (
-	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
+	"github.com/kubernetes/dashboard/v2/src/app/backend/resource/dataselect"
 	api "k8s.io/api/core/v1"
 )
 
