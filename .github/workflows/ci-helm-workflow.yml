@@ -11,6 +11,7 @@ on:
 
 jobs:
   helm-lint-test:
+    name: Lint & Test
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -25,7 +26,7 @@ jobs:
           command: lint
           config: aio/deploy/helm-chart/.helm-chart-testing.yaml
 
-      - name: validate-schema
+      - name: Validate schema
         uses: desaintmartin/helm-kubeval-action@v1.0.1
         with:
           path: aio/deploy/helm-chart
