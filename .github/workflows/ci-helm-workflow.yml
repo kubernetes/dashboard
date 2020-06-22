@@ -23,10 +23,10 @@ jobs:
         uses: helm/chart-testing-action@v1.0.0-rc.2
         with:
           command: lint
-          config: .helm-chart-testing.yaml
+          config: aio/deploy/helm-chart/.helm-chart-testing.yaml
 
       - name: validate-schema
-        uses: desaintmartin/helm-kubeval-action@v1.0.0
+        uses: desaintmartin/helm-kubeval-action@v1.0.1
         with:
           path: aio/deploy/helm-chart
 
@@ -39,4 +39,4 @@ jobs:
         uses: helm/chart-testing-action@v1.0.0-rc.2
         with:
           command: install
-          config: .helm-chart-testing.yaml
+          config: aio/deploy/helm-chart/.helm-chart-testing.yaml
