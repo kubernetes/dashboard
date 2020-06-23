@@ -66,6 +66,12 @@ export interface IgService {
   port: number;
 }
 
+export interface OpaDetail {
+  kind: string;
+  champ: string;
+  contrainte: string[];
+}
+
 export interface ResourceOwner extends Resource {
   pods: PodInfo;
   containerImages: string[];
@@ -92,6 +98,10 @@ export interface RoleBindingList extends ResourceList {
 
 export interface ConfigMapList extends ResourceList {
   items: ConfigMap[];
+}
+
+export interface OpaList extends ResourceList {
+  items: OpaDetail[];
 }
 
 export interface CronJobList extends ResourceList {
@@ -210,6 +220,8 @@ export interface ClusterRole extends Resource {}
 export interface RoleBinding extends Resource {}
 
 export interface ConfigMap extends Resource {}
+
+export interface OpaDetail extends Resource {}
 
 export interface Controller extends Resource {
   pods: PodInfo;

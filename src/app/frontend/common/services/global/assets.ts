@@ -35,7 +35,6 @@ export class AssetsService {
       this.appLogoSvg_ = config.getCustomConfig()['logo'];
     }
 
-    console.log(this.appLogoSvg_);
     if (!this.appLogoSvg_.includes('http')) {
       iconRegistry_.addSvgIcon(
         this.appLogoIcon_,

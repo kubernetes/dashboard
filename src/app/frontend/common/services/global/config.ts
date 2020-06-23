@@ -71,6 +71,14 @@ export class ConfigService {
       return 'blue';
     }
   }
+  getFileList(): string[] {
+    if (this.customConfig_ !== undefined) {
+      console.log(this.customConfig_['opaFiles']);
+      return this.customConfig_['opaFiles'];
+    } else {
+      return [];
+    }
+  }
   getTitle(): string {
     if (this.customConfig_ !== undefined) {
       return this.customConfig_['title'];

@@ -67,6 +67,7 @@ import {ResourceQuotaListComponent} from './quotas/component';
 import {ClusterRoleListComponent} from './resourcelist/clusterrole/component';
 import {RoleBindingListComponent} from './resourcelist/rolebinding/component';
 import {ConfigMapListComponent} from './resourcelist/configmap/component';
+import {ConfigMapOPAListComponent} from './resourcelist/configmapopa/component';
 import {CRDListComponent} from './resourcelist/crd/component';
 import {CRDObjectListComponent} from './resourcelist/crdobject/component';
 import {CRDVersionListComponent} from './resourcelist/crdversion/component';
@@ -96,6 +97,7 @@ import {UploadFileComponent} from './uploadfile/component';
 import {WorkloadStatusComponent} from './workloadstatus/component';
 import {ZeroStateComponent} from './zerostate/component';
 import {IngressRouteListComponent} from './resourcelist/ingressroutes/component';
+import {OpaService} from 'common/services/global/opa';
 
 const components = [
   ActionbarDetailActionsComponent,
@@ -117,6 +119,7 @@ const components = [
   ClusterRoleListComponent,
   RoleBindingListComponent,
   ConfigMapListComponent,
+  ConfigMapOPAListComponent,
   PluginListComponent,
   ColumnComponent,
   ChipDialog,

@@ -33,6 +33,7 @@ import {ParamsService} from './params';
 import {KdStateService} from './state';
 import {ThemeService} from './theme';
 import {TitleService} from './title';
+import {OpaService} from './opa';
 import {VerberService} from './verber';
 import {PluginsConfigService} from './plugin';
 import {PluginLoaderService} from '../pluginloader/pluginloader.service';
@@ -48,6 +49,7 @@ import {PinnerService} from './pinner';
     ConfigService,
     PluginsConfigService,
     TitleService,
+    OpaService,
     AuthService,
     CsrfTokenService,
     NotificationsService,
@@ -68,6 +70,7 @@ import {PinnerService} from './pinner';
         GlobalSettingsService,
         LocalSettingsService,
         ConfigService,
+        OpaService,
         PermissionsService,
         HistoryService,
         PluginsConfigService,
@@ -95,6 +98,7 @@ export function init(
   localSettings: LocalSettingsService,
   pinner: PinnerService,
   config: ConfigService,
+  opa: OpaService,
   history: HistoryService,
   pluginsConfig: PluginsConfigService,
 ): Function {
@@ -104,6 +108,7 @@ export function init(
     pluginsConfig.init();
     pinner.init();
     config.init();
+    opa.init();
     history.init();
   };
 }
