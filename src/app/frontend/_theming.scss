@@ -276,7 +276,9 @@
   }
 
   .mat-icon-button:hover {
-    background-color: $border !important;
+    :not([disabled='true']) and :not(&[disabled='true']) {
+      background-color: $border !important;
+    }
   }
 
   .c3-tooltip {
