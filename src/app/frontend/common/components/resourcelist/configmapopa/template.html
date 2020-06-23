@@ -18,7 +18,7 @@ limitations under the License.
          [hidden]="isHidden()">
   <div title
        fxLayout="row"
-       >Règles OPA</div>
+       >Contraintes de déploiements</div>
   <div description><span class="kd-muted-light"
           i18n>Items:&nbsp;</span>{{totalItems}}</div>
   <div actions>
@@ -56,7 +56,7 @@ limitations under the License.
 
       <ng-container matColumnDef="contrainte">
         <mat-header-cell *matHeaderCellDef
-                         >Contraintes de déploiements</mat-header-cell>
+                         >Contrainte</mat-header-cell>
         <mat-cell *matCellDef="let opa">
           <kd-chips [map]="opa.contrainte"></kd-chips>
         </mat-cell>
