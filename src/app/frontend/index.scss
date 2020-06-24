@@ -80,7 +80,7 @@ code {
   min-height: unset;
   padding: ($baseline-grid * .75) ($baseline-grid * 1.25);
   transition: none !important;
-  word-break: break-all !important;
+  word-wrap: break-word !important;
 
   &:hover::after {
     opacity: 0 !important;
