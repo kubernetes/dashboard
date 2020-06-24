@@ -2585,16 +2585,16 @@
           <context context-type="linenumber">174</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="5deee9cd9fabadb49eb1e3fcae70ff560e41ba27" datatype="html">
-        <source>Service Accounts
+      <trans-unit id="755417c37ab5d459cd2443b3776aaaca7ec87f90" datatype="html">
+        <source>Secrets
       </source>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/chrome/nav/template.html</context>
           <context context-type="linenumber">179</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="755417c37ab5d459cd2443b3776aaaca7ec87f90" datatype="html">
-        <source>Secrets
+      <trans-unit id="5deee9cd9fabadb49eb1e3fcae70ff560e41ba27" datatype="html">
+        <source>Service Accounts
       </source>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/chrome/nav/template.html</context>
