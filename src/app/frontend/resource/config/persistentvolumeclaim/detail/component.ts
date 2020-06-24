@@ -48,9 +48,7 @@ export class PersistentVolumeClaimDetailComponent implements OnInit, OnDestroy {
       .subscribe((d: PersistentVolumeClaimDetail) => {
         this.persistentVolumeClaim = d;
         this.notifications_.pushErrors(d.errors);
-        this.actionbar_.onInit.emit(
-          new ResourceMeta('Persistent Volume Claim', d.objectMeta, d.typeMeta),
-        );
+        this.actionbar_.onInit.emit(new ResourceMeta('Persistent Volume Claim', d.objectMeta, d.typeMeta));
         this.isInitialized = true;
       });
   }

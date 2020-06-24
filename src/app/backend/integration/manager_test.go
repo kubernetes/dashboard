@@ -15,6 +15,7 @@
 package integration
 
 import (
+	"strings"
 	"testing"
 
 	"github.com/kubernetes/dashboard/src/app/backend/client"
@@ -23,8 +24,14 @@ import (
 )
 
 func areErrorsEqual(err1, err2 error) bool {
-	return (err1 != nil && err2 != nil && err1.Error() == err2.Error()) ||
+	return (err1 != nil && err2 != nil && normalize(err1.Error()) == normalize(err2.Error())) ||
 		(err1 == nil && err2 == nil)
+}
+
+// Removes all quote signs that might have been added to the message.
+// Might depend on dependencies version how they are constructed.
+func normalize(msg string) string {
+	return strings.Replace(msg, "\"", "", -1)
 }
 
 func TestNewIntegrationManager(t *testing.T) {

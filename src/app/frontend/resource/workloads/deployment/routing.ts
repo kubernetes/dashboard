@@ -40,13 +40,7 @@ const DEPLOYMENT_DETAIL_ROUTE: Route = {
 };
 
 @NgModule({
-  imports: [
-    RouterModule.forChild([
-      DEPLOYMENT_LIST_ROUTE,
-      DEPLOYMENT_DETAIL_ROUTE,
-      SCALE_DEFAULT_ACTIONBAR,
-    ]),
-  ],
+  imports: [RouterModule.forChild([DEPLOYMENT_LIST_ROUTE, DEPLOYMENT_DETAIL_ROUTE, SCALE_DEFAULT_ACTIONBAR])],
   exports: [RouterModule],
 })
 export class DeploymentRoutingModule {}

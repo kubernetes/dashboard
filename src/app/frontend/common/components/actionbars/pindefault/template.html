@@ -19,7 +19,8 @@ limitations under the License.
   <kd-actionbar-detail-pin *ngIf="isInitialized"
                            [objectMeta]="resourceMeta?.objectMeta"
                            [typeMeta]="resourceMeta?.typeMeta"
-                           [displayName]="resourceMeta?.displayName"></kd-actionbar-detail-pin>
+                           [displayName]="resourceMeta?.displayName"
+                           [namespaced]="resourceMeta?.namespaced"></kd-actionbar-detail-pin>
 
   <kd-actionbar-detail-actions *ngIf="isInitialized"
                                [objectMeta]="resourceMeta.objectMeta"

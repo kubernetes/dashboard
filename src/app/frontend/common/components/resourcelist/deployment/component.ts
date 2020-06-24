@@ -13,13 +13,7 @@
 // limitations under the License.
 
 import {HttpParams} from '@angular/common/http';
-import {
-  ChangeDetectionStrategy,
-  ChangeDetectorRef,
-  Component,
-  ComponentFactoryResolver,
-  Input,
-} from '@angular/core';
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component, Input} from '@angular/core';
 import {Deployment, DeploymentList, Event, Metric} from '@api/backendapi';
 import {Observable} from 'rxjs/Observable';
 import {ResourceListWithStatuses} from '../../../resources/list';
@@ -42,10 +36,9 @@ export class DeploymentListComponent extends ResourceListWithStatuses<Deployment
   constructor(
     private readonly deployment_: NamespacedResourceService<DeploymentList>,
     notifications: NotificationsService,
-    resolver: ComponentFactoryResolver,
     cdr: ChangeDetectorRef,
   ) {
-    super('deployment', notifications, cdr, resolver);
+    super('deployment', notifications, cdr);
     this.id = ListIdentifier.deployment;
     this.groupId = ListGroupIdentifier.workloads;
 

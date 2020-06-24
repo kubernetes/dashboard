@@ -30,6 +30,7 @@ limitations under the License.
 
   <div content>
     <mat-table [dataSource]="getDataSource()"
+               [trackBy]="trackByCRDVersionName"
                class="kd-table-no-footer">
       <ng-container [matColumnDef]="getDisplayColumns()[0]">
         <mat-header-cell *matHeaderCellDef

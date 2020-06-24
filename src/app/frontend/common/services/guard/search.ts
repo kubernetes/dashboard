@@ -13,14 +13,7 @@
 // limitations under the License.
 
 import {Injectable} from '@angular/core';
-import {
-  ActivatedRouteSnapshot,
-  CanDeactivate,
-  Params,
-  Router,
-  RouterStateSnapshot,
-  UrlTree,
-} from '@angular/router';
+import {ActivatedRouteSnapshot, CanDeactivate, Params, Router, RouterStateSnapshot, UrlTree} from '@angular/router';
 import {SearchComponent} from '../../../search/component';
 import {SEARCH_QUERY_STATE_PARAM} from '../../params/params';
 

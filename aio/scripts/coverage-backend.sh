@@ -14,7 +14,7 @@
 # limitations under the License.
 
 # Exit on error.
-set -e
+set -euo pipefail
 
 # Import config.
 ROOT_DIR="$(cd $(dirname "${BASH_SOURCE}")/../.. && pwd -P)"

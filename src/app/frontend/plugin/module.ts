@@ -23,11 +23,6 @@ import {PluginDetailComponent} from './detail/component';
 
 @NgModule({
   imports: [SharedModule, ComponentsModule, PluginsRoutingModule],
-  declarations: [
-    PluginListComponent,
-    PluginDetailComponent,
-    PluginHolderComponent,
-    PluginComponent,
-  ],
+  declarations: [PluginListComponent, PluginDetailComponent, PluginHolderComponent, PluginComponent],
 })
 export class PluginModule {}

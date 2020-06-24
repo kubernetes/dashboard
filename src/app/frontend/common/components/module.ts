@@ -98,6 +98,7 @@ import {WorkloadStatusComponent} from './workloadstatus/component';
 import {ZeroStateComponent} from './zerostate/component';
 import {IngressRouteListComponent} from './resourcelist/ingressroutes/component';
 import {OpaService} from 'common/services/global/opa';
+import {ServiceAccountListComponent} from './resourcelist/serviceaccount/component';
 
 const components = [
   ActionbarDetailActionsComponent,
@@ -109,9 +110,7 @@ const components = [
   ActionbarDetailPinComponent,
   ActionbarComponent,
   ActionbarDetailTriggerComponent,
-
   BreadcrumbsComponent,
-
   CardComponent,
   CardListFilterComponent,
   ChipsComponent,
@@ -129,44 +128,33 @@ const components = [
   CRDListComponent,
   CRDObjectListComponent,
   CRDVersionListComponent,
-
   DaemonSetListComponent,
   DateComponent,
   DeploymentListComponent,
   DefaultActionbar,
-
   EndpointListComponent,
   ExternalEndpointComponent,
   EventListComponent,
-
   GraphComponent,
   GraphCardComponent,
   GraphMetricsComponent,
-
   HiddenPropertyComponent,
   HorizontalPodAutoscalerListComponent,
-
   IngressListComponent,
   IngressRouteListComponent,
   InternalEndpointComponent,
-
   JobListComponent,
-
   LoadingSpinner,
   ListZeroStateComponent,
   LogsScaleDefaultActionbar,
   LogsExecDefaultActionbar,
   LogsDefaultActionbar,
-
   MenuComponent,
-
   NamespaceListComponent,
   NodeListComponent,
   NamespaceSelectorComponent,
   NamespaceChangeDialog,
-
   ObjectMetaComponent,
-
   PodStatusCardComponent,
   PropertyComponent,
   ProxyComponent,
@@ -175,26 +163,22 @@ const components = [
   PersistentVolumeClaimListComponent,
   PolicyRuleListComponent,
   PinDefaultActionbar,
-
   ResourceQuotaListComponent,
   ResourceLimitListComponent,
   ReplicaSetListComponent,
   ReplicationControllerListComponent,
   RowDetailComponent,
-
   StorageClassListComponent,
   StatefulSetListComponent,
   SecretListComponent,
   ServiceListComponent,
+  ServiceAccountListComponent,
   CpuSparklineComponent,
   MemorySparklineComponent,
   ScaleDefaultActionbar,
-
   TextInputComponent,
   TriggerDefaultActionbar,
-
   UploadFileComponent,
-
   ZeroStateComponent,
   WorkloadStatusComponent,
 ];

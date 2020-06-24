@@ -43,6 +43,10 @@ export class NavComponent implements OnInit {
     public config: ConfigService,
   ) {}
 
+  get isVisible(): boolean {
+    return this.nav_.opened;
+  }
+
   ngOnInit(): void {
     this.navService_.setNav(this.nav_);
     this.navService_.setVisibility(true);

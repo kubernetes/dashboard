@@ -31,6 +31,16 @@
   text-transform: none;
   white-space: nowrap;
   width: 100%;
+
+  .kd-namespaced-item {
+    display: inline-block;
+    font-size: $footer-font-size-base;
+    height: 2 * $baseline-grid;
+    line-height: 2.25 * $baseline-grid;
+    margin-left: .5 * $baseline-grid;
+    text-align: center;
+    vertical-align: text-top;
+  }
 }
 
 :host-context(.kd-nav-item) {

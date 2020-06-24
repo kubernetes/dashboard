@@ -60,13 +60,7 @@ describe('ObjectMetaComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [
-        ObjectMetaComponent,
-        TestComponent,
-        CardComponent,
-        PropertyComponent,
-        ChipsComponent,
-      ],
+      declarations: [ObjectMetaComponent, TestComponent, CardComponent, PropertyComponent, ChipsComponent],
       imports: [
         MatIconModule,
         MatCardModule,
@@ -104,9 +98,7 @@ describe('ObjectMetaComponent', () => {
     const card = fixture.debugElement.query(By.css('mat-card-title'));
     expect(card).toBeTruthy();
 
-    const metaName = fixture.debugElement.query(
-      By.css('kd-property.object-meta-name div.kd-property-value'),
-    );
+    const metaName = fixture.debugElement.query(By.css('kd-property.object-meta-name div.kd-property-value'));
     expect(metaName).toBeTruthy();
     expect(metaName.nativeElement.textContent === miniName);
   });

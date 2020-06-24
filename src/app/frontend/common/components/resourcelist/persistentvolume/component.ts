@@ -29,10 +29,7 @@ import {ListGroupIdentifier, ListIdentifier} from '../groupids';
   templateUrl: './template.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class PersistentVolumeListComponent extends ResourceListWithStatuses<
-  PersistentVolumeList,
-  PersistentVolume
-> {
+export class PersistentVolumeListComponent extends ResourceListWithStatuses<PersistentVolumeList, PersistentVolume> {
   @Input() endpoint = EndpointManager.resource(Resource.persistentVolume).list();
 
   constructor(

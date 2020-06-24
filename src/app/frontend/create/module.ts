@@ -25,13 +25,7 @@ import {CreateFromInputComponent} from './from/input/component';
 import {CreateRoutingModule} from './routing';
 
 @NgModule({
-  imports: [
-    SharedModule,
-    ComponentsModule,
-    CreateFromFormModule,
-    CreateServiceModule,
-    CreateRoutingModule,
-  ],
+  imports: [SharedModule, ComponentsModule, CreateFromFormModule, CreateServiceModule, CreateRoutingModule],
   declarations: [CreateComponent, CreateFromInputComponent, CreateFromFileComponent],
 })
 export class CreateModule {}

@@ -33,6 +33,12 @@ export interface ObjectMeta {
   uid?: string;
 }
 
+export interface JobStatus {
+  status: string;
+  message: string;
+  conditions: Condition[];
+}
+
 export interface ResourceDetail {
   objectMeta: ObjectMeta;
   typeMeta: TypeMeta;
@@ -147,6 +153,10 @@ export interface IngressList extends ResourceList {
   items: Ingress[];
 }
 
+export interface ServiceAccountList extends ResourceList {
+  items: ServiceAccount[];
+}
+
 export interface JobList extends ResourceList {
   cumulativeMetrics: Metric[] | null;
   jobs: Job[];
@@ -215,13 +225,15 @@ export interface StorageClassList extends ResourceList {
 }
 
 // Simple detail types
-export interface ClusterRole extends Resource {}
+export type ClusterRole = Resource;
 
-export interface RoleBinding extends Resource {}
+export type ConfigMap = Resource;
 
-export interface ConfigMap extends Resource {}
+export type ServiceAccount = Resource;
 
 export interface OpaDetail extends Resource {}
+
+export interface RoleBinding extends Resource {}
 
 export interface Controller extends Resource {
   pods: PodInfo;
@@ -243,7 +255,7 @@ export interface CRD extends Resource {
   established: string;
 }
 
-export interface CRDObject extends Resource {}
+export type CRDObject = Resource;
 
 export interface DaemonSet extends Resource {
   podInfo: PodInfo;
@@ -478,7 +490,9 @@ export interface SecretDetail extends ResourceDetail {
   data: StringMap;
 }
 
-export interface IngressDetail extends ResourceDetail {}
+export type ServiceAccountDetail = ResourceDetail;
+
+export type IngressDetail = ResourceDetail;
 
 export interface PersistentVolumeClaimDetail extends ResourceDetail {
   status: string;
@@ -508,7 +522,7 @@ export interface CRDDetail extends ResourceDetail {
   subresources: string[];
 }
 
-export interface CRDObjectDetail extends ResourceDetail {}
+export type CRDObjectDetail = ResourceDetail;
 
 export interface JobDetail extends ResourceDetail {
   podInfo: PodInfo;
@@ -518,6 +532,7 @@ export interface JobDetail extends ResourceDetail {
   eventList: EventList;
   parallelism: number;
   completions: number;
+  jobStatus: JobStatus;
 }
 
 export interface CronJobDetail extends ResourceDetail {
@@ -1088,6 +1103,7 @@ export interface PinnedResource {
   name: string;
   displayName: string;
   namespace?: string;
+  namespaced: boolean;
 }
 
 export interface APIVersion {

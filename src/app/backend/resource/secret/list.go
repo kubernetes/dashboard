@@ -93,7 +93,7 @@ func GetSecretList(client kubernetes.Interface, namespace *common.NamespaceQuery
 		return nil, criticalError
 	}
 
-	return toSecretList(secretList.Items, nonCriticalErrors, dsQuery), nil
+	return ToSecretList(secretList.Items, nonCriticalErrors, dsQuery), nil
 }
 
 // CreateSecret creates a single secret using the cluster API client
@@ -120,7 +120,7 @@ func toSecret(secret *v1.Secret) Secret {
 	}
 }
 
-func toSecretList(secrets []v1.Secret, nonCriticalErrors []error, dsQuery *dataselect.DataSelectQuery) *SecretList {
+func ToSecretList(secrets []v1.Secret, nonCriticalErrors []error, dsQuery *dataselect.DataSelectQuery) *SecretList {
 	newSecretList := &SecretList{
 		ListMeta: api.ListMeta{TotalItems: len(secrets)},
 		Secrets:  make([]Secret, 0),

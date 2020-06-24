@@ -279,9 +279,7 @@ export class CreateFromFormComponent implements OnInit {
       containerImage: this.containerImage.value,
       imagePullSecret: this.imagePullSecret.value ? this.imagePullSecret.value : null,
       containerCommand: this.containerCommand.value ? this.containerCommand.value : null,
-      containerCommandArgs: this.containerCommandArgs.value
-        ? this.containerCommandArgs.value
-        : null,
+      containerCommandArgs: this.containerCommandArgs.value ? this.containerCommandArgs.value : null,
       isExternal: this.isExternal,
       name: this.name.value,
       description: this.description.value ? this.description.value : null,
@@ -290,9 +288,7 @@ export class CreateFromFormComponent implements OnInit {
       replicas: this.replicas.value,
       namespace: this.namespace.value,
       cpuRequirement: this.isNumber(this.cpuRequirement.value) ? this.cpuRequirement.value : null,
-      memoryRequirement: this.isNumber(this.memoryRequirement.value)
-        ? `${this.memoryRequirement.value}Mi`
-        : null,
+      memoryRequirement: this.isNumber(this.memoryRequirement.value) ? `${this.memoryRequirement.value}Mi` : null,
       labels: this.toBackendApiLabels(labels),
       runAsPrivileged: this.runAsPrivileged.value,
     };

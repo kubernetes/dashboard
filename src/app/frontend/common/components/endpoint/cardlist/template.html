@@ -31,6 +31,7 @@ limitations under the License.
   <div content
        [hidden]="endpoints?.length === 0">
     <mat-table [dataSource]="getDataSource()"
+               [trackBy]="trackByEndpoint"
                class="kd-table-no-footer">
       <ng-container [matColumnDef]="getEndpointsColumns()[0]">
         <mat-header-cell *matHeaderCellDef

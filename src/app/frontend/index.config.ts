@@ -15,7 +15,7 @@
 import {InjectionToken} from '@angular/core';
 import {MatTooltipDefaultOptions} from '@angular/material/tooltip';
 
-export let CONFIG_DI_TOKEN = new InjectionToken<Config>('kd.config');
+export const CONFIG_DI_TOKEN = new InjectionToken<Config>('kd.config');
 
 export interface Config {
   authTokenCookieName: string;
@@ -23,6 +23,7 @@ export interface Config {
   csrfHeaderName: string;
   authTokenHeaderName: string;
   defaultNamespace: string;
+  authModeCookieName: string;
 }
 
 export const CONFIG: Config = {
@@ -31,6 +32,7 @@ export const CONFIG: Config = {
   csrfHeaderName: 'X-CSRF-TOKEN',
   skipLoginPageCookieName: 'skipLoginPage',
   defaultNamespace: 'default',
+  authModeCookieName: 'authMode',
 };
 
 // Override default material tooltip values.

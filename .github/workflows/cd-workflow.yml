@@ -1,0 +1,121 @@
+name: Continuous Deployment
+
+on:
+  push:
+    branches: [ master ]
+  create:
+    tags:
+      - 'v*.*.*'
+
+jobs:
+  deploy:
+    name: Development Release
+    if: github.event_name == 'push' && contains(github.ref, 'master')
+    runs-on: ubuntu-latest
+    env:
+      NG_CLI_ANALYTICS: ci
+      GOPROXY: "https://proxy.golang.org"
+      NODE_OPTIONS: "--max-old-space-size=8192"
+      DOCKER_CLI_EXPERIMENTAL: enabled
+      TERM: xterm
+
+    steps:
+      - name: Setup Environment
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - name: Setup Go
+        uses: actions/setup-go@v2
+        with:
+          go-version: 1.14.4
+
+      - name: Setup NodeJS
+        uses: actions/setup-node@v1.4.2
+        with:
+          node-version: 12.6.0
+
+      - name: Cache Node Modules
+        uses: actions/cache@v2
+        env:
+          cache-name: cache-node-modules
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-build-${{ env.cache-name }}-
+            ${{ runner.os }}-build-
+            ${{ runner.os }}-
+
+      - name: Install Dependencies
+        shell: bash
+        run: |
+          [ ! -d "node_modules" ] && npm ci || node aio/scripts/version.js && go mod download
+
+      - name: Docker Login
+        env:
+          DOCKER_USER: ${{ secrets.DOCKER_USER }}
+          DOCKER_PASS: ${{ secrets.DOCKER_PASS }}
+        run: docker login -u $DOCKER_USER -p $DOCKER_PASS
+
+      - name: Push Image
+        shell: bash
+        run: |
+          export GOPATH=$(go env GOPATH)/bin
+          npm run docker:push:head
+
+  release:
+    name: Release
+    if: github.event_name == 'create' && startsWith(github.ref, 'refs/tags/v')
+    runs-on: ubuntu-latest
+    env:
+      NG_CLI_ANALYTICS: ci
+      GOPROXY: "https://proxy.golang.org"
+      NODE_OPTIONS: "--max-old-space-size=8192"
+      DOCKER_CLI_EXPERIMENTAL: enabled
+      TERM: xterm
+
+    steps:
+      - name: Setup Environment
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - name: Setup Go
+        uses: actions/setup-go@v2
+        with:
+          go-version: 1.14.4
+
+      - name: Setup NodeJS
+        uses: actions/setup-node@v1.4.2
+        with:
+          node-version: 12.6.0
+
+      - name: Cache Node Modules
+        uses: actions/cache@v2
+        env:
+          cache-name: cache-node-modules
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-build-${{ env.cache-name }}-
+            ${{ runner.os }}-build-
+            ${{ runner.os }}-
+
+      - name: Install Dependencies
+        shell: bash
+        run: |
+          [ ! -d "node_modules" ] && npm ci || node aio/scripts/version.js && go mod download
+
+      - name: Docker Login
+        env:
+          DOCKER_USER: ${{ secrets.DOCKER_RELEASE_USER }}
+          DOCKER_PASS: ${{ secrets.DOCKER_RELEASE_PASS }}
+        run: docker login -u $DOCKER_USER -p $DOCKER_PASS
+
+      - name: Push Image
+        shell: bash
+        run: |
+          export GOPATH=$(go env GOPATH)/bin
+          npm run docker:push

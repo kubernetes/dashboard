@@ -12,19 +12,17 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import {Directive, Input} from '@angular/core';
 import {MetricResult} from '@api/backendapi';
 
+@Directive()
 export class Sparkline {
   lastValue = 0;
 
-  private _timeseries: MetricResult[];
-
-  setTimeseries(timeseries: MetricResult[]) {
-    this._timeseries = timeseries;
-  }
+  @Input() timeseries: MetricResult[];
 
   getPolygonPoints(): string {
-    const series = this._timeseries.map(({timestamp, value}) => [Date.parse(timestamp), value]);
+    const series = this.timeseries.map(({timestamp, value}) => [Date.parse(timestamp), value]);
     const sorted = series.slice().sort((a, b) => a[0] - b[0]);
     this.lastValue = sorted.length > 0 ? sorted[sorted.length - 1][1] : undefined;
     const xShift = Math.min(...sorted.map(pt => pt[0]));

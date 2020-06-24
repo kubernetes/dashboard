@@ -120,6 +120,7 @@ const (
 	ResourceKindEvent                    = "event"
 	ResourceKindHorizontalPodAutoscaler  = "horizontalpodautoscaler"
 	ResourceKindIngress                  = "ingress"
+	ResourceKindServiceAccount           = "serviceaccount"
 	ResourceKindJob                      = "job"
 	ResourceKindCronJob                  = "cronjob"
 	ResourceKindLimitRange               = "limitrange"
@@ -216,6 +217,7 @@ var KindToAPIMapping = map[string]APIMapping{
 	ResourceKindResourceQuota:            {"resourcequotas", ClientTypeDefault, true},
 	ResourceKindSecret:                   {"secrets", ClientTypeDefault, true},
 	ResourceKindService:                  {"services", ClientTypeDefault, true},
+	ResourceKindServiceAccount:           {"serviceaccounts", ClientTypeDefault, true},
 	ResourceKindStatefulSet:              {"statefulsets", ClientTypeAppsClient, true},
 	ResourceKindStorageClass:             {"storageclasses", ClientTypeStorageClient, false},
 	ResourceKindEndpoint:                 {"endpoints", ClientTypeDefault, true},

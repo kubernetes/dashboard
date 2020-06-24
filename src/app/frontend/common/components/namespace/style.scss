@@ -15,19 +15,30 @@
 @import '../../../variables';
 
 :host {
-  display: block;
-  padding: 0 $baseline-grid 0 (3 * $baseline-grid);
+  border-radius: $baseline-grid / 4;
+  height: 4.75 * $baseline-grid;
+  line-height: 4.5 * $baseline-grid;
+  margin-right: 2 * $baseline-grid;
+  padding-right: 3.5 * $baseline-grid;
 
-  .kd-namespace-select-title {
-    font-family: $font-family-sans;
-    font-size: $caption-font-size-base;
+  ::ng-deep {
+    .mat-form-field-infix {
+      border: 0;
+      padding: 0;
+      width: 18 * $baseline-grid;
+    }
+
+    .mat-form-field-wrapper {
+      padding: 0;
+    }
+
+    .kd-namespace-select {
+      font-family: $font-family-sans;
+      font-size: $subhead-font-size-base;
+      line-height: 4.5 * $baseline-grid;
+      margin-left: 2 * $baseline-grid;
+    }
   }
-}
-
-.kd-namespace-select-input-container {
-  font-weight: $bold-font-weight;
-  margin-right: $baseline-grid;
-  width: 100%;
 }
 
 .kd-namespace-select-input {

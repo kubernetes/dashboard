@@ -27,7 +27,8 @@ limitations under the License.
     <div kdLoadingSpinner
          [isLoading]="isLoading"></div>
 
-    <mat-table [dataSource]="getData()">
+    <mat-table [dataSource]="getData()"
+               [trackBy]="trackByResource">
       <ng-container [matColumnDef]="getDisplayColumns()[0]">
         <mat-header-cell *matHeaderCellDef></mat-header-cell>
         <mat-cell *matCellDef="let event">

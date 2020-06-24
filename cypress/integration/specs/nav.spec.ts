@@ -36,10 +36,10 @@ describe('Navbar', () => {
       NavbarPage.assertUrlContains('storageclass');
     });
   });
-  describe('Overview and Namespace Items', () => {
-    it('overview', () => {
-      NavbarPage.clickItem(NavbarPage.overviewItemId);
-      NavbarPage.assertUrlContains('overview');
+  describe('Workload and Namespace Items', () => {
+    it('workload', () => {
+      NavbarPage.clickItem(NavbarPage.workloadsItemId);
+      NavbarPage.assertUrlContains('workload');
     });
 
     // Namespace selector

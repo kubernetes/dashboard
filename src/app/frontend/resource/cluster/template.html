@@ -25,6 +25,8 @@ limitations under the License.
                              [hideable]="true"></kd-persistent-volume-list>
   <kd-storage-class-list (onchange)="onListUpdate($event)"
                          [hideable]="true"></kd-storage-class-list>
+  <kd-service-account-list (onchange)="onListUpdate($event)"
+                           [hideable]="true"></kd-service-account-list>
 </div>
 
 <kd-zero-state [hidden]="!shouldShowZeroState()"></kd-zero-state>

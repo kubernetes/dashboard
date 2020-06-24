@@ -48,9 +48,7 @@ export class PluginHolderComponent implements OnInit {
       // tslint:disable-next-line:no-any
       const entryComponent = (moduleFactory.moduleType as any).entry;
       try {
-        const compFactory = moduleRef.componentFactoryResolver.resolveComponentFactory(
-          entryComponent,
-        );
+        const compFactory = moduleRef.componentFactoryResolver.resolveComponentFactory(entryComponent);
         this.vcRef.createComponent(compFactory);
       } catch (e) {
         this.entryError = true;

@@ -48,11 +48,7 @@ export class DaemonSetDetailComponent implements OnInit, OnDestroy {
 
     this.eventListEndpoint = this.endpoint_.child(resourceName, Resource.event, resourceNamespace);
     this.podListEndpoint = this.endpoint_.child(resourceName, Resource.pod, resourceNamespace);
-    this.serviceListEndpoint = this.endpoint_.child(
-      resourceName,
-      Resource.service,
-      resourceNamespace,
-    );
+    this.serviceListEndpoint = this.endpoint_.child(resourceName, Resource.service, resourceNamespace);
 
     this.daemonSetSubscription_ = this.daemonSet_
       .get(this.endpoint_.detail(), resourceName, resourceNamespace)

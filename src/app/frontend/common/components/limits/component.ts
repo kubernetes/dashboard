@@ -33,4 +33,8 @@ export class ResourceLimitListComponent {
     tableData.data = this.limits;
     return tableData;
   }
+
+  trackByLimitRage(_: number, item: LimitRange): any {
+    return `${item.resourceType}/${item.resourceName}`;
+  }
 }

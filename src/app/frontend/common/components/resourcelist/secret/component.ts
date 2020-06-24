@@ -29,6 +29,7 @@ import {ListGroupIdentifier, ListIdentifier} from '../groupids';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SecretListComponent extends ResourceListBase<SecretList, Secret> {
+  @Input() title = 'Secrets';
   @Input() endpoint = EndpointManager.resource(Resource.secret, true).list();
 
   constructor(

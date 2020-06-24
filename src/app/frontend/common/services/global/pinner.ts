@@ -25,7 +25,7 @@ export class PinnerService {
   onPinUpdate = new Subject();
   private isInitialized_ = false;
   private pinnedResources_: PinnedResource[] = [];
-  private readonly endpoint_ = `api/v1/settings/pinner`;
+  private readonly endpoint_ = 'api/v1/settings/pinner';
 
   constructor(
     private readonly dialog_: MatDialog,
@@ -50,9 +50,9 @@ export class PinnerService {
     return this.isInitialized_;
   }
 
-  pin(kind: string, name: string, namespace: string, displayName: string): void {
+  pin(kind: string, name: string, namespace: string, displayName: string, namespaced?: boolean): void {
     this.http_
-      .put(this.endpoint_, {kind, name, namespace, displayName})
+      .put(this.endpoint_, {kind, name, namespace, displayName, namespaced})
       .subscribe(() => this.onPinUpdate.next(), this.handleErrorResponse_.bind(this));
   }
 
@@ -63,9 +63,7 @@ export class PinnerService {
     }
     url += `/${name}`;
 
-    this.http_
-      .delete(url)
-      .subscribe(() => this.onPinUpdate.next(), this.handleErrorResponse_.bind(this));
+    this.http_.delete(url).subscribe(() => this.onPinUpdate.next(), this.handleErrorResponse_.bind(this));
   }
 
   unpinResource(resource: PinnedResource): void {
@@ -74,11 +72,7 @@ export class PinnerService {
 
   isPinned(kind: string, name: string, namespace?: string): boolean {
     for (const pinnedResource of this.pinnedResources_) {
-      if (
-        pinnedResource.name === name &&
-        pinnedResource.kind === kind &&
-        pinnedResource.namespace === namespace
-      ) {
+      if (pinnedResource.name === name && pinnedResource.kind === kind && pinnedResource.namespace === namespace) {
         return true;
       }
     }

@@ -18,12 +18,13 @@ import {
   ComponentRef,
   Input,
   OnChanges,
+  SimpleChanges,
   Type,
   ViewChild,
   ViewContainerRef,
 } from '@angular/core';
 import {ActionColumn} from '@api/frontendapi';
-import {CRD, CRDDetail, CRDObject, Resource} from 'typings/backendapi';
+import {CRDDetail, Resource} from 'typings/backendapi';
 
 @Component({
   selector: 'kd-dynamic-cell',
@@ -37,19 +38,30 @@ export class ColumnComponent<T extends ActionColumn> implements OnChanges {
 
   constructor(private readonly resolver_: ComponentFactoryResolver) {}
 
-  ngOnChanges(): void {
-    if (this.componentRef_) {
+  ngOnChanges(changes: SimpleChanges): void {
+    if (this.componentRef_ && changes.component) {
       this.target.remove();
       this.componentRef_ = undefined;
     }
 
-    const factory = this.resolver_.resolveComponentFactory(this.component);
-    this.componentRef_ = this.target.createComponent(factory);
+    if (!this.componentRef_) {
+      const factory = this.resolver_.resolveComponentFactory(this.component);
+      this.componentRef_ = this.target.createComponent(factory);
+    }
+
     this.componentRef_.instance.setObjectMeta(this.resource.objectMeta);
     this.componentRef_.instance.setTypeMeta(this.resource.typeMeta);
 
     if ((this.resource as CRDDetail).names !== undefined) {
       this.componentRef_.instance.setDisplayName((this.resource as CRDDetail).names.kind);
+      this.componentRef_.instance.setNamespaced(this.isNamespaced_(this.resource as CRDDetail));
     }
+
+    // Let the change detector run for out component
+    this.componentRef_.changeDetectorRef.detectChanges();
+  }
+
+  private isNamespaced_(crd: CRDDetail): boolean {
+    return crd && crd.scope === 'Namespaced';
   }
 }
