@@ -191,7 +191,7 @@
     "semver": "7.3.2",
     "source-map-explorer": "2.4.2",
     "tar": "6.0.2",
-    "through2": "3.0.1",
+    "through2": "3.0.2",
     "ts-loader": "7.0.5",
     "ts-node": "8.10.2",
     "tslint": "6.1.2",
