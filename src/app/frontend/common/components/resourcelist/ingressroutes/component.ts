@@ -76,27 +76,31 @@ export class IngressRouteListComponent extends ResourceListBase<CRDObjectList, C
   }
 
   map(crdObjectList: CRDObjectList): any[] {
-    this.totalItems = crdObjectList.items.length;
+    if (crdObjectList.items) {
+      this.totalItems = crdObjectList.items.length;
 
-    crdObjectList.items.forEach(item => {
-      if (
-        !item.spec.routes ||
-        !item.spec.routes[0] ||
-        !item.spec.routes[0].match ||
-        !item.spec.routes[0].services ||
-        !item.spec.routes[0].services[0] ||
-        !item.spec.routes[0].services[0].name ||
-        !item.spec.routes[0].services[0].port
-      ) {
-        item['iconName'] = 'error';
-        item['iconClass'] = {'kd-success': false};
-        item.spec = this.errorSpec;
-      } else {
-        item['iconName'] = 'check_circle';
-        item['iconClass'] = {'kd-success': true};
-      }
-    });
-    return crdObjectList.items;
+      crdObjectList.items.forEach(item => {
+        if (
+          !item.spec.routes ||
+          !item.spec.routes[0] ||
+          !item.spec.routes[0].match ||
+          !item.spec.routes[0].services ||
+          !item.spec.routes[0].services[0] ||
+          !item.spec.routes[0].services[0].name ||
+          !item.spec.routes[0].services[0].port
+        ) {
+          item['iconName'] = 'error';
+          item['iconClass'] = {'kd-success': false};
+          item.spec = this.errorSpec;
+        } else {
+          item['iconName'] = 'check_circle';
+          item['iconClass'] = {'kd-success': true};
+        }
+      });
+      return crdObjectList.items;
+    } else {
+      return null;
+    }
   }
 
   getDisplayColumns(): string[] {
