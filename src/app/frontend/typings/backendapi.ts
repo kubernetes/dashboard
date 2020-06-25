@@ -460,9 +460,14 @@ export interface SecretDetail extends ResourceDetail {
 
 export type ServiceAccountDetail = ResourceDetail;
 
-export type NetworkPolicyDetail = ResourceDetail;
-
 export type IngressDetail = ResourceDetail;
+
+export interface NetworkPolicyDetail extends ResourceDetail {
+  podSelector: LabelSelector;
+  ingress?: any;
+  egress?: any;
+  policyTypes?: string[];
+}
 
 export interface PersistentVolumeClaimDetail extends ResourceDetail {
   status: string;

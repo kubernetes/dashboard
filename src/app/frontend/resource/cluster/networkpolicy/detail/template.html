@@ -16,3 +16,30 @@ limitations under the License.
 
 <kd-object-meta [initialized]="isInitialized"
                 [objectMeta]="networkPolicy?.objectMeta"></kd-object-meta>
+
+<kd-card [initialized]="isInitialized">
+  <div title
+       i18n>Resource information</div>
+  <div content
+       *ngIf="isInitialized"
+       fxLayout="row wrap">
+    <kd-property *ngIf="networkPolicy?.podSelector">
+      <div key
+           i18n>Pod Selector</div>
+      <div value>
+        <kd-chips [map]="networkPolicy?.podSelector.matchLabels"></kd-chips>
+      </div>
+    </kd-property>
+
+    <kd-property *ngIf="networkPolicy?.podSelector">
+      <div key
+           i18n>Policy Types</div>
+      <div value>
+        <kd-chips [map]="networkPolicy?.policyTypes"></kd-chips>
+      </div>
+    </kd-property>
+  </div>
+</kd-card>
+
+{{networkPolicy?.ingress | json}}
+{{networkPolicy?.egress | json}}

@@ -26,7 +26,7 @@ import (
 // NetworkPolicyDetail contains detailed information about a network policy.
 type NetworkPolicyDetail struct {
 	NetworkPolicy `json:",inline"`
-	PodSelector   metaV1.LabelSelector          `json:"conditions"`
+	PodSelector   metaV1.LabelSelector          `json:"podSelector"`
 	Ingress       []v1.NetworkPolicyIngressRule `json:"ingress,omitempty"`
 	Egress        []v1.NetworkPolicyEgressRule  `json:"egress,omitempty"`
 	PolicyTypes   []v1.PolicyType               `json:"policyTypes,omitempty"`

@@ -482,7 +482,19 @@
           <context context-type="linenumber">24</context>
         </context-group>
         <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/resource/workloads/replicationcontroller/detail/template.html</context>
+          <context context-type="linenumber">22</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/resource/workloads/replicaset/detail/template.html</context>
+          <context context-type="linenumber">22</context>
+        </context-group>
+        <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/resource/cluster/namespace/detail/template.html</context>
+          <context context-type="linenumber">22</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/resource/cluster/networkpolicy/detail/template.html</context>
           <context context-type="linenumber">22</context>
         </context-group>
         <context-group purpose="location">
@@ -495,14 +507,6 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/resource/cluster/storageclass/detail/template.html</context>
-          <context context-type="linenumber">22</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">../src/app/frontend/resource/config/persistentvolumeclaim/detail/template.html</context>
-          <context context-type="linenumber">22</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">../src/app/frontend/resource/discovery/service/detail/template.html</context>
           <context context-type="linenumber">22</context>
         </context-group>
         <context-group purpose="location">
@@ -522,15 +526,15 @@
           <context context-type="linenumber">22</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">../src/app/frontend/resource/workloads/replicaset/detail/template.html</context>
-          <context context-type="linenumber">22</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">../src/app/frontend/resource/workloads/replicationcontroller/detail/template.html</context>
-          <context context-type="linenumber">22</context>
-        </context-group>
-        <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/resource/workloads/statefulset/detail/template.html</context>
+          <context context-type="linenumber">22</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/resource/discovery/service/detail/template.html</context>
+          <context context-type="linenumber">22</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/resource/config/persistentvolumeclaim/detail/template.html</context>
           <context context-type="linenumber">22</context>
         </context-group>
       </trans-unit>
@@ -4362,6 +4366,22 @@
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/resource/cluster/namespace/detail/actionbar/template.html</context>
           <context context-type="linenumber">23</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="a21b5b669ab3f36e0f83e9a025c26662fd0616e8" datatype="html">
+        <source>Pod Selector</source>
+        <target state="new">Pod Selector</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/resource/cluster/networkpolicy/detail/template.html</context>
+          <context context-type="linenumber">28</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="2ebd4e9210644c0f1da612d5c2ef1bbdab9652fd" datatype="html">
+        <source>Policy Types</source>
+        <target state="new">Policy Types</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/resource/cluster/networkpolicy/detail/template.html</context>
+          <context context-type="linenumber">36</context>
         </context-group>
       </trans-unit>
       <trans-unit id="8a3abe0df530103020a480befe1757e3b1776e7b" datatype="html">

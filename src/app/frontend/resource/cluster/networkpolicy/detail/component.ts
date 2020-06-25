@@ -25,7 +25,7 @@ import {EndpointManager, Resource} from '../../../../common/services/resource/en
 import {NamespacedResourceService} from '../../../../common/services/resource/resource';
 
 @Component({
-  selector: 'kd-service-account-detail',
+  selector: 'kd-network-policy-detail',
   templateUrl: './template.html',
 })
 export class NetworkPolicyDetailComponent implements OnInit, OnDestroy {
