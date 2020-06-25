@@ -18,7 +18,7 @@ import {DomSanitizer, SafeHtml} from '@angular/platform-browser';
 // @ts-ignore
 import * as ansiColorClass from 'ansi-to-html';
 
-const ansiColor = new ansiColorClass();
+//const ansiColor = new ansiColorClass();
 
 enum TextMode {
   Default = 'Default',
@@ -39,7 +39,7 @@ export class SafeHtmlFormatter {
     // Handle conversion of ANSI color codes.
     switch (mode) {
       case TextMode.Colored:
-        content = ansiColor.toHtml(content.replace(/&#27;/g, '\u001b'));
+        //content = ansiColor.toHtml(content.replace(/&#27;/g, '\u001b'));
         result = this.sanitizer.bypassSecurityTrustHtml(content);
         break;
 
