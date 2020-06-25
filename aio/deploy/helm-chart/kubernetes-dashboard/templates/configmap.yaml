@@ -13,18 +13,8 @@
 # limitations under the License.
 
 apiVersion: v1
-name: kubernetes-dashboard
-version: 2.1.1
-appVersion: 2.0.3
-description: General-purpose web UI for Kubernetes clusters
-keywords:
-- kubernetes
-- dashboard
-home: https://github.com/kubernetes/dashboard
-sources:
-- https://github.com/kubernetes/dashboard
-maintainers:
-- name: desaintmartin
-  email: cdesaintmartin@wiremind.fr
-icon: https://raw.githubusercontent.com/kubernetes/kubernetes/master/logo/logo.svg
-kubeVersion: ">=1.10.0-0"
+kind: ConfigMap
+metadata:
+  labels:
+{{ include "kubernetes-dashboard.labels" . | indent 4 }}
+  name: {{ template "kubernetes-dashboard.fullname" . }}-settings
