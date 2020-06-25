@@ -131,7 +131,11 @@ helm install kubernetes-dashboard/kubernetes-dashboard --name my-release -f valu
 
 > **Tip**: You can use the default [values.yaml](values.yaml), which is used by default, as reference
 
-## Using the dashboard with 'kubectl proxy'
+## Access
+
+For information about how to access, please read the [kubernetes-dashboard manual](https://github.com/kubernetes/dashboard)
+
+### Using the dashboard with 'kubectl proxy'
 
 When running 'kubectl proxy', the address `localhost:8001/ui` automatically expands to:
 
