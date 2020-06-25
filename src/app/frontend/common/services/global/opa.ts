@@ -65,6 +65,7 @@ export class OpaService {
     const msgList = opaFile.split('[msg]');
 
     msgList.forEach(msg => {
+      msg = msg.replace('{', '');
       if (!msg.trim().startsWith('#')) {
         const kind = this.getKind(msg);
         const champ = this.getChamp(msg);
