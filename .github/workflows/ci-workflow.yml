@@ -12,7 +12,7 @@ on:
 
 jobs:
   check:
-    name: Static Check & Linting
+    name: Static Check
     runs-on: ubuntu-latest
     env:
       NG_CLI_ANALYTICS: ci
