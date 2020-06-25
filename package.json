@@ -62,6 +62,10 @@
     }
   },
   "lint-staged": {
+    "**/**": [
+      "npm run fix:license",
+      "git add"
+    ],
     "src/**/*.ts": [
       "gts fix",
       "git add"
