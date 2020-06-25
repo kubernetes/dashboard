@@ -16,7 +16,7 @@ import {NgModule} from '@angular/core';
 import {Route, RouterModule} from '@angular/router';
 import {DEFAULT_ACTIONBAR} from '../../../common/components/actionbars/routing';
 
-import {CONFIG_ROUTE} from '../../config/routing';
+import {CLUSTER_ROUTE} from '../routing';
 
 import {NetworkPolicyDetailComponent} from './detail/component';
 import {NetworkPolicyListComponent} from './list/component';
@@ -25,8 +25,8 @@ const NETWORK_POLICY_LIST_ROUTE: Route = {
   path: '',
   component: NetworkPolicyListComponent,
   data: {
-    breadcrumb: 'Service Accounts',
-    parent: CONFIG_ROUTE,
+    breadcrumb: 'Network Policies',
+    parent: CLUSTER_ROUTE,
   },
 };
 
