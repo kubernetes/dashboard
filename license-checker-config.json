@@ -9,13 +9,15 @@
   "defaultFormat": {
     "eachLine": {
       "prepend": "# "
-    }
+    },
+    "append": ""
   },
   "licenseFormats": {
     "go|ts|js|scss": {
       "eachLine": {
         "prepend": "// "
-      }
+      },
+      "append": ""
     },
     "html": {
       "prepend": "<!--",
