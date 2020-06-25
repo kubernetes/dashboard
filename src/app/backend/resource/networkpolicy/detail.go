@@ -26,7 +26,11 @@ import (
 // NetworkPolicyDetail contains detailed information about a network policy.
 type NetworkPolicyDetail struct {
 	NetworkPolicy `json:",inline"`
-	Errors        []error `json:"errors"`
+	PodSelector   metaV1.LabelSelector          `json:"conditions"`
+	Ingress       []v1.NetworkPolicyIngressRule `json:"ingress,omitempty"`
+	Egress        []v1.NetworkPolicyEgressRule  `json:"egress,omitempty"`
+	PolicyTypes   []v1.PolicyType               `json:"policyTypes,omitempty"`
+	Errors        []error                       `json:"errors"`
 }
 
 // GetNetworkPolicyDetail returns detailed information about a network policy.
@@ -41,8 +45,12 @@ func GetNetworkPolicyDetail(client client.Interface, namespace, name string) (*N
 	return getNetworkPolicyDetail(raw), nil
 }
 
-func getNetworkPolicyDetail(sa *v1.NetworkPolicy) *NetworkPolicyDetail {
+func getNetworkPolicyDetail(np *v1.NetworkPolicy) *NetworkPolicyDetail {
 	return &NetworkPolicyDetail{
-		NetworkPolicy: toNetworkPolicy(sa),
+		NetworkPolicy: toNetworkPolicy(np),
+		PodSelector:   np.Spec.PodSelector,
+		Ingress:       np.Spec.Ingress,
+		Egress:        np.Spec.Egress,
+		PolicyTypes:   np.Spec.PolicyTypes,
 	}
 }
