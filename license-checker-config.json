@@ -1,7 +1,7 @@
 {
   "ignore": [
     "*", "docs", "i18n",
-    ".cached_tools", ".git", ".github", ".tmp", "coverage", "cypress", ".idea",
+    ".cached_tools", ".git", ".github/ISSUE_TEMPLATE", ".tmp", "coverage", "cypress", ".idea",
     "aio/test-resources",
     "**/*.json", "**/*.yaml", "**/*.svg", "**/*.txt", "**/*.md", "**/OWNERS", "**/.helmignore", "**/*.lock"
   ],
@@ -9,13 +9,15 @@
   "defaultFormat": {
     "eachLine": {
       "prepend": "# "
-    }
+    },
+    "append": ""
   },
   "licenseFormats": {
     "go|ts|js|scss": {
       "eachLine": {
         "prepend": "// "
-      }
+      },
+      "append": ""
     },
     "html": {
       "prepend": "<!--",
