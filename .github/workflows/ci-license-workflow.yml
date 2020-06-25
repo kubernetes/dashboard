@@ -48,7 +48,7 @@ jobs:
         run: |
           [ ! -d "node_modules" ] && npm ci || node aio/scripts/version.js && command -v golangci-lint >/dev/null 2>&1 || { curl -sfL https://install.goreleaser.com/github.com/golangci/golangci-lint.sh | sh -s -- -b $(go env GOPATH)/bin v1.23.6; } && go mod download
 
-      - name: Check Code
+      - name: Check License
         shell: bash
         run: |
           export GOPATH=$(go env GOPATH)/bin
