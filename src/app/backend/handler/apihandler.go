@@ -15,11 +15,12 @@
 package handler
 
 import (
-	"github.com/kubernetes/dashboard/src/app/backend/resource/networkpolicy"
 	"log"
 	"net/http"
 	"strconv"
 	"strings"
+
+	"github.com/kubernetes/dashboard/src/app/backend/resource/networkpolicy"
 
 	"github.com/kubernetes/dashboard/src/app/backend/handler/parser"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/customresourcedefinition/types"
