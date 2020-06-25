@@ -35,7 +35,7 @@
     "e2e": "concurrently -kill-others --success first \"npm run start\" \"wait-on http://localhost:8080 && npm run cy:run\"",
     "cluster:start": "./aio/scripts/start-cluster.sh",
     "cluster:stop": "./aio/scripts/stop-cluster.sh",
-    "check": "concurrently \"npm run check:backend\" \"npm run check:codegen\" \"npm run check:frontend\" \"npm run check:license\" \"npm run check:i18n\"",
+    "check": "concurrently \"npm run check:backend\" \"npm run check:codegen\" \"npm run check:frontend\" \"npm run check:i18n\"",
     "check:backend": "golangci-lint run -c .golangci.yml src/app/backend/...",
     "check:codegen": "aio/scripts/verify-codegen.sh",
     "check:frontend": "concurrently \"npm run check:frontend:ts\" \"npm run check:frontend:scss\" \"npm run check:frontend:html\"",
