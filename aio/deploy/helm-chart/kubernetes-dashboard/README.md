@@ -89,6 +89,7 @@ Parameter                                       | Description                   
 `service.type`                                  | Service type                                                                                                                     | `ClusterIP`
 `service.externalPort`                          | Dashboard external port                                                                                                          | `443`
 `service.loadBalancerSourceRanges`              | list of IP CIDRs allowed access to load balancer (if supported)                                                                  | `nil`
+`service.loadBalancerIP`                        | A user-specified IP address for load balancer to use as External IP (if supported)                                               | `nil`
 `ingress.annotations`                           | Specify ingress class                                                                                                            | `kubernetes.io/ingress.class: nginx`
 `ingress.labels`                                | Add custom labels                                                                                                                | `[]`
 `ingress.enabled`                               | Enable ingress controller resource                                                                                               | `false`

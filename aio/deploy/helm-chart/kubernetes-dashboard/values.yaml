@@ -92,6 +92,9 @@ service:
   ## Here labels can be added to the Kubernetes Dashboard service
   labels: {}
 
+  ## set a specific load balancer Ip if you're using one
+  # loadBalancerIP:
+
 ingress:
   ## If true, Kubernetes Dashboard Ingress will be created.
   ##
