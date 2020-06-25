@@ -44,8 +44,23 @@ jobs:
         env:
           TERM: xterm-256color
 
-      - name: Publish
+      - name: Create Pull Request branch
+        run: |
+          git checkout -b gh-pages-pull-request
+
+      # Note that will fail if branch already exists.
+      - name: Push Git Branch
         uses: ad-m/github-push-action@v0.6.0
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          branch: gh-pages
+          branch: gh-pages-pull-request
+
+      # Note that will silently fail if PR already exists.
+      - name: Create Pull Request
+        uses: repo-sync/pull-request@v2
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          source_branch: gh-pages-pull-request
+          destination_branch: gh-pages
+          pr_title: "Helm Chart: Update Helm repository"
+          pr_body: "Automatically created from Helm CD workflow."
