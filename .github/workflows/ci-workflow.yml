@@ -17,12 +17,22 @@ name: Continuous Integration - Code
 on:
   push:
     branches: [ master ]
-    paths:
-      - 'src/**'
+    ignore-paths:
+      - '**/*.md'
+      - 'aio/deploy/**'
+      - 'aio/test-resources/**'
+      - 'docs/**'
+      - '.github/workflows/cd-helm-workflow.yml'
+      - '.github/workflows/cd-workflow.yml'
   pull_request:
     branches: [ master ]
-    paths:
-      - 'src/**'
+    ignore-paths:
+      - '**/*.md'
+      - 'aio/deploy/**'
+      - 'aio/test-resources/**'
+      - 'docs/**'
+      - '.github/workflows/cd-helm-workflow.yml'
+      - '.github/workflows/cd-workflow.yml'
 
 jobs:
   check:

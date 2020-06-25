@@ -42,7 +42,7 @@ We use following tools and settings for each check and formatting:
 | scss    | [sass-lint](https://github.com/sasstools/sass-lint)                      | [`.sass-lint.yml`](../../.sass-lint.yml) |
 | scss    | [scssfmt](https://github.com/morishitter/scssfmt)                        | - |
 | html    | [js-beautify](https://github.com/beautify-web/js-beautify)               | options in [`format.sh`](../../aio/scripts/format.sh) |
-| license | [licence-check-and-add](https://github.com/awjh/license-check-and-add)   | [`license-checker-config.json`](../../license-checker-config.json) and [`license-header.txt`](../../aio/scripts/license-header.txt) |
+| license | [licence-check-and-add](https://github.com/awjh/license-check-and-add)   | [`license-checker-config.json`](../../license-checker-config.json)
 | i18n    | [xi18n](https://angular.io/cli/xi18n)                                    | - |
 | i18n    | [xliffmerge](https://github.com/martinroob/ngx-i18nsupport)              | `xliffmergeOptions` in [`package.json`](../../package.json) |
 
