@@ -127,6 +127,10 @@ export interface ServiceAccountList extends ResourceList {
   items: ServiceAccount[];
 }
 
+export interface NetworkPolicyList extends ResourceList {
+  items: NetworkPolicy[];
+}
+
 export interface JobList extends ResourceList {
   cumulativeMetrics: Metric[] | null;
   jobs: Job[];
@@ -200,6 +204,8 @@ export type ClusterRole = Resource;
 export type ConfigMap = Resource;
 
 export type ServiceAccount = Resource;
+
+export type NetworkPolicy = Resource;
 
 export interface Controller extends Resource {
   pods: PodInfo;
@@ -453,6 +459,8 @@ export interface SecretDetail extends ResourceDetail {
 }
 
 export type ServiceAccountDetail = ResourceDetail;
+
+export type NetworkPolicyDetail = ResourceDetail;
 
 export type IngressDetail = ResourceDetail;
 

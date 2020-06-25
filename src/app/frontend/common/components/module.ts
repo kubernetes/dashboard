@@ -95,6 +95,7 @@ import {UploadFileComponent} from './uploadfile/component';
 import {WorkloadStatusComponent} from './workloadstatus/component';
 import {ZeroStateComponent} from './zerostate/component';
 import {ServiceAccountListComponent} from './resourcelist/serviceaccount/component';
+import {NetworkPolicyListComponent} from './resourcelist/networkpolicy/component';
 
 const components = [
   ActionbarDetailActionsComponent,
@@ -174,6 +175,7 @@ const components = [
   UploadFileComponent,
   ZeroStateComponent,
   WorkloadStatusComponent,
+  NetworkPolicyListComponent,
 ];
 
 @NgModule({

@@ -30,6 +30,7 @@ export enum ListIdentifier {
   ingress = 'ingressList',
   service = 'serviceList',
   serviceAccount = 'serviceAccountList',
+  networkPolicy = 'networkPolicyList',
   configMap = 'configMapList',
   persistentVolumeClaim = 'persistentVolumeClaimList',
   secret = 'secretList',

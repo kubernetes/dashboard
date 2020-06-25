@@ -43,12 +43,20 @@ const routes: Routes = [
         loadChildren: () => import('resource/cluster/namespace/module').then(m => m.NamespaceModule),
       },
       {
+        path: 'networkpolicy',
+        loadChildren: () => import('resource/cluster/networkpolicy/module').then(m => m.NetworkPolicyModule),
+      },
+      {
         path: 'node',
         loadChildren: () => import('resource/cluster/node/module').then(m => m.NodeModule),
       },
       {
         path: 'persistentvolume',
         loadChildren: () => import('resource/cluster/persistentvolume/module').then(m => m.PersistentVolumeModule),
+      },
+      {
+        path: 'serviceaccount',
+        loadChildren: () => import('resource/cluster/serviceaccount/module').then(m => m.ServiceAccountModule),
       },
       {
         path: 'storageclass',
@@ -135,10 +143,6 @@ const routes: Routes = [
       {
         path: 'secret',
         loadChildren: () => import('resource/config/secret/module').then(m => m.SecretModule),
-      },
-      {
-        path: 'serviceaccount',
-        loadChildren: () => import('resource/cluster/serviceaccount/module').then(m => m.ServiceAccountModule),
       },
 
       // Custom resource definitions
