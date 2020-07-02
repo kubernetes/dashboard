@@ -19,7 +19,7 @@ import (
 	"strings"
 )
 
-// LINE_INDEX_NOT_FOUND is returned if requested line could not be found
+// LineIndexNotFound is returned if requested line could not be found
 var LineIndexNotFound = -1
 
 // DefaultDisplayNumLogLines returns default number of lines in case of invalid request.
@@ -251,7 +251,7 @@ func ToLogLines(rawLogs string) LogLines {
 	logLines := LogLines{}
 	for _, line := range strings.Split(rawLogs, "\n") {
 		if line != "" {
-			startsWithDate := '0' <= line[0] && line[0] <= '9' //2017-...
+			startsWithDate := ('0' <= line[0] && line[0] <= '9') //2017-...
 			idx := strings.Index(line, " ")
 			if idx > 0 && startsWithDate {
 				timestamp := LogTimestamp(line[0:idx])
