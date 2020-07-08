@@ -176,7 +176,7 @@
     "karma-jasmine-html-reporter": "1.5.4",
     "license-check-and-add": "3.0.4",
     "lint-staged": "10.2.11",
-    "lodash": "4.17.15",
+    "lodash": "4.17.18",
     "minimatch": "3.0.4",
     "minimist": "1.2.5",
     "ngx-i18nsupport": "0.17.1",
