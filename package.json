@@ -192,7 +192,7 @@
     "source-map-explorer": "2.4.2",
     "tar": "6.0.2",
     "through2": "4.0.2",
-    "ts-loader": "7.0.5",
+    "ts-loader": "8.0.0",
     "ts-node": "8.10.2",
     "tslint": "6.1.2",
     "typescript": "3.8.3",
