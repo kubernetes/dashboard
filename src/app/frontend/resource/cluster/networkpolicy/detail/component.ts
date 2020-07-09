@@ -23,6 +23,7 @@ import {ActionbarService, ResourceMeta} from '../../../../common/services/global
 import {NotificationsService} from '../../../../common/services/global/notifications';
 import {EndpointManager, Resource} from '../../../../common/services/resource/endpoint';
 import {NamespacedResourceService} from '../../../../common/services/resource/resource';
+import {dump} from 'js-yaml';
 
 @Component({
   selector: 'kd-network-policy-detail',
@@ -58,5 +59,9 @@ export class NetworkPolicyDetailComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.networkPolicySubscription_.unsubscribe();
     this.actionbar_.onDetailsLeave.emit();
+  }
+
+  stringify(data: any): string {
+    return dump(data);
   }
 }

@@ -41,5 +41,26 @@ limitations under the License.
   </div>
 </kd-card>
 
-{{networkPolicy?.ingress | json}}
-{{networkPolicy?.egress | json}}
+<kd-card *ngIf="networkPolicy?.ingress"
+         role="table">
+  <div title
+       i18n>Ingress Rules</div>
+  <div content>
+    <kd-text-input [text]="stringify(networkPolicy.ingress)"
+                   [readOnly]="true"
+                   [border]="false"
+                   mode="yaml"></kd-text-input>
+  </div>
+</kd-card>
+
+<kd-card *ngIf="networkPolicy?.egress"
+         role="table">
+  <div title
+       i18n>Egress Rules</div>
+  <div content>
+    <kd-text-input [text]="stringify(networkPolicy.egress)"
+                   [readOnly]="true"
+                   [border]="false"
+                   mode="yaml"></kd-text-input>
+  </div>
+</kd-card>

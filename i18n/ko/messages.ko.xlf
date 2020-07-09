@@ -4377,6 +4377,22 @@
           <context context-type="linenumber">36</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="1ebb4252343531346acc2530c2002fc639dd6926" datatype="html">
+        <source>Ingress Rules</source>
+        <target state="new">Ingress Rules</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/resource/cluster/networkpolicy/detail/template.html</context>
+          <context context-type="linenumber">47</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="21a53832d275152e4ad8dfa9371ebbefbf693c87" datatype="html">
+        <source>Egress Rules</source>
+        <target state="new">Egress Rules</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/resource/cluster/networkpolicy/detail/template.html</context>
+          <context context-type="linenumber">59</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="8a3abe0df530103020a480befe1757e3b1776e7b" datatype="html">
         <source>Pod CIDR</source>
         <target>파드 CIDR</target>
