@@ -8,14 +8,14 @@ For each of the following snippets for `ServiceAccount` and `ClusterRoleBinding`
 
 ## Creating a Service Account
 
-We are creating Service Account with name `admin-user` in namespace `kubernetes-dashboard` first.
+We are creating Service Account with name `admin-user` in namespace `kube-system` first.
 
 ```
 apiVersion: v1
 kind: ServiceAccount
 metadata:
   name: admin-user
-  namespace: kubernetes-dashboard
+  namespace: kube-system
 ```
 
 ## Creating a ClusterRoleBinding
@@ -37,7 +37,7 @@ roleRef:
 subjects:
 - kind: ServiceAccount
   name: admin-user
-  namespace: kubernetes-dashboard
+  namespace: kube-system
 ```
 
 ## Getting a Bearer Token
@@ -47,19 +47,19 @@ Now we need to find token we can use to log in. Execute following command:
 For Bash:
 
 ```bash
-kubectl -n kubernetes-dashboard describe secret $(kubectl -n kubernetes-dashboard get secret | grep admin-user | awk '{print $1}')
+kubectl -n kube-system describe secret $(kubectl -n kube-system get secret | grep admin-user | awk '{print $1}')
 ```
 
 For Powershell:
 ```powershell
-kubectl -n kubernetes-dashboard describe secret $(kubectl -n kubernetes-dashboard get secret | sls admin-user | ForEach-Object { $_ -Split '\s+' } | Select -First 1)
+kubectl -n kube-system describe secret $(kubectl -n kube-system get secret | sls admin-user | ForEach-Object { $_ -Split '\s+' } | Select -First 1)
 ```
 
 It should print something like:
 
 ```
 Name:         admin-user-token-v57nw
-Namespace:    kubernetes-dashboard
+Namespace:    kube-system
 Labels:       <none>
 Annotations:  kubernetes.io/service-account.name: admin-user
               kubernetes.io/service-account.uid: 0303243c-4040-4a58-8a47-849ee9ba79c1
