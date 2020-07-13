@@ -158,7 +158,7 @@
     "cypress": "4.10.0",
     "del": "5.1.0",
     "eslint": "7.4.0",
-    "eslint-plugin-rxjs": "0.0.2-beta.27",
+    "eslint-plugin-rxjs": "0.0.2-beta.28",
     "git-describe": "4.0.4",
     "gts": "2.0.2",
     "gulp": "4.0.2",
