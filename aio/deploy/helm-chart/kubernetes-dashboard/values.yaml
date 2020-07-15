@@ -46,6 +46,7 @@ extraEnv: []
 # Annotations to be added to kubernetes dashboard pods
 podAnnotations:
   seccomp.security.alpha.kubernetes.io/pod: 'runtime/default'
+
 # Labels to be added to kubernetes dashboard pods
 podLabels: {}
 
