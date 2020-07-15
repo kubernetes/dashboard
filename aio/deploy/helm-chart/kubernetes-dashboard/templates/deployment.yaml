@@ -46,6 +46,9 @@ spec:
       labels:
 {{ include "kubernetes-dashboard.labels" . | indent 8 }}
         app.kubernetes.io/component: kubernetes-dashboard
+{{- with .Values.podLabels }}
+{{ toYaml . | indent 8 }}
+{{- end }}
     spec:
 {{- with .Values.securityContext }}
       securityContext:

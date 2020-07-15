@@ -47,6 +47,9 @@ extraEnv: []
 podAnnotations:
   seccomp.security.alpha.kubernetes.io/pod: 'runtime/default'
 
+# Labels to be added to kubernetes dashboard pods
+podLabels: {}
+
 ## Node labels for pod assignment
 ## Ref: https://kubernetes.io/docs/user-guide/node-selection/
 ##
