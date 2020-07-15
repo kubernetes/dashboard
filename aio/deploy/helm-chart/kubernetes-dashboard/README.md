@@ -80,6 +80,7 @@ Parameter                                       | Description                   
 `extraArgs`                                     | Additional container arguments                                                                                                   | `[]`
 `extraEnv`                                      | Additional container environment variables                                                                                       | `[]`
 `podAnnotations`                                | Annotations to be added to pods                                                                                                  | `seccomp.security.alpha.kubernetes.io/pod: 'runtime/default'}`
+`podLabels`                                     | Labels to be added to pods                                                                                                       | `{}`
 `nodeSelector`                                  | node labels for pod assignment                                                                                                   | `{}`
 `tolerations`                                   | List of node taints to tolerate (requires Kubernetes >= 1.6)                                                                     | `[]`
 `affinity`                                      | Affinity for pod assignment                                                                                                      | `[]`
