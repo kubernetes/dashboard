@@ -138,7 +138,7 @@ jobs:
         shell: bash
         run: |
           rm -rf .tmp
-          bash <(curl -s https://codecov.io/bash)
+          bash <(curl -s https://codecov.io/bash) -c -K || echo "Codecov upload failed"
 
   e2e:
     name: E2E Tests
