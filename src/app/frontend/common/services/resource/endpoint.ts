@@ -41,6 +41,7 @@ export enum Resource {
   ingress = 'ingress',
   service = 'service',
   serviceAccount = 'serviceaccount',
+  networkPolicy = 'networkpolicy',
   event = 'event',
   container = 'container',
   plugin = 'plugin',

@@ -18,29 +18,29 @@ import {DEFAULT_ACTIONBAR} from '../../../common/components/actionbars/routing';
 
 import {CLUSTER_ROUTE} from '../routing';
 
-import {ServiceAccountDetailComponent} from './detail/component';
-import {ServiceAccountListComponent} from './list/component';
+import {NetworkPolicyDetailComponent} from './detail/component';
+import {NetworkPolicyListComponent} from './list/component';
 
-const SERVICEACCOUNT_LIST_ROUTE: Route = {
+const NETWORK_POLICY_LIST_ROUTE: Route = {
   path: '',
-  component: ServiceAccountListComponent,
+  component: NetworkPolicyListComponent,
   data: {
-    breadcrumb: 'Service Accounts',
+    breadcrumb: 'Network Policies',
     parent: CLUSTER_ROUTE,
   },
 };
 
-const SERVICEACCOUNT_DETAIL_ROUTE: Route = {
+const NETWORK_POLICY_DETAIL_ROUTE: Route = {
   path: ':resourceNamespace/:resourceName',
-  component: ServiceAccountDetailComponent,
+  component: NetworkPolicyDetailComponent,
   data: {
     breadcrumb: '{{ resourceName }}',
-    parent: SERVICEACCOUNT_LIST_ROUTE,
+    parent: NETWORK_POLICY_LIST_ROUTE,
   },
 };
 
 @NgModule({
-  imports: [RouterModule.forChild([SERVICEACCOUNT_LIST_ROUTE, SERVICEACCOUNT_DETAIL_ROUTE, DEFAULT_ACTIONBAR])],
+  imports: [RouterModule.forChild([NETWORK_POLICY_LIST_ROUTE, NETWORK_POLICY_DETAIL_ROUTE, DEFAULT_ACTIONBAR])],
   exports: [RouterModule],
 })
-export class ServiceAccountRoutingModule {}
+export class NetworkPolicyRoutingModule {}

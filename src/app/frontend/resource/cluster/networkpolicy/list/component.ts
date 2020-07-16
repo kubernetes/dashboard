@@ -12,9 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-@import '../../../variables';
+import {Component} from '@angular/core';
 
-.kd-ace {
-  height: 45 * $baseline-grid;
-  width: 100%;
-}
+@Component({
+  selector: 'kd-network-policy-list-state',
+  template: '<kd-network-policy-list></kd-network-policy-list>',
+})
+export class NetworkPolicyListComponent {}

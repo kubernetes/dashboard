@@ -12,9 +12,17 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-@import '../../../variables';
+import {NgModule} from '@angular/core';
 
-.kd-ace {
-  height: 45 * $baseline-grid;
-  width: 100%;
-}
+import {ComponentsModule} from '../../../common/components/module';
+import {SharedModule} from '../../../shared.module';
+
+import {NetworkPolicyDetailComponent} from './detail/component';
+import {NetworkPolicyListComponent} from './list/component';
+import {NetworkPolicyRoutingModule} from './routing';
+
+@NgModule({
+  imports: [SharedModule, ComponentsModule, NetworkPolicyRoutingModule],
+  declarations: [NetworkPolicyListComponent, NetworkPolicyDetailComponent],
+})
+export class NetworkPolicyModule {}
