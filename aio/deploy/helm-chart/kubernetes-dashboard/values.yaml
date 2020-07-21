@@ -98,6 +98,9 @@ service:
   ## set a specific load balancer Ip if you're using one
   # loadBalancerIP:
 
+  ## enable or disable the kubernetes.io/cluster-service label
+  clusterServiceLabel: "kubernetes.io/cluster-service: true"
+
 ingress:
   ## If true, Kubernetes Dashboard Ingress will be created.
   ##
