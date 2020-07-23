@@ -45,6 +45,7 @@ type holder struct {
 	systemBannerSeverity string
 	apiLogLevel          string
 	namespace            string
+	availableNamespaces  []string
 
 	authenticationMode []string
 
@@ -178,6 +179,11 @@ func (self *holder) GetEnableSkipLogin() bool {
 // GetNamespace 'namespace' argument of Dashboard binary.
 func (self *holder) GetNamespace() string {
 	return self.namespace
+}
+
+// GetNamespace 'available-namespaces' argument of Dashboard binary.
+func (self *holder) GetAvailableNamespaces() []string {
+	return self.availableNamespaces
 }
 
 // GetLocaleConfig 'locale-config' argument of Dashboard binary.

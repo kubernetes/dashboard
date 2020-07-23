@@ -19,10 +19,12 @@ import (
 	"log"
 
 	"github.com/kubernetes/dashboard/src/app/backend/api"
+	"github.com/kubernetes/dashboard/src/app/backend/args"
 	"github.com/kubernetes/dashboard/src/app/backend/errors"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	v1 "k8s.io/api/core/v1"
+	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/client-go/kubernetes"
 )
 
@@ -62,12 +64,35 @@ func GetNamespaceListFromChannels(channels *common.ResourceChannels, dsQuery *da
 
 // GetNamespaceList returns a list of all namespaces in the cluster.
 func GetNamespaceList(client kubernetes.Interface, dsQuery *dataselect.DataSelectQuery) (*NamespaceList, error) {
-	log.Println("Getting list of namespaces")
-	namespaces, err := client.CoreV1().Namespaces().List(context.TODO(), api.ListEverything)
+	var namespaces *v1.NamespaceList
+	nonCriticalErrors := make([]error, 0)
+	availableNamespaces := args.Holder.GetAvailableNamespaces()
 
-	nonCriticalErrors, criticalError := errors.HandleError(err)
-	if criticalError != nil {
-		return nil, criticalError
+	if len(availableNamespaces) > 0 {
+		log.Println("Setting list of namespaces from ags")
+		namespaces = new(v1.NamespaceList)
+
+		for _, nsName := range availableNamespaces {
+			ns, err := client.CoreV1().Namespaces().Get(context.TODO(), nsName, metav1.GetOptions{})
+			nces, criticalError := errors.HandleError(err)
+			if criticalError != nil {
+				return nil, criticalError
+			} else {
+				namespaces.Items = append(namespaces.Items, *ns)
+			}
+
+			nonCriticalErrors = append(nonCriticalErrors, nces...)
+		}
+	} else {
+		log.Println("Getting list of namespaces")
+		nss, err := client.CoreV1().Namespaces().List(context.TODO(), api.ListEverything)
+		nces, criticalError := errors.HandleError(err)
+		if criticalError != nil {
+			return nil, criticalError
+		}
+
+		namespaces = nss
+		nonCriticalErrors = nces
 	}
 
 	return toNamespaceList(namespaces.Items, nonCriticalErrors, dsQuery), nil

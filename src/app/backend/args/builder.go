@@ -162,6 +162,12 @@ func (self *holderBuilder) SetNamespace(namespace string) *holderBuilder {
 	return self
 }
 
+// SetNamespace 'available-namespaces' argument of Dashboard binary.
+func (self *holderBuilder) SetAvailableNamespaces(availableNamespaces []string) *holderBuilder {
+	self.holder.availableNamespaces = availableNamespaces
+	return self
+}
+
 // SetLocaleConfig 'locale-config' argument of Dashboard binary.
 func (self *holderBuilder) SetLocaleConfig(localeConfig string) *holderBuilder {
 	self.holder.localeConfig = localeConfig

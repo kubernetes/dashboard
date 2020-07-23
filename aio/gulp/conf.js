@@ -152,6 +152,14 @@ export default {
      */
     apiServerHost: 'http://localhost:8080',
     /**
+     * Namespace kubernetes-dashboard should be scoped to
+     */
+    namespace: gulpUtil.env.namespace !== undefined ? gulpUtil.env.namespace : '',
+    /**
+     * Available namespaces for listing on the kubernetes dashboard UI
+     */
+    availableNamespaces: gulpUtil.env['available-namespaces'] !== undefined ? gulpUtil.env['available-namespaces'] : '',
+    /**
      * Env variable with path to kubeconfig file.
      */
     kubeconfig: argv.kubeconfig !== undefined ? argv.kubeconfig : '',
