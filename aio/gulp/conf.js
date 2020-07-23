@@ -154,7 +154,7 @@ export default {
     /**
      * Namespace kubernetes-dashboard should be scoped to
      */
-    namespace: argv.namespace !== undefined ? argv.namespace : '',
+    namespace: argv.namespace !== undefined ? argv.namespace : 'kube-system',
     /**
      * Available namespaces for listing on the kubernetes dashboard UI
      */
