@@ -61,6 +61,9 @@ spec:
         imagePullPolicy: {{ .Values.image.pullPolicy }}
         args:
           - --namespace={{ .Release.Namespace }}
+ {{- if .Values.availableNamespaces-}}       
+          - --available-namespaces={{ join "," .Values.availableNamespaces }}
+{{- end -}}
 {{- if not .Values.protocolHttp }}
           - --auto-generate-certificates
 {{- end }}

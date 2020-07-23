@@ -237,3 +237,9 @@ containerSecurityContext:
 
 networkPolicy:
   enabled: false
+
+
+## Define the list of available namespaces (set list, instead of cluster lookup)
+availableNamespaces:
+- default
+- kubernetes-dashboard
