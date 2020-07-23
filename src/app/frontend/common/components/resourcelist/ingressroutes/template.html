@@ -57,7 +57,11 @@ limitations under the License.
       <ng-container [matColumnDef]="getColumns()[2]">
         <mat-header-cell *matHeaderCellDef
                          >Host</mat-header-cell>
-        <mat-cell *matCellDef="let object">{{object.spec.routes[0].match}}</mat-cell>
+        <mat-cell *matCellDef="let object">
+          {{object.spec.splitUrl[0]}}
+          <a class="navLinkHcp" href="{{object.spec.splitUrl[3]}}" title="{{object.spec.splitUrl[1]}}" target="_blank" ng-click="linkModelFunc(object.spec.splitUrl[1])">{{object.spec.splitUrl[1]}}</a>
+          {{object.spec.splitUrl[2]}}
+        </mat-cell>
       </ng-container>
 
       <ng-container [matColumnDef]="getColumns()[3]">
