@@ -154,11 +154,11 @@ export default {
     /**
      * Namespace kubernetes-dashboard should be scoped to
      */
-    namespace: gulpUtil.env.namespace !== undefined ? gulpUtil.env.namespace : '',
+    namespace: argv.namespace !== undefined ? argv.namespace : '',
     /**
      * Available namespaces for listing on the kubernetes dashboard UI
      */
-    availableNamespaces: gulpUtil.env['available-namespaces'] !== undefined ? gulpUtil.env['available-namespaces'] : '',
+    availableNamespaces: argv['available-namespaces'] !== undefined ? argv['available-namespaces'] : '',
     /**
      * Env variable with path to kubeconfig file.
      */
