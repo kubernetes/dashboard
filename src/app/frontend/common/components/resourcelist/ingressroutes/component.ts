@@ -35,6 +35,7 @@ export class IngressRouteListComponent extends ResourceListBase<CRDObjectList, C
   @Input() endpoint;
   objectType: string;
   objectName: string;
+  hcpurl = 'http://eahcp.org/index.php/about_eahcp/covered_species';
   errorSpec = {
     entryPoints: ['Erreur de format'],
     routes: [{match: 'Erreur de format', services: [{name: 'Erreur de format', port: 0}]}],
@@ -75,11 +76,16 @@ export class IngressRouteListComponent extends ResourceListBase<CRDObjectList, C
     return this.crdObject_.get(this.endpoint, undefined, undefined, params);
   }
 
+
+  linkModelFunc(url:string): void{
+    window.open(url);
+  }
   map(crdObjectList: CRDObjectList): any[] {
     if (crdObjectList.items) {
       this.totalItems = crdObjectList.items.length;
-
+      
       crdObjectList.items.forEach(item => {
+        let splittedMatch = ['','','','']
         if (
           !item.spec.routes ||
           !item.spec.routes[0] ||
@@ -92,16 +98,39 @@ export class IngressRouteListComponent extends ResourceListBase<CRDObjectList, C
           item['iconName'] = 'error';
           item['iconClass'] = {'kd-success': false};
           item.spec = this.errorSpec;
+          splittedMatch[0] = item.spec.routes[0].match
         } else {
           item['iconName'] = 'check_circle';
           item['iconClass'] = {'kd-success': true};
+          splittedMatch = this.splitHostUrl(item.spec.routes[0].match)
         }
+        item.spec['splitUrl'] = splittedMatch
       });
       return crdObjectList.items;
     } else {
       return null;
     }
   }
+
+  splitHostUrl(fullUrl: string): string[]{
+    let cut;
+    let guimet;
+    if(fullUrl.split('\'').length>fullUrl.split('\`').length){
+      cut = fullUrl.split('\'')
+      guimet = '\''
+    }else{
+      cut = fullUrl.split('\`')
+      guimet = '\`'
+    }
+
+    if(cut.length === 3){
+      return [cut[0]+guimet,cut[1],guimet+cut[2], 'https://'+cut[1]]
+    }else if(cut.length === 5){
+      return [cut[0]+guimet,cut[1],guimet+cut[2]+guimet+cut[3]+guimet+cut[4], 'https://'+cut[1] + cut[3]]
+    }else{
+      return [fullUrl,'','','']
+    }
+  } 
 
   getDisplayColumns(): string[] {
     return ['statusicon', 'title', 'host', 'service', 'port', 'entrypoint', 'created'];
