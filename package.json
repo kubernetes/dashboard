@@ -149,7 +149,7 @@
     "@types/jasminewd2": "2.0.8",
     "@types/js-yaml": "3.12.5",
     "@types/lodash": "4.14.158",
-    "@types/node": "14.0.23",
+    "@types/node": "14.0.26",
     "babel-cli": "6.26.0",
     "babel-preset-env": "1.7.0",
     "babel-register": "6.26.0",
