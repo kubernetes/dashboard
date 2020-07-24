@@ -69,10 +69,11 @@ func GetNamespaceList(client kubernetes.Interface, dsQuery *dataselect.DataSelec
 	availableNamespaces := args.Holder.GetAvailableNamespaces()
 
 	if len(availableNamespaces) > 0 {
-		log.Println("Setting list of namespaces from ags")
+		log.Println("Setting list of namespaces from args")
 		namespaces = new(v1.NamespaceList)
 
 		for _, nsName := range availableNamespaces {
+			// Validate the namespace
 			ns, err := client.CoreV1().Namespaces().Get(context.TODO(), nsName, metav1.GetOptions{})
 			nces, criticalError := errors.HandleError(err)
 			if criticalError != nil {
