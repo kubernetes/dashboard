@@ -98,6 +98,12 @@ service:
   ## set a specific load balancer Ip if you're using one
   # loadBalancerIP:
 
+  ## Enable or disable the kubernetes.io/cluster-service label. Should be disabled for GKE clusters >=1.15.
+  ## Otherwise, the addon manager will presume ownership of the service and try to delete it.
+  clusterServiceLabel:
+    enabled: true
+    key: "kubernetes.io/cluster-service"
+
 ingress:
   ## If true, Kubernetes Dashboard Ingress will be created.
   ##
