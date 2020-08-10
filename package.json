@@ -128,7 +128,7 @@
     "ngx-filter-pipe": "2.1.2",
     "normalize.css": "8.0.1",
     "roboto-fontface": "0.10.0",
-    "rxjs": "6.6.0",
+    "rxjs": "6.6.2",
     "rxjs-compat": "6.6.0",
     "sockjs-client": "1.4.0",
     "systemjs": "6.3.3",
