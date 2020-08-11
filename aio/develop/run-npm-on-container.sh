@@ -31,7 +31,7 @@ LOCAL_GID=$(id -g)
 # command with K8S_DASHBOAD_NPM_CMD.
 # But if K8S_DASHBOARD_CMD is set, the command in K8S_DASHBOARD_CMD will be
 # executed instead of `npm ${K8S_DASHBOARD_NPM_CMD}`.
-K8S_DASHBOARD_NPM_CMD=${K8S_DASHBOARD_NPM_CMD:-*}
+K8S_DASHBOARD_NPM_CMD=${K8S_DASHBOARD_NPM_CMD:-$*}
 
 # kubeconfig for dashboard.
 # This will be mounted and certain npm command can modify it,
