@@ -133,7 +133,7 @@
     "sockjs-client": "1.4.0",
     "systemjs": "6.5.0",
     "truncate-url": "1.0.0",
-    "tslib": "2.0.0",
+    "tslib": "2.0.1",
     "web-animations-js": "2.3.2",
     "xterm": "4.8.1",
     "xterm-addon-fit": "0.4.0",
