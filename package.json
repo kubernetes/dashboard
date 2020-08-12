@@ -143,7 +143,7 @@
     "@angular-devkit/build-angular": "0.1000.3",
     "@angular/cli": "10.0.5",
     "@angular/compiler-cli": "10.0.4",
-    "@angular/language-service": "10.0.4",
+    "@angular/language-service": "10.0.8",
     "@cypress/webpack-preprocessor": "5.4.3",
     "@types/jasmine": "3.5.11",
     "@types/jasminewd2": "2.0.8",
