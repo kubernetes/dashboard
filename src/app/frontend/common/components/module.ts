@@ -96,6 +96,7 @@ import {WorkloadStatusComponent} from './workloadstatus/component';
 import {ZeroStateComponent} from './zerostate/component';
 import {ServiceAccountListComponent} from './resourcelist/serviceaccount/component';
 import {NetworkPolicyListComponent} from './resourcelist/networkpolicy/component';
+import {RoleListComponent} from './resourcelist/role/component';
 
 const components = [
   ActionbarDetailActionsComponent,
@@ -176,6 +177,7 @@ const components = [
   ZeroStateComponent,
   WorkloadStatusComponent,
   NetworkPolicyListComponent,
+  RoleListComponent,
 ];
 
 @NgModule({
