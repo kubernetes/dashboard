@@ -225,6 +225,7 @@ var KindToAPIMapping = map[string]APIMapping{
 	ResourceKindEndpoint:                 {"endpoints", ClientTypeDefault, true},
 	ResourceKindNetworkPolicy:            {"networkpolicies", ClientTypeNetworkingClient, true},
 	ResourceKindClusterRole:              {"clusterroles", ClientTypeRbacClient, false},
+	ResourceKindRole:                     {"roles", ClientTypeRbacClient, true},
 	ResourceKindPlugin:                   {"plugins", ClientTypePluginsClient, true},
 }
 
