@@ -20,7 +20,7 @@ import {Subscription} from 'rxjs/Subscription';
 import {ActionbarService, ResourceMeta} from '../../../../common/services/global/actionbar';
 import {NotificationsService} from '../../../../common/services/global/notifications';
 import {EndpointManager, Resource} from '../../../../common/services/resource/endpoint';
-import {NamespacedResourceService, ResourceService} from '../../../../common/services/resource/resource';
+import {NamespacedResourceService} from '../../../../common/services/resource/resource';
 
 @Component({
   selector: 'kd-role-detail',
@@ -28,12 +28,12 @@ import {NamespacedResourceService, ResourceService} from '../../../../common/ser
 })
 export class RoleDetailComponent implements OnInit, OnDestroy {
   private roleSubscription_: Subscription;
-  private readonly endpoint_ = EndpointManager.resource(Resource.role);
+  private readonly endpoint_ = EndpointManager.resource(Resource.role, true);
   role: RoleDetail;
   isInitialized = false;
 
   constructor(
-    private readonly role_: ResourceService<RoleDetail>,
+    private readonly role_: NamespacedResourceService<RoleDetail>,
     private readonly actionbar_: ActionbarService,
     private readonly route_: ActivatedRoute,
     private readonly notifications_: NotificationsService,
