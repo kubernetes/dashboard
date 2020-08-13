@@ -31,7 +31,7 @@ const ROLE_LIST_ROUTE: Route = {
 };
 
 const ROLE_DETAIL_ROUTE: Route = {
-  path: ':resourceName',
+  path: ':resourceNamespace/:resourceName',
   component: RoleDetailComponent,
   data: {
     breadcrumb: '{{ resourceName }}',

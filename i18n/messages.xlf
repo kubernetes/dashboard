@@ -2196,35 +2196,35 @@
         <source>Resources</source>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/policyrule/template.html</context>
-          <context context-type="linenumber">36</context>
+          <context context-type="linenumber">37</context>
         </context-group>
       </trans-unit>
       <trans-unit id="7531ac0f84b54f0bcefa85493d9b9a4695d0b9f4" datatype="html">
         <source>Non-resource URL</source>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/policyrule/template.html</context>
-          <context context-type="linenumber">48</context>
+          <context context-type="linenumber">49</context>
         </context-group>
       </trans-unit>
       <trans-unit id="b44f9a54418bcbda336063edc010c98ded4f5817" datatype="html">
         <source>Resource Names</source>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/policyrule/template.html</context>
-          <context context-type="linenumber">60</context>
+          <context context-type="linenumber">61</context>
         </context-group>
       </trans-unit>
       <trans-unit id="accc38331fffe0055910477b45e525173d64c661" datatype="html">
         <source>Verbs</source>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/policyrule/template.html</context>
-          <context context-type="linenumber">72</context>
+          <context context-type="linenumber">73</context>
         </context-group>
       </trans-unit>
       <trans-unit id="bf6889e8e87bc743b25907eb4126bfbe2804e952" datatype="html">
         <source>API Groups</source>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/policyrule/template.html</context>
-          <context context-type="linenumber">84</context>
+          <context context-type="linenumber">85</context>
         </context-group>
       </trans-unit>
       <trans-unit id="707b0ec47f1b9d281b87f4235404f8f34411dd38" datatype="html">
@@ -2417,8 +2417,8 @@
           <context context-type="linenumber">51</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="a125c2d230baab7986614a5e8c52971e300d4072" datatype="html">
-        <source>Role
+      <trans-unit id="e9c8e24a53e2496d1bb734d0bd20d756bec5b200" datatype="html">
+        <source>Roles
       </source>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/chrome/nav/template.html</context>
