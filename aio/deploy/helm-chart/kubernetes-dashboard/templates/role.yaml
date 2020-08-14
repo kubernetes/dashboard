@@ -39,4 +39,10 @@ rules:
     resources: ["services/proxy"]
     resourceNames: ["heapster", "http:heapster:", "https:heapster:", "dashboard-metrics-scraper", "http:dashboard-metrics-scraper"]
     verbs: ["get"]
+  {{ if .Values.podSecurityPolicy.enabled -}}
+  - apiGroups: ["policy"]
+    resources: ["podsecuritypolicies"]
+    resourceNames: [{{ template "kubernetes-dashboard.fullname" . }}-psp]
+    verbs: ["use"]
+  {{- end -}}
 {{- end -}}

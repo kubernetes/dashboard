@@ -118,6 +118,7 @@ Parameter                                       | Description                   
 `securityContext`                               | PodSecurityContext for pod level securityContext                                                                                 | `nil`
 `containerSecurityContext`                      | SecurityContext for the kubernetes dashboard container                                                                           | `{allowPrivilegeEscalation:false, readOnlyRootFilesystem: true, runAsUser: 1001, runAsGroup: 2001}`
 `networkPolicy.enabled`                         | Whether to create a network policy that allows access to the service                                                             | `false`
+`podSecurityPolicy.enabled`                     | Whether to create a pod security policy that allows fine-grained authorization of pod creation and updates                       | `false`
 
 
 
