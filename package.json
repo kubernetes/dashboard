@@ -145,7 +145,7 @@
     "@angular/compiler-cli": "10.0.4",
     "@angular/language-service": "10.0.9",
     "@cypress/webpack-preprocessor": "5.4.4",
-    "@types/jasmine": "3.5.11",
+    "@types/jasmine": "3.5.12",
     "@types/jasminewd2": "2.0.8",
     "@types/js-yaml": "3.12.5",
     "@types/lodash": "4.14.158",
