@@ -62,6 +62,10 @@ const routes: Routes = [
         path: 'storageclass',
         loadChildren: () => import('resource/cluster/storageclass/module').then(m => m.StorageClassModule),
       },
+      {
+        path: 'role',
+        loadChildren: () => import('resource/cluster/role/module').then(m => m.RoleModule),
+      },
 
       // Overview
       {

@@ -34,6 +34,7 @@ export enum Resource {
   persistentVolume = 'persistentvolume',
   storageClass = 'storageclass',
   clusterRole = 'clusterrole',
+  role = 'role',
   configMap = 'configmap',
   persistentVolumeClaim = 'persistentvolumeclaim',
   secret = 'secret',
