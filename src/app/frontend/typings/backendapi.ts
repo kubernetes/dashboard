@@ -80,6 +80,10 @@ export interface RoleList extends ResourceList {
   items: Role[];
 }
 
+export interface RoleBindingList extends ResourceList {
+  items: RoleBinding[];
+}
+
 export interface ConfigMapList extends ResourceList {
   items: ConfigMap[];
 }
@@ -206,6 +210,8 @@ export interface StorageClassList extends ResourceList {
 export type ClusterRole = Resource;
 
 export type Role = Resource;
+
+export type RoleBinding = Resource;
 
 export type ConfigMap = Resource;
 
@@ -460,6 +466,10 @@ export interface ClusterRoleDetail extends ResourceDetail {
 }
 
 export interface RoleDetail extends ResourceDetail {
+  rules: PolicyRule[];
+}
+
+export interface RoleBindingDetail extends ResourceDetail {
   rules: PolicyRule[];
 }
 

@@ -66,6 +66,10 @@ const routes: Routes = [
         path: 'role',
         loadChildren: () => import('resource/cluster/role/module').then(m => m.RoleModule),
       },
+      {
+        path: 'rolebinding',
+        loadChildren: () => import('resource/cluster/rolebinding/module').then(m => m.RoleBingingModule),
+      },
 
       // Overview
       {
