@@ -29,6 +29,10 @@ limitations under the License.
                          [hideable]="true"></kd-storage-class-list>
   <kd-service-account-list (onchange)="onListUpdate($event)"
                            [hideable]="true"></kd-service-account-list>
+  <kd-role-binding-list (onchange)="onListUpdate($event)"
+                        [hideable]="true"></kd-role-binding-list>
+  <kd-role-list (onchange)="onListUpdate($event)"
+                [hideable]="true"></kd-role-list>
 </div>
 
 <kd-zero-state [hidden]="!shouldShowZeroState()"></kd-zero-state>

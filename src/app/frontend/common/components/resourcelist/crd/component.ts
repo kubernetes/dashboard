@@ -74,6 +74,10 @@ export class CRDListComponent extends ResourceListWithStatuses<CRDList, CRD> {
     return resource.established === 'True';
   }
 
+  getDisplayName(name: string): string {
+    return name.replace(/([A-Z]+)/g, ' $1').replace(/([A-Z][a-z])/g, ' $1');
+  }
+
   getDisplayColumns(): string[] {
     return ['statusicon', 'name', 'group', 'fullName', 'namespaced', 'created'];
   }
