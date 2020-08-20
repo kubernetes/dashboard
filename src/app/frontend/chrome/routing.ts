@@ -59,10 +59,6 @@ const routes: Routes = [
         loadChildren: () => import('resource/cluster/serviceaccount/module').then(m => m.ServiceAccountModule),
       },
       {
-        path: 'storageclass',
-        loadChildren: () => import('resource/cluster/storageclass/module').then(m => m.StorageClassModule),
-      },
-      {
         path: 'role',
         loadChildren: () => import('resource/cluster/role/module').then(m => m.RoleModule),
       },
@@ -151,6 +147,10 @@ const routes: Routes = [
       {
         path: 'secret',
         loadChildren: () => import('resource/config/secret/module').then(m => m.SecretModule),
+      },
+      {
+        path: 'storageclass',
+        loadChildren: () => import('resource/config/storageclass/module').then(m => m.StorageClassModule),
       },
 
       // Custom resource definitions
