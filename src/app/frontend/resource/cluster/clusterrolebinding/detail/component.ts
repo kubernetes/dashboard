@@ -21,6 +21,7 @@ import {ActionbarService, ResourceMeta} from '../../../../common/services/global
 import {NotificationsService} from '../../../../common/services/global/notifications';
 import {EndpointManager, Resource} from '../../../../common/services/resource/endpoint';
 import {ResourceService} from '../../../../common/services/resource/resource';
+import {KdStateService} from '../../../../common/services/global/state';
 
 @Component({
   selector: 'kd-cluster-role-binding-detail',
@@ -37,6 +38,7 @@ export class ClusterRoleBindingDetailComponent implements OnInit, OnDestroy {
     private readonly actionbar_: ActionbarService,
     private readonly route_: ActivatedRoute,
     private readonly notifications_: NotificationsService,
+    private readonly kdState_: KdStateService,
   ) {}
 
   ngOnInit(): void {
@@ -55,5 +57,13 @@ export class ClusterRoleBindingDetailComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.clusterRoleSubscription_.unsubscribe();
     this.actionbar_.onDetailsLeave.emit();
+  }
+
+  getRoleHref(): string {
+    return this.kdState_.href(
+      this.clusterRoleBinding.roleRef.kind.toLowerCase(),
+      this.clusterRoleBinding.roleRef.name,
+      this.clusterRoleBinding.objectMeta.namespace,
+    );
   }
 }

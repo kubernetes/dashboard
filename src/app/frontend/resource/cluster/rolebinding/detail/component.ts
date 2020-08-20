@@ -14,13 +14,14 @@
 
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
-import {RoleBindingDetail} from '@api/backendapi';
+import {PinnedResource, RoleBindingDetail, RoleRef} from '@api/backendapi';
 import {Subscription} from 'rxjs/Subscription';
 
 import {ActionbarService, ResourceMeta} from '../../../../common/services/global/actionbar';
 import {NotificationsService} from '../../../../common/services/global/notifications';
 import {EndpointManager, Resource} from '../../../../common/services/resource/endpoint';
 import {NamespacedResourceService} from '../../../../common/services/resource/resource';
+import {KdStateService} from '../../../../common/services/global/state';
 
 @Component({
   selector: 'kd-role-detail',
@@ -37,6 +38,7 @@ export class RoleBingingDetailComponent implements OnInit, OnDestroy {
     private readonly actionbar_: ActionbarService,
     private readonly route_: ActivatedRoute,
     private readonly notifications_: NotificationsService,
+    private readonly kdState_: KdStateService,
   ) {}
 
   ngOnInit(): void {
@@ -56,5 +58,13 @@ export class RoleBingingDetailComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.roleSubscription_.unsubscribe();
     this.actionbar_.onDetailsLeave.emit();
+  }
+
+  getRoleHref(): string {
+    return this.kdState_.href(
+      this.roleBinding.roleRef.kind.toLowerCase(),
+      this.roleBinding.roleRef.name,
+      this.roleBinding.objectMeta.namespace,
+    );
   }
 }

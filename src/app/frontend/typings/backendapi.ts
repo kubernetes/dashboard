@@ -471,13 +471,32 @@ export interface ClusterRoleDetail extends ResourceDetail {
   rules: PolicyRule[];
 }
 
-export type ClusterRoleBindingDetail = ResourceDetail;
+export interface Subject {
+  kind: string;
+  apiGroup: string;
+  name: string;
+  namespace: string;
+}
+
+export interface RoleRef {
+  kind: string;
+  apiGroup: string;
+  name: string;
+}
+
+export interface ClusterRoleBindingDetail extends ResourceDetail {
+  subjects: Subject[];
+  roleRef: RoleRef;
+}
 
 export interface RoleDetail extends ResourceDetail {
   rules: PolicyRule[];
 }
 
-export type RoleBindingDetail = ResourceDetail;
+export interface RoleBindingDetail extends ResourceDetail {
+  subjects: Subject[];
+  roleRef: RoleRef;
+}
 
 export interface SecretDetail extends ResourceDetail {
   type: string;

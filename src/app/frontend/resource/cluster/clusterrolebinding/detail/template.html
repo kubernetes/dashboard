@@ -16,3 +16,20 @@ limitations under the License.
 
 <kd-object-meta [initialized]="isInitialized"
                 [objectMeta]="clusterRoleBinding?.objectMeta"></kd-object-meta>
+
+<kd-card [initialized]="isInitialized">
+  <div title
+       i18n>Resource information</div>
+  <div content
+       *ngIf="isInitialized"
+       fxLayout="row wrap">
+    <kd-property *ngIf="clusterRoleBinding.roleRef">
+      <div key
+           i18n>Role Reference</div>
+      <div value>
+        <a [routerLink]="getRoleHref()"
+           queryParamsHandling="preserve">{{clusterRoleBinding.roleRef.name}}</a>
+      </div>
+    </kd-property>
+  </div>
+</kd-card>
