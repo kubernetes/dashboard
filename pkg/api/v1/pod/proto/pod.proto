@@ -2,13 +2,13 @@ syntax = "proto3";
 
 option go_package = "github.com/kubernetes/dashboard/pkg/api/v1/pod/proto";
 
-package proto;
+package pod;
 
-service RoutePod {
-  rpc GetPods (Request) returns (PodList) {}
+service Route {
+  rpc List (PodListRequest) returns (PodList) {}
 }
 
-message Request {}
+message PodListRequest {}
 
 message PodList {
   repeated Pod pods = 1;

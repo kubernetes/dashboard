@@ -1,0 +1,19 @@
+syntax = "proto3";
+
+option go_package = "github.com/kubernetes/dashboard/pkg/api/v1/deployment/proto";
+
+package deployment;
+
+service Route {
+  rpc List (DeploymentListRequest) returns (DeploymentList) {}
+}
+
+message DeploymentListRequest {}
+
+message DeploymentList {
+  repeated Deployment deployments = 1;
+}
+
+message Deployment {
+  string name = 1;
+}

@@ -2,7 +2,7 @@
 // versions:
 // 	protoc-gen-go v1.23.0
 // 	protoc        v3.6.1
-// source: route.proto
+// source: pod.proto
 
 package proto
 
@@ -29,29 +29,29 @@ const (
 // of the legacy proto package is being used.
 const _ = proto.ProtoPackageIsVersion4
 
-type Request struct {
+type PodListRequest struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 }
 
-func (x *Request) Reset() {
-	*x = Request{}
+func (x *PodListRequest) Reset() {
+	*x = PodListRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_route_proto_msgTypes[0]
+		mi := &file_pod_proto_msgTypes[0]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
 }
 
-func (x *Request) String() string {
+func (x *PodListRequest) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*Request) ProtoMessage() {}
+func (*PodListRequest) ProtoMessage() {}
 
-func (x *Request) ProtoReflect() protoreflect.Message {
-	mi := &file_route_proto_msgTypes[0]
+func (x *PodListRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_pod_proto_msgTypes[0]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -62,9 +62,9 @@ func (x *Request) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use Request.ProtoReflect.Descriptor instead.
-func (*Request) Descriptor() ([]byte, []int) {
-	return file_route_proto_rawDescGZIP(), []int{0}
+// Deprecated: Use PodListRequest.ProtoReflect.Descriptor instead.
+func (*PodListRequest) Descriptor() ([]byte, []int) {
+	return file_pod_proto_rawDescGZIP(), []int{0}
 }
 
 type PodList struct {
@@ -78,7 +78,7 @@ type PodList struct {
 func (x *PodList) Reset() {
 	*x = PodList{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_route_proto_msgTypes[1]
+		mi := &file_pod_proto_msgTypes[1]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -91,7 +91,7 @@ func (x *PodList) String() string {
 func (*PodList) ProtoMessage() {}
 
 func (x *PodList) ProtoReflect() protoreflect.Message {
-	mi := &file_route_proto_msgTypes[1]
+	mi := &file_pod_proto_msgTypes[1]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -104,7 +104,7 @@ func (x *PodList) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use PodList.ProtoReflect.Descriptor instead.
 func (*PodList) Descriptor() ([]byte, []int) {
-	return file_route_proto_rawDescGZIP(), []int{1}
+	return file_pod_proto_rawDescGZIP(), []int{1}
 }
 
 func (x *PodList) GetPods() []*Pod {
@@ -125,7 +125,7 @@ type Pod struct {
 func (x *Pod) Reset() {
 	*x = Pod{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_route_proto_msgTypes[2]
+		mi := &file_pod_proto_msgTypes[2]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -138,7 +138,7 @@ func (x *Pod) String() string {
 func (*Pod) ProtoMessage() {}
 
 func (x *Pod) ProtoReflect() protoreflect.Message {
-	mi := &file_route_proto_msgTypes[2]
+	mi := &file_pod_proto_msgTypes[2]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -151,7 +151,7 @@ func (x *Pod) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Pod.ProtoReflect.Descriptor instead.
 func (*Pod) Descriptor() ([]byte, []int) {
-	return file_route_proto_rawDescGZIP(), []int{2}
+	return file_pod_proto_rawDescGZIP(), []int{2}
 }
 
 func (x *Pod) GetName() string {
@@ -161,47 +161,47 @@ func (x *Pod) GetName() string {
 	return ""
 }
 
-var File_route_proto protoreflect.FileDescriptor
+var File_pod_proto protoreflect.FileDescriptor
 
-var file_route_proto_rawDesc = []byte{
-	0x0a, 0x0b, 0x72, 0x6f, 0x75, 0x74, 0x65, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x12, 0x05, 0x70,
-	0x72, 0x6f, 0x74, 0x6f, 0x22, 0x09, 0x0a, 0x07, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x22,
-	0x29, 0x0a, 0x07, 0x50, 0x6f, 0x64, 0x4c, 0x69, 0x73, 0x74, 0x12, 0x1e, 0x0a, 0x04, 0x70, 0x6f,
-	0x64, 0x73, 0x18, 0x01, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x0a, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f,
-	0x2e, 0x50, 0x6f, 0x64, 0x52, 0x04, 0x70, 0x6f, 0x64, 0x73, 0x22, 0x19, 0x0a, 0x03, 0x50, 0x6f,
-	0x64, 0x12, 0x12, 0x0a, 0x04, 0x6e, 0x61, 0x6d, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52,
-	0x04, 0x6e, 0x61, 0x6d, 0x65, 0x32, 0x37, 0x0a, 0x08, 0x52, 0x6f, 0x75, 0x74, 0x65, 0x50, 0x6f,
-	0x64, 0x12, 0x2b, 0x0a, 0x07, 0x47, 0x65, 0x74, 0x50, 0x6f, 0x64, 0x73, 0x12, 0x0e, 0x2e, 0x70,
-	0x72, 0x6f, 0x74, 0x6f, 0x2e, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x0e, 0x2e, 0x70,
-	0x72, 0x6f, 0x74, 0x6f, 0x2e, 0x50, 0x6f, 0x64, 0x4c, 0x69, 0x73, 0x74, 0x22, 0x00, 0x42, 0x36,
-	0x5a, 0x34, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x6b, 0x75, 0x62,
-	0x65, 0x72, 0x6e, 0x65, 0x74, 0x65, 0x73, 0x2f, 0x64, 0x61, 0x73, 0x68, 0x62, 0x6f, 0x61, 0x72,
-	0x64, 0x2f, 0x70, 0x6b, 0x67, 0x2f, 0x61, 0x70, 0x69, 0x2f, 0x76, 0x31, 0x2f, 0x70, 0x6f, 0x64,
-	0x2f, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
+var file_pod_proto_rawDesc = []byte{
+	0x0a, 0x09, 0x70, 0x6f, 0x64, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x12, 0x03, 0x70, 0x6f, 0x64,
+	0x22, 0x10, 0x0a, 0x0e, 0x50, 0x6f, 0x64, 0x4c, 0x69, 0x73, 0x74, 0x52, 0x65, 0x71, 0x75, 0x65,
+	0x73, 0x74, 0x22, 0x27, 0x0a, 0x07, 0x50, 0x6f, 0x64, 0x4c, 0x69, 0x73, 0x74, 0x12, 0x1c, 0x0a,
+	0x04, 0x70, 0x6f, 0x64, 0x73, 0x18, 0x01, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x08, 0x2e, 0x70, 0x6f,
+	0x64, 0x2e, 0x50, 0x6f, 0x64, 0x52, 0x04, 0x70, 0x6f, 0x64, 0x73, 0x22, 0x19, 0x0a, 0x03, 0x50,
+	0x6f, 0x64, 0x12, 0x12, 0x0a, 0x04, 0x6e, 0x61, 0x6d, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09,
+	0x52, 0x04, 0x6e, 0x61, 0x6d, 0x65, 0x32, 0x34, 0x0a, 0x05, 0x52, 0x6f, 0x75, 0x74, 0x65, 0x12,
+	0x2b, 0x0a, 0x04, 0x4c, 0x69, 0x73, 0x74, 0x12, 0x13, 0x2e, 0x70, 0x6f, 0x64, 0x2e, 0x50, 0x6f,
+	0x64, 0x4c, 0x69, 0x73, 0x74, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x0c, 0x2e, 0x70,
+	0x6f, 0x64, 0x2e, 0x50, 0x6f, 0x64, 0x4c, 0x69, 0x73, 0x74, 0x22, 0x00, 0x42, 0x36, 0x5a, 0x34,
+	0x67, 0x69, 0x74, 0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x6b, 0x75, 0x62, 0x65, 0x72,
+	0x6e, 0x65, 0x74, 0x65, 0x73, 0x2f, 0x64, 0x61, 0x73, 0x68, 0x62, 0x6f, 0x61, 0x72, 0x64, 0x2f,
+	0x70, 0x6b, 0x67, 0x2f, 0x61, 0x70, 0x69, 0x2f, 0x76, 0x31, 0x2f, 0x70, 0x6f, 0x64, 0x2f, 0x70,
+	0x72, 0x6f, 0x74, 0x6f, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
 }
 
 var (
-	file_route_proto_rawDescOnce sync.Once
-	file_route_proto_rawDescData = file_route_proto_rawDesc
+	file_pod_proto_rawDescOnce sync.Once
+	file_pod_proto_rawDescData = file_pod_proto_rawDesc
 )
 
-func file_route_proto_rawDescGZIP() []byte {
-	file_route_proto_rawDescOnce.Do(func() {
-		file_route_proto_rawDescData = protoimpl.X.CompressGZIP(file_route_proto_rawDescData)
+func file_pod_proto_rawDescGZIP() []byte {
+	file_pod_proto_rawDescOnce.Do(func() {
+		file_pod_proto_rawDescData = protoimpl.X.CompressGZIP(file_pod_proto_rawDescData)
 	})
-	return file_route_proto_rawDescData
+	return file_pod_proto_rawDescData
 }
 
-var file_route_proto_msgTypes = make([]protoimpl.MessageInfo, 3)
-var file_route_proto_goTypes = []interface{}{
-	(*Request)(nil), // 0: proto.Request
-	(*PodList)(nil), // 1: proto.PodList
-	(*Pod)(nil),     // 2: proto.Pod
+var file_pod_proto_msgTypes = make([]protoimpl.MessageInfo, 3)
+var file_pod_proto_goTypes = []interface{}{
+	(*PodListRequest)(nil), // 0: pod.PodListRequest
+	(*PodList)(nil),        // 1: pod.PodList
+	(*Pod)(nil),            // 2: pod.Pod
 }
-var file_route_proto_depIdxs = []int32{
-	2, // 0: proto.PodList.pods:type_name -> proto.Pod
-	0, // 1: proto.RoutePod.GetPods:input_type -> proto.Request
-	1, // 2: proto.RoutePod.GetPods:output_type -> proto.PodList
+var file_pod_proto_depIdxs = []int32{
+	2, // 0: pod.PodList.pods:type_name -> pod.Pod
+	0, // 1: pod.Route.List:input_type -> pod.PodListRequest
+	1, // 2: pod.Route.List:output_type -> pod.PodList
 	2, // [2:3] is the sub-list for method output_type
 	1, // [1:2] is the sub-list for method input_type
 	1, // [1:1] is the sub-list for extension type_name
@@ -209,14 +209,14 @@ var file_route_proto_depIdxs = []int32{
 	0, // [0:1] is the sub-list for field type_name
 }
 
-func init() { file_route_proto_init() }
-func file_route_proto_init() {
-	if File_route_proto != nil {
+func init() { file_pod_proto_init() }
+func file_pod_proto_init() {
+	if File_pod_proto != nil {
 		return
 	}
 	if !protoimpl.UnsafeEnabled {
-		file_route_proto_msgTypes[0].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*Request); i {
+		file_pod_proto_msgTypes[0].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*PodListRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -227,7 +227,7 @@ func file_route_proto_init() {
 				return nil
 			}
 		}
-		file_route_proto_msgTypes[1].Exporter = func(v interface{}, i int) interface{} {
+		file_pod_proto_msgTypes[1].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*PodList); i {
 			case 0:
 				return &v.state
@@ -239,7 +239,7 @@ func file_route_proto_init() {
 				return nil
 			}
 		}
-		file_route_proto_msgTypes[2].Exporter = func(v interface{}, i int) interface{} {
+		file_pod_proto_msgTypes[2].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*Pod); i {
 			case 0:
 				return &v.state
@@ -256,20 +256,20 @@ func file_route_proto_init() {
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
-			RawDescriptor: file_route_proto_rawDesc,
+			RawDescriptor: file_pod_proto_rawDesc,
 			NumEnums:      0,
 			NumMessages:   3,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
-		GoTypes:           file_route_proto_goTypes,
-		DependencyIndexes: file_route_proto_depIdxs,
-		MessageInfos:      file_route_proto_msgTypes,
+		GoTypes:           file_pod_proto_goTypes,
+		DependencyIndexes: file_pod_proto_depIdxs,
+		MessageInfos:      file_pod_proto_msgTypes,
 	}.Build()
-	File_route_proto = out.File
-	file_route_proto_rawDesc = nil
-	file_route_proto_goTypes = nil
-	file_route_proto_depIdxs = nil
+	File_pod_proto = out.File
+	file_pod_proto_rawDesc = nil
+	file_pod_proto_goTypes = nil
+	file_pod_proto_depIdxs = nil
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -280,74 +280,74 @@ var _ grpc.ClientConnInterface
 // is compatible with the grpc package it is being compiled against.
 const _ = grpc.SupportPackageIsVersion6
 
-// RoutePodClient is the client API for RoutePod service.
+// RouteClient is the client API for Route service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://godoc.org/google.golang.org/grpc#ClientConn.NewStream.
-type RoutePodClient interface {
-	GetPods(ctx context.Context, in *Request, opts ...grpc.CallOption) (*PodList, error)
+type RouteClient interface {
+	List(ctx context.Context, in *PodListRequest, opts ...grpc.CallOption) (*PodList, error)
 }
 
-type routePodClient struct {
+type routeClient struct {
 	cc grpc.ClientConnInterface
 }
 
-func NewRoutePodClient(cc grpc.ClientConnInterface) RoutePodClient {
-	return &routePodClient{cc}
+func NewRouteClient(cc grpc.ClientConnInterface) RouteClient {
+	return &routeClient{cc}
 }
 
-func (c *routePodClient) GetPods(ctx context.Context, in *Request, opts ...grpc.CallOption) (*PodList, error) {
+func (c *routeClient) List(ctx context.Context, in *PodListRequest, opts ...grpc.CallOption) (*PodList, error) {
 	out := new(PodList)
-	err := c.cc.Invoke(ctx, "/proto.RoutePod/GetPods", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/pod.Route/List", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-// RoutePodServer is the server API for RoutePod service.
-type RoutePodServer interface {
-	GetPods(context.Context, *Request) (*PodList, error)
+// RouteServer is the server API for Route service.
+type RouteServer interface {
+	List(context.Context, *PodListRequest) (*PodList, error)
 }
 
-// UnimplementedRoutePodServer can be embedded to have forward compatible implementations.
-type UnimplementedRoutePodServer struct {
+// UnimplementedRouteServer can be embedded to have forward compatible implementations.
+type UnimplementedRouteServer struct {
 }
 
-func (*UnimplementedRoutePodServer) GetPods(context.Context, *Request) (*PodList, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetPods not implemented")
+func (*UnimplementedRouteServer) List(context.Context, *PodListRequest) (*PodList, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method List not implemented")
 }
 
-func RegisterRoutePodServer(s *grpc.Server, srv RoutePodServer) {
-	s.RegisterService(&_RoutePod_serviceDesc, srv)
+func RegisterRouteServer(s *grpc.Server, srv RouteServer) {
+	s.RegisterService(&_Route_serviceDesc, srv)
 }
 
-func _RoutePod_GetPods_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(Request)
+func _Route_List_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(PodListRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(RoutePodServer).GetPods(ctx, in)
+		return srv.(RouteServer).List(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/proto.RoutePod/GetPods",
+		FullMethod: "/pod.Route/List",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(RoutePodServer).GetPods(ctx, req.(*Request))
+		return srv.(RouteServer).List(ctx, req.(*PodListRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-var _RoutePod_serviceDesc = grpc.ServiceDesc{
-	ServiceName: "proto.RoutePod",
-	HandlerType: (*RoutePodServer)(nil),
+var _Route_serviceDesc = grpc.ServiceDesc{
+	ServiceName: "pod.Route",
+	HandlerType: (*RouteServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "GetPods",
-			Handler:    _RoutePod_GetPods_Handler,
+			MethodName: "List",
+			Handler:    _Route_List_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
-	Metadata: "route.proto",
+	Metadata: "pod.proto",
 }

@@ -9,15 +9,15 @@ import (
 )
 
 type RouteHandler struct {
-  proto.UnimplementedRoutePodServer
+  proto.UnimplementedRouteServer
 }
 
-func (p *RouteHandler) GetPods(_ context.Context, in *proto.Request) (*proto.PodList, error) {
+func (p *RouteHandler) List(_ context.Context, in *proto.PodListRequest) (*proto.PodList, error) {
   return &proto.PodList{Pods: []*proto.Pod{{Name: "test-pod"}}}, nil
 }
 
 func (p *RouteHandler) Install(server *grpc.Server) error {
-  proto.RegisterRoutePodServer(server, p)
+  proto.RegisterRouteServer(server, p)
   return nil
 }
 

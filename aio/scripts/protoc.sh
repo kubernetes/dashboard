@@ -3,7 +3,8 @@
 # Import config.
 ROOT_DIR="$(cd $(dirname "${BASH_SOURCE}")/../.. && pwd -P)"
 source "${ROOT_DIR}/aio/scripts/conf.sh"
-POD_RESOURCES_ALPHA="${ROOT_DIR}/pkg/api/v1/pod/proto/"
+
+SOURCE_DIR="${ROOT_DIR}/pkg/api"
 
 function kd::protoc::ensure() {
   if [[ -z "$(which protoc)" || "$(protoc --version)" != "libprotoc 3."* ]]; then
@@ -15,21 +16,35 @@ function kd::protoc::ensure() {
     echo "WARNING: Protobuf changes are not being validated"
     exit 1
   fi
+
+  say "Found protoc: $(protoc --version)"
 }
 
 function kd::protoc-go::install() {
-  go install github.com/gogo/protobuf/protoc-gen-gogo
+  if [[ -z "$(which protoc-gen-gogo)" ]]; then
+    echo "Installing protoc-gen-gogo"
+    go install github.com/gogo/protobuf/protoc-gen-gogo
+  fi
+
+  say "Found protoc-gen-gogo"
 }
 
 function kd::protoc::generate() {
   local package=${1}
+  readonly files=$(find "${package}" -name "*.proto")
 
-  protoc \
-    --proto_path="${package}" \
-    --go_out=plugins=grpc,paths=source_relative:"pkg/api/v1/pod/proto" \
-    "${package}/route.proto"
+  for proto in ${files}; do
+    local baseDir="${proto%/*}"
+    local filename="${proto##*/}"
+    say "Generating proto file: ${filename}"
+
+    protoc \
+      --proto_path="${baseDir}" \
+      --go_out=plugins=grpc,paths=source_relative:"${baseDir}" \
+      "${baseDir}/${filename}"
+  done
 }
 
 kd::protoc::ensure
 kd::protoc-go::install
-kd::protoc::generate "${POD_RESOURCES_ALPHA}"
+kd::protoc::generate "${SOURCE_DIR}"
