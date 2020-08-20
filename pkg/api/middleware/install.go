@@ -48,6 +48,8 @@ type InterceptorBuilder interface {
 }
 
 type UnaryInterceptorBuilder struct {
+  unimplementedInterceptor
+
   interceptors []InterceptorType
 }
 
@@ -59,13 +61,15 @@ func (u UnaryInterceptorBuilder) Add(interceptorType InterceptorType) Intercepto
 func (u UnaryInterceptorBuilder) AsOptions() []grpc.ServerOption {
   result := make([]grpc.ServerOption, 0)
   for _, i := range u.interceptors {
-    result = append(result, withInterceptor(i, InterceptorKindUnary))
+    result = append(result, u.getOptionForType(i, InterceptorKindUnary))
   }
 
   return result
 }
 
 type StreamInterceptorBuilder struct {
+  unimplementedInterceptor
+
   interceptors []InterceptorType
 }
 
@@ -77,23 +81,25 @@ func (s StreamInterceptorBuilder) Add(interceptorType InterceptorType) Intercept
 func (s StreamInterceptorBuilder) AsOptions() []grpc.ServerOption {
   result := make([]grpc.ServerOption, 0)
   for _, i := range s.interceptors {
-    result = append(result, withInterceptor(i, InterceptorKindStream))
+    result = append(result, s.getOptionForType(i, InterceptorKindStream))
   }
 
   return result
 }
 
-func withInterceptor(interceptorType InterceptorType, kind InterceptorKind) grpc.ServerOption {
+type unimplementedInterceptor struct {}
+
+func (u unimplementedInterceptor) getOptionForType(interceptorType InterceptorType, kind InterceptorKind) grpc.ServerOption {
   switch interceptorType {
   case InterceptorTypeAuth:
-    return getInterceptorForKind(auth.NewAuthInterceptor(), kind)
+    return u.getOptionForKind(auth.NewAuthInterceptor(), kind)
   }
 
   klog.Fatalf("Unsupported interceptor type provided: %s", interceptorType)
   return nil
 }
 
-func getInterceptorForKind(interceptor Interceptor, kind InterceptorKind) grpc.ServerOption {
+func (u unimplementedInterceptor) getOptionForKind(interceptor Interceptor, kind InterceptorKind) grpc.ServerOption {
   switch kind {
   case InterceptorKindUnary:
     return grpc.UnaryInterceptor(interceptor.Unary)
