@@ -30,7 +30,7 @@ import {ClusterRoleBinding, ClusterRoleBindingList} from '@api/backendapi';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ClusterRoleBindingListComponent extends ResourceListBase<ClusterRoleBindingList, ClusterRoleBinding> {
-  @Input() endpoint = EndpointManager.resource(Resource.clusterRole).list();
+  @Input() endpoint = EndpointManager.resource(Resource.clusterRoleBinding).list();
 
   constructor(
     private readonly clusterRoleBinding_: ResourceService<ClusterRoleBindingList>,

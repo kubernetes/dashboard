@@ -29,7 +29,7 @@ import {KdStateService} from '../../../../common/services/global/state';
 })
 export class ClusterRoleBindingDetailComponent implements OnInit, OnDestroy {
   private clusterRoleSubscription_: Subscription;
-  private readonly endpoint_ = EndpointManager.resource(Resource.clusterRole);
+  private readonly endpoint_ = EndpointManager.resource(Resource.clusterRoleBinding);
   clusterRoleBinding: ClusterRoleBindingDetail;
   isInitialized = false;
 
