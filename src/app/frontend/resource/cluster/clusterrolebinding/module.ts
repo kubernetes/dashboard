@@ -12,10 +12,17 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {Component} from '@angular/core';
+import {NgModule} from '@angular/core';
 
-@Component({
-  selector: 'kd-role-binding-list-state',
-  template: '<kd-role-binding-list></kd-role-binding-list>',
+import {ComponentsModule} from '../../../common/components/module';
+import {SharedModule} from '../../../shared.module';
+
+import {ClusterRoleBindingDetailComponent} from './detail/component';
+import {ClusterRoleBindingListComponent} from './list/component';
+import {ClusterRoleBindingRoutingModule} from './routing';
+
+@NgModule({
+  imports: [SharedModule, ComponentsModule, ClusterRoleBindingRoutingModule],
+  declarations: [ClusterRoleBindingListComponent, ClusterRoleBindingDetailComponent],
 })
-export class RoleBingingListComponent {}
+export class ClusterRoleBindingModule {}

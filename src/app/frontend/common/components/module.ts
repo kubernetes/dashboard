@@ -98,6 +98,7 @@ import {ServiceAccountListComponent} from './resourcelist/serviceaccount/compone
 import {NetworkPolicyListComponent} from './resourcelist/networkpolicy/component';
 import {RoleListComponent} from './resourcelist/role/component';
 import {RoleBindingListComponent} from './resourcelist/rolebinding/component';
+import {ClusterRoleBindingListComponent} from './resourcelist/clusterrolebinding/component';
 
 const components = [
   ActionbarDetailActionsComponent,
@@ -115,6 +116,7 @@ const components = [
   ChipsComponent,
   CronJobListComponent,
   ClusterRoleListComponent,
+  ClusterRoleBindingListComponent,
   ConfigMapListComponent,
   PluginListComponent,
   ColumnComponent,

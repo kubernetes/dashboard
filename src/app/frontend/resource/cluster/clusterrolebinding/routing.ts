@@ -18,29 +18,29 @@ import {DEFAULT_ACTIONBAR} from '../../../common/components/actionbars/routing';
 
 import {CLUSTER_ROUTE} from '../routing';
 
-import {RoleBingingDetailComponent} from './detail/component';
-import {RoleBingingListComponent} from './list/component';
+import {ClusterRoleBindingDetailComponent} from './detail/component';
+import {ClusterRoleBindingListComponent} from './list/component';
 
-const ROLE_BINDING_LIST_ROUTE: Route = {
+const CLUSTERROLEBINDING_LIST_ROUTE: Route = {
   path: '',
-  component: RoleBingingListComponent,
+  component: ClusterRoleBindingListComponent,
   data: {
-    breadcrumb: 'Role Bindings',
+    breadcrumb: 'Cluster Role Bindings',
     parent: CLUSTER_ROUTE,
   },
 };
 
-const ROLE_BINDING_DETAIL_ROUTE: Route = {
-  path: ':resourceNamespace/:resourceName',
-  component: RoleBingingDetailComponent,
+const CLUSTERROLEBINDING_DETAIL_ROUTE: Route = {
+  path: ':resourceName',
+  component: ClusterRoleBindingDetailComponent,
   data: {
     breadcrumb: '{{ resourceName }}',
-    parent: ROLE_BINDING_LIST_ROUTE,
+    parent: CLUSTERROLEBINDING_LIST_ROUTE,
   },
 };
 
 @NgModule({
-  imports: [RouterModule.forChild([ROLE_BINDING_LIST_ROUTE, ROLE_BINDING_DETAIL_ROUTE, DEFAULT_ACTIONBAR])],
+  imports: [RouterModule.forChild([CLUSTERROLEBINDING_LIST_ROUTE, CLUSTERROLEBINDING_DETAIL_ROUTE, DEFAULT_ACTIONBAR])],
   exports: [RouterModule],
 })
-export class RoleBindingRoutingModule {}
+export class ClusterRoleBindingRoutingModule {}

@@ -15,7 +15,7 @@
 import {Component} from '@angular/core';
 
 @Component({
-  selector: 'kd-role-binding-list-state',
-  template: '<kd-role-binding-list></kd-role-binding-list>',
+  selector: 'kd-cluster-role-binding-list-state',
+  template: '<kd-cluster-role-binding-list></kd-cluster-role-binding-list>',
 })
-export class RoleBingingListComponent {}
+export class ClusterRoleBindingListComponent {}

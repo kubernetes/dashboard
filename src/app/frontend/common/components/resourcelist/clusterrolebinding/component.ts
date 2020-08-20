@@ -14,50 +14,43 @@
 
 import {HttpParams} from '@angular/common/http';
 import {ChangeDetectionStrategy, ChangeDetectorRef, Component, Input} from '@angular/core';
-import {Role, RoleBinding, RoleBindingList} from '@api/backendapi';
 import {Observable} from 'rxjs/Observable';
 
 import {ResourceListBase} from '../../../resources/list';
 import {NotificationsService} from '../../../services/global/notifications';
 import {EndpointManager, Resource} from '../../../services/resource/endpoint';
-import {NamespacedResourceService, ResourceService} from '../../../services/resource/resource';
+import {ResourceService} from '../../../services/resource/resource';
 import {MenuComponent} from '../../list/column/menu/component';
 import {ListGroupIdentifier, ListIdentifier} from '../groupids';
+import {ClusterRoleBinding, ClusterRoleBindingList} from '@api/backendapi';
 
 @Component({
-  selector: 'kd-role-binding-list',
+  selector: 'kd-cluster-role-binding-list',
   templateUrl: './template.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class RoleBindingListComponent extends ResourceListBase<RoleBindingList, Role> {
-  @Input() endpoint = EndpointManager.resource(Resource.roleBinding, true).list();
+export class ClusterRoleBindingListComponent extends ResourceListBase<ClusterRoleBindingList, ClusterRoleBinding> {
+  @Input() endpoint = EndpointManager.resource(Resource.clusterRole).list();
 
   constructor(
-    private readonly roleBinding_: NamespacedResourceService<RoleBindingList>,
+    private readonly clusterRoleBinding_: ResourceService<ClusterRoleBindingList>,
     notifications: NotificationsService,
     cdr: ChangeDetectorRef,
   ) {
-    super('rolebinding', notifications, cdr);
-    this.id = ListIdentifier.roleBinding;
+    super('clusterrolebinding', notifications, cdr);
+    this.id = ListIdentifier.clusterRoleBinding;
     this.groupId = ListGroupIdentifier.cluster;
 
     // Register action columns.
     this.registerActionColumn<MenuComponent>('menu', MenuComponent);
-
-    // Register dynamic columns.
-    this.registerDynamicColumn('namespace', 'name', this.shouldShowNamespaceColumn_.bind(this));
   }
 
-  private shouldShowNamespaceColumn_(): boolean {
-    return this.namespaceService_.areMultipleNamespacesSelected();
+  getResourceObservable(params?: HttpParams): Observable<ClusterRoleBindingList> {
+    return this.clusterRoleBinding_.get(this.endpoint, undefined, params);
   }
 
-  getResourceObservable(params?: HttpParams): Observable<RoleBindingList> {
-    return this.roleBinding_.get(this.endpoint, undefined, undefined, params);
-  }
-
-  map(roleBindingList: RoleBindingList): RoleBinding[] {
-    return roleBindingList.items;
+  map(clusterRoleBindingList: ClusterRoleBindingList): ClusterRoleBinding[] {
+    return clusterRoleBindingList.items;
   }
 
   getDisplayColumns(): string[] {

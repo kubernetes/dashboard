@@ -35,6 +35,10 @@ const routes: Routes = [
         loadChildren: () => import('resource/cluster/module').then(m => m.ClusterModule),
       },
       {
+        path: 'clusterrolebinding',
+        loadChildren: () => import('resource/cluster/clusterrolebinding/module').then(m => m.ClusterRoleBindingModule),
+      },
+      {
         path: 'clusterrole',
         loadChildren: () => import('resource/cluster/clusterrole/module').then(m => m.ClusterRoleModule),
       },
