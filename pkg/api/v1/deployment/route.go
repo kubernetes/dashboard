@@ -16,9 +16,8 @@ func (p *RouteHandler) List(_ context.Context, in *proto.DeploymentListRequest) 
   return &proto.DeploymentList{Deployments: []*proto.Deployment{{Name: "test-deployment"}}}, nil
 }
 
-func (p *RouteHandler) Install(server *grpc.Server) error {
+func (p *RouteHandler) Install(server *grpc.Server) {
   proto.RegisterRouteServer(server, p)
-  return nil
 }
 
 func NewDeploymentRouteHandler() *RouteHandler {

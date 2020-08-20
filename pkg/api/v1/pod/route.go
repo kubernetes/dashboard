@@ -16,9 +16,8 @@ func (p *RouteHandler) List(_ context.Context, in *proto.PodListRequest) (*proto
   return &proto.PodList{Pods: []*proto.Pod{{Name: "test-pod"}}}, nil
 }
 
-func (p *RouteHandler) Install(server *grpc.Server) error {
+func (p *RouteHandler) Install(server *grpc.Server) {
   proto.RegisterRouteServer(server, p)
-  return nil
 }
 
 func NewPodRouteHandler() *RouteHandler {

@@ -31,27 +31,26 @@ func (s *GRPCServer) Run() error {
 
   klog.Infof("listening on %s:%d", s.options.InsecureBindAddress, s.options.InsecurePort)
 
-  // Create the server
-  server := s.server()
-
-  // Install routes
-  s.install(server)
-
-  // Enable reflection so we can find out available routes
-  reflection.Register(server)
-
-  // Start the server
+  server := s.init()
   return server.Serve(listener)
 }
 
-func (s *GRPCServer) server() *grpc.Server {
+func (s *GRPCServer) init() *grpc.Server {
   unaryInterceptors := middleware.NewUnaryInterceptorBuilder().Add(middleware.InterceptorTypeAuth).AsOptions()
   streamInterceptors := middleware.NewStreamInterceptorBuilder().Add(middleware.InterceptorTypeAuth).AsOptions()
 
-  return grpc.NewServer(append(unaryInterceptors, streamInterceptors...)...)
+  server := grpc.NewServer(append(unaryInterceptors, streamInterceptors...)...)
+
+  // Install routes
+  s.installRoutes(server)
+
+  // Enable reflection so we can find available routes
+  reflection.Register(server)
+
+  return server
 }
 
-func (s *GRPCServer) install(server *grpc.Server) {
+func (s *GRPCServer) installRoutes(server *grpc.Server) {
   pod.NewPodRouteHandler().Install(server)
   deployment.NewDeploymentRouteHandler().Install(server)
 }

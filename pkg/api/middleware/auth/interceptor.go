@@ -7,18 +7,20 @@ import (
   "k8s.io/klog"
 )
 
-type Interceptor struct {}
+type Interceptor struct {
+  name string
+}
 
-func (i Interceptor) InterceptUnary(ctx context.Context, req interface{}, info *grpc.UnaryServerInfo, handler grpc.UnaryHandler) (interface{}, error) {
-  klog.Info("Intercepting unary call")
+func (i Interceptor) Unary(ctx context.Context, req interface{}, info *grpc.UnaryServerInfo, handler grpc.UnaryHandler) (interface{}, error) {
+  klog.Infof("[%s] Intercepting unary call to: %s", i.name, info.FullMethod)
   return handler(ctx, req)
 }
 
-func (i Interceptor) InterceptStream(srv interface{}, stream grpc.ServerStream, info *grpc.StreamServerInfo, handler grpc.StreamHandler) error {
-  klog.Info("Intercepting stream call")
+func (i Interceptor) Stream(srv interface{}, stream grpc.ServerStream, info *grpc.StreamServerInfo, handler grpc.StreamHandler) error {
+  klog.Infof("[%s] Intercepting stream call to: %s", i.name, info.FullMethod)
   return handler(srv, stream)
 }
 
 func NewAuthInterceptor() Interceptor {
-  return Interceptor{}
+  return Interceptor{"Auth"}
 }

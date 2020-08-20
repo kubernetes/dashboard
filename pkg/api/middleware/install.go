@@ -11,6 +11,7 @@ import (
 
 type InterceptorType string
 
+// All supported interceptors are defined here
 const (
   InterceptorTypeAuth InterceptorType = "Auth"
 )
@@ -23,8 +24,8 @@ const (
 )
 
 type Interceptor interface {
-  InterceptUnary(context.Context, interface{}, *grpc.UnaryServerInfo, grpc.UnaryHandler) (interface{}, error)
-  InterceptStream(interface{}, grpc.ServerStream, *grpc.StreamServerInfo, grpc.StreamHandler) error
+  Unary(context.Context, interface{}, *grpc.UnaryServerInfo, grpc.UnaryHandler) (interface{}, error)
+  Stream(interface{}, grpc.ServerStream, *grpc.StreamServerInfo, grpc.StreamHandler) error
 }
 
 type InterceptorBuilder interface {
@@ -81,9 +82,9 @@ func withInterceptor(interceptorType InterceptorType, kind InterceptorKind) grpc
 func getInterceptorForKind(interceptor Interceptor, kind InterceptorKind) grpc.ServerOption {
   switch kind {
   case InterceptorKindUnary:
-    return grpc.UnaryInterceptor(interceptor.InterceptUnary)
+    return grpc.UnaryInterceptor(interceptor.Unary)
   case InterceptorKindStream:
-    return grpc.StreamInterceptor(interceptor.InterceptStream)
+    return grpc.StreamInterceptor(interceptor.Stream)
   }
 
   klog.Fatalf("Unsupported interceptor kind provided: %s", kind)
