@@ -99,6 +99,7 @@ import {NetworkPolicyListComponent} from './resourcelist/networkpolicy/component
 import {RoleListComponent} from './resourcelist/role/component';
 import {RoleBindingListComponent} from './resourcelist/rolebinding/component';
 import {ClusterRoleBindingListComponent} from './resourcelist/clusterrolebinding/component';
+import {SubjectListComponent} from './subject/component';
 
 const components = [
   ActionbarDetailActionsComponent,
@@ -182,6 +183,7 @@ const components = [
   NetworkPolicyListComponent,
   RoleListComponent,
   RoleBindingListComponent,
+  SubjectListComponent,
 ];
 
 @NgModule({

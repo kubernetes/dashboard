@@ -23,13 +23,18 @@ limitations under the License.
   <div content
        *ngIf="isInitialized"
        fxLayout="row wrap">
-    <kd-property *ngIf="roleBinding.roleRef">
+    <kd-property>
       <div key
            i18n>Role Reference</div>
       <div value>
-        <a [routerLink]="getRoleHref()"
+        <a *ngIf="roleBinding.roleRef"
+           [routerLink]="getRoleHref()"
            queryParamsHandling="preserve">{{roleBinding.roleRef.name}}</a>
+        <span *ngIf="!roleBinding.roleRef">-</span>
       </div>
     </kd-property>
   </div>
 </kd-card>
+
+<kd-subject-list [subjects]="roleBinding?.subjects"
+                 [initialized]="isInitialized"></kd-subject-list>
