@@ -1080,7 +1080,7 @@
       </trans-unit>
       <trans-unit id="a21b5b669ab3f36e0f83e9a025c26662fd0616e8" datatype="html">
         <source>Pod Selector</source>
-        <target state="new">Pod Selector</target>
+        <target>Pod-Selektor</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/resource/cluster/networkpolicy/detail/template.html</context>
           <context context-type="linenumber">28</context>
@@ -1088,7 +1088,7 @@
       </trans-unit>
       <trans-unit id="2ebd4e9210644c0f1da612d5c2ef1bbdab9652fd" datatype="html">
         <source>Policy Types</source>
-        <target state="new">Policy Types</target>
+        <target>Policy-Typen</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/resource/cluster/networkpolicy/detail/template.html</context>
           <context context-type="linenumber">36</context>
@@ -1096,7 +1096,7 @@
       </trans-unit>
       <trans-unit id="1ebb4252343531346acc2530c2002fc639dd6926" datatype="html">
         <source>Ingress Rules</source>
-        <target state="new">Ingress Rules</target>
+        <target>Ingress-Regeln</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/resource/cluster/networkpolicy/detail/template.html</context>
           <context context-type="linenumber">47</context>
@@ -1104,7 +1104,7 @@
       </trans-unit>
       <trans-unit id="21a53832d275152e4ad8dfa9371ebbefbf693c87" datatype="html">
         <source>Egress Rules</source>
-        <target state="new">Egress Rules</target>
+        <target>Egress-Regeln</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/resource/cluster/networkpolicy/detail/template.html</context>
           <context context-type="linenumber">59</context>
@@ -1196,7 +1196,7 @@
       </trans-unit>
       <trans-unit id="a4f6d660f2cc1c8c680a96e39c719b48c8ebe17a" datatype="html">
         <source>Network Policies</source>
-        <target state="new">Network Policies</target>
+        <target>Netzwerkregeln</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/networkpolicy/template.html</context>
           <context context-type="linenumber">21</context>
@@ -1204,7 +1204,7 @@
       </trans-unit>
       <trans-unit id="9610487cbeb5796d34d8601b5ac0c0a65f9e1d19" datatype="html">
         <source>Roles</source>
-        <target state="new">Roles</target>
+        <target>Rollen</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/role/template.html</context>
           <context context-type="linenumber">21</context>
@@ -1376,7 +1376,7 @@
       </trans-unit>
       <trans-unit id="78da621b65ff6583de3d5b446cea93aeced674df" datatype="html">
         <source>Service Accounts</source>
-        <target state="new">Service Accounts</target>
+        <target>Service Accounts</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/serviceaccount/template.html</context>
           <context context-type="linenumber">21</context>
@@ -1876,7 +1876,7 @@
       </trans-unit>
       <trans-unit id="045ed332fbb2645493d6955677247db0d1134c2d" datatype="html">
         <source><x id="INTERPOLATION" equiv-text="{{title}}"/></source>
-        <target state="new"><x id="INTERPOLATION" equiv-text="{{title}}"/></target>
+        <target><x id="INTERPOLATION" equiv-text="{{title}}"/></target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/secret/template.html</context>
           <context context-type="linenumber">21</context>
@@ -2808,7 +2808,7 @@
       <trans-unit id="bce7cd9302197070e1782d38622dbb351ad84b69" datatype="html">
         <source>Network Policies
       </source>
-        <target state="new">Network Policies
+        <target>Netzwerkregeln
       </target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/chrome/nav/template.html</context>
@@ -2844,7 +2844,7 @@
       <trans-unit id="e9c8e24a53e2496d1bb734d0bd20d756bec5b200" datatype="html">
         <source>Roles
       </source>
-        <target state="new">Roles
+        <target>Rollen
       </target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/chrome/nav/template.html</context>
@@ -2922,7 +2922,7 @@
       <trans-unit id="22c030ecbaceb4c5cf969f5ca360d7e6c6384a6d" datatype="html">
         <source>Service
       </source>
-        <target state="new">Service
+        <target>Service
       </target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/chrome/nav/template.html</context>
@@ -3013,7 +3013,7 @@
       <trans-unit id="5deee9cd9fabadb49eb1e3fcae70ff560e41ba27" datatype="html">
         <source>Service Accounts
       </source>
-        <target state="new">Service Accounts
+        <target>Service Accounts
       </target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/chrome/nav/template.html</context>
@@ -3033,7 +3033,7 @@
       <trans-unit id="9b39398e6c7a9dfb5cd43f405598934244f8bd17" datatype="html">
         <source>Plugins
         </source>
-        <target state="new">Plugins
+        <target>Plugins
         </target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/chrome/nav/template.html</context>
