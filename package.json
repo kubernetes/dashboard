@@ -130,7 +130,7 @@
     "roboto-fontface": "0.10.0",
     "rxjs": "6.6.2",
     "rxjs-compat": "6.6.2",
-    "sockjs-client": "1.4.0",
+    "sockjs-client": "1.5.0",
     "systemjs": "6.5.0",
     "truncate-url": "1.0.0",
     "tslib": "2.0.1",
