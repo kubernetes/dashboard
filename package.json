@@ -155,7 +155,7 @@
     "babel-register": "6.26.0",
     "codelyzer": "6.0.0",
     "concurrently": "5.3.0",
-    "cypress": "4.12.1",
+    "cypress": "5.0.0",
     "del": "5.1.0",
     "eslint": "7.6.0",
     "eslint-plugin-rxjs": "0.0.2-beta.28",
