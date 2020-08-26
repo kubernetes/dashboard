@@ -114,7 +114,7 @@
     "@types/file-saver": "2.0.1",
     "@types/highlight.js": "9.12.4",
     "ace-builds": "1.4.12",
-    "angular-page-visibility": "9.0.0",
+    "angular-page-visibility": "9.0.6",
     "ansi-to-html": "0.6.14",
     "c3": "0.7.20",
     "core-js": "3.6.5",
