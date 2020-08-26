@@ -190,7 +190,7 @@
     "scssfmt": "1.0.7",
     "semver": "7.3.2",
     "source-map-explorer": "2.4.2",
-    "tar": "6.0.2",
+    "tar": "6.0.5",
     "through2": "4.0.2",
     "ts-loader": "8.0.3",
     "ts-node": "8.10.2",
