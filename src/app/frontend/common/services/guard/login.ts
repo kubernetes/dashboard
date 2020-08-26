@@ -36,7 +36,9 @@ export class LoginGuard implements CanActivate {
           return of(true);
         }),
       )
-      .catch(() => {
+      .catch((_err, _caught) => {
+        console.error(_err);
+        console.error(_caught);
         return this.router_.navigate(['overview']);
       });
   }
