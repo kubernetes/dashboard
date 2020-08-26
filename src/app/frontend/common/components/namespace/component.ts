@@ -18,7 +18,7 @@ import {MatSelect} from '@angular/material/select';
 import {ActivatedRoute, NavigationEnd, Router} from '@angular/router';
 import {NamespaceList} from '@api/backendapi';
 import {Subject} from 'rxjs';
-import {startWith, switchMap, takeUntil} from 'rxjs/operators';
+import {distinctUntilChanged, filter, startWith, switchMap, takeUntil} from 'rxjs/operators';
 
 import {CONFIG} from '../../../index.config';
 import {NAMESPACE_STATE_PARAM} from '../../params/params';
@@ -80,8 +80,10 @@ export class NamespaceSelectorComponent implements OnInit, OnDestroy {
 
     this.resourceNamespaceParam = this._getCurrentResourceNamespaceParam();
     this.router_.events
-      .filter(event => event instanceof NavigationEnd)
-      .distinctUntilChanged()
+      .pipe(
+        filter(event => event instanceof NavigationEnd),
+        distinctUntilChanged(),
+      )
       .subscribe(() => {
         this.resourceNamespaceParam = this._getCurrentResourceNamespaceParam();
         if (this.shouldShowNamespaceChangeDialog(this.namespaceService_.current())) {

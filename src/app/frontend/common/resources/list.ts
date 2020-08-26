@@ -37,9 +37,7 @@ import {
   ColumnWhenCondition,
   OnListChangeEvent,
 } from '@api/frontendapi';
-import {isObservable, Subject} from 'rxjs';
-import {Observable, ObservableInput} from 'rxjs/Observable';
-import {merge} from 'rxjs/observable/merge';
+import {isObservable, merge, Observable, ObservableInput, Subject} from 'rxjs';
 import {startWith, switchMap, takeUntil, tap} from 'rxjs/operators';
 
 import {CardListFilterComponent} from '../components/list/filter/component';
