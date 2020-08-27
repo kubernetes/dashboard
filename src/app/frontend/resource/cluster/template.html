@@ -15,6 +15,8 @@ limitations under the License.
 -->
 
 <div [hidden]="shouldShowZeroState()">
+  <kd-cluster-role-binding-list (onchange)="onListUpdate($event)"
+                                [hideable]="true"></kd-cluster-role-binding-list>
   <kd-cluster-role-list (onchange)="onListUpdate($event)"
                         [hideable]="true"></kd-cluster-role-list>
   <kd-namespace-list (onchange)="onListUpdate($event)"
@@ -25,12 +27,12 @@ limitations under the License.
                 [hideable]="true"></kd-node-list>
   <kd-persistent-volume-list (onchange)="onListUpdate($event)"
                              [hideable]="true"></kd-persistent-volume-list>
-  <kd-service-account-list (onchange)="onListUpdate($event)"
-                           [hideable]="true"></kd-service-account-list>
   <kd-role-binding-list (onchange)="onListUpdate($event)"
                         [hideable]="true"></kd-role-binding-list>
   <kd-role-list (onchange)="onListUpdate($event)"
                 [hideable]="true"></kd-role-list>
+  <kd-service-account-list (onchange)="onListUpdate($event)"
+                           [hideable]="true"></kd-service-account-list>
 </div>
 
 <kd-zero-state [hidden]="!shouldShowZeroState()"></kd-zero-state>
