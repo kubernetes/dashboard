@@ -5135,9 +5135,9 @@
           <context context-type="linenumber">43</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="e15825a0273ad0aa69da37ed117de2b8a79ebde5" datatype="html">
-        <source>Max number of items that can be displayed on each list page.</source>
-        <target>それぞれの一覧ページに表示する項目の最大数</target>
+      <trans-unit id="7f64e933f69b243f86219e053ce4f333f42d0cdc" datatype="html">
+        <source>Max number of items that can be displayed on each list view.</source>
+        <target state="new">Max number of items that can be displayed on each list view.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/settings/global/template.html</context>
           <context context-type="linenumber">45</context>
@@ -5151,9 +5151,9 @@
           <context context-type="linenumber">62</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="9fc174bf52ac5fb0a53ab677be9ec933f406a229" datatype="html">
-        <source>Max number of labels that can be displayed per each item in the list views.</source>
-        <target state="new">Max number of labels that can be displayed per each item in the list views.</target>
+      <trans-unit id="8a4af7cf3a29694243ea9a208e978db7e09457d9" datatype="html">
+        <source>Max number of labels that is displayed by default in most of the views.</source>
+        <target state="new">Max number of labels that is displayed by default in most of the views.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/settings/global/template.html</context>
           <context context-type="linenumber">64</context>
