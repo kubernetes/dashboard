@@ -92,7 +92,7 @@ type unimplementedInterceptor struct {}
 func (u unimplementedInterceptor) getOptionForType(interceptorType InterceptorType, kind InterceptorKind) grpc.ServerOption {
   switch interceptorType {
   case InterceptorTypeAuth:
-    return u.getOptionForKind(auth.NewAuthInterceptor(), kind)
+    return u.getOptionForKind(auth.NewInterceptor(), kind)
   }
 
   klog.Fatalf("Unsupported interceptor type provided: %s", interceptorType)

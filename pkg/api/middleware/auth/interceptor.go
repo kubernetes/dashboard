@@ -21,6 +21,8 @@ import (
   "k8s.io/klog"
 )
 
+const name = "Auth"
+
 type Interceptor struct {
   name string
 }
@@ -35,6 +37,6 @@ func (i Interceptor) Stream(srv interface{}, stream grpc.ServerStream, info *grp
   return handler(srv, stream)
 }
 
-func NewAuthInterceptor() Interceptor {
-  return Interceptor{"Auth"}
+func NewInterceptor() Interceptor {
+  return Interceptor{name}
 }

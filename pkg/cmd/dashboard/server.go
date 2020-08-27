@@ -43,7 +43,7 @@ func NewAPIServerCommand() *cobra.Command {
         MetricsRunOptions:   metricsOptions,
         UIRunOptions:        uiOptions,
       }
-      grpc := api.NewGRPCServer(opts)
+      grpc := api.NewServer(opts)
       return grpc.Run()
     },
   }

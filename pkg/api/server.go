@@ -23,6 +23,7 @@ import (
   "k8s.io/klog"
 
   "github.com/kubernetes/dashboard/pkg/api/middleware"
+  v1 "github.com/kubernetes/dashboard/pkg/api/v1"
   "github.com/kubernetes/dashboard/pkg/api/v1/deployment"
   "github.com/kubernetes/dashboard/pkg/api/v1/pod"
   "github.com/kubernetes/dashboard/pkg/cmd/dashboard/options"
@@ -31,13 +32,15 @@ import (
 // VERSION of this binary
 var Version = "DEV"
 
-type GRPCServer struct {
+type Server struct {
   options *options.Options
+  grpc    *grpc.Server
 }
 
-func (s *GRPCServer) Run() error {
+func (s *Server) Run() error {
   klog.Infof("starting Kubernetes Dashboard API Server: %+v", Version)
 
+  // TODO: Handle HTTPS connection
   listener, err := net.Listen("tcp", fmt.Sprintf("%s:%d", s.options.InsecureBindAddress, s.options.InsecurePort))
   if err != nil {
     klog.Fatalf("failed to listen: %v", err)
@@ -45,30 +48,32 @@ func (s *GRPCServer) Run() error {
 
   klog.Infof("listening on %s:%d", s.options.InsecureBindAddress, s.options.InsecurePort)
 
-  server := s.init()
-  return server.Serve(listener)
+  s.init()
+  return s.grpc.Serve(listener)
 }
 
-func (s *GRPCServer) init() *grpc.Server {
+func (s *Server) init() {
   unaryInterceptors := middleware.NewUnaryInterceptorBuilder().Add(middleware.InterceptorTypeAuth).AsOptions()
   streamInterceptors := middleware.NewStreamInterceptorBuilder().Add(middleware.InterceptorTypeAuth).AsOptions()
 
-  server := grpc.NewServer(append(unaryInterceptors, streamInterceptors...)...)
+  s.grpc = grpc.NewServer(append(unaryInterceptors, streamInterceptors...)...)
 
-  // Install routes
-  s.installRoutes(server)
+  s.register(
+    pod.NewPodRouteHandler(),
+    deployment.NewDeploymentRouteHandler(),
+  )
 
   // Enable reflection so we can find available routes
-  reflection.Register(server)
-
-  return server
+  // TODO: Disable reflection once API is stable
+  reflection.Register(s.grpc)
 }
 
-func (s *GRPCServer) installRoutes(server *grpc.Server) {
-  pod.NewPodRouteHandler().Install(server)
-  deployment.NewDeploymentRouteHandler().Install(server)
+func (s *Server) register(routes ...v1.RouteHandler) {
+  for _, route := range routes {
+    route.Install(s.grpc)
+  }
 }
 
-func NewGRPCServer(options *options.Options) *GRPCServer {
-  return &GRPCServer{options: options}
+func NewServer(options *options.Options) *Server {
+  return &Server{options: options}
 }

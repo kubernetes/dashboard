@@ -19,5 +19,5 @@ import (
 )
 
 type RouteHandler interface {
-  Install(server *grpc.Server) error
+  Install(server *grpc.Server)
 }
