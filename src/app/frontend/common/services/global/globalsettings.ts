@@ -31,6 +31,7 @@ export class GlobalSettingsService {
   private settings_: GlobalSettings = {
     itemsPerPage: 10,
     clusterName: '',
+    labelsLimit: 3,
     logsAutoRefreshTimeInterval: 5,
     resourceAutoRefreshTimeInterval: 5,
     disableAccessDeniedNotifications: false,
@@ -96,6 +97,10 @@ export class GlobalSettingsService {
 
   getItemsPerPage(): number {
     return this.settings_.itemsPerPage;
+  }
+
+  getLabelsLimit(): number {
+    return this.settings_.labelsLimit;
   }
 
   getLogsAutoRefreshTimeInterval(): number {

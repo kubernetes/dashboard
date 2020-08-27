@@ -50,7 +50,8 @@ limitations under the License.
       <div key
            i18n>Addresses</div>
       <div value>
-        <kd-chips [map]="getAddresses()"></kd-chips>
+        <kd-chips [map]="getAddresses()"
+                  [displayAll]="true"></kd-chips>
       </div>
     </kd-property>
     <kd-property *ngIf="node?.taints"
@@ -58,7 +59,8 @@ limitations under the License.
       <div key
            i18n>Taints</div>
       <div value>
-        <kd-chips [map]="getTaints()"></kd-chips>
+        <kd-chips [map]="getTaints()"
+                  [displayAll]="true"></kd-chips>
       </div>
     </kd-property>
   </div>

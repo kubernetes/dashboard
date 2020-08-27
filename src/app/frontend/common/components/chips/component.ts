@@ -24,6 +24,8 @@ import {
 import {MatDialog, MatDialogConfig} from '@angular/material/dialog';
 import {StringMap} from '@api/backendapi';
 
+import {GlobalSettingsService} from '../../services/global/globalsettings';
+
 import {ChipDialog} from './chipdialog/dialog';
 
 // @ts-ignore
@@ -57,13 +59,19 @@ const MAX_CHIP_VALUE_LENGTH = 63;
 })
 export class ChipsComponent implements OnInit, OnChanges {
   @Input() map: StringMap | string[];
-  @Input() minChipsVisible = 2;
+  @Input() displayAll = false;
   keys: string[];
   isShowingAll = false;
+  private _labelsLimit = 3;
 
-  constructor(private readonly dialog_: MatDialog, private readonly cdr_: ChangeDetectorRef) {}
+  constructor(
+    private readonly _globalSettingsService: GlobalSettingsService,
+    private readonly _matDialog: MatDialog,
+    private readonly _changeDetectorRef: ChangeDetectorRef,
+  ) {}
 
   ngOnInit(): void {
+    this._labelsLimit = this._globalSettingsService.getLabelsLimit();
     this.processMap();
   }
 
@@ -83,15 +91,15 @@ export class ChipsComponent implements OnInit, OnChanges {
     } else {
       this.keys = Object.keys(this.map);
     }
-    this.cdr_.markForCheck();
+    this._changeDetectorRef.markForCheck();
   }
 
   isVisible(index: number): boolean {
-    return this.isShowingAll || index < this.minChipsVisible;
+    return this.isShowingAll || index < this._labelsLimit || this.displayAll;
   }
 
   isAnythingHidden(): boolean {
-    return this.keys.length > this.minChipsVisible;
+    return this.keys.length > this._labelsLimit && !this.displayAll;
   }
 
   toggleView(): void {
@@ -118,6 +126,6 @@ export class ChipsComponent implements OnInit, OnChanges {
         value,
       },
     };
-    this.dialog_.open(ChipDialog, dialogConfig);
+    this._matDialog.open(ChipDialog, dialogConfig);
   }
 }

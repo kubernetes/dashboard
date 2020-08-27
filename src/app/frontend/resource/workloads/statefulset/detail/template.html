@@ -29,7 +29,8 @@ limitations under the License.
       <div key
            i18n>Label Selector</div>
       <div value>
-        <kd-chips [map]="statefulSet.labelSelector"></kd-chips>
+        <kd-chips [map]="statefulSet.labelSelector"
+                  [displayAll]="true"></kd-chips>
       </div>
     </kd-property>
 
@@ -37,7 +38,8 @@ limitations under the License.
       <div key
            i18n>Images</div>
       <div value>
-        <kd-chips [map]="statefulSet.containerImages"></kd-chips>
+        <kd-chips [map]="statefulSet.containerImages"
+                  [displayAll]="true"></kd-chips>
       </div>
     </kd-property>
 
@@ -45,7 +47,8 @@ limitations under the License.
       <div key
            i18n>Init images</div>
       <div value>
-        <kd-chips [map]="statefulSet.initContainerImages"></kd-chips>
+        <kd-chips [map]="statefulSet.initContainerImages"
+                  [displayAll]="true"></kd-chips>
       </div>
     </kd-property>
   </div>
