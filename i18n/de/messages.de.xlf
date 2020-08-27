@@ -1254,6 +1254,316 @@
           <context context-type="linenumber">65</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="934fdb1171e9fc1049cb4984e0049aab76102591" datatype="html">
+        <source>Workloads
+    </source>
+        <target state="new">Workloads
+    </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/chrome/nav/template.html</context>
+          <context context-type="linenumber">27</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="6813769e4d18b9d4a0464cb8c8750bdb03544c72" datatype="html">
+        <source>Cron Jobs
+    </source>
+        <target state="new">Cron Jobs
+    </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/chrome/nav/template.html</context>
+          <context context-type="linenumber">32</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="cf80ae73043410b4a3639b44a8e96182263f658c" datatype="html">
+        <source>Daemon Sets
+    </source>
+        <target state="new">Daemon Sets
+    </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/chrome/nav/template.html</context>
+          <context context-type="linenumber">37</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="13f8099c1aedce5f940780331ca0bdcdb316c170" datatype="html">
+        <source>Deployments
+    </source>
+        <target state="new">Deployments
+    </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/chrome/nav/template.html</context>
+          <context context-type="linenumber">42</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="ae8a219cc83a1c949ee32f21998d880421cb5a86" datatype="html">
+        <source>Jobs
+    </source>
+        <target state="new">Jobs
+    </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/chrome/nav/template.html</context>
+          <context context-type="linenumber">47</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="15f8a7c371b64ade38b3cd73b274aa7187438cdb" datatype="html">
+        <source>Pods
+    </source>
+        <target state="new">Pods
+    </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/chrome/nav/template.html</context>
+          <context context-type="linenumber">52</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="db3d918499ffbe2a6e348ddcb1752980f1df94b9" datatype="html">
+        <source>Replica Sets
+    </source>
+        <target state="new">Replica Sets
+    </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/chrome/nav/template.html</context>
+          <context context-type="linenumber">57</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="33d67c94283b0127a0346e2a5cd718477913a6a1" datatype="html">
+        <source>Replication Controllers
+    </source>
+        <target state="new">Replication Controllers
+    </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/chrome/nav/template.html</context>
+          <context context-type="linenumber">62</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="5eabfe9ff8274183911fa1a252e1407079cb2a16" datatype="html">
+        <source>Stateful Sets
+    </source>
+        <target state="new">Stateful Sets
+    </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/chrome/nav/template.html</context>
+          <context context-type="linenumber">67</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="d422c22e44b4f480a82b235cabe07939fa2f979d" datatype="html">
+        <source>Service
+    </source>
+        <target state="new">Service
+    </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/chrome/nav/template.html</context>
+          <context context-type="linenumber">75</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="0bdabb53ca8824f7d9e6f40ec615e16bb83fcf01" datatype="html">
+        <source>Ingresses
+    </source>
+        <target state="new">Ingresses
+    </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/chrome/nav/template.html</context>
+          <context context-type="linenumber">80</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="7c335ba678df22cecc9441b92ed072301ed94279" datatype="html">
+        <source>Services
+    </source>
+        <target state="new">Services
+    </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/chrome/nav/template.html</context>
+          <context context-type="linenumber">85</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="0c5a72ba59d18d38645f1fa6f7bcb04e00df2c8c" datatype="html">
+        <source>Config and Storage
+    </source>
+        <target state="new">Config and Storage
+    </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/chrome/nav/template.html</context>
+          <context context-type="linenumber">92</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="887f6083fe9501f5e808e5cdefaf19c85e66c75c" datatype="html">
+        <source>Config Maps
+    </source>
+        <target state="new">Config Maps
+    </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/chrome/nav/template.html</context>
+          <context context-type="linenumber">99</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="e1300a6424efa77ba12238dec10382453acf9cc1" datatype="html">
+        <source>Persistent Volume Claims
+    </source>
+        <target state="new">Persistent Volume Claims
+    </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/chrome/nav/template.html</context>
+          <context context-type="linenumber">105</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="d44fc20d048f5757b67ea02ac0cff30e34111e6e" datatype="html">
+        <source>Secrets
+    </source>
+        <target state="new">Secrets
+    </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/chrome/nav/template.html</context>
+          <context context-type="linenumber">111</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="9ff2ef0c3a7799f1964db2407073909eb8263572" datatype="html">
+        <source>Storage Classes
+    </source>
+        <target state="new">Storage Classes
+    </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/chrome/nav/template.html</context>
+          <context context-type="linenumber">116</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="c34f04cd2125812e3d4e41dead8d42473835fde2" datatype="html">
+        <source>Cluster
+    </source>
+        <target state="new">Cluster
+    </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/chrome/nav/template.html</context>
+          <context context-type="linenumber">123</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="68d9d8cacafb28498c204511ed8a574b94ef50a4" datatype="html">
+        <source>Cluster Role Bindings
+    </source>
+        <target state="new">Cluster Role Bindings
+    </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/chrome/nav/template.html</context>
+          <context context-type="linenumber">128</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="41cc66b6bab70bd17d0ff828a711c695f6339d3b" datatype="html">
+        <source>Cluster Roles
+    </source>
+        <target state="new">Cluster Roles
+    </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/chrome/nav/template.html</context>
+          <context context-type="linenumber">133</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="bf61dbf69acc050ff1a62f9bb12462007dced715" datatype="html">
+        <source>Namespaces
+    </source>
+        <target state="new">Namespaces
+    </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/chrome/nav/template.html</context>
+          <context context-type="linenumber">138</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="c62034455c1a1c090037c5bf1318574ad7c8556c" datatype="html">
+        <source>Network Policies
+    </source>
+        <target state="new">Network Policies
+    </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/chrome/nav/template.html</context>
+          <context context-type="linenumber">144</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="706b9aac1fe8d0bdbe3c2a9945254ee5b23c6428" datatype="html">
+        <source>Nodes
+    </source>
+        <target state="new">Nodes
+    </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/chrome/nav/template.html</context>
+          <context context-type="linenumber">149</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="f05cb819fecdf6e77c0953f4f198a662bafdf3fa" datatype="html">
+        <source>Persistent Volumes
+    </source>
+        <target state="new">Persistent Volumes
+    </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/chrome/nav/template.html</context>
+          <context context-type="linenumber">154</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="1da9779f69ff327a105f3ab40d5d0017afe4b3d2" datatype="html">
+        <source>Role Bindings
+    </source>
+        <target state="new">Role Bindings
+    </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/chrome/nav/template.html</context>
+          <context context-type="linenumber">160</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="5446b248abf62406ec14e0cb10487790b78e12b1" datatype="html">
+        <source>Roles
+    </source>
+        <target state="new">Roles
+    </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/chrome/nav/template.html</context>
+          <context context-type="linenumber">166</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="d999d08f0c03b9067c737d5090e3a3d7ca46b380" datatype="html">
+        <source>Service Accounts
+    </source>
+        <target state="new">Service Accounts
+    </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/chrome/nav/template.html</context>
+          <context context-type="linenumber">172</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="c5a7d8211a10fff96983da621212075adf355506" datatype="html">
+        <source>Custom Resource Definitions
+    </source>
+        <target state="new">Custom Resource Definitions
+    </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/chrome/nav/template.html</context>
+          <context context-type="linenumber">180</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="1d216da7f53e1afcd7bffd53c0a6b0f2502cde4d" datatype="html">
+        <source>Plugins
+      </source>
+        <target state="new">Plugins
+      </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/chrome/nav/template.html</context>
+          <context context-type="linenumber">191</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="ea95197f64760fcc66ce49f9c6be1a90bac10a8e" datatype="html">
+        <source>Settings
+    </source>
+        <target state="new">Settings
+    </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/chrome/nav/template.html</context>
+          <context context-type="linenumber">200</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="a8f71f6d57c0b72c4d36d72af3fc55af3342521c" datatype="html">
+        <source>About
+    </source>
+        <target state="new">About
+    </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/chrome/nav/template.html</context>
+          <context context-type="linenumber">206</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="707b0ec47f1b9d281b87f4235404f8f34411dd38" datatype="html">
         <source>Resource Quotas</source>
         <target>Ressourcen-Quotas</target>
@@ -2854,304 +3164,12 @@
           <context context-type="linenumber">37</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="67d3a6c50ed8a188e19ea8c541a56f0e35620e5c" datatype="html">
-        <source>Cluster
-      </source>
-        <target>Cluster</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">../src/app/frontend/chrome/nav/template.html</context>
-          <context context-type="linenumber">25</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="2e7f50d0bef3580ae3c46acdcdd71e29e4fa3fed" datatype="html">
-        <source>Cluster Role Bindings
-      </source>
-        <target state="new">Cluster Role Bindings
-      </target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">../src/app/frontend/chrome/nav/template.html</context>
-          <context context-type="linenumber">30</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="1aff4cb93f64ca57fbf92fe405b2c1f2c4ec1b11" datatype="html">
-        <source>Cluster Roles
-      </source>
-        <target>Cluster Roles</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">../src/app/frontend/chrome/nav/template.html</context>
-          <context context-type="linenumber">35</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="3b91b541ed4a1e47b83fe91f4cae1eefa904f4d5" datatype="html">
-        <source>Namespaces
-      </source>
-        <target>Namespaces</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">../src/app/frontend/chrome/nav/template.html</context>
-          <context context-type="linenumber">40</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="bce7cd9302197070e1782d38622dbb351ad84b69" datatype="html">
-        <source>Network Policies
-      </source>
-        <target state="new">Network Policies
-      </target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">../src/app/frontend/chrome/nav/template.html</context>
-          <context context-type="linenumber">46</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="9151fc3bbb78ca19bf93221148fb6f75c9adec73" datatype="html">
-        <source>Nodes
-      </source>
-        <target>Nodes</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">../src/app/frontend/chrome/nav/template.html</context>
-          <context context-type="linenumber">51</context>
-        </context-group>
-      </trans-unit>
       <trans-unit id="6e2329529b1953198c7dfa0edb260554310bc636" datatype="html">
         <source>Nodes</source>
         <target>Nodes</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/node/template.html</context>
           <context context-type="linenumber">24</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="53fa14e4e66a4b88531ac5852644edf4c93430c5" datatype="html">
-        <source>Persistent Volumes
-      </source>
-        <target>Persistent Volumes</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">../src/app/frontend/chrome/nav/template.html</context>
-          <context context-type="linenumber">56</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="d4d25df076acf842b0705cc4ac54f4757a979a03" datatype="html">
-        <source>Role Bindings
-      </source>
-        <target state="new">Role Bindings
-      </target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">../src/app/frontend/chrome/nav/template.html</context>
-          <context context-type="linenumber">62</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="e9c8e24a53e2496d1bb734d0bd20d756bec5b200" datatype="html">
-        <source>Roles
-      </source>
-        <target state="new">Roles
-      </target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">../src/app/frontend/chrome/nav/template.html</context>
-          <context context-type="linenumber">68</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="d49c812d67b965bd0a172844e265f55567c812ad" datatype="html">
-        <source>Storage Classes
-      </source>
-        <target>Storage Classes</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">../src/app/frontend/chrome/nav/template.html</context>
-          <context context-type="linenumber">169</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="6d9edf35ea416301631125005b66c9440397176d" datatype="html">
-        <source>Workloads
-      </source>
-        <target>Workloads</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">../src/app/frontend/chrome/nav/template.html</context>
-          <context context-type="linenumber">83</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="787093faa4cfa59c1499dca2cfc6e804f1838ab1" datatype="html">
-        <source>Cron Jobs
-      </source>
-        <target>Cron Jobs
-      </target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">../src/app/frontend/chrome/nav/template.html</context>
-          <context context-type="linenumber">88</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="d094e262a8d26c66b5eb9f7dbf501cd711c1306f" datatype="html">
-        <source>Daemon Sets
-      </source>
-        <target>Daemon Sets
-      </target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">../src/app/frontend/chrome/nav/template.html</context>
-          <context context-type="linenumber">93</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="a862522a568898e032031f6728be4eec8edeb61b" datatype="html">
-        <source>Deployments
-      </source>
-        <target>Deployments
-      </target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">../src/app/frontend/chrome/nav/template.html</context>
-          <context context-type="linenumber">98</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="702b6f15c86ce19a17aa8ae644658c852d3c1c08" datatype="html">
-        <source>Jobs
-      </source>
-        <target>Jobs
-      </target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">../src/app/frontend/chrome/nav/template.html</context>
-          <context context-type="linenumber">103</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="1bc563edf644be0e1f682694e543cc8608575562" datatype="html">
-        <source>Stateful Sets
-      </source>
-        <target>Stateful Sets
-      </target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">../src/app/frontend/chrome/nav/template.html</context>
-          <context context-type="linenumber">123</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="22c030ecbaceb4c5cf969f5ca360d7e6c6384a6d" datatype="html">
-        <source>Service
-      </source>
-        <target state="new">Service
-      </target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">../src/app/frontend/chrome/nav/template.html</context>
-          <context context-type="linenumber">130</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="03ff2fadee6736ca0b92abdfe0f19db0d0b2c3f8" datatype="html">
-        <source>Pods
-      </source>
-        <target>Pods</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">../src/app/frontend/chrome/nav/template.html</context>
-          <context context-type="linenumber">108</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="6fed5420d42fcfbd09dfb4777c207274dd4f0c0a" datatype="html">
-        <source>Replica Sets
-      </source>
-        <target>Replica Sets</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">../src/app/frontend/chrome/nav/template.html</context>
-          <context context-type="linenumber">113</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="5a60417d6a34e8c0655cb0678071c60ca8119aad" datatype="html">
-        <source>Replication Controllers
-      </source>
-        <target>Replication Controllers</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">../src/app/frontend/chrome/nav/template.html</context>
-          <context context-type="linenumber">118</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="7b4d1721251562683d614269b06ebbe3af811a00" datatype="html">
-        <source>Ingresses
-      </source>
-        <target>Ingresses</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">../src/app/frontend/chrome/nav/template.html</context>
-          <context context-type="linenumber">135</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="5502d7f80d7951086a85d2da478f3f13763939d5" datatype="html">
-        <source>Services
-      </source>
-        <target>Services</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">../src/app/frontend/chrome/nav/template.html</context>
-          <context context-type="linenumber">140</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="be3dcec436583ff66cce312fd2074779d8851f54" datatype="html">
-        <source>Config and Storage
-      </source>
-        <target>Konfiguration und Storage</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">../src/app/frontend/chrome/nav/template.html</context>
-          <context context-type="linenumber">146</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="990cffc29a7adb5ec1110b0176c8c12fff756eba" datatype="html">
-        <source>Config Maps
-      </source>
-        <target>Config Maps</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">../src/app/frontend/chrome/nav/template.html</context>
-          <context context-type="linenumber">152</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="74be5bc42681451056aacf13382e5b29c62bd903" datatype="html">
-        <source>Persistent Volume Claims
-      </source>
-        <target>Persistent Volume Claims</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">../src/app/frontend/chrome/nav/template.html</context>
-          <context context-type="linenumber">158</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="755417c37ab5d459cd2443b3776aaaca7ec87f90" datatype="html">
-        <source>Secrets
-      </source>
-        <target>Secrets</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">../src/app/frontend/chrome/nav/template.html</context>
-          <context context-type="linenumber">164</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="5deee9cd9fabadb49eb1e3fcae70ff560e41ba27" datatype="html">
-        <source>Service Accounts
-      </source>
-        <target state="new">Service Accounts
-      </target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">../src/app/frontend/chrome/nav/template.html</context>
-          <context context-type="linenumber">74</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="f2f9d18ebacb9e3bcb996d8176609e306864265e" datatype="html">
-        <source>Custom Resource Definitions
-      </source>
-        <target>Custom Resource Definitions
-      </target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">../src/app/frontend/chrome/nav/template.html</context>
-          <context context-type="linenumber">178</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="9b39398e6c7a9dfb5cd43f405598934244f8bd17" datatype="html">
-        <source>Plugins
-        </source>
-        <target state="new">Plugins
-        </target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">../src/app/frontend/chrome/nav/template.html</context>
-          <context context-type="linenumber">191</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="03511cfe5e28ed3380ab198c13cf62ebde1e89e6" datatype="html">
-        <source>Settings
-      </source>
-        <target>Einstellungen</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">../src/app/frontend/chrome/nav/template.html</context>
-          <context context-type="linenumber">202</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="c2fa735eb6b1b2c10171c5acb818f6e0975a9406" datatype="html">
-        <source>About
-      </source>
-        <target>Über</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">../src/app/frontend/chrome/nav/template.html</context>
-          <context context-type="linenumber">208</context>
         </context-group>
       </trans-unit>
       <trans-unit id="7e892ba15f2c6c17e83510e273b3e10fc32ea016" datatype="html">
