@@ -69,6 +69,7 @@ export class GlobalSettingsComponent implements OnInit, OnDestroy {
 
   onLoad(): void {
     this.settings.itemsPerPage = this.settings_.getItemsPerPage();
+    this.settings.labelsLimit = this.settings_.getLabelsLimit();
     this.settings.clusterName = this.settings_.getClusterName();
     this.settings.logsAutoRefreshTimeInterval = this.settings_.getLogsAutoRefreshTimeInterval();
     this.settings.resourceAutoRefreshTimeInterval = this.settings_.getResourceAutoRefreshTimeInterval();

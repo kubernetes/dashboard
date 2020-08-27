@@ -1078,6 +1078,7 @@ export interface ScaleTargetRef {
 export interface GlobalSettings {
   clusterName: string;
   itemsPerPage: number;
+  labelsLimit: number;
   logsAutoRefreshTimeInterval: number;
   resourceAutoRefreshTimeInterval: number;
   disableAccessDeniedNotifications: boolean;

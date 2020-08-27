@@ -59,6 +59,25 @@ limitations under the License.
           </div>
         </div>
       </kd-settings-entry>
+      <kd-settings-entry key="Labels limit"
+                         i18n-key
+                         desc="Max number of labels that can be displayed per each item in the list views."
+                         i18n-desc>
+        <div fxFlex>
+          <mat-slider [(ngModel)]="settings.labelsLimit"
+                      name="labelsLimit"
+                      color="primary"
+                      min="1"
+                      max="10"
+                      step="1"
+                      fxFlex>
+          </mat-slider>
+          <div class="kd-slider-value kd-muted"
+               fxFlexAlign=" center">
+            {{settings.labelsLimit}}
+          </div>
+        </div>
+      </kd-settings-entry>
       <kd-settings-entry key="Logs auto-refresh time interval"
                          i18n-key
                          desc="Number of seconds between every auto-refresh of logs."

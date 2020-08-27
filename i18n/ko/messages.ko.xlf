@@ -5272,12 +5272,28 @@
           <context context-type="linenumber">45</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="f530d15919f9ecdc3c56f55eae1a78b905cc08fa" datatype="html">
+        <source>Labels limit</source>
+        <target state="new">Labels limit</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/settings/global/template.html</context>
+          <context context-type="linenumber">62</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="9fc174bf52ac5fb0a53ab677be9ec933f406a229" datatype="html">
+        <source>Max number of labels that can be displayed per each item in the list views.</source>
+        <target state="new">Max number of labels that can be displayed per each item in the list views.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/settings/global/template.html</context>
+          <context context-type="linenumber">64</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="1bf6e9fbb0027605b8c66e07e51ba28ff29ef67f" datatype="html">
         <source>Logs auto-refresh time interval</source>
         <target>로그 자동 갱신 시간 간격</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/settings/global/template.html</context>
-          <context context-type="linenumber">62</context>
+          <context context-type="linenumber">81</context>
         </context-group>
       </trans-unit>
       <trans-unit id="02458bd7e54108bc7ac4f35fc96aeb3e422fa471" datatype="html">
@@ -5285,7 +5301,7 @@
         <target>로그가 자동 갱신되는데 걸리는 초.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/settings/global/template.html</context>
-          <context context-type="linenumber">64</context>
+          <context context-type="linenumber">83</context>
         </context-group>
       </trans-unit>
       <trans-unit id="694d9a3839897f77b3ebca37be526771f6c54fd0" datatype="html">
@@ -5293,7 +5309,7 @@
         <target>리소스 자동 갱신 시간 간격</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/settings/global/template.html</context>
-          <context context-type="linenumber">81</context>
+          <context context-type="linenumber">100</context>
         </context-group>
       </trans-unit>
       <trans-unit id="ad66f1317f55d474a80b519533bde2eb31f99eda" datatype="html">
@@ -5301,7 +5317,7 @@
         <target>리소스 자동 갱신되는데 걸리는 초. 0으로 설정하면 해제됩니다.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/settings/global/template.html</context>
-          <context context-type="linenumber">83</context>
+          <context context-type="linenumber">102</context>
         </context-group>
       </trans-unit>
       <trans-unit id="a4f3393592e5ebfd34408e85c3bd576d88839191" datatype="html">
@@ -5309,7 +5325,7 @@
         <target>접근 거부 알림 해제</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/settings/global/template.html</context>
-          <context context-type="linenumber">100</context>
+          <context context-type="linenumber">119</context>
         </context-group>
       </trans-unit>
       <trans-unit id="b6484080715a11bad65395e51d42e6ae4aa3c856" datatype="html">
@@ -5317,7 +5333,7 @@
         <target>알림 패널에서 접근 거부 경고 모두 숨김.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/settings/global/template.html</context>
-          <context context-type="linenumber">102</context>
+          <context context-type="linenumber">121</context>
         </context-group>
       </trans-unit>
       <trans-unit id="f8b53b407af242e77dc3391947f23988f3451e64" datatype="html">
@@ -5329,7 +5345,7 @@
       </target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/settings/global/template.html</context>
-          <context context-type="linenumber">116</context>
+          <context context-type="linenumber">135</context>
         </context-group>
       </trans-unit>
       <trans-unit id="713f3afed85462e92402e8e3523c6dcdb362ce17" datatype="html">
@@ -5341,7 +5357,7 @@
       </target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/settings/global/template.html</context>
-          <context context-type="linenumber">123</context>
+          <context context-type="linenumber">142</context>
         </context-group>
       </trans-unit>
       <trans-unit id="d440068d2406e98fd156b9dcab7f0998e707a38b" datatype="html">
