@@ -91,8 +91,8 @@ Parameter                                       | Description                   
 `service.externalPort`                          | Dashboard external port                                                                                                          | `443`
 `service.loadBalancerSourceRanges`              | list of IP CIDRs allowed access to load balancer (if supported)                                                                  | `nil`
 `service.loadBalancerIP`                        | A user-specified IP address for load balancer to use as External IP (if supported)                                               | `nil`
-`service.clusterServiceLabel.enabled            | Enable the cluster-service label                                                                                                 | `true`
-`service.clusterServiceLabel.key                | The cluster-service label key                                                                                                    | `kubernetes.io/cluster-service`
+`service.clusterServiceLabel.enabled`           | Enable the cluster-service label                                                                                                 | `true`
+`service.clusterServiceLabel.key`               | The cluster-service label key                                                                                                    | `kubernetes.io/cluster-service`
 `ingress.annotations`                           | Specify ingress class                                                                                                            | `kubernetes.io/ingress.class: nginx`
 `ingress.labels`                                | Add custom labels                                                                                                                | `[]`
 `ingress.enabled`                               | Enable ingress controller resource                                                                                               | `false`
