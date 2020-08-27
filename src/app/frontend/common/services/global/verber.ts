@@ -16,6 +16,7 @@ import {HttpClient, HttpErrorResponse, HttpHeaders} from '@angular/common/http';
 import {EventEmitter, Injectable} from '@angular/core';
 import {MatDialog, MatDialogConfig} from '@angular/material/dialog';
 import {ObjectMeta, TypeMeta} from '@api/backendapi';
+import {filter, switchMap} from 'rxjs/operators';
 
 import {AlertDialog, AlertDialogConfig} from '../../dialogs/alert/dialog';
 import {DeleteResourceDialog} from '../../dialogs/deleteresource/dialog';
@@ -40,14 +41,14 @@ export class VerberService {
     this.dialog_
       .open(DeleteResourceDialog, dialogConfig)
       .afterClosed()
-      .subscribe(doDelete => {
-        if (doDelete) {
+      .pipe(filter(doDelete => doDelete))
+      .pipe(
+        switchMap(_ => {
           const url = RawResource.getUrl(typeMeta, objectMeta);
-          this.http_
-            .delete(url, {responseType: 'text'})
-            .subscribe(() => this.onDelete.emit(true), this.handleErrorResponse_.bind(this));
-        }
-      });
+          return this.http_.delete(url, {responseType: 'text'});
+        })
+      )
+      .subscribe(_ => this.onDelete.emit(true), this.handleErrorResponse_.bind(this));
   }
 
   showEditDialog(displayName: string, typeMeta: TypeMeta, objectMeta: ObjectMeta): void {
@@ -55,14 +56,14 @@ export class VerberService {
     this.dialog_
       .open(EditResourceDialog, dialogConfig)
       .afterClosed()
-      .subscribe(result => {
-        if (result) {
+      .pipe(filter(result => result))
+      .pipe(
+        switchMap(result => {
           const url = RawResource.getUrl(typeMeta, objectMeta);
-          this.http_
-            .put(url, JSON.parse(result), {headers: this.getHttpHeaders_(), responseType: 'text'})
-            .subscribe(() => this.onEdit.emit(true), this.handleErrorResponse_.bind(this));
-        }
-      });
+          return this.http_.put(url, JSON.parse(result), {headers: this.getHttpHeaders_(), responseType: 'text'});
+        })
+      )
+      .subscribe(_ => this.onEdit.emit(true), this.handleErrorResponse_.bind(this));
   }
 
   showScaleDialog(displayName: string, typeMeta: TypeMeta, objectMeta: ObjectMeta): void {
@@ -70,20 +71,17 @@ export class VerberService {
     this.dialog_
       .open(ScaleResourceDialog, dialogConfig)
       .afterClosed()
-      .subscribe(result => {
-        if (Number.isInteger(result)) {
-          const url =
-            `api/v1/scale/${typeMeta.kind}` +
-            (objectMeta.namespace ? `/${objectMeta.namespace}` : '') +
-            `/${objectMeta.name}/`;
+      .pipe(filter(result => Number.isInteger(result)))
+      .pipe(
+        switchMap(result => {
+          const url = `api/v1/scale/${typeMeta.kind}${objectMeta.namespace ? `/${objectMeta.namespace}` : ''}/${
+            objectMeta.name
+          }/`;
 
-          this.http_
-            .put(url, result, {
-              params: {scaleBy: result},
-            })
-            .subscribe(() => this.onScale.emit(true), this.handleErrorResponse_.bind(this));
-        }
-      });
+          return this.http_.put(url, result, {params: {scaleBy: result}});
+        })
+      )
+      .subscribe(_ => this.onScale.emit(true), this.handleErrorResponse_.bind(this));
   }
 
   showTriggerDialog(displayName: string, typeMeta: TypeMeta, objectMeta: ObjectMeta): void {
@@ -91,14 +89,14 @@ export class VerberService {
     this.dialog_
       .open(TriggerResourceDialog, dialogConfig)
       .afterClosed()
-      .subscribe(result => {
-        if (result) {
+      .pipe(filter(result => result))
+      .pipe(
+        switchMap(_ => {
           const url = `api/v1/cronjob/${objectMeta.namespace}/${objectMeta.name}/trigger`;
-          this.http_
-            .put(url, {}, {responseType: 'text'})
-            .subscribe(() => this.onTrigger.emit(true), this.handleErrorResponse_.bind(this));
-        }
-      });
+          return this.http_.put(url, {}, {responseType: 'text'});
+        })
+      )
+      .subscribe(_ => this.onTrigger.emit(true), this.handleErrorResponse_.bind(this));
   }
 
   getDialogConfig_(displayName: string, typeMeta: TypeMeta, objectMeta: ObjectMeta): MatDialogConfig<ResourceMeta> {

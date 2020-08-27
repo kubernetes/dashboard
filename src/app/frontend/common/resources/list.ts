@@ -87,7 +87,7 @@ export abstract class ResourceListBase<T extends ResourceList, R extends Resourc
   protected constructor(
     stateName: string | Observable<string>,
     private readonly notifications_: NotificationsService,
-    protected readonly cdr_: ChangeDetectorRef,
+    protected readonly cdr_: ChangeDetectorRef
   ) {
     this.settingsService_ = GlobalServicesModule.injector.get(GlobalSettingsService);
     this.kdState_ = GlobalServicesModule.injector.get(KdStateService);
@@ -377,7 +377,7 @@ export abstract class ResourceListWithStatuses<T extends ResourceList, R extends
   protected constructor(
     stateName: string,
     private readonly notifications: NotificationsService,
-    cdr: ChangeDetectorRef,
+    cdr: ChangeDetectorRef
   ) {
     super(stateName, notifications, cdr);
   }

@@ -28,7 +28,7 @@ export class SearchGuard implements CanDeactivate<SearchComponent> {
     _cmp: SearchComponent,
     _route: ActivatedRouteSnapshot,
     _routeSnapshot: RouterStateSnapshot,
-    nextState?: RouterStateSnapshot,
+    nextState?: RouterStateSnapshot
   ): boolean | UrlTree {
     let url = nextState.url;
     const queryParams = this.getQueryParams_(url);

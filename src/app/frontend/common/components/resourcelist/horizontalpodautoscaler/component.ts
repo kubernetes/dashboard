@@ -15,7 +15,7 @@
 import {HttpParams} from '@angular/common/http';
 import {ChangeDetectionStrategy, ChangeDetectorRef, Component, Input} from '@angular/core';
 import {HorizontalPodAutoscaler, HorizontalPodAutoscalerList} from '@api/backendapi';
-import {Observable} from 'rxjs/Observable';
+import {Observable} from 'rxjs';
 import {ResourceListWithStatuses} from '../../../resources/list';
 import {NotificationsService} from '../../../services/global/notifications';
 import {EndpointManager, Resource} from '../../../services/resource/endpoint';
@@ -37,7 +37,7 @@ export class HorizontalPodAutoscalerListComponent extends ResourceListWithStatus
   constructor(
     private readonly horizontalpodautoscaler_: NamespacedResourceService<HorizontalPodAutoscalerList>,
     notifications: NotificationsService,
-    cdr: ChangeDetectorRef,
+    cdr: ChangeDetectorRef
   ) {
     super('horizontalpodautoscaler', notifications, cdr);
     this.id = ListIdentifier.horizontalpodautoscaler;

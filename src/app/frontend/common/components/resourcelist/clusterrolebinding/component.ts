@@ -35,7 +35,7 @@ export class ClusterRoleBindingListComponent extends ResourceListBase<ClusterRol
   constructor(
     private readonly clusterRoleBinding_: ResourceService<ClusterRoleBindingList>,
     notifications: NotificationsService,
-    cdr: ChangeDetectorRef,
+    cdr: ChangeDetectorRef
   ) {
     super('clusterrolebinding', notifications, cdr);
     this.id = ListIdentifier.clusterRoleBinding;

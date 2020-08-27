@@ -39,7 +39,7 @@ export class RoleBingingDetailComponent implements OnInit, OnDestroy {
     private readonly actionbar_: ActionbarService,
     private readonly route_: ActivatedRoute,
     private readonly notifications_: NotificationsService,
-    private readonly kdState_: KdStateService,
+    private readonly kdState_: KdStateService
   ) {}
 
   ngOnInit(): void {
@@ -67,7 +67,7 @@ export class RoleBingingDetailComponent implements OnInit, OnDestroy {
     return this.kdState_.href(
       this.roleBinding.roleRef.kind.toLowerCase(),
       this.roleBinding.roleRef.name,
-      this.roleBinding.objectMeta.namespace,
+      this.roleBinding.objectMeta.namespace
     );
   }
 }

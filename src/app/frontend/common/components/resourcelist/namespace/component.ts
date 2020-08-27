@@ -15,7 +15,7 @@
 import {HttpParams} from '@angular/common/http';
 import {ChangeDetectionStrategy, ChangeDetectorRef, Component, Input} from '@angular/core';
 import {Namespace, NamespaceList} from '@api/backendapi';
-import {Observable} from 'rxjs/Observable';
+import {Observable} from 'rxjs';
 
 import {ResourceListWithStatuses} from '../../../resources/list';
 import {NotificationsService} from '../../../services/global/notifications';
@@ -35,7 +35,7 @@ export class NamespaceListComponent extends ResourceListWithStatuses<NamespaceLi
   constructor(
     private readonly namespace_: ResourceService<NamespaceList>,
     notifications: NotificationsService,
-    cdr: ChangeDetectorRef,
+    cdr: ChangeDetectorRef
   ) {
     super('namespace', notifications, cdr);
     this.id = ListIdentifier.namespace;

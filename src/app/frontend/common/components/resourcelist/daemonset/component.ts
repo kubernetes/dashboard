@@ -15,7 +15,7 @@
 import {HttpParams} from '@angular/common/http';
 import {ChangeDetectionStrategy, ChangeDetectorRef, Component, Input} from '@angular/core';
 import {DaemonSet, DaemonSetList, Event, Metric} from '@api/backendapi';
-import {Observable} from 'rxjs/Observable';
+import {Observable} from 'rxjs';
 
 import {ResourceListWithStatuses} from '../../../resources/list';
 import {NotificationsService} from '../../../services/global/notifications';
@@ -37,7 +37,7 @@ export class DaemonSetListComponent extends ResourceListWithStatuses<DaemonSetLi
   constructor(
     private readonly daemonSet_: NamespacedResourceService<DaemonSetList>,
     notifications: NotificationsService,
-    cdr: ChangeDetectorRef,
+    cdr: ChangeDetectorRef
   ) {
     super('daemonset', notifications, cdr);
     this.id = ListIdentifier.daemonSet;

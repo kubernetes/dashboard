@@ -35,7 +35,7 @@ export class CRDListComponent extends ResourceListWithStatuses<CRDList, CRD> {
   constructor(
     private readonly crd_: ResourceService<CRDList>,
     notifications: NotificationsService,
-    cdr: ChangeDetectorRef,
+    cdr: ChangeDetectorRef
   ) {
     super(Resource.crdFull, notifications, cdr);
     this.id = ListIdentifier.crd;

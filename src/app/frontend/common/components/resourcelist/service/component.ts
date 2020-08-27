@@ -14,7 +14,7 @@
 
 import {HttpParams} from '@angular/common/http';
 import {ChangeDetectionStrategy, ChangeDetectorRef, Component, Input} from '@angular/core';
-import {Observable} from 'rxjs/Observable';
+import {Observable} from 'rxjs';
 import {Service, ServiceList} from 'typings/backendapi';
 
 import {ResourceListWithStatuses} from '../../../resources/list';
@@ -35,7 +35,7 @@ export class ServiceListComponent extends ResourceListWithStatuses<ServiceList, 
   constructor(
     private readonly service_: NamespacedResourceService<ServiceList>,
     notifications: NotificationsService,
-    cdr: ChangeDetectorRef,
+    cdr: ChangeDetectorRef
   ) {
     super('service', notifications, cdr);
     this.id = ListIdentifier.service;

@@ -23,7 +23,7 @@ import {ResourceMeta} from '../../services/global/actionbar';
 export class DeleteResourceDialog {
   constructor(
     public dialogRef: MatDialogRef<DeleteResourceDialog>,
-    @Inject(MAT_DIALOG_DATA) public data: ResourceMeta,
+    @Inject(MAT_DIALOG_DATA) public data: ResourceMeta
   ) {}
 
   onNoClick(): void {

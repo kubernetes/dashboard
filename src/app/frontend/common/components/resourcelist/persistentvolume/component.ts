@@ -15,7 +15,7 @@
 import {HttpParams} from '@angular/common/http';
 import {ChangeDetectionStrategy, ChangeDetectorRef, Component, Input} from '@angular/core';
 import {PersistentVolume, PersistentVolumeList} from '@api/backendapi';
-import {Observable} from 'rxjs/Observable';
+import {Observable} from 'rxjs';
 
 import {ResourceListWithStatuses} from '../../../resources/list';
 import {NotificationsService} from '../../../services/global/notifications';
@@ -35,7 +35,7 @@ export class PersistentVolumeListComponent extends ResourceListWithStatuses<Pers
   constructor(
     private readonly pv_: ResourceService<PersistentVolumeList>,
     notifications: NotificationsService,
-    cdr: ChangeDetectorRef,
+    cdr: ChangeDetectorRef
   ) {
     super('persistentvolume', notifications, cdr);
     this.id = ListIdentifier.persistentVolume;

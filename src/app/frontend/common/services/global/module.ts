@@ -93,7 +93,7 @@ export function init(
   pinner: PinnerService,
   config: ConfigService,
   history: HistoryService,
-  pluginsConfig: PluginsConfigService,
+  pluginsConfig: PluginsConfigService
 ): Function {
   return () => {
     globalSettings.init();

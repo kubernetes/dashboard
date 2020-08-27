@@ -31,7 +31,7 @@ const rollInOut = trigger('rollInOut', [
       keyframes([
         style({width: '16px', 'border-radius': '50%', color: 'rgba(0,0,0,0)'}),
         style({width: '72px', 'border-radius': '8px'}),
-      ]),
+      ])
     ),
   ]),
 
@@ -41,7 +41,7 @@ const rollInOut = trigger('rollInOut', [
       keyframes([
         style({width: '72px', 'border-radius': '8px', color: 'rgba(0,0,0,0)'}),
         style({width: '16px', 'border-radius': '50%'}),
-      ]),
+      ])
     ),
   ]),
 ]);
@@ -74,8 +74,8 @@ export class NavItemComponent implements OnInit, OnDestroy {
         tap(
           state =>
             (this.animationState =
-              state === NamespacedIndicatorState.Leave ? NamespacedIndicatorState.Leave : this.animationState),
-        ),
+              state === NamespacedIndicatorState.Leave ? NamespacedIndicatorState.Leave : this.animationState)
+        )
       )
       .pipe(debounceTime(this.debounceTime_))
       .pipe(takeUntil(this.unsubscribe_))

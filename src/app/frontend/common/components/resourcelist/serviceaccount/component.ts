@@ -14,7 +14,7 @@
 
 import {HttpParams} from '@angular/common/http';
 import {ChangeDetectionStrategy, ChangeDetectorRef, Component, Input} from '@angular/core';
-import {Observable} from 'rxjs/Observable';
+import {Observable} from 'rxjs';
 import {ServiceAccount, ServiceAccountList} from 'typings/backendapi';
 
 import {ResourceListBase} from '../../../resources/list';
@@ -35,7 +35,7 @@ export class ServiceAccountListComponent extends ResourceListBase<ServiceAccount
   constructor(
     private readonly serviceAccount_: NamespacedResourceService<ServiceAccountList>,
     notifications: NotificationsService,
-    cdr: ChangeDetectorRef,
+    cdr: ChangeDetectorRef
   ) {
     super('serviceaccount', notifications, cdr);
     this.id = ListIdentifier.serviceAccount;

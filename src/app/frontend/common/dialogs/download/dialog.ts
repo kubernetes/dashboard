@@ -42,7 +42,7 @@ export class LogsDownloadDialog implements OnDestroy {
     public dialogRef: MatDialogRef<LogsDownloadDialog>,
     @Inject(MAT_DIALOG_DATA) public data: LogsDownloadDialogMeta,
     private readonly logService: LogService,
-    private readonly http_: HttpClient,
+    private readonly http_: HttpClient
   ) {
     const logUrl = `api/v1/log/file/${data.namespace}/${data.pod}/${
       data.container
@@ -62,7 +62,7 @@ export class LogsDownloadDialog implements OnDestroy {
         },
         error => {
           this.error = error.status;
-        },
+        }
       );
   }
 

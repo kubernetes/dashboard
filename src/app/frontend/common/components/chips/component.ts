@@ -47,7 +47,7 @@ const URL_REGEXP = new RegExp(
     '){2}(?:\\.(?:[1-9]\\d?|1\\d\\d|2[0-4]\\d|25[0-4]))|(?:(?:[a-z\\u00a1-\\uffff0-9]-*)*' +
     '[a-z\\u00a1-\\uffff0-9]+)(?:\\.(?:[a-z\\u00a1-\\uffff0-9]-*)*[a-z\\u00a1-\\uffff0-9]' +
     '+)*(?:\\.(?:[a-z\\u00a1-\\uffff]{2,}))\\.?)(?::\\d{2,5})?(?:[/?#]\\S*)?$',
-  'i',
+  'i'
 );
 
 const MAX_CHIP_VALUE_LENGTH = 63;
@@ -67,7 +67,7 @@ export class ChipsComponent implements OnInit, OnChanges {
   constructor(
     private readonly _globalSettingsService: GlobalSettingsService,
     private readonly _matDialog: MatDialog,
-    private readonly _changeDetectorRef: ChangeDetectorRef,
+    private readonly _changeDetectorRef: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {

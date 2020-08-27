@@ -15,7 +15,8 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {RoleDetail} from '@api/backendapi';
-import {Subscription} from 'rxjs/Subscription';
+import {Subject} from 'rxjs';
+import {takeUntil} from 'rxjs/operators';
 
 import {ActionbarService, ResourceMeta} from '../../../../common/services/global/actionbar';
 import {NotificationsService} from '../../../../common/services/global/notifications';
@@ -27,8 +28,9 @@ import {NamespacedResourceService} from '../../../../common/services/resource/re
   templateUrl: './template.html',
 })
 export class RoleDetailComponent implements OnInit, OnDestroy {
-  private roleSubscription_: Subscription;
   private readonly endpoint_ = EndpointManager.resource(Resource.role, true);
+  private readonly unsubscribe_ = new Subject<void>();
+
   role: RoleDetail;
   isInitialized = false;
 
@@ -36,15 +38,16 @@ export class RoleDetailComponent implements OnInit, OnDestroy {
     private readonly role_: NamespacedResourceService<RoleDetail>,
     private readonly actionbar_: ActionbarService,
     private readonly route_: ActivatedRoute,
-    private readonly notifications_: NotificationsService,
+    private readonly notifications_: NotificationsService
   ) {}
 
   ngOnInit(): void {
     const resourceName = this.route_.snapshot.params.resourceName;
     const resourceNamespace = this.route_.snapshot.params.resourceNamespace;
 
-    this.roleSubscription_ = this.role_
+    this.role_
       .get(this.endpoint_.detail(), resourceName, resourceNamespace)
+      .pipe(takeUntil(this.unsubscribe_))
       .subscribe((d: RoleDetail) => {
         this.role = d;
         this.notifications_.pushErrors(d.errors);
@@ -54,7 +57,8 @@ export class RoleDetailComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.roleSubscription_.unsubscribe();
+    this.unsubscribe_.next();
+    this.unsubscribe_.complete();
     this.actionbar_.onDetailsLeave.emit();
   }
 }

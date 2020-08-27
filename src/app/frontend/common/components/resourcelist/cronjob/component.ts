@@ -15,7 +15,7 @@
 import {HttpParams} from '@angular/common/http';
 import {ChangeDetectionStrategy, ChangeDetectorRef, Component, Input} from '@angular/core';
 import {CronJob, CronJobList, Metric} from '@api/backendapi';
-import {Observable} from 'rxjs/Observable';
+import {Observable} from 'rxjs';
 import {ResourceListWithStatuses} from '../../../resources/list';
 import {NotificationsService} from '../../../services/global/notifications';
 import {EndpointManager, Resource} from '../../../services/resource/endpoint';
@@ -36,7 +36,7 @@ export class CronJobListComponent extends ResourceListWithStatuses<CronJobList, 
   constructor(
     private readonly cronJob_: NamespacedResourceService<CronJobList>,
     notifications: NotificationsService,
-    cdr: ChangeDetectorRef,
+    cdr: ChangeDetectorRef
   ) {
     super('cronjob', notifications, cdr);
     this.id = ListIdentifier.cronJob;

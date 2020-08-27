@@ -14,7 +14,7 @@
 
 import {HttpParams} from '@angular/common/http';
 import {ChangeDetectionStrategy, ChangeDetectorRef, Component, Input} from '@angular/core';
-import {Observable} from 'rxjs/Observable';
+import {Observable} from 'rxjs';
 import {Ingress, IngressList} from 'typings/backendapi';
 
 import {ResourceListBase} from '../../../resources/list';
@@ -35,7 +35,7 @@ export class IngressListComponent extends ResourceListBase<IngressList, Ingress>
   constructor(
     private readonly ingress_: NamespacedResourceService<IngressList>,
     notifications: NotificationsService,
-    cdr: ChangeDetectorRef,
+    cdr: ChangeDetectorRef
   ) {
     super('ingress', notifications, cdr);
     this.id = ListIdentifier.ingress;

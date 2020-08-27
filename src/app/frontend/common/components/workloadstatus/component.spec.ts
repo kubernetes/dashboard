@@ -110,7 +110,7 @@ describe('WorkloadStatusComponent', () => {
 
     testHostFixture.detectChanges();
     const debugElements = testHostFixture.debugElement.queryAll(
-      By.css('kd-card mat-card div mat-card-content div.kd-graph-title'),
+      By.css('kd-card mat-card div mat-card-content div.kd-graph-title')
     );
 
     debugElements.forEach(debugElement => {

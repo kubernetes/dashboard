@@ -67,7 +67,7 @@ export class ShellComponent implements AfterViewInit, OnDestroy {
     private readonly activatedRoute_: ActivatedRoute,
     private readonly matSnackBar_: MatSnackBar,
     private readonly cdr_: ChangeDetectorRef,
-    private readonly _router: Router,
+    private readonly _router: Router
   ) {
     this.namespace_ = this.activatedRoute_.snapshot.params.resourceNamespace;
     this.podName = this.activatedRoute_.snapshot.params.resourceName;
@@ -259,7 +259,7 @@ export class ShellComponent implements AfterViewInit, OnDestroy {
           Data: str,
           Cols: this.term.cols,
           Rows: this.term.rows,
-        }),
+        })
       );
     }
   }
@@ -271,7 +271,7 @@ export class ShellComponent implements AfterViewInit, OnDestroy {
           Op: 'resize',
           Cols: this.term.cols,
           Rows: this.term.rows,
-        }),
+        })
       );
     }
   }

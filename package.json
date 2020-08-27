@@ -54,7 +54,7 @@
     "fix:i18n": "ng xi18n --outFile ../i18n/messages.xlf && aio/scripts/xliffmerge.sh",
     "clean": "rm -rf .go_workspace .tmp coverage dist npm-debug.log",
     "postversion": "node aio/scripts/version.js",
-    "postinstall": "node aio/scripts/version.js && command -v golangci-lint >/dev/null 2>&1 || { curl -sfL https://install.goreleaser.com/github.com/golangci/golangci-lint.sh | sh -s -- -b $(go env GOPATH)/bin v1.23.6; } && go mod download && ngcc"
+    "postinstall": "node aio/scripts/version.js && command -v golangci-lint >/dev/null 2>&1 || { curl -sfL https://install.goreleaser.com/github.com/golangci/golangci-lint.sh | sh -s -- -b $(go env GOPATH)/bin v1.23.6; } && go mod download && ./aio/scripts/install-codegen.sh && ngcc"
   },
   "husky": {
     "hooks": {
@@ -235,7 +235,8 @@
       "prefer-rest-params": "error",
       "rxjs/no-ignored-observable": "error",
       "rxjs/no-unbound-methods": "error",
-      "rxjs/no-unsafe-takeuntil": "error"
+      "rxjs/no-unsafe-takeuntil": "error",
+      "rxjs/no-nested-subscribe": "error"
     },
     "overrides": [
       {

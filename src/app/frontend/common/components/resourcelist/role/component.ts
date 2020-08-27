@@ -15,7 +15,7 @@
 import {HttpParams} from '@angular/common/http';
 import {ChangeDetectionStrategy, ChangeDetectorRef, Component, Input} from '@angular/core';
 import {Role, RoleList, ServiceAccount, ServiceAccountList} from '@api/backendapi';
-import {Observable} from 'rxjs/Observable';
+import {Observable} from 'rxjs';
 
 import {ResourceListBase} from '../../../resources/list';
 import {NotificationsService} from '../../../services/global/notifications';
@@ -35,7 +35,7 @@ export class RoleListComponent extends ResourceListBase<RoleList, Role> {
   constructor(
     private readonly role_: NamespacedResourceService<RoleList>,
     notifications: NotificationsService,
-    cdr: ChangeDetectorRef,
+    cdr: ChangeDetectorRef
   ) {
     super('role', notifications, cdr);
     this.id = ListIdentifier.role;
