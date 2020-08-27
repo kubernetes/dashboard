@@ -22,12 +22,15 @@ import {NotificationsService} from '../../../../common/services/global/notificat
 import {EndpointManager, Resource} from '../../../../common/services/resource/endpoint';
 import {ResourceService} from '../../../../common/services/resource/resource';
 import {KdStateService} from '../../../../common/services/global/state';
+import {takeUntil} from 'rxjs/operators';
+import {Subject} from 'rxjs';
 
 @Component({
   selector: 'kd-cluster-role-binding-detail',
   templateUrl: './template.html',
 })
 export class ClusterRoleBindingDetailComponent implements OnInit, OnDestroy {
+  private _unsubscribe = new Subject<void>();
   private clusterRoleSubscription_: Subscription;
   private readonly endpoint_ = EndpointManager.resource(Resource.clusterRoleBinding);
   clusterRoleBinding: ClusterRoleBindingDetail;
@@ -46,6 +49,7 @@ export class ClusterRoleBindingDetailComponent implements OnInit, OnDestroy {
 
     this.clusterRoleSubscription_ = this.clusterRoleBinding_
       .get(this.endpoint_.detail(), resourceName)
+      .pipe(takeUntil(this._unsubscribe))
       .subscribe((d: ClusterRoleBindingDetail) => {
         this.clusterRoleBinding = d;
         this.notifications_.pushErrors(d.errors);
@@ -55,7 +59,8 @@ export class ClusterRoleBindingDetailComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.clusterRoleSubscription_.unsubscribe();
+    this._unsubscribe.next();
+    this._unsubscribe.complete();
     this.actionbar_.onDetailsLeave.emit();
   }
 
