@@ -19,6 +19,6 @@ limitations under the License.
                class="kd-nav-item"
                [state]="getResourceHref(resource)"
                [namespaced]="resource.namespaced"
-               i18n>{{resource.displayName}}
+               i18n>{{getDisplayName(resource)}}
   </kd-nav-item>
 </div>

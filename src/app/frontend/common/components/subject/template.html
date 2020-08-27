@@ -1,0 +1,78 @@
+<!--
+Copyright 2017 The Kubernetes Authors.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<kd-card [initialized]="initialized"
+         role="table">
+  <div title
+       i18n>Subjects</div>
+
+  <div description>
+    <div class="kd-inline-property"
+         *ngIf="subjects?.length">
+      <span class="kd-muted-light"
+            i18n>Items:&nbsp;</span>
+      <span>{{subjects.length}}</span>
+    </div>
+  </div>
+
+  <div content
+       [hidden]="!subjects">
+    <mat-table [dataSource]="getDataSource()"
+               class="kd-table-no-footer">
+
+      <ng-container [matColumnDef]="getColumns()[0]">
+        <mat-header-cell *matHeaderCellDef
+                         i18n>Name</mat-header-cell>
+        <mat-cell *matCellDef="let subject">
+          <ng-container *ngIf="isSubjectKindKnown(subject)">
+            <a [routerLink]="getSubjectHref(subject)"
+               queryParamsHandling="preserve">{{subject.name}}</a>
+          </ng-container>
+          <ng-container *ngIf="!isSubjectKindKnown(subject)">{{subject.name}}</ng-container>
+        </mat-cell>
+      </ng-container>
+
+      <ng-container [matColumnDef]="getColumns()[1]">
+        <mat-header-cell *matHeaderCellDef
+                         i18n>Namespace</mat-header-cell>
+        <mat-cell *matCellDef="let subject">
+          <ng-container *ngIf="subject.namespace">{{ subject.namespace }}</ng-container>
+          <ng-container *ngIf="!subject.namespace">-</ng-container>
+        </mat-cell>
+      </ng-container>
+
+      <ng-container [matColumnDef]="getColumns()[2]">
+        <mat-header-cell *matHeaderCellDef
+                         i18n>Kind</mat-header-cell>
+        <mat-cell *matCellDef="let subject">{{ subject.kind }}</mat-cell>
+      </ng-container>
+
+      <ng-container [matColumnDef]="getColumns()[3]">
+        <mat-header-cell *matHeaderCellDef
+                         i18n>API Group</mat-header-cell>
+        <mat-cell *matCellDef="let subject">{{ subject.apiGroup }}</mat-cell>
+      </ng-container>
+
+      <mat-header-row *matHeaderRowDef="getColumns()"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: getColumns();"></mat-row>
+    </mat-table>
+  </div>
+
+  <div content
+       [hidden]="subjects">
+    <kd-list-zero-state></kd-list-zero-state>
+  </div>
+</kd-card>

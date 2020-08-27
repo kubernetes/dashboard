@@ -18,7 +18,7 @@ limitations under the License.
          [hidden]="isHidden()">
   <div title
        fxLayout="row"
-       i18n>Custom Resource Definitions</div>
+       i18n>Cluster Role Bindings</div>
   <div description><span class="kd-muted-light"
           i18n>Items:&nbsp;</span>{{totalItems}}</div>
   <div actions>
@@ -33,15 +33,18 @@ limitations under the License.
     <mat-table [dataSource]="getData()"
                [trackBy]="trackByResource"
                matSort
-               matSortActive="created"
+               [matSortActive]="getColumns()[1]"
                matSortDisableClear
                matSortDirection="asc">
+
       <ng-container [matColumnDef]="getColumns()[0]">
-        <mat-header-cell *matHeaderCellDef></mat-header-cell>
-        <mat-cell *matCellDef="let crd">
-          <mat-icon [ngClass]="getStatus(crd).iconClass">
-            {{getStatus(crd).iconName}}
-          </mat-icon>
+        <mat-header-cell *matHeaderCellDef
+                         mat-sort-header
+                         disableClear="true"
+                         i18n>Name</mat-header-cell>
+        <mat-cell *matCellDef="let roleBinding">
+          <a [routerLink]="getDetailsHref(roleBinding.objectMeta.name)"
+             queryParamsHandling="preserve">{{roleBinding.objectMeta.name}}</a>
         </mat-cell>
       </ng-container>
 
@@ -49,38 +52,9 @@ limitations under the License.
         <mat-header-cell *matHeaderCellDef
                          mat-sort-header
                          disableClear="true"
-                         i18n>Name</mat-header-cell>
-        <mat-cell *matCellDef="let crd">
-          <a [routerLink]="getDetailsHref(crd.objectMeta.name)"
-             queryParamsHandling="preserve">{{getDisplayName(crd.names.kind)}}</a>
-        </mat-cell>
-      </ng-container>
-
-      <ng-container [matColumnDef]="getColumns()[2]">
-        <mat-header-cell *matHeaderCellDef
-                         i18n>Group</mat-header-cell>
-        <mat-cell *matCellDef="let crd">{{crd.group}}</mat-cell>
-      </ng-container>
-
-      <ng-container [matColumnDef]="getColumns()[3]">
-        <mat-header-cell *matHeaderCellDef
-                         i18n>Full Name</mat-header-cell>
-        <mat-cell *matCellDef="let crd">{{crd.objectMeta.name}}</mat-cell>
-      </ng-container>
-
-      <ng-container [matColumnDef]="getColumns()[4]">
-        <mat-header-cell *matHeaderCellDef
-                         i18n>Namespaced</mat-header-cell>
-        <mat-cell *matCellDef="let crd">{{isNamespaced(crd)}}</mat-cell>
-      </ng-container>
-
-      <ng-container [matColumnDef]="getColumns()[5]">
-        <mat-header-cell *matHeaderCellDef
-                         mat-sort-header
-                         disableClear="true"
                          i18n>Created</mat-header-cell>
-        <mat-cell *matCellDef="let crd">
-          <kd-date [date]="crd.objectMeta.creationTimestamp"
+        <mat-cell *matCellDef="let roleBinding">
+          <kd-date [date]="roleBinding.objectMeta.creationTimestamp"
                    relative></kd-date>
         </mat-cell>
       </ng-container>
@@ -88,9 +62,9 @@ limitations under the License.
       <ng-container *ngFor="let col of getActionColumns()"
                     [matColumnDef]="col.name">
         <mat-header-cell *matHeaderCellDef></mat-header-cell>
-        <mat-cell *matCellDef="let crd">
+        <mat-cell *matCellDef="let cr">
           <kd-dynamic-cell [component]="col.component"
-                           [resource]="crd"></kd-dynamic-cell>
+                           [resource]="cr"></kd-dynamic-cell>
         </mat-cell>
       </ng-container>
 
