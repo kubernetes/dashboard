@@ -3528,8 +3528,8 @@
           <context context-type="linenumber">62</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="55aa74556a13bf953ee64743843d67b5e36ac55e" datatype="html">
-        <source>Max number of labels that are displayed by default in most of the views.</source>
+      <trans-unit id="bf9673843b14fe0fc00bfb93d2bbfd9ffa51e794" datatype="html">
+        <source>Max number of labels that are displayed by default in most views.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/settings/global/template.html</context>
           <context context-type="linenumber">64</context>

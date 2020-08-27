@@ -27,7 +27,8 @@ limitations under the License.
       <div key
            i18n>Pod Selector</div>
       <div value>
-        <kd-chips [map]="networkPolicy?.podSelector.matchLabels"></kd-chips>
+        <kd-chips [map]="networkPolicy?.podSelector.matchLabels"
+                  [displayAll]="true"></kd-chips>
       </div>
     </kd-property>
 
@@ -35,7 +36,8 @@ limitations under the License.
       <div key
            i18n>Policy Types</div>
       <div value>
-        <kd-chips [map]="networkPolicy?.policyTypes"></kd-chips>
+        <kd-chips [map]="networkPolicy?.policyTypes"
+                  [displayAll]="true"></kd-chips>
       </div>
     </kd-property>
   </div>
