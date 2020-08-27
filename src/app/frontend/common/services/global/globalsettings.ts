@@ -17,7 +17,7 @@ import {EventEmitter, Injectable} from '@angular/core';
 import {GlobalSettings} from '@api/backendapi';
 import {onSettingsFailCallback, onSettingsLoadCallback} from '@api/frontendapi';
 import {of, ReplaySubject, Subject} from 'rxjs';
-import {Observable} from 'rxjs/Observable';
+import {Observable} from 'rxjs';
 import {catchError, switchMap, takeUntil} from 'rxjs/operators';
 
 import {AuthorizerService} from './authorizer';
@@ -70,7 +70,7 @@ export class GlobalSettingsService {
           this.isInitialized_ = false;
           this.onSettingsUpdate.next();
           if (onFail) onFail(err);
-        },
+        }
       );
   }
 

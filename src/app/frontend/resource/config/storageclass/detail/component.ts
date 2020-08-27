@@ -15,7 +15,8 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {StorageClassDetail} from '@api/backendapi';
-import {Subscription} from 'rxjs/Subscription';
+import {Subject} from 'rxjs';
+import {takeUntil} from 'rxjs/operators';
 
 import {ActionbarService, ResourceMeta} from '../../../../common/services/global/actionbar';
 import {NotificationsService} from '../../../../common/services/global/notifications';
@@ -28,8 +29,9 @@ import {ResourceService} from '../../../../common/services/resource/resource';
   styleUrls: ['./style.scss'],
 })
 export class StorageClassDetailComponent implements OnInit, OnDestroy {
-  private storageClassSubscription_: Subscription;
   private readonly endpoint_ = EndpointManager.resource(Resource.storageClass);
+  private readonly _unsubscribe = new Subject<void>();
+
   storageClass: StorageClassDetail;
   pvListEndpoint: string;
   isInitialized = false;
@@ -38,7 +40,7 @@ export class StorageClassDetailComponent implements OnInit, OnDestroy {
     private readonly storageClass_: ResourceService<StorageClassDetail>,
     private readonly actionbar_: ActionbarService,
     private readonly activatedRoute_: ActivatedRoute,
-    private readonly notifications_: NotificationsService,
+    private readonly notifications_: NotificationsService
   ) {}
 
   ngOnInit(): void {
@@ -46,8 +48,9 @@ export class StorageClassDetailComponent implements OnInit, OnDestroy {
 
     this.pvListEndpoint = this.endpoint_.child(resourceName, Resource.persistentVolume);
 
-    this.storageClassSubscription_ = this.storageClass_
+    this.storageClass_
       .get(this.endpoint_.detail(), resourceName)
+      .pipe(takeUntil(this._unsubscribe))
       .subscribe((d: StorageClassDetail) => {
         this.storageClass = d;
         this.notifications_.pushErrors(d.errors);
@@ -57,7 +60,8 @@ export class StorageClassDetailComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.storageClassSubscription_.unsubscribe();
+    this._unsubscribe.next();
+    this._unsubscribe.complete();
     this.actionbar_.onDetailsLeave.emit();
   }
 

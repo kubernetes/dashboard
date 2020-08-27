@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {Subject, Subscription} from 'rxjs';
+import {Subject} from 'rxjs';
 import {takeUntil} from 'rxjs/operators';
 import {ActionbarService, ResourceMeta} from '../../../services/global/actionbar';
 

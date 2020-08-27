@@ -15,7 +15,7 @@
 import {HttpParams} from '@angular/common/http';
 import {ChangeDetectionStrategy, ChangeDetectorRef, Component, Input} from '@angular/core';
 import {Event, Metric, Pod, PodList} from '@api/backendapi';
-import {Observable} from 'rxjs/Observable';
+import {Observable} from 'rxjs';
 
 import {ResourceListWithStatuses} from '../../../resources/list';
 import {NotificationsService} from '../../../services/global/notifications';
@@ -37,7 +37,7 @@ export class PodListComponent extends ResourceListWithStatuses<PodList, Pod> {
   constructor(
     private readonly podList: NamespacedResourceService<PodList>,
     notifications: NotificationsService,
-    cdr: ChangeDetectorRef,
+    cdr: ChangeDetectorRef
   ) {
     super('pod', notifications, cdr);
     this.id = ListIdentifier.pod;

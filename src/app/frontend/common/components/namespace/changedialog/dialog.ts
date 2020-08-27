@@ -25,7 +25,7 @@ export class NamespaceChangeDialog {
 
   constructor(
     public dialogRef: MatDialogRef<NamespaceChangeDialog>,
-    @Inject(MAT_DIALOG_DATA) public data: {namespace: string; newNamespace: string},
+    @Inject(MAT_DIALOG_DATA) public data: {namespace: string; newNamespace: string}
   ) {
     this.namespace = data.namespace;
     this.newNamespace = data.newNamespace;

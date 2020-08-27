@@ -30,7 +30,7 @@ export class CreatorCardComponent {
     return this.kdState_.href(
       this.creator.typeMeta.kind,
       this.creator.objectMeta.name,
-      this.creator.objectMeta.namespace,
+      this.creator.objectMeta.namespace
     );
   }
 }

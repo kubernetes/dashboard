@@ -14,7 +14,7 @@
 
 import {HttpParams} from '@angular/common/http';
 import {ChangeDetectionStrategy, ChangeDetectorRef, Component, Input} from '@angular/core';
-import {Observable} from 'rxjs/Observable';
+import {Observable} from 'rxjs';
 import {ConfigMap, ConfigMapList} from 'typings/backendapi';
 import {ResourceListBase} from '../../../resources/list';
 import {NotificationsService} from '../../../services/global/notifications';
@@ -34,7 +34,7 @@ export class ConfigMapListComponent extends ResourceListBase<ConfigMapList, Conf
   constructor(
     private readonly configMap_: NamespacedResourceService<ConfigMapList>,
     notifications: NotificationsService,
-    cdr: ChangeDetectorRef,
+    cdr: ChangeDetectorRef
   ) {
     super('configmap', notifications, cdr);
     this.id = ListIdentifier.configMap;

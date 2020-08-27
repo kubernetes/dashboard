@@ -15,7 +15,7 @@
 import {HttpParams} from '@angular/common/http';
 import {ChangeDetectionStrategy, ChangeDetectorRef, Component, Input} from '@angular/core';
 import {Event, ReplicationController, ReplicationControllerList} from '@api/backendapi';
-import {Observable} from 'rxjs/Observable';
+import {Observable} from 'rxjs';
 
 import {ResourceListWithStatuses} from '../../../resources/list';
 import {NotificationsService} from '../../../services/global/notifications';
@@ -38,7 +38,7 @@ export class ReplicationControllerListComponent extends ResourceListWithStatuses
   constructor(
     private readonly replicationController_: NamespacedResourceService<ReplicationControllerList>,
     notifications: NotificationsService,
-    cdr: ChangeDetectorRef,
+    cdr: ChangeDetectorRef
   ) {
     super('replicationcontroller', notifications, cdr);
     this.id = ListIdentifier.replicationController;

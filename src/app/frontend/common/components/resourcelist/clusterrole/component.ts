@@ -15,7 +15,7 @@
 import {HttpParams} from '@angular/common/http';
 import {ChangeDetectionStrategy, ChangeDetectorRef, Component, Input} from '@angular/core';
 import {ClusterRole, ClusterRoleList} from '@api/backendapi';
-import {Observable} from 'rxjs/Observable';
+import {Observable} from 'rxjs';
 
 import {ResourceListBase} from '../../../resources/list';
 import {NotificationsService} from '../../../services/global/notifications';
@@ -35,7 +35,7 @@ export class ClusterRoleListComponent extends ResourceListBase<ClusterRoleList, 
   constructor(
     private readonly clusterRole_: ResourceService<ClusterRoleList>,
     notifications: NotificationsService,
-    cdr: ChangeDetectorRef,
+    cdr: ChangeDetectorRef
   ) {
     super('clusterrole', notifications, cdr);
     this.id = ListIdentifier.clusterRole;

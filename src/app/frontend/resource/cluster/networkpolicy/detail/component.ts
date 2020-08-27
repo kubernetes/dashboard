@@ -12,26 +12,26 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import 'rxjs/add/operator/startWith';
-
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {NetworkPolicyDetail} from '@api/backendapi';
-import {Subscription} from 'rxjs/Subscription';
+import {dump} from 'js-yaml';
+import {Subject} from 'rxjs';
+import {takeUntil} from 'rxjs/operators';
 
 import {ActionbarService, ResourceMeta} from '../../../../common/services/global/actionbar';
 import {NotificationsService} from '../../../../common/services/global/notifications';
 import {EndpointManager, Resource} from '../../../../common/services/resource/endpoint';
 import {NamespacedResourceService} from '../../../../common/services/resource/resource';
-import {dump} from 'js-yaml';
 
 @Component({
   selector: 'kd-network-policy-detail',
   templateUrl: './template.html',
 })
 export class NetworkPolicyDetailComponent implements OnInit, OnDestroy {
-  private networkPolicySubscription_: Subscription;
   private readonly endpoint_ = EndpointManager.resource(Resource.networkPolicy, true);
+  private readonly _unsubscribe = new Subject<void>();
+
   networkPolicy: NetworkPolicyDetail;
   isInitialized = false;
 
@@ -39,15 +39,16 @@ export class NetworkPolicyDetailComponent implements OnInit, OnDestroy {
     private readonly networkPolicy_: NamespacedResourceService<NetworkPolicyDetail>,
     private readonly actionbar_: ActionbarService,
     private readonly activatedRoute_: ActivatedRoute,
-    private readonly notifications_: NotificationsService,
+    private readonly notifications_: NotificationsService
   ) {}
 
   ngOnInit(): void {
     const resourceName = this.activatedRoute_.snapshot.params.resourceName;
     const resourceNamespace = this.activatedRoute_.snapshot.params.resourceNamespace;
 
-    this.networkPolicySubscription_ = this.networkPolicy_
+    this.networkPolicy_
       .get(this.endpoint_.detail(), resourceName, resourceNamespace)
+      .pipe(takeUntil(this._unsubscribe))
       .subscribe((d: NetworkPolicyDetail) => {
         this.networkPolicy = d;
         this.notifications_.pushErrors(d.errors);
@@ -57,7 +58,8 @@ export class NetworkPolicyDetailComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.networkPolicySubscription_.unsubscribe();
+    this._unsubscribe.next();
+    this._unsubscribe.complete();
     this.actionbar_.onDetailsLeave.emit();
   }
 

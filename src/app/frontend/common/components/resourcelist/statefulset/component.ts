@@ -15,7 +15,7 @@
 import {HttpParams} from '@angular/common/http';
 import {ChangeDetectionStrategy, ChangeDetectorRef, Component, Input} from '@angular/core';
 import {Event, Metric, StatefulSet, StatefulSetList} from '@api/backendapi';
-import {Observable} from 'rxjs/Observable';
+import {Observable} from 'rxjs';
 import {ResourceListWithStatuses} from '../../../resources/list';
 import {NotificationsService} from '../../../services/global/notifications';
 import {EndpointManager, Resource} from '../../../services/resource/endpoint';
@@ -36,7 +36,7 @@ export class StatefulSetListComponent extends ResourceListWithStatuses<StatefulS
   constructor(
     private readonly statefulSet_: NamespacedResourceService<StatefulSetList>,
     notifications: NotificationsService,
-    cdr: ChangeDetectorRef,
+    cdr: ChangeDetectorRef
   ) {
     super('statefulset', notifications, cdr);
     this.id = ListIdentifier.statefulSet;

@@ -58,7 +58,7 @@ export class NamespaceSelectorComponent implements OnInit, OnDestroy {
     private readonly kdState_: KdStateService,
     private readonly notifications_: NotificationsService,
     private readonly _activatedRoute: ActivatedRoute,
-    private readonly _historyService: HistoryService,
+    private readonly _historyService: HistoryService
   ) {}
 
   ngOnInit(): void {
@@ -82,7 +82,7 @@ export class NamespaceSelectorComponent implements OnInit, OnDestroy {
     this.router_.events
       .pipe(
         filter(event => event instanceof NavigationEnd),
-        distinctUntilChanged(),
+        distinctUntilChanged()
       )
       .subscribe(() => {
         this.resourceNamespaceParam = this._getCurrentResourceNamespaceParam();
@@ -166,7 +166,7 @@ export class NamespaceSelectorComponent implements OnInit, OnDestroy {
         () => {},
         () => {
           this.onNamespaceLoaded_();
-        },
+        }
       );
   }
 

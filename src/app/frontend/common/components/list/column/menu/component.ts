@@ -50,7 +50,7 @@ export class MenuComponent implements ActionColumn {
     private readonly verber_: VerberService,
     private readonly router_: Router,
     private readonly kdState_: KdStateService,
-    private readonly pinner_: PinnerService,
+    private readonly pinner_: PinnerService
   ) {}
 
   setObjectMeta(objectMeta: ObjectMeta): void {
@@ -111,7 +111,7 @@ export class MenuComponent implements ActionColumn {
       this.objectMeta.name,
       this.objectMeta.namespace,
       this.displayName ? this.displayName : this.objectMeta.name,
-      this.namespaced,
+      this.namespaced
     );
   }
 

@@ -32,7 +32,7 @@ export class TitleService {
       () => {
         this.clusterName = '';
         this.apply_();
-      },
+      }
     );
   }
 

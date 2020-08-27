@@ -15,21 +15,23 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {SecretDetail} from '@api/backendapi';
-import {Subscription} from 'rxjs/Subscription';
+import {Subject} from 'rxjs';
+import {takeUntil} from 'rxjs/operators';
+import {HiddenPropertyMode} from '../../../../common/components/hiddenproperty/component';
 
 import {ActionbarService, ResourceMeta} from '../../../../common/services/global/actionbar';
 import {NotificationsService} from '../../../../common/services/global/notifications';
 import {EndpointManager, Resource} from '../../../../common/services/resource/endpoint';
 import {NamespacedResourceService} from '../../../../common/services/resource/resource';
-import {HiddenPropertyMode} from '../../../../common/components/hiddenproperty/component';
 
 @Component({
   selector: 'kd-secret-detail',
   templateUrl: './template.html',
 })
 export class SecretDetailComponent implements OnInit, OnDestroy {
-  private secretSubscription_: Subscription;
   private readonly endpoint_ = EndpointManager.resource(Resource.secret, true);
+  private readonly _unsubscribe = new Subject<void>();
+
   secret: SecretDetail;
   isInitialized = false;
   HiddenPropertyMode = HiddenPropertyMode;
@@ -38,15 +40,16 @@ export class SecretDetailComponent implements OnInit, OnDestroy {
     private readonly secret_: NamespacedResourceService<SecretDetail>,
     private readonly actionbar_: ActionbarService,
     private readonly activatedRoute_: ActivatedRoute,
-    private readonly notifications_: NotificationsService,
+    private readonly notifications_: NotificationsService
   ) {}
 
   ngOnInit(): void {
     const resourceName = this.activatedRoute_.snapshot.params.resourceName;
     const resourceNamespace = this.activatedRoute_.snapshot.params.resourceNamespace;
 
-    this.secretSubscription_ = this.secret_
+    this.secret_
       .get(this.endpoint_.detail(), resourceName, resourceNamespace)
+      .pipe(takeUntil(this._unsubscribe))
       .subscribe((d: SecretDetail) => {
         this.secret = d;
         this.notifications_.pushErrors(d.errors);
@@ -56,7 +59,8 @@ export class SecretDetailComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.secretSubscription_.unsubscribe();
+    this._unsubscribe.next();
+    this._unsubscribe.complete();
     this.actionbar_.onDetailsLeave.emit();
   }
 

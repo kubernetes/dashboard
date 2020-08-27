@@ -31,7 +31,7 @@ export class ClientPluginLoaderService extends PluginLoaderService {
       window.define(externalKey, [], () => {
         // @ts-ignore
         return PLUGIN_EXTERNALS_MAP[externalKey];
-      }),
+      })
     );
   }
 

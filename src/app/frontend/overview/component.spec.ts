@@ -133,7 +133,7 @@ describe('OverviewComponent', () => {
       podRatio: Helper.getResourceRatio(
         mockPodsData.status,
         mockPodsData.listMeta.totalItems,
-        ResourceRatioModes.Completable,
+        ResourceRatioModes.Completable
       ),
     });
 
@@ -157,7 +157,7 @@ describe('OverviewComponent', () => {
       cronJobRatio: Helper.getResourceRatio(
         mockCronJobsData.status,
         mockCronJobsData.listMeta.totalItems,
-        ResourceRatioModes.Suspendable,
+        ResourceRatioModes.Suspendable
       ),
     });
 

@@ -36,7 +36,7 @@ export class CRDDetailComponent implements OnInit, OnDestroy {
     private readonly crd_: ResourceService<CRDDetail>,
     private readonly actionbar_: ActionbarService,
     private readonly activatedRoute_: ActivatedRoute,
-    private readonly notifications_: NotificationsService,
+    private readonly notifications_: NotificationsService
   ) {}
 
   ngOnInit(): void {

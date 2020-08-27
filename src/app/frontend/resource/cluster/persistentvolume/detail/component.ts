@@ -16,7 +16,8 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {MatTableDataSource} from '@angular/material/table';
 import {ActivatedRoute} from '@angular/router';
 import {CapacityItem, PersistentVolumeDetail} from '@api/backendapi';
-import {Subscription} from 'rxjs/Subscription';
+import {Subject} from 'rxjs';
+import {takeUntil} from 'rxjs/operators';
 
 import {ActionbarService, ResourceMeta} from '../../../../common/services/global/actionbar';
 import {NotificationsService} from '../../../../common/services/global/notifications';
@@ -28,8 +29,9 @@ import {ResourceService} from '../../../../common/services/resource/resource';
   templateUrl: './template.html',
 })
 export class PersistentVolumeDetailComponent implements OnInit, OnDestroy {
-  private persistentVolumeSubscription_: Subscription;
   private readonly endpoint_ = EndpointManager.resource(Resource.persistentVolume);
+  private readonly _unsubscribe = new Subject<void>();
+
   persistentVolume: PersistentVolumeDetail;
   isInitialized = false;
 
@@ -37,14 +39,15 @@ export class PersistentVolumeDetailComponent implements OnInit, OnDestroy {
     private readonly persistentVolume_: ResourceService<PersistentVolumeDetail>,
     private readonly actionbar_: ActionbarService,
     private readonly activatedRoute_: ActivatedRoute,
-    private readonly notifications_: NotificationsService,
+    private readonly notifications_: NotificationsService
   ) {}
 
   ngOnInit(): void {
     const resourceName = this.activatedRoute_.snapshot.params.resourceName;
 
-    this.persistentVolumeSubscription_ = this.persistentVolume_
+    this.persistentVolume_
       .get(this.endpoint_.detail(), resourceName)
+      .pipe(takeUntil(this._unsubscribe))
       .subscribe((d: PersistentVolumeDetail) => {
         this.persistentVolume = d;
         this.notifications_.pushErrors(d.errors);
@@ -54,7 +57,8 @@ export class PersistentVolumeDetailComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.persistentVolumeSubscription_.unsubscribe();
+    this._unsubscribe.next();
+    this._unsubscribe.complete();
     this.actionbar_.onDetailsLeave.emit();
   }
 

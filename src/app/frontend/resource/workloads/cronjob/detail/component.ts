@@ -15,7 +15,8 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {CronJobDetail} from '@api/backendapi';
-import {Subscription} from 'rxjs/Subscription';
+import {Subject} from 'rxjs';
+import {takeUntil} from 'rxjs/operators';
 
 import {ActionbarService, ResourceMeta} from '../../../../common/services/global/actionbar';
 import {NotificationsService} from '../../../../common/services/global/notifications';
@@ -27,8 +28,9 @@ import {NamespacedResourceService} from '../../../../common/services/resource/re
   templateUrl: './template.html',
 })
 export class CronJobDetailComponent implements OnInit, OnDestroy {
-  private cronJobSubscription_: Subscription;
   private readonly endpoint_ = EndpointManager.resource(Resource.cronJob, true);
+  private readonly _unsubscribe = new Subject<void>();
+
   cronJob: CronJobDetail;
   isInitialized = false;
   eventListEndpoint: string;
@@ -39,7 +41,7 @@ export class CronJobDetailComponent implements OnInit, OnDestroy {
     private readonly cronJob_: NamespacedResourceService<CronJobDetail>,
     private readonly actionbar_: ActionbarService,
     private readonly activatedRoute_: ActivatedRoute,
-    private readonly notifications_: NotificationsService,
+    private readonly notifications_: NotificationsService
   ) {}
 
   ngOnInit(): void {
@@ -50,8 +52,9 @@ export class CronJobDetailComponent implements OnInit, OnDestroy {
     this.activeJobsEndpoint = this.endpoint_.child(resourceName, Resource.job, resourceNamespace);
     this.inactiveJobsEndpoint = this.activeJobsEndpoint + '?active=false';
 
-    this.cronJobSubscription_ = this.cronJob_
+    this.cronJob_
       .get(this.endpoint_.detail(), resourceName, resourceNamespace)
+      .pipe(takeUntil(this._unsubscribe))
       .subscribe((d: CronJobDetail) => {
         this.cronJob = d;
         this.notifications_.pushErrors(d.errors);
@@ -61,7 +64,8 @@ export class CronJobDetailComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.cronJobSubscription_.unsubscribe();
+    this._unsubscribe.next();
+    this._unsubscribe.complete();
     this.actionbar_.onDetailsLeave.emit();
   }
 }

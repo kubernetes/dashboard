@@ -5,13 +5,12 @@ const modifiedConfig = _.merge(
   {},
   gtsConfig,
   {
-    insertPragma: false,
-    printWidth: 120,
-    requirePragma: false,
+    // Print semicolons at the ends of statements.
     semi: true,
-    tabWidth: 2,
-    trailingComma: 'all',
-    useTabs: false,
+    // Include parentheses around a sole arrow function parameter (x => x).
+    arrowParens: 'avoid',
+    // Specify the line length that the printer will wrap on.
+    printWidth: 120,
   }
 )
 

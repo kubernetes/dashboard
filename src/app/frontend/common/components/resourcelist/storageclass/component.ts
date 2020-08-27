@@ -15,7 +15,7 @@
 import {HttpParams} from '@angular/common/http';
 import {ChangeDetectionStrategy, ChangeDetectorRef, Component, Input} from '@angular/core';
 import {StorageClass, StorageClassList} from '@api/backendapi';
-import {Observable} from 'rxjs/Observable';
+import {Observable} from 'rxjs';
 
 import {ResourceListBase} from '../../../resources/list';
 import {NotificationsService} from '../../../services/global/notifications';
@@ -35,7 +35,7 @@ export class StorageClassListComponent extends ResourceListBase<StorageClassList
   constructor(
     private readonly sc_: ResourceService<StorageClassList>,
     notifications: NotificationsService,
-    cdr: ChangeDetectorRef,
+    cdr: ChangeDetectorRef
   ) {
     super('storageclass', notifications, cdr);
     this.id = ListIdentifier.storageClass;

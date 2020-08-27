@@ -15,22 +15,24 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {NodeAddress, NodeDetail, NodeTaint} from '@api/backendapi';
-import {Subscription} from 'rxjs/Subscription';
+import {RatioItem} from '@api/frontendapi';
+import {Subject} from 'rxjs';
+import {takeUntil} from 'rxjs/operators';
+import {FormattedValue} from '../../../../common/components/graph/helper';
 
 import {ActionbarService, ResourceMeta} from '../../../../common/services/global/actionbar';
 import {NotificationsService} from '../../../../common/services/global/notifications';
 import {EndpointManager, Resource} from '../../../../common/services/resource/endpoint';
 import {ResourceService} from '../../../../common/services/resource/resource';
-import {RatioItem} from '@api/frontendapi';
-import {FormattedValue} from '../../../../common/components/graph/helper';
 
 @Component({
   selector: 'kd-node-detail',
   templateUrl: './template.html',
 })
 export class NodeDetailComponent implements OnInit, OnDestroy {
-  private nodeSubscription_: Subscription;
   private readonly endpoint_ = EndpointManager.resource(Resource.node);
+  private readonly _unsubscribe = new Subject<void>();
+
   node: NodeDetail;
   isInitialized = false;
   podListEndpoint: string;
@@ -52,7 +54,7 @@ export class NodeDetailComponent implements OnInit, OnDestroy {
     private readonly node_: ResourceService<NodeDetail>,
     private readonly actionbar_: ActionbarService,
     private readonly activatedRoute_: ActivatedRoute,
-    private readonly notifications_: NotificationsService,
+    private readonly notifications_: NotificationsService
   ) {}
 
   ngOnInit(): void {
@@ -61,17 +63,21 @@ export class NodeDetailComponent implements OnInit, OnDestroy {
     this.podListEndpoint = this.endpoint_.child(resourceName, Resource.pod);
     this.eventListEndpoint = this.endpoint_.child(resourceName, Resource.event);
 
-    this.nodeSubscription_ = this.node_.get(this.endpoint_.detail(), resourceName).subscribe((d: NodeDetail) => {
-      this.node = d;
-      this._getAllocation();
-      this.notifications_.pushErrors(d.errors);
-      this.actionbar_.onInit.emit(new ResourceMeta('Node', d.objectMeta, d.typeMeta));
-      this.isInitialized = true;
-    });
+    this.node_
+      .get(this.endpoint_.detail(), resourceName)
+      .pipe(takeUntil(this._unsubscribe))
+      .subscribe((d: NodeDetail) => {
+        this.node = d;
+        this._getAllocation();
+        this.notifications_.pushErrors(d.errors);
+        this.actionbar_.onInit.emit(new ResourceMeta('Node', d.objectMeta, d.typeMeta));
+        this.isInitialized = true;
+      });
   }
 
   ngOnDestroy(): void {
-    this.nodeSubscription_.unsubscribe();
+    this._unsubscribe.next();
+    this._unsubscribe.complete();
     this.actionbar_.onDetailsLeave.emit();
   }
 

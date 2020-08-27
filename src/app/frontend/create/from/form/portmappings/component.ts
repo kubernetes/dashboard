@@ -105,7 +105,7 @@ export class PortMappingsComponent implements OnInit, ControlValueAccessor {
       first(() => !this.portMappingForm.pending),
       map(() => {
         return this.portMappingForm.invalid ? {error: true} : null;
-      }),
+      })
     );
   }
 
