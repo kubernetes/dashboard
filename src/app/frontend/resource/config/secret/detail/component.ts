@@ -30,7 +30,7 @@ import {NamespacedResourceService} from '../../../../common/services/resource/re
 })
 export class SecretDetailComponent implements OnInit, OnDestroy {
   private readonly endpoint_ = EndpointManager.resource(Resource.secret, true);
-  private readonly _unsubscribe = new Subject<void>();
+  private readonly unsubscribe_ = new Subject<void>();
 
   secret: SecretDetail;
   isInitialized = false;
@@ -49,7 +49,7 @@ export class SecretDetailComponent implements OnInit, OnDestroy {
 
     this.secret_
       .get(this.endpoint_.detail(), resourceName, resourceNamespace)
-      .pipe(takeUntil(this._unsubscribe))
+      .pipe(takeUntil(this.unsubscribe_))
       .subscribe((d: SecretDetail) => {
         this.secret = d;
         this.notifications_.pushErrors(d.errors);
@@ -59,8 +59,8 @@ export class SecretDetailComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this._unsubscribe.next();
-    this._unsubscribe.complete();
+    this.unsubscribe_.next();
+    this.unsubscribe_.complete();
     this.actionbar_.onDetailsLeave.emit();
   }
 

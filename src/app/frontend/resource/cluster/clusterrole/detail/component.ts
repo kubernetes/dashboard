@@ -28,7 +28,7 @@ import {ResourceService} from '../../../../common/services/resource/resource';
   templateUrl: './template.html',
 })
 export class ClusterRoleDetailComponent implements OnInit, OnDestroy {
-  private readonly _unsubscribe = new Subject<void>();
+  private readonly unsubscribe_ = new Subject<void>();
   private readonly endpoint_ = EndpointManager.resource(Resource.clusterRole);
 
   clusterRole: ClusterRoleDetail;
@@ -46,7 +46,7 @@ export class ClusterRoleDetailComponent implements OnInit, OnDestroy {
 
     this.clusterRole_
       .get(this.endpoint_.detail(), resourceName)
-      .pipe(takeUntil(this._unsubscribe))
+      .pipe(takeUntil(this.unsubscribe_))
       .subscribe((d: ClusterRoleDetail) => {
         this.clusterRole = d;
         this.notifications_.pushErrors(d.errors);
@@ -56,8 +56,8 @@ export class ClusterRoleDetailComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this._unsubscribe.next();
-    this._unsubscribe.complete();
+    this.unsubscribe_.next();
+    this.unsubscribe_.complete();
     this.actionbar_.onDetailsLeave.emit();
   }
 }

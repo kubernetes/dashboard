@@ -31,7 +31,7 @@ import {ResourceService} from '../../../../common/services/resource/resource';
 })
 export class NodeDetailComponent implements OnInit, OnDestroy {
   private readonly endpoint_ = EndpointManager.resource(Resource.node);
-  private readonly _unsubscribe = new Subject<void>();
+  private readonly unsubscribe_ = new Subject<void>();
 
   node: NodeDetail;
   isInitialized = false;
@@ -65,7 +65,7 @@ export class NodeDetailComponent implements OnInit, OnDestroy {
 
     this.node_
       .get(this.endpoint_.detail(), resourceName)
-      .pipe(takeUntil(this._unsubscribe))
+      .pipe(takeUntil(this.unsubscribe_))
       .subscribe((d: NodeDetail) => {
         this.node = d;
         this._getAllocation();
@@ -76,8 +76,8 @@ export class NodeDetailComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this._unsubscribe.next();
-    this._unsubscribe.complete();
+    this.unsubscribe_.next();
+    this.unsubscribe_.complete();
     this.actionbar_.onDetailsLeave.emit();
   }
 

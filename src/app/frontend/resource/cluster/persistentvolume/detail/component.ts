@@ -30,7 +30,7 @@ import {ResourceService} from '../../../../common/services/resource/resource';
 })
 export class PersistentVolumeDetailComponent implements OnInit, OnDestroy {
   private readonly endpoint_ = EndpointManager.resource(Resource.persistentVolume);
-  private readonly _unsubscribe = new Subject<void>();
+  private readonly unsubscribe_ = new Subject<void>();
 
   persistentVolume: PersistentVolumeDetail;
   isInitialized = false;
@@ -47,7 +47,7 @@ export class PersistentVolumeDetailComponent implements OnInit, OnDestroy {
 
     this.persistentVolume_
       .get(this.endpoint_.detail(), resourceName)
-      .pipe(takeUntil(this._unsubscribe))
+      .pipe(takeUntil(this.unsubscribe_))
       .subscribe((d: PersistentVolumeDetail) => {
         this.persistentVolume = d;
         this.notifications_.pushErrors(d.errors);
@@ -57,8 +57,8 @@ export class PersistentVolumeDetailComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this._unsubscribe.next();
-    this._unsubscribe.complete();
+    this.unsubscribe_.next();
+    this.unsubscribe_.complete();
     this.actionbar_.onDetailsLeave.emit();
   }
 

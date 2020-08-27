@@ -29,7 +29,7 @@ import {NamespacedResourceService} from '../../../../common/services/resource/re
 })
 export class IngressDetailComponent implements OnInit, OnDestroy {
   private readonly endpoint_ = EndpointManager.resource(Resource.ingress, true);
-  private readonly _unsubscribe = new Subject<void>();
+  private readonly unsubscribe_ = new Subject<void>();
 
   ingress: IngressDetail;
   isInitialized = false;
@@ -47,7 +47,7 @@ export class IngressDetailComponent implements OnInit, OnDestroy {
 
     this.ingress_
       .get(this.endpoint_.detail(), resourceName, resourceNamespace)
-      .pipe(takeUntil(this._unsubscribe))
+      .pipe(takeUntil(this.unsubscribe_))
       .subscribe((d: IngressDetail) => {
         this.ingress = d;
         this.notifications_.pushErrors(d.errors);
@@ -57,8 +57,8 @@ export class IngressDetailComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this._unsubscribe.next();
-    this._unsubscribe.complete();
+    this.unsubscribe_.next();
+    this.unsubscribe_.complete();
     this.actionbar_.onDetailsLeave.emit();
   }
 }

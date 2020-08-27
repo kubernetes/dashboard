@@ -29,7 +29,7 @@ import {NamespacedResourceService} from '../../../../common/services/resource/re
 })
 export class DaemonSetDetailComponent implements OnInit, OnDestroy {
   private readonly endpoint_ = EndpointManager.resource(Resource.daemonSet, true);
-  private readonly _unsubscribe = new Subject<void>();
+  private readonly unsubscribe_ = new Subject<void>();
 
   daemonSet: DaemonSetDetail;
   isInitialized = false;
@@ -54,7 +54,7 @@ export class DaemonSetDetailComponent implements OnInit, OnDestroy {
 
     this.daemonSet_
       .get(this.endpoint_.detail(), resourceName, resourceNamespace)
-      .pipe(takeUntil(this._unsubscribe))
+      .pipe(takeUntil(this.unsubscribe_))
       .subscribe((d: DaemonSetDetail) => {
         this.daemonSet = d;
         this.notifications_.pushErrors(d.errors);
@@ -64,8 +64,8 @@ export class DaemonSetDetailComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this._unsubscribe.next();
-    this._unsubscribe.complete();
+    this.unsubscribe_.next();
+    this.unsubscribe_.complete();
     this.actionbar_.onDetailsLeave.emit();
   }
 }

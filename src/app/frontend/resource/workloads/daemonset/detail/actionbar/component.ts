@@ -21,7 +21,7 @@ import {ActionbarService, ResourceMeta} from '../../../../../common/services/glo
   templateUrl: './template.html',
 })
 export class ActionbarComponent implements OnInit {
-  private readonly _unsubscribe = new Subject<void>();
+  private readonly unsubscribe_ = new Subject<void>();
 
   isInitialized = false;
   resourceMeta: ResourceMeta;
@@ -36,7 +36,7 @@ export class ActionbarComponent implements OnInit {
   }
 
   ngOnDestroy(): void {
-    this._unsubscribe.next();
-    this._unsubscribe.complete();
+    this.unsubscribe_.next();
+    this.unsubscribe_.complete();
   }
 }

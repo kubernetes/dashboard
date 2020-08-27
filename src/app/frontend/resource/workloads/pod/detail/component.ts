@@ -30,7 +30,7 @@ import {NamespacedResourceService} from '../../../../common/services/resource/re
 })
 export class PodDetailComponent implements OnInit, OnDestroy {
   private readonly endpoint_ = EndpointManager.resource(Resource.pod, true);
-  private readonly _unsubscribe = new Subject<void>();
+  private readonly unsubscribe_ = new Subject<void>();
 
   pod: PodDetail;
   isInitialized = false;
@@ -54,7 +54,7 @@ export class PodDetailComponent implements OnInit, OnDestroy {
 
     this.pod_
       .get(this.endpoint_.detail(), resourceName, resourceNamespace)
-      .pipe(takeUntil(this._unsubscribe))
+      .pipe(takeUntil(this.unsubscribe_))
       .subscribe((d: PodDetail) => {
         this.pod = d;
         this.notifications_.pushErrors(d.errors);
@@ -64,8 +64,8 @@ export class PodDetailComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this._unsubscribe.next();
-    this._unsubscribe.complete();
+    this.unsubscribe_.next();
+    this.unsubscribe_.complete();
     this.actionbar_.onDetailsLeave.emit();
   }
 
