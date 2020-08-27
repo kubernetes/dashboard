@@ -35,7 +35,7 @@ export class RoleBindingListComponent extends ResourceListBase<RoleBindingList, 
   constructor(
     private readonly roleBinding_: NamespacedResourceService<RoleBindingList>,
     notifications: NotificationsService,
-    cdr: ChangeDetectorRef,
+    cdr: ChangeDetectorRef
   ) {
     super('rolebinding', notifications, cdr);
     this.id = ListIdentifier.roleBinding;

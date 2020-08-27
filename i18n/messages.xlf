@@ -425,11 +425,11 @@
           <context context-type="linenumber">24</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">../src/app/frontend/resource/workloads/replicationcontroller/detail/template.html</context>
+          <context context-type="sourcefile">../src/app/frontend/resource/workloads/replicaset/detail/template.html</context>
           <context context-type="linenumber">22</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">../src/app/frontend/resource/workloads/replicaset/detail/template.html</context>
+          <context context-type="sourcefile">../src/app/frontend/resource/workloads/replicationcontroller/detail/template.html</context>
           <context context-type="linenumber">22</context>
         </context-group>
         <context-group purpose="location">
@@ -600,26 +600,45 @@
           <context context-type="linenumber">101</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="53d3c87046022140381be2fc9b864d6fdd9f2cc8" datatype="html">
-        <source>Label Selector</source>
+      <trans-unit id="65f15d6396a9b96f745b7306df38ba538e190640" datatype="html">
+        <source>Pods: </source>
         <context-group purpose="location">
-          <context context-type="sourcefile">../src/app/frontend/resource/workloads/replicationcontroller/detail/template.html</context>
+          <context context-type="sourcefile">../src/app/frontend/resource/workloads/replicaset/detail/template.html</context>
+          <context context-type="linenumber">28</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/resource/workloads/deployment/detail/template.html</context>
+          <context context-type="linenumber">214</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="5de9d226db382155f482a557b832da6d63108112" datatype="html">
+        <source>Selector</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/resource/workloads/replicaset/detail/template.html</context>
+          <context context-type="linenumber">38</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/resource/workloads/daemonset/detail/template.html</context>
           <context context-type="linenumber">30</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">../src/app/frontend/resource/workloads/statefulset/detail/template.html</context>
-          <context context-type="linenumber">30</context>
+          <context context-type="sourcefile">../src/app/frontend/resource/workloads/deployment/detail/template.html</context>
+          <context context-type="linenumber">71</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/resource/discovery/service/detail/template.html</context>
+          <context context-type="linenumber">44</context>
         </context-group>
       </trans-unit>
       <trans-unit id="b73f7f5060fb22a1e9ec462b1bb02493fa3ab866" datatype="html">
         <source>Images</source>
         <context-group purpose="location">
-          <context context-type="sourcefile">../src/app/frontend/resource/workloads/replicationcontroller/detail/template.html</context>
-          <context context-type="linenumber">39</context>
-        </context-group>
-        <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/resource/workloads/replicaset/detail/template.html</context>
           <context context-type="linenumber">47</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/resource/workloads/replicationcontroller/detail/template.html</context>
+          <context context-type="linenumber">39</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/creator/template.html</context>
@@ -669,12 +688,12 @@
       <trans-unit id="318e1e7193512514e192cab4e4b6b722548b017b" datatype="html">
         <source>Init images</source>
         <context-group purpose="location">
-          <context context-type="sourcefile">../src/app/frontend/resource/workloads/replicationcontroller/detail/template.html</context>
-          <context context-type="linenumber">48</context>
-        </context-group>
-        <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/resource/workloads/replicaset/detail/template.html</context>
           <context context-type="linenumber">56</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/resource/workloads/replicationcontroller/detail/template.html</context>
+          <context context-type="linenumber">48</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/resource/workloads/daemonset/detail/template.html</context>
@@ -693,34 +712,15 @@
           <context context-type="linenumber">48</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="65f15d6396a9b96f745b7306df38ba538e190640" datatype="html">
-        <source>Pods: </source>
+      <trans-unit id="53d3c87046022140381be2fc9b864d6fdd9f2cc8" datatype="html">
+        <source>Label Selector</source>
         <context-group purpose="location">
-          <context context-type="sourcefile">../src/app/frontend/resource/workloads/replicaset/detail/template.html</context>
-          <context context-type="linenumber">28</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">../src/app/frontend/resource/workloads/deployment/detail/template.html</context>
-          <context context-type="linenumber">214</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="5de9d226db382155f482a557b832da6d63108112" datatype="html">
-        <source>Selector</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">../src/app/frontend/resource/workloads/replicaset/detail/template.html</context>
-          <context context-type="linenumber">38</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">../src/app/frontend/resource/workloads/daemonset/detail/template.html</context>
+          <context context-type="sourcefile">../src/app/frontend/resource/workloads/replicationcontroller/detail/template.html</context>
           <context context-type="linenumber">30</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">../src/app/frontend/resource/workloads/deployment/detail/template.html</context>
-          <context context-type="linenumber">71</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">../src/app/frontend/resource/discovery/service/detail/template.html</context>
-          <context context-type="linenumber">44</context>
+          <context context-type="sourcefile">../src/app/frontend/resource/workloads/statefulset/detail/template.html</context>
+          <context context-type="linenumber">30</context>
         </context-group>
       </trans-unit>
       <trans-unit id="5ca707824ab93066c7d9b44e1b8bf216725c2c22" datatype="html">

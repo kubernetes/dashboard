@@ -41,7 +41,7 @@ export class ClusterRoleBindingDetailComponent implements OnInit, OnDestroy {
     private readonly actionbar_: ActionbarService,
     private readonly route_: ActivatedRoute,
     private readonly notifications_: NotificationsService,
-    private readonly kdState_: KdStateService,
+    private readonly kdState_: KdStateService
   ) {}
 
   ngOnInit(): void {
@@ -68,7 +68,7 @@ export class ClusterRoleBindingDetailComponent implements OnInit, OnDestroy {
     return this.kdState_.href(
       this.clusterRoleBinding.roleRef.kind.toLowerCase(),
       this.clusterRoleBinding.roleRef.name,
-      this.clusterRoleBinding.objectMeta.namespace,
+      this.clusterRoleBinding.objectMeta.namespace
     );
   }
 }

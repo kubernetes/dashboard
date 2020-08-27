@@ -67,7 +67,7 @@ export class ChipsComponent implements OnInit, OnChanges {
   constructor(
     private readonly _globalSettingsService: GlobalSettingsService,
     private readonly _matDialog: MatDialog,
-    private readonly _changeDetectorRef: ChangeDetectorRef,
+    private readonly _changeDetectorRef: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
