@@ -2,10 +2,9 @@
 # Read more at: https://github.com/golangci/golangci-lint#config-file
 
 run:
-  deadline: 30m
+  timeout: 30m
   issues-exit-code: 1
   tests: true
-  modules-download-mode: readonly
 linters:
   disable-all: true
   enable:

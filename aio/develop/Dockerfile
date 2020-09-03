@@ -19,7 +19,7 @@
 
 # golang is based on debian:jessie
 # Specify version to clarify which version we use.
-FROM golang:1.13-buster
+FROM golang:1.15.1-buster
 
 # Install Node.js. Go is already installed.
 # A small tweak, apt-get update is already run by the nodejs setup script,
