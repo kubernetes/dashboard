@@ -11,11 +11,13 @@ For each of the following snippets for `ServiceAccount` and `ClusterRoleBinding`
 We are creating Service Account with name `admin-user` in namespace `kubernetes-dashboard` first.
 
 ```
+cat <<EOF | kubectl apply -f -
 apiVersion: v1
 kind: ServiceAccount
 metadata:
   name: admin-user
   namespace: kubernetes-dashboard
+EOF
 ```
 
 ## Creating a ClusterRoleBinding
@@ -23,9 +25,8 @@ metadata:
 In most cases after provisioning cluster using `kops`, `kubeadm` or any other popular tool, the `ClusterRole` `cluster-admin` already exists in the cluster. We can use it and create only `ClusterRoleBinding` for our `ServiceAccount`.
 If it does not exist then you need to create this role first and grant required privileges manually.
 
-**NOTE:** `apiVersion` of `ClusterRoleBinding` resource may differ between Kubernetes versions. Prior to Kubernetes `v1.8` the `apiVersion` was `rbac.authorization.k8s.io/v1beta1`.
-
 ```
+cat <<EOF | kubectl apply -f -
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
@@ -38,6 +39,7 @@ subjects:
 - kind: ServiceAccount
   name: admin-user
   namespace: kubernetes-dashboard
+EOF
 ```
 
 ## Getting a Bearer Token
@@ -81,7 +83,16 @@ Click `Sign in` button and that's it. You are now logged in as an admin.
 
 ![Overview](../../images/overview.png)
 
+## Clean up and next steps
+
+Remove the admin `ServiceAccount` and `ClusterRoleBinding`.
+
+```
+kubectl -n kubernetes-dashboard delete serviceaccount admin-user
+kubectl -n kubernetes-dashboard delete clusterrolebinding admin-user
+```
+
 In order to find out more about how to grant/deny permissions in Kubernetes read official [authentication](https://kubernetes.io/docs/reference/access-authn-authz/authentication/) & [authorization](https://kubernetes.io/docs/reference/access-authn-authz/authorization/) documentation.
 
 ----
-_Copyright 2019 [The Kubernetes Dashboard Authors](https://github.com/kubernetes/dashboard/graphs/contributors)_
+_Copyright 2020 [The Kubernetes Dashboard Authors](https://github.com/kubernetes/dashboard/graphs/contributors)_
