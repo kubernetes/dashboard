@@ -3,7 +3,32 @@ entries:
   kubernetes-dashboard:
   - apiVersion: v1
     appVersion: 2.0.3
-    created: "2020-09-08T17:56:51.403118678Z"
+    created: "2020-09-10T08:52:27.275313557Z"
+    dependencies:
+    - condition: metrics-server.enabled
+      name: metrics-server
+      repository: https://kubernetes-charts.storage.googleapis.com/
+      version: 2.11.1
+    description: General-purpose web UI for Kubernetes clusters
+    digest: dde574b7cf8f31adcb942cfb67cf643df219ec1ba1f5f305057d7ac404088037
+    home: https://github.com/kubernetes/dashboard
+    icon: https://raw.githubusercontent.com/kubernetes/kubernetes/master/logo/logo.svg
+    keywords:
+    - kubernetes
+    - dashboard
+    kubeVersion: '>=1.10.0-0'
+    maintainers:
+    - email: cdesaintmartin@wiremind.fr
+      name: desaintmartin
+    name: kubernetes-dashboard
+    sources:
+    - https://github.com/kubernetes/dashboard
+    urls:
+    - kubernetes-dashboard-2.6.0.tgz
+    version: 2.6.0
+  - apiVersion: v1
+    appVersion: 2.0.3
+    created: "2020-09-10T08:52:27.272345647Z"
     dependencies:
     - condition: metrics-server.enabled
       name: metrics-server
@@ -28,7 +53,7 @@ entries:
     version: 2.5.0
   - apiVersion: v1
     appVersion: 2.0.3
-    created: "2020-09-08T17:56:51.400552736Z"
+    created: "2020-09-10T08:52:27.269809239Z"
     dependencies:
     - condition: metrics-server.enabled
       name: metrics-server
@@ -53,7 +78,7 @@ entries:
     version: 2.3.0
   - apiVersion: v1
     appVersion: 2.0.3
-    created: "2020-09-08T17:56:51.398640406Z"
+    created: "2020-09-10T08:52:27.267675332Z"
     dependencies:
     - condition: metrics-server.enabled
       name: metrics-server
@@ -78,7 +103,7 @@ entries:
     version: 2.2.0
   - apiVersion: v1
     appVersion: 2.0.3
-    created: "2020-09-08T17:56:51.396712975Z"
+    created: "2020-09-10T08:52:27.265832426Z"
     dependencies:
     - condition: metrics-server.enabled
       name: metrics-server
@@ -103,7 +128,7 @@ entries:
     version: 2.1.1
   - apiVersion: v1
     appVersion: 2.0.3
-    created: "2020-09-08T17:56:51.394727742Z"
+    created: "2020-09-10T08:52:27.26398692Z"
     dependencies:
     - condition: metrics-server.enabled
       name: metrics-server
@@ -128,7 +153,7 @@ entries:
     version: 2.0.3
   - apiVersion: v1
     appVersion: 2.0.1
-    created: "2020-09-08T17:56:51.392810011Z"
+    created: "2020-09-10T08:52:27.261836813Z"
     dependencies:
     - condition: metrics-server.enabled
       name: metrics-server
@@ -151,4 +176,4 @@ entries:
     urls:
     - kubernetes-dashboard-2.0.1.tgz
     version: 2.0.1
-generated: "2020-09-08T17:56:51.390334972Z"
+generated: "2020-09-10T08:52:27.259088404Z"
