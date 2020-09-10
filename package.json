@@ -255,6 +255,7 @@
   },
   "eslintIgnore": [
     "node_modules/*",
-    "aio/*"
+    "aio/*",
+    "src/app/frontend/common/services/global/history.ts"
   ]
 }
