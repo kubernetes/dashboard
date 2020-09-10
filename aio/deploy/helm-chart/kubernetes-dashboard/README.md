@@ -79,6 +79,8 @@ Parameter                                       | Description                   
 `labels`                                        | Labels for deployment                                                                                                            | `{}`
 `extraArgs`                                     | Additional container arguments                                                                                                   | `[]`
 `extraEnv`                                      | Additional container environment variables                                                                                       | `[]`
+`extraVolumes`                                  | Additional volumes                                                                                                               | `[]`
+`extraVolumeMounts`                             | Additional container volumeMounts                                                                                                | `[]`
 `podAnnotations`                                | Annotations to be added to pods                                                                                                  | `seccomp.security.alpha.kubernetes.io/pod: 'runtime/default'}`
 `podLabels`                                     | Labels to be added to pods                                                                                                       | `{}`
 `nodeSelector`                                  | node labels for pod assignment                                                                                                   | `{}`
