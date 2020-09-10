@@ -45,6 +45,6 @@ export class LocalSettingsService {
   }
 
   updateCookie_(): void {
-    this.cookies_.set(this.cookieName_, JSON.stringify(this.settings_), null, null, null, false, 'Strict');
+    this.cookies_.set(this.cookieName_, JSON.stringify(this.settings_), 14, null, null, false, 'Strict');
   }
 }
