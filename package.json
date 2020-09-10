@@ -166,7 +166,7 @@
     "husky": "4.3.0",
     "jasmine-core": "3.6.0",
     "jasmine-spec-reporter": "5.0.2",
-    "js-beautify": "1.11.0",
+    "js-beautify": "1.13.0",
     "karma": "5.2.2",
     "karma-chrome-launcher": "3.1.0",
     "karma-cli": "2.0.0",
