@@ -16,22 +16,6 @@ limitations under the License.
 
 <div [hidden]="shouldShowZeroState()">
   <div class="kd-card-group-header kd-muted"
-       [hidden]="!hasCluster()"
-       i18n>Cluster</div>
-  <div>
-    <kd-cluster-role-list (onchange)="onListUpdate($event)"
-                          [hideable]="true"></kd-cluster-role-list>
-    <kd-namespace-list (onchange)="onListUpdate($event)"
-                       [hideable]="true"></kd-namespace-list>
-    <kd-node-list (onchange)="onListUpdate($event)"
-                  [hideable]="true"></kd-node-list>
-    <kd-persistent-volume-list (onchange)="onListUpdate($event)"
-                               [hideable]="true"></kd-persistent-volume-list>
-    <kd-storage-class-list (onchange)="onListUpdate($event)"
-                           [hideable]="true"></kd-storage-class-list>
-  </div>
-
-  <div class="kd-card-group-header kd-muted"
        [hidden]="!hasWorkloads()"
        i18n>Workloads</div>
   <div>
@@ -55,7 +39,7 @@ limitations under the License.
 
   <div class="kd-card-group-header kd-muted"
        [hidden]="!hasDiscovery()"
-       i18n>Discovery and Load Balancing</div>
+       i18n>Service</div>
   <div>
     <kd-ingress-list (onchange)="onListUpdate($event)"
                      [hideable]="true"></kd-ingress-list>
@@ -73,6 +57,32 @@ limitations under the License.
                                [hideable]="true"></kd-persistent-volume-list>
     <kd-secret-list (onchange)="onListUpdate($event)"
                     [hideable]="true"></kd-secret-list>
+    <kd-storage-class-list (onchange)="onListUpdate($event)"
+                           [hideable]="true"></kd-storage-class-list>
+  </div>
+
+  <div class="kd-card-group-header kd-muted"
+       [hidden]="!hasCluster()"
+       i18n>Cluster</div>
+  <div>
+    <kd-cluster-role-binding-list (onchange)="onListUpdate($event)"
+                                  [hideable]="true"></kd-cluster-role-binding-list>
+    <kd-cluster-role-list (onchange)="onListUpdate($event)"
+                          [hideable]="true"></kd-cluster-role-list>
+    <kd-namespace-list (onchange)="onListUpdate($event)"
+                       [hideable]="true"></kd-namespace-list>
+    <kd-network-policy-list (onchange)="onListUpdate($event)"
+                            [hideable]="true"></kd-network-policy-list>
+    <kd-node-list (onchange)="onListUpdate($event)"
+                  [hideable]="true"></kd-node-list>
+    <kd-persistent-volume-list (onchange)="onListUpdate($event)"
+                               [hideable]="true"></kd-persistent-volume-list>
+    <kd-role-binding-list (onchange)="onListUpdate($event)"
+                          [hideable]="true"></kd-role-binding-list>
+    <kd-role-list (onchange)="onListUpdate($event)"
+                  [hideable]="true"></kd-role-list>
+    <kd-service-account-list (onchange)="onListUpdate($event)"
+                             [hideable]="true"></kd-service-account-list>
   </div>
 </div>
 

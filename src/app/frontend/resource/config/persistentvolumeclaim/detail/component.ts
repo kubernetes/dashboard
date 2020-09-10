@@ -15,7 +15,8 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {PersistentVolumeClaimDetail} from '@api/backendapi';
-import {Subscription} from 'rxjs/Subscription';
+import {Subject} from 'rxjs';
+import {takeUntil} from 'rxjs/operators';
 
 import {ActionbarService, ResourceMeta} from '../../../../common/services/global/actionbar';
 import {NotificationsService} from '../../../../common/services/global/notifications';
@@ -27,8 +28,9 @@ import {NamespacedResourceService} from '../../../../common/services/resource/re
   templateUrl: './template.html',
 })
 export class PersistentVolumeClaimDetailComponent implements OnInit, OnDestroy {
-  private persistentVolumeClaimSubscription_: Subscription;
   private readonly endpoint_ = EndpointManager.resource(Resource.persistentVolumeClaim, true);
+  private readonly unsubscribe_ = new Subject<void>();
+
   persistentVolumeClaim: PersistentVolumeClaimDetail;
   isInitialized = false;
 
@@ -36,15 +38,16 @@ export class PersistentVolumeClaimDetailComponent implements OnInit, OnDestroy {
     private readonly persistentVolumeClaim_: NamespacedResourceService<PersistentVolumeClaimDetail>,
     private readonly actionbar_: ActionbarService,
     private readonly activatedRoute_: ActivatedRoute,
-    private readonly notifications_: NotificationsService,
+    private readonly notifications_: NotificationsService
   ) {}
 
   ngOnInit(): void {
     const resourceName = this.activatedRoute_.snapshot.params.resourceName;
     const resourceNamespace = this.activatedRoute_.snapshot.params.resourceNamespace;
 
-    this.persistentVolumeClaimSubscription_ = this.persistentVolumeClaim_
+    this.persistentVolumeClaim_
       .get(this.endpoint_.detail(), resourceName, resourceNamespace)
+      .pipe(takeUntil(this.unsubscribe_))
       .subscribe((d: PersistentVolumeClaimDetail) => {
         this.persistentVolumeClaim = d;
         this.notifications_.pushErrors(d.errors);
@@ -54,7 +57,8 @@ export class PersistentVolumeClaimDetailComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.persistentVolumeClaimSubscription_.unsubscribe();
+    this.unsubscribe_.next();
+    this.unsubscribe_.complete();
     this.actionbar_.onDetailsLeave.emit();
   }
 }

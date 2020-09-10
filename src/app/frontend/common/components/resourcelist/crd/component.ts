@@ -35,7 +35,7 @@ export class CRDListComponent extends ResourceListWithStatuses<CRDList, CRD> {
   constructor(
     private readonly crd_: ResourceService<CRDList>,
     notifications: NotificationsService,
-    cdr: ChangeDetectorRef,
+    cdr: ChangeDetectorRef
   ) {
     super(Resource.crdFull, notifications, cdr);
     this.id = ListIdentifier.crd;
@@ -72,6 +72,10 @@ export class CRDListComponent extends ResourceListWithStatuses<CRDList, CRD> {
 
   isInSuccessState(resource: CRD): boolean {
     return resource.established === 'True';
+  }
+
+  getDisplayName(name: string): string {
+    return name.replace(/([A-Z]+)/g, ' $1').replace(/([A-Z][a-z])/g, ' $1');
   }
 
   getDisplayColumns(): string[] {

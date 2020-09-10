@@ -12,12 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import 'rxjs/add/operator/startWith';
-
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {ServiceAccountDetail} from '@api/backendapi';
-import {Subscription} from 'rxjs/Subscription';
+import {Subject} from 'rxjs';
+import {takeUntil} from 'rxjs/operators';
 
 import {ActionbarService, ResourceMeta} from '../../../../common/services/global/actionbar';
 import {NotificationsService} from '../../../../common/services/global/notifications';
@@ -29,8 +28,9 @@ import {NamespacedResourceService} from '../../../../common/services/resource/re
   templateUrl: './template.html',
 })
 export class ServiceAccountDetailComponent implements OnInit, OnDestroy {
-  private serviceAccountSubscription_: Subscription;
   private readonly endpoint_ = EndpointManager.resource(Resource.serviceAccount, true);
+  private readonly unsubscribe_ = new Subject<void>();
+
   secretListEndpoint: string;
   imagePullSecretListEndpoint: string;
   serviceAccount: ServiceAccountDetail;
@@ -40,7 +40,7 @@ export class ServiceAccountDetailComponent implements OnInit, OnDestroy {
     private readonly serviceAccount_: NamespacedResourceService<ServiceAccountDetail>,
     private readonly actionbar_: ActionbarService,
     private readonly activatedRoute_: ActivatedRoute,
-    private readonly notifications_: NotificationsService,
+    private readonly notifications_: NotificationsService
   ) {}
 
   ngOnInit(): void {
@@ -50,8 +50,9 @@ export class ServiceAccountDetailComponent implements OnInit, OnDestroy {
     this.secretListEndpoint = this.endpoint_.child(resourceName, Resource.secret, resourceNamespace);
     this.imagePullSecretListEndpoint = this.endpoint_.child(resourceName, Resource.imagePullSecret, resourceNamespace);
 
-    this.serviceAccountSubscription_ = this.serviceAccount_
+    this.serviceAccount_
       .get(this.endpoint_.detail(), resourceName, resourceNamespace)
+      .pipe(takeUntil(this.unsubscribe_))
       .subscribe((d: ServiceAccountDetail) => {
         this.serviceAccount = d;
         this.notifications_.pushErrors(d.errors);
@@ -61,7 +62,8 @@ export class ServiceAccountDetailComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.serviceAccountSubscription_.unsubscribe();
+    this.unsubscribe_.next();
+    this.unsubscribe_.complete();
     this.actionbar_.onDetailsLeave.emit();
   }
 }

@@ -79,6 +79,8 @@ Parameter                                       | Description                   
 `labels`                                        | Labels for deployment                                                                                                            | `{}`
 `extraArgs`                                     | Additional container arguments                                                                                                   | `[]`
 `extraEnv`                                      | Additional container environment variables                                                                                       | `[]`
+`extraVolumes`                                  | Additional volumes                                                                                                               | `[]`
+`extraVolumeMounts`                             | Additional container volumeMounts                                                                                                | `[]`
 `podAnnotations`                                | Annotations to be added to pods                                                                                                  | `seccomp.security.alpha.kubernetes.io/pod: 'runtime/default'}`
 `podLabels`                                     | Labels to be added to pods                                                                                                       | `{}`
 `nodeSelector`                                  | node labels for pod assignment                                                                                                   | `{}`
@@ -91,8 +93,8 @@ Parameter                                       | Description                   
 `service.externalPort`                          | Dashboard external port                                                                                                          | `443`
 `service.loadBalancerSourceRanges`              | list of IP CIDRs allowed access to load balancer (if supported)                                                                  | `nil`
 `service.loadBalancerIP`                        | A user-specified IP address for load balancer to use as External IP (if supported)                                               | `nil`
-`service.clusterServiceLabel.enabled            | Enable the cluster-service label                                                                                                 | `true`
-`service.clusterServiceLabel.key                | The cluster-service label key                                                                                                    | `kubernetes.io/cluster-service`
+`service.clusterServiceLabel.enabled`           | Enable the cluster-service label                                                                                                 | `true`
+`service.clusterServiceLabel.key`               | The cluster-service label key                                                                                                    | `kubernetes.io/cluster-service`
 `ingress.annotations`                           | Specify ingress class                                                                                                            | `kubernetes.io/ingress.class: nginx`
 `ingress.labels`                                | Add custom labels                                                                                                                | `[]`
 `ingress.enabled`                               | Enable ingress controller resource                                                                                               | `false`
@@ -100,6 +102,7 @@ Parameter                                       | Description                   
 `ingress.customPaths`                           | Override the default ingress paths                                                                                               | `[]`
 `ingress.hosts`                                 | Dashboard Hostnames                                                                                                              | `nil`
 `ingress.tls`                                   | Ingress TLS configuration                                                                                                        | `[]`
+`settings`                                      | Global dashboard settings | `{}`
 `metricsScraper.enabled`                        | Wether to enable dashboard-metrics-scraper                                                                                       | `false`
 `metricsScraper.image.repository`               | Repository for metrics-scraper image                                                                                             | `kubernetesui/metrics-scraper`
 `metricsScraper.image.tag`                      | Repository for metrics-scraper image tag                                                                                         | `v1.0.4`

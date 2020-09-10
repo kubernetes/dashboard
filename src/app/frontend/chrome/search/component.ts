@@ -29,7 +29,7 @@ export class SearchComponent implements OnInit {
   constructor(
     private readonly router_: Router,
     private readonly activatedRoute_: ActivatedRoute,
-    private readonly paramsService_: ParamsService,
+    private readonly paramsService_: ParamsService
   ) {}
 
   ngOnInit(): void {

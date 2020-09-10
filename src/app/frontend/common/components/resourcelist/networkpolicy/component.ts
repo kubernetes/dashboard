@@ -14,7 +14,7 @@
 
 import {HttpParams} from '@angular/common/http';
 import {ChangeDetectionStrategy, ChangeDetectorRef, Component, Input} from '@angular/core';
-import {Observable} from 'rxjs/Observable';
+import {Observable} from 'rxjs';
 import {NetworkPolicy, NetworkPolicyList} from 'typings/backendapi';
 
 import {ResourceListBase} from '../../../resources/list';
@@ -35,7 +35,7 @@ export class NetworkPolicyListComponent extends ResourceListBase<NetworkPolicyLi
   constructor(
     private readonly networkPolicy_: NamespacedResourceService<NetworkPolicyList>,
     notifications: NotificationsService,
-    cdr: ChangeDetectorRef,
+    cdr: ChangeDetectorRef
   ) {
     super('networkpolicy', notifications, cdr);
     this.id = ListIdentifier.networkPolicy;

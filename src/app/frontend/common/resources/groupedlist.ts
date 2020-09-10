@@ -74,7 +74,7 @@ export class GroupedResourceList {
         this.resourcesRatio.cronJobRatio = Helper.getResourceRatio(
           cronJobs.status,
           cronJobs.listMeta.totalItems,
-          ResourceRatioModes.Suspendable,
+          ResourceRatioModes.Suspendable
         );
         break;
       }
@@ -87,7 +87,7 @@ export class GroupedResourceList {
         const deployments = list as DeploymentList;
         this.resourcesRatio.deploymentRatio = Helper.getResourceRatio(
           deployments.status,
-          deployments.listMeta.totalItems,
+          deployments.listMeta.totalItems
         );
         break;
       }
@@ -96,7 +96,7 @@ export class GroupedResourceList {
         this.resourcesRatio.jobRatio = Helper.getResourceRatio(
           jobs.status,
           jobs.listMeta.totalItems,
-          ResourceRatioModes.Completable,
+          ResourceRatioModes.Completable
         );
         break;
       }
@@ -105,7 +105,7 @@ export class GroupedResourceList {
         this.resourcesRatio.podRatio = Helper.getResourceRatio(
           pods.status,
           pods.listMeta.totalItems,
-          ResourceRatioModes.Completable,
+          ResourceRatioModes.Completable
         );
         this.cumulativeMetrics = pods.cumulativeMetrics;
         break;
@@ -114,7 +114,7 @@ export class GroupedResourceList {
         const replicaSets = list as ReplicaSetList;
         this.resourcesRatio.replicaSetRatio = Helper.getResourceRatio(
           replicaSets.status,
-          replicaSets.listMeta.totalItems,
+          replicaSets.listMeta.totalItems
         );
         break;
       }
@@ -122,7 +122,7 @@ export class GroupedResourceList {
         const replicationControllers = list as ReplicationControllerList;
         this.resourcesRatio.replicationControllerRatio = Helper.getResourceRatio(
           replicationControllers.status,
-          replicationControllers.listMeta.totalItems,
+          replicationControllers.listMeta.totalItems
         );
         break;
       }
@@ -130,7 +130,7 @@ export class GroupedResourceList {
         const statefulSets = list as StatefulSetList;
         this.resourcesRatio.statefulSetRatio = Helper.getResourceRatio(
           statefulSets.status,
-          statefulSets.listMeta.totalItems,
+          statefulSets.listMeta.totalItems
         );
         break;
       }

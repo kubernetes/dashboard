@@ -47,7 +47,7 @@ export class CRDObjectDetailComponent implements OnInit, OnDestroy {
     private readonly activatedRoute_: ActivatedRoute,
     private readonly notifications_: NotificationsService,
     private readonly http_: HttpClient,
-    private readonly renderer_: Renderer2,
+    private readonly renderer_: Renderer2
   ) {}
 
   ngOnInit(): void {

@@ -93,7 +93,7 @@ export class DeployLabelComponent implements ControlValueAccessor {
           Validators.compose([Validators.maxLength(253), FormValidators.labelValuePattern]),
         ],
         editable,
-      }),
+      })
     );
   }
 

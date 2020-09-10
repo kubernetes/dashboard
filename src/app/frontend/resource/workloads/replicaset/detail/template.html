@@ -37,7 +37,8 @@ limitations under the License.
       <div key
            i18n>Selector</div>
       <div value>
-        <kd-chips [map]="replicaSet.selector.matchLabels"></kd-chips>
+        <kd-chips [map]="replicaSet.selector.matchLabels"
+                  [displayAll]="true"></kd-chips>
       </div>
     </kd-property>
 
@@ -45,7 +46,8 @@ limitations under the License.
       <div key
            i18n>Images</div>
       <div value>
-        <kd-chips [map]="replicaSet.containerImages"></kd-chips>
+        <kd-chips [map]="replicaSet.containerImages"
+                  [displayAll]="true"></kd-chips>
       </div>
     </kd-property>
 
@@ -53,7 +55,8 @@ limitations under the License.
       <div key
            i18n>Init images</div>
       <div value>
-        <kd-chips [map]="replicaSet.initContainerImages"></kd-chips>
+        <kd-chips [map]="replicaSet.initContainerImages"
+                  [displayAll]="true"></kd-chips>
       </div>
     </kd-property>
   </div>

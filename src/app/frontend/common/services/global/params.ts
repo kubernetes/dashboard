@@ -14,8 +14,8 @@
 
 import {Injectable} from '@angular/core';
 import {ActivatedRoute, NavigationEnd, Params, Router} from '@angular/router';
-import {Subject} from 'rxjs';
-import {filter} from 'rxjs/operators';
+import {combineLatest, Subject} from 'rxjs';
+import {filter, map, switchMap} from 'rxjs/operators';
 
 @Injectable()
 export class ParamsService {
@@ -25,22 +25,24 @@ export class ParamsService {
   private queryParamMap_: Params = {};
 
   constructor(private router_: Router, private route_: ActivatedRoute) {
-    this.router_.events.pipe(filter(event => event instanceof NavigationEnd)).subscribe(() => {
-      let active = this.route_;
-      while (active.firstChild) {
-        active = active.firstChild;
-      }
+    this.router_.events
+      .pipe(filter(event => event instanceof NavigationEnd))
+      .pipe(
+        map(() => {
+          let active = this.route_;
+          while (active.firstChild) {
+            active = active.firstChild;
+          }
 
-      active.params.subscribe((params: Params) => {
+          return active;
+        })
+      )
+      .pipe(switchMap(active => combineLatest([active.params, active.queryParams])))
+      .subscribe(([params, queryParams]) => {
         this.copyParams_(params, this.params_);
+        this.copyParams_(queryParams, this.queryParamMap_);
         this.onParamChange.next();
       });
-
-      active.params.subscribe((params: Params) => {
-        this.copyParams_(params, this.queryParamMap_);
-        this.onParamChange.next();
-      });
-    });
   }
 
   getRouteParam(name: string) {

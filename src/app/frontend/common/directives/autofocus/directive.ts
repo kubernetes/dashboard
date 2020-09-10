@@ -21,7 +21,7 @@ import {takeUntil} from 'rxjs/operators';
 export class AutofocusDirective implements AfterViewInit, OnDestroy {
   @Input() opened: Observable<boolean>;
 
-  private readonly _unsubscribe = new Subject<void>();
+  private readonly unsubscribe_ = new Subject<void>();
 
   constructor(private readonly _el: ElementRef) {}
 
@@ -31,12 +31,12 @@ export class AutofocusDirective implements AfterViewInit, OnDestroy {
     }
 
     this.opened
-      .pipe(takeUntil(this._unsubscribe))
+      .pipe(takeUntil(this.unsubscribe_))
       .subscribe(opened => (opened ? setTimeout(() => this._el.nativeElement.focus()) : null));
   }
 
   ngOnDestroy(): void {
-    this._unsubscribe.next();
-    this._unsubscribe.complete();
+    this.unsubscribe_.next();
+    this.unsubscribe_.complete();
   }
 }

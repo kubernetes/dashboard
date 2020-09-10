@@ -28,7 +28,8 @@ limitations under the License.
     </div>
   </div>
 
-  <div content>
+  <div content
+       [hidden]="!rules">
     <mat-table [dataSource]="getDataSource()"
                class="kd-table-no-footer">
       <ng-container [matColumnDef]="getRuleColumns()[0]">
@@ -94,5 +95,10 @@ limitations under the License.
       <mat-header-row *matHeaderRowDef="getRuleColumns()"></mat-header-row>
       <mat-row *matRowDef="let row; columns: getRuleColumns();"></mat-row>
     </mat-table>
+  </div>
+
+  <div content
+       [hidden]="rules">
+    <kd-list-zero-state></kd-list-zero-state>
   </div>
 </kd-card>

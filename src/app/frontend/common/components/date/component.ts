@@ -13,8 +13,8 @@
 // limitations under the License.
 
 import {ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnChanges, OnDestroy} from '@angular/core';
-import {of, Subject, timer} from 'rxjs';
-import {mergeMap, switchMap, take, takeUntil} from 'rxjs/operators';
+import {Subject, timer} from 'rxjs';
+import {switchMap, takeUntil} from 'rxjs/operators';
 
 /**
  * Display a date

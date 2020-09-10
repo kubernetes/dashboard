@@ -54,7 +54,7 @@ export class CreateService {
     private readonly csrfToken_: CsrfTokenService,
     private readonly matDialog_: MatDialog,
     private readonly router_: Router,
-    @Inject(CONFIG_DI_TOKEN) private readonly CONFIG: Config,
+    @Inject(CONFIG_DI_TOKEN) private readonly CONFIG: Config
   ) {}
 
   async createContent(content: string, validate = true, name = ''): Promise<AppDeploymentContentResponse> {

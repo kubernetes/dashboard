@@ -12,12 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import 'rxjs/add/operator/catch';
-
 import {HttpClient} from '@angular/common/http';
 import {Injectable} from '@angular/core';
 import {CanIResponse} from '@api/backendapi';
-import {Observable} from 'rxjs/Observable';
+import {Observable, throwError} from 'rxjs';
+import {catchError, switchMap} from 'rxjs/operators';
 
 import {ERRORS} from '../../errors/errors';
 
@@ -30,15 +29,15 @@ export class AuthorizerService {
   proxyGET<T>(url: string): Observable<T> {
     return this.http_
       .get<CanIResponse>(`${url}${this.authorizationSubUrl_}`)
-      .switchMap<CanIResponse, T>(response => {
-        if (!response.allowed) {
-          return Observable.throwError(ERRORS.forbidden);
-        }
+      .pipe(
+        switchMap(response => {
+          if (!response.allowed) {
+            return throwError(ERRORS.forbidden);
+          }
 
-        return this.http_.get<T>(url);
-      })
-      .catch(e => {
-        return Observable.throwError(e);
-      });
+          return this.http_.get<T>(url);
+        })
+      )
+      .pipe(catchError(e => throwError(e)));
   }
 }

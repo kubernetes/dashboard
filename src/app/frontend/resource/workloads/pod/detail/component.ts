@@ -15,7 +15,8 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {Container, PodDetail} from '@api/backendapi';
-import {Subscription} from 'rxjs/Subscription';
+import {Subject} from 'rxjs';
+import {takeUntil} from 'rxjs/operators';
 
 import {ActionbarService, ResourceMeta} from '../../../../common/services/global/actionbar';
 import {NotificationsService} from '../../../../common/services/global/notifications';
@@ -28,8 +29,9 @@ import {NamespacedResourceService} from '../../../../common/services/resource/re
   templateUrl: './template.html',
 })
 export class PodDetailComponent implements OnInit, OnDestroy {
-  private podSubscription_: Subscription;
   private readonly endpoint_ = EndpointManager.resource(Resource.pod, true);
+  private readonly unsubscribe_ = new Subject<void>();
+
   pod: PodDetail;
   isInitialized = false;
   eventListEndpoint: string;
@@ -40,7 +42,7 @@ export class PodDetailComponent implements OnInit, OnDestroy {
     private readonly actionbar_: ActionbarService,
     private readonly activatedRoute_: ActivatedRoute,
     private readonly kdState_: KdStateService,
-    private readonly notifications_: NotificationsService,
+    private readonly notifications_: NotificationsService
   ) {}
 
   ngOnInit(): void {
@@ -50,8 +52,9 @@ export class PodDetailComponent implements OnInit, OnDestroy {
     this.eventListEndpoint = this.endpoint_.child(resourceName, Resource.event, resourceNamespace);
     this.pvcListEndpoint = this.endpoint_.child(resourceName, Resource.persistentVolumeClaim, resourceNamespace);
 
-    this.podSubscription_ = this.pod_
+    this.pod_
       .get(this.endpoint_.detail(), resourceName, resourceNamespace)
+      .pipe(takeUntil(this.unsubscribe_))
       .subscribe((d: PodDetail) => {
         this.pod = d;
         this.notifications_.pushErrors(d.errors);
@@ -61,7 +64,8 @@ export class PodDetailComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.podSubscription_.unsubscribe();
+    this.unsubscribe_.next();
+    this.unsubscribe_.complete();
     this.actionbar_.onDetailsLeave.emit();
   }
 

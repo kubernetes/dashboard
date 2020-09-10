@@ -16,6 +16,7 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Component, Inject, OnInit} from '@angular/core';
 import {AbstractControl, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material/dialog';
+import {switchMap} from 'rxjs/operators';
 import {AlertDialog, AlertDialogConfig} from '../../../../common/dialogs/alert/dialog';
 import {CsrfTokenService} from '../../../../common/services/global/csrftoken';
 import {CONFIG} from '../../../../index.config';
@@ -54,7 +55,7 @@ export class CreateSecretDialog implements OnInit {
     private readonly http_: HttpClient,
     private readonly csrfToken_: CsrfTokenService,
     private readonly matDialog_: MatDialog,
-    private readonly fb_: FormBuilder,
+    private readonly fb_: FormBuilder
   ) {}
 
   ngOnInit(): void {
@@ -91,32 +92,30 @@ export class CreateSecretDialog implements OnInit {
     };
 
     const tokenPromise = this.csrfToken_.getTokenForAction('secret');
-    tokenPromise.subscribe(csrfToken => {
-      return this.http_
-        .post<{valid: boolean}>(
-          'api/v1/secret/',
-          {...secretSpec},
-          {
-            headers: new HttpHeaders().set(this.config_.csrfHeaderName, csrfToken.token),
-          },
+    tokenPromise
+      .pipe(
+        switchMap(csrfToken =>
+          this.http_.post<{valid: boolean}>(
+            'api/v1/secret/',
+            {...secretSpec},
+            {headers: new HttpHeaders().set(this.config_.csrfHeaderName, csrfToken.token)}
+          )
         )
-        .subscribe(
-          () => {
-            // this.log_.info('Successfully created namespace:', savedConfig);
-            this.dialogRef.close(this.secretName.value);
-          },
-          error => {
-            // this.log_.info('Error creating namespace:', err);
-            this.dialogRef.close();
-            const configData: AlertDialogConfig = {
-              title: 'Error creating secret',
-              message: error.data,
-              confirmLabel: 'OK',
-            };
-            this.matDialog_.open(AlertDialog, {data: configData});
-          },
-        );
-    });
+      )
+      .subscribe(
+        () => {
+          this.dialogRef.close(this.secretName.value);
+        },
+        error => {
+          this.dialogRef.close();
+          const configData: AlertDialogConfig = {
+            title: 'Error creating secret',
+            message: error.data,
+            confirmLabel: 'OK',
+          };
+          this.matDialog_.open(AlertDialog, {data: configData});
+        }
+      );
   }
 
   /**

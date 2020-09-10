@@ -42,7 +42,7 @@ limitations under the License.
       </kd-settings-entry>
       <kd-settings-entry key="Items per page"
                          i18n-key
-                         desc="Max number of items that can be displayed on each list page."
+                         desc="Max number of items that can be displayed on every list view."
                          i18n-desc>
         <div fxFlex>
           <mat-slider [(ngModel)]="settings.itemsPerPage"
@@ -56,6 +56,25 @@ limitations under the License.
           <div class="kd-slider-value kd-muted"
                fxFlexAlign=" center">
             {{settings.itemsPerPage}}
+          </div>
+        </div>
+      </kd-settings-entry>
+      <kd-settings-entry key="Labels limit"
+                         i18n-key
+                         desc="Max number of labels that are displayed by default on most views."
+                         i18n-desc>
+        <div fxFlex>
+          <mat-slider [(ngModel)]="settings.labelsLimit"
+                      name="labelsLimit"
+                      color="primary"
+                      min="1"
+                      max="10"
+                      step="1"
+                      fxFlex>
+          </mat-slider>
+          <div class="kd-slider-value kd-muted"
+               fxFlexAlign=" center">
+            {{settings.labelsLimit}}
           </div>
         </div>
       </kd-settings-entry>

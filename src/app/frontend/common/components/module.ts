@@ -96,6 +96,10 @@ import {WorkloadStatusComponent} from './workloadstatus/component';
 import {ZeroStateComponent} from './zerostate/component';
 import {ServiceAccountListComponent} from './resourcelist/serviceaccount/component';
 import {NetworkPolicyListComponent} from './resourcelist/networkpolicy/component';
+import {RoleListComponent} from './resourcelist/role/component';
+import {RoleBindingListComponent} from './resourcelist/rolebinding/component';
+import {ClusterRoleBindingListComponent} from './resourcelist/clusterrolebinding/component';
+import {SubjectListComponent} from './subject/component';
 
 const components = [
   ActionbarDetailActionsComponent,
@@ -113,6 +117,7 @@ const components = [
   ChipsComponent,
   CronJobListComponent,
   ClusterRoleListComponent,
+  ClusterRoleBindingListComponent,
   ConfigMapListComponent,
   PluginListComponent,
   ColumnComponent,
@@ -176,6 +181,9 @@ const components = [
   ZeroStateComponent,
   WorkloadStatusComponent,
   NetworkPolicyListComponent,
+  RoleListComponent,
+  RoleBindingListComponent,
+  SubjectListComponent,
 ];
 
 @NgModule({

@@ -12,13 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import 'rxjs/add/operator/debounceTime';
-import 'rxjs/add/operator/distinctUntilChanged';
-
-import {Component, ElementRef, EventEmitter, OnDestroy, OnInit, ViewChild} from '@angular/core';
-import {ReplaySubject} from 'rxjs';
-import {takeUntil} from 'rxjs/operators';
-import {Subject} from 'rxjs/Subject';
+import {Component, EventEmitter, OnDestroy, OnInit} from '@angular/core';
+import {ReplaySubject, Subject} from 'rxjs';
+import {debounceTime, distinctUntilChanged, takeUntil} from 'rxjs/operators';
 
 @Component({
   selector: 'kd-card-list-filter',
@@ -37,9 +33,7 @@ export class CardListFilterComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.keyUpEvent
-      .debounceTime(this.debounceTime_)
-      .distinctUntilChanged()
-      .pipe(takeUntil(this.unsubscribe_))
+      .pipe(debounceTime(this.debounceTime_), distinctUntilChanged(), takeUntil(this.unsubscribe_))
       .subscribe(this.onFilterTriggered_.bind(this));
   }
 

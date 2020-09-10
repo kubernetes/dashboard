@@ -1,0 +1,6 @@
+settings:
+  clusterName: "ci-cluster"
+  itemsPerPage: 10
+  logsAutoRefreshTimeInterval: 5
+  resourceAutoRefreshTimeInterval: 5
+  disableAccessDeniedNotifications: false

@@ -43,6 +43,21 @@ extraEnv: []
 # - name: SOME_VAR
 #   value: 'some value'
 
+## Additional volumes to be added to kubernetes dashboard pods
+##
+extraVolumes: []
+# - name: dashboard-kubeconfig
+#   secret:
+#     defaultMode: 420
+#     secretName: dashboard-kubeconfig
+
+## Additional volumeMounts to be added to kubernetes dashboard pods
+##
+extraVolumeMounts: []
+# - mountPath: /kubeconfig
+#   name: dashboard-kubeconfig
+#   readOnly: true
+
 # Annotations to be added to kubernetes dashboard pods
 podAnnotations:
   seccomp.security.alpha.kubernetes.io/pod: 'runtime/default'
@@ -156,6 +171,18 @@ ingress:
   #   - secretName: kubernetes-dashboard-tls
   #     hosts:
   #       - kubernetes-dashboard.domain.com
+
+settings: {}
+  ## Cluster name that appears in the browser window title if it is set
+  # clusterName: ""
+  ## Max number of items that can be displayed on each list page
+  # itemsPerPage: 10
+  ## Number of seconds between every auto-refresh of logs
+  # logsAutoRefreshTimeInterval: 5
+  ## Number of seconds between every auto-refresh of every resource. Set 0 to disable
+  # resourceAutoRefreshTimeInterval: 5
+  ## Hide all access denied warnings in the notification panel
+  # disableAccessDeniedNotifications: false
 
 ## Metrics Scraper
 ## Container to scrape, store, and retrieve a window of time from the Metrics Server.

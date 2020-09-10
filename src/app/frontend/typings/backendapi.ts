@@ -76,6 +76,18 @@ export interface ClusterRoleList extends ResourceList {
   items: ClusterRole[];
 }
 
+export interface ClusterRoleBindingList extends ResourceList {
+  items: ClusterRoleBinding[];
+}
+
+export interface RoleList extends ResourceList {
+  items: Role[];
+}
+
+export interface RoleBindingList extends ResourceList {
+  items: RoleBinding[];
+}
+
 export interface ConfigMapList extends ResourceList {
   items: ConfigMap[];
 }
@@ -200,6 +212,12 @@ export interface StorageClassList extends ResourceList {
 
 // Simple detail types
 export type ClusterRole = Resource;
+
+export type ClusterRoleBinding = Resource;
+
+export type Role = Resource;
+
+export type RoleBinding = Resource;
 
 export type ConfigMap = Resource;
 
@@ -451,6 +469,33 @@ export interface PolicyRule {
 
 export interface ClusterRoleDetail extends ResourceDetail {
   rules: PolicyRule[];
+}
+
+export interface Subject {
+  kind: string;
+  apiGroup: string;
+  name: string;
+  namespace: string;
+}
+
+export interface RoleRef {
+  kind: string;
+  apiGroup: string;
+  name: string;
+}
+
+export interface ClusterRoleBindingDetail extends ResourceDetail {
+  subjects: Subject[];
+  roleRef: RoleRef;
+}
+
+export interface RoleDetail extends ResourceDetail {
+  rules: PolicyRule[];
+}
+
+export interface RoleBindingDetail extends ResourceDetail {
+  subjects: Subject[];
+  roleRef: RoleRef;
 }
 
 export interface SecretDetail extends ResourceDetail {
@@ -1068,6 +1113,7 @@ export interface ScaleTargetRef {
 export interface GlobalSettings {
   clusterName: string;
   itemsPerPage: number;
+  labelsLimit: number;
   logsAutoRefreshTimeInterval: number;
   resourceAutoRefreshTimeInterval: number;
   disableAccessDeniedNotifications: boolean;

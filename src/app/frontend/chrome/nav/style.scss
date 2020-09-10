@@ -42,18 +42,6 @@
   }
 }
 
-.kd-nav-group {
-  margin-right: $baseline-grid;
-
-  &:last-child {
-    > .kd-nav-item {
-      &:last-child {
-        padding-bottom: 2 * $baseline-grid;
-      }
-    }
-  }
-}
-
 .kd-nav-group-item {
   margin-left: 1.5 * $baseline-grid;
 }

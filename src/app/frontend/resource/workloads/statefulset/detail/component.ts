@@ -15,7 +15,8 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {StatefulSetDetail} from '@api/backendapi';
-import {Subscription} from 'rxjs/Subscription';
+import {Subject} from 'rxjs';
+import {takeUntil} from 'rxjs/operators';
 
 import {ActionbarService, ResourceMeta} from '../../../../common/services/global/actionbar';
 import {NotificationsService} from '../../../../common/services/global/notifications';
@@ -27,8 +28,9 @@ import {NamespacedResourceService} from '../../../../common/services/resource/re
   templateUrl: './template.html',
 })
 export class StatefulSetDetailComponent implements OnInit, OnDestroy {
-  private statefulSetSubscription_: Subscription;
   private readonly endpoint_ = EndpointManager.resource(Resource.statefulSet, true);
+  private readonly unsubscribe_ = new Subject<void>();
+
   statefulSet: StatefulSetDetail;
   isInitialized = false;
   podListEndpoint: string;
@@ -38,7 +40,7 @@ export class StatefulSetDetailComponent implements OnInit, OnDestroy {
     private readonly statefulSet_: NamespacedResourceService<StatefulSetDetail>,
     private readonly actionbar_: ActionbarService,
     private readonly activatedRoute_: ActivatedRoute,
-    private readonly notifications_: NotificationsService,
+    private readonly notifications_: NotificationsService
   ) {}
 
   ngOnInit(): void {
@@ -48,8 +50,9 @@ export class StatefulSetDetailComponent implements OnInit, OnDestroy {
     this.podListEndpoint = this.endpoint_.child(resourceName, Resource.pod, resourceNamespace);
     this.eventListEndpoint = this.endpoint_.child(resourceName, Resource.event, resourceNamespace);
 
-    this.statefulSetSubscription_ = this.statefulSet_
+    this.statefulSet_
       .get(this.endpoint_.detail(), resourceName, resourceNamespace)
+      .pipe(takeUntil(this.unsubscribe_))
       .subscribe((d: StatefulSetDetail) => {
         this.statefulSet = d;
         this.notifications_.pushErrors(d.errors);
@@ -59,7 +62,8 @@ export class StatefulSetDetailComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.statefulSetSubscription_.unsubscribe();
+    this.unsubscribe_.next();
+    this.unsubscribe_.complete();
     this.actionbar_.onDetailsLeave.emit();
   }
 }

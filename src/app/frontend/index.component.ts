@@ -33,7 +33,7 @@ export class RootComponent implements OnInit {
     private readonly settings_: LocalSettingsService,
     private readonly overlayContainer_: OverlayContainer,
     private readonly kdRootRef: ElementRef,
-    private readonly titleService_: TitleService,
+    private readonly titleService_: TitleService
   ) {
     this.isLightThemeEnabled_ = this.themeService_.isLightThemeEnabled();
   }

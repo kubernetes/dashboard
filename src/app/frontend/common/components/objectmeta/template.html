@@ -78,7 +78,7 @@ limitations under the License.
              i18n>Labels</div>
         <div value>
           <kd-chips [map]="objectMeta?.labels"
-                    minChipsVisible="4"></kd-chips>
+                    [displayAll]="true"></kd-chips>
         </div>
       </kd-property>
       <kd-property *ngIf="objectMeta?.annotations"
@@ -88,7 +88,7 @@ limitations under the License.
              i18n>Annotations</div>
         <div value>
           <kd-chips [map]="objectMeta?.annotations"
-                    minChipsVisible="4"></kd-chips>
+                    [displayAll]="true"></kd-chips>
         </div>
       </kd-property>
     </div>
