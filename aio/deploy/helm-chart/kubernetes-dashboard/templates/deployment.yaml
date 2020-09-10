@@ -90,6 +90,9 @@ spec:
           # Create on-disk volume to store exec logs
         - mountPath: /tmp
           name: tmp-volume
+{{- with .Values.extraVolumeMounts }}
+{{ toYaml . | indent 8 }}
+{{- end }}
         livenessProbe:
           httpGet:
 {{- if .Values.protocolHttp }}
@@ -156,6 +159,9 @@ spec:
           secretName: {{ template "kubernetes-dashboard.fullname" . }}-certs
       - name: tmp-volume
         emptyDir: {}
+{{- with .Values.extraVolumes }}
+{{ toYaml . | indent 6 }}
+{{- end }}
 {{- with .Values.tolerations }}
       tolerations:
 {{ toYaml . | indent 8 }}

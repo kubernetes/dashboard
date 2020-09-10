@@ -43,6 +43,21 @@ extraEnv: []
 # - name: SOME_VAR
 #   value: 'some value'
 
+## Additional volumes to be added to kubernetes dashboard pods
+##
+extraVolumes: []
+# - name: dashboard-kubeconfig
+#   secret:
+#     defaultMode: 420
+#     secretName: dashboard-kubeconfig
+
+## Additional volumeMounts to be added to kubernetes dashboard pods
+##
+extraVolumeMounts: []
+# - mountPath: /kubeconfig
+#   name: dashboard-kubeconfig
+#   readOnly: true
+
 # Annotations to be added to kubernetes dashboard pods
 podAnnotations:
   seccomp.security.alpha.kubernetes.io/pod: 'runtime/default'
