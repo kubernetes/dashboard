@@ -20,6 +20,5 @@ metadata:
   name: {{ template "kubernetes-dashboard.fullname" . }}-settings
 data:
 {{- with .Values.settings }}
-  _global: |
-{{ toYaml . | indent 4 }}
+  _global: {{ toJson . | quote }}
 {{- end }}
