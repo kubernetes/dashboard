@@ -33,13 +33,17 @@ function release-helm-chart {
   say "\nGenerating Helm Chart package for new version."
   say "Please note that your gh-pages branch, if it locally exists, should be up-to-date."
   helm repo add stable https://kubernetes-charts.storage.googleapis.com/
-  helm dependency build "$HELM_CHART_DIR"
-  helm package "$HELM_CHART_DIR"
-  rm -rf "$HELM_CHART_DIR/charts/"
+  cd "$HELM_CHART_DIR"
+  helm dependency build .
+  helm package .
+  rm -rf "./charts/"
   say "\nSwitching git branch to gh-pages so that we can commit package along the previous versions."
   git checkout gh-pages
   say "\nGenerating new Helm index, containing all existing versions in gh-pages (previous ones + new one)."
-  helm repo index .
+  helm repo index . --merge $ROOT_DIR/index.yaml
+  mv index.yaml $ROOT_DIR/index.yaml
+  mv kubernetes-dashboard-*.tgz $ROOT_DIR
+  cd $OLDPWD
   say "\nCommit new package and index."
   git add -A "./kubernetes-dashboard-*.tgz" ./index.yaml && git commit -m "Update Helm repository from CI."
   say "\nIf you are happy with the changes, please manually push to the gh-pages branch. No force should be needed."
