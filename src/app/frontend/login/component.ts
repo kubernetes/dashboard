@@ -91,16 +91,11 @@ export class LoginComponent implements OnInit {
   }
 
   login(): void {
-    this.cookies_.set(
-      this.CONFIG.authModeCookieName,
-      this.selectedAuthenticationMode,
-      null,
-      null,
-      null,
-      false,
-      'Strict'
-    );
+    if (!this.hasToken_()) {
+      return;
+    }
 
+    this.saveLastLoginMode_();
     this.authService_.login(this.getLoginSpec_()).subscribe(
       (errors: K8SError[]) => {
         if (errors.length > 0) {
@@ -149,6 +144,22 @@ export class LoginComponent implements OnInit {
         break;
       default:
     }
+  }
+
+  private hasToken_(): boolean {
+    return this.selectedAuthenticationMode === LoginModes.Token && !!this.token_ && !!this.token_.trim();
+  }
+
+  private saveLastLoginMode_(): void {
+    this.cookies_.set(
+      this.CONFIG.authModeCookieName,
+      this.selectedAuthenticationMode,
+      null,
+      null,
+      null,
+      false,
+      'Strict'
+    );
   }
 
   private onFileLoad_(file: KdFile): void {
