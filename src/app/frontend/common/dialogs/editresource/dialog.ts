@@ -36,7 +36,7 @@ export class EditResourceDialog implements OnInit {
   constructor(
     public dialogRef: MatDialogRef<EditResourceDialog>,
     @Inject(MAT_DIALOG_DATA) public data: ResourceMeta,
-    private readonly http_: HttpClient,
+    private readonly http_: HttpClient
   ) {}
 
   ngOnInit(): void {

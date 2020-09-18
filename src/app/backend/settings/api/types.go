@@ -93,6 +93,7 @@ func UnmarshalPinnedResources(data string) (*[]PinnedResource, error) {
 type Settings struct {
 	ClusterName                      string `json:"clusterName"`
 	ItemsPerPage                     int    `json:"itemsPerPage"`
+	LabelsLimit                      int    `json:"labelsLimit"`
 	LogsAutoRefreshTimeInterval      int    `json:"logsAutoRefreshTimeInterval"`
 	ResourceAutoRefreshTimeInterval  int    `json:"resourceAutoRefreshTimeInterval"`
 	DisableAccessDeniedNotifications bool   `json:"disableAccessDeniedNotifications"`
@@ -115,6 +116,7 @@ func Unmarshal(data string) (*Settings, error) {
 var defaultSettings = Settings{
 	ClusterName:                      "",
 	ItemsPerPage:                     10,
+	LabelsLimit:                      3,
 	LogsAutoRefreshTimeInterval:      5,
 	ResourceAutoRefreshTimeInterval:  5,
 	DisableAccessDeniedNotifications: true,

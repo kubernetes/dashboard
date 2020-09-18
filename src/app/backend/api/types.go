@@ -143,6 +143,7 @@ const (
 	ResourceKindRoleBinding              = "rolebinding"
 	ResourceKindPlugin                   = "plugin"
 	ResourceKindEndpoint                 = "endpoint"
+	ResourceKindNetworkPolicy            = "networkpolicy"
 )
 
 // Scalable method return whether ResourceKind is scalable.
@@ -179,6 +180,7 @@ const (
 	ClientTypeStorageClient       = "storageclient"
 	ClientTypeRbacClient          = "rbacclient"
 	ClientTypeAPIExtensionsClient = "apiextensionsclient"
+	ClientTypeNetworkingClient    = "networkingclient"
 	ClientTypePluginsClient       = "plugin"
 )
 
@@ -221,9 +223,11 @@ var KindToAPIMapping = map[string]APIMapping{
 	ResourceKindStatefulSet:              {"statefulsets", ClientTypeAppsClient, true},
 	ResourceKindStorageClass:             {"storageclasses", ClientTypeStorageClient, false},
 	ResourceKindEndpoint:                 {"endpoints", ClientTypeDefault, true},
+	ResourceKindNetworkPolicy:            {"networkpolicies", ClientTypeNetworkingClient, true},
 	ResourceKindClusterRole:              {"clusterroles", ClientTypeRbacClient, false},
-	ResourceKindRoleBinding:              {"rolebindings", ClientTypeRbacClient, false},
-	ResourceKindRole:                     {"roles", ClientTypeRbacClient, false},
+	ResourceKindClusterRoleBinding:       {"clusterrolebindings", ClientTypeRbacClient, false},
+	ResourceKindRole:                     {"roles", ClientTypeRbacClient, true},
+	ResourceKindRoleBinding:              {"rolebindings", ClientTypeRbacClient, true},
 	ResourceKindPlugin:                   {"plugins", ClientTypePluginsClient, true},
 }
 

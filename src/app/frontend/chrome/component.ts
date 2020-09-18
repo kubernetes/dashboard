@@ -41,7 +41,7 @@ export class ChromeComponent implements OnInit {
     private readonly http_: HttpClient,
     private readonly router_: Router,
     @Inject(DOCUMENT) private readonly document_: Document,
-    private readonly globalSettings_: GlobalSettingsService,
+    private readonly globalSettings_: GlobalSettingsService
   ) {}
 
   ngOnInit(): void {
@@ -100,7 +100,7 @@ export class ChromeComponent implements OnInit {
   private registerVisibilityChangeHandler_(): void {
     if (typeof this.document_.addEventListener === 'undefined') {
       console.log(
-        'Your browser does not support Page Visibility API. Page cannot properly stop background tasks when tab is inactive.',
+        'Your browser does not support Page Visibility API. Page cannot properly stop background tasks when tab is inactive.'
       );
       return;
     }

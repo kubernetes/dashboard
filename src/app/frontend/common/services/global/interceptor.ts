@@ -15,7 +15,7 @@
 import {HttpEvent, HttpHandler, HttpInterceptor, HttpRequest} from '@angular/common/http';
 import {Injectable} from '@angular/core';
 import {CookieService} from 'ngx-cookie-service';
-import {Observable} from 'rxjs/Observable';
+import {Observable} from 'rxjs';
 import {CONFIG} from '../../../index.config';
 
 /* tslint:disable */

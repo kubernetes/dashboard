@@ -99,6 +99,10 @@ import {ZeroStateComponent} from './zerostate/component';
 import {IngressRouteListComponent} from './resourcelist/ingressroutes/component';
 import {OpaService} from 'common/services/global/opa';
 import {ServiceAccountListComponent} from './resourcelist/serviceaccount/component';
+import {NetworkPolicyListComponent} from './resourcelist/networkpolicy/component';
+import {RoleListComponent} from './resourcelist/role/component';
+import {ClusterRoleBindingListComponent} from './resourcelist/clusterrolebinding/component';
+import {SubjectListComponent} from './subject/component';
 
 const components = [
   ActionbarDetailActionsComponent,
@@ -117,6 +121,7 @@ const components = [
   CronJobListComponent,
   ClusterRoleListComponent,
   RoleBindingListComponent,
+  ClusterRoleBindingListComponent,
   ConfigMapListComponent,
   ConfigMapOPAListComponent,
   PluginListComponent,
@@ -181,6 +186,10 @@ const components = [
   UploadFileComponent,
   ZeroStateComponent,
   WorkloadStatusComponent,
+  NetworkPolicyListComponent,
+  RoleListComponent,
+  RoleBindingListComponent,
+  SubjectListComponent,
 ];
 
 @NgModule({

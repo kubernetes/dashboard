@@ -13,3 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -->
+
+<kd-object-meta [initialized]="isInitialized"
+                [objectMeta]="role?.objectMeta"></kd-object-meta>
+
+<kd-policy-rule-list [rules]="role?.rules"
+                     [initialized]="isInitialized"></kd-policy-rule-list>

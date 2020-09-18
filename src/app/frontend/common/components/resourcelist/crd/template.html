@@ -52,7 +52,7 @@ limitations under the License.
                          i18n>Name</mat-header-cell>
         <mat-cell *matCellDef="let crd">
           <a [routerLink]="getDetailsHref(crd.objectMeta.name)"
-             queryParamsHandling="preserve">{{crd.names.kind}}</a>
+             queryParamsHandling="preserve">{{getDisplayName(crd.names.kind)}}</a>
         </mat-cell>
       </ng-container>
 

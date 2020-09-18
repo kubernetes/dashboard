@@ -34,6 +34,9 @@ export enum Resource {
   persistentVolume = 'persistentvolume',
   storageClass = 'storageclass',
   clusterRole = 'clusterrole',
+  clusterRoleBinding = 'clusterrolebinding',
+  role = 'role',
+  roleBinding = 'rolebinding',
   configMap = 'configmap',
   persistentVolumeClaim = 'persistentvolumeclaim',
   secret = 'secret',
@@ -41,10 +44,10 @@ export enum Resource {
   ingress = 'ingress',
   service = 'service',
   serviceAccount = 'serviceaccount',
+  networkPolicy = 'networkpolicy',
   event = 'event',
   container = 'container',
   plugin = 'plugin',
-  roleBinding = 'rolebinding',
 }
 
 export enum Utility {

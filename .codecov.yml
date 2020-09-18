@@ -1,0 +1,31 @@
+codecov:
+  notify:
+    require_ci_to_pass: yes
+
+coverage:
+  precision: 2
+  round: down
+  range: "70...90"
+
+  status:
+    project: yes
+      default:
+        target: 75%
+        threshold: 1%
+        # We need codecov purely for information purposes. Due to coverage calculation issue we have to disable checks.
+        informational: true
+    patch: yes
+    changes: no
+
+parsers:
+  gcov:
+    branch_detection:
+      conditional: yes
+      loop: yes
+      method: no
+      macro: no
+
+comment:
+  layout: "header, diff"
+  behavior: default
+  require_changes: no

@@ -38,7 +38,7 @@ export class CRDObjectListComponent extends ResourceListBase<CRDObjectList, CRDO
     private readonly crdObject_: NamespacedResourceService<CRDObjectList>,
     private readonly activatedRoute_: ActivatedRoute,
     notifications: NotificationsService,
-    cdr: ChangeDetectorRef,
+    cdr: ChangeDetectorRef
   ) {
     super(activatedRoute_.params.pipe(map(params => `customresourcedefinition/${params.crdName}`)), notifications, cdr);
     this.id = ListIdentifier.crdObject;

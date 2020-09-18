@@ -30,7 +30,7 @@ export class PinnerService {
   constructor(
     private readonly dialog_: MatDialog,
     private readonly http_: HttpClient,
-    private readonly verber_: VerberService,
+    private readonly verber_: VerberService
   ) {}
 
   init(): void {

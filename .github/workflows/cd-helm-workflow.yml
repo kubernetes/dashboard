@@ -1,0 +1,66 @@
+# Copyright 2017 The Kubernetes Authors.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+name: Continuous Deployment - Helm
+
+on:
+  push:
+    branches: [ master ]
+    paths:
+    - 'aio/deploy/helm-chart/**'
+    - 'aio/scripts/helm-release-chart.sh'
+    - '.github/workflows/cd-helm-workflow.yml'
+
+jobs:
+  release:
+    name: Helm Chart Release
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Setup Environment
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - name: Configure Git
+        run: |
+          git config user.name "$GITHUB_ACTOR"
+          git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
+
+      - name: Package
+        shell: bash
+        run: aio/scripts/helm-release-chart.sh
+        env:
+          TERM: xterm-256color
+
+      - name: Create Pull Request branch
+        run: |
+          git checkout -b gh-pages-pull-request
+
+      # Note that will fail if branch already exists.
+      - name: Push Git Branch
+        uses: ad-m/github-push-action@v0.6.0
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: gh-pages-pull-request
+
+      # Note that will silently fail if PR already exists.
+      - name: Create Pull Request
+        uses: repo-sync/pull-request@v2
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          source_branch: gh-pages-pull-request
+          destination_branch: gh-pages
+          pr_title: "Helm Chart: Update Helm repository"
+          pr_body: "Automatically created from Helm CD workflow."

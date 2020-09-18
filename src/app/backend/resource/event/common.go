@@ -136,8 +136,9 @@ func GetNodeEvents(client kubernetes.Interface, dsQuery *dataselect.DataSelectQu
 	}
 
 	events, err := client.CoreV1().Events(v1.NamespaceAll).Search(scheme, node)
-	if err != nil {
-		return &eventList, err
+	_, criticalError := errors.HandleError(err)
+	if criticalError != nil {
+		return &eventList, criticalError
 	}
 
 	eventList = CreateEventList(FillEventsType(events.Items), dsQuery)

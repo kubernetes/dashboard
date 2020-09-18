@@ -17,7 +17,7 @@ import {EventEmitter, Injectable} from '@angular/core';
 import {GlobalSettings} from '@api/backendapi';
 import {onSettingsFailCallback, onSettingsLoadCallback} from '@api/frontendapi';
 import {of, ReplaySubject, Subject} from 'rxjs';
-import {Observable} from 'rxjs/Observable';
+import {Observable} from 'rxjs';
 import {catchError, switchMap, takeUntil} from 'rxjs/operators';
 
 import {AuthorizerService} from './authorizer';
@@ -31,6 +31,7 @@ export class GlobalSettingsService {
   private settings_: GlobalSettings = {
     itemsPerPage: 10,
     clusterName: '',
+    labelsLimit: 3,
     logsAutoRefreshTimeInterval: 5,
     resourceAutoRefreshTimeInterval: 5,
     disableAccessDeniedNotifications: true,
@@ -69,7 +70,7 @@ export class GlobalSettingsService {
           this.isInitialized_ = false;
           this.onSettingsUpdate.next();
           if (onFail) onFail(err);
-        },
+        }
       );
   }
 
@@ -96,6 +97,10 @@ export class GlobalSettingsService {
 
   getItemsPerPage(): number {
     return this.settings_.itemsPerPage;
+  }
+
+  getLabelsLimit(): number {
+    return this.settings_.labelsLimit;
   }
 
   getLogsAutoRefreshTimeInterval(): number {

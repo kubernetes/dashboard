@@ -21,6 +21,8 @@ import (
 	"strings"
 
 	"io/ioutil"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/networkpolicy"
+
 	"github.com/kubernetes/dashboard/src/app/backend/handler/parser"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/customresourcedefinition/types"
 
@@ -480,6 +482,19 @@ func CreateHTTPAPIHandler(iManager integration.IntegrationManager, cManager clie
 		apiV1Ws.GET("/ingress/{namespace}/{name}").
 			To(apiHandler.handleGetIngressDetail).
 			Writes(ingress.IngressDetail{}))
+
+	apiV1Ws.Route(
+		apiV1Ws.GET("/networkpolicy").
+			To(apiHandler.handleGetNetworkPolicyList).
+			Writes(networkpolicy.NetworkPolicyList{}))
+	apiV1Ws.Route(
+		apiV1Ws.GET("/networkpolicy/{namespace}").
+			To(apiHandler.handleGetNetworkPolicyList).
+			Writes(networkpolicy.NetworkPolicyList{}))
+	apiV1Ws.Route(
+		apiV1Ws.GET("/networkpolicy/{namespace}/{networkpolicy}").
+			To(apiHandler.handleGetNetworkPolicyDetail).
+			Writes(networkpolicy.NetworkPolicyDetail{}))
 
 	apiV1Ws.Route(
 		apiV1Ws.GET("/statefulset").
@@ -1060,6 +1075,40 @@ func (apiHandler *APIHandler) handleGetServicePods(request *restful.Request, res
 	dataSelect := parser.ParseDataSelectPathParameter(request)
 	dataSelect.MetricQuery = dataselect.StandardMetrics
 	result, err := resourceService.GetServicePods(k8sClient, apiHandler.iManager.Metric().Client(), namespace, name, dataSelect)
+	if err != nil {
+		errors.HandleInternalError(response, err)
+		return
+	}
+	response.WriteHeaderAndEntity(http.StatusOK, result)
+}
+
+func (apiHandler *APIHandler) handleGetNetworkPolicyList(request *restful.Request, response *restful.Response) {
+	k8sClient, err := apiHandler.cManager.Client(request)
+	if err != nil {
+		errors.HandleInternalError(response, err)
+		return
+	}
+
+	namespace := parseNamespacePathParameter(request)
+	dataSelect := parser.ParseDataSelectPathParameter(request)
+	result, err := networkpolicy.GetNetworkPolicyList(k8sClient, namespace, dataSelect)
+	if err != nil {
+		errors.HandleInternalError(response, err)
+		return
+	}
+	response.WriteHeaderAndEntity(http.StatusOK, result)
+}
+
+func (apiHandler *APIHandler) handleGetNetworkPolicyDetail(request *restful.Request, response *restful.Response) {
+	k8sClient, err := apiHandler.cManager.Client(request)
+	if err != nil {
+		errors.HandleInternalError(response, err)
+		return
+	}
+
+	namespace := request.PathParameter("namespace")
+	name := request.PathParameter("networkpolicy")
+	result, err := networkpolicy.GetNetworkPolicyDetail(k8sClient, namespace, name)
 	if err != nil {
 		errors.HandleInternalError(response, err)
 		return

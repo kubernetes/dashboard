@@ -14,54 +14,56 @@
 
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
-import {StorageClassDetail} from '@api/backendapi';
-import {Subscription} from 'rxjs/Subscription';
+import {NetworkPolicyDetail} from '@api/backendapi';
+import {dump} from 'js-yaml';
+import {Subject} from 'rxjs';
+import {takeUntil} from 'rxjs/operators';
 
 import {ActionbarService, ResourceMeta} from '../../../../common/services/global/actionbar';
 import {NotificationsService} from '../../../../common/services/global/notifications';
 import {EndpointManager, Resource} from '../../../../common/services/resource/endpoint';
-import {ResourceService} from '../../../../common/services/resource/resource';
+import {NamespacedResourceService} from '../../../../common/services/resource/resource';
 
 @Component({
-  selector: 'kd-storage-class-detail',
+  selector: 'kd-network-policy-detail',
   templateUrl: './template.html',
-  styleUrls: ['./style.scss'],
 })
-export class StorageClassDetailComponent implements OnInit, OnDestroy {
-  private storageClassSubscription_: Subscription;
-  private readonly endpoint_ = EndpointManager.resource(Resource.storageClass);
-  storageClass: StorageClassDetail;
-  pvListEndpoint: string;
+export class NetworkPolicyDetailComponent implements OnInit, OnDestroy {
+  private readonly endpoint_ = EndpointManager.resource(Resource.networkPolicy, true);
+  private readonly unsubscribe_ = new Subject<void>();
+
+  networkPolicy: NetworkPolicyDetail;
   isInitialized = false;
 
   constructor(
-    private readonly storageClass_: ResourceService<StorageClassDetail>,
+    private readonly networkPolicy_: NamespacedResourceService<NetworkPolicyDetail>,
     private readonly actionbar_: ActionbarService,
     private readonly activatedRoute_: ActivatedRoute,
-    private readonly notifications_: NotificationsService,
+    private readonly notifications_: NotificationsService
   ) {}
 
   ngOnInit(): void {
     const resourceName = this.activatedRoute_.snapshot.params.resourceName;
+    const resourceNamespace = this.activatedRoute_.snapshot.params.resourceNamespace;
 
-    this.pvListEndpoint = this.endpoint_.child(resourceName, Resource.persistentVolume);
-
-    this.storageClassSubscription_ = this.storageClass_
-      .get(this.endpoint_.detail(), resourceName)
-      .subscribe((d: StorageClassDetail) => {
-        this.storageClass = d;
+    this.networkPolicy_
+      .get(this.endpoint_.detail(), resourceName, resourceNamespace)
+      .pipe(takeUntil(this.unsubscribe_))
+      .subscribe((d: NetworkPolicyDetail) => {
+        this.networkPolicy = d;
         this.notifications_.pushErrors(d.errors);
-        this.actionbar_.onInit.emit(new ResourceMeta('Storage Class', d.objectMeta, d.typeMeta));
+        this.actionbar_.onInit.emit(new ResourceMeta('Network Policy', d.objectMeta, d.typeMeta));
         this.isInitialized = true;
       });
   }
 
   ngOnDestroy(): void {
-    this.storageClassSubscription_.unsubscribe();
+    this.unsubscribe_.next();
+    this.unsubscribe_.complete();
     this.actionbar_.onDetailsLeave.emit();
   }
 
-  getParameterNames(): string[] {
-    return this.storageClass.parameters ? Object.keys(this.storageClass.parameters) : [];
+  stringify(data: any): string {
+    return dump(data);
   }
 }

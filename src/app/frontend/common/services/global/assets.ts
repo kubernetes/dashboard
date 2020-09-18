@@ -29,7 +29,7 @@ export class AssetsService {
   constructor(
     @Inject(MatIconRegistry) private readonly iconRegistry_: MatIconRegistry,
     @Inject(DomSanitizer) private readonly sanitizer_: DomSanitizer,
-    @Inject(ConfigService) private config: ConfigService,
+    @Inject(ConfigService) private config: ConfigService
   ) {
     if (config.getCustomConfig()) {
       this.appLogoSvg_ = config.getCustomConfig()['logo'];
@@ -38,28 +38,27 @@ export class AssetsService {
     if (!this.appLogoSvg_.includes('http')) {
       iconRegistry_.addSvgIcon(
         this.appLogoIcon_,
-        sanitizer_.bypassSecurityTrustResourceUrl(`${this.assetsPath_}/${this.appLogoSvg_}`),
+        sanitizer_.bypassSecurityTrustResourceUrl(`${this.assetsPath_}/${this.appLogoSvg_}`)
       );
     } else {
       this.iconRegistry_.addSvgIcon(
         this.appLogoIcon_,
-        sanitizer_.bypassSecurityTrustResourceUrl(`${this.appLogoSvg_}`),
+        sanitizer_.bypassSecurityTrustResourceUrl(`${this.appLogoSvg_}`)
       );
     }
-    this.iconRegistry_.addSvgIcon(
+    iconRegistry_.addSvgIcon(
       this.appLogoTextIcon_,
-      sanitizer_.bypassSecurityTrustResourceUrl(`${this.assetsPath_}/${this.appLogoTextSvg_}`),
+      sanitizer_.bypassSecurityTrustResourceUrl(`${this.assetsPath_}/${this.appLogoTextSvg_}`)
     );
 
     iconRegistry_.addSvgIcon('pin', sanitizer_.bypassSecurityTrustResourceUrl(`${this.assetsPath_}/pin.svg`));
     iconRegistry_.addSvgIcon(
       'pin-crossed',
-      sanitizer_.bypassSecurityTrustResourceUrl(`${this.assetsPath_}/pin-crossed.svg`),
+      sanitizer_.bypassSecurityTrustResourceUrl(`${this.assetsPath_}/pin-crossed.svg`)
     );
   }
 
   getAppLogo(): string {
-    const a = 2;
     return this.appLogoIcon_;
   }
 

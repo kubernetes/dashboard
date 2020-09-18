@@ -35,6 +35,12 @@ limitations under the License.
                    i18n>Namespaces
       </kd-nav-item>
       <kd-nav-item class="kd-nav-item"
+                 state="/networkpolicy"
+                 id="nav-network-policy"
+                 [namespaced]="true"
+                 i18n>Network Policies
+      </kd-nav-item>
+      <kd-nav-item class="kd-nav-item"
                    state="/node"
                    id="nav-node"
                    i18n>Nodes
@@ -43,6 +49,18 @@ limitations under the License.
                    state="/persistentvolume"
                    id="nav-persistentvolume"
                    i18n>Persistent Volumes
+      </kd-nav-item>
+      <kd-nav-item class="kd-nav-item"
+                 state="/rolebinding"
+                 id="nav-rolebinding"
+                 [namespaced]="true"
+                 i18n>Role Bindings
+      </kd-nav-item>
+      <kd-nav-item class="kd-nav-item"
+                 state="/role"
+                 id="nav-role"
+                 [namespaced]="true"
+                 i18n>Roles
       </kd-nav-item>
       <kd-nav-item class="kd-nav-item"
                    state="/storageclass"
@@ -227,3 +245,4 @@ limitations under the License.
     </div>
   </mat-drawer>
 </mat-drawer-container>
+

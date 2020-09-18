@@ -37,6 +37,10 @@ import {Helper, ResourceRatioModes} from './helper';
   templateUrl: './template.html',
 })
 export class OverviewComponent extends GroupedResourceList {
+  hasCluster(): boolean {
+    return this.isGroupVisible(ListGroupIdentifier.cluster);
+  }
+
   hasWorkloads(): boolean {
     return this.isGroupVisible(ListGroupIdentifier.workloads);
   }

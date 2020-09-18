@@ -558,6 +558,14 @@
           <context context-type="linenumber">23</context>
         </context-group>
         <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/rolebinding/template.html</context>
+          <context context-type="linenumber">30</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/clusterrolebinding/template.html</context>
+          <context context-type="linenumber">23</context>
+        </context-group>
+        <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/configmap/template.html</context>
           <context context-type="linenumber">23</context>
         </context-group>
@@ -677,6 +685,18 @@
           <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/serviceaccount/template.html</context>
           <context context-type="linenumber">23</context>
         </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/networkpolicy/template.html</context>
+          <context context-type="linenumber">23</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/role/template.html</context>
+          <context context-type="linenumber">23</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/common/components/subject/template.html</context>
+          <context context-type="linenumber">26</context>
+        </context-group>
       </trans-unit>
       <trans-unit id="cff1428d10d59d14e45edec3c735a27b5482db59" datatype="html">
         <source>Name</source>
@@ -687,6 +707,14 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/clusterrole/template.html</context>
+          <context context-type="linenumber">44</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/rolebinding/template.html</context>
+          <context context-type="linenumber">51</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/clusterrolebinding/template.html</context>
           <context context-type="linenumber">44</context>
         </context-group>
         <context-group purpose="location">
@@ -790,8 +818,20 @@
           <context context-type="linenumber">42</context>
         </context-group>
         <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/networkpolicy/template.html</context>
+          <context context-type="linenumber">42</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/role/template.html</context>
+          <context context-type="linenumber">44</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/common/components/subject/template.html</context>
+          <context context-type="linenumber">38</context>
+        </context-group>
+        <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/resource/workloads/deployment/detail/template.html</context>
-          <context context-type="linenumber">223</context>
+          <context context-type="linenumber">224</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/from/form/environmentvariables/template.html</context>
@@ -804,6 +844,10 @@
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/cronjob/template.html</context>
           <context context-type="linenumber">67</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/rolebinding/template.html</context>
+          <context context-type="linenumber">61</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/configmap/template.html</context>
@@ -874,8 +918,20 @@
           <context context-type="linenumber">54</context>
         </context-group>
         <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/networkpolicy/template.html</context>
+          <context context-type="linenumber">54</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/role/template.html</context>
+          <context context-type="linenumber">54</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/common/components/subject/template.html</context>
+          <context context-type="linenumber">50</context>
+        </context-group>
+        <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/resource/workloads/deployment/detail/template.html</context>
-          <context context-type="linenumber">231</context>
+          <context context-type="linenumber">232</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/from/form/template.html</context>
@@ -958,8 +1014,12 @@
           <context context-type="linenumber">60</context>
         </context-group>
         <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/networkpolicy/template.html</context>
+          <context context-type="linenumber">60</context>
+        </context-group>
+        <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/resource/workloads/deployment/detail/template.html</context>
-          <context context-type="linenumber">254</context>
+          <context context-type="linenumber">255</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/from/form/template.html</context>
@@ -1015,6 +1075,14 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/clusterrole/template.html</context>
+          <context context-type="linenumber">55</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/rolebinding/template.html</context>
+          <context context-type="linenumber">69</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/clusterrolebinding/template.html</context>
           <context context-type="linenumber">55</context>
         </context-group>
         <context-group purpose="location">
@@ -1113,6 +1181,14 @@
           <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/serviceaccount/template.html</context>
           <context context-type="linenumber">70</context>
         </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/networkpolicy/template.html</context>
+          <context context-type="linenumber">70</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/role/template.html</context>
+          <context context-type="linenumber">62</context>
+        </context-group>
       </trans-unit>
       <trans-unit id="2e6be334a2152f179a557167f98ce4459ff9a2f9" datatype="html">
         <source>Age</source>
@@ -1127,6 +1203,14 @@
         <target>クラスターロール</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/clusterrole/template.html</context>
+          <context context-type="linenumber">21</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="5382098398f2c3d09d75fe21addc796d91077051" datatype="html">
+        <source>Cluster Role Bindings</source>
+        <target state="new">Cluster Role Bindings</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/clusterrolebinding/template.html</context>
           <context context-type="linenumber">21</context>
         </context-group>
       </trans-unit>
@@ -1171,7 +1255,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/resource/cluster/persistentvolume/detail/source/template.html</context>
-          <context context-type="linenumber">282</context>
+          <context context-type="linenumber">283</context>
         </context-group>
       </trans-unit>
       <trans-unit id="bec9c0614c0c31fb6917b7f465e27399090b050e" datatype="html">
@@ -1255,31 +1339,31 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/resource/cluster/persistentvolume/detail/source/template.html</context>
-          <context context-type="linenumber">120</context>
+          <context context-type="linenumber">121</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/resource/cluster/persistentvolume/detail/source/template.html</context>
-          <context context-type="linenumber">134</context>
+          <context context-type="linenumber">135</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/resource/cluster/persistentvolume/detail/source/template.html</context>
-          <context context-type="linenumber">166</context>
+          <context context-type="linenumber">167</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/resource/cluster/persistentvolume/detail/source/template.html</context>
-          <context context-type="linenumber">192</context>
+          <context context-type="linenumber">193</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/resource/cluster/persistentvolume/detail/source/template.html</context>
-          <context context-type="linenumber">206</context>
+          <context context-type="linenumber">207</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/resource/cluster/persistentvolume/detail/source/template.html</context>
-          <context context-type="linenumber">244</context>
+          <context context-type="linenumber">245</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/resource/cluster/persistentvolume/detail/source/template.html</context>
-          <context context-type="linenumber">270</context>
+          <context context-type="linenumber">271</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/resource/discovery/service/detail/template.html</context>
@@ -1347,7 +1431,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/resource/workloads/deployment/detail/template.html</context>
-          <context context-type="linenumber">191</context>
+          <context context-type="linenumber">192</context>
         </context-group>
       </trans-unit>
       <trans-unit id="88db9c5672eb3d6dcd8e3b41617e98923b3b499a" datatype="html">
@@ -1371,7 +1455,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/resource/workloads/deployment/detail/template.html</context>
-          <context context-type="linenumber">205</context>
+          <context context-type="linenumber">206</context>
         </context-group>
       </trans-unit>
       <trans-unit id="539781df73bc24037d8289707d258925c9e4f2d5" datatype="html">
@@ -1388,6 +1472,10 @@
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/creator/template.html</context>
           <context context-type="linenumber">58</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/common/components/subject/template.html</context>
+          <context context-type="linenumber">59</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/crd/detail/template.html</context>
@@ -1435,11 +1523,11 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/resource/cluster/node/detail/template.html</context>
-          <context context-type="linenumber">162</context>
+          <context context-type="linenumber">164</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/resource/workloads/deployment/detail/template.html</context>
-          <context context-type="linenumber">247</context>
+          <context context-type="linenumber">248</context>
         </context-group>
       </trans-unit>
       <trans-unit id="81054386839df6c7c45d298e0044956413589ef4" datatype="html">
@@ -1452,7 +1540,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/resource/workloads/deployment/detail/template.html</context>
-          <context context-type="linenumber">237</context>
+          <context context-type="linenumber">238</context>
         </context-group>
       </trans-unit>
       <trans-unit id="b73f7f5060fb22a1e9ec462b1bb02493fa3ab866" datatype="html">
@@ -1460,11 +1548,11 @@
         <target>イメージ</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/resource/workloads/replicationcontroller/detail/template.html</context>
-          <context context-type="linenumber">38</context>
+          <context context-type="linenumber">39</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/resource/workloads/replicaset/detail/template.html</context>
-          <context context-type="linenumber">46</context>
+          <context context-type="linenumber">47</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/creator/template.html</context>
@@ -1496,11 +1584,11 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/resource/workloads/daemonset/detail/template.html</context>
-          <context context-type="linenumber">38</context>
+          <context context-type="linenumber">39</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/resource/workloads/deployment/detail/template.html</context>
-          <context context-type="linenumber">262</context>
+          <context context-type="linenumber">264</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/resource/workloads/job/detail/template.html</context>
@@ -1508,7 +1596,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/resource/workloads/statefulset/detail/template.html</context>
-          <context context-type="linenumber">38</context>
+          <context context-type="linenumber">39</context>
         </context-group>
       </trans-unit>
       <trans-unit id="6af40687e73f3e54515b94380a6463e6f8744ff2" datatype="html">
@@ -1624,7 +1712,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/resource/cluster/persistentvolume/detail/source/template.html</context>
-          <context context-type="linenumber">172</context>
+          <context context-type="linenumber">173</context>
         </context-group>
       </trans-unit>
       <trans-unit id="fe22ca53e651df951dac25b67c17894b0980f767" datatype="html">
@@ -1752,7 +1840,7 @@
         <target>水平ポッドオートスケーラー</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/resource/workloads/deployment/detail/template.html</context>
-          <context context-type="linenumber">284</context>
+          <context context-type="linenumber">288</context>
         </context-group>
       </trans-unit>
       <trans-unit id="31b85b06ea942f9bd430d369fd1b7fc0d2e949df" datatype="html">
@@ -1942,7 +2030,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/resource/workloads/deployment/detail/template.html</context>
-          <context context-type="linenumber">198</context>
+          <context context-type="linenumber">199</context>
         </context-group>
       </trans-unit>
       <trans-unit id="016ff9645a730c7a1171f2df1858a8f74d8e9ec0" datatype="html">
@@ -2078,7 +2166,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/resource/cluster/persistentvolume/detail/template.html</context>
-          <context context-type="linenumber">82</context>
+          <context context-type="linenumber">83</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/resource/config/persistentvolumeclaim/detail/template.html</context>
@@ -2098,7 +2186,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/resource/config/persistentvolumeclaim/detail/template.html</context>
-          <context context-type="linenumber">47</context>
+          <context context-type="linenumber">48</context>
         </context-group>
       </trans-unit>
       <trans-unit id="a7c36b970853f8ce7692119881d2550dbd7fa19d" datatype="html">
@@ -2166,7 +2254,7 @@
         <target>リソース</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/policyrule/template.html</context>
-          <context context-type="linenumber">36</context>
+          <context context-type="linenumber">37</context>
         </context-group>
       </trans-unit>
       <trans-unit id="7531ac0f84b54f0bcefa85493d9b9a4695d0b9f4" datatype="html">
@@ -2174,7 +2262,7 @@
         <target>非リソース URL</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/policyrule/template.html</context>
-          <context context-type="linenumber">48</context>
+          <context context-type="linenumber">49</context>
         </context-group>
       </trans-unit>
       <trans-unit id="b44f9a54418bcbda336063edc010c98ded4f5817" datatype="html">
@@ -2182,7 +2270,7 @@
         <target>リソース名</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/policyrule/template.html</context>
-          <context context-type="linenumber">60</context>
+          <context context-type="linenumber">61</context>
         </context-group>
       </trans-unit>
       <trans-unit id="accc38331fffe0055910477b45e525173d64c661" datatype="html">
@@ -2190,7 +2278,7 @@
         <target>動詞</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/policyrule/template.html</context>
-          <context context-type="linenumber">72</context>
+          <context context-type="linenumber">73</context>
         </context-group>
       </trans-unit>
       <trans-unit id="bf6889e8e87bc743b25907eb4126bfbe2804e952" datatype="html">
@@ -2198,7 +2286,7 @@
         <target>API グループ</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/policyrule/template.html</context>
-          <context context-type="linenumber">84</context>
+          <context context-type="linenumber">85</context>
         </context-group>
       </trans-unit>
       <trans-unit id="707b0ec47f1b9d281b87f4235404f8f34411dd38" datatype="html">
@@ -2226,7 +2314,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/resource/cluster/persistentvolume/detail/template.html</context>
-          <context context-type="linenumber">90</context>
+          <context context-type="linenumber">91</context>
         </context-group>
       </trans-unit>
       <trans-unit id="e4bc0a718dd945e7242e230772c371d963128d11" datatype="html">
@@ -2265,14 +2353,6 @@
           <context context-type="linenumber">26</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="e04aa162d5c7f9cf4dde1b4a78667ca3f70da778" datatype="html">
-        <source>Replications Controllers</source>
-        <target>レプリケーションコントローラー</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/replicationcontroller/template.html</context>
-          <context context-type="linenumber">21</context>
-        </context-group>
-      </trans-unit>
       <trans-unit id="3bb5706d8e2b719394b49d48ef5bf5398bfdc33f" datatype="html">
         <source>Storage Classes</source>
         <target>ストレージクラス</target>
@@ -2289,7 +2369,7 @@
           <context context-type="linenumber">53</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">../src/app/frontend/resource/cluster/storageclass/detail/template.html</context>
+          <context context-type="sourcefile">../src/app/frontend/resource/config/storageclass/detail/template.html</context>
           <context context-type="linenumber">29</context>
         </context-group>
       </trans-unit>
@@ -2329,7 +2409,23 @@
           <context context-type="linenumber">24</context>
         </context-group>
         <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/resource/workloads/replicationcontroller/detail/template.html</context>
+          <context context-type="linenumber">22</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/resource/workloads/replicaset/detail/template.html</context>
+          <context context-type="linenumber">22</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/resource/cluster/clusterrolebinding/detail/template.html</context>
+          <context context-type="linenumber">22</context>
+        </context-group>
+        <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/resource/cluster/namespace/detail/template.html</context>
+          <context context-type="linenumber">22</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/resource/cluster/networkpolicy/detail/template.html</context>
           <context context-type="linenumber">22</context>
         </context-group>
         <context-group purpose="location">
@@ -2341,15 +2437,7 @@
           <context context-type="linenumber">22</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">../src/app/frontend/resource/cluster/storageclass/detail/template.html</context>
-          <context context-type="linenumber">22</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">../src/app/frontend/resource/config/persistentvolumeclaim/detail/template.html</context>
-          <context context-type="linenumber">22</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">../src/app/frontend/resource/discovery/service/detail/template.html</context>
+          <context context-type="sourcefile">../src/app/frontend/resource/cluster/rolebinding/detail/template.html</context>
           <context context-type="linenumber">22</context>
         </context-group>
         <context-group purpose="location">
@@ -2369,15 +2457,19 @@
           <context context-type="linenumber">22</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">../src/app/frontend/resource/workloads/replicaset/detail/template.html</context>
-          <context context-type="linenumber">22</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">../src/app/frontend/resource/workloads/replicationcontroller/detail/template.html</context>
-          <context context-type="linenumber">22</context>
-        </context-group>
-        <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/resource/workloads/statefulset/detail/template.html</context>
+          <context context-type="linenumber">22</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/resource/discovery/service/detail/template.html</context>
+          <context context-type="linenumber">22</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/resource/config/persistentvolumeclaim/detail/template.html</context>
+          <context context-type="linenumber">22</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/resource/config/storageclass/detail/template.html</context>
           <context context-type="linenumber">22</context>
         </context-group>
       </trans-unit>
@@ -2441,139 +2533,134 @@
           <context context-type="linenumber">26</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="67d3a6c50ed8a188e19ea8c541a56f0e35620e5c" datatype="html">
-        <source>Cluster
-      </source>
-        <target>クラスター</target>
+      <trans-unit id="a4f6d660f2cc1c8c680a96e39c719b48c8ebe17a" datatype="html">
+        <source>Network Policies</source>
+        <target state="new">Network Policies</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">../src/app/frontend/chrome/nav/template.html</context>
-          <context context-type="linenumber">25</context>
+          <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/networkpolicy/template.html</context>
+          <context context-type="linenumber">21</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="1aff4cb93f64ca57fbf92fe405b2c1f2c4ec1b11" datatype="html">
-        <source>Cluster Roles
-      </source>
-        <target>クラスターロール</target>
+      <trans-unit id="9610487cbeb5796d34d8601b5ac0c0a65f9e1d19" datatype="html">
+        <source>Roles</source>
+        <target state="new">Roles</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">../src/app/frontend/chrome/nav/template.html</context>
-          <context context-type="linenumber">30</context>
+          <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/role/template.html</context>
+          <context context-type="linenumber">21</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="3b91b541ed4a1e47b83fe91f4cae1eefa904f4d5" datatype="html">
-        <source>Namespaces
-      </source>
-        <target>ネームスペース</target>
+      <trans-unit id="51682f193e48c9ef0e687aea04f825af1721f0f0" datatype="html">
+        <source>Role Bindings</source>
+        <target state="new">Role Bindings</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">../src/app/frontend/chrome/nav/template.html</context>
-          <context context-type="linenumber">35</context>
+          <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/rolebinding/template.html</context>
+          <context context-type="linenumber">28</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="9151fc3bbb78ca19bf93221148fb6f75c9adec73" datatype="html">
-        <source>Nodes
-      </source>
-        <target>ノード</target>
+      <trans-unit id="2b689ed7a24edd60660708e03c2dc11cd540e950" datatype="html">
+        <source>Subjects</source>
+        <target state="new">Subjects</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">../src/app/frontend/chrome/nav/template.html</context>
-          <context context-type="linenumber">40</context>
+          <context context-type="sourcefile">../src/app/frontend/common/components/subject/template.html</context>
+          <context context-type="linenumber">20</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="53fa14e4e66a4b88531ac5852644edf4c93430c5" datatype="html">
-        <source>Persistent Volumes
-      </source>
-        <target>永続ボリューム</target>
+      <trans-unit id="fb8681ea25f262db7f8ede5306e82d081016d5c7" datatype="html">
+        <source>API Group</source>
+        <target state="new">API Group</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">../src/app/frontend/chrome/nav/template.html</context>
-          <context context-type="linenumber">45</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="d49c812d67b965bd0a172844e265f55567c812ad" datatype="html">
-        <source>Storage Classes
-      </source>
-        <target>ストレージクラス</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">../src/app/frontend/chrome/nav/template.html</context>
-          <context context-type="linenumber">50</context>
+          <context context-type="sourcefile">../src/app/frontend/common/components/subject/template.html</context>
+          <context context-type="linenumber">65</context>
         </context-group>
       </trans-unit>
       <trans-unit id="6d9edf35ea416301631125005b66c9440397176d" datatype="html">
         <source>Workloads
       </source>
-        <target>ワークロード</target>
+        <target state="new">Workloads
+      </target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/chrome/nav/template.html</context>
-          <context context-type="linenumber">90</context>
+          <context context-type="linenumber">108</context>
         </context-group>
       </trans-unit>
       <trans-unit id="787093faa4cfa59c1499dca2cfc6e804f1838ab1" datatype="html">
         <source>Cron Jobs
       </source>
-        <target>Cron ジョブ</target>
+        <target state="new">Cron Jobs
+      </target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/chrome/nav/template.html</context>
-          <context context-type="linenumber">95</context>
+          <context context-type="linenumber">113</context>
         </context-group>
       </trans-unit>
       <trans-unit id="d094e262a8d26c66b5eb9f7dbf501cd711c1306f" datatype="html">
         <source>Daemon Sets
       </source>
-        <target>デーモンセット</target>
+        <target state="new">Daemon Sets
+      </target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/chrome/nav/template.html</context>
-          <context context-type="linenumber">100</context>
+          <context context-type="linenumber">118</context>
         </context-group>
       </trans-unit>
       <trans-unit id="a862522a568898e032031f6728be4eec8edeb61b" datatype="html">
         <source>Deployments
       </source>
-        <target>デプロイメント</target>
+        <target state="new">Deployments
+      </target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/chrome/nav/template.html</context>
-          <context context-type="linenumber">105</context>
+          <context context-type="linenumber">123</context>
         </context-group>
       </trans-unit>
       <trans-unit id="702b6f15c86ce19a17aa8ae644658c852d3c1c08" datatype="html">
         <source>Jobs
       </source>
-        <target>ジョブ</target>
+        <target state="new">Jobs
+      </target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/chrome/nav/template.html</context>
-          <context context-type="linenumber">110</context>
+          <context context-type="linenumber">128</context>
         </context-group>
       </trans-unit>
       <trans-unit id="03ff2fadee6736ca0b92abdfe0f19db0d0b2c3f8" datatype="html">
         <source>Pods
       </source>
-        <target>ポッド</target>
+        <target state="new">Pods
+      </target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/chrome/nav/template.html</context>
-          <context context-type="linenumber">115</context>
+          <context context-type="linenumber">133</context>
         </context-group>
       </trans-unit>
       <trans-unit id="6fed5420d42fcfbd09dfb4777c207274dd4f0c0a" datatype="html">
         <source>Replica Sets
       </source>
-        <target>レプリカセット</target>
+        <target state="new">Replica Sets
+      </target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/chrome/nav/template.html</context>
-          <context context-type="linenumber">120</context>
+          <context context-type="linenumber">138</context>
         </context-group>
       </trans-unit>
       <trans-unit id="5a60417d6a34e8c0655cb0678071c60ca8119aad" datatype="html">
         <source>Replication Controllers
       </source>
-        <target>レプリケーションコントローラー</target>
+        <target state="new">Replication Controllers
+      </target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/chrome/nav/template.html</context>
-          <context context-type="linenumber">125</context>
+          <context context-type="linenumber">143</context>
         </context-group>
       </trans-unit>
       <trans-unit id="1bc563edf644be0e1f682694e543cc8608575562" datatype="html">
         <source>Stateful Sets
       </source>
-        <target>ステートフルセット</target>
+        <target state="new">Stateful Sets
+      </target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/chrome/nav/template.html</context>
-          <context context-type="linenumber">130</context>
+          <context context-type="linenumber">148</context>
         </context-group>
       </trans-unit>
       <trans-unit id="22c030ecbaceb4c5cf969f5ca360d7e6c6384a6d" datatype="html">
@@ -2583,7 +2670,7 @@
       </target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/chrome/nav/template.html</context>
-          <context context-type="linenumber">137</context>
+          <context context-type="linenumber">155</context>
         </context-group>
       </trans-unit>
       <trans-unit id="950167b1c4eae7d3d3efdc6508f72c0c78a3f3cd" datatype="html">
@@ -2593,7 +2680,7 @@
       </target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/chrome/nav/template.html</context>
-          <context context-type="linenumber">147</context>
+          <context context-type="linenumber">165</context>
         </context-group>
       </trans-unit>
       <trans-unit id="8d6b7d147911e1d13187825c308cdd70f01dabd0" datatype="html">
@@ -2603,52 +2690,147 @@
       </target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/chrome/nav/template.html</context>
-          <context context-type="linenumber">152</context>
+          <context context-type="linenumber">170</context>
         </context-group>
       </trans-unit>
       <trans-unit id="5502d7f80d7951086a85d2da478f3f13763939d5" datatype="html">
         <source>Services
       </source>
-        <target>サービス</target>
+        <target state="new">Services
+      </target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/chrome/nav/template.html</context>
-          <context context-type="linenumber">157</context>
+          <context context-type="linenumber">175</context>
         </context-group>
       </trans-unit>
       <trans-unit id="be3dcec436583ff66cce312fd2074779d8851f54" datatype="html">
         <source>Config and Storage
       </source>
-        <target>コンフィグとストレージ</target>
+        <target state="new">Config and Storage
+      </target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/chrome/nav/template.html</context>
-          <context context-type="linenumber">164</context>
+          <context context-type="linenumber">182</context>
         </context-group>
       </trans-unit>
       <trans-unit id="990cffc29a7adb5ec1110b0176c8c12fff756eba" datatype="html">
         <source>Config Maps
       </source>
-        <target>コンフィグマップ</target>
+        <target state="new">Config Maps
+      </target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/chrome/nav/template.html</context>
-          <context context-type="linenumber">174</context>
+          <context context-type="linenumber">192</context>
         </context-group>
       </trans-unit>
       <trans-unit id="74be5bc42681451056aacf13382e5b29c62bd903" datatype="html">
         <source>Persistent Volume Claims
       </source>
-        <target>永続ボリューム要求</target>
+        <target state="new">Persistent Volume Claims
+      </target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/chrome/nav/template.html</context>
-          <context context-type="linenumber">179</context>
+          <context context-type="linenumber">197</context>
         </context-group>
       </trans-unit>
       <trans-unit id="755417c37ab5d459cd2443b3776aaaca7ec87f90" datatype="html">
         <source>Secrets
       </source>
-        <target>シークレット</target>
+        <target state="new">Secrets
+      </target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/chrome/nav/template.html</context>
-          <context context-type="linenumber">184</context>
+          <context context-type="linenumber">202</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="d49c812d67b965bd0a172844e265f55567c812ad" datatype="html">
+        <source>Storage Classes
+      </source>
+        <target state="new">Storage Classes
+      </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/chrome/nav/template.html</context>
+          <context context-type="linenumber">68</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="67d3a6c50ed8a188e19ea8c541a56f0e35620e5c" datatype="html">
+        <source>Cluster
+      </source>
+        <target state="new">Cluster
+      </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/chrome/nav/template.html</context>
+          <context context-type="linenumber">25</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="1aff4cb93f64ca57fbf92fe405b2c1f2c4ec1b11" datatype="html">
+        <source>Cluster Roles
+      </source>
+        <target state="new">Cluster Roles
+      </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/chrome/nav/template.html</context>
+          <context context-type="linenumber">30</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="3b91b541ed4a1e47b83fe91f4cae1eefa904f4d5" datatype="html">
+        <source>Namespaces
+      </source>
+        <target state="new">Namespaces
+      </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/chrome/nav/template.html</context>
+          <context context-type="linenumber">35</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="bce7cd9302197070e1782d38622dbb351ad84b69" datatype="html">
+        <source>Network Policies
+      </source>
+        <target state="new">Network Policies
+      </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/chrome/nav/template.html</context>
+          <context context-type="linenumber">41</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="9151fc3bbb78ca19bf93221148fb6f75c9adec73" datatype="html">
+        <source>Nodes
+      </source>
+        <target state="new">Nodes
+      </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/chrome/nav/template.html</context>
+          <context context-type="linenumber">46</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="53fa14e4e66a4b88531ac5852644edf4c93430c5" datatype="html">
+        <source>Persistent Volumes
+      </source>
+        <target state="new">Persistent Volumes
+      </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/chrome/nav/template.html</context>
+          <context context-type="linenumber">51</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="d4d25df076acf842b0705cc4ac54f4757a979a03" datatype="html">
+        <source>Role Bindings
+      </source>
+        <target state="new">Role Bindings
+      </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/chrome/nav/template.html</context>
+          <context context-type="linenumber">57</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="e9c8e24a53e2496d1bb734d0bd20d756bec5b200" datatype="html">
+        <source>Roles
+      </source>
+        <target state="new">Roles
+      </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/chrome/nav/template.html</context>
+          <context context-type="linenumber">63</context>
         </context-group>
       </trans-unit>
       <trans-unit id="5deee9cd9fabadb49eb1e3fcae70ff560e41ba27" datatype="html">
@@ -2658,17 +2840,17 @@
       </target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/chrome/nav/template.html</context>
-          <context context-type="linenumber">169</context>
+          <context context-type="linenumber">187</context>
         </context-group>
       </trans-unit>
       <trans-unit id="f2f9d18ebacb9e3bcb996d8176609e306864265e" datatype="html">
         <source>Custom Resource Definitions
       </source>
-        <target>カスタムリソース定義
+        <target state="new">Custom Resource Definitions
       </target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/chrome/nav/template.html</context>
-          <context context-type="linenumber">195</context>
+          <context context-type="linenumber">213</context>
         </context-group>
       </trans-unit>
       <trans-unit id="9b39398e6c7a9dfb5cd43f405598934244f8bd17" datatype="html">
@@ -2678,25 +2860,27 @@
         </target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/chrome/nav/template.html</context>
-          <context context-type="linenumber">208</context>
+          <context context-type="linenumber">226</context>
         </context-group>
       </trans-unit>
       <trans-unit id="03511cfe5e28ed3380ab198c13cf62ebde1e89e6" datatype="html">
         <source>Settings
       </source>
-        <target>設定</target>
+        <target state="new">Settings
+      </target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/chrome/nav/template.html</context>
-          <context context-type="linenumber">219</context>
+          <context context-type="linenumber">237</context>
         </context-group>
       </trans-unit>
       <trans-unit id="c2fa735eb6b1b2c10171c5acb818f6e0975a9406" datatype="html">
         <source>About
       </source>
-        <target>Kubernetes Dashboard について</target>
+        <target state="new">About
+      </target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/chrome/nav/template.html</context>
-          <context context-type="linenumber">225</context>
+          <context context-type="linenumber">243</context>
         </context-group>
       </trans-unit>
       <trans-unit id="01269ce8051398188d50367ead1831407e77d504" datatype="html">
@@ -2785,46 +2969,50 @@
           <context context-type="linenumber">42</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="192867803de476e3137425685702cb44b3bb9981" datatype="html">
-        <source><x id="INTERPOLATION" equiv-text="{{resource.displayName}}"/>
+      <trans-unit id="84d40318243f782005db3040f6bd3b9ec388b5d8" datatype="html">
+        <source><x id="INTERPOLATION" equiv-text="{{getDisplayName(resource)}}"/>
   </source>
-        <target><x id="INTERPOLATION" equiv-text="{{resource.displayName}}"/>
+        <target state="new"><x id="INTERPOLATION" equiv-text="{{getDisplayName(resource)}}"/>
   </target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/chrome/nav/pinner/template.html</context>
           <context context-type="linenumber">22</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="82b29c3b4501afec72a7fb434e048547f9a067e4" datatype="html">
+        <source>Role Reference</source>
+        <target state="new">Role Reference</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/resource/cluster/clusterrolebinding/detail/template.html</context>
+          <context context-type="linenumber">28</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/resource/cluster/rolebinding/detail/template.html</context>
+          <context context-type="linenumber">28</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="f4d1dd59b039ad818d9da7e29a773e10e41d9821" datatype="html">
         <source>Cluster</source>
         <target>クラスター</target>
         <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/overview/template.html</context>
+          <context context-type="linenumber">71</context>
+        </context-group>
+        <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/search/template.html</context>
-          <context context-type="linenumber">20</context>
+          <context context-type="linenumber">66</context>
         </context-group>
       </trans-unit>
       <trans-unit id="4346d3d4e2109584d33480fb8916a9b1cfcdf636" datatype="html">
         <source>Workloads</source>
         <target>ワークロード</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">../src/app/frontend/search/template.html</context>
-          <context context-type="linenumber">36</context>
+          <context context-type="sourcefile">../src/app/frontend/overview/template.html</context>
+          <context context-type="linenumber">19</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">../src/app/frontend/overview/template.html</context>
+          <context context-type="sourcefile">../src/app/frontend/search/template.html</context>
           <context context-type="linenumber">20</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="3ca17e5da2745672786f9d80be73ef0b4929b7fc" datatype="html">
-        <source>Discovery and Load Balancing</source>
-        <target>ディスカバリーとロードバランシング</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">../src/app/frontend/overview/template.html</context>
-          <context context-type="linenumber">47</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">../src/app/frontend/search/template.html</context>
-          <context context-type="linenumber">58</context>
         </context-group>
       </trans-unit>
       <trans-unit id="0349fe54380ff3444a3a881afb66c9158a299575" datatype="html">
@@ -2832,11 +3020,11 @@
         <target>コンフィグとストレージ</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/overview/template.html</context>
-          <context context-type="linenumber">57</context>
+          <context context-type="linenumber">56</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/search/template.html</context>
-          <context context-type="linenumber">68</context>
+          <context context-type="linenumber">52</context>
         </context-group>
       </trans-unit>
       <trans-unit id="cf9072061094a1ad33866a311152c495c05890a0" datatype="html">
@@ -3837,8 +4025,16 @@
         <source>Service</source>
         <target>サービス</target>
         <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/overview/template.html</context>
+          <context context-type="linenumber">46</context>
+        </context-group>
+        <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/from/form/portmappings/template.html</context>
           <context context-type="linenumber">25</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/search/template.html</context>
+          <context context-type="linenumber">42</context>
         </context-group>
       </trans-unit>
       <trans-unit id="cb2741a46e3560f6bc6dfd99d385e86b08b26d72" datatype="html">
@@ -4153,6 +4349,38 @@
           <context context-type="linenumber">23</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="a21b5b669ab3f36e0f83e9a025c26662fd0616e8" datatype="html">
+        <source>Pod Selector</source>
+        <target state="new">Pod Selector</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/resource/cluster/networkpolicy/detail/template.html</context>
+          <context context-type="linenumber">28</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="2ebd4e9210644c0f1da612d5c2ef1bbdab9652fd" datatype="html">
+        <source>Policy Types</source>
+        <target state="new">Policy Types</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/resource/cluster/networkpolicy/detail/template.html</context>
+          <context context-type="linenumber">37</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="1ebb4252343531346acc2530c2002fc639dd6926" datatype="html">
+        <source>Ingress Rules</source>
+        <target state="new">Ingress Rules</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/resource/cluster/networkpolicy/detail/template.html</context>
+          <context context-type="linenumber">49</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="21a53832d275152e4ad8dfa9371ebbefbf693c87" datatype="html">
+        <source>Egress Rules</source>
+        <target state="new">Egress Rules</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/resource/cluster/networkpolicy/detail/template.html</context>
+          <context context-type="linenumber">61</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="32c4fb786d3f614318c26ef8adc8f195d581545d" datatype="html">
         <source>Workload Status</source>
         <target>ワークロードの状態</target>
@@ -4167,6 +4395,10 @@
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/workloadstatus/template.html</context>
           <context context-type="linenumber">147</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/replicationcontroller/template.html</context>
+          <context context-type="linenumber">21</context>
         </context-group>
       </trans-unit>
       <trans-unit id="8a3abe0df530103020a480befe1757e3b1776e7b" datatype="html">
@@ -4206,7 +4438,7 @@
         <target>テイント</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/resource/cluster/node/detail/template.html</context>
-          <context context-type="linenumber">59</context>
+          <context context-type="linenumber">60</context>
         </context-group>
       </trans-unit>
       <trans-unit id="b129f142540fcf057f58e5ffc3a4bd1aae6f074b" datatype="html">
@@ -4214,7 +4446,7 @@
         <target>システム情報</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/resource/cluster/node/detail/template.html</context>
-          <context context-type="linenumber">69</context>
+          <context context-type="linenumber">71</context>
         </context-group>
       </trans-unit>
       <trans-unit id="e8455c62aae80d5b671b26f2b530beb19a9a06de" datatype="html">
@@ -4222,7 +4454,7 @@
         <target>マシン ID</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/resource/cluster/node/detail/template.html</context>
-          <context context-type="linenumber">75</context>
+          <context context-type="linenumber">77</context>
         </context-group>
       </trans-unit>
       <trans-unit id="e3d4246d625cd4ffe8066e08919446dadd11b618" datatype="html">
@@ -4230,7 +4462,7 @@
         <target>システム UUID</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/resource/cluster/node/detail/template.html</context>
-          <context context-type="linenumber">80</context>
+          <context context-type="linenumber">82</context>
         </context-group>
       </trans-unit>
       <trans-unit id="0125b821613421311435ad931bc1d25d45a256df" datatype="html">
@@ -4238,7 +4470,7 @@
         <target>ブート ID</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/resource/cluster/node/detail/template.html</context>
-          <context context-type="linenumber">85</context>
+          <context context-type="linenumber">87</context>
         </context-group>
       </trans-unit>
       <trans-unit id="844dfe8046a0d112eb4e4a03394b029e45fbaea9" datatype="html">
@@ -4246,7 +4478,7 @@
         <target>カーネルバージョン</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/resource/cluster/node/detail/template.html</context>
-          <context context-type="linenumber">90</context>
+          <context context-type="linenumber">92</context>
         </context-group>
       </trans-unit>
       <trans-unit id="b398d1a80e8ad17d3e6cb69370e5c49613e16ec9" datatype="html">
@@ -4254,7 +4486,7 @@
         <target>OS イメージ</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/resource/cluster/node/detail/template.html</context>
-          <context context-type="linenumber">95</context>
+          <context context-type="linenumber">97</context>
         </context-group>
       </trans-unit>
       <trans-unit id="82a554c35d668b131ce9d5d1c9fbb91e64a8c766" datatype="html">
@@ -4262,7 +4494,7 @@
         <target>コンテナーランタイムバージョン</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/resource/cluster/node/detail/template.html</context>
-          <context context-type="linenumber">100</context>
+          <context context-type="linenumber">102</context>
         </context-group>
       </trans-unit>
       <trans-unit id="d4a5b56e9e818777dab77878e208b826dce26029" datatype="html">
@@ -4270,7 +4502,7 @@
         <target>kubelet バージョン</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/resource/cluster/node/detail/template.html</context>
-          <context context-type="linenumber">105</context>
+          <context context-type="linenumber">107</context>
         </context-group>
       </trans-unit>
       <trans-unit id="bfcb449ad0d732fb67fcf63c1770ddc164b6d01b" datatype="html">
@@ -4278,7 +4510,7 @@
         <target>kube-proxy バージョン</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/resource/cluster/node/detail/template.html</context>
-          <context context-type="linenumber">110</context>
+          <context context-type="linenumber">112</context>
         </context-group>
       </trans-unit>
       <trans-unit id="1b5d16dfa3cfd08ebe24a7ca7ff4a8be82617868" datatype="html">
@@ -4286,7 +4518,7 @@
         <target>オペレーティングシステム</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/resource/cluster/node/detail/template.html</context>
-          <context context-type="linenumber">115</context>
+          <context context-type="linenumber">117</context>
         </context-group>
       </trans-unit>
       <trans-unit id="d2252b2dbce97640eb209224549e3e59c67412c1" datatype="html">
@@ -4294,7 +4526,7 @@
         <target>アーキテクチャー</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/resource/cluster/node/detail/template.html</context>
-          <context context-type="linenumber">120</context>
+          <context context-type="linenumber">122</context>
         </context-group>
       </trans-unit>
       <trans-unit id="2ee26d58f2707416e636887111d5603b35346c4a" datatype="html">
@@ -4302,7 +4534,7 @@
         <target>割り当て</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/resource/cluster/node/detail/template.html</context>
-          <context context-type="linenumber">128</context>
+          <context context-type="linenumber">130</context>
         </context-group>
       </trans-unit>
       <trans-unit id="43a02cbb549d36c5086109559945a3db29542b1f" datatype="html">
@@ -4310,7 +4542,7 @@
         <target>CPU</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/resource/cluster/node/detail/template.html</context>
-          <context context-type="linenumber">136</context>
+          <context context-type="linenumber">138</context>
         </context-group>
       </trans-unit>
       <trans-unit id="58d4a9814864741040bc5905b6a368836e683f76" datatype="html">
@@ -4318,7 +4550,7 @@
         <target>メモリー</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/resource/cluster/node/detail/template.html</context>
-          <context context-type="linenumber">149</context>
+          <context context-type="linenumber">151</context>
         </context-group>
       </trans-unit>
       <trans-unit id="c910633dbd59abefedb3896b45649b1373e31aab" datatype="html">
@@ -4350,7 +4582,7 @@
         <target>数量</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/resource/cluster/persistentvolume/detail/template.html</context>
-          <context context-type="linenumber">99</context>
+          <context context-type="linenumber">100</context>
         </context-group>
       </trans-unit>
       <trans-unit id="a621a52ed6b7b39a7e24df464bc18bf25615e816" datatype="html">
@@ -4370,15 +4602,15 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/resource/cluster/persistentvolume/detail/source/template.html</context>
-          <context context-type="linenumber">139</context>
+          <context context-type="linenumber">140</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/resource/cluster/persistentvolume/detail/source/template.html</context>
-          <context context-type="linenumber">212</context>
+          <context context-type="linenumber">213</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/resource/cluster/persistentvolume/detail/source/template.html</context>
-          <context context-type="linenumber">276</context>
+          <context context-type="linenumber">277</context>
         </context-group>
       </trans-unit>
       <trans-unit id="9d5287c10646f5c96877b0a2489e079f025c1400" datatype="html">
@@ -4390,7 +4622,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/resource/cluster/persistentvolume/detail/source/template.html</context>
-          <context context-type="linenumber">145</context>
+          <context context-type="linenumber">146</context>
         </context-group>
       </trans-unit>
       <trans-unit id="083338c1e13796fd0259d89493ec7b75be0d14d0" datatype="html">
@@ -4410,23 +4642,23 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/resource/cluster/persistentvolume/detail/source/template.html</context>
-          <context context-type="linenumber">151</context>
+          <context context-type="linenumber">152</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/resource/cluster/persistentvolume/detail/source/template.html</context>
-          <context context-type="linenumber">184</context>
+          <context context-type="linenumber">185</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/resource/cluster/persistentvolume/detail/source/template.html</context>
-          <context context-type="linenumber">224</context>
+          <context context-type="linenumber">225</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/resource/cluster/persistentvolume/detail/source/template.html</context>
-          <context context-type="linenumber">262</context>
+          <context context-type="linenumber">263</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/resource/cluster/persistentvolume/detail/source/template.html</context>
-          <context context-type="linenumber">308</context>
+          <context context-type="linenumber">310</context>
         </context-group>
       </trans-unit>
       <trans-unit id="32790440573a0626970812694495678f0581d25a" datatype="html">
@@ -4458,7 +4690,7 @@
         <target>データセット名</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/resource/cluster/persistentvolume/detail/source/template.html</context>
-          <context context-type="linenumber">126</context>
+          <context context-type="linenumber">127</context>
         </context-group>
       </trans-unit>
       <trans-unit id="234e55c72e262b155f0cc5cbd9a76c6e5727d469" datatype="html">
@@ -4466,7 +4698,7 @@
         <target>永続ディスク名</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/resource/cluster/persistentvolume/detail/source/template.html</context>
-          <context context-type="linenumber">157</context>
+          <context context-type="linenumber">158</context>
         </context-group>
       </trans-unit>
       <trans-unit id="766c66ad5cc981c531aaf3fe3a2a7a346ddc8d83" datatype="html">
@@ -4474,15 +4706,15 @@
         <target>パス</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/resource/cluster/persistentvolume/detail/source/template.html</context>
-          <context context-type="linenumber">178</context>
+          <context context-type="linenumber">179</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/resource/cluster/persistentvolume/detail/source/template.html</context>
-          <context context-type="linenumber">198</context>
+          <context context-type="linenumber">199</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/resource/cluster/persistentvolume/detail/source/template.html</context>
-          <context context-type="linenumber">256</context>
+          <context context-type="linenumber">257</context>
         </context-group>
       </trans-unit>
       <trans-unit id="f379dfb7ae583971995b6f684fe5e7649a938157" datatype="html">
@@ -4490,7 +4722,7 @@
         <target>iSCSI Qualified Name</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/resource/cluster/persistentvolume/detail/source/template.html</context>
-          <context context-type="linenumber">218</context>
+          <context context-type="linenumber">219</context>
         </context-group>
       </trans-unit>
       <trans-unit id="e5f508859a4cd49938b16a535cbda472eddd25e7" datatype="html">
@@ -4498,7 +4730,7 @@
         <target>iSCSI ターゲットの lun 数</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/resource/cluster/persistentvolume/detail/source/template.html</context>
-          <context context-type="linenumber">230</context>
+          <context context-type="linenumber">231</context>
         </context-group>
       </trans-unit>
       <trans-unit id="74709ddee987505c15115a569a1bdbe232a46dd3" datatype="html">
@@ -4506,7 +4738,7 @@
         <target>ターゲットポータル</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/resource/cluster/persistentvolume/detail/source/template.html</context>
-          <context context-type="linenumber">236</context>
+          <context context-type="linenumber">237</context>
         </context-group>
       </trans-unit>
       <trans-unit id="905882c0fe09eee755ee6730ecf10e3b85cb6d9c" datatype="html">
@@ -4514,7 +4746,7 @@
         <target>サーバー</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/resource/cluster/persistentvolume/detail/source/template.html</context>
-          <context context-type="linenumber">250</context>
+          <context context-type="linenumber">251</context>
         </context-group>
       </trans-unit>
       <trans-unit id="a7a1cc135f6f692055f755339426e1bbb3b94498" datatype="html">
@@ -4522,7 +4754,7 @@
         <target>キーリング</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/resource/cluster/persistentvolume/detail/source/template.html</context>
-          <context context-type="linenumber">288</context>
+          <context context-type="linenumber">289</context>
         </context-group>
       </trans-unit>
       <trans-unit id="624f596cc3320f5e0a0d7c7346c364e5af9bdd8c" datatype="html">
@@ -4530,7 +4762,7 @@
         <target>モニター</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/resource/cluster/persistentvolume/detail/source/template.html</context>
-          <context context-type="linenumber">294</context>
+          <context context-type="linenumber">295</context>
         </context-group>
       </trans-unit>
       <trans-unit id="e70fcca5a99575cffef3ff8cbd5e69f06ffd0f1c" datatype="html">
@@ -4538,7 +4770,7 @@
         <target>プール</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/resource/cluster/persistentvolume/detail/source/template.html</context>
-          <context context-type="linenumber">302</context>
+          <context context-type="linenumber">304</context>
         </context-group>
       </trans-unit>
       <trans-unit id="d315f9798d352943363381637fd120a6289e2453" datatype="html">
@@ -4546,7 +4778,7 @@
         <target>シークレット参照名</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/resource/cluster/persistentvolume/detail/source/template.html</context>
-          <context context-type="linenumber">314</context>
+          <context context-type="linenumber">316</context>
         </context-group>
       </trans-unit>
       <trans-unit id="e08a77594f3d89311cdf6da5090044270909c194" datatype="html">
@@ -4554,14 +4786,14 @@
         <target>ユーザー</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/resource/cluster/persistentvolume/detail/source/template.html</context>
-          <context context-type="linenumber">320</context>
+          <context context-type="linenumber">322</context>
         </context-group>
       </trans-unit>
       <trans-unit id="c64747f0bc3848d47c89e0af17d0c199b44ad0de" datatype="html">
         <source>Parameter</source>
         <target>パラメーター</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">../src/app/frontend/resource/cluster/storageclass/detail/template.html</context>
+          <context context-type="sourcefile">../src/app/frontend/resource/config/storageclass/detail/template.html</context>
           <context context-type="linenumber">37</context>
         </context-group>
       </trans-unit>
@@ -4693,28 +4925,28 @@
         <source>Init images</source>
         <target>初期イメージ</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">../src/app/frontend/resource/workloads/daemonset/detail/template.html</context>
-          <context context-type="linenumber">46</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">../src/app/frontend/resource/workloads/deployment/detail/template.html</context>
-          <context context-type="linenumber">270</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">../src/app/frontend/resource/workloads/job/detail/template.html</context>
-          <context context-type="linenumber">66</context>
+          <context context-type="sourcefile">../src/app/frontend/resource/workloads/replicationcontroller/detail/template.html</context>
+          <context context-type="linenumber">48</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/resource/workloads/replicaset/detail/template.html</context>
-          <context context-type="linenumber">54</context>
+          <context context-type="linenumber">56</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">../src/app/frontend/resource/workloads/replicationcontroller/detail/template.html</context>
-          <context context-type="linenumber">46</context>
+          <context context-type="sourcefile">../src/app/frontend/resource/workloads/daemonset/detail/template.html</context>
+          <context context-type="linenumber">48</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/resource/workloads/deployment/detail/template.html</context>
+          <context context-type="linenumber">273</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/resource/workloads/job/detail/template.html</context>
+          <context context-type="linenumber">67</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/resource/workloads/statefulset/detail/template.html</context>
-          <context context-type="linenumber">46</context>
+          <context context-type="linenumber">48</context>
         </context-group>
       </trans-unit>
       <trans-unit id="ad224050a62a6ea987915f5b33223046def3a2d3" datatype="html">
@@ -4770,7 +5002,7 @@
         <target>ローリングアップデートストラテジー</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/resource/workloads/deployment/detail/template.html</context>
-          <context context-type="linenumber">81</context>
+          <context context-type="linenumber">82</context>
         </context-group>
       </trans-unit>
       <trans-unit id="f7038874dae1845bd604f1c69424ebddd668e845" datatype="html">
@@ -4778,7 +5010,7 @@
         <target>最大サージ: </target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/resource/workloads/deployment/detail/template.html</context>
-          <context context-type="linenumber">87</context>
+          <context context-type="linenumber">88</context>
         </context-group>
       </trans-unit>
       <trans-unit id="c39576ee549298f6b7efa5fac84940493685ba3d" datatype="html">
@@ -4786,7 +5018,7 @@
         <target>最大利用不可: </target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/resource/workloads/deployment/detail/template.html</context>
-          <context context-type="linenumber">94</context>
+          <context context-type="linenumber">95</context>
         </context-group>
       </trans-unit>
       <trans-unit id="248e61c25d07d6906e7caa95e59f6d9557136b47" datatype="html">
@@ -4794,7 +5026,7 @@
         <target>最大サージ</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/resource/workloads/deployment/detail/template.html</context>
-          <context context-type="linenumber">104</context>
+          <context context-type="linenumber">105</context>
         </context-group>
       </trans-unit>
       <trans-unit id="3f43eb0d43c0d3b9cb89ff03e01bd2704e596279" datatype="html">
@@ -4802,7 +5034,7 @@
         <target>最大利用不可</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/resource/workloads/deployment/detail/template.html</context>
-          <context context-type="linenumber">110</context>
+          <context context-type="linenumber">111</context>
         </context-group>
       </trans-unit>
       <trans-unit id="0991eecb18ad10fac275b126b2829200d00f3976" datatype="html">
@@ -4814,7 +5046,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/resource/workloads/deployment/detail/template.html</context>
-          <context context-type="linenumber">118</context>
+          <context context-type="linenumber">119</context>
         </context-group>
       </trans-unit>
       <trans-unit id="7821a91cdd779e6b4382c216b527f641ecc349ae" datatype="html">
@@ -4822,7 +5054,7 @@
         <target>更新済み: </target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/resource/workloads/deployment/detail/template.html</context>
-          <context context-type="linenumber">124</context>
+          <context context-type="linenumber">125</context>
         </context-group>
       </trans-unit>
       <trans-unit id="ac06d432382824bb4b61123d254323ccf416e9b2" datatype="html">
@@ -4830,7 +5062,7 @@
         <target>合計: </target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/resource/workloads/deployment/detail/template.html</context>
-          <context context-type="linenumber">131</context>
+          <context context-type="linenumber">132</context>
         </context-group>
       </trans-unit>
       <trans-unit id="57c9cb257dc651cf321283e708c427a72201bc9f" datatype="html">
@@ -4838,7 +5070,7 @@
         <target>利用可能: </target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/resource/workloads/deployment/detail/template.html</context>
-          <context context-type="linenumber">138</context>
+          <context context-type="linenumber">139</context>
         </context-group>
       </trans-unit>
       <trans-unit id="8e07e6467839d2ad566998ae67628c6e8603778f" datatype="html">
@@ -4846,7 +5078,7 @@
         <target>利用不可: </target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/resource/workloads/deployment/detail/template.html</context>
-          <context context-type="linenumber">145</context>
+          <context context-type="linenumber">146</context>
         </context-group>
       </trans-unit>
       <trans-unit id="9da0107a35751e722c8b4bca7636fc7645dbdbdc" datatype="html">
@@ -4854,7 +5086,7 @@
         <target>更新済み</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/resource/workloads/deployment/detail/template.html</context>
-          <context context-type="linenumber">155</context>
+          <context context-type="linenumber">156</context>
         </context-group>
       </trans-unit>
       <trans-unit id="d04d5b5d13ac9acf9750f1807f0227eeee98b247" datatype="html">
@@ -4862,7 +5094,7 @@
         <target>合計</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/resource/workloads/deployment/detail/template.html</context>
-          <context context-type="linenumber">161</context>
+          <context context-type="linenumber">162</context>
         </context-group>
       </trans-unit>
       <trans-unit id="b7da3e3505cc80f9bf3cffc8444c53e8a9ec70a5" datatype="html">
@@ -4870,7 +5102,7 @@
         <target>利用可能</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/resource/workloads/deployment/detail/template.html</context>
-          <context context-type="linenumber">167</context>
+          <context context-type="linenumber">168</context>
         </context-group>
       </trans-unit>
       <trans-unit id="15c02cb6b6c3be53477e502d3e1ee26955b23af0" datatype="html">
@@ -4878,7 +5110,7 @@
         <target>利用不可</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/resource/workloads/deployment/detail/template.html</context>
-          <context context-type="linenumber">173</context>
+          <context context-type="linenumber">174</context>
         </context-group>
       </trans-unit>
       <trans-unit id="546d8d132ea4b0111d8e8ae5a3457e7cfc9f67a9" datatype="html">
@@ -4886,19 +5118,19 @@
         <target>新しいレプリカセット</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/resource/workloads/deployment/detail/template.html</context>
-          <context context-type="linenumber">185</context>
+          <context context-type="linenumber">186</context>
         </context-group>
       </trans-unit>
       <trans-unit id="65f15d6396a9b96f745b7306df38ba538e190640" datatype="html">
         <source>Pods: </source>
         <target>ポッド: </target>
         <context-group purpose="location">
-          <context context-type="sourcefile">../src/app/frontend/resource/workloads/deployment/detail/template.html</context>
-          <context context-type="linenumber">213</context>
-        </context-group>
-        <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/resource/workloads/replicaset/detail/template.html</context>
           <context context-type="linenumber">28</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/resource/workloads/deployment/detail/template.html</context>
+          <context context-type="linenumber">214</context>
         </context-group>
       </trans-unit>
       <trans-unit id="57b93a9b84d8693e539fe22e43688f26cdfb1783" datatype="html">
@@ -4906,7 +5138,7 @@
         <target>古いレプリカセット</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/resource/workloads/deployment/detail/template.html</context>
-          <context context-type="linenumber">280</context>
+          <context context-type="linenumber">284</context>
         </context-group>
       </trans-unit>
       <trans-unit id="5413cb2f145c06134be125af0b8900fa43178672" datatype="html">
@@ -5026,12 +5258,28 @@
           <context context-type="linenumber">43</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="e15825a0273ad0aa69da37ed117de2b8a79ebde5" datatype="html">
-        <source>Max number of items that can be displayed on each list page.</source>
-        <target>それぞれの一覧ページに表示する項目の最大数</target>
+      <trans-unit id="3925ecae114abc711d1b417b7bdc4f8d6ec0f585" datatype="html">
+        <source>Max number of items that can be displayed on every list view.</source>
+        <target state="new">Max number of items that can be displayed on every list view.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/settings/global/template.html</context>
           <context context-type="linenumber">45</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="f530d15919f9ecdc3c56f55eae1a78b905cc08fa" datatype="html">
+        <source>Labels limit</source>
+        <target state="new">Labels limit</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/settings/global/template.html</context>
+          <context context-type="linenumber">62</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="dd245a4e3a7100eb2fa1e91e62663f748016668b" datatype="html">
+        <source>Max number of labels that are displayed by default on most views.</source>
+        <target state="new">Max number of labels that are displayed by default on most views.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/settings/global/template.html</context>
+          <context context-type="linenumber">64</context>
         </context-group>
       </trans-unit>
       <trans-unit id="1bf6e9fbb0027605b8c66e07e51ba28ff29ef67f" datatype="html">
@@ -5039,7 +5287,7 @@
         <target>ログの自動更新間隔</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/settings/global/template.html</context>
-          <context context-type="linenumber">62</context>
+          <context context-type="linenumber">81</context>
         </context-group>
       </trans-unit>
       <trans-unit id="02458bd7e54108bc7ac4f35fc96aeb3e422fa471" datatype="html">
@@ -5047,7 +5295,7 @@
         <target>ログの自動更新間隔の秒数</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/settings/global/template.html</context>
-          <context context-type="linenumber">64</context>
+          <context context-type="linenumber">83</context>
         </context-group>
       </trans-unit>
       <trans-unit id="694d9a3839897f77b3ebca37be526771f6c54fd0" datatype="html">
@@ -5055,7 +5303,7 @@
         <target>リソースの自動更新間隔</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/settings/global/template.html</context>
-          <context context-type="linenumber">81</context>
+          <context context-type="linenumber">100</context>
         </context-group>
       </trans-unit>
       <trans-unit id="ad66f1317f55d474a80b519533bde2eb31f99eda" datatype="html">
@@ -5063,7 +5311,7 @@
         <target>リソースの自動更新間隔の秒数。無効にするには 0 を設定します。</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/settings/global/template.html</context>
-          <context context-type="linenumber">83</context>
+          <context context-type="linenumber">102</context>
         </context-group>
       </trans-unit>
       <trans-unit id="a4f3393592e5ebfd34408e85c3bd576d88839191" datatype="html">
@@ -5071,7 +5319,7 @@
         <target>アクセス拒否通知を無効にする</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/settings/global/template.html</context>
-          <context context-type="linenumber">100</context>
+          <context context-type="linenumber">119</context>
         </context-group>
       </trans-unit>
       <trans-unit id="b6484080715a11bad65395e51d42e6ae4aa3c856" datatype="html">
@@ -5079,7 +5327,7 @@
         <target>通知パネルのすべてのアクセス拒否警告を隠す</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/settings/global/template.html</context>
-          <context context-type="linenumber">102</context>
+          <context context-type="linenumber">121</context>
         </context-group>
       </trans-unit>
       <trans-unit id="f8b53b407af242e77dc3391947f23988f3451e64" datatype="html">
@@ -5089,7 +5337,7 @@
         <target>保存</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/settings/global/template.html</context>
-          <context context-type="linenumber">116</context>
+          <context context-type="linenumber">135</context>
         </context-group>
       </trans-unit>
       <trans-unit id="713f3afed85462e92402e8e3523c6dcdb362ce17" datatype="html">
@@ -5099,7 +5347,7 @@
         <target>リロード</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/settings/global/template.html</context>
-          <context context-type="linenumber">123</context>
+          <context context-type="linenumber">142</context>
         </context-group>
       </trans-unit>
       <trans-unit id="d440068d2406e98fd156b9dcab7f0998e707a38b" datatype="html">

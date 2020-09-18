@@ -1,14 +1,42 @@
-name: Continuous Integration
+# Copyright 2017 The Kubernetes Authors.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+name: Continuous Integration - Code
 
 on:
   push:
     branches: [ master ]
+    ignore-paths:
+      - '**/*.md'
+      - 'aio/deploy/**'
+      - 'aio/test-resources/**'
+      - 'docs/**'
+      - '.github/workflows/cd-helm-workflow.yml'
+      - '.github/workflows/cd-workflow.yml'
   pull_request:
     branches: [ master ]
+    ignore-paths:
+      - '**/*.md'
+      - 'aio/deploy/**'
+      - 'aio/test-resources/**'
+      - 'docs/**'
+      - '.github/workflows/cd-helm-workflow.yml'
+      - '.github/workflows/cd-workflow.yml'
 
 jobs:
 #  check:
-#    name: Code Check & Linting
+#    name: Static Check
 #    runs-on: ubuntu-latest
 #    env:
 #      NG_CLI_ANALYTICS: ci
@@ -25,7 +53,7 @@ jobs:
 #      - name: Setup Go
 #        uses: actions/setup-go@v2
 #        with:
-#          go-version: 1.14.4
+#          go-version: 1.15.1
 #
 #      - name: Setup NodeJS
 #        uses: actions/setup-node@v1.4.2
@@ -37,18 +65,13 @@ jobs:
 #        env:
 #          cache-name: cache-node-modules
 #        with:
-#          # npm cache files are stored in `~/.npm` on Linux/macOS
 #          path: node_modules
 #          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
-#          restore-keys: |
-#            ${{ runner.os }}-build-${{ env.cache-name }}-
-#            ${{ runner.os }}-build-
-#            ${{ runner.os }}-
 #
 #      - name: Install Dependencies
 #        shell: bash
 #        run: |
-#          [ ! -d "node_modules" ] && npm ci || node aio/scripts/version.js && command -v golangci-lint >/dev/null 2>&1 || { curl -sfL https://install.goreleaser.com/github.com/golangci/golangci-lint.sh | sh -s -- -b $(go env GOPATH)/bin v1.23.6; } && go mod download
+#          [ ! -d "node_modules" ] && npm ci || node aio/scripts/version.js && command -v golangci-lint >/dev/null 2>&1 || { curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $(go env GOPATH)/bin v1.30.0; } && go mod download
 #
 #      - name: Install Codegen
 #        shell: bash
@@ -61,7 +84,7 @@ jobs:
 #        run: |
 #          export GOPATH=$(go env GOPATH)/bin
 #          npm run check
-
+#
   unit:
     name: Unit Tests
     runs-on: ubuntu-latest
@@ -81,7 +104,7 @@ jobs:
       - name: Setup Go
         uses: actions/setup-go@v2
         with:
-          go-version: 1.14.4
+          go-version: 1.15.1
 
       - name: Setup NodeJS
         uses: actions/setup-node@v1.4.2
@@ -95,21 +118,17 @@ jobs:
         with:
           path: node_modules
           key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-build-${{ env.cache-name }}-
-            ${{ runner.os }}-build-
-            ${{ runner.os }}-
 
       - name: Install Dependencies
         shell: bash
         run: |
-          [ ! -d "node_modules" ] && npm ci || node aio/scripts/version.js && command -v golangci-lint >/dev/null 2>&1 || { curl -sfL https://install.goreleaser.com/github.com/golangci/golangci-lint.sh | sh -s -- -b $(go env GOPATH)/bin v1.23.6; } && go mod download
+          [ ! -d "node_modules" ] && npm ci || node aio/scripts/version.js && command -v golangci-lint >/dev/null 2>&1 || { curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $(go env GOPATH)/bin v1.30.0; } && go mod download
 
       - name: Run Frontend Unit Tests
         uses: GabrielBB/xvfb-action@v1.2
         with:
           run: npm run test:frontend:coverage
-          
+
       - name: Run Backend Unit Tests
         run: |
           export GOPATH=$(go env GOPATH)/bin
@@ -119,7 +138,7 @@ jobs:
         shell: bash
         run: |
           rm -rf .tmp
-          bash <(curl -s https://codecov.io/bash)
+          bash <(curl -s https://codecov.io/bash) -c -K || echo "Codecov upload failed"
 
 #  e2e:
 #    name: E2E Tests
@@ -140,7 +159,7 @@ jobs:
 #      - name: Setup Go
 #        uses: actions/setup-go@v2
 #        with:
-#          go-version: 1.14.4
+#          go-version: 1.15.1
 #
 #      - name: Setup NodeJS
 #        uses: actions/setup-node@v1.4.2
@@ -154,15 +173,11 @@ jobs:
 #        with:
 #          path: node_modules
 #          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
-#          restore-keys: |
-#            ${{ runner.os }}-build-${{ env.cache-name }}-
-#            ${{ runner.os }}-build-
-#            ${{ runner.os }}-
 #
 #      - name: Install Dependencies
 #        shell: bash
 #        run: |
-#          [ ! -d "node_modules" ] && npm ci || node aio/scripts/version.js && command -v golangci-lint >/dev/null 2>&1 || { curl -sfL https://install.goreleaser.com/github.com/golangci/golangci-lint.sh | sh -s -- -b $(go env GOPATH)/bin v1.23.6; } && go mod download && npm install cypress
+#          [ ! -d "node_modules" ] && npm ci || node aio/scripts/version.js && command -v golangci-lint >/dev/null 2>&1 || { curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $(go env GOPATH)/bin v1.30.0; } && go mod download && npm install cypress
 #
 #      - name: Run E2E Tests
 #        run: npm run cluster:start && npm run e2e

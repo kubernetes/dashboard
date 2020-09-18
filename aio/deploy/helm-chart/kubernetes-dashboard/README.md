@@ -80,6 +80,7 @@ Parameter                                       | Description                   
 `extraArgs`                                     | Additional container arguments                                                                                                   | `[]`
 `extraEnv`                                      | Additional container environment variables                                                                                       | `[]`
 `podAnnotations`                                | Annotations to be added to pods                                                                                                  | `seccomp.security.alpha.kubernetes.io/pod: 'runtime/default'}`
+`podLabels`                                     | Labels to be added to pods                                                                                                       | `{}`
 `nodeSelector`                                  | node labels for pod assignment                                                                                                   | `{}`
 `tolerations`                                   | List of node taints to tolerate (requires Kubernetes >= 1.6)                                                                     | `[]`
 `affinity`                                      | Affinity for pod assignment                                                                                                      | `[]`
@@ -89,10 +90,14 @@ Parameter                                       | Description                   
 `service.type`                                  | Service type                                                                                                                     | `ClusterIP`
 `service.externalPort`                          | Dashboard external port                                                                                                          | `443`
 `service.loadBalancerSourceRanges`              | list of IP CIDRs allowed access to load balancer (if supported)                                                                  | `nil`
+`service.loadBalancerIP`                        | A user-specified IP address for load balancer to use as External IP (if supported)                                               | `nil`
+`service.clusterServiceLabel.enabled`           | Enable the cluster-service label                                                                                                 | `true`
+`service.clusterServiceLabel.key`               | The cluster-service label key                                                                                                    | `kubernetes.io/cluster-service`
 `ingress.annotations`                           | Specify ingress class                                                                                                            | `kubernetes.io/ingress.class: nginx`
 `ingress.labels`                                | Add custom labels                                                                                                                | `[]`
 `ingress.enabled`                               | Enable ingress controller resource                                                                                               | `false`
 `ingress.paths`                                 | Paths to match against incoming requests. Both `/` and `/*` are required to work on gce ingress.                                 | `[/]`
+`ingress.customPaths`                           | Override the default ingress paths                                                                                               | `[]`
 `ingress.hosts`                                 | Dashboard Hostnames                                                                                                              | `nil`
 `ingress.tls`                                   | Ingress TLS configuration                                                                                                        | `[]`
 `metricsScraper.enabled`                        | Wether to enable dashboard-metrics-scraper                                                                                       | `false`
@@ -131,7 +136,11 @@ helm install kubernetes-dashboard/kubernetes-dashboard --name my-release -f valu
 
 > **Tip**: You can use the default [values.yaml](values.yaml), which is used by default, as reference
 
-## Using the dashboard with 'kubectl proxy'
+## Access
+
+For information about how to access, please read the [kubernetes-dashboard manual](https://github.com/kubernetes/dashboard)
+
+### Using the dashboard with 'kubectl proxy'
 
 When running 'kubectl proxy', the address `localhost:8001/ui` automatically expands to:
 

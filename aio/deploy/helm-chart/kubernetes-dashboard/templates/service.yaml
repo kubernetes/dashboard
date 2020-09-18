@@ -19,7 +19,7 @@ metadata:
   labels:
 {{ include "kubernetes-dashboard.labels" . | indent 4 }}
     app.kubernetes.io/component: kubernetes-dashboard
-    kubernetes.io/cluster-service: "true"
+{{ .Values.service.clusterServiceLabel.key | indent 4}}: {{ .Values.service.clusterServiceLabel.enabled | quote }}
 {{- if .Values.service.labels }}
 {{ toYaml .Values.service.labels | indent 4 }}
 {{- end }}
@@ -48,3 +48,6 @@ spec:
   selector:
 {{ include "kubernetes-dashboard.matchLabels" . | indent 4 }}
     app.kubernetes.io/component: kubernetes-dashboard
+{{- if .Values.service.loadBalancerIP }}
+  loadBalancerIP: {{ .Values.service.loadBalancerIP }}
+{{- end }}

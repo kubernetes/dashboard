@@ -16,7 +16,7 @@ import {HttpParams} from '@angular/common/http';
 import {ChangeDetectionStrategy, ChangeDetectorRef, Component, Input} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {Event, Metric, ReplicaSet, ReplicaSetList} from '@api/backendapi';
-import {Observable} from 'rxjs/Observable';
+import {Observable} from 'rxjs';
 
 import {ResourceListWithStatuses} from '../../../resources/list';
 import {NotificationsService} from '../../../services/global/notifications';
@@ -40,7 +40,7 @@ export class ReplicaSetListComponent extends ResourceListWithStatuses<ReplicaSet
     private readonly replicaSet_: NamespacedResourceService<ReplicaSetList>,
     private readonly activatedRoute_: ActivatedRoute,
     notifications: NotificationsService,
-    cdr: ChangeDetectorRef,
+    cdr: ChangeDetectorRef
   ) {
     super('replicaset', notifications, cdr);
     this.id = ListIdentifier.replicaSet;

@@ -37,7 +37,7 @@ export class ActionbarDetailPinComponent {
         this.objectMeta.name,
         this.objectMeta.namespace,
         this.displayName,
-        this.namespaced,
+        this.namespaced
       );
     }
   }

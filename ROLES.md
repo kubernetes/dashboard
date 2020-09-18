@@ -25,7 +25,6 @@ This document describes the set of roles individuals may have within the Kuberne
     <td>Lead</td>
     <td>Responsible for design, plannings, roadmaps etc. Works on project recognition.</td>
     <td>
-      <a href="https://github.com/danielromlein">@danielromlein</a>
       <a href="https://github.com/floreks">@floreks</a>
       <a href="https://github.com/jeefy">@jeefy</a>
       <a href="https://github.com/maciaszczykm">@maciaszczykm</a>
@@ -40,18 +39,11 @@ This document describes the set of roles individuals may have within the Kuberne
       <a href="https://github.com/maciaszczykm">@maciaszczykm</a>
     </td>
   </tr>
-    
-  <tr>
-    <td>UX/UI lead</td>
-    <td>Takes care of application look and feel. Resolves UX/UI issues and decisions.</td>
-    <td><a href="https://github.com/danielromlein">@danielromlein</a></td>
-  </tr>
   
   <tr>
     <td>SIG-UI lead</td>
     <td>Leads weekly meetings with the community. Integrates new members into community.</td>
     <td>
-      <a href="https://github.com/danielromlein">@danielromlein</a>
       <a href="https://github.com/floreks">@floreks</a>
       <a href="https://github.com/jeefy">@jeefy</a>
       <a href="https://github.com/maciaszczykm">@maciaszczykm</a>

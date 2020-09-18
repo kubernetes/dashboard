@@ -14,6 +14,9 @@
 
 export enum ListIdentifier {
   clusterRole = 'clusterRoleList',
+  clusterRoleBinding = 'clusterRoleBindingList',
+  role = 'roleList',
+  roleBinding = 'roleBindingList',
   namespace = 'namespaceList',
   node = 'nodeList',
   persistentVolume = 'persistentVolumeList',
@@ -30,6 +33,7 @@ export enum ListIdentifier {
   ingress = 'ingressList',
   service = 'serviceList',
   serviceAccount = 'serviceAccountList',
+  networkPolicy = 'networkPolicyList',
   configMap = 'configMapList',
   persistentVolumeClaim = 'persistentVolumeClaimList',
   secret = 'secretList',
@@ -38,7 +42,6 @@ export enum ListIdentifier {
   event = 'event',
   resource = 'resource',
   plugin = 'plugin',
-  roleBinding = 'roleBindingList',
 }
 
 export enum ListGroupIdentifier {

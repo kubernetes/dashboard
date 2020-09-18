@@ -13,9 +13,9 @@
 // limitations under the License.
 
 import {HttpClient} from '@angular/common/http';
-import {Attribute, Directive, forwardRef, Injector, Input, OnChanges, SimpleChanges} from '@angular/core';
-import {AbstractControl, AsyncValidator, FormControl, NG_ASYNC_VALIDATORS, NgModel, Validator} from '@angular/forms';
-import {Observable} from 'rxjs/Observable';
+import {Directive, forwardRef, Input} from '@angular/core';
+import {AbstractControl, AsyncValidator, NG_ASYNC_VALIDATORS, Validator} from '@angular/forms';
+import {Observable, of} from 'rxjs';
 import {debounceTime, map} from 'rxjs/operators';
 
 export const uniqueNameValidationKey = 'validImageReference';
@@ -41,7 +41,7 @@ export class ValidImageReferenceValidator implements AsyncValidator, Validator {
 
   validate(control: AbstractControl): Observable<{[key: string]: string}> {
     if (!control.value) {
-      return Observable.of(null);
+      return of(null);
     }
     return this.http
       .post<{valid: boolean; reason: string}>('api/v1/appdeployment/validate/imagereference', {
@@ -49,7 +49,7 @@ export class ValidImageReferenceValidator implements AsyncValidator, Validator {
       })
       .pipe(
         debounceTime(500),
-        map(res => (!res.valid ? {[uniqueNameValidationKey]: res.reason} : null)),
+        map(res => (!res.valid ? {[uniqueNameValidationKey]: res.reason} : null))
       );
   }
 }

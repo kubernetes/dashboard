@@ -98,6 +98,14 @@ export interface ClusterRoleList extends ResourceList {
   items: ClusterRole[];
 }
 
+export interface ClusterRoleBindingList extends ResourceList {
+  items: ClusterRoleBinding[];
+}
+
+export interface RoleList extends ResourceList {
+  items: Role[];
+}
+
 export interface RoleBindingList extends ResourceList {
   items: RoleBinding[];
 }
@@ -155,6 +163,10 @@ export interface IngressList extends ResourceList {
 
 export interface ServiceAccountList extends ResourceList {
   items: ServiceAccount[];
+}
+
+export interface NetworkPolicyList extends ResourceList {
+  items: NetworkPolicy[];
 }
 
 export interface JobList extends ResourceList {
@@ -227,13 +239,19 @@ export interface StorageClassList extends ResourceList {
 // Simple detail types
 export type ClusterRole = Resource;
 
+export type ClusterRoleBinding = Resource;
+
+export type Role = Resource;
+
+export type RoleBinding = Resource;
+
 export type ConfigMap = Resource;
 
 export type ServiceAccount = Resource;
 
 export interface OpaDetail extends Resource {}
 
-export interface RoleBinding extends Resource {}
+export type NetworkPolicy = Resource;
 
 export interface Controller extends Resource {
   pods: PodInfo;
@@ -485,6 +503,33 @@ export interface RoleBindingDetal extends ResourceDetail {
   rules: PolicyRule[];
 }
 
+export interface Subject {
+  kind: string;
+  apiGroup: string;
+  name: string;
+  namespace: string;
+}
+
+export interface RoleRef {
+  kind: string;
+  apiGroup: string;
+  name: string;
+}
+
+export interface ClusterRoleBindingDetail extends ResourceDetail {
+  subjects: Subject[];
+  roleRef: RoleRef;
+}
+
+export interface RoleDetail extends ResourceDetail {
+  rules: PolicyRule[];
+}
+
+export interface RoleBindingDetail extends ResourceDetail {
+  subjects: Subject[];
+  roleRef: RoleRef;
+}
+
 export interface SecretDetail extends ResourceDetail {
   type: string;
   data: StringMap;
@@ -493,6 +538,13 @@ export interface SecretDetail extends ResourceDetail {
 export type ServiceAccountDetail = ResourceDetail;
 
 export type IngressDetail = ResourceDetail;
+
+export interface NetworkPolicyDetail extends ResourceDetail {
+  podSelector: LabelSelector;
+  ingress?: any;
+  egress?: any;
+  policyTypes?: string[];
+}
 
 export interface PersistentVolumeClaimDetail extends ResourceDetail {
   status: string;
@@ -1093,6 +1145,7 @@ export interface ScaleTargetRef {
 export interface GlobalSettings {
   clusterName: string;
   itemsPerPage: number;
+  labelsLimit: number;
   logsAutoRefreshTimeInterval: number;
   resourceAutoRefreshTimeInterval: number;
   disableAccessDeniedNotifications: boolean;

@@ -100,7 +100,7 @@ export function init(
   config: ConfigService,
   opa: OpaService,
   history: HistoryService,
-  pluginsConfig: PluginsConfigService,
+  pluginsConfig: PluginsConfigService
 ): Function {
   return () => {
     globalSettings.init();

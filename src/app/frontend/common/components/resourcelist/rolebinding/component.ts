@@ -12,30 +12,30 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import {HttpParams} from '@angular/common/http';
 import {ChangeDetectionStrategy, ChangeDetectorRef, Component, Input} from '@angular/core';
-import {RoleBinding, RoleBindingList} from '@api/backendapi';
+import {Role, RoleBinding, RoleBindingList} from '@api/backendapi';
 import {Observable} from 'rxjs/Observable';
 
 import {ResourceListBase} from '../../../resources/list';
 import {NotificationsService} from '../../../services/global/notifications';
 import {EndpointManager, Resource} from '../../../services/resource/endpoint';
-import {ResourceService} from '../../../services/resource/resource';
+import {NamespacedResourceService, ResourceService} from '../../../services/resource/resource';
 import {MenuComponent} from '../../list/column/menu/component';
 import {ListGroupIdentifier, ListIdentifier} from '../groupids';
-import {HttpParams} from '@angular/common/http';
 
 @Component({
   selector: 'kd-role-binding-list',
   templateUrl: './template.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class RoleBindingListComponent extends ResourceListBase<RoleBindingList, RoleBinding> {
-  @Input() endpoint = EndpointManager.resource(Resource.roleBinding).list();
+export class RoleBindingListComponent extends ResourceListBase<RoleBindingList, Role> {
+  @Input() endpoint = EndpointManager.resource(Resource.roleBinding, true).list();
 
   constructor(
-    private readonly roleBinding_: ResourceService<RoleBindingList>,
+    private readonly roleBinding_: NamespacedResourceService<RoleBindingList>,
     notifications: NotificationsService,
-    cdr: ChangeDetectorRef,
+    cdr: ChangeDetectorRef
   ) {
     super('rolebinding', notifications, cdr);
     this.id = ListIdentifier.roleBinding;
@@ -43,10 +43,17 @@ export class RoleBindingListComponent extends ResourceListBase<RoleBindingList, 
 
     // Register action columns.
     this.registerActionColumn<MenuComponent>('menu', MenuComponent);
+
+    // Register dynamic columns.
+    this.registerDynamicColumn('namespace', 'name', this.shouldShowNamespaceColumn_.bind(this));
+  }
+
+  private shouldShowNamespaceColumn_(): boolean {
+    return this.namespaceService_.areMultipleNamespacesSelected();
   }
 
   getResourceObservable(params?: HttpParams): Observable<RoleBindingList> {
-    return this.roleBinding_.get(this.endpoint, undefined, params);
+    return this.roleBinding_.get(this.endpoint, undefined, undefined, params);
   }
 
   map(roleBindingList: RoleBindingList): RoleBinding[] {

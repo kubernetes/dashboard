@@ -38,12 +38,20 @@ const routes: Routes = [
         loadChildren: () => import('resource/cluster/module').then(m => m.ClusterModule),
       },
       {
+        path: 'clusterrolebinding',
+        loadChildren: () => import('resource/cluster/clusterrolebinding/module').then(m => m.ClusterRoleBindingModule),
+      },
+      {
         path: 'clusterrole',
         loadChildren: () => import('resource/cluster/clusterrole/module').then(m => m.ClusterRoleModule),
       },
       {
         path: 'namespace',
         loadChildren: () => import('resource/cluster/namespace/module').then(m => m.NamespaceModule),
+      },
+      {
+        path: 'networkpolicy',
+        loadChildren: () => import('resource/cluster/networkpolicy/module').then(m => m.NetworkPolicyModule),
       },
       {
         path: 'node',
@@ -54,8 +62,16 @@ const routes: Routes = [
         loadChildren: () => import('resource/cluster/persistentvolume/module').then(m => m.PersistentVolumeModule),
       },
       {
-        path: 'storageclass',
-        loadChildren: () => import('resource/cluster/storageclass/module').then(m => m.StorageClassModule),
+        path: 'serviceaccount',
+        loadChildren: () => import('resource/cluster/serviceaccount/module').then(m => m.ServiceAccountModule),
+      },
+      {
+        path: 'role',
+        loadChildren: () => import('resource/cluster/role/module').then(m => m.RoleModule),
+      },
+      {
+        path: 'rolebinding',
+        loadChildren: () => import('resource/cluster/rolebinding/module').then(m => m.RoleBingingModule),
       },
 
       // Overview
@@ -155,8 +171,8 @@ const routes: Routes = [
         loadChildren: () => import('resource/config/secret/module').then(m => m.SecretModule),
       },
       {
-        path: 'serviceaccount',
-        loadChildren: () => import('resource/cluster/serviceaccount/module').then(m => m.ServiceAccountModule),
+        path: 'storageclass',
+        loadChildren: () => import('resource/config/storageclass/module').then(m => m.StorageClassModule),
       },
 
       // Custom resource definitions

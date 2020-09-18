@@ -15,7 +15,8 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {NamespaceDetail} from '@api/backendapi';
-import {Subscription} from 'rxjs/Subscription';
+import {Subject} from 'rxjs';
+import {takeUntil} from 'rxjs/operators';
 
 import {ActionbarService, ResourceMeta} from '../../../../common/services/global/actionbar';
 import {NotificationsService} from '../../../../common/services/global/notifications';
@@ -27,8 +28,9 @@ import {ResourceService} from '../../../../common/services/resource/resource';
   templateUrl: './template.html',
 })
 export class NamespaceDetailComponent implements OnInit, OnDestroy {
-  private namespaceSubscription_: Subscription;
   private readonly endpoint_ = EndpointManager.resource(Resource.namespace);
+  private readonly unsubscribe_ = new Subject<void>();
+
   namespace: NamespaceDetail;
   isInitialized = false;
   eventListEndpoint: string;
@@ -37,7 +39,7 @@ export class NamespaceDetailComponent implements OnInit, OnDestroy {
     private readonly namespace_: ResourceService<NamespaceDetail>,
     private readonly actionbar_: ActionbarService,
     private readonly activatedRoute_: ActivatedRoute,
-    private readonly notifications_: NotificationsService,
+    private readonly notifications_: NotificationsService
   ) {}
 
   ngOnInit(): void {
@@ -45,8 +47,9 @@ export class NamespaceDetailComponent implements OnInit, OnDestroy {
 
     this.eventListEndpoint = this.endpoint_.child(resourceName, Resource.event);
 
-    this.namespaceSubscription_ = this.namespace_
+    this.namespace_
       .get(this.endpoint_.detail(), resourceName)
+      .pipe(takeUntil(this.unsubscribe_))
       .subscribe((d: NamespaceDetail) => {
         this.namespace = d;
         this.notifications_.pushErrors(d.errors);
@@ -56,7 +59,8 @@ export class NamespaceDetailComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.namespaceSubscription_.unsubscribe();
+    this.unsubscribe_.next();
+    this.unsubscribe_.complete();
     this.actionbar_.onDetailsLeave.emit();
   }
 }

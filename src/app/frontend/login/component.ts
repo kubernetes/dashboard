@@ -63,7 +63,7 @@ export class LoginComponent implements OnInit {
     private readonly pluginConfigService_: PluginsConfigService,
     public config: ConfigService,
     public permission: PermissionsService,
-    @Inject(CONFIG_DI_TOKEN) private readonly CONFIG: Config,
+    @Inject(CONFIG_DI_TOKEN) private readonly CONFIG: Config
   ) {}
 
   ngOnInit(): void {
@@ -111,7 +111,7 @@ export class LoginComponent implements OnInit {
       null,
       null,
       false,
-      'Strict',
+      'Strict'
     );
 
     this.authService_.login(this.getLoginSpec_()).subscribe(
@@ -128,7 +128,7 @@ export class LoginComponent implements OnInit {
       },
       (err: HttpErrorResponse) => {
         this.errors = [AsKdError(err)];
-      },
+      }
     );
   }
 
