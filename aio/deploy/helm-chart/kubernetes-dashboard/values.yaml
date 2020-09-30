@@ -184,13 +184,15 @@ settings: {}
   ## Hide all access denied warnings in the notification panel
   # disableAccessDeniedNotifications: false
 
-## Pinned CRDs in dashboard
+## Pinned CRDs that will be displayed in dashboard's menu
 pinnedCRDs: []
   # - kind: customresourcedefinition
   ##  Fully qualified name of a CRD
   #   name: prometheuses.monitoring.coreos.com
   ##  Display name
   #   displayName: Prometheus
+  ##  Is this CRD namespaced?
+  #   namespaced: true
 
 ## Metrics Scraper
 ## Container to scrape, store, and retrieve a window of time from the Metrics Server.
