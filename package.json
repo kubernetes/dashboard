@@ -109,7 +109,7 @@
     "@angular/router": "10.1.1",
     "@swimlane/ngx-charts": "16.0.0",
     "@types/c3": "0.7.4",
-    "@types/d3": "5.7.2",
+    "@types/d3": "5.9.2",
     "@types/d3-scale": "2.2.2",
     "@types/file-saver": "2.0.1",
     "@types/highlight.js": "9.12.4",
