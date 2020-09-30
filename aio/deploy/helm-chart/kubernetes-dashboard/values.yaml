@@ -184,6 +184,14 @@ settings: {}
   ## Hide all access denied warnings in the notification panel
   # disableAccessDeniedNotifications: false
 
+## Pinned CRDs in dashboard
+pinnedCRDs: []
+  # - kind: customresourcedefinition
+  ##  Fully qualified name of a CRD
+  #   name: prometheuses.monitoring.coreos.com
+  ##  Display name
+  #   displayName: Prometheus
+
 ## Metrics Scraper
 ## Container to scrape, store, and retrieve a window of time from the Metrics Server.
 ## refs: https://github.com/kubernetes-sigs/dashboard-metrics-scraper

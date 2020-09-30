@@ -22,3 +22,6 @@ data:
 {{- with .Values.settings }}
   _global: {{ toJson . | quote }}
 {{- end }}
+{{- with .Values.pinnedCRDs }}
+  _pinnedCRD: {{ toJson . | quote }}
+{{- end }}
