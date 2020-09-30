@@ -102,7 +102,8 @@ Parameter                                       | Description                   
 `ingress.customPaths`                           | Override the default ingress paths                                                                                               | `[]`
 `ingress.hosts`                                 | Dashboard Hostnames                                                                                                              | `nil`
 `ingress.tls`                                   | Ingress TLS configuration                                                                                                        | `[]`
-`settings`                                      | Global dashboard settings | `{}`
+`settings`                                      | Global dashboard settings                                                                                                        | `{}`
+`pinnedCRDs`                                    | Pinned CRDs that will be displayed in dashboard's menu                                                                           | `[]`
 `metricsScraper.enabled`                        | Wether to enable dashboard-metrics-scraper                                                                                       | `false`
 `metricsScraper.image.repository`               | Repository for metrics-scraper image                                                                                             | `kubernetesui/metrics-scraper`
 `metricsScraper.image.tag`                      | Repository for metrics-scraper image tag                                                                                         | `v1.0.4`
