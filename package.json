@@ -153,7 +153,7 @@
     "babel-cli": "6.26.0",
     "babel-preset-env": "1.7.0",
     "babel-register": "6.26.0",
-    "codelyzer": "6.0.0",
+    "codelyzer": "6.0.1",
     "concurrently": "5.3.0",
     "cypress": "5.3.0",
     "del": "6.0.0",
