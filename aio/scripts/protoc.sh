@@ -39,7 +39,7 @@ function kd::protoc::ensure() {
 function kd::protoc-gen-go::install() {
   if [[ -z "$(which protoc-gen-go)" || "$(protoc-gen-go --version)" != "${PROTOC_GEN_GO_VERSION}" ]]; then
     say "Installing protoc-gen-go@${PROTOC_GEN_GO_VERSION}"
-    go get google.golang.org/protobuf/cmd/protoc-gen-go@${PROTOC_GEN_GO_VERSION}
+    go get -u google.golang.org/protobuf/cmd/protoc-gen-go@${PROTOC_GEN_GO_VERSION}
   else
     say "Found protoc-gen-go"
   fi

@@ -16,7 +16,7 @@ syntax = "proto3";
 
 import "google/protobuf/timestamp.proto";
 
-option go_package = "github.com/kubernetes/dashboard/pkg/api/v1/deployment/proto";
+option go_package = "github.com/kubernetes/dashboard/pkg/api/v1/configmap/proto";
 
 package configmap;
 
