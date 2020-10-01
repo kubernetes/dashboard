@@ -15,75 +15,75 @@
 package dashboard
 
 import (
-  "fmt"
+	"fmt"
 
-  "github.com/spf13/cobra"
-  "k8s.io/apiserver/pkg/util/term"
-  cliflag "k8s.io/component-base/cli/flag"
+	"github.com/spf13/cobra"
+	"github.com/spf13/pflag"
+	"k8s.io/apiserver/pkg/util/term"
+	cliflag "k8s.io/component-base/cli/flag"
 
-  "github.com/kubernetes/dashboard/pkg/api"
-  "github.com/kubernetes/dashboard/pkg/cmd/dashboard/options"
+	"github.com/kubernetes/dashboard/pkg/api"
+	"github.com/kubernetes/dashboard/pkg/cmd/dashboard/options"
 )
 
 var CMD *cobra.Command
 
 func NewAPIServerCommand() *cobra.Command {
-  apiOptions := options.NewAPIServerRunOption()
-  metricsOptions := options.NewMetricsRunOptions()
-  uiOptions := options.NewUIRunOptions()
-  globalOptions := options.NewGlobalRunOptions()
+	apiOptions := options.NewAPIServerRunOption()
+	metricsOptions := options.NewMetricsRunOptions()
+	uiOptions := options.NewUIRunOptions()
+	globalOptions := options.NewGlobalRunOptions()
 
-  CMD = &cobra.Command{
-    Use: "dashboard",
-    Long: `The Kubernetes Dashboard API Server provides REST/GRPC API for the Kubernetes Dashboard UI`,
-    SilenceUsage: true,
-    RunE: func(cmd *cobra.Command, args []string) error {
-      opts := &options.Options{
-        APIServerRunOptions: apiOptions,
-        MetricsRunOptions:   metricsOptions,
-        UIRunOptions:        uiOptions,
-      }
-      grpc := api.NewServer(opts)
-      return grpc.Run()
-    },
-  }
+	CMD = &cobra.Command{
+		Use:          "dashboard",
+		Long:         `The Kubernetes Dashboard API Server provides REST/GRPC API for the Kubernetes Dashboard UI`,
+		SilenceUsage: true,
+		RunE: func(cmd *cobra.Command, args []string) error {
+			opts := &options.Options{
+				APIServerRunOptions: apiOptions,
+				MetricsRunOptions:   metricsOptions,
+				UIRunOptions:        uiOptions,
+				GlobalRunOptions:    globalOptions,
+			}
+			grpc := api.NewServer(opts)
+			return grpc.Run()
+		},
+	}
 
-  flags := CMD.Flags()
-  apiFlags := apiOptions.Flags()
-  metricsFlags := metricsOptions.Flags()
-  uiFlags := uiOptions.Flags()
-  globalFlags := globalOptions.Flags()
+	flags := CMD.Flags()
+	apiFlags := apiOptions.Flags()
+	metricsFlags := metricsOptions.Flags()
+	uiFlags := uiOptions.Flags()
+	globalFlags := globalOptions.Flags()
 
-  for _, fs := range apiFlags.FlagSets {
-    flags.AddFlagSet(fs)
-  }
+	registerFlagSets(flags, apiFlags, metricsFlags, uiFlags, globalFlags)
 
-  for _, fs := range metricsFlags.FlagSets {
-    flags.AddFlagSet(fs)
-  }
+	usageFmt := "Usage:\n %s\n"
+	cols, _, _ := term.TerminalSize(CMD.OutOrStdout())
+	CMD.SetUsageFunc(func(cmd *cobra.Command) error {
+		fmt.Fprintf(cmd.OutOrStderr(), usageFmt, cmd.UseLine())
+		cliflag.PrintSections(cmd.OutOrStderr(), apiFlags, cols)
+		cliflag.PrintSections(cmd.OutOrStderr(), metricsFlags, cols)
+		cliflag.PrintSections(cmd.OutOrStderr(), uiFlags, cols)
+		cliflag.PrintSections(cmd.OutOrStderr(), globalFlags, cols)
+		return nil
+	})
 
-  for _, fs := range uiFlags.FlagSets {
-    flags.AddFlagSet(fs)
-  }
+	CMD.SetHelpFunc(func(cmd *cobra.Command, args []string) {
+		fmt.Fprintf(cmd.OutOrStdout(), "%s\n\n"+usageFmt, cmd.Long, cmd.UseLine())
+		cliflag.PrintSections(cmd.OutOrStdout(), apiFlags, cols)
+		cliflag.PrintSections(cmd.OutOrStdout(), metricsFlags, cols)
+		cliflag.PrintSections(cmd.OutOrStdout(), uiFlags, cols)
+		cliflag.PrintSections(cmd.OutOrStdout(), globalFlags, cols)
+	})
 
-  usageFmt := "Usage:\n %s\n"
-  cols, _, _ := term.TerminalSize(CMD.OutOrStdout())
-  CMD.SetUsageFunc(func(cmd *cobra.Command) error {
-    fmt.Fprintf(cmd.OutOrStderr(), usageFmt, cmd.UseLine())
-    cliflag.PrintSections(cmd.OutOrStderr(), apiFlags, cols)
-    cliflag.PrintSections(cmd.OutOrStderr(), metricsFlags, cols)
-    cliflag.PrintSections(cmd.OutOrStderr(), uiFlags, cols)
-    cliflag.PrintSections(cmd.OutOrStderr(), globalFlags, cols)
-    return nil
-  })
+	return CMD
+}
 
-  CMD.SetHelpFunc(func(cmd *cobra.Command, args []string) {
-    fmt.Fprintf(cmd.OutOrStdout(), "%s\n\n"+usageFmt, cmd.Long, cmd.UseLine())
-    cliflag.PrintSections(cmd.OutOrStdout(), apiFlags, cols)
-    cliflag.PrintSections(cmd.OutOrStdout(), metricsFlags, cols)
-    cliflag.PrintSections(cmd.OutOrStdout(), uiFlags, cols)
-    cliflag.PrintSections(cmd.OutOrStdout(), globalFlags, cols)
-  })
-
-  return CMD
+func registerFlagSets(flags *pflag.FlagSet, flagSets ...cliflag.NamedFlagSets) {
+	for _, namedFS := range flagSets {
+		for _, fs := range namedFS.FlagSets {
+			flags.AddFlagSet(fs)
+		}
+	}
 }

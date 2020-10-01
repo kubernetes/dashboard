@@ -51,6 +51,6 @@ func (p *RouteHandler) Install(server *grpc.Server) {
 	proto.RegisterRouteServer(server, p)
 }
 
-func NewConfigMapRouteHandler() v1.RouteHandler {
+func NewRouteHandler() v1.RouteHandler {
 	return &RouteHandler{}
 }

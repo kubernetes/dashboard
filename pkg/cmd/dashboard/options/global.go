@@ -20,13 +20,16 @@ import (
   "k8s.io/component-base/version/verflag"
 )
 
-type GlobalRunOptions struct {}
+type GlobalRunOptions struct {
+	EnableReflectionAPI bool
+}
 
 func (s *GlobalRunOptions) Flags() (fss cliflag.NamedFlagSets) {
   fs := fss.FlagSet("global")
 
   verflag.AddFlags(fs)
   globalflag.AddGlobalFlags(fs, "global")
+  fs.BoolVar(&s.EnableReflectionAPI, "enable-reflection-api", s.EnableReflectionAPI, "Enables reflection API to dynamically determine RPC schema")
 
   return fss
 }

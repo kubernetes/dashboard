@@ -60,14 +60,14 @@ func (s *Server) init() {
 	s.grpc = grpc.NewServer(append(unaryInterceptors, streamInterceptors...)...)
 
 	s.register(
-		configmap.NewConfigMapRouteHandler(),
-		pod.NewPodRouteHandler(),
-		deployment.NewDeploymentRouteHandler(),
+		configmap.NewRouteHandler(),
+		pod.NewRouteHandler(),
+		deployment.NewRouteHandler(),
 	)
 
-	// Enable reflection so we can find available routes
-	// TODO: Disable reflection once API is stable
-	reflection.Register(s.grpc)
+	if s.options.GlobalRunOptions.EnableReflectionAPI {
+		reflection.Register(s.grpc)
+	}
 }
 
 func (s *Server) register(routes ...v1.RouteHandler) {

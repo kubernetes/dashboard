@@ -18,4 +18,5 @@ type Options struct {
   *APIServerRunOptions
   *MetricsRunOptions
   *UIRunOptions
+  *GlobalRunOptions
 }
