@@ -19,9 +19,12 @@ source "${ROOT_DIR}/aio/scripts/conf.sh"
 
 SOURCE_DIR="${ROOT_DIR}/pkg/api"
 
+PROTOC_VERSION="libprotoc 3.13.0"
+PROTOC_GEN_GO_VERSION="v1.25.0"
+
 function kd::protoc::ensure() {
-  if [[ -z "$(which protoc)" || "$(protoc --version)" != "libprotoc 3."* ]]; then
-    echo "Generating protobuf requires protoc 3.0.0-beta1 or newer. Please download and"
+  if [[ -z "$(which protoc)" || "$(protoc --version)" != "${PROTOC_VERSION}" ]]; then
+    echo "Generating protobuf requires ${PROTOC_VERSION}. Please download and"
     echo "install the platform appropriate Protobuf package for your OS: "
     echo
     echo "  https://github.com/google/protobuf/releases"
@@ -33,13 +36,23 @@ function kd::protoc::ensure() {
   say "Found protoc: $(protoc --version)"
 }
 
-function kd::protoc-go::install() {
-  if [[ -z "$(which protoc-gen-gogo)" ]]; then
-    echo "Installing protoc-gen-gogo"
-    go install github.com/gogo/protobuf/protoc-gen-gogo
+function kd::protoc-gen-go::install() {
+  if [[ -z "$(which protoc-gen-go)" || "$(protoc-gen-go --version)" != "${PROTOC_GEN_GO_VERSION}" ]]; then
+    say "Installing protoc-gen-go@${PROTOC_GEN_GO_VERSION}"
+    go get google.golang.org/protobuf/cmd/protoc-gen-go@${PROTOC_GEN_GO_VERSION}
+  else
+    say "Found protoc-gen-go"
   fi
+}
 
-  say "Found protoc-gen-gogo"
+function kd::protoc-gen-go-grpc::install() {
+  if [[ -z "$(which protoc-gen-go-grpc)" ]]; then
+    say "Installing protoc-gen-go-grpc"
+    go install google.golang.org/grpc/cmd/protoc-gen-go-grpc
+    go mod tidy
+  else
+    say "Found protoc-gen-go-grpc"
+  fi
 }
 
 function kd::protoc::generate() {
@@ -49,15 +62,21 @@ function kd::protoc::generate() {
   for proto in ${files}; do
     local baseDir="${proto%/*}"
     local filename="${proto##*/}"
-    say "Generating proto file: ${filename}"
+
+    say "Generating Go file: ${filename%.*}.pb.go"
+    say "Generating Go GRPC file: ${filename%.*}_grpc.pb.go"
 
     protoc \
       --proto_path="${baseDir}" \
-      --go_out=plugins=grpc,paths=source_relative:"${baseDir}" \
+      --go_out="${baseDir}" \
+      --go_opt=paths=source_relative \
+      --go-grpc_out="${baseDir}" \
+      --go-grpc_opt=paths=source_relative \
       "${baseDir}/${filename}"
   done
 }
 
 kd::protoc::ensure
-kd::protoc-go::install
+kd::protoc-gen-go::install
+kd::protoc-gen-go-grpc::install
 kd::protoc::generate "${SOURCE_DIR}"
