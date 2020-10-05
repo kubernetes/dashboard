@@ -106,7 +106,7 @@ Parameter                                       | Description                   
 `pinnedCRDs`                                    | Pinned CRDs that will be displayed in dashboard's menu                                                                           | `[]`
 `metricsScraper.enabled`                        | Wether to enable dashboard-metrics-scraper                                                                                       | `false`
 `metricsScraper.image.repository`               | Repository for metrics-scraper image                                                                                             | `kubernetesui/metrics-scraper`
-`metricsScraper.image.tag`                      | Repository for metrics-scraper image tag                                                                                         | `v1.0.4`
+`metricsScraper.image.tag`                      | Repository for metrics-scraper image tag                                                                                         | `v1.0.5`
 `metricsScraper.containerSecurityContext`       | SecurityContext for the kubernetes dashboard metrics scraper container                                                           | `{allowPrivilegeEscalation:false, readOnlyRootFilesystem: true, runAsUser: 1001, runAsGroup: 2001}`
 `metrics-server.enabled`                        | Wether to enable metrics-server                                                                                                  | `false`
 `rbac.create`                                   | Create & use RBAC resources                                                                                                      | `true`
