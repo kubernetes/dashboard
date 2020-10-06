@@ -110,7 +110,7 @@
     "@swimlane/ngx-charts": "16.0.0",
     "@types/c3": "0.7.4",
     "@types/d3": "5.16.1",
-    "@types/d3-scale": "3.0.0",
+    "@types/d3-scale": "3.1.0",
     "@types/file-saver": "2.0.1",
     "@types/highlight.js": "9.12.4",
     "ace-builds": "1.4.12",
