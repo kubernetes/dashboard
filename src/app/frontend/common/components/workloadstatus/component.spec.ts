@@ -14,7 +14,7 @@
 
 import {HttpClientTestingModule, HttpTestingController} from '@angular/common/http/testing';
 import {CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
-import {async, ComponentFixture, TestBed} from '@angular/core/testing';
+import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
 import {FlexLayoutModule} from '@angular/flex-layout';
 import {MatCardModule} from '@angular/material/card';
 import {MatDividerModule} from '@angular/material/divider';
@@ -67,24 +67,26 @@ describe('WorkloadStatusComponent', () => {
   let configService: ConfigService;
   let testHostFixture: ComponentFixture<WorkloadStatusComponent>;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [CardComponent, WorkloadStatusComponent],
-      imports: [
-        MatIconModule,
-        MatCardModule,
-        MatDividerModule,
-        MatTooltipModule,
-        NoopAnimationsModule,
-        HttpClientTestingModule,
-        FlexLayoutModule,
-      ],
-      providers: [ConfigService],
-      schemas: [CUSTOM_ELEMENTS_SCHEMA],
-    }).compileComponents();
-    httpMock = TestBed.get(HttpTestingController);
-    configService = TestBed.get(ConfigService);
-  }));
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        declarations: [CardComponent, WorkloadStatusComponent],
+        imports: [
+          MatIconModule,
+          MatCardModule,
+          MatDividerModule,
+          MatTooltipModule,
+          NoopAnimationsModule,
+          HttpClientTestingModule,
+          FlexLayoutModule,
+        ],
+        providers: [ConfigService],
+        schemas: [CUSTOM_ELEMENTS_SCHEMA],
+      }).compileComponents();
+      httpMock = TestBed.inject(HttpTestingController);
+      configService = TestBed.inject(ConfigService);
+    })
+  );
 
   beforeEach(() => {
     configService.init();
