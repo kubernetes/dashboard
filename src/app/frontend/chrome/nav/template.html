@@ -34,7 +34,7 @@ limitations under the License.
                    id="nav-namespace"
                    i18n>Namespaces
       </kd-nav-item>
-      <kd-nav-item class="kd-nav-group-item"
+      <kd-nav-item class="kd-nav-item"
                  state="/networkpolicy"
                  id="nav-network-policy"
                  [namespaced]="true"
@@ -49,18 +49,6 @@ limitations under the License.
                    state="/persistentvolume"
                    id="nav-persistentvolume"
                    i18n>Persistent Volumes
-      </kd-nav-item>
-      <kd-nav-item class="kd-nav-group-item"
-                 state="/rolebinding"
-                 id="nav-rolebinding"
-                 [namespaced]="true"
-                 i18n>Role Bindings
-      </kd-nav-item>
-      <kd-nav-item class="kd-nav-group-item"
-                 state="/role"
-                 id="nav-role"
-                 [namespaced]="true"
-                 i18n>Roles
       </kd-nav-item>
       <kd-nav-item class="kd-nav-item"
                    state="/storageclass"
@@ -195,6 +183,18 @@ limitations under the License.
                    state="/persistentvolumeclaim"
                    id="nav-persistentvolumeclaim"
                    i18n>Persistent Volume Claims
+      </kd-nav-item>
+      <kd-nav-item class="kd-nav-item"
+                 state="/role"
+                 id="nav-role"
+                 [namespaced]="true"
+                 i18n>Roles
+      </kd-nav-item>
+      <kd-nav-item class="kd-nav-item"
+                 state="/rolebinding"
+                 id="nav-rolebinding"
+                 [namespaced]="true"
+                 i18n>Role Bindings
       </kd-nav-item>
       <kd-nav-item class="kd-nav-item"
                    state="/secret"
