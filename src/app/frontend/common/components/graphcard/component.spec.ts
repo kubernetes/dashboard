@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {async, ComponentFixture, TestBed} from '@angular/core/testing';
+import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {Metric} from '@api/backendapi';
 
@@ -34,12 +34,14 @@ const testMetrics: Metric[] = [
 describe('GraphCardComponent', () => {
   let testHostFixture: ComponentFixture<GraphCardComponent>;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [GraphCardComponent, GraphComponent, CardComponent],
-      imports: [SharedModule, NoopAnimationsModule],
-    }).compileComponents();
-  }));
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        declarations: [GraphCardComponent, GraphComponent, CardComponent],
+        imports: [SharedModule, NoopAnimationsModule],
+      }).compileComponents();
+    })
+  );
 
   beforeEach(() => {
     testHostFixture = TestBed.createComponent(GraphCardComponent);

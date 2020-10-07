@@ -14,23 +14,25 @@
 
 import {HttpClientTestingModule, HttpTestingController} from '@angular/common/http/testing';
 import {Component, CUSTOM_ELEMENTS_SCHEMA, DebugElement} from '@angular/core';
-import {async, ComponentFixture, TestBed} from '@angular/core/testing';
+import {waitForAsync, TestBed} from '@angular/core/testing';
 import {MatCardModule} from '@angular/material/card';
 import {MatChipsModule} from '@angular/material/chips';
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatDividerModule} from '@angular/material/divider';
 import {MatIconModule} from '@angular/material/icon';
-import {MatTooltip, MatTooltipModule} from '@angular/material/tooltip';
+import {MatTooltipModule} from '@angular/material/tooltip';
 import {By} from '@angular/platform-browser';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {RouterModule} from '@angular/router';
-import {AppConfig, IngressDetail, ObjectMeta} from '@api/backendapi';
+import {AppConfig, IngressDetail} from '@api/backendapi';
 import {CardComponent} from 'common/components/card/component';
 import {ChipsComponent} from 'common/components/chips/component';
 import {ObjectMetaComponent} from 'common/components/objectmeta/component';
 import {PropertyComponent} from 'common/components/property/component';
 import {PipesModule} from 'common/pipes/module';
+import {AuthorizerService} from 'common/services/global/authorizer';
 import {ConfigService} from 'common/services/global/config';
+import {GlobalSettingsService} from 'common/services/global/globalsettings';
 
 import {IngressDetailComponent} from './component';
 
@@ -76,50 +78,48 @@ describe('IngressDetailComponent', () => {
   let httpMock: HttpTestingController;
   let configService: ConfigService;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [
-        ObjectMetaComponent,
-        MaxiTestComponent,
-        MiniTestComponent,
-        CardComponent,
-        PropertyComponent,
-        ChipsComponent,
-        IngressDetailComponent,
-      ],
-      imports: [
-        MatIconModule,
-        MatCardModule,
-        MatDividerModule,
-        MatTooltipModule,
-        MatDialogModule,
-        MatChipsModule,
-        NoopAnimationsModule,
-        PipesModule,
-        HttpClientTestingModule,
-        MatIconModule,
-        RouterModule,
-      ],
-      providers: [ConfigService],
-      schemas: [CUSTOM_ELEMENTS_SCHEMA],
-    }).compileComponents();
-    httpMock = TestBed.get(HttpTestingController);
-    configService = TestBed.get(ConfigService);
-  }));
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        declarations: [
+          ObjectMetaComponent,
+          MaxiTestComponent,
+          MiniTestComponent,
+          CardComponent,
+          PropertyComponent,
+          ChipsComponent,
+          IngressDetailComponent,
+        ],
+        imports: [
+          MatIconModule,
+          MatCardModule,
+          MatDividerModule,
+          MatTooltipModule,
+          MatDialogModule,
+          MatChipsModule,
+          NoopAnimationsModule,
+          PipesModule,
+          HttpClientTestingModule,
+          MatIconModule,
+          RouterModule,
+        ],
+        providers: [AuthorizerService, ConfigService, GlobalSettingsService],
+        schemas: [CUSTOM_ELEMENTS_SCHEMA],
+      }).compileComponents();
+      httpMock = TestBed.inject(HttpTestingController);
+      configService = TestBed.inject(ConfigService);
+    })
+  );
 
   beforeEach(() => {
     configService.init();
     const configRequest = httpMock.expectOne('config');
     const config: AppConfig = {serverTime: new Date().getTime()};
     configRequest.flush(config);
-
-    // httpMock.verify();
   });
 
   it('shows a mini ingress', () => {
     const fixture = TestBed.createComponent(MiniTestComponent);
-    const component = fixture.componentInstance;
-
     fixture.detectChanges();
     const debugElement = fixture.debugElement.query(By.css('kd-property.object-meta-name div.kd-property-value div'));
     expect(debugElement).toBeTruthy();
@@ -130,8 +130,6 @@ describe('IngressDetailComponent', () => {
 
   it('shows a maxi ingress', () => {
     const fixture = TestBed.createComponent(MaxiTestComponent);
-    const component = fixture.componentInstance;
-
     fixture.detectChanges();
     const debugElement = fixture.debugElement.query(By.css('kd-property.object-meta-name div.kd-property-value div'));
     expect(debugElement).toBeTruthy();

@@ -14,7 +14,7 @@
 
 import {HttpClientTestingModule, HttpTestingController} from '@angular/common/http/testing';
 import {Component, CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
-import {async, ComponentFixture, TestBed} from '@angular/core/testing';
+import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
 import {MatCardModule} from '@angular/material/card';
 import {MatChipsModule} from '@angular/material/chips';
 import {MatDialogModule} from '@angular/material/dialog';
@@ -28,7 +28,9 @@ import {AppConfig, ObjectMeta} from '@api/backendapi';
 import {ChipsComponent} from 'common/components/chips/component';
 
 import {PipesModule} from '../../pipes/module';
+import {AuthorizerService} from '../..//services/global/authorizer';
 import {ConfigService} from '../../services/global/config';
+import {GlobalSettingsService} from '../..//services/global/globalsettings';
 import {CardComponent} from '../card/component';
 import {PropertyComponent} from '../property/component';
 
@@ -53,46 +55,43 @@ class TestComponent {
 }
 
 describe('ObjectMetaComponent', () => {
-  let component: TestComponent;
-  let fixture: ComponentFixture<TestComponent>;
   let httpMock: HttpTestingController;
   let configService: ConfigService;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [ObjectMetaComponent, TestComponent, CardComponent, PropertyComponent, ChipsComponent],
-      imports: [
-        MatIconModule,
-        MatCardModule,
-        MatDividerModule,
-        MatTooltipModule,
-        MatDialogModule,
-        MatChipsModule,
-        NoopAnimationsModule,
-        PipesModule,
-        HttpClientTestingModule,
-        MatIconModule,
-        RouterModule,
-      ],
-      providers: [ConfigService],
-      schemas: [CUSTOM_ELEMENTS_SCHEMA],
-    }).compileComponents();
-    httpMock = TestBed.get(HttpTestingController);
-    configService = TestBed.get(ConfigService);
-  }));
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        declarations: [ObjectMetaComponent, TestComponent, CardComponent, PropertyComponent, ChipsComponent],
+        imports: [
+          MatIconModule,
+          MatCardModule,
+          MatDividerModule,
+          MatTooltipModule,
+          MatDialogModule,
+          MatChipsModule,
+          NoopAnimationsModule,
+          PipesModule,
+          HttpClientTestingModule,
+          MatIconModule,
+          RouterModule,
+        ],
+        providers: [AuthorizerService, ConfigService, GlobalSettingsService],
+        schemas: [CUSTOM_ELEMENTS_SCHEMA],
+      }).compileComponents();
+      httpMock = TestBed.inject(HttpTestingController);
+      configService = TestBed.inject(ConfigService);
+    })
+  );
 
   beforeEach(() => {
     configService.init();
-    fixture = TestBed.createComponent(TestComponent);
-    component = fixture.componentInstance;
     const configRequest = httpMock.expectOne('config');
     const config: AppConfig = {serverTime: new Date().getTime()};
     configRequest.flush(config);
-
-    // httpMock.verify();
   });
 
   it('shows a simple meta', () => {
+    const fixture = TestBed.createComponent(TestComponent);
     fixture.detectChanges();
 
     const card = fixture.debugElement.query(By.css('mat-card-title'));

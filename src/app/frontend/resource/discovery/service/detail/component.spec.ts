@@ -14,7 +14,7 @@
 
 import {HttpClientTestingModule, HttpTestingController} from '@angular/common/http/testing';
 import {Component, CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
-import {async, TestBed} from '@angular/core/testing';
+import {waitForAsync, TestBed} from '@angular/core/testing';
 import {MatCardModule} from '@angular/material/card';
 import {MatChipsModule} from '@angular/material/chips';
 import {MatDialogModule} from '@angular/material/dialog';
@@ -30,7 +30,9 @@ import {ChipsComponent} from 'common/components/chips/component';
 import {ObjectMetaComponent} from 'common/components/objectmeta/component';
 import {PropertyComponent} from 'common/components/property/component';
 import {PipesModule} from 'common/pipes/module';
+import {AuthorizerService} from 'common/services/global/authorizer';
 import {ConfigService} from 'common/services/global/config';
+import {GlobalSettingsService} from 'common/services/global/globalsettings';
 import {NamespacedResourceService} from 'common/services/resource/resource';
 
 import {ServiceDetailComponent} from './component';
@@ -137,35 +139,37 @@ describe('ServiceDetailComponent', () => {
   let httpMock: HttpTestingController;
   let configService: ConfigService;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [
-        ObjectMetaComponent,
-        MaxiTestComponent,
-        CardComponent,
-        PropertyComponent,
-        ChipsComponent,
-        ServiceDetailComponent,
-      ],
-      imports: [
-        MatIconModule,
-        MatCardModule,
-        MatDividerModule,
-        MatTooltipModule,
-        MatDialogModule,
-        MatChipsModule,
-        NoopAnimationsModule,
-        PipesModule,
-        HttpClientTestingModule,
-        MatIconModule,
-        RouterModule,
-      ],
-      providers: [ConfigService, NamespacedResourceService],
-      schemas: [CUSTOM_ELEMENTS_SCHEMA],
-    }).compileComponents();
-    httpMock = TestBed.get(HttpTestingController);
-    configService = TestBed.get(ConfigService);
-  }));
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        declarations: [
+          ObjectMetaComponent,
+          MaxiTestComponent,
+          CardComponent,
+          PropertyComponent,
+          ChipsComponent,
+          ServiceDetailComponent,
+        ],
+        imports: [
+          MatIconModule,
+          MatCardModule,
+          MatDividerModule,
+          MatTooltipModule,
+          MatDialogModule,
+          MatChipsModule,
+          NoopAnimationsModule,
+          PipesModule,
+          HttpClientTestingModule,
+          MatIconModule,
+          RouterModule,
+        ],
+        providers: [AuthorizerService, ConfigService, GlobalSettingsService, NamespacedResourceService],
+        schemas: [CUSTOM_ELEMENTS_SCHEMA],
+      }).compileComponents();
+      httpMock = TestBed.inject(HttpTestingController);
+      configService = TestBed.inject(ConfigService);
+    })
+  );
 
   beforeEach(() => {
     configService.init();
@@ -176,7 +180,6 @@ describe('ServiceDetailComponent', () => {
 
   it('shows a maxi service', () => {
     const fixture = TestBed.createComponent(MaxiTestComponent);
-    const component = fixture.componentInstance;
 
     fixture.detectChanges();
     const debugElement = fixture.debugElement.query(By.css('kd-property.object-meta-name div.kd-property-value div'));
