@@ -54,8 +54,8 @@ jobs:
         run: |
           [ ! -d "node_modules" ] && npm ci || node aio/scripts/version.js && command -v golangci-lint >/dev/null 2>&1 || { curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $(go env GOPATH)/bin v1.30.0; } && go mod download
 
-      - name: Check License
-        shell: bash
-        run: |
-          export GOPATH=$(go env GOPATH)/bin
-          npm run check:license
+#      - name: Check License
+#        shell: bash
+#        run: |
+#          export GOPATH=$(go env GOPATH)/bin
+#          npm run check:license
