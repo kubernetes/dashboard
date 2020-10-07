@@ -40,8 +40,7 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/errors"
 	"github.com/kubernetes/dashboard/src/app/backend/integration"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/clusterrole"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/cluster
-	"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/clusterrolebinding"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/configmap"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/container"
