@@ -160,7 +160,7 @@
     "eslint": "7.10.0",
     "eslint-plugin-rxjs": "0.0.3-beta.30",
     "git-describe": "4.0.4",
-    "gts": "2.0.2",
+    "gts": "3.0.0",
     "gulp": "4.0.2",
     "gulp-filter": "6.0.0",
     "husky": "4.3.0",
