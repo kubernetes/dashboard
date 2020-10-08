@@ -61,7 +61,7 @@ func NewAPIServerCommand() *cobra.Command {
 	usageFmt := "Usage:\n %s\n"
 	cols, _, _ := term.TerminalSize(CMD.OutOrStdout())
 	CMD.SetUsageFunc(func(cmd *cobra.Command) error {
-		fmt.Fprintf(cmd.OutOrStderr(), usageFmt, cmd.UseLine())
+		_, _ = fmt.Fprintf(cmd.OutOrStderr(), usageFmt, cmd.UseLine())
 		cliflag.PrintSections(cmd.OutOrStderr(), apiFlags, cols)
 		cliflag.PrintSections(cmd.OutOrStderr(), metricsFlags, cols)
 		cliflag.PrintSections(cmd.OutOrStderr(), uiFlags, cols)
@@ -70,7 +70,7 @@ func NewAPIServerCommand() *cobra.Command {
 	})
 
 	CMD.SetHelpFunc(func(cmd *cobra.Command, args []string) {
-		fmt.Fprintf(cmd.OutOrStdout(), "%s\n\n"+usageFmt, cmd.Long, cmd.UseLine())
+		_, _ = fmt.Fprintf(cmd.OutOrStdout(), "%s\n\n"+usageFmt, cmd.Long, cmd.UseLine())
 		cliflag.PrintSections(cmd.OutOrStdout(), apiFlags, cols)
 		cliflag.PrintSections(cmd.OutOrStdout(), metricsFlags, cols)
 		cliflag.PrintSections(cmd.OutOrStdout(), uiFlags, cols)
