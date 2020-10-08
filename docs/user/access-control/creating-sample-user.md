@@ -47,7 +47,7 @@ EOF
 Now we need to find token we can use to log in. Execute following command:
 
 ```bash
-kubectl -n kubernetes-dashboard get secret $(kubectl -n kubernetes-dashboard get sa/admin-user -o jsonpath="{.secrets[0].name}") -o jsonpath="{.data.token}{'\n'}"
+kubectl -n kubernetes-dashboard get secret $(kubectl -n kubernetes-dashboard get sa/admin-user -o jsonpath="{.secrets[0].name}") -o jsonpath="{.data.token}{'\n'}" | base64 --decode
 ```
 
 It should print something like:
