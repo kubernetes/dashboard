@@ -1408,7 +1408,7 @@
       </trans-unit>
       <trans-unit id="5382098398f2c3d09d75fe21addc796d91077051" datatype="html">
         <source>Cluster Role Bindings</source>
-        <target state="new">Cluster Role Bindings</target>
+        <target>Cluster Role Bindings</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/clusterrolebinding/template.html</context>
           <context context-type="linenumber">21</context>
@@ -1754,7 +1754,7 @@
       </trans-unit>
       <trans-unit id="6af40687e73f3e54515b94380a6463e6f8744ff2" datatype="html">
         <source>Custom Resource Definitions</source>
-        <target>定义自定义资源</target>
+        <target>自定义资源</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/crd/template.html</context>
           <context context-type="linenumber">21</context>
@@ -2534,7 +2534,7 @@
       </trans-unit>
       <trans-unit id="78da621b65ff6583de3d5b446cea93aeced674df" datatype="html">
         <source>Service Accounts</source>
-        <target state="new">Service Accounts</target>
+        <target>Service Accounts</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/serviceaccount/template.html</context>
           <context context-type="linenumber">21</context>
@@ -2547,11 +2547,11 @@
         <x id="START_TAG_MAT-ICON" ctype="x-mat-icon" equiv-text="&lt;mat-icon>"/>open_in_new<x id="CLOSE_TAG_MAT-ICON" ctype="x-mat-icon" equiv-text="&lt;/mat-icon>"/>
       <x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a>"/> to learn more.
     </source>
-        <target state="new">
-      You can <x id="START_LINK" ctype="x-a" equiv-text="&lt;a>"/>deploy a containerized app<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a>"/>, select other namespace or
-      <x id="START_LINK_1" ctype="x-a" equiv-text="&lt;a>"/>take the Dashboard Tour
+        <target>
+      你能 <x id="START_LINK" ctype="x-a" equiv-text="&lt;a>"/>部署一个容器化应用<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a>"/>, 选择其他 namespace，或者
+      <x id="START_LINK_1" ctype="x-a" equiv-text="&lt;a>"/>阅读 Dashboard 说明
         <x id="START_TAG_MAT-ICON" ctype="x-mat-icon" equiv-text="&lt;mat-icon>"/>open_in_new<x id="CLOSE_TAG_MAT-ICON" ctype="x-mat-icon" equiv-text="&lt;/mat-icon>"/>
-      <x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a>"/> to learn more.
+      <x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a>"/> 了解更多。
     </target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/zerostate/template.html</context>
@@ -2560,7 +2560,7 @@
       </trans-unit>
       <trans-unit id="a4f6d660f2cc1c8c680a96e39c719b48c8ebe17a" datatype="html">
         <source>Network Policies</source>
-        <target state="new">Network Policies</target>
+        <target>Network Policies</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/networkpolicy/template.html</context>
           <context context-type="linenumber">21</context>
@@ -2568,7 +2568,7 @@
       </trans-unit>
       <trans-unit id="9610487cbeb5796d34d8601b5ac0c0a65f9e1d19" datatype="html">
         <source>Roles</source>
-        <target state="new">Roles</target>
+        <target>Roles</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/role/template.html</context>
           <context context-type="linenumber">21</context>
@@ -2576,7 +2576,7 @@
       </trans-unit>
       <trans-unit id="51682f193e48c9ef0e687aea04f825af1721f0f0" datatype="html">
         <source>Role Bindings</source>
-        <target state="new">Role Bindings</target>
+        <target>Role Bindings</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/rolebinding/template.html</context>
           <context context-type="linenumber">21</context>
@@ -2584,7 +2584,7 @@
       </trans-unit>
       <trans-unit id="2b689ed7a24edd60660708e03c2dc11cd540e950" datatype="html">
         <source>Subjects</source>
-        <target state="new">Subjects</target>
+        <target>Subjects</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/subject/template.html</context>
           <context context-type="linenumber">20</context>
@@ -2592,7 +2592,7 @@
       </trans-unit>
       <trans-unit id="fb8681ea25f262db7f8ede5306e82d081016d5c7" datatype="html">
         <source>API Group</source>
-        <target state="new">API Group</target>
+        <target>API 组</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/subject/template.html</context>
           <context context-type="linenumber">65</context>
@@ -2601,7 +2601,7 @@
       <trans-unit id="6d9edf35ea416301631125005b66c9440397176d" datatype="html">
         <source>Workloads
       </source>
-        <target state="new">Workloads
+        <target>工作负载
       </target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/chrome/nav/template.html</context>
@@ -2611,7 +2611,7 @@
       <trans-unit id="787093faa4cfa59c1499dca2cfc6e804f1838ab1" datatype="html">
         <source>Cron Jobs
       </source>
-        <target state="new">Cron Jobs
+        <target>Cron Jobs
       </target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/chrome/nav/template.html</context>
@@ -2621,7 +2621,7 @@
       <trans-unit id="d094e262a8d26c66b5eb9f7dbf501cd711c1306f" datatype="html">
         <source>Daemon Sets
       </source>
-        <target state="new">Daemon Sets
+        <target>Daemon Sets
       </target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/chrome/nav/template.html</context>
@@ -2631,7 +2631,7 @@
       <trans-unit id="a862522a568898e032031f6728be4eec8edeb61b" datatype="html">
         <source>Deployments
       </source>
-        <target state="new">Deployments
+        <target>Deployments
       </target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/chrome/nav/template.html</context>
@@ -2641,7 +2641,7 @@
       <trans-unit id="702b6f15c86ce19a17aa8ae644658c852d3c1c08" datatype="html">
         <source>Jobs
       </source>
-        <target state="new">Jobs
+        <target>Jobs
       </target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/chrome/nav/template.html</context>
@@ -2651,7 +2651,7 @@
       <trans-unit id="03ff2fadee6736ca0b92abdfe0f19db0d0b2c3f8" datatype="html">
         <source>Pods
       </source>
-        <target state="new">Pods
+        <target>Pods
       </target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/chrome/nav/template.html</context>
@@ -2661,7 +2661,7 @@
       <trans-unit id="6fed5420d42fcfbd09dfb4777c207274dd4f0c0a" datatype="html">
         <source>Replica Sets
       </source>
-        <target state="new">Replica Sets
+        <target>Replica Sets
       </target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/chrome/nav/template.html</context>
@@ -2671,7 +2671,7 @@
       <trans-unit id="5a60417d6a34e8c0655cb0678071c60ca8119aad" datatype="html">
         <source>Replication Controllers
       </source>
-        <target state="new">Replication Controllers
+        <target>Replication Controllers
       </target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/chrome/nav/template.html</context>
@@ -2681,7 +2681,7 @@
       <trans-unit id="1bc563edf644be0e1f682694e543cc8608575562" datatype="html">
         <source>Stateful Sets
       </source>
-        <target state="new">Stateful Sets
+        <target>Stateful Sets
       </target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/chrome/nav/template.html</context>
@@ -2691,7 +2691,7 @@
       <trans-unit id="22c030ecbaceb4c5cf969f5ca360d7e6c6384a6d" datatype="html">
         <source>Service
       </source>
-        <target state="new">Service
+        <target>服务
       </target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/chrome/nav/template.html</context>
@@ -2701,7 +2701,7 @@
       <trans-unit id="7b4d1721251562683d614269b06ebbe3af811a00" datatype="html">
         <source>Ingresses
       </source>
-        <target state="new">Ingresses
+        <target>Ingresses
       </target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/chrome/nav/template.html</context>
@@ -2711,7 +2711,7 @@
       <trans-unit id="5502d7f80d7951086a85d2da478f3f13763939d5" datatype="html">
         <source>Services
       </source>
-        <target state="new">Services
+        <target>Services
       </target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/chrome/nav/template.html</context>
@@ -2721,7 +2721,7 @@
       <trans-unit id="be3dcec436583ff66cce312fd2074779d8851f54" datatype="html">
         <source>Config and Storage
       </source>
-        <target state="new">Config and Storage
+        <target>配置和存储
       </target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/chrome/nav/template.html</context>
@@ -2731,7 +2731,7 @@
       <trans-unit id="990cffc29a7adb5ec1110b0176c8c12fff756eba" datatype="html">
         <source>Config Maps
       </source>
-        <target state="new">Config Maps
+        <target>Config Maps
       </target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/chrome/nav/template.html</context>
@@ -2741,7 +2741,7 @@
       <trans-unit id="74be5bc42681451056aacf13382e5b29c62bd903" datatype="html">
         <source>Persistent Volume Claims
       </source>
-        <target state="new">Persistent Volume Claims
+        <target>Persistent Volume Claims
       </target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/chrome/nav/template.html</context>
@@ -2751,7 +2751,7 @@
       <trans-unit id="755417c37ab5d459cd2443b3776aaaca7ec87f90" datatype="html">
         <source>Secrets
       </source>
-        <target state="new">Secrets
+        <target>Secrets
       </target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/chrome/nav/template.html</context>
@@ -2761,7 +2761,7 @@
       <trans-unit id="d49c812d67b965bd0a172844e265f55567c812ad" datatype="html">
         <source>Storage Classes
       </source>
-        <target state="new">Storage Classes
+        <target>Storage Classes
       </target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/chrome/nav/template.html</context>
@@ -2771,7 +2771,7 @@
       <trans-unit id="67d3a6c50ed8a188e19ea8c541a56f0e35620e5c" datatype="html">
         <source>Cluster
       </source>
-        <target state="new">Cluster
+        <target>集群
       </target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/chrome/nav/template.html</context>
@@ -2781,7 +2781,7 @@
       <trans-unit id="2e7f50d0bef3580ae3c46acdcdd71e29e4fa3fed" datatype="html">
         <source>Cluster Role Bindings
       </source>
-        <target state="new">Cluster Role Bindings
+        <target>Cluster Role Bindings
       </target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/chrome/nav/template.html</context>
@@ -2791,7 +2791,7 @@
       <trans-unit id="1aff4cb93f64ca57fbf92fe405b2c1f2c4ec1b11" datatype="html">
         <source>Cluster Roles
       </source>
-        <target state="new">Cluster Roles
+        <target>Cluster Roles
       </target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/chrome/nav/template.html</context>
@@ -2801,7 +2801,7 @@
       <trans-unit id="3b91b541ed4a1e47b83fe91f4cae1eefa904f4d5" datatype="html">
         <source>Namespaces
       </source>
-        <target state="new">Namespaces
+        <target>Namespaces
       </target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/chrome/nav/template.html</context>
@@ -2811,7 +2811,7 @@
       <trans-unit id="bce7cd9302197070e1782d38622dbb351ad84b69" datatype="html">
         <source>Network Policies
       </source>
-        <target state="new">Network Policies
+        <target>Network Policies
       </target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/chrome/nav/template.html</context>
@@ -2821,7 +2821,7 @@
       <trans-unit id="9151fc3bbb78ca19bf93221148fb6f75c9adec73" datatype="html">
         <source>Nodes
       </source>
-        <target state="new">Nodes
+        <target>Nodes
       </target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/chrome/nav/template.html</context>
@@ -2831,7 +2831,7 @@
       <trans-unit id="53fa14e4e66a4b88531ac5852644edf4c93430c5" datatype="html">
         <source>Persistent Volumes
       </source>
-        <target state="new">Persistent Volumes
+        <target>Persistent Volumes
       </target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/chrome/nav/template.html</context>
@@ -2841,7 +2841,7 @@
       <trans-unit id="d4d25df076acf842b0705cc4ac54f4757a979a03" datatype="html">
         <source>Role Bindings
       </source>
-        <target state="new">Role Bindings
+        <target>Role Bindings
       </target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/chrome/nav/template.html</context>
@@ -2851,7 +2851,7 @@
       <trans-unit id="e9c8e24a53e2496d1bb734d0bd20d756bec5b200" datatype="html">
         <source>Roles
       </source>
-        <target state="new">Roles
+        <target>Roles
       </target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/chrome/nav/template.html</context>
@@ -2861,7 +2861,7 @@
       <trans-unit id="5deee9cd9fabadb49eb1e3fcae70ff560e41ba27" datatype="html">
         <source>Service Accounts
       </source>
-        <target state="new">Service Accounts
+        <target>Service Accounts
       </target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/chrome/nav/template.html</context>
@@ -2871,7 +2871,7 @@
       <trans-unit id="f2f9d18ebacb9e3bcb996d8176609e306864265e" datatype="html">
         <source>Custom Resource Definitions
       </source>
-        <target state="new">Custom Resource Definitions
+        <target>自定义资源
       </target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/chrome/nav/template.html</context>
@@ -2881,7 +2881,7 @@
       <trans-unit id="9b39398e6c7a9dfb5cd43f405598934244f8bd17" datatype="html">
         <source>Plugins
         </source>
-        <target state="new">Plugins
+        <target>插件
         </target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/chrome/nav/template.html</context>
@@ -2891,7 +2891,7 @@
       <trans-unit id="03511cfe5e28ed3380ab198c13cf62ebde1e89e6" datatype="html">
         <source>Settings
       </source>
-        <target state="new">Settings
+        <target>设置
       </target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/chrome/nav/template.html</context>
@@ -2901,7 +2901,7 @@
       <trans-unit id="c2fa735eb6b1b2c10171c5acb818f6e0975a9406" datatype="html">
         <source>About
       </source>
-        <target state="new">About
+        <target>关于
       </target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/chrome/nav/template.html</context>
@@ -3008,7 +3008,7 @@
       </trans-unit>
       <trans-unit id="82b29c3b4501afec72a7fb434e048547f9a067e4" datatype="html">
         <source>Role Reference</source>
-        <target state="new">Role Reference</target>
+        <target>角色引用</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/resource/cluster/clusterrolebinding/detail/template.html</context>
           <context context-type="linenumber">28</context>
@@ -3219,9 +3219,9 @@
       <x id="START_LINK_1" ctype="x-a" equiv-text="&lt;a>"/>open source project<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a>"/>.
     </source>
         <target>
-      Dashboard 使 Kubernetes Dashboard 成为可能
-      <x id="START_LINK" ctype="x-a" equiv-text="&lt;a>"/>community<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a>"/> as an
-      <x id="START_LINK_1" ctype="x-a" equiv-text="&lt;a>"/>open source project<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a>"/>.
+      Kubernetes Dashboard 是由 Dashboard
+      <x id="START_LINK" ctype="x-a" equiv-text="&lt;a>"/>社区<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a>"/> 作为一个
+      <x id="START_LINK_1" ctype="x-a" equiv-text="&lt;a>"/>开源项目<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a>"/>实现的。
     </target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/about/template.html</context>
@@ -3959,7 +3959,7 @@
   Deploy
 </source>
         <target>
-  Deploy
+  部署
 </target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/from/form/template.html</context>
@@ -4474,7 +4474,7 @@
       </trans-unit>
       <trans-unit id="6e73f7b06ce74fa29c8866cf5a82bfbeaf2452ed" datatype="html">
         <source>Follow logs</source>
-        <target>Follow logs</target>
+        <target>追踪日志</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/logs/template.html</context>
           <context context-type="linenumber">146</context>
@@ -4498,7 +4498,7 @@
       </trans-unit>
       <trans-unit id="a21b5b669ab3f36e0f83e9a025c26662fd0616e8" datatype="html">
         <source>Pod Selector</source>
-        <target state="new">Pod Selector</target>
+        <target>Pod 选择器</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/resource/cluster/networkpolicy/detail/template.html</context>
           <context context-type="linenumber">28</context>
@@ -4506,7 +4506,7 @@
       </trans-unit>
       <trans-unit id="2ebd4e9210644c0f1da612d5c2ef1bbdab9652fd" datatype="html">
         <source>Policy Types</source>
-        <target state="new">Policy Types</target>
+        <target>策略类型</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/resource/cluster/networkpolicy/detail/template.html</context>
           <context context-type="linenumber">37</context>
@@ -4514,7 +4514,7 @@
       </trans-unit>
       <trans-unit id="1ebb4252343531346acc2530c2002fc639dd6926" datatype="html">
         <source>Ingress Rules</source>
-        <target state="new">Ingress Rules</target>
+        <target>Ingress 规则</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/resource/cluster/networkpolicy/detail/template.html</context>
           <context context-type="linenumber">49</context>
@@ -4522,7 +4522,7 @@
       </trans-unit>
       <trans-unit id="21a53832d275152e4ad8dfa9371ebbefbf693c87" datatype="html">
         <source>Egress Rules</source>
-        <target state="new">Egress Rules</target>
+        <target>Egress 规则</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/resource/cluster/networkpolicy/detail/template.html</context>
           <context context-type="linenumber">61</context>
@@ -5379,7 +5379,7 @@
       </trans-unit>
       <trans-unit id="2045151788cbdda7512752e408da59a6b54a8ef0" datatype="html">
         <source>Items per page</source>
-        <target>每页 Items</target>
+        <target>每页项目</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/settings/global/template.html</context>
           <context context-type="linenumber">43</context>
@@ -5387,7 +5387,7 @@
       </trans-unit>
       <trans-unit id="3925ecae114abc711d1b417b7bdc4f8d6ec0f585" datatype="html">
         <source>Max number of items that can be displayed on every list view.</source>
-        <target state="new">Max number of items that can be displayed on every list view.</target>
+        <target>每个列表视图中可显示的最大项目数。</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/settings/global/template.html</context>
           <context context-type="linenumber">45</context>
@@ -5395,7 +5395,7 @@
       </trans-unit>
       <trans-unit id="f530d15919f9ecdc3c56f55eae1a78b905cc08fa" datatype="html">
         <source>Labels limit</source>
-        <target state="new">Labels limit</target>
+        <target>标签限制</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/settings/global/template.html</context>
           <context context-type="linenumber">62</context>
@@ -5403,7 +5403,7 @@
       </trans-unit>
       <trans-unit id="dd245a4e3a7100eb2fa1e91e62663f748016668b" datatype="html">
         <source>Max number of labels that are displayed by default on most views.</source>
-        <target state="new">Max number of labels that are displayed by default on most views.</target>
+        <target>默认情况下，大多数视图上显示的最大标签数。</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/settings/global/template.html</context>
           <context context-type="linenumber">64</context>
