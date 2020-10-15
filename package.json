@@ -39,7 +39,7 @@
     "check:backend": "golangci-lint run -c .golangci.yml ./src/app/backend/...",
     "check:codegen": "aio/scripts/verify-codegen.sh",
     "check:frontend": "concurrently \"npm run check:frontend:ts\" \"npm run check:frontend:scss\" \"npm run check:frontend:html\"",
-    "check:frontend:ts": "gts check",
+    "check:frontend:ts": "gts lint",
     "check:frontend:scss": "./aio/scripts/format.sh --styles --check && ./node_modules/sass-lint/bin/sass-lint.js -c .sass-lint.yml 'src/app/frontend/**/*.scss' -v -q",
     "check:frontend:html": "./aio/scripts/format.sh --html --check",
     "check:license": "license-check-and-add check",
@@ -210,7 +210,7 @@
       "rxjs"
     ],
     "rules": {
-      "@typescript-eslint/ban-ts-ignore": "off",
+      "@typescript-eslint/ban-ts-comment": "off",
       "@typescript-eslint/interface-name-prefix": "off",
       "@typescript-eslint/no-namespace": "off",
       "@typescript-eslint/no-unused-vars": "off",
