@@ -63,20 +63,16 @@
   },
   "lint-staged": {
     "src/**/*.ts": [
-      "gts fix",
-      "git add"
+      "gts fix"
     ],
     "src/**/*.scss": [
-      "scssfmt",
-      "git add"
+      "scssfmt"
     ],
     "src/**/*.go": [
-      "./aio/scripts/pre-commit-golangci-lint.sh",
-      "git add"
+      "./aio/scripts/pre-commit-golangci-lint.sh"
     ],
     "src/**/*.html": [
-      "./aio/scripts/pre-commit-i18n.sh",
-      "git add"
+      "./aio/scripts/pre-commit-i18n.sh"
     ]
   },
   "xliffmergeOptions": {
