@@ -24,8 +24,10 @@ import (
 )
 
 // PluginLister helps list Plugins.
+// All objects returned here must be treated as read-only.
 type PluginLister interface {
 	// List lists all Plugins in the indexer.
+	// Objects returned here must be treated as read-only.
 	List(selector labels.Selector) (ret []*v1alpha1.Plugin, err error)
 	// Plugins returns an object that can list and get Plugins.
 	Plugins(namespace string) PluginNamespaceLister
@@ -56,10 +58,13 @@ func (s *pluginLister) Plugins(namespace string) PluginNamespaceLister {
 }
 
 // PluginNamespaceLister helps list and get Plugins.
+// All objects returned here must be treated as read-only.
 type PluginNamespaceLister interface {
 	// List lists all Plugins in the indexer for a given namespace.
+	// Objects returned here must be treated as read-only.
 	List(selector labels.Selector) (ret []*v1alpha1.Plugin, err error)
 	// Get retrieves the Plugin from the indexer for a given namespace and name.
+	// Objects returned here must be treated as read-only.
 	Get(name string) (*v1alpha1.Plugin, error)
 	PluginNamespaceListerExpansion
 }
