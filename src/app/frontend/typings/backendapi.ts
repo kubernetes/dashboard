@@ -732,13 +732,11 @@ export interface ErrStatus {
   reason: string;
 }
 
-/* tslint:disable */
 export interface K8sError {
   ErrStatus: ErrStatus;
 
   toKdError(): KdError;
 }
-/* tslint:enable */
 
 export interface Condition {
   type: string;
@@ -971,7 +969,6 @@ export interface LocalObjectReference {
   name: string;
 }
 
-/* tslint:disable */
 export interface ISCSIVolumeSource {
   targetPortal: string;
   iqn: string;
@@ -979,7 +976,6 @@ export interface ISCSIVolumeSource {
   fsType: string;
   readOnly: boolean;
 }
-/* tslint:enable */
 
 export interface CinderVolumeSource {
   volumeID: string;
