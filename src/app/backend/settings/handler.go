@@ -17,7 +17,7 @@ package settings
 import (
 	"net/http"
 
-	restful "github.com/emicklei/go-restful"
+	restful "github.com/emicklei/go-restful/v3"
 
 	"github.com/kubernetes/dashboard/src/app/backend/args"
 	clientapi "github.com/kubernetes/dashboard/src/app/backend/client/api"
