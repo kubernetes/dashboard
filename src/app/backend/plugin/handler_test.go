@@ -17,7 +17,7 @@ package plugin
 import (
 	"testing"
 
-	"github.com/emicklei/go-restful"
+	"github.com/emicklei/go-restful/v3"
 )
 
 func TestIntegrationHandler_Install(t *testing.T) {

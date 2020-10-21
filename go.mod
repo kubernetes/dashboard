@@ -4,9 +4,9 @@ go 1.15
 
 require (
 	github.com/docker/distribution v2.7.1+incompatible
-	// emicklei/go-restful v2.14.0 or later breaks http response body if it has boolean value.
+	// emicklei/go-restful v3.3.0 or later breaks http response body if it has boolean value.
 	// See emicklei/go-restful#449
-	github.com/emicklei/go-restful v2.13.0+incompatible
+	github.com/emicklei/go-restful/v3 v3.2.0
 	github.com/golang/glog v0.0.0-20160126235308-23def4e6c14b
 	github.com/opencontainers/go-digest v1.0.0 // indirect
 	github.com/prometheus/client_golang v1.7.1
