@@ -40,7 +40,7 @@ func TestToPodPodStatusFailed(t *testing.T) {
 
 	expected := Pod{
 		TypeMeta: api.TypeMeta{Kind: api.ResourceKindPod},
-		PodStatus: PodStatus{
+		Status: PodStatus{
 			Status:   string(v1.PodFailed),
 			PodPhase: v1.PodFailed,
 		},
@@ -70,7 +70,7 @@ func TestToPodPodStatusSucceeded(t *testing.T) {
 
 	expected := Pod{
 		TypeMeta: api.TypeMeta{Kind: api.ResourceKindPod},
-		PodStatus: PodStatus{
+		Status: PodStatus{
 			Status:   string(v1.PodSucceeded),
 			PodPhase: v1.PodSucceeded,
 		},
@@ -104,7 +104,7 @@ func TestToPodPodStatusRunning(t *testing.T) {
 
 	expected := Pod{
 		TypeMeta: api.TypeMeta{Kind: api.ResourceKindPod},
-		PodStatus: PodStatus{
+		Status: PodStatus{
 			Status:   string(v1.PodRunning),
 			PodPhase: v1.PodRunning,
 		},
@@ -134,7 +134,7 @@ func TestToPodPodStatusPending(t *testing.T) {
 
 	expected := Pod{
 		TypeMeta: api.TypeMeta{Kind: api.ResourceKindPod},
-		PodStatus: PodStatus{
+		Status: PodStatus{
 			Status:   string(v1.PodPending),
 			PodPhase: v1.PodPending,
 		},
@@ -174,7 +174,7 @@ func TestToPodContainerStates(t *testing.T) {
 
 	expected := Pod{
 		TypeMeta: api.TypeMeta{Kind: api.ResourceKindPod},
-		PodStatus: PodStatus{
+		Status: PodStatus{
 			PodPhase: v1.PodRunning,
 			Status:   string(v1.PodPending),
 			ContainerStates: []v1.ContainerState{
@@ -211,7 +211,7 @@ func TestToPod(t *testing.T) {
 			pod: &v1.Pod{}, metrics: &MetricsByPod{},
 			expected: Pod{
 				TypeMeta: api.TypeMeta{Kind: api.ResourceKindPod},
-				PodStatus: PodStatus{
+				Status: PodStatus{
 					Status: string(v1.PodPending),
 				},
 				Warnings: []common.Event{},
@@ -228,7 +228,7 @@ func TestToPod(t *testing.T) {
 					Name:      "test-pod",
 					Namespace: "test-namespace",
 				},
-				PodStatus: PodStatus{
+				Status: PodStatus{
 					Status: string(v1.PodPending),
 				},
 				Warnings: []common.Event{},

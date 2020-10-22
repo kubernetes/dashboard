@@ -14,7 +14,7 @@
 
 import {HttpClientTestingModule, HttpTestingController} from '@angular/common/http/testing';
 import {Component, CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
-import {waitForAsync, TestBed} from '@angular/core/testing';
+import {TestBed, waitForAsync} from '@angular/core/testing';
 import {MatCardModule} from '@angular/material/card';
 import {MatChipsModule} from '@angular/material/chips';
 import {MatDialogModule} from '@angular/material/dialog';
@@ -74,11 +74,7 @@ class MaxiTestComponent {
     podList: {
       pods: [
         {
-          podStatus: {
-            podPhase: 'phase1',
-            status: 'Ready',
-            containerStates: [{waiting: {reason: 'Still starting'}}],
-          },
+          status: 'Running',
           restartCount: 1,
           metrics: {
             cpuUsage: 10,
