@@ -2,9 +2,10 @@ module github.com/kubernetes/dashboard
 
 go 1.15
 
+// Workaround for https://github.com/ory/dockertest/issues/208
+replace golang.org/x/sys => golang.org/x/sys v0.0.0-20200826173525-f9321e4c35a6
+
 require (
-	github.com/coreos/go-etcd v2.0.0+incompatible // indirect
-	github.com/cpuguy83/go-md2man v1.0.10 // indirect
 	github.com/docker/distribution v2.7.1+incompatible
 	// emicklei/go-restful v3.3.0 or later breaks http response body if it has boolean value.
 	// See emicklei/go-restful#449
@@ -15,7 +16,6 @@ require (
 	github.com/prometheus/client_golang v1.7.1
 	github.com/spf13/cobra v1.0.0
 	github.com/spf13/pflag v1.0.5
-	github.com/ugorji/go/codec v0.0.0-20181204163529-d75b2dcb6bc8 // indirect
 	golang.org/x/net v0.0.0-20201006153459-a7d1128ccaa0
 	golang.org/x/text v0.3.3
 	google.golang.org/grpc v1.32.0
@@ -23,12 +23,12 @@ require (
 	gopkg.in/igm/sockjs-go.v2 v2.1.0
 	gopkg.in/square/go-jose.v2 v2.4.1
 	gopkg.in/yaml.v2 v2.3.0
-	k8s.io/api v0.19.2
-	k8s.io/apiextensions-apiserver v0.19.2
-	k8s.io/apimachinery v0.19.2
-	k8s.io/apiserver v0.19.2 // indirect
-	k8s.io/client-go v0.19.2
-	k8s.io/component-base v0.19.2
+	k8s.io/api v0.18.10
+	k8s.io/apiextensions-apiserver v0.18.10
+	k8s.io/apimachinery v0.18.10
+	k8s.io/apiserver v0.18.10
+	k8s.io/client-go v0.18.10
+	k8s.io/component-base v0.18.10
 	k8s.io/heapster v1.5.4
 	k8s.io/klog v1.0.0
 )
