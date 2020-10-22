@@ -113,6 +113,10 @@ func getPodStatus(pod v1.Pod) string {
 		reason = "Terminating"
 	}
 
+	if len(reason) == 0 {
+		reason = string(v1.PodUnknown)
+	}
+
 	return reason
 }
 

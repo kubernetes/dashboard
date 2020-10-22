@@ -103,7 +103,7 @@ func TestGetPodListFromChannels(t *testing.T) {
 						CreationTimestamp: metav1.Unix(111, 222),
 					},
 					TypeMeta: api.TypeMeta{Kind: api.ResourceKindPod},
-					Status:   pod.PodStatus{Status: string(v1.PodPending)},
+					Status:   string(v1.PodUnknown),
 					Warnings: []common.Event{},
 				}},
 				Errors: []error{},

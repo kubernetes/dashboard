@@ -43,6 +43,7 @@ func TestGetPodDetail(t *testing.T) {
 				}}}},
 			expected: &PodDetail{
 				TypeMeta: api.TypeMeta{Kind: api.ResourceKindPod},
+				PodPhase: string(v1.PodUnknown),
 				ObjectMeta: api.ObjectMeta{
 					Name:      "test-pod",
 					Namespace: "test-namespace",
