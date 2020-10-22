@@ -19,7 +19,7 @@
 
 image:
   repository: kubernetesui/dashboard
-  tag: v2.0.3
+  tag: v2.0.4
   pullPolicy: IfNotPresent
   pullSecrets: []
 
@@ -42,6 +42,21 @@ labels: {}
 extraEnv: []
 # - name: SOME_VAR
 #   value: 'some value'
+
+## Additional volumes to be added to kubernetes dashboard pods
+##
+extraVolumes: []
+# - name: dashboard-kubeconfig
+#   secret:
+#     defaultMode: 420
+#     secretName: dashboard-kubeconfig
+
+## Additional volumeMounts to be added to kubernetes dashboard pods
+##
+extraVolumeMounts: []
+# - mountPath: /kubeconfig
+#   name: dashboard-kubeconfig
+#   readOnly: true
 
 # Annotations to be added to kubernetes dashboard pods
 podAnnotations:
@@ -157,6 +172,28 @@ ingress:
   #     hosts:
   #       - kubernetes-dashboard.domain.com
 
+settings: {}
+  ## Cluster name that appears in the browser window title if it is set
+  # clusterName: ""
+  ## Max number of items that can be displayed on each list page
+  # itemsPerPage: 10
+  ## Number of seconds between every auto-refresh of logs
+  # logsAutoRefreshTimeInterval: 5
+  ## Number of seconds between every auto-refresh of every resource. Set 0 to disable
+  # resourceAutoRefreshTimeInterval: 5
+  ## Hide all access denied warnings in the notification panel
+  # disableAccessDeniedNotifications: false
+
+## Pinned CRDs that will be displayed in dashboard's menu
+pinnedCRDs: []
+  # - kind: customresourcedefinition
+  ##  Fully qualified name of a CRD
+  #   name: prometheuses.monitoring.coreos.com
+  ##  Display name
+  #   displayName: Prometheus
+  ##  Is this CRD namespaced?
+  #   namespaced: true
+
 ## Metrics Scraper
 ## Container to scrape, store, and retrieve a window of time from the Metrics Server.
 ## refs: https://github.com/kubernetes-sigs/dashboard-metrics-scraper
@@ -164,7 +201,7 @@ metricsScraper:
   enabled: false
   image:
     repository: kubernetesui/metrics-scraper
-    tag: v1.0.4
+    tag: v1.0.5
   resources: {}
   ## SecurityContext for the metrics scraper container
   containerSecurityContext:
@@ -242,4 +279,9 @@ containerSecurityContext:
   runAsGroup: 2001
 
 networkPolicy:
+  enabled: false
+
+## podSecurityPolicy for fine-grained authorization of pod creation and updates
+podSecurityPolicy:
+  # Specifies whether a pod security policy should be created
   enabled: false

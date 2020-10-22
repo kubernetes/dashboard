@@ -11,6 +11,7 @@ Labels used to determine issue kind.
 * `kind/documentation` - documentation, that need to be improved or updated.
 * `kind/failing-test` - blocker of CI jobs, that should be fixed as soon as posible.
 * `kind/feature` - new features, that could be added to the application.
+* `kind/support` - issue that is a support question.
 
 ## Priority
 
@@ -62,7 +63,6 @@ Other labels used for issues and pull requests.
 * `triage/duplicate` - duplicates, that should be closed and linked with original issues.
 * `triage/needs-information` - issue needs more information in order to work on it.
 * `triage/not-reproducible` - issue can not be reproduced as described.
-* `triage/support` - issue that is a support question.
 * `triage/unresolved` - issue that can not or will not be resolved.
 
 ----

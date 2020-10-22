@@ -34,7 +34,6 @@ import {EndpointManager, Resource, Utility} from '../common/services/resource/en
 import {NamespacedResourceService} from '../common/services/resource/resource';
 import {UtilityService} from '../common/services/resource/utility';
 
-// tslint:disable-next-line:no-any
 declare let SockJS: any;
 
 @Component({

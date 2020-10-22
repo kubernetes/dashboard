@@ -108,6 +108,10 @@
     background-color: lighten(map-get($colors, indicator-error), 33%);
   }
 
+  .kd-help {
+    color: $muted;
+  }
+
   .kd-muted {
     color: $muted;
   }

@@ -55,10 +55,10 @@ type Pod struct {
 	ObjectMeta api.ObjectMeta `json:"objectMeta"`
 	TypeMeta   api.TypeMeta   `json:"typeMeta"`
 
-	// More info on pod status
-	PodStatus PodStatus `json:"podStatus"`
+	// Status determined based on the same logic as kubectl.
+	Status string `json:"status"`
 
-	// Count of containers restarts.
+	// RestartCount of containers restarts.
 	RestartCount int32 `json:"restartCount"`
 
 	// Pod metrics.
@@ -67,7 +67,7 @@ type Pod struct {
 	// Pod warning events
 	Warnings []common.Event `json:"warnings"`
 
-	// Name of the Node this Pod runs on.
+	// NodeName of the Node this Pod runs on.
 	NodeName string `json:"nodeName"`
 }
 
@@ -154,7 +154,7 @@ func toPod(pod *v1.Pod, metrics *MetricsByPod, warnings []common.Event) Pod {
 		ObjectMeta:   api.NewObjectMeta(pod.ObjectMeta),
 		TypeMeta:     api.NewTypeMeta(api.ResourceKindPod),
 		Warnings:     warnings,
-		PodStatus:    getPodStatus(*pod, warnings),
+		Status:       getPodStatus(*pod),
 		RestartCount: getRestartCount(*pod),
 		NodeName:     pod.Spec.NodeName,
 	}

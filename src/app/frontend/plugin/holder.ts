@@ -45,7 +45,6 @@ export class PluginHolderComponent implements OnInit {
   loadPlugin(pluginName: string) {
     this.pluginLoader.load(pluginName).then(moduleFactory => {
       const moduleRef = moduleFactory.create(this.injector);
-      // tslint:disable-next-line:no-any
       const entryComponent = (moduleFactory.moduleType as any).entry;
       try {
         const compFactory = moduleRef.componentFactoryResolver.resolveComponentFactory(entryComponent);

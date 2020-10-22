@@ -18,8 +18,6 @@ import {CookieService} from 'ngx-cookie-service';
 import {Observable} from 'rxjs';
 import {CONFIG} from '../../../index.config';
 
-/* tslint:disable */
-// We can disable tslint for this file as any is required here.
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
   constructor(private readonly cookies_: CookieService) {}
@@ -39,4 +37,3 @@ export class AuthInterceptor implements HttpInterceptor {
     return next.handle(req);
   }
 }
-/* tslint:enable */
