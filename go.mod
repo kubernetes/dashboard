@@ -3,6 +3,8 @@ module github.com/kubernetes/dashboard
 go 1.15
 
 require (
+	github.com/coreos/go-etcd v2.0.0+incompatible // indirect
+	github.com/cpuguy83/go-md2man v1.0.10 // indirect
 	github.com/docker/distribution v2.7.1+incompatible
 	// emicklei/go-restful v3.3.0 or later breaks http response body if it has boolean value.
 	// See emicklei/go-restful#449
@@ -11,8 +13,9 @@ require (
 	github.com/golang/protobuf v1.4.2
 	github.com/opencontainers/go-digest v1.0.0 // indirect
 	github.com/prometheus/client_golang v1.7.1
-	github.com/spf13/cobra v0.0.5
+	github.com/spf13/cobra v1.0.0
 	github.com/spf13/pflag v1.0.5
+	github.com/ugorji/go/codec v0.0.0-20181204163529-d75b2dcb6bc8 // indirect
 	golang.org/x/net v0.0.0-20201006153459-a7d1128ccaa0
 	golang.org/x/text v0.3.3
 	google.golang.org/grpc v1.32.0
@@ -23,7 +26,7 @@ require (
 	k8s.io/api v0.19.2
 	k8s.io/apiextensions-apiserver v0.19.2
 	k8s.io/apimachinery v0.19.2
-	k8s.io/apiserver v0.19.2
+	k8s.io/apiserver v0.19.2 // indirect
 	k8s.io/client-go v0.19.2
 	k8s.io/component-base v0.19.2
 	k8s.io/heapster v1.5.4
