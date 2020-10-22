@@ -347,7 +347,7 @@ export interface PersistentVolumeClaim extends Resource {
 }
 
 export interface Pod extends Resource {
-  podStatus: PodStatus;
+  status: string;
   podIP?: string;
   restartCount: number;
   qosClass?: string;

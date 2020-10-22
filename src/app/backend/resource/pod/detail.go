@@ -24,6 +24,12 @@ import (
 
 	"k8s.io/apimachinery/pkg/runtime/schema"
 
+	v1 "k8s.io/api/core/v1"
+	res "k8s.io/apimachinery/pkg/api/resource"
+	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	"k8s.io/apimachinery/pkg/runtime"
+	"k8s.io/client-go/kubernetes"
+
 	"github.com/kubernetes/dashboard/src/app/backend/api"
 	errorHandler "github.com/kubernetes/dashboard/src/app/backend/errors"
 	metricapi "github.com/kubernetes/dashboard/src/app/backend/integration/metric/api"
@@ -31,18 +37,13 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/controller"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/persistentvolumeclaim"
-	v1 "k8s.io/api/core/v1"
-	res "k8s.io/apimachinery/pkg/api/resource"
-	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
-	"k8s.io/apimachinery/pkg/runtime"
-	"k8s.io/client-go/kubernetes"
 )
 
 // PodDetail is a presentation layer view of Kubernetes Pod resource.
 type PodDetail struct {
 	ObjectMeta                api.ObjectMeta                                  `json:"objectMeta"`
 	TypeMeta                  api.TypeMeta                                    `json:"typeMeta"`
-	PodPhase                  v1.PodPhase                                     `json:"podPhase"`
+	PodPhase                  string                                          `json:"podPhase"`
 	PodIP                     string                                          `json:"podIP"`
 	NodeName                  string                                          `json:"nodeName"`
 	RestartCount              int32                                           `json:"restartCount"`
@@ -213,7 +214,7 @@ func toPodDetail(pod *v1.Pod, metrics []metricapi.Metric, configMaps *v1.ConfigM
 	return PodDetail{
 		ObjectMeta:                api.NewObjectMeta(pod.ObjectMeta),
 		TypeMeta:                  api.NewTypeMeta(api.ResourceKindPod),
-		PodPhase:                  pod.Status.Phase,
+		PodPhase:                  getPodStatus(*pod),
 		PodIP:                     pod.Status.PodIP,
 		RestartCount:              getRestartCount(*pod),
 		QOSClass:                  string(pod.Status.QOSClass),

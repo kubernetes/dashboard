@@ -40,10 +40,7 @@ func TestToPodPodStatusFailed(t *testing.T) {
 
 	expected := Pod{
 		TypeMeta: api.TypeMeta{Kind: api.ResourceKindPod},
-		PodStatus: PodStatus{
-			Status:   string(v1.PodFailed),
-			PodPhase: v1.PodFailed,
-		},
+		Status:   string(v1.PodFailed),
 		Warnings: []common.Event{},
 	}
 
@@ -70,10 +67,7 @@ func TestToPodPodStatusSucceeded(t *testing.T) {
 
 	expected := Pod{
 		TypeMeta: api.TypeMeta{Kind: api.ResourceKindPod},
-		PodStatus: PodStatus{
-			Status:   string(v1.PodSucceeded),
-			PodPhase: v1.PodSucceeded,
-		},
+		Status:   string(v1.PodSucceeded),
 		Warnings: []common.Event{},
 	}
 
@@ -104,10 +98,7 @@ func TestToPodPodStatusRunning(t *testing.T) {
 
 	expected := Pod{
 		TypeMeta: api.TypeMeta{Kind: api.ResourceKindPod},
-		PodStatus: PodStatus{
-			Status:   string(v1.PodRunning),
-			PodPhase: v1.PodRunning,
-		},
+		Status:   string(v1.PodRunning),
 		Warnings: []common.Event{},
 	}
 
@@ -134,10 +125,7 @@ func TestToPodPodStatusPending(t *testing.T) {
 
 	expected := Pod{
 		TypeMeta: api.TypeMeta{Kind: api.ResourceKindPod},
-		PodStatus: PodStatus{
-			Status:   string(v1.PodPending),
-			PodPhase: v1.PodPending,
-		},
+		Status:   string(v1.PodPending),
 		Warnings: []common.Event{},
 	}
 
@@ -157,14 +145,14 @@ func TestToPodContainerStates(t *testing.T) {
 				{
 					State: v1.ContainerState{
 						Terminated: &v1.ContainerStateTerminated{
-							Reason: "Terminated Test Reason",
+							Reason: "Terminated",
 						},
 					},
 				},
 				{
 					State: v1.ContainerState{
 						Waiting: &v1.ContainerStateWaiting{
-							Reason: "Waiting Test Reason",
+							Reason: "Waiting",
 						},
 					},
 				},
@@ -174,22 +162,7 @@ func TestToPodContainerStates(t *testing.T) {
 
 	expected := Pod{
 		TypeMeta: api.TypeMeta{Kind: api.ResourceKindPod},
-		PodStatus: PodStatus{
-			PodPhase: v1.PodRunning,
-			Status:   string(v1.PodPending),
-			ContainerStates: []v1.ContainerState{
-				{
-					Terminated: &v1.ContainerStateTerminated{
-						Reason: "Terminated Test Reason",
-					},
-				},
-				{
-					Waiting: &v1.ContainerStateWaiting{
-						Reason: "Waiting Test Reason",
-					},
-				},
-			},
-		},
+		Status:   "Terminated",
 		Warnings: []common.Event{},
 	}
 
@@ -211,9 +184,7 @@ func TestToPod(t *testing.T) {
 			pod: &v1.Pod{}, metrics: &MetricsByPod{},
 			expected: Pod{
 				TypeMeta: api.TypeMeta{Kind: api.ResourceKindPod},
-				PodStatus: PodStatus{
-					Status: string(v1.PodPending),
-				},
+				Status:   string(v1.PodUnknown),
 				Warnings: []common.Event{},
 			},
 		}, {
@@ -228,9 +199,7 @@ func TestToPod(t *testing.T) {
 					Name:      "test-pod",
 					Namespace: "test-namespace",
 				},
-				PodStatus: PodStatus{
-					Status: string(v1.PodPending),
-				},
+				Status:   string(v1.PodUnknown),
 				Warnings: []common.Event{},
 			},
 		},
