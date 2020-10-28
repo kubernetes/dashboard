@@ -217,6 +217,8 @@ spec:
             readOnlyRootFilesystem: true
             runAsUser: 1001
             runAsGroup: 2001
+            capabilities:
+              drop: [ "MKNOD", "DAC_OVERRIDE", "NET_BIND_SERVICE", "NET_RAW", "SYS_CHROOT" ]
       volumes:
         - name: kubernetes-dashboard-certs
           secret:
@@ -290,6 +292,8 @@ spec:
             readOnlyRootFilesystem: true
             runAsUser: 1001
             runAsGroup: 2001
+            capabilities:
+              drop: [ "MKNOD", "DAC_OVERRIDE", "NET_BIND_SERVICE", "NET_RAW", "SYS_CHROOT" ]
       serviceAccountName: kubernetes-dashboard
       nodeSelector:
         "kubernetes.io/os": linux
