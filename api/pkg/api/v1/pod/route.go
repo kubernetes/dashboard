@@ -12,12 +12,29 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package v1
+package pod
 
 import (
-  "google.golang.org/grpc"
+	"context"
+
+	"google.golang.org/grpc"
+
+	"github.com/kubernetes/dashboard/pkg/api/v1"
+	"github.com/kubernetes/dashboard/pkg/api/v1/pod/proto"
 )
 
-type RouteHandler interface {
-  Install(server *grpc.Server)
+type RouteHandler struct {
+	proto.UnimplementedRouteServer
+}
+
+func (p *RouteHandler) List(_ context.Context, in *proto.PodListRequest) (*proto.PodList, error) {
+	return &proto.PodList{Pods: []*proto.Pod{{Name: "test-pod"}}}, nil
+}
+
+func (p *RouteHandler) Install(server *grpc.Server) {
+	proto.RegisterRouteServer(server, p)
+}
+
+func NewRouteHandler() v1.RouteHandler {
+	return &RouteHandler{}
 }

@@ -15,8 +15,8 @@
 package options
 
 type Options struct {
-  *APIServerRunOptions
-  *MetricsRunOptions
-  *UIRunOptions
-  *GlobalRunOptions
+	*APIServerRunOptions
+	*MetricsRunOptions
+	*UIRunOptions
+	*GlobalRunOptions
 }

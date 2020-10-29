@@ -12,28 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package options
+package v1
 
 import (
-  cliflag "k8s.io/component-base/cli/flag"
-  "k8s.io/component-base/cli/globalflag"
-  "k8s.io/component-base/version/verflag"
+	"google.golang.org/grpc"
 )
 
-type GlobalRunOptions struct {
-	EnableReflectionAPI bool
-}
-
-func (s *GlobalRunOptions) Flags() (fss cliflag.NamedFlagSets) {
-  fs := fss.FlagSet("global")
-
-  verflag.AddFlags(fs)
-  globalflag.AddGlobalFlags(fs, "global")
-  fs.BoolVar(&s.EnableReflectionAPI, "enable-reflection-api", s.EnableReflectionAPI, "Enables reflection API to dynamically determine RPC schema")
-
-  return fss
-}
-
-func NewGlobalRunOptions() *GlobalRunOptions {
-  return &GlobalRunOptions{}
+type RouteHandler interface {
+	Install(server *grpc.Server)
 }

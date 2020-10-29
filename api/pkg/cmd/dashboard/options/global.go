@@ -12,8 +12,28 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package informers
+package options
 
-type Client interface {
+import (
+	cliflag "k8s.io/component-base/cli/flag"
+	"k8s.io/component-base/cli/globalflag"
+	"k8s.io/component-base/version/verflag"
+)
 
+type GlobalRunOptions struct {
+	EnableReflectionAPI bool
+}
+
+func (s *GlobalRunOptions) Flags() (fss cliflag.NamedFlagSets) {
+	fs := fss.FlagSet("global")
+
+	verflag.AddFlags(fs)
+	globalflag.AddGlobalFlags(fs, "global")
+	fs.BoolVar(&s.EnableReflectionAPI, "enable-reflection-api", s.EnableReflectionAPI, "Enables reflection API to dynamically determine RPC schema")
+
+	return fss
+}
+
+func NewGlobalRunOptions() *GlobalRunOptions {
+	return &GlobalRunOptions{}
 }

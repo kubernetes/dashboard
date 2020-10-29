@@ -30,8 +30,7 @@ import (
 	"github.com/kubernetes/dashboard/pkg/cmd/dashboard/options"
 )
 
-// VERSION of this binary
-var Version = "DEV"
+var Version = "v0.1.0"
 
 type Server struct {
 	options *options.Options
@@ -39,7 +38,7 @@ type Server struct {
 }
 
 func (s *Server) Run() error {
-	klog.Infof("starting Kubernetes Dashboard API Server: %+v", Version)
+	klog.Infof("starting Kubernetes Dashboard API Server %s", Version)
 
 	// TODO: Handle HTTPS connection
 	listener, err := net.Listen("tcp", fmt.Sprintf("%s:%d", s.options.InsecureBindAddress, s.options.InsecurePort))
