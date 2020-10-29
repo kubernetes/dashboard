@@ -16,7 +16,6 @@ package api
 
 import (
 	"fmt"
-	"github.com/kubernetes/dashboard/pkg/api/v1/configmap"
 	"net"
 
 	"google.golang.org/grpc"
@@ -25,12 +24,13 @@ import (
 
 	"github.com/kubernetes/dashboard/pkg/api/middleware"
 	v1 "github.com/kubernetes/dashboard/pkg/api/v1"
+	"github.com/kubernetes/dashboard/pkg/api/v1/configmap"
 	"github.com/kubernetes/dashboard/pkg/api/v1/deployment"
 	"github.com/kubernetes/dashboard/pkg/api/v1/pod"
 	"github.com/kubernetes/dashboard/pkg/cmd/dashboard/options"
 )
 
-var Version = "v0.1.0"
+var Version = "Dev"
 
 type Server struct {
 	options *options.Options
