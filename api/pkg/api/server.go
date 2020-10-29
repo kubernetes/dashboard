@@ -23,6 +23,7 @@ import (
 	"k8s.io/klog"
 
 	"github.com/kubernetes/dashboard/pkg/api/middleware"
+	"github.com/kubernetes/dashboard/pkg/api/v1"
 	"github.com/kubernetes/dashboard/pkg/api/v1/configmap"
 	"github.com/kubernetes/dashboard/pkg/api/v1/deployment"
 	"github.com/kubernetes/dashboard/pkg/api/v1/pod"
@@ -71,7 +72,7 @@ func (s *Server) init() {
 	}
 }
 
-func (s *Server) register(routes ...RouteHandler) {
+func (s *Server) register(routes ...v1.RouteHandler) {
 	for _, route := range routes {
 		route.Install(s.grpc)
 	}
