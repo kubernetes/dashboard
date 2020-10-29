@@ -16,7 +16,6 @@ package api
 
 import (
 	"fmt"
-	"github.com/kubernetes/dashboard/pkg/api/v1/configmap"
 	"net"
 
 	"google.golang.org/grpc"
@@ -24,13 +23,13 @@ import (
 	"k8s.io/klog"
 
 	"github.com/kubernetes/dashboard/pkg/api/middleware"
-	v1 "github.com/kubernetes/dashboard/pkg/api/v1"
+	"github.com/kubernetes/dashboard/pkg/api/v1/configmap"
 	"github.com/kubernetes/dashboard/pkg/api/v1/deployment"
 	"github.com/kubernetes/dashboard/pkg/api/v1/pod"
 	"github.com/kubernetes/dashboard/pkg/cmd/dashboard/options"
 )
 
-var Version = "v0.1.0"
+var Version = "Dev"
 
 type Server struct {
 	options *options.Options
@@ -72,7 +71,7 @@ func (s *Server) init() {
 	}
 }
 
-func (s *Server) register(routes ...v1.RouteHandler) {
+func (s *Server) register(routes ...RouteHandler) {
 	for _, route := range routes {
 		route.Install(s.grpc)
 	}

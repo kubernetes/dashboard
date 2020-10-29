@@ -19,7 +19,7 @@ import (
 
 	"google.golang.org/grpc"
 
-	"github.com/kubernetes/dashboard/pkg/api/v1"
+	"github.com/kubernetes/dashboard/pkg/api"
 	"github.com/kubernetes/dashboard/pkg/api/v1/pod/proto"
 )
 
@@ -35,6 +35,6 @@ func (p *RouteHandler) Install(server *grpc.Server) {
 	proto.RegisterRouteServer(server, p)
 }
 
-func NewRouteHandler() v1.RouteHandler {
+func NewRouteHandler() api.RouteHandler {
 	return &RouteHandler{}
 }
