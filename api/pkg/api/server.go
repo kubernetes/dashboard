@@ -49,7 +49,7 @@ func (s *Server) Run() error {
 	klog.Infof("listening on %s:%d", s.options.InsecureBindAddress, s.options.InsecurePort)
 
 	// TODO: For debug only.
-	klog.Infof("using %s kubeconfig", s.options.KubeconfigFile)
+	klog.Infof("using kubeconfig file: %s", s.options.KubeconfigFile)
 
 	s.init()
 	return s.grpc.Serve(listener)

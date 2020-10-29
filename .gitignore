@@ -14,8 +14,8 @@ node_modules/
 .cached_tools/
 dist/
 coverage/
-cypress/screenshots
-cypress/videos
+ui/e2e/screenshots
+ui/e2e/videos
 
 # System specific files:
 .DS_Store

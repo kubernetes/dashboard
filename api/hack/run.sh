@@ -2,6 +2,9 @@
 
 set -euo pipefail
 
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[@]}")" && pwd -P)"
+cd "${SCRIPT_DIR}/.."
+
 go run github.com/kubernetes/dashboard/pkg/cmd \
   --kubeconfig="${KUBECONFIG:-${HOME}/.kube/config}" \
   --port="${PORT:-8080}" \
