@@ -4790,7 +4790,7 @@
       </trans-unit>
       <trans-unit id="32790440573a0626970812694495678f0581d25a" datatype="html">
         <source>Volume ID</source>
-        <target>卷 ID</target>
+        <target>Volume ID</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/resource/cluster/persistentvolume/detail/source/template.html</context>
           <context context-type="linenumber">51</context>
@@ -4954,7 +4954,7 @@
       </trans-unit>
       <trans-unit id="eeff8ad50c095fe47ae84d4ee2536b0e191c256d" datatype="html">
         <source>Session Affinity</source>
-        <target>会话亲和</target>
+        <target>Session Affinity</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/resource/discovery/service/detail/template.html</context>
           <context context-type="linenumber">38</context>
