@@ -316,7 +316,7 @@
       </trans-unit>
       <trans-unit id="80a528a1e6015b28276e4ff83d1558722c354585" datatype="html">
         <source>View logs</source>
-        <target>显示日志</target>
+        <target>查看日志</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/actionbar/detailactions/logs/template.html</context>
           <context context-type="linenumber">21</context>
@@ -904,7 +904,7 @@
       </trans-unit>
       <trans-unit id="cff1428d10d59d14e45edec3c735a27b5482db59" datatype="html">
         <source>Name</source>
-        <target>名字</target>
+        <target>名称</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/cronjob/template.html</context>
           <context context-type="linenumber">55</context>
@@ -1620,7 +1620,7 @@
       </trans-unit>
       <trans-unit id="7473146d95b15814d45860e4f545c06798606faf" datatype="html">
         <source>Name: </source>
-        <target>名字: </target>
+        <target>名称: </target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/creator/template.html</context>
           <context context-type="linenumber">22</context>
@@ -1636,7 +1636,7 @@
       </trans-unit>
       <trans-unit id="88db9c5672eb3d6dcd8e3b41617e98923b3b499a" datatype="html">
         <source>Kind: </source>
-        <target>种类: </target>
+        <target>Kind: </target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/creator/template.html</context>
           <context context-type="linenumber">29</context>
@@ -1668,7 +1668,7 @@
       </trans-unit>
       <trans-unit id="1142d1e241e766713838ec7055c1b912ef9a0d7f" datatype="html">
         <source>Kind</source>
-        <target>种类</target>
+        <target>Kind</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/creator/template.html</context>
           <context context-type="linenumber">58</context>
@@ -1854,7 +1854,7 @@
       </trans-unit>
       <trans-unit id="02f397009ef997f78a6ea951356ea5deca2410c8" datatype="html">
         <source>Ports (Name, Port, Protocol)</source>
-        <target>端口 (名字, 端口, 协议)</target>
+        <target>端口 (名称, 端口, 协议)</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/endpoint/cardlist/template.html</context>
           <context context-type="linenumber">46</context>
@@ -2560,7 +2560,7 @@
       </trans-unit>
       <trans-unit id="a4f6d660f2cc1c8c680a96e39c719b48c8ebe17a" datatype="html">
         <source>Network Policies</source>
-        <target>Network Policies</target>
+        <target>网络策略</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/networkpolicy/template.html</context>
           <context context-type="linenumber">21</context>
@@ -3056,7 +3056,7 @@
       </trans-unit>
       <trans-unit id="bef0c68b6a7d96b56a8879ecfb9de80a83c151a2" datatype="html">
         <source>Kubernetes Dashboard</source>
-        <target>Kubernetes 仪表盘</target>
+        <target>Kubernetes Dashboard</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/login/template.html</context>
           <context context-type="linenumber">23</context>
@@ -3302,7 +3302,7 @@
       </trans-unit>
       <trans-unit id="5a2fcb3c1d8240f8f966564ee3500235d7427245" datatype="html">
         <source>List Kind</source>
-        <target>列出种类</target>
+        <target>列出 Kind</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/crd/detail/template.html</context>
           <context context-type="linenumber">77</context>
@@ -3366,7 +3366,7 @@
       </trans-unit>
       <trans-unit id="c9150e5a71cb54a3cd81b6bc0c6cd15743204c57" datatype="html">
         <source>Namespace name</source>
-        <target>命名空间的名字</target>
+        <target>命名空间的名称</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/from/form/createnamespace/template.html</context>
           <context context-type="linenumber">29</context>
@@ -3377,7 +3377,7 @@
               Name is required.
             </source>
         <target>
-              名字是必填的。
+              名称是必填的。
             </target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/from/form/createnamespace/template.html</context>
@@ -3393,7 +3393,7 @@
               Name must be up to <x id="INTERPOLATION" equiv-text="{{namespaceMaxLength}}"/> characters long.
             </source>
         <target>
-              Name必须大于 <x id="INTERPOLATION" equiv-text="{{namespaceMaxLength}}"/> 个字符.
+              名称必须大于 <x id="INTERPOLATION" equiv-text="{{namespaceMaxLength}}"/> 个字符.
             </target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/from/form/createnamespace/template.html</context>
@@ -3426,7 +3426,7 @@
               <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i>"/>open_in_new<x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i>"/>
             </source>
         <target>
-              学习更多
+              了解更多
               <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i>"/>open_in_new<x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i>"/>
             </target>
         <context-group purpose="location">
@@ -3472,7 +3472,7 @@
       </trans-unit>
       <trans-unit id="0d2ab5feae3bde82e357ae93420738e775a69f50" datatype="html">
         <source>Secret name</source>
-        <target>Secret 名字</target>
+        <target>Secret 名称</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/from/form/createsecret/template.html</context>
           <context context-type="linenumber">29</context>
@@ -3483,7 +3483,7 @@
               Name must be up to <x id="INTERPOLATION" equiv-text="{{secretNameMaxLength}}"/> characters long.
             </source>
         <target>
-              Name 必须大于 <x id="INTERPOLATION" equiv-text="{{secretNameMaxLength}}"/> 字符.
+              名称必须大于 <x id="INTERPOLATION" equiv-text="{{secretNameMaxLength}}"/> 字符.
             </target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/from/form/createsecret/template.html</context>
@@ -3600,7 +3600,7 @@
         <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i>"/>open_in_new<x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i>"/>
       </source>
         <target>
-        学到更多
+        了解更多
         <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i>"/>open_in_new<x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i>"/>
       </target>
         <context-group purpose="location">
@@ -3645,7 +3645,7 @@
         Container image is invalid: <x id="INTERPOLATION" equiv-text="{{containerImage.errors?.validImageReference}}"/>
       </source>
         <target>
-        Container image 无效: <x id="INTERPOLATION" equiv-text="{{containerImage.errors?.validImageReference}}"/>
+        容器镜像无效: <x id="INTERPOLATION" equiv-text="{{containerImage.errors?.validImageReference}}"/>
       </target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/from/form/template.html</context>
@@ -3754,7 +3754,7 @@
           <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i>"/>open_in_new<x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i>"/>
         </source>
         <target>
-          学到更多
+          了解更多
           <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i>"/>open_in_new<x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i>"/>
         </target>
         <context-group purpose="location">
@@ -3868,7 +3868,7 @@
       </trans-unit>
       <trans-unit id="d36662c0168b3275eaae4d68c9c1a3dba0090f84" datatype="html">
         <source>Memory requirement (MiB)</source>
-        <target>Memory 最低需求 (MiB)</target>
+        <target>内存最低需求 (MiB)</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/from/form/template.html</context>
           <context context-type="linenumber">260</context>
@@ -3879,7 +3879,7 @@
             Memory requirement must be given as a positive number.
           </source>
         <target>
-            Memory 最低需求必须是正整数。
+            内存最低需求必须是正整数。
           </target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/from/form/template.html</context>
@@ -3891,7 +3891,7 @@
             Memory requirement must be given as a valid number.
           </source>
         <target>
-            Memory 最低需求必须是一个有效的数字。
+            内存最低需求必须是一个有效的数字。
           </target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/from/form/template.html</context>
@@ -4031,7 +4031,7 @@
     Learn more <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i>"/>open_in_new<x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i>"/>
   </source>
         <target>
-    学到更多 <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i>"/>open_in_new<x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i>"/>
+    了解更多 <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i>"/>open_in_new<x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i>"/>
   </target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/from/input/template.html</context>
@@ -4080,7 +4080,7 @@
     <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i>"/>open_in_new<x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i>"/>
   </source>
         <target>
-    学到更多
+    了解更多
     <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i>"/>open_in_new<x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i>"/>
   </target>
         <context-group purpose="location">
@@ -4674,7 +4674,7 @@
       </trans-unit>
       <trans-unit id="58d4a9814864741040bc5905b6a368836e683f76" datatype="html">
         <source>Memory</source>
-        <target>Memory</target>
+        <target>内存</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/resource/cluster/node/detail/template.html</context>
           <context context-type="linenumber">151</context>
@@ -4790,7 +4790,7 @@
       </trans-unit>
       <trans-unit id="32790440573a0626970812694495678f0581d25a" datatype="html">
         <source>Volume ID</source>
-        <target>Volume ID</target>
+        <target>卷 ID</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/resource/cluster/persistentvolume/detail/source/template.html</context>
           <context context-type="linenumber">51</context>
@@ -4814,7 +4814,7 @@
       </trans-unit>
       <trans-unit id="9d3cac773074f1acb1bd046f41bfc25dcbda4620" datatype="html">
         <source>Dataset name</source>
-        <target>数据集名字</target>
+        <target>数据集名称</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/resource/cluster/persistentvolume/detail/source/template.html</context>
           <context context-type="linenumber">127</context>
@@ -4954,7 +4954,7 @@
       </trans-unit>
       <trans-unit id="eeff8ad50c095fe47ae84d4ee2536b0e191c256d" datatype="html">
         <source>Session Affinity</source>
-        <target>Session Affinity</target>
+        <target>会话亲和</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/resource/discovery/service/detail/template.html</context>
           <context context-type="linenumber">38</context>
@@ -5435,7 +5435,7 @@
       </trans-unit>
       <trans-unit id="ad66f1317f55d474a80b519533bde2eb31f99eda" datatype="html">
         <source>Number of seconds between every auto-refresh of every resource. Set 0 to disable.</source>
-        <target>两次资源自动刷新时间间隔。 设置为 0 则表示不启用。</target>
+        <target>两次资源自动刷新时间间隔。设置为 0 则表示不启用。</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/settings/global/template.html</context>
           <context context-type="linenumber">102</context>
