@@ -340,7 +340,7 @@
       </trans-unit>
       <trans-unit id="32c4fb786d3f614318c26ef8adc8f195d581545d" datatype="html">
         <source>Workload Status</source>
-        <target>工作负载状态</target>
+        <target>Workload 状态</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/workloadstatus/template.html</context>
           <context context-type="linenumber">20</context>
@@ -1798,7 +1798,7 @@
       </trans-unit>
       <trans-unit id="a3e6ad731f3d27e2fd80064adf380f461ea0251b" datatype="html">
         <source>No resources found in the selected namespace.</source>
-        <target>在所选的 namespace 中找不到资源</target>
+        <target>在所选的命名空间中找不到资源</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/crdobject/template.html</context>
           <context context-type="linenumber">92</context>
@@ -2002,7 +2002,7 @@
       </trans-unit>
       <trans-unit id="c3a7e364a88ea4673199dfa98bc73e6dbe09dfac" datatype="html">
         <source>Namespaces</source>
-        <target>Namespaces</target>
+        <target>命名空间</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/namespace/template.html</context>
           <context context-type="linenumber">21</context>
@@ -2046,7 +2046,7 @@
       </trans-unit>
       <trans-unit id="85550e95dc12c58e2e711dbebe89f3448eb66c72" datatype="html">
         <source>Memory requests (bytes)</source>
-        <target>Memory 最低需求 (bytes)</target>
+        <target>内存最低需求 (bytes)</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/node/template.html</context>
           <context context-type="linenumber">96</context>
@@ -2054,7 +2054,7 @@
       </trans-unit>
       <trans-unit id="69779fac7ee122da8c2ab05806baea7dec1a47f6" datatype="html">
         <source>Memory limits (bytes)</source>
-        <target>Memory 最高需求 (bytes)</target>
+        <target>内存最高需求 (bytes)</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/node/template.html</context>
           <context context-type="linenumber">104</context>
@@ -2062,7 +2062,7 @@
       </trans-unit>
       <trans-unit id="7d545ebc0f8d8727d50c375b2065a447f1029e2b" datatype="html">
         <source>Select namespace...</source>
-        <target>选择 namespace...</target>
+        <target>选择 命名空间...</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/namespace/template.html</context>
           <context context-type="linenumber">24</context>
@@ -2070,7 +2070,7 @@
       </trans-unit>
       <trans-unit id="6570ee92c355ae47991f34101be43f3f4270fdf3" datatype="html">
         <source>All namespaces</source>
-        <target>全部 namespaces</target>
+        <target>全部命名空间</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/namespace/template.html</context>
           <context context-type="linenumber">33</context>
@@ -2078,7 +2078,7 @@
       </trans-unit>
       <trans-unit id="6fac407fa5aec6e3291cf87a7ed3252add8a7d28" datatype="html">
         <source>NAMESPACES</source>
-        <target>NAMESPACES</target>
+        <target>命名空间</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/namespace/template.html</context>
           <context context-type="linenumber">34</context>
@@ -2086,7 +2086,7 @@
       </trans-unit>
       <trans-unit id="d12515fa127fafff639075d37498207138a5d18a" datatype="html">
         <source>Namespace conflict</source>
-        <target>Namespace 冲突</target>
+        <target>命名空间冲突</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/namespace/changedialog/template.html</context>
           <context context-type="linenumber">19</context>
@@ -2097,7 +2097,7 @@
     Selected namespace is different than namespace of currently selected resource.
   </source>
         <target>
-    选中的 namespace 与当前所选资源的 namespace 不同。
+    选中的命名空间与当前所选资源的命名空间不同。
   </target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/namespace/changedialog/template.html</context>
@@ -2142,7 +2142,7 @@
       </trans-unit>
       <trans-unit id="b77c2f08649661de78074abf98641cb6b7d77e38" datatype="html">
         <source>Namespace: </source>
-        <target>Namespace: </target>
+        <target>命名空间: </target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/objectmeta/template.html</context>
           <context context-type="linenumber">29</context>
@@ -2601,7 +2601,7 @@
       <trans-unit id="6d9edf35ea416301631125005b66c9440397176d" datatype="html">
         <source>Workloads
       </source>
-        <target>工作负载
+        <target>Workload
       </target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/chrome/nav/template.html</context>
@@ -2801,7 +2801,7 @@
       <trans-unit id="3b91b541ed4a1e47b83fe91f4cae1eefa904f4d5" datatype="html">
         <source>Namespaces
       </source>
-        <target>Namespaces
+        <target>命名空间
       </target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/chrome/nav/template.html</context>
@@ -2811,7 +2811,7 @@
       <trans-unit id="bce7cd9302197070e1782d38622dbb351ad84b69" datatype="html">
         <source>Network Policies
       </source>
-        <target>Network Policies
+        <target>网络策略
       </target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/chrome/nav/template.html</context>
@@ -3032,7 +3032,7 @@
       </trans-unit>
       <trans-unit id="4346d3d4e2109584d33480fb8916a9b1cfcdf636" datatype="html">
         <source>Workloads</source>
-        <target>工作负载</target>
+        <target>Workloads</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/overview/template.html</context>
           <context context-type="linenumber">19</context>
@@ -3800,7 +3800,7 @@
       </trans-unit>
       <trans-unit id="d3213693a72aff08814557c9d4ea66a1a8ebb5b7" datatype="html">
         <source>Namespaces let you partition resources into logically named groups.</source>
-        <target>Namespaces 允许您将资源分区为逻辑命名的组。</target>
+        <target>命名空间允许将资源分区为逻辑命名的组。</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/from/form/template.html</context>
           <context context-type="linenumber">198</context>
@@ -4490,7 +4490,7 @@
       </trans-unit>
       <trans-unit id="c351ac57f153f24bf440eb98ec27932af51c203c" datatype="html">
         <source>Go to namespace overview</source>
-        <target>转到 namespace 概述</target>
+        <target>转到命名空间概述</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/resource/cluster/namespace/detail/actionbar/template.html</context>
           <context context-type="linenumber">23</context>
