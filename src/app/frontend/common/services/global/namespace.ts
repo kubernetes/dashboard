@@ -51,7 +51,7 @@ export class NamespaceService {
   }
 
   getDefaultNamespace(): string {
-    return CONFIG.defaultNamespace;
+    return this.defaultNamespace;
   }
 
   isNamespaceValid(namespace: string): boolean {
