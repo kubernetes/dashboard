@@ -13,10 +13,16 @@
 // limitations under the License.
 
 import {EventEmitter, Injectable} from '@angular/core';
-import {CONFIG} from '../../../index.config';
+import {ConfigService} from './config';
 
 @Injectable()
 export class NamespaceService {
+  private defaultNamespace: string;
+
+  constructor(private readonly config: ConfigService) {
+    this.defaultNamespace = config.getNamespace();
+  }
+
   onNamespaceChangeEvent = new EventEmitter<string>();
 
   /**
@@ -37,7 +43,7 @@ export class NamespaceService {
   }
 
   current(): string {
-    return this.currentNamespace_ || CONFIG.defaultNamespace;
+    return this.currentNamespace_ || this.defaultNamespace;
   }
 
   getAllNamespacesKey(): string {

@@ -20,7 +20,6 @@ import {NamespaceList} from '@api/backendapi';
 import {Subject} from 'rxjs';
 import {distinctUntilChanged, filter, startWith, switchMap, takeUntil} from 'rxjs/operators';
 
-import {CONFIG} from '../../../index.config';
 import {NAMESPACE_STATE_PARAM} from '../../params/params';
 import {HistoryService} from '../../services/global/history';
 import {NamespaceService} from '../../services/global/namespace';
@@ -248,7 +247,7 @@ export class NamespaceSelectorComponent implements OnInit, OnDestroy {
 
   setDefaultQueryParams_() {
     this.router_.navigate([this._activatedRoute.snapshot.url], {
-      queryParams: {[NAMESPACE_STATE_PARAM]: CONFIG.defaultNamespace},
+      queryParams: {[NAMESPACE_STATE_PARAM]: this.namespaceService_.getDefaultNamespace()},
       queryParamsHandling: 'merge',
     });
   }

@@ -20,6 +20,8 @@ import (
 	"net/http"
 	"text/template"
 	"time"
+
+	"github.com/kubernetes/dashboard/src/app/backend/args"
 )
 
 // AppHandler is an application handler.
@@ -28,7 +30,8 @@ type AppHandler func(http.ResponseWriter, *http.Request) (int, error)
 // AppConfig is a global configuration of application.
 type AppConfig struct {
 	// ServerTime is current server time.
-	ServerTime int64 `json:"serverTime"`
+	ServerTime       int64  `json:"serverTime"`
+	DefaultNamespace string `json:"defaultNamespace"`
 }
 
 const (
@@ -49,8 +52,14 @@ func (fn AppHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 func getAppConfigJSON() string {
 	log.Println("Getting application global configuration")
 
+	defaultNamespace := args.Holder.GetNamespace()
+	if defaultNamespace == "kube-system" || defaultNamespace == "kube-dashboard" {
+		defaultNamespace = "default"
+	}
+
 	config := &AppConfig{
-		ServerTime: time.Now().UTC().UnixNano() / 1e6,
+		ServerTime:       time.Now().UTC().UnixNano() / 1e6,
+		DefaultNamespace: defaultNamespace,
 	}
 
 	jsonConfig, _ := json.Marshal(config)

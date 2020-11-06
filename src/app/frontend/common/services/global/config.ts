@@ -18,6 +18,7 @@ import {AppConfig} from '@api/backendapi';
 import {VersionInfo} from '@api/frontendapi';
 import {Observable} from 'rxjs';
 import {version} from '../../../environments/version';
+import {CONFIG} from '../../../index.config';
 
 @Injectable()
 export class ConfigService {
@@ -37,6 +38,13 @@ export class ConfigService {
 
   getAppConfig(): Observable<AppConfig> {
     return this.http.get<AppConfig>(this.configPath_);
+  }
+
+  getNamespace(): string {
+    if (this.config_.namespace) {
+      return this.config_.namespace;
+    }
+    return CONFIG.defaultNamespace;
   }
 
   getServerTime(): Date {

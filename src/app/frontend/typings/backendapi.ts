@@ -719,6 +719,7 @@ export interface LocalSettings {
 
 export interface AppConfig {
   serverTime: number;
+  namespace: string;
 }
 
 export interface StringMap {
