@@ -51,3 +51,4 @@ spec:
 {{- if .Values.service.loadBalancerIP }}
   loadBalancerIP: {{ .Values.service.loadBalancerIP }}
 {{- end }}
+  sessionAffinity: {{ .Values.service.sessionAffinity }}

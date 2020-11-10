@@ -119,6 +119,8 @@ service:
     enabled: true
     key: "kubernetes.io/cluster-service"
 
+  sessionAffinity: ClientIP
+
 ingress:
   ## If true, Kubernetes Dashboard Ingress will be created.
   ##
