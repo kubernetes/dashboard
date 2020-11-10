@@ -67,6 +67,7 @@ func getAppConfigJSON() string {
 	return string(jsonConfig)
 }
 
+// ConfigHandler handles config calls
 func ConfigHandler(w http.ResponseWriter, r *http.Request) (int, error) {
 	configTemplate, err := template.New(ConfigTemplateName).Parse(ConfigTemplate)
 	w.Header().Set("Content-Type", "application/json")
