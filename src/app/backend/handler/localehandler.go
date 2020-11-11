@@ -131,11 +131,13 @@ func (handler *LocaleHandler) getLocaleDir(locale string) string {
 		}
 	}
 
-	if handler.dirExists(localeDir) {
-		return localeDir
+	if len(localeDir) == 0 {
+		localeDir = filepath.Join(assetsDir, defaultLocaleDir)
 	}
-
-	return filepath.Join(assetsDir, defaultLocaleDir)
+	if !handler.dirExists(localeDir) {
+		glog.Fatalf("the local dir not exists: %s", localeDir)
+	}
+	return localeDir
 }
 
 func (handler *LocaleHandler) getLocaleMap() map[string]struct{} {
