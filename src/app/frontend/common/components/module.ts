@@ -58,6 +58,8 @@ import {LoadingSpinner} from './list/spinner/component';
 import {ListZeroStateComponent} from './list/zerostate/component';
 import {NamespaceChangeDialog} from './namespace/changedialog/dialog';
 import {NamespaceSelectorComponent} from './namespace/component';
+import {NamespaceAddDialog} from './namespace/v2/adddialog/dialog';
+import {NamespaceSelectorComponent as NamespaceSelectorComponentV2} from './namespace/v2/component';
 import {ObjectMetaComponent} from './objectmeta/component';
 import {PodStatusCardComponent} from './podstatus/component';
 import {PolicyRuleListComponent} from './policyrule/component';
@@ -190,12 +192,14 @@ const components = [
   RoleBindingListComponent,
   SubjectListComponent,
   VolumeMountComponent,
+  NamespaceSelectorComponentV2,
+  NamespaceAddDialog,
 ];
 
 @NgModule({
   imports: [SharedModule, DirectivesModule, MatTableModule, MatTableModule],
   declarations: [...components],
   exports: [...components],
-  entryComponents: [ChipDialog, RowDetailComponent, MenuComponent, NamespaceChangeDialog],
+  entryComponents: [ChipDialog, RowDetailComponent, MenuComponent, NamespaceChangeDialog, NamespaceAddDialog],
 })
 export class ComponentsModule {}

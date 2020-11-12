@@ -12,16 +12,23 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {COMMA, ENTER} from '@angular/cdk/keycodes';
+import {Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {NgForm} from '@angular/forms';
+import {MatAutocompleteSelectedEvent} from '@angular/material/autocomplete';
+import {MatChipInputEvent} from '@angular/material/chips';
 import {MatDialog} from '@angular/material/dialog';
-import {GlobalSettings} from '@api/root.api';
-import {of, Subject} from 'rxjs';
-import {catchError, takeUntil, tap} from 'rxjs/operators';
+import {GlobalSettings, NamespaceList} from '@api/root.api';
+import {Observable, of, Subject} from 'rxjs';
+import {catchError, map, takeUntil, tap} from 'rxjs/operators';
 import {GlobalSettingsService} from '../../common/services/global/globalsettings';
 import {TitleService} from '../../common/services/global/title';
+import {EndpointManager, Resource} from '../../common/services/resource/endpoint';
+import {ResourceService} from '../../common/services/resource/resource';
 
 import {SaveAnywayDialog} from './saveanywaysdialog/dialog';
+
+enum Controls {}
 
 @Component({
   selector: 'kd-global-settings',
@@ -29,12 +36,12 @@ import {SaveAnywayDialog} from './saveanywaysdialog/dialog';
   styleUrls: ['style.scss'],
 })
 export class GlobalSettingsComponent implements OnInit, OnDestroy {
+  settings: GlobalSettings = {} as GlobalSettings;
+  hasLoadError = false;
+
   // Keep it in sync with ConcurrentSettingsChangeError constant from the backend.
   private readonly concurrentChangeErr_ = 'settings changed since last reload';
   private readonly unsubscribe_ = new Subject<void>();
-
-  settings: GlobalSettings = {} as GlobalSettings;
-  hasLoadError = false;
 
   constructor(
     private readonly settings_: GlobalSettingsService,
@@ -74,6 +81,8 @@ export class GlobalSettingsComponent implements OnInit, OnDestroy {
     this.settings.logsAutoRefreshTimeInterval = this.settings_.getLogsAutoRefreshTimeInterval();
     this.settings.resourceAutoRefreshTimeInterval = this.settings_.getResourceAutoRefreshTimeInterval();
     this.settings.disableAccessDeniedNotifications = this.settings_.getDisableAccessDeniedNotifications();
+    this.settings.defaultNamespace = this.settings_.getDefaultNamespace();
+    this.settings.namespaceFallbackList = this.settings_.getNamespaceFallbackList();
   }
 
   onLoadError(): void {

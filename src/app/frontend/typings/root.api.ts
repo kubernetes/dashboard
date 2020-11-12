@@ -1160,6 +1160,8 @@ export interface GlobalSettings {
   logsAutoRefreshTimeInterval: number;
   resourceAutoRefreshTimeInterval: number;
   disableAccessDeniedNotifications: boolean;
+  defaultNamespace: string;
+  namespaceFallbackList: string[];
 }
 
 export interface PinnedResource {

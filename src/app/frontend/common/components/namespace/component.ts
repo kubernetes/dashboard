@@ -36,15 +36,15 @@ import {NamespaceChangeDialog} from './changedialog/dialog';
   styleUrls: ['style.scss'],
 })
 export class NamespaceSelectorComponent implements OnInit, OnDestroy {
-  private namespaceUpdate_ = new Subject();
-  private unsubscribe_ = new Subject();
-  private readonly endpoint_ = EndpointManager.resource(Resource.namespace);
-
   namespaces: string[] = [];
   selectNamespaceInput = '';
   allNamespacesKey: string;
   selectedNamespace: string;
   resourceNamespaceParam: string;
+
+  private namespaceUpdate_ = new Subject();
+  private unsubscribe_ = new Subject();
+  private readonly endpoint_ = EndpointManager.resource(Resource.namespace);
 
   @ViewChild(MatSelect, {static: true}) private readonly select_: MatSelect;
   @ViewChild('namespaceInput', {static: true}) private readonly namespaceInputEl_: ElementRef;
@@ -103,20 +103,23 @@ export class NamespaceSelectorComponent implements OnInit, OnDestroy {
   }
 
   selectNamespace(): void {
-    if (this.selectNamespaceInput.length > 0) {
-      this.selectedNamespace = this.selectNamespaceInput;
-      this.select_.close();
-      this.changeNamespace_(this.selectedNamespace);
+    if (this.selectNamespaceInput.length === 0) {
+      return;
     }
+
+    this.selectedNamespace = this.selectNamespaceInput;
+    this.select_.close();
+    this.changeNamespace_(this.selectedNamespace);
   }
 
   onNamespaceToggle(opened: boolean): void {
     if (opened) {
       this.namespaceUpdate_.next();
       this.focusNamespaceInput_();
-    } else {
-      this.changeNamespace_(this.selectedNamespace);
+      return;
     }
+
+    this.changeNamespace_(this.selectedNamespace);
   }
 
   formatNamespaceName(namespace: string): string {
@@ -125,6 +128,13 @@ export class NamespaceSelectorComponent implements OnInit, OnDestroy {
     }
 
     return namespace;
+  }
+
+  setDefaultQueryParams_() {
+    this.router_.navigate([this.activatedRoute_.snapshot.url], {
+      queryParams: {[NAMESPACE_STATE_PARAM]: CONFIG.defaultNamespace},
+      queryParamsHandling: 'merge',
+    });
   }
 
   /**
@@ -187,9 +197,10 @@ export class NamespaceSelectorComponent implements OnInit, OnDestroy {
             queryParams: {[NAMESPACE_STATE_PARAM]: this.selectedNamespace},
             queryParamsHandling: 'merge',
           });
-        } else {
-          this.historyService_.goToPreviousState('overview');
+          return;
         }
+
+        this.historyService_.goToPreviousState('overview');
       });
   }
 
@@ -202,14 +213,15 @@ export class NamespaceSelectorComponent implements OnInit, OnDestroy {
         queryParams: {[NAMESPACE_STATE_PARAM]: namespace},
         queryParamsHandling: 'merge',
       });
-    } else {
-      // Change only the namespace as currently not on details view.
-      this.router_.navigate([], {
-        relativeTo: this.activatedRoute_,
-        queryParams: {[NAMESPACE_STATE_PARAM]: namespace},
-        queryParamsHandling: 'merge',
-      });
+      return;
     }
+
+    // Change only the namespace as currently not on details view.
+    this.router_.navigate([], {
+      relativeTo: this.activatedRoute_,
+      queryParams: {[NAMESPACE_STATE_PARAM]: namespace},
+      queryParamsHandling: 'merge',
+    });
   }
 
   private clearNamespaceInput_(): void {
@@ -244,12 +256,5 @@ export class NamespaceSelectorComponent implements OnInit, OnDestroy {
     setTimeout(() => {
       this.namespaceInputEl_.nativeElement.focus();
     }, 150);
-  }
-
-  setDefaultQueryParams_() {
-    this.router_.navigate([this.activatedRoute_.snapshot.url], {
-      queryParams: {[NAMESPACE_STATE_PARAM]: this.appConfig_.defaultNamespace},
-      queryParamsHandling: 'merge',
-    });
   }
 }

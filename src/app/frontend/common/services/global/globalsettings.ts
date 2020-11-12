@@ -16,8 +16,8 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {EventEmitter, Injectable} from '@angular/core';
 import {GlobalSettings} from '@api/root.api';
 import {onSettingsFailCallback, onSettingsLoadCallback} from '@api/root.ui';
-import {of, ReplaySubject, Subject} from 'rxjs';
-import {Observable} from 'rxjs';
+import * as _ from 'lodash';
+import {Observable, of, ReplaySubject, Subject} from 'rxjs';
 import {catchError, switchMap, takeUntil} from 'rxjs/operators';
 
 import {AuthorizerService} from './authorizer';
@@ -35,6 +35,8 @@ export class GlobalSettingsService {
     logsAutoRefreshTimeInterval: 5,
     resourceAutoRefreshTimeInterval: 5,
     disableAccessDeniedNotifications: false,
+    defaultNamespace: 'default',
+    namespaceFallbackList: [],
   };
   private unsubscribe_ = new Subject<void>();
   private isInitialized_ = false;
@@ -113,5 +115,13 @@ export class GlobalSettingsService {
 
   getDisableAccessDeniedNotifications(): boolean {
     return this.settings_.disableAccessDeniedNotifications;
+  }
+
+  getDefaultNamespace(): string {
+    return this.settings_.defaultNamespace;
+  }
+
+  getNamespaceFallbackList(): string[] {
+    return _.isArray(this.settings_.namespaceFallbackList) ? this.settings_.namespaceFallbackList : [];
   }
 }

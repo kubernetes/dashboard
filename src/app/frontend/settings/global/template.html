@@ -40,6 +40,72 @@ limitations under the License.
                  matInput>
         </mat-form-field>
       </kd-settings-entry>
+
+      <kd-settings-entry key="Default namespace"
+                         i18n-key
+                         desc="Namespace that should be selected by default after logging in."
+                         i18n-desc>
+        <mat-form-field fxFlex>
+          <input [(ngModel)]="settings.defaultNamespace"
+                 name="defaultNamespace"
+                 i18n-placeholder
+                 placeholder="Namespace name"
+                 type="text"
+                 matInput>
+        </mat-form-field>
+      </kd-settings-entry>
+
+      <kd-settings-entry key="Namespace fallback list"
+                         i18n-key
+                         desc="List of namespaces that should be presented to user without namespace list privileges."
+                         i18n-desc>
+        <kd-namespace-selector-new [multi]="true"></kd-namespace-selector-new>
+<!--        <mat-form-field fxFlex class="kd-namespace-select-input-container">-->
+<!--          <mat-label>Namespaces</mat-label>-->
+<!--          <mat-select multiple-->
+<!--                      class="kd-namespace-select">-->
+<!--            <div [ngClass]="{'kd-namespace-select-input-border': true}">-->
+<!--              <input #namespaceInput-->
+<!--                     i18n-placeholder-->
+<!--                     placeholder="Select namespace..."-->
+<!--                     name="selectNamespaceInput"-->
+<!--                     class="kd-namespace-select-input"-->
+<!--                     autocomplete="off"-->
+<!--                     (keydown)="$event.code === 'Enter' ? null : null">-->
+<!--            </div>-->
+
+<!--            <mat-option *ngFor="let namespace of (namespaces$ | async)"-->
+<!--                        [value]="namespace">-->
+<!--              {{namespace}}-->
+<!--            </mat-option>-->
+<!--          </mat-select>-->
+<!--          <mat-chip-list #chipList>-->
+<!--            <mat-chip-->
+<!--              *ngFor="let namespace of settings.namespaceFallbackList"-->
+<!--              [selectable]="true"-->
+<!--              [removable]="true"-->
+<!--              (removed)="removeNamespace(namespace)">-->
+<!--              {{namespace}}-->
+<!--              <mat-icon matChipRemove>cancel</mat-icon>-->
+<!--            </mat-chip>-->
+<!--            <input-->
+<!--              placeholder="Namespaces"-->
+<!--              #namespaceListInput-->
+<!--              [matAutocomplete]="auto"-->
+<!--              [matChipInputFor]="chipList"-->
+<!--              [matChipInputSeparatorKeyCodes]="separatorKeysCodes"-->
+<!--              (matChipInputTokenEnd)="addNamespace($event)">-->
+<!--          </mat-chip-list>-->
+<!--          <mat-autocomplete #auto="matAutocomplete"-->
+<!--                            (optionSelected)="selectedNamespace($event)">-->
+<!--            <mat-option *ngFor="let namespace of (namespaces$ | async) | filterBy: namespaceListInput.value"-->
+<!--                        [value]="namespace">-->
+<!--              {{namespace}}-->
+<!--            </mat-option>-->
+<!--          </mat-autocomplete>-->
+<!--        </mat-form-field>-->
+      </kd-settings-entry>
+
       <kd-settings-entry key="Items per page"
                          i18n-key
                          desc="Max number of items that can be displayed on every list view."
