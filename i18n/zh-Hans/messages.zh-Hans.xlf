@@ -3828,7 +3828,7 @@
       </trans-unit>
       <trans-unit id="141fd856fac50370a82a6082ef9e55f22014f32f" datatype="html">
         <source>The specified image could require a pull secret credential if it is private. You may choose an existing secret or create a new one.</source>
-        <target>如果指定的 Image 是私有的，则可能需要 pull secret credential。 您可以选择现有 secret 或创建新 secret。</target>
+        <target>如果指定的镜像是私有的，则可能需要拉取 secret 凭据。 您可以选择现有 secret 或创建新 secret。</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/from/form/template.html</context>
           <context context-type="linenumber">226</context>
@@ -3924,7 +3924,7 @@
       </trans-unit>
       <trans-unit id="7f64de7337ceb8f09ec7db1778676b02f07a73df" datatype="html">
         <source>By default, your containers run the selected image's default entrypoint command. You can use the command options to override the default.</source>
-        <target>默认情况下，容器运行所选镜像的默认 entrypoint command。 您可以使用命令选项覆盖默认值。</target>
+        <target>默认情况下，容器运行所选镜像的默认 entrypoint 命令。 您可以使用命令选项覆盖默认值。</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/from/form/template.html</context>
           <context context-type="linenumber">303</context>
