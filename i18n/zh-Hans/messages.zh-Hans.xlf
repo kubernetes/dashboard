@@ -2518,7 +2518,7 @@
       </trans-unit>
       <trans-unit id="fcc3e654108a95539975cf06678f999f5c429a2e" datatype="html">
         <source>Internal Endpoints</source>
-        <target>内部 Endpoints</target>
+        <target>内部端点</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/service/template.html</context>
           <context context-type="linenumber">84</context>
@@ -2526,7 +2526,7 @@
       </trans-unit>
       <trans-unit id="cfe8c5b521a487c8f2f9d2d4232032bfe2e609ec" datatype="html">
         <source>External Endpoints</source>
-        <target>外部 Endpoints</target>
+        <target>外部端点</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/service/template.html</context>
           <context context-type="linenumber">92</context>
