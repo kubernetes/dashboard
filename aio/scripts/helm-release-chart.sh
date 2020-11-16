@@ -32,7 +32,7 @@ function release-helm-chart {
   fi
   say "\nGenerating Helm Chart package for new version."
   say "Please note that your gh-pages branch, if it locally exists, should be up-to-date."
-  helm repo add stable https://charts.helm.sh/stable
+  helm repo add stable https://charts.helm.sh/stable/
   cd "$HELM_CHART_DIR"
   helm dependency build .
   helm package .
