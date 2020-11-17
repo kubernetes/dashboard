@@ -41,7 +41,7 @@ jobs:
           config: aio/deploy/helm-chart/.helm-chart-testing.yaml
 
       - name: Validate schema
-        uses: desaintmartin/helm-kubeval-action@v1.0.1
+        uses: desaintmartin/helm-kubeval-action@v1.0.2
         with:
           path: aio/deploy/helm-chart
 
