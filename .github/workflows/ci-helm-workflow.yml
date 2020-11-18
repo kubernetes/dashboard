@@ -35,23 +35,23 @@ jobs:
 
       - name: Run chart-testing (lint)
         id: lint
-        uses: helm/chart-testing-action@v1.0.0-rc.2
+        uses: helm/chart-testing-action@v2.0.1
         with:
           command: lint
           config: aio/deploy/helm-chart/.helm-chart-testing.yaml
 
       - name: Validate schema
-        uses: desaintmartin/helm-kubeval-action@v1.0.1
+        uses: desaintmartin/helm-kubeval-action@v1.0.2
         with:
           path: aio/deploy/helm-chart
 
       - name: Create kind cluster
-        uses: helm/kind-action@v1.0.0-rc.1
+        uses: helm/kind-action@v1.1.0
         # Only build a kind cluster if there are chart changes to test.
         if: steps.lint.outputs.changed == 'true'
 
       - name: Run chart-testing (install)
-        uses: helm/chart-testing-action@v1.0.0-rc.2
+        uses: helm/chart-testing-action@v2.0.1
         with:
           command: install
           config: aio/deploy/helm-chart/.helm-chart-testing.yaml
