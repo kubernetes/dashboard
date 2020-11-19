@@ -55,8 +55,6 @@ jobs:
 
       - name: Create kind cluster
         uses: helm/kind-action@v1.1.0
-        # Only build a kind cluster if there are chart changes to test.
-        if: steps.lint.outputs.changed == 'true'
 
       - name: Run chart-testing (install)
         run: ct install --config=aio/deploy/helm-chart/.helm-chart-testing.yaml

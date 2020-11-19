@@ -43,6 +43,10 @@ The command removes all the Kubernetes components associated with the chart and 
 A major chart version change (like v1.2.3 -> v2.0.0) indicates that there is an
 incompatible breaking change needing manual actions.
 
+### Upgrade from 2.x.x to 3.x.x
+
+- Switch Ingress from extensions/v1beta1 to networking.k8s.io/v1beta1. Requires kubernetes >= 1.14.0.
+
 ### Upgrade from 1.x.x to 2.x.x
 
 Version 2.0.0 of this chart is the first version hosted in the kubernetes/dashboard.git repository. v1.x.x until 1.10.1 is hosted on https://github.com/helm/charts.
