@@ -33,25 +33,28 @@ jobs:
         with:
           fetch-depth: "0"
 
-      - name: Run chart-testing (lint)
-        id: lint
-        uses: helm/chart-testing-action@v2.0.1
-        with:
-          command: lint
-          config: aio/deploy/helm-chart/.helm-chart-testing.yaml
-
       - name: Validate schema
         uses: desaintmartin/helm-kubeval-action@v1.0.2
         with:
           path: aio/deploy/helm-chart
 
+      - uses: actions/setup-python@v2
+        with:
+          python-version: 3.7
+
+      - name: Set up chart-testing
+        uses: helm/chart-testing-action@v2.0.1
+
+      - name: Cleanup charts directory
+        id: cleanup
+        run: sudo rm -rf aio/deploy/helm-chart/kubernetes-dashboard/charts
+
+      - name: Run chart-testing (lint)
+        id: lint
+        run: ct lint --config=aio/deploy/helm-chart/.helm-chart-testing.yaml
+
       - name: Create kind cluster
         uses: helm/kind-action@v1.1.0
-        # Only build a kind cluster if there are chart changes to test.
-        if: steps.lint.outputs.changed == 'true'
 
       - name: Run chart-testing (install)
-        uses: helm/chart-testing-action@v2.0.1
-        with:
-          command: install
-          config: aio/deploy/helm-chart/.helm-chart-testing.yaml
+        run: ct install --config=aio/deploy/helm-chart/.helm-chart-testing.yaml
