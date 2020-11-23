@@ -74,8 +74,9 @@ limitations under the License.
                                   [hideable]="true"></kd-cluster-role-binding-list>
     <kd-cluster-role-list (onchange)="onListUpdate($event)"
                           [hideable]="true"></kd-cluster-role-list>
-    <kd-namespace-list (onchange)="onListUpdate($event)"
-                       [hideable]="true"></kd-namespace-list>
+    <!-- Don't print list namespace in overview of current namespace -->                    
+    <!-- <kd-namespace-list (onchange)="onListUpdate($event)"
+                       [hideable]="true"></kd-namespace-list> -->
     <kd-network-policy-list (onchange)="onListUpdate($event)"
                             [hideable]="true"></kd-network-policy-list>
     <kd-node-list (onchange)="onListUpdate($event)"
