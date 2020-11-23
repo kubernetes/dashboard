@@ -12,21 +12,38 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild, ElementRef} from '@angular/core';
 import {LocalSettings} from '@api/backendapi';
+import {Subject} from 'rxjs';
+import {CookieService} from 'ngx-cookie-service';
 import {LocalSettingsService} from '../../common/services/global/localsettings';
-
+import {MatSelect} from '@angular/material/select';
+import {AVAILABLE_LANGUAGES} from '../../index.config';
 @Component({selector: 'kd-local-settings', templateUrl: './template.html'})
 export class LocalSettingsComponent implements OnInit {
   settings: LocalSettings = {} as LocalSettings;
+  languages: any[] = AVAILABLE_LANGUAGES;
 
-  constructor(private readonly settings_: LocalSettingsService) {}
+  selectedLanguage: any;
+
+  @ViewChild(MatSelect, {static: true}) private readonly select_: MatSelect;
+
+  constructor(private readonly settings_: LocalSettingsService, private readonly cookies_: CookieService) {}
 
   ngOnInit(): void {
     this.settings = this.settings_.get();
+    this.selectedLanguage = this.cookies_.get('lang');
+    if (!this.selectedLanguage) {
+      this.selectedLanguage = 'en';
+    }
   }
 
   onThemeChange(): void {
     this.settings_.handleThemeChange(this.settings.isThemeDark);
+  }
+
+  onLanaugeSelected(selectedLanguageValue: string) {
+    this.cookies_.set('lang', selectedLanguageValue);
+    document.location.reload(true);
   }
 }

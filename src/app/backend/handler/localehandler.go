@@ -94,8 +94,19 @@ func (handler *LocaleHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) 
 		// we want a different index.html (for the right locale) to be served when the page refreshes.
 		w.Header().Add("Cache-Control", "no-store")
 	}
-	acceptLanguage := os.Getenv("ACCEPT_LANGUAGE")
-	if acceptLanguage == "" {
+
+	acceptLanguage := ""
+
+	var cookie, err = r.Cookie("lang")
+	if err == nil {
+		acceptLanguage = cookie.Value
+	}
+
+	if len(acceptLanguage) == 0 {
+		acceptLanguage = os.Getenv("ACCEPT_LANGUAGE")
+	}
+
+	if len(acceptLanguage) == 0 {
 		acceptLanguage = r.Header.Get("Accept-Language")
 	}
 

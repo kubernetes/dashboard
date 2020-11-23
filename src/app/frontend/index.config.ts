@@ -17,6 +17,10 @@ import {MatTooltipDefaultOptions} from '@angular/material/tooltip';
 
 export const CONFIG_DI_TOKEN = new InjectionToken<Config>('kd.config');
 
+interface LANGUAGE {
+  value: string;
+  label: string;
+}
 export interface Config {
   authTokenCookieName: string;
   skipLoginPageCookieName: string;
@@ -41,3 +45,34 @@ export const KD_TOOLTIP_DEFAULT_OPTIONS: MatTooltipDefaultOptions = {
   hideDelay: 0,
   touchendHideDelay: 0,
 };
+
+export const AVAILABLE_LANGUAGES: LANGUAGE[] = [
+  {
+    label: 'Deutsche',
+    value: 'de',
+  },
+  {
+    label: 'English',
+    value: 'en',
+  },
+  {
+    label: '日本語',
+    value: 'ja',
+  },
+  {
+    label: '한국어',
+    value: 'ko',
+  },
+  {
+    label: '中文',
+    value: 'zh-Hans',
+  },
+  {
+    label: '台湾中文',
+    value: 'zh-Hant',
+  },
+  {
+    label: '香港中文',
+    value: 'zh-Hant-HK',
+  },
+];

@@ -5517,6 +5517,22 @@
           <context context-type="linenumber">27</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="fe46ccaae902ce974e2441abe752399288298619" datatype="html">
+        <source>Language</source>
+        <target state="new">语言</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/settings/local/template.html</context>
+          <context context-type="linenumber">36</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="170c19b70d40071916e39cad610ac12f269dd473" datatype="html">
+        <source>Change the language of the dashboard</source>
+        <target state="new">更改仪表板的语言</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/settings/local/template.html</context>
+          <context context-type="linenumber">38</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="dc935c1eb87651baf1b1b0e53119e6dec2db8862" datatype="html">
         <source>
     Shell in
