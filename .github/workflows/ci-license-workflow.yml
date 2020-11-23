@@ -30,6 +30,7 @@ jobs:
       GOPROXY: "https://proxy.golang.org"
       NODE_OPTIONS: "--max-old-space-size=8192"
       TERM: xterm
+      ACTIONS_ALLOW_UNSECURE_COMMANDS: 'true'
     steps:
       - name: Setup Environment
         uses: actions/checkout@v2

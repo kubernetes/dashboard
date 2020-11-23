@@ -32,6 +32,7 @@ jobs:
       NODE_OPTIONS: "--max-old-space-size=8192"
       DOCKER_CLI_EXPERIMENTAL: enabled
       TERM: xterm
+      ACTIONS_ALLOW_UNSECURE_COMMANDS: 'true'
 
     steps:
       - name: Setup Environment
