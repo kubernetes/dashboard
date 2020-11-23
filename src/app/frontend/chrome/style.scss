@@ -60,7 +60,7 @@
   padding-left: .5 * $baseline-grid;
   // Move entire second toolbar above content to avoid elements overlap with
   // shadow (there was problem with it on IE).
-  z-index: 1;
+  z-index: 100;
 }
 
 .kd-system-banner {
@@ -75,7 +75,7 @@
   white-space: nowrap;
   // Move entire system banner above content to avoid elements overlap with
   // shadow (there was problem with it on IE).
-  z-index: 2;
+  z-index: 200;
 }
 
 .kd-chrome-container {
@@ -87,16 +87,4 @@
 
 .kd-scroll-container {
   overflow-x: auto;
-
-  ::before {
-    content: '';
-    display: block;
-    margin-bottom: 2.5 * $baseline-grid;
-  }
-
-  ::after {
-    content: '';
-    display: block;
-    padding-bottom: 2 * $baseline-grid;
-  }
 }

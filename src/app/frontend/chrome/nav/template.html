@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<mat-drawer-container class="kd-nav"
+<mat-drawer-container class="kd-nav-container"
                       [ngClass]="isVisible ? 'visible' : 'hidden'">
   <mat-drawer class="kd-nav"
               mode="side">
@@ -88,7 +88,9 @@ limitations under the License.
 
     <mat-divider></mat-divider>
 
-    <div class="kd-nav-group">
+    <div class="kd-nav-items">
+
+      <!-- Workloads -->
       <kd-nav-item class="kd-nav-group-item"
                    state="/workloads"
                    id="nav-workloads"
@@ -226,7 +228,12 @@ limitations under the License.
       </div>
     </ng-container>
 
-    <mat-divider></mat-divider>
+      <!-- Config and Storage -->
+      <kd-nav-item class="kd-nav-group-item"
+                   state="/config"
+                   id="nav-config"
+                   i18n>Config and Storage
+      </kd-nav-item>
 
     <div class="kd-nav-group">
       <kd-nav-item class="kd-nav-group-item"

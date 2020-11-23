@@ -579,7 +579,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/pod/template.html</context>
-          <context context-type="linenumber">96</context>
+          <context context-type="linenumber">97</context>
         </context-group>
       </trans-unit>
       <trans-unit id="81b97b8ea996ad1e4f9fca8415021850214884b1" datatype="html">
@@ -595,7 +595,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/pod/template.html</context>
-          <context context-type="linenumber">103</context>
+          <context context-type="linenumber">104</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/persistentvolume/template.html</context>
@@ -647,7 +647,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/pod/template.html</context>
-          <context context-type="linenumber">109</context>
+          <context context-type="linenumber">110</context>
         </context-group>
       </trans-unit>
       <trans-unit id="f5dc4402dbf1d5f8f98da57b6061d5f9be05ca5c" datatype="html">
@@ -947,7 +947,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/crdobject/template.html</context>
-          <context context-type="linenumber">42</context>
+          <context context-type="linenumber">43</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/crdversion/template.html</context>
@@ -987,7 +987,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/pod/template.html</context>
-          <context context-type="linenumber">69</context>
+          <context context-type="linenumber">70</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/persistentvolume/template.html</context>
@@ -1071,7 +1071,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/crdobject/template.html</context>
-          <context context-type="linenumber">53</context>
+          <context context-type="linenumber">54</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/daemonset/template.html</context>
@@ -1099,7 +1099,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/pod/template.html</context>
-          <context context-type="linenumber">82</context>
+          <context context-type="linenumber">83</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/persistentvolumeclaim/template.html</context>
@@ -1195,7 +1195,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/pod/template.html</context>
-          <context context-type="linenumber">88</context>
+          <context context-type="linenumber">89</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/persistentvolumeclaim/template.html</context>
@@ -1311,7 +1311,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/crdobject/template.html</context>
-          <context context-type="linenumber">59</context>
+          <context context-type="linenumber">60</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/daemonset/template.html</context>
@@ -1351,7 +1351,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/pod/template.html</context>
-          <context context-type="linenumber">139</context>
+          <context context-type="linenumber">140</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/persistentvolume/template.html</context>
@@ -1420,7 +1420,7 @@
       </trans-unit>
       <trans-unit id="5382098398f2c3d09d75fe21addc796d91077051" datatype="html">
         <source>Cluster Role Bindings</source>
-        <target state="new">Cluster Role Bindings</target>
+        <target>클러스터 롤 바인딩</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/clusterrolebinding/template.html</context>
           <context context-type="linenumber">21</context>
@@ -1488,7 +1488,7 @@
       </trans-unit>
       <trans-unit id="e41b42647be2b71c6929a3c7210c1f75d9cd522e" datatype="html">
         <source><x id="INTERPOLATION" equiv-text="{{formatSecretValue(env.value).length}}"/> bytes</source>
-        <target><x id="INTERPOLATION" equiv-text="{{formatSecretValue(env.value).length}}"/> bytes</target>
+        <target><x id="INTERPOLATION" equiv-text="{{formatSecretValue(env.value).length}}"/> 바이트</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/container/template.html</context>
           <context context-type="linenumber">61</context>
@@ -1810,10 +1810,10 @@
       </trans-unit>
       <trans-unit id="a3e6ad731f3d27e2fd80064adf380f461ea0251b" datatype="html">
         <source>No resources found in the selected namespace.</source>
-        <target state="new">No resources found in the selected namespace.</target>
+        <target>선택된 네임스페이스에서 리소스를 찾을 수 없습니다.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/crdobject/template.html</context>
-          <context context-type="linenumber">91</context>
+          <context context-type="linenumber">92</context>
         </context-group>
       </trans-unit>
       <trans-unit id="cfcee33b4f74fb641e9d6b00f72244d2b78c1480" datatype="html">
@@ -1941,7 +1941,7 @@
         <target>마지막에 표시된</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/event/template.html</context>
-          <context context-type="linenumber">80</context>
+          <context context-type="linenumber">81</context>
         </context-group>
       </trans-unit>
       <trans-unit id="7f910609b2f8e23ae9694be7103f52e258827fd5" datatype="html">
@@ -2265,7 +2265,7 @@
         <target>CPU 사용량(cores)</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/pod/template.html</context>
-          <context context-type="linenumber">117</context>
+          <context context-type="linenumber">118</context>
         </context-group>
       </trans-unit>
       <trans-unit id="b433be6f17bb6c614c6adb6a81912baae4a619b7" datatype="html">
@@ -2273,7 +2273,7 @@
         <target>메모리 사용량(bytes)</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/pod/template.html</context>
-          <context context-type="linenumber">127</context>
+          <context context-type="linenumber">128</context>
         </context-group>
       </trans-unit>
       <trans-unit id="ad2fd201bb504d5836ffd31f00d2c3a535059147" datatype="html">
@@ -2502,7 +2502,7 @@
       </trans-unit>
       <trans-unit id="045ed332fbb2645493d6955677247db0d1134c2d" datatype="html">
         <source><x id="INTERPOLATION" equiv-text="{{title}}"/></source>
-        <target state="new"><x id="INTERPOLATION" equiv-text="{{title}}"/></target>
+        <target><x id="INTERPOLATION" equiv-text="{{title}}"/></target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/secret/template.html</context>
           <context context-type="linenumber">21</context>
@@ -2546,22 +2546,24 @@
       </trans-unit>
       <trans-unit id="78da621b65ff6583de3d5b446cea93aeced674df" datatype="html">
         <source>Service Accounts</source>
-        <target state="new">Service Accounts</target>
+        <target>서비스 어카운트</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/serviceaccount/template.html</context>
           <context context-type="linenumber">21</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="7066e1af065c2b6a45b83dc874af7d15f1fba435" datatype="html">
+      <trans-unit id="e632605b270a832d5f39d30f34cbcd80ba61f390" datatype="html">
         <source>
       You can <x id="START_LINK" ctype="x-a" equiv-text="&lt;a>"/>deploy a containerized app<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a>"/>, select other namespace or
       <x id="START_LINK_1" ctype="x-a" equiv-text="&lt;a>"/>take the Dashboard Tour
-        <x id="START_TAG_MAT-ICON" ctype="x-mat-icon" equiv-text="&lt;mat-icon>"/>open_in_new<x id="CLOSE_TAG_MAT-ICON" ctype="x-mat-icon" equiv-text="&lt;/mat-icon>"/><x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a>"/> to learn more.
+        <x id="START_TAG_MAT-ICON" ctype="x-mat-icon" equiv-text="&lt;mat-icon>"/>open_in_new<x id="CLOSE_TAG_MAT-ICON" ctype="x-mat-icon" equiv-text="&lt;/mat-icon>"/>
+      <x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a>"/> to learn more.
     </source>
         <target>
-      <x id="START_LINK" ctype="x-a" equiv-text="&lt;a>"/>컨테이너화된 앱을 디플로이<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a>"/> 하거나, 다른 네임스페이스를 선택할 수 있습니다. 자세한 정보는
-      <x id="START_LINK_1" ctype="x-a" equiv-text="&lt;a>"/>대시보드 문서
-        <x id="START_TAG_MAT-ICON" ctype="x-mat-icon" equiv-text="&lt;mat-icon>"/>open_in_new<x id="CLOSE_TAG_MAT-ICON" ctype="x-mat-icon" equiv-text="&lt;/mat-icon>"/><x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a>"/>를 살펴보시기 바랍니다.
+      <x id="START_LINK" ctype="x-a" equiv-text="&lt;a>"/>컨테이너화된 앱을 배포하거나<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a>"/>, 다른 네임스페이스를 선택하거나
+      <x id="START_LINK_1" ctype="x-a" equiv-text="&lt;a>"/>대시보드 투어(Dashboard Tour)를 통해
+        <x id="START_TAG_MAT-ICON" ctype="x-mat-icon" equiv-text="&lt;mat-icon>"/>open_in_new<x id="CLOSE_TAG_MAT-ICON" ctype="x-mat-icon" equiv-text="&lt;/mat-icon>"/>
+      <x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a>"/> 자세한 내용을 확인할 수 있습니다.
     </target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/zerostate/template.html</context>
@@ -2570,7 +2572,7 @@
       </trans-unit>
       <trans-unit id="a4f6d660f2cc1c8c680a96e39c719b48c8ebe17a" datatype="html">
         <source>Network Policies</source>
-        <target state="new">Network Policies</target>
+        <target>네트워크 폴리시</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/networkpolicy/template.html</context>
           <context context-type="linenumber">21</context>
@@ -2578,7 +2580,7 @@
       </trans-unit>
       <trans-unit id="9610487cbeb5796d34d8601b5ac0c0a65f9e1d19" datatype="html">
         <source>Roles</source>
-        <target state="new">Roles</target>
+        <target>롤</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/role/template.html</context>
           <context context-type="linenumber">21</context>
@@ -2586,7 +2588,7 @@
       </trans-unit>
       <trans-unit id="51682f193e48c9ef0e687aea04f825af1721f0f0" datatype="html">
         <source>Role Bindings</source>
-        <target state="new">Role Bindings</target>
+        <target>롤 바인딩</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/rolebinding/template.html</context>
           <context context-type="linenumber">28</context>
@@ -2594,7 +2596,7 @@
       </trans-unit>
       <trans-unit id="2b689ed7a24edd60660708e03c2dc11cd540e950" datatype="html">
         <source>Subjects</source>
-        <target state="new">Subjects</target>
+        <target>서브젝트</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/subject/template.html</context>
           <context context-type="linenumber">20</context>
@@ -2602,7 +2604,7 @@
       </trans-unit>
       <trans-unit id="fb8681ea25f262db7f8ede5306e82d081016d5c7" datatype="html">
         <source>API Group</source>
-        <target state="new">API Group</target>
+        <target>API 그룹</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/subject/template.html</context>
           <context context-type="linenumber">65</context>
@@ -2611,311 +2613,311 @@
       <trans-unit id="6d9edf35ea416301631125005b66c9440397176d" datatype="html">
         <source>Workloads
       </source>
-        <target state="new">Workloads
+        <target>워크로드
       </target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/chrome/nav/template.html</context>
-          <context context-type="linenumber">108</context>
+          <context context-type="linenumber">28</context>
         </context-group>
       </trans-unit>
       <trans-unit id="787093faa4cfa59c1499dca2cfc6e804f1838ab1" datatype="html">
         <source>Cron Jobs
       </source>
-        <target state="new">Cron Jobs
+        <target>크론 잡
       </target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/chrome/nav/template.html</context>
-          <context context-type="linenumber">113</context>
+          <context context-type="linenumber">33</context>
         </context-group>
       </trans-unit>
       <trans-unit id="d094e262a8d26c66b5eb9f7dbf501cd711c1306f" datatype="html">
         <source>Daemon Sets
       </source>
-        <target state="new">Daemon Sets
+        <target>데몬 셋
       </target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/chrome/nav/template.html</context>
-          <context context-type="linenumber">118</context>
+          <context context-type="linenumber">38</context>
         </context-group>
       </trans-unit>
       <trans-unit id="a862522a568898e032031f6728be4eec8edeb61b" datatype="html">
         <source>Deployments
       </source>
-        <target state="new">Deployments
+        <target>디플로이먼트
       </target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/chrome/nav/template.html</context>
-          <context context-type="linenumber">123</context>
+          <context context-type="linenumber">43</context>
         </context-group>
       </trans-unit>
       <trans-unit id="702b6f15c86ce19a17aa8ae644658c852d3c1c08" datatype="html">
         <source>Jobs
       </source>
-        <target state="new">Jobs
+        <target>잡
       </target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/chrome/nav/template.html</context>
-          <context context-type="linenumber">128</context>
+          <context context-type="linenumber">48</context>
         </context-group>
       </trans-unit>
       <trans-unit id="03ff2fadee6736ca0b92abdfe0f19db0d0b2c3f8" datatype="html">
         <source>Pods
       </source>
-        <target state="new">Pods
+        <target>파드
       </target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/chrome/nav/template.html</context>
-          <context context-type="linenumber">133</context>
+          <context context-type="linenumber">53</context>
         </context-group>
       </trans-unit>
       <trans-unit id="6fed5420d42fcfbd09dfb4777c207274dd4f0c0a" datatype="html">
         <source>Replica Sets
       </source>
-        <target state="new">Replica Sets
+        <target>레플리카 셋
       </target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/chrome/nav/template.html</context>
-          <context context-type="linenumber">138</context>
+          <context context-type="linenumber">58</context>
         </context-group>
       </trans-unit>
       <trans-unit id="5a60417d6a34e8c0655cb0678071c60ca8119aad" datatype="html">
         <source>Replication Controllers
       </source>
-        <target state="new">Replication Controllers
-      </target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">../src/app/frontend/chrome/nav/template.html</context>
-          <context context-type="linenumber">143</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="1bc563edf644be0e1f682694e543cc8608575562" datatype="html">
-        <source>Stateful Sets
-      </source>
-        <target state="new">Stateful Sets
-      </target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">../src/app/frontend/chrome/nav/template.html</context>
-          <context context-type="linenumber">148</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="22c030ecbaceb4c5cf969f5ca360d7e6c6384a6d" datatype="html">
-        <source>Service
-      </source>
-        <target state="new">Service
-      </target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">../src/app/frontend/chrome/nav/template.html</context>
-          <context context-type="linenumber">155</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="950167b1c4eae7d3d3efdc6508f72c0c78a3f3cd" datatype="html">
-        <source>IngressRoutes
-      </source>
-        <target state="new">IngressRoutes
-      </target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">../src/app/frontend/chrome/nav/template.html</context>
-          <context context-type="linenumber">165</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="8d6b7d147911e1d13187825c308cdd70f01dabd0" datatype="html">
-        <source>IngressRouteTCPs
-      </source>
-        <target state="new">IngressRouteTCPs
-      </target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">../src/app/frontend/chrome/nav/template.html</context>
-          <context context-type="linenumber">170</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="5502d7f80d7951086a85d2da478f3f13763939d5" datatype="html">
-        <source>Services
-      </source>
-        <target state="new">Services
-      </target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">../src/app/frontend/chrome/nav/template.html</context>
-          <context context-type="linenumber">175</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="be3dcec436583ff66cce312fd2074779d8851f54" datatype="html">
-        <source>Config and Storage
-      </source>
-        <target state="new">Config and Storage
-      </target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">../src/app/frontend/chrome/nav/template.html</context>
-          <context context-type="linenumber">182</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="990cffc29a7adb5ec1110b0176c8c12fff756eba" datatype="html">
-        <source>Config Maps
-      </source>
-        <target state="new">Config Maps
-      </target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">../src/app/frontend/chrome/nav/template.html</context>
-          <context context-type="linenumber">192</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="74be5bc42681451056aacf13382e5b29c62bd903" datatype="html">
-        <source>Persistent Volume Claims
-      </source>
-        <target state="new">Persistent Volume Claims
-      </target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">../src/app/frontend/chrome/nav/template.html</context>
-          <context context-type="linenumber">197</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="755417c37ab5d459cd2443b3776aaaca7ec87f90" datatype="html">
-        <source>Secrets
-      </source>
-        <target state="new">Secrets
-      </target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">../src/app/frontend/chrome/nav/template.html</context>
-          <context context-type="linenumber">202</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="d49c812d67b965bd0a172844e265f55567c812ad" datatype="html">
-        <source>Storage Classes
-      </source>
-        <target state="new">Storage Classes
-      </target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">../src/app/frontend/chrome/nav/template.html</context>
-          <context context-type="linenumber">68</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="67d3a6c50ed8a188e19ea8c541a56f0e35620e5c" datatype="html">
-        <source>Cluster
-      </source>
-        <target state="new">Cluster
-      </target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">../src/app/frontend/chrome/nav/template.html</context>
-          <context context-type="linenumber">25</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="1aff4cb93f64ca57fbf92fe405b2c1f2c4ec1b11" datatype="html">
-        <source>Cluster Roles
-      </source>
-        <target state="new">Cluster Roles
-      </target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">../src/app/frontend/chrome/nav/template.html</context>
-          <context context-type="linenumber">30</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="3b91b541ed4a1e47b83fe91f4cae1eefa904f4d5" datatype="html">
-        <source>Namespaces
-      </source>
-        <target state="new">Namespaces
-      </target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">../src/app/frontend/chrome/nav/template.html</context>
-          <context context-type="linenumber">35</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="bce7cd9302197070e1782d38622dbb351ad84b69" datatype="html">
-        <source>Network Policies
-      </source>
-        <target state="new">Network Policies
-      </target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">../src/app/frontend/chrome/nav/template.html</context>
-          <context context-type="linenumber">41</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="9151fc3bbb78ca19bf93221148fb6f75c9adec73" datatype="html">
-        <source>Nodes
-      </source>
-        <target state="new">Nodes
-      </target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">../src/app/frontend/chrome/nav/template.html</context>
-          <context context-type="linenumber">46</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="53fa14e4e66a4b88531ac5852644edf4c93430c5" datatype="html">
-        <source>Persistent Volumes
-      </source>
-        <target state="new">Persistent Volumes
-      </target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">../src/app/frontend/chrome/nav/template.html</context>
-          <context context-type="linenumber">51</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="d4d25df076acf842b0705cc4ac54f4757a979a03" datatype="html">
-        <source>Role Bindings
-      </source>
-        <target state="new">Role Bindings
-      </target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">../src/app/frontend/chrome/nav/template.html</context>
-          <context context-type="linenumber">57</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="e9c8e24a53e2496d1bb734d0bd20d756bec5b200" datatype="html">
-        <source>Roles
-      </source>
-        <target state="new">Roles
+        <target>레플리케이션 컨트롤러
       </target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/chrome/nav/template.html</context>
           <context context-type="linenumber">63</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="5deee9cd9fabadb49eb1e3fcae70ff560e41ba27" datatype="html">
-        <source>Service Accounts
+      <trans-unit id="1bc563edf644be0e1f682694e543cc8608575562" datatype="html">
+        <source>Stateful Sets
       </source>
-        <target state="new">Service Accounts
+        <target>스테이트풀 셋
       </target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/chrome/nav/template.html</context>
-          <context context-type="linenumber">187</context>
+          <context context-type="linenumber">68</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="22c030ecbaceb4c5cf969f5ca360d7e6c6384a6d" datatype="html">
+        <source>Service
+      </source>
+        <target>서비스
+      </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/chrome/nav/template.html</context>
+          <context context-type="linenumber">76</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="7b4d1721251562683d614269b06ebbe3af811a00" datatype="html">
+        <source>Ingresses
+      </source>
+        <target>인그레스
+      </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/chrome/nav/template.html</context>
+          <context context-type="linenumber">81</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="5502d7f80d7951086a85d2da478f3f13763939d5" datatype="html">
+        <source>Services
+      </source>
+        <target>서비스
+      </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/chrome/nav/template.html</context>
+          <context context-type="linenumber">86</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="be3dcec436583ff66cce312fd2074779d8851f54" datatype="html">
+        <source>Config and Storage
+      </source>
+        <target>컨피그 및 스토리지
+      </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/chrome/nav/template.html</context>
+          <context context-type="linenumber">93</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="990cffc29a7adb5ec1110b0176c8c12fff756eba" datatype="html">
+        <source>Config Maps
+      </source>
+        <target>컨피그 맵
+      </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/chrome/nav/template.html</context>
+          <context context-type="linenumber">100</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="74be5bc42681451056aacf13382e5b29c62bd903" datatype="html">
+        <source>Persistent Volume Claims
+      </source>
+        <target>퍼시스턴트 볼륨 클레임
+      </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/chrome/nav/template.html</context>
+          <context context-type="linenumber">106</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="755417c37ab5d459cd2443b3776aaaca7ec87f90" datatype="html">
+        <source>Secrets
+      </source>
+        <target>시크릿
+      </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/chrome/nav/template.html</context>
+          <context context-type="linenumber">112</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="d49c812d67b965bd0a172844e265f55567c812ad" datatype="html">
+        <source>Storage Classes
+      </source>
+        <target>스토리지 클래스
+      </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/chrome/nav/template.html</context>
+          <context context-type="linenumber">117</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="67d3a6c50ed8a188e19ea8c541a56f0e35620e5c" datatype="html">
+        <source>Cluster
+      </source>
+        <target>클러스터
+      </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/chrome/nav/template.html</context>
+          <context context-type="linenumber">124</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="2e7f50d0bef3580ae3c46acdcdd71e29e4fa3fed" datatype="html">
+        <source>Cluster Role Bindings
+      </source>
+        <target>클러스터 롤 바인딩
+      </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/chrome/nav/template.html</context>
+          <context context-type="linenumber">129</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="1aff4cb93f64ca57fbf92fe405b2c1f2c4ec1b11" datatype="html">
+        <source>Cluster Roles
+      </source>
+        <target>클러스터 롤
+      </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/chrome/nav/template.html</context>
+          <context context-type="linenumber">134</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="3b91b541ed4a1e47b83fe91f4cae1eefa904f4d5" datatype="html">
+        <source>Namespaces
+      </source>
+        <target>네임스페이스
+      </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/chrome/nav/template.html</context>
+          <context context-type="linenumber">139</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="bce7cd9302197070e1782d38622dbb351ad84b69" datatype="html">
+        <source>Network Policies
+      </source>
+        <target>네트워크 폴리시
+      </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/chrome/nav/template.html</context>
+          <context context-type="linenumber">145</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="9151fc3bbb78ca19bf93221148fb6f75c9adec73" datatype="html">
+        <source>Nodes
+      </source>
+        <target>노드
+      </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/chrome/nav/template.html</context>
+          <context context-type="linenumber">150</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="53fa14e4e66a4b88531ac5852644edf4c93430c5" datatype="html">
+        <source>Persistent Volumes
+      </source>
+        <target>퍼시스턴트 볼륨
+      </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/chrome/nav/template.html</context>
+          <context context-type="linenumber">155</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="d4d25df076acf842b0705cc4ac54f4757a979a03" datatype="html">
+        <source>Role Bindings
+      </source>
+        <target>롤 바인딩
+      </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/chrome/nav/template.html</context>
+          <context context-type="linenumber">161</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="e9c8e24a53e2496d1bb734d0bd20d756bec5b200" datatype="html">
+        <source>Roles
+      </source>
+        <target>롤
+      </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/chrome/nav/template.html</context>
+          <context context-type="linenumber">167</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="5deee9cd9fabadb49eb1e3fcae70ff560e41ba27" datatype="html">
+        <source>Service Accounts
+      </source>
+        <target>서비스 어카운트
+      </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/chrome/nav/template.html</context>
+          <context context-type="linenumber">173</context>
         </context-group>
       </trans-unit>
       <trans-unit id="f2f9d18ebacb9e3bcb996d8176609e306864265e" datatype="html">
         <source>Custom Resource Definitions
       </source>
-        <target state="new">Custom Resource Definitions
+        <target>커스텀 리소스 데피니션
       </target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/chrome/nav/template.html</context>
-          <context context-type="linenumber">213</context>
+          <context context-type="linenumber">181</context>
         </context-group>
       </trans-unit>
       <trans-unit id="9b39398e6c7a9dfb5cd43f405598934244f8bd17" datatype="html">
         <source>Plugins
         </source>
-        <target state="new">Plugins
+        <target>플러그인
         </target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/chrome/nav/template.html</context>
-          <context context-type="linenumber">226</context>
+          <context context-type="linenumber">192</context>
         </context-group>
       </trans-unit>
       <trans-unit id="03511cfe5e28ed3380ab198c13cf62ebde1e89e6" datatype="html">
         <source>Settings
       </source>
-        <target state="new">Settings
+        <target>설정
       </target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/chrome/nav/template.html</context>
-          <context context-type="linenumber">237</context>
+          <context context-type="linenumber">201</context>
         </context-group>
       </trans-unit>
       <trans-unit id="c2fa735eb6b1b2c10171c5acb818f6e0975a9406" datatype="html">
         <source>About
       </source>
-        <target state="new">About
+        <target>소개
       </target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/chrome/nav/template.html</context>
-          <context context-type="linenumber">243</context>
+          <context context-type="linenumber">207</context>
         </context-group>
       </trans-unit>
       <trans-unit id="01269ce8051398188d50367ead1831407e77d504" datatype="html">
@@ -3009,7 +3011,7 @@
       <trans-unit id="84d40318243f782005db3040f6bd3b9ec388b5d8" datatype="html">
         <source><x id="INTERPOLATION" equiv-text="{{getDisplayName(resource)}}"/>
   </source>
-        <target state="new"><x id="INTERPOLATION" equiv-text="{{getDisplayName(resource)}}"/>
+        <target><x id="INTERPOLATION" equiv-text="{{getDisplayName(resource)}}"/>
   </target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/chrome/nav/pinner/template.html</context>
@@ -3018,7 +3020,7 @@
       </trans-unit>
       <trans-unit id="82b29c3b4501afec72a7fb434e048547f9a067e4" datatype="html">
         <source>Role Reference</source>
-        <target state="new">Role Reference</target>
+        <target>롤 레퍼런스</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/resource/cluster/clusterrolebinding/detail/template.html</context>
           <context context-type="linenumber">28</context>
@@ -3143,11 +3145,11 @@
               here
             <x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a>"/>.
           </source>
-        <target state="new">
-            Insecure access detected. Sign in will not be available. Access Dashboard securely over HTTPS or using localhost. Read more
+        <target>
+            안전하지 않은 접근이 탐지되었습니다. 로그인하실 수 없습니다. HTTPS 프로토콜을 통해 또는 localhost를 사용하여 대시보드에 안전하게 접근하세요. 자세한 내용은
             <x id="START_LINK" ctype="x-a" equiv-text="&lt;a>"/>
-              here
-            <x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a>"/>.
+              여기
+            <x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a>"/>에서 확인하세요.
           </target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/login/template.html</context>
@@ -4461,7 +4463,7 @@
       </trans-unit>
       <trans-unit id="72f275d9b31bf0e6dc122c1a9b58b4986800eb7a" datatype="html">
         <source>Auto-refresh (every <x id="INTERPOLATION" equiv-text="{{refreshInterval}}"/> s.)</source>
-        <target state="new">Auto-refresh (every <x id="INTERPOLATION" equiv-text="{{refreshInterval}}"/> s.)</target>
+        <target>(<x id="INTERPOLATION" equiv-text="{{refreshInterval}}"/> 초마다) 자동 새로고침.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/logs/template.html</context>
           <context context-type="linenumber">141</context>
@@ -4493,7 +4495,7 @@
       </trans-unit>
       <trans-unit id="a21b5b669ab3f36e0f83e9a025c26662fd0616e8" datatype="html">
         <source>Pod Selector</source>
-        <target state="new">Pod Selector</target>
+        <target>파드 셀렉터</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/resource/cluster/networkpolicy/detail/template.html</context>
           <context context-type="linenumber">28</context>
@@ -4501,7 +4503,7 @@
       </trans-unit>
       <trans-unit id="2ebd4e9210644c0f1da612d5c2ef1bbdab9652fd" datatype="html">
         <source>Policy Types</source>
-        <target state="new">Policy Types</target>
+        <target>폴리시 타입</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/resource/cluster/networkpolicy/detail/template.html</context>
           <context context-type="linenumber">37</context>
@@ -4509,7 +4511,7 @@
       </trans-unit>
       <trans-unit id="1ebb4252343531346acc2530c2002fc639dd6926" datatype="html">
         <source>Ingress Rules</source>
-        <target state="new">Ingress Rules</target>
+        <target>인그레스 규칙</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/resource/cluster/networkpolicy/detail/template.html</context>
           <context context-type="linenumber">49</context>
@@ -4517,7 +4519,7 @@
       </trans-unit>
       <trans-unit id="21a53832d275152e4ad8dfa9371ebbefbf693c87" datatype="html">
         <source>Egress Rules</source>
-        <target state="new">Egress Rules</target>
+        <target>이그레스 규칙</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/resource/cluster/networkpolicy/detail/template.html</context>
           <context context-type="linenumber">61</context>
@@ -5358,7 +5360,7 @@
       </trans-unit>
       <trans-unit id="2045151788cbdda7512752e408da59a6b54a8ef0" datatype="html">
         <source>Items per page</source>
-        <target>페이지 당 아이템</target>
+        <target>페이지 당 항목</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/settings/global/template.html</context>
           <context context-type="linenumber">43</context>
@@ -5366,7 +5368,7 @@
       </trans-unit>
       <trans-unit id="3925ecae114abc711d1b417b7bdc4f8d6ec0f585" datatype="html">
         <source>Max number of items that can be displayed on every list view.</source>
-        <target state="new">Max number of items that can be displayed on every list view.</target>
+        <target>모든 목록 화면에서 표시할 수 있는 최대 항목 개수.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/settings/global/template.html</context>
           <context context-type="linenumber">45</context>
@@ -5374,7 +5376,7 @@
       </trans-unit>
       <trans-unit id="f530d15919f9ecdc3c56f55eae1a78b905cc08fa" datatype="html">
         <source>Labels limit</source>
-        <target state="new">Labels limit</target>
+        <target>레이블 제한</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/settings/global/template.html</context>
           <context context-type="linenumber">62</context>
@@ -5382,7 +5384,7 @@
       </trans-unit>
       <trans-unit id="dd245a4e3a7100eb2fa1e91e62663f748016668b" datatype="html">
         <source>Max number of labels that are displayed by default on most views.</source>
-        <target state="new">Max number of labels that are displayed by default on most views.</target>
+        <target>대부분의 화면에서 기본적으로 표시할 수 있는 최대 레이블 개수.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/settings/global/template.html</context>
           <context context-type="linenumber">64</context>

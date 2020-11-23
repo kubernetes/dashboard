@@ -60,7 +60,7 @@ code {
 }
 
 .mat-card {
-  margin: 2.5 * $baseline-grid;
+  margin: $content-padding;
 
   .mat-card-title {
     margin-bottom: $baseline-grid;

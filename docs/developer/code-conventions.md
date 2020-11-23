@@ -38,7 +38,7 @@ We use following tools and settings for each check and formatting:
 | code    | tools                                                                    | setting |
 |---------|--------------------------------------------------------------------------|---------|
 | go      | [golangci-lint](https://github.com/golangci/golangci-lint)               | [`.golangci.yml`](../../.golangci.yml) |
-| ts      | [gts](https://github.com/google/gts)                                     | [`tslint.json`](../../tslint.json) |
+| ts      | [gts](https://github.com/google/gts)                                     | `eslintConfig` in [`package.json`](../../package.json) and [`.prettierrc.js`](../../.prettierrc.js) |
 | scss    | [sass-lint](https://github.com/sasstools/sass-lint)                      | [`.sass-lint.yml`](../../.sass-lint.yml) |
 | scss    | [scssfmt](https://github.com/morishitter/scssfmt)                        | - |
 | html    | [js-beautify](https://github.com/beautify-web/js-beautify)               | options in [`format.sh`](../../aio/scripts/format.sh) |

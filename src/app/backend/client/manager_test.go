@@ -19,7 +19,7 @@ import (
 	"net/http"
 	"testing"
 
-	restful "github.com/emicklei/go-restful"
+	restful "github.com/emicklei/go-restful/v3"
 	"github.com/kubernetes/dashboard/src/app/backend/args"
 	"github.com/kubernetes/dashboard/src/app/backend/errors"
 	"k8s.io/client-go/rest"

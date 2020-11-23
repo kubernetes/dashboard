@@ -18,3 +18,10 @@ metadata:
   labels:
 {{ include "kubernetes-dashboard.labels" . | indent 4 }}
   name: {{ template "kubernetes-dashboard.fullname" . }}-settings
+data:
+{{- with .Values.settings }}
+  _global: {{ toJson . | quote }}
+{{- end }}
+{{- with .Values.pinnedCRDs }}
+  _pinnedCRD: {{ toJson . | quote }}
+{{- end }}

@@ -366,7 +366,7 @@ export abstract class ResourceListWithStatuses<T extends ResourceList, R extends
   private lastHash_: number;
   private readonly unknownStatus: StatusIcon = {
     iconName: 'help',
-    iconClass: {'': true},
+    iconClass: {'kd-help': true},
   };
 
   protected icon = IconName;

@@ -8,7 +8,7 @@ Dashboard container accepts multiple arguments that can be used to customize it 
 |---------------|---------------|-------------|
 | insecure-port	| 9090          | The port to listen to for incoming HTTP requests. |
 | port          | 8443          | The secure port to listen to for incoming HTTPS requests. |
-| insecure-bind-address | 127.0.0.1 | The IP address on which to serve the `--insecure-port` (set to 127.0.0.1 for all interfaces). |
+| insecure-bind-address | 127.0.0.1 | The IP address on which to serve the `--insecure-port` (set to 127.0.0.1 for loopback only). |
 | bind-address  | 0.0.0.0       | The IP address on which to serve the `--port` (set to 0.0.0.0 for all interfaces). |
 | default-cert-dir | /certs     | Directory path containing `--tls-cert-file` and `--tls-key-file` files. Used also when auto-generating certificates flag is set. Relative to the container, not the host. |
 | tls-cert-file | -             | File containing the default x509 Certificate for HTTPS. |

@@ -17,7 +17,7 @@ package handler
 import (
 	"io"
 
-	restful "github.com/emicklei/go-restful"
+	restful "github.com/emicklei/go-restful/v3"
 
 	"github.com/kubernetes/dashboard/src/app/backend/errors"
 )
@@ -28,6 +28,5 @@ func handleDownload(response *restful.Response, result io.ReadCloser) {
 	_, err := io.Copy(response, result)
 	if err != nil {
 		errors.HandleInternalError(response, err)
-		return
 	}
 }

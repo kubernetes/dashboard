@@ -165,9 +165,9 @@ export class NamespaceSelectorComponent implements OnInit, OnDestroy {
 
   private loadNamespaces_(): void {
     this.namespaceUpdate_
-      .pipe(takeUntil(this.unsubscribe_))
       .pipe(startWith({}))
       .pipe(switchMap(() => this.namespace_.get(this.endpoint_.list())))
+      .pipe(takeUntil(this.unsubscribe_))
       .subscribe(
         namespaceList => {
           const namespacesTemp = namespaceList.namespaces.map(n => n.objectMeta.name);
