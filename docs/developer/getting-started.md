@@ -62,6 +62,8 @@ In the background, `npm start` makes a [concurrently](https://github.com/kimmobr
 
 Once the angular server starts, it takes some time to pre-compile all assets before serving them. By default, the angular development server watches for file changes and will update accordingly.
 
+If you want to test your local language in the web ui by i18n, you should run dashboard with the command: `npm run start:prod`.
+
 ## Building Dashboard for production
 
 To build dashboard for production, you still need to install `bc`.
