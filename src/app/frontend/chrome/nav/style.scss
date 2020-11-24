@@ -35,7 +35,8 @@
     }
 
     .kd-nav-items {
-      padding: $content-padding 3px $content-padding $content-padding;
+      padding: $content-padding;
+      padding-inline-end: 3px;
 
       .mat-divider {
         margin: $baseline-grid $baseline-grid (2 * $baseline-grid) (-1 * $content-padding);

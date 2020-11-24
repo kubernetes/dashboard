@@ -20,7 +20,7 @@ import {Notification, NotificationsService} from '../../common/services/global/n
 @Component({
   selector: 'kd-notifications',
   templateUrl: './template.html',
-  styleUrls: ['./style.scss'],
+  styleUrls: ['./style.scss', './rtl.scss'],
   animations: [Animations.easeOut],
 })
 export class NotificationsComponent {

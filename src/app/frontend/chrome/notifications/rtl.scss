@@ -12,15 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-@import '../variables';
-@import '../mixins';
-
-.kd-about-logo-icon {
-  @include kd-icon-size(8 * $baseline-grid);
-  margin: 0px;
-  margin-inline-end: (2 * $baseline-grid);
-}
-
-.kd-error-icon {
-  margin-right: $baseline-grid;
+.kd-notifications-panel:lang(fa) {
+  left: 1rem !important;
 }

@@ -41,7 +41,7 @@
 }
 
 .kd-card-toggle {
-  margin-right: (3 * $baseline-grid);
+  margin-inline-end: (3 * $baseline-grid);
 }
 
 .kd-card-content {
@@ -58,6 +58,8 @@
   font-weight: $regular-font-weight;
   margin-right: $baseline-grid;
   padding: (2 * $baseline-grid) 0 (2 * $baseline-grid) (2 * $baseline-grid);
+  padding-inline-start: (2 * $baseline-grid);
+  padding-inline-end: 0;
 }
 
 .kd-card-description {

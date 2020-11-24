@@ -24,6 +24,10 @@ const SUPPORTED_LANGUAGES: LanguageConfig[] = [
     value: 'de',
   },
   {
+    label: 'فارسی',
+    value: 'fa',
+  },
+  {
     label: 'French',
     value: 'fr',
   },

@@ -18,6 +18,9 @@
 @import './variables';
 @import './mixins';
 
+///// Override styles when selected language is rtl based.
+@import './rtl';
+
 /////////////////////////////////
 // Overrides of default styles //
 /////////////////////////////////
@@ -34,7 +37,7 @@ a {
 
 button {
   &:not(:last-child) {
-    margin-right: $baseline-grid;
+    margin-inline-end: $baseline-grid;
   }
 }
 
@@ -238,6 +241,8 @@ router-outlet::after {
   font-family: $font-family-sans;
   font-size: $title-font-size-base;
   margin: (3 * $baseline-grid) 0 (2.5 * $baseline-grid) (4.5 * $baseline-grid);
+  margin-inline-start: (3 * $baseline-grid);
+  margin-inline-end: 0px;
 }
 
 .kd-card-top-radius {

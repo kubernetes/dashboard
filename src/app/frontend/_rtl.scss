@@ -1,0 +1,107 @@
+// Copyright 2017 The Kubernetes Authors.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+
+body:lang(fa) {
+  direction: rtl;
+
+  .mat-form-field {
+    text-align: unset !important;
+  }
+  .mat-paginator-range-actions {
+    flex-direction: row-reverse;
+  }
+  .kd-slider-value {
+    text-align: left !important;
+  }
+  .mat-option {
+    text-align: right;
+    padding: 0 16px !important;
+    padding-right: 32px !important;
+  }
+
+  .mat-optgroup-label {
+    text-align: right;
+  }
+
+  .mat-drawer {
+    transform: translate3d(100%, 0, 0);
+  }
+
+  .mat-slide-toggle {
+    direction: ltr !important;
+  }
+
+  .kd-namespace-select-input-border {
+    text-align: right;
+    input {
+      padding: 16px 16px 16px 0px;
+      text-align: right;
+    }
+  }
+
+  .kd-breadcrumbs-container {
+    mat-icon {
+      transform: rotateZ(180deg);
+    }
+  }
+
+
+
+  ///// Set Font family
+
+  @import url('https://cdn.jsdelivr.net/gh/rastikerdar/vazir-font@v27.0.1/dist/font-face.css');
+  $font-family-sans: 'Vazir', sans-serif;
+
+
+  .kd-dialog-text {
+    font-family: $font-family-sans !important;
+  }
+  .kd-card-group-header {
+    font-family: $font-family-sans !important;
+  }
+
+  .kd-auth-status {
+    font-family: $font-family-sans !important;
+  }
+
+  .mat-button,
+  .mat-raised-button,
+  .mat-icon-button,
+  .mat-stroked-button,
+  .mat-flat-button,
+  .mat-fab,
+  .mat-mini-fab,
+  .mat-card,
+  .mat-toolbar,
+  .mat-toolbar h1,
+  .mat-toolbar h2,
+  .mat-toolbar h3,
+  .mat-toolbar h4,
+  .mat-toolbar h5,
+  .mat-toolbar h6,
+  .mat-table,
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  span,
+  p,
+  a,
+  div {
+    font-family: $font-family-sans !important;
+  }
+}

@@ -17,6 +17,10 @@
             "translation": "i18n/de/messages.de.xlf",
             "baseHref": ""
           },
+          "fa": {
+            "translation": "i18n/fa/messages.fa.xlf",
+            "baseHref": ""
+          },
           "fr": {
             "translation": "i18n/fr/messages.fr.xlf",
             "baseHref": ""

@@ -18,8 +18,8 @@
   border-radius: $baseline-grid / 4;
   height: 4.75 * $baseline-grid;
   line-height: 4.5 * $baseline-grid;
-  margin-right: 2 * $baseline-grid;
-  padding-right: 3.5 * $baseline-grid;
+  margin-inline-end: 2 * $baseline-grid;
+  padding-inline-end: 3.5 * $baseline-grid;
 
   ::ng-deep {
     .mat-form-field-infix {
@@ -36,7 +36,7 @@
       font-family: $font-family-sans;
       font-size: $subhead-font-size-base;
       line-height: 4.5 * $baseline-grid;
-      margin-left: 2 * $baseline-grid;
+      margin-inline-start: 2 * $baseline-grid;
     }
   }
 }
