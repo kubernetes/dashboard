@@ -9,7 +9,7 @@ It allows users to manage applications running in the cluster and troubleshoot t
 # Add kubernetes-dashboard repository
 helm repo add kubernetes-dashboard https://kubernetes.github.io/dashboard/
 # Deploy a Helm Release named "my-release" using the kubernetes-dashboard chart
-helm install kubernetes-dashboard/kubernetes-dashboard --name my-release
+helm install my-release kubernetes-dashboard/kubernetes-dashboard
 ```
 
 ## Introduction
@@ -133,14 +133,14 @@ Parameter                                       | Description                   
 Specify each parameter using the `--set key=value[,key=value]` argument to `helm install`. For example,
 
 ```console
-helm install kubernetes-dashboard/kubernetes-dashboard --name my-release \
+helm install my-release kubernetes-dashboard/kubernetes-dashboard \
   --set=service.externalPort=8080,resources.limits.cpu=200m
 ```
 
 Alternatively, a YAML file that specifies the values for the above parameters can be provided while installing the chart. For example,
 
 ```console
-helm install kubernetes-dashboard/kubernetes-dashboard --name my-release -f values.yaml
+helm install my-release kubernetes-dashboard/kubernetes-dashboard -f values.yaml
 ```
 
 > **Tip**: You can use the default [values.yaml](values.yaml), which is used by default, as reference
