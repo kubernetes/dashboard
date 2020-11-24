@@ -75,7 +75,7 @@ The Dashboard project can be built for production by using the following task:
 npm run build
 ```
 
-The code is compiled, compressed and debug support removed. The dashboard binary can be found in the `dist` folder.
+The code is compiled, compressed, i18n support is enabled and debug support removed. The dashboard binary can be found in the `dist` folder.
 
 To build and immediately serve Dashboard from the `dist` folder, use the following task:
 
