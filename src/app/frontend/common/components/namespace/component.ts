@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {Component, ElementRef, Inject, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
 import {MatSelect} from '@angular/material/select';
 import {ActivatedRoute, NavigationEnd, Router} from '@angular/router';
@@ -20,15 +20,14 @@ import {NamespaceList} from '@api/backendapi';
 import {Subject} from 'rxjs';
 import {distinctUntilChanged, filter, startWith, switchMap, takeUntil} from 'rxjs/operators';
 
-import {CONFIG} from '../../../index.config';
+import {Config, CONFIG_DI_TOKEN} from '../../../index.config';
 import {NAMESPACE_STATE_PARAM} from '../../params/params';
 import {HistoryService} from '../../services/global/history';
 import {NamespaceService} from '../../services/global/namespace';
-import {NotificationSeverity, NotificationsService} from '../../services/global/notifications';
+import {NotificationsService} from '../../services/global/notifications';
 import {KdStateService} from '../../services/global/state';
 import {EndpointManager, Resource} from '../../services/resource/endpoint';
 import {ResourceService} from '../../services/resource/resource';
-
 import {NamespaceChangeDialog} from './changedialog/dialog';
 
 @Component({
@@ -57,12 +56,13 @@ export class NamespaceSelectorComponent implements OnInit, OnDestroy {
     private readonly dialog_: MatDialog,
     private readonly kdState_: KdStateService,
     private readonly notifications_: NotificationsService,
-    private readonly _activatedRoute: ActivatedRoute,
-    private readonly _historyService: HistoryService
+    private readonly activatedRoute_: ActivatedRoute,
+    private readonly historyService_: HistoryService,
+    @Inject(CONFIG_DI_TOKEN) private readonly appConfig_: Config
   ) {}
 
   ngOnInit(): void {
-    this._activatedRoute.queryParams.pipe(takeUntil(this.unsubscribe_)).subscribe(params => {
+    this.activatedRoute_.queryParams.pipe(takeUntil(this.unsubscribe_)).subscribe(params => {
       const namespace = params.namespace;
       if (!namespace) {
         this.setDefaultQueryParams_();
@@ -183,12 +183,12 @@ export class NamespaceSelectorComponent implements OnInit, OnDestroy {
         if (confirmed) {
           this.selectedNamespace = this._getCurrentResourceNamespaceParam();
           this.router_.navigate([], {
-            relativeTo: this._activatedRoute,
+            relativeTo: this.activatedRoute_,
             queryParams: {[NAMESPACE_STATE_PARAM]: this.selectedNamespace},
             queryParamsHandling: 'merge',
           });
         } else {
-          this._historyService.goToPreviousState('overview');
+          this.historyService_.goToPreviousState('overview');
         }
       });
   }
@@ -205,7 +205,7 @@ export class NamespaceSelectorComponent implements OnInit, OnDestroy {
     } else {
       // Change only the namespace as currently not on details view.
       this.router_.navigate([], {
-        relativeTo: this._activatedRoute,
+        relativeTo: this.activatedRoute_,
         queryParams: {[NAMESPACE_STATE_PARAM]: namespace},
         queryParamsHandling: 'merge',
       });
@@ -229,7 +229,7 @@ export class NamespaceSelectorComponent implements OnInit, OnDestroy {
   }
 
   private _getCurrentRoute(): ActivatedRoute {
-    let route = this._activatedRoute.root;
+    let route = this.activatedRoute_.root;
     while (route && route.firstChild) {
       route = route.firstChild;
     }
@@ -247,8 +247,8 @@ export class NamespaceSelectorComponent implements OnInit, OnDestroy {
   }
 
   setDefaultQueryParams_() {
-    this.router_.navigate([this._activatedRoute.snapshot.url], {
-      queryParams: {[NAMESPACE_STATE_PARAM]: CONFIG.defaultNamespace},
+    this.router_.navigate([this.activatedRoute_.snapshot.url], {
+      queryParams: {[NAMESPACE_STATE_PARAM]: this.appConfig_.defaultNamespace},
       queryParamsHandling: 'merge',
     });
   }
