@@ -140,3 +140,8 @@ export interface ViewportMetadata {
   target: HTMLElement;
   visible: boolean;
 }
+
+export interface LanguageConfig {
+  value: string;
+  label: string;
+}
