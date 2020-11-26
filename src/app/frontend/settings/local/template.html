@@ -33,15 +33,13 @@ limitations under the License.
                           (change)="onThemeChange()"></mat-slide-toggle>
       </div>
     </kd-settings-entry>
-    <kd-settings-entry *ngIf="!isDevMode()"
+    <kd-settings-entry *ngIf="isProdMode()"
                        key="Language"
                        i18n-key
                        desc="Change the language of the dashboard"
                        i18n-desc>
-      <mat-form-field fxFlex
-                      class="kd-language-select-input-container">
-        <mat-select class="kd-language-select"
-                    (ngModelChange)="onLanaugeSelected($event)"
+      <mat-form-field fxFlex>
+        <mat-select (ngModelChange)="onLanguageSelected($event)"
                     [(ngModel)]="selectedLanguage">
           <mat-option *ngFor="let language of languages"
                       [value]="language.value">

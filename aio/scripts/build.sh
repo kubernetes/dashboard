@@ -42,8 +42,7 @@ function build::frontend {
   languages=($(ls ${FRONTEND_DIR}))
   for language in "${languages[@]}"; do
     localeDir=${FRONTEND_DIR}/${language}
-    filenames=("$(find "${localeDir}" -name 'main.*.js' -exec basename {} \;)")
-    filename=${filenames[0]}
+    filename=("$(find "${localeDir}" -name 'main.*.js' -exec basename {} \;)")
 
     mv "${localeDir}/${filename}" "${localeDir}/${language}.${filename}"
     sed -i "s/${filename}/${language}.${filename}/" "${localeDir}/index.html"

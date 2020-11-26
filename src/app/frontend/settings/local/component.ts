@@ -47,12 +47,12 @@ export class LocalSettingsComponent implements OnInit {
     this.settings_.handleThemeChange(this.settings.isThemeDark);
   }
 
-  onLanaugeSelected(selectedLanguageValue: string) {
-    this.cookies_.set(this.appConfig_.languageCookieName, selectedLanguageValue);
+  onLanguageSelected(selectedLanguage: string) {
+    this.cookies_.set(this.appConfig_.languageCookieName, selectedLanguage);
     this.document_.location.reload();
   }
 
-  isDevMode(): boolean {
-    return !environment.production;
+  isProdMode(): boolean {
+    return environment.production;
   }
 }
