@@ -14,8 +14,8 @@
 
 apiVersion: v1
 name: kubernetes-dashboard
-version: 3.0.1
-appVersion: 2.0.5
+version: 3.0.0
+appVersion: 2.0.4
 description: General-purpose web UI for Kubernetes clusters
 keywords:
 - kubernetes
