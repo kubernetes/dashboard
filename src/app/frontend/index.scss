@@ -18,7 +18,7 @@
 @import './variables';
 @import './mixins';
 
-///// Override styles when selected language is rtl based.
+// Override styles when selected language is rtl based.
 @import './rtl';
 
 /////////////////////////////////
@@ -242,7 +242,7 @@ router-outlet::after {
   font-size: $title-font-size-base;
   margin: (3 * $baseline-grid) 0 (2.5 * $baseline-grid) (4.5 * $baseline-grid);
   margin-inline-start: (3 * $baseline-grid);
-  margin-inline-end: 0px;
+  margin-inline-end: 0;
 }
 
 .kd-card-top-radius {

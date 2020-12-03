@@ -57,13 +57,9 @@ body:lang(fa) {
     }
   }
 
-
-
-  ///// Set Font family
-
+  // Set Font family
   @import url('https://cdn.jsdelivr.net/gh/rastikerdar/vazir-font@v27.0.1/dist/font-face.css');
   $font-family-sans: 'Vazir', sans-serif;
-
 
   .kd-dialog-text {
     font-family: $font-family-sans !important;

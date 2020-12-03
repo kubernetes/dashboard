@@ -24,7 +24,7 @@ const SUPPORTED_LANGUAGES: LanguageConfig[] = [
     value: 'de',
   },
   {
-    label: 'فارسی',
+    label: 'Persian',
     value: 'fa',
   },
   {
