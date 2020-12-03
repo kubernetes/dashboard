@@ -45,7 +45,7 @@ function build::frontend {
     filename=("$(find "${localeDir}" -name 'main.*.js' -exec basename {} \;)")
 
     mv "${localeDir}/${filename}" "${localeDir}/${language}.${filename}"
-    sed -i "s/${filename}/${language}.${filename}/" "${localeDir}/index.html"
+    perl -i -pe"s/${filename}/${language}.${filename}/" "${localeDir}/index.html"
   done
 }
 
