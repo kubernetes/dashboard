@@ -56,48 +56,4 @@ body:lang(fa) {
       transform: rotateZ(180deg);
     }
   }
-
-  // Set Font family
-  @import url('https://cdn.jsdelivr.net/gh/rastikerdar/vazir-font@v27.0.1/dist/font-face.css');
-  $font-family-sans: 'Vazir', sans-serif;
-
-  .kd-dialog-text {
-    font-family: $font-family-sans !important;
-  }
-  .kd-card-group-header {
-    font-family: $font-family-sans !important;
-  }
-
-  .kd-auth-status {
-    font-family: $font-family-sans !important;
-  }
-
-  .mat-button,
-  .mat-raised-button,
-  .mat-icon-button,
-  .mat-stroked-button,
-  .mat-flat-button,
-  .mat-fab,
-  .mat-mini-fab,
-  .mat-card,
-  .mat-toolbar,
-  .mat-toolbar h1,
-  .mat-toolbar h2,
-  .mat-toolbar h3,
-  .mat-toolbar h4,
-  .mat-toolbar h5,
-  .mat-toolbar h6,
-  .mat-table,
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6,
-  span,
-  p,
-  a,
-  div {
-    font-family: $font-family-sans !important;
-  }
 }
