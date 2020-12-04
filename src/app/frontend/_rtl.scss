@@ -17,18 +17,21 @@ body:lang(fa) {
   direction: rtl;
 
   .mat-form-field {
-    text-align: unset !important;
+    text-align: unset;
   }
   .mat-paginator-range-actions {
     flex-direction: row-reverse;
   }
   .kd-slider-value {
-    text-align: left !important;
+    text-align: left;
   }
   .mat-option {
     text-align: right;
-    padding: 0 16px !important;
-    padding-right: 32px !important;
+  }
+  .mat-optgroup .mat-option {
+
+    padding-left: 16px;
+    padding-right: 32px;
   }
 
   .mat-optgroup-label {
@@ -40,7 +43,7 @@ body:lang(fa) {
   }
 
   .mat-slide-toggle {
-    direction: ltr !important;
+    direction: ltr;
   }
 
   .kd-namespace-select-input-border {

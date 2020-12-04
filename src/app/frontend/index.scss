@@ -18,9 +18,6 @@
 @import './variables';
 @import './mixins';
 
-// Override styles when selected language is rtl based.
-@import './rtl';
-
 /////////////////////////////////
 // Overrides of default styles //
 /////////////////////////////////
@@ -387,3 +384,7 @@ router-outlet::after {
     padding: (2 * $baseline-grid) (2 * $baseline-grid) 0 !important;
   }
 }
+
+// Override styles when selected language is rtl based.
+@import './rtl';
+
