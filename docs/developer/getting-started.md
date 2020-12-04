@@ -62,7 +62,13 @@ In the background, `npm start` makes a [concurrently](https://github.com/kimmobr
 
 Once the angular server starts, it takes some time to pre-compile all assets before serving them. By default, the angular development server watches for file changes and will update accordingly.
 
-## Building Dashboard for production
+
+As stated in the [Angular documentation](https://angular.io/guide/i18n#generate-app-versions-for-each-locale), i18n does not work in the development mode. 
+Follow [Building Dashboard for Production](#building-dashboard-for-production) section to test this feature.
+
+> Due to the deployment complexities of i18n and the need to minimize rebuild time, the development server only supports localizing a single locale at a time. Setting the "localize" option to true will cause an error when using ng serve if more than one locale is defined. Setting the option to a specific locale, such as "localize": ["fr"], can work if you want to develop against a specific locale (such as fr).
+
+## Building Dashboard for Production
 
 To build dashboard for production, you still need to install `bc`.
 
@@ -72,7 +78,7 @@ The Dashboard project can be built for production by using the following task:
 npm run build
 ```
 
-The code is compiled, compressed and debug support removed. The dashboard binary can be found in the `dist` folder.
+The code is compiled, compressed, i18n support is enabled and debug support removed. The dashboard binary can be found in the `dist` folder.
 
 To build and immediately serve Dashboard from the `dist` folder, use the following task:
 

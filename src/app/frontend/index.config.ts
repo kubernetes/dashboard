@@ -14,8 +14,44 @@
 
 import {InjectionToken} from '@angular/core';
 import {MatTooltipDefaultOptions} from '@angular/material/tooltip';
+import {LanguageConfig} from 'typings/frontendapi';
 
 export const CONFIG_DI_TOKEN = new InjectionToken<Config>('kd.config');
+
+const SUPPORTED_LANGUAGES: LanguageConfig[] = [
+  {
+    label: 'German',
+    value: 'de',
+  },
+  {
+    label: 'French',
+    value: 'fr',
+  },
+  {
+    label: 'English',
+    value: 'en',
+  },
+  {
+    label: 'Japanese',
+    value: 'ja',
+  },
+  {
+    label: 'Korean',
+    value: 'ko',
+  },
+  {
+    label: 'Chinese Simplified',
+    value: 'zh-Hans',
+  },
+  {
+    label: 'Chinese Traditional',
+    value: 'zh-Hant',
+  },
+  {
+    label: 'Chinese Traditional Hong Kong',
+    value: 'zh-Hant-HK',
+  },
+];
 
 export interface Config {
   authTokenCookieName: string;
@@ -24,6 +60,9 @@ export interface Config {
   authTokenHeaderName: string;
   defaultNamespace: string;
   authModeCookieName: string;
+  supportedLanguages: LanguageConfig[];
+  defaultLanguage: string;
+  languageCookieName: string;
 }
 
 export const CONFIG: Config = {
@@ -33,6 +72,9 @@ export const CONFIG: Config = {
   skipLoginPageCookieName: 'skipLoginPage',
   defaultNamespace: 'default',
   authModeCookieName: 'authMode',
+  supportedLanguages: SUPPORTED_LANGUAGES,
+  defaultLanguage: 'en',
+  languageCookieName: 'lang',
 };
 
 // Override default material tooltip values.

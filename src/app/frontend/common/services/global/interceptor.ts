@@ -13,22 +13,22 @@
 // limitations under the License.
 
 import {HttpEvent, HttpHandler, HttpInterceptor, HttpRequest} from '@angular/common/http';
-import {Injectable} from '@angular/core';
+import {Inject, Injectable} from '@angular/core';
 import {CookieService} from 'ngx-cookie-service';
 import {Observable} from 'rxjs';
-import {CONFIG} from '../../../index.config';
+import {Config, CONFIG_DI_TOKEN} from '../../../index.config';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
-  constructor(private readonly cookies_: CookieService) {}
+  constructor(private readonly cookies_: CookieService, @Inject(CONFIG_DI_TOKEN) private readonly appConfig_: Config) {}
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    const authCookie = this.cookies_.get(CONFIG.authTokenCookieName);
+    const authCookie = this.cookies_.get(this.appConfig_.authTokenCookieName);
     // Filter requests made to our backend starting with 'api/v1' and append request header
     // with token stored in a cookie.
     if (req.url.startsWith('api/v1') && authCookie.length) {
       const authReq = req.clone({
-        headers: req.headers.set(CONFIG.authTokenHeaderName, authCookie),
+        headers: req.headers.set(this.appConfig_.authTokenHeaderName, authCookie),
       });
 
       return next.handle(authReq);

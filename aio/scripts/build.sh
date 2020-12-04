@@ -36,6 +36,17 @@ function build::frontend {
             --prod \
             --localize \
             --outputPath=${FRONTEND_DIR}
+
+  # Avoid locale caching due to the same output file naming
+  # We'll add language code prefix to the generated main javascript file.
+  languages=($(ls ${FRONTEND_DIR}))
+  for language in "${languages[@]}"; do
+    localeDir=${FRONTEND_DIR}/${language}
+    filename=("$(find "${localeDir}" -name 'main.*.js' -exec basename {} \;)")
+
+    mv "${localeDir}/${filename}" "${localeDir}/${language}.${filename}"
+    perl -i -pe"s/${filename}/${language}.${filename}/" "${localeDir}/index.html"
+  done
 }
 
 function build::backend {
