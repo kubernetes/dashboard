@@ -3066,14 +3066,6 @@
           <context context-type="linenumber">52</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="bef0c68b6a7d96b56a8879ecfb9de80a83c151a2" datatype="html">
-        <source>Kubernetes Dashboard</source>
-        <target>Kubernetes Dashboard</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">../src/app/frontend/login/template.html</context>
-          <context context-type="linenumber">23</context>
-        </context-group>
-      </trans-unit>
       <trans-unit id="cf9072061094a1ad33866a311152c495c05890a0" datatype="html">
         <source>Kubeconfig</source>
         <target>Kubeconfig</target>
