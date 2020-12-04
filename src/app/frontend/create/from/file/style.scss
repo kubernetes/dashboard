@@ -15,10 +15,10 @@
 @import '../../../variables';
 
 .kd-create-from-file-info {
+  align-items: center;
+  display: flex;
   margin-bottom: $baseline-grid * 3;
   padding: 0 (.5 * $baseline-grid);
-  display: flex;
-  align-items: center;
 
   .material-icons {
     font-size: $body-font-size-base;

@@ -19,19 +19,24 @@ body:lang(fa) {
   .mat-form-field {
     text-align: unset;
   }
+
   .mat-paginator-range-actions {
     flex-direction: row-reverse;
   }
+
   .kd-slider-value {
     text-align: left;
   }
+
   .mat-option {
     text-align: right;
   }
-  .mat-optgroup .mat-option {
 
-    padding-left: 16px;
-    padding-right: 32px;
+  .mat-optgroup {
+    .mat-option {
+      padding-left: 16px;
+      padding-right: 32px;
+    }
   }
 
   .mat-optgroup-label {
@@ -48,8 +53,9 @@ body:lang(fa) {
 
   .kd-namespace-select-input-border {
     text-align: right;
+
     input {
-      padding: 16px 16px 16px 0px;
+      padding: 16px 16px 16px 0;
       text-align: right;
     }
   }
