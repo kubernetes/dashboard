@@ -3251,14 +3251,6 @@
           <context context-type="sourcefile">../src/app/frontend/chrome/userpanel/template.html</context>
           <context context-type="linenumber">43</context>
         </context-group>
-      </trans-unit>
-      <trans-unit id="c3ac815ec8c13020ec9ccb53a50a4f8b4c0b5929" datatype="html">
-        <source>
-    Sign out
-  </source>
-        <target state="new">
-    Sign out
-  </target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/chrome/userpanel/template.html</context>
           <context context-type="linenumber">49</context>
