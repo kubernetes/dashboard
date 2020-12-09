@@ -53,6 +53,7 @@ type holder struct {
 	disableSettingsAuthorizer bool
 
 	enableSkipLogin bool
+	signOutUrl      string
 
 	localeConfig string
 }

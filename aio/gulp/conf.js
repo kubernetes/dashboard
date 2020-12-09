@@ -221,6 +221,10 @@ export default {
       argv.enableInsecureLogin :
       false,
     /**
+     * Optional signout url to be called when signing out (if signed in with token)
+     */
+    signoutUrl: argv.signoutUrl,
+    /**
      * Defines token time to live.
      */
     tokenTTL: argv.tokenTTL !== undefined ?

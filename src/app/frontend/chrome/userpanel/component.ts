@@ -15,6 +15,7 @@
 import {Component, OnInit} from '@angular/core';
 import {LoginStatus} from '@api/backendapi';
 import {AuthService} from '../../common/services/global/authentication';
+import {Observable} from 'rxjs';
 
 @Component({
   selector: 'kd-user-panel',
@@ -41,7 +42,7 @@ export class UserPanelComponent implements OnInit {
     return this.loginStatus && !this.authService_.isLoginPageEnabled() && !this.loginStatus.headerPresent;
   }
 
-  isLoggedIn(): boolean {
+  isLoggedInClassic(): boolean {
     return this.loginStatus && !this.loginStatus.headerPresent && this.loginStatus.tokenPresent;
   }
 
@@ -49,7 +50,15 @@ export class UserPanelComponent implements OnInit {
     return this.loginStatus ? this.loginStatus.httpsMode : false;
   }
 
-  logout(): void {
+  logoutClassic(): void {
     this.authService_.logout();
+  }
+
+  isLoggedInHeader() {
+    return this.loginStatus && this.loginStatus.headerPresent && !this.loginStatus.impersonationPresent;
+  }
+
+  logoutHeader(): Observable<void> {
+    return this.authService_.logoutWithHeader();
   }
 }

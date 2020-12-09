@@ -73,6 +73,7 @@ var (
 	argAutoGenerateCertificates  = pflag.Bool("auto-generate-certificates", false, "When set to true, Dashboard will automatically generate certificates used to serve HTTPS. (default false)")
 	argEnableInsecureLogin       = pflag.Bool("enable-insecure-login", false, "When enabled, Dashboard login view will also be shown when Dashboard is not served over HTTPS. (default false)")
 	argEnableSkip                = pflag.Bool("enable-skip-login", false, "When enabled, the skip button on the login page will be shown. (default false)")
+	argSignOutUrl                = pflag.String("signout-url", "", "When set, this url will be invoked when signing out of dashboard if signed in with token")
 	argSystemBanner              = pflag.String("system-banner", "", "When non-empty displays message to Dashboard users. Accepts simple HTML tags.")
 	argSystemBannerSeverity      = pflag.String("system-banner-severity", "INFO", "Severity of system banner. Should be one of 'INFO|WARNING|ERROR'.")
 	argAPILogLevel               = pflag.String("api-log-level", "INFO", "Level of API request logging. Should be one of 'INFO|NONE|DEBUG'.")
@@ -252,6 +253,7 @@ func initArgHolder() {
 	builder.SetEnableInsecureLogin(*argEnableInsecureLogin)
 	builder.SetDisableSettingsAuthorizer(*argDisableSettingsAuthorizer)
 	builder.SetEnableSkipLogin(*argEnableSkip)
+	builder.SetSignOutUrl(*argSignOutUrl)
 	builder.SetNamespace(*argNamespace)
 	builder.SetLocaleConfig(*localeConfig)
 }

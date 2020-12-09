@@ -673,9 +673,11 @@ export interface LoginSpec {
 }
 
 export interface LoginStatus {
+  impersonationPresent: boolean;
   tokenPresent: boolean;
   headerPresent: boolean;
   httpsMode: boolean;
+  signOutUrl?: string;
 }
 
 export interface AppDeploymentContentSpec {

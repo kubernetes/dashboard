@@ -39,7 +39,8 @@ function getBackendArgs() {
     `--tls-key-file=${conf.backend.tlsKey}`,
     `--auto-generate-certificates=${conf.backend.autoGenerateCerts}`,
     `--enable-insecure-login=${conf.backend.enableInsecureLogin}`,
-    `--enable-skip-login=${conf.backend.enableSkipButton}`
+    `--enable-skip-login=${conf.backend.enableSkipButton}`,
+    `--signout-url=${conf.backend.signoutUrl}`
   ];
 
   if (conf.backend.systemBanner.length > 0) {

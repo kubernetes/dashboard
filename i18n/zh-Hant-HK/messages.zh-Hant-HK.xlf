@@ -2956,9 +2956,13 @@
           <context context-type="linenumber">67</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="7003098da97db80a0761fe9fdadb2f0349eb462c" datatype="html">
-        <source>Logged in with auth header</source>
-        <target>使用 auth header 登錄</target>
+      <trans-unit id="17e954c8f8ad84606c1f7fc92c195088e5998cbb" datatype="html">
+        <source>
+          Logged in with auth header
+        </source>
+        <target state="new">
+          Logged in with auth header
+        </target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/chrome/userpanel/template.html</context>
           <context context-type="linenumber">23</context>
@@ -2969,7 +2973,7 @@
         <target>使用 token 登錄</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/chrome/userpanel/template.html</context>
-          <context context-type="linenumber">25</context>
+          <context context-type="linenumber">27</context>
         </context-group>
       </trans-unit>
       <trans-unit id="f88774e30855665c168f36b58fdac3fdffbbe24f" datatype="html">
@@ -2977,7 +2981,7 @@
         <target>默認 service account</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/chrome/userpanel/template.html</context>
-          <context context-type="linenumber">28</context>
+          <context context-type="linenumber">30</context>
         </context-group>
       </trans-unit>
       <trans-unit id="f798949a4cdc74591fbf665c178513e4219c0898" datatype="html">
@@ -2987,7 +2991,7 @@
   </target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/chrome/userpanel/template.html</context>
-          <context context-type="linenumber">37</context>
+          <context context-type="linenumber">39</context>
         </context-group>
       </trans-unit>
       <trans-unit id="6426cc90184df1cdb238f45fce5220df8438ed62" datatype="html">
@@ -2997,7 +3001,19 @@
   </target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/chrome/userpanel/template.html</context>
-          <context context-type="linenumber">42</context>
+          <context context-type="linenumber">45</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="c3ac815ec8c13020ec9ccb53a50a4f8b4c0b5929" datatype="html">
+        <source>
+    Sign out
+  </source>
+        <target state="new">
+    Sign out
+  </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../src/app/frontend/chrome/userpanel/template.html</context>
+          <context context-type="linenumber">51</context>
         </context-group>
       </trans-unit>
       <trans-unit id="84d40318243f782005db3040f6bd3b9ec388b5d8" datatype="html">

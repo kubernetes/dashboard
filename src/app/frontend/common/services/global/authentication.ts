@@ -109,6 +109,11 @@ export class AuthService {
     this.router_.navigate(['login']);
   }
 
+  logoutWithHeader(): Observable<void> {
+    this.removeAuthCookies();
+    return this.callLogoutUrl();
+  }
+
   /**
    * Sends a token refresh request to the backend. In case user is not logged in
    * with token nothing will happen.
@@ -178,5 +183,13 @@ export class AuthService {
    */
   isLoginEnabled(): boolean {
     return this.isCurrentDomainSecure_() || this.isCurrentProtocolSecure_();
+  }
+
+  private callLogoutUrl(): Observable<void> {
+    const temp = 'oauth2/sign_out';
+
+    // TODO: get sign out url oauth from settings
+
+    return this.http_.get<void>(temp);
   }
 }

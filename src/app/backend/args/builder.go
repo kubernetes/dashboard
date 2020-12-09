@@ -156,6 +156,12 @@ func (self *holderBuilder) SetEnableSkipLogin(enableSkipLogin bool) *holderBuild
 	return self
 }
 
+// SetSignOutUrl 'signout-url' argument of Dashboard binary.
+func (self *holderBuilder) SetSignOutUrl(signOutUrl string) *holderBuilder {
+	self.holder.signOutUrl = signOutUrl
+	return self
+}
+
 // SetNamespace 'namespace' argument of Dashboard binary.
 func (self *holderBuilder) SetNamespace(namespace string) *holderBuilder {
 	self.holder.namespace = namespace

@@ -32,7 +32,6 @@ type LoginStatus struct {
 	HTTPSMode bool `json:"httpsMode"`
 	// True if impersonation is enabled
 	ImpersonationPresent bool `json:"impersonationPresent"`
-
 	// The impersonated user
 	ImpersonatedUser string `json:"impersonatedUser"`
 }
