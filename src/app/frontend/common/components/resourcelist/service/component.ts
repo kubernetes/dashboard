@@ -90,7 +90,7 @@ export class ServiceListComponent extends ResourceListWithStatuses<ServiceList, 
   }
 
   getDisplayColumns(): string[] {
-    return ['statusicon', 'name', 'labels', 'clusterip', 'internalendp', 'externalendp', 'created'];
+    return ['statusicon', 'name', 'labels', 'clusterip', 'internalendp', 'externalendp', 'created', 'type'];
   }
 
   private shouldShowNamespaceColumn_(): boolean {

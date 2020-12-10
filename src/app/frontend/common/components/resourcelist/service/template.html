@@ -106,6 +106,12 @@ limitations under the License.
         </mat-cell>
       </ng-container>
 
+      <ng-container matColumnDef="type">
+        <mat-header-cell *matHeaderCellDef
+                         i18n>Type</mat-header-cell>
+        <mat-cell *matCellDef="let service">{{service.type}}</mat-cell>
+      </ng-container>
+
       <ng-container *ngFor="let col of getActionColumns()"
                     [matColumnDef]="col.name">
         <mat-header-cell *matHeaderCellDef></mat-header-cell>
