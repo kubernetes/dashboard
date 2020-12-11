@@ -104,7 +104,7 @@ export class LoginComponent implements OnInit {
   }
 
   login(): void {
-    if (!this.hasToken_()) {
+    if (this.hasEmptyToken_()) {
       return;
     }
 
@@ -159,8 +159,8 @@ export class LoginComponent implements OnInit {
     }
   }
 
-  private hasToken_(): boolean {
-    return this.selectedAuthenticationMode === LoginModes.Token && !!this.token_ && !!this.token_.trim();
+  private hasEmptyToken_(): boolean {
+    return this.selectedAuthenticationMode === LoginModes.Token && (!this.token_ || !this.token_.trim());
   }
 
   private saveLastLoginMode_(): void {
