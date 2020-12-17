@@ -12,15 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {COMMA, ENTER} from '@angular/cdk/keycodes';
-import {Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {BreakpointObserver, Breakpoints} from '@angular/cdk/layout';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {NgForm} from '@angular/forms';
-import {MatAutocompleteSelectedEvent} from '@angular/material/autocomplete';
-import {MatChipInputEvent} from '@angular/material/chips';
 import {MatDialog} from '@angular/material/dialog';
 import {GlobalSettings, NamespaceList} from '@api/root.api';
 import {Observable, of, Subject} from 'rxjs';
-import {catchError, map, takeUntil, tap} from 'rxjs/operators';
+import {catchError, map, take, takeUntil, tap} from 'rxjs/operators';
 import {GlobalSettingsService} from '../../common/services/global/globalsettings';
 import {TitleService} from '../../common/services/global/title';
 import {EndpointManager, Resource} from '../../common/services/resource/endpoint';
@@ -28,7 +26,12 @@ import {ResourceService} from '../../common/services/resource/resource';
 
 import {SaveAnywayDialog} from './saveanywaysdialog/dialog';
 
-enum Controls {}
+enum BreakpointElementCount {
+  XLarge = 5,
+  Large = 3,
+  Medium = 2,
+  Small = 2,
+}
 
 @Component({
   selector: 'kd-global-settings',
@@ -38,18 +41,46 @@ enum Controls {}
 export class GlobalSettingsComponent implements OnInit, OnDestroy {
   settings: GlobalSettings = {} as GlobalSettings;
   hasLoadError = false;
+  namespaces$: Observable<string[]>;
+  visibleNamespaces = 0;
 
   // Keep it in sync with ConcurrentSettingsChangeError constant from the backend.
   private readonly concurrentChangeErr_ = 'settings changed since last reload';
   private readonly unsubscribe_ = new Subject<void>();
+  private readonly visibleNamespacesMap: [string, number][] = [
+    [Breakpoints.XLarge, BreakpointElementCount.XLarge],
+    [Breakpoints.Large, BreakpointElementCount.Large],
+    [Breakpoints.Medium, BreakpointElementCount.Medium],
+    [Breakpoints.Small, BreakpointElementCount.Small],
+  ];
 
   constructor(
     private readonly settings_: GlobalSettingsService,
+    private readonly namespaceService_: ResourceService<NamespaceList>,
     private readonly dialog_: MatDialog,
-    private readonly title_: TitleService
+    private readonly title_: TitleService,
+    private readonly breakpointObserver_: BreakpointObserver
   ) {}
 
+  get invisibleCount(): number {
+    return this.settings.namespaceFallbackList
+      ? this.settings.namespaceFallbackList.length - this.visibleNamespaces
+      : 0;
+  }
+
   ngOnInit(): void {
+    const endpoint = EndpointManager.resource(Resource.namespace).list();
+    this.namespaces$ = this.namespaceService_
+      .get(endpoint)
+      .pipe(map(list => list.namespaces.map(ns => ns.objectMeta.name)));
+    this.breakpointObserver_
+      .observe([Breakpoints.Small, Breakpoints.Medium, Breakpoints.Large, Breakpoints.XLarge])
+      .pipe(takeUntil(this.unsubscribe_))
+      .subscribe(result => {
+        const breakpoint = this.visibleNamespacesMap.find(breakpoint => result.breakpoints[breakpoint[0]]);
+        this.visibleNamespaces = breakpoint ? breakpoint[1] : BreakpointElementCount.Small;
+      });
+
     this.load();
   }
 
@@ -82,7 +113,7 @@ export class GlobalSettingsComponent implements OnInit, OnDestroy {
     this.settings.resourceAutoRefreshTimeInterval = this.settings_.getResourceAutoRefreshTimeInterval();
     this.settings.disableAccessDeniedNotifications = this.settings_.getDisableAccessDeniedNotifications();
     this.settings.defaultNamespace = this.settings_.getDefaultNamespace();
-    this.settings.namespaceFallbackList = this.settings_.getNamespaceFallbackList();
+    this.settings.namespaceFallbackList = [...Array(256)].map(_ => Math.random().toString(36));
   }
 
   onLoadError(): void {

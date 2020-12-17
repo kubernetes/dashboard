@@ -388,3 +388,12 @@ router-outlet::after {
     padding: (2 * $baseline-grid) (2 * $baseline-grid) 0 !important;
   }
 }
+
+.kd-namespace-chip-list {
+  overflow-x: hidden;
+
+  .mat-chip-list-wrapper {
+    flex-wrap: nowrap;
+    overflow-x: hidden;
+  }
+}

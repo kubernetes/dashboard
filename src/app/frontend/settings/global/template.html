@@ -18,15 +18,15 @@ limitations under the License.
          [expandable]="true"
          *ngIf="!hasLoadError">
   <div title
-       i18n>Global settings</div>
+       i18n>Global settings
+  </div>
   <div content>
     <p i18n>
       Global settings are stored in config map, so all of them are applied for every instance of the
       app.
     </p>
     <br>
-    <form #form="ngForm"
-          (ngSubmit)="save(form)">
+    <form #form="ngForm">
       <kd-settings-entry key="Cluster name"
                          i18n-key
                          desc="Cluster name appears in the browser window title if it is set."
@@ -46,12 +46,20 @@ limitations under the License.
                          desc="Namespace that should be selected by default after logging in."
                          i18n-desc>
         <mat-form-field fxFlex>
-          <input [(ngModel)]="settings.defaultNamespace"
+          <input #namespaceInput
+                 [(ngModel)]="settings.defaultNamespace"
                  name="defaultNamespace"
                  i18n-placeholder
-                 placeholder="Namespace name"
+                 placeholder="Namespace"
                  type="text"
+                 [matAutocomplete]="auto"
                  matInput>
+          <mat-autocomplete #auto="matAutocomplete">
+            <mat-option *ngFor="let namespace of (namespaces$ | async) | filterBy: namespaceInput.value"
+                        [value]="namespace">
+              {{namespace}}
+            </mat-option>
+          </mat-autocomplete>
         </mat-form-field>
       </kd-settings-entry>
 
@@ -59,28 +67,35 @@ limitations under the License.
                          i18n-key
                          desc="List of namespaces that should be presented to user without namespace list privileges."
                          i18n-desc>
-        <mat-form-field fxFlex class="kd-namespace-select-input-container">
+        <mat-form-field fxFlex>
           <mat-label>Namespaces</mat-label>
-          <mat-chip-list #chipList>
-            <mat-chip
-              *ngFor="let namespace of settings.namespaceFallbackList"
-              [selectable]="true">
-              {{namespace}}
-              <mat-icon matChipRemove>cancel</mat-icon>
-            </mat-chip>
-            <input
-              placeholder="Namespaces"
-              #namespaceListInput
-              [readOnly]="true"
-              [matChipInputFor]="chipList">
-          </mat-chip-list>
-          <mat-autocomplete #auto="matAutocomplete"
-                            (optionSelected)="selectedNamespace($event)">
-            <mat-option *ngFor="let namespace of (namespaces$ | async) | filterBy: namespaceListInput.value"
-                        [value]="namespace">
-              {{namespace}}
-            </mat-option>
-          </mat-autocomplete>
+          <div fxFlex="100"
+               fxLayout="row">
+            <mat-chip-list fxFlex="80"
+                           fxLayoutAlign=" center"
+                           class="kd-namespace-chip-list">
+              <mat-chip *ngFor="let namespace of settings.namespaceFallbackList | slice:0:visibleNamespaces"
+                        style="max-width: 100px; text-overflow: ellipsis; white-space: nowrap; overflow: hidden; display: block"
+                        [matTooltip]="namespace"
+                        [selectable]="false"
+                        [removable]="false">
+                {{namespace}}
+              </mat-chip>
+              <mat-chip *ngIf="invisibleCount > 0"
+                        [disabled]="true"
+                        fxFlex
+                        fxLayoutAlign=" center">+ {{invisibleCount}}</mat-chip>
+            </mat-chip-list>
+            <div fxFlex="20"
+                 fxLayoutAlign="end">
+              <button mat-icon-button style="margin-right: 0">
+                <mat-icon style="font-size: 20px">edit</mat-icon>
+              </button>
+              <button mat-icon-button>
+                <mat-icon>add</mat-icon>
+              </button>
+            </div>
+          </div>
         </mat-form-field>
       </kd-settings-entry>
 
@@ -173,7 +188,7 @@ limitations under the License.
       </kd-settings-entry>
       <br><br>
       <button [disabled]="form.pristine"
-              type="submit"
+              (click)="save(form)"
               color="primary"
               mat-raised-button
               i18n>

@@ -103,7 +103,6 @@
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
-              "extractCss": true,
               "namedChunks": false,
               "localize": true,
               "extractLicenses": true,
@@ -121,6 +120,7 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
+            "aot": true,
             "browserTarget": "kubernetes-dashboard:build",
             "port": 8080
           },
