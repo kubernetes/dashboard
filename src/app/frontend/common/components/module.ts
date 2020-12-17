@@ -58,8 +58,6 @@ import {LoadingSpinner} from './list/spinner/component';
 import {ListZeroStateComponent} from './list/zerostate/component';
 import {NamespaceChangeDialog} from './namespace/changedialog/dialog';
 import {NamespaceSelectorComponent} from './namespace/component';
-import {NamespaceAddDialog} from './namespace/v2/adddialog/dialog';
-import {NamespaceSelectorComponent as NamespaceSelectorComponentV2} from './namespace/v2/component';
 import {ObjectMetaComponent} from './objectmeta/component';
 import {PodStatusCardComponent} from './podstatus/component';
 import {PolicyRuleListComponent} from './policyrule/component';
@@ -200,6 +198,6 @@ const components = [
   imports: [SharedModule, DirectivesModule, MatTableModule, MatTableModule],
   declarations: [...components],
   exports: [...components],
-  entryComponents: [ChipDialog, RowDetailComponent, MenuComponent, NamespaceChangeDialog, NamespaceAddDialog],
+  entryComponents: [ChipDialog, RowDetailComponent, MenuComponent, NamespaceChangeDialog],
 })
 export class ComponentsModule {}
