@@ -10,8 +10,8 @@
     "paths": {
       "@api/*": ["typings/*"]
     },
-    "outDir": "./out-tsc/app",
-    "target": "es5",
+    "outDir": ".tmp/out-tsc",
+    "target": "esnext",
     "moduleResolution": "node",
     "sourceMap": true,
     "strict": false,
@@ -27,13 +27,6 @@
     "typeRoots": [
       "./node_modules/@types",
       "./src/typings"
-    ],
-    "types": ["node"]
-  },
-  "include": [
-    "src/**/*"
-  ],
-  "exclude": [
-    "src/**/*.spec.ts"
-  ]
+    ]
+  }
 }

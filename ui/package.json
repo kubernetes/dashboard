@@ -7,6 +7,7 @@
   },
   "license": "Apache-2.0",
   "scripts": {
+    "test": "ng test --karma-config karma.conf.js --watch=false",
     "postversion": "node hack/version.js",
     "postinstall": "npm run postversion && ngcc",
     "start": "concurrently \"npm run start:backend --kubernetes-dashboard:sidecar_host=$npm_package_config_sidecar_host\" \"npm run start:frontend --kubernetes-dashboard:bind_address=$npm_package_config_bind_address --kubernetes-dashboard:port=$npm_package_config_port\"",
@@ -28,8 +29,6 @@
     "docker:push:head": "npm run docker:build:head && gulp push-to-docker:head:cross",
     "cy:open": "npx cypress open",
     "cy:run": "npx cypress run",
-    "test": "npm run test:frontend && npm run test:backend && npm run e2e",
-    "test:frontend": "ng test --karma-config ./aio/karma.conf.js --watch=false",
     "test:frontend:coverage": "ng test --karma-config ./aio/karma.conf.js --watch=false --code-coverage",
     "test:frontend:watch": "ng test --karma-config ./aio/karma.conf.js",
     "test:backend": "go test github.com/kubernetes/dashboard/src/app/backend/...",

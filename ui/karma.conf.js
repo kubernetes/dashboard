@@ -28,7 +28,7 @@ module.exports = function(config) {
         watched: true
       },
       {
-        pattern: './aio/karma-test-shim.js',
+        pattern: 'karma-test-shim.js',
         included: true,
         watched: true,
       }
@@ -38,8 +38,10 @@ module.exports = function(config) {
 
     browserConsoleLogOptions: {terminal: true, level: ''},
 
-    frameworks: ['jasmine', '@angular-devkit/build-angular'],
-
+    frameworks: [
+      'jasmine',
+      '@angular-devkit/build-angular',
+    ],
     plugins: [
       require('@angular-devkit/build-angular/plugins/karma'),
       require('karma-chrome-launcher'),
@@ -63,11 +65,10 @@ module.exports = function(config) {
     },
 
     client: {
-      clearContext: false  // leave Jasmine Spec Runner output visible in browser
+      clearContext: false,
     },
 
     angularCli: {environment: 'dev'},
-
     colors: true,
     autoWatch: true,
     port: 9876,
