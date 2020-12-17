@@ -80,7 +80,7 @@ func toPersistentVolumeClaim(pvc v1.PersistentVolumeClaim) PersistentVolumeClaim
 		TypeMeta:     api.NewTypeMeta(api.ResourceKindPersistentVolumeClaim),
 		Status:       string(pvc.Status.Phase),
 		Volume:       pvc.Spec.VolumeName,
-		Capacity:     pvc.Status.Capacity,
+		Capacity:     pvc.Spec.Resources.Requests,
 		AccessModes:  pvc.Spec.AccessModes,
 		StorageClass: pvc.Spec.StorageClassName,
 	}
