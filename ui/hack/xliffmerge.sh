@@ -13,7 +13,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# Collect current localized files
+# Collect current localized files.
 languages=($(find i18n/* -type d|cut -d"/" -f2))
 for language in "${languages[@]}"; do
   if [ ! -L i18n/${language}/messages.${language}.xlf ]; then
