@@ -19,20 +19,20 @@
   height: 100%;
   width: $nav-width + 8px;
 
+  &.visible {
+    transition: width .3s;
+  }
+
+  &.hidden {
+    transition: width .2s;
+    width: 0;
+  }
+
   .kd-nav {
     background-color: transparent;
     font-size: $body-font-size-base;
     overflow-y: auto;
     white-space: nowrap;
-
-    &.visible {
-      transition: width .3s;
-    }
-
-    &.hidden {
-      transition: width .2s;
-      width: 0;
-    }
 
     .kd-nav-items {
       padding: $content-padding 3px $content-padding $content-padding;

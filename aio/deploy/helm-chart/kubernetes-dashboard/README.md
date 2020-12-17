@@ -22,7 +22,7 @@ To install the [Chart](https://helm.sh/docs/intro/using_helm/#three-big-concepts
 
 ```console
 helm repo add kubernetes-dashboard https://kubernetes.github.io/dashboard/
-helm install kubernetes-dashboard/kubernetes-dashboard --name my-release
+helm install kubernetes-dashboard kubernetes-dashboard/kubernetes-dashboard
 ```
 
 The command deploys kubernetes-dashboard on the Kubernetes cluster in the default configuration.
@@ -42,6 +42,10 @@ The command removes all the Kubernetes components associated with the chart and 
 
 A major chart version change (like v1.2.3 -> v2.0.0) indicates that there is an
 incompatible breaking change needing manual actions.
+
+### Upgrade from 2.x.x to 3.x.x
+
+- Switch Ingress from extensions/v1beta1 to networking.k8s.io/v1beta1. Requires kubernetes >= 1.14.0.
 
 ### Upgrade from 1.x.x to 2.x.x
 
@@ -71,7 +75,7 @@ The following table lists the configurable parameters of the kubernetes-dashboar
 Parameter                                       | Description                                                                                                                      | Default
 ------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------
 `image.repository`                              | Repository for container image                                                                                                   | `kubernetesui/dashboard`
-`image.tag`                                     | Image tag                                                                                                                        | `v2.0.4`
+`image.tag`                                     | Image tag                                                                                                                        | `v2.1.0`
 `image.pullPolicy`                              | Image pull policy                                                                                                                | `IfNotPresent`
 `image.pullSecrets`                             | Image pull secrets                                                                                                               | `[]`
 `replicaCount`                                  | Number of replicas                                                                                                               | `1`
@@ -106,7 +110,7 @@ Parameter                                       | Description                   
 `pinnedCRDs`                                    | Pinned CRDs that will be displayed in dashboard's menu                                                                           | `[]`
 `metricsScraper.enabled`                        | Wether to enable dashboard-metrics-scraper                                                                                       | `false`
 `metricsScraper.image.repository`               | Repository for metrics-scraper image                                                                                             | `kubernetesui/metrics-scraper`
-`metricsScraper.image.tag`                      | Repository for metrics-scraper image tag                                                                                         | `v1.0.5`
+`metricsScraper.image.tag`                      | Repository for metrics-scraper image tag                                                                                         | `v1.0.6`
 `metricsScraper.containerSecurityContext`       | SecurityContext for the kubernetes dashboard metrics scraper container                                                           | `{allowPrivilegeEscalation:false, readOnlyRootFilesystem: true, runAsUser: 1001, runAsGroup: 2001}`
 `metrics-server.enabled`                        | Wether to enable metrics-server                                                                                                  | `false`
 `rbac.create`                                   | Create & use RBAC resources                                                                                                      | `true`

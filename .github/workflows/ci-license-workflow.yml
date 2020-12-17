@@ -37,7 +37,7 @@ jobs:
           fetch-depth: 0
 
       - name: Setup NodeJS
-        uses: actions/setup-node@v1.4.2
+        uses: actions/setup-node@v2.1.2
         with:
           node-version: 12.6.0
 

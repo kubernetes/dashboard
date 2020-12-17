@@ -12,12 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {EventEmitter, Injectable} from '@angular/core';
-import {CONFIG} from '../../../index.config';
+import {EventEmitter, Inject, Injectable} from '@angular/core';
+import {Config, CONFIG_DI_TOKEN} from '../../../index.config';
 
 @Injectable()
 export class NamespaceService {
   onNamespaceChangeEvent = new EventEmitter<string>();
+
+  constructor(@Inject(CONFIG_DI_TOKEN) private readonly appConfig_: Config) {}
 
   /**
    * Internal key for empty selection. To differentiate empty string from nulls.
@@ -37,7 +39,7 @@ export class NamespaceService {
   }
 
   current(): string {
-    return this.currentNamespace_ || CONFIG.defaultNamespace;
+    return this.currentNamespace_ || this.appConfig_.defaultNamespace;
   }
 
   getAllNamespacesKey(): string {
@@ -45,7 +47,7 @@ export class NamespaceService {
   }
 
   getDefaultNamespace(): string {
-    return CONFIG.defaultNamespace;
+    return this.appConfig_.defaultNamespace;
   }
 
   isNamespaceValid(namespace: string): boolean {

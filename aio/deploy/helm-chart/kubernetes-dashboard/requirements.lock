@@ -1,6 +1,6 @@
 dependencies:
 - name: metrics-server
-  repository: https://kubernetes-charts.storage.googleapis.com/
+  repository: https://charts.helm.sh/stable/
   version: 2.11.1
-digest: sha256:22392d72416a0330f0c537fcc6cd306da7d25ddf511726bdf8a227d6a6ca8be1
-generated: "2020-04-23T20:58:52.074628+02:00"
+digest: sha256:2204066c4b4bc9daba461f92f4cccff2cdf97e72c473d6e49ab6d17ee9560033
+generated: "2020-11-17T02:26:27.039499349Z"

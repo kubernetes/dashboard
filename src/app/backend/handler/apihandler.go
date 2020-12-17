@@ -99,9 +99,7 @@ type TerminalResponse struct {
 // CreateHTTPAPIHandler creates a new HTTP handler that handles all requests to the API of the backend.
 func CreateHTTPAPIHandler(iManager integration.IntegrationManager, cManager clientapi.ClientManager,
 	authManager authApi.AuthManager, sManager settingsApi.SettingsManager,
-	sbManager systembanner.SystemBannerManager) (
-
-	http.Handler, error) {
+	sbManager systembanner.SystemBannerManager) (http.Handler, error) {
 	apiHandler := APIHandler{iManager: iManager, cManager: cManager, sManager: sManager}
 	wsContainer := restful.NewContainer()
 	wsContainer.EnableContentEncoding(true)

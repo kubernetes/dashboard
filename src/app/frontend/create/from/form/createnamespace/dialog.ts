@@ -19,7 +19,7 @@ import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material/dialog
 import {switchMap} from 'rxjs/operators';
 import {AlertDialog, AlertDialogConfig} from '../../../../common/dialogs/alert/dialog';
 import {CsrfTokenService} from '../../../../common/services/global/csrftoken';
-import {CONFIG} from '../../../../index.config';
+import {Config, CONFIG_DI_TOKEN} from '../../../../index.config';
 
 export interface CreateNamespaceDialogMeta {
   namespaces: string[];
@@ -34,8 +34,6 @@ export interface CreateNamespaceDialogMeta {
 })
 export class CreateNamespaceDialog implements OnInit {
   form: FormGroup;
-
-  private readonly config_ = CONFIG;
 
   /**
    * Max-length validation rule for namespace
@@ -52,7 +50,8 @@ export class CreateNamespaceDialog implements OnInit {
     private readonly http_: HttpClient,
     private readonly csrfToken_: CsrfTokenService,
     private readonly matDialog_: MatDialog,
-    private readonly fb_: FormBuilder
+    private readonly fb_: FormBuilder,
+    @Inject(CONFIG_DI_TOKEN) private readonly appConfig_: Config
   ) {}
 
   ngOnInit(): void {
@@ -83,7 +82,7 @@ export class CreateNamespaceDialog implements OnInit {
           this.http_.post<{valid: boolean}>(
             'api/v1/namespace',
             {...namespaceSpec},
-            {headers: new HttpHeaders().set(this.config_.csrfHeaderName, csrfToken.token)}
+            {headers: new HttpHeaders().set(this.appConfig_.csrfHeaderName, csrfToken.token)}
           )
         )
       )
