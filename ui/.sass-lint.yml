@@ -1,24 +1,21 @@
-# Configuration file for SASS lint.
-# Read more at: https://github.com/sasstools/sass-lint/blob/develop/docs/sass-lint.yml
-
 options:
   formatter: stylish
 
 rules:
-  # Extends
+  # Extends.
   extends-before-mixins: 2
   extends-before-declarations: 2
   placeholder-in-extend: 2
 
-  # Mixins
+  # Mixins.
   mixins-before-declarations: 2
 
-  # Line Spacing
+  # Line Spacing.
   one-declaration-per-line: 2
   empty-line-between-blocks: 2
   single-line-per-selector: 2
 
-  # Disallows
+  # Disallows.
   no-color-keywords: 2
   no-color-literals: 2
   no-css-comments: 2
@@ -34,11 +31,7 @@ rules:
   no-qualifying-elements: 2
   no-trailing-zero: 2
   no-transition-all: 2
-
-  # Disabled because the project includes external fonts.
   no-url-protocols: 0
-
-  # Excluded Internet Explorer prefix (ms), because some of bug fixes require it.
   no-vendor-prefixes:
       - 2
       - additional-identifiers: []
@@ -46,12 +39,12 @@ rules:
   no-warn: 2
   property-units: 2
 
-  # Nesting
+  # Nesting.
   force-attribute-nesting: 3
   force-element-nesting: 3
   force-pseudo-nesting: 3
 
-  # Name Formats
+  # Name Formats.
   class-name-format: 2
   function-name-format: 2
   id-name-format: 0
@@ -59,7 +52,7 @@ rules:
   placeholder-name-format: 2
   variable-name-format: 2
 
-  # Style Guide
+  # Style Guide.
   bem-depth: 0
   border-zero: 2
   brace-style: 2
@@ -77,7 +70,7 @@ rules:
   variable-for-property: 2
   zero-unit: 2
 
-  # Inner Spacing
+  # Inner Spacing.
   space-after-comma: 2
   space-before-colon: 2
   space-after-colon: 2
@@ -87,6 +80,6 @@ rules:
   space-between-parens: 2
   space-around-operator: 2
 
-  # Final Items
+  # Final Items.
   trailing-semicolon: 2
   final-newline: 2

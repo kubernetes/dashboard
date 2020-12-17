@@ -1,6 +1,6 @@
 {
   "name": "kubernetes-dashboard",
-  "version": "2.1.0",
+  "version": "3.0.0",
   "repository": {
     "type": "git",
     "url": "https://github.com/kubernetes/dashboard.git"
@@ -54,8 +54,8 @@
     "fix:license": "license-check-and-add add",
     "fix:i18n": "ng xi18n --outFile ../i18n/messages.xlf && aio/scripts/xliffmerge.sh",
     "clean": "rm -rf .go_workspace .tmp coverage dist npm-debug.log",
-    "postversion": "node aio/scripts/version.js",
-    "postinstall": "node aio/scripts/version.js && command -v golangci-lint >/dev/null 2>&1 || { curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $(go env GOPATH)/bin v1.30.0; } && go mod download && ./aio/scripts/install-codegen.sh && ngcc"
+    "postversion": "node version.js",
+    "postinstall": "node version.js && ngcc"
   },
   "husky": {
     "hooks": {
@@ -251,7 +251,6 @@
   },
   "eslintIgnore": [
     "node_modules/*",
-    "aio/*",
-    "src/app/frontend/common/services/global/history.ts"
+    "src/common/services/global/history.ts"
   ]
 }

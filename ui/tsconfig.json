@@ -6,7 +6,7 @@
   },
   "compileOnSave": false,
   "compilerOptions": {
-    "baseUrl": "src/app/frontend",
+    "baseUrl": "src",
     "paths": {
       "@api/*": ["typings/*"]
     },
@@ -26,7 +26,7 @@
     ],
     "typeRoots": [
       "./node_modules/@types",
-      "./src/app/frontend/typings"
+      "./src/typings"
     ]
   }
 }
