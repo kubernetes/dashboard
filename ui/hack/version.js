@@ -1,5 +1,5 @@
 const {gitDescribeSync} = require('git-describe');
-const {version} = require('./package.json');
+const {version} = require('../package.json');
 const {resolve, relative} = require('path');
 const {writeFileSync} = require('fs-extra');
 
@@ -40,9 +40,10 @@ const template = `// Copyright 2017 The Kubernetes Authors.
 import {VersionInfo} from '@api/frontendapi';
 
 // prettier-ignore
-export const version: VersionInfo = ${json};`;
+export const version: VersionInfo = ${json};
+`;
 
-const file = resolve(__dirname, 'src/', 'environments', 'version.ts');
+const file = resolve(__dirname, '..', 'src/', 'environments/', 'version.ts');
 
 writeFileSync(file, template, {encoding: 'utf-8'});
 

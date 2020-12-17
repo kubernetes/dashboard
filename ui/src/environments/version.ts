@@ -19,9 +19,9 @@ import {VersionInfo} from '@api/frontendapi';
 // prettier-ignore
 export const version: VersionInfo = {
   'dirty': true,
-  'raw': 'v2.1.0-34-g542fd956e-dirty',
-  'hash': 'g542fd956e',
-  'distance': 34,
+  'raw': 'v2.1.0-37-gc466f3064-dirty',
+  'hash': 'gc466f3064',
+  'distance': 37,
   'tag': 'v2.1.0',
   'semver': {
     'options': {
@@ -37,7 +37,7 @@ export const version: VersionInfo = {
     'build': [],
     'version': '2.1.0'
   },
-  'suffix': '34-g542fd956e-dirty',
-  'semverString': '2.1.0+34.g542fd956e',
+  'suffix': '37-gc466f3064-dirty',
+  'semverString': '2.1.0+37.gc466f3064',
   'packageVersion': '3.0.0'
 };

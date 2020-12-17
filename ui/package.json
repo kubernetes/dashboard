@@ -7,6 +7,8 @@
   },
   "license": "Apache-2.0",
   "scripts": {
+    "postversion": "node hack/version.js",
+    "postinstall": "npm run postversion && ngcc",
     "start": "concurrently \"npm run start:backend --kubernetes-dashboard:sidecar_host=$npm_package_config_sidecar_host\" \"npm run start:frontend --kubernetes-dashboard:bind_address=$npm_package_config_bind_address --kubernetes-dashboard:port=$npm_package_config_port\"",
     "start:https": "concurrently \"npm run start:backend:https --kubernetes-dashboard:sidecar_host=$npm_package_config_sidecar_host\" \"npm run start:frontend:https --kubernetes-dashboard:bind_address=$npm_package_config_bind_address --kubernetes-dashboard:port=$npm_package_config_port\"",
     "start:frontend": "npm run postversion && ng serve --aot --progress=false --proxy-config aio/proxy.conf.json --host=$npm_package_config_bind_address --port $npm_package_config_port",
@@ -53,9 +55,7 @@
     "fix:frontend:html": "./aio/scripts/format.sh --html",
     "fix:license": "license-check-and-add add",
     "fix:i18n": "ng xi18n --outFile ../i18n/messages.xlf && hack/xliffmerge.sh",
-    "clean": "rm -rf .tmp coverage dist npm-debug.log",
-    "postversion": "node version.js",
-    "postinstall": "npm run postversion && ngcc"
+    "clean": "rm -rf .tmp coverage dist npm-debug.log"
   },
   "husky": {
     "hooks": {
