@@ -2,7 +2,7 @@
   "extends": "./tsconfig.json",
   "compilerOptions": {
     "outDir": "./out-tsc/spec",
-    "baseUrl": "../src",
+    "baseUrl": "./src",
     "target": "es5",
     "types": [
       "jasmine",
@@ -10,11 +10,11 @@
     ]
   },
   "files": [
-    "src/polyfills.ts"
+    "./src/polyfills.ts"
   ],
   "include": [
-    "src/**/*.spec.ts",
-    "src/**/*.d.ts"
+    "./src/**/*.spec.ts",
+    "./src/**/*.d.ts"
   ],
   "lib": ["es2017", "dom"]
 }

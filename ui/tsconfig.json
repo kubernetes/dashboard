@@ -6,7 +6,7 @@
   },
   "compileOnSave": false,
   "compilerOptions": {
-    "baseUrl": "src",
+    "baseUrl": "./src",
     "paths": {
       "@api/*": ["typings/*"]
     },
