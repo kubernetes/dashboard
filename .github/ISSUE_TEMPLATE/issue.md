@@ -13,7 +13,7 @@ labels: kind/bug
 ```
 Installation method:
 Kubernetes version:
-Dashboard version:
+Dashboard version (v1.x is not supported. Use v2.0 or later.):
 Operating system:
 Node.js version ('node --version' output):
 Go version ('go version' output):
