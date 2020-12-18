@@ -207,7 +207,7 @@ export interface StatefulSetList extends ResourceList {
 }
 
 export interface StorageClassList extends ResourceList {
-  storageClasses: StorageClass[];
+  items: StorageClass[];
 }
 
 // Simple detail types

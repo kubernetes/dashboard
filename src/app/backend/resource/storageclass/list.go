@@ -27,8 +27,8 @@ import (
 
 // StorageClassList holds a list of Storage Class objects in the cluster.
 type StorageClassList struct {
-	ListMeta       api.ListMeta   `json:"listMeta"`
-	StorageClasses []StorageClass `json:"storageClasses"`
+	ListMeta api.ListMeta   `json:"listMeta"`
+	Items    []StorageClass `json:"items"`
 
 	// List of non-critical errors, that occurred during resource retrieval.
 	Errors []error `json:"errors"`
@@ -71,9 +71,9 @@ func toStorageClassList(storageClasses []storage.StorageClass, nonCriticalErrors
 	dsQuery *dataselect.DataSelectQuery) *StorageClassList {
 
 	storageClassList := &StorageClassList{
-		StorageClasses: make([]StorageClass, 0),
-		ListMeta:       api.ListMeta{TotalItems: len(storageClasses)},
-		Errors:         nonCriticalErrors,
+		Items:    make([]StorageClass, 0),
+		ListMeta: api.ListMeta{TotalItems: len(storageClasses)},
+		Errors:   nonCriticalErrors,
 	}
 
 	storageClassCells, filteredTotal := dataselect.GenericDataSelectWithFilter(toCells(storageClasses), dsQuery)
@@ -81,7 +81,7 @@ func toStorageClassList(storageClasses []storage.StorageClass, nonCriticalErrors
 	storageClassList.ListMeta = api.ListMeta{TotalItems: filteredTotal}
 
 	for _, storageClass := range storageClasses {
-		storageClassList.StorageClasses = append(storageClassList.StorageClasses, toStorageClass(&storageClass))
+		storageClassList.Items = append(storageClassList.Items, toStorageClass(&storageClass))
 	}
 
 	return storageClassList

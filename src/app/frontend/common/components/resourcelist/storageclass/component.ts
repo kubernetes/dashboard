@@ -50,7 +50,7 @@ export class StorageClassListComponent extends ResourceListBase<StorageClassList
   }
 
   map(storageClassList: StorageClassList): StorageClass[] {
-    return storageClassList.storageClasses;
+    return storageClassList.items;
   }
 
   getDisplayColumns(): string[] {

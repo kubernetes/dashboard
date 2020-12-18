@@ -44,7 +44,7 @@ func TestGetStorageClassList(t *testing.T) {
 			expectedActions: []string{"list"},
 			expected: &StorageClassList{
 				ListMeta: api.ListMeta{TotalItems: 1},
-				StorageClasses: []StorageClass{
+				Items: []StorageClass{
 					{
 						ObjectMeta: api.ObjectMeta{
 							Name:   "storage-1",

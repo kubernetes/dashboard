@@ -107,7 +107,7 @@ func GetPodDetail(client kubernetes.Interface, metricClient metricapi.MetricClie
 		return nil, err
 	}
 
-	controller, err := getPodController(client, common.NewSameNamespaceQuery(namespace), pod)
+	podController, err := getPodController(client, common.NewSameNamespaceQuery(namespace), pod)
 	nonCriticalErrors, criticalError := errorHandler.HandleError(err)
 	if criticalError != nil {
 		return nil, criticalError
@@ -144,7 +144,7 @@ func GetPodDetail(client kubernetes.Interface, metricClient metricapi.MetricClie
 		return nil, criticalError
 	}
 
-	podDetail := toPodDetail(pod, metrics, configMapList, secretList, controller,
+	podDetail := toPodDetail(pod, metrics, configMapList, secretList, podController,
 		eventList, persistentVolumeClaimList, nonCriticalErrors)
 	return &podDetail, nil
 }
