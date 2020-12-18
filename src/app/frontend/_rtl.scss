@@ -12,6 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+@import './variables';
 
 body:lang(fa) {
   direction: rtl;
@@ -34,8 +35,8 @@ body:lang(fa) {
 
   .mat-optgroup {
     .mat-option {
-      padding-left: 16px;
-      padding-right: 32px;
+      padding-left: 2 * $baseline-grid;
+      padding-right: 4 * $baseline-grid;
     }
   }
 
@@ -55,7 +56,7 @@ body:lang(fa) {
     text-align: right;
 
     input {
-      padding: 16px 16px 16px 0;
+      padding: (2 * $baseline-grid) (2 * $baseline-grid) (2 * $baseline-grid) 0;
       text-align: right;
     }
   }
