@@ -113,7 +113,7 @@ export class GlobalSettingsComponent implements OnInit, OnDestroy {
     this.settings.resourceAutoRefreshTimeInterval = this.settings_.getResourceAutoRefreshTimeInterval();
     this.settings.disableAccessDeniedNotifications = this.settings_.getDisableAccessDeniedNotifications();
     this.settings.defaultNamespace = this.settings_.getDefaultNamespace();
-    this.settings.namespaceFallbackList = [...Array(256)].map(_ => Math.random().toString(36));
+    this.settings.namespaceFallbackList = this.settings_.getNamespaceFallbackList();
   }
 
   onLoadError(): void {

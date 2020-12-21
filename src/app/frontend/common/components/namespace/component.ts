@@ -132,7 +132,7 @@ export class NamespaceSelectorComponent implements OnInit, OnDestroy {
 
   setDefaultQueryParams_() {
     this.router_.navigate([this.activatedRoute_.snapshot.url], {
-      queryParams: {[NAMESPACE_STATE_PARAM]: CONFIG.defaultNamespace},
+      queryParams: {[NAMESPACE_STATE_PARAM]: this.appConfig_.defaultNamespace},
       queryParamsHandling: 'merge',
     });
   }
