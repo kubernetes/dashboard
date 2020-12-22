@@ -8,14 +8,15 @@ coverage:
   range: "70...90"
 
   status:
-    project: yes
+    project:
       default:
         target: 75%
         threshold: 1%
         # We need codecov purely for information purposes. Due to coverage calculation issue we have to disable checks.
         informational: true
-    patch: yes
-    changes: no
+    # We use codecov for information described as above. So it is enough to check only `project` as of now.
+    patch: off
+    changes: off
 
 parsers:
   gcov:
