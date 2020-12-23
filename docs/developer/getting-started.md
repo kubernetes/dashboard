@@ -36,18 +36,6 @@ kubectl proxy
 
 kubectl will handle authentication with Kubernetes and create an API proxy with the address `localhost:8080`. Therefore, no changes in the configuration are required.
 
-Another way to connect to real cluster while developing dashboard is to override default values used by our build pipeline. In order to do that we have introduced two environment variables `KUBE_DASHBOARD_APISERVER_HOST` and `KUBE_DASHBOARD_KUBECONFIG` that will be used over default ones when defined. Before running our npm tasks just do:
-
-```
-export KUBE_DASHBOARD_APISERVER_HOST="http://<APISERVER_IP>:<APISERVER_PORT>"
-```
-or
-```
-export KUBE_DASHBOARD_KUBECONFIG="<KUBECONFIG_FILE_PATH>"
-```
-
-**NOTE: Environment variable `KUBE_DASHBOARD_KUBECONFIG` has higher priority than `KUBE_DASHBOARD_APISERVER_HOST`.**
-
 ## Serving Dashboard for Development
 
 Quick updated version:
@@ -55,6 +43,14 @@ Quick updated version:
 ```
 npm start
 ```
+
+Another way to connect to real cluster while developing dashboard is to specify options for `npm` like following:
+
+```
+npm run start:https --kubernetes-dashboard:kubeconfig=<path to your kubeconfig>
+```
+
+Please see [here](https://github.com/kubernetes/dashboard/blob/master/.npmrc) which options you can specify to run dashboard with `npm`.
 
 Open a browser and access the UI under `localhost:8080`.
 

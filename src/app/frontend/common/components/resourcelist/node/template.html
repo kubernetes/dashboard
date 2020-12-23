@@ -36,7 +36,7 @@ limitations under the License.
     <mat-table [dataSource]="getData()"
                [trackBy]="trackByResource"
                matSort
-               [matSortActive]="getColumns()[8]"
+               [matSortActive]="getColumns()[9]"
                matSortDisableClear
                matSortDirection="asc">
       <ng-container [matColumnDef]="getColumns()[0]">
@@ -108,6 +108,14 @@ limitations under the License.
       </ng-container>
 
       <ng-container [matColumnDef]="getColumns()[8]">
+        <mat-header-cell *matHeaderCellDef
+                         i18n>Pods</mat-header-cell>
+        <mat-cell *matCellDef="let node">
+          {{node.allocatedResources.allocatedPods}} ({{node.allocatedResources.podFraction | number:"1.2-2"}}%)
+        </mat-cell>
+      </ng-container>
+
+      <ng-container [matColumnDef]="getColumns()[9]">
         <mat-header-cell *matHeaderCellDef
                          mat-sort-header
                          disableClear="true"
