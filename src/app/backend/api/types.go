@@ -204,7 +204,7 @@ var KindToAPIMapping = map[string]APIMapping{
 	ResourceKindDeployment:               {"deployments", ClientTypeAppsClient, true},
 	ResourceKindEvent:                    {"events", ClientTypeDefault, true},
 	ResourceKindHorizontalPodAutoscaler:  {"horizontalpodautoscalers", ClientTypeAutoscalingClient, true},
-	ResourceKindIngress:                  {"ingresses", ClientTypeExtensionClient, true},
+	ResourceKindIngress:                  {"ingresses", ClientTypeNetworkingClient, true},
 	ResourceKindJob:                      {"jobs", ClientTypeBatchClient, true},
 	ResourceKindCronJob:                  {"cronjobs", ClientTypeBetaBatchClient, true},
 	ResourceKindLimitRange:               {"limitrange", ClientTypeDefault, true},
