@@ -21,7 +21,7 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/errors"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
-	v1 "k8s.io/api/networking/v1"
+	v1beta1 "k8s.io/api/networking/v1beta1"
 	client "k8s.io/client-go/kubernetes"
 )
 
@@ -48,7 +48,7 @@ type IngressList struct {
 // GetIngressList returns all ingresses in the given namespace.
 func GetIngressList(client client.Interface, namespace *common.NamespaceQuery,
 	dsQuery *dataselect.DataSelectQuery) (*IngressList, error) {
-	ingressList, err := client.NetworkingV1().Ingresses(namespace.ToRequestParam()).List(context.TODO(), api.ListEverything)
+	ingressList, err := client.NetworkingV1beta1().Ingresses(namespace.ToRequestParam()).List(context.TODO(), api.ListEverything)
 
 	nonCriticalErrors, criticalError := errors.HandleError(err)
 	if criticalError != nil {
@@ -58,7 +58,7 @@ func GetIngressList(client client.Interface, namespace *common.NamespaceQuery,
 	return toIngressList(ingressList.Items, nonCriticalErrors, dsQuery), nil
 }
 
-func getEndpoints(ingress *v1.Ingress) []common.Endpoint {
+func getEndpoints(ingress *v1beta1.Ingress) []common.Endpoint {
 	endpoints := make([]common.Endpoint, 0)
 	if len(ingress.Status.LoadBalancer.Ingress) > 0 {
 		for _, status := range ingress.Status.LoadBalancer.Ingress {
@@ -74,7 +74,7 @@ func getEndpoints(ingress *v1.Ingress) []common.Endpoint {
 	return endpoints
 }
 
-func toIngress(ingress *v1.Ingress) Ingress {
+func toIngress(ingress *v1beta1.Ingress) Ingress {
 	return Ingress{
 		ObjectMeta: api.NewObjectMeta(ingress.ObjectMeta),
 		TypeMeta:   api.NewTypeMeta(api.ResourceKindIngress),
@@ -82,7 +82,7 @@ func toIngress(ingress *v1.Ingress) Ingress {
 	}
 }
 
-func toIngressList(ingresses []v1.Ingress, nonCriticalErrors []error, dsQuery *dataselect.DataSelectQuery) *IngressList {
+func toIngressList(ingresses []v1beta1.Ingress, nonCriticalErrors []error, dsQuery *dataselect.DataSelectQuery) *IngressList {
 	newIngressList := &IngressList{
 		ListMeta: api.ListMeta{TotalItems: len(ingresses)},
 		Items:    make([]Ingress, 0),
