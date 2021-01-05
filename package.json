@@ -96,7 +96,7 @@
     "@angular/common": "11.0.5",
     "@angular/compiler": "11.0.5",
     "@angular/core": "11.0.5",
-    "@angular/flex-layout": "10.0.0-beta.32",
+    "@angular/flex-layout": "^11.0.0-beta.33",
     "@angular/forms": "11.0.5",
     "@angular/localize": "11.0.5",
     "@angular/material": "11.0.3",
