@@ -1,11 +1,10 @@
 {
   "ignore": [
     "*", "docs", "i18n",
-    ".cached_tools", ".git", ".github/ISSUE_TEMPLATE", ".tmp", "coverage", "cypress", ".idea",
-    "aio/test-resources",
+    ".cached_tools", ".git", ".tmp", "coverage", "cypress", ".idea",
     "**/*.json", "**/*.yaml", "**/*.svg", "**/*.txt", "**/*.md", "**/OWNERS", "**/.helmignore", "**/*.lock"
   ],
-  "license": "aio/scripts/license-header.txt",
+  "license": "../license-header.txt",
   "defaultFormat": {
     "eachLine": {
       "prepend": "# "
@@ -13,7 +12,7 @@
     "append": ""
   },
   "licenseFormats": {
-    "go|ts|js|scss|proto": {
+    "ts|js|scss": {
       "eachLine": {
         "prepend": "// "
       },
