@@ -23,13 +23,9 @@ export class CoreFormatter implements PipeTransform {
   readonly base = 1000;
   readonly powerSuffixes = ['m', '', 'k', 'M', 'G', 'T'];
 
-  constructor(private decimalPipe: DecimalPipe) {}
+  constructor(private readonly decimalPipe_: DecimalPipe) {}
 
-  transform(value: number | string | null | undefined): string | null {
-    if (!value) {
-      value = 0;
-    }
-    value = typeof value === 'number' ? value : parseFloat(value);
+  transform(value: number): string {
     let divider = 1;
     let power = 0;
 
@@ -38,7 +34,7 @@ export class CoreFormatter implements PipeTransform {
       power += 1;
     }
 
-    const formatted = this.decimalPipe.transform(value / divider, '1.2-2') || '';
+    const formatted = this.decimalPipe_.transform(value / divider, '1.2-2');
     const suffix = this.powerSuffixes[power];
     return suffix ? `${formatted}${suffix}` : formatted;
   }
