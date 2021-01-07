@@ -26,13 +26,13 @@ limitations under the License.
       app.
     </p>
     <br>
-    <form #form="ngForm">
+    <form [formGroup]="form">
       <kd-settings-entry key="Cluster name"
                          i18n-key
                          desc="Cluster name appears in the browser window title if it is set."
                          i18n-desc>
         <mat-form-field fxFlex>
-          <input [(ngModel)]="settings.clusterName"
+          <input [formControlName]="Controls.ClusterName"
                  name="clusterName"
                  i18n-placeholder
                  placeholder="Cluster name"
@@ -41,71 +41,16 @@ limitations under the License.
         </mat-form-field>
       </kd-settings-entry>
 
-      <kd-settings-entry key="Default namespace"
-                         i18n-key
-                         desc="Namespace that should be selected by default after logging in."
-                         i18n-desc>
-        <mat-form-field fxFlex>
-          <input #namespaceInput
-                 [(ngModel)]="settings.defaultNamespace"
-                 name="defaultNamespace"
-                 i18n-placeholder
-                 placeholder="Namespace"
-                 type="text"
-                 [matAutocomplete]="auto"
-                 matInput>
-          <mat-autocomplete #auto="matAutocomplete">
-            <mat-option *ngFor="let namespace of (namespaces$ | async) | filterBy: namespaceInput.value"
-                        [value]="namespace">
-              {{namespace}}
-            </mat-option>
-          </mat-autocomplete>
-        </mat-form-field>
-      </kd-settings-entry>
-
-      <kd-settings-entry key="Namespace fallback list"
-                         i18n-key
-                         desc="List of namespaces that should be presented to user without namespace list privileges."
-                         i18n-desc>
-        <mat-form-field fxFlex>
-          <mat-label>Namespaces</mat-label>
-          <div fxFlex="100"
-               fxLayout="row">
-            <mat-chip-list fxFlex="80"
-                           fxLayoutAlign=" center"
-                           class="kd-namespace-chip-list">
-              <mat-chip *ngFor="let namespace of settings.namespaceFallbackList | slice:0:visibleNamespaces"
-                        style="max-width: 100px; text-overflow: ellipsis; white-space: nowrap; overflow: hidden; display: block"
-                        [matTooltip]="namespace"
-                        [selectable]="false"
-                        [removable]="false">
-                {{namespace}}
-              </mat-chip>
-              <mat-chip *ngIf="invisibleCount > 0"
-                        [disabled]="true"
-                        fxFlex
-                        fxLayoutAlign=" center">+ {{invisibleCount}}</mat-chip>
-            </mat-chip-list>
-            <div fxFlex="20"
-                 fxLayoutAlign="end">
-              <button mat-icon-button style="margin-right: 0">
-                <mat-icon style="font-size: 20px">edit</mat-icon>
-              </button>
-              <button mat-icon-button>
-                <mat-icon>add</mat-icon>
-              </button>
-            </div>
-          </div>
-        </mat-form-field>
-      </kd-settings-entry>
+      <kd-namespace-settings [formControlName]="Controls.NamespaceSettings"
+                             [settings]="settings">
+      </kd-namespace-settings>
 
       <kd-settings-entry key="Items per page"
                          i18n-key
                          desc="Max number of items that can be displayed on every list view."
                          i18n-desc>
         <div fxFlex>
-          <mat-slider [(ngModel)]="settings.itemsPerPage"
-                      name="itemsPerPage"
+          <mat-slider [formControlName]="Controls.ItemsPerPage"
                       color="primary"
                       min="5"
                       max="50"
@@ -123,8 +68,7 @@ limitations under the License.
                          desc="Max number of labels that are displayed by default on most views."
                          i18n-desc>
         <div fxFlex>
-          <mat-slider [(ngModel)]="settings.labelsLimit"
-                      name="labelsLimit"
+          <mat-slider [formControlName]="Controls.LabelsLimit"
                       color="primary"
                       min="1"
                       max="10"
@@ -142,8 +86,7 @@ limitations under the License.
                          desc="Number of seconds between every auto-refresh of logs."
                          i18n-desc>
         <div fxFlex>
-          <mat-slider [(ngModel)]="settings.logsAutoRefreshTimeInterval"
-                      name="autoRefreshTimeInterval"
+          <mat-slider [formControlName]="Controls.LogsAutorefreshInterval"
                       color="primary"
                       min="1"
                       max="10"
@@ -161,8 +104,7 @@ limitations under the License.
                          desc="Number of seconds between every auto-refresh of every resource. Set 0 to disable."
                          i18n-desc>
         <div fxFlex>
-          <mat-slider [(ngModel)]="settings.resourceAutoRefreshTimeInterval"
-                      name="resourceAutoRefreshTimeInterval"
+          <mat-slider [formControlName]="Controls.ResourceAutorefreshInterval"
                       color="primary"
                       min="0"
                       max="60"
@@ -183,19 +125,20 @@ limitations under the License.
              fxLayoutAlign=" center">
           <mat-slide-toggle color="primary"
                             name="disableAccessDeniedNotifications"
-                            [(ngModel)]="settings.disableAccessDeniedNotifications"></mat-slide-toggle>
+                            [formControlName]="Controls.DisableAccessDeniedNotification">
+          </mat-slide-toggle>
         </div>
       </kd-settings-entry>
       <br><br>
       <button [disabled]="form.pristine"
-              (click)="save(form)"
+              (click)="save()"
               color="primary"
               mat-raised-button
               i18n>
         Save
       </button>
       <button type="button"
-              (click)="load(form)"
+              (click)="reload()"
               color="primary"
               mat-raised-button
               i18n>
