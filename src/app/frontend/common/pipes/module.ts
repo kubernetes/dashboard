@@ -12,6 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import {DecimalPipe} from '@angular/common';
 import {NgModule} from '@angular/core';
 
 import {CommaSeparatedPipe} from './commaseparated';
@@ -30,6 +31,7 @@ import {TrimPipe} from './trim';
     TrimPipe,
     CommaSeparatedPipe,
   ],
+  providers: [DecimalPipe],
   exports: [MemoryFormatter, CoreFormatter, RelativeTimeFormatter, SafeHtmlFormatter, TrimPipe, CommaSeparatedPipe],
 })
 export class PipesModule {}

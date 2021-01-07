@@ -48,6 +48,7 @@
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
             "aot": true,
+            "progress": false,
             "outputPath": ".tmp/frontend",
             "index": "src/app/frontend/index.html",
             "main": "src/app/frontend/index.ts",
@@ -99,7 +100,6 @@
               "sourceMap": false,
               "extractCss": true,
               "namedChunks": false,
-              "aot": true,
               "localize": true,
               "extractLicenses": true,
               "vendorChunk": false,
