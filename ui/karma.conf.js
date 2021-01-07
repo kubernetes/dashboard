@@ -12,31 +12,27 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-// Karma configuration file, see link for more information
-// https://karma-runner.github.io/1.0/config/configuration-file.html
-
 let path = require('path');
 
 module.exports = function(config) {
   let configuration = {
     basePath: path.join(__dirname, '..'),
     files: [
-      // Include a Material theme in the test suite.
       {
         pattern: './node_modules/@angular/material/prebuilt-themes/indigo-pink.css',
         included: true,
         watched: true
       },
       {
-        pattern: 'karma-test-shim.js',
+        pattern: './ui/karma-test-shim.js',
         included: true,
         watched: true,
       }
     ],
 
     logLevel: config.LOG_INFO,
-
     browserConsoleLogOptions: {terminal: true, level: ''},
+    browserNoActivityTimeout: 5 * 60 * 1000,
 
     frameworks: [
       'jasmine',
@@ -50,8 +46,6 @@ module.exports = function(config) {
       require('karma-jasmine-html-reporter'),
       require('karma-coverage-istanbul-reporter'),
     ],
-
-    browserNoActivityTimeout: 5 * 60 * 1000,  // 5 minutes.
 
     reporters: ['progress', 'kjhtml'],
 
@@ -76,7 +70,6 @@ module.exports = function(config) {
     singleRun: false
   };
 
-  // Use custom browser configuration when running on Travis CI or container.
   if (!!process.env.TRAVIS || !!process.env.K8S_DASHBOARD_CONTAINER) {
     configuration.browsers = ['ChromeHeadless', 'FirefoxHeadless'];
     configuration.customLaunchers = {
