@@ -1069,15 +1069,22 @@ export interface LogLine {
   content: string;
 }
 
+export enum LogControl {
+  LoadStart = 'beginning',
+  LoadEnd = 'end',
+  TimestampOldest = 'oldest',
+  TimestampNewest = 'newest',
+}
+
 export interface LogSelection {
-  logFilePosition: string;
+  logFilePosition: LogControl;
   referencePoint: LogLineReference;
   offsetFrom: number;
   offsetTo: number;
 }
 
 export interface LogLineReference {
-  timestamp: string;
+  timestamp: LogControl;
   lineNum: number;
 }
 
@@ -1197,6 +1204,7 @@ export interface TerminalPageParams {
 
 export interface SockJSSimpleEvent {
   type: string;
+
   toString(): string;
 }
 

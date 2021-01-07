@@ -16,32 +16,19 @@ import {HttpParams} from '@angular/common/http';
 import {Component, ElementRef, OnDestroy, ViewChild} from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
 import {ActivatedRoute, Router} from '@angular/router';
-import {LogDetails, LogLine, LogSelection, LogSources} from '@api/backendapi';
+import {LogControl, LogDetails, LogLine, LogSelection, LogSources} from '@api/backendapi';
 import {GlobalSettingsService} from 'common/services/global/globalsettings';
 import {LogService} from 'common/services/global/logs';
 import {NotificationSeverity, NotificationsService} from 'common/services/global/notifications';
-import {Observable, Subject, Subscription, timer} from 'rxjs';
-import {switchMap, takeUntil, tap} from 'rxjs/operators';
+import {Observable, Subject, timer} from 'rxjs';
+import {switchMap, takeUntil} from 'rxjs/operators';
 
 import {LogsDownloadDialog} from '../common/dialogs/download/dialog';
-
-const logsPerView = 100;
-const maxLogSize = 2e9;
-// Load logs from the beginning of the log file. This matters only if the log file is too large to
-// be loaded completely.
-const beginningOfLogFile = 'beginning';
-// Load logs from the end of the log file. This matters only if the log file is too large to be
-// loaded completely.
-const endOfLogFile = 'end';
-const oldestTimestamp = 'oldest';
-const newestTimestamp = 'newest';
 
 const i18n = {
   MSG_LOGS_ZEROSTATE_TEXT: 'The selected container has not logged any messages yet.',
   MSG_LOGS_TRUNCATED_WARNING: 'The middle part of the log file cannot be loaded, because it is too big.',
 };
-
-type ScrollPosition = 'TOP' | 'BOTTOM';
 
 @Component({
   selector: 'kd-logs',
@@ -49,34 +36,33 @@ type ScrollPosition = 'TOP' | 'BOTTOM';
   styleUrls: ['./style.scss'],
 })
 export class LogsComponent implements OnDestroy {
-  private refreshUnsubscribe_ = new Subject<void>();
-  private unsubscribe_ = new Subject<void>();
-
   readonly refreshInterval: number;
 
   @ViewChild('logViewContainer', {static: true}) logViewContainer_: ElementRef;
-
   podLogs: LogDetails;
   logsSet: string[];
   logSources: LogSources;
   pod: string;
   container: string;
-  logService: LogService;
   totalItems = 0;
   itemsPerPage = 10;
   currentSelection: LogSelection;
   isLoading: boolean;
   logsAutorefreshEnabled = false;
 
+  private readonly refreshUnsubscribe_ = new Subject<void>();
+  private readonly unsubscribe_ = new Subject<void>();
+  private readonly logsPerView = 100;
+  private readonly maxLogSize = 2e9;
+
   constructor(
-    logService: LogService,
+    readonly logService: LogService,
     private readonly activatedRoute_: ActivatedRoute,
     private readonly settingsService_: GlobalSettingsService,
     private readonly dialog_: MatDialog,
     private readonly notifications_: NotificationsService,
     private readonly _router: Router
   ) {
-    this.logService = logService;
     this.isLoading = true;
     this.refreshInterval = this.settingsService_.getLogsAutoRefreshTimeInterval();
 
@@ -167,14 +153,26 @@ export class LogsComponent implements OnDestroy {
    * Loads maxLogSize oldest lines of logs.
    */
   loadOldest(): void {
-    this.loadView(beginningOfLogFile, oldestTimestamp, 0, -maxLogSize - logsPerView, -maxLogSize);
+    this.loadView(
+      LogControl.LoadStart,
+      LogControl.TimestampOldest,
+      0,
+      -this.maxLogSize - this.logsPerView,
+      -this.maxLogSize
+    );
   }
 
   /**
    * Loads maxLogSize newest lines of logs.
    */
   loadNewest(): void {
-    this.loadView(endOfLogFile, newestTimestamp, 0, maxLogSize, maxLogSize + logsPerView);
+    this.loadView(
+      LogControl.LoadEnd,
+      LogControl.TimestampNewest,
+      0,
+      this.maxLogSize,
+      this.maxLogSize + this.logsPerView
+    );
   }
 
   /**
@@ -185,7 +183,7 @@ export class LogsComponent implements OnDestroy {
       this.currentSelection.logFilePosition,
       this.currentSelection.referencePoint.timestamp,
       this.currentSelection.referencePoint.lineNum,
-      this.currentSelection.offsetFrom - logsPerView,
+      this.currentSelection.offsetFrom - this.logsPerView,
       this.currentSelection.offsetFrom,
       this.scrollToBottom.bind(this)
     );
@@ -200,7 +198,7 @@ export class LogsComponent implements OnDestroy {
       this.currentSelection.referencePoint.timestamp,
       this.currentSelection.referencePoint.lineNum,
       this.currentSelection.offsetTo,
-      this.currentSelection.offsetTo + logsPerView,
+      this.currentSelection.offsetTo + this.logsPerView,
       this.scrollToTop.bind(this)
     );
   }
@@ -214,8 +212,8 @@ export class LogsComponent implements OnDestroy {
    * from -n to -n+10.
    */
   loadView(
-    logFilePosition: string,
-    referenceTimestamp: string,
+    logFilePosition: LogControl,
+    referenceTimestamp: LogControl,
     referenceLinenum: number,
     offsetFrom: number,
     offsetTo: number,
@@ -338,7 +336,7 @@ export class LogsComponent implements OnDestroy {
     this.scrollTo('TOP');
   }
 
-  scrollTo(position: ScrollPosition): void {
+  scrollTo(position: 'TOP' | 'BOTTOM'): void {
     const {nativeElement} = this.logViewContainer_;
     if (!nativeElement) {
       return;
