@@ -171,8 +171,8 @@ func GetNodeDetail(client k8sClient.Interface, metricClient metricapi.MetricClie
 func getNodeAllocatedResources(node v1.Node, podList *v1.PodList) (NodeAllocatedResources, error) {
 	reqs, limits := map[v1.ResourceName]resource.Quantity{}, map[v1.ResourceName]resource.Quantity{}
 
-	for _, pod := range podList.Items {
-		podReqs, podLimits, err := PodRequestsAndLimits(&pod)
+	for _, podInfo := range podList.Items {
+		podReqs, podLimits, err := PodRequestsAndLimits(&podInfo)
 		if err != nil {
 			return NodeAllocatedResources{}, err
 		}
