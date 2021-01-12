@@ -49,7 +49,7 @@ type NodeAllocatedResources struct {
 	// CPUCapacity is specified node CPU capacity in milicores.
 	CPUCapacity int64 `json:"cpuCapacity"`
 
-  // MemoryRequests is number of allocated megabytes.
+  // MemoryRequests is number of allocated bytes.
 	MemoryRequests int64 `json:"memoryRequests"`
 
 	// MemoryRequestsFraction is a fraction of memory, that is allocated.
