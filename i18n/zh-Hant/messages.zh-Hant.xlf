@@ -3480,7 +3480,7 @@
       </trans-unit>
       <trans-unit id="0d2ab5feae3bde82e357ae93420738e775a69f50" datatype="html">
         <source>Secret name</source>
-        <target>Secret 名称</target>
+        <target>Secret 名稱</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/from/form/createsecret/template.html</context>
           <context context-type="linenumber">29</context>
@@ -5395,7 +5395,7 @@
       </trans-unit>
       <trans-unit id="3925ecae114abc711d1b417b7bdc4f8d6ec0f585" datatype="html">
         <source>Max number of items that can be displayed on every list view.</source>
-        <target state="new">Max number of items that can be displayed on every list view.</target>
+        <target state="new">每列視窗上可以顯示的最大項目數。</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/settings/global/template.html</context>
           <context context-type="linenumber">45</context>
@@ -5411,7 +5411,7 @@
       </trans-unit>
       <trans-unit id="dd245a4e3a7100eb2fa1e91e62663f748016668b" datatype="html">
         <source>Max number of labels that are displayed by default on most views.</source>
-        <target state="new">Max number of labels that are displayed by default on most views.</target>
+        <target state="new">默認情況下，大多數視窗上顯示的最大標籤數。</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/settings/global/template.html</context>
           <context context-type="linenumber">64</context>
