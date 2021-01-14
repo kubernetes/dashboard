@@ -16,3 +16,8 @@ limitations under the License.
 
 <kd-object-meta [initialized]="isInitialized"
                 [objectMeta]="ingress?.objectMeta"></kd-object-meta>
+
+<kd-ingressruleflat-card-list [ingressSpecRules]="ingress?.spec.rules"
+                              [namespace]="ingress?.objectMeta.namespace"
+                              [initialized]="isInitialized">
+</kd-ingressruleflat-card-list>

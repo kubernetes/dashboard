@@ -51,6 +51,40 @@ class MiniTestComponent {
     },
     typeMeta: {kind: 'Ingress'},
     errors: [],
+    endpoints: [],
+    spec: {
+      rules: [
+        {
+          http: {
+            paths: [
+              {
+                path: '/testpath',
+                pathType: 'Prefix',
+                backend: {
+                  serviceName: 'test',
+                  servicePort: 80,
+                },
+              },
+            ],
+          },
+        },
+        {
+          host: 'foo.bar.com',
+          http: {
+            paths: [
+              {
+                path: '/bar',
+                pathType: 'Prefix',
+                backend: {
+                  serviceName: 'service1',
+                  servicePort: 'a_port_name',
+                },
+              },
+            ],
+          },
+        },
+      ],
+    },
   };
 }
 
@@ -71,6 +105,41 @@ class MaxiTestComponent {
     },
     typeMeta: {kind: 'Ingress'},
     errors: [],
+    endpoints: [],
+    spec: {
+      rules: [
+        {
+          host: 'foox.bar.com',
+          http: {
+            paths: [
+              {
+                path: '/',
+                pathType: 'Prefix',
+                backend: {
+                  serviceName: 'service1',
+                  servicePort: 80,
+                },
+              },
+            ],
+          },
+        },
+        {
+          host: 'barx.foo.com',
+          http: {
+            paths: [
+              {
+                path: '/',
+                pathType: 'Prefix',
+                backend: {
+                  serviceName: 'service2',
+                  servicePort: 80,
+                },
+              },
+            ],
+          },
+        },
+      ],
+    },
   };
 }
 
