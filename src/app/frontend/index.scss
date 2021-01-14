@@ -249,6 +249,10 @@ router-outlet::after {
   font-weight: $bold-font-weight;
 }
 
+.kd-capitalize {
+  text-transform: capitalize;
+}
+
 .kd-h1 {
   font-size: 24px;
 }

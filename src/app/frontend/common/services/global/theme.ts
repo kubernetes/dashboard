@@ -14,19 +14,20 @@
 
 import {EventEmitter, Injectable} from '@angular/core';
 import {ThemeSwitchCallback} from '@api/frontendapi';
+import {Theme} from '@api/backendapi';
 
 @Injectable()
 export class ThemeService {
-  private isLightThemeEnabled_ = true;
-  private readonly onThemeSwitchEvent_ = new EventEmitter<boolean>();
+  private _theme = Theme.Light;
+  private readonly onThemeSwitchEvent_ = new EventEmitter<string>();
 
-  isLightThemeEnabled(): boolean {
-    return this.isLightThemeEnabled_;
+  get theme(): Theme {
+    return this._theme;
   }
 
-  switchTheme(isLightTheme: boolean): void {
-    this.onThemeSwitchEvent_.emit(isLightTheme);
-    this.isLightThemeEnabled_ = isLightTheme;
+  set theme(theme: Theme) {
+    this.onThemeSwitchEvent_.emit(theme);
+    this._theme = theme;
   }
 
   subscribe(callback: ThemeSwitchCallback): void {
