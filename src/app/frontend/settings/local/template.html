@@ -27,16 +27,16 @@ limitations under the License.
                        i18n-key
                        desc="Choose color theme of the dashboard"
                        i18n-desc>
-        <mat-button-toggle-group [(value)]="selectedTheme"
-                                 (change)="onThemeChange($event.value)"
-                                 fxLayout="row wrap"
-                                 fxFlex>
-          <mat-button-toggle *ngFor="let theme of themes"
-                             [value]="theme"
-                             class="kd-border">
-            {{theme}}
-          </mat-button-toggle>
-        </mat-button-toggle-group>
+      <mat-button-toggle-group [(value)]="selectedTheme"
+                               (change)="onThemeChange($event.value)"
+                               fxLayout="row wrap"
+                               fxFlex>
+        <mat-button-toggle *ngFor="let theme of themes"
+                           [value]="theme"
+                           class="kd-border">
+          {{theme}}
+        </mat-button-toggle>
+      </mat-button-toggle-group>
     </kd-settings-entry>
     <kd-settings-entry *ngIf="isProdMode()"
                        key="Language"
