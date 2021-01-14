@@ -718,8 +718,8 @@ export interface LocalSettings {
 }
 
 export enum Theme {
-  Light = 'kd-theme-light',
-  Dark = 'kd-theme-dark',
+  Light = 'kd-light-theme',
+  Dark = 'kd-dark-theme',
 }
 
 export interface AppConfig {

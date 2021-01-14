@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import {Injectable} from '@angular/core';
-import {LocalSettings} from '@api/backendapi';
+import {LocalSettings, Theme} from '@api/backendapi';
 
 import {ThemeService} from './theme';
 
@@ -21,7 +21,7 @@ import {ThemeService} from './theme';
 export class LocalSettingsService {
   private readonly _settingsKey = 'localSettings';
   private settings_: LocalSettings = {
-    isThemeDark: false,
+    theme: Theme.Light,
   };
 
   constructor(private readonly theme_: ThemeService) {}
@@ -37,10 +37,10 @@ export class LocalSettingsService {
     return this.settings_;
   }
 
-  handleThemeChange(isThemeDark: boolean): void {
-    this.settings_.isThemeDark = isThemeDark;
+  handleThemeChange(theme: Theme): void {
+    this.settings_.theme = theme;
+    this.theme_.theme = theme;
     this.updateCookie_();
-    this.theme_.switchTheme(!this.settings_.isThemeDark);
   }
 
   updateCookie_(): void {

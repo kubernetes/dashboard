@@ -18,8 +18,13 @@ import {Theme} from '@api/backendapi';
 
 @Injectable()
 export class ThemeService {
+  private _availableThemes = [Theme.Light, Theme.Dark];
   private _theme = Theme.Light;
   private readonly onThemeSwitchEvent_ = new EventEmitter<string>();
+
+  get availableThemes(): Theme[] {
+    return this._availableThemes;
+  }
 
   get theme(): Theme {
     return this._theme;
