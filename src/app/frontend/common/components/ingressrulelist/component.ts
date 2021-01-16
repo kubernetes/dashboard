@@ -29,17 +29,13 @@ interface IngressRuleFlat {
 })
 export class IngressRuleFlatListComponent {
   @Input() initialized: boolean;
-  @Input() ingressSpecRules?: IngressSpecRule[];
+  @Input() ingressSpecRules: IngressSpecRule[] = [];
   @Input() namespace: string;
 
   private readonly kdState_: KdStateService = GlobalServicesModule.injector.get(KdStateService);
 
   getIngressRulesFlatColumns(): string[] {
     return ['Host', 'Path', 'Path Type', 'Service Name', 'Service Port'];
-  }
-
-  trackByIngressRuleFlat(index: number, item: any): any {
-    return item.host ? index : index;
   }
 
   ingressSpecRuleToIngressRuleFlat(ingressSpecRules: IngressSpecRule[]): IngressRuleFlat[] {
@@ -66,10 +62,7 @@ export class IngressRuleFlatListComponent {
 
   getDataSource(): MatTableDataSource<IngressRuleFlat> {
     const tableData = new MatTableDataSource<IngressRuleFlat>();
-    const the_input =
-      this.ingressSpecRules === undefined || this.ingressSpecRules === null ? [] : this.ingressSpecRules;
-
-    tableData.data = this.ingressSpecRuleToIngressRuleFlat(the_input);
+    tableData.data = this.ingressSpecRuleToIngressRuleFlat(this.ingressSpecRules || []);
 
     return tableData;
   }
