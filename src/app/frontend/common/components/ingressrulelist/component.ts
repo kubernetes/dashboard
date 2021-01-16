@@ -39,25 +39,17 @@ export class IngressRuleFlatListComponent {
   }
 
   ingressSpecRuleToIngressRuleFlat(ingressSpecRules: IngressSpecRule[]): IngressRuleFlat[] {
-    const output: IngressRuleFlat[] = [];
-
-    ingressSpecRules.forEach(ingressSpecRule => {
-      let host: string = null;
-      if (ingressSpecRule.host !== undefined) {
-        host = ingressSpecRule.host;
-      }
-
-      ingressSpecRule.http.paths.forEach(path => {
-        const ingressRuleFlat: IngressRuleFlat = {
-          path: path,
-        };
-        if (host !== null) {
-          ingressRuleFlat.host = host;
-        }
-        output.push(ingressRuleFlat);
-      });
-    });
-    return output;
+    return [].concat(
+      ...ingressSpecRules.map(rule =>
+        rule.http.paths.map(
+          specPath =>
+            ({
+              host: rule.host || '',
+              path: specPath,
+            } as IngressRuleFlat)
+        )
+      )
+    );
   }
 
   getDataSource(): MatTableDataSource<IngressRuleFlat> {
