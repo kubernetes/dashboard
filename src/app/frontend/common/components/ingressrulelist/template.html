@@ -36,8 +36,7 @@ limitations under the License.
         <mat-header-cell *matHeaderCellDef
                          i18n>Host</mat-header-cell>
         <mat-cell *matCellDef="let ingressRuleFlat">
-          <ng-container *ngIf="ingressRuleFlat.host">{{ingressRuleFlat.host}}</ng-container>
-          <ng-container *ngIf="!ingressRuleFlat.host">*</ng-container>
+          {{!!ingressRuleFlat.host ? ingressRuleFlat.host : '-'}}
         </mat-cell>
       </ng-container>
       <ng-container [matColumnDef]="getIngressRulesFlatColumns()[1]">
