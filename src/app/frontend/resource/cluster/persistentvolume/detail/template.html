@@ -33,7 +33,12 @@ limitations under the License.
     <kd-property *ngIf="persistentVolume?.claim">
       <div key
            i18n>Claim</div>
-      <div value>{{persistentVolume.claim}}</div>
+      <div value>
+        <a [routerLink]="getClaimHref(persistentVolume.claim)"
+           queryParamsHandling="preserve">
+          {{persistentVolume.claim}}
+        </a>
+      </div>
     </kd-property>
 
     <kd-property *ngIf="persistentVolume?.reclaimPolicy">
