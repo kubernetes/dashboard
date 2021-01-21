@@ -42,7 +42,6 @@ limitations under the License.
                      desc="List of namespaces that should be presented to user without namespace list privileges."
                      i18n-desc>
     <mat-form-field fxFlex>
-      <mat-label>Namespaces</mat-label>
       <div fxFlex="100"
            fxLayout="row">
         <mat-chip-list [formArrayName]="Controls.FallbackList"
@@ -56,6 +55,8 @@ limitations under the License.
                     [removable]="false">
             {{namespace}}
           </mat-chip>
+          <mat-chip *ngIf="form.get(Controls.FallbackList).value.length === 0"
+                    [disabled]="true">Add namespaces...</mat-chip>
           <mat-chip *ngIf="invisibleCount > 0"
                     [disabled]="true"
                     fxFlex
@@ -63,7 +64,7 @@ limitations under the License.
         </mat-chip-list>
         <div fxFlex="20"
              fxLayoutAlign="end">
-          <button mat-icon-button style="margin-right: 0">
+          <button mat-icon-button style="margin-right: 0" (click)="edit()">
             <mat-icon style="font-size: 20px">edit</mat-icon>
           </button>
           <button mat-icon-button

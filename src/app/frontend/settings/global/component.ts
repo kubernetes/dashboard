@@ -89,7 +89,9 @@ export class GlobalSettingsComponent implements OnInit, OnDestroy {
     this.load_();
   }
 
-  canSave(): boolean {}
+  canSave(): boolean {
+    return false;
+  }
 
   save(): void {
     this.settings_
@@ -178,7 +180,6 @@ export class GlobalSettingsComponent implements OnInit, OnDestroy {
     };
 
     if (namespaceSettings) {
-      console.log(namespaceSettings);
       this.settings.defaultNamespace = namespaceSettings.defaultNamespace;
       this.settings.namespaceFallbackList = namespaceSettings.fallbackList;
     }

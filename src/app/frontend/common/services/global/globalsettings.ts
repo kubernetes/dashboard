@@ -36,7 +36,7 @@ export class GlobalSettingsService {
     resourceAutoRefreshTimeInterval: 5,
     disableAccessDeniedNotifications: false,
     defaultNamespace: 'default',
-    namespaceFallbackList: [],
+    namespaceFallbackList: ['default'],
   };
   private unsubscribe_ = new Subject<void>();
   private isInitialized_ = false;
@@ -122,6 +122,8 @@ export class GlobalSettingsService {
   }
 
   getNamespaceFallbackList(): string[] {
-    return _.isArray(this.settings_.namespaceFallbackList) ? this.settings_.namespaceFallbackList : [];
+    return _.isArray(this.settings_.namespaceFallbackList)
+      ? this.settings_.namespaceFallbackList
+      : [this.settings_.defaultNamespace];
   }
 }

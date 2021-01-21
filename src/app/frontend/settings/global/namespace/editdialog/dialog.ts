@@ -15,14 +15,22 @@
 import {Component, Inject} from '@angular/core';
 import {MAT_DIALOG_DATA} from '@angular/material/dialog';
 
-export interface AddFallbackNamespaceDialogData {
+export interface EditFallbackNamespaceDialogData {
   namespaces: string[];
 }
 
 @Component({
-  selector: 'kd-namespace-settings-add-dialog',
+  selector: 'kd-namespace-settings-edit-dialog',
   templateUrl: 'template.html',
 })
-export class AddFallbackNamespaceDialog {
-  constructor(@Inject(MAT_DIALOG_DATA) public data: AddFallbackNamespaceDialogData) {}
+export class EditFallbackNamespaceDialog {
+  namespaces: string[] = [];
+
+  constructor(@Inject(MAT_DIALOG_DATA) public data: EditFallbackNamespaceDialogData) {
+    this.namespaces = Array.from(data.namespaces);
+  }
+
+  remove(namespace: string): void {
+    this.namespaces.splice(this.namespaces.indexOf(namespace), 1);
+  }
 }

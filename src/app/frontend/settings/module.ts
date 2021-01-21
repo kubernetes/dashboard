@@ -22,6 +22,7 @@ import {SettingsEntryComponent} from './entry/component';
 import {GlobalSettingsComponent} from './global/component';
 import {AddFallbackNamespaceDialog} from './global/namespace/adddialog/dialog';
 import {NamespaceSettingsComponent} from './global/namespace/component';
+import {EditFallbackNamespaceDialog} from './global/namespace/editdialog/dialog';
 import {SaveAnywayDialog} from './global/saveanywaysdialog/dialog';
 import {LocalSettingsComponent} from './local/component';
 import {SettingsRoutingModule} from './routing';
@@ -35,6 +36,7 @@ import {SettingsRoutingModule} from './routing';
     SettingsEntryComponent,
     NamespaceSettingsComponent,
     AddFallbackNamespaceDialog,
+    EditFallbackNamespaceDialog,
     SaveAnywayDialog,
   ],
 })

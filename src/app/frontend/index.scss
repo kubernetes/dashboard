@@ -392,8 +392,20 @@ router-outlet::after {
 .kd-namespace-chip-list {
   overflow-x: hidden;
 
+  &:focus {
+    outline: none;
+  }
+
   .mat-chip-list-wrapper {
     flex-wrap: nowrap;
     overflow-x: hidden;
+  }
+}
+
+.mat-list {
+  margin-top: $baseline-grid;
+
+  &.mat-list-base {
+    padding-top: 0;
   }
 }

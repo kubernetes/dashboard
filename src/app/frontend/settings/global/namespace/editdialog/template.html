@@ -17,33 +17,28 @@ limitations under the License.
 <div fxFlex
      fxLayout="column">
   <h2 mat-dialog-title
-      i18n>Add Namespace</h2>
+      i18n>Edit Namespace List</h2>
   <mat-dialog-content fxLayout="column"
                       class="kd-dialog-text">
-    <div i18n>Provide a namespace that should be added to the namespace fallback list</div>
+    <div i18n>Remove namespaces from the list as needed and confirm to save the changes.</div>
 
-    <mat-form-field fxFlex>
-      <input #namespaceInput
-             name="defaultNamespace"
-             i18n-placeholder
-             placeholder="Namespace"
-             type="text"
-             [matAutocomplete]="auto"
-             matInput>
-      <mat-autocomplete #auto="matAutocomplete">
-        <mat-option *ngFor="let namespace of data.namespaces | filterBy: namespaceInput.value"
-                    [value]="namespace">
-          {{namespace}}
-        </mat-option>
-      </mat-autocomplete>
-    </mat-form-field>
+    <mat-list>
+      <mat-list-item *ngFor="let namespace of namespaces">
+        <div fxFlex="100">{{namespace}}</div>
+        <button mat-icon-button (click)="remove(namespace)" (focus)="$event.stopPropagation()">
+          <mat-icon>close</mat-icon>
+        </button>
+        <mat-divider></mat-divider>
+      </mat-list-item>
+      <mat-list-item *ngIf="namespaces.length === 0">No namespaces selected</mat-list-item>
+    </mat-list>
   </mat-dialog-content>
 
   <mat-dialog-actions>
     <button mat-button
             color="primary"
-            [mat-dialog-close]="namespaceInput.value"
-            i18n>Add
+            [mat-dialog-close]="namespaces"
+            i18n>Edit
     </button>
     <button mat-button
             color="primary"

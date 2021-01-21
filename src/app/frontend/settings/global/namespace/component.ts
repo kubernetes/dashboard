@@ -13,15 +13,16 @@
 // limitations under the License.
 
 import {BreakpointObserver, Breakpoints} from '@angular/cdk/layout';
-import {Component, forwardRef, Input, OnDestroy, OnInit} from '@angular/core';
+import {AfterViewInit, Component, forwardRef, Input, OnChanges, OnDestroy, OnInit, SimpleChanges} from '@angular/core';
 import {ControlValueAccessor, FormArray, FormBuilder, FormGroup, NG_VALUE_ACCESSOR} from '@angular/forms';
 import {MatDialog, MatDialogConfig} from '@angular/material/dialog';
 import {GlobalSettings, NamespaceList} from '@api/backendapi';
-import {Observable, Subject} from 'rxjs';
+import {Subject} from 'rxjs';
 import {map, take, takeUntil} from 'rxjs/operators';
 import {EndpointManager, Resource} from '../../../common/services/resource/endpoint';
 import {ResourceService} from '../../../common/services/resource/resource';
-import {AddFalbackNamespaceDialogData, AddFallbackNamespaceDialog} from './adddialog/dialog';
+import {AddFallbackNamespaceDialog, AddFallbackNamespaceDialogData} from './adddialog/dialog';
+import {EditFallbackNamespaceDialog, EditFallbackNamespaceDialogData} from './editdialog/dialog';
 
 enum BreakpointElementCount {
   XLarge = 5,
@@ -53,7 +54,7 @@ interface NamespaceSettings {
   ],
 })
 export class NamespaceSettingsComponent implements OnInit, OnDestroy, ControlValueAccessor {
-  @Input() settings: GlobalSettings = {} as GlobalSettings;
+  @Input() settings: GlobalSettings;
 
   readonly Controls = Controls;
 
@@ -113,14 +114,33 @@ export class NamespaceSettingsComponent implements OnInit, OnDestroy, ControlVal
     const dialogConfig: MatDialogConfig = {
       data: {
         namespaces: this.namespaces,
-      } as AddFalbackNamespaceDialogData,
+      } as AddFallbackNamespaceDialogData,
     };
 
     this.dialog_
       .open(AddFallbackNamespaceDialog, dialogConfig)
       .afterClosed()
       .pipe(take(1))
-      .subscribe(s => console.log(s));
+      .subscribe(s => (!this.containsNamespace_(s) ? this.addNamespace_(s) : null));
+  }
+
+  edit(): void {
+    const dialogConfig: MatDialogConfig = {
+      data: {
+        namespaces: this.settings.namespaceFallbackList,
+      } as EditFallbackNamespaceDialogData,
+    };
+
+    this.dialog_
+      .open(EditFallbackNamespaceDialog, dialogConfig)
+      .afterClosed()
+      .pipe(take(1))
+      .subscribe((namespaces: string[] | undefined) => {
+        if (namespaces) {
+          this.form.setControl(Controls.FallbackList, this.builder_.array([]));
+          namespaces.forEach(ns => this.addNamespace_(ns));
+        }
+      });
   }
 
   // ControlValueAccessor interface implementation
@@ -130,7 +150,7 @@ export class NamespaceSettingsComponent implements OnInit, OnDestroy, ControlVal
     }
 
     this.form.get(Controls.DefaultNamespace).setValue(obj.defaultNamespace, {emitEvent: false});
-    obj.fallbackList.forEach(ns => (this.form.get(Controls.FallbackList) as FormArray).push(this.builder_.control(ns)));
+    obj.fallbackList.filter(ns => !this.containsNamespace_(ns)).forEach(ns => this.addNamespace_(ns));
   }
 
   registerOnChange(fn: any): void {
@@ -139,5 +159,13 @@ export class NamespaceSettingsComponent implements OnInit, OnDestroy, ControlVal
 
   registerOnTouched(fn: any): void {
     this.form.statusChanges.pipe(takeUntil(this.unsubscribe_)).subscribe(fn);
+  }
+
+  private addNamespace_(ns: string): void {
+    (this.form.get(Controls.FallbackList) as FormArray).push(this.builder_.control(ns));
+  }
+
+  private containsNamespace_(ns: string): boolean {
+    return !ns || (this.form.get(Controls.FallbackList) as FormArray).controls.map(c => c.value).indexOf(ns) > -1;
   }
 }
