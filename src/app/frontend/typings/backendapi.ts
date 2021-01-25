@@ -864,6 +864,15 @@ export interface Container {
   env: EnvVar[];
   commands: string[];
   args: string[];
+  volumeMounts: VolumeMounts[];
+}
+
+export interface VolumeMounts {
+  name: string;
+  readOnly: boolean;
+  mountPath: string;
+  subPath: string;
+  volume: PersistentVolumeSource;
 }
 
 export interface CRDNames {
@@ -1216,17 +1225,105 @@ export interface SystemBanner {
   severity: string;
 }
 
+// https://godoc.org/k8s.io/api/core/v1#Volumes
 export interface PersistentVolumeSource {
-  gcePersistentDisk: GCEPersistentDiskVolumeSource;
-  awsElasticBlockStore: AWSElasticBlockStorageVolumeSource;
-  hostPath: HostPathVolumeSource;
-  glusterfs: GlusterfsVolumeSource;
-  nfs: NFSVolumeSource;
-  rbd: RBDVolumeSource;
-  iscsi: ISCSIVolumeSource;
-  cinder: CinderVolumeSource;
-  fc: FCVolumeSource;
-  flocker: FlockerVolumeSource;
+  name: string;
+  hostPath?: HostPathVolumeSource;
+  emptyDir?: {};
+  gcePersistentDisk?: GCEPersistentDiskVolumeSource;
+  awsElasticBlockStore?: AWSElasticBlockStorageVolumeSource;
+  gitRepo?: GitRepoVolumeSource;
+  secret?: SecretVolumeSource;
+  nfs?: NFSVolumeSource;
+  iscsi?: ISCSIVolumeSource;
+  glusterfs?: GlusterfsVolumeSource;
+  persistentVolumeClaim?: PersistentVolumeClaimVolumeSource;
+  rbd?: RBDVolumeSource;
+  flexVolume?: FlexVolumeSource;
+  cinder?: CinderVolumeSource;
+  cephFS?: CephFSVolumeSource;
+  flocker?: FlockerVolumeSource;
+  downwardAPI?: DownwardAPIVolumeSource;
+  fc?: FCVolumeSource;
+  azureFile?: AzureFileVolumeSource;
+  configMap?: ConfigMapVolumeSource;
+  vsphereVolume?: VsphereVirtualDiskVolumeSource;
+  quobyte?: QuobyteVolumeSource;
+  // azureDisk: AzureDiskVolumeSource;
+  // photonPersistentDisk: PhotonPersistentDiskVolumeSource;
+  // projected: ProjectedVolumeSource;
+  // portworxVolume: PortworxVolumeSource;
+  // scaleIO: ScaleIOVolumeSource;
+  // storageOS: StorageOSVolumeSource;
+  // csi: CSIVolumeSource;
+}
+
+// export interface EmptyDirVolumeSource {}
+
+export interface GitRepoVolumeSource {
+  repository: string;
+  revision: string;
+  directory: string;
+}
+
+export interface SecretVolumeSource {
+  secretName: string;
+  // items
+  defaultMode: number;
+  optional: boolean;
+}
+
+export interface PersistentVolumeClaimVolumeSource {
+  claimName: string;
+  readOnly: boolean;
+}
+
+export interface DownwardAPIVolumeSource {
+  // items
+  defaultMode: number;
+}
+
+export interface AzureFileVolumeSource {
+  secretName: string;
+  shareName: string;
+  readOnly: boolean;
+}
+
+export interface FlexVolumeSource {
+  driver: string;
+  fsType: string;
+  // secretRef
+  readOnly: boolean;
+  // options
+}
+
+export interface ConfigMapVolumeSource {
+  name: string;
+  items: KeyToPath[];
+  defaultMode: number;
+  optional: boolean;
+}
+
+export interface KeyToPath {
+  key: string;
+  path: string;
+  mode: number;
+}
+
+export interface VsphereVirtualDiskVolumeSource {
+  volumePath: string;
+  fsType: string;
+  storagePolicyName: string;
+  storagePolicyID: string;
+}
+
+export interface QuobyteVolumeSource {
+  registry: string;
+  volume: string;
+  readOnly: boolean;
+  user: string;
+  group: string;
+  tenant: string;
 }
 
 export interface TerminalResponse {
