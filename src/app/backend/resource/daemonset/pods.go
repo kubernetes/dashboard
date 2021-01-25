@@ -56,8 +56,14 @@ func getRawDaemonSetPods(client k8sClient.Interface, daemonSetName, namespace st
 		return nil, err
 	}
 
+	selector, err := metaV1.LabelSelectorAsSelector(daemonSet.Spec.Selector)
+	if err != nil {
+		return nil, err
+	}
+	options := metaV1.ListOptions{LabelSelector: selector.String()}
+
 	channels := &common.ResourceChannels{
-		PodList: common.GetPodListChannel(client, common.NewSameNamespaceQuery(namespace), 1),
+		PodList: common.GetPodListChannelWithOptions(client, common.NewSameNamespaceQuery(namespace), options, 1),
 	}
 
 	podList := <-channels.PodList.List
