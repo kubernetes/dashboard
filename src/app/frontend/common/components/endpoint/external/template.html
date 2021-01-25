@@ -25,14 +25,14 @@ limitations under the License.
       <div *ngFor="let port of endpoint?.ports">
         <div>
           <a href="http://{{endpoint.host}}:{{port.port}}"
-            target="_blank">
+             target="_blank">
             {{endpoint.host}}:{{port.port}}
             <mat-icon class="kd-endpoint-icon">open_in_new</mat-icon>
           </a>
         </div>
         <div *ngIf="!port.port">
           <a href="http://{{endpoint.host}}:{{port.nodePort}}"
-            target="_blank">
+             target="_blank">
             {{endpoint.host}}:{{port.nodePort}}
             <mat-icon class="kd-endpoint-icon">open_in_new</mat-icon>
           </a>
@@ -40,7 +40,7 @@ limitations under the License.
       </div>
       <div *ngIf="!endpoint.ports?.length">
         <a href="http://{{endpoint.host}}"
-          target="_blank">
+           target="_blank">
           {{endpoint.host}}
           <mat-icon class="kd-endpoint-icon">open_in_new</mat-icon>
         </a>

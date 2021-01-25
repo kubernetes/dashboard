@@ -24,8 +24,9 @@ limitations under the License.
 </kd-ingressruleflat-card-list>
 
 <kd-card [initialized]="isInitialized">
-    <div title i18n>Endpoints</div>
-    <div content>
-      <kd-external-endpoint [endpoints]="ingress?.endpoints"></kd-external-endpoint>
-    </div>
+  <div title
+       i18n>Endpoints</div>
+  <div content>
+    <kd-external-endpoint [endpoints]="ingress?.endpoints"></kd-external-endpoint>
+  </div>
 </kd-card>

@@ -572,10 +572,6 @@
         <source>Status</source>
         <target>狀態</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/frontend/common/components/resourcelist/persistentvolume/component.ts</context>
-          <context context-type="linenumber">99</context>
-        </context-group>
-        <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/resourcelist/pod/component.ts</context>
           <context context-type="linenumber">117</context>
         </context-group>
@@ -584,16 +580,20 @@
           <context context-type="linenumber">91</context>
         </context-group>
         <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/common/components/resourcelist/persistentvolume/component.ts</context>
+          <context context-type="linenumber">99</context>
+        </context-group>
+        <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/quotas/component.ts</context>
           <context context-type="linenumber">49</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/frontend/resource/workloads/pod/detail/component.ts</context>
-          <context context-type="linenumber">80</context>
-        </context-group>
-        <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/condition/component.ts</context>
           <context context-type="linenumber">61</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/resource/workloads/pod/detail/component.ts</context>
+          <context context-type="linenumber">80</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/resource/cluster/namespace/detail/component.ts</context>
@@ -772,7 +772,7 @@
           <context context-type="linenumber">67</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/frontend/common/components/resourcelist/serviceaccount/component.ts</context>
+          <context context-type="sourcefile">src/app/frontend/common/components/resourcelist/networkpolicy/component.ts</context>
           <context context-type="linenumber">67</context>
         </context-group>
         <context-group purpose="location">
@@ -780,48 +780,24 @@
           <context context-type="linenumber">67</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/frontend/common/components/resourcelist/node/component.ts</context>
-          <context context-type="linenumber">68</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/frontend/common/components/resourcelist/networkpolicy/component.ts</context>
+          <context context-type="sourcefile">src/app/frontend/common/components/resourcelist/serviceaccount/component.ts</context>
           <context context-type="linenumber">67</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/frontend/common/components/resourcelist/namespace/component.ts</context>
-          <context context-type="linenumber">69</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/frontend/common/components/resourcelist/clusterrole/component.ts</context>
-          <context context-type="linenumber">60</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/resourcelist/storageclass/component.ts</context>
           <context context-type="linenumber">60</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/frontend/common/components/resourcelist/secret/template.html</context>
-          <context context-type="linenumber">36</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/frontend/common/components/resourcelist/persistentvolume/component.ts</context>
-          <context context-type="linenumber">66</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/frontend/common/components/resourcelist/configmap/component.ts</context>
-          <context context-type="linenumber">66</context>
+          <context context-type="sourcefile">src/app/frontend/common/components/resourcelist/statefulset/component.ts</context>
+          <context context-type="linenumber">62</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/resourcelist/service/component.ts</context>
           <context context-type="linenumber">68</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/frontend/common/components/resourcelist/ingress/component.ts</context>
-          <context context-type="linenumber">67</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/frontend/common/components/resourcelist/statefulset/component.ts</context>
-          <context context-type="linenumber">62</context>
+          <context context-type="sourcefile">src/app/frontend/common/components/resourcelist/secret/template.html</context>
+          <context context-type="linenumber">36</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/resourcelist/replicationcontroller/component.ts</context>
@@ -836,12 +812,52 @@
           <context context-type="linenumber">76</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/frontend/common/components/resourcelist/deployment/component.ts</context>
-          <context context-type="linenumber">62</context>
+          <context context-type="sourcefile">src/app/frontend/common/components/resourcelist/plugin/component.ts</context>
+          <context context-type="linenumber">66</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/common/components/resourcelist/persistentvolumeclaim/component.ts</context>
+          <context context-type="linenumber">69</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/common/components/volumemount/component.ts</context>
+          <context context-type="linenumber">45</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/common/components/resourcelist/persistentvolume/component.ts</context>
+          <context context-type="linenumber">66</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/common/components/resourcelist/node/component.ts</context>
+          <context context-type="linenumber">68</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/common/components/resourcelist/namespace/component.ts</context>
+          <context context-type="linenumber">69</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/common/components/ingressrulelist/component.ts</context>
+          <context context-type="linenumber">71</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/resourcelist/job/component.ts</context>
           <context context-type="linenumber">48</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/common/components/resourcelist/ingress/component.ts</context>
+          <context context-type="linenumber">67</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/common/components/resourcelist/horizontalpodautoscaler/component.ts</context>
+          <context context-type="linenumber">69</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/common/components/resourcelist/event/component.ts</context>
+          <context context-type="linenumber">74</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/common/components/resourcelist/deployment/component.ts</context>
+          <context context-type="linenumber">62</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/resourcelist/daemonset/component.ts</context>
@@ -850,34 +866,6 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/resourcelist/cronjob/component.ts</context>
           <context context-type="linenumber">66</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/frontend/common/components/resourcelist/persistentvolumeclaim/component.ts</context>
-          <context context-type="linenumber">69</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/frontend/common/components/resourcelist/event/component.ts</context>
-          <context context-type="linenumber">74</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/frontend/common/components/volumemount/component.ts</context>
-          <context context-type="linenumber">45</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/frontend/common/components/condition/component.ts</context>
-          <context context-type="linenumber">61</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/frontend/common/components/resourcelist/plugin/component.ts</context>
-          <context context-type="linenumber">66</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/frontend/common/components/ingressrulelist/component.ts</context>
-          <context context-type="linenumber">66</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/frontend/common/components/resourcelist/horizontalpodautoscaler/component.ts</context>
-          <context context-type="linenumber">69</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/resourcelist/crdversion/component.ts</context>
@@ -892,6 +880,14 @@
           <context context-type="linenumber">73</context>
         </context-group>
         <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/common/components/resourcelist/configmap/component.ts</context>
+          <context context-type="linenumber">66</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/common/components/resourcelist/clusterrole/component.ts</context>
+          <context context-type="linenumber">60</context>
+        </context-group>
+        <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/quotas/component.ts</context>
           <context context-type="linenumber">49</context>
         </context-group>
@@ -902,6 +898,10 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/limits/component.ts</context>
           <context context-type="linenumber">41</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/common/components/condition/component.ts</context>
+          <context context-type="linenumber">61</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/endpoint/cardlist/component.ts</context>
@@ -1861,6 +1861,10 @@
           <context context-type="linenumber">46</context>
         </context-group>
         <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/resource/discovery/ingress/detail/component.ts</context>
+          <context context-type="linenumber">44</context>
+        </context-group>
+        <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/resource/cluster/persistentvolume/detail/source/component.ts</context>
           <context context-type="linenumber">26</context>
         </context-group>
@@ -1870,7 +1874,14 @@
         <target>主機</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/ingressrulelist/component.ts</context>
+&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD
+          
           <context context-type="linenumber">66</context>
+=======
+          
+          <context context-type="linenumber">80</context>
+>>>>>>> npm run fix
+        
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/endpoint/cardlist/component.ts</context>
@@ -2430,7 +2441,14 @@
         <target>規則</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/ingressrulelist/component.ts</context>
+&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD
+          
           <context context-type="linenumber">48</context>
+=======
+          
+          <context context-type="linenumber">46</context>
+>>>>>>> npm run fix
+        
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/policyrule/component.ts</context>
@@ -4743,7 +4761,14 @@
         <target>路徑</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/ingressrulelist/component.ts</context>
+&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD
+          
           <context context-type="linenumber">66</context>
+=======
+          
+          <context context-type="linenumber">80</context>
+>>>>>>> npm run fix
+        
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/resource/cluster/persistentvolume/detail/source/component.ts</context>
@@ -4763,7 +4788,14 @@
         <target state="new">Path Type</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/ingressrulelist/component.ts</context>
+&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD
+          
           <context context-type="linenumber">66</context>
+=======
+          
+          <context context-type="linenumber">80</context>
+>>>>>>> npm run fix
+        
         </context-group>
       </trans-unit>
       <trans-unit id="27634638ac68edd16b5a107ea29e52e1bab80b25" datatype="html">
@@ -4771,7 +4803,14 @@
         <target state="new">Service Name</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/ingressrulelist/component.ts</context>
+&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD
+          
           <context context-type="linenumber">66</context>
+=======
+          
+          <context context-type="linenumber">80</context>
+>>>>>>> npm run fix
+        
         </context-group>
       </trans-unit>
       <trans-unit id="148a9e4494f2b05eadc825c223ca651eee294ebe" datatype="html">
@@ -4779,7 +4818,22 @@
         <target state="new">Service Port</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/ingressrulelist/component.ts</context>
+&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD
+          
           <context context-type="linenumber">66</context>
+=======
+          
+          <context context-type="linenumber">80</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="b5e9d053394cf552041668ea2106430f1775d567" datatype="html">
+        <source>TLS Secret</source>
+        <target state="new">TLS Secret</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/common/components/ingressrulelist/component.ts</context>
+          <context context-type="linenumber">80</context>
+>>>>>>> npm run fix
+        
         </context-group>
       </trans-unit>
       <trans-unit id="f379dfb7ae583971995b6f684fe5e7649a938157" datatype="html">
