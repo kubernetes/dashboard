@@ -21,3 +21,10 @@ limitations under the License.
                               [namespace]="ingress?.objectMeta.namespace"
                               [initialized]="isInitialized">
 </kd-ingressruleflat-card-list>
+
+<kd-card [initialized]="isInitialized">
+    <div title i18n>Endpoints</div>
+    <div content>
+      <kd-external-endpoint [endpoints]="ingress?.endpoints"></kd-external-endpoint>
+    </div>
+</kd-card>

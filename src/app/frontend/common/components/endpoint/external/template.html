@@ -20,30 +20,32 @@ limitations under the License.
    Link is always shown independent of the endpoint capabilities to support HTTP.
 -->
 <div>
-  <div *ngFor="let endpoint of endpoints">
-    <div *ngFor="let port of endpoint?.ports">
-      <div>
-        <a href="http://{{endpoint.host}}:{{port.port}}"
-           target="_blank">
-          {{endpoint.host}}:{{port.port}}
-          <mat-icon class="kd-endpoint-icon">open_in_new</mat-icon>
-        </a>
+  <ng-container *ngIf="endpoints">
+    <div *ngFor="let endpoint of endpoints">
+      <div *ngFor="let port of endpoint?.ports">
+        <div>
+          <a href="http://{{endpoint.host}}:{{port.port}}"
+            target="_blank">
+            {{endpoint.host}}:{{port.port}}
+            <mat-icon class="kd-endpoint-icon">open_in_new</mat-icon>
+          </a>
+        </div>
+        <div *ngIf="!port.port">
+          <a href="http://{{endpoint.host}}:{{port.nodePort}}"
+            target="_blank">
+            {{endpoint.host}}:{{port.nodePort}}
+            <mat-icon class="kd-endpoint-icon">open_in_new</mat-icon>
+          </a>
+        </div>
       </div>
-      <div *ngIf="!port.port">
-        <a href="http://{{endpoint.host}}:{{port.nodePort}}"
-           target="_blank">
-          {{endpoint.host}}:{{port.nodePort}}
+      <div *ngIf="!endpoint.ports?.length">
+        <a href="http://{{endpoint.host}}"
+          target="_blank">
+          {{endpoint.host}}
           <mat-icon class="kd-endpoint-icon">open_in_new</mat-icon>
         </a>
       </div>
     </div>
-    <div *ngIf="!endpoint.ports?.length">
-      <a href="http://{{endpoint.host}}"
-         target="_blank">
-        {{endpoint.host}}
-        <mat-icon class="kd-endpoint-icon">open_in_new</mat-icon>
-      </a>
-    </div>
-  </div>
-  <div *ngIf="endpoints.length === 0">-</div>
+    <div *ngIf="endpoints.length === 0">-</div>
+  </ng-container>
 </div>
