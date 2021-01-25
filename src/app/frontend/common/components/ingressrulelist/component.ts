@@ -14,13 +14,14 @@
 
 import {Component, Input} from '@angular/core';
 import {MatTableDataSource} from '@angular/material/table';
-import {IngressSpecRule, IngressSpecRuleHttpPath} from '@api/root.api';
+import {IngressSpecRule, IngressSpecRuleHttpPath, IngressSpecTls} from '@api/root.api';
 import {KdStateService} from '../../services/global/state';
 import {GlobalServicesModule} from '../../services/global/module';
 
 interface IngressRuleFlat {
   host?: string;
   path: IngressSpecRuleHttpPath;
+  tlsSecretName?: string;
 }
 
 @Component({
@@ -30,16 +31,17 @@ interface IngressRuleFlat {
 export class IngressRuleFlatListComponent {
   @Input() initialized: boolean;
   @Input() ingressSpecRules: IngressSpecRule[] = [];
+  @Input() tlsList: IngressSpecTls[] = [];
   @Input() namespace: string;
 
   private readonly kdState_: KdStateService = GlobalServicesModule.injector.get(KdStateService);
 
   getIngressRulesFlatColumns(): string[] {
-    return ['Host', 'Path', 'Path Type', 'Service Name', 'Service Port'];
+    return ['Host', 'Path', 'Path Type', 'Service Name', 'Service Port', 'TLS Secret'];
   }
 
-  ingressSpecRuleToIngressRuleFlat(ingressSpecRules: IngressSpecRule[]): IngressRuleFlat[] {
-    return [].concat(
+  ingressSpecRuleToIngressRuleFlat(ingressSpecRules: IngressSpecRule[], tlsList: IngressSpecTls[]): IngressRuleFlat[] {
+    const ingressRuleList = [].concat(
       ...ingressSpecRules.map(rule =>
         rule.http.paths.map(
           specPath =>
@@ -49,12 +51,24 @@ export class IngressRuleFlatListComponent {
             } as IngressRuleFlat)
         )
       )
-    );
+    ) as IngressRuleFlat[];
+
+    ingressRuleList.forEach((ingressRule, _) => {
+      tlsList.forEach((tls, _) => {
+        tls.hosts.forEach((tlsHost, _) => {
+          if (tlsHost === ingressRule.host) {
+            ingressRule.tlsSecretName = tls.secretName;
+          }
+        });
+      });
+    });
+
+    return ingressRuleList;
   }
 
   getDataSource(): MatTableDataSource<IngressRuleFlat> {
     const tableData = new MatTableDataSource<IngressRuleFlat>();
-    tableData.data = this.ingressSpecRuleToIngressRuleFlat(this.ingressSpecRules || []);
+    tableData.data = this.ingressSpecRuleToIngressRuleFlat(this.ingressSpecRules || [], this.tlsList || []);
 
     return tableData;
   }

@@ -520,6 +520,12 @@ export interface IngressDetail extends ResourceDetail {
 export interface IngressSpec {
   defaultBackend?: IngressDefaultBackend;
   rules?: IngressSpecRule[];
+  tls?: IngressSpecTls[];
+}
+
+export interface IngressSpecTls {
+  hosts: string[];
+  secretName: string;
 }
 
 export interface IngressDefaultBackend {

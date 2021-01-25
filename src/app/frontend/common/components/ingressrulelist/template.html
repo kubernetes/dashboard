@@ -78,6 +78,19 @@ limitations under the License.
           <ng-container *ngIf="ingressRuleFlat.path.backend.servicePort">{{ingressRuleFlat.path.backend.servicePort}}</ng-container>
         </mat-cell>
       </ng-container>
+      <ng-container [matColumnDef]="getIngressRulesFlatColumns()[5]">
+        <mat-header-cell *matHeaderCellDef
+                         i18n>TLS Secret</mat-header-cell>
+        <mat-cell *matCellDef="let ingressRuleFlat">
+          <ng-container *ngIf="ingressRuleFlat.tlsSecretName">
+            <a [routerLink]="getDetailsHref(ingressRuleFlat.tlsSecretName, 'secret')"
+               queryParamsHandling="preserve">
+              {{ingressRuleFlat.tlsSecretName}}
+            </a>
+          </ng-container>
+          <ng-container *ngIf="!ingressRuleFlat.tlsSecretName">-</ng-container>
+        </mat-cell>
+      </ng-container>
 
       <mat-header-row *matHeaderRowDef="getIngressRulesFlatColumns()"></mat-header-row>
       <mat-row *matRowDef="let row; columns: getIngressRulesFlatColumns();"></mat-row>
