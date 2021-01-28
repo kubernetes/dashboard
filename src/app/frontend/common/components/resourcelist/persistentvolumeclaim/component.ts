@@ -15,7 +15,7 @@
 import {HttpParams} from '@angular/common/http';
 import {ChangeDetectionStrategy, ChangeDetectorRef, Component, Input} from '@angular/core';
 import {Observable} from 'rxjs';
-import {PersistentVolumeClaim, PersistentVolumeClaimList} from 'typings/backendapi';
+import {PersistentVolumeClaim, PersistentVolumeClaimList} from 'typings/root.api';
 
 import {ResourceListWithStatuses} from '../../../resources/list';
 import {NotificationsService} from '../../../services/global/notifications';

@@ -317,4 +317,8 @@
   .kd-edit-active {
     color: map-get($colors, primary);
   }
+
+  .kd-volume-mounts {
+    border: 1px solid $border;
+  }
 }

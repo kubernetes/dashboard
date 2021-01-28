@@ -24,7 +24,7 @@ import {MatTooltipModule} from '@angular/material/tooltip';
 import {By} from '@angular/platform-browser';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {RouterModule} from '@angular/router';
-import {AppConfig, ObjectMeta} from '@api/backendapi';
+import {AppConfig, ObjectMeta} from '@api/root.api';
 import {ChipsComponent} from 'common/components/chips/component';
 
 import {PipesModule} from '../../pipes/module';

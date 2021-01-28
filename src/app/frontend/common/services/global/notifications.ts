@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import {Injectable} from '@angular/core';
-import {K8sError} from '@api/backendapi';
+import {K8sError} from '@api/root.api';
 import {GlobalSettingsService} from './globalsettings';
 
 export class Notification {

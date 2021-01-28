@@ -13,7 +13,14 @@
 // limitations under the License.
 
 // Shared resource types
-import {KdError} from '@api/frontendapi';
+import {KdError} from '@api/root.ui';
+import {PersistentVolumeSource} from '@api/volume.api';
+
+export enum SupportedResources {
+  ConfigMap = 'ConfigMap',
+  Secret = 'Secret',
+  PersistentVolumeClaim = 'PersistentVolumeClaim',
+}
 
 export interface TypeMeta {
   kind: string;
@@ -864,6 +871,15 @@ export interface Container {
   env: EnvVar[];
   commands: string[];
   args: string[];
+  volumeMounts: VolumeMounts[];
+}
+
+export interface VolumeMounts {
+  name: string;
+  readOnly: boolean;
+  mountPath: string;
+  subPath: string;
+  volume: PersistentVolumeSource;
 }
 
 export interface CRDNames {
@@ -971,85 +987,6 @@ export interface Label {
 export interface PodEvent {
   reason: string;
   message: string;
-}
-
-export interface GCEPersistentDiskVolumeSource {
-  pdName: string;
-  fsType: string;
-  partition: number;
-  readOnly: boolean;
-}
-
-export interface AWSElasticBlockStorageVolumeSource {
-  volumeID: string;
-  fsType: string;
-  partition: number;
-  readOnly: boolean;
-}
-
-export interface HostPathVolumeSource {
-  path: string;
-}
-
-export interface GlusterfsVolumeSource {
-  endpoints: string;
-  path: string;
-  readOnly: boolean;
-}
-
-export interface NFSVolumeSource {
-  server: string;
-  path: string;
-  readOnly: boolean;
-}
-
-export interface RBDVolumeSource {
-  monitors: string[];
-  image: string;
-  fsType: string;
-  pool: string;
-  user: string;
-  keyring: string;
-  secretRef: LocalObjectReference;
-  readOnly: boolean;
-}
-
-export interface LocalObjectReference {
-  name: string;
-}
-
-export interface ISCSIVolumeSource {
-  targetPortal: string;
-  iqn: string;
-  lun: number;
-  fsType: string;
-  readOnly: boolean;
-}
-
-export interface CinderVolumeSource {
-  volumeID: string;
-  fsType: string;
-  readOnly: boolean;
-}
-
-export interface CephFSVolumeSource {
-  monitors: string[];
-  path: string;
-  user: string;
-  secretFile: string;
-  secretRef: LocalObjectReference;
-  readonly: boolean;
-}
-
-export interface FCVolumeSource {
-  targetWWNs: string[];
-  lun: number;
-  fsType: string;
-  readOnly: boolean;
-}
-
-export interface FlockerVolumeSource {
-  datasetName: string;
 }
 
 export interface RollingUpdateStrategy {
@@ -1216,19 +1153,6 @@ export interface SystemBanner {
   severity: string;
 }
 
-export interface PersistentVolumeSource {
-  gcePersistentDisk: GCEPersistentDiskVolumeSource;
-  awsElasticBlockStore: AWSElasticBlockStorageVolumeSource;
-  hostPath: HostPathVolumeSource;
-  glusterfs: GlusterfsVolumeSource;
-  nfs: NFSVolumeSource;
-  rbd: RBDVolumeSource;
-  iscsi: ISCSIVolumeSource;
-  cinder: CinderVolumeSource;
-  fc: FCVolumeSource;
-  flocker: FlockerVolumeSource;
-}
-
 export interface TerminalResponse {
   id: string;
 }
@@ -1245,8 +1169,6 @@ export interface TerminalPageParams {
   namespace: string;
   resourceKind: string;
   resourceName: string;
-
-  // Optional
   pod?: string;
   container?: string;
 }

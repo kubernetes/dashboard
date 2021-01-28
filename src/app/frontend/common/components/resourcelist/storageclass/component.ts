@@ -14,7 +14,7 @@
 
 import {HttpParams} from '@angular/common/http';
 import {ChangeDetectionStrategy, ChangeDetectorRef, Component, Input} from '@angular/core';
-import {StorageClass, StorageClassList} from '@api/backendapi';
+import {StorageClass, StorageClassList} from '@api/root.api';
 import {Observable} from 'rxjs';
 
 import {ResourceListBase} from '../../../resources/list';

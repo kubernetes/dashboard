@@ -14,7 +14,7 @@
 
 import {Component, Input} from '@angular/core';
 import {MatTableDataSource} from '@angular/material/table';
-import {ResourceQuotaDetail} from 'typings/backendapi';
+import {ResourceQuotaDetail} from 'typings/root.api';
 
 @Component({
   selector: 'kd-resource-quota-list',

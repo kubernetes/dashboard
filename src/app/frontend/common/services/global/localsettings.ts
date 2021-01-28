@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import {Injectable} from '@angular/core';
-import {LocalSettings} from '@api/backendapi';
+import {LocalSettings} from '@api/root.api';
 
 import {ThemeService} from './theme';
 

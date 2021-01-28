@@ -14,8 +14,8 @@
 
 import {Component, Input} from '@angular/core';
 import {Router} from '@angular/router';
-import {ObjectMeta, TypeMeta} from '@api/backendapi';
-import {ActionColumn} from '@api/frontendapi';
+import {ObjectMeta, TypeMeta} from '@api/root.api';
+import {ActionColumn} from '@api/root.ui';
 import {PinnerService} from '../../../../services/global/pinner';
 import {KdStateService} from '../../../../services/global/state';
 import {VerberService} from '../../../../services/global/verber';

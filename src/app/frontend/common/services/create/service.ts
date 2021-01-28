@@ -16,7 +16,7 @@ import {HttpClient, HttpErrorResponse} from '@angular/common/http';
 import {Inject, Injectable} from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
 import {Router} from '@angular/router';
-import {AppDeploymentContentResponse, AppDeploymentContentSpec, AppDeploymentSpec} from '@api/backendapi';
+import {AppDeploymentContentResponse, AppDeploymentContentSpec, AppDeploymentSpec} from '@api/root.api';
 
 import {Config, CONFIG_DI_TOKEN} from '../../../index.config';
 import {AlertDialog, AlertDialogConfig} from '../../dialogs/alert/dialog';

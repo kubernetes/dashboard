@@ -14,7 +14,7 @@
 
 import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
-import {Metric} from '@api/backendapi';
+import {Metric} from '@api/root.api';
 
 import {SharedModule} from '../../../shared.module';
 import {CardComponent} from '../card/component';

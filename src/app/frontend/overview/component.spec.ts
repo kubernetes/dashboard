@@ -21,7 +21,7 @@ import {MatDividerModule} from '@angular/material/divider';
 import {MatIconModule} from '@angular/material/icon';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
-import {AppConfig, CronJobList, DaemonSetList, PodList} from '@api/backendapi';
+import {AppConfig, CronJobList, DaemonSetList, PodList} from '@api/root.api';
 
 import {CardComponent} from '../common/components/card/component';
 import {ListGroupIdentifier, ListIdentifier} from '../common/components/resourcelist/groupids';

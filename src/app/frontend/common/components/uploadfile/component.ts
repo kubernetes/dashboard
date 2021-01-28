@@ -14,7 +14,7 @@
 
 import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
-import {HTMLInputEvent, KdFile} from '@api/frontendapi';
+import {HTMLInputEvent, KdFile} from '@api/root.ui';
 import {AlertDialog, AlertDialogConfig} from 'common/dialogs/alert/dialog';
 
 @Component({

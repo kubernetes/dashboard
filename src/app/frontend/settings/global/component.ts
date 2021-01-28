@@ -15,7 +15,7 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {NgForm} from '@angular/forms';
 import {MatDialog} from '@angular/material/dialog';
-import {GlobalSettings} from '@api/backendapi';
+import {GlobalSettings} from '@api/root.api';
 import {of, Subject} from 'rxjs';
 import {catchError, takeUntil, tap} from 'rxjs/operators';
 import {GlobalSettingsService} from '../../common/services/global/globalsettings';

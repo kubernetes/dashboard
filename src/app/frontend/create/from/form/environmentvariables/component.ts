@@ -24,7 +24,7 @@ import {
   NG_VALUE_ACCESSOR,
   Validators,
 } from '@angular/forms';
-import {EnvironmentVariable} from '@api/backendapi';
+import {EnvironmentVariable} from '@api/root.api';
 
 @Component({
   selector: 'kd-environment-variables',

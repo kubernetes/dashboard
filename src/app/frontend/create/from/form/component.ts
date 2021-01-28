@@ -25,7 +25,7 @@ import {
   PortMapping,
   Protocols,
   SecretList,
-} from '@api/backendapi';
+} from '@api/root.api';
 import {take} from 'rxjs/operators';
 
 import {CreateService} from '../../../common/services/create/service';

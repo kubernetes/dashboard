@@ -15,8 +15,8 @@
 import {HttpClient, HttpErrorResponse} from '@angular/common/http';
 import {Component, Inject, NgZone, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import {AuthenticationMode, EnabledAuthenticationModes, LoginSkippableResponse, LoginSpec} from '@api/backendapi';
-import {KdError, KdFile, StateError} from '@api/frontendapi';
+import {AuthenticationMode, EnabledAuthenticationModes, LoginSkippableResponse, LoginSpec} from '@api/root.api';
+import {KdError, KdFile, StateError} from '@api/root.ui';
 import {CookieService} from 'ngx-cookie-service';
 import {map} from 'rxjs/operators';
 

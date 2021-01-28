@@ -106,5 +106,23 @@ limitations under the License.
         </div>
       </div>
     </kd-property>
+
+    <kd-property *ngIf="container?.volumeMounts?.length > 0"
+                 [stretched]="true"
+                 fxFlex="100">
+      <div key
+           i18n>Mounts</div>
+      <div value
+           class="kd-volume-mounts">
+        <kd-volumemounts-list [volumeMounts]="container?.volumeMounts"
+                              [namespace]="namespace"
+                              [initialized]="initialized">
+        </kd-volumemounts-list>
+      </div>
+    </kd-property>
   </div>
+
+  <div content>
+  </div>
+
 </kd-card>

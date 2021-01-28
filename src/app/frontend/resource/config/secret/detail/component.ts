@@ -14,7 +14,7 @@
 
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
-import {SecretDetail} from '@api/backendapi';
+import {SecretDetail} from '@api/root.api';
 import {Subject} from 'rxjs';
 import {takeUntil} from 'rxjs/operators';
 import {HiddenPropertyMode} from '../../../../common/components/hiddenproperty/component';

@@ -13,8 +13,8 @@
 // limitations under the License.
 
 import {HttpErrorResponse} from '@angular/common/http';
-import {ErrStatus, K8sError as K8SApiError} from '@api/backendapi';
-import {KdError as KdApiError} from '@api/frontendapi';
+import {ErrStatus, K8sError as K8SApiError} from '@api/root.api';
+import {KdError as KdApiError} from '@api/root.ui';
 
 export enum ApiError {
   tokenExpired = 'MSG_TOKEN_EXPIRED_ERROR',

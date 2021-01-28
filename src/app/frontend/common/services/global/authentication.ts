@@ -19,7 +19,7 @@ import {CookieService} from 'ngx-cookie-service';
 import {of} from 'rxjs';
 import {Observable} from 'rxjs';
 import {first, switchMap} from 'rxjs/operators';
-import {AuthResponse, CsrfToken, LoginSpec, LoginStatus} from 'typings/backendapi';
+import {AuthResponse, CsrfToken, LoginSpec, LoginStatus} from 'typings/root.api';
 
 import {Config, CONFIG_DI_TOKEN} from '../../../index.config';
 import {K8SError} from '../../errors/errors';

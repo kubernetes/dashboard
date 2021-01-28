@@ -24,7 +24,7 @@ import {MatTooltipModule} from '@angular/material/tooltip';
 import {By} from '@angular/platform-browser';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {RouterModule} from '@angular/router';
-import {AppConfig, K8sError, ServiceDetail} from '@api/backendapi';
+import {AppConfig, K8sError, ServiceDetail} from '@api/root.api';
 import {CardComponent} from 'common/components/card/component';
 import {ChipsComponent} from 'common/components/chips/component';
 import {ObjectMetaComponent} from 'common/components/objectmeta/component';

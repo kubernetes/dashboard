@@ -14,7 +14,7 @@
 
 import {InjectionToken} from '@angular/core';
 import {MatTooltipDefaultOptions} from '@angular/material/tooltip';
-import {LanguageConfig} from 'typings/frontendapi';
+import {LanguageConfig} from '@api/root.ui';
 
 export const CONFIG_DI_TOKEN = new InjectionToken<Config>('kd.config');
 
