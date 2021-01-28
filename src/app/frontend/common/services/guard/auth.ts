@@ -14,7 +14,7 @@
 
 import {Injectable} from '@angular/core';
 import {CanActivate, Router, UrlTree} from '@angular/router';
-import {LoginStatus} from '@api/backendapi';
+import {LoginStatus} from '@api/root.api';
 import {Observable, of} from 'rxjs';
 import {catchError, first, switchMap} from 'rxjs/operators';
 import {AuthService} from '../global/authentication';

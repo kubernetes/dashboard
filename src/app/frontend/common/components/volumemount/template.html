@@ -29,60 +29,61 @@ limitations under the License.
 
   <div content
        [hidden]="volumeMounts?.length === 0">
-    <mat-table [dataSource]="getDataSource()"
+    <mat-table [dataSource]="dataSource"
                class="kd-table-no-footer">
-      <ng-container [matColumnDef]="getVolumeMountColumns()[0]">
+      <ng-container [matColumnDef]="columns[0]">
         <mat-header-cell *matHeaderCellDef
                          i18n>Name</mat-header-cell>
         <mat-cell *matCellDef="let volumeMount">
           {{volumeMount.name}}
         </mat-cell>
       </ng-container>
-      <ng-container [matColumnDef]="getVolumeMountColumns()[1]">
+      <ng-container [matColumnDef]="columns[1]">
         <mat-header-cell *matHeaderCellDef
                          i18n>Read Only</mat-header-cell>
         <mat-cell *matCellDef="let volumeMount">
           {{volumeMount.readOnly}}
         </mat-cell>
       </ng-container>
-      <ng-container [matColumnDef]="getVolumeMountColumns()[2]">
+      <ng-container [matColumnDef]="columns[2]">
         <mat-header-cell *matHeaderCellDef
                          i18n>Mount Path</mat-header-cell>
         <mat-cell *matCellDef="let volumeMount">
           {{volumeMount.mountPath}}
         </mat-cell>
       </ng-container>
-      <ng-container [matColumnDef]="getVolumeMountColumns()[3]">
+      <ng-container [matColumnDef]="columns[3]">
         <mat-header-cell *matHeaderCellDef
                          i18n>Sub Path</mat-header-cell>
         <mat-cell *matCellDef="let volumeMount">
           {{volumeMount.subPath ? volumeMount.subPath : '-'}}
         </mat-cell>
       </ng-container>
-      <ng-container [matColumnDef]="getVolumeMountColumns()[4]">
+      <ng-container [matColumnDef]="columns[4]">
         <mat-header-cell *matHeaderCellDef
                          i18n>Source Type</mat-header-cell>
         <mat-cell *matCellDef="let volumeMount">
           {{getTypeFromVolume(volumeMount.volume)}}
         </mat-cell>
       </ng-container>
-      <ng-container [matColumnDef]="getVolumeMountColumns()[5]">
+      <ng-container [matColumnDef]="columns[5]">
         <mat-header-cell *matHeaderCellDef
                          i18n>Source Name</mat-header-cell>
         <mat-cell *matCellDef="let volumeMount">
-          <ng-container *ngIf="hasPanelInTheDashboard(getTypeFromVolume(volumeMount.volume))">
+          <ng-container *ngIf="isResourceSupported(getTypeFromVolume(volumeMount.volume))">
             <a [routerLink]="getDetailsHref(getNameFromVolume(volumeMount.volume), getTypeFromVolume(volumeMount.volume))"
                queryParamsHandling="preserve">
               {{getNameFromVolume(volumeMount.volume)}}
             </a>
           </ng-container>
-          <ng-container *ngIf="!hasPanelInTheDashboard(getTypeFromVolume(volumeMount.volume))">
+
+          <ng-container *ngIf="!isResourceSupported(getTypeFromVolume(volumeMount.volume))">
             {{getNameFromVolume(volumeMount.volume)}}
           </ng-container>
         </mat-cell>
       </ng-container>
-      <mat-header-row *matHeaderRowDef="getVolumeMountColumns()"></mat-header-row>
-      <mat-row *matRowDef="let row; columns: getVolumeMountColumns();"></mat-row>
+      <mat-header-row *matHeaderRowDef="columns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: columns;"></mat-row>
     </mat-table>
   </div>
 

@@ -16,7 +16,7 @@ import {HttpParams} from '@angular/common/http';
 import {Component, ElementRef, OnDestroy, ViewChild} from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
 import {ActivatedRoute, Router} from '@angular/router';
-import {LogControl, LogDetails, LogLine, LogSelection, LogSources} from '@api/backendapi';
+import {LogControl, LogDetails, LogLine, LogSelection, LogSources} from '@api/root.api';
 import {GlobalSettingsService} from 'common/services/global/globalsettings';
 import {LogService} from 'common/services/global/logs';
 import {NotificationSeverity, NotificationsService} from 'common/services/global/notifications';

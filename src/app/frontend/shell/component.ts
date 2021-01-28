@@ -23,7 +23,7 @@ import {
 } from '@angular/core';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {ActivatedRoute, Router} from '@angular/router';
-import {PodContainerList, ShellFrame, SJSCloseEvent, SJSMessageEvent, TerminalResponse} from '@api/backendapi';
+import {PodContainerList, ShellFrame, SJSCloseEvent, SJSMessageEvent, TerminalResponse} from '@api/root.api';
 import {debounce} from 'lodash';
 import {ReplaySubject, Subject, Subscription} from 'rxjs';
 import {takeUntil} from 'rxjs/operators';

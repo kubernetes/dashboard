@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import {EventEmitter, Injectable} from '@angular/core';
-import {ThemeSwitchCallback} from '@api/frontendapi';
+import {ThemeSwitchCallback} from '@api/root.ui';
 
 @Injectable()
 export class ThemeService {

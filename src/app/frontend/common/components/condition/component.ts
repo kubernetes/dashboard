@@ -14,7 +14,7 @@
 
 import {Component, Input, OnInit} from '@angular/core';
 import {MatTableDataSource} from '@angular/material/table';
-import {Condition} from 'typings/backendapi';
+import {Condition} from 'typings/root.api';
 
 @Component({
   selector: 'kd-condition-list',

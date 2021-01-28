@@ -15,7 +15,7 @@
 import {HttpParams} from '@angular/common/http';
 import {ChangeDetectionStrategy, ChangeDetectorRef, Component, Input} from '@angular/core';
 import {Observable} from 'rxjs';
-import {ConfigMap, ConfigMapList} from 'typings/backendapi';
+import {ConfigMap, ConfigMapList} from 'typings/root.api';
 import {ResourceListBase} from '../../../resources/list';
 import {NotificationsService} from '../../../services/global/notifications';
 import {EndpointManager, Resource} from '../../../services/resource/endpoint';

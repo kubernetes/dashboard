@@ -16,7 +16,7 @@ import {Component, ElementRef, Inject, OnDestroy, OnInit, ViewChild} from '@angu
 import {MatDialog} from '@angular/material/dialog';
 import {MatSelect} from '@angular/material/select';
 import {ActivatedRoute, NavigationEnd, Router} from '@angular/router';
-import {NamespaceList} from '@api/backendapi';
+import {NamespaceList} from '@api/root.api';
 import {Subject} from 'rxjs';
 import {distinctUntilChanged, filter, startWith, switchMap, takeUntil} from 'rxjs/operators';
 

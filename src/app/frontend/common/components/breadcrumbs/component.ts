@@ -14,7 +14,7 @@
 
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, NavigationEnd, Params, Route, Router} from '@angular/router';
-import {Breadcrumb} from '@api/frontendapi';
+import {Breadcrumb} from '@api/root.ui';
 import {distinctUntilChanged, filter} from 'rxjs/operators';
 import {POD_DETAIL_ROUTE} from '../../../resource/workloads/pod/routing';
 import {REPLICASET_DETAIL_ROUTE} from '../../../resource/workloads/replicaset/routing';

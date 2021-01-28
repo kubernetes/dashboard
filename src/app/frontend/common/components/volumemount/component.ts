@@ -14,8 +14,8 @@
 
 import {Component, Input} from '@angular/core';
 import {MatTableDataSource} from '@angular/material/table';
-import {PersistentVolumeSource, VolumeMounts} from '@api/backendapi';
-import {isObject} from 'lodash';
+import {SupportedResources, VolumeMounts} from '@api/root.api';
+import {PersistentVolumeSource} from '@api/volume.api';
 import {KdStateService} from '../../services/global/state';
 
 @Component({
@@ -29,20 +29,21 @@ export class VolumeMountComponent {
 
   constructor(private readonly kdState_: KdStateService) {}
 
-  getVolumeMountColumns(): string[] {
+  get columns(): string[] {
     return ['Name', 'Read Only', 'Mount Path', 'Sub Path', 'Source Type', 'Source Name'];
   }
 
-  getDataSource(): MatTableDataSource<VolumeMounts> {
+  get dataSource(): MatTableDataSource<VolumeMounts> {
     const tableData = new MatTableDataSource<VolumeMounts>();
     tableData.data = this.volumeMounts;
 
     return tableData;
   }
 
-  hasPanelInTheDashboard(sourceType: string): boolean {
-    const implemented_panels = ['ConfigMap', 'Secret', 'PersistentVolumeClaim'];
-    return implemented_panels.includes(sourceType);
+  isResourceSupported(sourceType: string): boolean {
+    return Object.values(SupportedResources)
+      .map(r => r as string)
+      .includes(sourceType);
   }
 
   getDetailsHref(name: string, kind: string): string {
@@ -50,177 +51,14 @@ export class VolumeMountComponent {
   }
 
   getTypeFromVolume(volume: PersistentVolumeSource): string {
-    const source = Object.values(volume)
-      .filter(val => isObject(val) && val)
-      .pop();
-    console.log(source);
-
-    if (volume.hostPath) {
-      return 'HostPath';
-    }
-    if (volume.emptyDir) {
-      return 'EmptyDir';
-    }
-    if (volume.gcePersistentDisk) {
-      return 'GcePersistentDisk';
-    }
-    if (volume.awsElasticBlockStore) {
-      return 'AwsElasticBlockStore';
-    }
-    if (volume.gitRepo) {
-      return 'GitRepo';
-    }
-    if (volume.secret) {
-      return 'Secret';
-    }
-    if (volume.nfs) {
-      return 'NFS';
-    }
-    if (volume.iscsi) {
-      return 'iSCSI';
-    }
-    if (volume.glusterfs) {
-      return 'GlusterFS';
-    }
-    if (volume.persistentVolumeClaim) {
-      return 'PersistentVolumeClaim';
-    }
-    if (volume.rbd) {
-      return 'RBD';
-    }
-    if (volume.flexVolume) {
-      return 'FlexVolume';
-    }
-    if (volume.cinder) {
-      return 'Cinder';
-    }
-    if (volume.cephFS) {
-      return 'CephFS';
-    }
-    if (volume.flocker) {
-      return 'Flocker';
-    }
-    if (volume.downwardAPI) {
-      return 'DownwardAPI';
-    }
-    if (volume.fc) {
-      return 'FC';
-    }
-    if (volume.azureFile) {
-      return 'AzureFile';
-    }
-    if (volume.configMap) {
-      return 'ConfigMap';
-    }
-    if (volume.vsphereVolume) {
-      return 'vSphereVolume';
-    }
-    if (volume.quobyte) {
-      return 'Quobyte';
-    }
-    if (volume.azureDisk) {
-      return 'AzureDisk';
-    }
-    if (volume.photonPersistentDisk) {
-      return 'PhotonPersistentDisk';
-    }
-    if (volume.projected) {
-      return 'Projected';
-    }
-    if (volume.portworxVolume) {
-      return 'PortworxVolume';
-    }
-    if (volume.scaleIO) {
-      return 'ScaleIO';
-    }
-    if (volume.storageOS) {
-      return 'StorageOS';
-    }
-    if (volume.csi) {
-      return 'CSI';
-    }
-    return 'unknown';
+    // This is to make sure that volume is an actual class instance with all methods.
+    volume = new PersistentVolumeSource(volume);
+    return volume.source ? volume.source.type : '-';
   }
 
   getNameFromVolume(volume: PersistentVolumeSource): string {
-    if (volume.hostPath) {
-      return volume.hostPath.path;
-    }
-    if (volume.emptyDir) {
-      return '-';
-    }
-    if (volume.gcePersistentDisk) {
-      return volume.gcePersistentDisk.pdName;
-    }
-    if (volume.awsElasticBlockStore) {
-      return volume.awsElasticBlockStore.volumeID;
-    }
-    if (volume.gitRepo) {
-      return volume.gitRepo.repository + '/' + volume.gitRepo.directory + ':' + volume.gitRepo.revision;
-    }
-    if (volume.secret) {
-      return volume.secret.secretName;
-    }
-    if (volume.nfs) {
-      return volume.nfs.server + '/' + volume.nfs.path;
-    }
-    if (volume.iscsi) {
-      return volume.iscsi.targetPortal + '/' + volume.iscsi.iqn + '/' + volume.iscsi.lun;
-    }
-    if (volume.glusterfs) {
-      return volume.glusterfs.endpoints + '/' + volume.glusterfs.path;
-    }
-    if (volume.persistentVolumeClaim) {
-      return volume.persistentVolumeClaim.claimName;
-    }
-    if (volume.rbd) {
-      return volume.rbd.image;
-    }
-    if (volume.flexVolume) {
-      return volume.flexVolume.driver;
-    }
-    if (volume.cinder) {
-      return volume.cinder.volumeID;
-    }
-    if (volume.cephFS) {
-      return volume.cephFS.path;
-    }
-    if (volume.flocker) {
-      return volume.flocker.datasetName;
-    }
-    // if (volume.downwardAPI ) { return '-'; }
-    // if (volume.fc ) { return '-'; }
-    if (volume.azureFile) {
-      return volume.azureFile.shareName;
-    }
-    if (volume.configMap) {
-      return volume.configMap.name;
-    }
-    if (volume.vsphereVolume) {
-      return volume.vsphereVolume.volumePath;
-    }
-    if (volume.quobyte) {
-      return volume.quobyte.volume;
-    }
-    if (volume.azureDisk) {
-      return volume.azureDisk.diskName;
-    }
-    if (volume.photonPersistentDisk) {
-      return volume.photonPersistentDisk.fsType;
-    }
-    // if (volume.projected) {      return '-';    }
-    if (volume.portworxVolume) {
-      return volume.portworxVolume.volumeID;
-    }
-    if (volume.scaleIO) {
-      return volume.scaleIO.volumeName;
-    }
-    if (volume.storageOS) {
-      return volume.storageOS.volumeName;
-    }
-    if (volume.csi) {
-      return volume.csi.driver;
-    }
-    return '-';
+    // This is to make sure that volume is an actual class instance with all methods.
+    volume = new PersistentVolumeSource(volume);
+    return volume.source ? volume.source.displayName : '-';
   }
 }

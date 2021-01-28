@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import {Component, Input} from '@angular/core';
-import {ObjectMeta, TypeMeta} from '@api/backendapi';
+import {ObjectMeta, TypeMeta} from '@api/root.api';
 import {ResourceMeta} from '../../../services/global/actionbar';
 
 @Component({

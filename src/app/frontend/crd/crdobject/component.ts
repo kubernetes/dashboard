@@ -18,7 +18,7 @@ import {MatButtonToggleGroup} from '@angular/material/button-toggle';
 import {HttpClient} from '@angular/common/http';
 import {dump as toYaml, load as fromYaml} from 'js-yaml';
 import {Subscription} from 'rxjs';
-import {CRDObjectDetail} from '@api/backendapi';
+import {CRDObjectDetail} from '@api/root.api';
 import {highlightAuto} from 'highlight.js';
 import {EditorMode} from '../../common/components/textinput/component';
 import {ActionbarService, ResourceMeta} from '../../common/services/global/actionbar';

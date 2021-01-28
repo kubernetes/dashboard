@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import {Component, Input} from '@angular/core';
-import {ObjectMeta, TypeMeta} from '@api/backendapi';
+import {ObjectMeta, TypeMeta} from '@api/root.api';
 
 import {VerberService} from '../../../../services/global/verber';
 

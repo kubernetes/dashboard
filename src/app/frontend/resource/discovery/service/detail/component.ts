@@ -14,7 +14,7 @@
 
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
-import {ServiceDetail} from '@api/backendapi';
+import {ServiceDetail} from '@api/root.api';
 import {Subject} from 'rxjs';
 import {takeUntil} from 'rxjs/operators';
 

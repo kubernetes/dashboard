@@ -14,8 +14,8 @@
 
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {EventEmitter, Injectable} from '@angular/core';
-import {GlobalSettings} from '@api/backendapi';
-import {onSettingsFailCallback, onSettingsLoadCallback} from '@api/frontendapi';
+import {GlobalSettings} from '@api/root.api';
+import {onSettingsFailCallback, onSettingsLoadCallback} from '@api/root.ui';
 import {of, ReplaySubject, Subject} from 'rxjs';
 import {Observable} from 'rxjs';
 import {catchError, switchMap, takeUntil} from 'rxjs/operators';

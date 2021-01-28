@@ -14,7 +14,7 @@
 
 import {Component, Input, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import {ObjectMeta, TypeMeta} from '@api/backendapi';
+import {ObjectMeta, TypeMeta} from '@api/root.api';
 import {first} from 'rxjs/operators';
 
 import {VerberService} from '../../../../services/global/verber';

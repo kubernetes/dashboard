@@ -15,8 +15,8 @@
 import {DOCUMENT} from '@angular/common';
 import {Component, Inject, OnInit, ViewChild} from '@angular/core';
 import {MatSelect} from '@angular/material/select';
-import {LocalSettings} from '@api/backendapi';
-import {LanguageConfig} from '@api/frontendapi';
+import {LocalSettings} from '@api/root.api';
+import {LanguageConfig} from '@api/root.ui';
 import {CookieService} from 'ngx-cookie-service';
 import {LocalSettingsService} from '../../common/services/global/localsettings';
 import {environment} from '../../environments/environment';

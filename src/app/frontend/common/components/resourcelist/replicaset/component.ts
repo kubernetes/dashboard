@@ -15,7 +15,7 @@
 import {HttpParams} from '@angular/common/http';
 import {ChangeDetectionStrategy, ChangeDetectorRef, Component, Input} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
-import {Event, Metric, ReplicaSet, ReplicaSetList} from '@api/backendapi';
+import {Event, Metric, ReplicaSet, ReplicaSetList} from '@api/root.api';
 import {Observable} from 'rxjs';
 
 import {ResourceListWithStatuses} from '../../../resources/list';

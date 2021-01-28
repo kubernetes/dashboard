@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import {EventEmitter, Injectable} from '@angular/core';
-import {ObjectMeta, TypeMeta} from '@api/backendapi';
+import {ObjectMeta, TypeMeta} from '@api/root.api';
 
 export class ResourceMeta {
   displayName: string;

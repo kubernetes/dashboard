@@ -14,7 +14,7 @@
 
 import {Component, Input} from '@angular/core';
 import {MatTableDataSource} from '@angular/material/table';
-import {Subject} from 'typings/backendapi';
+import {Subject} from 'typings/root.api';
 import {KdStateService} from '../../services/global/state';
 import {Resource} from '../../services/resource/endpoint';
 

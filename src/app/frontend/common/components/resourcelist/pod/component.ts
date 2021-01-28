@@ -14,7 +14,7 @@
 
 import {HttpParams} from '@angular/common/http';
 import {ChangeDetectionStrategy, ChangeDetectorRef, Component, Input} from '@angular/core';
-import {Event, Metric, Pod, PodList} from '@api/backendapi';
+import {Event, Metric, Pod, PodList} from '@api/root.api';
 import {Observable} from 'rxjs';
 import {ResourceListWithStatuses} from '../../../resources/list';
 import {NotificationsService} from '../../../services/global/notifications';

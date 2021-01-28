@@ -14,7 +14,7 @@
 
 import {HttpParams} from '@angular/common/http';
 import {ChangeDetectionStrategy, ChangeDetectorRef, Component, Input} from '@angular/core';
-import {CRD, CRDList} from '@api/backendapi';
+import {CRD, CRDList} from '@api/root.api';
 import {Observable} from 'rxjs';
 
 import {ResourceListWithStatuses} from '../../../resources/list';
