@@ -113,6 +113,27 @@ export class VolumeMountComponent {
     if (volume.quobyte) {
       return 'Quobyte';
     }
+    if (volume.azureDisk) {
+      return 'AzureDisk';
+    }
+    if (volume.photonPersistentDisk) {
+      return 'PhotonPersistentDisk';
+    }
+    if (volume.projected) {
+      return 'Projected';
+    }
+    if (volume.portworxVolume) {
+      return 'PortworxVolume';
+    }
+    if (volume.scaleIO) {
+      return 'ScaleIO';
+    }
+    if (volume.storageOS) {
+      return 'StorageOS';
+    }
+    if (volume.csi) {
+      return 'CSI';
+    }
     return 'unknown';
   }
 
@@ -176,7 +197,25 @@ export class VolumeMountComponent {
     if (volume.quobyte) {
       return volume.quobyte.volume;
     }
-
+    if (volume.azureDisk) {
+      return volume.azureDisk.diskName;
+    }
+    if (volume.photonPersistentDisk) {
+      return volume.photonPersistentDisk.fsType;
+    }
+    // if (volume.projected) {      return '-';    }
+    if (volume.portworxVolume) {
+      return volume.portworxVolume.volumeID;
+    }
+    if (volume.scaleIO) {
+      return volume.scaleIO.volumeName;
+    }
+    if (volume.storageOS) {
+      return volume.storageOS.volumeName;
+    }
+    if (volume.csi) {
+      return volume.csi.driver;
+    }
     return '-';
   }
 }
