@@ -1300,7 +1300,6 @@ export interface ProjectedVolumeSource {
   defaultMode?: number;
 }
 
-
 export interface VolumeProjection {
   secret?: SecretProjection;
   downwardAPI?: DownwardAPIProjection;
@@ -1313,7 +1312,6 @@ export interface ServiceAccountTokenProjection {
   expirationSeconds: number;
   path: string;
 }
-
 
 export interface ConfigMapProjection {
   items?: KeyToPath[];
