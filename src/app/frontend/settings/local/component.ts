@@ -34,6 +34,7 @@ export class LocalSettingsComponent implements OnInit {
   selectedLanguage: string;
   themes: Theme[];
   selectedTheme: string;
+  systemTheme: string;
 
   @ViewChild(MatSelect, {static: true}) private readonly select_: MatSelect;
 
@@ -51,11 +52,12 @@ export class LocalSettingsComponent implements OnInit {
     this.languages = this.appConfig_.supportedLanguages;
     this.selectedLanguage = this.cookies_.get(this.appConfig_.languageCookieName) || this.appConfig_.defaultLanguage;
 
-    this.themes = this.theme_.availableThemes;
+    this.themes = this.theme_.themes;
     this.selectedTheme = this.theme_.theme;
+    this.systemTheme = this.theme_.systemTheme;
   }
 
-  onThemeChange(theme: Theme): void {
+  onThemeChange(theme: string): void {
     this.settings.theme = theme;
     this.settings_.handleThemeChange(this.settings.theme);
   }

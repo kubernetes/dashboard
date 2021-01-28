@@ -26,7 +26,6 @@ import {
 } from '@angular/core';
 import {Ace, config, edit} from 'ace-builds';
 import {ThemeService} from '../../services/global/theme';
-import {Theme} from '@api/backendapi';
 
 enum EditorTheme {
   light = 'textmate',
@@ -69,13 +68,7 @@ export class TextInputComponent implements OnInit, AfterViewInit, OnChanges {
   constructor(private readonly themeService_: ThemeService) {}
 
   ngOnInit(): void {
-    switch (this.themeService_.theme) {
-      case Theme.Dark:
-        this.theme = EditorTheme.dark;
-        break;
-      default:
-        this.theme = EditorTheme.light;
-    }
+    this.theme = this.themeService_.isThemeDark() ? EditorTheme.dark : EditorTheme.light;
   }
 
   ngAfterViewInit(): void {

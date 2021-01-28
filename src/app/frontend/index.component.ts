@@ -18,7 +18,6 @@ import {Component, ElementRef, OnInit} from '@angular/core';
 import {LocalSettingsService} from './common/services/global/localsettings';
 import {ThemeService} from './common/services/global/theme';
 import {TitleService} from './common/services/global/title';
-import {Theme} from '@api/backendapi';
 
 @Component({selector: 'kd-root', template: '<router-outlet></router-outlet>'})
 export class RootComponent implements OnInit {
@@ -45,7 +44,7 @@ export class RootComponent implements OnInit {
     this.applyOverlayContainerTheme_('', this._theme);
   }
 
-  private onThemeChange_(theme: Theme): void {
+  private onThemeChange_(theme: string): void {
     this.applyOverlayContainerTheme_(this._theme, theme);
     this._theme = theme;
   }

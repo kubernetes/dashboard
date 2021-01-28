@@ -20,6 +20,7 @@
     "noImplicitReturns": true,
     "noUnusedParameters": true,
     "noImplicitAny": true,
+    "resolveJsonModule": true,
     "lib": [
       "es2017",
       "dom"

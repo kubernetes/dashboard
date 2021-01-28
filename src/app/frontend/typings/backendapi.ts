@@ -763,12 +763,13 @@ export interface CsrfToken {
 }
 
 export interface LocalSettings {
-  theme: Theme;
+  theme: string;
 }
 
-export enum Theme {
-  Light = 'kd-light-theme',
-  Dark = 'kd-dark-theme',
+export interface Theme {
+  name: string;
+  displayName: string;
+  isDark: boolean;
 }
 
 export interface AppConfig {

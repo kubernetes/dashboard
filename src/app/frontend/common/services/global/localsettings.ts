@@ -21,7 +21,7 @@ import {ThemeService} from './theme';
 export class LocalSettingsService {
   private readonly _settingsKey = 'localSettings';
   private settings_: LocalSettings = {
-    theme: Theme.Light,
+    theme: 'kd-light-theme',
   };
 
   constructor(private readonly theme_: ThemeService) {}
@@ -37,7 +37,7 @@ export class LocalSettingsService {
     return this.settings_;
   }
 
-  handleThemeChange(theme: Theme): void {
+  handleThemeChange(theme: string): void {
     this.settings_.theme = theme;
     this.theme_.theme = theme;
     this.updateCookie_();

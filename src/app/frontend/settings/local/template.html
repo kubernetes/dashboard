@@ -31,10 +31,14 @@ limitations under the License.
                                (change)="onThemeChange($event.value)"
                                fxLayout="row wrap"
                                fxFlex>
-        <mat-button-toggle *ngFor="let theme of themes"
-                           [value]="theme"
+        <mat-button-toggle [value]="systemTheme"
                            class="kd-border">
-          {{theme}}
+          System
+        </mat-button-toggle>
+        <mat-button-toggle *ngFor="let theme of themes"
+                           [value]="theme.name"
+                           class="kd-border">
+          {{theme.displayName}}
         </mat-button-toggle>
       </mat-button-toggle-group>
     </kd-settings-entry>
