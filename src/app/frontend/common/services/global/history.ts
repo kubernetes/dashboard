@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import {Injectable, Injector} from '@angular/core';
-import {NavigationEnd, Router} from '@angular/router';
+import {Navigation, NavigationEnd, Router} from '@angular/router';
 import {filter, pairwise} from 'rxjs/operators';
 
 @Injectable()
@@ -32,9 +32,16 @@ export class HistoryService {
       .pipe(filter(e => e instanceof NavigationEnd))
       .pipe(pairwise())
       .subscribe((e: [NavigationEnd, NavigationEnd]) => {
-        this.previousStateUrl_ = e[0].url;
-        this.currentStateUrl_ = e[1].url;
+        if(e[0].url !== e[1].url) {
+          this.previousStateUrl_ = e[0].url;
+          this.currentStateUrl_ = e[1].url;
+        }
       });
+  }
+
+  pushState(navigation: Navigation): void {
+    this.previousStateUrl_ = navigation.extractedUrl.toString();
+    this.currentStateUrl_ = navigation.initialUrl.toString();
   }
 
   /**
