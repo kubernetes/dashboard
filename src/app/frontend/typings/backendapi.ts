@@ -982,83 +982,8 @@ export interface PodEvent {
   message: string;
 }
 
-export interface GCEPersistentDiskVolumeSource {
-  pdName: string;
-  fsType: string;
-  partition: number;
-  readOnly: boolean;
-}
-
-export interface AWSElasticBlockStorageVolumeSource {
-  volumeID: string;
-  fsType: string;
-  partition: number;
-  readOnly: boolean;
-}
-
-export interface HostPathVolumeSource {
-  path: string;
-}
-
-export interface GlusterfsVolumeSource {
-  endpoints: string;
-  path: string;
-  readOnly: boolean;
-}
-
-export interface NFSVolumeSource {
-  server: string;
-  path: string;
-  readOnly: boolean;
-}
-
-export interface RBDVolumeSource {
-  monitors: string[];
-  image: string;
-  fsType: string;
-  pool: string;
-  user: string;
-  keyring: string;
-  secretRef: LocalObjectReference;
-  readOnly: boolean;
-}
-
 export interface LocalObjectReference {
   name: string;
-}
-
-export interface ISCSIVolumeSource {
-  targetPortal: string;
-  iqn: string;
-  lun: number;
-  fsType: string;
-  readOnly: boolean;
-}
-
-export interface CinderVolumeSource {
-  volumeID: string;
-  fsType: string;
-  readOnly: boolean;
-}
-
-export interface CephFSVolumeSource {
-  monitors: string[];
-  path: string;
-  user: string;
-  secretFile: string;
-  secretRef: LocalObjectReference;
-  readonly: boolean;
-}
-
-export interface FCVolumeSource {
-  targetWWNs: string[];
-  lun: number;
-  fsType: string;
-  readOnly: boolean;
-}
-
-export interface FlockerVolumeSource {
-  datasetName: string;
 }
 
 export interface RollingUpdateStrategy {
@@ -1225,7 +1150,6 @@ export interface SystemBanner {
   severity: string;
 }
 
-// https://godoc.org/k8s.io/api/core/v1#Volumes
 export interface PersistentVolumeSource {
   name: string;
   hostPath?: HostPathVolumeSource;
@@ -1258,72 +1182,317 @@ export interface PersistentVolumeSource {
   // csi: CSIVolumeSource;
 }
 
-// export interface EmptyDirVolumeSource {}
+// Our custom object to extend Persistent Volume Sources with generic type/name information
+export interface VolumeSource {
+  type: string;
+  displayName: string;
+}
 
-export interface GitRepoVolumeSource {
+export class HostPathVolumeSource implements VolumeSource {
+  path: string;
+
+  get type(): string {
+    return 'HostPath';
+  }
+
+  get displayName(): string {
+    return '';
+  }
+}
+
+export class EmptyDirVolumeSource implements VolumeSource {
+  get type(): string {
+    return 'EmptyDir';
+  }
+
+  get displayName(): string {
+    return '';
+  }
+}
+
+export class GCEPersistentDiskVolumeSource implements VolumeSource {
+  pdName: string;
+  fsType: string;
+  partition: number;
+  readOnly: boolean;
+
+  get type(): string {
+    return '';
+  }
+
+  get displayName(): string {
+    return '';
+  }
+}
+
+export class AWSElasticBlockStorageVolumeSource implements VolumeSource {
+  volumeID: string;
+  fsType: string;
+  partition: number;
+  readOnly: boolean;
+
+  get type(): string {
+    return '';
+  }
+
+  get displayName(): string {
+    return '';
+  }
+}
+
+export class GitRepoVolumeSource implements VolumeSource {
   repository: string;
   revision: string;
   directory: string;
+
+  get type(): string {
+    return '';
+  }
+
+  get displayName(): string {
+    return '';
+  }
 }
 
-export interface SecretVolumeSource {
+export class SecretVolumeSource implements VolumeSource {
   secretName: string;
-  // items
   defaultMode: number;
   optional: boolean;
+
+  get type(): string {
+    return 'Secret';
+  }
+
+  get displayName(): string {
+    return '';
+  }
 }
 
-export interface PersistentVolumeClaimVolumeSource {
+export class NFSVolumeSource implements VolumeSource {
+  server: string;
+  path: string;
+  readOnly: boolean;
+
+  get type(): string {
+    return '';
+  }
+
+  get displayName(): string {
+    return '';
+  }
+}
+
+export class ISCSIVolumeSource implements VolumeSource {
+  targetPortal: string;
+  iqn: string;
+  lun: number;
+  fsType: string;
+  readOnly: boolean;
+
+  get type(): string {
+    return '';
+  }
+
+  get displayName(): string {
+    return '';
+  }
+}
+
+export class GlusterfsVolumeSource implements VolumeSource {
+  endpoints: string;
+  path: string;
+  readOnly: boolean;
+
+  get type(): string {
+    return '';
+  }
+
+  get displayName(): string {
+    return '';
+  }
+}
+
+export class PersistentVolumeClaimVolumeSource implements VolumeSource {
   claimName: string;
   readOnly: boolean;
+
+  get type(): string {
+    return '';
+  }
+
+  get displayName(): string {
+    return '';
+  }
 }
 
-export interface DownwardAPIVolumeSource {
-  // items
+export class RBDVolumeSource implements VolumeSource {
+  monitors: string[];
+  image: string;
+  fsType: string;
+  pool: string;
+  user: string;
+  keyring: string;
+  secretRef: LocalObjectReference;
+  readOnly: boolean;
+
+  get type(): string {
+    return '';
+  }
+
+  get displayName(): string {
+    return '';
+  }
+}
+
+export class FlexVolumeSource implements VolumeSource {
+  driver: string;
+  fsType: string;
+  readOnly: boolean;
+
+  get type(): string {
+    return '';
+  }
+
+  get displayName(): string {
+    return '';
+  }
+}
+
+export class CinderVolumeSource implements VolumeSource {
+  volumeID: string;
+  fsType: string;
+  readOnly: boolean;
+
+  get type(): string {
+    return '';
+  }
+
+  get displayName(): string {
+    return '';
+  }
+}
+
+export class CephFSVolumeSource implements VolumeSource {
+  monitors: string[];
+  path: string;
+  user: string;
+  secretFile: string;
+  secretRef: LocalObjectReference;
+  readonly: boolean;
+
+  get type(): string {
+    return '';
+  }
+
+  get displayName(): string {
+    return '';
+  }
+}
+
+export class FlockerVolumeSource implements VolumeSource {
+  datasetName: string;
+
+  get type(): string {
+    return '';
+  }
+
+  get displayName(): string {
+    return '';
+  }
+}
+
+export class DownwardAPIVolumeSource implements VolumeSource {
   defaultMode: number;
+
+  get type(): string {
+    return '';
+  }
+
+  get displayName(): string {
+    return '';
+  }
 }
 
-export interface AzureFileVolumeSource {
+export class FCVolumeSource implements VolumeSource {
+  targetWWNs: string[];
+  lun: number;
+  fsType: string;
+  readOnly: boolean;
+
+  get type(): string {
+    return '';
+  }
+
+  get displayName(): string {
+    return '';
+  }
+}
+
+export class AzureFileVolumeSource implements VolumeSource {
   secretName: string;
   shareName: string;
   readOnly: boolean;
+
+  get type(): string {
+    return '';
+  }
+
+  get displayName(): string {
+    return '';
+  }
 }
 
-export interface FlexVolumeSource {
-  driver: string;
-  fsType: string;
-  // secretRef
-  readOnly: boolean;
-  // options
-}
-
-export interface ConfigMapVolumeSource {
+export class ConfigMapVolumeSource implements VolumeSource {
   name: string;
   items: KeyToPath[];
   defaultMode: number;
   optional: boolean;
+
+  get type(): string {
+    return '';
+  }
+
+  get displayName(): string {
+    return '';
+  }
 }
 
-export interface KeyToPath {
-  key: string;
-  path: string;
-  mode: number;
-}
-
-export interface VsphereVirtualDiskVolumeSource {
+export class VsphereVirtualDiskVolumeSource implements VolumeSource {
   volumePath: string;
   fsType: string;
   storagePolicyName: string;
   storagePolicyID: string;
+
+  get type(): string {
+    return '';
+  }
+
+  get displayName(): string {
+    return '';
+  }
 }
 
-export interface QuobyteVolumeSource {
+export class QuobyteVolumeSource implements VolumeSource {
   registry: string;
   volume: string;
   readOnly: boolean;
   user: string;
   group: string;
   tenant: string;
+
+  get type(): string {
+    return '';
+  }
+
+  get displayName(): string {
+    return '';
+  }
+}
+
+export interface KeyToPath {
+  key: string;
+  path: string;
+  mode: number;
 }
 
 export interface TerminalResponse {
@@ -1342,8 +1511,6 @@ export interface TerminalPageParams {
   namespace: string;
   resourceKind: string;
   resourceName: string;
-
-  // Optional
   pod?: string;
   container?: string;
 }

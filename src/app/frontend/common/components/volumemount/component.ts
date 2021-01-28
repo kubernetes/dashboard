@@ -14,9 +14,9 @@
 
 import {Component, Input} from '@angular/core';
 import {MatTableDataSource} from '@angular/material/table';
-import {VolumeMounts, PersistentVolumeSource} from '@api/backendapi';
+import {PersistentVolumeSource, VolumeMounts} from '@api/backendapi';
+import {isObject} from 'lodash';
 import {KdStateService} from '../../services/global/state';
-import {GlobalServicesModule} from '../../services/global/module';
 
 @Component({
   selector: 'kd-volumemounts-list',
@@ -27,7 +27,7 @@ export class VolumeMountComponent {
   @Input() volumeMounts: VolumeMounts[];
   @Input() namespace: string;
 
-  private readonly kdState_: KdStateService = GlobalServicesModule.injector.get(KdStateService);
+  constructor(private readonly kdState_: KdStateService) {}
 
   getVolumeMountColumns(): string[] {
     return ['Name', 'Read Only', 'Mount Path', 'Sub Path', 'Source Type', 'Source Name'];
@@ -50,6 +50,11 @@ export class VolumeMountComponent {
   }
 
   getTypeFromVolume(volume: PersistentVolumeSource): string {
+    const source = Object.values(volume)
+      .filter(val => isObject(val) && val)
+      .pop();
+    console.log(source);
+
     if (volume.hostPath) {
       return 'HostPath';
     }
