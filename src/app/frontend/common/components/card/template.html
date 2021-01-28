@@ -48,8 +48,6 @@ limitations under the License.
   </mat-card-title>
 
   <div [@expandInOut]="!expanded">
-    <mat-divider class="kd-on-top"></mat-divider>
-
     <mat-card-content class="kd-card-content"
                       [ngClass]="{'kd-card-content-table': role === 'table'}">
       <div *ngIf="initialized; else loading">

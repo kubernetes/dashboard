@@ -33,18 +33,19 @@ import (
 // resourceVerber is a struct responsible for doing common verb operations on resources, like
 // DELETE, PUT, UPDATE.
 type resourceVerber struct {
-	client              RESTClient
-	extensionsClient    RESTClient
-	appsClient          RESTClient
-	batchClient         RESTClient
-	betaBatchClient     RESTClient
-	autoscalingClient   RESTClient
-	storageClient       RESTClient
-	rbacClient          RESTClient
-	networkingClient    RESTClient
-	apiExtensionsClient RESTClient
-	pluginsClient       RESTClient
-	config              *restclient.Config
+	client               RESTClient
+	extensionsClient     RESTClient
+	appsClient           RESTClient
+	batchClient          RESTClient
+	betaBatchClient      RESTClient
+	autoscalingClient    RESTClient
+	storageClient        RESTClient
+	rbacClient           RESTClient
+	networkingClient     RESTClient
+	betaNetworkingClient RESTClient
+	apiExtensionsClient  RESTClient
+	pluginsClient        RESTClient
+	config               *restclient.Config
 }
 
 type crdInfo struct {
@@ -72,6 +73,8 @@ func (verber *resourceVerber) getRESTClientByType(clientType api.ClientType) RES
 		return verber.rbacClient
 	case api.ClientTypeNetworkingClient:
 		return verber.networkingClient
+	case api.ClientTypeBetaNetworkingClient:
+		return verber.betaNetworkingClient
 	case api.ClientTypeAPIExtensionsClient:
 		return verber.apiExtensionsClient
 	case api.ClientTypePluginsClient:
@@ -167,9 +170,9 @@ type RESTClient interface {
 }
 
 // NewResourceVerber creates a new resource verber that uses the given client for performing operations.
-func NewResourceVerber(client, extensionsClient, appsClient, batchClient, betaBatchClient, autoscalingClient, storageClient, rbacClient, networkingClient, apiExtensionsClient, pluginsClient RESTClient, config *restclient.Config) clientapi.ResourceVerber {
+func NewResourceVerber(client, extensionsClient, appsClient, batchClient, betaBatchClient, autoscalingClient, storageClient, rbacClient, networkingClient, betaNetworkingClient, apiExtensionsClient, pluginsClient RESTClient, config *restclient.Config) clientapi.ResourceVerber {
 	return &resourceVerber{client, extensionsClient, appsClient,
-		batchClient, betaBatchClient, autoscalingClient, storageClient, rbacClient, networkingClient, apiExtensionsClient, pluginsClient, config}
+		batchClient, betaBatchClient, autoscalingClient, storageClient, rbacClient, networkingClient, betaNetworkingClient, apiExtensionsClient, pluginsClient, config}
 }
 
 // Delete deletes the resource of the given kind in the given namespace with the given name.

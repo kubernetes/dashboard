@@ -75,6 +75,7 @@ import {DeploymentListComponent} from './resourcelist/deployment/component';
 import {EventListComponent} from './resourcelist/event/component';
 import {HorizontalPodAutoscalerListComponent} from './resourcelist/horizontalpodautoscaler/component';
 import {IngressListComponent} from './resourcelist/ingress/component';
+import {IngressRuleFlatListComponent} from './ingressrulelist/component';
 import {JobListComponent} from './resourcelist/job/component';
 import {NamespaceListComponent} from './resourcelist/namespace/component';
 import {NodeListComponent} from './resourcelist/node/component';
@@ -141,6 +142,7 @@ const components = [
   HiddenPropertyComponent,
   HorizontalPodAutoscalerListComponent,
   IngressListComponent,
+  IngressRuleFlatListComponent,
   InternalEndpointComponent,
   JobListComponent,
   LoadingSpinner,
