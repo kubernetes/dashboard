@@ -1173,13 +1173,13 @@ export interface PersistentVolumeSource {
   configMap?: ConfigMapVolumeSource;
   vsphereVolume?: VsphereVirtualDiskVolumeSource;
   quobyte?: QuobyteVolumeSource;
-  // azureDisk: AzureDiskVolumeSource;
-  // photonPersistentDisk: PhotonPersistentDiskVolumeSource;
-  // projected: ProjectedVolumeSource;
-  // portworxVolume: PortworxVolumeSource;
-  // scaleIO: ScaleIOVolumeSource;
-  // storageOS: StorageOSVolumeSource;
-  // csi: CSIVolumeSource;
+  azureDisk: AzureDiskVolumeSource;
+  photonPersistentDisk: PhotonPersistentDiskVolumeSource;
+  projected: ProjectedVolumeSource;
+  portworxVolume: PortworxVolumeSource;
+  scaleIO: ScaleIOVolumeSource;
+  storageOS: StorageOSVolumeSource;
+  csi: CSIVolumeSource;
 }
 
 // Our custom object to extend Persistent Volume Sources with generic type/name information
@@ -1487,6 +1487,117 @@ export class QuobyteVolumeSource implements VolumeSource {
   get displayName(): string {
     return '';
   }
+}
+
+export interface CSIVolumeSource {
+  driver: string;
+  readOnly?: boolean;
+  fSType?: string;
+  volumeAttributes?: any;
+  nodePublishSecretRef?: LocalObjectReference;
+}
+
+export interface StorageOSVolumeSource {
+  volumeName: string;
+  volumeNamespace?: string;
+  fSType?: string;
+  readOnly?: boolean;
+  secretRef?: LocalObjectReference;
+}
+
+export interface ScaleIOVolumeSource {
+  gateway: string;
+  system: string;
+  secretRef: LocalObjectReference;
+  sSLEnabled?: boolean;
+  protectionDomain?: string;
+  storagePool?: string;
+  storageMode?: string;
+  volumeName: string;
+  fSType?: string;
+  readOnly?: boolean;
+}
+
+export interface PortworxVolumeSource {
+  volumeID: string;
+  fSType: string;
+  readOnly?: boolean;
+}
+
+export interface ProjectedVolumeSource {
+  sources?: VolumeProjection[];
+  defaultMode?: number;
+}
+
+export interface VolumeProjection {
+  secret?: SecretProjection;
+  downwardAPI?: DownwardAPIProjection;
+  configMap?: ConfigMapProjection;
+  serviceAccountToken?: ServiceAccountTokenProjection;
+}
+
+export interface ServiceAccountTokenProjection {
+  audience: string;
+  expirationSeconds: number;
+  path: string;
+}
+
+export interface ConfigMapProjection {
+  items?: KeyToPath[];
+  optional?: boolean;
+}
+
+export interface SecretProjection {
+  items?: KeyToPath[];
+  optional?: boolean;
+}
+
+export interface DownwardAPIProjection {
+  items?: DownwardAPIVolumeFile[];
+}
+
+export interface DownwardAPIVolumeFile {
+  path: string;
+  fieldRef?: ObjectFieldSelector;
+  resourceFieldRef?: ResourceFieldSelector;
+  mode?: number;
+}
+
+export interface ResourceFieldSelector {
+  containerName?: string;
+  resource: string;
+}
+
+export interface ObjectFieldSelector {
+  aPIVersion?: string;
+  fieldPath: string;
+}
+
+export interface VolumeProjection {
+  sources: VolumeProjection;
+  defaultMode: number;
+}
+
+export interface PhotonPersistentDiskVolumeSource {
+  phID: string;
+  fsType: string;
+}
+
+export interface AzureDiskVolumeSource {
+  diskName: string;
+  dataDiskURI: string;
+  cachingMode: AzureDataDiskCachingMode;
+  fsType: string;
+  readOnly: boolean;
+  kind: AzureDataDiskKind;
+}
+
+export interface AzureDataDiskKind {
+  azureDataDiskKind: string;
+}
+
+export interface AzureDataDiskCachingMode {
+  azureDataDiskCachingMode: string;
 }
 
 export interface KeyToPath {
