@@ -23,8 +23,8 @@ import {
   ViewChild,
   ViewContainerRef,
 } from '@angular/core';
-import {ActionColumn} from '@api/frontendapi';
-import {CRDDetail, Resource} from 'typings/backendapi';
+import {ActionColumn} from '@api/root.ui';
+import {CRDDetail, Resource} from 'typings/root.api';
 
 @Component({
   selector: 'kd-dynamic-cell',

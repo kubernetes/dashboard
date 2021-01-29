@@ -22,8 +22,8 @@ import {MatIconModule} from '@angular/material/icon';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {By} from '@angular/platform-browser';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
-import {AppConfig} from '@api/backendapi';
-import {ResourcesRatio} from '@api/frontendapi';
+import {AppConfig} from '@api/root.api';
+import {ResourcesRatio} from '@api/root.ui';
 
 import {ConfigService} from '../../services/global/config';
 import {CardComponent} from '../card/component';

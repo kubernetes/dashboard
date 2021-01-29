@@ -22,7 +22,7 @@ import {
   SimpleChanges,
 } from '@angular/core';
 import {MatDialog, MatDialogConfig} from '@angular/material/dialog';
-import {StringMap} from '@api/backendapi';
+import {StringMap} from '@api/root.api';
 
 import {GlobalSettingsService} from '../../services/global/globalsettings';
 

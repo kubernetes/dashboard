@@ -14,7 +14,7 @@
 
 import {Component, Input} from '@angular/core';
 import {MatTableDataSource} from '@angular/material/table';
-import {IngressSpecRule, IngressSpecRuleHttpPath} from '@api/backendapi';
+import {IngressSpecRule, IngressSpecRuleHttpPath} from '@api/root.api';
 import {KdStateService} from '../../services/global/state';
 import {GlobalServicesModule} from '../../services/global/module';
 

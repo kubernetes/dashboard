@@ -14,7 +14,7 @@
 
 import {HttpClient} from '@angular/common/http';
 import {Injectable} from '@angular/core';
-import {CsrfToken} from '@api/backendapi';
+import {CsrfToken} from '@api/root.api';
 import {Observable} from 'rxjs';
 
 @Injectable()

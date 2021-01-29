@@ -15,10 +15,11 @@
 import {HttpClient, HttpErrorResponse} from '@angular/common/http';
 import {Component, Inject, NgZone, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import {AuthenticationMode, EnabledAuthenticationModes, LoginSkippableResponse, LoginSpec} from '@api/backendapi';
-import {KdError, KdFile, StateError} from '@api/frontendapi';
+import {AuthenticationMode, EnabledAuthenticationModes, LoginSkippableResponse, LoginSpec} from '@api/root.api';
+import {KdError, KdFile, StateError} from '@api/root.ui';
 import {CookieService} from 'ngx-cookie-service';
 import {map} from 'rxjs/operators';
+import {HistoryService} from '../common/services/global/history';
 
 import {Config, CONFIG_DI_TOKEN} from '../index.config';
 import {AsKdError, K8SError} from '../common/errors/errors';
@@ -56,6 +57,7 @@ export class LoginComponent implements OnInit {
     private readonly ngZone_: NgZone,
     private readonly route_: ActivatedRoute,
     private readonly pluginConfigService_: PluginsConfigService,
+    private readonly historyService_: HistoryService,
     @Inject(CONFIG_DI_TOKEN) private readonly CONFIG: Config
   ) {}
 
@@ -104,9 +106,7 @@ export class LoginComponent implements OnInit {
         }
 
         this.pluginConfigService_.refreshConfig();
-        this.ngZone_.run(() => {
-          this.state_.navigate(['overview']);
-        });
+        this.ngZone_.run(_ => this.historyService_.goToPreviousState('overview'));
       },
       (err: HttpErrorResponse) => {
         this.errors = [AsKdError(err)];
@@ -116,7 +116,7 @@ export class LoginComponent implements OnInit {
 
   skip(): void {
     this.authService_.skipLoginPage(true);
-    this.state_.navigate(['overview']);
+    this.historyService_.goToPreviousState('overview');
   }
 
   isSkipButtonEnabled(): boolean {

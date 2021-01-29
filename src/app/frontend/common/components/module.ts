@@ -80,6 +80,7 @@ import {JobListComponent} from './resourcelist/job/component';
 import {NamespaceListComponent} from './resourcelist/namespace/component';
 import {NodeListComponent} from './resourcelist/node/component';
 import {PersistentVolumeListComponent} from './resourcelist/persistentvolume/component';
+import {VolumeMountComponent} from './volumemount/component';
 import {PersistentVolumeClaimListComponent} from './resourcelist/persistentvolumeclaim/component';
 import {PluginListComponent} from './resourcelist/plugin/component';
 import {PodListComponent} from './resourcelist/pod/component';
@@ -186,6 +187,7 @@ const components = [
   RoleListComponent,
   RoleBindingListComponent,
   SubjectListComponent,
+  VolumeMountComponent,
 ];
 
 @NgModule({

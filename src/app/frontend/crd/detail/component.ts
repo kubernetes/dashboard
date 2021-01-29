@@ -14,7 +14,7 @@
 
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
-import {CRD, CRDDetail} from '@api/backendapi';
+import {CRD, CRDDetail} from '@api/root.api';
 import {Subject, Subscription} from 'rxjs';
 import {switchMap, takeUntil, tap} from 'rxjs/operators';
 

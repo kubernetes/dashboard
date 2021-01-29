@@ -13,8 +13,8 @@
 // limitations under the License.
 
 import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
-import {DataPoint, Metric} from '@api/backendapi';
-import {ViewportMetadata} from '@api/frontendapi';
+import {DataPoint, Metric} from '@api/root.api';
+import {ViewportMetadata} from '@api/root.ui';
 import {curveMonotoneX, timeFormat} from 'd3';
 
 import {FormattedValue} from './helper';

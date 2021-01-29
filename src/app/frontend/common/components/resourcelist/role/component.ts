@@ -14,7 +14,7 @@
 
 import {HttpParams} from '@angular/common/http';
 import {ChangeDetectionStrategy, ChangeDetectorRef, Component, Input} from '@angular/core';
-import {Role, RoleList, ServiceAccount, ServiceAccountList} from '@api/backendapi';
+import {Role, RoleList, ServiceAccount, ServiceAccountList} from '@api/root.api';
 import {Observable} from 'rxjs';
 
 import {ResourceListBase} from '../../../resources/list';

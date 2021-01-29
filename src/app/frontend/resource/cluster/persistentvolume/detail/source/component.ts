@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import {Component, Input} from '@angular/core';
-import {PersistentVolumeSource} from '@api/backendapi';
+import {PersistentVolumeSource} from '@api/volume.api';
 
 @Component({
   selector: 'kd-persistent-volume-source',

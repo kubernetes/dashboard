@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import {Component, Input} from '@angular/core';
-import {PinnedResource} from '@api/backendapi';
+import {PinnedResource} from '@api/root.api';
 import {PinnerService} from '../../../common/services/global/pinner';
 import {Resource} from '../../../common/services/resource/endpoint';
 

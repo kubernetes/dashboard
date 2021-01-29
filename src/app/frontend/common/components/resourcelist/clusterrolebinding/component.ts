@@ -22,7 +22,7 @@ import {EndpointManager, Resource} from '../../../services/resource/endpoint';
 import {ResourceService} from '../../../services/resource/resource';
 import {MenuComponent} from '../../list/column/menu/component';
 import {ListGroupIdentifier, ListIdentifier} from '../groupids';
-import {ClusterRoleBinding, ClusterRoleBindingList} from '@api/backendapi';
+import {ClusterRoleBinding, ClusterRoleBindingList} from '@api/root.api';
 
 @Component({
   selector: 'kd-cluster-role-binding-list',

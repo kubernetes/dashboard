@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import {Component, Input, OnChanges} from '@angular/core';
-import {ConfigMapKeyRef, Container, EnvVar, SecretKeyRef} from '@api/backendapi';
+import {ConfigMapKeyRef, Container, EnvVar, SecretKeyRef} from '@api/root.api';
 import {KdStateService} from '../../services/global/state';
 
 @Component({

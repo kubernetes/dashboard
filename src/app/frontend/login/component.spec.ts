@@ -22,14 +22,14 @@ import {By} from '@angular/platform-browser';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {ActivatedRoute, Router} from '@angular/router';
 import {RouterTestingModule} from '@angular/router/testing';
-import {EnabledAuthenticationModes, LoginSkippableResponse, LoginSpec} from '@api/backendapi';
+import {EnabledAuthenticationModes, LoginSkippableResponse, LoginSpec} from '@api/root.api';
 import {Config, CONFIG_DI_TOKEN} from '../index.config';
 import {K8SError, KdError} from 'common/errors/errors';
 import {AuthService} from 'common/services/global/authentication';
 import {from, Observable, of, throwError} from 'rxjs';
 import {LoginComponent} from './component';
 import {PluginsConfigService} from '../common/services/global/plugin';
-import {PluginMetadata} from '@api/frontendapi';
+import {PluginMetadata} from '@api/root.ui';
 
 const queries = {
   submitButton: '.kd-login-button[type="submit"]',

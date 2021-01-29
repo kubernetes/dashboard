@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import {Component, Input} from '@angular/core';
-import {ResourceOwner} from '@api/backendapi';
+import {ResourceOwner} from '@api/root.api';
 import {KdStateService} from '../../services/global/state';
 
 @Component({

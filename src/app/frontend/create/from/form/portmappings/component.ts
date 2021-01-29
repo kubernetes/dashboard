@@ -25,7 +25,7 @@ import {
   NG_VALUE_ACCESSOR,
   Validators,
 } from '@angular/forms';
-import {PortMapping} from '@api/backendapi';
+import {PortMapping} from '@api/root.api';
 import {Observable} from 'rxjs';
 import {first, map, startWith} from 'rxjs/operators';
 import {FormValidators} from '../validator/validators';

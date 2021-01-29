@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import {Component, Input} from '@angular/core';
-import {Endpoint} from '@api/backendapi';
+import {Endpoint} from '@api/root.api';
 
 /**
  * Component definition object for the component that displays the endpoints which are accessible

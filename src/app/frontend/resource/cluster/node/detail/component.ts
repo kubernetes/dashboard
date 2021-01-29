@@ -14,8 +14,8 @@
 
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
-import {NodeAddress, NodeDetail, NodeTaint} from '@api/backendapi';
-import {RatioItem} from '@api/frontendapi';
+import {NodeAddress, NodeDetail, NodeTaint} from '@api/root.api';
+import {RatioItem} from '@api/root.ui';
 import {Subject} from 'rxjs';
 import {takeUntil} from 'rxjs/operators';
 import {FormattedValue} from '../../../../common/components/graph/helper';
