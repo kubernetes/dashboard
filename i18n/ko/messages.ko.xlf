@@ -3090,7 +3090,7 @@
         <target>쿠버네티스 대시보드</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/login/component.ts</context>
-          <context context-type="linenumber">53</context>
+          <context context-type="linenumber">54</context>
         </context-group>
       </trans-unit>
       <trans-unit id="cf9072061094a1ad33866a311152c495c05890a0" datatype="html">
@@ -3098,7 +3098,7 @@
         <target>Kubeconfig</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/login/component.ts</context>
-          <context context-type="linenumber">82</context>
+          <context context-type="linenumber">84</context>
         </context-group>
       </trans-unit>
       <trans-unit id="380ab580741bec31346978e7cab8062d6970408d" datatype="html">
@@ -3106,7 +3106,7 @@
         <target>기본</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/login/component.ts</context>
-          <context context-type="linenumber">106</context>
+          <context context-type="linenumber">104</context>
         </context-group>
       </trans-unit>
       <trans-unit id="1edc1fc6cfbbb22353050ad6788508b3ed584f53" datatype="html">
@@ -3114,7 +3114,7 @@
         <target>토큰</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/login/component.ts</context>
-          <context context-type="linenumber">132</context>
+          <context context-type="linenumber">130</context>
         </context-group>
       </trans-unit>
       <trans-unit id="a55441e16a7aab838dcedbccf0a517b3ad41eac4" datatype="html">
@@ -3124,7 +3124,7 @@
               </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/login/component.ts</context>
-          <context context-type="linenumber">166</context>
+          <context context-type="linenumber">163</context>
         </context-group>
       </trans-unit>
       <trans-unit id="2071ed7df8c83bd144f74bc298a721261bea4c11" datatype="html">
@@ -3201,7 +3201,7 @@
           </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/login/component.ts</context>
-          <context context-type="linenumber">69</context>
+          <context context-type="linenumber">70</context>
         </context-group>
       </trans-unit>
       <trans-unit id="89c689a203570b2848d633426d19bd73f51a34f8" datatype="html">
@@ -5414,33 +5414,31 @@
         <target>로컬 설정</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/settings/local/component.ts</context>
-          <context context-type="linenumber">47</context>
+          <context context-type="linenumber">53</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="f2ff730022575262d4e63002c34482e4455682c4" datatype="html">
+      <trans-unit id="c73af29d15f7f46e960a5a52908965e0e1a0c3a7" datatype="html">
         <source> Local settings are stored in the browser cookies, so they are not synchronized between multiple devices. Changes are applied automatically on every change. </source>
-        <target>
-      로컬 설정은 브라우저의 쿠키에 저장되므로, 다중 장치 사이에 동기화가 되지 않습니다. 모든 변경 사항은 자동으로 적용됩니다.
-    </target>
+        <target state="new"> Local settings are stored in the browser cookies, so they are not synchronized between multiple devices. Changes are applied automatically on every change. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/settings/local/component.ts</context>
-          <context context-type="linenumber">59</context>
+          <context context-type="linenumber">74</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="7bfa30b6cd6b020c84efa4c554890bf49932de18" datatype="html">
-        <source>Dark theme</source>
-        <target>어두운 테마</target>
+      <trans-unit id="27a56aad79d8b61269ed303f11664cc78bcc2522" datatype="html">
+        <source>Theme</source>
+        <target state="new">Theme</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/settings/local/component.ts</context>
-          <context context-type="linenumber">59</context>
+          <context context-type="linenumber">74</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="96f2b8de376e3dbfaae05e9de836f8a740c0b803" datatype="html">
-        <source>Use dark theme in the whole app</source>
-        <target>전체 앱에 대해서 어두운 테마를 사용합니다.</target>
+      <trans-unit id="66d4ff20f88ba9658fa511e86291164d0dd3d1d0" datatype="html">
+        <source>Choose color theme of the dashboard</source>
+        <target state="new">Choose color theme of the dashboard</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/settings/local/component.ts</context>
-          <context context-type="linenumber">59</context>
+          <context context-type="linenumber">74</context>
         </context-group>
       </trans-unit>
       <trans-unit id="fe46ccaae902ce974e2441abe752399288298619" datatype="html">
@@ -5448,11 +5446,11 @@
         <target state="new">언어</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/settings/local/component.ts</context>
-          <context context-type="linenumber">59</context>
+          <context context-type="linenumber">74</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/settings/local/component.ts</context>
-          <context context-type="linenumber">59</context>
+          <context context-type="linenumber">74</context>
         </context-group>
       </trans-unit>
       <trans-unit id="170c19b70d40071916e39cad610ac12f269dd473" datatype="html">
@@ -5460,11 +5458,11 @@
         <target state="new">대시 보드의 언어 변경</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/settings/local/component.ts</context>
-          <context context-type="linenumber">59</context>
+          <context context-type="linenumber">74</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/settings/local/component.ts</context>
-          <context context-type="linenumber">59</context>
+          <context context-type="linenumber">74</context>
         </context-group>
       </trans-unit>
       <trans-unit id="dc935c1eb87651baf1b1b0e53119e6dec2db8862" datatype="html">
