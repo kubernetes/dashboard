@@ -13,7 +13,6 @@
 // limitations under the License.
 
 import {Component, Input} from '@angular/core';
-// import {MatTableDataSource} from '@angular/material/table';
 import {K8sSecurityContext} from '@api/root.api';
 
 @Component({
@@ -23,11 +22,4 @@ import {K8sSecurityContext} from '@api/root.api';
 export class SecurityContextComponent {
   @Input() initialized: boolean;
   @Input() securityContext: K8sSecurityContext[];
-
-  // get dataSource(): MatTableDataSource<VolumeMounts> {
-  //   const tableData = new MatTableDataSource<VolumeMounts>();
-  //   tableData.data = this.volumeMounts;
-
-  //   return tableData;
-  // }
 }

@@ -80,7 +80,7 @@ type Container struct {
 	// Information about mounted volumes
 	VolumeMounts []VolumeMount `json:"volumeMounts"`
 
-	// security configuration that will be applied to a container.
+	// Security configuration that will be applied to a container.
 	SecurityContext *v1.SecurityContext `json:"securityContext"`
 }
 
