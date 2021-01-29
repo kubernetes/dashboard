@@ -12,25 +12,22 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-@import '../../../variables';
-@import '../../../mixins';
+import {Component, Input} from '@angular/core';
+// import {MatTableDataSource} from '@angular/material/table';
+import {K8sSecurityContext} from '@api/root.api';
 
-.kd-env-variable-icon {
-  @include kd-icon-size($caption-font-size-base);
+@Component({
+  selector: 'kd-securitycontext',
+  templateUrl: './template.html',
+})
+export class SecurityContextComponent {
+  @Input() initialized: boolean;
+  @Input() securityContext: K8sSecurityContext[];
 
-  align-self: baseline;
-  margin-left: $baseline-grid / 2;
-}
+  // get dataSource(): MatTableDataSource<VolumeMounts> {
+  //   const tableData = new MatTableDataSource<VolumeMounts>();
+  //   tableData.data = this.volumeMounts;
 
-.kd-volume-mounts {
-  border-radius: $baseline-grid / 4;
-  margin-right: $baseline-grid;
-  margin-top: $baseline-grid / 2;
-}
-
-.kd-security-context {
-  padding-left: $baseline-grid;
-  border-radius: $baseline-grid / 4;
-  margin-right: $baseline-grid;
-  margin-top: $baseline-grid / 2;
+  //   return tableData;
+  // }
 }

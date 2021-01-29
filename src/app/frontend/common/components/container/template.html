@@ -120,6 +120,20 @@ limitations under the License.
         </kd-volumemounts-list>
       </div>
     </kd-property>
+
+    <kd-property *ngIf="container?.securityContext"
+                 [stretched]="true"
+                 fxFlex="100">
+      <div key
+           i18n>Security Context</div>
+      <div value
+           class="kd-security-context">
+        <kd-securitycontext [securityContext]="container?.securityContext"
+                            [initialized]="initialized">
+        </kd-securitycontext>
+      </div>
+    </kd-property>
+
   </div>
 
   <div content>
