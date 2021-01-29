@@ -13,9 +13,9 @@
 // limitations under the License.
 
 import {Injectable} from '@angular/core';
-import {LocalSettings, Theme} from '@api/backendapi';
 
 import {ThemeService} from './theme';
+import {LocalSettings} from '@api/root.api';
 
 @Injectable()
 export class LocalSettingsService {
