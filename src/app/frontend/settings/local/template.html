@@ -19,19 +19,28 @@ limitations under the License.
        i18n>Local settings</div>
   <div content>
     <p i18n>
-      Local settings are stored in the browser cookies, so they are not synchronized between multiple devices. Changes are applied automatically on every change.
+      Local settings are stored in the browser cookies, so they are not synchronized between multiple devices.
+      Changes are applied automatically on every change.
     </p>
     <br>
-    <kd-settings-entry key="Dark theme"
+    <kd-settings-entry key="Theme"
                        i18n-key
-                       desc="Use dark theme in the whole app"
+                       desc="Choose color theme of the dashboard"
                        i18n-desc>
-      <div fxFlex>
-        <mat-slide-toggle color="primary"
-                          name="isThemeDark"
-                          [(ngModel)]="settings.isThemeDark"
-                          (change)="onThemeChange()"></mat-slide-toggle>
-      </div>
+      <mat-button-toggle-group [(value)]="selectedTheme"
+                               (change)="onThemeChange($event.value)"
+                               fxLayout="row wrap"
+                               fxFlex>
+        <mat-button-toggle [value]="systemTheme"
+                           class="kd-border">
+          System
+        </mat-button-toggle>
+        <mat-button-toggle *ngFor="let theme of themes"
+                           [value]="theme.name"
+                           class="kd-border">
+          {{theme.displayName}}
+        </mat-button-toggle>
+      </mat-button-toggle-group>
     </kd-settings-entry>
     <kd-settings-entry *ngIf="isProdMode()"
                        key="Language"

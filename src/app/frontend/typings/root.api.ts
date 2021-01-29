@@ -770,7 +770,13 @@ export interface CsrfToken {
 }
 
 export interface LocalSettings {
-  isThemeDark: boolean;
+  theme: string;
+}
+
+export interface Theme {
+  name: string;
+  displayName: string;
+  isDark: boolean;
 }
 
 export interface AppConfig {
