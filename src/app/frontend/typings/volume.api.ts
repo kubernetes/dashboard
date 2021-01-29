@@ -69,14 +69,15 @@ export class PersistentVolumeSource {
 
 // Our custom object to extend Persistent Volume Sources with generic type/name information
 export class IVolumeSource {
-  type: string;
+  mountType: string;
   displayName: string;
 }
 
 export class HostPathVolumeSource implements IVolumeSource {
   path: string;
+  type?: string;
 
-  get type(): string {
+  get mountType(): string {
     return 'HostPath';
   }
 
@@ -86,7 +87,7 @@ export class HostPathVolumeSource implements IVolumeSource {
 }
 
 export class EmptyDirVolumeSource implements IVolumeSource {
-  get type(): string {
+  get mountType(): string {
     return 'EmptyDir';
   }
 
@@ -101,7 +102,7 @@ export class GCEPersistentDiskVolumeSource implements IVolumeSource {
   partition: number;
   readOnly: boolean;
 
-  get type(): string {
+  get mountType(): string {
     return 'GCE Persistent Disk';
   }
 
@@ -116,7 +117,7 @@ export class AWSElasticBlockStorageVolumeSource implements IVolumeSource {
   partition: number;
   readOnly: boolean;
 
-  get type(): string {
+  get mountType(): string {
     return 'AWS Elastic Block Store';
   }
 
@@ -130,7 +131,7 @@ export class GitRepoVolumeSource implements IVolumeSource {
   revision: string;
   directory: string;
 
-  get type(): string {
+  get mountType(): string {
     return 'GitRepo';
   }
 
@@ -144,7 +145,7 @@ export class SecretVolumeSource implements IVolumeSource {
   defaultMode: number;
   optional: boolean;
 
-  get type(): string {
+  get mountType(): string {
     return SupportedResources.Secret;
   }
 
@@ -158,7 +159,7 @@ export class NFSVolumeSource implements IVolumeSource {
   path: string;
   readOnly: boolean;
 
-  get type(): string {
+  get mountType(): string {
     return 'NFS';
   }
 
@@ -174,7 +175,7 @@ export class ISCSIVolumeSource implements IVolumeSource {
   fsType: string;
   readOnly: boolean;
 
-  get type(): string {
+  get mountType(): string {
     return 'ISCI';
   }
 
@@ -188,7 +189,7 @@ export class GlusterfsVolumeSource implements IVolumeSource {
   path: string;
   readOnly: boolean;
 
-  get type(): string {
+  get mountType(): string {
     return 'GlusterFS';
   }
 
@@ -201,7 +202,7 @@ export class PersistentVolumeClaimVolumeSource implements IVolumeSource {
   claimName: string;
   readOnly: boolean;
 
-  get type(): string {
+  get mountType(): string {
     return SupportedResources.PersistentVolumeClaim;
   }
 
@@ -220,7 +221,7 @@ export class RBDVolumeSource implements IVolumeSource {
   secretRef: LocalObjectReference;
   readOnly: boolean;
 
-  get type(): string {
+  get mountType(): string {
     return 'RBD';
   }
 
@@ -234,7 +235,7 @@ export class FlexVolumeSource implements IVolumeSource {
   fsType: string;
   readOnly: boolean;
 
-  get type(): string {
+  get mountType(): string {
     return 'Flex';
   }
 
@@ -248,7 +249,7 @@ export class CinderVolumeSource implements IVolumeSource {
   fsType: string;
   readOnly: boolean;
 
-  get type(): string {
+  get mountType(): string {
     return 'Cinder';
   }
 
@@ -265,7 +266,7 @@ export class CephFSVolumeSource implements IVolumeSource {
   secretRef: LocalObjectReference;
   readonly: boolean;
 
-  get type(): string {
+  get mountType(): string {
     return 'CephFS';
   }
 
@@ -277,7 +278,7 @@ export class CephFSVolumeSource implements IVolumeSource {
 export class FlockerVolumeSource implements IVolumeSource {
   datasetName: string;
 
-  get type(): string {
+  get mountType(): string {
     return 'Flocker';
   }
 
@@ -289,7 +290,7 @@ export class FlockerVolumeSource implements IVolumeSource {
 export class DownwardAPIVolumeSource implements IVolumeSource {
   defaultMode: number;
 
-  get type(): string {
+  get mountType(): string {
     return 'DownwardAPI';
   }
 
@@ -304,7 +305,7 @@ export class FCVolumeSource implements IVolumeSource {
   fsType: string;
   readOnly: boolean;
 
-  get type(): string {
+  get mountType(): string {
     return 'FC';
   }
 
@@ -318,7 +319,7 @@ export class AzureFileVolumeSource implements IVolumeSource {
   shareName: string;
   readOnly: boolean;
 
-  get type(): string {
+  get mountType(): string {
     return 'Azure File';
   }
 
@@ -333,7 +334,7 @@ export class ConfigMapVolumeSource implements IVolumeSource {
   defaultMode: number;
   optional: boolean;
 
-  get type(): string {
+  get mountType(): string {
     return SupportedResources.ConfigMap;
   }
 
@@ -348,7 +349,7 @@ export class VSphereVirtualDiskVolumeSource implements IVolumeSource {
   storagePolicyName: string;
   storagePolicyID: string;
 
-  get type(): string {
+  get mountType(): string {
     return 'VSphere Virtual Disk';
   }
 
@@ -365,7 +366,7 @@ export class QuobyteVolumeSource implements IVolumeSource {
   group: string;
   tenant: string;
 
-  get type(): string {
+  get mountType(): string {
     return 'Quobyte';
   }
 
@@ -381,7 +382,7 @@ export class CSIVolumeSource implements IVolumeSource {
   volumeAttributes?: any;
   nodePublishSecretRef?: LocalObjectReference;
 
-  get type(): string {
+  get mountType(): string {
     return 'CSI';
   }
 
@@ -397,7 +398,7 @@ export class StorageOSVolumeSource implements IVolumeSource {
   readOnly?: boolean;
   secretRef?: LocalObjectReference;
 
-  get type(): string {
+  get mountType(): string {
     return 'Storage OS';
   }
 
@@ -418,7 +419,7 @@ export class ScaleIOVolumeSource implements IVolumeSource {
   fSType?: string;
   readOnly?: boolean;
 
-  get type(): string {
+  get mountType(): string {
     return 'Scale IO';
   }
 
@@ -432,7 +433,7 @@ export class PortworxVolumeSource implements IVolumeSource {
   fSType: string;
   readOnly?: boolean;
 
-  get type(): string {
+  get mountType(): string {
     return 'Portworx';
   }
 
@@ -445,7 +446,7 @@ export class ProjectedVolumeSource implements IVolumeSource {
   sources?: VolumeProjection[];
   defaultMode?: number;
 
-  get type(): string {
+  get mountType(): string {
     return 'Projected';
   }
 
@@ -458,7 +459,7 @@ export class PhotonPersistentDiskVolumeSource implements IVolumeSource {
   phID: string;
   fsType: string;
 
-  get type(): string {
+  get mountType(): string {
     return 'Photon Persistent Disk';
   }
 
@@ -475,7 +476,7 @@ export class AzureDiskVolumeSource implements IVolumeSource {
   readOnly: boolean;
   kind: AzureDataDiskKind;
 
-  get type(): string {
+  get mountType(): string {
     return 'Azure Disk';
   }
 

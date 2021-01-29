@@ -63,21 +63,21 @@ limitations under the License.
         <mat-header-cell *matHeaderCellDef
                          i18n>Source Type</mat-header-cell>
         <mat-cell *matCellDef="let volumeMount">
-          {{getTypeFromVolume(volumeMount.volume)}}
+          {{getMountTypeFromVolume(volumeMount.volume)}}
         </mat-cell>
       </ng-container>
       <ng-container [matColumnDef]="columns[5]">
         <mat-header-cell *matHeaderCellDef
                          i18n>Source Name</mat-header-cell>
         <mat-cell *matCellDef="let volumeMount">
-          <ng-container *ngIf="isResourceSupported(getTypeFromVolume(volumeMount.volume))">
-            <a [routerLink]="getDetailsHref(getNameFromVolume(volumeMount.volume), getTypeFromVolume(volumeMount.volume))"
+          <ng-container *ngIf="isResourceSupported(getMountTypeFromVolume(volumeMount.volume))">
+            <a [routerLink]="getDetailsHref(getNameFromVolume(volumeMount.volume), getMountTypeFromVolume(volumeMount.volume))"
                queryParamsHandling="preserve">
               {{getNameFromVolume(volumeMount.volume)}}
             </a>
           </ng-container>
 
-          <ng-container *ngIf="!isResourceSupported(getTypeFromVolume(volumeMount.volume))">
+          <ng-container *ngIf="!isResourceSupported(getMountTypeFromVolume(volumeMount.volume))">
             {{getNameFromVolume(volumeMount.volume)}}
           </ng-container>
         </mat-cell>
