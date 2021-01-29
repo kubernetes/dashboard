@@ -872,7 +872,7 @@ export interface Container {
 export interface K8sSecurityContext {
   capabilities?: Capabilities;
   privileged?: boolean;
-  sELinuxOptions?: SELinuxOptions;
+  seLinuxOptions?: SELinuxOptions;
   windowsOptions?: WindowsSecurityContextOptions;
   runAsUser?: number;
   runAsGroup?: number;
