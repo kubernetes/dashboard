@@ -12,10 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {EventEmitter, Injectable, Injector} from '@angular/core';
+import {EventEmitter, Inject, Injectable, Injector} from '@angular/core';
 import {ThemeSwitchCallback} from '@api/frontendapi';
 import {Theme} from '@api/backendapi';
 import * as customThemes from '../../../custom-themes.json';
+import {DOCUMENT} from '@angular/common';
 
 @Injectable()
 export class ThemeService {
@@ -28,6 +29,8 @@ export class ThemeService {
   private _theme = 'kd-light-theme';
   private readonly _onThemeSwitchEvent = new EventEmitter<string>();
   private readonly _colorSchemeQuery = '(prefers-color-scheme: dark)';
+
+  constructor(@Inject(DOCUMENT) private readonly _document: Document) {}
 
   get themes(): Theme[] {
     const defaultThemeNames = new Set(this._defaultThemes.map(theme => theme.name));
@@ -49,7 +52,7 @@ export class ThemeService {
   }
 
   init(): void {
-    window.matchMedia(this._colorSchemeQuery).addEventListener('change', e => {
+    this._document.defaultView.matchMedia(this._colorSchemeQuery).addEventListener('change', e => {
       if (this.theme === this.systemTheme) {
         this._onThemeSwitchEvent.emit(e.matches ? 'kd-dark-theme' : 'kd-light-theme');
       }
@@ -70,6 +73,8 @@ export class ThemeService {
   }
 
   private _isSystemThemeDark(): boolean {
-    return window.matchMedia && window.matchMedia(this._colorSchemeQuery).matches;
+    return (
+      this._document.defaultView.matchMedia && this._document.defaultView.matchMedia(this._colorSchemeQuery).matches
+    );
   }
 }
