@@ -50,10 +50,10 @@ export class VolumeMountComponent {
     return this.kdState_.href(kind.toLowerCase(), name, this.namespace);
   }
 
-  getTypeFromVolume(volume: PersistentVolumeSource): string {
+  getMountTypeFromVolume(volume: PersistentVolumeSource): string {
     // This is to make sure that volume is an actual class instance with all methods.
     volume = new PersistentVolumeSource(volume);
-    return volume.source ? volume.source.type : '-';
+    return volume.source ? volume.source.mountType : '-';
   }
 
   getNameFromVolume(volume: PersistentVolumeSource): string {
