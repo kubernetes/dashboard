@@ -78,22 +78,21 @@ export class IngressRuleFlatListComponent {
     return this.kdState_.href(kind, name, this.namespace);
   }
 
-  private getTlsSecretName(host: string, tlsList: IngressSpecTls[]) : string {
-    if( host === null ){
+  private getTlsSecretName(host: string, tlsList: IngressSpecTls[]): string {
+    if (host === null) {
       return null;
     }
-    var result : string = null;
-    tlsList.every( (tls, _) => {
-      tls.hosts.every( (tlsHost, _) => {
+    let result: string = null;
+    tlsList.every((tls, _) => {
+      tls.hosts.every((tlsHost, _) => {
         if (tlsHost === host) {
           result = tls.secretName;
           return false;
         }
         return true;
-      })
+      });
       return result === null;
     });
     return result;
   }
-
 }
