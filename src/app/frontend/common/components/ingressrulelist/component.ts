@@ -41,7 +41,7 @@ export class IngressRuleFlatListComponent {
   }
 
   ingressSpecRuleToIngressRuleFlat(ingressSpecRules: IngressSpecRule[], tlsList: IngressSpecTls[]): IngressRuleFlat[] {
-    const ingressRuleList = [].concat(
+    return [].concat(
       ...ingressSpecRules.map(rule =>
         rule.http.paths.map(
           specPath =>
@@ -52,19 +52,7 @@ export class IngressRuleFlatListComponent {
             } as IngressRuleFlat)
         )
       )
-    ) as IngressRuleFlat[];
-
-    // ingressRuleList.forEach((ingressRule, _) => {
-    //   tlsList.forEach((tls, _) => {
-    //     tls.hosts.forEach((tlsHost, _) => {
-    //       if (tlsHost === ingressRule.host) {
-    //         ingressRule.tlsSecretName = tls.secretName;
-    //       }
-    //     });
-    //   });
-    // });
-
-    return ingressRuleList;
+    );
   }
 
   getDataSource(): MatTableDataSource<IngressRuleFlat> {
