@@ -48,20 +48,21 @@ export class IngressRuleFlatListComponent {
             ({
               host: rule.host || '',
               path: specPath,
+              tlsSecretName: this.getTlsSecretName(rule.host, tlsList),
             } as IngressRuleFlat)
         )
       )
     ) as IngressRuleFlat[];
 
-    ingressRuleList.forEach((ingressRule, _) => {
-      tlsList.forEach((tls, _) => {
-        tls.hosts.forEach((tlsHost, _) => {
-          if (tlsHost === ingressRule.host) {
-            ingressRule.tlsSecretName = tls.secretName;
-          }
-        });
-      });
-    });
+    // ingressRuleList.forEach((ingressRule, _) => {
+    //   tlsList.forEach((tls, _) => {
+    //     tls.hosts.forEach((tlsHost, _) => {
+    //       if (tlsHost === ingressRule.host) {
+    //         ingressRule.tlsSecretName = tls.secretName;
+    //       }
+    //     });
+    //   });
+    // });
 
     return ingressRuleList;
   }
@@ -76,4 +77,23 @@ export class IngressRuleFlatListComponent {
   getDetailsHref(name: string, kind: string): string {
     return this.kdState_.href(kind, name, this.namespace);
   }
+
+  private getTlsSecretName(host: string, tlsList: IngressSpecTls[]) : string {
+    if( host === null ){
+      return null;
+    }
+    var result : string = null;
+    tlsList.every( (tls, _) => {
+      tls.hosts.every( (tlsHost, _) => {
+        if (tlsHost === host) {
+          result = tls.secretName;
+          return false;
+        }
+        return true;
+      })
+      return result === null;
+    });
+    return result;
+  }
+
 }
