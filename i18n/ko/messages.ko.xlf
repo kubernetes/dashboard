@@ -1874,14 +1874,7 @@
         <target>호스트</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/ingressrulelist/component.ts</context>
-&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD
-          
-          <context context-type="linenumber">66</context>
-=======
-          
-          <context context-type="linenumber">80</context>
->>>>>>> npm run fix
-        
+          <context context-type="linenumber">92</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/endpoint/cardlist/component.ts</context>
@@ -2443,11 +2436,17 @@
           <context context-type="sourcefile">src/app/frontend/common/components/ingressrulelist/component.ts</context>
 &lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD
           
+          
+          
           <context context-type="linenumber">48</context>
 =======
           
+          
+          
           <context context-type="linenumber">46</context>
 >>>>>>> npm run fix
+        
+        
         
         </context-group>
         <context-group purpose="location">
@@ -4774,14 +4773,7 @@
         <target>경로</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/ingressrulelist/component.ts</context>
-&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD
-          
-          <context context-type="linenumber">66</context>
-=======
-          
-          <context context-type="linenumber">80</context>
->>>>>>> npm run fix
-        
+          <context context-type="linenumber">100</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/resource/cluster/persistentvolume/detail/source/component.ts</context>
@@ -4801,14 +4793,7 @@
         <target state="new">Path Type</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/ingressrulelist/component.ts</context>
-&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD
-          
-          <context context-type="linenumber">66</context>
-=======
-          
-          <context context-type="linenumber">80</context>
->>>>>>> npm run fix
-        
+          <context context-type="linenumber">100</context>
         </context-group>
       </trans-unit>
       <trans-unit id="27634638ac68edd16b5a107ea29e52e1bab80b25" datatype="html">
@@ -4816,14 +4801,7 @@
         <target state="new">Service Name</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/ingressrulelist/component.ts</context>
-&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD
-          
-          <context context-type="linenumber">66</context>
-=======
-          
-          <context context-type="linenumber">80</context>
->>>>>>> npm run fix
-        
+          <context context-type="linenumber">100</context>
         </context-group>
       </trans-unit>
       <trans-unit id="148a9e4494f2b05eadc825c223ca651eee294ebe" datatype="html">
@@ -4831,12 +4809,7 @@
         <target state="new">Service Port</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/ingressrulelist/component.ts</context>
-&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD
-          
-          <context context-type="linenumber">66</context>
-=======
-          
-          <context context-type="linenumber">80</context>
+          <context context-type="linenumber">100</context>
         </context-group>
       </trans-unit>
       <trans-unit id="b5e9d053394cf552041668ea2106430f1775d567" datatype="html">
@@ -4844,9 +4817,7 @@
         <target state="new">TLS Secret</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/ingressrulelist/component.ts</context>
-          <context context-type="linenumber">80</context>
->>>>>>> npm run fix
-        
+          <context context-type="linenumber">100</context>
         </context-group>
       </trans-unit>
       <trans-unit id="f379dfb7ae583971995b6f684fe5e7649a938157" datatype="html">
