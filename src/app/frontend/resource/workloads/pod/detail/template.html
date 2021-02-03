@@ -73,6 +73,17 @@ limitations under the License.
            i18n>Restarts</div>
       <div value>{{pod.restartCount}}</div>
     </kd-property>
+
+    <kd-property *ngIf="pod?.imagePullSecrets !== undefined">
+      <div key
+           i18n>Image Pull Secrets</div>
+      <div value
+           *ngFor="let imagePullSecret of pod?.imagePullSecrets">
+        <a value
+           [routerLink]="getSecretHref(imagePullSecret.name)"
+           queryParamsHandling="preserve">{{imagePullSecret.name}}</a>
+      </div>
+    </kd-property>
   </div>
 </kd-card>
 

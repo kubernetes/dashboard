@@ -651,8 +651,13 @@ export interface PodDetail extends ResourceDetail {
   metrics: Metric[];
   conditions: Condition[];
   controller: Resource;
+  imagePullSecrets: LocalObjectReference[];
   eventList: EventList;
   persistentVolumeClaimList: PersistentVolumeClaimList;
+}
+
+export interface LocalObjectReference {
+  name: string;
 }
 
 export interface NodeDetail extends ResourceDetail {
