@@ -78,6 +78,6 @@ export class PodDetailComponent implements OnInit, OnDestroy {
   }
 
   getSecretHref(name: string): string {
-    return this.kdState_.href('secret', name, this.activatedRoute_.snapshot.params.resourceNamespace);
+    return this.kdState_.href('secret', name, this.pod.objectMeta.namespace);
   }
 }
