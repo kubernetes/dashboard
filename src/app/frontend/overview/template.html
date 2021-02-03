@@ -60,7 +60,9 @@ limitations under the License.
   <kd-persistent-volume-list (onchange)="onListUpdate($event)"
                              [hideable]="true"></kd-persistent-volume-list>
   <kd-secret-list (onchange)="onListUpdate($event)"
-                  [hideable]="true"></kd-secret-list>
+                  [hideable]="true"
+                  title="Secrets"
+                  i18n-title></kd-secret-list>
   <kd-storage-class-list (onchange)="onListUpdate($event)"
                          [hideable]="true"></kd-storage-class-list>
 </div>
