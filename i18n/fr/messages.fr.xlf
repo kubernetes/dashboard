@@ -3333,6 +3333,14 @@
           <context context-type="linenumber">65</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="1bdf6d0a95c523599676ee9ce536adb037ce56af" datatype="html">
+        <source>Local settings </source>
+        <target state="new">Local settings </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/settings/local/component.ts</context>
+          <context context-type="linenumber">53,62</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="004b222ff9ef9dd4771b777950ca1d0e4cd4348a" datatype="html">
         <source>About</source>
         <target>À propos</target>
@@ -5529,14 +5537,6 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/settings/global/component.ts</context>
           <context context-type="linenumber">114</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="d440068d2406e98fd156b9dcab7f0998e707a38b" datatype="html">
-        <source>Local settings</source>
-        <target>Paramètres locaux</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/frontend/settings/local/component.ts</context>
-          <context context-type="linenumber">53</context>
         </context-group>
       </trans-unit>
       <trans-unit id="c73af29d15f7f46e960a5a52908965e0e1a0c3a7" datatype="html">
