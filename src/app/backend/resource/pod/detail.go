@@ -53,6 +53,7 @@ type PodDetail struct {
 	InitContainers            []Container                                     `json:"initContainers"`
 	Metrics                   []metricapi.Metric                              `json:"metrics"`
 	Conditions                []common.Condition                              `json:"conditions"`
+	ImagePullSecrets          []v1.LocalObjectReference                       `json:"imagePullSecrets,omitempty"`
 	EventList                 common.EventList                                `json:"eventList"`
 	PersistentvolumeclaimList persistentvolumeclaim.PersistentVolumeClaimList `json:"persistentVolumeClaimList"`
 
@@ -79,6 +80,9 @@ type Container struct {
 
 	// Information about mounted volumes
 	VolumeMounts []VolumeMount `json:"volumeMounts"`
+
+	// Security configuration that will be applied to a container.
+	SecurityContext *v1.SecurityContext `json:"securityContext"`
 }
 
 // EnvVar represents an environment variable of a container.
@@ -245,12 +249,13 @@ func extractContainerInfo(containerList []v1.Container, pod *v1.Pod, configMaps 
 		volume_mounts := extractContainerMounts(container, pod)
 
 		containers = append(containers, Container{
-			Name:         container.Name,
-			Image:        container.Image,
-			Env:          vars,
-			Commands:     container.Command,
-			Args:         container.Args,
-			VolumeMounts: volume_mounts,
+			Name:            container.Name,
+			Image:           container.Image,
+			Env:             vars,
+			Commands:        container.Command,
+			Args:            container.Args,
+			VolumeMounts:    volume_mounts,
+			SecurityContext: container.SecurityContext,
 		})
 	}
 	return containers
@@ -272,6 +277,7 @@ func toPodDetail(pod *v1.Pod, metrics []metricapi.Metric, configMaps *v1.ConfigM
 		InitContainers:            extractContainerInfo(pod.Spec.InitContainers, pod, configMaps, secrets),
 		Metrics:                   metrics,
 		Conditions:                getPodConditions(*pod),
+		ImagePullSecrets:          pod.Spec.ImagePullSecrets,
 		EventList:                 *events,
 		PersistentvolumeclaimList: *persistentVolumeClaimList,
 		Errors:                    nonCriticalErrors,
