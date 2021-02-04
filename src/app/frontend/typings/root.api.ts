@@ -866,10 +866,10 @@ export interface Container {
   commands: string[];
   args: string[];
   volumeMounts: VolumeMounts[];
-  securityContext: K8sSecurityContext;
+  securityContext: ContainerSecurityContext;
 }
 
-export interface K8sSecurityContext {
+export interface ContainerSecurityContext {
   capabilities?: Capabilities;
   privileged?: boolean;
   seLinuxOptions?: SELinuxOptions;

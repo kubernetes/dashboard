@@ -23,7 +23,8 @@ limitations under the License.
        fxLayout="row wrap">
     <kd-property fxFlex="100">
       <div key
-           i18n>Image</div>
+           i18n>Image
+      </div>
       <div value>{{container.image}}</div>
     </kd-property>
 
@@ -36,7 +37,8 @@ limitations under the License.
             {{env.name}}
             <mat-icon matTooltip="Environment variable"
                       i18n-matTooltip
-                      class="kd-env-variable-icon">public</mat-icon>
+                      class="kd-env-variable-icon">public
+            </mat-icon>
           </div>
           <div value>{{env.value}}</div>
         </kd-property>
@@ -53,12 +55,14 @@ limitations under the License.
             </a>
             <mat-icon matTooltip="Environment variable"
                       i18n-matTooltip
-                      class="kd-env-variable-icon">public</mat-icon>
+                      class="kd-env-variable-icon">public
+            </mat-icon>
           </div>
           <div whenVisible
                class="kd-code-block">{{formatSecretValue(env.value)}}</div>
           <div whenHidden
-               i18n>{{formatSecretValue(env.value).length}} bytes</div>
+               i18n>{{formatSecretValue(env.value).length}} bytes
+          </div>
         </kd-hidden-property>
       </ng-container>
 
@@ -73,12 +77,14 @@ limitations under the License.
             </a>
             <mat-icon matTooltip="Environment variable"
                       i18n-matTooltip
-                      class="kd-env-variable-icon">public</mat-icon>
+                      class="kd-env-variable-icon">public
+            </mat-icon>
           </div>
           <div whenVisible
                class="kd-code-block">{{env.value}}</div>
           <div whenHidden
-               i18n>{{env.value.length}} bytes</div>
+               i18n>{{env.value.length}} bytes
+          </div>
         </kd-hidden-property>
       </ng-container>
     </div>
@@ -86,7 +92,8 @@ limitations under the License.
     <kd-property *ngIf="container?.commands?.length"
                  fxFlex="100">
       <div key
-           i18n>Commands</div>
+           i18n>Commands
+      </div>
       <div value>
         <div class="kd-code-block kd-no-whitespace">
           <div *ngFor="let command of container.commands"
@@ -98,7 +105,8 @@ limitations under the License.
     <kd-property *ngIf="container?.args?.length"
                  fxFlex="100">
       <div key
-           i18n>Arguments</div>
+           i18n>Arguments
+      </div>
       <div value>
         <div class="kd-code-block kd-no-whitespace">
           <div *ngFor="let arg of container.args"
@@ -111,7 +119,8 @@ limitations under the License.
                  [stretched]="true"
                  fxFlex="100">
       <div key
-           i18n>Mounts</div>
+           i18n>Mounts
+      </div>
       <div value
            class="kd-volume-mounts">
         <kd-volumemounts-list [volumeMounts]="container?.volumeMounts"
@@ -121,19 +130,17 @@ limitations under the License.
       </div>
     </kd-property>
 
-    <kd-property *ngIf="container?.securityContext"
-                 [stretched]="true"
-                 fxFlex="100">
-      <div key
-           i18n>Security Context</div>
-      <div value
-           class="kd-security-context">
-        <kd-securitycontext [securityContext]="container?.securityContext"
-                            [initialized]="initialized">
-        </kd-securitycontext>
+    <div *ngIf="container?.securityContext"
+         fxLayout="column">
+      <div fxFlex
+           class="security-context-header kd-muted">
+        Security Context
       </div>
-    </kd-property>
 
+      <kd-container-security-context [securityContext]="container.securityContext"
+                                     [initialized]="initialized">
+      </kd-container-security-context>
+    </div>
   </div>
 
   <div content>

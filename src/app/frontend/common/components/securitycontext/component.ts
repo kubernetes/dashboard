@@ -13,13 +13,13 @@
 // limitations under the License.
 
 import {Component, Input} from '@angular/core';
-import {K8sSecurityContext} from '@api/root.api';
+import {ContainerSecurityContext} from '@api/root.api';
 
 @Component({
-  selector: 'kd-securitycontext',
+  selector: 'kd-container-security-context',
   templateUrl: './template.html',
 })
-export class SecurityContextComponent {
+export class ContainerSecurityContextComponent {
   @Input() initialized: boolean;
-  @Input() securityContext: K8sSecurityContext[];
+  @Input() securityContext: ContainerSecurityContext;
 }

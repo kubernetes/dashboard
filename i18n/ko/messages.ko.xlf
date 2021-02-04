@@ -848,9 +848,9 @@
           <context context-type="linenumber">26</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="11aba6d249e2be842709bc1e8edce063b78eba8c" datatype="html">
-        <source>Run as Non Root</source>
-        <target state="new">Run as Non Root</target>
+      <trans-unit id="824f45818fc0f4ad4dd77e6fe2978ef7f7aba40d" datatype="html">
+        <source>Run as Non-Root</source>
+        <target state="new">Run as Non-Root</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/securitycontext/component.ts</context>
           <context context-type="linenumber">26</context>
@@ -1604,13 +1604,17 @@
           <context context-type="linenumber">47</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="a5f9ba9bb9faa8284bcadb1cdbc6aaf969e9c4bb" datatype="html">
-        <source>Image</source>
-        <target>이미지</target>
+      <trans-unit id="2179bcb6e430557dd0c8ace27ea55e1bcf1a1979" datatype="html">
+        <source>Image </source>
+        <target state="new">Image </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/container/component.ts</context>
           <context context-type="linenumber">59</context>
         </context-group>
+      </trans-unit>
+      <trans-unit id="a5f9ba9bb9faa8284bcadb1cdbc6aaf969e9c4bb" datatype="html">
+        <source>Image</source>
+        <target>이미지</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/resource/cluster/persistentvolume/detail/source/component.ts</context>
           <context context-type="linenumber">26</context>
@@ -1629,55 +1633,47 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/container/template.html</context>
-          <context context-type="linenumber">74</context>
+          <context context-type="linenumber">78</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="e41b42647be2b71c6929a3c7210c1f75d9cd522e" datatype="html">
-        <source><x id="INTERPOLATION" equiv-text="{{formatSecretValue(env.value).length}}"/> bytes</source>
-        <target><x id="INTERPOLATION" equiv-text="{{formatSecretValue(env.value).length}}"/> 바이트</target>
+      <trans-unit id="e85e953453ef00a2b4b4f32bf83a5cb9488a86bb" datatype="html">
+        <source><x id="INTERPOLATION" equiv-text="{{formatSecretValue(env.value).length}}"/> bytes </source>
+        <target state="new"><x id="INTERPOLATION" equiv-text="{{formatSecretValue(env.value).length}}"/> bytes </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/container/component.ts</context>
           <context context-type="linenumber">59</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="47a54c2463fd16e928ac0892a2050221978933df" datatype="html">
-        <source><x id="INTERPOLATION" equiv-text="{{env.value.length}}"/> bytes</source>
-        <target><x id="INTERPOLATION" equiv-text="{{env.value.length}}"/> bytes</target>
+      <trans-unit id="4ae826faf65dddaf6d41fcce2f22abb08ca1d7c4" datatype="html">
+        <source><x id="INTERPOLATION" equiv-text="{{env.value.length}}"/> bytes </source>
+        <target state="new"><x id="INTERPOLATION" equiv-text="{{env.value.length}}"/> bytes </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/container/template.html</context>
-          <context context-type="linenumber">95</context>
+          <context context-type="linenumber">100,86</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="e5f16b542e3154cb107f4adedef050543594ffd6" datatype="html">
-        <source>Commands</source>
-        <target>커맨드</target>
+      <trans-unit id="3bd3636c73b1d4a423f38ddef44fba33ceacdd85" datatype="html">
+        <source>Commands </source>
+        <target state="new">Commands </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/container/template.html</context>
-          <context context-type="linenumber">95</context>
+          <context context-type="linenumber">101,111</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="5c12a82c6283b5e933cda0c15e7aa6b07f8c9713" datatype="html">
-        <source>Arguments</source>
-        <target>인수</target>
+      <trans-unit id="5612a5ae6b595d690ae22cfeedbf2495295a5d69" datatype="html">
+        <source>Arguments </source>
+        <target state="new">Arguments </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/container/template.html</context>
-          <context context-type="linenumber">117</context>
+          <context context-type="linenumber">126,133</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="4a3f085bda6b366365b6ac918d6ab6e69c886494" datatype="html">
-        <source>Mounts</source>
-        <target state="new">Mounts</target>
+      <trans-unit id="10ad7fc4f45662c6e5b57069d7bd9b6ff5ee9f2c" datatype="html">
+        <source>Mounts </source>
+        <target state="new">Mounts </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/container/template.html</context>
-          <context context-type="linenumber">139</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="061228e43e5874457cb52276b56013fb8ad69b1e" datatype="html">
-        <source>Security Context</source>
-        <target state="new">Security Context</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/frontend/common/components/container/template.html</context>
-          <context context-type="linenumber">143</context>
+          <context context-type="linenumber">149,150</context>
         </context-group>
       </trans-unit>
       <trans-unit id="986668e81481d0fd0934b4ef56b4236ccb298712" datatype="html">

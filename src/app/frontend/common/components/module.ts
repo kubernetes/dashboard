@@ -84,7 +84,7 @@ import {VolumeMountComponent} from './volumemount/component';
 import {PersistentVolumeClaimListComponent} from './resourcelist/persistentvolumeclaim/component';
 import {PluginListComponent} from './resourcelist/plugin/component';
 import {PodListComponent} from './resourcelist/pod/component';
-import {SecurityContextComponent} from './securitycontext/component';
+import {ContainerSecurityContextComponent} from './securitycontext/component';
 import {ReplicaSetListComponent} from './resourcelist/replicaset/component';
 import {ReplicationControllerListComponent} from './resourcelist/replicationcontroller/component';
 import {SecretListComponent} from './resourcelist/secret/component';
@@ -162,7 +162,7 @@ const components = [
   PropertyComponent,
   ProxyComponent,
   PodListComponent,
-  SecurityContextComponent,
+  ContainerSecurityContextComponent,
   PersistentVolumeListComponent,
   PersistentVolumeClaimListComponent,
   PolicyRuleListComponent,
