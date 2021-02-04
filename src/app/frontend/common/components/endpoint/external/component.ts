@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {Component, Input} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {Endpoint} from '@api/root.api';
 
 /**
@@ -24,6 +24,10 @@ import {Endpoint} from '@api/root.api';
   templateUrl: './template.html',
   styleUrls: ['./style.scss'],
 })
-export class ExternalEndpointComponent {
+export class ExternalEndpointComponent implements OnInit {
   @Input() endpoints: Endpoint[];
+
+  ngOnInit(): void {
+    this.endpoints = this.endpoints || [];
+  }
 }

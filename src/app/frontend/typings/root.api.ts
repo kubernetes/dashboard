@@ -485,7 +485,7 @@ export interface Subject {
   namespace: string;
 }
 
-export interface RoleRef {
+export interface ResourceRef {
   kind: string;
   apiGroup: string;
   name: string;
@@ -493,7 +493,7 @@ export interface RoleRef {
 
 export interface ClusterRoleBindingDetail extends ResourceDetail {
   subjects: Subject[];
-  roleRef: RoleRef;
+  roleRef: ResourceRef;
 }
 
 export interface RoleDetail extends ResourceDetail {
@@ -502,7 +502,7 @@ export interface RoleDetail extends ResourceDetail {
 
 export interface RoleBindingDetail extends ResourceDetail {
   subjects: Subject[];
-  roleRef: RoleRef;
+  roleRef: ResourceRef;
 }
 
 export interface SecretDetail extends ResourceDetail {
@@ -518,28 +518,21 @@ export interface IngressDetail extends ResourceDetail {
 }
 
 export interface IngressSpec {
-  defaultBackend?: IngressDefaultBackend;
+  ingressClassName?: string;
+  backend?: IngressBackend;
   rules?: IngressSpecRule[];
-  tls?: IngressSpecTls[];
+  tls?: IngressSpecTLS[];
 }
 
-export interface IngressSpecTls {
+export interface IngressSpecTLS {
   hosts: string[];
   secretName: string;
 }
 
-export interface IngressDefaultBackend {
-  service: IngressService;
-}
-
-export interface IngressService {
-  name: string;
-  port: IngressServicePort;
-}
-
-export interface IngressServicePort {
-  number?: number;
-  name?: string;
+export interface IngressBackend {
+  serviceName?: string;
+  servicePort?: string | number;
+  resource?: ResourceRef;
 }
 
 export interface IngressSpecRule {
@@ -554,19 +547,7 @@ export interface IngressSpecRuleHttp {
 export interface IngressSpecRuleHttpPath {
   path: string;
   pathType: string;
-  backend: IngressSpecRuleHttpPathBackend;
-}
-
-export interface IngressSpecRuleHttpPathBackend {
-  serviceName?: string;
-  servicePort?: string | number;
-  resource?: IngressSpecRuleHttpPathBackendResource;
-}
-
-export interface IngressSpecRuleHttpPathBackendResource {
-  apiGroup: string;
-  kind: string;
-  name: string;
+  backend: IngressBackend;
 }
 
 export interface NetworkPolicyDetail extends ResourceDetail {
