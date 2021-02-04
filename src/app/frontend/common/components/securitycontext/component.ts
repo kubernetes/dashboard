@@ -12,23 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-@import '../../../variables';
-@import '../../../mixins';
+import {Component, Input} from '@angular/core';
+import {ContainerSecurityContext} from '@api/root.api';
 
-.kd-env-variable-icon {
-  @include kd-icon-size($caption-font-size-base);
-
-  align-self: baseline;
-  margin-left: $baseline-grid / 2;
-}
-
-.kd-volume-mounts {
-  border-radius: $baseline-grid / 4;
-  margin-right: $baseline-grid;
-  margin-top: $baseline-grid / 2;
-}
-
-.security-context-header {
-  font-size: $subhead-font-size-base-lg;
-  margin: (2 * $baseline-grid) 0;
+@Component({
+  selector: 'kd-container-security-context',
+  templateUrl: './template.html',
+})
+export class ContainerSecurityContextComponent {
+  @Input() initialized: boolean;
+  @Input() securityContext: ContainerSecurityContext;
 }

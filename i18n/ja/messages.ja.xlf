@@ -528,6 +528,150 @@
           <context context-type="linenumber">134</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="b8347ea191b01bd6499eb8efffd719a008f2c953" datatype="html">
+        <source>Added Capabilities</source>
+        <target state="new">Added Capabilities</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/common/components/securitycontext/component.ts</context>
+          <context context-type="linenumber">26</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="e79004004ec3c10f6504aef5267ead5adabeafda" datatype="html">
+        <source>Dropped Capabilities</source>
+        <target state="new">Dropped Capabilities</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/common/components/securitycontext/component.ts</context>
+          <context context-type="linenumber">26</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="07e52ab48450e2997ffa0d8508d996281db05a3d" datatype="html">
+        <source>Privileged</source>
+        <target state="new">Privileged</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/common/components/securitycontext/component.ts</context>
+          <context context-type="linenumber">26</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="211fbdbe78f66f4dada9b9aaf5c21296278f424f" datatype="html">
+        <source>SE Linux User</source>
+        <target state="new">SE Linux User</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/common/components/securitycontext/component.ts</context>
+          <context context-type="linenumber">26</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="d29c0adbf4a7f2cc6c194cc6bbac6c2e004be313" datatype="html">
+        <source>SE Linux Role</source>
+        <target state="new">SE Linux Role</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/common/components/securitycontext/component.ts</context>
+          <context context-type="linenumber">26</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="5561078d23c805fd641b183204ed441208083cc0" datatype="html">
+        <source>SE Linux Type</source>
+        <target state="new">SE Linux Type</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/common/components/securitycontext/component.ts</context>
+          <context context-type="linenumber">26</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="e6a21f27af0b1e3a818b5ba506ea23b6d568ff31" datatype="html">
+        <source>SE Linux Level</source>
+        <target state="new">SE Linux Level</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/common/components/securitycontext/component.ts</context>
+          <context context-type="linenumber">26</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="6e81c80ba66e92f4056dc339af2281350fff213f" datatype="html">
+        <source>Windows GMSA Credential Spec Name</source>
+        <target state="new">Windows GMSA Credential Spec Name</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/common/components/securitycontext/component.ts</context>
+          <context context-type="linenumber">26</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="1b3f55a9c82076e32751ce2457aa27b1185022a3" datatype="html">
+        <source>Windows GMSA Credential Spec</source>
+        <target state="new">Windows GMSA Credential Spec</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/common/components/securitycontext/component.ts</context>
+          <context context-type="linenumber">26</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="4d32e29c3ed8ef3961d77d85cbbeb385a81cc90c" datatype="html">
+        <source>Windows Run as User</source>
+        <target state="new">Windows Run as User</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/common/components/securitycontext/component.ts</context>
+          <context context-type="linenumber">26</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="2e7702fc348b62fd35c1241b576d3939a574ddba" datatype="html">
+        <source>Run as User</source>
+        <target state="new">Run as User</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/common/components/securitycontext/component.ts</context>
+          <context context-type="linenumber">26</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="9bd5ee137f2b7f983132c5bffbf5c681d1648331" datatype="html">
+        <source>Run as Group</source>
+        <target state="new">Run as Group</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/common/components/securitycontext/component.ts</context>
+          <context context-type="linenumber">26</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="824f45818fc0f4ad4dd77e6fe2978ef7f7aba40d" datatype="html">
+        <source>Run as Non-Root</source>
+        <target state="new">Run as Non-Root</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/common/components/securitycontext/component.ts</context>
+          <context context-type="linenumber">26</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="69851b70e90bc0599c426048c425866a26cfd5cb" datatype="html">
+        <source>Read Only Filesystem</source>
+        <target state="new">Read Only Filesystem</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/common/components/securitycontext/component.ts</context>
+          <context context-type="linenumber">26</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="a40a3594a0009164479e52c41b81e3981dc24f7e" datatype="html">
+        <source>Allow Privilege Escalation</source>
+        <target state="new">Allow Privilege Escalation</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/common/components/securitycontext/component.ts</context>
+          <context context-type="linenumber">26</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="c9b82274cdf442ca2ccfa36ef7eff066fa03689e" datatype="html">
+        <source>Proc Mount</source>
+        <target state="new">Proc Mount</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/common/components/securitycontext/component.ts</context>
+          <context context-type="linenumber">26</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="034066bb80cfe6be76952cb72e65ee487dd3bda4" datatype="html">
+        <source>Seccomp Profile Type</source>
+        <target state="new">Seccomp Profile Type</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/common/components/securitycontext/component.ts</context>
+          <context context-type="linenumber">26</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="fbdccbf9dbc9fb8355c1a9021465fb6082f47b69" datatype="html">
+        <source>Seccomp Localhost Profile</source>
+        <target state="new">Seccomp Localhost Profile</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/common/components/securitycontext/component.ts</context>
+          <context context-type="linenumber">26</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="28f86ffd419b869711aa13f5e5ff54be6d70731c" datatype="html">
         <source>Edit</source>
         <target>編集</target>
@@ -1248,13 +1392,17 @@
           <context context-type="linenumber">47</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="a5f9ba9bb9faa8284bcadb1cdbc6aaf969e9c4bb" datatype="html">
-        <source>Image</source>
-        <target>イメージ</target>
+      <trans-unit id="2179bcb6e430557dd0c8ace27ea55e1bcf1a1979" datatype="html">
+        <source>Image </source>
+        <target state="new">Image </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/container/component.ts</context>
           <context context-type="linenumber">59</context>
         </context-group>
+      </trans-unit>
+      <trans-unit id="a5f9ba9bb9faa8284bcadb1cdbc6aaf969e9c4bb" datatype="html">
+        <source>Image</source>
+        <target>イメージ</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/resource/cluster/persistentvolume/detail/source/component.ts</context>
           <context context-type="linenumber">26</context>
@@ -1273,47 +1421,47 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/container/template.html</context>
-          <context context-type="linenumber">74</context>
+          <context context-type="linenumber">78</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="e41b42647be2b71c6929a3c7210c1f75d9cd522e" datatype="html">
-        <source><x id="INTERPOLATION" equiv-text="{{formatSecretValue(env.value).length}}"/> bytes</source>
-        <target><x id="INTERPOLATION" equiv-text="{{formatSecretValue(env.value).length}}"/> バイト</target>
+      <trans-unit id="e85e953453ef00a2b4b4f32bf83a5cb9488a86bb" datatype="html">
+        <source><x id="INTERPOLATION" equiv-text="{{formatSecretValue(env.value).length}}"/> bytes </source>
+        <target state="new"><x id="INTERPOLATION" equiv-text="{{formatSecretValue(env.value).length}}"/> bytes </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/container/component.ts</context>
           <context context-type="linenumber">59</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="47a54c2463fd16e928ac0892a2050221978933df" datatype="html">
-        <source><x id="INTERPOLATION" equiv-text="{{env.value.length}}"/> bytes</source>
-        <target><x id="INTERPOLATION" equiv-text="{{env.value.length}}"/> バイト</target>
+      <trans-unit id="4ae826faf65dddaf6d41fcce2f22abb08ca1d7c4" datatype="html">
+        <source><x id="INTERPOLATION" equiv-text="{{env.value.length}}"/> bytes </source>
+        <target state="new"><x id="INTERPOLATION" equiv-text="{{env.value.length}}"/> bytes </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/container/template.html</context>
-          <context context-type="linenumber">95</context>
+          <context context-type="linenumber">100,86</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="e5f16b542e3154cb107f4adedef050543594ffd6" datatype="html">
-        <source>Commands</source>
-        <target>コマンド</target>
+      <trans-unit id="3bd3636c73b1d4a423f38ddef44fba33ceacdd85" datatype="html">
+        <source>Commands </source>
+        <target state="new">Commands </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/container/template.html</context>
-          <context context-type="linenumber">95</context>
+          <context context-type="linenumber">101,111</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="5c12a82c6283b5e933cda0c15e7aa6b07f8c9713" datatype="html">
-        <source>Arguments</source>
-        <target>引数</target>
+      <trans-unit id="5612a5ae6b595d690ae22cfeedbf2495295a5d69" datatype="html">
+        <source>Arguments </source>
+        <target state="new">Arguments </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/container/template.html</context>
-          <context context-type="linenumber">117</context>
+          <context context-type="linenumber">126,133</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="4a3f085bda6b366365b6ac918d6ab6e69c886494" datatype="html">
-        <source>Mounts</source>
-        <target state="new">Mounts</target>
+      <trans-unit id="10ad7fc4f45662c6e5b57069d7bd9b6ff5ee9f2c" datatype="html">
+        <source>Mounts </source>
+        <target state="new">Mounts </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/container/template.html</context>
-          <context context-type="linenumber">129</context>
+          <context context-type="linenumber">149,150</context>
         </context-group>
       </trans-unit>
       <trans-unit id="986668e81481d0fd0934b4ef56b4236ccb298712" datatype="html">
@@ -3311,6 +3459,14 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/crd/detail/component.ts</context>
           <context context-type="linenumber">65</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="1bdf6d0a95c523599676ee9ce536adb037ce56af" datatype="html">
+        <source>Local settings </source>
+        <target state="new">Local settings </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/settings/local/component.ts</context>
+          <context context-type="linenumber">53,62</context>
         </context-group>
       </trans-unit>
       <trans-unit id="7db62a1ccd31f1bb55e3532b0f58984a492296a8" datatype="html">
