@@ -15,6 +15,7 @@
 // Shared resource types
 import {KdError} from '@api/root.ui';
 import {PersistentVolumeSource} from '@api/volume.api';
+import {SecurityContext} from '@angular/core';
 
 export enum SupportedResources {
   ConfigMap = 'ConfigMap',
@@ -865,6 +866,44 @@ export interface Container {
   commands: string[];
   args: string[];
   volumeMounts: VolumeMounts[];
+  securityContext: ContainerSecurityContext;
+}
+
+export interface ContainerSecurityContext {
+  capabilities?: Capabilities;
+  privileged?: boolean;
+  seLinuxOptions?: SELinuxOptions;
+  windowsOptions?: WindowsSecurityContextOptions;
+  runAsUser?: number;
+  runAsGroup?: number;
+  runAsNonRoot?: boolean;
+  readOnlyRootFilesystem?: boolean;
+  allowPrivilegeEscalation?: boolean;
+  procMount?: string; // ProcMountType;
+  seccompProfile?: SeccompProfile;
+}
+
+export interface Capabilities {
+  add: string[];
+  drop: string[];
+}
+
+export interface SELinuxOptions {
+  user?: string;
+  role?: string;
+  type?: string;
+  level?: string;
+}
+
+export interface WindowsSecurityContextOptions {
+  gMSACredentialSpecName?: string;
+  gMSACredentialSpec?: string;
+  runAsUserName?: string;
+}
+
+export interface SeccompProfile {
+  type: string; // SeccompProfileType;
+  localhostProfile?: string;
 }
 
 export interface VolumeMounts {

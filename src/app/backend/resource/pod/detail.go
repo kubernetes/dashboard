@@ -79,6 +79,9 @@ type Container struct {
 
 	// Information about mounted volumes
 	VolumeMounts []VolumeMount `json:"volumeMounts"`
+
+	// Security configuration that will be applied to a container.
+	SecurityContext *v1.SecurityContext `json:"securityContext"`
 }
 
 // EnvVar represents an environment variable of a container.
@@ -245,12 +248,13 @@ func extractContainerInfo(containerList []v1.Container, pod *v1.Pod, configMaps 
 		volume_mounts := extractContainerMounts(container, pod)
 
 		containers = append(containers, Container{
-			Name:         container.Name,
-			Image:        container.Image,
-			Env:          vars,
-			Commands:     container.Command,
-			Args:         container.Args,
-			VolumeMounts: volume_mounts,
+			Name:            container.Name,
+			Image:           container.Image,
+			Env:             vars,
+			Commands:        container.Command,
+			Args:            container.Args,
+			VolumeMounts:    volume_mounts,
+			SecurityContext: container.SecurityContext,
 		})
 	}
 	return containers
