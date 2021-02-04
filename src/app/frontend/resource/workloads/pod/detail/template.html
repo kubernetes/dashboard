@@ -74,7 +74,8 @@ limitations under the License.
       <div value>{{pod.restartCount}}</div>
     </kd-property>
 
-    <kd-property *ngIf="pod?.imagePullSecrets !== undefined">
+    <kd-property *ngIf="pod?.imagePullSecrets"
+                 fxFlex="100">
       <div key
            i18n>Image Pull Secrets</div>
       <div value
