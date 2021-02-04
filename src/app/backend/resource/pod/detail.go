@@ -53,6 +53,7 @@ type PodDetail struct {
 	InitContainers            []Container                                     `json:"initContainers"`
 	Metrics                   []metricapi.Metric                              `json:"metrics"`
 	Conditions                []common.Condition                              `json:"conditions"`
+	ImagePullSecrets          []v1.LocalObjectReference                       `json:"imagePullSecrets,omitempty"`
 	EventList                 common.EventList                                `json:"eventList"`
 	PersistentvolumeclaimList persistentvolumeclaim.PersistentVolumeClaimList `json:"persistentVolumeClaimList"`
 
@@ -276,6 +277,7 @@ func toPodDetail(pod *v1.Pod, metrics []metricapi.Metric, configMaps *v1.ConfigM
 		InitContainers:            extractContainerInfo(pod.Spec.InitContainers, pod, configMaps, secrets),
 		Metrics:                   metrics,
 		Conditions:                getPodConditions(*pod),
+		ImagePullSecrets:          pod.Spec.ImagePullSecrets,
 		EventList:                 *events,
 		PersistentvolumeclaimList: *persistentVolumeClaimList,
 		Errors:                    nonCriticalErrors,
