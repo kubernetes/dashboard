@@ -12,54 +12,85 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {Component, Input} from '@angular/core';
+import {Component, Input, OnChanges, OnInit, SimpleChange} from '@angular/core';
 import {MatTableDataSource} from '@angular/material/table';
-import {IngressSpecRule, IngressSpecRuleHttpPath} from '@api/root.api';
-import {KdStateService} from '../../services/global/state';
+import {IngressSpecRule, IngressSpecRuleHttpPath, IngressSpecTLS} from '@api/root.api';
 import {GlobalServicesModule} from '../../services/global/module';
+import {KdStateService} from '../../services/global/state';
 
 interface IngressRuleFlat {
   host?: string;
   path: IngressSpecRuleHttpPath;
+  tlsSecretName?: string;
+}
+
+interface IngressSpecTLSFlat {
+  host: string;
+  tlsSecretName: string;
 }
 
 @Component({
   selector: 'kd-ingressruleflat-card-list',
   templateUrl: './template.html',
 })
-export class IngressRuleFlatListComponent {
+export class IngressRuleFlatListComponent implements OnInit, OnChanges {
   @Input() initialized: boolean;
-  @Input() ingressSpecRules: IngressSpecRule[] = [];
+  @Input() ingressSpecRules: IngressSpecRule[];
+  @Input() tlsList: IngressSpecTLS[];
   @Input() namespace: string;
 
   private readonly kdState_: KdStateService = GlobalServicesModule.injector.get(KdStateService);
+  // Flat map of host -> secret name pairs.
+  private tlsHostMap_ = new Map<string, string>();
 
-  getIngressRulesFlatColumns(): string[] {
-    return ['Host', 'Path', 'Path Type', 'Service Name', 'Service Port'];
+  ngOnInit(): void {
+    this.tlsList = this.tlsList || [];
+    this.ingressSpecRules = this.ingressSpecRules || [];
   }
 
-  ingressSpecRuleToIngressRuleFlat(ingressSpecRules: IngressSpecRule[]): IngressRuleFlat[] {
+  ngOnChanges(changes: {tlsList: SimpleChange}): void {
+    if (changes.tlsList.currentValue) {
+      this.tlsHostMap_.clear();
+      []
+        .concat(
+          ...(changes.tlsList.currentValue as IngressSpecTLS[]).map(spec =>
+            spec.hosts.map(
+              host =>
+                ({
+                  host: host,
+                  tlsSecretName: spec.secretName,
+                } as IngressSpecTLSFlat)
+            )
+          )
+        )
+        .forEach((specFlat: IngressSpecTLSFlat) => this.tlsHostMap_.set(specFlat.host, specFlat.tlsSecretName));
+    }
+  }
+
+  getIngressRulesFlatColumns(): string[] {
+    return ['Host', 'Path', 'Path Type', 'Service Name', 'Service Port', 'TLS Secret'];
+  }
+
+  getDataSource(): MatTableDataSource<IngressRuleFlat> {
+    return new MatTableDataSource<IngressRuleFlat>(this.ingressRuleFlatList_);
+  }
+
+  getDetailsHref(name: string, kind: string): string {
+    return this.kdState_.href(kind, name, this.namespace);
+  }
+
+  private get ingressRuleFlatList_(): IngressRuleFlat[] {
     return [].concat(
-      ...ingressSpecRules.map(rule =>
+      ...this.ingressSpecRules.map(rule =>
         rule.http.paths.map(
           specPath =>
             ({
               host: rule.host || '',
               path: specPath,
+              tlsSecretName: this.tlsHostMap_.get(rule.host) || '',
             } as IngressRuleFlat)
         )
       )
     );
-  }
-
-  getDataSource(): MatTableDataSource<IngressRuleFlat> {
-    const tableData = new MatTableDataSource<IngressRuleFlat>();
-    tableData.data = this.ingressSpecRuleToIngressRuleFlat(this.ingressSpecRules || []);
-
-    return tableData;
-  }
-
-  getDetailsHref(name: string, kind: string): string {
-    return this.kdState_.href(kind, name, this.namespace);
   }
 }
