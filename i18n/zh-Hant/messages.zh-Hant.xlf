@@ -74,7 +74,7 @@
         <source><x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span>"/>Are you sure you want to delete <x id="INTERPOLATION" equiv-text="{{data.displayName}}"/> <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i>"/><x id="INTERPOLATION_1" equiv-text="{{data.objectMeta.name}}"/><x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i>"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span>"/><x id="START_TAG_SPAN_1" ctype="x-span_1" equiv-text="&lt;span *ngIf=&quot;data.objectMeta.namespace&quot;>
       "/>  in namespace <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i>"/><x id="INTERPOLATION_2" equiv-text="{{data.objectMeta.namespace}}"/><x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i>"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span>"/><x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span>"/>?<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span>"/></source>
         <target>
-    <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span>"/>你確定要刪除 <x id="INTERPOLATION" equiv-text="{{data.displayName}}"/> <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i>"/><x id="INTERPOLATION_1" equiv-text="{{data.objectMeta.name}}"/><x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i>"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span>"/>
+    <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span>"/>您確定要刪除 <x id="INTERPOLATION" equiv-text="{{data.displayName}}"/> <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i>"/><x id="INTERPOLATION_1" equiv-text="{{data.objectMeta.name}}"/><x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i>"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span>"/>
     <x id="START_TAG_SPAN_1" ctype="x-span" equiv-text="&lt;span>"/>
        in namespace <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i>"/><x id="INTERPOLATION_2" equiv-text="{{data.objectMeta.namespace}}"/><x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i>"/>
     <x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span>"/>
@@ -1314,7 +1314,7 @@
       </trans-unit>
       <trans-unit id="2af7efecfae8d7fed3b07f718a623eca1ad8163f" datatype="html">
         <source>Labels</source>
-        <target>標簽</target>
+        <target>標籤</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/resourcelist/networkpolicy/component.ts</context>
           <context context-type="linenumber">67</context>
@@ -2310,7 +2310,7 @@
       <trans-unit id="7966f20bdbfc6d32429e1eaa61386e3e6eb0cb2d" datatype="html">
         <source> Do you want to stay on current page and change namespace from <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i>"/><x id="INTERPOLATION" equiv-text="{{namespace}}"/><x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i>"/> to <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i>"/><x id="INTERPOLATION_1" equiv-text="{{newNamespace}}"/><x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i>"/>? </source>
         <target>
-    你是否希望保持當前頁面并從<x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i>"/><x id="INTERPOLATION" equiv-text="{{namespace}}"/><x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i>"/> to <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i>"/><x id="INTERPOLATION_1" equiv-text="{{newNamespace}}"/><x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i>"/>中更改命名空間?
+    您是否希望保持當前頁面並從<x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i>"/><x id="INTERPOLATION" equiv-text="{{namespace}}"/><x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i>"/> to <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i>"/><x id="INTERPOLATION_1" equiv-text="{{newNamespace}}"/><x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i>"/>中更改命名空間?
   </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/namespace/changedialog/dialog.ts</context>
@@ -2459,7 +2459,7 @@
       </trans-unit>
       <trans-unit id="b433be6f17bb6c614c6adb6a81912baae4a619b7" datatype="html">
         <source>Memory Usage (bytes)</source>
-        <target>内存實用 (bytes)</target>
+        <target>記憶體實用 (bytes)</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/resourcelist/pod/component.ts</context>
           <context context-type="linenumber">117</context>
@@ -2683,7 +2683,7 @@
       </trans-unit>
       <trans-unit id="e4bc0a718dd945e7242e230772c371d963128d11" datatype="html">
         <source>Resource type</source>
-        <target>资源類別</target>
+        <target>資源類別</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/limits/component.ts</context>
           <context context-type="linenumber">41</context>
@@ -2806,7 +2806,7 @@
          queryParamsHandling=&quot;preserve&quot;>"/>deploy a containerized app<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a>"/>, select other namespace or <x id="START_LINK_1" equiv-text="&lt;a href=&quot;http://kubernetes.io/docs/user-guide/ui/&quot;
          target=&quot;_blank&quot;>"/>take the Dashboard Tour <x id="START_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;mat-icon class=&quot;kd-zerostate-icon&quot;>"/>open_in_new<x id="CLOSE_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;/mat-icon>"/><x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a>"/> to learn more. </source>
         <target>
-      你可以 <x id="START_LINK" ctype="x-a" equiv-text="&lt;a>"/> 部署一個容器化應用 <x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a>"/>, select other namespace or
+      您可以 <x id="START_LINK" ctype="x-a" equiv-text="&lt;a>"/> 部署一個容器化應用 <x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a>"/>, select other namespace or
       <x id="START_LINK_1" ctype="x-a" equiv-text="&lt;a>"/> 閱讀 Dashboard 說明
         <x id="START_TAG_MAT-ICON" ctype="x-mat-icon" equiv-text="&lt;mat-icon>"/>open_in_new<x id="CLOSE_TAG_MAT-ICON" ctype="x-mat-icon" equiv-text="&lt;/mat-icon>"/>
       <x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a>"/> 瞭解更多。
@@ -2850,7 +2850,7 @@
       </trans-unit>
       <trans-unit id="fb8681ea25f262db7f8ede5306e82d081016d5c7" datatype="html">
         <source>API Group</source>
-        <target>API 组</target>
+        <target>API 組</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/subject/component.ts</context>
           <context context-type="linenumber">50</context>
@@ -3312,7 +3312,7 @@
       <trans-unit id="a55441e16a7aab838dcedbccf0a517b3ad41eac4" datatype="html">
         <source> Please select the kubeconfig file that you have created to configure access to the cluster. To find out more about how to configure and use kubeconfig file, please refer to the <x id="START_LINK" ctype="x-a" equiv-text="&lt;a href='https://kubernetes.io/docs/tasks/access-application-cluster/configure-access-multiple-clusters/'>"/>Configure Access to Multiple Clusters<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a>"/> section. </source>
         <target>
-                請選擇您設定的 kubeconfig 文件以配置對叢集的訪問權限。   要瞭解有關如何配置和使用 kubeconfig 文件的更多訊息， 請參閲<x id="START_LINK" ctype="x-a" equiv-text="&lt;a>"/>Configure Access to Multiple Clusters<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a>"/> 部分.
+                請選擇您設定的 kubeconfig 文件以配置對叢集的訪問權限。要瞭解有關如何配置和使用 kubeconfig 文件的更多訊息，請參閲<x id="START_LINK" ctype="x-a" equiv-text="&lt;a>"/>Configure Access to Multiple Clusters<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a>"/> 部分.
               </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/login/component.ts</context>
@@ -3322,7 +3322,7 @@
       <trans-unit id="2071ed7df8c83bd144f74bc298a721261bea4c11" datatype="html">
         <source> Make sure that support for basic authentication is enabled in the cluster. To find out more about how to configure basic authentication, please refer to the <x id="START_LINK" ctype="x-a" equiv-text="&lt;a href=&quot;https://kubernetes.io/docs/admin/authentication/&quot;>"/>Authenticating<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a>"/> and <x id="START_LINK_1" equiv-text="&lt;a href=&quot;https://kubernetes.io/docs/admin/authorization/abac/&quot;>"/>ABAC Mode<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a>"/> sections. </source>
         <target>
-                確保在集群中啓用了對基本身份驗證的支持。 要了解有關如何配置基本身份驗證的詳情，请參閲 <x id="START_LINK" ctype="x-a" equiv-text="&lt;a>"/>Authenticating<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a>"/> 和 <x id="START_LINK_1" ctype="x-a" equiv-text="&lt;a>"/>ABAC Mode<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a>"/> 部分.
+                確保在集群中啓用了對基本身份驗證的支持。要了解有關如何配置基本身份驗證的詳情，請參閲<x id="START_LINK" ctype="x-a" equiv-text="&lt;a>"/>Authenticating<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a>"/> 和 <x id="START_LINK_1" ctype="x-a" equiv-text="&lt;a>"/>ABAC Mode<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a>"/> 部分.
               </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/login/template.html</context>
@@ -3426,7 +3426,7 @@
         <source> Kubernetes Dashboard is made possible by the Dashboard <x id="START_LINK" ctype="x-a" equiv-text="&lt;a href=&quot;https://github.com/kubernetes/dashboard/graphs/contributors&quot;>"/>community<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a>"/> as an <x id="START_LINK_1" equiv-text="&lt;a href=&quot;https://github.com/kubernetes/dashboard&quot;>"/>open source project<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a>"/>. </source>
         <target>
       Kubernetes Dashboard 是由 Dashboard
-      <x id="START_LINK" ctype="x-a" equiv-text="&lt;a>"/>社區<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a>"/> 开发的
+      <x id="START_LINK" ctype="x-a" equiv-text="&lt;a>"/>社區<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a>"/> 開發的
       <x id="START_LINK_1" ctype="x-a" equiv-text="&lt;a>"/>開源項目<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a>"/>。
     </target>
         <context-group purpose="location">
@@ -3770,7 +3770,7 @@
       <trans-unit id="aea36993f0b05780ff41173cb0d5eaf5d6e886f9" datatype="html">
         <source> Application name must start with a lowercase letter and contain only lowercase letters, numbers, and '-' between words. </source>
         <target>
-        應用名稱必須以小寫字母開頭，只包含小寫字母與數字，並且之間可以包含“-”符號。
+        應用名稱必須以小寫字母開頭，只包含小寫字母與數字，並且之間可以包含 '-' 符號。
       </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/create/from/form/template.html</context>
@@ -3779,7 +3779,7 @@
       </trans-unit>
       <trans-unit id="41cb32a2fd6b8c46e9abfc29ad55e26bceb82b29" datatype="html">
         <source>An 'app' label with this value will be added to the Deployment and Service that get deployed.</source>
-        <target>具有此值的“app”標籤將添加到已部署的 Deployment 和 Service 中。</target>
+        <target>具有此值的 'app' 標籤將添加到已部署的 Deployment 和 Service 中。</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/create/from/form/component.ts</context>
           <context context-type="linenumber">80</context>
@@ -3819,7 +3819,7 @@
       <trans-unit id="b39030efbb74fc1fa94582d4fd1b7397a7372332" datatype="html">
         <source> Container image is required </source>
         <target>
-        容器镜像是必须的
+        容器鏡像是必須的
       </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/create/from/form/template.html</context>
@@ -3855,7 +3855,7 @@
       <trans-unit id="f2e5a7cf7744abe0afff7d83650266934ecc9ccc" datatype="html">
         <source> Number of pods is required </source>
         <target>
-        pod 的数量是必填项
+        pod 的數量是必填項
       </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/create/from/form/template.html</context>
@@ -3865,7 +3865,7 @@
       <trans-unit id="a94af3fc42af8831966e3f4fcc14b4a7bb78c2fb" datatype="html">
         <source> Number of pods must be a positive integer </source>
         <target>
-        pod 的數量必須是正整数
+        pod 的數量必須是正整數
       </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/create/from/form/template.html</context>
@@ -3884,7 +3884,7 @@
       </trans-unit>
       <trans-unit id="1b71dbca4d8c341a7a9be7f8ce266494a5ed3827" datatype="html">
         <source>A Deployment will be created to maintain the desired number of pods across your cluster.</source>
-        <target>Deployment 将被創建來管理一定數量的 pod 在你的叢集中。</target>
+        <target>Deployment 將被創建來管理一定數量的 pod 在您的叢集中。</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/create/from/form/template.html</context>
           <context context-type="linenumber">116</context>
@@ -4014,7 +4014,7 @@
       <trans-unit id="01673bc7d2279746d96d858ab84d3fb22d2d1256" datatype="html">
         <source> CPU requirement must be given as a positive number. </source>
         <target>
-            CPU 下限必須是正整数。
+            CPU 下限必須是正整數。
           </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/create/from/form/template.html</context>
@@ -4437,7 +4437,7 @@
       <trans-unit id="4737b998467bee46867d0bb338f42158fd1ce407" datatype="html">
         <source> Prefix is not a valid DNS subdomain prefix (eg. my-domain.com). </source>
         <target>
-            前綴不是有效的前缀DNS子域前缀（例如 my-domain.com ）。
+            前綴不是有效的前缀 DNS 子域前缀（例如 my-domain.com ）。
         </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/create/from/form/deploylabel/template.html</context>
@@ -4447,7 +4447,7 @@
       <trans-unit id="2cf48a4788243a5493ff403a8fac4db6b9073303" datatype="html">
         <source> Label key name must be alphanumeric separated by '-', '_' or '.', optionally prefixed by a DNS subdomain and '/'. </source>
         <target>
-            標簽密鑰名稱必須是由 “ - ”，“_” 或 “.” 分隔的字母數字，可選以DNS子域和“/”为前綴。
+            標籤密鑰名稱必須是由 '-'，'_' 或 '.' 分隔的字母數字，可選以 DNS 子域和 '/' 為前綴。
         </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/create/from/form/deploylabel/template.html</context>
@@ -4457,7 +4457,7 @@
       <trans-unit id="582a028dd0ce5ae70905be0242f5df6cf1f4d23f" datatype="html">
         <source> Prefix should not exceed 253 characters. </source>
         <target>
-          前綴不應超過253個字符。
+          前綴不應超過 253 個字符。
         </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/create/from/form/deploylabel/template.html</context>
@@ -4467,7 +4467,7 @@
       <trans-unit id="f7cc544468f5139ba304be388d7e7720cf75cc3c" datatype="html">
         <source> Label Key name should not exceed 63 characters. </source>
         <target>
-          Label Key 名稱不應超過63個字符
+          Label Key 名稱不應超過 63 個字符
         </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/create/from/form/deploylabel/template.html</context>
@@ -4485,7 +4485,7 @@
       <trans-unit id="f0f259da0f80c8a4cfb99e71ba6f6492efe816f2" datatype="html">
         <source> Label value must be alphanumeric separated by '.' , '-' or '_'. </source>
         <target>
-            標簽值必須由'.' , '-'或者'_'分割字母數字
+            標籤值必須由 '.' , '-' 或者 '_' 分割字母數字
         </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/create/from/form/deploylabel/template.html</context>
@@ -4495,7 +4495,7 @@
       <trans-unit id="c7e8ada7c30de9d346a6e0c3a4bdf485ab582213" datatype="html">
         <source> Label Value must not exceed 253 characters. </source>
         <target>
-            標簽值不得超過253個字符。
+            標籤值不得超過 253 個字符。
         </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/create/from/form/deploylabel/template.html</context>
@@ -4720,7 +4720,7 @@
       </trans-unit>
       <trans-unit id="b398d1a80e8ad17d3e6cb69370e5c49613e16ec9" datatype="html">
         <source>OS Image</source>
-        <target>操作系統映像檔</target>
+        <target>作業系統映像檔</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/resource/cluster/node/detail/component.ts</context>
           <context context-type="linenumber">146</context>
@@ -4752,7 +4752,7 @@
       </trans-unit>
       <trans-unit id="1b5d16dfa3cfd08ebe24a7ca7ff4a8be82617868" datatype="html">
         <source>Operating system</source>
-        <target>操作系統</target>
+        <target>作業系統</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/resource/cluster/node/detail/component.ts</context>
           <context context-type="linenumber">146</context>
@@ -5196,7 +5196,7 @@
       </trans-unit>
       <trans-unit id="0df4074e7be76bee82290f4c26433c15fe4bb239" datatype="html">
         <source>Concurrency policy</source>
-        <target>并發策略</target>
+        <target>並發策略</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/resource/workloads/cronjob/detail/component.ts</context>
           <context context-type="linenumber">72</context>
@@ -5288,7 +5288,7 @@
       </trans-unit>
       <trans-unit id="42709c3dedbf05e8d28ee25c60dcdd328cfb44b9" datatype="html">
         <source>Min ready seconds</source>
-        <target>最小準備秒數:</target>
+        <target>最小準備秒數: </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/resource/workloads/deployment/detail/component.ts</context>
           <context context-type="linenumber">96</context>
@@ -5456,7 +5456,7 @@
       </trans-unit>
       <trans-unit id="a15cd320e4f839a76e972c13f20cd674df195d0c" datatype="html">
         <source>Parallelism: </source>
-        <target>并行: </target>
+        <target>並行: </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/resource/workloads/job/detail/component.ts</context>
           <context context-type="linenumber">70</context>
@@ -5472,7 +5472,7 @@
       </trans-unit>
       <trans-unit id="c2b3cd38e1617d3948913b233bddfb163d6011fb" datatype="html">
         <source>Parallelism</source>
-        <target>并行</target>
+        <target>並行</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/resource/workloads/job/detail/component.ts</context>
           <context context-type="linenumber">70</context>
@@ -5480,7 +5480,7 @@
       </trans-unit>
       <trans-unit id="53d3c87046022140381be2fc9b864d6fdd9f2cc8" datatype="html">
         <source>Label Selector</source>
-        <target>標簽選擇器</target>
+        <target>標籤選擇器</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/resource/workloads/replicationcontroller/detail/component.ts</context>
           <context context-type="linenumber">57</context>
@@ -5492,7 +5492,7 @@
       </trans-unit>
       <trans-unit id="130d46e5699c410721dbdf43691f5c957b5955ef" datatype="html">
         <source>Settings have changed since last reload</source>
-        <target>自上次重新加載后設置已更改</target>
+        <target>自上次重新加載後設置已更改</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/settings/global/saveanywaysdialog/dialog.ts</context>
           <context context-type="linenumber">29</context>
@@ -5500,7 +5500,7 @@
       </trans-unit>
       <trans-unit id="02b9a3951b251f014027ab26bea1e26c282be22f" datatype="html">
         <source>Do you want to save them anyways?</source>
-        <target>你想保存它們嗎？</target>
+        <target>您想保存它們嗎？</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/settings/global/saveanywaysdialog/dialog.ts</context>
           <context context-type="linenumber">29</context>
@@ -5546,7 +5546,7 @@
       </trans-unit>
       <trans-unit id="409222992640ac7a22c9f4d8d1dd19bf0109bafa" datatype="html">
         <source>Cluster name appears in the browser window title if it is set.</source>
-        <target>如果已設置， 則叢集名字將顯示在瀏覽器標題中。</target>
+        <target>如果已設置，則叢集名字將顯示在瀏覽器標題中。</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/settings/global/component.ts</context>
           <context context-type="linenumber">114</context>
@@ -5654,7 +5654,7 @@
       </trans-unit>
       <trans-unit id="c73af29d15f7f46e960a5a52908965e0e1a0c3a7" datatype="html">
         <source> Local settings are stored in the browser cookies, so they are not synchronized between multiple devices. Changes are applied automatically on every change. </source>
-        <target state="new"> Local settings are stored in the browser cookies, so they are not synchronized between multiple devices. Changes are applied automatically on every change. </target>
+        <target state="new"> 本地設置存儲在瀏覽器 cookie 中，因此它們不會在多個設備之間同步。每次更改都會自動應用改變。 </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/settings/local/component.ts</context>
           <context context-type="linenumber">74</context>
