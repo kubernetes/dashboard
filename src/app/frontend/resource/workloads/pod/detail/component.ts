@@ -63,6 +63,10 @@ export class PodDetailComponent implements OnInit, OnDestroy {
       });
   }
 
+  showPodSecurityContext(): boolean {
+    return this.pod && Object.keys(this.pod.securityContext).length > 0;
+  }
+
   ngOnDestroy(): void {
     this.unsubscribe_.next();
     this.unsubscribe_.complete();

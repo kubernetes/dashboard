@@ -13,13 +13,13 @@
 // limitations under the License.
 
 import {Component, Input} from '@angular/core';
-import {ContainerSecurityContext} from '@api/root.api';
+import {PodContainerMergedSecurityContext} from '@api/root.api';
 
 @Component({
   selector: 'kd-container-security-context',
   templateUrl: './template.html',
 })
-export class ContainerSecurityContextComponent {
+export class PodContainerMergedSecurityContextComponent {
   @Input() initialized: boolean;
-  @Input() securityContext: ContainerSecurityContext;
+  @Input() securityContext: PodContainerMergedSecurityContext;
 }

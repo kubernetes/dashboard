@@ -100,6 +100,21 @@ limitations under the License.
 
 <kd-event-list [endpoint]="eventListEndpoint"></kd-event-list>
 
+
+<kd-card [initialized]="isInitialized"
+         *ngIf="showPodSecurityContext()">
+  <div title
+       i18n>Pod Security Context</div>
+
+  <div content
+       *ngIf="isInitialized"
+       fxLayout="row wrap">
+    <kd-container-security-context [securityContext]="pod?.securityContext"
+                                   [initialized]="isInitialized">
+    </kd-container-security-context>
+  </div>
+</kd-card>
+
 <div *ngIf="pod?.containers?.length"
      class="kd-card-group-header kd-muted"
      i18n>Containers</div>

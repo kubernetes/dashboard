@@ -642,6 +642,7 @@ export interface PodDetail extends ResourceDetail {
   imagePullSecrets: LocalObjectReference[];
   eventList: EventList;
   persistentVolumeClaimList: PersistentVolumeClaimList;
+  securityContext: PodSecurityContext;
 }
 
 export interface LocalObjectReference {
@@ -886,6 +887,47 @@ export interface ContainerSecurityContext {
   allowPrivilegeEscalation?: boolean;
   procMount?: string; // ProcMountType;
   seccompProfile?: SeccompProfile;
+}
+
+export interface PodSecurityContext {
+  fsGroup?: number;
+  fsGroupChangePolicy?: string;
+  runAsGroup?: number;
+  runAsNonRoot?: boolean;
+  runAsUser?: number;
+  seLinuxOptions?: SELinuxOptions;
+  seccompProfile?: SeccompProfile;
+  supplementalGroups?: number[];
+  sysctls?: Sysctl[];
+  windowsOptions?: WindowsSecurityContextOptions;
+}
+
+export interface PodContainerMergedSecurityContext {
+  // common
+  seLinuxOptions?: SELinuxOptions;
+  windowsOptions?: WindowsSecurityContextOptions;
+  runAsUser?: number;
+  runAsGroup?: number;
+  runAsNonRoot?: boolean;
+  seccompProfile?: SeccompProfile;
+
+  // container only
+  capabilities?: Capabilities;
+  privileged?: boolean;
+  readOnlyRootFilesystem?: boolean;
+  allowPrivilegeEscalation?: boolean;
+  procMount?: string; // ProcMountType;
+
+  // pod only
+  fsGroup?: number;
+  fsGroupChangePolicy?: string;
+  supplementalGroups?: number[];
+  sysctls?: Sysctl[];
+}
+
+export interface Sysctl {
+  name: string;
+  value: string;
 }
 
 export interface Capabilities {

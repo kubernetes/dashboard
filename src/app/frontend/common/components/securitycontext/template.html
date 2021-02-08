@@ -31,7 +31,7 @@ limitations under the License.
       {{securityContext.capabilities.drop}}
     </div>
   </kd-property>
-  <kd-property *ngIf="securityContext?.privileged">
+  <kd-property *ngIf="securityContext?.privileged !== undefined">
     <div key
          i18n>Privileged</div>
     <div value>{{securityContext.privileged}}</div>
@@ -88,27 +88,27 @@ limitations under the License.
     </div>
   </kd-property>
 
-  <kd-property *ngIf="securityContext?.runAsUser">
+  <kd-property *ngIf="securityContext?.runAsUser !== undefined">
     <div key
          i18n>Run as User</div>
     <div value>{{securityContext.runAsUser}}</div>
   </kd-property>
-  <kd-property *ngIf="securityContext?.runAsGroup">
+  <kd-property *ngIf="securityContext?.runAsGroup !== undefined">
     <div key
          i18n>Run as Group</div>
     <div value>{{securityContext.runAsGroup}}</div>
   </kd-property>
-  <kd-property *ngIf="securityContext?.runAsNonRoot">
+  <kd-property *ngIf="securityContext?.runAsNonRoot !== undefined">
     <div key
          i18n>Run as Non-Root</div>
     <div value>{{securityContext.runAsNonRoot}}</div>
   </kd-property>
-  <kd-property *ngIf="securityContext?.readOnlyRootFilesystem">
+  <kd-property *ngIf="securityContext?.readOnlyRootFilesystem !== undefined">
     <div key
          i18n>Read Only Filesystem</div>
     <div value>{{securityContext.readOnlyRootFilesystem}}</div>
   </kd-property>
-  <kd-property *ngIf="securityContext?.allowPrivilegeEscalation">
+  <kd-property *ngIf="securityContext?.allowPrivilegeEscalation !== undefined">
     <div key
          i18n>Allow Privilege Escalation</div>
     <div value>{{securityContext.allowPrivilegeEscalation}}</div>
@@ -133,5 +133,34 @@ limitations under the License.
       {{securityContext.seccompProfile.localhostProfile}}
     </div>
   </kd-property>
-
+  <kd-property *ngIf="securityContext?.fsGroup !== undefined">
+    <div key
+         i18n>Filesystem Group</div>
+    <div value>
+      {{securityContext.fsGroup}}
+    </div>
+  </kd-property>
+  <kd-property *ngIf="securityContext?.fsGroupChangePolicy">
+    <div key
+         i18n>Filesystem Group Change Policy</div>
+    <div value>
+      {{securityContext.fsGroupChangePolicy}}
+    </div>
+  </kd-property>
+  <kd-property *ngIf="securityContext?.supplementalGroups">
+    <div key
+         i18n>Supplemental Groups</div>
+    <div value
+         *ngFor="let supplementalGroup of securityContext?.supplementalGroups">
+      {{supplementalGroup}}
+    </div>
+  </kd-property>
+  <kd-property *ngIf="securityContext?.sysctls">
+    <div key
+         i18n>SysCtls</div>
+    <div value
+         *ngFor="let sysctl of securityContext?.sysctls">
+      {{sysctl.name}}: {{sysctl.value}}
+    </div>
+  </kd-property>
 </div>
