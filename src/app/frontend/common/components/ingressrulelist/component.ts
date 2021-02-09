@@ -49,7 +49,7 @@ export class IngressRuleFlatListComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: {tlsList: SimpleChange}): void {
-    if (changes.tlsList.currentValue) {
+    if (changes.tlsList && changes.tlsList.currentValue) {
       this.tlsHostMap_.clear();
       []
         .concat(
