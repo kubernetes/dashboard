@@ -32,6 +32,7 @@ type Ingress struct {
 
 	// External endpoints of this ingress.
 	Endpoints []common.Endpoint `json:"endpoints"`
+	Hosts     []string          `json:"hosts"`
 }
 
 // IngressList - response structure for a queried ingress list.
@@ -74,11 +75,33 @@ func getEndpoints(ingress *v1beta1.Ingress) []common.Endpoint {
 	return endpoints
 }
 
+func contains(s []string, str string) bool {
+	for _, v := range s {
+		if v == str {
+			return true
+		}
+	}
+	return false
+}
+
+func getHosts(ingress *v1beta1.Ingress) []string {
+	hosts := make([]string, 0)
+	if len(ingress.Spec.Rules) > 0 {
+		for _, rule := range ingress.Spec.Rules {
+			if rule.Host != "" && !contains(hosts, rule.Host) {
+				hosts = append(hosts, rule.Host)
+			}
+		}
+	}
+	return hosts
+}
+
 func toIngress(ingress *v1beta1.Ingress) Ingress {
 	return Ingress{
 		ObjectMeta: api.NewObjectMeta(ingress.ObjectMeta),
 		TypeMeta:   api.NewTypeMeta(api.ResourceKindIngress),
 		Endpoints:  getEndpoints(ingress),
+		Hosts:      getHosts(ingress),
 	}
 }
 

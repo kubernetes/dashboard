@@ -72,6 +72,22 @@ limitations under the License.
         </mat-cell>
       </ng-container>
 
+      <ng-container matColumnDef="hosts">
+        <mat-header-cell *matHeaderCellDef
+                         disableClear="true"
+                         i18n>Hosts</mat-header-cell>
+        <mat-cell *matCellDef="let ingress">
+          <div *ngFor="let host of ingress.hosts">
+            <a href="http://{{host}}"
+               target="_blank">
+              {{host}}
+              <mat-icon class="kd-endpoint-icon">open_in_new</mat-icon>
+            </a>
+          </div>
+          <div *ngIf="ingress.hosts.length === 0">-</div>
+        </mat-cell>
+      </ng-container>
+
       <ng-container matColumnDef="created">
         <mat-header-cell *matHeaderCellDef
                          mat-sort-header

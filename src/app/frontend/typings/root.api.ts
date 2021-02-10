@@ -322,6 +322,7 @@ export interface HorizontalPodAutoscaler extends Resource {
 
 export interface Ingress extends Resource {
   endpoints: Endpoint[];
+  hosts: string[];
 }
 
 export interface Job extends Resource {
