@@ -106,7 +106,7 @@ export class LoginComponent implements OnInit {
         }
 
         this.pluginConfigService_.refreshConfig();
-        this.ngZone_.run(_ => this.historyService_.goToPreviousState('overview'));
+        this.ngZone_.run(_ => this.historyService_.goToPreviousState('workloads'));
       },
       (err: HttpErrorResponse) => {
         this.errors = [AsKdError(err)];
@@ -116,7 +116,7 @@ export class LoginComponent implements OnInit {
 
   skip(): void {
     this.authService_.skipLoginPage(true);
-    this.historyService_.goToPreviousState('overview');
+    this.historyService_.goToPreviousState('workloads');
   }
 
   isSkipButtonEnabled(): boolean {

@@ -28,7 +28,7 @@ limitations under the License.
              autocomplete="off"
              (keydown)="$event.code === 'Enter' ? selectNamespace() : null">
     </div>
-    <mat-option *ngIf="namespaces.length"
+    <mat-option *ngIf="namespaces.length && !usingFallbackNamespaces"
                 [value]="allNamespacesKey"
                 i18n>All namespaces</mat-option>
     <mat-optgroup label="NAMESPACES"

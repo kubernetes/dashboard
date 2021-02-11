@@ -41,8 +41,7 @@ limitations under the License.
         </mat-form-field>
       </kd-settings-entry>
 
-      <kd-namespace-settings [formControlName]="Controls.NamespaceSettings"
-                             [settings]="settings">
+      <kd-namespace-settings [formControlName]="Controls.NamespaceSettings">
       </kd-namespace-settings>
 
       <kd-settings-entry key="Items per page"
@@ -130,7 +129,7 @@ limitations under the License.
         </div>
       </kd-settings-entry>
       <br><br>
-      <button [disabled]="form.pristine"
+      <button [disabled]="!canSave()"
               (click)="save()"
               color="primary"
               mat-raised-button

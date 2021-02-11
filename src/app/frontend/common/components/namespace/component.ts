@@ -22,6 +22,7 @@ import {distinctUntilChanged, filter, startWith, switchMap, takeUntil} from 'rxj
 
 import {Config, CONFIG_DI_TOKEN} from '../../../index.config';
 import {NAMESPACE_STATE_PARAM} from '../../params/params';
+import {GlobalSettingsService} from '../../services/global/globalsettings';
 import {HistoryService} from '../../services/global/history';
 import {NamespaceService} from '../../services/global/namespace';
 import {NotificationsService} from '../../services/global/notifications';
@@ -41,9 +42,10 @@ export class NamespaceSelectorComponent implements OnInit, OnDestroy {
   allNamespacesKey: string;
   selectedNamespace: string;
   resourceNamespaceParam: string;
+  usingFallbackNamespaces = false;
 
-  private namespaceUpdate_ = new Subject();
-  private unsubscribe_ = new Subject();
+  private readonly namespaceUpdate_ = new Subject();
+  private readonly unsubscribe_ = new Subject();
   private readonly endpoint_ = EndpointManager.resource(Resource.namespace);
 
   @ViewChild(MatSelect, {static: true}) private readonly select_: MatSelect;
@@ -58,6 +60,7 @@ export class NamespaceSelectorComponent implements OnInit, OnDestroy {
     private readonly notifications_: NotificationsService,
     private readonly activatedRoute_: ActivatedRoute,
     private readonly historyService_: HistoryService,
+    private readonly settingsService_: GlobalSettingsService,
     @Inject(CONFIG_DI_TOKEN) private readonly appConfig_: Config
   ) {}
 
@@ -131,8 +134,9 @@ export class NamespaceSelectorComponent implements OnInit, OnDestroy {
   }
 
   setDefaultQueryParams_() {
+    const defaultNamespace = this.settingsService_.getDefaultNamespace() || this.appConfig_.defaultNamespace;
     this.router_.navigate([this.activatedRoute_.snapshot.url], {
-      queryParams: {[NAMESPACE_STATE_PARAM]: this.appConfig_.defaultNamespace},
+      queryParams: {[NAMESPACE_STATE_PARAM]: defaultNamespace},
       queryParamsHandling: 'merge',
     });
   }
@@ -165,7 +169,14 @@ export class NamespaceSelectorComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.unsubscribe_))
       .subscribe(
         namespaceList => {
+          this.usingFallbackNamespaces = false;
           this.namespaces = namespaceList.namespaces.map(n => n.objectMeta.name);
+          this.namespaces = [];
+
+          if (!this.namespaces || this.namespaces.length === 0) {
+            this.usingFallbackNamespaces = true;
+            this.namespaces = this.settingsService_.getNamespaceFallbackList();
+          }
 
           if (namespaceList.errors.length > 0) {
             for (const err of namespaceList.errors) {

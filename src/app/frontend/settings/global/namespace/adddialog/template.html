@@ -20,7 +20,7 @@ limitations under the License.
       i18n>Add Namespace</h2>
   <mat-dialog-content fxLayout="column"
                       class="kd-dialog-text">
-    <div i18n>Provide a namespace that should be added to the namespace fallback list</div>
+    <div i18n>Provide a namespace name that should be added to the namespace fallback list</div>
 
     <mat-form-field fxFlex>
       <input #namespaceInput
@@ -40,7 +40,7 @@ limitations under the License.
   </mat-dialog-content>
 
   <mat-dialog-actions>
-    <button mat-button
+    <button mat-raised-button
             color="primary"
             [mat-dialog-close]="namespaceInput.value"
             i18n>Add

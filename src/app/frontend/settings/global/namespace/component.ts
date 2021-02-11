@@ -13,16 +13,18 @@
 // limitations under the License.
 
 import {BreakpointObserver, Breakpoints} from '@angular/cdk/layout';
-import {AfterViewInit, Component, forwardRef, Input, OnChanges, OnDestroy, OnInit, SimpleChanges} from '@angular/core';
+import {Component, forwardRef, Input, OnDestroy, OnInit} from '@angular/core';
 import {ControlValueAccessor, FormArray, FormBuilder, FormGroup, NG_VALUE_ACCESSOR} from '@angular/forms';
 import {MatDialog, MatDialogConfig} from '@angular/material/dialog';
-import {GlobalSettings, NamespaceList} from '@api/backendapi';
+import {GlobalSettings, NamespaceList} from '@api/root.api';
 import {Subject} from 'rxjs';
 import {map, take, takeUntil} from 'rxjs/operators';
 import {EndpointManager, Resource} from '../../../common/services/resource/endpoint';
 import {ResourceService} from '../../../common/services/resource/resource';
+import {SettingsHelperService} from '../service';
 import {AddFallbackNamespaceDialog, AddFallbackNamespaceDialogData} from './adddialog/dialog';
 import {EditFallbackNamespaceDialog, EditFallbackNamespaceDialogData} from './editdialog/dialog';
+import set = Reflect.set;
 
 enum BreakpointElementCount {
   XLarge = 5,
@@ -54,14 +56,13 @@ interface NamespaceSettings {
   ],
 })
 export class NamespaceSettingsComponent implements OnInit, OnDestroy, ControlValueAccessor {
-  @Input() settings: GlobalSettings;
-
   readonly Controls = Controls;
 
   namespaces: string[] = [];
   visibleNamespaces = 0;
   form: FormGroup;
 
+  private settings_: GlobalSettings;
   private readonly endpoint_ = EndpointManager.resource(Resource.namespace).list();
   private readonly unsubscribe_ = new Subject<void>();
   private readonly visibleNamespacesMap: [string, number][] = [
@@ -71,20 +72,32 @@ export class NamespaceSettingsComponent implements OnInit, OnDestroy, ControlVal
     [Breakpoints.Small, BreakpointElementCount.Small],
   ];
 
+  private get namespaceFallbackList_(): string[] {
+    return this.settings_.namespaceFallbackList ? this.settings_.namespaceFallbackList.filter(ns => ns) : [];
+  }
+
+  private get formArrayNamespaceFallbackList_(): string[] {
+    const arr = this.form.get(Controls.FallbackList).value as string[];
+    return arr ? arr.filter(ns => ns) : [];
+  }
+
   constructor(
     private readonly namespaceService_: ResourceService<NamespaceList>,
+    private readonly settingsHelperService_: SettingsHelperService,
     private readonly dialog_: MatDialog,
     private readonly breakpointObserver_: BreakpointObserver,
     private readonly builder_: FormBuilder
   ) {}
 
   get invisibleCount(): number {
-    return this.settings.namespaceFallbackList
-      ? this.settings.namespaceFallbackList.length - this.visibleNamespaces
+    return this.settings_.namespaceFallbackList
+      ? this.settings_.namespaceFallbackList.length - this.visibleNamespaces
       : 0;
   }
 
   ngOnInit(): void {
+    this.settings_ = this.settingsHelperService_.settings;
+
     this.form = this.builder_.group({
       [Controls.DefaultNamespace]: this.builder_.control(''),
       [Controls.FallbackList]: this.builder_.array([]),
@@ -103,6 +116,11 @@ export class NamespaceSettingsComponent implements OnInit, OnDestroy, ControlVal
         const breakpoint = this.visibleNamespacesMap.find(breakpoint => result.breakpoints[breakpoint[0]]);
         this.visibleNamespaces = breakpoint ? breakpoint[1] : BreakpointElementCount.Small;
       });
+
+    this.form.valueChanges.pipe(takeUntil(this.unsubscribe_)).subscribe(this.onFormChange_.bind(this));
+    this.settingsHelperService_.onSettingsChange
+      .pipe(takeUntil(this.unsubscribe_))
+      .subscribe(this.onSettingsChange_.bind(this));
   }
 
   ngOnDestroy(): void {
@@ -127,7 +145,7 @@ export class NamespaceSettingsComponent implements OnInit, OnDestroy, ControlVal
   edit(): void {
     const dialogConfig: MatDialogConfig = {
       data: {
-        namespaces: this.settings.namespaceFallbackList,
+        namespaces: this.namespaceFallbackList_,
       } as EditFallbackNamespaceDialogData,
     };
 
@@ -137,8 +155,7 @@ export class NamespaceSettingsComponent implements OnInit, OnDestroy, ControlVal
       .pipe(take(1))
       .subscribe((namespaces: string[] | undefined) => {
         if (namespaces) {
-          this.form.setControl(Controls.FallbackList, this.builder_.array([]));
-          namespaces.forEach(ns => this.addNamespace_(ns));
+          this.settingsHelperService_.settings = {namespaceFallbackList: namespaces} as GlobalSettings;
         }
       });
   }
@@ -149,8 +166,7 @@ export class NamespaceSettingsComponent implements OnInit, OnDestroy, ControlVal
       return;
     }
 
-    this.form.get(Controls.DefaultNamespace).setValue(obj.defaultNamespace, {emitEvent: false});
-    obj.fallbackList.filter(ns => !this.containsNamespace_(ns)).forEach(ns => this.addNamespace_(ns));
+    this.form.setValue(obj);
   }
 
   registerOnChange(fn: any): void {
@@ -167,5 +183,23 @@ export class NamespaceSettingsComponent implements OnInit, OnDestroy, ControlVal
 
   private containsNamespace_(ns: string): boolean {
     return !ns || (this.form.get(Controls.FallbackList) as FormArray).controls.map(c => c.value).indexOf(ns) > -1;
+  }
+
+  private onFormChange_(): void {
+    this.settingsHelperService_.settings = {
+      defaultNamespace: this.form.get(Controls.DefaultNamespace).value,
+      namespaceFallbackList: this.formArrayNamespaceFallbackList_,
+    } as GlobalSettings;
+  }
+
+  private onSettingsChange_(settings: GlobalSettings): void {
+    this.settings_ = settings;
+
+    this.form.get(Controls.DefaultNamespace).setValue(this.settings_.defaultNamespace, {emitEvent: false});
+
+    (this.form.get(Controls.FallbackList) as FormArray).controls = this.namespaceFallbackList_.map(_ =>
+      this.builder_.control('')
+    );
+    (this.form.get(Controls.FallbackList) as FormArray).reset(this.namespaceFallbackList_, {emitEvent: false});
   }
 }

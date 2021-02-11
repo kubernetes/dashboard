@@ -20,7 +20,7 @@ limitations under the License.
       i18n>Edit Namespace List</h2>
   <mat-dialog-content fxLayout="column"
                       class="kd-dialog-text">
-    <div i18n>Remove namespaces from the list as needed and confirm to save the changes.</div>
+    <div i18n>Remove namespaces from the list and confirm to save the changes.</div>
 
     <mat-list>
       <mat-list-item *ngFor="let namespace of namespaces">
@@ -35,7 +35,7 @@ limitations under the License.
   </mat-dialog-content>
 
   <mat-dialog-actions>
-    <button mat-button
+    <button mat-raised-button
             color="primary"
             [mat-dialog-close]="namespaces"
             i18n>Edit

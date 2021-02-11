@@ -17,14 +17,17 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {MatDialog} from '@angular/material/dialog';
 import {GlobalSettings, NamespaceList} from '@api/root.api';
+import * as _ from 'lodash';
 import {of, Subject} from 'rxjs';
 import {Observable} from 'rxjs/Observable';
 import {catchError, take, takeUntil, tap} from 'rxjs/operators';
+
 import {GlobalSettingsService} from '../../common/services/global/globalsettings';
 import {TitleService} from '../../common/services/global/title';
 import {ResourceService} from '../../common/services/resource/resource';
 
 import {SaveAnywayDialog} from './saveanywaysdialog/dialog';
+import {SettingsHelperService} from './service';
 
 enum Controls {
   ClusterName = 'clusterName',
@@ -53,26 +56,43 @@ export class GlobalSettingsComponent implements OnInit, OnDestroy {
   private readonly unsubscribe_ = new Subject<void>();
 
   constructor(
-    private readonly settings_: GlobalSettingsService,
+    private readonly settingsService_: GlobalSettingsService,
+    private readonly settingsHelperService_: SettingsHelperService,
     private readonly namespaceService_: ResourceService<NamespaceList>,
     private readonly dialog_: MatDialog,
     private readonly title_: TitleService,
     private readonly builder_: FormBuilder
   ) {}
 
+  private get externalSettings_(): GlobalSettings {
+    const settings = {} as GlobalSettings;
+
+    settings.itemsPerPage = this.settingsService_.getItemsPerPage();
+    settings.labelsLimit = this.settingsService_.getLabelsLimit();
+    settings.clusterName = this.settingsService_.getClusterName();
+    settings.logsAutoRefreshTimeInterval = this.settingsService_.getLogsAutoRefreshTimeInterval();
+    settings.resourceAutoRefreshTimeInterval = this.settingsService_.getResourceAutoRefreshTimeInterval();
+    settings.disableAccessDeniedNotifications = this.settingsService_.getDisableAccessDeniedNotifications();
+    settings.defaultNamespace = this.settingsService_.getDefaultNamespace();
+    settings.namespaceFallbackList = this.settingsService_.getNamespaceFallbackList();
+
+    return settings;
+  }
+
   ngOnInit(): void {
     this.form = this.builder_.group({
       [Controls.ClusterName]: this.builder_.control(''),
-      [Controls.ItemsPerPage]: this.builder_.control(''),
-      [Controls.LabelsLimit]: this.builder_.control(''),
-      [Controls.LogsAutorefreshInterval]: this.builder_.control(''),
-      [Controls.ResourceAutorefreshInterval]: this.builder_.control(''),
-      [Controls.DisableAccessDeniedNotification]: this.builder_.control(''),
+      [Controls.ItemsPerPage]: this.builder_.control(0),
+      [Controls.LabelsLimit]: this.builder_.control(0),
+      [Controls.LogsAutorefreshInterval]: this.builder_.control(0),
+      [Controls.ResourceAutorefreshInterval]: this.builder_.control(0),
+      [Controls.DisableAccessDeniedNotification]: this.builder_.control(false),
       [Controls.NamespaceSettings]: this.builder_.control(''),
     });
 
     this.load_();
     this.form.valueChanges.pipe(takeUntil(this.unsubscribe_)).subscribe(this.onFormChange_.bind(this));
+    this.settingsHelperService_.onSettingsChange.pipe(takeUntil(this.unsubscribe_)).subscribe(s => (this.settings = s));
   }
 
   ngOnDestroy(): void {
@@ -81,26 +101,27 @@ export class GlobalSettingsComponent implements OnInit, OnDestroy {
   }
 
   isInitialized(): boolean {
-    return this.settings_.isInitialized();
+    return this.settingsService_.isInitialized();
   }
 
   reload(): void {
     this.form.reset();
+    this.settingsHelperService_.reset();
     this.load_();
   }
 
   canSave(): boolean {
-    return false;
+    return !_.isEqual(this.settings, this.externalSettings_);
   }
 
   save(): void {
-    this.settings_
+    this.settingsService_
       .save(this.settings)
       .pipe(
         tap(_ => {
           this.load_();
           this.title_.update();
-          this.settings_.onSettingsUpdate.next();
+          this.settingsService_.onSettingsUpdate.next();
         })
       )
       .pipe(catchError(this.onSaveError_.bind(this)))
@@ -125,26 +146,20 @@ export class GlobalSettingsComponent implements OnInit, OnDestroy {
   }
 
   private load_(): void {
-    this.settings_
+    this.settingsService_
       .canI()
       .pipe(take(1))
       .subscribe(canI => (this.hasLoadError = !canI));
-    this.settings_.load(this.onLoad_.bind(this), this.onLoadError_.bind(this));
+    this.settingsService_.load(this.onLoad_.bind(this), this.onLoadError_.bind(this));
   }
 
   private onLoad_(): void {
-    this.settings.itemsPerPage = this.settings_.getItemsPerPage();
-    this.settings.labelsLimit = this.settings_.getLabelsLimit();
-    this.settings.clusterName = this.settings_.getClusterName();
-    this.settings.logsAutoRefreshTimeInterval = this.settings_.getLogsAutoRefreshTimeInterval();
-    this.settings.resourceAutoRefreshTimeInterval = this.settings_.getResourceAutoRefreshTimeInterval();
-    this.settings.disableAccessDeniedNotifications = this.settings_.getDisableAccessDeniedNotifications();
-    this.settings.defaultNamespace = this.settings_.getDefaultNamespace();
-    this.settings.namespaceFallbackList = this.settings_.getNamespaceFallbackList();
+    this.settings = this.externalSettings_;
+    this.settingsHelperService_.settings = this.settings;
 
-    this.form.get(Controls.ClusterName).setValue(this.settings.clusterName, {emitEvent: false});
     this.form.get(Controls.ItemsPerPage).setValue(this.settings.itemsPerPage, {emitEvent: false});
     this.form.get(Controls.LabelsLimit).setValue(this.settings.labelsLimit, {emitEvent: false});
+    this.form.get(Controls.ClusterName).setValue(this.settings.clusterName, {emitEvent: false});
     this.form
       .get(Controls.LogsAutorefreshInterval)
       .setValue(this.settings.logsAutoRefreshTimeInterval, {emitEvent: false});
@@ -154,12 +169,6 @@ export class GlobalSettingsComponent implements OnInit, OnDestroy {
     this.form
       .get(Controls.DisableAccessDeniedNotification)
       .setValue(this.settings.disableAccessDeniedNotifications, {emitEvent: false});
-    this.form
-      .get(Controls.NamespaceSettings)
-      .setValue(
-        {defaultNamespace: this.settings.defaultNamespace, fallbackList: this.settings.namespaceFallbackList},
-        {emitEvent: false}
-      );
   }
 
   private onLoadError_(): void {
@@ -167,21 +176,13 @@ export class GlobalSettingsComponent implements OnInit, OnDestroy {
   }
 
   private onFormChange_(): void {
-    this.settings.itemsPerPage = this.form.get(Controls.ItemsPerPage).value;
-    this.settings.labelsLimit = this.form.get(Controls.LabelsLimit).value;
-    this.settings.clusterName = this.form.get(Controls.ClusterName).value;
-    this.settings.logsAutoRefreshTimeInterval = this.form.get(Controls.LogsAutorefreshInterval).value;
-    this.settings.resourceAutoRefreshTimeInterval = this.form.get(Controls.ResourceAutorefreshInterval).value;
-    this.settings.disableAccessDeniedNotifications = this.form.get(Controls.DisableAccessDeniedNotification).value;
-
-    const namespaceSettings = this.form.get(Controls.NamespaceSettings).value as {
-      defaultNamespace: string;
-      fallbackList: [];
-    };
-
-    if (namespaceSettings) {
-      this.settings.defaultNamespace = namespaceSettings.defaultNamespace;
-      this.settings.namespaceFallbackList = namespaceSettings.fallbackList;
-    }
+    this.settingsHelperService_.settings = {
+      itemsPerPage: this.form.get(Controls.ItemsPerPage).value,
+      clusterName: this.form.get(Controls.ClusterName).value,
+      disableAccessDeniedNotifications: this.form.get(Controls.DisableAccessDeniedNotification).value,
+      labelsLimit: this.form.get(Controls.LabelsLimit).value,
+      logsAutoRefreshTimeInterval: this.form.get(Controls.LogsAutorefreshInterval).value,
+      resourceAutoRefreshTimeInterval: this.form.get(Controls.ResourceAutorefreshInterval).value,
+    } as GlobalSettings;
   }
 }

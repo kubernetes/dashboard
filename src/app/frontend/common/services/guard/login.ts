@@ -30,12 +30,12 @@ export class LoginGuard implements CanActivate {
       .pipe(
         switchMap((loginStatus: LoginStatus) => {
           if (!this.authService_.isAuthenticationEnabled(loginStatus)) {
-            return this.router_.navigate(['overview']);
+            return this.router_.navigate(['workloads']);
           }
 
           return of(true);
         })
       )
-      .pipe(catchError(_ => this.router_.navigate(['overview'])));
+      .pipe(catchError(_ => this.router_.navigate(['workloads'])));
   }
 }
