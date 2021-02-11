@@ -26,6 +26,7 @@ import {Endpoint} from '@api/root.api';
 })
 export class ExternalEndpointComponent implements OnInit {
   @Input() endpoints: Endpoint[];
+  @Input() hideExternalIcon = false;
 
   ngOnInit(): void {
     this.endpoints = this.endpoints || [];
