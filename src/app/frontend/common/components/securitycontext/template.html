@@ -171,22 +171,22 @@ limitations under the License.
       {{securityContext.fsGroupChangePolicy}}
     </div>
   </kd-property>
-  <kd-property *ngIf="securityContext?.supplementalGroups">
+  <kd-property *ngIf="securityContext?.supplementalGroups"
+               fxFlex="100">
     <div key
          i18n>Supplemental Groups
     </div>
-    <div value
-         *ngFor="let supplementalGroup of securityContext?.supplementalGroups">
-      {{supplementalGroup}}
+    <div value>
+      <kd-chips [map]="securityContext.supplementalGroups"></kd-chips>
     </div>
   </kd-property>
-  <kd-property *ngIf="securityContext?.sysctls">
+  <kd-property *ngIf="securityContext?.sysctls"
+               fxFlex="100">
     <div key
-         i18n>SysCtls
+         i18n>Sysctls
     </div>
-    <div value
-         *ngFor="let sysctl of securityContext?.sysctls">
-      {{sysctl.name}}: {{sysctl.value}}
+    <div value>
+      <kd-chips [map]="toSysctlMap(securityContext.sysctls)"></kd-chips>
     </div>
   </kd-property>
 </div>

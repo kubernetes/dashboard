@@ -58,9 +58,6 @@ export class PodDetailComponent implements OnInit, OnDestroy {
       .get(this.endpoint_.detail(), resourceName, resourceNamespace)
       .pipe(takeUntil(this.unsubscribe_))
       .subscribe((d: PodDetail) => {
-        d.securityContext.fsGroup = 1;
-        d.securityContext.fsGroupChangePolicy = 'policy';
-
         this.pod = d;
         this.notifications_.pushErrors(d.errors);
         this.actionbar_.onInit.emit(new ResourceMeta('Pod', d.objectMeta, d.typeMeta));

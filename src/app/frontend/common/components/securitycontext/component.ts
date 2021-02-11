@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import {Component, Input} from '@angular/core';
-import {ContainerSecurityContext, PodSecurityContext} from '@api/root.api';
+import {ContainerSecurityContext, PodSecurityContext, StringMap, Sysctl} from '@api/root.api';
 
 @Component({
   selector: 'kd-security-context',
@@ -22,4 +22,10 @@ import {ContainerSecurityContext, PodSecurityContext} from '@api/root.api';
 export class SecurityContextComponent {
   @Input() initialized: boolean;
   @Input() securityContext: PodSecurityContext | ContainerSecurityContext;
+
+  toSysctlMap(sysctls: Sysctl[]): StringMap {
+    const stringMap: {[key: string]: string} = {};
+    sysctls.forEach(s => (stringMap[s.name] = s.value));
+    return stringMap;
+  }
 }
