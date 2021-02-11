@@ -4,10 +4,10 @@ This document describes how to setup your development environment.
 
 ## Preparation
 
-Make sure the following software is installed and added to the $PATH variable:
+Make sure the following software is installed and added to the `$PATH` variable:
 
-* Curl 7+
-* Git 2.13.2+
+* Curl 7+ ([installation manual](https://curl.se/docs/install.html))
+* Git 2.13.2+ ([installation manual](https://git-scm.com/downloads))
 * Docker 1.13.1+ ([installation manual](https://docs.docker.com/engine/installation/linux/docker-ce/ubuntu/))
 * Golang 1.15+ ([installation manual](https://golang.org/dl/))
     * Dashboard uses `go mod` for go dependency management, so enable it with running `export GO111MODULE=on`.

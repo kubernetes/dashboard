@@ -12,20 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {Component, Input} from '@angular/core';
-import {ContainerSecurityContext, PodSecurityContext, StringMap, Sysctl} from '@api/root.api';
+@import '../../../../variables';
 
-@Component({
-  selector: 'kd-security-context',
-  templateUrl: './template.html',
-})
-export class SecurityContextComponent {
-  @Input() initialized: boolean;
-  @Input() securityContext: PodSecurityContext | ContainerSecurityContext;
-
-  toSysctlMap(sysctls: Sysctl[]): StringMap {
-    const stringMap: {[key: string]: string} = {};
-    sysctls.forEach(s => (stringMap[s.name] = s.value));
-    return stringMap;
-  }
+.security-context-header {
+  font-size: $subhead-font-size-base-lg;
+  margin: (2 * $baseline-grid) 0;
 }
