@@ -130,16 +130,17 @@ limitations under the License.
       </div>
     </kd-property>
 
-    <div *ngIf="container?.securityContext"
+    <div *ngIf="hasSecurityContext()"
+         fxFlex="100"
          fxLayout="column">
       <div fxFlex
            class="security-context-header kd-muted"
-           i18n>Container Security Context
+           i18n>Security Context
       </div>
 
-      <kd-container-security-context [securityContext]="container.securityContext"
-                                     [initialized]="initialized">
-      </kd-container-security-context>
+      <kd-security-context [securityContext]="container.securityContext"
+                           [initialized]="initialized">
+      </kd-security-context>
     </div>
   </div>
 

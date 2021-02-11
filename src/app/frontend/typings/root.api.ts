@@ -875,50 +875,24 @@ export interface Container {
   securityContext: ContainerSecurityContext;
 }
 
-export interface ContainerSecurityContext {
-  capabilities?: Capabilities;
-  privileged?: boolean;
+export interface ISecurityContext {
   seLinuxOptions?: SELinuxOptions;
   windowsOptions?: WindowsSecurityContextOptions;
   runAsUser?: number;
   runAsGroup?: number;
   runAsNonRoot?: boolean;
-  readOnlyRootFilesystem?: boolean;
-  allowPrivilegeEscalation?: boolean;
-  procMount?: string; // ProcMountType;
   seccompProfile?: SeccompProfile;
 }
 
-export interface PodSecurityContext {
-  fsGroup?: number;
-  fsGroupChangePolicy?: string;
-  runAsGroup?: number;
-  runAsNonRoot?: boolean;
-  runAsUser?: number;
-  seLinuxOptions?: SELinuxOptions;
-  seccompProfile?: SeccompProfile;
-  supplementalGroups?: number[];
-  sysctls?: Sysctl[];
-  windowsOptions?: WindowsSecurityContextOptions;
-}
-
-export interface PodContainerMergedSecurityContext {
-  // common
-  seLinuxOptions?: SELinuxOptions;
-  windowsOptions?: WindowsSecurityContextOptions;
-  runAsUser?: number;
-  runAsGroup?: number;
-  runAsNonRoot?: boolean;
-  seccompProfile?: SeccompProfile;
-
-  // container only
+export interface ContainerSecurityContext extends ISecurityContext {
   capabilities?: Capabilities;
   privileged?: boolean;
   readOnlyRootFilesystem?: boolean;
   allowPrivilegeEscalation?: boolean;
   procMount?: string; // ProcMountType;
+}
 
-  // pod only
+export interface PodSecurityContext extends ISecurityContext {
   fsGroup?: number;
   fsGroupChangePolicy?: string;
   supplementalGroups?: number[];

@@ -288,7 +288,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/ingressrulelist/component.ts</context>
-          <context context-type="linenumber">75,84</context>
+          <context context-type="linenumber">75,83</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/resourcelist/horizontalpodautoscaler/component.ts</context>
@@ -1221,12 +1221,12 @@
           <context context-type="linenumber">37</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/frontend/resource/config/component.ts</context>
-          <context context-type="linenumber">23</context>
-        </context-group>
-        <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/resource/config/secret/list/component.ts</context>
           <context context-type="linenumber">22</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/resource/config/component.ts</context>
+          <context context-type="linenumber">23</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/overview/component.ts</context>
@@ -1251,9 +1251,16 @@
       <trans-unit id="222a0537c59f20178268925dc70fb661a20dbdb7" datatype="html">
         <source>There is nothing to display here</source>
         <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/common/components/list/zerostate/component.ts</context>
+          <context context-type="linenumber">25</context>
+        </context-group>
+        <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/zerostate/component.ts</context>
           <context context-type="linenumber">23</context>
         </context-group>
+      </trans-unit>
+      <trans-unit id="b7c59f712c5e6628569d1aed53a624f883c11663" datatype="html">
+        <source>No resources found.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/list/zerostate/component.ts</context>
           <context context-type="linenumber">25</context>
@@ -1458,12 +1465,12 @@
           <context context-type="linenumber">37</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/frontend/resource/workloads/deployment/detail/component.ts</context>
-          <context context-type="linenumber">96</context>
-        </context-group>
-        <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/resource/cluster/node/detail/component.ts</context>
           <context context-type="linenumber">146</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/resource/workloads/deployment/detail/component.ts</context>
+          <context context-type="linenumber">96</context>
         </context-group>
       </trans-unit>
       <trans-unit id="a4f6d660f2cc1c8c680a96e39c719b48c8ebe17a" datatype="html">
@@ -1523,6 +1530,91 @@
           <context context-type="linenumber">60</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="5403a767248e304199592271bba3366d2ca3f903" datatype="html">
+        <source>Show less</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/common/components/chips/component.ts</context>
+          <context context-type="linenumber">80,93</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="4eb84de23219c85432e38fb4fbdeb6c0f103ff8b" datatype="html">
+        <source>Show all</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/common/components/chips/component.ts</context>
+          <context context-type="linenumber">110,118</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="5ca707824ab93066c7d9b44e1b8bf216725c2c22" datatype="html">
+        <source>Filter</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/common/components/list/filter/component.ts</context>
+          <context context-type="linenumber">37,49</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/common/components/list/filter/component.ts</context>
+          <context context-type="linenumber">69</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="0b5c5a43ccd2f696d6e0ad2b745bcc9041d6e380" datatype="html">
+        <source>Filter objects by name</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/common/components/list/filter/component.ts</context>
+          <context context-type="linenumber">66,69</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/common/components/list/filter/component.ts</context>
+          <context context-type="linenumber">69</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="28f86ffd419b869711aa13f5e5ff54be6d70731c" datatype="html">
+        <source>Edit</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/common/components/list/column/menu/component.ts</context>
+          <context context-type="linenumber">68,77</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="eb3d5aefff38a814b76da74371cbf02c0789a1ef" datatype="html">
+        <source>Logs</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/common/components/list/column/menu/component.ts</context>
+          <context context-type="linenumber">119,127</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="148ca44d9d0161c729b0893444c41fa434c6e90f" datatype="html">
+        <source>Exec</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/common/components/list/column/menu/component.ts</context>
+          <context context-type="linenumber">134</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="4ef33b4d376762e82c74ca9fe1c976a376f9ee77" datatype="html">
+        <source>Trigger</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/common/components/list/column/menu/component.ts</context>
+          <context context-type="linenumber">134</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="a062b45312698e8669cb644bff887f93778d334f" datatype="html">
+        <source>Scale</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/common/components/list/column/menu/component.ts</context>
+          <context context-type="linenumber">134</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="8cf90839a62d530bfe9433ef049fb1b016c55e04" datatype="html">
+        <source>Unpin</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/common/components/list/column/menu/component.ts</context>
+          <context context-type="linenumber">134</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="32d40747d801c0d4f51f2fbbdb368e265c307305" datatype="html">
+        <source>Pin</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/common/components/list/column/menu/component.ts</context>
+          <context context-type="linenumber">134</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="f61c6867295f3b53d23557021f2f4e0aa1d0b8fc" datatype="html">
         <source>Type</source>
         <context-group purpose="location">
@@ -1538,48 +1630,48 @@
           <context context-type="linenumber">61</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/frontend/resource/cluster/persistentvolume/detail/source/component.ts</context>
-          <context context-type="linenumber">26</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/frontend/resource/cluster/persistentvolume/detail/source/component.ts</context>
-          <context context-type="linenumber">26</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/frontend/resource/cluster/persistentvolume/detail/source/component.ts</context>
-          <context context-type="linenumber">26</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/frontend/resource/cluster/persistentvolume/detail/source/component.ts</context>
-          <context context-type="linenumber">26</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/frontend/resource/cluster/persistentvolume/detail/source/component.ts</context>
-          <context context-type="linenumber">26</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/frontend/resource/cluster/persistentvolume/detail/source/component.ts</context>
-          <context context-type="linenumber">26</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/frontend/resource/cluster/persistentvolume/detail/source/component.ts</context>
-          <context context-type="linenumber">26</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/frontend/resource/cluster/persistentvolume/detail/source/component.ts</context>
-          <context context-type="linenumber">26</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/frontend/resource/cluster/persistentvolume/detail/source/component.ts</context>
-          <context context-type="linenumber">26</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/frontend/resource/cluster/persistentvolume/detail/source/component.ts</context>
-          <context context-type="linenumber">26</context>
-        </context-group>
-        <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/resource/discovery/service/detail/component.ts</context>
           <context context-type="linenumber">59,67</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/resource/cluster/persistentvolume/detail/source/component.ts</context>
+          <context context-type="linenumber">26</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/resource/cluster/persistentvolume/detail/source/component.ts</context>
+          <context context-type="linenumber">26</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/resource/cluster/persistentvolume/detail/source/component.ts</context>
+          <context context-type="linenumber">26</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/resource/cluster/persistentvolume/detail/source/component.ts</context>
+          <context context-type="linenumber">26</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/resource/cluster/persistentvolume/detail/source/component.ts</context>
+          <context context-type="linenumber">26</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/resource/cluster/persistentvolume/detail/source/component.ts</context>
+          <context context-type="linenumber">26</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/resource/cluster/persistentvolume/detail/source/component.ts</context>
+          <context context-type="linenumber">26</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/resource/cluster/persistentvolume/detail/source/component.ts</context>
+          <context context-type="linenumber">26</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/resource/cluster/persistentvolume/detail/source/component.ts</context>
+          <context context-type="linenumber">26</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/resource/cluster/persistentvolume/detail/source/component.ts</context>
+          <context context-type="linenumber">26</context>
         </context-group>
       </trans-unit>
       <trans-unit id="ad2fd201bb504d5836ffd31f00d2c3a535059147" datatype="html">
@@ -1653,20 +1745,16 @@
           <context context-type="linenumber">61</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/frontend/resource/workloads/pod/detail/component.ts</context>
-          <context context-type="linenumber">88</context>
-        </context-group>
-        <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/resource/config/persistentvolumeclaim/detail/component.ts</context>
           <context context-type="linenumber">61,65</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/frontend/resource/cluster/persistentvolume/detail/component.ts</context>
-          <context context-type="linenumber">92,100</context>
-        </context-group>
-        <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/resource/cluster/namespace/detail/component.ts</context>
           <context context-type="linenumber">64,67</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/resource/cluster/persistentvolume/detail/component.ts</context>
+          <context context-type="linenumber">92,100</context>
         </context-group>
       </trans-unit>
       <trans-unit id="63a988d71f146da942b6b97d3770b55472c33f08" datatype="html">
@@ -1767,12 +1855,12 @@
           <context context-type="linenumber">46,55</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/frontend/resource/cluster/persistentvolume/detail/source/component.ts</context>
-          <context context-type="linenumber">26</context>
-        </context-group>
-        <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/resource/discovery/ingress/detail/template.html</context>
           <context context-type="linenumber">55,60</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/resource/cluster/persistentvolume/detail/source/component.ts</context>
+          <context context-type="linenumber">26</context>
         </context-group>
       </trans-unit>
       <trans-unit id="0756fdca226249dcff9d05651d50b7acdade2aba" datatype="html">
@@ -1817,12 +1905,20 @@
           <context context-type="linenumber">37</context>
         </context-group>
         <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/resource/workloads/replicationcontroller/detail/component.ts</context>
+          <context context-type="linenumber">72</context>
+        </context-group>
+        <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/resource/workloads/replicaset/detail/component.ts</context>
           <context context-type="linenumber">72</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/frontend/resource/workloads/replicationcontroller/detail/component.ts</context>
-          <context context-type="linenumber">72</context>
+          <context context-type="sourcefile">src/app/frontend/resource/workloads/statefulset/detail/component.ts</context>
+          <context context-type="linenumber">70</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/resource/workloads/job/detail/component.ts</context>
+          <context context-type="linenumber">70</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/resource/workloads/daemonset/detail/component.ts</context>
@@ -1831,14 +1927,6 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/resource/workloads/deployment/detail/component.ts</context>
           <context context-type="linenumber">96</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/frontend/resource/workloads/job/detail/component.ts</context>
-          <context context-type="linenumber">70</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/frontend/resource/workloads/statefulset/detail/component.ts</context>
-          <context context-type="linenumber">70</context>
         </context-group>
       </trans-unit>
       <trans-unit id="900ec6b108c64adf2f23a3a84699be1217050001" datatype="html">
@@ -1873,20 +1961,12 @@
           <context context-type="sourcefile">src/app/frontend/common/components/endpoint/cardlist/component.ts</context>
           <context context-type="linenumber">55</context>
         </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/frontend/resource/workloads/pod/detail/component.ts</context>
-          <context context-type="linenumber">88</context>
-        </context-group>
       </trans-unit>
       <trans-unit id="cda8ffb9fa0a0b1bc9332ccc6990a835c0b87919" datatype="html">
         <source>Restarts</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/resourcelist/pod/component.ts</context>
           <context context-type="linenumber">117</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/frontend/resource/workloads/pod/detail/component.ts</context>
-          <context context-type="linenumber">88</context>
         </context-group>
       </trans-unit>
       <trans-unit id="f2db0be1c93c93d5af51ed6d3b42abb184d07c08" datatype="html">
@@ -1983,27 +2063,6 @@
           <context context-type="linenumber">81</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="5403a767248e304199592271bba3366d2ca3f903" datatype="html">
-        <source>Show less</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/frontend/common/components/chips/component.ts</context>
-          <context context-type="linenumber">80,93</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="4eb84de23219c85432e38fb4fbdeb6c0f103ff8b" datatype="html">
-        <source>Show all</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/frontend/common/components/chips/component.ts</context>
-          <context context-type="linenumber">110,118</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="b7c59f712c5e6628569d1aed53a624f883c11663" datatype="html">
-        <source>No resources found.</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/frontend/common/components/list/zerostate/component.ts</context>
-          <context context-type="linenumber">25</context>
-        </context-group>
-      </trans-unit>
       <trans-unit id="32c4fb786d3f614318c26ef8adc8f195d581545d" datatype="html">
         <source>Workload Status</source>
         <context-group purpose="location">
@@ -2011,226 +2070,155 @@
           <context context-type="linenumber">51</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="5ca707824ab93066c7d9b44e1b8bf216725c2c22" datatype="html">
-        <source>Filter</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/frontend/common/components/list/filter/component.ts</context>
-          <context context-type="linenumber">37,49</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/frontend/common/components/list/filter/component.ts</context>
-          <context context-type="linenumber">69</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="0b5c5a43ccd2f696d6e0ad2b745bcc9041d6e380" datatype="html">
-        <source>Filter objects by name</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/frontend/common/components/list/filter/component.ts</context>
-          <context context-type="linenumber">66,69</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/frontend/common/components/list/filter/component.ts</context>
-          <context context-type="linenumber">69</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="28f86ffd419b869711aa13f5e5ff54be6d70731c" datatype="html">
-        <source>Edit</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/frontend/common/components/list/column/menu/component.ts</context>
-          <context context-type="linenumber">68,77</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="eb3d5aefff38a814b76da74371cbf02c0789a1ef" datatype="html">
-        <source>Logs</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/frontend/common/components/list/column/menu/component.ts</context>
-          <context context-type="linenumber">119,127</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="148ca44d9d0161c729b0893444c41fa434c6e90f" datatype="html">
-        <source>Exec</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/frontend/common/components/list/column/menu/component.ts</context>
-          <context context-type="linenumber">134</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="4ef33b4d376762e82c74ca9fe1c976a376f9ee77" datatype="html">
-        <source>Trigger</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/frontend/common/components/list/column/menu/component.ts</context>
-          <context context-type="linenumber">134</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="a062b45312698e8669cb644bff887f93778d334f" datatype="html">
-        <source>Scale</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/frontend/common/components/list/column/menu/component.ts</context>
-          <context context-type="linenumber">134</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="8cf90839a62d530bfe9433ef049fb1b016c55e04" datatype="html">
-        <source>Unpin</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/frontend/common/components/list/column/menu/component.ts</context>
-          <context context-type="linenumber">134</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="32d40747d801c0d4f51f2fbbdb368e265c307305" datatype="html">
-        <source>Pin</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/frontend/common/components/list/column/menu/component.ts</context>
-          <context context-type="linenumber">134</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="b8347ea191b01bd6499eb8efffd719a008f2c953" datatype="html">
-        <source>Added Capabilities</source>
+      <trans-unit id="aa79d62657fc8b1da74cb577748f1fcc4cc53196" datatype="html">
+        <source>SE Linux User </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/securitycontext/component.ts</context>
           <context context-type="linenumber">26</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="e79004004ec3c10f6504aef5267ead5adabeafda" datatype="html">
-        <source>Dropped Capabilities</source>
+      <trans-unit id="1985a4160878273346b2ac67f9f2e5cf69aeb3c9" datatype="html">
+        <source>SE Linux Role </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/securitycontext/component.ts</context>
           <context context-type="linenumber">26</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="07e52ab48450e2997ffa0d8508d996281db05a3d" datatype="html">
-        <source>Privileged</source>
+      <trans-unit id="48eeb755cc5f051fe99a17b57de9bd7ad1ce724a" datatype="html">
+        <source>SE Linux Type </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/securitycontext/component.ts</context>
           <context context-type="linenumber">26</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="211fbdbe78f66f4dada9b9aaf5c21296278f424f" datatype="html">
-        <source>SE Linux User</source>
+      <trans-unit id="93ec87905e0e9b5b5c0c468bd2768a952b93ae58" datatype="html">
+        <source>SE Linux Level </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/securitycontext/component.ts</context>
           <context context-type="linenumber">26</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="d29c0adbf4a7f2cc6c194cc6bbac6c2e004be313" datatype="html">
-        <source>SE Linux Role</source>
+      <trans-unit id="5495ef5ef9acca7e8e696357155a85336add6fd3" datatype="html">
+        <source>Windows GMSA Credential Spec Name </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/securitycontext/component.ts</context>
           <context context-type="linenumber">26</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="5561078d23c805fd641b183204ed441208083cc0" datatype="html">
-        <source>SE Linux Type</source>
+      <trans-unit id="5fcf7435387c623eb7ecab34d64c43854e540c16" datatype="html">
+        <source>Windows GMSA Credential Spec </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/securitycontext/component.ts</context>
           <context context-type="linenumber">26</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="e6a21f27af0b1e3a818b5ba506ea23b6d568ff31" datatype="html">
-        <source>SE Linux Level</source>
+      <trans-unit id="dbcd377f840a8299aadcafb72ea99b99d61990da" datatype="html">
+        <source>Windows Run as User </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/securitycontext/component.ts</context>
           <context context-type="linenumber">26</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="6e81c80ba66e92f4056dc339af2281350fff213f" datatype="html">
-        <source>Windows GMSA Credential Spec Name</source>
+      <trans-unit id="ca6c531b20393b870f824431b0efd2197fe5de54" datatype="html">
+        <source>Run as User </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/securitycontext/component.ts</context>
           <context context-type="linenumber">26</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="1b3f55a9c82076e32751ce2457aa27b1185022a3" datatype="html">
-        <source>Windows GMSA Credential Spec</source>
+      <trans-unit id="ac4b245296367fe4dded9beb9923918a6aa214ce" datatype="html">
+        <source>Run as Group </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/securitycontext/component.ts</context>
           <context context-type="linenumber">26</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="4d32e29c3ed8ef3961d77d85cbbeb385a81cc90c" datatype="html">
-        <source>Windows Run as User</source>
+      <trans-unit id="ae93bad0143306043278a5a8e8e1c94baa99167a" datatype="html">
+        <source>Run as Non-Root </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/securitycontext/component.ts</context>
           <context context-type="linenumber">26</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="2e7702fc348b62fd35c1241b576d3939a574ddba" datatype="html">
-        <source>Run as User</source>
+      <trans-unit id="709928aa65e952105f75b5003b31dc3ee5368292" datatype="html">
+        <source>Seccomp Profile Type </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/securitycontext/component.ts</context>
           <context context-type="linenumber">26</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="9bd5ee137f2b7f983132c5bffbf5c681d1648331" datatype="html">
-        <source>Run as Group</source>
+      <trans-unit id="75b9cb126f9faf350e9abe5979402504c51472c9" datatype="html">
+        <source>Seccomp Localhost Profile </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/securitycontext/component.ts</context>
           <context context-type="linenumber">26</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="824f45818fc0f4ad4dd77e6fe2978ef7f7aba40d" datatype="html">
-        <source>Run as Non-Root</source>
+      <trans-unit id="49ff5854c7b54617ce7f5dff5f25a7407d159d5f" datatype="html">
+        <source>Added Capabilities </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/securitycontext/component.ts</context>
           <context context-type="linenumber">26</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="69851b70e90bc0599c426048c425866a26cfd5cb" datatype="html">
-        <source>Read Only Filesystem</source>
+      <trans-unit id="5112c19bd9d8556a3d61b47b07539d2e44c02787" datatype="html">
+        <source>Dropped Capabilities </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/securitycontext/component.ts</context>
           <context context-type="linenumber">26</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="a40a3594a0009164479e52c41b81e3981dc24f7e" datatype="html">
-        <source>Allow Privilege Escalation</source>
+      <trans-unit id="5888e533eca323b41e842777f6ced5d1a78f2b61" datatype="html">
+        <source>Privileged </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/securitycontext/component.ts</context>
           <context context-type="linenumber">26</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="c9b82274cdf442ca2ccfa36ef7eff066fa03689e" datatype="html">
-        <source>Proc Mount</source>
+      <trans-unit id="fc2c15a320dc8b44e0d5589ef7b44a0ebcccfa75" datatype="html">
+        <source>Read Only Filesystem </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/securitycontext/component.ts</context>
           <context context-type="linenumber">26</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="034066bb80cfe6be76952cb72e65ee487dd3bda4" datatype="html">
-        <source>Seccomp Profile Type</source>
+      <trans-unit id="6426168a2a53244fac93fc013938153a76f739e0" datatype="html">
+        <source>Allow Privilege Escalation </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/securitycontext/component.ts</context>
           <context context-type="linenumber">26</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="fbdccbf9dbc9fb8355c1a9021465fb6082f47b69" datatype="html">
-        <source>Seccomp Localhost Profile</source>
+      <trans-unit id="ae2d09d54a2aa1fbb29d4e586ac93c8acd9e5387" datatype="html">
+        <source>Proc Mount </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/securitycontext/component.ts</context>
           <context context-type="linenumber">26</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="f0772d22f8eaa8d8f30f1d3e96064305f6aad287" datatype="html">
-        <source>Filesystem Group</source>
+      <trans-unit id="28b7cd02dfac3cde7b916551dffb5d915399afd5" datatype="html">
+        <source>Filesystem Group </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/securitycontext/component.ts</context>
           <context context-type="linenumber">26</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="787f7ef56773ad256422f0bd1c385d2c44ea4906" datatype="html">
-        <source>Filesystem Group Change Policy</source>
+      <trans-unit id="c23e85e08ff248d4ead899a57f640f570c1ea8b6" datatype="html">
+        <source>Filesystem Group Change Policy </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/securitycontext/component.ts</context>
           <context context-type="linenumber">26</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="23b8e3a92e41dffeda33985115ea02b29e652a55" datatype="html">
-        <source>Supplemental Groups</source>
+      <trans-unit id="381abb5b9f8145c3f673b63865844cdfdbbd391d" datatype="html">
+        <source>Supplemental Groups </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/securitycontext/component.ts</context>
           <context context-type="linenumber">26</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="800732cb9f68ba17beedc7e51ce0ce1556867aa7" datatype="html">
-        <source>SysCtls</source>
+      <trans-unit id="2caae24f3e0dc71195b79d8c69c8a61cee0f3116" datatype="html">
+        <source>SysCtls </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/securitycontext/component.ts</context>
           <context context-type="linenumber">26</context>
@@ -2303,7 +2291,7 @@
         <source>Rules</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/ingressrulelist/component.ts</context>
-          <context context-type="linenumber">56,62</context>
+          <context context-type="linenumber">55,61</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/policyrule/component.ts</context>
@@ -2539,6 +2527,41 @@
           <context context-type="linenumber">42,49</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="452ef1b96854fe05618303ee601f8fed3b866c9f" datatype="html">
+        <source>Resources</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/common/components/policyrule/component.ts</context>
+          <context context-type="linenumber">54</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="7531ac0f84b54f0bcefa85493d9b9a4695d0b9f4" datatype="html">
+        <source>Non-resource URL</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/common/components/policyrule/component.ts</context>
+          <context context-type="linenumber">54</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="b44f9a54418bcbda336063edc010c98ded4f5817" datatype="html">
+        <source>Resource Names</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/common/components/policyrule/component.ts</context>
+          <context context-type="linenumber">54</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="accc38331fffe0055910477b45e525173d64c661" datatype="html">
+        <source>Verbs</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/common/components/policyrule/component.ts</context>
+          <context context-type="linenumber">54</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="bf6889e8e87bc743b25907eb4126bfbe2804e952" datatype="html">
+        <source>API Groups</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/common/components/policyrule/component.ts</context>
+          <context context-type="linenumber">54</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="0991eecb18ad10fac275b126b2829200d00f3976" datatype="html">
         <source>Pods status</source>
         <context-group purpose="location">
@@ -2618,41 +2641,6 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/podstatus/component.ts</context>
           <context context-type="linenumber">26</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="452ef1b96854fe05618303ee601f8fed3b866c9f" datatype="html">
-        <source>Resources</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/frontend/common/components/policyrule/component.ts</context>
-          <context context-type="linenumber">54</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="7531ac0f84b54f0bcefa85493d9b9a4695d0b9f4" datatype="html">
-        <source>Non-resource URL</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/frontend/common/components/policyrule/component.ts</context>
-          <context context-type="linenumber">54</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="b44f9a54418bcbda336063edc010c98ded4f5817" datatype="html">
-        <source>Resource Names</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/frontend/common/components/policyrule/component.ts</context>
-          <context context-type="linenumber">54</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="accc38331fffe0055910477b45e525173d64c661" datatype="html">
-        <source>Verbs</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/frontend/common/components/policyrule/component.ts</context>
-          <context context-type="linenumber">54</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="bf6889e8e87bc743b25907eb4126bfbe2804e952" datatype="html">
-        <source>API Groups</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/frontend/common/components/policyrule/component.ts</context>
-          <context context-type="linenumber">54</context>
         </context-group>
       </trans-unit>
       <trans-unit id="f721a500a68c357e8f2a01e60510f6a01e4ba529" datatype="html">
@@ -2866,25 +2854,25 @@
         <source>Image: </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/container/component.ts</context>
-          <context context-type="linenumber">47,52</context>
+          <context context-type="linenumber">49,54</context>
         </context-group>
       </trans-unit>
       <trans-unit id="2179bcb6e430557dd0c8ace27ea55e1bcf1a1979" datatype="html">
         <source>Image </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/container/component.ts</context>
-          <context context-type="linenumber">59</context>
+          <context context-type="linenumber">65</context>
         </context-group>
       </trans-unit>
       <trans-unit id="bec9c0614c0c31fb6917b7f465e27399090b050e" datatype="html">
         <source>Environment variable</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/container/component.ts</context>
-          <context context-type="linenumber">59</context>
+          <context context-type="linenumber">65</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/container/component.ts</context>
-          <context context-type="linenumber">59</context>
+          <context context-type="linenumber">65</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/container/template.html</context>
@@ -2895,7 +2883,7 @@
         <source><x id="INTERPOLATION" equiv-text="{{formatSecretValue(env.value).length}}"/> bytes </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/container/component.ts</context>
-          <context context-type="linenumber">59</context>
+          <context context-type="linenumber">65</context>
         </context-group>
       </trans-unit>
       <trans-unit id="4ae826faf65dddaf6d41fcce2f22abb08ca1d7c4" datatype="html">
@@ -2923,14 +2911,18 @@
         <source>Mounts </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/container/template.html</context>
-          <context context-type="linenumber">146,150</context>
+          <context context-type="linenumber">151</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="912ee04af54390f7c1da5434d80f94f8c8a37405" datatype="html">
-        <source>Container Security Context </source>
+      <trans-unit id="e880595fd209b54f6b8603ff6f00588499399867" datatype="html">
+        <source>Security Context </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/container/template.html</context>
-          <context context-type="linenumber">150</context>
+          <context context-type="linenumber">151</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/resource/workloads/pod/detail/component.ts</context>
+          <context context-type="linenumber">93</context>
         </context-group>
       </trans-unit>
       <trans-unit id="986668e81481d0fd0934b4ef56b4236ccb298712" datatype="html">
@@ -2975,6 +2967,13 @@
           <context context-type="linenumber">38</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="af9afc63514524f9f57ccd95637144546d44eabe" datatype="html">
+        <source>Exec into pod</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/common/components/actionbar/detailactions/exec/component.ts</context>
+          <context context-type="linenumber">32</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="619737e41a87eaefd21d600d83135d12dd163772" datatype="html">
         <source>Edit resource</source>
         <context-group purpose="location">
@@ -2989,46 +2988,47 @@
           <context context-type="linenumber">47</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="af9afc63514524f9f57ccd95637144546d44eabe" datatype="html">
-        <source>Exec into pod</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/frontend/common/components/actionbar/detailactions/exec/component.ts</context>
-          <context context-type="linenumber">32</context>
-        </context-group>
-      </trans-unit>
       <trans-unit id="8c0925876d5a1454f604dc4fc4cf8dbb4dceed0a" datatype="html">
         <source>Resource information</source>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/frontend/resource/workloads/pod/detail/component.ts</context>
-          <context context-type="linenumber">44,52</context>
+          <context context-type="sourcefile">src/app/frontend/resource/workloads/replicationcontroller/detail/component.ts</context>
+          <context context-type="linenumber">43,49</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/resource/workloads/replicaset/detail/component.ts</context>
           <context context-type="linenumber">43,51</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/frontend/resource/workloads/replicationcontroller/detail/component.ts</context>
-          <context context-type="linenumber">43,49</context>
+          <context context-type="sourcefile">src/app/frontend/resource/config/persistentvolumeclaim/detail/component.ts</context>
+          <context context-type="linenumber">41,49</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/resource/config/storageclass/detail/component.ts</context>
           <context context-type="linenumber">44,52</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/frontend/resource/config/persistentvolumeclaim/detail/component.ts</context>
-          <context context-type="linenumber">41,49</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/frontend/resource/workloads/daemonset/detail/component.ts</context>
-          <context context-type="linenumber">43,51</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/frontend/resource/workloads/deployment/detail/component.ts</context>
-          <context context-type="linenumber">44,49</context>
+          <context context-type="sourcefile">src/app/frontend/resource/workloads/statefulset/detail/component.ts</context>
+          <context context-type="linenumber">43,50</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/resource/workloads/job/detail/component.ts</context>
           <context context-type="linenumber">43,50</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/resource/discovery/ingress/detail/component.ts</context>
+          <context context-type="linenumber">45,50</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/resource/discovery/service/detail/component.ts</context>
+          <context context-type="linenumber">43,50</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/resource/cluster/clusterrolebinding/detail/component.ts</context>
+          <context context-type="linenumber">43,51</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/resource/cluster/namespace/detail/component.ts</context>
+          <context context-type="linenumber">43,52</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/resource/cluster/networkpolicy/detail/component.ts</context>
@@ -3051,92 +3051,129 @@
           <context context-type="linenumber">43,51</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/frontend/resource/workloads/statefulset/detail/component.ts</context>
-          <context context-type="linenumber">43,50</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/frontend/resource/discovery/ingress/detail/component.ts</context>
-          <context context-type="linenumber">45,50</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/frontend/resource/discovery/service/detail/component.ts</context>
-          <context context-type="linenumber">43,50</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/frontend/resource/cluster/namespace/detail/component.ts</context>
-          <context context-type="linenumber">43,52</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/frontend/resource/cluster/clusterrolebinding/detail/component.ts</context>
+          <context context-type="sourcefile">src/app/frontend/resource/workloads/daemonset/detail/component.ts</context>
           <context context-type="linenumber">43,51</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/resource/workloads/deployment/detail/component.ts</context>
+          <context context-type="linenumber">44,49</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="53d3c87046022140381be2fc9b864d6fdd9f2cc8" datatype="html">
+        <source>Label Selector</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/resource/workloads/replicationcontroller/detail/component.ts</context>
+          <context context-type="linenumber">57,61</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/resource/workloads/statefulset/detail/component.ts</context>
+          <context context-type="linenumber">59,67</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="318e1e7193512514e192cab4e4b6b722548b017b" datatype="html">
+        <source>Init images</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/resource/workloads/replicationcontroller/detail/component.ts</context>
+          <context context-type="linenumber">72</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/resource/workloads/replicaset/detail/component.ts</context>
+          <context context-type="linenumber">72</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/resource/workloads/statefulset/detail/component.ts</context>
+          <context context-type="linenumber">70</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/resource/workloads/job/detail/component.ts</context>
+          <context context-type="linenumber">70</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/resource/workloads/daemonset/detail/component.ts</context>
+          <context context-type="linenumber">72</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/resource/workloads/deployment/detail/component.ts</context>
+          <context context-type="linenumber">96</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="6eb7b94658a88a86d4f25e7bd80290bdcd225502" datatype="html">
+        <source>Resource information </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/resource/workloads/pod/detail/component.ts</context>
+          <context context-type="linenumber">46,54</context>
         </context-group>
       </trans-unit>
       <trans-unit id="3b121cf07ffe19827cbd77056761267306a74f33" datatype="html">
         <source>Status: </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/resource/workloads/pod/detail/component.ts</context>
-          <context context-type="linenumber">60,67</context>
+          <context context-type="linenumber">62,67</context>
         </context-group>
       </trans-unit>
       <trans-unit id="ae39149b767b8c4ea1374fdb34f3c5794b79c445" datatype="html">
         <source>IP: </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/resource/workloads/pod/detail/component.ts</context>
-          <context context-type="linenumber">85,88</context>
+          <context context-type="linenumber">86,93</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="84738b1bbb866302445901b1bca1e9cb5bf8d006" datatype="html">
-        <source>IP</source>
+      <trans-unit id="91138d0cca2e12647e6baac543a2eb4e97cd6a14" datatype="html">
+        <source>Node </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/resource/workloads/pod/detail/component.ts</context>
-          <context context-type="linenumber">88</context>
+          <context context-type="linenumber">93</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="4b359fa8499772c9fa2d6004ac3a941a3fee612d" datatype="html">
-        <source>QoS Class</source>
+      <trans-unit id="76f036ebd16dcb481592101ca243e1b5a7eb642e" datatype="html">
+        <source>Status </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/resource/workloads/pod/detail/component.ts</context>
-          <context context-type="linenumber">88</context>
+          <context context-type="linenumber">93</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="7d58fa3a5b6490938d8f36832cce311e91fe4496" datatype="html">
-        <source>Image Pull Secrets</source>
+      <trans-unit id="817a95521ba0d6d4d2faade36ee4a8d69d294879" datatype="html">
+        <source>IP </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/resource/workloads/pod/detail/component.ts</context>
-          <context context-type="linenumber">88</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/frontend/resource/cluster/serviceaccount/detail/component.ts</context>
-          <context context-type="linenumber">57,65</context>
+          <context context-type="linenumber">93</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="6008056c59e829e3feb1b23677fe70f5d6c80cb2" datatype="html">
-        <source>Pod Security Context</source>
+      <trans-unit id="dbc66564bba1ab5b5efa4a566cf6ed5e2d684c4e" datatype="html">
+        <source>QoS Class </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/resource/workloads/pod/detail/component.ts</context>
-          <context context-type="linenumber">88</context>
+          <context context-type="linenumber">93</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="f5dc4402dbf1d5f8f98da57b6061d5f9be05ca5c" datatype="html">
-        <source>Containers</source>
+      <trans-unit id="1d3e7e4e21cb24e0710933c568bb01ed18a27cfc" datatype="html">
+        <source>Restarts </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/resource/workloads/pod/detail/component.ts</context>
-          <context context-type="linenumber">88</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/frontend/logs/component.ts</context>
-          <context context-type="linenumber">72,79</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/frontend/logs/template.html</context>
-          <context context-type="linenumber">154</context>
+          <context context-type="linenumber">93</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="0499542969c672a765fa0ba1643b9d411ed45616" datatype="html">
-        <source>Init containers</source>
+      <trans-unit id="e97f7e134354297ea983595b4907479dafa2155a" datatype="html">
+        <source>Image Pull Secrets </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/resource/workloads/pod/detail/component.ts</context>
-          <context context-type="linenumber">88</context>
+          <context context-type="linenumber">93</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="3bdc6249aaaf86c74f0dce8a5517fceb07ddc251" datatype="html">
+        <source>Containers
+</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/resource/workloads/pod/detail/component.ts</context>
+          <context context-type="linenumber">93</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="b363813db5514a650c55b42a0b598ed603e7c40b" datatype="html">
+        <source>Init containers
+</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/resource/workloads/pod/detail/component.ts</context>
+          <context context-type="linenumber">93</context>
         </context-group>
       </trans-unit>
       <trans-unit id="65f15d6396a9b96f745b7306df38ba538e190640" datatype="html">
@@ -3157,104 +3194,16 @@
           <context context-type="linenumber">72</context>
         </context-group>
         <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/resource/discovery/service/detail/component.ts</context>
+          <context context-type="linenumber">70</context>
+        </context-group>
+        <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/resource/workloads/daemonset/detail/component.ts</context>
           <context context-type="linenumber">58,62</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/resource/workloads/deployment/detail/component.ts</context>
           <context context-type="linenumber">96</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/frontend/resource/discovery/service/detail/component.ts</context>
-          <context context-type="linenumber">70</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="318e1e7193512514e192cab4e4b6b722548b017b" datatype="html">
-        <source>Init images</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/frontend/resource/workloads/replicaset/detail/component.ts</context>
-          <context context-type="linenumber">72</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/frontend/resource/workloads/replicationcontroller/detail/component.ts</context>
-          <context context-type="linenumber">72</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/frontend/resource/workloads/daemonset/detail/component.ts</context>
-          <context context-type="linenumber">72</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/frontend/resource/workloads/deployment/detail/component.ts</context>
-          <context context-type="linenumber">96</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/frontend/resource/workloads/job/detail/component.ts</context>
-          <context context-type="linenumber">70</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/frontend/resource/workloads/statefulset/detail/component.ts</context>
-          <context context-type="linenumber">70</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="53d3c87046022140381be2fc9b864d6fdd9f2cc8" datatype="html">
-        <source>Label Selector</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/frontend/resource/workloads/replicationcontroller/detail/component.ts</context>
-          <context context-type="linenumber">57,61</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/frontend/resource/workloads/statefulset/detail/component.ts</context>
-          <context context-type="linenumber">59,67</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="1bdf6d0a95c523599676ee9ce536adb037ce56af" datatype="html">
-        <source>Local settings </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/frontend/settings/local/component.ts</context>
-          <context context-type="linenumber">53,62</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="c73af29d15f7f46e960a5a52908965e0e1a0c3a7" datatype="html">
-        <source> Local settings are stored in the browser cookies, so they are not synchronized between multiple devices. Changes are applied automatically on every change. </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/frontend/settings/local/component.ts</context>
-          <context context-type="linenumber">74</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="27a56aad79d8b61269ed303f11664cc78bcc2522" datatype="html">
-        <source>Theme</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/frontend/settings/local/component.ts</context>
-          <context context-type="linenumber">74</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="66d4ff20f88ba9658fa511e86291164d0dd3d1d0" datatype="html">
-        <source>Choose color theme of the dashboard</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/frontend/settings/local/component.ts</context>
-          <context context-type="linenumber">74</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="fe46ccaae902ce974e2441abe752399288298619" datatype="html">
-        <source>Language</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/frontend/settings/local/component.ts</context>
-          <context context-type="linenumber">74</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/frontend/settings/local/component.ts</context>
-          <context context-type="linenumber">74</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="170c19b70d40071916e39cad610ac12f269dd473" datatype="html">
-        <source>Change the language of the dashboard</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/frontend/settings/local/component.ts</context>
-          <context context-type="linenumber">74</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/frontend/settings/local/component.ts</context>
-          <context context-type="linenumber">74</context>
         </context-group>
       </trans-unit>
       <trans-unit id="5ad4eecbd0fe09c34678fefce317a052af39dc96" datatype="html">
@@ -3264,12 +3213,23 @@
           <context context-type="linenumber">54,58</context>
         </context-group>
         <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/resource/config/secret/detail/component.ts</context>
+          <context context-type="linenumber">43,48</context>
+        </context-group>
+        <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/resource/config/configmap/detail/component.ts</context>
           <context context-type="linenumber">44,49</context>
         </context-group>
+      </trans-unit>
+      <trans-unit id="cb784dbcccfc59a841e1b9477816aa9cada005fb" datatype="html">
+        <source>There is no data to display.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/resource/config/secret/detail/component.ts</context>
-          <context context-type="linenumber">43,48</context>
+          <context context-type="linenumber">62,75</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/resource/config/configmap/detail/component.ts</context>
+          <context context-type="linenumber">61,73</context>
         </context-group>
       </trans-unit>
       <trans-unit id="c64747f0bc3848d47c89e0af17d0c199b44ad0de" datatype="html">
@@ -3279,15 +3239,32 @@
           <context context-type="linenumber">72</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="cb784dbcccfc59a841e1b9477816aa9cada005fb" datatype="html">
-        <source>There is no data to display.</source>
+      <trans-unit id="5413cb2f145c06134be125af0b8900fa43178672" datatype="html">
+        <source>Completions: </source>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/frontend/resource/config/configmap/detail/component.ts</context>
-          <context context-type="linenumber">61,73</context>
+          <context context-type="sourcefile">src/app/frontend/resource/workloads/job/detail/component.ts</context>
+          <context context-type="linenumber">59,70</context>
         </context-group>
+      </trans-unit>
+      <trans-unit id="a15cd320e4f839a76e972c13f20cd674df195d0c" datatype="html">
+        <source>Parallelism: </source>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/frontend/resource/config/secret/detail/component.ts</context>
-          <context context-type="linenumber">62,75</context>
+          <context context-type="sourcefile">src/app/frontend/resource/workloads/job/detail/component.ts</context>
+          <context context-type="linenumber">70</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="2f77415685109db1722401cbff234287c89c6b76" datatype="html">
+        <source>Completions</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/resource/workloads/job/detail/component.ts</context>
+          <context context-type="linenumber">70</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="c2b3cd38e1617d3948913b233bddfb163d6011fb" datatype="html">
+        <source>Parallelism</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/resource/workloads/job/detail/component.ts</context>
+          <context context-type="linenumber">70</context>
         </context-group>
       </trans-unit>
       <trans-unit id="dc935c1eb87651baf1b1b0e53119e6dec2db8862" datatype="html">
@@ -3308,6 +3285,17 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/logs/component.ts</context>
           <context context-type="linenumber">61,67</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="f5dc4402dbf1d5f8f98da57b6061d5f9be05ca5c" datatype="html">
+        <source>Containers</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/logs/component.ts</context>
+          <context context-type="linenumber">72,79</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/logs/template.html</context>
+          <context context-type="linenumber">154</context>
         </context-group>
       </trans-unit>
       <trans-unit id="c7b6cfe5410900faa386dd25760731fc8f8d68d7" datatype="html">
@@ -3428,186 +3416,50 @@
           <context context-type="linenumber">34</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="b252ca416fa6e6154b5ea799809588093e6f957b" datatype="html">
-        <source>Rolling update strategy</source>
+      <trans-unit id="edaea29b701e6ccacdab876ed4f3ede7f42a4200" datatype="html">
+        <source><x id="INTERPOLATION" equiv-text="{{ingress.spec.backend.resource.kind}}"/></source>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/frontend/resource/workloads/deployment/detail/component.ts</context>
-          <context context-type="linenumber">57,65</context>
+          <context context-type="sourcefile">src/app/frontend/resource/discovery/ingress/detail/component.ts</context>
+          <context context-type="linenumber">65</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="57b93a9b84d8693e539fe22e43688f26cdfb1783" datatype="html">
-        <source>Old Replica Sets</source>
+      <trans-unit id="eeff8ad50c095fe47ae84d4ee2536b0e191c256d" datatype="html">
+        <source>Session Affinity</source>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/frontend/resource/workloads/deployment/detail/component.ts</context>
-          <context context-type="linenumber">96</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="fa94cedf16ac30b4c9523cb6e11c8681c5a8d9fd" datatype="html">
-        <source>Horizontal Pod Autoscaler</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/frontend/resource/workloads/deployment/detail/component.ts</context>
-          <context context-type="linenumber">96</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="ad224050a62a6ea987915f5b33223046def3a2d3" datatype="html">
-        <source>Strategy: </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/frontend/resource/workloads/deployment/detail/component.ts</context>
-          <context context-type="linenumber">96</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="3a32bc1571210fc46f6aef4ab857f2a1a953922c" datatype="html">
-        <source>Min ready seconds: </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/frontend/resource/workloads/deployment/detail/component.ts</context>
-          <context context-type="linenumber">96</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="9f07294f08e99e9cad8c3814756b402d7f16460a" datatype="html">
-        <source>Revision history limit: </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/frontend/resource/workloads/deployment/detail/component.ts</context>
-          <context context-type="linenumber">96</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="05f5612d42b02be4d6d9e0a99585ae7e30a91780" datatype="html">
-        <source>Strategy</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/frontend/resource/workloads/deployment/detail/component.ts</context>
-          <context context-type="linenumber">96</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="42709c3dedbf05e8d28ee25c60dcdd328cfb44b9" datatype="html">
-        <source>Min ready seconds</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/frontend/resource/workloads/deployment/detail/component.ts</context>
-          <context context-type="linenumber">96</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="a196b130fac39c26bd90978276d5fcd5add00dd9" datatype="html">
-        <source>Revision history limit</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/frontend/resource/workloads/deployment/detail/component.ts</context>
-          <context context-type="linenumber">96</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="f7038874dae1845bd604f1c69424ebddd668e845" datatype="html">
-        <source>Max surge: </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/frontend/resource/workloads/deployment/detail/component.ts</context>
-          <context context-type="linenumber">96</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="c39576ee549298f6b7efa5fac84940493685ba3d" datatype="html">
-        <source>Max unavailable: </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/frontend/resource/workloads/deployment/detail/component.ts</context>
-          <context context-type="linenumber">96</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="248e61c25d07d6906e7caa95e59f6d9557136b47" datatype="html">
-        <source>Max surge</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/frontend/resource/workloads/deployment/detail/component.ts</context>
-          <context context-type="linenumber">96</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="3f43eb0d43c0d3b9cb89ff03e01bd2704e596279" datatype="html">
-        <source>Max unavailable</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/frontend/resource/workloads/deployment/detail/component.ts</context>
-          <context context-type="linenumber">96</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="7821a91cdd779e6b4382c216b527f641ecc349ae" datatype="html">
-        <source>Updated: </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/frontend/resource/workloads/deployment/detail/component.ts</context>
-          <context context-type="linenumber">96</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="ac06d432382824bb4b61123d254323ccf416e9b2" datatype="html">
-        <source>Total: </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/frontend/resource/workloads/deployment/detail/component.ts</context>
-          <context context-type="linenumber">96</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="57c9cb257dc651cf321283e708c427a72201bc9f" datatype="html">
-        <source>Available: </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/frontend/resource/workloads/deployment/detail/component.ts</context>
-          <context context-type="linenumber">96</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="8e07e6467839d2ad566998ae67628c6e8603778f" datatype="html">
-        <source>Unavailable: </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/frontend/resource/workloads/deployment/detail/component.ts</context>
-          <context context-type="linenumber">96</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="9da0107a35751e722c8b4bca7636fc7645dbdbdc" datatype="html">
-        <source>Updated</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/frontend/resource/workloads/deployment/detail/component.ts</context>
-          <context context-type="linenumber">96</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="d04d5b5d13ac9acf9750f1807f0227eeee98b247" datatype="html">
-        <source>Total</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/frontend/resource/workloads/deployment/detail/component.ts</context>
-          <context context-type="linenumber">96</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="b7da3e3505cc80f9bf3cffc8444c53e8a9ec70a5" datatype="html">
-        <source>Available</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/frontend/resource/workloads/deployment/detail/component.ts</context>
-          <context context-type="linenumber">96</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="15c02cb6b6c3be53477e502d3e1ee26955b23af0" datatype="html">
-        <source>Unavailable</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/frontend/resource/workloads/deployment/detail/component.ts</context>
-          <context context-type="linenumber">96</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="546d8d132ea4b0111d8e8ae5a3457e7cfc9f67a9" datatype="html">
-        <source>New Replica Set</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/frontend/resource/workloads/deployment/detail/component.ts</context>
-          <context context-type="linenumber">96</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="5413cb2f145c06134be125af0b8900fa43178672" datatype="html">
-        <source>Completions: </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/frontend/resource/workloads/job/detail/component.ts</context>
-          <context context-type="linenumber">59,70</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="a15cd320e4f839a76e972c13f20cd674df195d0c" datatype="html">
-        <source>Parallelism: </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/frontend/resource/workloads/job/detail/component.ts</context>
+          <context context-type="sourcefile">src/app/frontend/resource/discovery/service/detail/component.ts</context>
           <context context-type="linenumber">70</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="2f77415685109db1722401cbff234287c89c6b76" datatype="html">
-        <source>Completions</source>
+      <trans-unit id="a44df39b2ce0f5d85e406c3aeec76ae898dbf9af" datatype="html">
+        <source>Read documentation</source>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/frontend/resource/workloads/job/detail/component.ts</context>
-          <context context-type="linenumber">70</context>
+          <context context-type="sourcefile">src/app/frontend/about/actionbar/component.ts</context>
+          <context context-type="linenumber">27</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="c2b3cd38e1617d3948913b233bddfb163d6011fb" datatype="html">
-        <source>Parallelism</source>
+      <trans-unit id="af1dff066daa4c07f3c314d3b0d3a5106c289efd" datatype="html">
+        <source>Provide feedback</source>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/frontend/resource/workloads/job/detail/component.ts</context>
-          <context context-type="linenumber">70</context>
+          <context context-type="sourcefile">src/app/frontend/about/actionbar/component.ts</context>
+          <context context-type="linenumber">27</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="82b29c3b4501afec72a7fb434e048547f9a067e4" datatype="html">
+        <source>Role Reference</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/resource/cluster/clusterrolebinding/detail/component.ts</context>
+          <context context-type="linenumber">64,72</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/resource/cluster/rolebinding/detail/component.ts</context>
+          <context context-type="linenumber">63,74</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="c351ac57f153f24bf440eb98ec27932af51c203c" datatype="html">
+        <source>Go to namespace overview</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/resource/cluster/namespace/detail/actionbar/component.ts</context>
+          <context context-type="linenumber">43,53</context>
         </context-group>
       </trans-unit>
       <trans-unit id="a21b5b669ab3f36e0f83e9a025c26662fd0616e8" datatype="html">
@@ -3638,18 +3490,11 @@
           <context context-type="linenumber">70</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="a44df39b2ce0f5d85e406c3aeec76ae898dbf9af" datatype="html">
-        <source>Read documentation</source>
+      <trans-unit id="7d58fa3a5b6490938d8f36832cce311e91fe4496" datatype="html">
+        <source>Image Pull Secrets</source>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/frontend/about/actionbar/component.ts</context>
-          <context context-type="linenumber">27</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="af1dff066daa4c07f3c314d3b0d3a5106c289efd" datatype="html">
-        <source>Provide feedback</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/frontend/about/actionbar/component.ts</context>
-          <context context-type="linenumber">27</context>
+          <context context-type="sourcefile">src/app/frontend/resource/cluster/serviceaccount/detail/component.ts</context>
+          <context context-type="linenumber">57,65</context>
         </context-group>
       </trans-unit>
       <trans-unit id="b129f142540fcf057f58e5ffc3a4bd1aae6f074b" datatype="html">
@@ -3811,6 +3656,220 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/resource/cluster/persistentvolume/detail/component.ts</context>
           <context context-type="linenumber">106</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="c4ebc7b58943268c8fa4f033e9a231b1a99e5ec9" datatype="html">
+        <source>Active Jobs</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/resource/workloads/cronjob/detail/component.ts</context>
+          <context context-type="linenumber">58,66</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/resource/workloads/cronjob/detail/component.ts</context>
+          <context context-type="linenumber">72</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="961695fbc9df557b897e8df7860fc75d5a4653f7" datatype="html">
+        <source>Inactive Jobs</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/resource/workloads/cronjob/detail/component.ts</context>
+          <context context-type="linenumber">72</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="8f097dc952ca26f9cbb8f37ecd54f5e45af9d96d" datatype="html">
+        <source>Schedule: </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/resource/workloads/cronjob/detail/component.ts</context>
+          <context context-type="linenumber">72</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="3d130286d00ae02b20b42afaa458360e33b76b84" datatype="html">
+        <source>Active Jobs: </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/resource/workloads/cronjob/detail/component.ts</context>
+          <context context-type="linenumber">72</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="8e864d1a2e19fbf9f6aad420a0b0587e7ac1b7c4" datatype="html">
+        <source>Suspend: </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/resource/workloads/cronjob/detail/component.ts</context>
+          <context context-type="linenumber">72</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="a6aa763adf7674b9030b4295fe631ea0d7c93a34" datatype="html">
+        <source>Last schedule</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/resource/workloads/cronjob/detail/component.ts</context>
+          <context context-type="linenumber">72</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="0df4074e7be76bee82290f4c26433c15fe4bb239" datatype="html">
+        <source>Concurrency policy</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/resource/workloads/cronjob/detail/component.ts</context>
+          <context context-type="linenumber">72</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="09ee2c72fd6f5748b0754d5253acdc33f0326189" datatype="html">
+        <source>Starting deadline seconds</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/resource/workloads/cronjob/detail/component.ts</context>
+          <context context-type="linenumber">72</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="b252ca416fa6e6154b5ea799809588093e6f957b" datatype="html">
+        <source>Rolling update strategy</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/resource/workloads/deployment/detail/component.ts</context>
+          <context context-type="linenumber">57,65</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="57b93a9b84d8693e539fe22e43688f26cdfb1783" datatype="html">
+        <source>Old Replica Sets</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/resource/workloads/deployment/detail/component.ts</context>
+          <context context-type="linenumber">96</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="fa94cedf16ac30b4c9523cb6e11c8681c5a8d9fd" datatype="html">
+        <source>Horizontal Pod Autoscaler</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/resource/workloads/deployment/detail/component.ts</context>
+          <context context-type="linenumber">96</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="ad224050a62a6ea987915f5b33223046def3a2d3" datatype="html">
+        <source>Strategy: </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/resource/workloads/deployment/detail/component.ts</context>
+          <context context-type="linenumber">96</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="3a32bc1571210fc46f6aef4ab857f2a1a953922c" datatype="html">
+        <source>Min ready seconds: </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/resource/workloads/deployment/detail/component.ts</context>
+          <context context-type="linenumber">96</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="9f07294f08e99e9cad8c3814756b402d7f16460a" datatype="html">
+        <source>Revision history limit: </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/resource/workloads/deployment/detail/component.ts</context>
+          <context context-type="linenumber">96</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="05f5612d42b02be4d6d9e0a99585ae7e30a91780" datatype="html">
+        <source>Strategy</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/resource/workloads/deployment/detail/component.ts</context>
+          <context context-type="linenumber">96</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="42709c3dedbf05e8d28ee25c60dcdd328cfb44b9" datatype="html">
+        <source>Min ready seconds</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/resource/workloads/deployment/detail/component.ts</context>
+          <context context-type="linenumber">96</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="a196b130fac39c26bd90978276d5fcd5add00dd9" datatype="html">
+        <source>Revision history limit</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/resource/workloads/deployment/detail/component.ts</context>
+          <context context-type="linenumber">96</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="f7038874dae1845bd604f1c69424ebddd668e845" datatype="html">
+        <source>Max surge: </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/resource/workloads/deployment/detail/component.ts</context>
+          <context context-type="linenumber">96</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="c39576ee549298f6b7efa5fac84940493685ba3d" datatype="html">
+        <source>Max unavailable: </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/resource/workloads/deployment/detail/component.ts</context>
+          <context context-type="linenumber">96</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="248e61c25d07d6906e7caa95e59f6d9557136b47" datatype="html">
+        <source>Max surge</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/resource/workloads/deployment/detail/component.ts</context>
+          <context context-type="linenumber">96</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="3f43eb0d43c0d3b9cb89ff03e01bd2704e596279" datatype="html">
+        <source>Max unavailable</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/resource/workloads/deployment/detail/component.ts</context>
+          <context context-type="linenumber">96</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="7821a91cdd779e6b4382c216b527f641ecc349ae" datatype="html">
+        <source>Updated: </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/resource/workloads/deployment/detail/component.ts</context>
+          <context context-type="linenumber">96</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="ac06d432382824bb4b61123d254323ccf416e9b2" datatype="html">
+        <source>Total: </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/resource/workloads/deployment/detail/component.ts</context>
+          <context context-type="linenumber">96</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="57c9cb257dc651cf321283e708c427a72201bc9f" datatype="html">
+        <source>Available: </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/resource/workloads/deployment/detail/component.ts</context>
+          <context context-type="linenumber">96</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="8e07e6467839d2ad566998ae67628c6e8603778f" datatype="html">
+        <source>Unavailable: </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/resource/workloads/deployment/detail/component.ts</context>
+          <context context-type="linenumber">96</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="9da0107a35751e722c8b4bca7636fc7645dbdbdc" datatype="html">
+        <source>Updated</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/resource/workloads/deployment/detail/component.ts</context>
+          <context context-type="linenumber">96</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="d04d5b5d13ac9acf9750f1807f0227eeee98b247" datatype="html">
+        <source>Total</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/resource/workloads/deployment/detail/component.ts</context>
+          <context context-type="linenumber">96</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="b7da3e3505cc80f9bf3cffc8444c53e8a9ec70a5" datatype="html">
+        <source>Available</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/resource/workloads/deployment/detail/component.ts</context>
+          <context context-type="linenumber">96</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="15c02cb6b6c3be53477e502d3e1ee26955b23af0" datatype="html">
+        <source>Unavailable</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/resource/workloads/deployment/detail/component.ts</context>
+          <context context-type="linenumber">96</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="546d8d132ea4b0111d8e8ae5a3457e7cfc9f67a9" datatype="html">
+        <source>New Replica Set</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/resource/workloads/deployment/detail/component.ts</context>
+          <context context-type="linenumber">96</context>
         </context-group>
       </trans-unit>
       <trans-unit id="a621a52ed6b7b39a7e24df464bc18bf25615e816" datatype="html">
@@ -3992,82 +4051,54 @@
           <context context-type="linenumber">26</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="82b29c3b4501afec72a7fb434e048547f9a067e4" datatype="html">
-        <source>Role Reference</source>
+      <trans-unit id="1bdf6d0a95c523599676ee9ce536adb037ce56af" datatype="html">
+        <source>Local settings </source>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/frontend/resource/cluster/rolebinding/detail/component.ts</context>
-          <context context-type="linenumber">63,74</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/frontend/resource/cluster/clusterrolebinding/detail/component.ts</context>
-          <context context-type="linenumber">64,72</context>
+          <context context-type="sourcefile">src/app/frontend/settings/local/component.ts</context>
+          <context context-type="linenumber">53,62</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="c4ebc7b58943268c8fa4f033e9a231b1a99e5ec9" datatype="html">
-        <source>Active Jobs</source>
+      <trans-unit id="c73af29d15f7f46e960a5a52908965e0e1a0c3a7" datatype="html">
+        <source> Local settings are stored in the browser cookies, so they are not synchronized between multiple devices. Changes are applied automatically on every change. </source>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/frontend/resource/workloads/cronjob/detail/component.ts</context>
-          <context context-type="linenumber">58,66</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/frontend/resource/workloads/cronjob/detail/component.ts</context>
-          <context context-type="linenumber">72</context>
+          <context context-type="sourcefile">src/app/frontend/settings/local/component.ts</context>
+          <context context-type="linenumber">74</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="961695fbc9df557b897e8df7860fc75d5a4653f7" datatype="html">
-        <source>Inactive Jobs</source>
+      <trans-unit id="27a56aad79d8b61269ed303f11664cc78bcc2522" datatype="html">
+        <source>Theme</source>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/frontend/resource/workloads/cronjob/detail/component.ts</context>
-          <context context-type="linenumber">72</context>
+          <context context-type="sourcefile">src/app/frontend/settings/local/component.ts</context>
+          <context context-type="linenumber">74</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="8f097dc952ca26f9cbb8f37ecd54f5e45af9d96d" datatype="html">
-        <source>Schedule: </source>
+      <trans-unit id="66d4ff20f88ba9658fa511e86291164d0dd3d1d0" datatype="html">
+        <source>Choose color theme of the dashboard</source>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/frontend/resource/workloads/cronjob/detail/component.ts</context>
-          <context context-type="linenumber">72</context>
+          <context context-type="sourcefile">src/app/frontend/settings/local/component.ts</context>
+          <context context-type="linenumber">74</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="3d130286d00ae02b20b42afaa458360e33b76b84" datatype="html">
-        <source>Active Jobs: </source>
+      <trans-unit id="fe46ccaae902ce974e2441abe752399288298619" datatype="html">
+        <source>Language</source>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/frontend/resource/workloads/cronjob/detail/component.ts</context>
-          <context context-type="linenumber">72</context>
+          <context context-type="sourcefile">src/app/frontend/settings/local/component.ts</context>
+          <context context-type="linenumber">74</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/settings/local/component.ts</context>
+          <context context-type="linenumber">74</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="8e864d1a2e19fbf9f6aad420a0b0587e7ac1b7c4" datatype="html">
-        <source>Suspend: </source>
+      <trans-unit id="170c19b70d40071916e39cad610ac12f269dd473" datatype="html">
+        <source>Change the language of the dashboard</source>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/frontend/resource/workloads/cronjob/detail/component.ts</context>
-          <context context-type="linenumber">72</context>
+          <context context-type="sourcefile">src/app/frontend/settings/local/component.ts</context>
+          <context context-type="linenumber">74</context>
         </context-group>
-      </trans-unit>
-      <trans-unit id="a6aa763adf7674b9030b4295fe631ea0d7c93a34" datatype="html">
-        <source>Last schedule</source>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/frontend/resource/workloads/cronjob/detail/component.ts</context>
-          <context context-type="linenumber">72</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="0df4074e7be76bee82290f4c26433c15fe4bb239" datatype="html">
-        <source>Concurrency policy</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/frontend/resource/workloads/cronjob/detail/component.ts</context>
-          <context context-type="linenumber">72</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="09ee2c72fd6f5748b0754d5253acdc33f0326189" datatype="html">
-        <source>Starting deadline seconds</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/frontend/resource/workloads/cronjob/detail/component.ts</context>
-          <context context-type="linenumber">72</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="edaea29b701e6ccacdab876ed4f3ede7f42a4200" datatype="html">
-        <source><x id="INTERPOLATION" equiv-text="{{ingress.spec.backend.resource.kind}}"/></source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/frontend/resource/discovery/ingress/detail/component.ts</context>
-          <context context-type="linenumber">65</context>
+          <context context-type="sourcefile">src/app/frontend/settings/local/component.ts</context>
+          <context context-type="linenumber">74</context>
         </context-group>
       </trans-unit>
       <trans-unit id="6b13cf4001515430e636bceec206522ab955e2f1" datatype="html">
@@ -4184,104 +4215,6 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/settings/global/component.ts</context>
           <context context-type="linenumber">114</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="eeff8ad50c095fe47ae84d4ee2536b0e191c256d" datatype="html">
-        <source>Session Affinity</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/frontend/resource/discovery/service/detail/component.ts</context>
-          <context context-type="linenumber">70</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="5927a3493fbb556db65f530e01b3aa6ab9f186e6" datatype="html">
-        <source>Resource Information</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/frontend/crd/detail/component.ts</context>
-          <context context-type="linenumber">39,47</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="1ec17de9560711cd81108ccf93eb5b1df4eb6d4c" datatype="html">
-        <source>Accepted Names</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/frontend/crd/detail/component.ts</context>
-          <context context-type="linenumber">58,65</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="1481b8488e10dbc437accce89d2ae35a0106e8ba" datatype="html">
-        <source>Scope</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/frontend/crd/detail/component.ts</context>
-          <context context-type="linenumber">65</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="8fe73a4787b8068b2ba61f54ab7e0f9af2ea1fc9" datatype="html">
-        <source>Version</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/frontend/crd/detail/component.ts</context>
-          <context context-type="linenumber">65</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="d9ac1caf6715c8011155c0a027d544dbeca63062" datatype="html">
-        <source>Subresources</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/frontend/crd/detail/component.ts</context>
-          <context context-type="linenumber">65</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="fa1312fe00bfe38662df238fa059bcd75866ecd7" datatype="html">
-        <source>Plural</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/frontend/crd/detail/component.ts</context>
-          <context context-type="linenumber">65</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="5a2fcb3c1d8240f8f966564ee3500235d7427245" datatype="html">
-        <source>List Kind</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/frontend/crd/detail/component.ts</context>
-          <context context-type="linenumber">65</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="712232bebfc8836a394c358ce9679452fabb945f" datatype="html">
-        <source>Singular</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/frontend/crd/detail/component.ts</context>
-          <context context-type="linenumber">65</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="d27e60f49dba9b7994331db545a4c14e1e2683ad" datatype="html">
-        <source>Short Names</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/frontend/crd/detail/component.ts</context>
-          <context context-type="linenumber">65</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="04201f9d27abd7d6f58a4328ab98063ce1072006" datatype="html">
-        <source>Categories</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/frontend/crd/detail/component.ts</context>
-          <context context-type="linenumber">65</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="130d46e5699c410721dbdf43691f5c957b5955ef" datatype="html">
-        <source>Settings have changed since last reload</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/frontend/settings/global/saveanywaysdialog/dialog.ts</context>
-          <context context-type="linenumber">29</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="02b9a3951b251f014027ab26bea1e26c282be22f" datatype="html">
-        <source>Do you want to save them anyways?</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/frontend/settings/global/saveanywaysdialog/dialog.ts</context>
-          <context context-type="linenumber">29</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="c8d1785038d461ec66b5799db21864182b35900a" datatype="html">
-        <source>Refresh</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/frontend/settings/global/saveanywaysdialog/dialog.ts</context>
-          <context context-type="linenumber">29</context>
         </context-group>
       </trans-unit>
       <trans-unit id="d6f7150f368b44c7aaa4b2b07df3e0f988a5db02" datatype="html">
@@ -4685,11 +4618,95 @@
           <context context-type="linenumber">51</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="c351ac57f153f24bf440eb98ec27932af51c203c" datatype="html">
-        <source>Go to namespace overview</source>
+      <trans-unit id="5927a3493fbb556db65f530e01b3aa6ab9f186e6" datatype="html">
+        <source>Resource Information</source>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/frontend/resource/cluster/namespace/detail/actionbar/component.ts</context>
-          <context context-type="linenumber">43,53</context>
+          <context context-type="sourcefile">src/app/frontend/crd/detail/component.ts</context>
+          <context context-type="linenumber">39,47</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="1ec17de9560711cd81108ccf93eb5b1df4eb6d4c" datatype="html">
+        <source>Accepted Names</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/crd/detail/component.ts</context>
+          <context context-type="linenumber">58,65</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="1481b8488e10dbc437accce89d2ae35a0106e8ba" datatype="html">
+        <source>Scope</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/crd/detail/component.ts</context>
+          <context context-type="linenumber">65</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="8fe73a4787b8068b2ba61f54ab7e0f9af2ea1fc9" datatype="html">
+        <source>Version</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/crd/detail/component.ts</context>
+          <context context-type="linenumber">65</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="d9ac1caf6715c8011155c0a027d544dbeca63062" datatype="html">
+        <source>Subresources</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/crd/detail/component.ts</context>
+          <context context-type="linenumber">65</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="fa1312fe00bfe38662df238fa059bcd75866ecd7" datatype="html">
+        <source>Plural</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/crd/detail/component.ts</context>
+          <context context-type="linenumber">65</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="5a2fcb3c1d8240f8f966564ee3500235d7427245" datatype="html">
+        <source>List Kind</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/crd/detail/component.ts</context>
+          <context context-type="linenumber">65</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="712232bebfc8836a394c358ce9679452fabb945f" datatype="html">
+        <source>Singular</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/crd/detail/component.ts</context>
+          <context context-type="linenumber">65</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="d27e60f49dba9b7994331db545a4c14e1e2683ad" datatype="html">
+        <source>Short Names</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/crd/detail/component.ts</context>
+          <context context-type="linenumber">65</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="04201f9d27abd7d6f58a4328ab98063ce1072006" datatype="html">
+        <source>Categories</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/crd/detail/component.ts</context>
+          <context context-type="linenumber">65</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="130d46e5699c410721dbdf43691f5c957b5955ef" datatype="html">
+        <source>Settings have changed since last reload</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/settings/global/saveanywaysdialog/dialog.ts</context>
+          <context context-type="linenumber">29</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="02b9a3951b251f014027ab26bea1e26c282be22f" datatype="html">
+        <source>Do you want to save them anyways?</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/settings/global/saveanywaysdialog/dialog.ts</context>
+          <context context-type="linenumber">29</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="c8d1785038d461ec66b5799db21864182b35900a" datatype="html">
+        <source>Refresh</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/settings/global/saveanywaysdialog/dialog.ts</context>
+          <context context-type="linenumber">29</context>
         </context-group>
       </trans-unit>
       <trans-unit id="d5bf8edfc35f18bb70804a15ad79a70417be988f" datatype="html">
@@ -4771,69 +4788,6 @@
           <context context-type="linenumber">50,63</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="a93d7bc0981c6bb60dd15032eeb2548f3133a008" datatype="html">
-        <source>key</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/frontend/create/from/form/deploylabel/component.ts</context>
-          <context context-type="linenumber">64,69</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="eed41bb430cc4ef492f96e3abf4e2325a60b53b8" datatype="html">
-        <source>value</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/frontend/create/from/form/deploylabel/component.ts</context>
-          <context context-type="linenumber">86,93</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="438306a033d833e01c0d4b43ffb47acb5c9d4fdb" datatype="html">
-        <source> <x id="INTERPOLATION" equiv-text="{{label.get(&apos;key&apos;).value}}"/> is not unique </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/frontend/create/from/form/deploylabel/component.ts</context>
-          <context context-type="linenumber">112</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="4737b998467bee46867d0bb338f42158fd1ce407" datatype="html">
-        <source> Prefix is not a valid DNS subdomain prefix (eg. my-domain.com). </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/frontend/create/from/form/deploylabel/template.html</context>
-          <context context-type="linenumber">42,49</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="2cf48a4788243a5493ff403a8fac4db6b9073303" datatype="html">
-        <source> Label key name must be alphanumeric separated by &apos;-&apos;, &apos;_&apos; or &apos;.&apos;, optionally prefixed by a DNS subdomain and &apos;/&apos;. </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/frontend/create/from/form/deploylabel/template.html</context>
-          <context context-type="linenumber">63,74</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="582a028dd0ce5ae70905be0242f5df6cf1f4d23f" datatype="html">
-        <source> Prefix should not exceed 253 characters. </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/frontend/create/from/form/deploylabel/template.html</context>
-          <context context-type="linenumber">86</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="f7cc544468f5139ba304be388d7e7720cf75cc3c" datatype="html">
-        <source> Label Key name should not exceed 63 characters. </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/frontend/create/from/form/deploylabel/template.html</context>
-          <context context-type="linenumber">86</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="f0f259da0f80c8a4cfb99e71ba6f6492efe816f2" datatype="html">
-        <source> Label value must be alphanumeric separated by &apos;.&apos; , &apos;-&apos; or &apos;_&apos;. </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/frontend/create/from/form/deploylabel/template.html</context>
-          <context context-type="linenumber">86</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="c7e8ada7c30de9d346a6e0c3a4bdf485ab582213" datatype="html">
-        <source> Label Value must not exceed 253 characters. </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/frontend/create/from/form/deploylabel/template.html</context>
-          <context context-type="linenumber">86</context>
-        </context-group>
-      </trans-unit>
       <trans-unit id="e8e1511eda00436d2d4d34a43d45af8be2e60fb4" datatype="html">
         <source>Create a new image pull secret</source>
         <context-group purpose="location">
@@ -4897,25 +4851,67 @@
           <context context-type="linenumber">95,103</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="4703f18f9d5b6cd5c3c1f8a5d9677ee0ffb29c19" datatype="html">
-        <source>Environment variables</source>
+      <trans-unit id="a93d7bc0981c6bb60dd15032eeb2548f3133a008" datatype="html">
+        <source>key</source>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/frontend/create/from/form/environmentvariables/component.ts</context>
-          <context context-type="linenumber">62,71</context>
+          <context context-type="sourcefile">src/app/frontend/create/from/form/deploylabel/component.ts</context>
+          <context context-type="linenumber">64,69</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="5049e204c14c648691ac775a64fb504467aeb549" datatype="html">
-        <source>Value</source>
+      <trans-unit id="eed41bb430cc4ef492f96e3abf4e2325a60b53b8" datatype="html">
+        <source>value</source>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/frontend/create/from/form/environmentvariables/component.ts</context>
-          <context context-type="linenumber">104</context>
+          <context context-type="sourcefile">src/app/frontend/create/from/form/deploylabel/component.ts</context>
+          <context context-type="linenumber">86,93</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="4929426ddbc6a7c6bddddde497c5221ae1ecbec7" datatype="html">
-        <source> Variable name must be a valid C identifier. </source>
+      <trans-unit id="438306a033d833e01c0d4b43ffb47acb5c9d4fdb" datatype="html">
+        <source> <x id="INTERPOLATION" equiv-text="{{label.get(&apos;key&apos;).value}}"/> is not unique </source>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/frontend/create/from/form/environmentvariables/component.ts</context>
-          <context context-type="linenumber">104</context>
+          <context context-type="sourcefile">src/app/frontend/create/from/form/deploylabel/component.ts</context>
+          <context context-type="linenumber">112</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="4737b998467bee46867d0bb338f42158fd1ce407" datatype="html">
+        <source> Prefix is not a valid DNS subdomain prefix (eg. my-domain.com). </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/create/from/form/deploylabel/template.html</context>
+          <context context-type="linenumber">42,49</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="2cf48a4788243a5493ff403a8fac4db6b9073303" datatype="html">
+        <source> Label key name must be alphanumeric separated by &apos;-&apos;, &apos;_&apos; or &apos;.&apos;, optionally prefixed by a DNS subdomain and &apos;/&apos;. </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/create/from/form/deploylabel/template.html</context>
+          <context context-type="linenumber">63,74</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="582a028dd0ce5ae70905be0242f5df6cf1f4d23f" datatype="html">
+        <source> Prefix should not exceed 253 characters. </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/create/from/form/deploylabel/template.html</context>
+          <context context-type="linenumber">86</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="f7cc544468f5139ba304be388d7e7720cf75cc3c" datatype="html">
+        <source> Label Key name should not exceed 63 characters. </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/create/from/form/deploylabel/template.html</context>
+          <context context-type="linenumber">86</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="f0f259da0f80c8a4cfb99e71ba6f6492efe816f2" datatype="html">
+        <source> Label value must be alphanumeric separated by &apos;.&apos; , &apos;-&apos; or &apos;_&apos;. </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/create/from/form/deploylabel/template.html</context>
+          <context context-type="linenumber">86</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="c7e8ada7c30de9d346a6e0c3a4bdf485ab582213" datatype="html">
+        <source> Label Value must not exceed 253 characters. </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/create/from/form/deploylabel/template.html</context>
+          <context context-type="linenumber">86</context>
         </context-group>
       </trans-unit>
       <trans-unit id="cb2741a46e3560f6bc6dfd99d385e86b08b26d72" datatype="html">
@@ -5007,6 +5003,27 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/create/from/form/portmappings/component.ts</context>
           <context context-type="linenumber">231</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="4703f18f9d5b6cd5c3c1f8a5d9677ee0ffb29c19" datatype="html">
+        <source>Environment variables</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/create/from/form/environmentvariables/component.ts</context>
+          <context context-type="linenumber">62,71</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="5049e204c14c648691ac775a64fb504467aeb549" datatype="html">
+        <source>Value</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/create/from/form/environmentvariables/component.ts</context>
+          <context context-type="linenumber">104</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="4929426ddbc6a7c6bddddde497c5221ae1ecbec7" datatype="html">
+        <source> Variable name must be a valid C identifier. </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/create/from/form/environmentvariables/component.ts</context>
+          <context context-type="linenumber">104</context>
         </context-group>
       </trans-unit>
     </body>

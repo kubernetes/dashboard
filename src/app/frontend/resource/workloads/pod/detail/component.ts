@@ -17,6 +17,7 @@ import {ActivatedRoute} from '@angular/router';
 import {Container, PodDetail} from '@api/root.api';
 import {Subject} from 'rxjs';
 import {takeUntil} from 'rxjs/operators';
+import * as _ from 'lodash';
 
 import {ActionbarService, ResourceMeta} from '../../../../common/services/global/actionbar';
 import {NotificationsService} from '../../../../common/services/global/notifications';
@@ -27,6 +28,7 @@ import {NamespacedResourceService} from '../../../../common/services/resource/re
 @Component({
   selector: 'kd-pod-detail',
   templateUrl: './template.html',
+  styleUrls: ['style.scss'],
 })
 export class PodDetailComponent implements OnInit, OnDestroy {
   private readonly endpoint_ = EndpointManager.resource(Resource.pod, true);
@@ -56,6 +58,9 @@ export class PodDetailComponent implements OnInit, OnDestroy {
       .get(this.endpoint_.detail(), resourceName, resourceNamespace)
       .pipe(takeUntil(this.unsubscribe_))
       .subscribe((d: PodDetail) => {
+        d.securityContext.fsGroup = 1;
+        d.securityContext.fsGroupChangePolicy = 'policy';
+
         this.pod = d;
         this.notifications_.pushErrors(d.errors);
         this.actionbar_.onInit.emit(new ResourceMeta('Pod', d.objectMeta, d.typeMeta));
@@ -63,14 +68,14 @@ export class PodDetailComponent implements OnInit, OnDestroy {
       });
   }
 
-  showPodSecurityContext(): boolean {
-    return this.pod && Object.keys(this.pod.securityContext).length > 0;
-  }
-
   ngOnDestroy(): void {
     this.unsubscribe_.next();
     this.unsubscribe_.complete();
     this.actionbar_.onDetailsLeave.emit();
+  }
+
+  hasSecurityContext(): boolean {
+    return this.pod && !_.isEmpty(this.pod.securityContext);
   }
 
   getNodeHref(name: string): string {
