@@ -75,24 +75,18 @@ func getEndpoints(ingress *v1beta1.Ingress) []common.Endpoint {
 	return endpoints
 }
 
-func contains(s []string, str string) bool {
-	for _, v := range s {
-		if v == str {
-			return true
-		}
-	}
-	return false
-}
-
 func getHosts(ingress *v1beta1.Ingress) []string {
 	hosts := make([]string, 0)
-	if len(ingress.Spec.Rules) > 0 {
-		for _, rule := range ingress.Spec.Rules {
-			if rule.Host != "" && !contains(hosts, rule.Host) {
-				hosts = append(hosts, rule.Host)
-			}
+	set := make(map[string]struct{})
+
+	for _, rule := range ingress.Spec.Rules {
+		if _, exists := set[rule.Host]; !exists && len(rule.Host) > 0 {
+			hosts = append(hosts, rule.Host)
 		}
+
+		set[rule.Host] = struct{}{}
 	}
+
 	return hosts
 }
 
