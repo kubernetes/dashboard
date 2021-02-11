@@ -21,7 +21,8 @@ limitations under the License.
 
 <kd-card [initialized]="isInitialized">
   <div title
-       i18n>Resource information</div>
+       i18n>Resource information
+  </div>
 
   <div description>
     <div class="kd-inline-property"
@@ -44,7 +45,8 @@ limitations under the License.
        fxLayout="row wrap">
     <kd-property *ngIf="pod?.nodeName">
       <div key
-           i18n>Node</div>
+           i18n>Node
+      </div>
       <a value
          [routerLink]="getNodeHref(pod.nodeName)"
          queryParamsHandling="preserve">{{pod.nodeName}}</a>
@@ -52,39 +54,56 @@ limitations under the License.
 
     <kd-property *ngIf="pod?.podPhase">
       <div key
-           i18n>Status</div>
+           i18n>Status
+      </div>
       <div value>{{pod?.podPhase}}</div>
     </kd-property>
 
     <kd-property *ngIf="pod?.podIP">
       <div key
-           i18n>IP</div>
+           i18n>IP
+      </div>
       <div value>{{pod.podIP}}</div>
     </kd-property>
 
     <kd-property *ngIf="pod?.qosClass">
       <div key
-           i18n>QoS Class</div>
+           i18n>QoS Class
+      </div>
       <div value>{{pod.qosClass}}</div>
     </kd-property>
 
     <kd-property *ngIf="pod?.restartCount !== undefined">
       <div key
-           i18n>Restarts</div>
+           i18n>Restarts
+      </div>
       <div value>{{pod.restartCount}}</div>
     </kd-property>
 
     <kd-property *ngIf="pod?.imagePullSecrets"
                  fxFlex="100">
       <div key
-           i18n>Image Pull Secrets</div>
+           i18n>Image Pull Secrets
+      </div>
       <div value
            *ngFor="let imagePullSecret of pod?.imagePullSecrets">
-        <a value
-           [routerLink]="getSecretHref(imagePullSecret.name)"
+        <a [routerLink]="getSecretHref(imagePullSecret.name)"
            queryParamsHandling="preserve">{{imagePullSecret.name}}</a>
       </div>
     </kd-property>
+
+    <div *ngIf="hasSecurityContext()"
+         fxFlex="100"
+         fxLayout="column">
+      <div fxFlex
+           class="security-context-header kd-muted"
+           i18n>Security Context
+      </div>
+
+      <kd-security-context [securityContext]="pod?.securityContext"
+                           [initialized]="true">
+      </kd-security-context>
+    </div>
   </div>
 </kd-card>
 
@@ -102,7 +121,8 @@ limitations under the License.
 
 <div *ngIf="pod?.containers?.length"
      class="kd-card-group-header kd-muted"
-     i18n>Containers</div>
+     i18n>Containers
+</div>
 <kd-container-card *ngFor="let container of pod?.containers;trackBy:getContainerName"
                    [container]="container"
                    [namespace]="pod.objectMeta.namespace"
@@ -110,7 +130,8 @@ limitations under the License.
 
 <div *ngIf="pod?.initContainers?.length"
      class="kd-card-group-header kd-muted"
-     i18n>Init containers</div>
+     i18n>Init containers
+</div>
 <kd-container-card *ngFor="let container of pod?.initContainers;trackBy:getContainerName"
                    [container]="container"
                    [namespace]="pod.objectMeta.namespace"

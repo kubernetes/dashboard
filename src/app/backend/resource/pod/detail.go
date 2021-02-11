@@ -56,6 +56,7 @@ type PodDetail struct {
 	ImagePullSecrets          []v1.LocalObjectReference                       `json:"imagePullSecrets,omitempty"`
 	EventList                 common.EventList                                `json:"eventList"`
 	PersistentvolumeclaimList persistentvolumeclaim.PersistentVolumeClaimList `json:"persistentVolumeClaimList"`
+	SecurityContext           *v1.PodSecurityContext                          `json:"securityContext"`
 
 	// List of non-critical errors, that occurred during resource retrieval.
 	Errors []error `json:"errors"`
@@ -280,6 +281,7 @@ func toPodDetail(pod *v1.Pod, metrics []metricapi.Metric, configMaps *v1.ConfigM
 		ImagePullSecrets:          pod.Spec.ImagePullSecrets,
 		EventList:                 *events,
 		PersistentvolumeclaimList: *persistentVolumeClaimList,
+		SecurityContext:           pod.Spec.SecurityContext,
 		Errors:                    nonCriticalErrors,
 	}
 }
