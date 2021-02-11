@@ -18,6 +18,6 @@
 .external-link-icon {
   @include kd-icon-size($body-font-size-base);
 
-  margin-left: .5 * $baseline-grid;
   margin-bottom: .75 * $baseline-grid;
+  margin-left: .5 * $baseline-grid;
 }
