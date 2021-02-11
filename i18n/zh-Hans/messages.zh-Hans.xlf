@@ -630,7 +630,7 @@
       </trans-unit>
       <trans-unit id="7d58fa3a5b6490938d8f36832cce311e91fe4496" datatype="html">
         <source>Image Pull Secrets</source>
-        <target state="new">Image Pull Secrets</target>
+        <target state="new">镜像拉取 Secrets</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/resource/workloads/pod/detail/component.ts</context>
           <context context-type="linenumber">84</context>
@@ -766,7 +766,7 @@
       </trans-unit>
       <trans-unit id="b8347ea191b01bd6499eb8efffd719a008f2c953" datatype="html">
         <source>Added Capabilities</source>
-        <target state="new">Added Capabilities</target>
+        <target state="new">新增的功能</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/securitycontext/component.ts</context>
           <context context-type="linenumber">26</context>
@@ -774,7 +774,7 @@
       </trans-unit>
       <trans-unit id="e79004004ec3c10f6504aef5267ead5adabeafda" datatype="html">
         <source>Dropped Capabilities</source>
-        <target state="new">Dropped Capabilities</target>
+        <target state="new">放弃的功能</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/securitycontext/component.ts</context>
           <context context-type="linenumber">26</context>
@@ -782,7 +782,7 @@
       </trans-unit>
       <trans-unit id="07e52ab48450e2997ffa0d8508d996281db05a3d" datatype="html">
         <source>Privileged</source>
-        <target state="new">Privileged</target>
+        <target state="new">特权</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/securitycontext/component.ts</context>
           <context context-type="linenumber">26</context>
@@ -790,7 +790,7 @@
       </trans-unit>
       <trans-unit id="211fbdbe78f66f4dada9b9aaf5c21296278f424f" datatype="html">
         <source>SE Linux User</source>
-        <target state="new">SE Linux User</target>
+        <target state="new">SE Linux 用户</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/securitycontext/component.ts</context>
           <context context-type="linenumber">26</context>
@@ -798,7 +798,7 @@
       </trans-unit>
       <trans-unit id="d29c0adbf4a7f2cc6c194cc6bbac6c2e004be313" datatype="html">
         <source>SE Linux Role</source>
-        <target state="new">SE Linux Role</target>
+        <target state="new">SE Linux 角色</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/securitycontext/component.ts</context>
           <context context-type="linenumber">26</context>
@@ -806,7 +806,7 @@
       </trans-unit>
       <trans-unit id="5561078d23c805fd641b183204ed441208083cc0" datatype="html">
         <source>SE Linux Type</source>
-        <target state="new">SE Linux Type</target>
+        <target state="new">SE Linux 类型</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/securitycontext/component.ts</context>
           <context context-type="linenumber">26</context>
@@ -814,7 +814,7 @@
       </trans-unit>
       <trans-unit id="e6a21f27af0b1e3a818b5ba506ea23b6d568ff31" datatype="html">
         <source>SE Linux Level</source>
-        <target state="new">SE Linux Level</target>
+        <target state="new">SE Linux 级别</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/securitycontext/component.ts</context>
           <context context-type="linenumber">26</context>
@@ -822,7 +822,7 @@
       </trans-unit>
       <trans-unit id="6e81c80ba66e92f4056dc339af2281350fff213f" datatype="html">
         <source>Windows GMSA Credential Spec Name</source>
-        <target state="new">Windows GMSA Credential Spec Name</target>
+        <target state="new">Windows GMSA 凭据规范名称</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/securitycontext/component.ts</context>
           <context context-type="linenumber">26</context>
@@ -830,7 +830,7 @@
       </trans-unit>
       <trans-unit id="1b3f55a9c82076e32751ce2457aa27b1185022a3" datatype="html">
         <source>Windows GMSA Credential Spec</source>
-        <target state="new">Windows GMSA Credential Spec</target>
+        <target state="new">Windows GMSA 凭据规范</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/securitycontext/component.ts</context>
           <context context-type="linenumber">26</context>
@@ -838,7 +838,7 @@
       </trans-unit>
       <trans-unit id="4d32e29c3ed8ef3961d77d85cbbeb385a81cc90c" datatype="html">
         <source>Windows Run as User</source>
-        <target state="new">Windows Run as User</target>
+        <target state="new">Windows 运行的用户</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/securitycontext/component.ts</context>
           <context context-type="linenumber">26</context>
@@ -846,7 +846,7 @@
       </trans-unit>
       <trans-unit id="2e7702fc348b62fd35c1241b576d3939a574ddba" datatype="html">
         <source>Run as User</source>
-        <target state="new">Run as User</target>
+        <target state="new">运行的用户</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/securitycontext/component.ts</context>
           <context context-type="linenumber">26</context>
@@ -854,7 +854,7 @@
       </trans-unit>
       <trans-unit id="9bd5ee137f2b7f983132c5bffbf5c681d1648331" datatype="html">
         <source>Run as Group</source>
-        <target state="new">Run as Group</target>
+        <target state="new">运行的用户组</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/securitycontext/component.ts</context>
           <context context-type="linenumber">26</context>
@@ -862,7 +862,7 @@
       </trans-unit>
       <trans-unit id="824f45818fc0f4ad4dd77e6fe2978ef7f7aba40d" datatype="html">
         <source>Run as Non-Root</source>
-        <target state="new">Run as Non-Root</target>
+        <target state="new">以非 Root 用户运行</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/securitycontext/component.ts</context>
           <context context-type="linenumber">26</context>
@@ -870,7 +870,7 @@
       </trans-unit>
       <trans-unit id="69851b70e90bc0599c426048c425866a26cfd5cb" datatype="html">
         <source>Read Only Filesystem</source>
-        <target state="new">Read Only Filesystem</target>
+        <target state="new">只读文件系统</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/securitycontext/component.ts</context>
           <context context-type="linenumber">26</context>
@@ -878,7 +878,7 @@
       </trans-unit>
       <trans-unit id="a40a3594a0009164479e52c41b81e3981dc24f7e" datatype="html">
         <source>Allow Privilege Escalation</source>
-        <target state="new">Allow Privilege Escalation</target>
+        <target state="new">允许提升权限</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/securitycontext/component.ts</context>
           <context context-type="linenumber">26</context>
@@ -886,7 +886,7 @@
       </trans-unit>
       <trans-unit id="c9b82274cdf442ca2ccfa36ef7eff066fa03689e" datatype="html">
         <source>Proc Mount</source>
-        <target state="new">Proc Mount</target>
+        <target state="new">Proc 挂载</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/securitycontext/component.ts</context>
           <context context-type="linenumber">26</context>
@@ -894,7 +894,7 @@
       </trans-unit>
       <trans-unit id="034066bb80cfe6be76952cb72e65ee487dd3bda4" datatype="html">
         <source>Seccomp Profile Type</source>
-        <target state="new">Seccomp Profile Type</target>
+        <target state="new">Seccomp 配置文件类型</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/securitycontext/component.ts</context>
           <context context-type="linenumber">26</context>
@@ -902,7 +902,7 @@
       </trans-unit>
       <trans-unit id="fbdccbf9dbc9fb8355c1a9021465fb6082f47b69" datatype="html">
         <source>Seccomp Localhost Profile</source>
-        <target state="new">Seccomp Localhost Profile</target>
+        <target state="new">Seccomp 本地配置文件</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/securitycontext/component.ts</context>
           <context context-type="linenumber">26</context>
@@ -1618,7 +1618,7 @@
       </trans-unit>
       <trans-unit id="2179bcb6e430557dd0c8ace27ea55e1bcf1a1979" datatype="html">
         <source>Image </source>
-        <target state="new">Image </target>
+        <target state="new">镜像</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/container/component.ts</context>
           <context context-type="linenumber">59</context>
@@ -1650,7 +1650,7 @@
       </trans-unit>
       <trans-unit id="e85e953453ef00a2b4b4f32bf83a5cb9488a86bb" datatype="html">
         <source><x id="INTERPOLATION" equiv-text="{{formatSecretValue(env.value).length}}"/> bytes </source>
-        <target state="new"><x id="INTERPOLATION" equiv-text="{{formatSecretValue(env.value).length}}"/> bytes </target>
+        <target><x id="INTERPOLATION" equiv-text="{{formatSecretValue(env.value).length}}"/> bytes </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/container/component.ts</context>
           <context context-type="linenumber">59</context>
@@ -1658,7 +1658,7 @@
       </trans-unit>
       <trans-unit id="4ae826faf65dddaf6d41fcce2f22abb08ca1d7c4" datatype="html">
         <source><x id="INTERPOLATION" equiv-text="{{env.value.length}}"/> bytes </source>
-        <target state="new"><x id="INTERPOLATION" equiv-text="{{env.value.length}}"/> bytes </target>
+        <target><x id="INTERPOLATION" equiv-text="{{env.value.length}}"/> bytes </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/container/template.html</context>
           <context context-type="linenumber">100,86</context>
@@ -1666,7 +1666,7 @@
       </trans-unit>
       <trans-unit id="3bd3636c73b1d4a423f38ddef44fba33ceacdd85" datatype="html">
         <source>Commands </source>
-        <target state="new">Commands </target>
+        <target state="new">命令 </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/container/template.html</context>
           <context context-type="linenumber">101,111</context>
@@ -1674,7 +1674,7 @@
       </trans-unit>
       <trans-unit id="5612a5ae6b595d690ae22cfeedbf2495295a5d69" datatype="html">
         <source>Arguments </source>
-        <target state="new">Arguments </target>
+        <target state="new">参数 </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/container/template.html</context>
           <context context-type="linenumber">126,133</context>
@@ -2563,7 +2563,7 @@
       </trans-unit>
       <trans-unit id="de375a026181bbc32e1bd7d8a654ec3b073f9ccf" datatype="html">
         <source>Read Only</source>
-        <target state="new">Read Only</target>
+        <target state="new">只读</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/volumemount/component.ts</context>
           <context context-type="linenumber">65</context>
@@ -2571,7 +2571,7 @@
       </trans-unit>
       <trans-unit id="77abbe59a0fb6ed58f736acf8cef054ed267b31e" datatype="html">
         <source>Mount Path</source>
-        <target state="new">Mount Path</target>
+        <target state="new">挂载路径</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/volumemount/component.ts</context>
           <context context-type="linenumber">65</context>
@@ -2579,7 +2579,7 @@
       </trans-unit>
       <trans-unit id="e395242f9308f706b3b3d2ccbd26069dc110d893" datatype="html">
         <source>Sub Path</source>
-        <target state="new">Sub Path</target>
+        <target state="new">子路径</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/volumemount/component.ts</context>
           <context context-type="linenumber">65</context>
@@ -2587,7 +2587,7 @@
       </trans-unit>
       <trans-unit id="5bf82c3d886212c3115bbff5a2fd0c47daee3032" datatype="html">
         <source>Source Type</source>
-        <target state="new">Source Type</target>
+        <target state="new">源类型</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/volumemount/component.ts</context>
           <context context-type="linenumber">65</context>
@@ -2595,7 +2595,7 @@
       </trans-unit>
       <trans-unit id="77e3f89cf546684334e05f3d68273c1d4d7c4cc9" datatype="html">
         <source>Source Name</source>
-        <target state="new">Source Name</target>
+        <target state="new">源名称</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/volumemount/component.ts</context>
           <context context-type="linenumber">65</context>
@@ -3532,7 +3532,7 @@
       </trans-unit>
       <trans-unit id="1bdf6d0a95c523599676ee9ce536adb037ce56af" datatype="html">
         <source>Local settings </source>
-        <target state="new">Local settings </target>
+        <target state="new">本地设置 </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/settings/local/component.ts</context>
           <context context-type="linenumber">53,62</context>
@@ -4960,7 +4960,7 @@
       </trans-unit>
       <trans-unit id="ffcb4a93798d319faa059cf0a59e13a33e13fc5f" datatype="html">
         <source>Path Type</source>
-        <target state="new">Path Type</target>
+        <target state="new">路径类型</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/ingressrulelist/component.ts</context>
           <context context-type="linenumber">97</context>
@@ -4968,7 +4968,7 @@
       </trans-unit>
       <trans-unit id="27634638ac68edd16b5a107ea29e52e1bab80b25" datatype="html">
         <source>Service Name</source>
-        <target state="new">Service Name</target>
+        <target state="new">Service 名称</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/ingressrulelist/component.ts</context>
           <context context-type="linenumber">97</context>
@@ -4980,7 +4980,7 @@
       </trans-unit>
       <trans-unit id="148a9e4494f2b05eadc825c223ca651eee294ebe" datatype="html">
         <source>Service Port</source>
-        <target state="new">Service Port</target>
+        <target state="new">Service 端口</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/ingressrulelist/component.ts</context>
           <context context-type="linenumber">97</context>
@@ -5080,7 +5080,7 @@
       </trans-unit>
       <trans-unit id="1bdf6d0a95c523599676ee9ce536adb037ce56af" datatype="html">
         <source>Local settings </source>
-        <target state="new">Local settings </target>
+        <target state="new">本地设置 </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/settings/local/component.ts</context>
           <context context-type="linenumber">53,62</context>
@@ -5212,7 +5212,7 @@
       </trans-unit>
       <trans-unit id="7d58fa3a5b6490938d8f36832cce311e91fe4496" datatype="html">
         <source>Image Pull Secrets</source>
-        <target state="new">Image Pull Secrets</target>
+        <target state="new">镜像拉取 Secrets</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/resource/cluster/serviceaccount/detail/component.ts</context>
           <context context-type="linenumber">57</context>
@@ -5654,7 +5654,7 @@
       </trans-unit>
       <trans-unit id="c73af29d15f7f46e960a5a52908965e0e1a0c3a7" datatype="html">
         <source> Local settings are stored in the browser cookies, so they are not synchronized between multiple devices. Changes are applied automatically on every change. </source>
-        <target state="new"> Local settings are stored in the browser cookies, so they are not synchronized between multiple devices. Changes are applied automatically on every change. </target>
+        <target state="new"> 本地设置存储在浏览器的 cookie 中，因此它们不会再多个设备之间同步它。每次更改都会被自动应用。</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/settings/local/component.ts</context>
           <context context-type="linenumber">74</context>
@@ -5662,7 +5662,7 @@
       </trans-unit>
       <trans-unit id="27a56aad79d8b61269ed303f11664cc78bcc2522" datatype="html">
         <source>Theme</source>
-        <target state="new">Theme</target>
+        <target state="new">主题</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/settings/local/component.ts</context>
           <context context-type="linenumber">74</context>
@@ -5670,7 +5670,7 @@
       </trans-unit>
       <trans-unit id="66d4ff20f88ba9658fa511e86291164d0dd3d1d0" datatype="html">
         <source>Choose color theme of the dashboard</source>
-        <target state="new">Choose color theme of the dashboard</target>
+        <target state="new">选择 dashboard 的颜色主题</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/settings/local/component.ts</context>
           <context context-type="linenumber">74</context>
