@@ -16,13 +16,13 @@ Make sure the following software is installed and added to the `$PATH` variable:
 
 Clone the repository into `$GOPATH/src/github.com/kubernetes/dashboard` and install the dependencies:
 
-```
+```shell
 npm ci
 ```
 
 If you are running commands with root privileges set `--unsafe-perm flag`:
 
-```
+```shell
 npm ci --unsafe-perm
 ```
 
@@ -30,7 +30,7 @@ npm ci --unsafe-perm
 
 To make Dashboard work you need to have cluster running. If you would like to use local cluster we recommend [kubeadm](https://kubernetes.io/docs/setup/independent/create-cluster-kubeadm/), [minikube](https://kubernetes.io/docs/getting-started-guides/minikube/) or [kubeadm-dind-cluster](https://github.com/Mirantis/kubeadm-dind-cluster). The most convenient way is to make it work is to create a proxy. Run the following command:
 
-```
+```shell
 kubectl proxy
 ```
 
@@ -40,13 +40,13 @@ kubectl will handle authentication with Kubernetes and create an API proxy with 
 
 Quick updated version:
 
-```
+```shell
 npm start
 ```
 
 Another way to connect to real cluster while developing dashboard is to specify options for `npm` like following:
 
-```
+```shell
 npm run start:https --kubernetes-dashboard:kubeconfig=<path to your kubeconfig>
 ```
 
@@ -70,7 +70,7 @@ To build dashboard for production, you still need to install `bc`.
 
 The Dashboard project can be built for production by using the following task:
 
-```
+```shell
 npm run build
 ```
 
@@ -78,7 +78,7 @@ The code is compiled, compressed, i18n support is enabled and debug support remo
 
 To build and immediately serve Dashboard from the `dist` folder, use the following task:
 
-```
+```shell
 npm run start:prod
 ```
 
@@ -88,13 +88,13 @@ Open a browser and access the UI under `localhost:9090`. The following processes
 
 To build the docker image on darwin OS you will need to set environment variable for go to build as linux:
 
-```
+```shell
 export GOOS=linux
 ```
 
 In order to package everything into a ready-to-run Docker image, use the following task:
 
-```
+```shell
 npm run docker:build:head
 ```
 
@@ -104,29 +104,29 @@ You might notice that the Docker image is very small and requires only a few MB.
 
 Unit tests should be executed after every source code change. The following task makes this a breeze. The full test suite includes unit tests and integration tests.
 
-```
+```shell
 npm run test
 ```
 
 You can also run individual tests on their own (such as the backend or frontend tests) by doing the following:
 
-```
+```shell
 npm run test:frontend
 ```
 or
-```
+```shell
 npm run test:backend
 ```
 
 The code style check suite includes format checks can be executed with:
 
-```
+```shell
 npm run check
 ```
 
 The code formatting can be executed with:
 
-```
+```shell
 npm run fix
 ```
 
@@ -140,7 +140,7 @@ Since the hooks for commit has been set with `husky` into `<dashboard_home>/.git
 
 Then you can commit your changes and push them to your fork:
 
-```
+```shell
 git commit
 git push -f origin my-feature
 ```
