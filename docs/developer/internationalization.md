@@ -57,7 +57,7 @@ Since dashboard team can not review translation files in your language, so dashb
 
 After preparation of new translation file, configure `i18n/locale_conf.json` file to support translated dashboard as follows:
 
-```json
+```JSON
 {"translations": [ "en", "fr", "ko", "zh" ]}
 ```
 
