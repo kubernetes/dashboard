@@ -21,13 +21,13 @@ An overview of the features provided by the dashboard can be found [here](https:
 
 The code style check suite includes format checks can be executed with:
 
-```
+```shell
 npm run check
 ```
 
 The code formatting can be executed with:
 
-```
+```shell
 npm run fix
 ```
 
