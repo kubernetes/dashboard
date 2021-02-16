@@ -47,7 +47,7 @@ Since dashboard team can not review translation files in your language, so dashb
 3. Run `npm run fix:i18n`. Then translation file for your language, e.g. `i18n/fr/messages.fr.xlf`, would be generated in your locale directory.
 4. Open your translation file and translate texts in `<target>` element into your language, and remove `state="new"` to mark it as translated.
 5. To build dashboard for your language, add your locale into `locales` in `angular.json` like follow:
-  ```
+  ```json
           "ja": {
             "translation": "i18n/ja/messages.ja.xlf",
             "baseHref": ""
@@ -57,13 +57,13 @@ Since dashboard team can not review translation files in your language, so dashb
 
 After preparation of new translation file, configure `i18n/locale_conf.json` file to support translated dashboard as follows:
 
-```
+```json
 {"translations": [ "en", "fr", "ko", "zh" ]}
 ```
 
 To add Japanese translation file, add `"ja"` into `"translations"` array in alphabetical order.
 
-```
+```json
 {"translations": [ "en", "fr", "ja", "ko", "zh" ]}
 ```
 
@@ -71,7 +71,7 @@ Then you can build your localized dashboard with `npm run build`.
 
 Before submit Pull Request, add `i18n/[locale]/OWNERS` file for your translation team like below:
 
-```
+```yaml
 approvers:
   - [your github account]
   - [and more approvers' github account]
