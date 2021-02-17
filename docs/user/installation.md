@@ -12,18 +12,18 @@ By default self-signed certificates are generated and stored in-memory. In case 
 
 Custom certificates have to be stored in a secret named `kubernetes-dashboard-certs` in the same namespace as Kubernetes Dashboard. Assuming that you have `tls.crt` and `tls.key` files stored under `$HOME/certs` directory, you should create secret with contents of these files:
 
-```
+```shell
 kubectl create secret generic kubernetes-dashboard-certs --from-file=$HOME/certs -n kubernetes-dashboard
 ```
 
 For Dashboard to pickup the certificates, you must pass arguments `--tls-cert-file=/tls.crt` and `--tls-key-file=/tls.key` to the container. You can edit YAML definition and deploy Dashboard in one go:
 
-```
+```shell
 kubectl create --edit -f https://raw.githubusercontent.com/kubernetes/dashboard/v2.1.0/aio/deploy/recommended.yaml
 ```
 
 Under Deployment section, add arguments to pod definition, it should look as follows:
-```
+```yaml
       containers:
       - args:
         - --tls-cert-file=/tls.crt
@@ -37,7 +37,7 @@ This setup is not fully secure. Certificates are not used and Dashboard is expos
 
 To deploy Dashboard execute following command:
 
-```
+```shell
 kubectl create -f https://raw.githubusercontent.com/kubernetes/dashboard/v2.0.1/aio/deploy/alternative.yaml
 ```
 
@@ -50,8 +50,8 @@ Besides official releases, there are also development releases, that are pushed 
 
 In most of the use cases you need to execute the following command to deploy latest development release:
 
-```
-$ kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v2.0.1/aio/deploy/head.yaml
+```shell
+kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v2.0.1/aio/deploy/head.yaml
 ```
 
 ### Update
@@ -60,8 +60,13 @@ Once installed, the deployment is not automatically updated. In order to update 
 
 Delete all Dashboard pods (assuming that Dashboard is deployed in kubernetes-dashboard namespace):
 
-```
+```shell
 kubectl -n kubernetes-dashboard delete $(kubectl -n kubernetes-dashboard get pod -o name | grep dashboard)
+```
+
+The output is similar to this:
+
+```
 pod "dashboard-metrics-scraper-fb986f88d-gnfnk" deleted
 pod "kubernetes-dashboard-7d8b9cc8d-npljm" deleted
 ```
