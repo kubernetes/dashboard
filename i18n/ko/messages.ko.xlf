@@ -5664,7 +5664,15 @@
         <target state="new">List of namespaces that should be presented to user without namespace list privileges.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/settings/global/namespace/component.ts</context>
-          <context context-type="linenumber">153,165</context>
+          <context context-type="linenumber">150</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="867c149459751f1e03e02dbd646c51f7fe69eb9d" datatype="html">
+        <source>Add namespaces...</source>
+        <target state="new">Add namespaces...</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/settings/global/namespace/component.ts</context>
+          <context context-type="linenumber">182,187</context>
         </context-group>
       </trans-unit>
       <trans-unit id="ec0f60f3ae029dd116dd5f1549c16d98f36f3e24" datatype="html">
@@ -5701,6 +5709,14 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/settings/global/namespace/adddialog/dialog.ts</context>
           <context context-type="linenumber">29</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="cb2715bffb465ec5b62a6d5c334eb4a4fc30e9eb" datatype="html">
+        <source>No namespaces selected</source>
+        <target state="new">No namespaces selected</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/settings/global/namespace/editdialog/dialog.ts</context>
+          <context context-type="linenumber">37</context>
         </context-group>
       </trans-unit>
       <trans-unit id="0eaf09bb21b299b7d114c0f4e70c2976bb80c9aa" datatype="html">

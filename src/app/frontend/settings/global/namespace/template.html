@@ -56,7 +56,8 @@ limitations under the License.
             {{namespace}}
           </mat-chip>
           <mat-chip *ngIf="form.get(Controls.FallbackList).value.length === 0"
-                    [disabled]="true">Add namespaces...</mat-chip>
+                    [disabled]="true"
+                    i18n>Add namespaces...</mat-chip>
           <mat-chip *ngIf="invisibleCount > 0"
                     [disabled]="true"
                     fxFlex
