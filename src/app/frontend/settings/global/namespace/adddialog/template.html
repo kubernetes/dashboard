@@ -42,6 +42,7 @@ limitations under the License.
   <mat-dialog-actions>
     <button mat-raised-button
             color="primary"
+            [disabled]="namespaceInput?.value?.length === 0"
             [mat-dialog-close]="namespaceInput.value"
             i18n>Add
     </button>

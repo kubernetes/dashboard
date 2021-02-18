@@ -131,7 +131,9 @@ export class NamespaceSettingsComponent implements OnInit, OnDestroy, ControlVal
   add(): void {
     const dialogConfig: MatDialogConfig = {
       data: {
-        namespaces: this.namespaces,
+        namespaces: this.namespaces.filter(
+          ns => !this.settingsHelperService_.settings.namespaceFallbackList.includes(ns)
+        ),
       } as AddFallbackNamespaceDialogData,
     };
 
