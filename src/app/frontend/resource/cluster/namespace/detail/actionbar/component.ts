@@ -49,7 +49,7 @@ export class ActionbarComponent implements OnInit {
   }
 
   onClick(): void {
-    this.router_.navigate(['overview'], {
+    this.router_.navigate(['workloads'], {
       queryParamsHandling: 'merge',
       queryParams: {[NAMESPACE_STATE_PARAM]: this.resourceMeta.objectMeta.name},
     });

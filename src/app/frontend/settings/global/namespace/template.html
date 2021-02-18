@@ -1,0 +1,81 @@
+<!--
+Copyright 2017 The Kubernetes Authors.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<form [formGroup]="form">
+  <kd-settings-entry key="Default namespace"
+                     i18n-key
+                     desc="Namespace that should be selected by default after logging in."
+                     i18n-desc>
+    <mat-form-field fxFlex>
+      <input #namespaceInput
+             formControlName="defaultNamespace"
+             name="defaultNamespace"
+             i18n-placeholder
+             placeholder="Namespace"
+             type="text"
+             [matAutocomplete]="auto"
+             matInput>
+      <mat-autocomplete #auto="matAutocomplete">
+        <mat-option *ngFor="let namespace of namespaces | filterBy: namespaceInput.value"
+                    [value]="namespace">
+          {{namespace}}
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+  </kd-settings-entry>
+
+  <kd-settings-entry key="Namespace fallback list"
+                     i18n-key
+                     desc="List of namespaces that should be presented to user without namespace list privileges."
+                     i18n-desc>
+    <mat-form-field fxFlex>
+      <div fxFlex="100"
+           fxLayout="row">
+        <mat-chip-list [formArrayName]="Controls.FallbackList"
+                       fxFlex="80"
+                       fxLayoutAlign=" center"
+                       class="kd-namespace-chip-list">
+          <mat-chip *ngFor="let namespace of form.get(Controls.FallbackList).value | slice:0:visibleNamespaces"
+                    style="max-width: 100px; text-overflow: ellipsis; white-space: nowrap; overflow: hidden; display: block"
+                    [matTooltip]="namespace"
+                    [selectable]="false"
+                    [removable]="false">
+            {{namespace}}
+          </mat-chip>
+          <mat-chip *ngIf="form.get(Controls.FallbackList).value.length === 0"
+                    [disabled]="true"
+                    i18n>Add namespaces...</mat-chip>
+          <mat-chip *ngIf="invisibleCount > 0"
+                    [disabled]="true"
+                    fxFlex
+                    fxLayoutAlign=" center">+ {{invisibleCount}}</mat-chip>
+        </mat-chip-list>
+        <div fxFlex="20"
+             fxLayoutAlign="end">
+          <button mat-icon-button
+                  style="margin-right: 0"
+                  (click)="edit()">
+            <mat-icon style="font-size: 20px">edit</mat-icon>
+          </button>
+          <button mat-icon-button
+                  (click)="add()">
+            <mat-icon>add</mat-icon>
+          </button>
+        </div>
+      </div>
+    </mat-form-field>
+  </kd-settings-entry>
+</form>

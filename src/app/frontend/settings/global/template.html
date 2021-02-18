@@ -18,21 +18,21 @@ limitations under the License.
          [expandable]="true"
          *ngIf="!hasLoadError">
   <div title
-       i18n>Global settings</div>
+       i18n>Global settings
+  </div>
   <div content>
     <p i18n>
       Global settings are stored in config map, so all of them are applied for every instance of the
       app.
     </p>
     <br>
-    <form #form="ngForm"
-          (ngSubmit)="save(form)">
+    <form [formGroup]="form">
       <kd-settings-entry key="Cluster name"
                          i18n-key
                          desc="Cluster name appears in the browser window title if it is set."
                          i18n-desc>
         <mat-form-field fxFlex>
-          <input [(ngModel)]="settings.clusterName"
+          <input [formControlName]="Controls.ClusterName"
                  name="clusterName"
                  i18n-placeholder
                  placeholder="Cluster name"
@@ -40,13 +40,16 @@ limitations under the License.
                  matInput>
         </mat-form-field>
       </kd-settings-entry>
+
+      <kd-namespace-settings [formControlName]="Controls.NamespaceSettings">
+      </kd-namespace-settings>
+
       <kd-settings-entry key="Items per page"
                          i18n-key
                          desc="Max number of items that can be displayed on every list view."
                          i18n-desc>
         <div fxFlex>
-          <mat-slider [(ngModel)]="settings.itemsPerPage"
-                      name="itemsPerPage"
+          <mat-slider [formControlName]="Controls.ItemsPerPage"
                       color="primary"
                       min="5"
                       max="50"
@@ -64,8 +67,7 @@ limitations under the License.
                          desc="Max number of labels that are displayed by default on most views."
                          i18n-desc>
         <div fxFlex>
-          <mat-slider [(ngModel)]="settings.labelsLimit"
-                      name="labelsLimit"
+          <mat-slider [formControlName]="Controls.LabelsLimit"
                       color="primary"
                       min="1"
                       max="10"
@@ -83,8 +85,7 @@ limitations under the License.
                          desc="Number of seconds between every auto-refresh of logs."
                          i18n-desc>
         <div fxFlex>
-          <mat-slider [(ngModel)]="settings.logsAutoRefreshTimeInterval"
-                      name="autoRefreshTimeInterval"
+          <mat-slider [formControlName]="Controls.LogsAutorefreshInterval"
                       color="primary"
                       min="1"
                       max="10"
@@ -102,8 +103,7 @@ limitations under the License.
                          desc="Number of seconds between every auto-refresh of every resource. Set 0 to disable."
                          i18n-desc>
         <div fxFlex>
-          <mat-slider [(ngModel)]="settings.resourceAutoRefreshTimeInterval"
-                      name="resourceAutoRefreshTimeInterval"
+          <mat-slider [formControlName]="Controls.ResourceAutorefreshInterval"
                       color="primary"
                       min="0"
                       max="60"
@@ -124,19 +124,20 @@ limitations under the License.
              fxLayoutAlign=" center">
           <mat-slide-toggle color="primary"
                             name="disableAccessDeniedNotifications"
-                            [(ngModel)]="settings.disableAccessDeniedNotifications"></mat-slide-toggle>
+                            [formControlName]="Controls.DisableAccessDeniedNotification">
+          </mat-slide-toggle>
         </div>
       </kd-settings-entry>
       <br><br>
-      <button [disabled]="form.pristine"
-              type="submit"
+      <button [disabled]="!canSave()"
+              (click)="save()"
               color="primary"
               mat-raised-button
               i18n>
         Save
       </button>
       <button type="button"
-              (click)="load(form)"
+              (click)="reload()"
               color="primary"
               mat-raised-button
               i18n>

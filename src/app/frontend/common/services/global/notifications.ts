@@ -57,7 +57,6 @@ export class NotificationsService {
   constructor(private readonly _globalSettingsService: GlobalSettingsService) {}
 
   push(message: string, severity: NotificationSeverity): void {
-    console.log(message);
     // Do not add same notifications multiple times
     if (this.notifications_.some(notification => notification.message === message)) {
       return;
