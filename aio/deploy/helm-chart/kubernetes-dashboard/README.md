@@ -61,9 +61,9 @@ Version 2.0.0 of this chart is the first version hosted in the kubernetes/dashbo
 
 In order to upgrade, please update your configuration to remove `clusterAdminRole` parameter and adapt `enableSkipLogin`, `enableInsecureLogin`, `podAnnotations` and `securityContext` parameters, and uninstall/reinstall the chart.
 
-### Version 4.0.0
+### Version 4.x.x
 
-Version 4.0.0 of this chart only support Helm 3 and remove the support from Helm 2.
+Starting from version 4.0.0 of this chart, it will only support Helm 3 and remove the support for Helm 2.
 If you still use Helm 2 you will need first to migrate the deployment to Helm 3 and then you can upgrade your chart.
 
 To do that you can follow the [guide](https://helm.sh/blog/migrate-from-helm-v2-to-helm-v3/)
@@ -82,7 +82,7 @@ The following table lists the configurable parameters of the kubernetes-dashboar
 Parameter                                       | Description                                                                                                                      | Default
 ------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------
 `image.repository`                              | Repository for container image                                                                                                   | `kubernetesui/dashboard`
-`image.tag`                                     | Image tag                                                                                                                        | `v2.1.0`
+`image.tag`                                     | Image tag                                                                                                                        | `v2.2.0`
 `image.pullPolicy`                              | Image pull policy                                                                                                                | `IfNotPresent`
 `image.pullSecrets`                             | Image pull secrets                                                                                                               | `[]`
 `replicaCount`                                  | Number of replicas                                                                                                               | `1`
