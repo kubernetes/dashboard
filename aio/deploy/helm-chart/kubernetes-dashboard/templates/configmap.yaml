@@ -17,7 +17,7 @@ kind: ConfigMap
 metadata:
   labels:
 {{ include "kubernetes-dashboard.labels" . | indent 4 }}
-  name: {{ template "kubernetes-dashboard.fullname" . }}-settings
+  name: kubernetes-dashboard-settings
 data:
 {{- with .Values.settings }}
   _global: {{ toJson . | quote }}
