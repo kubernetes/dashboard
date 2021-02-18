@@ -12,23 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {Component, Input, OnInit} from '@angular/core';
-import {Endpoint} from '@api/root.api';
+@import '../../../../variables';
+@import '../../../../mixins';
 
-/**
- * Component definition object for the component that displays the endpoints which are accessible
- * from the outside of the cluster.
- */
-@Component({
-  selector: 'kd-external-endpoint',
-  templateUrl: './template.html',
-  styleUrls: ['./style.scss'],
-})
-export class ExternalEndpointComponent implements OnInit {
-  @Input() endpoints: Endpoint[];
-  @Input() hideExternalIcon = false;
+.external-link-icon {
+  @include kd-icon-size($body-font-size-base);
 
-  ngOnInit(): void {
-    this.endpoints = this.endpoints || [];
-  }
+  margin-bottom: .75 * $baseline-grid;
+  margin-left: .5 * $baseline-grid;
 }

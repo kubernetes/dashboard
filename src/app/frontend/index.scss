@@ -329,6 +329,12 @@ router-outlet::after {
   cursor: pointer !important;
 }
 
+.kd-ellipsised {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
 .kd-no-bottom-border {
   border-bottom: 0 !important;
 }
