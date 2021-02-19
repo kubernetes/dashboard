@@ -19,7 +19,7 @@ import {NavService} from '../../common/services/nav/service';
 import {PluginsConfigService} from '../../common/services/global/plugin';
 import {Router} from '@angular/router';
 import {ResourceService} from 'common/services/resource/resource';
-import {NamespaceDetail} from '@api/backendapi';
+import {NamespaceDetail} from '@api/root.api';
 import {EndpointManager, Resource} from 'common/services/resource/endpoint';
 import {first} from 'rxjs/operators';
 

@@ -15,7 +15,7 @@
 import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
 import {ResourceService} from '../resource/resource';
-import {NamespaceList, PodList} from '@api/backendapi';
+import {NamespaceList, PodList} from '@api/root.api';
 import {EndpointManager, Resource} from '../resource/endpoint';
 import {NotificationsService} from './notifications';
 import {Router} from '@angular/router';

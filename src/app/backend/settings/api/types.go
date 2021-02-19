@@ -122,7 +122,6 @@ var defaultSettings = Settings{
 	LogsAutoRefreshTimeInterval:      5,
 	ResourceAutoRefreshTimeInterval:  5,
 	DisableAccessDeniedNotifications: true,
-	DisableAccessDeniedNotifications: false,
 	DefaultNamespace:                 "default",
 	NamespaceFallbackList:            []string{"default"},
 }

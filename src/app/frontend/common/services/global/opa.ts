@@ -14,11 +14,11 @@
 
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Injectable, Inject} from '@angular/core';
-import {AppConfig} from '@api/backendapi';
-import {VersionInfo} from '@api/frontendapi';
+import {AppConfig} from '@api/root.api';
+import {VersionInfo} from '@api/root.ui';
 import {Observable} from 'rxjs/Observable';
 import {version} from '../../../environments/version';
-import {OpaDetail, OpaList} from 'typings/backendapi';
+import {OpaDetail, OpaList} from 'typings/root.api';
 import {of} from 'rxjs';
 import {getHeapSpaceStatistics} from 'v8';
 import {ConfigService} from './config';

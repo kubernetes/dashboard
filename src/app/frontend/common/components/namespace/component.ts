@@ -186,18 +186,7 @@ export class NamespaceSelectorComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.unsubscribe_))
       .subscribe(
         namespaceList => {
-<<<<<<< HEAD
           const namespacesTemp = namespaceList.namespaces.map(n => n.objectMeta.name);
-=======
-          this.usingFallbackNamespaces = false;
-          this.namespaces = namespaceList.namespaces.map(n => n.objectMeta.name);
-
-          if (!this.namespaces || this.namespaces.length === 0) {
-            this.usingFallbackNamespaces = true;
-            this.namespaces = this.settingsService_.getNamespaceFallbackList();
-          }
-
->>>>>>> upstream/master
           if (namespaceList.errors.length > 0) {
             for (const err of namespaceList.errors) {
               this.notifications_.pushErrors([err]);
