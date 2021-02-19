@@ -14,9 +14,10 @@
 
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
-import {Container, PodDetail} from '@api/backendapi';
+import {Container, PodDetail} from '@api/root.api';
 import {Subject} from 'rxjs';
 import {takeUntil} from 'rxjs/operators';
+import * as _ from 'lodash';
 
 import {ActionbarService, ResourceMeta} from '../../../../common/services/global/actionbar';
 import {NotificationsService} from '../../../../common/services/global/notifications';
@@ -27,6 +28,7 @@ import {NamespacedResourceService} from '../../../../common/services/resource/re
 @Component({
   selector: 'kd-pod-detail',
   templateUrl: './template.html',
+  styleUrls: ['style.scss'],
 })
 export class PodDetailComponent implements OnInit, OnDestroy {
   private readonly endpoint_ = EndpointManager.resource(Resource.pod, true);
@@ -69,11 +71,19 @@ export class PodDetailComponent implements OnInit, OnDestroy {
     this.actionbar_.onDetailsLeave.emit();
   }
 
+  hasSecurityContext(): boolean {
+    return this.pod && !_.isEmpty(this.pod.securityContext);
+  }
+
   getNodeHref(name: string): string {
     return this.kdState_.href('node', name);
   }
 
   getContainerName(_: number, container: Container): string {
     return container.name;
+  }
+
+  getSecretHref(name: string): string {
+    return this.kdState_.href('secret', name, this.pod.objectMeta.namespace);
   }
 }

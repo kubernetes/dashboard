@@ -13,15 +13,17 @@
 // limitations under the License.
 
 import {DecimalPipe} from '@angular/common';
-import {Pipe} from '@angular/core';
+import {Pipe, PipeTransform} from '@angular/core';
 
 /**
  * Formats memory in bytes to a binary prefix format, e.g., 789,21 MiB.
  */
 @Pipe({name: 'kdMemory'})
-export class MemoryFormatter extends DecimalPipe {
+export class MemoryFormatter implements PipeTransform {
   readonly base = 1024;
   readonly powerSuffixes = ['', 'Ki', 'Mi', 'Gi', 'Ti', 'Pi'];
+
+  constructor(private readonly decimalPipe_: DecimalPipe) {}
 
   transform(value: number): string {
     let divider = 1;
@@ -32,7 +34,7 @@ export class MemoryFormatter extends DecimalPipe {
       power += 1;
     }
 
-    const formatted = super.transform(value / divider, '1.2-2');
+    const formatted = this.decimalPipe_.transform(value / divider, '1.2-2');
     const suffix = this.powerSuffixes[power];
     return suffix ? `${formatted}${suffix}` : formatted;
   }

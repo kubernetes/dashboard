@@ -24,7 +24,7 @@ import {MatTooltipModule} from '@angular/material/tooltip';
 import {By} from '@angular/platform-browser';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {RouterModule} from '@angular/router';
-import {AppConfig, IngressDetail} from '@api/backendapi';
+import {AppConfig, IngressDetail} from '@api/root.api';
 import {CardComponent} from 'common/components/card/component';
 import {ChipsComponent} from 'common/components/chips/component';
 import {ObjectMetaComponent} from 'common/components/objectmeta/component';
@@ -51,6 +51,40 @@ class MiniTestComponent {
     },
     typeMeta: {kind: 'Ingress'},
     errors: [],
+    endpoints: [],
+    spec: {
+      rules: [
+        {
+          http: {
+            paths: [
+              {
+                path: '/testpath',
+                pathType: 'Prefix',
+                backend: {
+                  serviceName: 'test',
+                  servicePort: 80,
+                },
+              },
+            ],
+          },
+        },
+        {
+          host: 'foo.bar.com',
+          http: {
+            paths: [
+              {
+                path: '/bar',
+                pathType: 'Prefix',
+                backend: {
+                  serviceName: 'service1',
+                  servicePort: 'a_port_name',
+                },
+              },
+            ],
+          },
+        },
+      ],
+    },
   };
 }
 
@@ -71,6 +105,41 @@ class MaxiTestComponent {
     },
     typeMeta: {kind: 'Ingress'},
     errors: [],
+    endpoints: [],
+    spec: {
+      rules: [
+        {
+          host: 'foox.bar.com',
+          http: {
+            paths: [
+              {
+                path: '/',
+                pathType: 'Prefix',
+                backend: {
+                  serviceName: 'service1',
+                  servicePort: 80,
+                },
+              },
+            ],
+          },
+        },
+        {
+          host: 'barx.foo.com',
+          http: {
+            paths: [
+              {
+                path: '/',
+                pathType: 'Prefix',
+                backend: {
+                  serviceName: 'service2',
+                  servicePort: 80,
+                },
+              },
+            ],
+          },
+        },
+      ],
+    },
   };
 }
 

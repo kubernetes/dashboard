@@ -48,6 +48,7 @@
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
             "aot": true,
+            "progress": false,
             "outputPath": ".tmp/frontend",
             "index": "src/app/frontend/index.html",
             "main": "src/app/frontend/index.ts",
@@ -71,6 +72,11 @@
                 "output": "/ace"
               }
             ],
+            "stylePreprocessorOptions": {
+              "includePaths": [
+                "src/app/frontend"
+              ]
+            },
             "styles": [
               "node_modules/highlight.js/styles/github.css",
               "node_modules/material-design-icons/iconfont/material-icons.css",
@@ -97,9 +103,7 @@
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
-              "extractCss": true,
               "namedChunks": false,
-              "aot": true,
               "localize": true,
               "extractLicenses": true,
               "vendorChunk": false,
@@ -116,6 +120,7 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
+            "aot": true,
             "browserTarget": "kubernetes-dashboard:build",
             "port": 8080
           },

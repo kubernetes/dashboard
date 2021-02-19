@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import {Component, OnInit, Input, EventEmitter, Output} from '@angular/core';
-import {SecretDetail} from '@api/backendapi';
+import {SecretDetail} from '@api/root.api';
 import {RawResource} from 'common/resources/rawresource';
 import {HttpClient, HttpErrorResponse, HttpHeaders} from '@angular/common/http';
 import {AlertDialogConfig, AlertDialog} from 'common/dialogs/alert/dialog';

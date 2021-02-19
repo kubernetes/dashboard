@@ -330,6 +330,12 @@ router-outlet::after {
   cursor: pointer !important;
 }
 
+.kd-ellipsised {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
 .kd-no-bottom-border {
   border-bottom: 0 !important;
 }
@@ -381,5 +387,26 @@ router-outlet::after {
 
   textarea {
     padding: (2 * $baseline-grid) (2 * $baseline-grid) 0 !important;
+  }
+}
+
+.kd-namespace-chip-list {
+  overflow-x: hidden;
+
+  &:focus {
+    outline: none;
+  }
+
+  .mat-chip-list-wrapper {
+    flex-wrap: nowrap;
+    overflow-x: hidden;
+  }
+}
+
+.mat-list {
+  margin-top: $baseline-grid;
+
+  &.mat-list-base {
+    padding-top: 0;
   }
 }

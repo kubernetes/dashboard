@@ -13,7 +13,9 @@
 // limitations under the License.
 
 import {Component, Input, OnChanges} from '@angular/core';
-import {ConfigMapKeyRef, Container, EnvVar, SecretKeyRef} from '@api/backendapi';
+import {ConfigMapKeyRef, Container, EnvVar, SecretKeyRef} from '@api/root.api';
+import * as _ from 'lodash';
+
 import {KdStateService} from '../../services/global/state';
 
 @Component({
@@ -54,5 +56,9 @@ export class ContainerCardComponent implements OnChanges {
 
   getEnvVarID(_: number, envVar: EnvVar): string {
     return `${envVar.name}-${envVar.value}`;
+  }
+
+  hasSecurityContext(): boolean {
+    return this.container && !_.isEmpty(this.container.securityContext);
   }
 }

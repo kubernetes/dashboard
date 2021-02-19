@@ -19,10 +19,19 @@
   .mat-card {
     min-width: 100 * $baseline-grid;
     padding: 0;
-  }
 
-  .mat-card.kd-graph {
-    min-width: unset;
+    &.kd-inner-table {
+      box-shadow: none;
+      margin: 0;
+
+      .mat-card-content {
+        padding: 0;
+      }
+    }
+
+    &.kd-graph {
+      min-width: unset;
+    }
   }
 
   .mat-card-title {

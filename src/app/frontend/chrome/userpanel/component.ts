@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import {Component, OnInit} from '@angular/core';
-import {LoginStatus} from '@api/backendapi';
+import {LoginStatus} from '@api/root.api';
 import {AuthService} from '../../common/services/global/authentication';
 
 @Component({

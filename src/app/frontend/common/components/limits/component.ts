@@ -14,7 +14,7 @@
 
 import {Component, Input} from '@angular/core';
 import {MatTableDataSource} from '@angular/material/table';
-import {LimitRange} from 'typings/backendapi';
+import {LimitRange} from 'typings/root.api';
 
 @Component({
   selector: 'kd-resource-limit-list',

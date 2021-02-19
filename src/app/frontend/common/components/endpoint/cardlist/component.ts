@@ -14,7 +14,7 @@
 
 import {Component, Input} from '@angular/core';
 import {MatTableDataSource} from '@angular/material/table';
-import {Endpoint} from '@api/backendapi';
+import {Endpoint} from '@api/root.api';
 
 @Component({
   selector: 'kd-endpoint-card-list',

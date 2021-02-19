@@ -229,6 +229,7 @@
 
   .kd-namespace-select-input {
     background: $card-background;
+    color: mat-color($foreground-palette, secondary-text);
   }
 
   .kd-namespaced-item {
@@ -316,5 +317,13 @@
 
   .kd-edit-active {
     color: map-get($colors, primary);
+  }
+
+  .kd-volume-mounts {
+    border: 1px solid $border;
+  }
+
+  .mat-list {
+    border: 1px solid $border;
   }
 }

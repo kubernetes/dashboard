@@ -16,7 +16,7 @@ import {HttpClientTestingModule, HttpTestingController} from '@angular/common/ht
 import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
 import {By} from '@angular/platform-browser';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {AppConfig} from '@api/backendapi';
+import {AppConfig} from '@api/root.api';
 import {SharedModule} from 'shared.module';
 import {CardComponent} from '../common/components/card/component';
 import {AssetsService} from '../common/services/global/assets';

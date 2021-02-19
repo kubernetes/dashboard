@@ -14,7 +14,7 @@
 
 import {HttpParams} from '@angular/common/http';
 import {ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnInit} from '@angular/core';
-import {Event, EventList} from '@api/backendapi';
+import {Event, EventList} from '@api/root.api';
 import {Observable} from 'rxjs';
 
 import {ResourceListWithStatuses} from '../../../resources/list';

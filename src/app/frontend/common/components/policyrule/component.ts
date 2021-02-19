@@ -14,7 +14,7 @@
 
 import {Component, Input, OnInit} from '@angular/core';
 import {MatTableDataSource} from '@angular/material/table';
-import {PolicyRule} from 'typings/backendapi';
+import {PolicyRule} from 'typings/root.api';
 
 @Component({
   selector: 'kd-policy-rule-list',

@@ -74,7 +74,7 @@ You can grant full admin privileges to Dashboard's Service Account by creating b
 
 ### Official release
 
-```
+```yaml
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
@@ -92,7 +92,7 @@ subjects:
 
 ### Development release
 
-```
+```yaml
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:

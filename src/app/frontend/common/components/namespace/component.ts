@@ -16,16 +16,17 @@ import {Component, ElementRef, Inject, OnDestroy, OnInit, ViewChild} from '@angu
 import {MatDialog} from '@angular/material/dialog';
 import {MatSelect} from '@angular/material/select';
 import {ActivatedRoute, NavigationEnd, Router} from '@angular/router';
-import {NamespaceList} from '@api/backendapi';
-import {NamespaceDetail} from '@api/backendapi';
-import {RoleBindingList} from '@api/backendapi';
-import {PodList} from '@api/backendapi';
+import {NamespaceDetail} from '@api/root.api';
+import {RoleBindingList} from '@api/root.api';
+import {PodList} from '@api/root.api';
+import {NamespaceList} from '@api/root.api';
 import {Subject} from 'rxjs';
-import {CRDObjectList} from '@api/backendapi';
+import {CRDObjectList} from '@api/root.api'; 
 import {distinctUntilChanged, filter, startWith, switchMap, takeUntil, first} from 'rxjs/operators';
 
 import {Config, CONFIG_DI_TOKEN} from '../../../index.config';
 import {NAMESPACE_STATE_PARAM} from '../../params/params';
+import {GlobalSettingsService} from '../../services/global/globalsettings';
 import {HistoryService} from '../../services/global/history';
 import {NamespaceService} from '../../services/global/namespace';
 import {NotificationsService} from '../../services/global/notifications';
@@ -54,6 +55,9 @@ export class NamespaceSelectorComponent implements OnInit, OnDestroy {
   selectedNamespace: string;
   resourceNamespaceParam: string;
   endpoint: string;
+  usingFallbackNamespaces = false;
+
+
   @ViewChild(MatSelect, {static: true}) private readonly select_: MatSelect;
   @ViewChild('namespaceInput', {static: true}) private readonly namespaceInputEl_: ElementRef;
 
@@ -70,6 +74,7 @@ export class NamespaceSelectorComponent implements OnInit, OnDestroy {
     private readonly notifications_: NotificationsService,
     private readonly activatedRoute_: ActivatedRoute,
     private readonly historyService_: HistoryService,
+    private readonly settingsService_: GlobalSettingsService,
     @Inject(CONFIG_DI_TOKEN) private readonly appConfig_: Config
   ) {}
 
@@ -118,20 +123,23 @@ export class NamespaceSelectorComponent implements OnInit, OnDestroy {
   }
 
   selectNamespace(): void {
-    if (this.selectNamespaceInput.length > 0) {
-      this.selectedNamespace = this.selectNamespaceInput;
-      this.select_.close();
-      this.changeNamespace_(this.selectedNamespace);
+    if (this.selectNamespaceInput.length === 0) {
+      return;
     }
+
+    this.selectedNamespace = this.selectNamespaceInput;
+    this.select_.close();
+    this.changeNamespace_(this.selectedNamespace);
   }
 
   onNamespaceToggle(opened: boolean): void {
     if (opened) {
       this.namespaceUpdate_.next();
       this.focusNamespaceInput_();
-    } else {
-      this.changeNamespace_(this.selectedNamespace);
+      return;
     }
+
+    this.changeNamespace_(this.selectedNamespace);
   }
 
   formatNamespaceName(namespace: string): string {
@@ -141,6 +149,14 @@ export class NamespaceSelectorComponent implements OnInit, OnDestroy {
 
     return namespace;
   }
+
+  // setDefaultQueryParams_() {
+  //   const defaultNamespace = this.settingsService_.getDefaultNamespace() || this.appConfig_.defaultNamespace;
+  //   this.router_.navigate([this.activatedRoute_.snapshot.url], {
+  //     queryParams: {[NAMESPACE_STATE_PARAM]: defaultNamespace},
+  //     queryParamsHandling: 'merge',
+  //   });
+  // }
 
   /**
    * When state is loaded and namespaces are fetched perform basic validation.
@@ -170,7 +186,18 @@ export class NamespaceSelectorComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.unsubscribe_))
       .subscribe(
         namespaceList => {
+<<<<<<< HEAD
           const namespacesTemp = namespaceList.namespaces.map(n => n.objectMeta.name);
+=======
+          this.usingFallbackNamespaces = false;
+          this.namespaces = namespaceList.namespaces.map(n => n.objectMeta.name);
+
+          if (!this.namespaces || this.namespaces.length === 0) {
+            this.usingFallbackNamespaces = true;
+            this.namespaces = this.settingsService_.getNamespaceFallbackList();
+          }
+
+>>>>>>> upstream/master
           if (namespaceList.errors.length > 0) {
             for (const err of namespaceList.errors) {
               this.notifications_.pushErrors([err]);
@@ -275,9 +302,10 @@ export class NamespaceSelectorComponent implements OnInit, OnDestroy {
             queryParams: {[NAMESPACE_STATE_PARAM]: this.selectedNamespace},
             queryParamsHandling: 'merge',
           });
-        } else {
-          this.historyService_.goToPreviousState('overview');
+          return;
         }
+
+        this.historyService_.goToPreviousState('overview');
       });
   }
 
@@ -290,14 +318,15 @@ export class NamespaceSelectorComponent implements OnInit, OnDestroy {
         queryParams: {[NAMESPACE_STATE_PARAM]: namespace},
         queryParamsHandling: 'merge',
       });
-    } else {
-      // Change only the namespace as currently not on details view.
-      this.router_.navigate([], {
-        relativeTo: this.activatedRoute_,
-        queryParams: {[NAMESPACE_STATE_PARAM]: namespace},
-        queryParamsHandling: 'merge',
-      });
+      return;
     }
+
+    // Change only the namespace as currently not on details view.
+    this.router_.navigate([], {
+      relativeTo: this.activatedRoute_,
+      queryParams: {[NAMESPACE_STATE_PARAM]: namespace},
+      queryParamsHandling: 'merge',
+    });
   }
 
   private clearNamespaceInput_(): void {

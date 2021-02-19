@@ -15,7 +15,7 @@
 import {HttpParams} from '@angular/common/http';
 import {ChangeDetectionStrategy, ChangeDetectorRef, Component, Input} from '@angular/core';
 import {Observable} from 'rxjs';
-import {Ingress, IngressList} from 'typings/backendapi';
+import {Ingress, IngressList} from 'typings/root.api';
 
 import {ResourceListBase} from '../../../resources/list';
 import {NotificationsService} from '../../../services/global/notifications';
@@ -27,6 +27,7 @@ import {ListGroupIdentifier, ListIdentifier} from '../groupids';
 @Component({
   selector: 'kd-ingress-list',
   templateUrl: './template.html',
+  styleUrls: ['./style.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class IngressListComponent extends ResourceListBase<IngressList, Ingress> {
@@ -57,7 +58,7 @@ export class IngressListComponent extends ResourceListBase<IngressList, Ingress>
   }
 
   getDisplayColumns(): string[] {
-    return ['name', 'labels', 'endpoints', 'created'];
+    return ['name', 'labels', 'endpoints', 'hosts', 'created'];
   }
 
   private shouldShowNamespaceColumn_(): boolean {

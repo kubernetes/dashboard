@@ -16,10 +16,12 @@ import {HttpClient, HttpErrorResponse} from '@angular/common/http';
 import {Component, Inject, NgZone, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {ConfigService} from 'common/services/global/config';
-import {AuthenticationMode, EnabledAuthenticationModes, LoginSkippableResponse, LoginSpec} from '@api/backendapi';
-import {KdError, KdFile, StateError} from '@api/frontendapi';
+
+import {AuthenticationMode, EnabledAuthenticationModes, LoginSkippableResponse, LoginSpec} from '@api/root.api';
+import {KdError, KdFile, StateError} from '@api/root.ui';
 import {CookieService} from 'ngx-cookie-service';
 import {map} from 'rxjs/operators';
+import {HistoryService} from '../common/services/global/history';
 
 import {Config, CONFIG_DI_TOKEN} from '../index.config';
 import {AsKdError, K8SError} from '../common/errors/errors';
@@ -63,6 +65,7 @@ export class LoginComponent implements OnInit {
     private readonly pluginConfigService_: PluginsConfigService,
     public config: ConfigService,
     public permission: PermissionsService,
+    private readonly historyService_: HistoryService,
     @Inject(CONFIG_DI_TOKEN) private readonly CONFIG: Config
   ) {}
 
@@ -129,7 +132,7 @@ export class LoginComponent implements OnInit {
 
   skip(): void {
     this.authService_.skipLoginPage(true);
-    this.state_.navigate(['overview']);
+    this.historyService_.goToPreviousState('workloads');
   }
 
   isSkipButtonEnabled(): boolean {

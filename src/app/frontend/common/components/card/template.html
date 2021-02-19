@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<mat-card [ngClass]="{'kd-minimized-card': !expanded && !graphMode, 'kd-graph': graphMode}">
+<mat-card [ngClass]="{'kd-minimized-card': !expanded && !graphMode, 'kd-graph': graphMode, 'kd-inner-table': role === 'inner'}">
   <mat-card-title *ngIf="withTitle"
                   (click)="expand()"
                   [ngClass]="getTitleClasses()"
@@ -51,8 +51,6 @@ limitations under the License.
   </mat-card-title>
 
   <div [@expandInOut]="!expanded">
-    <mat-divider class="kd-on-top"></mat-divider>
-
     <mat-card-content class="kd-card-content"
                       [ngClass]="{'kd-card-content-table': role === 'table'}">
       <div *ngIf="initialized; else loading">

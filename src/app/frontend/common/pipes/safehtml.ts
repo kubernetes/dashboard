@@ -15,15 +15,7 @@
 import {Pipe, SecurityContext} from '@angular/core';
 import {DomSanitizer, SafeHtml} from '@angular/platform-browser';
 
-// @ts-ignore
-import * as ansiColorClass from 'ansi-to-html';
-
-//const ansiColor = new ansiColorClass();
-
-enum TextMode {
-  Default = 'Default',
-  Colored = 'Colored',
-}
+import stripAnsi = require('strip-ansi');
 
 /**
  * Formats the given value as raw HTML to display to the user.
@@ -32,23 +24,18 @@ enum TextMode {
 export class SafeHtmlFormatter {
   constructor(private readonly sanitizer: DomSanitizer) {}
 
-  transform(value: string, mode: TextMode = TextMode.Default): SafeHtml {
-    let result: SafeHtml = null;
-    let content = this.sanitizer.sanitize(SecurityContext.HTML, value.replace('<', '&lt;').replace('>', '&gt;'));
+  transform(value: string): SafeHtml {
+    value = stripAnsi(value);
+    value = this.escape_(value);
+    return this.sanitizer.sanitize(SecurityContext.HTML, value);
+  }
 
-    // Handle conversion of ANSI color codes.
-    switch (mode) {
-      case TextMode.Colored:
-        //content = ansiColor.toHtml(content.replace(/&#27;/g, '\u001b'));
-        result = this.sanitizer.bypassSecurityTrustHtml(content);
-        break;
-
-      default:
-        // TextMode.Default
-        result = content;
-        break;
-    }
-
-    return result;
+  private escape_(unsafe: string): string {
+    return unsafe
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#039;');
   }
 }

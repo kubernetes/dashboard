@@ -14,7 +14,7 @@
 
 import {Injectable} from '@angular/core';
 import {CanActivate, Router, UrlTree} from '@angular/router';
-import {LoginStatus} from '@api/backendapi';
+import {LoginStatus} from '@api/root.api';
 import {Observable, of} from 'rxjs';
 import {catchError, first, switchMap} from 'rxjs/operators';
 import {AuthService} from '../global/authentication';
@@ -30,12 +30,12 @@ export class LoginGuard implements CanActivate {
       .pipe(
         switchMap((loginStatus: LoginStatus) => {
           if (!this.authService_.isAuthenticationEnabled(loginStatus)) {
-            return this.router_.navigate(['overview']);
+            return this.router_.navigate(['workloads']);
           }
 
           return of(true);
         })
       )
-      .pipe(catchError(_ => this.router_.navigate(['overview'])));
+      .pipe(catchError(_ => this.router_.navigate(['workloads'])));
   }
 }

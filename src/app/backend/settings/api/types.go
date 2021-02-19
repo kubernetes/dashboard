@@ -91,12 +91,14 @@ func UnmarshalPinnedResources(data string) (*[]PinnedResource, error) {
 
 // Settings is a single instance of settings without context.
 type Settings struct {
-	ClusterName                      string `json:"clusterName"`
-	ItemsPerPage                     int    `json:"itemsPerPage"`
-	LabelsLimit                      int    `json:"labelsLimit"`
-	LogsAutoRefreshTimeInterval      int    `json:"logsAutoRefreshTimeInterval"`
-	ResourceAutoRefreshTimeInterval  int    `json:"resourceAutoRefreshTimeInterval"`
-	DisableAccessDeniedNotifications bool   `json:"disableAccessDeniedNotifications"`
+	ClusterName                      string   `json:"clusterName"`
+	ItemsPerPage                     int      `json:"itemsPerPage"`
+	LabelsLimit                      int      `json:"labelsLimit"`
+	LogsAutoRefreshTimeInterval      int      `json:"logsAutoRefreshTimeInterval"`
+	ResourceAutoRefreshTimeInterval  int      `json:"resourceAutoRefreshTimeInterval"`
+	DisableAccessDeniedNotifications bool     `json:"disableAccessDeniedNotifications"`
+	DefaultNamespace                 string   `json:"defaultNamespace"`
+	NamespaceFallbackList            []string `json:"namespaceFallbackList"`
 }
 
 // Marshal settings into JSON object.
@@ -120,6 +122,9 @@ var defaultSettings = Settings{
 	LogsAutoRefreshTimeInterval:      5,
 	ResourceAutoRefreshTimeInterval:  5,
 	DisableAccessDeniedNotifications: true,
+	DisableAccessDeniedNotifications: false,
+	DefaultNamespace:                 "default",
+	NamespaceFallbackList:            []string{"default"},
 }
 
 // GetDefaultSettings returns settings structure, that should be used if there are no

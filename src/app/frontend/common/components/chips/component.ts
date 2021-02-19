@@ -22,7 +22,7 @@ import {
   SimpleChanges,
 } from '@angular/core';
 import {MatDialog, MatDialogConfig} from '@angular/material/dialog';
-import {StringMap} from '@api/backendapi';
+import {StringMap} from '@api/root.api';
 
 import {GlobalSettingsService} from '../../services/global/globalsettings';
 
@@ -58,7 +58,7 @@ const MAX_CHIP_VALUE_LENGTH = 63;
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ChipsComponent implements OnInit, OnChanges {
-  @Input() map: StringMap | string[];
+  @Input() map: StringMap | string[] | number[];
   @Input() displayAll = false;
   keys: string[];
   isShowingAll = false;

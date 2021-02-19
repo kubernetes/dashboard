@@ -13,7 +13,15 @@
 // limitations under the License.
 
 // Shared resource types
-import {KdError} from '@api/frontendapi';
+import {KdError} from '@api/root.ui';
+import {PersistentVolumeSource} from '@api/volume.api';
+import {SecurityContext} from '@angular/core';
+
+export enum SupportedResources {
+  ConfigMap = 'ConfigMap',
+  Secret = 'Secret',
+  PersistentVolumeClaim = 'PersistentVolumeClaim',
+}
 
 export interface TypeMeta {
   kind: string;
@@ -342,6 +350,7 @@ export interface HorizontalPodAutoscaler extends Resource {
 
 export interface Ingress extends Resource {
   endpoints: Endpoint[];
+  hosts: string[];
 }
 
 export interface Job extends Resource {
@@ -510,7 +519,7 @@ export interface Subject {
   namespace: string;
 }
 
-export interface RoleRef {
+export interface ResourceRef {
   kind: string;
   apiGroup: string;
   name: string;
@@ -518,7 +527,7 @@ export interface RoleRef {
 
 export interface ClusterRoleBindingDetail extends ResourceDetail {
   subjects: Subject[];
-  roleRef: RoleRef;
+  roleRef: ResourceRef;
 }
 
 export interface RoleDetail extends ResourceDetail {
@@ -527,7 +536,7 @@ export interface RoleDetail extends ResourceDetail {
 
 export interface RoleBindingDetail extends ResourceDetail {
   subjects: Subject[];
-  roleRef: RoleRef;
+  roleRef: ResourceRef;
 }
 
 export interface SecretDetail extends ResourceDetail {
@@ -537,7 +546,43 @@ export interface SecretDetail extends ResourceDetail {
 
 export type ServiceAccountDetail = ResourceDetail;
 
-export type IngressDetail = ResourceDetail;
+export interface IngressDetail extends ResourceDetail {
+  endpoints: Endpoint[];
+  spec: IngressSpec;
+}
+
+export interface IngressSpec {
+  ingressClassName?: string;
+  backend?: IngressBackend;
+  rules?: IngressSpecRule[];
+  tls?: IngressSpecTLS[];
+}
+
+export interface IngressSpecTLS {
+  hosts: string[];
+  secretName: string;
+}
+
+export interface IngressBackend {
+  serviceName?: string;
+  servicePort?: string | number;
+  resource?: ResourceRef;
+}
+
+export interface IngressSpecRule {
+  host?: string;
+  http: IngressSpecRuleHttp;
+}
+
+export interface IngressSpecRuleHttp {
+  paths: IngressSpecRuleHttpPath[];
+}
+
+export interface IngressSpecRuleHttpPath {
+  path: string;
+  pathType: string;
+  backend: IngressBackend;
+}
 
 export interface NetworkPolicyDetail extends ResourceDetail {
   podSelector: LabelSelector;
@@ -627,8 +672,14 @@ export interface PodDetail extends ResourceDetail {
   metrics: Metric[];
   conditions: Condition[];
   controller: Resource;
+  imagePullSecrets: LocalObjectReference[];
   eventList: EventList;
   persistentVolumeClaimList: PersistentVolumeClaimList;
+  securityContext: PodSecurityContext;
+}
+
+export interface LocalObjectReference {
+  name: string;
 }
 
 export interface NodeDetail extends ResourceDetail {
@@ -746,7 +797,13 @@ export interface CsrfToken {
 }
 
 export interface LocalSettings {
-  isThemeDark: boolean;
+  theme: string;
+}
+
+export interface Theme {
+  name: string;
+  displayName: string;
+  isDark: boolean;
 }
 
 export interface AppConfig {
@@ -847,6 +904,68 @@ export interface Container {
   env: EnvVar[];
   commands: string[];
   args: string[];
+  volumeMounts: VolumeMounts[];
+  securityContext: ContainerSecurityContext;
+}
+
+export interface ISecurityContext {
+  seLinuxOptions?: SELinuxOptions;
+  windowsOptions?: WindowsSecurityContextOptions;
+  runAsUser?: number;
+  runAsGroup?: number;
+  runAsNonRoot?: boolean;
+  seccompProfile?: SeccompProfile;
+}
+
+export interface ContainerSecurityContext extends ISecurityContext {
+  capabilities?: Capabilities;
+  privileged?: boolean;
+  readOnlyRootFilesystem?: boolean;
+  allowPrivilegeEscalation?: boolean;
+  procMount?: string; // ProcMountType;
+}
+
+export interface PodSecurityContext extends ISecurityContext {
+  fsGroup?: number;
+  fsGroupChangePolicy?: string;
+  supplementalGroups?: number[];
+  sysctls?: Sysctl[];
+}
+
+export interface Sysctl {
+  name: string;
+  value: string;
+}
+
+export interface Capabilities {
+  add: string[];
+  drop: string[];
+}
+
+export interface SELinuxOptions {
+  user?: string;
+  role?: string;
+  type?: string;
+  level?: string;
+}
+
+export interface WindowsSecurityContextOptions {
+  gMSACredentialSpecName?: string;
+  gMSACredentialSpec?: string;
+  runAsUserName?: string;
+}
+
+export interface SeccompProfile {
+  type: string; // SeccompProfileType;
+  localhostProfile?: string;
+}
+
+export interface VolumeMounts {
+  name: string;
+  readOnly: boolean;
+  mountPath: string;
+  subPath: string;
+  volume: PersistentVolumeSource;
 }
 
 export interface CRDNames {
@@ -956,85 +1075,6 @@ export interface PodEvent {
   message: string;
 }
 
-export interface GCEPersistentDiskVolumeSource {
-  pdName: string;
-  fsType: string;
-  partition: number;
-  readOnly: boolean;
-}
-
-export interface AWSElasticBlockStorageVolumeSource {
-  volumeID: string;
-  fsType: string;
-  partition: number;
-  readOnly: boolean;
-}
-
-export interface HostPathVolumeSource {
-  path: string;
-}
-
-export interface GlusterfsVolumeSource {
-  endpoints: string;
-  path: string;
-  readOnly: boolean;
-}
-
-export interface NFSVolumeSource {
-  server: string;
-  path: string;
-  readOnly: boolean;
-}
-
-export interface RBDVolumeSource {
-  monitors: string[];
-  image: string;
-  fsType: string;
-  pool: string;
-  user: string;
-  keyring: string;
-  secretRef: LocalObjectReference;
-  readOnly: boolean;
-}
-
-export interface LocalObjectReference {
-  name: string;
-}
-
-export interface ISCSIVolumeSource {
-  targetPortal: string;
-  iqn: string;
-  lun: number;
-  fsType: string;
-  readOnly: boolean;
-}
-
-export interface CinderVolumeSource {
-  volumeID: string;
-  fsType: string;
-  readOnly: boolean;
-}
-
-export interface CephFSVolumeSource {
-  monitors: string[];
-  path: string;
-  user: string;
-  secretFile: string;
-  secretRef: LocalObjectReference;
-  readonly: boolean;
-}
-
-export interface FCVolumeSource {
-  targetWWNs: string[];
-  lun: number;
-  fsType: string;
-  readOnly: boolean;
-}
-
-export interface FlockerVolumeSource {
-  datasetName: string;
-}
-
 export interface RollingUpdateStrategy {
   maxSurge: number | string;
   maxUnavailable: number | string;
@@ -1101,15 +1141,22 @@ export interface LogLine {
   content: string;
 }
 
+export enum LogControl {
+  LoadStart = 'beginning',
+  LoadEnd = 'end',
+  TimestampOldest = 'oldest',
+  TimestampNewest = 'newest',
+}
+
 export interface LogSelection {
-  logFilePosition: string;
+  logFilePosition: LogControl;
   referencePoint: LogLineReference;
   offsetFrom: number;
   offsetTo: number;
 }
 
 export interface LogLineReference {
-  timestamp: string;
+  timestamp: LogControl;
   lineNum: number;
 }
 
@@ -1145,6 +1192,8 @@ export interface GlobalSettings {
   logsAutoRefreshTimeInterval: number;
   resourceAutoRefreshTimeInterval: number;
   disableAccessDeniedNotifications: boolean;
+  defaultNamespace: string;
+  namespaceFallbackList: string[];
 }
 
 export interface PinnedResource {
@@ -1192,19 +1241,6 @@ export interface SystemBanner {
   severity: string;
 }
 
-export interface PersistentVolumeSource {
-  gcePersistentDisk: GCEPersistentDiskVolumeSource;
-  awsElasticBlockStore: AWSElasticBlockStorageVolumeSource;
-  hostPath: HostPathVolumeSource;
-  glusterfs: GlusterfsVolumeSource;
-  nfs: NFSVolumeSource;
-  rbd: RBDVolumeSource;
-  iscsi: ISCSIVolumeSource;
-  cinder: CinderVolumeSource;
-  fc: FCVolumeSource;
-  flocker: FlockerVolumeSource;
-}
-
 export interface TerminalResponse {
   id: string;
 }
@@ -1221,14 +1257,13 @@ export interface TerminalPageParams {
   namespace: string;
   resourceKind: string;
   resourceName: string;
-
-  // Optional
   pod?: string;
   container?: string;
 }
 
 export interface SockJSSimpleEvent {
   type: string;
+
   toString(): string;
 }
 

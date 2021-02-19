@@ -1,0 +1,110 @@
+<!--
+Copyright 2017 The Kubernetes Authors.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<kd-card [initialized]="initialized"
+         role="table">
+  <div title
+       i18n>Rules</div>
+
+  <div description>
+    <div class="kd-inline-property"
+         *ngIf="ingressSpecRules?.length">
+      <span class="kd-muted-light"
+            i18n>Items:&nbsp;</span>
+      <span>{{ingressSpecRules.length}}</span>
+    </div>
+  </div>
+
+  <div content
+       [hidden]="ingressSpecRules?.length === 0">
+    <mat-table [dataSource]="getDataSource()"
+               class="kd-table-no-footer">
+      <ng-container [matColumnDef]="getIngressRulesFlatColumns()[0]">
+        <mat-header-cell *matHeaderCellDef
+                         i18n>Host</mat-header-cell>
+        <mat-cell *matCellDef="let ingressRuleFlat">
+          <ng-container *ngIf="ingressRuleFlat.host">
+            <a href="http://{{ingressRuleFlat.host}}"
+               target="_blank">
+              {{ingressRuleFlat.host}}
+            </a>
+          </ng-container>
+          <ng-container *ngIf="!ingressRuleFlat.host">-</ng-container>
+        </mat-cell>
+      </ng-container>
+      <ng-container [matColumnDef]="getIngressRulesFlatColumns()[1]">
+        <mat-header-cell *matHeaderCellDef
+                         i18n>Path</mat-header-cell>
+        <mat-cell *matCellDef="let ingressRuleFlat">
+          {{!!ingressRuleFlat?.path?.path ? ingressRuleFlat?.path?.path : '-'}}
+        </mat-cell>
+      </ng-container>
+      <ng-container [matColumnDef]="getIngressRulesFlatColumns()[2]">
+        <mat-header-cell *matHeaderCellDef
+                         i18n>Path Type</mat-header-cell>
+        <mat-cell *matCellDef="let ingressRuleFlat">
+          {{!!ingressRuleFlat?.path?.pathType ? ingressRuleFlat?.path?.pathType : '-'}}
+        </mat-cell>
+      </ng-container>
+      <ng-container [matColumnDef]="getIngressRulesFlatColumns()[3]">
+        <mat-header-cell *matHeaderCellDef
+                         i18n>Service Name</mat-header-cell>
+        <mat-cell *matCellDef="let ingressRuleFlat">
+          <ng-container *ngIf="ingressRuleFlat.path.backend.serviceName">
+            <a [routerLink]="getDetailsHref(ingressRuleFlat.path.backend.serviceName, 'service')"
+               queryParamsHandling="preserve">
+              {{ingressRuleFlat.path.backend.serviceName}}
+            </a>
+          </ng-container>
+          <ng-container *ngIf="ingressRuleFlat.path.backend.resource">
+            <a [routerLink]="getDetailsHref(ingressRuleFlat.path.backend.resource.name, ingressRuleFlat.path.backend.resource.kind)"
+               queryParamsHandling="preserve">
+              {{ingressRuleFlat.path.backend.resource.apiGroup}}/{{ingressRuleFlat.path.backend.resource.name}}
+            </a>
+          </ng-container>
+        </mat-cell>
+      </ng-container>
+      <ng-container [matColumnDef]="getIngressRulesFlatColumns()[4]">
+        <mat-header-cell *matHeaderCellDef
+                         i18n>Service Port</mat-header-cell>
+        <mat-cell *matCellDef="let ingressRuleFlat">
+          <ng-container *ngIf="ingressRuleFlat.path.backend.servicePort">{{ingressRuleFlat.path.backend.servicePort}}</ng-container>
+        </mat-cell>
+      </ng-container>
+      <ng-container [matColumnDef]="getIngressRulesFlatColumns()[5]">
+        <mat-header-cell *matHeaderCellDef
+                         i18n>TLS Secret</mat-header-cell>
+        <mat-cell *matCellDef="let ingressRuleFlat">
+          <ng-container *ngIf="ingressRuleFlat.tlsSecretName">
+            <a [routerLink]="getDetailsHref(ingressRuleFlat.tlsSecretName, 'secret')"
+               queryParamsHandling="preserve">
+              {{ingressRuleFlat.tlsSecretName}}
+            </a>
+          </ng-container>
+          <ng-container *ngIf="!ingressRuleFlat.tlsSecretName">-</ng-container>
+        </mat-cell>
+      </ng-container>
+
+      <mat-header-row *matHeaderRowDef="getIngressRulesFlatColumns()"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: getIngressRulesFlatColumns();"></mat-row>
+    </mat-table>
+  </div>
+
+  <div content
+       [hidden]="ingressSpecRules?.length != 0">
+    <kd-list-zero-state></kd-list-zero-state>
+  </div>
+</kd-card>

@@ -21,7 +21,7 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/errors"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
-	extensions "k8s.io/api/extensions/v1beta1"
+	v1beta1 "k8s.io/api/networking/v1beta1"
 	client "k8s.io/client-go/kubernetes"
 )
 
@@ -32,6 +32,7 @@ type Ingress struct {
 
 	// External endpoints of this ingress.
 	Endpoints []common.Endpoint `json:"endpoints"`
+	Hosts     []string          `json:"hosts"`
 }
 
 // IngressList - response structure for a queried ingress list.
@@ -48,7 +49,7 @@ type IngressList struct {
 // GetIngressList returns all ingresses in the given namespace.
 func GetIngressList(client client.Interface, namespace *common.NamespaceQuery,
 	dsQuery *dataselect.DataSelectQuery) (*IngressList, error) {
-	ingressList, err := client.ExtensionsV1beta1().Ingresses(namespace.ToRequestParam()).List(context.TODO(), api.ListEverything)
+	ingressList, err := client.NetworkingV1beta1().Ingresses(namespace.ToRequestParam()).List(context.TODO(), api.ListEverything)
 
 	nonCriticalErrors, criticalError := errors.HandleError(err)
 	if criticalError != nil {
@@ -58,7 +59,7 @@ func GetIngressList(client client.Interface, namespace *common.NamespaceQuery,
 	return toIngressList(ingressList.Items, nonCriticalErrors, dsQuery), nil
 }
 
-func getEndpoints(ingress *extensions.Ingress) []common.Endpoint {
+func getEndpoints(ingress *v1beta1.Ingress) []common.Endpoint {
 	endpoints := make([]common.Endpoint, 0)
 	if len(ingress.Status.LoadBalancer.Ingress) > 0 {
 		for _, status := range ingress.Status.LoadBalancer.Ingress {
@@ -74,15 +75,31 @@ func getEndpoints(ingress *extensions.Ingress) []common.Endpoint {
 	return endpoints
 }
 
-func toIngress(ingress *extensions.Ingress) Ingress {
+func getHosts(ingress *v1beta1.Ingress) []string {
+	hosts := make([]string, 0)
+	set := make(map[string]struct{})
+
+	for _, rule := range ingress.Spec.Rules {
+		if _, exists := set[rule.Host]; !exists && len(rule.Host) > 0 {
+			hosts = append(hosts, rule.Host)
+		}
+
+		set[rule.Host] = struct{}{}
+	}
+
+	return hosts
+}
+
+func toIngress(ingress *v1beta1.Ingress) Ingress {
 	return Ingress{
 		ObjectMeta: api.NewObjectMeta(ingress.ObjectMeta),
 		TypeMeta:   api.NewTypeMeta(api.ResourceKindIngress),
 		Endpoints:  getEndpoints(ingress),
+		Hosts:      getHosts(ingress),
 	}
 }
 
-func toIngressList(ingresses []extensions.Ingress, nonCriticalErrors []error, dsQuery *dataselect.DataSelectQuery) *IngressList {
+func toIngressList(ingresses []v1beta1.Ingress, nonCriticalErrors []error, dsQuery *dataselect.DataSelectQuery) *IngressList {
 	newIngressList := &IngressList{
 		ListMeta: api.ListMeta{TotalItems: len(ingresses)},
 		Items:    make([]Ingress, 0),

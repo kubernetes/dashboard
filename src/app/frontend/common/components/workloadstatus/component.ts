@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import {Component, Input} from '@angular/core';
-import {ResourcesRatio} from '@api/frontendapi';
+import {ResourcesRatio} from '@api/root.ui';
 
 export const emptyResourcesRatio: ResourcesRatio = {
   cronJobRatio: [],
