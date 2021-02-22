@@ -363,6 +363,7 @@ export interface Pod extends Resource {
   metrics: PodMetrics;
   warnings: Event[];
   nodeName: string;
+  serviceAccountName: string;
 }
 
 export interface PodContainer {
