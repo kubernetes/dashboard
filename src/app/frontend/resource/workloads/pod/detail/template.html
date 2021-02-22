@@ -80,6 +80,16 @@ limitations under the License.
       <div value>{{pod.restartCount}}</div>
     </kd-property>
 
+    <kd-property *ngIf="pod?.serviceAccountName !== undefined">
+      <div key
+           i18n>Service Account
+      </div>
+      <div value>
+        <a [routerLink]="getObjectHref('serviceaccount', pod.serviceAccountName)"
+           queryParamsHandling="preserve">{{pod.serviceAccountName}}</a>
+      </div>
+    </kd-property>
+
     <kd-property *ngIf="pod?.imagePullSecrets"
                  fxFlex="100">
       <div key
@@ -87,7 +97,7 @@ limitations under the License.
       </div>
       <div value
            *ngFor="let imagePullSecret of pod?.imagePullSecrets">
-        <a [routerLink]="getSecretHref(imagePullSecret.name)"
+        <a [routerLink]="getObjectHref('secret', imagePullSecret.name)"
            queryParamsHandling="preserve">{{imagePullSecret.name}}</a>
       </div>
     </kd-property>
