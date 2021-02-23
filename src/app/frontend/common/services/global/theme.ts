@@ -34,8 +34,9 @@ export class ThemeService {
 
   get themes(): Theme[] {
     const defaultThemeNames = new Set(this._defaultThemes.map(theme => theme.name));
-    const filteredCustomThemes = this._customThemes.filter(theme => !defaultThemeNames.has(theme.name));
-    return [...this._defaultThemes, ...filteredCustomThemes];
+    //const filteredCustomThemes = this._customThemes.filter(theme => !defaultThemeNames.has(theme.name));
+    //return [...this._defaultThemes, ...filteredCustomThemes];
+    return [...this._defaultThemes, ...this._defaultThemes];
   }
 
   get theme(): string {
