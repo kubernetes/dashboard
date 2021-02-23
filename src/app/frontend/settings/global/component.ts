@@ -87,7 +87,7 @@ export class GlobalSettingsComponent implements OnInit, OnDestroy {
       [Controls.LogsAutorefreshInterval]: this.builder_.control(0),
       [Controls.ResourceAutorefreshInterval]: this.builder_.control(0),
       [Controls.DisableAccessDeniedNotification]: this.builder_.control(false),
-     // [Controls.NamespaceSettings]: this.builder_.control(''),
+      [Controls.NamespaceSettings]: this.builder_.control(''),
     });
 
     this.load_();
