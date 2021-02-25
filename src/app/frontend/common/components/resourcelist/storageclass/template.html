@@ -87,11 +87,10 @@ limitations under the License.
     </mat-table>
 
     <div [hidden]="totalItems <= itemsPerPage">
-      <mat-paginator
-        [length]="totalItems"
-        [pageSize]="itemsPerPage"
-        hidePageSize
-        showFirstLastButtons></mat-paginator>
+      <mat-paginator [length]="totalItems"
+                     [pageSize]="itemsPerPage"
+                     hidePageSize
+                     showFirstLastButtons></mat-paginator>
     </div>
   </div>
 
