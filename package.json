@@ -103,7 +103,7 @@
     "@angular/platform-browser": "11.0.6",
     "@angular/platform-browser-dynamic": "11.0.6",
     "@angular/router": "11.0.6",
-    "@swimlane/ngx-charts": "16.0.0",
+    "@swimlane/ngx-charts": "17.0.0",
     "@types/c3": "0.7.5",
     "@types/d3": "6.2.0",
     "@types/d3-scale": "3.2.2",
