@@ -103,6 +103,7 @@ import {UploadFileComponent} from './uploadfile/component';
 import {VolumeMountComponent} from './volumemount/component';
 import {WorkloadStatusComponent} from './workloadstatus/component';
 import {ZeroStateComponent} from './zerostate/component';
+import {PaginatorComponent} from './paginator/component';
 
 const components = [
   ActionbarDetailActionsComponent,

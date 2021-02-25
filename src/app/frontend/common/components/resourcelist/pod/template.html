@@ -164,10 +164,13 @@ limitations under the License.
                *matRowDef="let row; columns: ['statusDetail']; let index=index"></mat-row>
     </mat-table>
 
-    <mat-paginator [length]="totalItems"
-                   [pageSize]="itemsPerPage"
-                   [hidePageSize]="true"
-                   [showFirstLastButtons]="true"></mat-paginator>
+    <div [hidden]="totalItems <= itemsPerPage">
+      <mat-paginator
+        [length]="totalItems"
+        [pageSize]="itemsPerPage"
+        hidePageSize
+        showFirstLastButtons></mat-paginator>
+    </div>
   </div>
 
   <div content
