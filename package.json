@@ -128,7 +128,7 @@
     "web-animations-js": "2.3.2",
     "xterm": "4.9.0",
     "xterm-addon-fit": "0.5.0",
-    "zone.js": "0.11.3"
+    "zone.js": "0.11.4"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "0.1102.2",
