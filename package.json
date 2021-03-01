@@ -185,7 +185,7 @@
     "sass-loader": "10.1.0",
     "scssfmt": "1.0.7",
     "semver": "7.3.4",
-    "source-map-explorer": "2.5.1",
+    "source-map-explorer": "2.5.2",
     "tar": "6.0.5",
     "through2": "4.0.2",
     "ts-loader": "8.0.14",
