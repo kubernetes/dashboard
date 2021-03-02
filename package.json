@@ -170,7 +170,7 @@
     "karma-firefox-launcher": "2.1.0",
     "karma-jasmine": "4.0.1",
     "karma-jasmine-html-reporter": "1.5.4",
-    "license-check-and-add": "3.0.4",
+    "license-check-and-add": "4.0.2",
     "lint-staged": "10.5.4",
     "lodash": "4.17.21",
     "minimatch": "3.0.4",
