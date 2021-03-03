@@ -113,6 +113,9 @@ Parameter                                       | Description                   
 `ingress.customPaths`                           | Override the default ingress paths                                                                                               | `[]`
 `ingress.hosts`                                 | Dashboard Hostnames                                                                                                              | `nil`
 `ingress.tls`                                   | Ingress TLS configuration                                                                                                        | `[]`
+`ingress.class.name`                            | Ingress Class Name                                                                                                               | `nil`
+`ingress.class.controller`                      | Ingress Class Controller                                                                                                         | `nil`
+`ingress.class.paramers`                        | Ingress Class Parameters                                                                                                         | `[]`
 `settings`                                      | Global dashboard settings                                                                                                        | `{}`
 `pinnedCRDs`                                    | Pinned CRDs that will be displayed in dashboard's menu                                                                           | `[]`
 `metricsScraper.enabled`                        | Wether to enable dashboard-metrics-scraper                                                                                       | `false`
