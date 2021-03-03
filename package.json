@@ -137,7 +137,7 @@
     "@angular/language-service": "11.2.3",
     "@cypress/webpack-preprocessor": "5.5.0",
     "@types/c3": "0.7.5",
-    "@types/d3": "6.2.0",
+    "@types/d3": "6.3.0",
     "@types/d3-scale": "3.2.2",
     "@types/file-saver": "2.0.1",
     "@types/highlight.js": "10.1.0",
