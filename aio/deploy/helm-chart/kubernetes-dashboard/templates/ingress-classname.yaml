@@ -1,0 +1,12 @@
+{{- if .Values.ingress.class }}
+apiVersion: "networking.k8s.io/v1beta1"
+kind: "IngressClass"
+metadata:
+  name: {{ .Values.ingress.class.name | quote }}
+spec:
+  controller: {{ .Values.ingress.class.controller | quote }}
+  parameters:
+{{- with .Values.ingress.class.parameters }}
+{{ toYaml . | indent 4 }}
+{{- end }}
+{{- end }}
