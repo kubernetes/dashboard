@@ -45,9 +45,11 @@ export class PersistentVolumeListComponent extends ResourceListWithStatuses<Pers
     this.registerActionColumn<MenuComponent>('menu', MenuComponent);
 
     // Register status icon handlers
-    this.registerBinding('kd-success', this.isInSuccessState);
-    this.registerBinding('kd-muted', this.isInPendingState);
-    this.registerBinding('kd-error', this.isInErrorState);
+    this.registerBinding('kd-success', r => r.status === 'Available', 'Available');
+    this.registerBinding('kd-success', r => r.status === 'Bound', 'Bound');
+    this.registerBinding('kd-muted', r => r.status === 'Pending', 'Pending');
+    this.registerBinding('kd-muted', r => r.status === 'Released', 'Released');
+    this.registerBinding('kd-error', r => r.status === 'Failed', 'Failed');
   }
 
   getResourceObservable(params?: HttpParams): Observable<PersistentVolumeList> {
@@ -56,18 +58,6 @@ export class PersistentVolumeListComponent extends ResourceListWithStatuses<Pers
 
   map(persistentVolumeList: PersistentVolumeList): PersistentVolume[] {
     return persistentVolumeList.items;
-  }
-
-  isInErrorState(resource: PersistentVolume): boolean {
-    return resource.status === 'Failed';
-  }
-
-  isInPendingState(resource: PersistentVolume): boolean {
-    return resource.status === 'Pending' || resource.status === 'Released';
-  }
-
-  isInSuccessState(resource: PersistentVolume): boolean {
-    return resource.status === 'Available' || resource.status === 'Bound';
   }
 
   getClaimHref(claimReference: string): string {

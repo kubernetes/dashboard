@@ -46,7 +46,7 @@ export class PersistentVolumeClaimListComponent extends ResourceListWithStatuses
 
     // Register status icon handlers
     this.registerBinding('kd-success', this.isInBoundState);
-    this.registerBinding('kd-muted', this.isInPendingState);
+    this.registerBinding('kd-muted', this.isInPendingState, 'Pending');
     this.registerBinding('kd-error', this.isInLostState);
 
     // Register action columns.

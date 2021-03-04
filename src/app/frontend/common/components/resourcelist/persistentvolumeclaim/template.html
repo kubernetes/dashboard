@@ -39,7 +39,8 @@ limitations under the License.
       <ng-container matColumnDef="statusicon">
         <mat-header-cell *matHeaderCellDef></mat-header-cell>
         <mat-cell *matCellDef="let pvc">
-          <mat-icon [ngClass]="getStatus(pvc).iconClass">{{getStatus(pvc).iconName}}</mat-icon>
+          <mat-icon [ngClass]="getStatus(pvc).iconClass"
+                    [matTooltip]="getStatus(pvc).iconTooltip">{{getStatus(pvc).iconName}}</mat-icon>
         </mat-cell>
       </ng-container>
 

@@ -57,7 +57,7 @@ export class PodListComponent extends ResourceListWithStatuses<PodList, Pod> {
 
     // Register status icon handlers
     this.registerBinding('kd-success', this.isInSuccessState);
-    this.registerBinding('kd-muted', this.isInPendingState);
+    this.registerBinding('kd-muted', this.isInPendingState, 'Pending');
     this.registerBinding('kd-error', this.isInErrorState);
 
     // Register action columns.
