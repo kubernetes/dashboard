@@ -45,27 +45,15 @@ export class PersistentVolumeClaimListComponent extends ResourceListWithStatuses
     this.groupId = ListGroupIdentifier.config;
 
     // Register status icon handlers
-    this.registerBinding('kd-success', this.isInBoundState);
-    this.registerBinding('kd-muted', this.isInPendingState, 'Pending');
-    this.registerBinding('kd-error', this.isInLostState);
+    this.registerBinding('kd-success', r => r.status === 'Bound', 'Bound');
+    this.registerBinding('kd-muted', r => r.status === 'Pending', 'Pending');
+    this.registerBinding('kd-error', r => r.status === 'Lost', 'Lost');
 
     // Register action columns.
     this.registerActionColumn<MenuComponent>('menu', MenuComponent);
 
     // Register dynamic columns.
     this.registerDynamicColumn('namespace', 'name', this.shouldShowNamespaceColumn_.bind(this));
-  }
-
-  isInBoundState(resource: PersistentVolumeClaim): boolean {
-    return resource.status === 'Bound';
-  }
-
-  isInPendingState(resource: PersistentVolumeClaim): boolean {
-    return resource.status === 'Pending';
-  }
-
-  isInLostState(resource: PersistentVolumeClaim): boolean {
-    return resource.status === 'Lost';
   }
 
   getResourceObservable(params?: HttpParams): Observable<PersistentVolumeClaimList> {
