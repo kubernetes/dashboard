@@ -42,8 +42,8 @@ export class ServiceListComponent extends ResourceListWithStatuses<ServiceList, 
     this.groupId = ListGroupIdentifier.discovery;
 
     // Register status icon handlers
-    this.registerBinding(this.icon.checkCircle, 'kd-success', this.isInSuccessState.bind(this));
-    this.registerBinding(this.icon.timelapse, 'kd-muted', this.isInPendingState.bind(this));
+    this.registerBinding('kd-success', this.isInSuccessState.bind(this));
+    this.registerBinding('kd-muted', this.isInPendingState.bind(this));
 
     // Register action columns.
     this.registerActionColumn<MenuComponent>('menu', MenuComponent);

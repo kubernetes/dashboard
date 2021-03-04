@@ -43,8 +43,8 @@ export class CronJobListComponent extends ResourceListWithStatuses<CronJobList, 
     this.groupId = ListGroupIdentifier.workloads;
 
     // Register status icon handlers
-    this.registerBinding(this.icon.checkCircle, 'kd-success', this.isInSuccessState);
-    this.registerBinding(this.icon.error, 'kd-error', this.isInErrorState);
+    this.registerBinding('kd-success', this.isInSuccessState);
+    this.registerBinding('kd-error', this.isInErrorState);
 
     // Register action columns.
     this.registerActionColumn<MenuComponent>('menu', MenuComponent);

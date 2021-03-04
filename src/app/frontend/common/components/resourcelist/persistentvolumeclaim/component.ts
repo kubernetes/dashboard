@@ -45,9 +45,9 @@ export class PersistentVolumeClaimListComponent extends ResourceListWithStatuses
     this.groupId = ListGroupIdentifier.config;
 
     // Register status icon handlers
-    this.registerBinding(this.icon.checkCircle, 'kd-success', this.isInBoundState);
-    this.registerBinding(this.icon.timelapse, 'kd-muted', this.isInPendingState);
-    this.registerBinding(this.icon.error, 'kd-error', this.isInLostState);
+    this.registerBinding('kd-success', this.isInBoundState);
+    this.registerBinding('kd-muted', this.isInPendingState);
+    this.registerBinding('kd-error', this.isInLostState);
 
     // Register action columns.
     this.registerActionColumn<MenuComponent>('menu', MenuComponent);

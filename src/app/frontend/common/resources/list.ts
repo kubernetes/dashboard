@@ -444,8 +444,8 @@ export abstract class ResourceListWithStatuses<T extends ResourceList, R extends
     return false;
   }
 
-  protected registerBinding(iconName: IconName, iconClass: string, callbackFunction: StatusCheckCallback<R>): void {
-    const icon = new Icon(String(iconName), iconClass);
+  protected registerBinding(iconClass: string, callbackFunction: StatusCheckCallback<R>): void {
+    const icon = new Icon(IconName.circle, iconClass);
     this.bindings_[icon.hash()] = {icon, callbackFunction};
   }
 
@@ -466,6 +466,7 @@ enum IconName {
   error = 'error',
   timelapse = 'timelapse',
   checkCircle = 'check_circle',
+  circle = 'fiber_manual_record',
   help = 'help',
   warning = 'warning',
   none = '',

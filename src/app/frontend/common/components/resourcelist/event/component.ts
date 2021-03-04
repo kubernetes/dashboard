@@ -42,8 +42,8 @@ export class EventListComponent extends ResourceListWithStatuses<EventList, Even
     this.groupId = ListGroupIdentifier.none;
 
     // Register status icon handler
-    this.registerBinding(this.icon.warning, 'kd-warning', this.isWarning);
-    this.registerBinding(this.icon.none, '', this.isNormal.bind(this));
+    this.registerBinding('kd-warning', this.isWarning);
+    this.registerBinding('', this.isNormal.bind(this)); // TODO transparent
   }
 
   ngOnInit(): void {

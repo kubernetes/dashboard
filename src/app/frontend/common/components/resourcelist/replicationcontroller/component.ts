@@ -45,9 +45,9 @@ export class ReplicationControllerListComponent extends ResourceListWithStatuses
     this.groupId = ListGroupIdentifier.workloads;
 
     // Register status icon handlers
-    this.registerBinding(this.icon.checkCircle, 'kd-success', this.isInSuccessState);
-    this.registerBinding(this.icon.timelapse, 'kd-muted', this.isInPendingState);
-    this.registerBinding(this.icon.error, 'kd-error', this.isInErrorState);
+    this.registerBinding('kd-success', this.isInSuccessState);
+    this.registerBinding('kd-muted', this.isInPendingState);
+    this.registerBinding('kd-error', this.isInErrorState);
 
     // Register action columns.
     this.registerActionColumn<MenuComponent>('menu', MenuComponent);

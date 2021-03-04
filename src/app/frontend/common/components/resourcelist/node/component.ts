@@ -46,9 +46,9 @@ export class NodeListComponent extends ResourceListWithStatuses<NodeList, Node> 
     this.registerActionColumn<MenuComponent>('menu', MenuComponent);
 
     // Register status icon handlers
-    this.registerBinding(this.icon.checkCircle, 'kd-success', this.isInSuccessState);
-    this.registerBinding(this.icon.help, 'kd-muted', this.isInUnknownState);
-    this.registerBinding(this.icon.error, 'kd-error', this.isInErrorState);
+    this.registerBinding('kd-success', this.isInSuccessState);
+    this.registerBinding('kd-muted', this.isInUnknownState);
+    this.registerBinding('kd-error', this.isInErrorState);
   }
 
   getResourceObservable(params?: HttpParams): Observable<NodeList> {
