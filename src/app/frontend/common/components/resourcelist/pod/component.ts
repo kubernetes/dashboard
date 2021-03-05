@@ -56,9 +56,12 @@ export class PodListComponent extends ResourceListWithStatuses<PodList, Pod> {
     this.groupId = ListGroupIdentifier.workloads;
 
     // Register status icon handlers
-    this.registerBinding('kd-success', this.isInSuccessState);
-    this.registerBinding('kd-muted', this.isInPendingState, 'Pending');
-    this.registerBinding('kd-error', this.isInErrorState);
+    this.registerBinding('kd-success', r => r.status === Status.Running, Status.Running);
+    this.registerBinding('kd-success', r => r.status === Status.Succeeded, Status.Succeeded);
+    this.registerBinding('kd-success', r => r.status === Status.Completed, Status.Completed);
+    this.registerBinding('kd-muted', r => r.status === Status.Pending, Status.Pending);
+    this.registerBinding('kd-muted', r => r.status === Status.ContainerCreating, Status.ContainerCreating);
+    this.registerBinding('kd-error', this.isInErrorState, 'Error');
 
     // Register action columns.
     this.registerActionColumn<MenuComponent>('menu', MenuComponent);
@@ -84,14 +87,6 @@ export class PodListComponent extends ResourceListWithStatuses<PodList, Pod> {
           s => resource.status === s
         ))
     );
-  }
-
-  isInPendingState(resource: Pod): boolean {
-    return [Status.Pending, Status.ContainerCreating].some(s => resource.status === s);
-  }
-
-  isInSuccessState(resource: Pod): boolean {
-    return [Status.Succeeded, Status.Running, Status.Completed].some(s => resource.status === s);
   }
 
   hasErrors(pod: Pod): boolean {

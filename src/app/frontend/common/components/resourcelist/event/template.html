@@ -32,7 +32,8 @@ limitations under the License.
       <ng-container [matColumnDef]="getDisplayColumns()[0]">
         <mat-header-cell *matHeaderCellDef></mat-header-cell>
         <mat-cell *matCellDef="let event">
-          <mat-icon [ngClass]="getStatus(event).iconClass">
+          <mat-icon [ngClass]="getStatus(event).iconClass"
+                    [matTooltip]="getStatus(event).iconTooltip">
             {{getStatus(event).iconName}}
           </mat-icon>
         </mat-cell>

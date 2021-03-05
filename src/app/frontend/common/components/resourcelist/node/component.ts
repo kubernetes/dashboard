@@ -46,9 +46,9 @@ export class NodeListComponent extends ResourceListWithStatuses<NodeList, Node> 
     this.registerActionColumn<MenuComponent>('menu', MenuComponent);
 
     // Register status icon handlers
-    this.registerBinding('kd-success', this.isInSuccessState);
-    this.registerBinding('kd-muted', this.isInUnknownState);
-    this.registerBinding('kd-error', this.isInErrorState);
+    this.registerBinding('kd-success', r => r.ready === 'True', 'Ready');
+    this.registerBinding('kd-muted', r => r.ready === 'True', 'Unknown');
+    this.registerBinding('kd-error', r => r.ready === 'False', 'Not ready');
   }
 
   getResourceObservable(params?: HttpParams): Observable<NodeList> {
@@ -58,18 +58,6 @@ export class NodeListComponent extends ResourceListWithStatuses<NodeList, Node> 
   map(nodeList: NodeList): Node[] {
     this.cumulativeMetrics = nodeList.cumulativeMetrics;
     return nodeList.nodes;
-  }
-
-  isInErrorState(resource: Node): boolean {
-    return resource.ready === 'False';
-  }
-
-  isInUnknownState(resource: Node): boolean {
-    return resource.ready === 'Unknown';
-  }
-
-  isInSuccessState(resource: Node): boolean {
-    return resource.ready === 'True';
   }
 
   getDisplayColumns(): string[] {

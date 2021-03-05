@@ -42,8 +42,8 @@ export class EventListComponent extends ResourceListWithStatuses<EventList, Even
     this.groupId = ListGroupIdentifier.none;
 
     // Register status icon handler
-    this.registerBinding('kd-warning', this.isWarning);
-    this.registerBinding('', this.isNormal.bind(this)); // TODO transparent
+    this.registerBinding('kd-warning', e => e.type === EVENT_TYPE_WARNING, 'Warning');
+    this.registerBinding('kd-hidden', e => e.type !== EVENT_TYPE_WARNING, 'Normal');
   }
 
   ngOnInit(): void {
@@ -52,14 +52,6 @@ export class EventListComponent extends ResourceListWithStatuses<EventList, Even
     }
 
     super.ngOnInit();
-  }
-
-  isWarning(event: Event): boolean {
-    return event.type === EVENT_TYPE_WARNING;
-  }
-
-  isNormal(event: Event): boolean {
-    return !this.isWarning(event);
   }
 
   getResourceObservable(params?: HttpParams): Observable<EventList> {

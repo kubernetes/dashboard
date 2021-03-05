@@ -45,9 +45,9 @@ export class CRDListComponent extends ResourceListWithStatuses<CRDList, CRD> {
     this.registerActionColumn<MenuComponent>('menu', MenuComponent);
 
     // Register status icon handlers
-    this.registerBinding('kd-success', this.isInSuccessState);
-    this.registerBinding('kd-muted', this.isInUnknownState);
-    this.registerBinding('kd-error', this.isInErrorState);
+    this.registerBinding('kd-success', r => r.established === 'True', 'Established');
+    this.registerBinding('kd-muted', r => r.established === 'Unknown', 'Unknown');
+    this.registerBinding('kd-error', r => r.established === 'False', 'Not established');
   }
 
   isNamespaced(crd: CRD): string {
@@ -60,18 +60,6 @@ export class CRDListComponent extends ResourceListWithStatuses<CRDList, CRD> {
 
   map(crdList: CRDList): CRD[] {
     return crdList.items;
-  }
-
-  isInErrorState(resource: CRD): boolean {
-    return resource.established === 'False';
-  }
-
-  isInUnknownState(resource: CRD): boolean {
-    return resource.established === 'Unknown';
-  }
-
-  isInSuccessState(resource: CRD): boolean {
-    return resource.established === 'True';
   }
 
   getDisplayName(name: string): string {

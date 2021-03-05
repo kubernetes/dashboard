@@ -43,9 +43,17 @@ export class DeploymentListComponent extends ResourceListWithStatuses<Deployment
     this.groupId = ListGroupIdentifier.workloads;
 
     // Register status icon handlers
-    this.registerBinding('kd-success', this.isInSuccessState);
-    this.registerBinding('kd-muted', this.isInPendingState, 'Pending');
-    this.registerBinding('kd-error', this.isInErrorState);
+    this.registerBinding(
+      'kd-success',
+      r => r.pods.warnings.length === 0 && r.pods.pending === 0 && r.pods.running === r.pods.desired,
+      'Running'
+    );
+    this.registerBinding(
+      'kd-muted',
+      r => r.pods.warnings.length === 0 && (r.pods.pending > 0 || r.pods.running !== r.pods.desired),
+      'Pending'
+    );
+    this.registerBinding('kd-error', r => r.pods.warnings.length > 0, 'Error');
 
     // Register action columns.
     this.registerActionColumn<MenuComponent>('menu', MenuComponent);
@@ -61,25 +69,6 @@ export class DeploymentListComponent extends ResourceListWithStatuses<Deployment
   map(deploymentList: DeploymentList): Deployment[] {
     this.cumulativeMetrics = deploymentList.cumulativeMetrics;
     return deploymentList.deployments;
-  }
-
-  isInErrorState(resource: Deployment): boolean {
-    return resource.pods.warnings.length > 0;
-  }
-
-  isInPendingState(resource: Deployment): boolean {
-    return (
-      resource.pods.warnings.length === 0 &&
-      (resource.pods.pending > 0 || resource.pods.running !== resource.pods.desired)
-    );
-  }
-
-  isInSuccessState(resource: Deployment): boolean {
-    return (
-      resource.pods.warnings.length === 0 &&
-      resource.pods.pending === 0 &&
-      resource.pods.running === resource.pods.desired
-    );
   }
 
   getDisplayColumns(): string[] {

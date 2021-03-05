@@ -47,9 +47,17 @@ export class ReplicaSetListComponent extends ResourceListWithStatuses<ReplicaSet
     this.groupId = ListGroupIdentifier.workloads;
 
     // Register status icon handlers
-    this.registerBinding('kd-success', this.isInSuccessState);
-    this.registerBinding('kd-muted', this.isInPendingState, 'Pending');
-    this.registerBinding('kd-error', this.isInErrorState);
+    this.registerBinding(
+      'kd-success',
+      r => r.podInfo.warnings.length === 0 && r.podInfo.pending === 0 && r.podInfo.running === r.podInfo.desired,
+      'Running'
+    );
+    this.registerBinding(
+      'kd-muted',
+      r => r.podInfo.warnings.length === 0 && (r.podInfo.pending > 0 || r.podInfo.running !== r.podInfo.desired),
+      'Pending'
+    );
+    this.registerBinding('kd-error', r => r.podInfo.warnings.length > 0, 'Error');
 
     // Register action columns.
     this.registerActionColumn<MenuComponent>('menu', MenuComponent);
@@ -65,25 +73,6 @@ export class ReplicaSetListComponent extends ResourceListWithStatuses<ReplicaSet
   map(rsList: ReplicaSetList): ReplicaSet[] {
     this.cumulativeMetrics = rsList.cumulativeMetrics;
     return rsList.replicaSets;
-  }
-
-  isInErrorState(resource: ReplicaSet): boolean {
-    return resource.podInfo.warnings.length > 0;
-  }
-
-  isInPendingState(resource: ReplicaSet): boolean {
-    return (
-      resource.podInfo.warnings.length === 0 &&
-      (resource.podInfo.pending > 0 || resource.podInfo.running !== resource.podInfo.desired)
-    );
-  }
-
-  isInSuccessState(resource: ReplicaSet): boolean {
-    return (
-      resource.podInfo.warnings.length === 0 &&
-      resource.podInfo.pending === 0 &&
-      resource.podInfo.running === resource.podInfo.desired
-    );
   }
 
   protected getDisplayColumns(): string[] {

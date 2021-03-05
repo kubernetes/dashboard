@@ -44,9 +44,9 @@ export class DaemonSetListComponent extends ResourceListWithStatuses<DaemonSetLi
     this.groupId = ListGroupIdentifier.workloads;
 
     // Register status icon handlers
-    this.registerBinding('kd-success', this.isInSuccessState);
-    this.registerBinding('kd-muted', this.isInPendingState, 'Pending');
-    this.registerBinding('kd-error', this.isInErrorState);
+    this.registerBinding('kd-success', r => r.podInfo.warnings.length === 0 && r.podInfo.pending === 0, 'Running');
+    this.registerBinding('kd-muted', r => r.podInfo.warnings.length === 0 && r.podInfo.pending > 0, 'Pending');
+    this.registerBinding('kd-error', r => r.podInfo.warnings.length > 0, 'Error');
 
     // Register action columns.
     this.registerActionColumn<MenuComponent>('menu', MenuComponent);
@@ -62,18 +62,6 @@ export class DaemonSetListComponent extends ResourceListWithStatuses<DaemonSetLi
   map(daemonSetList: DaemonSetList): DaemonSet[] {
     this.cumulativeMetrics = daemonSetList.cumulativeMetrics;
     return daemonSetList.daemonSets;
-  }
-
-  isInErrorState(resource: DaemonSet): boolean {
-    return resource.podInfo.warnings.length > 0;
-  }
-
-  isInPendingState(resource: DaemonSet): boolean {
-    return resource.podInfo.warnings.length === 0 && resource.podInfo.pending > 0;
-  }
-
-  isInSuccessState(resource: DaemonSet): boolean {
-    return resource.podInfo.warnings.length === 0 && resource.podInfo.pending === 0;
   }
 
   hasErrors(daemonSet: DaemonSet): boolean {

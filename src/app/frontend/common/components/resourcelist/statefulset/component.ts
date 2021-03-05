@@ -43,9 +43,16 @@ export class StatefulSetListComponent extends ResourceListWithStatuses<StatefulS
     this.groupId = ListGroupIdentifier.workloads;
 
     // Register status icon handlers
-    this.registerBinding('kd-success', this.isInSuccessState);
-    this.registerBinding('kd-muted', this.isInPendingState, 'Pending');
-    this.registerBinding('kd-error', this.isInErrorState);
+    this.registerBinding(
+      'kd-success',
+      r => r.podInfo.warnings.length === 0 && r.podInfo.pending === 0 && r.podInfo.running === r.podInfo.desired
+    );
+    this.registerBinding(
+      'kd-muted',
+      r => r.podInfo.warnings.length === 0 && (r.podInfo.pending > 0 || r.podInfo.running !== r.podInfo.desired),
+      'Pending'
+    );
+    this.registerBinding('kd-error', r => r.podInfo.warnings.length > 0, 'Error');
 
     // Register action columns.
     this.registerActionColumn<MenuComponent>('menu', MenuComponent);
@@ -61,25 +68,6 @@ export class StatefulSetListComponent extends ResourceListWithStatuses<StatefulS
   map(statefulSetList: StatefulSetList): StatefulSet[] {
     this.cumulativeMetrics = statefulSetList.cumulativeMetrics;
     return statefulSetList.statefulSets;
-  }
-
-  isInErrorState(resource: StatefulSet): boolean {
-    return resource.podInfo.warnings.length > 0;
-  }
-
-  isInPendingState(resource: StatefulSet): boolean {
-    return (
-      resource.podInfo.warnings.length === 0 &&
-      (resource.podInfo.pending > 0 || resource.podInfo.running !== resource.podInfo.desired)
-    );
-  }
-
-  isInSuccessState(resource: StatefulSet): boolean {
-    return (
-      resource.podInfo.warnings.length === 0 &&
-      resource.podInfo.pending === 0 &&
-      resource.podInfo.running === resource.podInfo.desired
-    );
   }
 
   getDisplayColumns(): string[] {

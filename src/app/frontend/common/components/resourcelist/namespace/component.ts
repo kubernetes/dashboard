@@ -42,8 +42,8 @@ export class NamespaceListComponent extends ResourceListWithStatuses<NamespaceLi
     this.groupId = ListGroupIdentifier.cluster;
 
     // Register status icon handlers
-    this.registerBinding('kd-success', this.isInSuccessState);
-    this.registerBinding('kd-error', this.isInErrorState);
+    this.registerBinding('kd-success', r => r.phase === 'Active', 'Active');
+    this.registerBinding('kd-error', r => r.phase === 'Terminating', 'Terminating');
 
     // Register action columns.
     this.registerActionColumn<MenuComponent>('menu', MenuComponent);
@@ -55,14 +55,6 @@ export class NamespaceListComponent extends ResourceListWithStatuses<NamespaceLi
 
   map(namespaceList: NamespaceList): Namespace[] {
     return namespaceList.namespaces;
-  }
-
-  isInErrorState(resource: Namespace): boolean {
-    return resource.phase === 'Terminating';
-  }
-
-  isInSuccessState(resource: Namespace): boolean {
-    return resource.phase === 'Active';
   }
 
   getDisplayColumns(): string[] {
