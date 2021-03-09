@@ -44,6 +44,14 @@ func CreateNamespace(spec *NamespaceSpec, client kubernetes.Interface) error {
 	return err
 }
 
+// DeleteNamespace deletes namespace based on given specification.
+func DeleteNamespace(spec *NamespaceSpec, client kubernetes.Interface) error {
+	log.Printf("Deleting namespace %s", spec.Name)
+
+	_, err := client.CoreV1().Namespaces().Delete(context.TODO(), spec.Name, metaV1.DeleteOptions{})
+	return err
+}
+
 // The code below allows to perform complex data section on []api.Namespace
 
 type NamespaceCell api.Namespace
