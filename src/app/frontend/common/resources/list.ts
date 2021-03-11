@@ -361,7 +361,7 @@ export abstract class ResourceListWithStatuses<T extends ResourceList, R extends
   private readonly unknownStatus: StatusIcon = {
     iconName: IconName.circle,
     iconClass: {'kd-muted': true},
-    iconTooltip: 'Unknown',
+    iconTooltip: 'Unrecognized',
   };
 
   protected icon = IconName;
