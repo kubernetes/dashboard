@@ -359,9 +359,9 @@ export abstract class ResourceListWithStatuses<T extends ResourceList, R extends
   private readonly bindings_: {[hash: number]: StateBinding<R>} = {};
   private lastHash_: number;
   private readonly unknownStatus: StatusIcon = {
-    iconName: 'help',
-    iconClass: {'kd-help': true},
-    iconTooltip: '',
+    iconName: IconName.circle,
+    iconClass: {'kd-muted': true},
+    iconTooltip: 'Unknown',
   };
 
   protected icon = IconName;
