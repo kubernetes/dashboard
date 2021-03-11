@@ -61,6 +61,7 @@ export class PodListComponent extends ResourceListWithStatuses<PodList, Pod> {
     this.registerBinding('kd-success', r => r.status === Status.Completed, Status.Completed);
     this.registerBinding('kd-warning', r => r.status === Status.Pending, Status.Pending);
     this.registerBinding('kd-warning', r => r.status === Status.ContainerCreating, Status.ContainerCreating);
+    this.registerBinding('kd-muted', r => r.status === Status.Terminating, Status.Terminating);
     this.registerBinding('kd-error', this.isInErrorState, 'Error');
 
     // Register action columns.
