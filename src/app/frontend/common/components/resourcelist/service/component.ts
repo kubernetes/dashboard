@@ -43,7 +43,7 @@ export class ServiceListComponent extends ResourceListWithStatuses<ServiceList, 
 
     // Register status icon handlers
     this.registerBinding('kd-success', r => this.isInSuccessState(r), 'Success');
-    this.registerBinding('kd-muted', r => !this.isInSuccessState(r), 'Pending');
+    this.registerBinding('kd-warning', r => !this.isInSuccessState(r), 'Pending');
 
     // Register action columns.
     this.registerActionColumn<MenuComponent>('menu', MenuComponent);

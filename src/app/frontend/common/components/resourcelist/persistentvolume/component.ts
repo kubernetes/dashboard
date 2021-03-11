@@ -47,7 +47,7 @@ export class PersistentVolumeListComponent extends ResourceListWithStatuses<Pers
     // Register status icon handlers
     this.registerBinding('kd-success', r => r.status === 'Available', 'Available');
     this.registerBinding('kd-success', r => r.status === 'Bound', 'Bound');
-    this.registerBinding('kd-muted', r => r.status === 'Pending', 'Pending');
+    this.registerBinding('kd-warning', r => r.status === 'Pending', 'Pending');
     this.registerBinding('kd-muted', r => r.status === 'Released', 'Released');
     this.registerBinding('kd-error', r => r.status === 'Failed', 'Failed');
   }

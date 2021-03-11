@@ -46,7 +46,7 @@ export class JobListComponent extends ResourceListWithStatuses<JobList, Job> {
 
     // Register status icon handlers
     this.registerBinding('kd-success', r => r.podInfo.warnings.length === 0 && r.podInfo.pending === 0, 'Running');
-    this.registerBinding('kd-muted', r => r.podInfo.warnings.length === 0 && r.podInfo.pending > 0, 'Pending');
+    this.registerBinding('kd-warning', r => r.podInfo.warnings.length === 0 && r.podInfo.pending > 0, 'Pending');
     this.registerBinding('kd-error', r => r.podInfo.warnings.length > 0, 'Error');
 
     // Register action columns.
