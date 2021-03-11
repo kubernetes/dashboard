@@ -412,12 +412,12 @@ router-outlet::after {
 
 kd-logs {
   .mat-form-field {
-    width: auto;
     max-width: 22 * $baseline-grid;
+    width: auto;
 
     .mat-form-field-underline {
-      position: initial;
       margin-top: .25 * $baseline-grid;
+      position: initial;
     }
 
     .mat-form-field-wrapper {

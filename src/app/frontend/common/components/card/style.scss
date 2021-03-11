@@ -21,9 +21,9 @@
       display: flex;
       flex-direction: column;
       // Reserve 70px for the footer
-      min-height: 50 * $baseline-grid;
       height: calc(100% - 70px);
       max-height: calc(100% - 70px);
+      min-height: 50 * $baseline-grid;
 
       .kd-card-content {
         > div {
@@ -38,8 +38,8 @@
     padding: 0;
 
     &.kd-inner-content {
-      width: 100%;
       height: auto;
+      width: 100%;
 
       .mat-card-content {
         flex-grow: 1;
