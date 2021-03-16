@@ -175,6 +175,7 @@ ingress:
 
   ## Kubernetes Dashboard Ingress Class 
   ## All fields must be provided to enable ingressClass support
+  ## https://kubernetes.io/blog/2020/04/02/improvements-to-the-ingress-api-in-kubernetes-1.18/#specifying-the-class-of-an-ingress
   # 
   # class:
   #  name: "external-lb"
