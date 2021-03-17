@@ -191,7 +191,7 @@
     "ts-loader": "8.0.18",
     "ts-node": "9.1.1",
     "typescript": "4.1.5",
-    "wait-on": "5.2.1",
+    "wait-on": "5.2.2",
     "webpack-dev-server": "3.11.2"
   },
   "engines": {
