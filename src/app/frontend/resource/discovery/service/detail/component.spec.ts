@@ -110,6 +110,7 @@ class MaxiTestComponent {
             },
           ],
           typeMeta: {kind: 'Service'},
+          serviceAccountName: '',
         },
       ],
       status: {failed: 2, pending: 1, running: 3, succeeded: 5},
