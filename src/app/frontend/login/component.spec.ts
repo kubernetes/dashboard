@@ -23,6 +23,7 @@ import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {ActivatedRoute, Router} from '@angular/router';
 import {RouterTestingModule} from '@angular/router/testing';
 import {EnabledAuthenticationModes, LoginSkippableResponse, LoginSpec} from '@api/root.api';
+import {HistoryService} from '../common/services/global/history';
 import {Config, CONFIG_DI_TOKEN} from '../index.config';
 import {K8SError, KdError} from 'common/errors/errors';
 import {AuthService} from 'common/services/global/authentication';
@@ -85,6 +86,15 @@ class MockPluginsConfigService {
   }
 }
 
+class MockHistoryService {
+  router_: MockRouter;
+  private previousStateUrl_: '';
+  private currentStateUrl_: '';
+  init(): void {}
+  pushState(): void {}
+  goToPreviousState(): void {}
+}
+
 describe('LoginComponent', () => {
   let component: LoginComponent;
   let fixture: ComponentFixture<LoginComponent>;
@@ -128,6 +138,10 @@ describe('LoginComponent', () => {
           {
             provide: CONFIG_DI_TOKEN,
             useValue: MOCK_CONFIG_DI_TOKEN,
+          },
+          {
+            provide: HistoryService,
+            useClass: MockHistoryService,
           },
         ],
       }).compileComponents();
@@ -191,7 +205,7 @@ describe('LoginComponent', () => {
     it('calls AuthService.login with correct spec and redirects to overview', async () => {
       // setups spies in services
       const loginSpy = spyOn(TestBed.inject(AuthService), 'login').and.callThrough();
-      const navigateSpy = spyOn(TestBed.inject(Router), 'navigate').and.callThrough();
+      const goToPreviousStateSpy = spyOn(TestBed.inject(HistoryService), 'goToPreviousState').and.callThrough();
 
       await setSelectedAuthenticationMode('token');
 
@@ -203,7 +217,7 @@ describe('LoginComponent', () => {
       submit();
 
       expect(loginSpy).toHaveBeenCalledWith({token: loginToken} as LoginSpec);
-      expect(navigateSpy).toHaveBeenCalledWith(['overview']);
+      expect(goToPreviousStateSpy).toHaveBeenCalledWith('workloads');
     });
 
     it('calls AuthService.login, does not redirect, and renders errors if login fails', async () => {
@@ -234,7 +248,7 @@ describe('LoginComponent', () => {
 
       // setups spies in services
       const skipLoginPageSpy = spyOn(TestBed.inject(AuthService), 'skipLoginPage').and.callThrough();
-      const navigateSpy = spyOn(TestBed.inject(Router), 'navigate').and.callThrough();
+      const goToPreviousStateSpy = spyOn(TestBed.inject(HistoryService), 'goToPreviousState').and.callThrough();
 
       await setSelectedAuthenticationMode('basic');
 
@@ -242,7 +256,7 @@ describe('LoginComponent', () => {
       fixture.detectChanges();
 
       expect(skipLoginPageSpy).toHaveBeenCalledWith(true);
-      expect(navigateSpy).toHaveBeenCalledWith(['overview']);
+      expect(goToPreviousStateSpy).toHaveBeenCalledWith('workloads');
     });
   });
 
