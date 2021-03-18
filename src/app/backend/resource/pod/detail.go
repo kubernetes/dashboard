@@ -46,6 +46,7 @@ type PodDetail struct {
 	PodPhase                  string                                          `json:"podPhase"`
 	PodIP                     string                                          `json:"podIP"`
 	NodeName                  string                                          `json:"nodeName"`
+	ServiceAccountName        string                                          `json:"serviceAccountName"`
 	RestartCount              int32                                           `json:"restartCount"`
 	QOSClass                  string                                          `json:"qosClass"`
 	Controller                *controller.ResourceOwner                       `json:"controller,omitempty"`
@@ -273,6 +274,7 @@ func toPodDetail(pod *v1.Pod, metrics []metricapi.Metric, configMaps *v1.ConfigM
 		RestartCount:              getRestartCount(*pod),
 		QOSClass:                  string(pod.Status.QOSClass),
 		NodeName:                  pod.Spec.NodeName,
+		ServiceAccountName:        pod.Spec.ServiceAccountName,
 		Controller:                controller,
 		Containers:                extractContainerInfo(pod.Spec.Containers, pod, configMaps, secrets),
 		InitContainers:            extractContainerInfo(pod.Spec.InitContainers, pod, configMaps, secrets),

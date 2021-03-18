@@ -84,6 +84,6 @@ export class LogService {
   }
 
   getLogFileName(pod: string, container: string): string {
-    return `logs-from-${container}-in-${pod}.txt`;
+    return `logs-from-${container}-in-${pod}.log`;
   }
 }
