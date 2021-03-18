@@ -22,6 +22,7 @@ import {EndpointManager, Resource} from '../../../services/resource/endpoint';
 import {NamespacedResourceService} from '../../../services/resource/resource';
 import {MenuComponent} from '../../list/column/menu/component';
 import {ListGroupIdentifier, ListIdentifier} from '../groupids';
+import {Status} from '../statuses';
 
 @Component({
   selector: 'kd-stateful-set-list',
@@ -43,9 +44,16 @@ export class StatefulSetListComponent extends ResourceListWithStatuses<StatefulS
     this.groupId = ListGroupIdentifier.workloads;
 
     // Register status icon handlers
-    this.registerBinding(this.icon.checkCircle, 'kd-success', this.isInSuccessState);
-    this.registerBinding(this.icon.timelapse, 'kd-muted', this.isInPendingState);
-    this.registerBinding(this.icon.error, 'kd-error', this.isInErrorState);
+    this.registerBinding(
+      'kd-success',
+      r => r.podInfo.warnings.length === 0 && r.podInfo.pending === 0 && r.podInfo.running === r.podInfo.desired
+    );
+    this.registerBinding(
+      'kd-muted',
+      r => r.podInfo.warnings.length === 0 && (r.podInfo.pending > 0 || r.podInfo.running !== r.podInfo.desired),
+      Status.Pending
+    );
+    this.registerBinding('kd-error', r => r.podInfo.warnings.length > 0, Status.Error);
 
     // Register action columns.
     this.registerActionColumn<MenuComponent>('menu', MenuComponent);
@@ -61,25 +69,6 @@ export class StatefulSetListComponent extends ResourceListWithStatuses<StatefulS
   map(statefulSetList: StatefulSetList): StatefulSet[] {
     this.cumulativeMetrics = statefulSetList.cumulativeMetrics;
     return statefulSetList.statefulSets;
-  }
-
-  isInErrorState(resource: StatefulSet): boolean {
-    return resource.podInfo.warnings.length > 0;
-  }
-
-  isInPendingState(resource: StatefulSet): boolean {
-    return (
-      resource.podInfo.warnings.length === 0 &&
-      (resource.podInfo.pending > 0 || resource.podInfo.running !== resource.podInfo.desired)
-    );
-  }
-
-  isInSuccessState(resource: StatefulSet): boolean {
-    return (
-      resource.podInfo.warnings.length === 0 &&
-      resource.podInfo.pending === 0 &&
-      resource.podInfo.running === resource.podInfo.desired
-    );
   }
 
   getDisplayColumns(): string[] {

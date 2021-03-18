@@ -43,7 +43,8 @@ limitations under the License.
       <ng-container matColumnDef="statusicon">
         <mat-header-cell *matHeaderCellDef></mat-header-cell>
         <mat-cell *matCellDef="let ss; let index=index">
-          <mat-icon [ngClass]="getStatus(ss).iconClass">
+          <mat-icon [ngClass]="getStatus(ss).iconClass"
+                    [matTooltip]="getStatus(ss).iconTooltip">
             <ng-container *ngIf="showHoverIcon(index, ss); else showStatus">
               remove_red_eye
             </ng-container>

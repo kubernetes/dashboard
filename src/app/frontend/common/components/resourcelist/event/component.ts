@@ -21,6 +21,7 @@ import {ResourceListWithStatuses} from '../../../resources/list';
 import {NotificationsService} from '../../../services/global/notifications';
 import {NamespacedResourceService} from '../../../services/resource/resource';
 import {ListGroupIdentifier, ListIdentifier} from '../groupids';
+import {Status} from '../statuses';
 
 const EVENT_TYPE_WARNING = 'Warning';
 
@@ -42,8 +43,8 @@ export class EventListComponent extends ResourceListWithStatuses<EventList, Even
     this.groupId = ListGroupIdentifier.none;
 
     // Register status icon handler
-    this.registerBinding(this.icon.warning, 'kd-warning', this.isWarning);
-    this.registerBinding(this.icon.none, '', this.isNormal.bind(this));
+    this.registerBinding('kd-warning', e => e.type === EVENT_TYPE_WARNING, Status.Warning);
+    this.registerBinding('kd-hidden', e => e.type !== EVENT_TYPE_WARNING, Status.Normal);
   }
 
   ngOnInit(): void {
@@ -52,14 +53,6 @@ export class EventListComponent extends ResourceListWithStatuses<EventList, Even
     }
 
     super.ngOnInit();
-  }
-
-  isWarning(event: Event): boolean {
-    return event.type === EVENT_TYPE_WARNING;
-  }
-
-  isNormal(event: Event): boolean {
-    return !this.isWarning(event);
   }
 
   getResourceObservable(params?: HttpParams): Observable<EventList> {

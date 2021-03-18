@@ -42,7 +42,8 @@ limitations under the License.
       <ng-container matColumnDef="statusicon">
         <mat-header-cell *matHeaderCellDef></mat-header-cell>
         <mat-cell *matCellDef="let cronJob">
-          <mat-icon [ngClass]="getStatus(cronJob).iconClass">
+          <mat-icon [ngClass]="getStatus(cronJob).iconClass"
+                    [matTooltip]="getStatus(cronJob).iconTooltip">
             {{getStatus(cronJob).iconName}}
           </mat-icon>
         </mat-cell>
