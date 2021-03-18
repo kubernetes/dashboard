@@ -22,7 +22,7 @@ import {EndpointManager, Resource} from '../../../services/resource/endpoint';
 import {NamespacedResourceService} from '../../../services/resource/resource';
 import {MenuComponent} from '../../list/column/menu/component';
 import {ListGroupIdentifier, ListIdentifier} from '../groupids';
-import {Status} from "../statuses";
+import {Status} from '../statuses';
 
 @Component({
   selector: 'kd-deployment-list',

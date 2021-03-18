@@ -21,7 +21,7 @@ import {ResourceListWithStatuses} from '../../../resources/list';
 import {NotificationsService} from '../../../services/global/notifications';
 import {NamespacedResourceService} from '../../../services/resource/resource';
 import {ListGroupIdentifier, ListIdentifier} from '../groupids';
-import {Status} from "../statuses";
+import {Status} from '../statuses';
 
 const EVENT_TYPE_WARNING = 'Warning';
 
