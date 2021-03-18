@@ -71,8 +71,7 @@
         </context-group>
       </trans-unit>
       <trans-unit id="ea458920c36540bbd94274d9074c8c9fc2906f46" datatype="html">
-        <source><x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span>"/>Are you sure you want to delete <x id="INTERPOLATION" equiv-text="{{data.displayName}}"/> <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i>"/><x id="INTERPOLATION_1" equiv-text="{{data.objectMeta.name}}"/><x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i>"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span>"/><x id="START_TAG_SPAN_1" ctype="x-span_1" equiv-text="&lt;span *ngIf=&quot;data.objectMeta.namespace&quot;>
-      "/>  in namespace <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i>"/><x id="INTERPOLATION_2" equiv-text="{{data.objectMeta.namespace}}"/><x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i>"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span>"/><x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span>"/>?<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span>"/></source>
+        <source><x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span>"/>Are you sure you want to delete <x id="INTERPOLATION" equiv-text="{{data.displayName}}"/> <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i>"/><x id="INTERPOLATION_1" equiv-text="{{data.objectMeta.name}}"/><x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i>"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span>"/><x id="START_TAG_SPAN_1" ctype="x-span_1" equiv-text="&lt;span *ngIf=&quot;data.objectMeta.namespace&quot;>"/>  in namespace <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i>"/><x id="INTERPOLATION_2" equiv-text="{{data.objectMeta.namespace}}"/><x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i>"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span>"/><x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span>"/>?<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span>"/></source>
         <target>
     <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span>"/>정말로 <x id="INTERPOLATION" equiv-text="{{data.displayName}}"/> <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i>"/><x id="INTERPOLATION_1" equiv-text="{{data.objectMeta.name}}"/><x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i>"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span>"/>
     <x id="START_TAG_SPAN_1" ctype="x-span" equiv-text="&lt;span>"/>
@@ -875,10 +874,6 @@
           <context context-type="sourcefile">src/app/frontend/logs/component.ts</context>
           <context context-type="linenumber">79</context>
         </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/frontend/logs/template.html</context>
-          <context context-type="linenumber">154</context>
-        </context-group>
       </trans-unit>
       <trans-unit id="5ca707824ab93066c7d9b44e1b8bf216725c2c22" datatype="html">
         <source>Filter</source>
@@ -886,10 +881,6 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/list/filter/component.ts</context>
           <context context-type="linenumber">42</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/frontend/common/components/list/filter/component.ts</context>
-          <context context-type="linenumber">69</context>
         </context-group>
       </trans-unit>
       <trans-unit id="0b5c5a43ccd2f696d6e0ad2b745bcc9041d6e380" datatype="html">
@@ -2380,10 +2371,6 @@
           <context context-type="sourcefile">src/app/frontend/common/components/namespace/component.ts</context>
           <context context-type="linenumber">93</context>
         </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/frontend/common/components/namespace/component.ts</context>
-          <context context-type="linenumber">151</context>
-        </context-group>
       </trans-unit>
       <trans-unit id="f721a500a68c357e8f2a01e60510f6a01e4ba529" datatype="html">
         <source>Metadata</source>
@@ -3425,8 +3412,7 @@
       </trans-unit>
       <trans-unit id="e09a3f8198fa5e84e6259c2a9b9f8c0dbafab5ad" datatype="html">
         <source> Insecure access detected. Sign in will not be available. Access Dashboard securely over HTTPS or using localhost. Read more <x id="START_LINK" ctype="x-a" equiv-text="&lt;a href=&quot;https://github.com/kubernetes/dashboard/blob/master/docs/user/accessing-dashboard/README.md#login-not-available&quot;
-               target=&quot;_blank&quot;>
-              "/> here <x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a>"/>. </source>
+               target=&quot;_blank&quot;>"/> here <x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a>"/>. </source>
         <target>
             안전하지 않은 접근이 탐지되었습니다. 로그인하실 수 없습니다. HTTPS 프로토콜을 통해 또는 localhost를 사용하여 대시보드에 안전하게 접근하세요. 자세한 내용은
             <x id="START_LINK" ctype="x-a" equiv-text="&lt;a>"/>
@@ -4596,11 +4582,7 @@
         <target>초기화 컨테이너</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/logs/component.ts</context>
-          <context context-type="linenumber">103</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/frontend/logs/template.html</context>
-          <context context-type="linenumber">154</context>
+          <context context-type="linenumber">101</context>
         </context-group>
       </trans-unit>
       <trans-unit id="cb0f69bdd4dea41d7d45c74b6e07f98de8a2ab26" datatype="html">
@@ -4636,7 +4618,7 @@
         <target>색상 반전</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/logs/component.ts</context>
-          <context context-type="linenumber">186</context>
+          <context context-type="linenumber">185</context>
         </context-group>
       </trans-unit>
       <trans-unit id="8902979878d0f294dfc6f5b95fd7788c3fa2dd49" datatype="html">
@@ -4644,7 +4626,7 @@
         <target>글꼴 크기 축소</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/logs/component.ts</context>
-          <context context-type="linenumber">210</context>
+          <context context-type="linenumber">209</context>
         </context-group>
       </trans-unit>
       <trans-unit id="b5c4c520630525f705f7bddbeb2f0b0aec7a30d6" datatype="html">
@@ -4652,7 +4634,7 @@
         <target>타임스탬프 보기</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/logs/component.ts</context>
-          <context context-type="linenumber">230</context>
+          <context context-type="linenumber">229</context>
         </context-group>
       </trans-unit>
       <trans-unit id="72f275d9b31bf0e6dc122c1a9b58b4986800eb7a" datatype="html">
@@ -4660,7 +4642,7 @@
         <target>(<x id="INTERPOLATION" equiv-text="{{refreshInterval}}"/> 초마다) 자동 새로고침.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/logs/component.ts</context>
-          <context context-type="linenumber">265</context>
+          <context context-type="linenumber">264</context>
         </context-group>
       </trans-unit>
       <trans-unit id="6e73f7b06ce74fa29c8866cf5a82bfbeaf2452ed" datatype="html">
@@ -5933,10 +5915,8 @@
         <source> Shell in <x id="START_TAG_MAT_SELECT" ctype="x-mat_select" equiv-text="&lt;mat-select *ngIf=&quot;containers?.length > 0&quot;
                 class=&quot;kd-shell-toolbar-select&quot;
                 (ngModelChange)=&quot;onPodContainerChange($event)&quot;
-                [(ngModel)]=&quot;selectedContainer&quot;>
-      "/><x id="START_TAG_MAT_OPTION" ctype="x-mat_option" equiv-text="&lt;mat-option *ngFor=&quot;let item of containers&quot;
-                  [value]=&quot;item&quot;>
-        "/> <x id="INTERPOLATION" equiv-text="{{ item }}"/> <x id="CLOSE_TAG_MAT_OPTION" ctype="x-mat_option" equiv-text="&lt;/mat-option>"/><x id="CLOSE_TAG_MAT_SELECT" ctype="x-mat_select" equiv-text="&lt;/mat-select>"/> in <x id="INTERPOLATION_1" equiv-text="{{ podName }}"/> </source>
+                [(ngModel)]=&quot;selectedContainer&quot;>"/><x id="START_TAG_MAT_OPTION" ctype="x-mat_option" equiv-text="&lt;mat-option *ngFor=&quot;let item of containers&quot;
+                  [value]=&quot;item&quot;>"/> <x id="INTERPOLATION" equiv-text="{{ item }}"/> <x id="CLOSE_TAG_MAT_OPTION" ctype="x-mat_option" equiv-text="&lt;/mat-option>"/><x id="CLOSE_TAG_MAT_SELECT" ctype="x-mat_select" equiv-text="&lt;/mat-select>"/> in <x id="INTERPOLATION_1" equiv-text="{{ podName }}"/> </source>
         <target>
     <x id="INTERPOLATION_1" equiv-text="{{ podName }}"/>의
     <x id="START_TAG_MAT-SELECT" ctype="x-mat-select" equiv-text="&lt;mat-select>"/>
