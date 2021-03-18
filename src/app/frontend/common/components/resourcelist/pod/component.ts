@@ -22,19 +22,7 @@ import {EndpointManager, Resource} from '../../../services/resource/endpoint';
 import {NamespacedResourceService} from '../../../services/resource/resource';
 import {MenuComponent} from '../../list/column/menu/component';
 import {ListGroupIdentifier, ListIdentifier} from '../groupids';
-
-enum Status {
-  Pending = 'Pending',
-  ContainerCreating = 'ContainerCreating',
-  Running = 'Running',
-  Succeeded = 'Succeeded',
-  Completed = 'Completed',
-  Failed = 'Failed',
-  Unknown = 'Unknown',
-  NotReady = 'NotReady',
-  Terminating = 'Terminating',
-  Error = 'Error',
-}
+import {Status} from '../statuses';
 
 @Component({
   selector: 'kd-pod-list',

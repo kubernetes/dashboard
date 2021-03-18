@@ -22,6 +22,7 @@ import {EndpointManager, Resource} from '../../../services/resource/endpoint';
 import {NamespacedResourceService} from '../../../services/resource/resource';
 import {MenuComponent} from '../../list/column/menu/component';
 import {ListGroupIdentifier, ListIdentifier} from '../groupids';
+import {Status} from '../statuses';
 
 @Component({
   selector: 'kd-stateful-set-list',
@@ -50,9 +51,9 @@ export class StatefulSetListComponent extends ResourceListWithStatuses<StatefulS
     this.registerBinding(
       'kd-muted',
       r => r.podInfo.warnings.length === 0 && (r.podInfo.pending > 0 || r.podInfo.running !== r.podInfo.desired),
-      'Pending'
+      Status.Pending
     );
-    this.registerBinding('kd-error', r => r.podInfo.warnings.length > 0, 'Error');
+    this.registerBinding('kd-error', r => r.podInfo.warnings.length > 0, Status.Error);
 
     // Register action columns.
     this.registerActionColumn<MenuComponent>('menu', MenuComponent);

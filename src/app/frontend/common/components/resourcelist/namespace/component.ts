@@ -23,6 +23,7 @@ import {EndpointManager, Resource} from '../../../services/resource/endpoint';
 import {ResourceService} from '../../../services/resource/resource';
 import {MenuComponent} from '../../list/column/menu/component';
 import {ListGroupIdentifier, ListIdentifier} from '../groupids';
+import {Status} from "../statuses";
 
 @Component({
   selector: 'kd-namespace-list',
@@ -42,8 +43,8 @@ export class NamespaceListComponent extends ResourceListWithStatuses<NamespaceLi
     this.groupId = ListGroupIdentifier.cluster;
 
     // Register status icon handlers
-    this.registerBinding('kd-success', r => r.phase === 'Active', 'Active');
-    this.registerBinding('kd-error', r => r.phase === 'Terminating', 'Terminating');
+    this.registerBinding('kd-success', r => r.phase === Status.Active, Status.Active);
+    this.registerBinding('kd-error', r => r.phase === Status.Terminating, Status.Terminating);
 
     // Register action columns.
     this.registerActionColumn<MenuComponent>('menu', MenuComponent);

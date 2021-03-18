@@ -22,6 +22,7 @@ import {EndpointManager, Resource} from '../../../services/resource/endpoint';
 import {NamespacedResourceService} from '../../../services/resource/resource';
 import {MenuComponent} from '../../list/column/menu/component';
 import {ListGroupIdentifier, ListIdentifier} from '../groupids';
+import {Status} from "../statuses";
 
 @Component({
   selector: 'kd-deployment-list',
@@ -46,14 +47,14 @@ export class DeploymentListComponent extends ResourceListWithStatuses<Deployment
     this.registerBinding(
       'kd-success',
       r => r.pods.warnings.length === 0 && r.pods.pending === 0 && r.pods.running === r.pods.desired,
-      'Running'
+      Status.Running
     );
     this.registerBinding(
       'kd-muted',
       r => r.pods.warnings.length === 0 && (r.pods.pending > 0 || r.pods.running !== r.pods.desired),
-      'Pending'
+      Status.Pending
     );
-    this.registerBinding('kd-error', r => r.pods.warnings.length > 0, 'Error');
+    this.registerBinding('kd-error', r => r.pods.warnings.length > 0, Status.Error);
 
     // Register action columns.
     this.registerActionColumn<MenuComponent>('menu', MenuComponent);

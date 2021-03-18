@@ -23,6 +23,7 @@ import {EndpointManager, Resource} from '../../../services/resource/endpoint';
 import {ResourceService} from '../../../services/resource/resource';
 import {MenuComponent} from '../../list/column/menu/component';
 import {ListGroupIdentifier, ListIdentifier} from '../groupids';
+import {Status} from "../statuses";
 
 @Component({
   selector: 'kd-persistent-volume-list',
@@ -45,11 +46,11 @@ export class PersistentVolumeListComponent extends ResourceListWithStatuses<Pers
     this.registerActionColumn<MenuComponent>('menu', MenuComponent);
 
     // Register status icon handlers
-    this.registerBinding('kd-success', r => r.status === 'Available', 'Available');
-    this.registerBinding('kd-success', r => r.status === 'Bound', 'Bound');
-    this.registerBinding('kd-warning', r => r.status === 'Pending', 'Pending');
-    this.registerBinding('kd-muted', r => r.status === 'Released', 'Released');
-    this.registerBinding('kd-error', r => r.status === 'Failed', 'Failed');
+    this.registerBinding('kd-success', r => r.status === Status.Available, Status.Available);
+    this.registerBinding('kd-success', r => r.status === Status.Bound, Status.Bound);
+    this.registerBinding('kd-warning', r => r.status === Status.Pending, Status.Pending);
+    this.registerBinding('kd-muted', r => r.status === Status.Released, Status.Released);
+    this.registerBinding('kd-error', r => r.status === Status.Failed, Status.Failed);
   }
 
   getResourceObservable(params?: HttpParams): Observable<PersistentVolumeList> {

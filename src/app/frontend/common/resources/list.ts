@@ -445,7 +445,7 @@ export abstract class ResourceListWithStatuses<T extends ResourceList, R extends
     return false;
   }
 
-  protected registerBinding(iconClass: string, callbackFunction: StatusCheckCallback<R>, status = ''): void {
+  protected registerBinding(iconClass: string, callbackFunction: StatusCheckCallback<R>, status: string = ''): void {
     const icon = new Icon(IconName.circle, iconClass, status);
     this.bindings_[icon.hash()] = {icon, callbackFunction};
   }

@@ -22,6 +22,7 @@ import {EndpointManager, Resource} from '../../../services/resource/endpoint';
 import {ResourceService} from '../../../services/resource/resource';
 import {MenuComponent} from '../../list/column/menu/component';
 import {ListGroupIdentifier, ListIdentifier} from '../groupids';
+import {Status} from "../statuses";
 
 @Component({
   selector: 'kd-node-list',
@@ -46,9 +47,9 @@ export class NodeListComponent extends ResourceListWithStatuses<NodeList, Node> 
     this.registerActionColumn<MenuComponent>('menu', MenuComponent);
 
     // Register status icon handlers
-    this.registerBinding('kd-success', r => r.ready === 'True', 'Ready');
-    this.registerBinding('kd-muted', r => r.ready === 'True', 'Unknown');
-    this.registerBinding('kd-error', r => r.ready === 'False', 'Not ready');
+    this.registerBinding('kd-success', r => r.ready === 'True', Status.Ready);
+    this.registerBinding('kd-muted', r => r.ready === 'True', Status.Unknown);
+    this.registerBinding('kd-error', r => r.ready === 'False', Status.NotReady);
   }
 
   getResourceObservable(params?: HttpParams): Observable<NodeList> {

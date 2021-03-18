@@ -23,6 +23,7 @@ import {EndpointManager, Resource} from '../../../services/resource/endpoint';
 import {NamespacedResourceService} from '../../../services/resource/resource';
 import {MenuComponent} from '../../list/column/menu/component';
 import {ListGroupIdentifier, ListIdentifier} from '../groupids';
+import {Status} from "../statuses";
 
 @Component({
   selector: 'kd-persistent-volume-claim-list',
@@ -45,9 +46,9 @@ export class PersistentVolumeClaimListComponent extends ResourceListWithStatuses
     this.groupId = ListGroupIdentifier.config;
 
     // Register status icon handlers
-    this.registerBinding('kd-success', r => r.status === 'Bound', 'Bound');
-    this.registerBinding('kd-warning', r => r.status === 'Pending', 'Pending');
-    this.registerBinding('kd-error', r => r.status === 'Lost', 'Lost');
+    this.registerBinding('kd-success', r => r.status === Status.Bound, Status.Bound);
+    this.registerBinding('kd-warning', r => r.status === Status.Pending, Status.Pending);
+    this.registerBinding('kd-error', r => r.status === Status.Lost, Status.Lost);
 
     // Register action columns.
     this.registerActionColumn<MenuComponent>('menu', MenuComponent);
