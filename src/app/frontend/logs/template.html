@@ -14,110 +14,118 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<div class="kd-logs-container">
-  <kd-card [expandable]="false">
-    <div title
-         [fxLayout]="'row'"
-         [fxFlex]="100">
-      <span class="kd-logs-header-text"
-            i18n>Logs from</span>
-      <mat-form-field>
-        <mat-select [(ngModel)]="container"
-                    class="kd-logs-toolbar-select"
-                    (selectionChange)="onContainerChange()">
-          <mat-optgroup label="Containers"
-                        i18n-label
-                        *ngIf="logSources?.containerNames?.length > 0">
-            <mat-option *ngFor="let item of logSources?.containerNames"
-                        [value]="item">
-              {{item}}
-            </mat-option>
-          </mat-optgroup>
-          <mat-optgroup label="Init Containers"
-                        i18n-label
-                        *ngIf="logSources?.initContainerNames?.length > 0">
-            <mat-option *ngFor="let item of logSources?.initContainerNames"
-                        [value]="item">
-              {{item}}
-            </mat-option>
-          </mat-optgroup>
-        </mat-select>
-      </mat-form-field>
-      <span class="kd-logs-header-text"
-            i18n>in</span>
-      <mat-form-field class="kd-form-field">
-        <mat-select [(ngModel)]="pod"
-                    class="kd-logs-toolbar-select"
-                    (selectionChange)="loadNewest()">
-          <mat-option *ngFor="let item of logSources?.podNames"
+<kd-card [expandable]="false"
+         role="inner-content">
+  <div title
+       fxLayout="row"
+       fxLayoutAlign="start center"
+       fxLayoutGap="8px"
+       fxFlex="100">
+    <span i18n>Logs from</span>
+    <mat-form-field>
+      <mat-select [(ngModel)]="container"
+                  (selectionChange)="onContainerChange()">
+        <mat-optgroup label="Containers"
+                      i18n-label
+                      *ngIf="logSources?.containerNames?.length > 0">
+          <mat-option *ngFor="let item of logSources?.containerNames"
                       [value]="item">
             {{item}}
           </mat-option>
-        </mat-select>
-      </mat-form-field>
-      <div class="kd-logs-style-buttons">
-        <button mat-icon-button
-                i18n-matTooltip
-                matTooltip="Download logs"
-                (click)="downloadLog()">
-          <mat-icon>file_download</mat-icon>
-        </button>
-        <button mat-icon-button
-                [matMenuTriggerFor]="kdMenu">
-          <mat-icon>more_vert</mat-icon>
-        </button>
+        </mat-optgroup>
+        <mat-optgroup label="Init Containers"
+                      i18n-label
+                      *ngIf="logSources?.initContainerNames?.length > 0">
+          <mat-option *ngFor="let item of logSources?.initContainerNames"
+                      [value]="item">
+            {{item}}
+          </mat-option>
+        </mat-optgroup>
+      </mat-select>
+    </mat-form-field>
+
+    <span i18n>in</span>
+    <mat-form-field>
+      <mat-select [(ngModel)]="pod"
+                  (selectionChange)="loadNewest()">
+        <mat-option *ngFor="let item of logSources?.podNames"
+                    [value]="item">
+          {{item}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <div fxFlex></div>
+
+    <button fxFlexAlign="center end"
+            mat-icon-button
+            i18n-matTooltip
+            matTooltip="Download logs"
+            (click)="downloadLog()">
+      <mat-icon>file_download</mat-icon>
+    </button>
+    <button fxLayoutAlign="center end"
+            mat-icon-button
+            [matMenuTriggerFor]="kdMenu">
+      <mat-icon>more_vert</mat-icon>
+    </button>
+  </div>
+
+  <div content
+       #logViewContainer
+       class="kd-log-line-container"
+       (scroll)="onLogsScroll()"
+       [ngClass]="{'kd-logs-text-color-invert': logService?.getInverted(), 'kd-logs-text-color': !logService?.getInverted()}">
+    <div kdLoadingSpinner
+         [isLoading]="isLoading"></div>
+    <div fxFlex
+         fxLayout="column"
+         fxLayoutGap="2px">
+      <div *ngFor="let item of logsSet"
+           [ngClass]="{'kd-logs-element-compact': logService.getCompact(), 'kd-logs-element': !logService.getCompact()}">
+        <span>{{item}}</span>
       </div>
     </div>
+  </div>
 
-    <div content
-         class="kd-log-view"
-         [ngClass]="{'kd-logs-text-color-invert': logService?.getInverted(), 'kd-logs-text-color': !logService?.getInverted()}">
-      <div kdLoadingSpinner
-           [isLoading]="isLoading"></div>
-      <div class="kd-log-view-container"
-           #logViewContainer
-           (scroll)="onLogsScroll()">
-        <div class="kd-virtual-repeat-sizer"></div>
-        <div *ngFor="let item of logsSet"
-             class="kd-logs-element"
-             [ngClass]="{'kd-logs-element-compact': logService.getCompact(), 'kd-logs-element': !logService.getCompact()}">
-          <span class="kd-log-line"
-                [innerHTML]="item | kdSafeHtml"></span>
-        </div>
-      </div>
-
-      <div fxLayout="row"
-           class="kd-muted">
-        <span class="kd-logs-info"
-              *ngIf="logsSet?.length > 1"
-              i18n>
-          Logs from <kd-date [date]="podLogs?.info.fromDate"
-                   format="short"></kd-date> to <kd-date [date]="podLogs?.info.toDate"
-                   format="short"></kd-date> UTC
-        </span>
-        <span fxFlex></span>
-        <div class="kd-list-pagination-buttons">
-          <button mat-icon-button
-                  (click)="loadOldest()">
-            <mat-icon>first_page</mat-icon>
-          </button>
-          <button mat-icon-button
-                  (click)="loadOlder()">
-            <mat-icon>chevron_left</mat-icon>
-          </button>
-          <button mat-icon-button
-                  (click)="loadNewer()">
-            <mat-icon>chevron_right</mat-icon>
-          </button>
-          <button mat-icon-button
-                  (click)="loadNewest()">
-            <mat-icon>last_page</mat-icon>
-          </button>
-        </div>
-      </div>
+  <div footer
+       fxFlex
+       fxLayoutAlign="start center"
+       class="footer"
+       fxLayout="row">
+    <div *ngIf="logsSet?.length > 1"
+         i18n>
+      Logs from
+      <kd-date [date]="podLogs?.info.fromDate"
+               format="short">
+      </kd-date> to
+      <kd-date [date]="podLogs?.info.toDate"
+               format="short">
+      </kd-date> UTC
     </div>
-  </kd-card>
-</div>
+
+    <div fxFlex></div>
+
+    <div>
+      <button mat-icon-button
+              (click)="loadOldest()">
+        <mat-icon>first_page</mat-icon>
+      </button>
+      <button mat-icon-button
+              (click)="loadOlder()">
+        <mat-icon>chevron_left</mat-icon>
+      </button>
+      <button mat-icon-button
+              (click)="loadNewer()">
+        <mat-icon>chevron_right</mat-icon>
+      </button>
+      <button mat-icon-button
+              (click)="loadNewest()">
+        <mat-icon>last_page</mat-icon>
+      </button>
+    </div>
+  </div>
+</kd-card>
 
 <mat-menu #kdMenu="matMenu">
   <button mat-menu-item
@@ -139,11 +147,6 @@ limitations under the License.
           (click)="toggleLogAutoRefresh()">
     <mat-icon>{{logService.getAutoRefresh() ? 'check_box' : 'check_box_outline_blank'}}</mat-icon>
     <span i18n>Auto-refresh (every {{refreshInterval}} s.)</span>
-  </button>
-  <button mat-menu-item
-          (click)="toggleLogFollow()">
-    <mat-icon>{{logService.getFollowing() ? 'check_box' : 'check_box_outline_blank'}}</mat-icon>
-    <span i18n>Follow logs</span>
   </button>
   <button mat-menu-item
           (click)="onPreviousChange()">

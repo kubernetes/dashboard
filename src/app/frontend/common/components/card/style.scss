@@ -16,9 +16,37 @@
 @import '../../../mixins';
 
 :host {
+  div {
+    &.kd-inner-content {
+      display: flex;
+      flex-direction: column;
+      // Reserve 70px for the footer
+      height: calc(100% - 70px);
+      max-height: calc(100% - 70px);
+      min-height: 50 * $baseline-grid;
+
+      .kd-card-content {
+        > div {
+          height: 100%;
+        }
+      }
+    }
+  }
+
   .mat-card {
     min-width: 100 * $baseline-grid;
     padding: 0;
+
+    &.kd-inner-content {
+      height: auto;
+      width: 100%;
+
+      .mat-card-content {
+        flex-grow: 1;
+        overflow: auto;
+        padding: 0;
+      }
+    }
 
     &.kd-inner-table {
       box-shadow: none;
