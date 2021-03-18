@@ -326,4 +326,24 @@
   .mat-list {
     border: 1px solid $border;
   }
+
+  kd-logs {
+    .kd-card-content {
+      border-bottom: 1px solid lighten(map-get($colors, log-viewer-bg), 75%);
+      border-top: 1px solid lighten(map-get($colors, log-viewer-bg), 75%);
+    }
+
+    .kd-log-line-container {
+      background-color: map-get($colors, log-viewer-bg);
+      color: map-get($colors, log-viewer-text);
+
+      &::-webkit-scrollbar-thumb {
+        background-color: map-get($colors, log-viewer-scrollbar);
+      }
+
+      &.kd-logs-text-color-invert {
+        filter: invert(100%);
+      }
+    }
+  }
 }

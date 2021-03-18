@@ -15,67 +15,8 @@
 @import '../variables';
 @import '../mixins';
 
-$logs-color-black: #000;
-$logs-color-white: #fff;
-
-$emphasis: #000;
-$content-background: #fff;
-
-$scrollbar-color-light: rgba(255, 255, 255, .5);
-
-.kd-logs-header-text {
-  line-height: $baseline-grid * 5.25;
-  white-space: nowrap;
-}
-
-.kd-logs-container {
-  box-sizing: border-box;
-  height: 100%;
-  padding-bottom: 35px;
-}
-
-.kd-logs-color-icon {
-  background-color: $logs-color-black;
-  color: $logs-color-white;
-}
-
-.kd-logs-text-color-invert {
-  background-color: $logs-color-black;
-  color: $logs-color-white;
-
-  ::-webkit-scrollbar-thumb {
-    background-color: $scrollbar-color-light;
-  }
-}
-
-.kd-logs-text-color {
-  background-color: $logs-color-white;
-  color: $logs-color-black;
-}
-
-.kd-logs-size-icon {
-  color: $logs-color-black;
-}
-
-.kd-logs-size-icon-compact {
-  color: $logs-color-black;
-  transform: scale(-1, 1);
-}
-
-.kd-log-view {
-  -webkit-font-smoothing: antialiased;
-  display: flex;
-  flex: 1;
-  font-family: $font-family-monospace;
-  padding: 0;
-  width: 100%;
-}
-
-.kd-log-line {
-  white-space: pre-wrap;
-}
-
 %kd-logs-element-base {
+  font-family: $font-family-monospace;
   padding: 0 (2 * $baseline-grid);
   word-wrap: break-word;
 }
@@ -92,99 +33,22 @@ $scrollbar-color-light: rgba(255, 255, 255, .5);
   font-size: $caption-font-size-base;
 }
 
-.kd-logs-toolbar-select {
-  display: inline-flex;
-  flex-grow: 1;
-  margin: 0;
-  position: relative;
-}
+.kd-log-line-container {
+  height: 100%;
+  overflow-y: auto;
 
-.kd-logs-style-buttons {
-  float: right;
-  white-space: nowrap;
-}
-
-.kd-cross-line-black {
-  stroke: $emphasis;
-  stroke-width: 2;
-}
-
-.kd-cross-line-white {
-  stroke: $content-background;
-  stroke-width: 4;
-}
-
-.kd-logs-info {
-  padding: 1.5 * $baseline-grid;
-}
-
-.kd-cross-style {
-  bottom: 0;
-  left: 0;
-  position: absolute;
-  right: 0;
-  top: 0;
-}
-
-.kd-list-pagination-buttons {
-  margin-right: $baseline-grid;
-}
-
-.mat-form-field {
-  align-items: center;
-  display: inline-flex;
-  margin-bottom: -25px;
-  margin-top: -16px;
-  padding: 0 5px;
-  vertical-align: middle;
-  width: auto;
-
-  &.kd-form-field {
-    flex: 1;
+  &::-webkit-scrollbar {
+    width: 5px;
   }
 }
 
-.kd-log-view-container {
-  -webkit-overflow-scrolling: touch;
-  background-color: inherit;
-  bottom: 50px;
-  box-sizing: border-box;
-  left: 0;
-  margin: 0;
-  overflow-x: hidden;
-  padding: 0;
-  position: absolute;
-  right: 0;
-  top: 57px;
+kd-card {
+  display: flex;
+  max-height: 100%;
+  min-height: max(100%, 550px);
 }
 
-.kd-virtual-repeat-sizer {
-  box-sizing: border-box;
-  display: block;
-  height: 1px;
-  margin: 0;
-  padding: 0;
-  width: 1px;
-}
-
-.kd-muted {
-  bottom: 0;
-  box-sizing: border-box;
-  color: $logs-color-black;
-  left: 0;
-  position: absolute;
-  width: 100%;
-}
-
-:host ::ng-deep mat-card {
-  height: 100%;
-}
-
-:host ::ng-deep .mat-form-field-infix {
-  width: inherit;
-}
-
-:host ::ng-deep .mat-select-value {
-  max-width: 100%;
-  width: inherit;
+.footer {
+  font-size: $body-font-size-base;
+  padding: 0 (2 * $baseline-grid);
 }
