@@ -3757,86 +3757,79 @@
         <source>Logs from</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/logs/component.ts</context>
-          <context context-type="linenumber">60,67</context>
+          <context context-type="linenumber">59,65</context>
         </context-group>
       </trans-unit>
       <trans-unit id="f5dc4402dbf1d5f8f98da57b6061d5f9be05ca5c" datatype="html">
         <source>Containers</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/logs/component.ts</context>
-          <context context-type="linenumber">72,78</context>
+          <context context-type="linenumber">72,77</context>
         </context-group>
       </trans-unit>
       <trans-unit id="c7b6cfe5410900faa386dd25760731fc8f8d68d7" datatype="html">
         <source>Init Containers</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/logs/component.ts</context>
-          <context context-type="linenumber">84,96</context>
+          <context context-type="linenumber">85,95</context>
         </context-group>
       </trans-unit>
       <trans-unit id="cb0f69bdd4dea41d7d45c74b6e07f98de8a2ab26" datatype="html">
         <source>in</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/logs/component.ts</context>
-          <context context-type="linenumber">109,115</context>
+          <context context-type="linenumber">114,125</context>
         </context-group>
       </trans-unit>
       <trans-unit id="bdf43b20b7101e83458a69a1e5e2008557feca1f" datatype="html">
         <source>Download logs</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/logs/component.ts</context>
-          <context context-type="linenumber">128,136</context>
+          <context context-type="linenumber">143,148</context>
         </context-group>
       </trans-unit>
       <trans-unit id="fb31e77d231aa06eb2e8494b50596519bbeeb386" datatype="html">
         <source>Invert colors</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/logs/component.ts</context>
-          <context context-type="linenumber">150,163</context>
+          <context context-type="linenumber">161,174</context>
         </context-group>
       </trans-unit>
       <trans-unit id="8902979878d0f294dfc6f5b95fd7788c3fa2dd49" datatype="html">
         <source>Reduce font size</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/logs/component.ts</context>
-          <context context-type="linenumber">183,188</context>
+          <context context-type="linenumber">190,201</context>
         </context-group>
       </trans-unit>
       <trans-unit id="b5c4c520630525f705f7bddbeb2f0b0aec7a30d6" datatype="html">
         <source>Show timestamps</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/logs/component.ts</context>
-          <context context-type="linenumber">201,209</context>
+          <context context-type="linenumber">215,220</context>
         </context-group>
       </trans-unit>
       <trans-unit id="72f275d9b31bf0e6dc122c1a9b58b4986800eb7a" datatype="html">
         <source>Auto-refresh (every <x id="INTERPOLATION" equiv-text="{{refreshInterval}}"/> s.)</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/logs/component.ts</context>
-          <context context-type="linenumber">223</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="6e73f7b06ce74fa29c8866cf5a82bfbeaf2452ed" datatype="html">
-        <source>Follow logs</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/frontend/logs/template.html</context>
-          <context context-type="linenumber">150,154</context>
+          <context context-type="linenumber">235</context>
         </context-group>
       </trans-unit>
       <trans-unit id="3de87d94cff5d685043f035ac20e6d4521f8edf2" datatype="html">
         <source>Show previous logs</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/logs/template.html</context>
-          <context context-type="linenumber">154</context>
+          <context context-type="linenumber">157</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="4718e522f1a6e0d5ca2062f6c96ee1c584021326" datatype="html">
+      <trans-unit id="948452dba1924a83bfe56a00c92ab7cb390c0889" datatype="html">
         <source> Logs from <x id="START_TAG_KD_DATE" ctype="x-kd_date" equiv-text="&lt;kd-date [date]=&quot;podLogs?.info.fromDate&quot;
-                   format=&quot;short&quot;&gt;"/><x id="CLOSE_TAG_KD_DATE" ctype="x-kd_date" equiv-text="&lt;/kd-date&gt;"/> to <x id="START_TAG_KD_DATE_1" ctype="x-kd_date_1" equiv-text="&lt;kd-date [date]=&quot;podLogs?.info.toDate&quot;
-                   format=&quot;short&quot;&gt;"/><x id="CLOSE_TAG_KD_DATE" ctype="x-kd_date" equiv-text="&lt;/kd-date&gt;"/> UTC </source>
+               format=&quot;short&quot;&gt;"/><x id="CLOSE_TAG_KD_DATE" ctype="x-kd_date" equiv-text="&lt;/kd-date&gt;"/> to <x id="START_TAG_KD_DATE_1" ctype="x-kd_date_1" equiv-text="&lt;kd-date [date]=&quot;podLogs?.info.toDate&quot;
+               format=&quot;short&quot;&gt;"/><x id="CLOSE_TAG_KD_DATE" ctype="x-kd_date" equiv-text="&lt;/kd-date&gt;"/> UTC </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/logs/template.html</context>
-          <context context-type="linenumber">154,95</context>
+          <context context-type="linenumber">157,100</context>
         </context-group>
       </trans-unit>
       <trans-unit id="4346d3d4e2109584d33480fb8916a9b1cfcdf636" datatype="html">
