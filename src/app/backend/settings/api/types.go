@@ -99,6 +99,7 @@ type Settings struct {
 	DisableAccessDeniedNotifications bool     `json:"disableAccessDeniedNotifications"`
 	DefaultNamespace                 string   `json:"defaultNamespace"`
 	NamespaceFallbackList            []string `json:"namespaceFallbackList"`
+	ContainerEnvColumns              int      `json:"containerEnvColumns"`
 }
 
 // Marshal settings into JSON object.
@@ -124,6 +125,7 @@ var defaultSettings = Settings{
 	DisableAccessDeniedNotifications: false,
 	DefaultNamespace:                 "default",
 	NamespaceFallbackList:            []string{"default"},
+	ContainerEnvColumns:              5,
 }
 
 // GetDefaultSettings returns settings structure, that should be used if there are no

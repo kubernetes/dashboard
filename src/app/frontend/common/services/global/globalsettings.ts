@@ -37,6 +37,7 @@ export class GlobalSettingsService {
     disableAccessDeniedNotifications: false,
     defaultNamespace: 'default',
     namespaceFallbackList: ['default'],
+    containerEnvColumns: 5,
   };
   private unsubscribe_ = new Subject<void>();
   private isInitialized_ = false;
@@ -125,5 +126,9 @@ export class GlobalSettingsService {
     return _.isArray(this.settings_.namespaceFallbackList)
       ? this.settings_.namespaceFallbackList
       : [this.settings_.defaultNamespace];
+  }
+
+  getContainerEnvColumns(): number {
+    return this.settings_.containerEnvColumns;
   }
 }

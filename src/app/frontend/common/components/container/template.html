@@ -29,7 +29,7 @@ limitations under the License.
     </kd-property>
 
     <div *ngFor="let env of container?.env;trackBy:getEnvVarID"
-         fxFlex="20">
+         [fxFlex]="columnWidth">
       <ng-container *ngIf="!isSecret(env) && !isConfigMap(env)">
         <kd-property>
           <div key

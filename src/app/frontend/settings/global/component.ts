@@ -37,6 +37,7 @@ enum Controls {
   ResourceAutorefreshInterval = 'resourceAutorefreshInterval',
   DisableAccessDeniedNotification = 'disableAccessDeniedNotification',
   NamespaceSettings = 'namespaceSettings',
+  ContainerEnvColumns = 'containerEnvColumns',
 }
 
 @Component({
@@ -75,6 +76,7 @@ export class GlobalSettingsComponent implements OnInit, OnDestroy {
     settings.disableAccessDeniedNotifications = this.settingsService_.getDisableAccessDeniedNotifications();
     settings.defaultNamespace = this.settingsService_.getDefaultNamespace();
     settings.namespaceFallbackList = this.settingsService_.getNamespaceFallbackList();
+    settings.containerEnvColumns = this.settingsService_.getContainerEnvColumns();
 
     return settings;
   }
@@ -88,6 +90,7 @@ export class GlobalSettingsComponent implements OnInit, OnDestroy {
       [Controls.ResourceAutorefreshInterval]: this.builder_.control(0),
       [Controls.DisableAccessDeniedNotification]: this.builder_.control(false),
       [Controls.NamespaceSettings]: this.builder_.control(''),
+      [Controls.ContainerEnvColumns]: this.builder_.control(0),
     });
 
     this.load_();
@@ -169,6 +172,7 @@ export class GlobalSettingsComponent implements OnInit, OnDestroy {
     this.form
       .get(Controls.DisableAccessDeniedNotification)
       .setValue(this.settings.disableAccessDeniedNotifications, {emitEvent: false});
+    this.form.get(Controls.ContainerEnvColumns).setValue(this.settings.containerEnvColumns, {emitEvent: false});
   }
 
   private onLoadError_(): void {
@@ -183,6 +187,7 @@ export class GlobalSettingsComponent implements OnInit, OnDestroy {
       labelsLimit: this.form.get(Controls.LabelsLimit).value,
       logsAutoRefreshTimeInterval: this.form.get(Controls.LogsAutorefreshInterval).value,
       resourceAutoRefreshTimeInterval: this.form.get(Controls.ResourceAutorefreshInterval).value,
+      containerEnvColumns: this.form.get(Controls.ContainerEnvColumns).value,
     } as GlobalSettings;
   }
 }

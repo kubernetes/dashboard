@@ -128,6 +128,24 @@ limitations under the License.
           </mat-slide-toggle>
         </div>
       </kd-settings-entry>
+      <kd-settings-entry key="Container environment columns count"
+                         i18n-key
+                         desc="Number of columns to display environment variables for containers."
+                         i18n-desc>
+        <div fxFlex>
+          <mat-slider [formControlName]="Controls.ContainerEnvColumns"
+                      color="primary"
+                      min="1"
+                      max="5"
+                      step="1"
+                      fxFlex>
+          </mat-slider>
+          <span class="kd-slider-value kd-muted"
+                fxFlexAlign=" center">
+            {{settings.containerEnvColumns}}
+          </span>
+        </div>
+      </kd-settings-entry>
       <br><br>
       <button [disabled]="!canSave()"
               (click)="save()"

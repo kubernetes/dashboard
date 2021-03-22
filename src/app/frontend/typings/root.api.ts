@@ -1163,6 +1163,7 @@ export interface GlobalSettings {
   disableAccessDeniedNotifications: boolean;
   defaultNamespace: string;
   namespaceFallbackList: string[];
+  containerEnvColumns: number;
 }
 
 export interface PinnedResource {
