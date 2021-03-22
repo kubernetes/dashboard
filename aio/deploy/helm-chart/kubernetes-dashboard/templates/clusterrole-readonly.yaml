@@ -45,7 +45,9 @@ rules:
       - events
       - limitranges
       - namespaces/status
+      {{- if .Values.rbac.clusterReadOnlyRolePermissions.logging }}
       - pods/log
+      {{- end }}
       - pods/status
       - replicationcontrollers/status
       - resourcequotas

@@ -123,6 +123,7 @@ Parameter                                       | Description                   
 `rbac.create`                                   | Create & use RBAC resources                                                                                                      | `true`
 `rbac.clusterRoleMetrics`                       | If set, an additional cluster role / role binding will be created to access metrics.                                             | `true`
 `rbac.clusterReadOnlyRole`                      | If set, an additional cluster role / role binding will be created with read only permissions to all resources listed inside.     | `false`
+`rbac.clusterReadOnlyRolePermissions.logging`   | Whether or not to allow the Kubernetes Dashboard read-only role to view Pod logs.                                                | `true`
 `serviceAccount.create`                         | Whether a new service account name that the agent will use should be created.                                                    | `true`
 `serviceAccount.name`                           | Service account to be used. If not set and serviceAccount.create is `true` a name is generated using the fullname template.      |
 `livenessProbe.initialDelaySeconds`             | Number of seconds to wait before sending first probe                                                                             | `30`

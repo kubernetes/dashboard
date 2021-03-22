@@ -246,6 +246,12 @@ rbac:
   # Independent from rbac.create parameter.
   clusterReadOnlyRole: false
 
+  # Individual permissions for the `clusterReadOnlyRole`.
+  # Only available if `rbac.clusterReadOnlyRole` is set to `true`.
+  clusterReadOnlyRolePermissions:
+    # Whether or not to allow the Kubernetes Dashboard read-only role to view Pod logs.
+    logging: true
+
 serviceAccount:
   # Specifies whether a service account should be created
   create: true
