@@ -184,8 +184,6 @@ ingress:
   #    apiGroup: "k8s.example.com/v1alpha"
   #    kind: "IngressParameters"
   #    name: "external-lb"
-  
-  
 
 settings: {}
   ## Cluster name that appears in the browser window title if it is set
