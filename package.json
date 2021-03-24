@@ -163,7 +163,7 @@
     "jasmine-core": "3.7.1",
     "jasmine-spec-reporter": "6.0.0",
     "js-beautify": "1.13.5",
-    "karma": "6.3.0",
+    "karma": "6.3.1",
     "karma-chrome-launcher": "3.1.0",
     "karma-cli": "2.0.0",
     "karma-coverage-istanbul-reporter": "3.0.3",
