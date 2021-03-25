@@ -16,3 +16,6 @@
 . "$(dirname "$0")/_/husky.sh"
 
 npx --no-install lint-staged
+npm run check
+npm run test:frontend
+npm run test:backend
