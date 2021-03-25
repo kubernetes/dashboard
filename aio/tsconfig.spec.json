@@ -2,6 +2,7 @@
   "extends": "../tsconfig.json",
   "compilerOptions": {
     "outDir": "../out-tsc/spec",
+    "baseUrl": "../src/app/frontend",
     "types": ["jest", "node"]
   },
   "include": [
