@@ -267,12 +267,10 @@
   }
 
   .kd-user-help {
+    color: $muted;
+
     .material-icons {
       color: map-get($colors, primary);
-    }
-
-    * {
-      color: $muted;
     }
   }
 
