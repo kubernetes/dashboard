@@ -132,7 +132,7 @@
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "0.1102.6",
-    "@angular/cli": "11.2.5",
+    "@angular/cli": "11.2.6",
     "@angular/compiler-cli": "11.2.5",
     "@angular/language-service": "11.2.7",
     "@cypress/webpack-preprocessor": "5.6.0",
