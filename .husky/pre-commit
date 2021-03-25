@@ -17,5 +17,6 @@
 
 npx --no-install lint-staged
 npm run check
+npm run check:license
 npm run test:frontend
 npm run test:backend
