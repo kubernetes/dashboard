@@ -28,3 +28,6 @@ cypress/videos
 
 # npm debug log:
 npm-debug.log
+
+# husky
+.husky/_
