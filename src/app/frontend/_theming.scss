@@ -37,6 +37,10 @@
 
   a {
     color: map-get($colors, primary);
+
+    &:hover {
+      color: map-get($colors, primary-hover);
+    }
   }
 
   code {
@@ -165,6 +169,10 @@
 
   .kd-chips-show-button {
     color: map-get($colors, primary);
+
+    &:hover {
+      color: map-get($colors, primary-hover);
+    }
   }
 
   .kd-minimized-card-header:hover {
@@ -259,20 +267,10 @@
   }
 
   .kd-user-help {
+    color: $muted;
+
     .material-icons {
       color: map-get($colors, primary);
-    }
-
-    * {
-      color: $muted;
-    }
-
-    a {
-      color: map-get($colors, primary);
-
-      &:hover {
-        color: map-get($colors, toolbar-button);
-      }
     }
   }
 
@@ -280,10 +278,8 @@
     border-right: 0;
   }
 
-  .mat-icon-button:hover {
-    :not([disabled='true']) and :not(&[disabled='true']) {
-      background-color: $border !important;
-    }
+  .mat-icon-button:hover:not([disabled]) {
+    background-color: $border !important;
   }
 
   .c3-tooltip {
