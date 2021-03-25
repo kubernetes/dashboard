@@ -13,7 +13,6 @@
 // limitations under the License.
 
 import {Component, Input} from '@angular/core';
-import {Router} from '@angular/router';
 import {ObjectMeta, TypeMeta} from '@api/root.api';
 import {ActionColumn} from '@api/root.ui';
 import {PinnerService} from '@common/services/global/pinner';
@@ -23,13 +22,13 @@ import {Resource} from '@common/services/resource/endpoint';
 
 const loggableResources: string[] = [
   Resource.daemonSet,
+  Resource.history,
   Resource.job,
   Resource.pod,
   Resource.replicaSet,
   Resource.replicationController,
   Resource.statefulSet,
 ];
-
 const pinnableResources: string[] = [Resource.crdFull];
 const executableResources: string[] = [Resource.pod];
 const triggerableResources: string[] = [Resource.cronJob];
@@ -42,11 +41,11 @@ export class MenuComponent implements ActionColumn {
   @Input() objectMeta: ObjectMeta;
   @Input() typeMeta: TypeMeta;
   @Input() displayName: string;
+  @Input() parentObjectMeta: ObjectMeta;
   @Input() namespaced: boolean;
 
   constructor(
     private readonly verber_: VerberService,
-    private readonly router_: Router,
     private readonly kdState_: KdStateService,
     private readonly pinner_: PinnerService
   ) {}
@@ -65,6 +64,10 @@ export class MenuComponent implements ActionColumn {
 
   setNamespaced(namespaced: boolean): void {
     this.namespaced = namespaced;
+  }
+
+  setParentObjectMeta(parentObjectMeta: ObjectMeta): void {
+    this.parentObjectMeta = parentObjectMeta;
   }
 
   isLogsEnabled(): boolean {
@@ -131,6 +134,14 @@ export class MenuComponent implements ActionColumn {
 
   onRestart(): void {
     this.verber_.showRestartDialog(this.typeMeta.kind, this.typeMeta, this.objectMeta);
+  }
+
+  isRollbackEnabled(): boolean {
+    return this.typeMeta.rollbackable && !this.typeMeta.currentRevision;
+  }
+
+  onRollback(): void {
+    this.verber_.showRollbackDialog(this.typeMeta.kind, this.typeMeta, this.objectMeta, this.parentObjectMeta);
   }
 
   onDelete(): void {

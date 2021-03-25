@@ -274,13 +274,16 @@ func CreateHTTPAPIHandler(iManager integration.IntegrationManager, cManager clie
 			To(apiHandler.handleGetDeploymentNewReplicaSet).
 			Writes(replicaset.ReplicaSet{}))
 	apiV1Ws.Route(
+		apiV1Ws.GET("/{kind}/{namespace}/{deployment}/history").
+			To(apiHandler.handleDeploymentHistory).
+			Writes(deployment.HistoryList{}))
+	apiV1Ws.Route(
 		apiV1Ws.PUT("/{kind}/{namespace}/{deployment}/pause").
 			To(apiHandler.handleDeploymentPause).
 			Writes(deployment.DeploymentDetail{}))
 	apiV1Ws.Route(
 		apiV1Ws.PUT("/{kind}/{namespace}/{deployment}/rollback").
 			To(apiHandler.handleDeploymentRollback).
-			Reads(deployment.RolloutSpec{}).
 			Writes(deployment.RolloutSpec{}))
 	apiV1Ws.Route(
 		apiV1Ws.PUT("/{kind}/{namespace}/{deployment}/restart").
@@ -1279,6 +1282,23 @@ func (apiHandler *APIHandler) handleDeployFromFile(request *restful.Request, res
 		Content: deploymentSpec.Content,
 		Error:   errorMessage,
 	})
+}
+
+func (apiHandler *APIHandler) handleDeploymentHistory(request *restful.Request, response *restful.Response) {
+	k8sClient, err := apiHandler.cManager.Client(request)
+	if err != nil {
+		errors.HandleInternalError(response, err)
+		return
+	}
+
+	namespace := request.PathParameter("namespace")
+	name := request.PathParameter("deployment")
+	history, err := deployment.GetDeploymentHistory(k8sClient, namespace, name)
+	if err != nil {
+		errors.HandleInternalError(response, err)
+		return
+	}
+	response.WriteHeaderAndEntity(http.StatusOK, history)
 }
 
 func (apiHandler *APIHandler) handleDeploymentPause(request *restful.Request, response *restful.Response) {

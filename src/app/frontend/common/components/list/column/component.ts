@@ -24,7 +24,7 @@ import {
   ViewContainerRef,
 } from '@angular/core';
 import {ActionColumn} from '@api/root.ui';
-import {CRDDetail, Resource} from 'typings/root.api';
+import {CRDDetail, History, Resource} from 'typings/root.api';
 
 @Component({
   selector: 'kd-dynamic-cell',
@@ -55,6 +55,10 @@ export class ColumnComponent<T extends ActionColumn> implements OnChanges {
     if ((this.resource as CRDDetail).names !== undefined) {
       this.componentRef_.instance.setDisplayName((this.resource as CRDDetail).names.kind);
       this.componentRef_.instance.setNamespaced(this.isNamespaced_(this.resource as CRDDetail));
+    }
+
+    if ((this.resource as History).parentObjectMeta !== undefined) {
+      this.componentRef_.instance.setParentObjectMeta((this.resource as History).parentObjectMeta);
     }
 
     // Let the change detector run for out component

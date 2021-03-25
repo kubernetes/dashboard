@@ -19,6 +19,8 @@ export interface TypeMeta {
   kind: string;
   scalable?: boolean;
   restartable?: boolean;
+  rollbackable?: boolean;
+  currentRevision?: boolean;
 }
 
 export interface ListMeta {
@@ -126,6 +128,11 @@ export interface EndpointList extends ResourceList {
 
 export interface EventList extends ResourceList {
   events: Event[];
+}
+
+export interface HistoryList extends ResourceList {
+  history: History[];
+  status: Status;
 }
 
 export interface HorizontalPodAutoscalerList extends ResourceList {
@@ -307,6 +314,13 @@ export interface Event extends Resource {
   lastSeen: string;
   reason: string;
   type: string;
+}
+
+export interface History extends Resource {
+  deploymentName: string;
+  containerImages: string[];
+  restartedAt: string;
+  parentObjectMeta: ObjectMeta;
 }
 
 export interface HorizontalPodAutoscaler extends Resource {

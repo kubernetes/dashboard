@@ -22,6 +22,7 @@ import {AlertDialog, AlertDialogConfig} from '../../dialogs/alert/dialog';
 import {DeleteResourceDialog} from '../../dialogs/deleteresource/dialog';
 import {EditResourceDialog} from '../../dialogs/editresource/dialog';
 import {RestartResourceDialog} from '../../dialogs/restartresource/dialog';
+import {RollbackResourceDialog} from '../../dialogs/rollbackresource/dialog';
 import {ScaleResourceDialog} from '../../dialogs/scaleresource/dialog';
 import {TriggerResourceDialog} from '../../dialogs/triggerresource/dialog';
 import {RawResource} from '../../resources/rawresource';
@@ -32,9 +33,10 @@ import {ResourceMeta} from './actionbar';
 export class VerberService {
   onDelete = new EventEmitter<boolean>();
   onEdit = new EventEmitter<boolean>();
+  onRestart = new EventEmitter<boolean>();
+  onRollback = new EventEmitter<boolean>();
   onScale = new EventEmitter<boolean>();
   onTrigger = new EventEmitter<boolean>();
-  onRestart = new EventEmitter<boolean>();
 
   constructor(private readonly dialog_: MatDialog, private readonly http_: HttpClient) {}
 
@@ -78,6 +80,28 @@ export class VerberService {
         switchMap(_ => {
           const url = `api/v1/${typeMeta.kind}/${objectMeta.namespace}/${objectMeta.name}/restart`;
           return this.http_.put(url, {responseType: 'text'});
+        })
+      )
+      .subscribe(_ => this.onTrigger.emit(true), this.handleErrorResponse_.bind(this));
+  }
+
+  showRollbackDialog(
+    displayName: string,
+    typeMeta: TypeMeta,
+    objectMeta: ObjectMeta,
+    parentObjectMeta: ObjectMeta
+  ): void {
+    const dialogConfig = this.getDialogConfig_(displayName, typeMeta, objectMeta);
+    dialogConfig.data.parentObjectMeta = parentObjectMeta;
+    this.dialog_
+      .open(RollbackResourceDialog, dialogConfig)
+      .afterClosed()
+      .pipe(filter(result => result))
+      .pipe(
+        switchMap(_ => {
+          const url = `api/v1/deployment/${parentObjectMeta.namespace}/${parentObjectMeta.name}/rollback`;
+          const revision = objectMeta.annotations['deployment.kubernetes.io/revision'];
+          return this.http_.put(url, {revision: revision});
         })
       )
       .subscribe(_ => this.onTrigger.emit(true), this.handleErrorResponse_.bind(this));

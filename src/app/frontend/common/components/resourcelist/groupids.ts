@@ -28,6 +28,7 @@ export enum ListIdentifier {
   deployment = 'deploymentList',
   daemonSet = 'daemonSetList',
   pod = 'podList',
+  history = 'historyList',
   horizontalpodautoscaler = 'horizontalPodAutoscalerList',
   replicaSet = 'replicaSetList',
   ingress = 'ingressList',

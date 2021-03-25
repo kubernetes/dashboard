@@ -14,7 +14,7 @@
 
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
-import {DeploymentDetail, ReplicaSet} from '@api/root.api';
+import {DeploymentDetail, HistoryList, ReplicaSet} from '@api/root.api';
 import {Subject} from 'rxjs';
 import {takeUntil} from 'rxjs/operators';
 
@@ -33,15 +33,18 @@ export class DeploymentDetailComponent implements OnInit, OnDestroy {
   private readonly endpoint_ = EndpointManager.resource(Resource.deployment, true);
   deployment: DeploymentDetail;
   newReplicaSet: ReplicaSet;
+  historyList: HistoryList;
   isInitialized = false;
   eventListEndpoint: string;
   oldReplicaSetsEndpoint: string;
   newReplicaSetEndpoint: string;
+  historyListEndpoint: string;
   horizontalPodAutoscalerEndpoint: string;
 
   constructor(
     private readonly deployment_: NamespacedResourceService<DeploymentDetail>,
     private readonly replicaSet_: NamespacedResourceService<ReplicaSet>,
+    private readonly historyList_: NamespacedResourceService<HistoryList>,
     private readonly activatedRoute_: ActivatedRoute,
     private readonly actionbar_: ActionbarService,
     private readonly kdState_: KdStateService,
@@ -55,6 +58,7 @@ export class DeploymentDetailComponent implements OnInit, OnDestroy {
     this.eventListEndpoint = this.endpoint_.child(resourceName, Resource.event, resourceNamespace);
     this.oldReplicaSetsEndpoint = this.endpoint_.child(resourceName, Resource.oldReplicaSet, resourceNamespace);
     this.newReplicaSetEndpoint = this.endpoint_.child(resourceName, Resource.newReplicaSet, resourceNamespace);
+    this.historyListEndpoint = this.endpoint_.child(resourceName, Resource.history, resourceNamespace);
     this.horizontalPodAutoscalerEndpoint = this.endpoint_.child(
       resourceName,
       Resource.horizontalPodAutoscaler,
@@ -76,6 +80,13 @@ export class DeploymentDetailComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.unsubscribe_))
       .subscribe((rs: ReplicaSet) => {
         this.newReplicaSet = rs;
+      });
+
+    this.historyList_
+      .get(this.historyListEndpoint)
+      .pipe(takeUntil(this.unsubscribe_))
+      .subscribe((historyList: HistoryList) => {
+        this.historyList = historyList;
       });
   }
 

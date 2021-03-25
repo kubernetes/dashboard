@@ -81,6 +81,12 @@ type TypeMeta struct {
 
 	// Restartable represents whether or not an object is restartable.
 	Restartable bool `json:"restartable,omitempty"`
+
+	// Rollbackable represents whether or not an object is rollbackable.
+	Rollbackable bool `json:"rollbackable,omitempty"`
+
+	// CurrentRevision represents whether or not an object is current revision.
+	CurrentRevision bool `json:"currentRevision,omitempty"`
 }
 
 // ListMeta describes list of objects, i.e. holds information about pagination options set for the list.
@@ -105,9 +111,10 @@ func NewObjectMeta(k8SObjectMeta metaV1.ObjectMeta) ObjectMeta {
 // NewTypeMeta creates new type mete for the resource kind.
 func NewTypeMeta(kind ResourceKind) TypeMeta {
 	return TypeMeta{
-		Kind:        kind,
-		Scalable:    kind.Scalable(),
-		Restartable: kind.Restartable(),
+		Kind:         kind,
+		Scalable:     kind.Scalable(),
+		Restartable:  kind.Restartable(),
+		Rollbackable: kind.Rollbackable(),
 	}
 }
 
@@ -122,6 +129,7 @@ const (
 	ResourceKindDaemonSet                = "daemonset"
 	ResourceKindDeployment               = "deployment"
 	ResourceKindEvent                    = "event"
+	ResourceKindHistory                  = "history"
 	ResourceKindHorizontalPodAutoscaler  = "horizontalpodautoscaler"
 	ResourceKindIngress                  = "ingress"
 	ResourceKindServiceAccount           = "serviceaccount"
@@ -175,6 +183,21 @@ func (k ResourceKind) Restartable() bool {
 	}
 
 	for _, kind := range restartable {
+		if k == kind {
+			return true
+		}
+	}
+
+	return false
+}
+
+// Rollbackable method return whether ResourceKind is rollbackable.
+func (k ResourceKind) Rollbackable() bool {
+	rollbackable := []ResourceKind{
+		ResourceKindHistory,
+	}
+
+	for _, kind := range rollbackable {
 		if k == kind {
 			return true
 		}

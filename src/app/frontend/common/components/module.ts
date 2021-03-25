@@ -77,6 +77,7 @@ import {CronJobListComponent} from './resourcelist/cronjob/component';
 import {DaemonSetListComponent} from './resourcelist/daemonset/component';
 import {DeploymentListComponent} from './resourcelist/deployment/component';
 import {EventListComponent} from './resourcelist/event/component';
+import {HistoryListComponent} from './resourcelist/history/component';
 import {HorizontalPodAutoscalerListComponent} from './resourcelist/horizontalpodautoscaler/component';
 import {IngressListComponent} from './resourcelist/ingress/component';
 import {JobListComponent} from './resourcelist/job/component';
@@ -145,6 +146,7 @@ const components = [
   GraphCardComponent,
   GraphMetricsComponent,
   HiddenPropertyComponent,
+  HistoryListComponent,
   HorizontalPodAutoscalerListComponent,
   IngressListComponent,
   IngressRuleFlatListComponent,

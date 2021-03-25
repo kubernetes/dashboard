@@ -20,8 +20,14 @@ import (
 	"time"
 
 	v1 "k8s.io/api/apps/v1"
+	core "k8s.io/api/core/v1"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	client "k8s.io/client-go/kubernetes"
+
+	"github.com/kubernetes/dashboard/src/app/backend/api"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/replicaset"
 )
 
 const (
@@ -39,17 +45,45 @@ type RolloutSpec struct {
 	Revision string `json:"revision"`
 }
 
+// HistoryList contains a list of Replica Sets in the deployment.
+type HistoryList struct {
+	ListMeta api.ListMeta `json:"listMeta"`
+
+	// Basic information about resources status on the list.
+	Status common.ResourceStatus `json:"status"`
+
+	// Unordered list of Replica Sets.
+	HistoryList []History `json:"history"`
+
+	// List of non-critical errors, that occurred during resource retrieval.
+	Errors []error `json:"errors"`
+}
+
+// History is a presentation layer view of Kubernetes Replica Set resource for history.
+type History struct {
+	ObjectMeta api.ObjectMeta `json:"objectMeta"`
+	TypeMeta   api.TypeMeta   `json:"typeMeta"`
+
+	// Container images of the Replica Set.
+	ContainerImages []string `json:"containerImages"`
+
+	// Restarted At
+	RestartedAt metaV1.Time `json:"restartedAt"`
+
+	// Parent Object Metadata
+	ParentObjectMeta api.ObjectMeta `json:"parentObjectMeta"`
+}
+
 // RollbackDeployment rollback to a specific ReplicaSet revision
 func RollbackDeployment(client client.Interface, rolloutSpec *RolloutSpec, namespace, name string) (*RolloutSpec, error) {
 	deployment, err := client.AppsV1().Deployments(namespace).Get(context.TODO(), name, metaV1.GetOptions{})
 	if err != nil {
 		return nil, err
 	}
-	currRevision := deployment.Annotations[RevisionAnnotationKey]
+	matchRS, currRevision, err := GetReplicaSetFromDeployment(client, namespace, name)
 	if currRevision == FirstRevision {
 		return nil, errors.New("No revision for rolling back ")
 	}
-	matchRS, err := GetReplicaSetFromDeployment(client, namespace, name)
 	if err != nil {
 		return nil, err
 	}
@@ -124,20 +158,20 @@ func RestartDeployment(client client.Interface, namespace, name string) (*Rollou
 }
 
 // GetReplicaSetFromDeployment return all replicaSet which is belong to the deployment
-func GetReplicaSetFromDeployment(client client.Interface, namespace, name string) ([]v1.ReplicaSet, error) {
+func GetReplicaSetFromDeployment(client client.Interface, namespace, name string) ([]v1.ReplicaSet, string, error) {
 	deployment, err := client.AppsV1().Deployments(namespace).Get(context.TODO(), name, metaV1.GetOptions{})
 	if err != nil {
-		return nil, err
+		return nil, "", err
 	}
-
+	currentRevision := deployment.Annotations[RevisionAnnotationKey]
 	selector, err := metaV1.LabelSelectorAsSelector(deployment.Spec.Selector)
 	if err != nil {
-		return nil, err
+		return nil, "", err
 	}
 	options := metaV1.ListOptions{LabelSelector: selector.String()}
 	allRS, err := client.AppsV1().ReplicaSets(namespace).List(context.TODO(), options)
 	if err != nil {
-		return nil, err
+		return nil, "", err
 	}
 	var result []v1.ReplicaSet
 	for _, rs := range allRS.Items {
@@ -145,5 +179,50 @@ func GetReplicaSetFromDeployment(client client.Interface, namespace, name string
 			result = append(result, rs)
 		}
 	}
-	return result, nil
+	return result, currentRevision, nil
+}
+
+// GetDeploymentHistory return all replicaSet which is belong to the deployment for REST API
+func GetDeploymentHistory(client client.Interface, namespace, name string) (*HistoryList, error) {
+	rsList, currentRevision, err := GetReplicaSetFromDeployment(client, namespace, name)
+	if err != nil {
+		return nil, err
+	}
+	return ToHistoryList(namespace, name, rsList, currentRevision), nil
+}
+
+// ToHistoryList convert ReplicaSet array to HistoryList type.
+func ToHistoryList(namespace, parentName string, replicaSets []v1.ReplicaSet, currentRevision string) *HistoryList {
+	historyList := []History{}
+	replicasetList := replicaset.ToReplicaSetList(replicaSets, []core.Pod{}, []core.Event{}, nil, dataselect.NoDataSelect, nil)
+	for _, replicaSet := range replicaSets {
+		historyList = append(historyList, ToHistory(namespace, parentName, replicaSet, currentRevision))
+	}
+	return &HistoryList{
+		ListMeta:    replicasetList.ListMeta,
+		Status:      replicasetList.Status,
+		HistoryList: historyList,
+		Errors:      replicasetList.Errors,
+	}
+}
+
+// ToHistory convert ReplicaSet to History type.
+func ToHistory(namespace, parentName string, replicaSet v1.ReplicaSet, currentRevision string) History {
+	restartedAt := metaV1.Time{}
+	if replicaSet.Spec.Template.ObjectMeta.Annotations != nil {
+		timestamp, _ := time.Parse(time.RFC3339, replicaSet.Spec.Template.ObjectMeta.Annotations[RestartedAtAnnotationKey])
+		restartedAt = metaV1.NewTime(timestamp)
+	}
+	history := History{
+		ObjectMeta:      api.NewObjectMeta(replicaSet.ObjectMeta),
+		TypeMeta:        api.NewTypeMeta(api.ResourceKindHistory),
+		ContainerImages: common.GetContainerImages(&replicaSet.Spec.Template.Spec),
+		RestartedAt:     restartedAt,
+		ParentObjectMeta: api.ObjectMeta{
+			Namespace: namespace,
+			Name:      parentName,
+		},
+	}
+	history.TypeMeta.CurrentRevision = (currentRevision == replicaSet.ObjectMeta.Annotations[RevisionAnnotationKey])
+	return history
 }
