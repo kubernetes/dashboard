@@ -116,7 +116,7 @@
     "normalize.css": "8.0.1",
     "roboto-fontface": "0.10.0",
     "rxjs": "6.6.6",
-    "rxjs-compat": "6.6.6",
+    "rxjs-compat": "6.6.7",
     "sockjs-client": "1.5.1",
     "systemjs": "6.8.3",
     "truncate-url": "1.0.0",
