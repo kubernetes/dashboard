@@ -24,6 +24,15 @@ import (
 	client "k8s.io/client-go/kubernetes"
 )
 
+const (
+	// FirstRevision is a first revision number
+	FirstRevision = "1"
+	// RestartedAtAnnotationKey is an annotation key for rollout restart
+	RestartedAtAnnotationKey = "kubectl.kubernetes.io/restartedAt"
+	// RevisionAnnotationKey is an annotation key for rollout targeted or resulted revision
+	RevisionAnnotationKey = "deployment.kubernetes.io/revision"
+)
+
 // RolloutSpec is a specification for deployment rollout
 type RolloutSpec struct {
 	// Revision is the requested/resulted revision number of the ReplicateSet to rollback.
@@ -36,8 +45,8 @@ func RollbackDeployment(client client.Interface, rolloutSpec *RolloutSpec, names
 	if err != nil {
 		return nil, err
 	}
-	currRevision := deployment.Annotations["deployment.kubernetes.io/revision"]
-	if currRevision == "1" {
+	currRevision := deployment.Annotations[RevisionAnnotationKey]
+	if currRevision == FirstRevision {
 		return nil, errors.New("No revision for rolling back ")
 	}
 	matchRS, err := GetReplicaSetFromDeployment(client, namespace, name)
@@ -45,7 +54,7 @@ func RollbackDeployment(client client.Interface, rolloutSpec *RolloutSpec, names
 		return nil, err
 	}
 	for _, rs := range matchRS {
-		if rs.Annotations["deployment.kubernetes.io/revision"] == rolloutSpec.Revision {
+		if rs.Annotations[RevisionAnnotationKey] == rolloutSpec.Revision {
 			updateDeployment := deployment.DeepCopy()
 			updateDeployment.Spec.Template.Spec = rs.Spec.Template.Spec
 			res, err := client.AppsV1().Deployments(namespace).Update(context.TODO(), updateDeployment, metaV1.UpdateOptions{})
@@ -53,7 +62,7 @@ func RollbackDeployment(client client.Interface, rolloutSpec *RolloutSpec, names
 				return nil, err
 			}
 			return &RolloutSpec{
-				Revision: res.Annotations["deployment.kubernetes.io/revision"],
+				Revision: res.Annotations[RevisionAnnotationKey],
 			}, nil
 		}
 	}
@@ -101,13 +110,16 @@ func RestartDeployment(client client.Interface, namespace, name string) (*Rollou
 		return nil, err
 	}
 
-	deployment.Spec.Template.ObjectMeta.Annotations["kubectl.kubernetes.io/restartedAt"] = time.Now().Format(time.RFC3339)
+	if deployment.Spec.Template.ObjectMeta.Annotations == nil {
+		deployment.Spec.Template.ObjectMeta.Annotations = map[string]string{}
+	}
+	deployment.Spec.Template.ObjectMeta.Annotations[RestartedAtAnnotationKey] = time.Now().Format(time.RFC3339)
 	res, err := client.AppsV1().Deployments(namespace).Update(context.TODO(), deployment, metaV1.UpdateOptions{})
 	if err != nil {
 		return nil, err
 	}
 	return &RolloutSpec{
-		Revision: res.Annotations["deployment.kubernetes.io/revision"],
+		Revision: res.Annotations[RevisionAnnotationKey],
 	}, nil
 }
 

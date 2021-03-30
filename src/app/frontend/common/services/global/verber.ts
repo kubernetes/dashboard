@@ -77,7 +77,7 @@ export class VerberService {
       .pipe(
         switchMap(_ => {
           const url = `api/v1/${typeMeta.kind}/${objectMeta.namespace}/${objectMeta.name}/restart`;
-          return this.http_.get(url, {responseType: 'text'});
+          return this.http_.put(url, {responseType: 'text'});
         })
       )
       .subscribe(_ => this.onTrigger.emit(true), this.handleErrorResponse_.bind(this));

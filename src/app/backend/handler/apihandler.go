@@ -272,14 +272,22 @@ func CreateHTTPAPIHandler(iManager integration.IntegrationManager, cManager clie
 			To(apiHandler.handleGetDeploymentNewReplicaSet).
 			Writes(replicaset.ReplicaSet{}))
 	apiV1Ws.Route(
-		apiV1Ws.POST("/{kind}/{namespace}/{deployment}/rollback").
-			To(apiHandler.handleDeployRollback).
+		apiV1Ws.PUT("/{kind}/{namespace}/{deployment}/pause").
+			To(apiHandler.handleDeploymentPause).
+			Writes(deployment.DeploymentDetail{}))
+	apiV1Ws.Route(
+		apiV1Ws.PUT("/{kind}/{namespace}/{deployment}/rollback").
+			To(apiHandler.handleDeploymentRollback).
 			Reads(deployment.RolloutSpec{}).
 			Writes(deployment.RolloutSpec{}))
 	apiV1Ws.Route(
-		apiV1Ws.GET("/{kind}/{namespace}/{deployment}/restart").
-			To(apiHandler.handleDeployRestart).
+		apiV1Ws.PUT("/{kind}/{namespace}/{deployment}/restart").
+			To(apiHandler.handleDeploymentRestart).
 			Writes(deployment.RolloutSpec{}))
+	apiV1Ws.Route(
+		apiV1Ws.PUT("/{kind}/{namespace}/{deployment}/resume").
+			To(apiHandler.handleDeploymentResume).
+			Writes(deployment.DeploymentDetail{}))
 
 	apiV1Ws.Route(
 		apiV1Ws.PUT("/scale/{kind}/{namespace}/{name}/").
@@ -1262,7 +1270,24 @@ func (apiHandler *APIHandler) handleDeployFromFile(request *restful.Request, res
 	})
 }
 
-func (apiHandler *APIHandler) handleDeployRollback(request *restful.Request, response *restful.Response) {
+func (apiHandler *APIHandler) handleDeploymentPause(request *restful.Request, response *restful.Response) {
+	k8sClient, err := apiHandler.cManager.Client(request)
+	if err != nil {
+		errors.HandleInternalError(response, err)
+		return
+	}
+
+	namespace := request.PathParameter("namespace")
+	name := request.PathParameter("deployment")
+	deploymentSpec, err := deployment.PauseDeployment(k8sClient, namespace, name)
+	if err != nil {
+		errors.HandleInternalError(response, err)
+		return
+	}
+	response.WriteHeaderAndEntity(http.StatusOK, deploymentSpec)
+}
+
+func (apiHandler *APIHandler) handleDeploymentRollback(request *restful.Request, response *restful.Response) {
 	k8sClient, err := apiHandler.cManager.Client(request)
 	if err != nil {
 		errors.HandleInternalError(response, err)
@@ -1281,10 +1306,10 @@ func (apiHandler *APIHandler) handleDeployRollback(request *restful.Request, res
 		errors.HandleInternalError(response, err)
 		return
 	}
-	response.WriteHeaderAndEntity(http.StatusCreated, rolloutSpec)
+	response.WriteHeaderAndEntity(http.StatusOK, rolloutSpec)
 }
 
-func (apiHandler *APIHandler) handleDeployRestart(request *restful.Request, response *restful.Response) {
+func (apiHandler *APIHandler) handleDeploymentRestart(request *restful.Request, response *restful.Response) {
 	k8sClient, err := apiHandler.cManager.Client(request)
 	if err != nil {
 		errors.HandleInternalError(response, err)
@@ -1299,6 +1324,23 @@ func (apiHandler *APIHandler) handleDeployRestart(request *restful.Request, resp
 		return
 	}
 	response.WriteHeaderAndEntity(http.StatusOK, rolloutSpec)
+}
+
+func (apiHandler *APIHandler) handleDeploymentResume(request *restful.Request, response *restful.Response) {
+	k8sClient, err := apiHandler.cManager.Client(request)
+	if err != nil {
+		errors.HandleInternalError(response, err)
+		return
+	}
+
+	namespace := request.PathParameter("namespace")
+	name := request.PathParameter("deployment")
+	deploymentSpec, err := deployment.ResumeDeployment(k8sClient, namespace, name)
+	if err != nil {
+		errors.HandleInternalError(response, err)
+		return
+	}
+	response.WriteHeaderAndEntity(http.StatusOK, deploymentSpec)
 }
 
 func (apiHandler *APIHandler) handleNameValidity(request *restful.Request, response *restful.Response) {
