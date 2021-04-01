@@ -8,7 +8,10 @@
   "compilerOptions": {
     "baseUrl": "src/app/frontend",
     "paths": {
-      "@api/*": ["typings/*"]
+      "@api/*": ["typings/*"],
+      "@common/*": ["common/*"],
+      "@environments/*": ["environments/*"],
+      "@root/*": ["./*"],
     },
     "outDir": ".tmp/out-tsc",
     "target": "esnext",

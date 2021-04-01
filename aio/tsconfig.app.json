@@ -10,7 +10,8 @@
     "../src/app/frontend/**/*"
   ],
   "exclude": [
-    "../src/app/frontend/**/*.spec.ts"
+    "../src/app/frontend/**/*.spec.ts",
+    "../src/app/frontend/test.*.ts"
   ],
   "lib": ["es2017", "dom"]
 }
