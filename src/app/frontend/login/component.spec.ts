@@ -14,7 +14,7 @@
 
 import {HttpClientTestingModule, HttpTestingController} from '@angular/common/http/testing';
 import {CUSTOM_ELEMENTS_SCHEMA, InjectionToken} from '@angular/core';
-import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
+import {ComponentFixture, TestBed, waitForAsync} from '@angular/core/testing';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {MatButtonModule} from '@angular/material/button';
 import {MatRadioModule} from '@angular/material/radio';
@@ -23,14 +23,14 @@ import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {ActivatedRoute, Router} from '@angular/router';
 import {RouterTestingModule} from '@angular/router/testing';
 import {EnabledAuthenticationModes, LoginSkippableResponse, LoginSpec} from '@api/root.api';
-import {HistoryService} from '../common/services/global/history';
-import {Config, CONFIG_DI_TOKEN} from '../index.config';
-import {K8SError, KdError} from 'common/errors/errors';
-import {AuthService} from 'common/services/global/authentication';
-import {from, Observable, of, throwError} from 'rxjs';
-import {LoginComponent} from './component';
-import {PluginsConfigService} from '../common/services/global/plugin';
 import {PluginMetadata} from '@api/root.ui';
+import {K8SError, KdError} from '@common/errors/errors';
+import {AuthService} from '@common/services/global/authentication';
+import {HistoryService} from '@common/services/global/history';
+import {PluginsConfigService} from '@common/services/global/plugin';
+import {from, Observable, of, throwError} from 'rxjs';
+import {Config, CONFIG_DI_TOKEN} from '../index.config';
+import {LoginComponent} from './component';
 
 const queries = {
   submitButton: '.kd-login-button[type="submit"]',
@@ -76,22 +76,28 @@ class MockRouter {
 }
 
 class MockPluginsConfigService {
-  init(): void {}
-  refreshConfig(): void {}
   static pluginsMetadata(): PluginMetadata[] {
     return [];
   }
+
   static status(): number {
     return 200;
   }
+
+  init(): void {}
+
+  refreshConfig(): void {}
 }
 
 class MockHistoryService {
   router_: MockRouter;
   private previousStateUrl_: '';
   private currentStateUrl_: '';
+
   init(): void {}
+
   pushState(): void {}
+
   goToPreviousState(): void {}
 }
 
@@ -204,8 +210,8 @@ describe('LoginComponent', () => {
   describe('login', () => {
     it('calls AuthService.login with correct spec and redirects to overview', async () => {
       // setups spies in services
-      const loginSpy = spyOn(TestBed.inject(AuthService), 'login').and.callThrough();
-      const goToPreviousStateSpy = spyOn(TestBed.inject(HistoryService), 'goToPreviousState').and.callThrough();
+      const loginSpy = jest.spyOn(TestBed.inject(AuthService), 'login');
+      const goToPreviousStateSpy = jest.spyOn(TestBed.inject(HistoryService), 'goToPreviousState');
 
       await setSelectedAuthenticationMode('token');
 
@@ -223,8 +229,8 @@ describe('LoginComponent', () => {
     it('calls AuthService.login, does not redirect, and renders errors if login fails', async () => {
       // setups spies in services
       const err = {status: 401, error: 'Unauthorized (401): Invalid credentials provided'};
-      const loginSpy = spyOn(TestBed.inject(AuthService), 'login').and.returnValue(throwError(err));
-      const navigateSpy = spyOn(TestBed.inject(Router), 'navigate').and.callThrough();
+      const loginSpy = jest.spyOn(TestBed.inject(AuthService), 'login').mockReturnValue(throwError(err));
+      const navigateSpy = jest.spyOn(TestBed.inject(Router), 'navigate');
 
       await setSelectedAuthenticationMode('token');
 
@@ -247,8 +253,8 @@ describe('LoginComponent', () => {
       fixture.debugElement.query(By.css(queries.skipButton)).nativeElement.click();
 
       // setups spies in services
-      const skipLoginPageSpy = spyOn(TestBed.inject(AuthService), 'skipLoginPage').and.callThrough();
-      const goToPreviousStateSpy = spyOn(TestBed.inject(HistoryService), 'goToPreviousState').and.callThrough();
+      const skipLoginPageSpy = jest.spyOn(TestBed.inject(AuthService), 'skipLoginPage');
+      const goToPreviousStateSpy = jest.spyOn(TestBed.inject(HistoryService), 'goToPreviousState');
 
       await setSelectedAuthenticationMode('basic');
 

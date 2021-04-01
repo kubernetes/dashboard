@@ -78,7 +78,7 @@ export class VerberService {
             objectMeta.name
           }/`;
 
-          return this.http_.put(url, result, {params: {scaleBy: result}});
+          return this.http_.put(url, {scaleBy: result}, {params: {scaleBy: result}});
         })
       )
       .subscribe(_ => this.onScale.emit(true), this.handleErrorResponse_.bind(this));

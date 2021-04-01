@@ -13,14 +13,14 @@
 // limitations under the License.
 
 import {HttpClientTestingModule, HttpTestingController} from '@angular/common/http/testing';
-import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
+import {ComponentFixture, TestBed, waitForAsync} from '@angular/core/testing';
 import {By} from '@angular/platform-browser';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {AppConfig} from '@api/root.api';
-import {SharedModule} from 'shared.module';
-import {CardComponent} from '../common/components/card/component';
-import {AssetsService} from '../common/services/global/assets';
-import {ConfigService} from '../common/services/global/config';
+import {CardComponent} from '@common/components/card/component';
+import {AssetsService} from '@common/services/global/assets';
+import {ConfigService} from '@common/services/global/config';
+import {SharedModule} from '@root/shared.module';
 import {AboutComponent} from './component';
 
 describe('AboutComponent', () => {

@@ -12,13 +12,22 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-@import '../../../../../variables';
+const tsJestPreset = require('jest-preset-angular/jest-preset').globals['ts-jest'];
 
-.kd-user-help ::ng-deep {
-  font-size: $body-font-size-base;
-
-  .material-icons {
-    font-size: $caption-font-size-base;
-    vertical-align: middle;
-  }
-}
+module.exports = {
+  verbose: true,
+  preset: 'jest-preset-angular',
+  rootDir: '../src/app/frontend',
+  setupFilesAfterEnv: ["<rootDir>/test.base.ts"],
+  globals: {
+    "ts-jest": {
+      tsconfig: "aio/tsconfig.spec.json",
+    }
+  },
+  moduleNameMapper: {
+    "^@api/(.*)$": "<rootDir>/api/$1",
+    "^@common/(.*)$": "<rootDir>/common/$1",
+    "^@environments/(.*)$": "<rootDir>/environments/$1",
+    "^@root/(.*)$": "<rootDir>/$1"
+  },
+};
