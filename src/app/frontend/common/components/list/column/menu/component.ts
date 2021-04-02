@@ -31,10 +31,9 @@ const loggableResources: string[] = [
 ];
 
 const pinnableResources: string[] = [Resource.crdFull];
-
 const executableResources: string[] = [Resource.pod];
-
 const triggerableResources: string[] = [Resource.cronJob];
+const restartableResources: string[] = [Resource.deployment];
 
 @Component({
   selector: 'kd-resource-context-menu',
@@ -125,6 +124,14 @@ export class MenuComponent implements ActionColumn {
 
   onEdit(): void {
     this.verber_.showEditDialog(this.typeMeta.kind, this.typeMeta, this.objectMeta);
+  }
+
+  isRestartEnabled(): boolean {
+    return restartableResources.includes(this.typeMeta.kind);
+  }
+
+  onRestart(): void {
+    this.verber_.showRestartDialog(this.typeMeta.kind, this.typeMeta, this.objectMeta);
   }
 
   onDelete(): void {
