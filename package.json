@@ -131,7 +131,7 @@
     "@angular/cli": "11.2.6",
     "@angular/compiler-cli": "11.2.7",
     "@angular/language-service": "11.2.8",
-    "@cypress/webpack-preprocessor": "5.6.0",
+    "@cypress/webpack-preprocessor": "5.7.0",
     "@types/c3": "0.7.5",
     "@types/d3": "6.3.0",
     "@types/d3-scale": "3.2.2",
