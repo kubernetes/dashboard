@@ -2828,7 +2828,7 @@
         <source> You can <x id="START_LINK" ctype="x-a" equiv-text="&lt;a routerLink=&quot;deploy&quot;
          queryParamsHandling=&quot;preserve&quot;>"/>deploy a containerized app<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a>"/>, select other namespace or <x id="START_LINK_1" equiv-text="&lt;a href=&quot;http://kubernetes.io/docs/user-guide/ui/&quot;
          target=&quot;_blank&quot;>"/>take the Dashboard Tour <x id="START_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;mat-icon class=&quot;kd-zerostate-icon&quot;>"/>open_in_new<x id="CLOSE_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;/mat-icon>"/><x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a>"/> to learn more. </source>
-        <target>你可以 <x id="START_LINK" ctype="x-a" equiv-text="&lt;a>"/>部署一个容器化应用<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a>"/>, 选择其他 namespace，或者
+        <target>你可以 <x id="START_LINK" ctype="x-a" equiv-text="&lt;a>"/>部署一个容器化应用<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a>"/>, 选择其他命名空间，或者
       <x id="START_LINK_1" ctype="x-a" equiv-text="&lt;a>"/>阅读 Dashboard 说明
         <x id="START_TAG_MAT-ICON" ctype="x-mat-icon" equiv-text="&lt;mat-icon>"/>open_in_new<x id="CLOSE_TAG_MAT-ICON" ctype="x-mat-icon" equiv-text="&lt;/mat-icon>"/>
       <x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a>"/> 了解更多。</target>
@@ -3100,7 +3100,7 @@
       </trans-unit>
       <trans-unit id="5deee9cd9fabadb49eb1e3fcae70ff560e41ba27" datatype="html">
         <source>Service Accounts </source>
-        <target>Service Accounts </target>
+        <target>服务账号 </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/chrome/nav/component.ts</context>
           <context context-type="linenumber">44</context>
@@ -3694,7 +3694,7 @@
       </trans-unit>
       <trans-unit id="77751725f4a7cb970bd5508543690c9e7977ab0d" datatype="html">
         <source> Data is required. </source>
-        <target> Data 是必须的。</target>
+        <target> Data 是必需的。</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/create/from/form/createsecret/template.html</context>
           <context context-type="linenumber">74</context>
