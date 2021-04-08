@@ -28,8 +28,7 @@ limitations under the License.
       <div value>{{container.image}}</div>
     </kd-property>
 
-    <div *ngFor="let env of container?.env;trackBy:getEnvVarID"
-         fxFlex="20">
+    <div *ngFor="let env of container?.env;trackBy:getEnvVarID">
       <ng-container *ngIf="!isSecret(env) && !isConfigMap(env)">
         <kd-property>
           <div key

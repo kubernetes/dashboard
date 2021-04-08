@@ -15,6 +15,7 @@
 import {Component, Input, OnChanges, OnInit, SimpleChange} from '@angular/core';
 import {MatTableDataSource} from '@angular/material/table';
 import {IngressSpecRule, IngressSpecRuleHttpPath, IngressSpecTLS} from '@api/root.api';
+import * as _ from 'lodash';
 import {GlobalServicesModule} from '../../services/global/module';
 import {KdStateService} from '../../services/global/state';
 
@@ -43,6 +44,25 @@ export class IngressRuleFlatListComponent implements OnInit, OnChanges {
   // Flat map of host -> secret name pairs.
   private tlsHostMap_ = new Map<string, string>();
 
+  private get ingressRuleFlatList_(): IngressRuleFlat[] {
+    return [].concat(
+      ...this.ingressSpecRules.map(rule => {
+        if (!rule.http) {
+          return [] as IngressRuleFlat[];
+        }
+
+        return rule.http.paths.map(
+          specPath =>
+            ({
+              host: rule.host || '',
+              path: specPath,
+              tlsSecretName: this.tlsHostMap_.get(rule.host) || '',
+            } as IngressRuleFlat)
+        );
+      })
+    );
+  }
+
   ngOnInit(): void {
     this.tlsList = this.tlsList || [];
     this.ingressSpecRules = this.ingressSpecRules || [];
@@ -53,15 +73,19 @@ export class IngressRuleFlatListComponent implements OnInit, OnChanges {
       this.tlsHostMap_.clear();
       []
         .concat(
-          ...(changes.tlsList.currentValue as IngressSpecTLS[]).map(spec =>
-            spec.hosts.map(
+          ...(changes.tlsList.currentValue as IngressSpecTLS[]).map(spec => {
+            if (!_.isArray(spec.hosts)) {
+              return [] as IngressSpecTLSFlat[];
+            }
+
+            return spec.hosts.map(
               host =>
                 ({
                   host: host,
                   tlsSecretName: spec.secretName,
                 } as IngressSpecTLSFlat)
-            )
-          )
+            );
+          })
         )
         .forEach((specFlat: IngressSpecTLSFlat) => this.tlsHostMap_.set(specFlat.host, specFlat.tlsSecretName));
     }
@@ -77,20 +101,5 @@ export class IngressRuleFlatListComponent implements OnInit, OnChanges {
 
   getDetailsHref(name: string, kind: string): string {
     return this.kdState_.href(kind, name, this.namespace);
-  }
-
-  private get ingressRuleFlatList_(): IngressRuleFlat[] {
-    return [].concat(
-      ...this.ingressSpecRules.map(rule =>
-        rule.http.paths.map(
-          specPath =>
-            ({
-              host: rule.host || '',
-              path: specPath,
-              tlsSecretName: this.tlsHostMap_.get(rule.host) || '',
-            } as IngressRuleFlat)
-        )
-      )
-    );
   }
 }
