@@ -365,10 +365,8 @@ router-outlet::after {
   display: none !important;
 }
 
-.kd-table-no-footer {
-  .mat-row:last-of-type {
-    border-bottom: 0;
-  }
+.mat-row:last-of-type {
+  border-bottom: 0;
 }
 
 // Override Arial font type

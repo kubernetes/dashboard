@@ -28,9 +28,18 @@ export enum Status {
   Released = 'Released',
   Running = 'Running',
   Succeeded = 'Succeeded',
-  Succees = 'Succeeded',
+  Success = 'Succeeded',
   Suspended = 'Suspended',
   Terminating = 'Terminating',
+  Terminated = 'Terminated',
   Unknown = 'Unknown',
+  Waiting = 'Waiting',
   Warning = 'Warning',
+}
+
+export enum StatusClass {
+  Error = 'kd-error',
+  Success = 'kd-success',
+  Unknown = 'kd-muted',
+  Warning = 'kd-warning',
 }

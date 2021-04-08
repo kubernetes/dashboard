@@ -30,8 +30,7 @@ limitations under the License.
 
   <div content
        [hidden]="ingressSpecRules?.length === 0">
-    <mat-table [dataSource]="getDataSource()"
-               class="kd-table-no-footer">
+    <mat-table [dataSource]="getDataSource()">
       <ng-container [matColumnDef]="getIngressRulesFlatColumns()[0]">
         <mat-header-cell *matHeaderCellDef
                          i18n>Host</mat-header-cell>

@@ -28,7 +28,11 @@
   margin-top: $baseline-grid / 2;
 }
 
-.security-context-header {
+.container-status-icon {
+  vertical-align: middle;
+}
+
+.section-header {
   font-size: $subhead-font-size-base-lg;
   margin: (2 * $baseline-grid) 0;
 }

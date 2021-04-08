@@ -29,8 +29,7 @@ limitations under the License.
 
   <div content
        [hidden]="volumeMounts?.length === 0">
-    <mat-table [dataSource]="dataSource"
-               class="kd-table-no-footer">
+    <mat-table [dataSource]="dataSource">
       <ng-container [matColumnDef]="columns[0]">
         <mat-header-cell *matHeaderCellDef
                          i18n>Name</mat-header-cell>

@@ -85,6 +85,9 @@ type Container struct {
 
 	// Security configuration that will be applied to a container.
 	SecurityContext *v1.SecurityContext `json:"securityContext"`
+
+	// Status of a pod container
+	Status *v1.ContainerStatus `json:"status"`
 }
 
 // EnvVar represents an environment variable of a container.
@@ -258,6 +261,7 @@ func extractContainerInfo(containerList []v1.Container, pod *v1.Pod, configMaps 
 			Args:            container.Args,
 			VolumeMounts:    volume_mounts,
 			SecurityContext: container.SecurityContext,
+			Status:          extractContainerStatus(pod, &container),
 		})
 	}
 	return containers
@@ -421,4 +425,14 @@ func extractContainerResourceValue(fs *v1.ResourceFieldSelector, container *v1.C
 	}
 
 	return "", fmt.Errorf("Unsupported container resource : %v", fs.Resource)
+}
+
+func extractContainerStatus(pod *v1.Pod, container *v1.Container) *v1.ContainerStatus {
+	for _, status := range pod.Status.ContainerStatuses {
+		if status.Name == container.Name {
+			return &status
+		}
+	}
+
+	return nil
 }
