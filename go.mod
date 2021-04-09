@@ -9,14 +9,14 @@ require (
 	github.com/opencontainers/go-digest v1.0.0 // indirect
 	github.com/prometheus/client_golang v1.10.0
 	github.com/spf13/pflag v1.0.5
-	golang.org/x/net v0.0.0-20210316092652-d523dce5a7f4
-	golang.org/x/text v0.3.5
+	golang.org/x/net v0.0.0-20210405180319-a5a99cb37ef4
+	golang.org/x/text v0.3.6
 	gopkg.in/igm/sockjs-go.v2 v2.1.0
 	gopkg.in/square/go-jose.v2 v2.4.1
 	gopkg.in/yaml.v2 v2.4.0
-	k8s.io/api v0.20.5
-	k8s.io/apiextensions-apiserver v0.20.5
-	k8s.io/apimachinery v0.20.5
-	k8s.io/client-go v0.20.5
+	k8s.io/api v0.21.0
+	k8s.io/apiextensions-apiserver v0.21.0
+	k8s.io/apimachinery v0.21.0
+	k8s.io/client-go v0.21.0
 	k8s.io/heapster v1.5.4
 )
