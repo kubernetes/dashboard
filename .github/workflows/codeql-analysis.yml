@@ -10,7 +10,8 @@ on:
     # The branches below must be a subset of the branches above
     branches: [ master, plugin/base ]
   schedule:
-    - cron: '30 16 * * 2'
+    # Once a week on monday at 00:00
+    - cron: '0 0 * * 1'
 
 jobs:
   analyze:
