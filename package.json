@@ -147,7 +147,7 @@
     "babel-preset-env": "1.7.0",
     "babel-register": "6.26.0",
     "codelyzer": "6.0.1",
-    "concurrently": "6.0.1",
+    "concurrently": "6.0.2",
     "cypress": "7.0.1",
     "del": "6.0.0",
     "eslint": "7.24.0",
