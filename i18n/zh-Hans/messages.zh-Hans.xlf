@@ -95,9 +95,7 @@
         </context-group>
       </trans-unit>
       <trans-unit id="ea458920c36540bbd94274d9074c8c9fc2906f46" datatype="html">
-        <source>
-        <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span>"/>Are you sure you want to delete <x id="INTERPOLATION" equiv-text="{{data.displayName}}"/> <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i>"/><x id="INTERPOLATION_1" equiv-text="{{data.objectMeta.name}}"/><x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i>"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span>"/><x id="START_TAG_SPAN_1" ctype="x-span_1" equiv-text="&lt;span *ngIf=&quot;data.objectMeta.namespace&quot;>"/>  in namespace <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i>"/><x id="INTERPOLATION_2" equiv-text="{{data.objectMeta.namespace}}"/><x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i>"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span>"/><x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span>"/>?<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span>"/>
-        </source>
+        <source><x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span>"/>Are you sure you want to delete <x id="INTERPOLATION" equiv-text="{{data.displayName}}"/> <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i>"/><x id="INTERPOLATION_1" equiv-text="{{data.objectMeta.name}}"/><x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i>"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span>"/><x id="START_TAG_SPAN_1" ctype="x-span_1" equiv-text="&lt;span *ngIf=&quot;data.objectMeta.namespace&quot;>"/>  in namespace <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i>"/><x id="INTERPOLATION_2" equiv-text="{{data.objectMeta.namespace}}"/><x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i>"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span>"/><x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span>"/>?<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span>"/></source>
         <target>
     <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span>"/>你确定要删除 <x id="INTERPOLATION" equiv-text="{{data.displayName}}"/> <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i>"/><x id="INTERPOLATION_1" equiv-text="{{data.objectMeta.name}}"/><x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i>"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span>"/>
     <x id="START_TAG_SPAN_1" ctype="x-span" equiv-text="&lt;span>"/>
@@ -123,7 +121,8 @@
         </context-group>
       </trans-unit>
       <trans-unit id="db0cf322b4bfc4f0466c9826810e3800dc4687dd" datatype="html">
-        <source> Download logs file </source>
+        <source> Download logs file
+</source>
         <target> 下载日志文件 </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/dialogs/download/dialog.ts</context>
@@ -237,7 +236,7 @@
         </context-group>
       </trans-unit>
       <trans-unit id="8bad5230cdda2f915bc80289f8d81675e97e8db9" datatype="html">
-        <source>Scale</source>
+        <source> Scale </source>
         <target>缩放</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/dialogs/scaleresource/template.html</context>
@@ -245,7 +244,7 @@
         </context-group>
       </trans-unit>
       <trans-unit id="e67bebb0291cbe76b190e83225878cdd3a8a6df6" datatype="html">
-        <source>Cancel</source>
+        <source> Cancel </source>
         <target>取消</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/dialogs/restartresource/dialog.ts</context>
@@ -289,7 +288,7 @@
         </context-group>
       </trans-unit>
       <trans-unit id="f07e394db2e2b0e24164eba79d2140dfcbaa428c" datatype="html">
-        <source>Trigger</source>
+        <source> Trigger </source>
         <target>触发</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/dialogs/triggerresource/template.html</context>
@@ -817,7 +816,8 @@
         </context-group>
       </trans-unit>
       <trans-unit id="3bdc6249aaaf86c74f0dce8a5517fceb07ddc251" datatype="html">
-        <source>Containers</source>
+        <source>Containers
+</source>
         <target state="new">容器</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/resource/workloads/pod/detail/component.ts</context>
@@ -825,7 +825,8 @@
         </context-group>
       </trans-unit>
       <trans-unit id="b363813db5514a650c55b42a0b598ed603e7c40b" datatype="html">
-        <source>Init containers</source>
+        <source>Init containers
+</source>
         <target state="new">Init containers</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/resource/workloads/pod/detail/component.ts</context>
@@ -4177,7 +4178,8 @@
         </context-group>
       </trans-unit>
       <trans-unit id="b95afbbd2ca9a4db0384a66e1acb8f3bc45f38c9" datatype="html">
-        <source> Deploy </source>
+        <source> Deploy
+</source>
         <target> 部署 </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/create/from/form/template.html</context>
@@ -4185,7 +4187,8 @@
         </context-group>
       </trans-unit>
       <trans-unit id="a4cdce8c5a799a664dd8189ec13429fdca405a0c" datatype="html">
-        <source> Cancel </source>
+        <source> Cancel
+</source>
         <target> 取消 </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/create/from/form/template.html</context>
@@ -4197,7 +4200,8 @@
         </context-group>
       </trans-unit>
       <trans-unit id="e661f8ed8ea38e20018b90fabc40817391ead3f4" datatype="html">
-        <source> <x id="ICU" equiv-text="{isMoreOptionsEnabled(), select, 1 {Hide advanced options} other {Show advanced options}}"/></source>
+        <source> <x id="ICU" equiv-text="{isMoreOptionsEnabled(), select, 1 {Hide advanced options} other {Show advanced options}}"/>
+</source>
         <target> <x id="ICU" equiv-text="{isMoreOptionsEnabled(), select, 1 {隐藏高级选项} other {显示高级选项}}"/></target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/create/from/form/template.html</context>
@@ -4237,7 +4241,8 @@
         </context-group>
       </trans-unit>
       <trans-unit id="c449ced26e3963a5e5a689c1b5aa1678e6a1a18f" datatype="html">
-        <source> Upload </source>
+        <source> Upload
+</source>
         <target> 上传 </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/create/from/input/template.html</context>
@@ -4583,7 +4588,7 @@
                format=&quot;short&quot;>"/><x id="CLOSE_TAG_KD_DATE" ctype="x-kd_date" equiv-text="&lt;/kd-date>"/> UTC </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/logs/template.html</context>
-          <context context-type="linenumber">157,100</context>
+          <context context-type="linenumber">157</context>
         </context-group>
       </trans-unit>
       <trans-unit id="a21b5b669ab3f36e0f83e9a025c26662fd0616e8" datatype="html">

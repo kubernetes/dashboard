@@ -1287,7 +1287,7 @@
                format=&quot;short&quot;>"/><x id="CLOSE_TAG_KD_DATE" ctype="x-kd_date" equiv-text="&lt;/kd-date>"/> UTC </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/logs/template.html</context>
-          <context context-type="linenumber">157,100</context>
+          <context context-type="linenumber">157</context>
         </context-group>
       </trans-unit>
       <trans-unit id="a21b5b669ab3f36e0f83e9a025c26662fd0616e8" datatype="html">
