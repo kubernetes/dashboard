@@ -93,6 +93,14 @@ limitations under the License.
         </mat-cell>
       </ng-container>
 
+      <ng-container matColumnDef="images">
+        <mat-header-cell *matHeaderCellDef
+                         i18n>Images</mat-header-cell>
+        <mat-cell *matCellDef="let pod">
+          <kd-chips [map]="pod.containerImages"></kd-chips>
+        </mat-cell>
+      </ng-container>
+
       <ng-container matColumnDef="node">
         <mat-header-cell *matHeaderCellDef
                          i18n>Node</mat-header-cell>

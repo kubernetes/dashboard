@@ -364,6 +364,8 @@ export interface Pod extends Resource {
   warnings: Event[];
   nodeName: string;
   serviceAccountName: string;
+  containerImages: string[];
+  initContainerImages: string[];
 }
 
 export interface PodContainer {
