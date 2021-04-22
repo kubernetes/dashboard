@@ -156,6 +156,9 @@ jobs:
         with:
           fetch-depth: 0
 
+      # Increase watchers system limit
+      - run: echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf && sudo sysctl -p
+
       - name: Setup Go
         uses: actions/setup-go@v2
         with:
