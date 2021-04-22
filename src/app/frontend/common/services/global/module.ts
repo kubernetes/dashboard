@@ -14,6 +14,7 @@
 
 import {HTTP_INTERCEPTORS} from '@angular/common/http';
 import {APP_INITIALIZER, Injector, NgModule} from '@angular/core';
+import {LocalConfigLoaderService} from '@common/services/global/loader';
 
 import {ActionbarService} from './actionbar';
 import {AssetsService} from './assets';
@@ -59,6 +60,7 @@ import {PinnerService} from './pinner';
     HistoryService,
     LogService,
     ParamsService,
+    LocalConfigLoaderService,
     {
       provide: APP_INITIALIZER,
       useFactory: init,
@@ -70,6 +72,7 @@ import {PinnerService} from './pinner';
         PluginsConfigService,
         PinnerService,
         ThemeService,
+        LocalConfigLoaderService,
       ],
       multi: true,
     },
@@ -95,15 +98,18 @@ export function init(
   config: ConfigService,
   history: HistoryService,
   pluginsConfig: PluginsConfigService,
-  theme: ThemeService
+  theme: ThemeService,
+  loader: LocalConfigLoaderService
 ): Function {
   return () => {
-    globalSettings.init();
-    localSettings.init();
-    pluginsConfig.init();
-    pinner.init();
-    config.init();
-    history.init();
-    theme.init();
+    return loader.init().then(() => {
+      globalSettings.init();
+      localSettings.init();
+      pluginsConfig.init();
+      pinner.init();
+      config.init();
+      history.init();
+      theme.init();
+    });
   };
 }

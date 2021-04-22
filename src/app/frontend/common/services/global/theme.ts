@@ -16,27 +16,25 @@ import {DOCUMENT} from '@angular/common';
 import {EventEmitter, Inject, Injectable} from '@angular/core';
 import {Theme} from '@api/root.api';
 import {ThemeSwitchCallback} from '@api/root.ui';
-import customThemes from 'custom-themes.json';
+import {LocalConfigLoaderService} from '@common/services/global/loader';
 
 @Injectable()
 export class ThemeService {
   readonly systemTheme = '__system_theme__';
-  private readonly _customThemes: Theme[] = customThemes;
+  private _customThemes: Theme[] = [];
   private readonly _defaultThemes: Theme[] = [
     {name: 'kd-light-theme', displayName: 'Light', isDark: false},
     {name: 'kd-dark-theme', displayName: 'Dark', isDark: true},
   ];
-  private _theme = 'kd-light-theme';
   private readonly _onThemeSwitchEvent = new EventEmitter<string>();
   private readonly _colorSchemeQuery = '(prefers-color-scheme: dark)';
 
-  constructor(@Inject(DOCUMENT) private readonly _document: Document) {}
+  constructor(
+    @Inject(DOCUMENT) private readonly _document: Document,
+    private readonly _config: LocalConfigLoaderService
+  ) {}
 
-  get themes(): Theme[] {
-    const defaultThemeNames = new Set(this._defaultThemes.map(theme => theme.name));
-    const filteredCustomThemes = this._customThemes.filter(theme => !defaultThemeNames.has(theme.name));
-    return [...this._defaultThemes, ...filteredCustomThemes];
-  }
+  private _theme = 'kd-light-theme';
 
   get theme(): string {
     return this._theme;
@@ -51,12 +49,20 @@ export class ThemeService {
     this._onThemeSwitchEvent.emit(theme);
   }
 
+  get themes(): Theme[] {
+    const defaultThemeNames = new Set(this._defaultThemes.map(theme => theme.name));
+    const filteredCustomThemes = this._customThemes.filter(theme => !defaultThemeNames.has(theme.name));
+    return [...this._defaultThemes, ...filteredCustomThemes];
+  }
+
   init(): void {
     this._document.defaultView.matchMedia(this._colorSchemeQuery).addEventListener('change', e => {
       if (this.theme === this.systemTheme) {
         this._onThemeSwitchEvent.emit(e.matches ? 'kd-dark-theme' : 'kd-light-theme');
       }
     });
+
+    this._customThemes = this._config.appConfig.themes;
   }
 
   subscribe(callback: ThemeSwitchCallback): void {

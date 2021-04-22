@@ -6,7 +6,7 @@ describe('Userpanel', () => {
   });
 
   it('check default namespace', () => {
-    UserpanelPage.assertUrlContains('overview?namespace=default');
+    UserpanelPage.assertUrlContains('overview');
   });
 
   it('collapses sidebar', () => {

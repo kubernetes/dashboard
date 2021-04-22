@@ -1,7 +1,8 @@
 import gitDescribe from 'git-describe';
-import config from '../../package.json';
 import {resolve, relative} from 'path';
-import {writeFileSync} from 'node:fs';
+import {writeFileSync, readFileSync} from 'node:fs';
+
+const config = JSON.parse(readFileSync('package.json', 'utf8'));
 
 const gitInfo = gitDescribe.gitDescribeSync({
   dirtyMark: false,

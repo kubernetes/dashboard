@@ -108,7 +108,8 @@ limitations under the License.
         <mat-header-cell *matHeaderCellDef
                          class="kd-col-sm"
                          i18n>Pods</mat-header-cell>
-        <mat-cell *matCellDef="let replicaSet" class="kd-col-sm">
+        <mat-cell *matCellDef="let replicaSet"
+                  class="kd-col-sm">
           {{replicaSet.podInfo.running}} / {{replicaSet.podInfo.desired}}
         </mat-cell>
       </ng-container>
@@ -119,7 +120,8 @@ limitations under the License.
                          disableClear="true"
                          class="kd-col-sm"
                          i18n>Created</mat-header-cell>
-        <mat-cell *matCellDef="let replicaSet" class="kd-col-sm">
+        <mat-cell *matCellDef="let replicaSet"
+                  class="kd-col-sm">
           <kd-date [date]="replicaSet.objectMeta.creationTimestamp"
                    relative></kd-date>
         </mat-cell>

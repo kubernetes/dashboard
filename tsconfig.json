@@ -27,10 +27,6 @@
     "lib": [
       "ES2020",
       "dom"
-    ],
-    "typeRoots": [
-      "./node_modules/@types",
-      "./src/app/frontend/typings"
     ]
   },
 }

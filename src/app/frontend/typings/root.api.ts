@@ -12,10 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import {KdError} from '@api/root.shared';
 // Shared resource types
-import {KdError} from '@api/root.ui';
 import {PersistentVolumeSource} from '@api/volume.api';
-import {SecurityContext} from '@angular/core';
 
 export enum SupportedResources {
   ConfigMap = 'ConfigMap',
