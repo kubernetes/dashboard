@@ -1,4 +1,4 @@
-const wp = require('@cypress/webpack-preprocessor');
+import webpack from '@cypress/webpack-preprocessor';
 
 const webpackOptions = {
   resolve: {extensions: ['.ts', '.js']},
@@ -18,5 +18,6 @@ const webpackOptions = {
   },
 };
 
-const options = {webpackOptions};
-module.exports = wp(options);
+export default async (on) => {
+  on('file:preprocessor', webpack({webpackOptions}));
+}

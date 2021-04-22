@@ -33,6 +33,6 @@ export default async (): Promise<Config.InitialOptions> => {
     },
     transform: {
       '^.+\\.(ts|js|html|scss|css)$': 'jest-preset-angular',
-    }
+    },
   };
 };
