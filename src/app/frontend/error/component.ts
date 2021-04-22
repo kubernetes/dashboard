@@ -17,7 +17,9 @@ import {ActivatedRoute} from '@angular/router';
 import {StateError} from '@api/root.ui';
 import {map} from 'rxjs/operators';
 
-import {KdError} from '../common/errors/errors';
+import {ErrorCode, KdError} from '../common/errors/errors';
+import {AuthService} from '@common/services/global/authentication';
+import {LoginStatus} from '@api/root.api';
 
 @Component({
   selector: 'kd-error',
@@ -25,31 +27,50 @@ import {KdError} from '../common/errors/errors';
   styleUrls: ['./style.scss'],
 })
 export class ErrorComponent implements OnInit {
-  private error_: KdError;
+  private _error: KdError;
+  private _loginStatus: LoginStatus;
+  isLoginStatusInitialized = false;
 
-  constructor(private readonly route_: ActivatedRoute) {}
+  constructor(private readonly _activatedRoute: ActivatedRoute, private readonly _authService: AuthService) {}
 
   ngOnInit(): void {
-    this.route_.paramMap.pipe(map(() => window.history.state)).subscribe((state: StateError) => {
+    this._activatedRoute.paramMap.pipe(map(() => window.history.state)).subscribe((state: StateError) => {
       if (state.error) {
-        this.error_ = state.error;
+        this._error = state.error;
       }
+    });
+
+    this._authService.getLoginStatus().subscribe(status => {
+      this._loginStatus = status;
+      this.isLoginStatusInitialized = true;
     });
   }
 
   getErrorStatus(): string {
-    if (this.error_) {
-      return `${this.error_.status} (${this.error_.code})`;
+    if (this._error) {
+      return `${this._error.status} (${this._error.code})`;
     }
 
     return 'Unknown Error';
   }
 
   getErrorData(): string {
-    if (this.error_) {
-      return this.error_.message;
+    if (this._error) {
+      return this._error.message;
     }
 
     return 'No error data available.';
+  }
+
+  isAuthSkipped(): boolean {
+    return this._loginStatus && !this._authService.isLoginPageEnabled() && !this._loginStatus.headerPresent;
+  }
+
+  isAuthError(): boolean {
+    return this._error.code === ErrorCode.unauthorized;
+  }
+
+  goToSignIn(): void {
+    this._authService.logout();
   }
 }
