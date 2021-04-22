@@ -52,9 +52,14 @@
             "outputPath": ".tmp/frontend",
             "index": "src/app/frontend/index.html",
             "main": "src/app/frontend/index.ts",
-            "tsConfig": "src/app/frontend/../../../aio/tsconfig.app.json",
+            "tsConfig": "aio/tsconfig.app.json",
             "polyfills": "src/app/frontend/polyfills.ts",
             "i18nMissingTranslation": "error",
+            "allowedCommonJsDependencies": [
+              "lodash",
+              "file-saver",
+              "truncate-url"
+            ],
             "assets": [
               {
                 "glob": "**/*",
@@ -120,7 +125,6 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "aot": true,
             "browserTarget": "kubernetes-dashboard:build",
             "port": 8080
           },

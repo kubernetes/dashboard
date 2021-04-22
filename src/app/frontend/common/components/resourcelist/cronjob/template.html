@@ -69,6 +69,16 @@ limitations under the License.
         <mat-cell *matCellDef="let cronJob">{{cronJob.objectMeta.namespace}}</mat-cell>
       </ng-container>
 
+      <ng-container matColumnDef="images">
+        <mat-header-cell *matHeaderCellDef
+                         class="kd-col-gt"
+                         i18n>Images</mat-header-cell>
+        <mat-cell *matCellDef="let cronJob"
+                  class="kd-col-gt">
+          <kd-chips [map]="cronJob.containerImages"></kd-chips>
+        </mat-cell>
+      </ng-container>
+
       <ng-container matColumnDef="labels">
         <mat-header-cell *matHeaderCellDef
                          i18n>Labels</mat-header-cell>
@@ -96,16 +106,22 @@ limitations under the License.
         <mat-header-cell *matHeaderCellDef
                          mat-sort-header
                          disableClear="true"
+                         class="kd-col-sm"
                          i18n>Active</mat-header-cell>
-        <mat-cell *matCellDef="let cronJob">{{cronJob.active}}</mat-cell>
+        <mat-cell *matCellDef="let cronJob"
+                  class="kd-col-sm">{{cronJob.active}}</mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="lastschedule">
         <mat-header-cell *matHeaderCellDef
+                         class="kd-col-md"
                          i18n>Last Schedule</mat-header-cell>
-        <mat-cell *matCellDef="let cronJob">
-          <kd-date [date]="cronJob.lastSchedule"
+        <mat-cell *matCellDef="let cronJob"
+                  class="kd-col-md">
+          <kd-date *ngIf="cronJob.lastSchedule"
+                   [date]="cronJob.lastSchedule"
                    relative></kd-date>
+          <ng-container *ngIf="!cronJob.lastSchedule">-</ng-container>
         </mat-cell>
       </ng-container>
 
@@ -122,8 +138,10 @@ limitations under the License.
         <mat-header-cell *matHeaderCellDef
                          mat-sort-header
                          disableClear="true"
+                         class="kd-col-sm"
                          i18n>Created</mat-header-cell>
-        <mat-cell *matCellDef="let cronJob">
+        <mat-cell *matCellDef="let cronJob"
+                  class="kd-col-sm">
           <kd-date [date]="cronJob.objectMeta.creationTimestamp"
                    relative></kd-date>
         </mat-cell>

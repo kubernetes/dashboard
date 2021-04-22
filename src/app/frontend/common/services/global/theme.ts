@@ -12,11 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {EventEmitter, Inject, Injectable, Injector} from '@angular/core';
-import * as customThemes from '../../../custom-themes.json';
 import {DOCUMENT} from '@angular/common';
+import {EventEmitter, Inject, Injectable} from '@angular/core';
 import {Theme} from '@api/root.api';
 import {ThemeSwitchCallback} from '@api/root.ui';
+import customThemes from 'custom-themes.json';
 
 @Injectable()
 export class ThemeService {

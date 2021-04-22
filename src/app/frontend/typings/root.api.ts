@@ -244,6 +244,7 @@ export interface CronJob extends Resource {
   suspend: boolean;
   active: number;
   lastSchedule: string;
+  containerImages: string[];
 }
 
 export interface CRD extends Resource {
@@ -364,6 +365,7 @@ export interface Pod extends Resource {
   warnings: Event[];
   nodeName: string;
   serviceAccountName: string;
+  containerImages: string[];
 }
 
 export interface PodContainer {

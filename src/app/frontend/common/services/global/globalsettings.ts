@@ -16,7 +16,7 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {EventEmitter, Injectable} from '@angular/core';
 import {GlobalSettings} from '@api/root.api';
 import {onSettingsFailCallback, onSettingsLoadCallback} from '@api/root.ui';
-import * as _ from 'lodash';
+import _ from 'lodash';
 import {Observable, of, ReplaySubject, Subject} from 'rxjs';
 import {catchError, switchMap, takeUntil} from 'rxjs/operators';
 

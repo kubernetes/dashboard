@@ -1,15 +1,15 @@
-const {gitDescribeSync} = require('git-describe');
-const {version} = require('../../package.json');
-const {resolve, relative} = require('path');
-const {writeFileSync} = require('fs-extra');
+import gitDescribe from 'git-describe';
+import config from '../../package.json';
+import {resolve, relative} from 'path';
+import {writeFileSync} from 'node:fs';
 
-const gitInfo = gitDescribeSync({
+const gitInfo = gitDescribe.gitDescribeSync({
   dirtyMark: false,
   dirtySemver: false,
   longSemver: true,
 });
 
-gitInfo.packageVersion = version;
+gitInfo.packageVersion = config.version;
 Object.assign(gitInfo.semver, {
   loose: false,
   options: {
@@ -19,7 +19,7 @@ Object.assign(gitInfo.semver, {
 });
 
 const file =
-    resolve(__dirname, '..', '..', 'src/', 'app', 'frontend', 'environments', 'version.ts');
+    resolve('src/', 'app', 'frontend', 'environments', 'version.ts');
 writeFileSync(
     file, `// Copyright 2017 The Kubernetes Authors.
 //
@@ -44,4 +44,4 @@ export const version: VersionInfo = ${JSON.stringify(gitInfo, null, 2).replace(/
 `,
     {encoding: 'utf-8'});
 
-console.log(`Version ${gitInfo.raw} saved to ${relative(resolve(__dirname, '..'), file)}`);
+console.log(`Version ${gitInfo.raw} saved to ${relative(resolve( '..'), file)}`);

@@ -1,9 +1,5 @@
 {
   "extends": "./node_modules/gts/tsconfig-google.json",
-  "angularCompilerOptions": {
-    "annotationsAs": "static fields",
-    "annotateForClosureCompiler": true
-  },
   "compileOnSave": false,
   "compilerOptions": {
     "baseUrl": "src/app/frontend",
@@ -14,16 +10,20 @@
       "@root/*": ["./*"],
     },
     "outDir": ".tmp/out-tsc",
-    "target": "esnext",
-    "moduleResolution": "node",
+    "moduleResolution": "Node",
+    "target": "ES2020",
+    "module": "ES2020",
     "sourceMap": true,
     "strict": false,
+    "allowSyntheticDefaultImports": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
+    "importHelpers": true,
     "noImplicitReturns": true,
     "noUnusedParameters": true,
     "noImplicitAny": true,
     "resolveJsonModule": true,
+    "esModuleInterop": true,
     "lib": [
       "ES2020",
       "dom"
@@ -32,5 +32,5 @@
       "./node_modules/@types",
       "./src/app/frontend/typings"
     ]
-  }
+  },
 }
