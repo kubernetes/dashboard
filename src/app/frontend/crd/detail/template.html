@@ -14,10 +14,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<kd-object-meta [initialized]="isInitialized"
-                [objectMeta]="crd?.objectMeta"></kd-object-meta>
+<!-- <kd-object-meta [initialized]="isInitialized"
+                [objectMeta]="crd?.objectMeta"></kd-object-meta> -->
 
-<kd-card [initialized]="isInitialized">
+<!-- <kd-card [initialized]="isInitialized">
   <div title
        i18n>Resource Information</div>
   <div content
@@ -48,8 +48,8 @@ limitations under the License.
       <div value>{{crd.subresources.join(", ")}}</div>
     </kd-property>
   </div>
-</kd-card>
-
+</kd-card> -->
+<!-- 
 <kd-card [initialized]="isInitialized">
   <div title
        i18n>Accepted Names</div>
@@ -88,14 +88,14 @@ limitations under the License.
       <div value>{{crd?.names.categories.join(", ")}}</div>
     </kd-property>
   </div>
-</kd-card>
+</kd-card> -->
 
 <kd-crd-object-list [namespaced]="isNamespaced()"></kd-crd-object-list>
-
+<!-- 
 <kd-crd-versions-list *ngIf="crd?.versions"
                       [versions]="crd?.versions"
                       [initialized]="isInitialized"></kd-crd-versions-list>
 
 <kd-condition-list [conditions]="crd?.conditions"
                    [showLastProbeTime]="false"
-                   [initialized]="isInitialized"></kd-condition-list>
+                   [initialized]="isInitialized"></kd-condition-list> -->

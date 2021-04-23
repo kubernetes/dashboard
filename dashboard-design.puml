@@ -1,0 +1,119 @@
+@startuml kubernetes
+
+footer Multi-tenancy Kubernetes Dashboard 
+
+' Azure
+!define AzurePuml https://raw.githubusercontent.com/RicardoNiepel/Azure-PlantUML/release/2-1/dist
+
+!includeurl AzurePuml/AzureCommon.puml
+!includeurl AzurePuml/AzureSimplified.puml
+
+!includeurl AzurePuml/DevOps/AzurePipelines.puml
+!includeurl AzurePuml/Identity/AzureActiveDirectory.puml
+!includeurl AzurePuml/Networking/AzureLoadBalancer.puml
+
+' Kubernetes
+!define KubernetesPuml https://raw.githubusercontent.com/dcasati/kubernetes-PlantUML/master/dist
+
+!includeurl KubernetesPuml/kubernetes_Common.puml
+!includeurl KubernetesPuml/kubernetes_Context.puml
+!includeurl KubernetesPuml/kubernetes_Simplified.puml
+
+!includeurl KubernetesPuml/OSS/KubernetesApi.puml
+!includeurl KubernetesPuml/OSS/KubernetesIng.puml
+!includeurl KubernetesPuml/OSS/KubernetesPod.puml
+!includeurl KubernetesPuml/OSS/KubernetesDeploy.puml
+!includeurl KubernetesPuml/OSS/KubernetesSts.puml
+!includeurl KubernetesPuml/OSS/KubernetesSvc.puml
+
+collections "Client Apps" as clientalias
+collections "AMaaS Helm Repo" as helmRepo
+collections "AMaaS Docker Repo" as dockerRepo
+collections "Release Steps" as releaseSteps
+
+left to right direction
+
+' Azure Components
+AzureActiveDirectory(aad, "\nAzure\nActive Directory", "Global")
+AzureLoadBalancer(alb, "\nLoad\nBalancer", "Canada Central")
+AzurePipelines(build, "\nBuild Pipelines", "Global")
+AzurePipelines(release, "\nKaaS MT Release", "Global")
+
+' Kubernetes Components
+Cluster_Boundary(cluster, "Multi-tenant KaaS Cluster") {
+    KubernetesApi(KubernetesApi, "Kubernetes API", "")
+
+    Namespace_Boundary(nsIngress, "ingress-controller") {
+        KubernetesIng(ingress, "nginx", "")
+    }
+  
+    Namespace_Boundary(nsKubeSystem, "kube-system") {
+        KubernetesSvc(MetricsServerSvc, "\nmetrics-server", "")
+    }
+
+    Namespace_Boundary(nsKaaSSystem, "kaas-system") {
+        KubernetesDeploy(KubernetesUI, "\ndashboard\ndeployment", "")
+        KubernetesPod(KubernetesUI1, "", "")
+        KubernetesPod(KubernetesUI2, "", "")
+        KubernetesPod(KubernetesUI3, "", "")
+        KubernetesSvc(KubernetesUISvc, "\ndashboard", "")
+      
+        KubernetesDeploy(oAuth2Proxy, "\nOAuth2\nProxy\nDeployment", "")
+        KubernetesPod(KubernetesProxy1, "", "")
+        KubernetesPod(KubernetesProxy2, "", "")
+        KubernetesPod(KubernetesProxy3, "", "")
+        KubernetesSvc(oAuth2ProxySvc, "\nOAuth2\nProxy", "")
+      
+        KubernetesSts(RedisCache, "\nRedis\nCluster\nStatefulset", "")
+        KubernetesPod(RedisNode1, "", "")
+        KubernetesPod(RedisNode2, "", "")
+        KubernetesPod(RedisNode3, "", "")
+        KubernetesSvc(RedisCacheSvc, "\nRedis\nCluster", "")
+    }
+}
+Rel(clientalias, alb, "https", "async")
+Rel(alb, ingress, "https", "async")
+
+Rel(ingress, KubernetesUISvc, "/*")
+Rel(KubernetesUISvc, KubernetesUI1, " ")
+Rel(KubernetesUISvc, KubernetesUI2, " ")
+Rel(KubernetesUISvc, KubernetesUI3, " ")
+Rel_U(KubernetesUI, KubernetesUI1, " ")
+Rel_U(KubernetesUI, KubernetesUI2, " ")
+Rel_U(KubernetesUI, KubernetesUI3, " ")
+Rel_U(KubernetesUI1, MetricsServerSvc, " ")
+Rel_U(KubernetesUI2, MetricsServerSvc, " ")
+Rel_U(KubernetesUI3, MetricsServerSvc, " ")
+
+Rel(ingress, oAuth2ProxySvc, "/oauth2")
+Rel(oAuth2ProxySvc, KubernetesProxy1, " ")
+Rel(oAuth2ProxySvc, KubernetesProxy2, " ")
+Rel(oAuth2ProxySvc, KubernetesProxy3, " ")
+Rel_U(oAuth2Proxy, KubernetesProxy1, " ")
+Rel_U(oAuth2Proxy, KubernetesProxy2, " ")
+Rel_U(oAuth2Proxy, KubernetesProxy3, " ")
+Rel(KubernetesProxy1, RedisCacheSvc, " ")
+Rel(KubernetesProxy2, RedisCacheSvc, " ")
+Rel(KubernetesProxy3, RedisCacheSvc, " ")
+Rel(ingress, aad, "RBAC", "aysnc")
+Rel(KubernetesProxy1, aad, " ")
+Rel(KubernetesProxy2, aad, " ")
+Rel(KubernetesProxy3, aad, " ")
+
+Rel_U(RedisCache, RedisNode1, " ")
+Rel_U(RedisCache, RedisNode2, " ")
+Rel_U(RedisCache, RedisNode3, " ")
+Rel(RedisCacheSvc, RedisNode1, " ")
+Rel(RedisCacheSvc, RedisNode2, " ")
+Rel(RedisCacheSvc, RedisNode3, " ")
+
+Rel(build, dockerRepo, "docker push")
+Rel(build, helmRepo, "helm package")
+
+Rel_U(KubernetesApi, dockerRepo, "docker pull")
+
+Rel(release, releaseSteps, "Release")
+Rel_U(releaseSteps, helmRepo, "helm pull")
+Rel(releaseSteps, KubernetesApi, "helm upgrade")
+
+@enduml

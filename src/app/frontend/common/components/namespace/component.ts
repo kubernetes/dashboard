@@ -106,23 +106,20 @@ export class NamespaceSelectorComponent implements OnInit, OnDestroy {
   }
 
   selectNamespace(): void {
-    if (this.selectNamespaceInput.length === 0) {
-      return;
+    if (this.selectNamespaceInput.length > 0) {
+      this.selectedNamespace = this.selectNamespaceInput;
+      this.select_.close();
+      this.changeNamespace_(this.selectedNamespace);
     }
-
-    this.selectedNamespace = this.selectNamespaceInput;
-    this.select_.close();
-    this.changeNamespace_(this.selectedNamespace);
   }
 
   onNamespaceToggle(opened: boolean): void {
     if (opened) {
       this.namespaceUpdate_.next();
       this.focusNamespaceInput_();
-      return;
+    } else {
+      this.changeNamespace_(this.selectedNamespace);
     }
-
-    this.changeNamespace_(this.selectedNamespace);
   }
 
   formatNamespaceName(namespace: string): string {
@@ -163,31 +160,31 @@ export class NamespaceSelectorComponent implements OnInit, OnDestroy {
   }
 
   private loadNamespaces_(): void {
-    this.namespaceUpdate_
-      .pipe(startWith({}))
-      .pipe(switchMap(() => this.namespace_.get(this.endpoint_.list())))
-      .pipe(takeUntil(this.unsubscribe_))
-      .subscribe(
-        namespaceList => {
-          this.usingFallbackNamespaces = false;
-          this.namespaces = namespaceList.namespaces.map(n => n.objectMeta.name);
+  //  this.namespaceUpdate_
+  //    .pipe(startWith({}))
+  //    .pipe(switchMap(() => this.namespace_.get(this.endpoint_.list())))
+  //    .pipe(takeUntil(this.unsubscribe_))
+  //    .subscribe(
+  //      namespaceList => {
+  //        this.usingFallbackNamespaces = false;
+  //        this.namespaces = namespaceList.namespaces.map(n => n.objectMeta.name);
 
-          if (!this.namespaces || this.namespaces.length === 0) {
-            this.usingFallbackNamespaces = true;
-            this.namespaces = this.settingsService_.getNamespaceFallbackList();
-          }
+  //        if (!this.namespaces || this.namespaces.length === 0) {
+  //          this.usingFallbackNamespaces = true;
+  //          this.namespaces = this.settingsService_.getNamespaceFallbackList();
+  //        }
 
-          if (namespaceList.errors.length > 0) {
-            for (const err of namespaceList.errors) {
-              this.notifications_.pushErrors([err]);
-            }
-          }
-        },
-        () => {},
-        () => {
-          this.onNamespaceLoaded_();
-        }
-      );
+  //       if (namespaceList.errors.length > 0) {
+  //          for (const err of namespaceList.errors) {
+  //            this.notifications_.pushErrors([err]);
+  //          }
+  //        }
+  //      },
+  //      () => {},
+  //      () => {
+  //        this.onNamespaceLoaded_();
+  //      }
+  //    );
   }
 
   private handleNamespaceChangeDialog_(): void {

@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<mat-form-field class="kd-namespace-select-input-container">
+<mat-form-field class="kd-namespace-select-input-container" fxFlex>
   <mat-select (openedChange)="onNamespaceToggle($event)"
               class="kd-namespace-select"
               [(ngModel)]="selectedNamespace">
@@ -28,17 +28,17 @@ limitations under the License.
              autocomplete="off"
              (keydown)="$event.code === 'Enter' ? selectNamespace() : null">
     </div>
-    <mat-option *ngIf="namespaces.length && !usingFallbackNamespaces"
+    <!-- <mat-option *ngIf="namespaces.length"
                 [value]="allNamespacesKey"
-                i18n>All namespaces</mat-option>
-    <mat-optgroup label="NAMESPACES"
+                i18n>All namespaces</mat-option> -->
+    <!-- <mat-optgroup label="NAMESPACES"
                   i18n-label
                   *ngIf="(namespaces | filterBy: selectNamespaceInput).length">
       <mat-option *ngFor="let namespace of namespaces | filterBy: selectNamespaceInput"
                   [value]="namespace">
         {{namespace}}
       </mat-option>
-    </mat-optgroup>
+    </mat-optgroup> -->
     <mat-option class="kd-hidden"
                 [value]="selectedNamespace">{{formatNamespaceName(selectedNamespace)}}</mat-option>
   </mat-select>
