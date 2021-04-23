@@ -24,7 +24,7 @@ FROM golang:1.15.1-buster
 # Install Node.js. Go is already installed.
 # A small tweak, apt-get update is already run by the nodejs setup script,
 # so there's no need to run it again.
-RUN curl -sL https://deb.nodesource.com/setup_12.x | bash - \
+RUN curl -sL https://deb.nodesource.com/setup_14.x | bash - \
 	&& apt-get install -y --no-install-recommends \
 	nodejs \
 	patch \

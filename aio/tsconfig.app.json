@@ -13,5 +13,5 @@
     "../src/app/frontend/**/*.spec.ts",
     "../src/app/frontend/test.*.ts"
   ],
-  "lib": ["es2017", "dom"]
+  "lib": ["ES2020", "dom"]
 }
