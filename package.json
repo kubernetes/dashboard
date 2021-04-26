@@ -119,7 +119,7 @@
     "rxjs-compat": "6.6.7",
     "sockjs-client": "1.5.1",
     "systemjs": "6.8.3",
-    "truncate-url": "1.0.0",
+    "truncate-url": "2.1.0",
     "tslib": "2.2.0",
     "web-animations-js": "2.3.2",
     "xterm": "4.11.0",
