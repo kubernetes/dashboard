@@ -156,6 +156,9 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: Setup Kernel for cypress file watcher
+        run: echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf && sysctl -p
+
       - name: Setup Go
         uses: actions/setup-go@v2
         with:
