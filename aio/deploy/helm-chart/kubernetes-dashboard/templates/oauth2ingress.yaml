@@ -1,0 +1,21 @@
+---
+{{- if .Values.oauth2.common.enabled }}
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: {{ .Values.oauth2.common.app }}
+  namespace: {{ .Values.oauth2.common.namespace }}
+spec:
+  rules:
+  - host: {{ .Values.oauth2.ingress.host}}
+    http:
+      paths:
+      - backend:
+          serviceName: {{ .Values.oauth2.common.app }}
+          servicePort: {{ .Values.oauth2.config.port }}
+        path: {{ .Values.oauth2.ingress.path}}
+  tls:
+  - hosts:
+    -  {{ .Values.oauth2.ingress.host}}
+    secretName: {{ .Values.oauth2.ingress.secret}}
+{{- end }}

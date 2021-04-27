@@ -286,33 +286,42 @@ podSecurityPolicy:
   # Specifies whether a pod security policy should be created
   enabled: false
 
+## Oauth2 proxy for kubenetes dashboard
+## ref: https://kubernetes.github.io/ingress-nginx/examples/auth/oauth-external-auth/
 oauth2:
-  enabled: false
-  app: oauth2-proxy
-  replica: 1
-  namespace: test-ns
-  session_type: redis
-  provider: azure
-  address: 0.0.0.0:4180
+  common:
+    enabled: false
+    app:
+    replica:
+    namespace: 
+## Stoarge session type 
+## ref: https://oauth2-proxy.github.io/oauth2-proxy/docs/configuration/session_storage
+    session_type: redis
+    provider: azure
+    address:
+## Configuration details of the Azure registered App - for the particular location
   config:
-    clientID: XXXXXXX
-    clientSecret: XXXXXXXX
-    cookieSecret: XXXXXXXXXX
-    tenantID: XXXXXXXXXX
-    configFile: 
-      email_domains: eydev.net
-      upstreams: file:///dev/null
-    port: 4180
-    protocol: TCP
+    clientID:
+    clientSecret:
+    cookieSecret: 
+    tenantID:
+    port:
+    protocol:
+  configFile: 
+    email_domains:
+    upstreams:
+## Oauth2 Container port and protocol 
   image: 
-    repository: eyctpeu-ctp-containers-docker.jfrog.io/bitnami/oauth2-proxy:7.1.2
-    pullPolicy: IfNotPresent
-    pullSecret: test-secret
+    repository: 
+    pullPolicy: 
+    pullSecret:
+## Oauth2 ingress configurations
   ingress:
-    host: test-host
-    secret: test-tls
-    path: /oauth2
+    host: 
+## TLS ingress secret 
+    secret: 
+    path: 
+## Storage session configurations
   redis:
     use_cluster: true
-    connection_urls: XXXXX
-
+    connection_urls:

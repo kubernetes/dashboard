@@ -1,28 +1,28 @@
 ---
-{{- if .Values.oauth2.enabled }}
+{{- if .Values.oauth2.common.enabled }}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    k8s-app: {{ .Values.oauth2.app }}
-  name: {{ .Values.oauth2.app }}
+    k8s-app: {{ .Values.oauth2.common.app }}
+  name: {{ .Values.oauth2.common.app }}
 spec:
-  replicas: {{ .Values.oauth2.replica }}
+  replicas: {{ .Values.oauth2.common.replica }}
   selector:
     matchLabels:
-      k8s-app: {{ .Values.oauth2.app }}
+      k8s-app: {{ .Values.oauth2.common.app }}
   template:
     metadata:
       labels:
-        k8s-app: {{ .Values.oauth2.app }}
+        k8s-app: {{ .Values.oauth2.common.app }}
     spec:
       containers:
       - args:
-        - --session-store-type={{ .Values.oauth2.session_type}}
-        - --provider={{ .Values.oauth2.provider}}
-        - --email-domain={{ .Values.oauth2.config.configFile.email_domains }}
-        - --upstream={{ .Values.oauth2.config.configFile.upstreams }}
-        - --http-address={{ .Values.oauth2.address}}
+        - --session-store-type={{ .Values.oauth2.common.session_type}}
+        - --provider={{ .Values.oauth2.common.provider}}
+        - --email-domain={{ .Values.oauth2.configFile.email_domains }}
+        - --upstream={{ .Values.oauth2.configFile.upstreams }}
+        - --http-address={{ .Values.oauth2.common.address}}
         - --azure-tenant={{ .Values.oauth2.config.tenantID }}
         - --redis-use-cluster={{ .Values.oauth2.redis.use_cluster}}
         - --redis-cluster-connection-urls= {{ toYaml .Values.oauth2.redis.connection_urls }}
@@ -36,47 +36,12 @@ spec:
           value: {{ .Values.oauth2.config.clientSecret }}
         - name: OAUTH2_PROXY_COOKIE_SECRET
           value: {{ .Values.oauth2.config.cookieSecret }}
-        image: {{ .Values.oauth2.image.respository | required "Docker Image of the Service is required" }}
+        image: {{ .Values.oauth2.image.repository | required "Docker Image of the Service is required" }}
         imagePullPolicy: {{ .Values.oauth2.image.pullPolicy }}
-        name: {{ .Values.oauth2.app }}
+        name: {{ .Values.oauth2.common.app }}
         ports:
         - containerPort: {{ .Values.oauth2.config.port }}
           protocol: {{ .Values.oauth2.config.protocol}}
       imagePullSecrets:
         - name:  {{ .Values.oauth2.image.pullSecret }}
-
----
-apiVersion: v1
-kind: Service
-metadata:
-  labels:
-    k8s-app: {{ .Values.oauth2.app }}
-  name: {{ .Values.oauth2.app }}
-spec:
-  ports:
-  - name: http
-    port: {{ .Values.oauth2.config.port }}
-    protocol: {{ .Values.oauth2.config.protocol}}
-    targetPort: {{ .Values.oauth2.config.port }}
-  selector:
-    k8s-app: {{ .Values.oauth2.app }}
----
-apiVersion: networking.k8s.io/v1beta1
-kind: Ingress
-metadata:
-  name: {{ .Values.oauth2.app }}
-  namespace: {{ .Values.oauth2.namespace }}
-spec:
-  rules:
-  - host: {{ .Values.oauth2.ingress.host}}
-    http:
-      paths:
-      - backend:
-          serviceName: {{ .Values.oauth2.app }}
-          servicePort: {{ .Values.oauth2.config.port }}
-        path: {{ .Values.oauth2.ingress.path}}
-  tls:
-  - hosts:
-    -  {{ .Values.oauth2.ingress.host}}
-    secretName: {{ .Values.oauth2.ingress.secret}}
 {{- end }}

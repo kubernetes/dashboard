@@ -1,0 +1,17 @@
+---
+{{- if .Values.oauth2.common.enabled }}
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    k8s-app: {{ .Values.oauth2.common.app }}
+  name: {{ .Values.oauth2.common.app }}
+spec:
+  ports:
+  - name: http
+    port: {{ .Values.oauth2.config.port }}
+    protocol: {{ .Values.oauth2.config.protocol}}
+    targetPort: {{ .Values.oauth2.config.port }}
+  selector:
+    k8s-app: {{ .Values.oauth2.common.app }}
+{{- end }}
