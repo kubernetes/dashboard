@@ -16,6 +16,6 @@ spec:
         path: {{ .Values.oauth2.ingress.path}}
   tls:
   - hosts:
-    -  {{ .Values.oauth2.ingress.host}}
+    - {{ .Values.oauth2.ingress.host}}
     secretName: {{ .Values.oauth2.ingress.secret}}
 {{- end }}

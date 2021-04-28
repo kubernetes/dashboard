@@ -25,7 +25,7 @@ spec:
         - --http-address={{ .Values.oauth2.common.address}}
         - --azure-tenant={{ .Values.oauth2.config.tenantID }}
         - --redis-use-cluster={{ .Values.oauth2.redis.use_cluster}}
-        - --redis-cluster-connection-urls= {{ toYaml .Values.oauth2.redis.connection_urls }}
+        - --redis-cluster-connection-urls={{ .Values.oauth2.redis.connection_urls}}
         - --pass-authorization-header
         - --set-xauthrequest
         - --set-authorization-header
@@ -36,12 +36,12 @@ spec:
           value: {{ .Values.oauth2.config.clientSecret }}
         - name: OAUTH2_PROXY_COOKIE_SECRET
           value: {{ .Values.oauth2.config.cookieSecret }}
-        image: {{ .Values.oauth2.image.repository | required "Docker Image of the Service is required" }}
+        image: {{ .Values.oauth2.image.repository }}
         imagePullPolicy: {{ .Values.oauth2.image.pullPolicy }}
         name: {{ .Values.oauth2.common.app }}
         ports:
         - containerPort: {{ .Values.oauth2.config.port }}
           protocol: {{ .Values.oauth2.config.protocol}}
       imagePullSecrets:
-        - name:  {{ .Values.oauth2.image.pullSecret }}
+        - name: {{ .Values.oauth2.image.pullSecret }}
 {{- end }}

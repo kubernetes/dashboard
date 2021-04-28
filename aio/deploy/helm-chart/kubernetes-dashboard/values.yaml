@@ -290,10 +290,10 @@ podSecurityPolicy:
 ## ref: https://kubernetes.github.io/ingress-nginx/examples/auth/oauth-external-auth/
 oauth2:
   common:
-    enabled: false
-    app:
+    enabled: true
+    app: oauth2-proxy
     replica:
-    namespace: 
+    namespace:
 ## Stoarge session type 
 ## ref: https://oauth2-proxy.github.io/oauth2-proxy/docs/configuration/session_storage
     session_type: redis
@@ -303,24 +303,23 @@ oauth2:
   config:
     clientID:
     clientSecret:
-    cookieSecret: 
+    cookieSecret:
     tenantID:
-    port:
-    protocol:
+    port: 4180
+    protocol: TCP
   configFile: 
     email_domains:
     upstreams:
-## Oauth2 Container port and protocol 
   image: 
-    repository: 
-    pullPolicy: 
+    repository:
+    pullPolicy:
     pullSecret:
 ## Oauth2 ingress configurations
   ingress:
-    host: 
+    host:
 ## TLS ingress secret 
-    secret: 
-    path: 
+    secret:
+    path:
 ## Storage session configurations
   redis:
     use_cluster: true
