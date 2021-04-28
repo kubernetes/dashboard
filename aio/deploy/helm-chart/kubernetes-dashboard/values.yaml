@@ -301,9 +301,6 @@ oauth2:
     address:
 ## Configuration details of the Azure registered App - for the particular location
   config:
-    clientID:
-    clientSecret:
-    cookieSecret:
     tenantID:
     port: 4180
     protocol: TCP

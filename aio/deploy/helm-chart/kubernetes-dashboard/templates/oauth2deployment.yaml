@@ -31,11 +31,20 @@ spec:
         - --set-authorization-header
         env:
         - name: OAUTH2_PROXY_CLIENT_ID
-          value: {{ .Values.oauth2.config.clientID }}
+          valueFrom:
+            secretKeyRef:
+              name: oauth2-dashboard-secret
+              key: OAUTH2_PROXY_CLIENT_ID
         - name: OAUTH2_PROXY_CLIENT_SECRET
-          value: {{ .Values.oauth2.config.clientSecret }}
+          valueFrom:
+            secretKeyRef:
+              name: oauth2-dashboard-secret
+              key: OAUTH2_PROXY_CLIENT_SECRET
         - name: OAUTH2_PROXY_COOKIE_SECRET
-          value: {{ .Values.oauth2.config.cookieSecret }}
+          valueFrom:
+            secretKeyRef:
+              name: oauth2-dashboard-secret
+              key: OAUTH2_PROXY_COOKIE_SECRET
         image: {{ .Values.oauth2.image.repository }}
         imagePullPolicy: {{ .Values.oauth2.image.pullPolicy }}
         name: {{ .Values.oauth2.common.app }}
