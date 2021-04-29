@@ -26,7 +26,7 @@ limitations under the License.
     <div content>
       <div>{{getErrorData()}}</div>
       <button type="button"
-              *ngIf="isAuthSkipped() && isAuthError()"
+              *ngIf="isAuthError()"
               (click)="goToSignIn()"
               color="primary"
               mat-raised-button

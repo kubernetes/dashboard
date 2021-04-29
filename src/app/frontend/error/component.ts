@@ -17,7 +17,7 @@ import {ActivatedRoute} from '@angular/router';
 import {StateError} from '@api/root.ui';
 import {map} from 'rxjs/operators';
 
-import {ErrorCode, KdError} from '../common/errors/errors';
+import {ErrorCode, KdError} from '@common/errors/errors';
 import {AuthService} from '@common/services/global/authentication';
 import {LoginStatus} from '@api/root.api';
 
@@ -60,10 +60,6 @@ export class ErrorComponent implements OnInit {
     }
 
     return 'No error data available.';
-  }
-
-  isAuthSkipped(): boolean {
-    return this._loginStatus && !this._authService.isLoginPageEnabled() && !this._loginStatus.headerPresent;
   }
 
   isAuthError(): boolean {
