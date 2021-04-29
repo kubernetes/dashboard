@@ -21,7 +21,7 @@ import path from 'path';
 /**
  * Base path for all other paths.
  */
-const basePath = path.join(__dirname, '../../');
+const basePath = path.resolve('../../');
 
 /**
  * Compilation architecture configuration.
