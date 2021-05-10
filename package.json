@@ -145,7 +145,7 @@
     "@types/jest": "26.0.23",
     "@types/js-yaml": "4.0.1",
     "@types/lodash": "4.14.168",
-    "@types/node": "15.0.1",
+    "@types/node": "15.0.2",
     "codelyzer": "6.0.2",
     "concurrently": "6.1.0",
     "cypress": "7.2.0",
