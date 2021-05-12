@@ -68,7 +68,7 @@ export class TextInputComponent implements OnInit, AfterViewInit, OnChanges {
   constructor(private readonly themeService_: ThemeService) {}
 
   ngOnInit(): void {
-    this.theme = this.themeService_.isLightThemeEnabled() ? EditorTheme.light : EditorTheme.dark;
+    this.theme = this.themeService_.isThemeDark() ? EditorTheme.dark : EditorTheme.light;
   }
 
   ngAfterViewInit(): void {

@@ -23,8 +23,8 @@ import {
   ReplicaSetList,
   ReplicationControllerList,
   StatefulSetList,
-} from '@api/backendapi';
-import {OnListChangeEvent, ResourcesRatio} from '@api/frontendapi';
+} from '@api/root.api';
+import {OnListChangeEvent, ResourcesRatio} from '@api/root.ui';
 import {emptyResourcesRatio} from 'common/components/workloadstatus/component';
 import {Helper, ResourceRatioModes} from 'overview/helper';
 

@@ -49,6 +49,7 @@ import {GraphComponent} from './graph/component';
 import {GraphCardComponent} from './graphcard/component';
 import {GraphMetricsComponent} from './graphmetrics/component';
 import {HiddenPropertyComponent} from './hiddenproperty/component';
+import {IngressRuleFlatListComponent} from './ingressrulelist/component';
 import {ResourceLimitListComponent} from './limits/component';
 import {ColumnComponent} from './list/column/component';
 import {MenuComponent} from './list/column/menu/component';
@@ -65,6 +66,7 @@ import {PropertyComponent} from './property/component';
 import {ProxyComponent} from './proxy/component';
 import {ResourceQuotaListComponent} from './quotas/component';
 import {ClusterRoleListComponent} from './resourcelist/clusterrole/component';
+import {ClusterRoleBindingListComponent} from './resourcelist/clusterrolebinding/component';
 import {ConfigMapListComponent} from './resourcelist/configmap/component';
 import {CRDListComponent} from './resourcelist/crd/component';
 import {CRDObjectListComponent} from './resourcelist/crdobject/component';
@@ -77,6 +79,7 @@ import {HorizontalPodAutoscalerListComponent} from './resourcelist/horizontalpod
 import {IngressListComponent} from './resourcelist/ingress/component';
 import {JobListComponent} from './resourcelist/job/component';
 import {NamespaceListComponent} from './resourcelist/namespace/component';
+import {NetworkPolicyListComponent} from './resourcelist/networkpolicy/component';
 import {NodeListComponent} from './resourcelist/node/component';
 import {PersistentVolumeListComponent} from './resourcelist/persistentvolume/component';
 import {PersistentVolumeClaimListComponent} from './resourcelist/persistentvolumeclaim/component';
@@ -84,22 +87,22 @@ import {PluginListComponent} from './resourcelist/plugin/component';
 import {PodListComponent} from './resourcelist/pod/component';
 import {ReplicaSetListComponent} from './resourcelist/replicaset/component';
 import {ReplicationControllerListComponent} from './resourcelist/replicationcontroller/component';
-import {SecretListComponent} from './resourcelist/secret/component';
-import {ServiceListComponent} from './resourcelist/service/component';
-import {StatefulSetListComponent} from './resourcelist/statefulset/component';
-import {StorageClassListComponent} from './resourcelist/storageclass/component';
-import {CpuSparklineComponent} from './sparkline/cpu/component';
-import {MemorySparklineComponent} from './sparkline/memory/component';
-import {TextInputComponent} from './textinput/component';
-import {UploadFileComponent} from './uploadfile/component';
-import {WorkloadStatusComponent} from './workloadstatus/component';
-import {ZeroStateComponent} from './zerostate/component';
-import {ServiceAccountListComponent} from './resourcelist/serviceaccount/component';
-import {NetworkPolicyListComponent} from './resourcelist/networkpolicy/component';
 import {RoleListComponent} from './resourcelist/role/component';
 import {RoleBindingListComponent} from './resourcelist/rolebinding/component';
-import {ClusterRoleBindingListComponent} from './resourcelist/clusterrolebinding/component';
+import {SecretListComponent} from './resourcelist/secret/component';
+import {ServiceListComponent} from './resourcelist/service/component';
+import {ServiceAccountListComponent} from './resourcelist/serviceaccount/component';
+import {StatefulSetListComponent} from './resourcelist/statefulset/component';
+import {StorageClassListComponent} from './resourcelist/storageclass/component';
+import {SecurityContextComponent} from './securitycontext/component';
+import {CpuSparklineComponent} from './sparkline/cpu/component';
+import {MemorySparklineComponent} from './sparkline/memory/component';
 import {SubjectListComponent} from './subject/component';
+import {TextInputComponent} from './textinput/component';
+import {UploadFileComponent} from './uploadfile/component';
+import {VolumeMountComponent} from './volumemount/component';
+import {WorkloadStatusComponent} from './workloadstatus/component';
+import {ZeroStateComponent} from './zerostate/component';
 
 const components = [
   ActionbarDetailActionsComponent,
@@ -141,6 +144,7 @@ const components = [
   HiddenPropertyComponent,
   HorizontalPodAutoscalerListComponent,
   IngressListComponent,
+  IngressRuleFlatListComponent,
   InternalEndpointComponent,
   JobListComponent,
   LoadingSpinner,
@@ -158,6 +162,7 @@ const components = [
   PropertyComponent,
   ProxyComponent,
   PodListComponent,
+  SecurityContextComponent,
   PersistentVolumeListComponent,
   PersistentVolumeClaimListComponent,
   PolicyRuleListComponent,
@@ -184,6 +189,7 @@ const components = [
   RoleListComponent,
   RoleBindingListComponent,
   SubjectListComponent,
+  VolumeMountComponent,
 ];
 
 @NgModule({

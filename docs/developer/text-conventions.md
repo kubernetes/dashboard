@@ -6,13 +6,13 @@ Kubernetes Dashboard is a web-based user interface for Kubernetes clusters. It c
 
 As you noticed there are a lot of different kinds of text messages in each view:
 
-* Titles,
-* Headers,
-* Labels,
-* Values,
-* Tooltips,
-* Action button,
-* Menu and navigation entries,
+* Titles.
+* Headers.
+* Labels.
+* Values.
+* Tooltips.
+* Action button.
+* Menu and navigation entries.
 * All kinds of messages including warnings, errors and help information.
 
 For each one of them a developer has to make the following decisions:
@@ -37,26 +37,24 @@ Certain types of text resources should have punctuation. Periods should be used 
 
 Periods should be avoided for:
 
-* Headers,
-* Titles,
-* Labels,
-* Values,
-* Tooltips,
+* Headers.
+* Titles.
+* Labels.
+* Values.
+* Tooltips.
 * Menu and navigation entries.
 
 ### Capitalization
 
 In general, all kinds of messages should have their first word capitalized. Exceptions are:
 
-* Names which appear in the middle of a message,
+* Names which appear in the middle of a message.
 * Values and table contents.
 
 Moreover, Kubernetes-specific names should be capitalized everywhere. This includes:
 
 * Application names - Kubernetes, Kubernetes Dashboard etc.
 * Resource names - Pod, Service, Endpoint, Node etc.
-
-
 
 ----
 _Copyright 2019 [The Kubernetes Dashboard Authors](https://github.com/kubernetes/dashboard/graphs/contributors)_

@@ -23,18 +23,18 @@ import {Animations} from '../../animations/animations';
 })
 export class CardComponent {
   @Input() initialized = true;
-  @Input() role: string;
+  @Input() role: 'inner' | 'table' | 'inner-content';
   @Input() withFooter = false;
   @Input() withTitle = true;
   @Input() expandable = true;
+  @Input() expanded = true;
+  @Input() graphMode = false;
+  private classes_: string[] = [];
+
   @Input()
   set titleClasses(val: string) {
     this.classes_ = val.split(/\s+/);
   }
-  @Input() expanded = true;
-  @Input() graphMode = false;
-
-  private classes_: string[] = [];
 
   expand(): void {
     if (this.expandable) {

@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import {Component} from '@angular/core';
-import {VersionInfo} from '@api/frontendapi';
+import {VersionInfo} from '@api/root.ui';
 import {ConfigService} from '../../common/services/global/config';
 
 @Component({selector: '', templateUrl: './template.html'})

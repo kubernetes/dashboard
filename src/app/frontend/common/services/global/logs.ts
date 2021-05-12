@@ -19,10 +19,10 @@ import {Observable} from 'rxjs';
 @Injectable()
 export class LogService {
   previous_ = false;
-  inverted_ = true;
+  inverted_ = false;
   compact_ = false;
   showTimestamp_ = false;
-  following_ = true;
+  following_ = false;
   autoRefresh_ = false;
 
   constructor(private readonly http_: HttpClient) {}
@@ -35,15 +35,11 @@ export class LogService {
     this.following_ = status;
   }
 
-  toggleFollowing(): void {
-    this.following_ = !this.following_;
-  }
-
   getFollowing(): boolean {
     return this.following_;
   }
 
-  setAutoRefresh(): void {
+  toggleAutoRefresh(): void {
     this.autoRefresh_ = !this.autoRefresh_;
   }
 
@@ -51,7 +47,7 @@ export class LogService {
     return this.autoRefresh_;
   }
 
-  setPrevious(): void {
+  togglePrevious(): void {
     this.previous_ = !this.previous_;
   }
 
@@ -59,7 +55,7 @@ export class LogService {
     return this.previous_;
   }
 
-  setInverted(): void {
+  toggleInverted(): void {
     this.inverted_ = !this.inverted_;
   }
 
@@ -67,7 +63,7 @@ export class LogService {
     return this.inverted_;
   }
 
-  setCompact(): void {
+  toggleCompact(): void {
     this.compact_ = !this.compact_;
   }
 
@@ -75,7 +71,7 @@ export class LogService {
     return this.compact_;
   }
 
-  setShowTimestamp(): void {
+  toggleShowTimestamp(): void {
     this.showTimestamp_ = !this.showTimestamp_;
   }
 
@@ -84,6 +80,6 @@ export class LogService {
   }
 
   getLogFileName(pod: string, container: string): string {
-    return `logs-from-${container}-in-${pod}.txt`;
+    return `logs-from-${container}-in-${pod}.log`;
   }
 }

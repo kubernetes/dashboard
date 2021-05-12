@@ -1,0 +1,93 @@
+<!--
+Copyright 2017 The Kubernetes Authors.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<kd-card [initialized]="initialized"
+         [expandable]="false"
+         [withTitle]="false"
+         role="inner">
+  <div description>
+    <div class="kd-inline-property"
+         *ngIf="volumeMounts?.length">
+      <span class="kd-muted-light"
+            i18n>Items:&nbsp;</span>
+      <span>{{volumeMounts.length}}</span>
+    </div>
+  </div>
+
+  <div content
+       [hidden]="volumeMounts?.length === 0">
+    <mat-table [dataSource]="dataSource">
+      <ng-container [matColumnDef]="columns[0]">
+        <mat-header-cell *matHeaderCellDef
+                         i18n>Name</mat-header-cell>
+        <mat-cell *matCellDef="let volumeMount">
+          {{volumeMount.name}}
+        </mat-cell>
+      </ng-container>
+      <ng-container [matColumnDef]="columns[1]">
+        <mat-header-cell *matHeaderCellDef
+                         i18n>Read Only</mat-header-cell>
+        <mat-cell *matCellDef="let volumeMount">
+          {{volumeMount.readOnly}}
+        </mat-cell>
+      </ng-container>
+      <ng-container [matColumnDef]="columns[2]">
+        <mat-header-cell *matHeaderCellDef
+                         i18n>Mount Path</mat-header-cell>
+        <mat-cell *matCellDef="let volumeMount">
+          {{volumeMount.mountPath}}
+        </mat-cell>
+      </ng-container>
+      <ng-container [matColumnDef]="columns[3]">
+        <mat-header-cell *matHeaderCellDef
+                         i18n>Sub Path</mat-header-cell>
+        <mat-cell *matCellDef="let volumeMount">
+          {{volumeMount.subPath ? volumeMount.subPath : '-'}}
+        </mat-cell>
+      </ng-container>
+      <ng-container [matColumnDef]="columns[4]">
+        <mat-header-cell *matHeaderCellDef
+                         i18n>Source Type</mat-header-cell>
+        <mat-cell *matCellDef="let volumeMount">
+          {{getMountTypeFromVolume(volumeMount.volume)}}
+        </mat-cell>
+      </ng-container>
+      <ng-container [matColumnDef]="columns[5]">
+        <mat-header-cell *matHeaderCellDef
+                         i18n>Source Name</mat-header-cell>
+        <mat-cell *matCellDef="let volumeMount">
+          <ng-container *ngIf="isResourceSupported(getMountTypeFromVolume(volumeMount.volume))">
+            <a [routerLink]="getDetailsHref(getNameFromVolume(volumeMount.volume), getMountTypeFromVolume(volumeMount.volume))"
+               queryParamsHandling="preserve">
+              {{getNameFromVolume(volumeMount.volume)}}
+            </a>
+          </ng-container>
+
+          <ng-container *ngIf="!isResourceSupported(getMountTypeFromVolume(volumeMount.volume))">
+            {{getNameFromVolume(volumeMount.volume)}}
+          </ng-container>
+        </mat-cell>
+      </ng-container>
+      <mat-header-row *matHeaderRowDef="columns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: columns;"></mat-row>
+    </mat-table>
+  </div>
+
+  <div content
+       [hidden]="volumeMounts?.length != 0">
+    <kd-list-zero-state></kd-list-zero-state>
+  </div>
+</kd-card>

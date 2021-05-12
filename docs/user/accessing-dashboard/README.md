@@ -15,9 +15,13 @@ As the alternative setup is recommended for advanced users only, we'll not descr
 
 First let's check if `kubectl` is properly configured and has access to the cluster. In case of error follow [this guide](https://kubernetes.io/docs/tasks/tools/install-kubectl/) to install and set up `kubectl`.
 
+```shell
+kubectl cluster-info
 ```
-$ kubectl cluster-info
-# Example output
+
+The output is similar to this:
+
+```
 Kubernetes master is running at https://192.168.30.148:6443
 KubeDNS is running at https://192.168.30.148:6443/api/v1/namespaces/kube-system/services/kube-dns/proxy
 
@@ -26,8 +30,13 @@ To further debug and diagnose cluster problems, use 'kubectl cluster-info dump'.
 
 Start local proxy server.
 
+```shell
+kubectl proxy
 ```
-$ kubectl proxy
+
+The output is similar to this:
+
+```
 Starting to serve on 127.0.0.1:8001
 ```
 
@@ -42,12 +51,12 @@ http://localhost:8001/api/v1/namespaces/kubernetes-dashboard/services/https:kube
 
 Instead of `kubectl proxy`, you can use `kubectl port-forward` and access dashboard with simpler URL than using `kubectl proxy`.
 
-```bash
-$ kubectl port-forward -n kubernetes-dashboard service/kubernetes-dashboard 8080:443
+```shell
+kubectl port-forward -n kubernetes-dashboard service/kubernetes-dashboard 8080:443
 ```
 
 To access Kubernetes Dashboard go to:
-```bash
+```shell
 https://localhost:8080
 ```
 
@@ -57,13 +66,13 @@ This way of accessing Dashboard is only recommended for development environments
 
 Edit `kubernetes-dashboard` service.
 
-```
-$ kubectl -n kubernetes-dashboard edit service kubernetes-dashboard
+```shell
+kubectl -n kubernetes-dashboard edit service kubernetes-dashboard
 ```
 
 You should see `yaml` representation of the service. Change `type: ClusterIP` to `type: NodePort` and save file. If it's already changed go to next step.
 
-```
+```yaml
 # Please edit the object below. Lines beginning with a '#' will be ignored,
 # and an empty file will abort the edit. If an error occurs while saving this file will be
 # reopened with the relevant failures.
@@ -92,8 +101,13 @@ status:
 
 Next we need to check port on which Dashboard was exposed.
 
+```shell
+kubectl -n kubernetes-dashboard get service kubernetes-dashboard
 ```
-$ kubectl -n kubernetes-dashboard get service kubernetes-dashboard
+
+The output is similar to this:
+
+```
 NAME                   TYPE       CLUSTER-IP       EXTERNAL-IP   PORT(S)        AGE
 kubernetes-dashboard   NodePort   10.100.124.90   <nodes>       443:31707/TCP   21h
 ```

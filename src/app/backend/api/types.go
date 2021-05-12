@@ -171,17 +171,18 @@ type ClientType string
 
 // List of client types supported by the UI.
 const (
-	ClientTypeDefault             = "restclient"
-	ClientTypeExtensionClient     = "extensionclient"
-	ClientTypeAppsClient          = "appsclient"
-	ClientTypeBatchClient         = "batchclient"
-	ClientTypeBetaBatchClient     = "betabatchclient"
-	ClientTypeAutoscalingClient   = "autoscalingclient"
-	ClientTypeStorageClient       = "storageclient"
-	ClientTypeRbacClient          = "rbacclient"
-	ClientTypeAPIExtensionsClient = "apiextensionsclient"
-	ClientTypeNetworkingClient    = "networkingclient"
-	ClientTypePluginsClient       = "plugin"
+	ClientTypeDefault              = "restclient"
+	ClientTypeExtensionClient      = "extensionclient"
+	ClientTypeAppsClient           = "appsclient"
+	ClientTypeBatchClient          = "batchclient"
+	ClientTypeBetaBatchClient      = "betabatchclient"
+	ClientTypeAutoscalingClient    = "autoscalingclient"
+	ClientTypeStorageClient        = "storageclient"
+	ClientTypeRbacClient           = "rbacclient"
+	ClientTypeAPIExtensionsClient  = "apiextensionsclient"
+	ClientTypeNetworkingClient     = "networkingclient"
+	ClientTypeBetaNetworkingClient = "betanetworkingclient"
+	ClientTypePluginsClient        = "plugin"
 )
 
 // APIMapping is the mapping from resource kind to ClientType and Namespaced.
@@ -204,7 +205,7 @@ var KindToAPIMapping = map[string]APIMapping{
 	ResourceKindDeployment:               {"deployments", ClientTypeAppsClient, true},
 	ResourceKindEvent:                    {"events", ClientTypeDefault, true},
 	ResourceKindHorizontalPodAutoscaler:  {"horizontalpodautoscalers", ClientTypeAutoscalingClient, true},
-	ResourceKindIngress:                  {"ingresses", ClientTypeExtensionClient, true},
+	ResourceKindIngress:                  {"ingresses", ClientTypeBetaNetworkingClient, true},
 	ResourceKindJob:                      {"jobs", ClientTypeBatchClient, true},
 	ResourceKindCronJob:                  {"cronjobs", ClientTypeBetaBatchClient, true},
 	ResourceKindLimitRange:               {"limitrange", ClientTypeDefault, true},

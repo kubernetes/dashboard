@@ -15,6 +15,7 @@ limitations under the License.
 -->
 
 <kd-card role="table"
+         [expanded]="totalItems > 0"
          [hidden]="isHidden()">
   <div title
        fxLayout="row"
@@ -32,7 +33,8 @@ limitations under the License.
       <ng-container [matColumnDef]="getDisplayColumns()[0]">
         <mat-header-cell *matHeaderCellDef></mat-header-cell>
         <mat-cell *matCellDef="let event">
-          <mat-icon [ngClass]="getStatus(event).iconClass">
+          <mat-icon [ngClass]="getStatus(event).iconClass"
+                    [matTooltip]="getStatus(event).iconTooltip">
             {{getStatus(event).iconName}}
           </mat-icon>
         </mat-cell>
@@ -99,10 +101,12 @@ limitations under the License.
                *matRowDef="let row; columns: getColumns()"></mat-row>
     </mat-table>
 
-    <mat-paginator [length]="totalItems"
-                   [pageSize]="itemsPerPage"
-                   [hidePageSize]="true"
-                   [showFirstLastButtons]="true"></mat-paginator>
+    <div [hidden]="totalItems <= itemsPerPage">
+      <mat-paginator [length]="totalItems"
+                     [pageSize]="itemsPerPage"
+                     hidePageSize
+                     showFirstLastButtons></mat-paginator>
+    </div>
   </div>
 
   <div content

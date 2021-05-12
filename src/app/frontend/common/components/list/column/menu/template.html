@@ -48,6 +48,10 @@ limitations under the License.
           (click)="onEdit()"
           i18n>Edit</button>
   <button mat-menu-item
+          *ngIf="isRestartEnabled()"
+          (click)="onRestart()"
+          i18n>Restart</button>
+  <button mat-menu-item
           id="delete"
           (click)="onDelete()"
           i18n>Delete</button>

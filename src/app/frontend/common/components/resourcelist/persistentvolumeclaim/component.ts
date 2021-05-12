@@ -15,7 +15,7 @@
 import {HttpParams} from '@angular/common/http';
 import {ChangeDetectionStrategy, ChangeDetectorRef, Component, Input} from '@angular/core';
 import {Observable} from 'rxjs';
-import {PersistentVolumeClaim, PersistentVolumeClaimList} from 'typings/backendapi';
+import {PersistentVolumeClaim, PersistentVolumeClaimList} from 'typings/root.api';
 
 import {ResourceListWithStatuses} from '../../../resources/list';
 import {NotificationsService} from '../../../services/global/notifications';
@@ -23,6 +23,7 @@ import {EndpointManager, Resource} from '../../../services/resource/endpoint';
 import {NamespacedResourceService} from '../../../services/resource/resource';
 import {MenuComponent} from '../../list/column/menu/component';
 import {ListGroupIdentifier, ListIdentifier} from '../groupids';
+import {Status} from '../statuses';
 
 @Component({
   selector: 'kd-persistent-volume-claim-list',
@@ -45,27 +46,15 @@ export class PersistentVolumeClaimListComponent extends ResourceListWithStatuses
     this.groupId = ListGroupIdentifier.config;
 
     // Register status icon handlers
-    this.registerBinding(this.icon.checkCircle, 'kd-success', this.isInBoundState);
-    this.registerBinding(this.icon.timelapse, 'kd-muted', this.isInPendingState);
-    this.registerBinding(this.icon.error, 'kd-error', this.isInLostState);
+    this.registerBinding('kd-success', r => r.status === Status.Bound, Status.Bound);
+    this.registerBinding('kd-warning', r => r.status === Status.Pending, Status.Pending);
+    this.registerBinding('kd-error', r => r.status === Status.Lost, Status.Lost);
 
     // Register action columns.
     this.registerActionColumn<MenuComponent>('menu', MenuComponent);
 
     // Register dynamic columns.
     this.registerDynamicColumn('namespace', 'name', this.shouldShowNamespaceColumn_.bind(this));
-  }
-
-  isInBoundState(resource: PersistentVolumeClaim): boolean {
-    return resource.status === 'Bound';
-  }
-
-  isInPendingState(resource: PersistentVolumeClaim): boolean {
-    return resource.status === 'Pending';
-  }
-
-  isInLostState(resource: PersistentVolumeClaim): boolean {
-    return resource.status === 'Lost';
   }
 
   getResourceObservable(params?: HttpParams): Observable<PersistentVolumeClaimList> {

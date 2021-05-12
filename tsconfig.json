@@ -8,7 +8,10 @@
   "compilerOptions": {
     "baseUrl": "src/app/frontend",
     "paths": {
-      "@api/*": ["typings/*"]
+      "@api/*": ["typings/*"],
+      "@common/*": ["common/*"],
+      "@environments/*": ["environments/*"],
+      "@root/*": ["./*"],
     },
     "outDir": ".tmp/out-tsc",
     "target": "esnext",
@@ -20,8 +23,9 @@
     "noImplicitReturns": true,
     "noUnusedParameters": true,
     "noImplicitAny": true,
+    "resolveJsonModule": true,
     "lib": [
-      "es2017",
+      "ES2020",
       "dom"
     ],
     "typeRoots": [

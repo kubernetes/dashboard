@@ -139,6 +139,7 @@ code {
   flex: 0 0 ($baseline-grid * 5) !important;
 
   .mat-icon {
+    cursor: default;
     font-size: 2.5 * $baseline-grid;
     margin-top: .66 * $baseline-grid;
   }
@@ -331,6 +332,12 @@ router-outlet::after {
   cursor: pointer !important;
 }
 
+.kd-ellipsised {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
 .kd-no-bottom-border {
   border-bottom: 0 !important;
 }
@@ -360,10 +367,8 @@ router-outlet::after {
   display: none !important;
 }
 
-.kd-table-no-footer {
-  .mat-row:last-of-type {
-    border-bottom: 0;
-  }
+.mat-row:last-of-type {
+  border-bottom: 0;
 }
 
 // Override Arial font type
@@ -385,6 +390,59 @@ router-outlet::after {
   }
 }
 
+.kd-namespace-chip-list {
+  overflow-x: hidden;
+
+  &:focus {
+    outline: none;
+  }
+
+  .mat-chip-list-wrapper {
+    flex-wrap: nowrap;
+    overflow-x: hidden;
+  }
+}
+
+.mat-list {
+  margin-top: $baseline-grid;
+
+  &.mat-list-base {
+    padding-top: 0;
+  }
+}
+
+kd-logs {
+  .mat-form-field {
+    max-width: 22 * $baseline-grid;
+    width: auto;
+
+    .mat-form-field-underline {
+      margin-top: .25 * $baseline-grid;
+      position: initial;
+    }
+
+    .mat-form-field-wrapper {
+      padding-bottom: 0;
+    }
+
+    .mat-form-field-infix {
+      border-top: 0;
+      padding: 0;
+      width: auto;
+    }
+
+    .mat-select-trigger {
+      align-items: center;
+      display: flex;
+    }
+
+    .mat-select-value {
+      display: inline-flex;
+      max-width: 100%;
+      padding-right: $baseline-grid;
+    }
+  }
+}
+
 // Override styles when selected language is rtl based.
 @import './rtl';
-

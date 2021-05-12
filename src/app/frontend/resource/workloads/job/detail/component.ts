@@ -14,14 +14,13 @@
 
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
-import {JobDetail} from '@api/backendapi';
+import {JobDetail} from '@api/root.api';
+import {ActionbarService, ResourceMeta} from '@common/services/global/actionbar';
+import {NotificationsService} from '@common/services/global/notifications';
+import {EndpointManager, Resource} from '@common/services/resource/endpoint';
+import {NamespacedResourceService} from '@common/services/resource/resource';
 import {Subject} from 'rxjs';
 import {takeUntil} from 'rxjs/operators';
-
-import {ActionbarService, ResourceMeta} from '../../../../common/services/global/actionbar';
-import {NotificationsService} from '../../../../common/services/global/notifications';
-import {EndpointManager, Resource} from '../../../../common/services/resource/endpoint';
-import {NamespacedResourceService} from '../../../../common/services/resource/resource';
 
 @Component({
   selector: 'kd-job-detail',

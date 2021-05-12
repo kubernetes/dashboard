@@ -14,7 +14,7 @@ Make sure, that `metrics-server` and `dashboard-metrics-scraper` are up and runn
 
 You probably need to update your npm dependencies. Run following commands from Dashboard's root directory:
 
-```sh
+```shell
 rm -rf node_modules && npm ci
 ```
 
@@ -22,7 +22,7 @@ rm -rf node_modules && npm ci
 
 Running into an error like that probably means, that you need to rerun following command:
 
-```sh
+```shell
 export PATH=$PATH:/usr/local/go/bin
 ```
 
@@ -30,12 +30,13 @@ export PATH=$PATH:/usr/local/go/bin
 
 Try to run:
 
-```sh
+```shell
 sudo mount --bind /var/lib/kubelet /var/lib/kubelet && sudo mount --make-shared /var/lib/kubelet
 ```
 You can find more information [here](https://github.com/kubernetes/kubernetes/issues/4869#issuecomment-193640483).
 
 ### I am seeing 404 errors when trying to access Dashbord. Dashboard resources can not be loaded.
+
 ```
 GET https://<IP>/api/v1/namespaces/kube-system/services/kubernetes-dashboard/static/vendor.9aa0b786.css
 proxy:1 GET https://<IP>/api/v1/namespaces/kube-system/services/kubernetes-dashboard/static/app.8ebf2901.css
@@ -66,10 +67,12 @@ Dashboard on GCE is installed by default with very little permissions. That is n
 Based on a way of deploying and accessing Dashboard (HTTPS or HTTP) there are different issues.
 
 #### I'm accessing Dashboard over HTTP
+
 There is a [known issue](https://github.com/kubernetes/kubernetes/issues/52729) related to Kubernetes 1.7.X where `/ui` redirect does not work. Try to add trailing slash at the end of `/ui` redirect url: `http://localhost:8001/api/v1/namespaces/kube-system/services/kubernetes-dashboard/proxy/`
 
 #### I'm accessing Dashboard over HTTPS
-The reason why `/ui` redirect does not work for HTTPS is that it hasn't yet been updated in the core repository. You can track https://github.com/kubernetes/kubernetes/pull/53046#discussion_r145338754 to find out when it will be merged. Probably it won't be available until K8S `1.8.3`+.
+
+The reason why `/ui` redirect does not work for HTTPS is that it hasn't yet been updated in the core repository. You can track https://github.com/kubernetes/kubernetes/pull/53046#discussion_r145338754 to find out when it will be merged. Probably it won't be available until Kubernetes `1.8.3`+.
 
 Correct links that can be used to access Dashboard are in our documentation. Check [Accessing Dashboard](../user/accessing-dashboard/README.md) to find out more.
 

@@ -14,7 +14,7 @@
 
 import {HttpClient} from '@angular/common/http';
 import {Injectable} from '@angular/core';
-import {CanIResponse} from '@api/backendapi';
+import {CanIResponse} from '@api/root.api';
 import {Observable, throwError} from 'rxjs';
 import {catchError, switchMap} from 'rxjs/operators';
 

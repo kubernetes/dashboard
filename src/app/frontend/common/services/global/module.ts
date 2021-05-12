@@ -69,6 +69,7 @@ import {PinnerService} from './pinner';
         HistoryService,
         PluginsConfigService,
         PinnerService,
+        ThemeService,
       ],
       multi: true,
     },
@@ -93,7 +94,8 @@ export function init(
   pinner: PinnerService,
   config: ConfigService,
   history: HistoryService,
-  pluginsConfig: PluginsConfigService
+  pluginsConfig: PluginsConfigService,
+  theme: ThemeService
 ): Function {
   return () => {
     globalSettings.init();
@@ -102,5 +104,6 @@ export function init(
     pinner.init();
     config.init();
     history.init();
+    theme.init();
   };
 }

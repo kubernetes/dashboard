@@ -15,7 +15,7 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {MatTableDataSource} from '@angular/material/table';
 import {ActivatedRoute} from '@angular/router';
-import {CapacityItem, PersistentVolumeDetail} from '@api/backendapi';
+import {CapacityItem, PersistentVolumeDetail} from '@api/root.api';
 import {Subject} from 'rxjs';
 import {takeUntil} from 'rxjs/operators';
 
@@ -23,6 +23,8 @@ import {ActionbarService, ResourceMeta} from '../../../../common/services/global
 import {NotificationsService} from '../../../../common/services/global/notifications';
 import {EndpointManager, Resource} from '../../../../common/services/resource/endpoint';
 import {ResourceService} from '../../../../common/services/resource/resource';
+import {KdStateService} from '../../../../common/services/global/state';
+import {GlobalServicesModule} from '../../../../common/services/global/module';
 
 @Component({
   selector: 'kd-persistent-volume-detail',
@@ -31,6 +33,8 @@ import {ResourceService} from '../../../../common/services/resource/resource';
 export class PersistentVolumeDetailComponent implements OnInit, OnDestroy {
   private readonly endpoint_ = EndpointManager.resource(Resource.persistentVolume);
   private readonly unsubscribe_ = new Subject<void>();
+
+  private readonly kdState_: KdStateService = GlobalServicesModule.injector.get(KdStateService);
 
   persistentVolume: PersistentVolumeDetail;
   isInitialized = false;
@@ -86,5 +90,16 @@ export class PersistentVolumeDetailComponent implements OnInit, OnDestroy {
 
   trackByCapacityItemName(_: number, item: CapacityItem): any {
     return item.resourceName;
+  }
+
+  getClaimHref(claimReference: string): string {
+    let href = '';
+
+    const splittedRef = claimReference.split('/');
+    if (splittedRef.length === 2) {
+      href = this.kdState_.href('persistentvolumeclaim', splittedRef[1], splittedRef[0]);
+    }
+
+    return href;
   }
 }

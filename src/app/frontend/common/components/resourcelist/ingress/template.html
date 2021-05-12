@@ -66,9 +66,35 @@ limitations under the License.
 
       <ng-container matColumnDef="endpoints">
         <mat-header-cell *matHeaderCellDef
-                         i18n>Endpoints</mat-header-cell>
+                         i18n>
+          Endpoints <mat-icon class="external-link-icon kd-clickable"
+                    i18n-matTooltip
+                    matTooltip="Endpoint links are external links that will be open in a new tab.">open_in_new</mat-icon>
+        </mat-header-cell>
         <mat-cell *matCellDef="let ingress">
-          <kd-external-endpoint [endpoints]="ingress.endpoints"></kd-external-endpoint>
+          <kd-external-endpoint [endpoints]="ingress.endpoints"
+                                [hideExternalIcon]="true"></kd-external-endpoint>
+        </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="hosts">
+        <mat-header-cell *matHeaderCellDef
+                         disableClear="true"
+                         i18n>
+          Hosts <mat-icon class="external-link-icon kd-clickable"
+                    i18n-matTooltip
+                    matTooltip="Host links are external links that will be open in a new tab.">open_in_new</mat-icon>
+        </mat-header-cell>
+        <mat-cell *matCellDef="let ingress">
+          <div *ngFor="let host of ingress?.hosts"
+               class="kd-ellipsised">
+            <a href="http://{{host}}"
+               target="_blank">
+              {{host}}
+            </a>
+          </div>
+
+          <div *ngIf="ingress?.hosts?.length === 0">-</div>
         </mat-cell>
       </ng-container>
 
@@ -96,10 +122,12 @@ limitations under the License.
       <mat-row *matRowDef="let row; columns: getColumns();"></mat-row>
     </mat-table>
 
-    <mat-paginator [length]="totalItems"
-                   [pageSize]="itemsPerPage"
-                   [hidePageSize]="true"
-                   [showFirstLastButtons]="true"></mat-paginator>
+    <div [hidden]="totalItems <= itemsPerPage">
+      <mat-paginator [length]="totalItems"
+                     [pageSize]="itemsPerPage"
+                     hidePageSize
+                     showFirstLastButtons></mat-paginator>
+    </div>
   </div>
 
   <div content

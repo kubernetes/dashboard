@@ -16,12 +16,12 @@ package ingress
 
 import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
-	extensions "k8s.io/api/extensions/v1beta1"
+	v1beta1 "k8s.io/api/networking/v1beta1"
 )
 
 // The code below allows to perform complex data section on []extensions.Ingress
 
-type IngressCell extensions.Ingress
+type IngressCell v1beta1.Ingress
 
 func (self IngressCell) GetProperty(name dataselect.PropertyName) dataselect.ComparableValue {
 	switch name {
@@ -37,7 +37,7 @@ func (self IngressCell) GetProperty(name dataselect.PropertyName) dataselect.Com
 	}
 }
 
-func toCells(std []extensions.Ingress) []dataselect.DataCell {
+func toCells(std []v1beta1.Ingress) []dataselect.DataCell {
 	cells := make([]dataselect.DataCell, len(std))
 	for i := range std {
 		cells[i] = IngressCell(std[i])
@@ -45,10 +45,10 @@ func toCells(std []extensions.Ingress) []dataselect.DataCell {
 	return cells
 }
 
-func fromCells(cells []dataselect.DataCell) []extensions.Ingress {
-	std := make([]extensions.Ingress, len(cells))
+func fromCells(cells []dataselect.DataCell) []v1beta1.Ingress {
+	std := make([]v1beta1.Ingress, len(cells))
 	for i := range std {
-		std[i] = extensions.Ingress(cells[i].(IngressCell))
+		std[i] = v1beta1.Ingress(cells[i].(IngressCell))
 	}
 	return std
 }

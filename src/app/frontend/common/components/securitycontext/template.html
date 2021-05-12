@@ -1,0 +1,192 @@
+<!--
+Copyright 2017 The Kubernetes Authors.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<div content
+     *ngIf="initialized"
+     fxLayout="row wrap">
+  <!--  Common Security Context Properties -->
+  <kd-property *ngIf="securityContext?.seLinuxOptions?.user">
+    <div key
+         i18n>SE Linux User
+    </div>
+    <div value>
+      {{securityContext.seLinuxOptions.user}}
+    </div>
+  </kd-property>
+  <kd-property *ngIf="securityContext?.seLinuxOptions?.role">
+    <div key
+         i18n>SE Linux Role
+    </div>
+    <div value>
+      {{securityContext.seLinuxOptions.role}}
+    </div>
+  </kd-property>
+  <kd-property *ngIf="securityContext?.seLinuxOptions?.type">
+    <div key
+         i18n>SE Linux Type
+    </div>
+    <div value>
+      {{securityContext.seLinuxOptions.type}}
+    </div>
+  </kd-property>
+  <kd-property *ngIf="securityContext?.seLinuxOptions?.level">
+    <div key
+         i18n>SE Linux Level
+    </div>
+    <div value>
+      {{securityContext.seLinuxOptions.level}}
+    </div>
+  </kd-property>
+
+  <kd-property *ngIf="securityContext?.windowsOptions?.gMSACredentialSpecName">
+    <div key
+         i18n>Windows GMSA Credential Spec Name
+    </div>
+    <div value>
+      {{securityContext.windowsOptions.gMSACredentialSpecName}}
+    </div>
+  </kd-property>
+  <kd-property *ngIf="securityContext?.windowsOptions?.gMSACredentialSpec">
+    <div key
+         i18n>Windows GMSA Credential Spec
+    </div>
+    <div value>
+      {{securityContext.windowsOptions.gMSACredentialSpec}}
+    </div>
+  </kd-property>
+  <kd-property *ngIf="securityContext?.windowsOptions?.runAsUserName">
+    <div key
+         i18n>Windows Run as User
+    </div>
+    <div value>
+      {{securityContext.windowsOptions.runAsUserName}}
+    </div>
+  </kd-property>
+
+  <kd-property *ngIf="securityContext?.runAsUser !== undefined">
+    <div key
+         i18n>Run as User
+    </div>
+    <div value>{{securityContext.runAsUser}}</div>
+  </kd-property>
+  <kd-property *ngIf="securityContext?.runAsGroup !== undefined">
+    <div key
+         i18n>Run as Group
+    </div>
+    <div value>{{securityContext.runAsGroup}}</div>
+  </kd-property>
+  <kd-property *ngIf="securityContext?.runAsNonRoot !== undefined">
+    <div key
+         i18n>Run as Non-Root
+    </div>
+    <div value>{{securityContext.runAsNonRoot}}</div>
+  </kd-property>
+
+  <kd-property *ngIf="securityContext?.seccompProfile?.type">
+    <div key
+         i18n>Seccomp Profile Type
+    </div>
+    <div value>
+      {{securityContext.seccompProfile.type}}
+    </div>
+  </kd-property>
+  <kd-property *ngIf="securityContext?.seccompProfile?.localhostProfile">
+    <div key
+         i18n>Seccomp Localhost Profile
+    </div>
+    <div value>
+      {{securityContext.seccompProfile.localhostProfile}}
+    </div>
+  </kd-property>
+
+  <!--  Container Security Context Properties -->
+  <kd-property *ngIf="securityContext?.capabilities?.add">
+    <div key
+         i18n>Added Capabilities
+    </div>
+    <div value>
+      {{securityContext.capabilities.add}}
+    </div>
+  </kd-property>
+  <kd-property *ngIf="securityContext?.capabilities?.drop">
+    <div key
+         i18n>Dropped Capabilities
+    </div>
+    <div value>
+      {{securityContext.capabilities.drop}}
+    </div>
+  </kd-property>
+  <kd-property *ngIf="securityContext?.privileged !== undefined">
+    <div key
+         i18n>Privileged
+    </div>
+    <div value>{{securityContext.privileged}}</div>
+  </kd-property>
+  <kd-property *ngIf="securityContext?.readOnlyRootFilesystem !== undefined">
+    <div key
+         i18n>Read Only Filesystem
+    </div>
+    <div value>{{securityContext.readOnlyRootFilesystem}}</div>
+  </kd-property>
+  <kd-property *ngIf="securityContext?.allowPrivilegeEscalation !== undefined">
+    <div key
+         i18n>Allow Privilege Escalation
+    </div>
+    <div value>{{securityContext.allowPrivilegeEscalation}}</div>
+  </kd-property>
+  <kd-property *ngIf="securityContext?.procMount">
+    <div key
+         i18n>Proc Mount
+    </div>
+    <div value>{{securityContext.procMount}}</div>
+  </kd-property>
+
+  <!-- Pod Security Context Properties -->
+  <kd-property *ngIf="securityContext?.fsGroup !== undefined">
+    <div key
+         i18n>Filesystem Group
+    </div>
+    <div value>
+      {{securityContext.fsGroup}}
+    </div>
+  </kd-property>
+  <kd-property *ngIf="securityContext?.fsGroupChangePolicy">
+    <div key
+         i18n>Filesystem Group Change Policy
+    </div>
+    <div value>
+      {{securityContext.fsGroupChangePolicy}}
+    </div>
+  </kd-property>
+  <kd-property *ngIf="securityContext?.supplementalGroups"
+               fxFlex="100">
+    <div key
+         i18n>Supplemental Groups
+    </div>
+    <div value>
+      <kd-chips [map]="securityContext.supplementalGroups"></kd-chips>
+    </div>
+  </kd-property>
+  <kd-property *ngIf="securityContext?.sysctls"
+               fxFlex="100">
+    <div key
+         i18n>Sysctls
+    </div>
+    <div value>
+      <kd-chips [map]="toSysctlMap(securityContext.sysctls)"></kd-chips>
+    </div>
+  </kd-property>
+</div>

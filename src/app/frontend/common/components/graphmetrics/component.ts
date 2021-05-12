@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import {Component, Input} from '@angular/core';
-import {Metric} from '@api/backendapi';
+import {Metric} from '@api/root.api';
 import {GraphType} from '../graph/component';
 
 @Component({

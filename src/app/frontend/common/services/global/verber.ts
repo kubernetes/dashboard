@@ -15,12 +15,13 @@
 import {HttpClient, HttpErrorResponse, HttpHeaders} from '@angular/common/http';
 import {EventEmitter, Injectable} from '@angular/core';
 import {MatDialog, MatDialogConfig} from '@angular/material/dialog';
-import {ObjectMeta, TypeMeta} from '@api/backendapi';
+import {ObjectMeta, TypeMeta} from '@api/root.api';
 import {filter, switchMap} from 'rxjs/operators';
 
 import {AlertDialog, AlertDialogConfig} from '../../dialogs/alert/dialog';
 import {DeleteResourceDialog} from '../../dialogs/deleteresource/dialog';
 import {EditResourceDialog} from '../../dialogs/editresource/dialog';
+import {RestartResourceDialog} from '../../dialogs/restartresource/dialog';
 import {ScaleResourceDialog} from '../../dialogs/scaleresource/dialog';
 import {TriggerResourceDialog} from '../../dialogs/triggerresource/dialog';
 import {RawResource} from '../../resources/rawresource';
@@ -33,6 +34,7 @@ export class VerberService {
   onEdit = new EventEmitter<boolean>();
   onScale = new EventEmitter<boolean>();
   onTrigger = new EventEmitter<boolean>();
+  onRestart = new EventEmitter<boolean>();
 
   constructor(private readonly dialog_: MatDialog, private readonly http_: HttpClient) {}
 
@@ -66,6 +68,21 @@ export class VerberService {
       .subscribe(_ => this.onEdit.emit(true), this.handleErrorResponse_.bind(this));
   }
 
+  showRestartDialog(displayName: string, typeMeta: TypeMeta, objectMeta: ObjectMeta): void {
+    const dialogConfig = this.getDialogConfig_(displayName, typeMeta, objectMeta);
+    this.dialog_
+      .open(RestartResourceDialog, dialogConfig)
+      .afterClosed()
+      .pipe(filter(result => result))
+      .pipe(
+        switchMap(_ => {
+          const url = `api/v1/${typeMeta.kind}/${objectMeta.namespace}/${objectMeta.name}/restart`;
+          return this.http_.put(url, {responseType: 'text'});
+        })
+      )
+      .subscribe(_ => this.onTrigger.emit(true), this.handleErrorResponse_.bind(this));
+  }
+
   showScaleDialog(displayName: string, typeMeta: TypeMeta, objectMeta: ObjectMeta): void {
     const dialogConfig = this.getDialogConfig_(displayName, typeMeta, objectMeta);
     this.dialog_
@@ -78,7 +95,7 @@ export class VerberService {
             objectMeta.name
           }/`;
 
-          return this.http_.put(url, result, {params: {scaleBy: result}});
+          return this.http_.put(url, {scaleBy: result}, {params: {scaleBy: result}});
         })
       )
       .subscribe(_ => this.onScale.emit(true), this.handleErrorResponse_.bind(this));

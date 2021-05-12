@@ -26,14 +26,16 @@ limitations under the License.
         <a href="http://{{endpoint.host}}:{{port.port}}"
            target="_blank">
           {{endpoint.host}}:{{port.port}}
-          <mat-icon class="kd-endpoint-icon">open_in_new</mat-icon>
+          <mat-icon *ngIf="!hideExternalIcon"
+                    class="kd-endpoint-icon">open_in_new</mat-icon>
         </a>
       </div>
       <div *ngIf="!port.port">
         <a href="http://{{endpoint.host}}:{{port.nodePort}}"
            target="_blank">
           {{endpoint.host}}:{{port.nodePort}}
-          <mat-icon class="kd-endpoint-icon">open_in_new</mat-icon>
+          <mat-icon *ngIf="!hideExternalIcon"
+                    class="kd-endpoint-icon">open_in_new</mat-icon>
         </a>
       </div>
     </div>
@@ -41,7 +43,8 @@ limitations under the License.
       <a href="http://{{endpoint.host}}"
          target="_blank">
         {{endpoint.host}}
-        <mat-icon class="kd-endpoint-icon">open_in_new</mat-icon>
+        <mat-icon *ngIf="!hideExternalIcon"
+                  class="kd-endpoint-icon">open_in_new</mat-icon>
       </a>
     </div>
   </div>

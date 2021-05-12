@@ -39,7 +39,8 @@ limitations under the License.
       <ng-container matColumnDef="statusicon">
         <mat-header-cell *matHeaderCellDef></mat-header-cell>
         <mat-cell *matCellDef="let service">
-          <mat-icon [ngClass]="getStatus(service).iconClass">
+          <mat-icon [ngClass]="getStatus(service).iconClass"
+                    [matTooltip]="getStatus(service).iconTooltip">
             {{getStatus(service).iconName}}
           </mat-icon>
         </mat-cell>
@@ -125,10 +126,12 @@ limitations under the License.
       <mat-row *matRowDef="let row; columns: getColumns();"></mat-row>
     </mat-table>
 
-    <mat-paginator [length]="totalItems"
-                   [pageSize]="itemsPerPage"
-                   [hidePageSize]="true"
-                   [showFirstLastButtons]="true"></mat-paginator>
+    <div [hidden]="totalItems <= itemsPerPage">
+      <mat-paginator [length]="totalItems"
+                     [pageSize]="itemsPerPage"
+                     hidePageSize
+                     showFirstLastButtons></mat-paginator>
+    </div>
   </div>
 
   <div content

@@ -15,20 +15,109 @@ limitations under the License.
 -->
 
 <kd-card [initialized]="initialized">
-  <div description><span class="kd-muted-light"
-          i18n>Image:&nbsp;</span>{{container.image}}</div>
-  <div title>{{container.name}}</div>
+  <div description>
+    <span class="kd-muted-light"
+          i18n>Image:&nbsp;</span>{{container.image}}
+  </div>
+  <div title>
+    <mat-icon *ngIf="container.status"
+              class="container-status-icon"
+              [ngClass]="containerStatusClass"
+              [matTooltip]="containerStatus">fiber_manual_record</mat-icon>
+    {{container.name}}
+  </div>
   <div content
        fxFlex
        fxLayout="row wrap">
     <kd-property fxFlex="100">
       <div key
-           i18n>Image</div>
+           i18n>Image
+      </div>
       <div value>{{container.image}}</div>
     </kd-property>
 
-    <div *ngFor="let env of container?.env;trackBy:getEnvVarID"
-         fxFlex="20">
+    <div *ngIf="container.status?.state"
+         class="kd-muted section-header"
+         fxFlex="100"
+         i18n>Status</div>
+
+    <ng-container *ngIf="container.status">
+      <kd-property>
+        <div key
+             i18n>Ready
+        </div>
+        <div value>{{container.status.ready}}</div>
+      </kd-property>
+
+      <kd-property>
+        <div key
+             i18n>Started
+        </div>
+        <div value>{{container.status.started}}</div>
+      </kd-property>
+    </ng-container>
+
+    <ng-container *ngIf="container.status?.state?.waiting">
+      <kd-property *ngIf="container.status.state.waiting.reason">
+        <div key
+             i18n>Reason
+        </div>
+        <div value>{{container.status.state.waiting.reason}}</div>
+      </kd-property>
+
+      <kd-property *ngIf="container.status.state.waiting.message">
+        <div key
+             i18n>Message
+        </div>
+        <div value>{{container.status.state.waiting.message}}</div>
+      </kd-property>
+    </ng-container>
+
+    <ng-container *ngIf="container.status?.state?.terminated">
+      <kd-property *ngIf="container.status.state.terminated.reason">
+        <div key
+             i18n>Reason
+        </div>
+        <div value>{{container.status.state.terminated.reason}}</div>
+      </kd-property>
+
+      <kd-property *ngIf="container.status.state.terminated.message">
+        <div key
+             i18n>Message
+        </div>
+        <div value>{{container.status.state.terminated.message}}</div>
+      </kd-property>
+
+      <kd-property *ngIf="container.status.state.terminated.exitCode">
+        <div key
+             i18n>Exit Code
+        </div>
+        <div value>{{container.status.state.terminated.exitCode}}</div>
+      </kd-property>
+
+      <kd-property *ngIf="container.status.state.terminated.signal">
+        <div key
+             i18n>Signal
+        </div>
+        <div value>{{container.status.state.terminated.signal}}</div>
+      </kd-property>
+    </ng-container>
+
+    <ng-container *ngIf="container.status?.state?.running">
+      <kd-property *ngIf="container.status.state.running.startedAt">
+        <div key
+             i18n>Started At
+        </div>
+        <div value>{{container.status.state.running.startedAt}}</div>
+      </kd-property>
+    </ng-container>
+
+    <div *ngIf="container?.env?.length > 0"
+         class="kd-muted section-header"
+         fxFlex="100"
+         i18n>Environment Variables</div>
+
+    <div *ngFor="let env of container?.env;trackBy:getEnvVarID">
       <ng-container *ngIf="!isSecret(env) && !isConfigMap(env)">
         <kd-property>
           <div key
@@ -36,9 +125,10 @@ limitations under the License.
             {{env.name}}
             <mat-icon matTooltip="Environment variable"
                       i18n-matTooltip
-                      class="kd-env-variable-icon">public</mat-icon>
+                      class="kd-env-variable-icon">public
+            </mat-icon>
           </div>
-          <div value>{{env.value}}</div>
+          <div value>{{env.value || '-'}}</div>
         </kd-property>
       </ng-container>
 
@@ -53,12 +143,14 @@ limitations under the License.
             </a>
             <mat-icon matTooltip="Environment variable"
                       i18n-matTooltip
-                      class="kd-env-variable-icon">public</mat-icon>
+                      class="kd-env-variable-icon">public
+            </mat-icon>
           </div>
           <div whenVisible
                class="kd-code-block">{{formatSecretValue(env.value)}}</div>
           <div whenHidden
-               i18n>{{formatSecretValue(env.value).length}} bytes</div>
+               i18n>{{formatSecretValue(env.value).length}} bytes
+          </div>
         </kd-hidden-property>
       </ng-container>
 
@@ -73,12 +165,14 @@ limitations under the License.
             </a>
             <mat-icon matTooltip="Environment variable"
                       i18n-matTooltip
-                      class="kd-env-variable-icon">public</mat-icon>
+                      class="kd-env-variable-icon">public
+            </mat-icon>
           </div>
           <div whenVisible
                class="kd-code-block">{{env.value}}</div>
           <div whenHidden
-               i18n>{{env.value.length}} bytes</div>
+               i18n>{{env.value.length}} bytes
+          </div>
         </kd-hidden-property>
       </ng-container>
     </div>
@@ -86,7 +180,10 @@ limitations under the License.
     <kd-property *ngIf="container?.commands?.length"
                  fxFlex="100">
       <div key
-           i18n>Commands</div>
+           fxFlex
+           class="kd-muted section-header"
+           i18n>Commands
+      </div>
       <div value>
         <div class="kd-code-block kd-no-whitespace">
           <div *ngFor="let command of container.commands"
@@ -98,7 +195,10 @@ limitations under the License.
     <kd-property *ngIf="container?.args?.length"
                  fxFlex="100">
       <div key
-           i18n>Arguments</div>
+           fxFlex
+           class="kd-muted section-header"
+           i18n>Arguments
+      </div>
       <div value>
         <div class="kd-code-block kd-no-whitespace">
           <div *ngFor="let arg of container.args"
@@ -106,5 +206,39 @@ limitations under the License.
         </div>
       </div>
     </kd-property>
+
+    <kd-property *ngIf="container?.volumeMounts?.length > 0"
+                 [stretched]="true"
+                 fxFlex="100">
+      <div key
+           fxFlex
+           class="kd-muted section-header"
+           i18n>Mounts
+      </div>
+      <div value
+           class="kd-volume-mounts">
+        <kd-volumemounts-list [volumeMounts]="container?.volumeMounts"
+                              [namespace]="namespace"
+                              [initialized]="initialized">
+        </kd-volumemounts-list>
+      </div>
+    </kd-property>
+
+    <div *ngIf="hasSecurityContext()"
+         fxFlex="100"
+         fxLayout="column">
+      <div fxFlex
+           class="kd-muted section-header"
+           i18n>Security Context
+      </div>
+
+      <kd-security-context [securityContext]="container.securityContext"
+                           [initialized]="initialized">
+      </kd-security-context>
+    </div>
   </div>
+
+  <div content>
+  </div>
+
 </kd-card>

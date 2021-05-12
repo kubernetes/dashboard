@@ -13,8 +13,10 @@
 // limitations under the License.
 
 import {Component, Input, OnChanges} from '@angular/core';
-import {ConfigMapKeyRef, Container, EnvVar, SecretKeyRef} from '@api/backendapi';
-import {KdStateService} from '../../services/global/state';
+import {ConfigMapKeyRef, Container, EnvVar, SecretKeyRef} from '@api/root.api';
+import {Status, StatusClass} from '@common/components/resourcelist/statuses';
+import {KdStateService} from '@common/services/global/state';
+import * as _ from 'lodash';
 
 @Component({
   selector: 'kd-container-card',
@@ -27,6 +29,38 @@ export class ContainerCardComponent implements OnChanges {
   @Input() initialized: boolean;
 
   constructor(private readonly state_: KdStateService) {}
+
+  get containerStatusClass(): string {
+    if (this.isTerminated_() && this.container.status.state.terminated.reason !== Status.Completed) {
+      return StatusClass.Error;
+    }
+
+    if (this.isWaiting_()) {
+      return StatusClass.Warning;
+    }
+
+    if (this.isRunning_() || this.isTerminated_()) {
+      return StatusClass.Success;
+    }
+
+    return StatusClass.Unknown;
+  }
+
+  get containerStatus(): string {
+    if (this.container.status && this.container.status.state.terminated) {
+      return Status.Terminated;
+    }
+
+    if (this.container.status && this.container.status.state.waiting) {
+      return Status.Waiting;
+    }
+
+    if (this.container.status && this.container.status.ready && this.container.status.started) {
+      return Status.Running;
+    }
+
+    return Status.Unknown;
+  }
 
   ngOnChanges(): void {
     this.container.env = this.container.env.sort((a, b) => a.name.localeCompare(b.name));
@@ -54,5 +88,25 @@ export class ContainerCardComponent implements OnChanges {
 
   getEnvVarID(_: number, envVar: EnvVar): string {
     return `${envVar.name}-${envVar.value}`;
+  }
+
+  hasSecurityContext(): boolean {
+    return this.container && !_.isEmpty(this.container.securityContext);
+  }
+
+  private hasState_(): boolean {
+    return !!this.container && !!this.container.status && !!this.container.status.state;
+  }
+
+  private isWaiting_(): boolean {
+    return this.hasState_() && !!this.container.status.state.waiting;
+  }
+
+  private isTerminated_(): boolean {
+    return this.hasState_() && !!this.container.status.state.terminated;
+  }
+
+  private isRunning_(): boolean {
+    return this.hasState_() && !!this.container.status.state.running;
   }
 }

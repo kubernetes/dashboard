@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import {Component, Input} from '@angular/core';
-import {PodInfo} from '@api/backendapi';
+import {PodInfo} from '@api/root.api';
 
 @Component({
   selector: 'kd-pod-status-card',

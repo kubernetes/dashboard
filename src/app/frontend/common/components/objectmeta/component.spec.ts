@@ -24,15 +24,14 @@ import {MatTooltipModule} from '@angular/material/tooltip';
 import {By} from '@angular/platform-browser';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {RouterModule} from '@angular/router';
-import {AppConfig, ObjectMeta} from '@api/backendapi';
-import {ChipsComponent} from 'common/components/chips/component';
-
-import {PipesModule} from '../../pipes/module';
-import {AuthorizerService} from '../..//services/global/authorizer';
-import {ConfigService} from '../../services/global/config';
-import {GlobalSettingsService} from '../..//services/global/globalsettings';
-import {CardComponent} from '../card/component';
-import {PropertyComponent} from '../property/component';
+import {AppConfig, ObjectMeta} from '@api/root.api';
+import {CardComponent} from '@common/components/card/component';
+import {ChipsComponent} from '@common/components/chips/component';
+import {PropertyComponent} from '@common/components/property/component';
+import {PipesModule} from '@common/pipes/module';
+import {AuthorizerService} from '@common/services/global/authorizer';
+import {ConfigService} from '@common/services/global/config';
+import {GlobalSettingsService} from '@common/services/global/globalsettings';
 
 import {ObjectMetaComponent} from './component';
 

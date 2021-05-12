@@ -46,6 +46,7 @@ type PodDetail struct {
 	PodPhase                  string                                          `json:"podPhase"`
 	PodIP                     string                                          `json:"podIP"`
 	NodeName                  string                                          `json:"nodeName"`
+	ServiceAccountName        string                                          `json:"serviceAccountName"`
 	RestartCount              int32                                           `json:"restartCount"`
 	QOSClass                  string                                          `json:"qosClass"`
 	Controller                *controller.ResourceOwner                       `json:"controller,omitempty"`
@@ -53,8 +54,10 @@ type PodDetail struct {
 	InitContainers            []Container                                     `json:"initContainers"`
 	Metrics                   []metricapi.Metric                              `json:"metrics"`
 	Conditions                []common.Condition                              `json:"conditions"`
+	ImagePullSecrets          []v1.LocalObjectReference                       `json:"imagePullSecrets,omitempty"`
 	EventList                 common.EventList                                `json:"eventList"`
 	PersistentvolumeclaimList persistentvolumeclaim.PersistentVolumeClaimList `json:"persistentVolumeClaimList"`
+	SecurityContext           *v1.PodSecurityContext                          `json:"securityContext"`
 
 	// List of non-critical errors, that occurred during resource retrieval.
 	Errors []error `json:"errors"`
@@ -76,6 +79,15 @@ type Container struct {
 
 	// Command arguments
 	Args []string `json:"args"`
+
+	// Information about mounted volumes
+	VolumeMounts []VolumeMount `json:"volumeMounts"`
+
+	// Security configuration that will be applied to a container.
+	SecurityContext *v1.SecurityContext `json:"securityContext"`
+
+	// Status of a pod container
+	Status *v1.ContainerStatus `json:"status"`
 }
 
 // EnvVar represents an environment variable of a container.
@@ -90,6 +102,23 @@ type EnvVar struct {
 	// Note that this is an API struct. This is intentional, as EnvVarSources are plain struct
 	// references.
 	ValueFrom *v1.EnvVarSource `json:"valueFrom"`
+}
+
+type VolumeMount struct {
+	// Name of the variable.
+	Name string `json:"name"`
+
+	// Is the volume read only ?
+	ReadOnly bool `json:"readOnly"`
+
+	// Path within the container at which the volume should be mounted. Must not contain ':'.
+	MountPath string `json:"mountPath"`
+
+	// Path within the volume from which the container's volume should be mounted. Defaults to "" (volume's root).
+	SubPath string `json:"subPath"`
+
+	// Information about the Volume itself
+	Volume v1.Volume `json:"volume"`
 }
 
 // GetPodDetail returns the details of a named Pod from a particular namespace.
@@ -179,6 +208,31 @@ func getPodController(client kubernetes.Interface, nsQuery *common.NamespaceQuer
 	return &ctrl, nil
 }
 
+func getVolume(volumes []v1.Volume, volumeName string) v1.Volume {
+	for _, volume := range volumes {
+		if volume.Name == volumeName {
+			// yes, this is exponential, but N is VERY small, so the malloc for creating a named dictionary would probably take longer
+			return volume
+		}
+	}
+	return v1.Volume{}
+}
+
+func extractContainerMounts(container v1.Container, pod *v1.Pod) []VolumeMount {
+	volume_mounts := make([]VolumeMount, 0)
+	for _, a_volume_mount := range container.VolumeMounts {
+		volume_mount := VolumeMount{
+			Name:      a_volume_mount.Name,
+			ReadOnly:  a_volume_mount.ReadOnly,
+			MountPath: a_volume_mount.MountPath,
+			SubPath:   a_volume_mount.SubPath,
+			Volume:    getVolume(pod.Spec.Volumes, a_volume_mount.Name),
+		}
+		volume_mounts = append(volume_mounts, volume_mount)
+	}
+	return volume_mounts
+}
+
 func extractContainerInfo(containerList []v1.Container, pod *v1.Pod, configMaps *v1.ConfigMapList, secrets *v1.SecretList) []Container {
 	containers := make([]Container, 0)
 	for _, container := range containerList {
@@ -197,12 +251,17 @@ func extractContainerInfo(containerList []v1.Container, pod *v1.Pod, configMaps 
 		}
 		vars = append(vars, evalEnvFrom(container, configMaps, secrets)...)
 
+		volume_mounts := extractContainerMounts(container, pod)
+
 		containers = append(containers, Container{
-			Name:     container.Name,
-			Image:    container.Image,
-			Env:      vars,
-			Commands: container.Command,
-			Args:     container.Args,
+			Name:            container.Name,
+			Image:           container.Image,
+			Env:             vars,
+			Commands:        container.Command,
+			Args:            container.Args,
+			VolumeMounts:    volume_mounts,
+			SecurityContext: container.SecurityContext,
+			Status:          extractContainerStatus(pod, &container),
 		})
 	}
 	return containers
@@ -219,13 +278,16 @@ func toPodDetail(pod *v1.Pod, metrics []metricapi.Metric, configMaps *v1.ConfigM
 		RestartCount:              getRestartCount(*pod),
 		QOSClass:                  string(pod.Status.QOSClass),
 		NodeName:                  pod.Spec.NodeName,
+		ServiceAccountName:        pod.Spec.ServiceAccountName,
 		Controller:                controller,
 		Containers:                extractContainerInfo(pod.Spec.Containers, pod, configMaps, secrets),
 		InitContainers:            extractContainerInfo(pod.Spec.InitContainers, pod, configMaps, secrets),
 		Metrics:                   metrics,
 		Conditions:                getPodConditions(*pod),
+		ImagePullSecrets:          pod.Spec.ImagePullSecrets,
 		EventList:                 *events,
 		PersistentvolumeclaimList: *persistentVolumeClaimList,
+		SecurityContext:           pod.Spec.SecurityContext,
 		Errors:                    nonCriticalErrors,
 	}
 }
@@ -363,4 +425,14 @@ func extractContainerResourceValue(fs *v1.ResourceFieldSelector, container *v1.C
 	}
 
 	return "", fmt.Errorf("Unsupported container resource : %v", fs.Resource)
+}
+
+func extractContainerStatus(pod *v1.Pod, container *v1.Container) *v1.ContainerStatus {
+	for _, status := range pod.Status.ContainerStatuses {
+		if status.Name == container.Name {
+			return &status
+		}
+	}
+
+	return nil
 }

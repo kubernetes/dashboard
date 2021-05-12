@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import {Injectable} from '@angular/core';
-import {PinnedResource} from '@api/backendapi';
+import {PinnedResource} from '@api/root.api';
 import {HttpClient, HttpErrorResponse} from '@angular/common/http';
 import {Subject} from 'rxjs';
 import {MatDialog, MatDialogConfig} from '@angular/material/dialog';

@@ -29,14 +29,8 @@ import {MatPaginator} from '@angular/material/paginator';
 import {MatSort} from '@angular/material/sort';
 import {MatTableDataSource} from '@angular/material/table';
 import {Router} from '@angular/router';
-import {Event as KdEvent, Resource, ResourceList} from '@api/backendapi';
-import {
-  ActionColumn,
-  ActionColumnDef,
-  ColumnWhenCallback,
-  ColumnWhenCondition,
-  OnListChangeEvent,
-} from '@api/frontendapi';
+import {Event as KdEvent, Resource, ResourceList} from '@api/root.api';
+import {ActionColumn, ActionColumnDef, ColumnWhenCallback, ColumnWhenCondition, OnListChangeEvent} from '@api/root.ui';
 import {isObservable, merge, Observable, ObservableInput, Subject} from 'rxjs';
 import {startWith, switchMap, takeUntil, tap} from 'rxjs/operators';
 
@@ -365,8 +359,9 @@ export abstract class ResourceListWithStatuses<T extends ResourceList, R extends
   private readonly bindings_: {[hash: number]: StateBinding<R>} = {};
   private lastHash_: number;
   private readonly unknownStatus: StatusIcon = {
-    iconName: 'help',
-    iconClass: {'kd-help': true},
+    iconName: IconName.circle,
+    iconClass: {'kd-muted': true},
+    iconTooltip: 'Unrecognized',
   };
 
   protected icon = IconName;
@@ -450,8 +445,8 @@ export abstract class ResourceListWithStatuses<T extends ResourceList, R extends
     return false;
   }
 
-  protected registerBinding(iconName: IconName, iconClass: string, callbackFunction: StatusCheckCallback<R>): void {
-    const icon = new Icon(String(iconName), iconClass);
+  protected registerBinding(iconClass: string, callbackFunction: StatusCheckCallback<R>, status = ''): void {
+    const icon = new Icon(IconName.circle, iconClass, status);
     this.bindings_[icon.hash()] = {icon, callbackFunction};
   }
 
@@ -459,6 +454,7 @@ export abstract class ResourceListWithStatuses<T extends ResourceList, R extends
     return {
       iconName: stateBinding.icon.name,
       iconClass: {[stateBinding.icon.cssClass]: true},
+      iconTooltip: stateBinding.icon.tooltip,
     };
   }
 }
@@ -466,12 +462,12 @@ export abstract class ResourceListWithStatuses<T extends ResourceList, R extends
 interface StatusIcon {
   iconName: string;
   iconClass: {[className: string]: boolean};
+  iconTooltip: string;
 }
 
 enum IconName {
   error = 'error',
-  timelapse = 'timelapse',
-  checkCircle = 'check_circle',
+  circle = 'fiber_manual_record',
   help = 'help',
   warning = 'warning',
   none = '',
@@ -480,10 +476,12 @@ enum IconName {
 class Icon {
   name: string;
   cssClass: string;
+  tooltip: string;
 
-  constructor(name: string, cssClass: string) {
+  constructor(name: string, cssClass: string, tooltip: string) {
     this.name = name;
     this.cssClass = cssClass;
+    this.tooltip = tooltip;
   }
 
   /**
@@ -491,7 +489,7 @@ class Icon {
    * http://www.cse.yorku.ca/~oz/hash.html
    */
   hash(): number {
-    const value = `${this.name}#${this.cssClass}`;
+    const value = `${this.name}#${this.cssClass}#${this.tooltip}`;
     return value
       .split('')
       .map(str => {

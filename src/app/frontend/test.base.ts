@@ -12,4 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-jasmine.DEFAULT_TIMEOUT_INTERVAL = 15000;
+// Load `$localize` onto the global scope - used if i18n tags appear in Angular templates.
+import '@angular/localize/init';
+
+import 'jest-preset-angular/setup-jest';
+import './test.base.mocks';
+
+// Async operations timeout
+// eslint-disable-next-line @typescript-eslint/no-magic-numbers
+jest.setTimeout(15000);

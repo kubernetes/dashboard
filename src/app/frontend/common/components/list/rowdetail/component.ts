@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import {ChangeDetectionStrategy, Component, Input} from '@angular/core';
-import {Event} from 'typings/backendapi';
+import {Event} from 'typings/root.api';
 
 @Component({
   selector: 'kd-row-detail',

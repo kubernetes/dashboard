@@ -14,7 +14,7 @@
 
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
-import {ClusterRoleBindingDetail} from '@api/backendapi';
+import {ClusterRoleBindingDetail} from '@api/root.api';
 import {Subscription} from 'rxjs/Subscription';
 
 import {ActionbarService, ResourceMeta} from '../../../../common/services/global/actionbar';

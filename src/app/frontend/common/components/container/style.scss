@@ -21,3 +21,18 @@
   align-self: baseline;
   margin-left: $baseline-grid / 2;
 }
+
+.kd-volume-mounts {
+  border-radius: $baseline-grid / 4;
+  margin-right: $baseline-grid;
+  margin-top: $baseline-grid / 2;
+}
+
+.container-status-icon {
+  vertical-align: middle;
+}
+
+.section-header {
+  font-size: $subhead-font-size-base-lg;
+  margin: (2 * $baseline-grid) 0;
+}

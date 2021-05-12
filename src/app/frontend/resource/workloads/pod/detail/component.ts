@@ -14,19 +14,20 @@
 
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
-import {Container, PodDetail} from '@api/backendapi';
+import {Container, PodDetail} from '@api/root.api';
+import {ActionbarService, ResourceMeta} from '@common/services/global/actionbar';
+import {NotificationsService} from '@common/services/global/notifications';
+import {KdStateService} from '@common/services/global/state';
+import {EndpointManager, Resource} from '@common/services/resource/endpoint';
+import {NamespacedResourceService} from '@common/services/resource/resource';
+import * as _ from 'lodash';
 import {Subject} from 'rxjs';
 import {takeUntil} from 'rxjs/operators';
-
-import {ActionbarService, ResourceMeta} from '../../../../common/services/global/actionbar';
-import {NotificationsService} from '../../../../common/services/global/notifications';
-import {KdStateService} from '../../../../common/services/global/state';
-import {EndpointManager, Resource} from '../../../../common/services/resource/endpoint';
-import {NamespacedResourceService} from '../../../../common/services/resource/resource';
 
 @Component({
   selector: 'kd-pod-detail',
   templateUrl: './template.html',
+  styleUrls: ['style.scss'],
 })
 export class PodDetailComponent implements OnInit, OnDestroy {
   private readonly endpoint_ = EndpointManager.resource(Resource.pod, true);
@@ -69,11 +70,19 @@ export class PodDetailComponent implements OnInit, OnDestroy {
     this.actionbar_.onDetailsLeave.emit();
   }
 
+  hasSecurityContext(): boolean {
+    return this.pod && !_.isEmpty(this.pod.securityContext);
+  }
+
   getNodeHref(name: string): string {
     return this.kdState_.href('node', name);
   }
 
   getContainerName(_: number, container: Container): string {
     return container.name;
+  }
+
+  getObjectHref(type: string, name: string): string {
+    return this.kdState_.href(type, name, this.pod.objectMeta.namespace);
   }
 }
