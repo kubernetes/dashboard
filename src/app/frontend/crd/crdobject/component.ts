@@ -68,6 +68,9 @@ export class CRDObjectDetailComponent implements OnInit, OnDestroy {
           .get(url)
           .toPromise()
           .then(response => (this.text = toYaml(response)));
+      	if (this.text) {
+        	this.updateText_();
+      	}
       });
 
     this.buttonToggleGroup.valueChange.subscribe((selectedMode: EditorMode) => {
