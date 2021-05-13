@@ -47,7 +47,7 @@ import {MAT_TOOLTIP_DEFAULT_OPTIONS, MatTooltipModule} from '@angular/material/t
 import {RouterModule} from '@angular/router';
 import {NgxChartsModule} from '@swimlane/ngx-charts';
 import {InViewportModule} from 'ng-in-viewport';
-import {FilterPipeModule} from 'ngx-filter-pipe';
+import {NgPipesModule} from 'ngx-pipes';
 
 import {PipesModule} from '@common/pipes/module';
 import {KD_TOOLTIP_DEFAULT_OPTIONS} from './index.config';
@@ -91,7 +91,7 @@ const SHARED_DEPENDENCIES = [
   // Other 3rd party modules
   FlexLayoutModule,
   RouterModule,
-  FilterPipeModule,
+  NgPipesModule,
   NgxChartsModule,
   InViewportModule,
 
