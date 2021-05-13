@@ -30,4 +30,4 @@ if [ $MD5_OLD != $MD5_NEW ] ; then
 fi
 
 # Remove extracted file for check
-rm -fr i18n/messages.new.xlf
+rm i18n/messages.new.xlf
