@@ -1,4 +1,7 @@
 {
+  "angularCompilerOptions": {
+    "enableI18nLegacyMessageIdFormat": false,
+  },
   "compileOnSave": false,
   "compilerOptions": {
     "baseUrl": "src/app/frontend",
