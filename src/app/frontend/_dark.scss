@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-@import '~@angular/material/theming';
-@import './theming';
+@use '~@angular/material/theming';
+@use './theming';
 
 $colors-dark: (
   primary: #327df4,
