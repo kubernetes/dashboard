@@ -2441,9 +2441,9 @@ func (apiHandler *APIHandler) handleGetCustomResourceDefinitionDetail(request *r
 		errors.HandleInternalError(response, err)
 		return
 	}
-
+	dataSelect := parser.ParseDataSelectPathParameter(request)
 	name := request.PathParameter("crd")
-	result, err := customresourcedefinition.GetCustomResourceDefinitionDetail(apiextensionsclient, config, name)
+	result, err := customresourcedefinition.GetCustomResourceDefinitionDetail(apiextensionsclient, config, dataSelect, name)
 	if err != nil {
 		errors.HandleInternalError(response, err)
 		return

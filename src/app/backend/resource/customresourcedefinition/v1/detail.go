@@ -29,14 +29,14 @@ import (
 )
 
 // GetCustomResourceDefinitionDetail returns detailed information about a custom resource definition.
-func GetCustomResourceDefinitionDetail(client apiextensionsclientset.Interface, config *rest.Config, name string) (*types.CustomResourceDefinitionDetail, error) {
+func GetCustomResourceDefinitionDetail(client apiextensionsclientset.Interface, config *rest.Config, dsQuery *dataselect.DataSelectQuery, name string) (*types.CustomResourceDefinitionDetail, error) {
 	customResourceDefinition, err := client.ApiextensionsV1().CustomResourceDefinitions().Get(context.TODO(), name, metav1.GetOptions{})
 	nonCriticalErrors, criticalError := errors.HandleError(err)
 	if criticalError != nil {
 		return nil, criticalError
 	}
 
-	objects, err := GetCustomResourceObjectList(client, config, &common.NamespaceQuery{}, dataselect.DefaultDataSelect, name)
+	objects, err := GetCustomResourceObjectList(client, config, &common.NamespaceQuery{}, dsQuery, name)
 	nonCriticalErrors, criticalError = errors.AppendError(err, nonCriticalErrors)
 	if criticalError != nil {
 		return nil, criticalError
