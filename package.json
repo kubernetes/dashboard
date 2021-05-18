@@ -174,7 +174,7 @@
     "run-node": "2.0.0",
     "sass": "1.32.13",
     "sass-lint": "1.13.1",
-    "sass-loader": "11.1.0",
+    "sass-loader": "11.1.1",
     "scssfmt": "1.0.7",
     "semver": "7.3.5",
     "source-map-explorer": "2.5.2",
