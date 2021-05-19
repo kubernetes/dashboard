@@ -99,7 +99,7 @@
     "@angular/platform-browser": "11.2.7",
     "@angular/platform-browser-dynamic": "11.2.7",
     "@angular/router": "11.2.7",
-    "@swimlane/ngx-charts": "17.0.1",
+    "@swimlane/ngx-charts": "18.0.1",
     "ace-builds": "1.4.12",
     "angular-page-visibility": "11.0.0",
     "ansi-to-html": "0.6.15",
