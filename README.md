@@ -58,7 +58,7 @@ Learn how to engage with the Kubernetes community on the [community page](http:/
 
 You can reach the maintainers of this project at:
 
-* [**#sig-ui on Kubernetes Slack**](https://kubernetes.slack.com)
+* [**sig-ui on Kubernetes Slack**](https://kubernetes.slack.com)
 * [**kubernetes-sig-ui mailing list** ](https://groups.google.com/forum/#!forum/kubernetes-sig-ui)
 * [**Issue tracker**](https://github.com/kubernetes/dashboard/issues)
 * [**SIG info**](https://github.com/kubernetes/community/tree/master/sig-ui)
