@@ -6,7 +6,7 @@ describe('Userpanel', () => {
   });
 
   it('check default namespace', () => {
-    UserpanelPage.assertUrlContains('overview');
+    UserpanelPage.assertUrlContains('workloads');
   });
 
   it('collapses sidebar', () => {
@@ -17,7 +17,7 @@ describe('Userpanel', () => {
 
   it('home logo click overview redirect check', () => {
     UserpanelPage.clickItem('.kd-toolbar-logo-link');
-    UserpanelPage.assertUrlContains('overview');
+    UserpanelPage.assertUrlContains('workloads');
   });
 
   it('add resource', () => {
