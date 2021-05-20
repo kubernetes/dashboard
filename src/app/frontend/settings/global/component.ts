@@ -17,7 +17,7 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {MatDialog} from '@angular/material/dialog';
 import {GlobalSettings, NamespaceList} from '@api/root.api';
-import * as _ from 'lodash';
+import _ from 'lodash';
 import {of, Subject} from 'rxjs';
 import {Observable} from 'rxjs/Observable';
 import {catchError, take, takeUntil, tap} from 'rxjs/operators';

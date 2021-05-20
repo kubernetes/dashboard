@@ -19,12 +19,12 @@ import (
 	metricapi "github.com/kubernetes/dashboard/src/app/backend/integration/metric/api"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
-	batch2 "k8s.io/api/batch/v1beta1"
+	batchv1beta1 "k8s.io/api/batch/v1beta1"
 )
 
 // The code below allows to perform complex data section on []batch.CronJob
 
-type CronJobCell batch2.CronJob
+type CronJobCell batchv1beta1.CronJob
 
 func (self CronJobCell) GetProperty(name dataselect.PropertyName) dataselect.ComparableValue {
 	switch name {
@@ -49,7 +49,7 @@ func (self CronJobCell) GetResourceSelector() *metricapi.ResourceSelector {
 	}
 }
 
-func ToCells(std []batch2.CronJob) []dataselect.DataCell {
+func ToCells(std []batchv1beta1.CronJob) []dataselect.DataCell {
 	cells := make([]dataselect.DataCell, len(std))
 	for i := range std {
 		cells[i] = CronJobCell(std[i])
@@ -57,15 +57,15 @@ func ToCells(std []batch2.CronJob) []dataselect.DataCell {
 	return cells
 }
 
-func FromCells(cells []dataselect.DataCell) []batch2.CronJob {
-	std := make([]batch2.CronJob, len(cells))
+func FromCells(cells []dataselect.DataCell) []batchv1beta1.CronJob {
+	std := make([]batchv1beta1.CronJob, len(cells))
 	for i := range std {
-		std[i] = batch2.CronJob(cells[i].(CronJobCell))
+		std[i] = batchv1beta1.CronJob(cells[i].(CronJobCell))
 	}
 	return std
 }
 
-func getStatus(list *batch2.CronJobList) common.ResourceStatus {
+func getStatus(list *batchv1beta1.CronJobList) common.ResourceStatus {
 	info := common.ResourceStatus{}
 	if list == nil {
 		return info
@@ -80,4 +80,15 @@ func getStatus(list *batch2.CronJobList) common.ResourceStatus {
 	}
 
 	return info
+}
+
+func getContainerImages(cronJob *batchv1beta1.CronJob) []string {
+	podSpec := cronJob.Spec.JobTemplate.Spec.Template.Spec
+	result := make([]string, 0)
+
+	for _, container := range podSpec.Containers {
+		result = append(result, container.Image)
+	}
+
+	return result
 }

@@ -31,7 +31,7 @@ limitations under the License.
              [matAutocomplete]="auto"
              matInput>
       <mat-autocomplete #auto="matAutocomplete">
-        <mat-option *ngFor="let namespace of data.namespaces | filterBy: namespaceInput.value"
+        <mat-option *ngFor="let namespace of data.namespaces | kdFilterBy: namespaceInput.value"
                     [value]="namespace">
           {{namespace}}
         </mat-option>

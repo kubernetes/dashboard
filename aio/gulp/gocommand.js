@@ -20,7 +20,7 @@ import lodash from 'lodash';
 import q from 'q';
 import semver from 'semver';
 
-import conf from './conf';
+import conf from './conf.js';
 
 // Add the project's required go tools to the PATH.
 const devPath = `${process.env.PATH}:${conf.paths.goTools}/bin`;

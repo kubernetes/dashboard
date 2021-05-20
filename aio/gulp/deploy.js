@@ -21,8 +21,8 @@ import gulp from 'gulp';
 import lodash from 'lodash';
 import path from 'path';
 
-import {multiDest} from './common';
-import conf from './conf';
+import {multiDest} from './common.js';
+import conf from './conf.js';
 
 /**
  * Processes the Docker file and places it in the dist folder for all architectures.

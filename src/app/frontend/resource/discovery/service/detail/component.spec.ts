@@ -76,6 +76,7 @@ class MaxiTestComponent {
         {
           status: 'Running',
           restartCount: 1,
+          containerImages: [],
           metrics: {
             cpuUsage: 10,
             memoryUsage: 10,

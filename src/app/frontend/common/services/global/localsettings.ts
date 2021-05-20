@@ -14,8 +14,8 @@
 
 import {Injectable} from '@angular/core';
 
-import {ThemeService} from './theme';
 import {LocalSettings} from '@api/root.api';
+import {ThemeService} from './theme';
 
 @Injectable()
 export class LocalSettingsService {

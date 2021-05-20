@@ -33,8 +33,8 @@ limitations under the License.
                 i18n>All namespaces</mat-option>
     <mat-optgroup label="NAMESPACES"
                   i18n-label
-                  *ngIf="(namespaces | filterBy: selectNamespaceInput).length">
-      <mat-option *ngFor="let namespace of namespaces | filterBy: selectNamespaceInput"
+                  *ngIf="(namespaces | kdFilterBy: selectNamespaceInput).length">
+      <mat-option *ngFor="let namespace of namespaces | kdFilterBy: selectNamespaceInput"
                   [value]="namespace">
         {{namespace}}
       </mat-option>

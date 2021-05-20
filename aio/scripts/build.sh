@@ -32,8 +32,7 @@ function build::frontend {
   say "\nBuilding localized frontend"
   mkdir -p ${FRONTEND_DIR}
   ${NG_BIN} build \
-            --aot \
-            --prod \
+            --configuration production \
             --localize \
             --outputPath=${FRONTEND_DIR}
 

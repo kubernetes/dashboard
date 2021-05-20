@@ -14,6 +14,7 @@
 
 import {DecimalPipe} from '@angular/common';
 import {NgModule} from '@angular/core';
+import {FilterByPipe} from '@common/pipes/filterby';
 
 import {CommaSeparatedPipe} from './commaseparated';
 import {CoreFormatter} from './coreformatter';
@@ -30,8 +31,17 @@ import {TrimPipe} from './trim';
     SafeHtmlFormatter,
     TrimPipe,
     CommaSeparatedPipe,
+    FilterByPipe,
   ],
   providers: [DecimalPipe],
-  exports: [MemoryFormatter, CoreFormatter, RelativeTimeFormatter, SafeHtmlFormatter, TrimPipe, CommaSeparatedPipe],
+  exports: [
+    MemoryFormatter,
+    CoreFormatter,
+    RelativeTimeFormatter,
+    SafeHtmlFormatter,
+    TrimPipe,
+    CommaSeparatedPipe,
+    FilterByPipe,
+  ],
 })
 export class PipesModule {}

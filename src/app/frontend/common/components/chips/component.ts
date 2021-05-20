@@ -23,13 +23,11 @@ import {
 } from '@angular/core';
 import {MatDialog, MatDialogConfig} from '@angular/material/dialog';
 import {StringMap} from '@api/root.api';
+// @ts-ignore
+import truncateUrl from 'truncate-url';
 
 import {GlobalSettingsService} from '../../services/global/globalsettings';
-
 import {ChipDialog} from './chipdialog/dialog';
-
-// @ts-ignore
-import * as truncateUrl from 'truncate-url';
 import {KdStateService} from '@common/services/global/state';
 
 export interface Chip {
@@ -81,19 +79,6 @@ export class ChipsComponent implements OnInit, OnChanges {
     if (changes.map) {
       this.processMap();
     }
-  }
-
-  private processMap() {
-    if (!this.map) {
-      this.map = [];
-    }
-
-    if (Array.isArray(this.map)) {
-      this.keys = this.map as string[];
-    } else {
-      this.keys = Object.keys(this.map);
-    }
-    this._changeDetectorRef.markForCheck();
   }
 
   isVisible(index: number): boolean {
@@ -156,5 +141,18 @@ export class ChipsComponent implements OnInit, OnChanges {
       },
     };
     this._matDialog.open(ChipDialog, dialogConfig);
+  }
+
+  private processMap() {
+    if (!this.map) {
+      this.map = [];
+    }
+
+    if (Array.isArray(this.map)) {
+      this.keys = this.map as string[];
+    } else {
+      this.keys = Object.keys(this.map);
+    }
+    this._changeDetectorRef.markForCheck();
   }
 }

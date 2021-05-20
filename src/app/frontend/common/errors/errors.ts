@@ -14,7 +14,7 @@
 
 import {HttpErrorResponse} from '@angular/common/http';
 import {ErrStatus, K8sError as K8SApiError} from '@api/root.api';
-import {KdError as KdApiError} from '@api/root.ui';
+import {KdError as KdApiError} from '@api/root.shared';
 
 export enum ApiError {
   tokenExpired = 'MSG_TOKEN_EXPIRED_ERROR',

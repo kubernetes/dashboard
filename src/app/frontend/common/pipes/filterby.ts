@@ -12,24 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-@import '../variables';
+import {Pipe, PipeTransform} from '@angular/core';
 
-.kd-login-mode-description {
-  padding: $baseline-grid (3.5 * $baseline-grid) (2 * $baseline-grid);
-}
-
-.kd-login-input {
-  padding: 0 (3.5 * $baseline-grid);
-}
-
-.kd-login-button {
-  margin: (4 * $baseline-grid) $baseline-grid $baseline-grid 0;
-}
-
-.kd-error-text {
-  text-align: left;
-}
-
-:host {
-  height: 100vh;
+@Pipe({name: 'kdFilterBy'})
+export class FilterByPipe implements PipeTransform {
+  transform(arr: string[], predicate: string): string[] {
+    return arr.filter(elem => elem.includes(predicate));
+  }
 }

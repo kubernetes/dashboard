@@ -12,10 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import {KdError} from '@api/root.shared';
 // Shared resource types
-import {KdError} from '@api/root.ui';
 import {PersistentVolumeSource} from '@api/volume.api';
-import {SecurityContext} from '@angular/core';
 
 export enum SupportedResources {
   ConfigMap = 'ConfigMap',
@@ -244,6 +243,7 @@ export interface CronJob extends Resource {
   suspend: boolean;
   active: number;
   lastSchedule: string;
+  containerImages: string[];
 }
 
 export interface CRD extends Resource {
@@ -364,6 +364,7 @@ export interface Pod extends Resource {
   warnings: Event[];
   nodeName: string;
   serviceAccountName: string;
+  containerImages: string[];
 }
 
 export interface PodContainer {
