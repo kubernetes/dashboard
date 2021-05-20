@@ -53,8 +53,10 @@ limitations under the License.
         <mat-header-cell *matHeaderCellDef
                          mat-sort-header
                          disableClear="true"
+                         class="kd-col-gt"
                          i18n>Name</mat-header-cell>
-        <mat-cell *matCellDef="let node">
+        <mat-cell *matCellDef="let node"
+                  class="kd-col-gt">
           <a [routerLink]="getDetailsHref(node.objectMeta.name)"
              queryParamsHandling="preserve">
             {{node.objectMeta.name}}
@@ -64,54 +66,68 @@ limitations under the License.
 
       <ng-container [matColumnDef]="getColumns()[2]">
         <mat-header-cell *matHeaderCellDef
+                         class="kd-col-gt"
                          i18n>Labels</mat-header-cell>
-        <mat-cell *matCellDef="let node">
+        <mat-cell *matCellDef="let node"
+                  class="kd-col-gt">
           <kd-chips [map]="node.objectMeta.labels"></kd-chips>
         </mat-cell>
       </ng-container>
 
       <ng-container [matColumnDef]="getColumns()[3]">
         <mat-header-cell *matHeaderCellDef
+                         class="kd-col-xs"
                          i18n>Ready</mat-header-cell>
-        <mat-cell *matCellDef="let node">{{node.ready}}</mat-cell>
+        <mat-cell *matCellDef="let node"
+                  class="kd-col-xs">{{node.ready}}</mat-cell>
       </ng-container>
 
       <ng-container [matColumnDef]="getColumns()[4]">
         <mat-header-cell *matHeaderCellDef
+                         class="kd-col-sm"
                          i18n>CPU requests (cores)</mat-header-cell>
-        <mat-cell *matCellDef="let node">
+        <mat-cell *matCellDef="let node"
+                  class="kd-col-sm">
           {{node.allocatedResources.cpuRequests | kdCores}} ({{node.allocatedResources.cpuRequestsFraction | number:"1.2-2"}}%)
         </mat-cell>
       </ng-container>
 
       <ng-container [matColumnDef]="getColumns()[5]">
         <mat-header-cell *matHeaderCellDef
+                         class="kd-col-sm"
                          i18n>CPU limits (cores)</mat-header-cell>
-        <mat-cell *matCellDef="let node">
+        <mat-cell *matCellDef="let node"
+                  class="kd-col-sm">
           {{node.allocatedResources.cpuLimits | kdCores}} ({{node.allocatedResources.cpuLimitsFraction | number:"1.2-2"}}%)
         </mat-cell>
       </ng-container>
 
       <ng-container [matColumnDef]="getColumns()[6]">
         <mat-header-cell *matHeaderCellDef
+                         class="kd-col-sm"
                          i18n>Memory requests (bytes)</mat-header-cell>
-        <mat-cell *matCellDef="let node">
+        <mat-cell *matCellDef="let node"
+                  class="kd-col-sm">
           {{node.allocatedResources.memoryRequests | kdMemory}} ({{node.allocatedResources.memoryRequestsFraction | number:"1.2-2"}}%)
         </mat-cell>
       </ng-container>
 
       <ng-container [matColumnDef]="getColumns()[7]">
         <mat-header-cell *matHeaderCellDef
+                         class="kd-col-sm"
                          i18n>Memory limits (bytes)</mat-header-cell>
-        <mat-cell *matCellDef="let node">
+        <mat-cell *matCellDef="let node"
+                  class="kd-col-sm">
           {{node.allocatedResources.memoryLimits | kdMemory}} ({{node.allocatedResources.memoryLimitsFraction | number:"1.2-2"}}%)
         </mat-cell>
       </ng-container>
 
       <ng-container [matColumnDef]="getColumns()[8]">
         <mat-header-cell *matHeaderCellDef
+                         class="kd-col-sm"
                          i18n>Pods</mat-header-cell>
-        <mat-cell *matCellDef="let node">
+        <mat-cell *matCellDef="let node"
+                  class="kd-col-sm">
           {{node.allocatedResources.allocatedPods}} ({{node.allocatedResources.podFraction | number:"1.2-2"}}%)
         </mat-cell>
       </ng-container>
@@ -120,8 +136,10 @@ limitations under the License.
         <mat-header-cell *matHeaderCellDef
                          mat-sort-header
                          disableClear="true"
+                         class="kd-col-xs"
                          i18n>Created</mat-header-cell>
-        <mat-cell *matCellDef="let node">
+        <mat-cell *matCellDef="let node"
+                  class="kd-col-xs">
           <kd-date [date]="node.objectMeta.creationTimestamp"
                    relative></kd-date>
         </mat-cell>

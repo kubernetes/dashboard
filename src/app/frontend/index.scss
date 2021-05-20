@@ -138,23 +138,19 @@ code {
 .mat-cell,
 .mat-header-cell {
   &.kd-col-xs {
-    flex: 0 0 (5 * $baseline-grid);
+    flex: 1 1 (5 * $baseline-grid);
   }
 
   &.kd-col-sm {
-    flex: 0 1 (10 * $baseline-grid);
+    flex: 1 1 (10 * $baseline-grid);
   }
 
   &.kd-col-md {
-    flex: 0 1 (15 * $baseline-grid);
+    flex: 1 1 (15 * $baseline-grid);
   }
 
   &.kd-col-gt {
-    flex: 0 1 (30 * $baseline-grid);
-  }
-
-  &.kd-col-auto {
-    flex: 1 1 auto;
+    flex: 1 1 (30 * $baseline-grid);
   }
 }
 
@@ -172,7 +168,7 @@ code {
 .mat-column-images,
 .mat-column-name,
 .mat-column-message {
-  flex-grow: 2 !important;
+  //flex-grow: 2;
 }
 
 [class^='mat-column-action'],

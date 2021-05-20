@@ -63,8 +63,10 @@ limitations under the License.
         <mat-header-cell *matHeaderCellDef
                          mat-sort-header
                          disableClear="true"
+                         class="kd-col-gt"
                          i18n>Name</mat-header-cell>
-        <mat-cell *matCellDef="let rc">
+        <mat-cell *matCellDef="let rc"
+                  class="kd-col-gt">
           <a (click)="$event.stopPropagation()"
              [routerLink]="getDetailsHref(rc.objectMeta.name, rc.objectMeta.namespace)"
              queryParamsHandling="preserve">
@@ -84,16 +86,20 @@ limitations under the License.
 
       <ng-container matColumnDef="images">
         <mat-header-cell *matHeaderCellDef
+                         class="kd-col-gt"
                          i18n>Images</mat-header-cell>
-        <mat-cell *matCellDef="let rc">
+        <mat-cell *matCellDef="let rc"
+                  class="kd-col-gt">
           <kd-chips [map]="rc.containerImages"></kd-chips>
         </mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="labels">
         <mat-header-cell *matHeaderCellDef
+                         class="kd-col-gt"
                          i18n>Labels</mat-header-cell>
-        <mat-cell *matCellDef="let rc">
+        <mat-cell *matCellDef="let rc"
+                  class="kd-col-gt">
           <kd-chips [map]="rc.objectMeta.labels"></kd-chips>
         </mat-cell>
       </ng-container>

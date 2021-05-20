@@ -66,8 +66,10 @@ limitations under the License.
         <mat-header-cell *matHeaderCellDef
                          mat-sort-header
                          disableClear="true"
+                         class="kd-col-gt"
                          i18n>Name</mat-header-cell>
-        <mat-cell *matCellDef="let deployment">
+        <mat-cell *matCellDef="let deployment"
+                  class="kd-col-gt">
           <a (click)="$event.stopPropagation()"
              [routerLink]="getDetailsHref(deployment.objectMeta.name, deployment.objectMeta.namespace)"
              queryParamsHandling="preserve">
@@ -87,26 +89,30 @@ limitations under the License.
 
       <ng-container matColumnDef="images">
         <mat-header-cell *matHeaderCellDef
+                         class="kd-col-gt"
                          i18n>Images</mat-header-cell>
-        <mat-cell *matCellDef="let deployment">
+        <mat-cell *matCellDef="let deployment"
+                  class="kd-col-gt">
           <kd-chips [map]="deployment.containerImages"></kd-chips>
         </mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="labels">
         <mat-header-cell *matHeaderCellDef
+                         class="kd-col-gt"
                          i18n>Labels</mat-header-cell>
-        <mat-cell *matCellDef="let deployment">
+        <mat-cell *matCellDef="let deployment"
+                  class="kd-col-gt">
           <kd-chips [map]="deployment.objectMeta.labels"></kd-chips>
         </mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="pods">
         <mat-header-cell *matHeaderCellDef
-                         class="kd-col-sm"
+                         class="kd-col-xs"
                          i18n>Pods</mat-header-cell>
         <mat-cell *matCellDef="let deployment"
-                  class="kd-col-sm">
+                  class="kd-col-xs">
           {{deployment.pods.running}} / {{deployment.pods.desired}}
         </mat-cell>
       </ng-container>

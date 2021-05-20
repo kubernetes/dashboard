@@ -43,10 +43,8 @@ limitations under the License.
                matSortDirection="asc"
                multiTemplateDataRows>
       <ng-container matColumnDef="statusicon">
-        <mat-header-cell *matHeaderCellDef
-                         class="kd-col-xs"></mat-header-cell>
-        <mat-cell *matCellDef="let pod; let index=index"
-                  class="kd-col-xs">
+        <mat-header-cell *matHeaderCellDef></mat-header-cell>
+        <mat-cell *matCellDef="let pod; let index=index">
           <mat-icon [ngClass]="getStatus(pod).iconClass"
                     [matTooltip]="getStatus(pod).iconTooltip">
             <ng-container *ngIf="showHoverIcon(index, pod); else showStatus">
@@ -113,19 +111,19 @@ limitations under the License.
 
       <ng-container matColumnDef="node">
         <mat-header-cell *matHeaderCellDef
-                         class="kd-col-md"
+                         class="kd-col-gt"
                          i18n>Node</mat-header-cell>
         <mat-cell *matCellDef="let pod"
-                  class="kd-col-md">{{pod.nodeName}}</mat-cell>
+                  class="kd-col-gt">{{pod.nodeName}}</mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="status">
         <mat-header-cell *matHeaderCellDef
                          disableClear="true"
-                         class="kd-col-md"
+                         class="kd-col-sm"
                          i18n>Status</mat-header-cell>
         <mat-cell *matCellDef="let pod"
-                  class="kd-col-md">{{getDisplayStatus(pod)}}</mat-cell>
+                  class="kd-col-sm">{{getDisplayStatus(pod)}}</mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="restarts">
@@ -140,8 +138,10 @@ limitations under the License.
 
       <ng-container matColumnDef="cpu">
         <mat-header-cell *matHeaderCellDef
+                         class="kd-col-sm"
                          i18n>CPU Usage (cores)</mat-header-cell>
-        <mat-cell *matCellDef="let pod">
+        <mat-cell *matCellDef="let pod"
+                  class="kd-col-sm">
           <kd-cpu-sparkline *ngIf="pod.metrics?.cpuUsageHistory"
                             [timeseries]="pod.metrics.cpuUsageHistory"></kd-cpu-sparkline>
           <span *ngIf="!pod.metrics?.cpuUsageHistory">-</span>
@@ -150,8 +150,10 @@ limitations under the License.
 
       <ng-container matColumnDef="mem">
         <mat-header-cell *matHeaderCellDef
+                         class="kd-col-sm"
                          i18n>Memory Usage (bytes)</mat-header-cell>
-        <mat-cell *matCellDef="let pod">
+        <mat-cell *matCellDef="let pod"
+                  class="kd-col-sm">
           <kd-memory-sparkline *ngIf="pod.metrics?.memoryUsageHistory"
                                [timeseries]="pod.metrics.memoryUsageHistory"></kd-memory-sparkline>
           <span *ngIf="!pod.metrics?.memoryUsageHistory">-</span>
@@ -162,10 +164,10 @@ limitations under the License.
         <mat-header-cell *matHeaderCellDef
                          mat-sort-header
                          disableClear="true"
-                         class="kd-col-sm"
+                         class="kd-col-md"
                          i18n>Created</mat-header-cell>
         <mat-cell *matCellDef="let pod"
-                  class="kd-col-sm">
+                  class="kd-col-md">
           <kd-date [date]="pod.objectMeta.creationTimestamp"
                    relative></kd-date>
         </mat-cell>
