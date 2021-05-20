@@ -30,9 +30,7 @@ import {ChipsComponent} from '@common/components/chips/component';
 import {ObjectMetaComponent} from '@common/components/objectmeta/component';
 import {PropertyComponent} from '@common/components/property/component';
 import {PipesModule} from '@common/pipes/module';
-import {AuthorizerService} from '@common/services/global/authorizer';
 import {ConfigService} from '@common/services/global/config';
-import {GlobalSettingsService} from '@common/services/global/globalsettings';
 
 import {IngressDetailComponent} from './component';
 
@@ -156,7 +154,6 @@ describe('IngressDetailComponent', () => {
           MiniTestComponent,
           CardComponent,
           PropertyComponent,
-          ChipsComponent,
           IngressDetailComponent,
         ],
         imports: [
@@ -172,7 +169,7 @@ describe('IngressDetailComponent', () => {
           MatIconModule,
           RouterModule,
         ],
-        providers: [AuthorizerService, ConfigService, GlobalSettingsService],
+        providers: [ConfigService],
         schemas: [CUSTOM_ELEMENTS_SCHEMA],
       }).compileComponents();
       httpMock = TestBed.inject(HttpTestingController);

@@ -145,7 +145,6 @@ describe('ServiceDetailComponent', () => {
           MaxiTestComponent,
           CardComponent,
           PropertyComponent,
-          ChipsComponent,
           ServiceDetailComponent,
         ],
         imports: [
@@ -161,7 +160,7 @@ describe('ServiceDetailComponent', () => {
           MatIconModule,
           RouterModule,
         ],
-        providers: [AuthorizerService, ConfigService, GlobalSettingsService, NamespacedResourceService],
+        providers: [ConfigService],
         schemas: [CUSTOM_ELEMENTS_SCHEMA],
       }).compileComponents();
       httpMock = TestBed.inject(HttpTestingController);
