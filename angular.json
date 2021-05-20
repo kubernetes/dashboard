@@ -47,8 +47,8 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "aot": true,
-            "progress": false,
+            "optimization": false,
+            "progress": true,
             "outputPath": ".tmp/frontend",
             "index": "src/app/frontend/index.html",
             "main": "src/app/frontend/index.ts",
@@ -105,6 +105,7 @@
                   "maximumWarning": "6kb"
                 }
               ],
+              "aot": true,
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,

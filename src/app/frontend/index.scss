@@ -12,11 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-@use '~@angular/material/prebuilt-themes/deeppurple-amber.css';
-@use './dark';
-@use './light';
-@use './variables';
-@use './mixins';
+@import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
+@import './dark';
+@import './light';
+@import './variables';
+@import './mixins';
 
 /////////////////////////////////
 // Overrides of default styles //

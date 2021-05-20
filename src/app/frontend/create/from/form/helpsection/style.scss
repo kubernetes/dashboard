@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-@use '../../../../variables';
+@import '../../../../variables';
 
 // Align items only in the current layout (kd-help-section).
 .kd-help-section ::ng-deep > {

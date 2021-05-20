@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-@use '../../../../variables';
+@import '../../../../variables';
 
 .kd-row-detail {
   padding: $baseline-grid (2 * $baseline-grid) 0 (7.5 * $baseline-grid);
