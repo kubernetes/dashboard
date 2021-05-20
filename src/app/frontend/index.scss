@@ -164,13 +164,6 @@ code {
   }
 }
 
-.mat-column-labels,
-.mat-column-images,
-.mat-column-name,
-.mat-column-message {
-  //flex-grow: 2;
-}
-
 [class^='mat-column-action'],
 [class*='mat-column-action'] {
   flex: 0 0 ($baseline-grid * 5) !important;
