@@ -30,6 +30,7 @@ import {ChipDialog} from './chipdialog/dialog';
 
 // @ts-ignore
 import * as truncateUrl from 'truncate-url';
+import {KdStateService} from '@common/services/global/state';
 
 export interface Chip {
   key: string;
@@ -65,6 +66,7 @@ export class ChipsComponent implements OnInit, OnChanges {
   private _labelsLimit = 3;
 
   constructor(
+    private readonly _kdStateService: KdStateService,
     private readonly _globalSettingsService: GlobalSettingsService,
     private readonly _matDialog: MatDialog,
     private readonly _changeDetectorRef: ChangeDetectorRef
@@ -116,6 +118,33 @@ export class ChipsComponent implements OnInit, OnChanges {
 
   isHref(value: string): boolean {
     return URL_REGEXP.test(value.trim());
+  }
+
+  isSerializedRef(value: string): boolean {
+    try {
+      const obj = JSON.parse(value);
+      return obj && obj.kind === 'SerializedReference';
+    } catch (e) {
+      return false;
+    }
+  }
+
+  getSerializedHref(value: string): string {
+    const ref = JSON.parse(value);
+    if (!ref.reference || !ref.reference.kind || !ref.reference.name || !ref.reference.namespace) {
+      return '';
+    }
+
+    return this._kdStateService.href(ref.reference.kind.toLowerCase(), ref.reference.name, ref.reference.namespace);
+  }
+
+  getSerializedRefDisplayName(value: string): string {
+    const ref = JSON.parse(value);
+    if (!ref.reference || !ref.reference.kind || !ref.reference.name || !ref.reference.namespace) {
+      return 'Invalid reference';
+    }
+
+    return `${ref.reference.kind.replace(/([A-Z])/g, ' $1')} ${ref.reference.namespace}/${ref.reference.name}`;
   }
 
   openChipDialog(key: string, value: string): void {
