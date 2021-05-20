@@ -120,6 +120,10 @@ spec:
       - name: dashboard-metrics-scraper
         image: "{{ .Values.metricsScraper.image.repository }}:{{ .Values.metricsScraper.image.tag }}"
         imagePullPolicy: {{ .Values.image.pullPolicy }}
+{{- with .Values.metricsScraper.args }}
+        args:
+{{ toYaml . | indent 10 }}
+{{- end }}
         ports:
           - containerPort: 8000
             protocol: TCP

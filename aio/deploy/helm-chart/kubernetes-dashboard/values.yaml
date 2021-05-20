@@ -209,7 +209,9 @@ metricsScraper:
     readOnlyRootFilesystem: true
     runAsUser: 1001
     runAsGroup: 2001
-
+#  args:
+#    - --logtostderr=true
+#    - --v=0
 
 ## Optional Metrics Server sub-chart
 ## Enable this is you don't already have metrics-server enabled on your cluster and
