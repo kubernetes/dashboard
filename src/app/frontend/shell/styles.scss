@@ -39,23 +39,25 @@ $shell-background-color: #000;
   }
 
   // Some hacks are required to make the terminal takes full page
-  ::ng-deep mat-card {
-    display: flex;
-    flex-flow: column;
-    height: 100%;
+  ::ng-deep {
+    mat-card {
+      display: flex;
+      flex-flow: column;
+      height: 100%;
 
-    > mat-card-title + div {
-      @include flex-full-height;
-    }
-
-    mat-card-content {
-      @include flex-full-height;
-      background: $shell-background-color;
-      padding: 0;
-
-      > div,
-      .xterm-anchor {
+      > mat-card-title + div {
         @include flex-full-height;
+      }
+
+      mat-card-content {
+        @include flex-full-height;
+        background: $shell-background-color;
+        padding: 0;
+
+        > div,
+        .xterm-anchor {
+          @include flex-full-height;
+        }
       }
     }
   }

@@ -60,7 +60,7 @@ describe('ObjectMetaComponent', () => {
   beforeEach(
     waitForAsync(() => {
       TestBed.configureTestingModule({
-        declarations: [ObjectMetaComponent, TestComponent, CardComponent, PropertyComponent, ChipsComponent],
+        declarations: [ObjectMetaComponent, TestComponent, CardComponent, PropertyComponent],
         imports: [
           MatIconModule,
           MatCardModule,
@@ -74,7 +74,7 @@ describe('ObjectMetaComponent', () => {
           MatIconModule,
           RouterModule,
         ],
-        providers: [AuthorizerService, ConfigService, GlobalSettingsService],
+        providers: [ConfigService],
         schemas: [CUSTOM_ELEMENTS_SCHEMA],
       }).compileComponents();
       httpMock = TestBed.inject(HttpTestingController);

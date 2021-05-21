@@ -40,8 +40,10 @@ limitations under the License.
         <mat-header-cell *matHeaderCellDef
                          mat-sort-header
                          disableClear="true"
+                         class="kd-col-gt"
                          i18n>Name</mat-header-cell>
-        <mat-cell *matCellDef="let cm">
+        <mat-cell *matCellDef="let cm"
+                  class="kd-col-gt">
           <a [routerLink]="getDetailsHref(cm.objectMeta.name, cm.objectMeta.namespace)"
              queryParamsHandling="preserve">
             {{cm.objectMeta.name}}
@@ -52,14 +54,18 @@ limitations under the License.
       <ng-container *ngIf="shouldShowColumn('namespace')"
                     matColumnDef="namespace">
         <mat-header-cell *matHeaderCellDef
+                         class="kd-col-md"
                          i18n>Namespace</mat-header-cell>
-        <mat-cell *matCellDef="let cm">{{cm.objectMeta.namespace}}</mat-cell>
+        <mat-cell *matCellDef="let cm"
+                  class="kd-col-md">{{cm.objectMeta.namespace}}</mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="labels">
         <mat-header-cell *matHeaderCellDef
+                         class="kd-col-gt"
                          i18n>Labels</mat-header-cell>
-        <mat-cell *matCellDef="let cm">
+        <mat-cell *matCellDef="let cm"
+                  class="kd-col-gt">
           <kd-chips [map]="cm.objectMeta.labels"></kd-chips>
         </mat-cell>
       </ng-container>
@@ -68,8 +74,10 @@ limitations under the License.
         <mat-header-cell *matHeaderCellDef
                          mat-sort-header
                          disableClear="true"
+                         class="kd-col-sm"
                          i18n>Created</mat-header-cell>
-        <mat-cell *matCellDef="let cm">
+        <mat-cell *matCellDef="let cm"
+                  class="kd-col-sm">
           <kd-date [date]="cm.objectMeta.creationTimestamp"
                    relative></kd-date>
         </mat-cell>
