@@ -112,7 +112,7 @@
     "js-yaml": "4.1.0",
     "material-design-icons": "3.0.1",
     "ng-in-viewport": "6.1.5",
-    "ngx-cookie-service": "11.0.2",
+    "ngx-cookie-service": "12.0.0",
     "ngx-pipes": "2.7.5",
     "normalize.css": "8.0.1",
     "roboto-fontface": "0.10.0",
