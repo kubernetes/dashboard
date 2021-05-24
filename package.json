@@ -145,7 +145,7 @@
     "@types/jasminewd2": "2.0.8",
     "@types/jest": "26.0.23",
     "@types/js-yaml": "4.0.1",
-    "@types/lodash": "4.14.169",
+    "@types/lodash": "4.14.170",
     "@types/node": "15.6.0",
     "codelyzer": "6.0.2",
     "concurrently": "6.1.0",
