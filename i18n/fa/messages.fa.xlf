@@ -125,7 +125,7 @@
       Preparing file to download...
     </source>
         <target state="translated">
-      آماده کردن فایل برای دانلود...
+      در حال آماده سازی فایل برای دانلود...
     </target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/dialogs/download/template.html</context>
@@ -137,7 +137,7 @@
       File is ready to download!
     </source>
         <target>
-      فایل آماده دانلود است.
+      فایل آماده‌ی دانلود است!
     </target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/dialogs/download/template.html</context>
@@ -154,7 +154,7 @@
       </trans-unit>
       <trans-unit id="75560f1f2b93c480db660bab24f2aadb4503dc71" datatype="html">
         <source>You do not have required permissions to access this resource.</source>
-        <target state="translated">شما اجاره های لازم برای دسترسی به این منبع را ندارید.</target>
+        <target state="translated">شما مجوز های لازم برای دسترسی به این منبع را ندارید.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/dialogs/download/template.html</context>
           <context context-type="linenumber">40</context>
@@ -194,7 +194,7 @@
       </trans-unit>
       <trans-unit id="a92a2623ec8f7344194693dfb1341c9a7687eaa2" datatype="html">
         <source>Scale a resource</source>
-        <target state="translated">تغییر سایز منبع</target>
+        <target state="translated">تغییر پیمانه منبع</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/dialogs/scaleresource/template.html</context>
           <context context-type="linenumber">18</context>
@@ -213,7 +213,7 @@
       </trans-unit>
       <trans-unit id="9592e13413a413e5416c650331c0d06f9670ae64" datatype="html">
         <source>Desired replicas</source>
-        <target state="needs-translation">Desired replicas</target>
+        <target state="translated">روگرفت های خواسته شده</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/dialogs/scaleresource/template.html</context>
           <context context-type="linenumber">28</context>
@@ -221,7 +221,7 @@
       </trans-unit>
       <trans-unit id="b8f2540427e55f0ca0f2567e1e7eb4e5da8711b1" datatype="html">
         <source>Actual replicas</source>
-        <target state="needs-translation">Actual replicas</target>
+        <target state="translated">روگرفت های فعلی</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/dialogs/scaleresource/template.html</context>
           <context context-type="linenumber">40</context>
@@ -232,7 +232,7 @@
     Scale
   </source>
         <target>
-    تغییر مشخصات
+    پیمانه ریزی
   </target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/dialogs/scaleresource/template.html</context>
@@ -304,7 +304,7 @@
       </trans-unit>
       <trans-unit id="7a4e4644d31ae90390b396f08c2f209d0a4a9952" datatype="html">
         <source>Scale resource</source>
-        <target state="translated">تغییر مشخصات منبع</target>
+        <target state="translated">پیمانه بندی منبع</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/actionbar/detailactions/scale/template.html</context>
           <context context-type="linenumber">21</context>
@@ -336,7 +336,7 @@
       </trans-unit>
       <trans-unit id="32c4fb786d3f614318c26ef8adc8f195d581545d" datatype="html">
         <source>Workload Status</source>
-        <target>وضعیت حجم فعالیت</target>
+        <target>فشار کاری</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/workloadstatus/template.html</context>
           <context context-type="linenumber">20</context>
@@ -356,7 +356,7 @@
       </trans-unit>
       <trans-unit id="d41640b21b662e4d9ee00c35239d30d15f1de9c7" datatype="html">
         <source>Daemon Sets</source>
-        <target state="needs-translation">Daemon Sets</target>
+        <target>دیمون ست</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/workloadstatus/template.html</context>
           <context context-type="linenumber">56</context>
@@ -440,7 +440,7 @@
       </trans-unit>
       <trans-unit id="d9161a5f702c1f98ea34e4996c2d0b0c9eb1b66a" datatype="html">
         <source>Replica Sets</source>
-        <target state="needs-translation">Replica Sets</target>
+        <target>روگرفت ها</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/workloadstatus/template.html</context>
           <context context-type="linenumber">129</context>
@@ -452,7 +452,7 @@
       </trans-unit>
       <trans-unit id="900ec6b108c64adf2f23a3a84699be1217050001" datatype="html">
         <source>Replication Controllers</source>
-        <target state="needs-translation">Replication Controllers</target>
+        <target>کنترل‌گر روگرفت</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/workloadstatus/template.html</context>
           <context context-type="linenumber">147</context>
@@ -476,7 +476,7 @@
       </trans-unit>
       <trans-unit id="8c0925876d5a1454f604dc4fc4cf8dbb4dceed0a" datatype="html">
         <source>Resource information</source>
-        <target>اطلاعات منبع</target>
+        <target>مشخصات منبع</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/resource/workloads/pod/detail/template.html</context>
           <context context-type="linenumber">24</context>
@@ -556,7 +556,7 @@
       </trans-unit>
       <trans-unit id="ae39149b767b8c4ea1374fdb34f3c5794b79c445" datatype="html">
         <source>IP: </source>
-        <target state="translated">آیپی:</target>
+        <target state="translated">آی‌پی: </target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/resource/workloads/pod/detail/template.html</context>
           <context context-type="linenumber">37</context>
@@ -564,7 +564,7 @@
       </trans-unit>
       <trans-unit id="f738b840b92bf81637cc77a10cd2b2f2c6e09796" datatype="html">
         <source>Node</source>
-        <target state="translated">نود</target>
+        <target state="translated">گره</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/resource/workloads/pod/detail/template.html</context>
           <context context-type="linenumber">47</context>
@@ -620,7 +620,7 @@
       </trans-unit>
       <trans-unit id="84738b1bbb866302445901b1bca1e9cb5bf8d006" datatype="html">
         <source>IP</source>
-        <target state="translated">آیپی</target>
+        <target state="translated">آی‌پی</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/resource/workloads/pod/detail/template.html</context>
           <context context-type="linenumber">61</context>
@@ -628,7 +628,7 @@
       </trans-unit>
       <trans-unit id="4b359fa8499772c9fa2d6004ac3a941a3fee612d" datatype="html">
         <source>QoS Class</source>
-        <target state="needs-translation">QoS Class</target>
+        <target>رتبه کیفیت سرویس</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/resource/workloads/pod/detail/template.html</context>
           <context context-type="linenumber">67</context>
@@ -680,7 +680,7 @@
       </trans-unit>
       <trans-unit id="5de9d226db382155f482a557b832da6d63108112" datatype="html">
         <source>Selector</source>
-        <target>انتخاب کننده</target>
+        <target>انتخاب گر</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/resource/workloads/replicaset/detail/template.html</context>
           <context context-type="linenumber">38</context>
@@ -700,7 +700,7 @@
       </trans-unit>
       <trans-unit id="b73f7f5060fb22a1e9ec462b1bb02493fa3ab866" datatype="html">
         <source>Images</source>
-        <target>ایمیج‌ها</target>
+        <target>ایمج‌ها</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/resource/workloads/replicaset/detail/template.html</context>
           <context context-type="linenumber">47</context>
@@ -756,7 +756,7 @@
       </trans-unit>
       <trans-unit id="318e1e7193512514e192cab4e4b6b722548b017b" datatype="html">
         <source>Init images</source>
-        <target state="needs-translation">ساخت ایمیج</target>
+        <target state="needs-translation">ساخت ایمج</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/resource/workloads/replicaset/detail/template.html</context>
           <context context-type="linenumber">56</context>
@@ -784,7 +784,7 @@
       </trans-unit>
       <trans-unit id="53d3c87046022140381be2fc9b864d6fdd9f2cc8" datatype="html">
         <source>Label Selector</source>
-        <target>انتخاب کننده لیبل</target>
+        <target>انتخاب گر با برچسب</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/resource/workloads/replicationcontroller/detail/template.html</context>
           <context context-type="linenumber">30</context>
@@ -804,7 +804,7 @@
       </trans-unit>
       <trans-unit id="0b5c5a43ccd2f696d6e0ad2b745bcc9041d6e380" datatype="html">
         <source>Filter objects by name</source>
-        <target state="needs-translation">Filter objects by name</target>
+        <target>فیلتر بر اساس نام</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/list/filter/template.html</context>
           <context context-type="linenumber">34</context>
@@ -852,7 +852,7 @@
       </trans-unit>
       <trans-unit id="a062b45312698e8669cb644bff887f93778d334f" datatype="html">
         <source>Scale</source>
-        <target>تغییر مشخصات</target>
+        <target>پیمانه ریزی</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/list/column/menu/template.html</context>
           <context context-type="linenumber">35</context>
@@ -1268,7 +1268,7 @@
       </trans-unit>
       <trans-unit id="2af7efecfae8d7fed3b07f718a623eca1ad8163f" datatype="html">
         <source>Labels</source>
-        <target>لیبل ها</target>
+        <target>برچسب ها</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/cronjob/template.html</context>
           <context context-type="linenumber">73</context>
@@ -1556,7 +1556,7 @@
       </trans-unit>
       <trans-unit id="3c16399a88dd3765114804d3825cc346f995c685" datatype="html">
         <source>Image: </source>
-        <target>ایمیج: </target>
+        <target>ایمج: </target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/container/template.html</context>
           <context context-type="linenumber">19</context>
@@ -1564,7 +1564,7 @@
       </trans-unit>
       <trans-unit id="a5f9ba9bb9faa8284bcadb1cdbc6aaf969e9c4bb" datatype="html">
         <source>Image</source>
-        <target>ایمیج</target>
+        <target>ایمج</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/container/template.html</context>
           <context context-type="linenumber">26</context>
@@ -1576,7 +1576,7 @@
       </trans-unit>
       <trans-unit id="bec9c0614c0c31fb6917b7f465e27399090b050e" datatype="html">
         <source>Environment variable</source>
-        <target>متغیر‌های محیط (Environment Variable)</target>
+        <target>متغیر محیطی (Environment Variable)</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/container/template.html</context>
           <context context-type="linenumber">37</context>
@@ -1950,7 +1950,7 @@
       </trans-unit>
       <trans-unit id="6834fa6b43d1ecbdf147c48dd9c4d72f1484571d" datatype="html">
         <source>Source</source>
-        <target>منبع</target>
+        <target>مبدا</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/event/template.html</context>
           <context context-type="linenumber">49</context>
@@ -2002,7 +2002,7 @@
       </trans-unit>
       <trans-unit id="18cd38a8b51485adf1e5a7e33f3fbbf8d6c92c00" datatype="html">
         <source>Min Replicas</source>
-        <target state="needs-translation">Min Replicas</target>
+        <target>حداقل تعداد روگرفت</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/horizontalpodautoscaler/template.html</context>
           <context context-type="linenumber">59</context>
@@ -2034,7 +2034,7 @@
       </trans-unit>
       <trans-unit id="222a0537c59f20178268925dc70fb661a20dbdb7" datatype="html">
         <source>There is nothing to display here</source>
-        <target state="needs-translation">چیزی برای نمایش وجود ندارد.</target>
+        <target>چیزی برای نمایش وجود ندارد</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/list/zerostate/template.html</context>
           <context context-type="linenumber">22</context>
@@ -2062,7 +2062,7 @@
       </trans-unit>
       <trans-unit id="e6a7b7bcb73586394eaa3d328515338f21b0306e" datatype="html">
         <source>Phase</source>
-        <target state="needs-translation">فازها</target>
+        <target state="needs-translation">مرحله</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/namespace/template.html</context>
           <context context-type="linenumber">71</context>
@@ -2074,7 +2074,7 @@
       </trans-unit>
       <trans-unit id="6e2329529b1953198c7dfa0edb260554310bc636" datatype="html">
         <source>Nodes</source>
-        <target state="needs-translation">نودها</target>
+        <target state="needs-translation">گره‌ها</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/node/template.html</context>
           <context context-type="linenumber">24</context>
@@ -2082,7 +2082,7 @@
       </trans-unit>
       <trans-unit id="90ae2a4959c979abc049f4652f59b85e993e16cd" datatype="html">
         <source>CPU requests (cores)</source>
-        <target>تعداد هسته سی پی یو درخواست شده</target>
+        <target>پردازنده در خواستی (هسته‌ها)</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/node/template.html</context>
           <context context-type="linenumber">80</context>
@@ -2090,7 +2090,7 @@
       </trans-unit>
       <trans-unit id="d9465e327fed60c8566555ae63a51d8d24b4dcbe" datatype="html">
         <source>CPU limits (cores)</source>
-        <target>محدودیت هسته سی پی یو</target>
+        <target>‌محدودیت پردازنده (هسته‌ها)</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/node/template.html</context>
           <context context-type="linenumber">88</context>
@@ -2098,7 +2098,7 @@
       </trans-unit>
       <trans-unit id="85550e95dc12c58e2e711dbebe89f3448eb66c72" datatype="html">
         <source>Memory requests (bytes)</source>
-        <target>رم درخواست شده (بایت)</target>
+        <target>حافظه درخواست شده (بایت)</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/node/template.html</context>
           <context context-type="linenumber">96</context>
@@ -2106,7 +2106,7 @@
       </trans-unit>
       <trans-unit id="69779fac7ee122da8c2ab05806baea7dec1a47f6" datatype="html">
         <source>Memory limits (bytes)</source>
-        <target>محدودیت رم (بایت)</target>
+        <target>محدودیت حافظه (بایت)</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/node/template.html</context>
           <context context-type="linenumber">104</context>
@@ -2258,7 +2258,7 @@
       </trans-unit>
       <trans-unit id="f2c8a2942797110c229cee3ee830ae2c1b64901a" datatype="html">
         <source>Pending: </source>
-        <target>در انتظار: </target>
+        <target>آویخته: </target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/podstatus/template.html</context>
           <context context-type="linenumber">40</context>
@@ -2298,7 +2298,7 @@
       </trans-unit>
       <trans-unit id="e6a27066251ca1e04c5be86ad758380856df2506" datatype="html">
         <source>Pending</source>
-        <target>در حال انتظار</target>
+        <target>آویخته</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/podstatus/template.html</context>
           <context context-type="linenumber">75</context>
@@ -2322,7 +2322,7 @@
       </trans-unit>
       <trans-unit id="f2db0be1c93c93d5af51ed6d3b42abb184d07c08" datatype="html">
         <source>CPU Usage (cores)</source>
-        <target>هسته سی پی یو در حال استفاده</target>
+        <target>پردازنده در حال استفاده (هسته‌ها)</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/pod/template.html</context>
           <context context-type="linenumber">118</context>
@@ -2382,7 +2382,7 @@
       </trans-unit>
       <trans-unit id="a7c36b970853f8ce7692119881d2550dbd7fa19d" datatype="html">
         <source>Reclaim Policy</source>
-        <target state="needs-translation">Reclaim Policy</target>
+        <target>سیاست بازپس‌گیریy</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/persistentvolume/template.html</context>
           <context context-type="linenumber">75</context>
@@ -2458,7 +2458,7 @@
       </trans-unit>
       <trans-unit id="b44f9a54418bcbda336063edc010c98ded4f5817" datatype="html">
         <source>Resource Names</source>
-        <target>نام‌های منبع</target>
+        <target>نام‌های منابع</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/policyrule/template.html</context>
           <context context-type="linenumber">61</context>
@@ -2518,7 +2518,7 @@
       </trans-unit>
       <trans-unit id="ff7cee38a2259526c519f878e71b964f41db4348" datatype="html">
         <source>Default</source>
-        <target>پیش فرض</target>
+        <target>پیش‌فرض</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/limits/template.html</context>
           <context context-type="linenumber">48</context>
@@ -2526,7 +2526,7 @@
       </trans-unit>
       <trans-unit id="6da72a4cb98aa86a034afc7c4134910590838fc5" datatype="html">
         <source>Default request</source>
-        <target>درخواست پیش فرض</target>
+        <target>درخواست پیش‌فرض</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/limits/template.html</context>
           <context context-type="linenumber">53</context>
@@ -2554,7 +2554,7 @@
       </trans-unit>
       <trans-unit id="d3a2cb0ded32106ed12b60d1f56f166daba23f42" datatype="html">
         <source>Parameters</source>
-        <target>مشخصات</target>
+        <target>پارامترها</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/storageclass/template.html</context>
           <context context-type="linenumber">59</context>
@@ -2895,7 +2895,7 @@
       <trans-unit id="9151fc3bbb78ca19bf93221148fb6f75c9adec73" datatype="html">
         <source>Nodes
       </source>
-        <target>نودها
+        <target>گره‌ها
       </target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/chrome/nav/template.html</context>
@@ -3011,7 +3011,7 @@
       </trans-unit>
       <trans-unit id="6f67a9eb93e586778483503a409317c509e41996" datatype="html">
         <source>There are no notifications</source>
-        <target>اعلانی وجود ندارد.</target>
+        <target>اعلانی وجود ندارد</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/chrome/notifications/template.html</context>
           <context context-type="linenumber">61</context>
@@ -3043,7 +3043,7 @@
       </trans-unit>
       <trans-unit id="f88774e30855665c168f36b58fdac3fdffbbe24f" datatype="html">
         <source>Default service account</source>
-        <target>حساب پیش فرض سرویس</target>
+        <target>حساب پیش‌فرض سرویس</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/chrome/userpanel/template.html</context>
           <context context-type="linenumber">28</context>
@@ -3102,7 +3102,7 @@
       </trans-unit>
       <trans-unit id="a21b5b669ab3f36e0f83e9a025c26662fd0616e8" datatype="html">
         <source>Pod Selector</source>
-        <target>انتخاب کننده پاد</target>
+        <target>انتخاب‌گر پاد</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/resource/cluster/networkpolicy/detail/template.html</context>
           <context context-type="linenumber">28</context>
@@ -3214,7 +3214,7 @@
       </trans-unit>
       <trans-unit id="b398d1a80e8ad17d3e6cb69370e5c49613e16ec9" datatype="html">
         <source>OS Image</source>
-        <target>ایمیج سیستم عامل</target>
+        <target>ایمج سیستم عامل</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/resource/cluster/node/detail/template.html</context>
           <context context-type="linenumber">97</context>
@@ -3254,7 +3254,7 @@
       </trans-unit>
       <trans-unit id="d2252b2dbce97640eb209224549e3e59c67412c1" datatype="html">
         <source>Architecture</source>
-        <target state="needs-translation">Architecture</target>
+        <target>معماری</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/resource/cluster/node/detail/template.html</context>
           <context context-type="linenumber">122</context>
@@ -3270,7 +3270,7 @@
       </trans-unit>
       <trans-unit id="43a02cbb549d36c5086109559945a3db29542b1f" datatype="html">
         <source>CPU</source>
-        <target>سی پی یو</target>
+        <target>پردازنده</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/resource/cluster/node/detail/template.html</context>
           <context context-type="linenumber">138</context>
@@ -3278,7 +3278,7 @@
       </trans-unit>
       <trans-unit id="58d4a9814864741040bc5905b6a368836e683f76" datatype="html">
         <source>Memory</source>
-        <target>رم</target>
+        <target>حافظه</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/resource/cluster/node/detail/template.html</context>
           <context context-type="linenumber">151</context>
@@ -3302,7 +3302,7 @@
       </trans-unit>
       <trans-unit id="1efe2027e7a71760894e8958b7dff0f38be84f2c" datatype="html">
         <source>Access modes</source>
-        <target>حالت دسترسی</target>
+        <target>حالت‌های دسترسی</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/resource/cluster/persistentvolume/detail/template.html</context>
           <context context-type="linenumber">68</context>
@@ -3310,7 +3310,7 @@
       </trans-unit>
       <trans-unit id="ca30c1aa79fb5ab487fbd2caa4ca01f2f6691d70" datatype="html">
         <source>Quantity</source>
-        <target>تعداد</target>
+        <target>کیمیت</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/resource/cluster/persistentvolume/detail/template.html</context>
           <context context-type="linenumber">100</context>
@@ -3522,7 +3522,7 @@
       </trans-unit>
       <trans-unit id="4346d3d4e2109584d33480fb8916a9b1cfcdf636" datatype="html">
         <source>Workloads</source>
-        <target state="needs-translation">حجم فعالیت</target>
+        <target>فشار کاری</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/overview/template.html</context>
           <context context-type="linenumber">19</context>
@@ -3762,7 +3762,7 @@
       </trans-unit>
       <trans-unit id="9da0107a35751e722c8b4bca7636fc7645dbdbdc" datatype="html">
         <source>Updated</source>
-        <target>به روز رسانی شده</target>
+        <target>به‌روز</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/resource/workloads/deployment/detail/template.html</context>
           <context context-type="linenumber">156</context>
@@ -3826,7 +3826,7 @@
       </trans-unit>
       <trans-unit id="a15cd320e4f839a76e972c13f20cd674df195d0c" datatype="html">
         <source>Parallelism: </source>
-        <target state="needs-translation">Parallelism: </target>
+        <target>درجه همزمانی: </target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/resource/workloads/job/detail/template.html</context>
           <context context-type="linenumber">35</context>
@@ -3858,7 +3858,7 @@
       </trans-unit>
       <trans-unit id="5ad4eecbd0fe09c34678fefce317a052af39dc96" datatype="html">
         <source>Data</source>
-        <target>داده</target>
+        <target>داده‌ها</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/resource/config/configmap/detail/template.html</context>
           <context context-type="linenumber">23</context>
@@ -3886,7 +3886,7 @@
       </trans-unit>
       <trans-unit id="c64747f0bc3848d47c89e0af17d0c199b44ad0de" datatype="html">
         <source>Parameter</source>
-        <target>مشخصات</target>
+        <target>پارامتر</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/resource/config/storageclass/detail/template.html</context>
           <context context-type="linenumber">37</context>
@@ -3894,7 +3894,7 @@
       </trans-unit>
       <trans-unit id="5927a3493fbb556db65f530e01b3aa6ab9f186e6" datatype="html">
         <source>Resource Information</source>
-        <target>اطلاعات منبع</target>
+        <target>مشخصات منبع</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/crd/detail/template.html</context>
           <context context-type="linenumber">22</context>
@@ -3926,7 +3926,7 @@
       </trans-unit>
       <trans-unit id="1ec17de9560711cd81108ccf93eb5b1df4eb6d4c" datatype="html">
         <source>Accepted Names</source>
-        <target>نام های تایید شده</target>
+        <target>نام‌های مورد قبول</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/crd/detail/template.html</context>
           <context context-type="linenumber">55</context>
@@ -3958,7 +3958,7 @@
       </trans-unit>
       <trans-unit id="d27e60f49dba9b7994331db545a4c14e1e2683ad" datatype="html">
         <source>Short Names</source>
-        <target>نام های کوتاه</target>
+        <target>نام‌های کوتاه</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/crd/detail/template.html</context>
           <context context-type="linenumber">82</context>
@@ -3982,7 +3982,7 @@
       </trans-unit>
       <trans-unit id="02b9a3951b251f014027ab26bea1e26c282be22f" datatype="html">
         <source>Do you want to save them anyways?</source>
-        <target>آیا میخواهید آنها ها در هر صورت ذخیره کنید؟</target>
+        <target>آیا میخواهید آنها را در هر صورت ذخیره کنید؟</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/settings/global/saveanywaysdialog/template.html</context>
           <context context-type="linenumber">19</context>
@@ -4188,7 +4188,7 @@
       </trans-unit>
       <trans-unit id="170c19b70d40071916e39cad610ac12f269dd473" datatype="html">
         <source>Change the language of the dashboard</source>
-        <target>تغییر دادن زبان پنل</target>
+        <target>تغییر زبان داشبورد</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/settings/local/template.html</context>
           <context context-type="linenumber">38</context>
@@ -4204,7 +4204,7 @@
       </trans-unit>
       <trans-unit id="860f8d6a2a2265b9bdf4e5b35401ae1069082fe7" datatype="html">
         <source>General-purpose web UI for Kubernetes clusters</source>
-        <target>پنل با اهداف عمومی برای کلاستر های کوبرنتیز</target>
+        <target>واسط کاربری همه کاره برای کلاسترهای کوبرنتیز</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/about/template.html</context>
           <context context-type="linenumber">30</context>
@@ -4228,7 +4228,7 @@
       </trans-unit>
       <trans-unit id="a44df39b2ce0f5d85e406c3aeec76ae898dbf9af" datatype="html">
         <source>Read documentation</source>
-        <target>مستندات</target>
+        <target>مطالعه مستندات</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/about/actionbar/template.html</context>
           <context context-type="linenumber">24</context>
@@ -4494,7 +4494,7 @@
         <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/>open_in_new<x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i&gt;"/>
       </source>
         <target>
-        بیشتر بدانید.
+        بیشتر بدانید
         <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/>open_in_new<x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i&gt;"/>
       </target>
         <context-group purpose="location">
@@ -4567,7 +4567,7 @@
         Number of pods is required
       </source>
         <target state="needs-translation">
-        تعداد پادها الزامی است.
+        تعداد پادها الزامی است
       </target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/from/form/template.html</context>
@@ -4579,7 +4579,7 @@
         Number of pods must be a positive integer
       </source>
         <target>
-        تعداد پادها باید یک عدد مثبت باشد.
+        تعداد پادها باید یک عدد مثبت باشد
       </target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/create/from/form/template.html</context>
