@@ -17,12 +17,12 @@ import type {Config} from '@jest/types';
 export default async (): Promise<Config.InitialOptions> => {
   return {
     rootDir: '../src/app/frontend',
-    testEnvironment: 'jsdom',
+    preset: 'jest-preset-angular/presets/defaults-esm',
     setupFilesAfterEnv: ["<rootDir>/test.base.ts"],
     globals: {
       "ts-jest": {
         tsconfig: "aio/tsconfig.spec.json",
-        stringifyContentPathRegex: '\\.(html|scss|css)$',
+        stringifyContentPathRegex: '\\.(html|scss)$',
       }
     },
     moduleNameMapper: {
@@ -32,7 +32,7 @@ export default async (): Promise<Config.InitialOptions> => {
       "^@root/(.*)$": "<rootDir>/$1"
     },
     transform: {
-      '^.+\\.(ts|js|html|scss|css)$': 'jest-preset-angular',
+      '^.+\\.(ts|js|html|scss)$': 'jest-preset-angular',
     },
   };
 };

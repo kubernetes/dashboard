@@ -58,7 +58,7 @@ jobs:
       - name: Setup NodeJS
         uses: actions/setup-node@v2.1.2
         with:
-          node-version: 14.16.1
+          node-version: 14.17.0
 
       - name: Cache Node Modules
         uses: actions/cache@v2
@@ -109,7 +109,7 @@ jobs:
       - name: Setup NodeJS
         uses: actions/setup-node@v2.1.2
         with:
-          node-version: 14.16.1
+          node-version: 14.17.0
 
       - name: Cache Node Modules
         uses: actions/cache@v2
@@ -122,6 +122,7 @@ jobs:
       - name: Install Dependencies
         shell: bash
         run: |
+          export GOPATH=$(go env GOPATH)/bin
           [ ! -d "node_modules" ] && npm ci || node aio/scripts/version.js && command -v golangci-lint >/dev/null 2>&1 || { curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $(go env GOPATH)/bin v1.30.0; } && go mod download
 
       - name: Run Frontend Unit Tests
@@ -167,7 +168,7 @@ jobs:
       - name: Setup NodeJS
         uses: actions/setup-node@v2.1.2
         with:
-          node-version: 14.16.1
+          node-version: 14.17.0
 
       - name: Cache Node Modules
         uses: actions/cache@v2
