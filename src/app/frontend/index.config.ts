@@ -14,11 +14,9 @@
 
 import {InjectionToken} from '@angular/core';
 import {MatTooltipDefaultOptions} from '@angular/material/tooltip';
-import {LanguageConfig} from '@api/root.ui';
+import {IConfig, LanguageConfig} from 'typings/root.ui';
 
-export const CONFIG_DI_TOKEN = new InjectionToken<Config>('kd.config');
-
-const SUPPORTED_LANGUAGES: LanguageConfig[] = [
+const supportedLanguages: LanguageConfig[] = [
   {
     label: 'German',
     value: 'de',
@@ -53,26 +51,16 @@ const SUPPORTED_LANGUAGES: LanguageConfig[] = [
   },
 ];
 
-export interface Config {
-  authTokenCookieName: string;
-  skipLoginPageCookieName: string;
-  csrfHeaderName: string;
-  authTokenHeaderName: string;
-  defaultNamespace: string;
-  authModeCookieName: string;
-  supportedLanguages: LanguageConfig[];
-  defaultLanguage: string;
-  languageCookieName: string;
-}
+export const CONFIG_DI_TOKEN = new InjectionToken<IConfig>('kd.config');
 
-export const CONFIG: Config = {
+export const CONFIG: IConfig = {
   authTokenCookieName: 'jweToken',
   authTokenHeaderName: 'jweToken',
   csrfHeaderName: 'X-CSRF-TOKEN',
   skipLoginPageCookieName: 'skipLoginPage',
   defaultNamespace: 'default',
   authModeCookieName: 'authMode',
-  supportedLanguages: SUPPORTED_LANGUAGES,
+  supportedLanguages: supportedLanguages,
   defaultLanguage: 'en',
   languageCookieName: 'lang',
 };

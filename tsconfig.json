@@ -1,15 +1,20 @@
 {
   "angularCompilerOptions": {
-    "enableI18nLegacyMessageIdFormat": false,
+    "enableI18nLegacyMessageIdFormat": false
   },
   "compileOnSave": false,
   "compilerOptions": {
     "baseUrl": "src/app/frontend",
     "paths": {
-      "@api/*": ["typings/*"],
-      "@common/*": ["common/*"],
-      "@environments/*": ["environments/*"],
-      "@root/*": ["./*"],
+      "@api/*": [
+        "typings/*"
+      ],
+      "@common/*": [
+        "common/*"
+      ],
+      "@environments/*": [
+        "environments/*"
+      ]
     },
     "outDir": ".tmp/out-tsc",
     "moduleResolution": "Node",
@@ -27,5 +32,5 @@
       "ES2020",
       "dom"
     ]
-  },
+  }
 }

@@ -126,9 +126,7 @@ jobs:
           [ ! -d "node_modules" ] && npm ci || node aio/scripts/version.js && command -v golangci-lint >/dev/null 2>&1 || { curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $(go env GOPATH)/bin v1.30.0; } && go mod download
 
       - name: Run Frontend Unit Tests
-        uses: GabrielBB/xvfb-action@v1.2
-        with:
-          run: npm run test:frontend:coverage
+        run: npm run test:frontend:coverage
 
       - name: Run Backend Unit Tests
         run: |

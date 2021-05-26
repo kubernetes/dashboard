@@ -12,15 +12,21 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-// Load `$localize` onto the global scope - used if i18n tags appear in Angular templates.
-import '@angular/localize/init';
+const config = {
+  verbose: true,
+  rootDir: '../src/app/frontend',
+  preset: "jest-preset-angular/presets/defaults-esm",
+  setupFilesAfterEnv: ["<rootDir>/test.base.ts"],
+  globals: {
+    'ts-jest': {
+      tsconfig: 'aio/tsconfig.spec.json',
+    },
+  },
+  moduleNameMapper: {
+    "^@api/(.*)$": "<rootDir>/typings/$1",
+    "^@common/(.*)$": "<rootDir>/common/$1",
+    "^@environments/(.*)$": "<rootDir>/environments/$1",
+  },
+};
 
-import 'jest-preset-angular/setup-jest';
-import './test.base.mocks';
-
-// eslint-disable-next-line node/no-extraneous-import
-import {jest} from '@jest/globals';
-
-// Async operations timeout
-// eslint-disable-next-line @typescript-eslint/no-magic-numbers
-jest.setTimeout(15000);
+export default config;

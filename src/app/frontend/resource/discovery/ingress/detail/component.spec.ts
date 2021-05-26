@@ -26,7 +26,6 @@ import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {RouterModule} from '@angular/router';
 import {AppConfig, IngressDetail} from '@api/root.api';
 import {CardComponent} from '@common/components/card/component';
-import {ChipsComponent} from '@common/components/chips/component';
 import {ObjectMetaComponent} from '@common/components/objectmeta/component';
 import {PropertyComponent} from '@common/components/property/component';
 import {PipesModule} from '@common/pipes/module';
@@ -157,7 +156,6 @@ describe('IngressDetailComponent', () => {
           IngressDetailComponent,
         ],
         imports: [
-          MatIconModule,
           MatCardModule,
           MatDividerModule,
           MatTooltipModule,

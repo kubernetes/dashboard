@@ -56,8 +56,6 @@
             "polyfills": "src/app/frontend/polyfills.ts",
             "i18nMissingTranslation": "error",
             "allowedCommonJsDependencies": [
-              "lodash",
-              "file-saver",
               "truncate-url"
             ],
             "assets": [

@@ -3,9 +3,10 @@
   "compilerOptions": {
     "outDir": "../out-tsc/spec",
     "baseUrl": "../src/app/frontend",
-    "types": ["jest", "node"],
+    "types": ["jest"],
   },
   "include": [
     "src/app/frontend/**/*.spec.ts",
+    "src/app/frontend/**/*.d.ts",
   ]
 }
