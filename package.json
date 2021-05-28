@@ -141,7 +141,7 @@
     "@types/d3": "6.6.0",
     "@types/d3-scale": "3.2.3",
     "@types/file-saver": "2.0.2",
-    "@types/jasmine": "3.7.4",
+    "@types/jasmine": "3.7.6",
     "@types/jasminewd2": "2.0.8",
     "@types/jest": "26.0.23",
     "@types/js-yaml": "4.0.1",
