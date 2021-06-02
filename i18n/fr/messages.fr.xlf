@@ -95,7 +95,7 @@
         </context-group>
       </trans-unit>
       <trans-unit id="2320200316076079587" datatype="html">
-        <source><x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span>"/>Are you sure you want to delete <x id="INTERPOLATION" equiv-text="{{data.displayName}}"/> <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i>"/><x id="INTERPOLATION_1" equiv-text="{{data.objectMeta.name}}"/><x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i>"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span>"/><x id="START_TAG_SPAN_1" ctype="x-span_1" equiv-text="&lt;span *ngIf=&quot;data.objectMeta.namespace&quot;>"/>  in namespace <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i>"/><x id="INTERPOLATION_2" equiv-text="{{data.objectMeta.namespace}}"/><x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i>"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span>"/><x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span>"/>?<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span>"/></source>
+        <source><x id="START_TAG_SPAN" ctype="x-span" equiv-text="&quot;[\uFFFD#5\uFFFD|\uFFFD#8\uFFFD]&quot;"/>Are you sure you want to delete <x id="INTERPOLATION" equiv-text="&quot;\uFFFD0\uFFFD&quot;"/> <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&quot;[\uFFFD#6\uFFFD|\uFFFD#2:1\uFFFD]&quot;"/><x id="INTERPOLATION_1" equiv-text="&quot;\uFFFD1\uFFFD&quot;"/><x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&quot;[\uFFFD/#6\uFFFD|\uFFFD/#2:1\uFFFD]&quot;"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&quot;[\uFFFD/#5\uFFFD|\uFFFD/#1:1\uFFFD\uFFFD/*7:1\uFFFD|\uFFFD/#8\uFFFD]&quot;"/><x id="START_TAG_SPAN_1" ctype="x-span_1" equiv-text="&quot;\uFFFD*7:1\uFFFD\uFFFD#1:1\uFFFD&quot;"/>  in namespace <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&quot;[\uFFFD#6\uFFFD|\uFFFD#2:1\uFFFD]&quot;"/><x id="INTERPOLATION_2" equiv-text="&quot;\uFFFD0:1\uFFFD&quot;"/><x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&quot;[\uFFFD/#6\uFFFD|\uFFFD/#2:1\uFFFD]&quot;"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&quot;[\uFFFD/#5\uFFFD|\uFFFD/#1:1\uFFFD\uFFFD/*7:1\uFFFD|\uFFFD/#8\uFFFD]&quot;"/><x id="START_TAG_SPAN" ctype="x-span" equiv-text="&quot;[\uFFFD#5\uFFFD|\uFFFD#8\uFFFD]&quot;"/>?<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&quot;[\uFFFD/#5\uFFFD|\uFFFD/#1:1\uFFFD\uFFFD/*7:1\uFFFD|\uFFFD/#8\uFFFD]&quot;"/></source>
         <target>
     <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span>"/>Êtes-vous sûr de vouloir supprimer <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i>"/><x id="INTERPOLATION_1" equiv-text="{{data.objectMeta.name}}"/><x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i>"/> de genre <x id="INTERPOLATION" equiv-text="{{data.displayName}}"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span>"/>
     <x id="START_TAG_SPAN_1" ctype="x-span" equiv-text="&lt;span>"/>
@@ -130,7 +130,7 @@
         </context-group>
       </trans-unit>
       <trans-unit id="5352570882809799670" datatype="html">
-        <source>Size: <x id="INTERPOLATION" equiv-text="{{loaded | kdMemory}}"/> B</source>
+        <source>Size: <x id="INTERPOLATION" equiv-text="&quot;\uFFFD0\uFFFD&quot;"/> B</source>
         <target>Taille : <x id="INTERPOLATION" equiv-text="{{loaded | kdMemory}}"/> o</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/dialogs/download/template.html</context>
@@ -210,7 +210,7 @@
         </context-group>
       </trans-unit>
       <trans-unit id="2532335681797774155" datatype="html">
-        <source> <x id="INTERPOLATION" equiv-text="{{data.displayName}}"/> <x id="INTERPOLATION_1" equiv-text="{{data.objectMeta.name}}"/> will be updated to reflect the desired replicas count. </source>
+        <source> <x id="INTERPOLATION" equiv-text="&quot;\uFFFD0\uFFFD&quot;"/> <x id="INTERPOLATION_1" equiv-text="&quot;\uFFFD1\uFFFD&quot;"/> will be updated to reflect the desired replicas count. </source>
         <target>
     <x id="INTERPOLATION" equiv-text="{{data.displayName}}"/> <x id="INTERPOLATION_1" equiv-text="{{data.objectMeta.name}}"/> sera mis à jour pour refléter le nombre de répliques demandéss.
   </target>
@@ -268,7 +268,7 @@
         </context-group>
       </trans-unit>
       <trans-unit id="4342607865016428668" datatype="html">
-        <source><x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span>"/><x id="INTERPOLATION" equiv-text="{{data.displayName}}"/> <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i>"/><x id="INTERPOLATION_1" equiv-text="{{data.objectMeta.name}}"/> <x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i>"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span>"/><x id="START_TAG_SPAN_1" ctype="x-span_1" equiv-text="&lt;span *ngIf=&quot;data.objectMeta.namespace&quot;>"/> in namespace <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i>"/><x id="INTERPOLATION_2" equiv-text="{{data.objectMeta.namespace}}"/> <x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i>"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span>"/><x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span>"/>will be restarted.<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span>"/></source>
+        <source><x id="START_TAG_SPAN" ctype="x-span" equiv-text="&quot;[\uFFFD#5\uFFFD|\uFFFD#8\uFFFD]&quot;"/><x id="INTERPOLATION" equiv-text="&quot;\uFFFD0\uFFFD&quot;"/> <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&quot;[\uFFFD#6\uFFFD|\uFFFD#2:1\uFFFD]&quot;"/><x id="INTERPOLATION_1" equiv-text="&quot;\uFFFD1\uFFFD&quot;"/> <x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&quot;[\uFFFD/#6\uFFFD|\uFFFD/#2:1\uFFFD]&quot;"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&quot;[\uFFFD/#5\uFFFD|\uFFFD/#1:1\uFFFD\uFFFD/*7:1\uFFFD|\uFFFD/#8\uFFFD]&quot;"/><x id="START_TAG_SPAN_1" ctype="x-span_1" equiv-text="&quot;\uFFFD*7:1\uFFFD\uFFFD#1:1\uFFFD&quot;"/> in namespace <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&quot;[\uFFFD#6\uFFFD|\uFFFD#2:1\uFFFD]&quot;"/><x id="INTERPOLATION_2" equiv-text="&quot;\uFFFD0:1\uFFFD&quot;"/> <x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&quot;[\uFFFD/#6\uFFFD|\uFFFD/#2:1\uFFFD]&quot;"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&quot;[\uFFFD/#5\uFFFD|\uFFFD/#1:1\uFFFD\uFFFD/*7:1\uFFFD|\uFFFD/#8\uFFFD]&quot;"/><x id="START_TAG_SPAN" ctype="x-span" equiv-text="&quot;[\uFFFD#5\uFFFD|\uFFFD#8\uFFFD]&quot;"/>will be restarted.<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&quot;[\uFFFD/#5\uFFFD|\uFFFD/#1:1\uFFFD\uFFFD/*7:1\uFFFD|\uFFFD/#8\uFFFD]&quot;"/></source>
         <target state="new"><x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span>"/><x id="INTERPOLATION" equiv-text="{{data.displayName}}"/> <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i>"/><x id="INTERPOLATION_1" equiv-text="{{data.objectMeta.name}}"/> <x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i>"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span>"/><x id="START_TAG_SPAN_1" ctype="x-span_1" equiv-text="&lt;span *ngIf=&quot;data.objectMeta.namespace&quot;>"/> in namespace <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i>"/><x id="INTERPOLATION_2" equiv-text="{{data.objectMeta.namespace}}"/> <x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i>"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span>"/><x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span>"/>will be restarted.<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span>"/></target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/dialogs/restartresource/template.html</context>
@@ -276,7 +276,7 @@
         </context-group>
       </trans-unit>
       <trans-unit id="9034287169969953424" datatype="html">
-        <source>Trigger a <x id="INTERPOLATION" equiv-text="{{data.displayName}}"/></source>
+        <source>Trigger a <x id="INTERPOLATION" equiv-text="&quot;\uFFFD0\uFFFD&quot;"/></source>
         <target>Déclencher un <x id="INTERPOLATION" equiv-text="{{data.displayName}}"/></target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/dialogs/triggerresource/template.html</context>
@@ -284,7 +284,7 @@
         </context-group>
       </trans-unit>
       <trans-unit id="31200575933930123" datatype="html">
-        <source><x id="INTERPOLATION" equiv-text="{{data.displayName}}"/> <x id="INTERPOLATION_1" equiv-text="{{data.objectMeta.name}}"/> will be triggered.</source>
+        <source><x id="INTERPOLATION" equiv-text="&quot;\uFFFD0\uFFFD&quot;"/> <x id="INTERPOLATION_1" equiv-text="&quot;\uFFFD1\uFFFD&quot;"/> will be triggered.</source>
         <target><x id="INTERPOLATION" equiv-text="{{data.displayName}}"/> <x id="INTERPOLATION_1" equiv-text="{{data.objectMeta.name}}"/> sera déclenché.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/dialogs/triggerresource/template.html</context>
@@ -1263,7 +1263,7 @@
         </context-group>
       </trans-unit>
       <trans-unit id="1045499538393271132" datatype="html">
-        <source>Auto-refresh (every <x id="INTERPOLATION" equiv-text="{{refreshInterval}}"/> s.)</source>
+        <source>Auto-refresh (every <x id="INTERPOLATION" equiv-text="&quot;\uFFFD0\uFFFD&quot;"/> s.)</source>
         <target state="new">Auto-refresh (every <x id="INTERPOLATION" equiv-text="{{refreshInterval}}"/> s.)</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/logs/template.html</context>
@@ -1279,9 +1279,7 @@
         </context-group>
       </trans-unit>
       <trans-unit id="7109976949603290892" datatype="html">
-        <source> Logs from <x id="START_TAG_KD_DATE" ctype="x-kd_date" equiv-text="&lt;kd-date [date]=&quot;podLogs?.info.fromDate&quot;
-               format=&quot;short&quot;>"/><x id="CLOSE_TAG_KD_DATE" ctype="x-kd_date" equiv-text="&lt;/kd-date>"/> to <x id="START_TAG_KD_DATE_1" ctype="x-kd_date_1" equiv-text="&lt;kd-date [date]=&quot;podLogs?.info.toDate&quot;
-               format=&quot;short&quot;>"/><x id="CLOSE_TAG_KD_DATE" ctype="x-kd_date" equiv-text="&lt;/kd-date>"/> UTC </source>
+        <source> Logs from <x id="START_TAG_KD_DATE" ctype="x-kd_date" equiv-text="&quot;\uFFFD#2\uFFFD&quot;"/><x id="CLOSE_TAG_KD_DATE" ctype="x-kd_date" equiv-text="&quot;[\uFFFD/#2\uFFFD|\uFFFD/#3\uFFFD]&quot;"/> to <x id="START_TAG_KD_DATE_1" ctype="x-kd_date_1" equiv-text="&quot;\uFFFD#3\uFFFD&quot;"/><x id="CLOSE_TAG_KD_DATE" ctype="x-kd_date" equiv-text="&quot;[\uFFFD/#2\uFFFD|\uFFFD/#3\uFFFD]&quot;"/> UTC </source>
         <target state="new"> Logs from <x id="START_TAG_KD_DATE" ctype="x-kd_date" equiv-text="&lt;kd-date [date]=&quot;podLogs?.info.fromDate&quot;
                format=&quot;short&quot;>"/><x id="CLOSE_TAG_KD_DATE" ctype="x-kd_date" equiv-text="&lt;/kd-date>"/> to <x id="START_TAG_KD_DATE_1" ctype="x-kd_date_1" equiv-text="&lt;kd-date [date]=&quot;podLogs?.info.toDate&quot;
                format=&quot;short&quot;>"/><x id="CLOSE_TAG_KD_DATE" ctype="x-kd_date" equiv-text="&lt;/kd-date>"/> UTC </target>
@@ -2110,9 +2108,7 @@
         </context-group>
       </trans-unit>
       <trans-unit id="8444287437490086299" datatype="html">
-        <source> Endpoints <x id="START_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;mat-icon class=&quot;external-link-icon kd-clickable&quot;
-                    i18n-matTooltip
-                    matTooltip=&quot;Endpoint links are external links that will be open in a new tab.&quot;>"/>open_in_new<x id="CLOSE_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;/mat-icon>"/></source>
+        <source> Endpoints <x id="START_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&quot;\uFFFD#2\uFFFD&quot;"/>open_in_new<x id="CLOSE_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&quot;\uFFFD/#2\uFFFD&quot;"/></source>
         <target state="new"> Endpoints <x id="START_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;mat-icon class=&quot;external-link-icon kd-clickable&quot;
                     i18n-matTooltip
                     matTooltip=&quot;Endpoint links are external links that will be open in a new tab.&quot;>"/>open_in_new<x id="CLOSE_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;/mat-icon>"/></target>
@@ -2130,9 +2126,7 @@
         </context-group>
       </trans-unit>
       <trans-unit id="3283019513707383139" datatype="html">
-        <source> Hosts <x id="START_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;mat-icon class=&quot;external-link-icon kd-clickable&quot;
-                    i18n-matTooltip
-                    matTooltip=&quot;Host links are external links that will be open in a new tab.&quot;>"/>open_in_new<x id="CLOSE_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;/mat-icon>"/></source>
+        <source> Hosts <x id="START_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&quot;\uFFFD#2\uFFFD&quot;"/>open_in_new<x id="CLOSE_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&quot;\uFFFD/#2\uFFFD&quot;"/></source>
         <target state="new"> Hosts <x id="START_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;mat-icon class=&quot;external-link-icon kd-clickable&quot;
                     i18n-matTooltip
                     matTooltip=&quot;Host links are external links that will be open in a new tab.&quot;>"/>open_in_new<x id="CLOSE_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;/mat-icon>"/></target>
@@ -2222,9 +2216,7 @@
         </context-group>
       </trans-unit>
       <trans-unit id="5680114016457280827" datatype="html">
-        <source> You can <x id="START_LINK" ctype="x-a" equiv-text="&lt;a routerLink=&quot;deploy&quot;
-         queryParamsHandling=&quot;preserve&quot;>"/>deploy a containerized app<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a>"/>, select other namespace or <x id="START_LINK_1" equiv-text="&lt;a href=&quot;http://kubernetes.io/docs/user-guide/ui/&quot;
-         target=&quot;_blank&quot;>"/>take the Dashboard Tour <x id="START_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;mat-icon class=&quot;kd-zerostate-icon&quot;>"/>open_in_new<x id="CLOSE_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;/mat-icon>"/><x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a>"/> to learn more. </source>
+        <source> You can <x id="START_LINK" ctype="x-a" equiv-text="&quot;\uFFFD#6\uFFFD&quot;"/>deploy a containerized app<x id="CLOSE_LINK" ctype="x-a" equiv-text="&quot;[\uFFFD/#6\uFFFD|\uFFFD/#7\uFFFD]&quot;"/>, select other namespace or <x id="START_LINK_1" equiv-text="&quot;\uFFFD#7\uFFFD&quot;"/>take the Dashboard Tour <x id="START_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&quot;\uFFFD#8\uFFFD&quot;"/>open_in_new<x id="CLOSE_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&quot;\uFFFD/#8\uFFFD&quot;"/><x id="CLOSE_LINK" ctype="x-a" equiv-text="&quot;[\uFFFD/#6\uFFFD|\uFFFD/#7\uFFFD]&quot;"/> to learn more. </source>
         <target state="new">
       You can <x id="START_LINK" ctype="x-a" equiv-text="&lt;a>"/>deploy a containerized app<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a>"/>, select other namespace or
       <x id="START_LINK_1" ctype="x-a" equiv-text="&lt;a>"/>take the Dashboard Tour
@@ -2633,7 +2625,7 @@
         </context-group>
       </trans-unit>
       <trans-unit id="6286810098678473039" datatype="html">
-        <source><x id="INTERPOLATION" equiv-text="{{formatSecretValue(env.value).length}}"/> bytes </source>
+        <source><x id="INTERPOLATION" equiv-text="&quot;\uFFFD0\uFFFD&quot;"/> bytes </source>
         <target state="new"><x id="INTERPOLATION" equiv-text="{{formatSecretValue(env.value).length}}"/> bytes </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/container/template.html</context>
@@ -3479,7 +3471,7 @@
         </context-group>
       </trans-unit>
       <trans-unit id="2833767909565048391" datatype="html">
-        <source> Do you want to stay on current page and change namespace from <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i>"/><x id="INTERPOLATION" equiv-text="{{namespace}}"/><x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i>"/> to <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i>"/><x id="INTERPOLATION_1" equiv-text="{{newNamespace}}"/><x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i>"/>? </source>
+        <source> Do you want to stay on current page and change namespace from <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&quot;[\uFFFD#7\uFFFD|\uFFFD#8\uFFFD]&quot;"/><x id="INTERPOLATION" equiv-text="&quot;\uFFFD0\uFFFD&quot;"/><x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&quot;[\uFFFD/#7\uFFFD|\uFFFD/#8\uFFFD]&quot;"/> to <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&quot;[\uFFFD#7\uFFFD|\uFFFD#8\uFFFD]&quot;"/><x id="INTERPOLATION_1" equiv-text="&quot;\uFFFD1\uFFFD&quot;"/><x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&quot;[\uFFFD/#7\uFFFD|\uFFFD/#8\uFFFD]&quot;"/>? </source>
         <target>
     Désirez-vous rester sur la page en cours et modifier l'espace de nom de <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i>"/><x id="INTERPOLATION" equiv-text="{{namespace}}"/><x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i>"/> à <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i>"/><x id="INTERPOLATION_1" equiv-text="{{newNamespace}}"/><x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i>"/> ?
   </target>
@@ -3757,7 +3749,7 @@
         </context-group>
       </trans-unit>
       <trans-unit id="3319732415078214507" datatype="html">
-        <source> Kubernetes Dashboard is made possible by the Dashboard <x id="START_LINK" ctype="x-a" equiv-text="&lt;a href=&quot;https://github.com/kubernetes/dashboard/graphs/contributors&quot;>"/>community<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a>"/> as an <x id="START_LINK_1" equiv-text="&lt;a href=&quot;https://github.com/kubernetes/dashboard&quot;>"/>open source project<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a>"/>. </source>
+        <source> Kubernetes Dashboard is made possible by the Dashboard <x id="START_LINK" ctype="x-a" equiv-text="&quot;\uFFFD#16\uFFFD&quot;"/>community<x id="CLOSE_LINK" ctype="x-a" equiv-text="&quot;[\uFFFD/#16\uFFFD|\uFFFD/#17\uFFFD]&quot;"/> as an <x id="START_LINK_1" equiv-text="&quot;\uFFFD#17\uFFFD&quot;"/>open source project<x id="CLOSE_LINK" ctype="x-a" equiv-text="&quot;[\uFFFD/#16\uFFFD|\uFFFD/#17\uFFFD]&quot;"/>. </source>
         <target>
       Kubernetes Dashboard est rendu possible par la
       <x id="START_LINK" ctype="x-a" equiv-text="&lt;a>"/>communauté<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a>"/> Dashboard comme un
@@ -3785,8 +3777,7 @@
         </context-group>
       </trans-unit>
       <trans-unit id="7487879176780118151" datatype="html">
-        <source><x id="START_TAG_KD_DATE" ctype="x-kd_date" equiv-text="&lt;kd-date [date]=&quot;notification.timestamp&quot;
-                       relative>"/><x id="CLOSE_TAG_KD_DATE" ctype="x-kd_date" equiv-text="&lt;/kd-date>"/> ago </source>
+        <source><x id="START_TAG_KD_DATE" ctype="x-kd_date" equiv-text="&quot;\uFFFD#9\uFFFD&quot;"/><x id="CLOSE_TAG_KD_DATE" ctype="x-kd_date" equiv-text="&quot;\uFFFD/#9\uFFFD&quot;"/> ago </source>
         <target>
               il y a <x id="START_TAG_KD-DATE" ctype="x-kd-date" equiv-text="&lt;kd-date>"/><x id="CLOSE_TAG_KD-DATE" ctype="x-kd-date" equiv-text="&lt;/kd-date>"/>
             </target>
@@ -3852,7 +3843,7 @@
         </context-group>
       </trans-unit>
       <trans-unit id="8323422358213440128" datatype="html">
-        <source><x id="INTERPOLATION" equiv-text="{{getDisplayName(resource)}}"/> </source>
+        <source><x id="INTERPOLATION" equiv-text="&quot;\uFFFD0\uFFFD&quot;"/> </source>
         <target state="new"><x id="INTERPOLATION" equiv-text="{{getDisplayName(resource)}}"/>
   </target>
         <context-group purpose="location">
@@ -3905,7 +3896,7 @@
         </context-group>
       </trans-unit>
       <trans-unit id="2135976822395163664" datatype="html">
-        <source> Please select the kubeconfig file that you have created to configure access to the cluster. To find out more about how to configure and use kubeconfig file, please refer to the <x id="START_LINK" ctype="x-a" equiv-text="&lt;a href='https://kubernetes.io/docs/tasks/access-application-cluster/configure-access-multiple-clusters/'>"/>Configure Access to Multiple Clusters<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a>"/> section. </source>
+        <source> Please select the kubeconfig file that you have created to configure access to the cluster. To find out more about how to configure and use kubeconfig file, please refer to the <x id="START_LINK" ctype="x-a" equiv-text="&quot;\uFFFD#2\uFFFD&quot;"/>Configure Access to Multiple Clusters<x id="CLOSE_LINK" ctype="x-a" equiv-text="&quot;\uFFFD/#2\uFFFD&quot;"/> section. </source>
         <target>
                 Veuillez sélectionner le fichier kubeconfig que vous avez créé pour accéder au cluster.
                 Pour en savoir plus sur la façon de configurer et utiliser un fichier kubeconfig,
@@ -3917,7 +3908,7 @@
         </context-group>
       </trans-unit>
       <trans-unit id="7927427229271598667" datatype="html">
-        <source> Make sure that support for basic authentication is enabled in the cluster. To find out more about how to configure basic authentication, please refer to the <x id="START_LINK" ctype="x-a" equiv-text="&lt;a href=&quot;https://kubernetes.io/docs/admin/authentication/&quot;>"/>Authenticating<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a>"/> and <x id="START_LINK_1" equiv-text="&lt;a href=&quot;https://kubernetes.io/docs/admin/authorization/abac/&quot;>"/>ABAC Mode<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a>"/> sections. </source>
+        <source> Make sure that support for basic authentication is enabled in the cluster. To find out more about how to configure basic authentication, please refer to the <x id="START_LINK" ctype="x-a" equiv-text="&quot;\uFFFD#2\uFFFD&quot;"/>Authenticating<x id="CLOSE_LINK" ctype="x-a" equiv-text="&quot;[\uFFFD/#2\uFFFD|\uFFFD/#3\uFFFD]&quot;"/> and <x id="START_LINK_1" equiv-text="&quot;\uFFFD#3\uFFFD&quot;"/>ABAC Mode<x id="CLOSE_LINK" ctype="x-a" equiv-text="&quot;[\uFFFD/#2\uFFFD|\uFFFD/#3\uFFFD]&quot;"/> sections. </source>
         <target>
                 Assurez-vous que le support pour l'authentification Basic est activéde pour le cluster.
                 Pour en savoir plus sur la façon de configurer l'authentification Basic,
@@ -3929,7 +3920,7 @@
         </context-group>
       </trans-unit>
       <trans-unit id="1268395641466243700" datatype="html">
-        <source> Every Service Account has a Secret with valid Bearer Token that can be used to log in to Dashboard. To find out more about how to configure and use Bearer Tokens, please refer to the <x id="START_LINK" ctype="x-a" equiv-text="&lt;a href='https://kubernetes.io/docs/admin/authentication/'>"/>Authentication<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a>"/> section. </source>
+        <source> Every Service Account has a Secret with valid Bearer Token that can be used to log in to Dashboard. To find out more about how to configure and use Bearer Tokens, please refer to the <x id="START_LINK" ctype="x-a" equiv-text="&quot;\uFFFD#2\uFFFD&quot;"/>Authentication<x id="CLOSE_LINK" ctype="x-a" equiv-text="&quot;\uFFFD/#2\uFFFD&quot;"/> section. </source>
         <target>
                 Chaque compte de service a un Secret associé avec un jeton porteur (Bearer Token) valide
                 qui peut être utilisé pour se connecter au Dashboard.
@@ -3974,8 +3965,7 @@
         </context-group>
       </trans-unit>
       <trans-unit id="1649590266934618453" datatype="html">
-        <source> Insecure access detected. Sign in will not be available. Access Dashboard securely over HTTPS or using localhost. Read more <x id="START_LINK" ctype="x-a" equiv-text="&lt;a href=&quot;https://github.com/kubernetes/dashboard/blob/master/docs/user/accessing-dashboard/README.md#login-not-available&quot;
-               target=&quot;_blank&quot;>"/> here <x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a>"/>. </source>
+        <source> Insecure access detected. Sign in will not be available. Access Dashboard securely over HTTPS or using localhost. Read more <x id="START_LINK" ctype="x-a" equiv-text="&quot;\uFFFD#2\uFFFD&quot;"/> here <x id="CLOSE_LINK" ctype="x-a" equiv-text="&quot;\uFFFD/#2\uFFFD&quot;"/>. </source>
         <target state="new">
             Insecure access detected. Sign in will not be available. Access Dashboard securely over HTTPS or using localhost. Read more
             <x id="START_LINK" ctype="x-a" equiv-text="&lt;a>"/>
@@ -4032,11 +4022,7 @@
         </context-group>
       </trans-unit>
       <trans-unit id="728108318392658678" datatype="html">
-        <source> Shell in <x id="START_TAG_MAT_SELECT" ctype="x-mat_select" equiv-text="&lt;mat-select *ngIf=&quot;containers?.length > 0&quot;
-                class=&quot;kd-shell-toolbar-select&quot;
-                (ngModelChange)=&quot;onPodContainerChange($event)&quot;
-                [(ngModel)]=&quot;selectedContainer&quot;>"/><x id="START_TAG_MAT_OPTION" ctype="x-mat_option" equiv-text="&lt;mat-option *ngFor=&quot;let item of containers&quot;
-                  [value]=&quot;item&quot;>"/> <x id="INTERPOLATION" equiv-text="{{ item }}"/> <x id="CLOSE_TAG_MAT_OPTION" ctype="x-mat_option" equiv-text="&lt;/mat-option>"/><x id="CLOSE_TAG_MAT_SELECT" ctype="x-mat_select" equiv-text="&lt;/mat-select>"/> in <x id="INTERPOLATION_1" equiv-text="{{ podName }}"/> </source>
+        <source> Shell in <x id="START_TAG_MAT_SELECT" ctype="x-mat_select" equiv-text="&quot;\uFFFD*3:1\uFFFD\uFFFD#1:1\uFFFD&quot;"/><x id="START_TAG_MAT_OPTION" ctype="x-mat_option" equiv-text="&quot;\uFFFD*2:2\uFFFD\uFFFD#1:2\uFFFD&quot;"/> <x id="INTERPOLATION" equiv-text="&quot;\uFFFD0:2\uFFFD&quot;"/> <x id="CLOSE_TAG_MAT_OPTION" ctype="x-mat_option" equiv-text="&quot;\uFFFD/#1:2\uFFFD\uFFFD/*2:2\uFFFD&quot;"/><x id="CLOSE_TAG_MAT_SELECT" ctype="x-mat_select" equiv-text="&quot;\uFFFD/#1:1\uFFFD\uFFFD/*3:1\uFFFD&quot;"/> in <x id="INTERPOLATION_1" equiv-text="&quot;\uFFFD0\uFFFD&quot;"/> </source>
         <target>
     Shell dans
     <x id="START_TAG_MAT-SELECT" ctype="x-mat-select" equiv-text="&lt;mat-select>"/>
@@ -4112,7 +4098,7 @@
         </context-group>
       </trans-unit>
       <trans-unit id="3370944056293075657" datatype="html">
-        <source> Name must be up to <x id="INTERPOLATION" equiv-text="{{namespaceMaxLength}}"/> characters long. </source>
+        <source> Name must be up to <x id="INTERPOLATION" equiv-text="&quot;\uFFFD0\uFFFD&quot;"/> characters long. </source>
         <target>Le nom ne doit pas dépasser
           <x id="INTERPOLATION" equiv-text="{{namespaceMaxLength}}"/>
           caractères.</target>
@@ -4150,7 +4136,7 @@
         </context-group>
       </trans-unit>
       <trans-unit id="3368378053177904137" datatype="html">
-        <source> Learn more <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i class=&quot;material-icons&quot;>"/>open_in_new<x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i>"/></source>
+        <source> Learn more <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&quot;\uFFFD#5\uFFFD&quot;"/>open_in_new<x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&quot;\uFFFD/#5\uFFFD&quot;"/></source>
         <target>En savoir plus
           <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i>"/>
           open_in_new
@@ -4362,7 +4348,7 @@
         </context-group>
       </trans-unit>
       <trans-unit id="8175189185819474284" datatype="html">
-        <source> Container image is invalid: <x id="INTERPOLATION" equiv-text="{{containerImage.errors?.validImageReference}}"/> </source>
+        <source> Container image is invalid: <x id="INTERPOLATION" equiv-text="&quot;\uFFFD0\uFFFD&quot;"/> </source>
         <target>L'image du conteneur n'est pas valide :
           <x id="INTERPOLATION" equiv-text="{{containerImage.errors?.validImageReference}}"/></target>
         <context-group purpose="location">
@@ -4662,7 +4648,7 @@
         </context-group>
       </trans-unit>
       <trans-unit id="2380939390102386148" datatype="html">
-        <source> <x id="ICU" equiv-text="{isMoreOptionsEnabled(), select, 1 {Hide advanced options} other {Show advanced options}}"/>
+        <source> <x id="ICU" equiv-text="i18n_79"/>
 </source>
         <target>
   <x id="ICU" equiv-text="{isMoreOptionsEnabled(), select, 1 {...} other {...}}"/>
@@ -4912,7 +4898,7 @@
         </context-group>
       </trans-unit>
       <trans-unit id="1106543845307638308" datatype="html">
-        <source> <x id="INTERPOLATION" equiv-text="{{label.get('key').value}}"/> is not unique </source>
+        <source> <x id="INTERPOLATION" equiv-text="&quot;\uFFFD0\uFFFD&quot;"/> is not unique </source>
         <target><x id="INTERPOLATION" equiv-text="{{label.get('key').value}}"/>
           n'est pas unique</target>
         <context-group purpose="location">
@@ -5241,7 +5227,7 @@
         </context-group>
       </trans-unit>
       <trans-unit id="187187500641108332" datatype="html">
-        <source><x id="INTERPOLATION" equiv-text="{{ingress.spec.backend.resource.kind}}"/></source>
+        <source><x id="INTERPOLATION" equiv-text="&quot;\uFFFD0\uFFFD&quot;"/></source>
         <target state="new"><x id="INTERPOLATION" equiv-text="{{ingress.spec.backend.resource.kind}}"/></target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/resource/discovery/ingress/detail/template.html</context>

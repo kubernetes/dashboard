@@ -19,3 +19,9 @@ export interface KdError {
 
   localize(): KdError;
 }
+
+export enum SupportedResources {
+  ConfigMap = 'ConfigMap',
+  Secret = 'Secret',
+  PersistentVolumeClaim = 'PersistentVolumeClaim',
+}

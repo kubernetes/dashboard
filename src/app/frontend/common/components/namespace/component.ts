@@ -17,10 +17,11 @@ import {MatDialog} from '@angular/material/dialog';
 import {MatSelect} from '@angular/material/select';
 import {ActivatedRoute, NavigationEnd, Router} from '@angular/router';
 import {NamespaceList} from '@api/root.api';
+import {IConfig} from '@api/root.ui';
 import {Subject} from 'rxjs';
 import {distinctUntilChanged, filter, startWith, switchMap, takeUntil} from 'rxjs/operators';
+import {CONFIG_DI_TOKEN} from '../../../index.config';
 
-import {Config, CONFIG_DI_TOKEN} from '../../../index.config';
 import {NAMESPACE_STATE_PARAM} from '../../params/params';
 import {GlobalSettingsService} from '../../services/global/globalsettings';
 import {HistoryService} from '../../services/global/history';
@@ -61,7 +62,7 @@ export class NamespaceSelectorComponent implements OnInit, OnDestroy {
     private readonly activatedRoute_: ActivatedRoute,
     private readonly historyService_: HistoryService,
     private readonly settingsService_: GlobalSettingsService,
-    @Inject(CONFIG_DI_TOKEN) private readonly appConfig_: Config
+    @Inject(CONFIG_DI_TOKEN) private readonly appConfig_: IConfig
   ) {}
 
   ngOnInit(): void {

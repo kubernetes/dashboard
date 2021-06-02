@@ -3,9 +3,12 @@
   "compilerOptions": {
     "outDir": "../out-tsc/spec",
     "baseUrl": "../src/app/frontend",
-    "types": ["jest", "node"],
+    "module": "CommonJS",
+    "target": "ES2015",
+    "types": ["jest"],
   },
   "include": [
-    "src/app/frontend/**/*.spec.ts",
+    "./**/*.spec.ts",
+    "./**/*.d.ts",
   ]
 }

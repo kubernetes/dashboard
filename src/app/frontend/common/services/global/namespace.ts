@@ -13,13 +13,14 @@
 // limitations under the License.
 
 import {EventEmitter, Inject, Injectable} from '@angular/core';
-import {Config, CONFIG_DI_TOKEN} from '../../../index.config';
+import {IConfig} from '@api/root.ui';
+import {CONFIG_DI_TOKEN} from '../../../index.config';
 
 @Injectable()
 export class NamespaceService {
   onNamespaceChangeEvent = new EventEmitter<string>();
 
-  constructor(@Inject(CONFIG_DI_TOKEN) private readonly appConfig_: Config) {}
+  constructor(@Inject(CONFIG_DI_TOKEN) private readonly appConfig_: IConfig) {}
 
   /**
    * Internal key for empty selection. To differentiate empty string from nulls.

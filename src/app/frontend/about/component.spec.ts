@@ -20,7 +20,7 @@ import {AppConfig} from '@api/root.api';
 import {CardComponent} from '@common/components/card/component';
 import {AssetsService} from '@common/services/global/assets';
 import {ConfigService} from '@common/services/global/config';
-import {SharedModule} from '@root/shared.module';
+import {SharedModule} from '../shared.module';
 import {AboutComponent} from './component';
 
 describe('AboutComponent', () => {

@@ -134,11 +134,23 @@ export interface ViewportMetadata {
   visible: boolean;
 }
 
+export interface AppConfig {
+  themes: Theme[];
+}
+
+export interface IConfig {
+  authTokenCookieName: string;
+  skipLoginPageCookieName: string;
+  csrfHeaderName: string;
+  authTokenHeaderName: string;
+  defaultNamespace: string;
+  authModeCookieName: string;
+  supportedLanguages: LanguageConfig[];
+  defaultLanguage: string;
+  languageCookieName: string;
+}
+
 export interface LanguageConfig {
   value: string;
   label: string;
-}
-
-export interface AppConfig {
-  themes: Theme[];
 }

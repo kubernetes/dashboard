@@ -13,14 +13,7 @@
 // limitations under the License.
 
 import {KdError} from '@api/root.shared';
-// Shared resource types
 import {PersistentVolumeSource} from '@api/volume.api';
-
-export enum SupportedResources {
-  ConfigMap = 'ConfigMap',
-  Secret = 'Secret',
-  PersistentVolumeClaim = 'PersistentVolumeClaim',
-}
 
 export interface TypeMeta {
   kind: string;
