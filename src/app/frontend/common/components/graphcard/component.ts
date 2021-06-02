@@ -33,8 +33,7 @@ export class GraphCardComponent implements OnChanges {
   }
 
   private getSelectedMetrics(): Metric {
-    const minMetricsLength = 5;
-    if (!this.selectedMetricName || (this.metrics.length && this.metrics[0].dataPoints.length < minMetricsLength)) {
+    if (!this.selectedMetricName || (this.metrics.length && this.metrics[0].dataPoints.length === 0)) {
       return null;
     }
 

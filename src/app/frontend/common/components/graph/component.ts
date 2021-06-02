@@ -30,7 +30,7 @@ enum TimeScale {
   Days,
 }
 
-@Component({selector: 'kd-graph', templateUrl: './template.html'})
+@Component({selector: 'kd-graph', templateUrl: './template.html', styleUrls: ['./style.scss']})
 export class GraphComponent implements OnInit, OnChanges {
   @Input() metric: Metric;
   @Input() id: string;
@@ -41,6 +41,8 @@ export class GraphComponent implements OnInit, OnChanges {
   customColors = {};
   yAxisLabel = '';
   yScaleMax = 0;
+  shouldShowGraph = false;
+
   private suffixMap_: Map<number, string> = new Map<number, string>();
   private yAxisSuffix_ = '';
   private visible_ = false;
@@ -116,6 +118,7 @@ export class GraphComponent implements OnInit, OnChanges {
     this._findTimeScale(points);
 
     points = points.reduce(this._average.bind(this), []);
+    this.shouldShowGraph = points.length >= this.minMetricsCount_;
     points = this._averageWithReduce(points, this.maxMetricsCount_);
 
     const result = [
