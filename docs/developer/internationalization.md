@@ -31,7 +31,7 @@ Add `i18n` attribute into tag surrounding new text in Angular template html file
 
 ### To update translation source file and translation files
 
-Run `npm run fix:i18n`. It will execute `ng xi18n` and `xliffmerge`, they will update `i18n/messages.xlf` and `i18n/[locale]/messages.[locale].xlf` files.
+Run `npm run fix:i18n`. It will execute `xliffmerge` and update `i18n/messages.xlf` and `i18n/[locale]/messages.[locale].xlf` files.
 
 ### To translate new localizable text
 
