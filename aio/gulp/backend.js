@@ -19,8 +19,8 @@ import gulp from 'gulp';
 import lodash from 'lodash';
 import path from 'path';
 
-import conf from './conf';
-import goCommand from './gocommand';
+import conf from './conf.js';
+import goCommand from './gocommand.js';
 
 /**
  * Compiles backend application in development mode and places the binary in the serve

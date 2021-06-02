@@ -13,9 +13,8 @@
 // limitations under the License.
 
 const config = {
-  verbose: true,
   rootDir: '../src/app/frontend',
-  preset: "jest-preset-angular/presets/defaults-esm",
+  preset: "jest-preset-angular/presets/defaults",
   setupFilesAfterEnv: ["<rootDir>/test.base.ts"],
   globals: {
     'ts-jest': {
@@ -27,6 +26,7 @@ const config = {
     "^@common/(.*)$": "<rootDir>/common/$1",
     "^@environments/(.*)$": "<rootDir>/environments/$1",
   },
+
 };
 
 export default config;

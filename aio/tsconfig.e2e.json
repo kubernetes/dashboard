@@ -3,7 +3,7 @@
   "compilerOptions": {
     "strict": true,
     "outDir": "../out-tsc/e2e",
-    "baseUrl": "../node_modules",
+    "baseUrl": "../cypress",
     "types": ["cypress"]
   },
   "include": [

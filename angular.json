@@ -56,7 +56,8 @@
             "polyfills": "src/app/frontend/polyfills.ts",
             "i18nMissingTranslation": "error",
             "allowedCommonJsDependencies": [
-              "truncate-url"
+              "truncate-url",
+              "strip-ansi"
             ],
             "assets": [
               {
