@@ -18,7 +18,7 @@ import (
 	"context"
 	"log"
 
-	v1beta1 "k8s.io/api/networking/v1beta1"
+	v1 "k8s.io/api/networking/v1"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	client "k8s.io/client-go/kubernetes"
 )
@@ -30,10 +30,10 @@ type IngressDetail struct {
 	Ingress `json:",inline"`
 
 	// Spec is the desired state of the Ingress.
-	Spec v1beta1.IngressSpec `json:"spec"`
+	Spec v1.IngressSpec `json:"spec"`
 
 	// Status is the current state of the Ingress.
-	Status v1beta1.IngressStatus `json:"status"`
+	Status v1.IngressStatus `json:"status"`
 
 	// List of non-critical errors, that occurred during resource retrieval.
 	Errors []error `json:"errors"`
@@ -43,7 +43,7 @@ type IngressDetail struct {
 func GetIngressDetail(client client.Interface, namespace, name string) (*IngressDetail, error) {
 	log.Printf("Getting details of %s ingress in %s namespace", name, namespace)
 
-	rawIngress, err := client.NetworkingV1beta1().Ingresses(namespace).Get(context.TODO(), name, metaV1.GetOptions{})
+	rawIngress, err := client.NetworkingV1().Ingresses(namespace).Get(context.TODO(), name, metaV1.GetOptions{})
 
 	if err != nil {
 		return nil, err
@@ -52,7 +52,7 @@ func GetIngressDetail(client client.Interface, namespace, name string) (*Ingress
 	return getIngressDetail(rawIngress), nil
 }
 
-func getIngressDetail(i *v1beta1.Ingress) *IngressDetail {
+func getIngressDetail(i *v1.Ingress) *IngressDetail {
 	return &IngressDetail{
 		Ingress: toIngress(i),
 		Spec:    i.Spec,
