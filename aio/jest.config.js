@@ -14,6 +14,7 @@
 
 const config = {
   rootDir: '../src/app/frontend',
+  coverageDirectory: '../../../coverage',
   preset: "jest-preset-angular/presets/defaults",
   setupFilesAfterEnv: ["<rootDir>/test.base.ts"],
   globals: {
