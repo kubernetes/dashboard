@@ -12,22 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-const config = {
-  rootDir: '../src/app/frontend',
-  coverageDirectory: '../../../coverage',
-  preset: "jest-preset-angular/presets/defaults",
-  setupFilesAfterEnv: ["<rootDir>/test.base.ts"],
-  globals: {
-    'ts-jest': {
-      tsconfig: 'aio/tsconfig.spec.json',
-    },
-  },
-  moduleNameMapper: {
-    "^@api/(.*)$": "<rootDir>/typings/$1",
-    "^@common/(.*)$": "<rootDir>/common/$1",
-    "^@environments/(.*)$": "<rootDir>/environments/$1",
-  },
+@import '../../../variables';
 
-};
+.chart-container {
+  padding: 2 * $baseline-grid;
+}
 
-export default config;
+.empty-chart-text {
+  font-size: $headline-font-size-base;
+  font-weight: $regular-font-weight;
+  margin-bottom: $baseline-grid / 2;
+}

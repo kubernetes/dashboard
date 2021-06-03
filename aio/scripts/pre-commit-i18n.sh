@@ -25,18 +25,25 @@ MD5_OLD=$(md5sum "${I18N_DIR}/messages.xlf" | cut -c -32)
 MD5_NEW=$(md5sum "${I18N_DIR}/messages.new.xlf" | cut -c -32)
 
 if [ $MD5_OLD != $MD5_NEW ] ; then
+  mv "${I18N_DIR}/messages.xlf" "${I18N_DIR}/messages.old.xlf"
+  mv "${I18N_DIR}/messages.new.xlf" "${I18N_DIR}/messages.xlf"
   "${AIO_DIR}/scripts/xliffmerge.sh"
 
   languages=($(find "${I18N_DIR}"/* -type d -exec basename {} \;))
+  updated=false
   for language in "${languages[@]}"; do
     if ! _=$(git diff --exit-code "${I18N_DIR}/${language}/messages.${language}.xlf"); then
       say "Translation files were updated. Commit them too."
-      mv "${I18N_DIR}/messages.new.xlf" "${I18N_DIR}/messages.xlf"
-      git add i18n
+      updated=true
       break
     fi
   done
+
+  if [ ${updated} == false ]; then
+    mv "${I18N_DIR}/messages.old.xlf" "${I18N_DIR}/messages.xlf"
+  fi
 fi
 
 # Remove extracted file for check
 rm -rf "${I18N_DIR}/messages.new.xlf"
+rm -rf "${I18N_DIR}/messages.old.xlf"

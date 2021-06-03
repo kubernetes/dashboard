@@ -24,7 +24,13 @@ export enum GraphType {
   Memory = 'memory',
 }
 
-@Component({selector: 'kd-graph', templateUrl: './template.html'})
+enum TimeScale {
+  Minutes,
+  Hours,
+  Days,
+}
+
+@Component({selector: 'kd-graph', templateUrl: './template.html', styleUrls: ['./style.scss']})
 export class GraphComponent implements OnInit, OnChanges {
   @Input() metric: Metric;
   @Input() id: string;
@@ -34,27 +40,32 @@ export class GraphComponent implements OnInit, OnChanges {
   curve = d3.curveMonotoneX;
   customColors = {};
   yAxisLabel = '';
-  yAxisTickFormatting = (value: number) => `${value} ${this.yAxisSuffix_}`;
   yScaleMax = 0;
+  shouldShowGraph = false;
 
   private suffixMap_: Map<number, string> = new Map<number, string>();
   private yAxisSuffix_ = '';
   private visible_ = false;
+  private minMetricsCount_ = 5;
+  private maxMetricsCount_ = 15;
+  private timeScale_ = TimeScale.Minutes;
+
+  yAxisTickFormatting = (value: number) => `${value} ${this.yAxisSuffix_}`;
 
   ngOnInit(): void {
     if (!this.graphType) {
       throw new Error('Graph type has to be provided.');
     }
 
-    this.series = this.generateSeries_();
-    this.customColors = this.getColor_();
+    this.series = this._generateSeries();
+    this.customColors = this._getColor();
     this.yAxisLabel = this.graphType === GraphType.CPU ? 'CPU (cores)' : 'Memory (bytes)';
   }
 
   ngOnChanges(_: SimpleChanges): void {
     if (this.visible_) {
       this.suffixMap_.clear();
-      this.series = this.generateSeries_();
+      this.series = this._generateSeries();
     }
   }
 
@@ -66,8 +77,8 @@ export class GraphComponent implements OnInit, OnChanges {
     return `${value} ${this.suffixMap_.has(value) ? this.suffixMap_.get(value) : ''}`;
   }
 
-  private generateSeries_(): Array<{name: string; series: Array<{value: number; name: string}>}> {
-    const points: DataPoint[] = [];
+  private _generateSeries(): Array<{name: string; series: Array<{value: number; name: string}>}> {
+    let points: DataPoint[] = [];
     let series: FormattedValue[];
     let highestSuffixPower = 0;
     let highestSuffix = '';
@@ -84,16 +95,13 @@ export class GraphComponent implements OnInit, OnChanges {
         throw new Error(`Unsupported graph type ${this.graphType}.`);
     }
 
-    // Find out the highest suffix
-    series.forEach(value => {
+    // Find out the highest suffix and normalize all values to a single suffix
+    series.map(value => {
       if (highestSuffixPower < value.suffixPower) {
         highestSuffixPower = value.suffixPower;
         highestSuffix = value.suffix;
       }
-    });
 
-    // Normalize all values to a single suffix
-    series.map(value => {
       value.normalize(highestSuffix);
       return value;
     });
@@ -107,16 +115,22 @@ export class GraphComponent implements OnInit, OnChanges {
       } as DataPoint);
     });
 
+    this._findTimeScale(points);
+
+    points = points.reduce(this._average.bind(this), []);
+    this.shouldShowGraph = points.length >= this.minMetricsCount_;
+    points = this._averageWithReduce(points, this.maxMetricsCount_);
+
     const result = [
       {
         name: this.id,
-        series: points.reduce(this._average.bind(this), []).map(point => {
+        series: points.map(point => {
           if (maxValue < point.y) {
             maxValue = point.y;
           }
 
           return {
-            value: point.y,
+            value: Number(point.y.toPrecision(3)),
             name: d3.timeFormat('%H:%M')(new Date(1000 * point.x)),
           };
         }),
@@ -138,32 +152,32 @@ export class GraphComponent implements OnInit, OnChanges {
     return result;
   }
 
-  // Calculate the average usage based on minute intervals. If there are more data points within
-  // a single minute, they will be accumulated and an average will be taken.
+  // Calculate the average usage based on detected time unit intervals. If there are more data points than
+  // max allowed metrics, they will be accumulated and an average will be taken.
   private _average(acc: DataPoint[], point: DataPoint, idx: number, points: DataPoint[]): DataPoint[] {
     if (idx > 0) {
-      const currMinute = this._getMinute(point.x);
-      const lastMinute = this._getMinute(points[idx - 1].x);
+      const currTimeUnit = this._getTimeScale(point.x);
+      const lastTimeUnit = this._getTimeScale(points[idx - 1].x);
 
-      // Minute changed or we are at the end of an array
-      if (currMinute !== lastMinute || idx === points.length - 1) {
+      // Time unit changed or we are at the end of an array
+      if (currTimeUnit !== lastTimeUnit || idx === points.length - 1) {
         let i = idx - 2;
-        // Initialize with last minute
+        // Initialize with last time unit
         const minutes = [points[idx - 1].y];
 
-        // Track back all remaining points for the last minute
-        while (i >= 0 && lastMinute === this._getMinute(points[i].x)) {
+        // Track back all remaining points for the last time unit
+        while (i >= 0 && lastTimeUnit === this._getTimeScale(points[i].x)) {
           minutes.push(points[i].y);
           i--;
         }
 
-        // Calculate an average of this minute values
+        // Calculate an average of this time unit values
         const average = minutes.reduce((a, b) => a + b, 0) / minutes.length;
 
         // Accumulate the result
         return acc.concat({
           x: points[idx - 1].x,
-          y: Number(average.toPrecision(3)),
+          y: average,
         });
       }
     }
@@ -171,11 +185,92 @@ export class GraphComponent implements OnInit, OnChanges {
     return acc;
   }
 
+  // Average with reduce scales the number of provided points to the given limit.
+  private _averageWithReduce(points: DataPoint[], limit: number): DataPoint[] {
+    const result: DataPoint[] = [];
+    const divider = Math.floor(points.length / limit);
+    let reminder = points.length % limit;
+
+    if (divider === 0 || (divider === 1 && reminder === 0)) {
+      return points;
+    }
+
+    for (let i = 0; i < points.length; i += divider) {
+      let sum = 0;
+      let count = 0;
+
+      for (let j = 0; j < divider && i + j < points.length; j++) {
+        sum += points[i + j].y;
+        count++;
+      }
+
+      if (reminder > 0) {
+        sum += points[i + divider].y;
+        i++;
+        count++;
+        reminder--;
+      }
+
+      result.push({
+        x: points[i].x,
+        y: sum / count,
+      } as DataPoint);
+    }
+
+    return result;
+  }
+
+  private _getTimeScale(date: number): number {
+    switch (this.timeScale_) {
+      case TimeScale.Minutes:
+        return this._getMinute(date);
+      case TimeScale.Hours:
+        return this._getHour(date);
+      case TimeScale.Days:
+        return this._getDay(date);
+    }
+  }
+
   private _getMinute(date: number): number {
     return new Date(1000 * date).getMinutes();
   }
 
-  private getColor_(): Array<{name: string; value: string}> {
+  private _getHour(date: number): number {
+    return new Date(1000 * date).getHours();
+  }
+
+  private _getDay(date: number): number {
+    return new Date(1000 * date).getDay();
+  }
+
+  private _findTimeScale(points: DataPoint[]): void {
+    if (points.length < 1) {
+      return;
+    }
+
+    let metricsCount = 1;
+    let lastTimeUnit = this._getTimeScale(points.pop().x);
+
+    points.forEach(point => {
+      const currTimeUnit = this._getTimeScale(point.x);
+      if (lastTimeUnit !== currTimeUnit) {
+        lastTimeUnit = currTimeUnit;
+        metricsCount++;
+      }
+    });
+
+    if (metricsCount <= this.minMetricsCount_ && this.timeScale_ > TimeScale.Minutes) {
+      this.timeScale_--;
+      return;
+    }
+
+    if (metricsCount > this.maxMetricsCount_ && this.timeScale_ < TimeScale.Days) {
+      this.timeScale_++;
+      this._findTimeScale(points);
+    }
+  }
+
+  private _getColor(): Array<{name: string; value: string}> {
     return this.graphType === GraphType.CPU
       ? [
           {
