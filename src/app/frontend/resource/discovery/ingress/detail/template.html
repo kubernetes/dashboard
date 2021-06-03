@@ -24,16 +24,17 @@ limitations under the License.
   <div content
        *ngIf="isInitialized"
        fxLayout="row wrap">
-    <kd-property *ngIf="ingress?.spec?.backend?.serviceName">
+    <kd-property *ngIf="ingress?.spec?.backend?.service?.Name">
       <div key
            i18n>Service Name</div>
-      <div value>{{ingress.spec.backend.serviceName}}</div>
+      <div value>{{ingress.spec.backend.service.Name}}</div>
     </kd-property>
 
-    <kd-property *ngIf="ingress?.spec?.backend?.servicePort">
+    <kd-property *ngIf="ingress?.spec?.backend?.service?.port">
       <div key
            i18n>Service Port</div>
-      <div value>{{ingress.spec.backend.servicePort}}</div>
+      <div *ngIf="ingress?.spec?.backend?.service?.port?.name" value>{{ingress.spec.backend.service.port.name}}</div>
+      <div *ngIf="ingress?.spec?.backend?.service?.port?.number" value>{{ingress.spec.backend.service.port.number}}</div>
     </kd-property>
 
     <kd-property *ngIf="ingress?.spec?.backend?.resource?.name">
