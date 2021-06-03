@@ -126,6 +126,7 @@ class MaxiTestComponent {
                     port: {
                       number: 80
                     }
+                  },
                 },
               },
             ],
@@ -144,8 +145,9 @@ class MaxiTestComponent {
                     port: {
                       number: 80
                     }
+                  },
                 },
-              },
+            } ,
             ],
           },
         },
