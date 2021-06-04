@@ -147,7 +147,7 @@ class MaxiTestComponent {
                     }
                   },
                 },
-            } ,
+              },
             ],
           },
         },
