@@ -62,8 +62,8 @@ class MiniTestComponent {
                     name: 'test',
                     port: {
                       number: 80,
-                    }
-                  }
+                    },
+                  },
                 },
               },
             ],
@@ -81,8 +81,8 @@ class MiniTestComponent {
                     name: 'test',
                     port: {
                       name: 'a_port_name',
-                    }
-                  }
+                    },
+                  },
                 },
               },
             ],
@@ -125,7 +125,7 @@ class MaxiTestComponent {
                     name: 'service1',
                     port: {
                       number: 80,
-                    }
+                    },
                   },
                 },
               },
@@ -144,7 +144,7 @@ class MaxiTestComponent {
                     name: 'service2',
                     port: {
                       number: 80,
-                    }
+                    },
                   },
                 },
               },
