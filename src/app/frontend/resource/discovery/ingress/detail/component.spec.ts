@@ -61,7 +61,7 @@ class MiniTestComponent {
                   service: {
                     name: 'test',
                     port: {
-                      number: 80
+                      number: 80,
                     }
                   }
                 },
@@ -124,7 +124,7 @@ class MaxiTestComponent {
                   service: {
                     name: 'service1',
                     port: {
-                      number: 80
+                      number: 80,
                     }
                   },
                 },
@@ -143,7 +143,7 @@ class MaxiTestComponent {
                   service: {
                     name: 'service2',
                     port: {
-                      number: 80
+                      number: 80,
                     }
                   },
                 },
