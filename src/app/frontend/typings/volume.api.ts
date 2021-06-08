@@ -164,7 +164,7 @@ export class NFSVolumeSource implements IVolumeSource {
   }
 
   get displayName(): string {
-    return `${this.server}/${this.path}`;
+    return `${this.server}:${this.path}`;
   }
 }
 
