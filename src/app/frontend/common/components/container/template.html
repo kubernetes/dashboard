@@ -236,6 +236,44 @@ limitations under the License.
                            [initialized]="initialized">
       </kd-security-context>
     </div>
+
+
+    <div *ngIf="container?.livenessProbe"
+        fxFlex="100"
+        fxLayout="column">
+      <div fxFlex
+           class="kd-muted section-header"
+           i18n>Liveness Probe
+      </div>
+        <kd-probe-card [probe]="container?.livenessProbe"
+                              [initialized]="initialized">
+        </kd-probe-card>
+      </div>
+
+    <div *ngIf="container?.readinessProbe"
+    fxFlex="100"
+    fxLayout="column">
+      <div fxFlex
+           class="kd-muted section-header"
+           i18n>Readiness Probe
+      </div>
+        <kd-probe-card [probe]="container?.readinessProbe"
+                              [initialized]="initialized">
+        </kd-probe-card>
+    </div>
+
+    <div *ngIf="container?.startupProbe"
+    fxFlex="100"
+    fxLayout="column">
+      <div fxFlex
+           class="kd-muted section-header"
+           i18n>Startup Probe
+      </div>
+        <kd-probe-card [probe]="container?.startupProbe"
+                              [initialized]="initialized">
+        </kd-probe-card>
+    </div>
+
   </div>
 
   <div content>

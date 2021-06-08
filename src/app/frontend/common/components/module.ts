@@ -62,6 +62,7 @@ import {NamespaceSelectorComponent} from './namespace/component';
 import {ObjectMetaComponent} from './objectmeta/component';
 import {PodStatusCardComponent} from './podstatus/component';
 import {PolicyRuleListComponent} from './policyrule/component';
+import {ProbeComponent} from './probe/component';
 import {PropertyComponent} from './property/component';
 import {ProxyComponent} from './proxy/component';
 import {ResourceQuotaListComponent} from './quotas/component';
@@ -159,6 +160,7 @@ const components = [
   NamespaceChangeDialog,
   ObjectMetaComponent,
   PodStatusCardComponent,
+  ProbeComponent,
   PropertyComponent,
   ProxyComponent,
   PodListComponent,
