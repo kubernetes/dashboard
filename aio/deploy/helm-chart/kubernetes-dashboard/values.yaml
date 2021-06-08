@@ -19,7 +19,7 @@
 
 image:
   repository: kubernetesui/dashboard
-  tag: v2.2.0
+  tag: v2.3.1
   pullPolicy: IfNotPresent
   pullSecrets: []
 
@@ -210,8 +210,8 @@ metricsScraper:
     runAsUser: 1001
     runAsGroup: 2001
 #  args:
+#    - --log-level=info
 #    - --logtostderr=true
-#    - --v=0
 
 ## Optional Metrics Server sub-chart
 ## Enable this is you don't already have metrics-server enabled on your cluster and
