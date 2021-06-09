@@ -1875,6 +1875,30 @@
           <context context-type="linenumber">110</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="6987864942421621952" datatype="html">
+        <source>Liveness Probe </source>
+        <target state="new">Liveness Probe </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/common/components/container/template.html</context>
+          <context context-type="linenumber">246,247</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="411889937376498888" datatype="html">
+        <source>Readiness Probe </source>
+        <target state="new">Readiness Probe </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/common/components/container/template.html</context>
+          <context context-type="linenumber">258,259</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="4469810524935263635" datatype="html">
+        <source>Startup Probe </source>
+        <target state="new">Startup Probe </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/common/components/container/template.html</context>
+          <context context-type="linenumber">270,271</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="2079395509894825886" datatype="html">
         <source>Conditions</source>
         <target>조건</target>
@@ -2826,6 +2850,86 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/policyrule/template.html</context>
           <context context-type="linenumber">84</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="2120991562304016894" datatype="html">
+        <source>Initial Delay (Seconds) </source>
+        <target state="new">Initial Delay (Seconds) </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/common/components/probe/template.html</context>
+          <context context-type="linenumber">27,28</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="5821699818018482070" datatype="html">
+        <source>Timeout (Seconds) </source>
+        <target state="new">Timeout (Seconds) </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/common/components/probe/template.html</context>
+          <context context-type="linenumber">33,34</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="1754024291861061976" datatype="html">
+        <source>Probe Period (Seconds) </source>
+        <target state="new">Probe Period (Seconds) </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/common/components/probe/template.html</context>
+          <context context-type="linenumber">39,40</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="8195974205472351044" datatype="html">
+        <source>Success Threshold </source>
+        <target state="new">Success Threshold </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/common/components/probe/template.html</context>
+          <context context-type="linenumber">45,46</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="5158394458624484785" datatype="html">
+        <source>Failure Threshold </source>
+        <target state="new">Failure Threshold </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/common/components/probe/template.html</context>
+          <context context-type="linenumber">51,52</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="3676668621220865916" datatype="html">
+        <source>Termination Grace Period (Seconds) </source>
+        <target state="new">Termination Grace Period (Seconds) </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/common/components/probe/template.html</context>
+          <context context-type="linenumber">57,58</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="515094234886642041" datatype="html">
+        <source>HTTP Healthcheck URI</source>
+        <target state="new">HTTP Healthcheck URI</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/common/components/probe/template.html</context>
+          <context context-type="linenumber">65</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="6846205659630194861" datatype="html">
+        <source>HTTP Headers </source>
+        <target state="new">HTTP Headers </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/common/components/probe/template.html</context>
+          <context context-type="linenumber">87,88</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="6393773098525856112" datatype="html">
+        <source>TCP Socket</source>
+        <target state="new">TCP Socket</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/common/components/probe/template.html</context>
+          <context context-type="linenumber">102</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="367969280410641978" datatype="html">
+        <source>Exec Commands </source>
+        <target state="new">Exec Commands </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/common/components/probe/template.html</context>
+          <context context-type="linenumber">115,116</context>
         </context-group>
       </trans-unit>
       <trans-unit id="322645671410395107" datatype="html">
