@@ -61,66 +61,47 @@ role="inner">
     <ng-container *ngIf="probe?.httpGet">
       <kd-property>
       <div key i18n>HTTP</div>
-      <div value>ABACBB</div>
+      <div value>
+        <div *ngIf="probe?.httpGet?.scheme">
+          {{probe.httpGet.scheme | lowercase }}://
+        </div>
+        <div *ngIf="probe?.httpGet?.host as value; else defaultHost">{{ value }}</div>
+          <ng-template #defaultHost>[host]</ng-template>
+        <div *ngIf="probe?.httpGet?.port">
+          :{{probe.httpGet.port}}
+        </div>
+        <div *ngIf="probe?.httpGet?.path">
+          {{probe.httpGet.path}}
+        </div>
+      </div>
     </kd-property>
-
-      <kd-property *ngIf="probe?.httpGet?.scheme">
+    <kd-property *ngIf="probe?.httpGet?.httpHeaders?.length"
+    fxFlex="100">
         <div key
-             i18n>HTTP scheme
+        fxFlex
+        class="kd-muted section-header"
+        i18n>HTTP Headers
         </div>
-        <div value>{{probe.httpGet.scheme}}</div>
-      </kd-property>
-
-      <kd-property *ngIf="probe?.httpGet?.host">
-        <div key
-             i18n>HTTP host
+        <div value>
+        <div class="kd-code-block kd-no-whitespace">
+        <div *ngFor="let httpHeader of probe.httpGet.httpHeaders"
+            class="kd-code-block-font">{{httpHeader}}</div>
         </div>
-        <div value>{{probe.httpGet.host}}</div>
-      </kd-property>
-
-      <kd-property *ngIf="probe?.httpGet?.port">
-        <div key
-             i18n>HTTP port
         </div>
-        <div value>{{probe.httpGet.port}}</div>
-      </kd-property>
-
-      <kd-property *ngIf="probe?.httpGet?.path">
-        <div key
-             i18n>HTTP Path
-        </div>
-        <div value>{{probe.httpGet.path}}</div>
-      </kd-property>
-
-      <kd-property *ngIf="probe?.httpGet?.httpHeaders?.length"
-      fxFlex="100">
-          <div key
-          fxFlex
-          class="kd-muted section-header"
-          i18n>HTTP Headers
-          </div>
-          <div value>
-          <div class="kd-code-block kd-no-whitespace">
-          <div *ngFor="let httpHeader of probe.httpGet.httpHeaders"
-              class="kd-code-block-font">{{httpHeader}}</div>
-          </div>
-          </div>
-      </kd-property>
+    </kd-property>
     </ng-container>
 
     <ng-container *ngIf="probe?.tcpSocket">
-      <kd-property *ngIf="probe?.tcpSocket?.host">
-        <div key
-             i18n>TcpSocket Host
-        </div>
-        <div value>{{probe.tcpSocket.host}}</div>
-      </kd-property>
 
-      <kd-property *ngIf="probe?.tcpSocket?.port">
-        <div key
-             i18n>TcpSocket Port
+      <kd-property>
+        <div key i18n>TCP Socket</div>
+        <div value>
+          <div *ngIf="probe?.tcpSocket?.host as value; else defaultHost">{{ value }}</div>
+            <ng-template #defaultHost>[host]</ng-template>
+          <div *ngIf="probe?.tcpSocket?.port">
+            :{{probe.httpGet.port}}
+          </div>
         </div>
-        <div value>{{probe.tcpSocket.port}}</div>
       </kd-property>
     </ng-container>
 
