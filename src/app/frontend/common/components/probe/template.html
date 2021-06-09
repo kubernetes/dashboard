@@ -14,9 +14,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<kd-card [initialized]="initialized"          [expandable]="false"
-[withTitle]="false"
-role="inner">
+<kd-card [initialized]="initialized"
+         [expandable]="false"
+         [withTitle]="false"
+         role="inner">
 
   <div content
        *ngIf="initialized"
@@ -60,44 +61,48 @@ role="inner">
 
     <ng-container *ngIf="probe?.httpGet">
       <kd-property>
-      <div key i18n>HTTP</div>
-      <div value>
-        <div *ngIf="probe?.httpGet?.scheme">
-          {{probe.httpGet.scheme | lowercase }}://
-        </div>
-        <div *ngIf="probe?.httpGet?.host as value; else defaultHost">{{ value }}</div>
-          <ng-template #defaultHost>[host]</ng-template>
-        <div *ngIf="probe?.httpGet?.port">
-          :{{probe.httpGet.port}}
-        </div>
-        <div *ngIf="probe?.httpGet?.path">
-          {{probe.httpGet.path}}
-        </div>
-      </div>
-    </kd-property>
-    <kd-property *ngIf="probe?.httpGet?.httpHeaders?.length"
-    fxFlex="100">
         <div key
-        fxFlex
-        class="kd-muted section-header"
-        i18n>HTTP Headers
+             i18n>HTTP Healthcheck URI</div>
+        <div value>
+          <div class="kd-code-block">
+            <spam *ngIf="probe?.httpGet?.scheme">
+              {{probe.httpGet.scheme | lowercase }}://
+            </spam>
+            <spam *ngIf="probe?.httpGet?.host as value; else defaultHost">{{ value }}</spam>
+            <ng-template #defaultHost>[host]</ng-template>
+            <spam *ngIf="probe?.httpGet?.port">
+              :{{probe.httpGet.port}}
+            </spam>
+            <spam *ngIf="probe?.httpGet?.path">
+              {{probe.httpGet.path}}
+            </spam>
+          </div>
+        </div>
+      </kd-property>
+      <kd-property *ngIf="probe?.httpGet?.httpHeaders?.length"
+                   fxFlex="100">
+        <div key
+             fxFlex
+             class="kd-muted section-header"
+             i18n>HTTP Headers
         </div>
         <div value>
-        <div class="kd-code-block kd-no-whitespace">
-        <div *ngFor="let httpHeader of probe.httpGet.httpHeaders"
-            class="kd-code-block-font">{{httpHeader}}</div>
+          <div class="kd-code-block kd-no-whitespace">
+            <div *ngFor="let httpHeader of probe.httpGet.httpHeaders"
+                 class="kd-code-block-font">{{httpHeader}}</div>
+          </div>
         </div>
-        </div>
-    </kd-property>
+      </kd-property>
     </ng-container>
 
     <ng-container *ngIf="probe?.tcpSocket">
 
       <kd-property>
-        <div key i18n>TCP Socket</div>
+        <div key
+             i18n>TCP Socket</div>
         <div value>
           <div *ngIf="probe?.tcpSocket?.host as value; else defaultHost">{{ value }}</div>
-            <ng-template #defaultHost>[host]</ng-template>
+          <ng-template #defaultHost>[host]</ng-template>
           <div *ngIf="probe?.tcpSocket?.port">
             :{{probe.httpGet.port}}
           </div>
@@ -106,15 +111,15 @@ role="inner">
     </ng-container>
 
     <kd-property *ngIf="probe?.exec?.command?.length">
-        <div key
-             i18n>Exec Commands
-        </div>
-        <div value>
+      <div key
+           i18n>Exec Commands
+      </div>
+      <div value>
         <div class="kd-code-block">
-        <div *ngFor="let command of probe.exec.command"
-            class="kd-code-block-font">{{command}}</div>
+          <div *ngFor="let command of probe.exec.command"
+               class="kd-code-block-font">{{command}}</div>
         </div>
-        </div>
+      </div>
     </kd-property>
 
   </div>

@@ -13,11 +13,7 @@
 // limitations under the License.
 
 import {Component, Input} from '@angular/core';
-// import {MatTableDataSource} from '@angular/material/table';
 import {Probe} from '@api/root.api';
-// import {SupportedResources} from '@api/root.shared';
-// import {PersistentVolumeSource} from '@api/volume.api';
-// import {KdStateService} from '../../services/global/state';
 
 @Component({
   selector: 'kd-probe-card',
@@ -25,5 +21,5 @@ import {Probe} from '@api/root.api';
 })
 export class ProbeComponent {
   @Input() initialized: boolean;
-  @Input() probe: Probe[];
+  @Input() probe: Probe;
 }
