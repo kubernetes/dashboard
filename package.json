@@ -160,7 +160,7 @@
     "husky": "6.0.0",
     "jasmine-core": "3.7.1",
     "jasmine-spec-reporter": "7.0.0",
-    "jest": "27.0.1",
+    "jest": "27.0.4",
     "jest-preset-angular": "9.0.1",
     "js-beautify": "1.13.13",
     "license-check-and-add": "4.0.2",
