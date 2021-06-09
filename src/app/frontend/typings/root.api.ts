@@ -894,7 +894,7 @@ export interface ProbeHttpGet {
   port: string | number;
   host?: string;
   scheme?: string;
-  httpHeaders?: string[]
+  httpHeaders?: string[];
 }
 
 export interface ProbeTcpSocket {
