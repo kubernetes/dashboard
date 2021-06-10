@@ -3420,22 +3420,20 @@
           <context context-type="linenumber">47</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="5943454400955467108" datatype="html">
+        <source><x id="START_TAG_KD_DATE" ctype="x-kd_date" equiv-text="&quot;\uFFFD#9\uFFFD&quot;"/><x id="CLOSE_TAG_KD_DATE" ctype="x-kd_date" equiv-text="&quot;\uFFFD/#9\uFFFD&quot;"/></source>
+        <target state="new"><x id="START_TAG_KD_DATE" ctype="x-kd_date" equiv-text="&quot;\uFFFD#9\uFFFD&quot;"/><x id="CLOSE_TAG_KD_DATE" ctype="x-kd_date" equiv-text="&quot;\uFFFD/#9\uFFFD&quot;"/></target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/chrome/notifications/template.html</context>
+          <context context-type="linenumber">45,46</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="4580988005648117665" datatype="html">
         <source>Search</source>
         <target>검색</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/chrome/search/template.html</context>
           <context context-type="linenumber">29</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="7487879176780118151" datatype="html">
-        <source><x id="START_TAG_KD_DATE" ctype="x-kd_date" equiv-text="&quot;\uFFFD#9\uFFFD&quot;"/><x id="CLOSE_TAG_KD_DATE" ctype="x-kd_date" equiv-text="&quot;\uFFFD/#9\uFFFD&quot;"/> ago </source>
-        <target>
-              <x id="START_TAG_KD-DATE" ctype="x-kd-date" equiv-text="&lt;kd-date>"/><x id="CLOSE_TAG_KD-DATE" ctype="x-kd-date" equiv-text="&lt;/kd-date>"/> 전
-            </target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/frontend/chrome/notifications/template.html</context>
-          <context context-type="linenumber">45</context>
         </context-group>
       </trans-unit>
       <trans-unit id="5145206565823805475" datatype="html">
