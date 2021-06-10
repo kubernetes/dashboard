@@ -10,14 +10,12 @@ For each of the following snippets for `ServiceAccount` and `ClusterRoleBinding`
 
 We are creating Service Account with name `admin-user` in namespace `kubernetes-dashboard` first.
 
-```shell
-cat <<EOF | kubectl apply -f -
+```yaml
 apiVersion: v1
 kind: ServiceAccount
 metadata:
   name: admin-user
   namespace: kubernetes-dashboard
-EOF
 ```
 
 ## Creating a ClusterRoleBinding
@@ -25,8 +23,7 @@ EOF
 In most cases after provisioning cluster using `kops`, `kubeadm` or any other popular tool, the `ClusterRole` `cluster-admin` already exists in the cluster. We can use it and create only `ClusterRoleBinding` for our `ServiceAccount`.
 If it does not exist then you need to create this role first and grant required privileges manually.
 
-```shell
-cat <<EOF | kubectl apply -f -
+```yaml
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
@@ -39,7 +36,6 @@ subjects:
 - kind: ServiceAccount
   name: admin-user
   namespace: kubernetes-dashboard
-EOF
 ```
 
 ## Getting a Bearer Token
