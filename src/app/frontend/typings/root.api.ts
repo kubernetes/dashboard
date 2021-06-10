@@ -527,9 +527,18 @@ export interface IngressSpecTLS {
 }
 
 export interface IngressBackend {
-  serviceName?: string;
-  servicePort?: string | number;
+  service?: IngressBackendService;
   resource?: ResourceRef;
+}
+
+export interface IngressBackendService {
+  name: string;
+  port: IngressBackendServicePort;
+}
+
+export interface IngressBackendServicePort {
+  name?: string;
+  number?: number;
 }
 
 export interface IngressSpecRule {
