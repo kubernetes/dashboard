@@ -22,4 +22,23 @@ import {Probe} from '@api/root.api';
 export class ProbeComponent {
   @Input() initialized: boolean;
   @Input() probe: Probe;
+
+  get healthcheckUri(): string {
+    if (!this.probe || !this.probe.httpGet || !this.probe.httpGet.scheme) {
+      return '';
+    }
+
+    const host = this.probe.httpGet.host || '[host]';
+    let uri = `${this.probe.httpGet.scheme.toLocaleLowerCase()}://${host}`;
+
+    if (this.probe.httpGet.port) {
+      uri += `:${this.probe.httpGet.port}`;
+    }
+
+    if (this.probe.httpGet.path) {
+      uri += this.probe.httpGet.path;
+    }
+
+    return uri;
+  }
 }

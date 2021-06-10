@@ -18,7 +18,6 @@ limitations under the License.
          [expandable]="false"
          [withTitle]="false"
          role="inner">
-
   <div content
        *ngIf="initialized"
        fxLayout="row wrap">
@@ -65,17 +64,7 @@ limitations under the License.
              i18n>HTTP Healthcheck URI</div>
         <div value>
           <div class="kd-code-block">
-            <spam *ngIf="probe?.httpGet?.scheme">
-              {{probe.httpGet.scheme | lowercase }}://
-            </spam>
-            <spam *ngIf="probe?.httpGet?.host as value; else defaultHost">{{ value }}</spam>
-            <ng-template #defaultHost>[host]</ng-template>
-            <spam *ngIf="probe?.httpGet?.port">
-              :{{probe.httpGet.port}}
-            </spam>
-            <spam *ngIf="probe?.httpGet?.path">
-              {{probe.httpGet.path}}
-            </spam>
+            {{healthcheckUri}}
           </div>
         </div>
       </kd-property>
