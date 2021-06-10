@@ -881,6 +881,38 @@ export interface Container {
   volumeMounts: VolumeMounts[];
   securityContext: ContainerSecurityContext;
   status: ContainerStatus;
+  livenessProbe: Probe;
+  readinessProbe: Probe;
+  startupProbe: Probe;
+}
+
+export interface Probe {
+  httpGet?: ProbeHttpGet;
+  tcpSocket?: ProbeTcpSocket;
+  exec?: ProbeExec;
+  initialDelaySeconds?: number;
+  timeoutSeconds?: number;
+  periodSeconds?: number;
+  successThreshold?: number;
+  failureThreshold?: number;
+  terminationGracePeriodSeconds?: number;
+}
+
+export interface ProbeHttpGet {
+  path?: string;
+  port: string | number;
+  host?: string;
+  scheme?: string;
+  httpHeaders?: string[];
+}
+
+export interface ProbeTcpSocket {
+  port: string | number;
+  host?: string;
+}
+
+export interface ProbeExec {
+  command?: string[];
 }
 
 export interface ContainerStatus {
