@@ -26,7 +26,6 @@ This document describes the set of roles individuals may have within the Kuberne
     <td>Responsible for design, plannings, roadmaps etc. Works on project recognition.</td>
     <td>
       <a href="https://github.com/floreks">@floreks</a>
-      <a href="https://github.com/jeefy">@jeefy</a>
       <a href="https://github.com/maciaszczykm">@maciaszczykm</a>
     </td>
   </tr>
@@ -45,7 +44,6 @@ This document describes the set of roles individuals may have within the Kuberne
     <td>Leads weekly meetings with the community. Integrates new members into community.</td>
     <td>
       <a href="https://github.com/floreks">@floreks</a>
-      <a href="https://github.com/jeefy">@jeefy</a>
       <a href="https://github.com/maciaszczykm">@maciaszczykm</a>
     </td>
   </tr>
