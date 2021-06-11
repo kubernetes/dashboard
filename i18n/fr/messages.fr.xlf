@@ -738,6 +738,14 @@
           <context context-type="linenumber">47</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="5943454400955467108" datatype="html">
+        <source><x id="START_TAG_KD_DATE" ctype="x-kd_date" equiv-text="&quot;\uFFFD#9\uFFFD&quot;"/><x id="CLOSE_TAG_KD_DATE" ctype="x-kd_date" equiv-text="&quot;\uFFFD/#9\uFFFD&quot;"/></source>
+        <target state="new"><x id="START_TAG_KD_DATE" ctype="x-kd_date" equiv-text="&quot;\uFFFD#9\uFFFD&quot;"/><x id="CLOSE_TAG_KD_DATE" ctype="x-kd_date" equiv-text="&quot;\uFFFD/#9\uFFFD&quot;"/></target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/chrome/notifications/template.html</context>
+          <context context-type="linenumber">45,46</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="2944102521023817891" datatype="html">
         <source>Cluster</source>
         <target>Cluster</target>
@@ -2144,7 +2152,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/resource/discovery/ingress/detail/template.html</context>
-          <context context-type="linenumber">48</context>
+          <context context-type="linenumber">51</context>
         </context-group>
       </trans-unit>
       <trans-unit id="7143579180750436311" datatype="html">
@@ -2678,6 +2686,30 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/resource/workloads/pod/detail/template.html</context>
           <context context-type="linenumber">110</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="6987864942421621952" datatype="html">
+        <source>Liveness Probe </source>
+        <target state="new">Liveness Probe </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/common/components/container/template.html</context>
+          <context context-type="linenumber">246,247</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="411889937376498888" datatype="html">
+        <source>Readiness Probe </source>
+        <target state="new">Readiness Probe </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/common/components/container/template.html</context>
+          <context context-type="linenumber">258,259</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="4469810524935263635" datatype="html">
+        <source>Startup Probe </source>
+        <target state="new">Startup Probe </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/common/components/container/template.html</context>
+          <context context-type="linenumber">270,271</context>
         </context-group>
       </trans-unit>
       <trans-unit id="2079395509894825886" datatype="html">
@@ -3580,6 +3612,86 @@
           <context context-type="linenumber">84</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="2120991562304016894" datatype="html">
+        <source>Initial Delay (Seconds) </source>
+        <target state="new">Initial Delay (Seconds) </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/common/components/probe/template.html</context>
+          <context context-type="linenumber">26</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="5821699818018482070" datatype="html">
+        <source>Timeout (Seconds) </source>
+        <target state="new">Timeout (Seconds) </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/common/components/probe/template.html</context>
+          <context context-type="linenumber">32</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="1754024291861061976" datatype="html">
+        <source>Probe Period (Seconds) </source>
+        <target state="new">Probe Period (Seconds) </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/common/components/probe/template.html</context>
+          <context context-type="linenumber">38</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="8195974205472351044" datatype="html">
+        <source>Success Threshold </source>
+        <target state="new">Success Threshold </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/common/components/probe/template.html</context>
+          <context context-type="linenumber">44</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="5158394458624484785" datatype="html">
+        <source>Failure Threshold </source>
+        <target state="new">Failure Threshold </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/common/components/probe/template.html</context>
+          <context context-type="linenumber">50</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="3676668621220865916" datatype="html">
+        <source>Termination Grace Period (Seconds) </source>
+        <target state="new">Termination Grace Period (Seconds) </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/common/components/probe/template.html</context>
+          <context context-type="linenumber">56</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="515094234886642041" datatype="html">
+        <source>HTTP Healthcheck URI</source>
+        <target state="new">HTTP Healthcheck URI</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/common/components/probe/template.html</context>
+          <context context-type="linenumber">64</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="6846205659630194861" datatype="html">
+        <source>HTTP Headers </source>
+        <target state="new">HTTP Headers </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/common/components/probe/template.html</context>
+          <context context-type="linenumber">76</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="6393773098525856112" datatype="html">
+        <source>TCP Socket</source>
+        <target state="new">TCP Socket</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/common/components/probe/template.html</context>
+          <context context-type="linenumber">91</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="367969280410641978" datatype="html">
+        <source>Exec Commands </source>
+        <target state="new">Exec Commands </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/common/components/probe/template.html</context>
+          <context context-type="linenumber">104</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="4749936818577754995" datatype="html">
         <source>Delete resource</source>
         <target>Supprimer la ressource</target>
@@ -3782,16 +3894,6 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/chrome/search/template.html</context>
           <context context-type="linenumber">29</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="7487879176780118151" datatype="html">
-        <source><x id="START_TAG_KD_DATE" ctype="x-kd_date" equiv-text="&quot;\uFFFD#9\uFFFD&quot;"/><x id="CLOSE_TAG_KD_DATE" ctype="x-kd_date" equiv-text="&quot;\uFFFD/#9\uFFFD&quot;"/> ago </source>
-        <target>
-              il y a <x id="START_TAG_KD-DATE" ctype="x-kd-date" equiv-text="&lt;kd-date>"/><x id="CLOSE_TAG_KD-DATE" ctype="x-kd-date" equiv-text="&lt;/kd-date>"/>
-            </target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/frontend/chrome/notifications/template.html</context>
-          <context context-type="linenumber">45</context>
         </context-group>
       </trans-unit>
       <trans-unit id="5145206565823805475" datatype="html">
@@ -5199,7 +5301,7 @@
         <target state="new">TLS Secret</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/ingressrulelist/template.html</context>
-          <context context-type="linenumber">88</context>
+          <context context-type="linenumber">89</context>
         </context-group>
       </trans-unit>
       <trans-unit id="1183601349925746054" datatype="html">
@@ -5239,7 +5341,7 @@
         <target state="new"><x id="INTERPOLATION" equiv-text="{{ingress.spec.backend.resource.kind}}"/></target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/resource/discovery/ingress/detail/template.html</context>
-          <context context-type="linenumber">41</context>
+          <context context-type="linenumber">44</context>
         </context-group>
       </trans-unit>
       <trans-unit id="7298863100332850221" datatype="html">
