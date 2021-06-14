@@ -22,7 +22,7 @@ import {
   SimpleChanges,
 } from '@angular/core';
 import {MatDialog, MatDialogConfig} from '@angular/material/dialog';
-import {StringMap} from '@api/root.api';
+import {StringMap} from '@api/root.shared';
 // @ts-ignore
 import truncateUrl from 'truncate-url';
 
