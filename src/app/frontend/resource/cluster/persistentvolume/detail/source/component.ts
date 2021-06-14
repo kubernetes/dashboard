@@ -13,7 +13,9 @@
 // limitations under the License.
 
 import {Component, Input} from '@angular/core';
+import {MatTableDataSource} from '@angular/material/table';
 import {PersistentVolumeSource} from '@api/volume.api';
+import {StringMap} from '@api/root.shared';
 
 @Component({
   selector: 'kd-persistent-volume-source',
@@ -23,7 +25,29 @@ export class PersistentVolumeSourceComponent {
   @Input() source: PersistentVolumeSource;
   @Input() initialized: boolean;
 
-  getCsiVolumeAttribute(): string {
-    return JSON.stringify(this.source.csi.volumeAttributes);
+  getVolumeAttributesColumns(): string[] {
+    return ['key', 'value'];
+  }
+
+  getVolumeAttributesDataSource(): MatTableDataSource<StringMap> {
+    const data: StringMap[] = [];
+
+    if (this.initialized) {
+      for (const rName of Array.from<string>(Object.keys(this.source.csi.volumeAttributes))) {
+        data.push({
+          key: rName,
+          value: this.source.csi.volumeAttributes[rName],
+        });
+      }
+    }
+
+    const tableData = new MatTableDataSource<StringMap>();
+    tableData.data = data;
+
+    return tableData;
+  }
+
+  trackByCapacityItemName(_: number, item: StringMap): string {
+    return item.key;
   }
 }

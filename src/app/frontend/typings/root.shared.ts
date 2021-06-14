@@ -25,3 +25,7 @@ export enum SupportedResources {
   Secret = 'Secret',
   PersistentVolumeClaim = 'PersistentVolumeClaim',
 }
+
+export interface StringMap {
+  [key: string]: string;
+}

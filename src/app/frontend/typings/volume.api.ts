@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {SupportedResources} from '@api/root.shared';
+import {SupportedResources, StringMap} from '@api/root.shared';
 import {isObject} from 'lodash';
 
 export class PersistentVolumeSource {
@@ -44,7 +44,7 @@ export class PersistentVolumeSource {
   portworxVolume: PortworxVolumeSource;
   scaleIO: ScaleIOVolumeSource;
   storageOS: StorageOSVolumeSource;
-  csi: CSIVolumeSource;
+  csi?: CSIVolumeSource;
 
   constructor(volume: PersistentVolumeSource) {
     Object.assign(this, volume);
@@ -377,10 +377,10 @@ export class QuobyteVolumeSource implements IVolumeSource {
 
 export class CSIVolumeSource implements IVolumeSource {
   driver: string;
+  volumeHandle: string;
   readOnly?: boolean;
   fSType?: string;
-  volumeAttributes?: any;
-  volumeHandle: string;
+  volumeAttributes?: StringMap;
   nodePublishSecretRef?: LocalObjectReference;
 
   get mountType(): string {
