@@ -380,6 +380,7 @@ export class CSIVolumeSource implements IVolumeSource {
   readOnly?: boolean;
   fSType?: string;
   volumeAttributes?: any;
+  volumeHandle: string;
   nodePublishSecretRef?: LocalObjectReference;
 
   get mountType(): string {
@@ -387,7 +388,7 @@ export class CSIVolumeSource implements IVolumeSource {
   }
 
   get displayName(): string {
-    return this.driver;
+    return `${this.driver}/${this.volumeHandle}`;
   }
 }
 

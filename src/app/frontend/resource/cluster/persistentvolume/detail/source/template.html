@@ -229,6 +229,37 @@ limitations under the License.
       </kd-property>
     </ng-container>
 
+    <ng-container *ngIf="source?.csi">
+      <kd-property>
+        <div key
+             i18n>Type
+        </div>
+        <div value>CSI</div>
+      </kd-property>
+      <kd-property *ngIf="source.csi.driver">
+        <div key
+             i18n>Driver
+        </div>
+        <div value>{{source.csi.driver}}</div>
+      </kd-property>
+      <kd-property *ngIf="source.csi.volumeHandle">
+        <div key
+             i18n>Volume Handle
+        </div>
+        <div value>{{source.csi.volumeHandle}}</div>
+      </kd-property>
+      <kd-property *ngIf="source?.csi?.volumeAttributes">
+        <div key
+             i18n>Volume Attributes
+        </div>
+        <div value>
+          <div class="kd-code-block">
+            <div class="kd-code-block-font">{{getCsiVolumeAttribute()}}</div>
+          </div>
+        </div>
+      </kd-property>
+    </ng-container>
+
     <ng-container *ngIf="source?.iscsi">
       <kd-property>
         <div key

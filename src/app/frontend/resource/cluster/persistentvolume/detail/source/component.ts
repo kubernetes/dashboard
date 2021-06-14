@@ -22,4 +22,8 @@ import {PersistentVolumeSource} from '@api/volume.api';
 export class PersistentVolumeSourceComponent {
   @Input() source: PersistentVolumeSource;
   @Input() initialized: boolean;
+
+  getCsiVolumeAttribute(): string {
+    return JSON.stringify(this.source.csi.volumeAttributes);
+  }
 }
