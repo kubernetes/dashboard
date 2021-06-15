@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {KdError} from '@api/root.shared';
+import {KdError, StringMap} from '@api/root.shared';
 import {PersistentVolumeSource} from '@api/volume.api';
 
 export interface TypeMeta {
@@ -781,10 +781,6 @@ export interface Theme {
 
 export interface AppConfig {
   serverTime: number;
-}
-
-export interface StringMap {
-  [key: string]: string;
 }
 
 export interface ErrStatus {
