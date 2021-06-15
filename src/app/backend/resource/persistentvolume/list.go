@@ -42,6 +42,7 @@ type PersistentVolume struct {
 	AccessModes   []v1.PersistentVolumeAccessMode  `json:"accessModes"`
 	ReclaimPolicy v1.PersistentVolumeReclaimPolicy `json:"reclaimPolicy"`
 	StorageClass  string                           `json:"storageClass"`
+	MountOptions  []string                         `json:"mountOptions"`
 	Status        v1.PersistentVolumePhase         `json:"status"`
 	Claim         string                           `json:"claim"`
 	Reason        string                           `json:"reason"`
@@ -99,6 +100,7 @@ func toPersistentVolume(pv v1.PersistentVolume) PersistentVolume {
 		AccessModes:   pv.Spec.AccessModes,
 		ReclaimPolicy: pv.Spec.PersistentVolumeReclaimPolicy,
 		StorageClass:  pv.Spec.StorageClassName,
+		MountOptions:  pv.Spec.MountOptions,
 		Status:        pv.Status.Phase,
 		Claim:         getPersistentVolumeClaim(&pv),
 		Reason:        pv.Status.Reason,

@@ -67,6 +67,16 @@ limitations under the License.
       <div value>{{persistentVolume.message}}</div>
     </kd-property>
 
+    <kd-property *ngIf="persistentVolume?.mountOptions"
+                 fxFlex="100">
+      <div key
+           i18n>Mount Option(s)</div>
+      <div value
+           *ngFor="let mountOption of persistentVolume?.mountOptions">
+        <div value>{{mountOption}}</div>
+      </div>
+    </kd-property>
+
     <kd-property *ngIf="persistentVolume?.accessModes"
                  fxFlex="100">
       <div key

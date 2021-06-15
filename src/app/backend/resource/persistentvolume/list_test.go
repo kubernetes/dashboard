@@ -77,6 +77,7 @@ func TestToPersistentVolumeList(t *testing.T) {
 					Reason:        "my-reason",
 					ReclaimPolicy: "delete",
 					StorageClass:  "default-storageclass",
+					MountOptions:  ["op1", "op2"],
 				}},
 			},
 		},

@@ -338,6 +338,7 @@ export interface PersistentVolume extends Resource {
   storageClass: string;
   accessModes: string[];
   reclaimPolicy: string;
+  mountOptions?: string[];
   status: string;
   claim: string;
   reason: string;
