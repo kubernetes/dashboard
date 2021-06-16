@@ -1176,6 +1176,11 @@ export interface LogLineReference {
   lineNum: number;
 }
 
+export type LogOptions = {
+  previous: boolean;
+  timestamps: boolean;
+};
+
 export interface Protocols {
   protocols: string[];
 }
