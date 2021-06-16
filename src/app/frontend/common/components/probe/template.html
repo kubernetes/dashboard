@@ -85,16 +85,11 @@ limitations under the License.
     </ng-container>
 
     <ng-container *ngIf="probe?.tcpSocket">
-
       <kd-property>
         <div key
              i18n>TCP Socket</div>
         <div value>
-          <div *ngIf="probe?.tcpSocket?.host as value; else defaultHost">{{ value }}</div>
-          <ng-template #defaultHost>[host]</ng-template>
-          <div *ngIf="probe?.tcpSocket?.port">
-            :{{probe.httpGet.port}}
-          </div>
+          <div class="kd-code-block">{{tcpSocketAddr}}</div>
         </div>
       </kd-property>
     </ng-container>
