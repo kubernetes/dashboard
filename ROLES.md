@@ -27,6 +27,7 @@ This document describes the set of roles individuals may have within the Kuberne
     <td>
       <a href="https://github.com/floreks">@floreks</a>
       <a href="https://github.com/maciaszczykm">@maciaszczykm</a>
+      <a href="https://github.com/shu-mutou">@shu-mutou</a>
     </td>
   </tr>
    
@@ -36,6 +37,7 @@ This document describes the set of roles individuals may have within the Kuberne
     <td>
       <a href="https://github.com/floreks">@floreks</a>
       <a href="https://github.com/maciaszczykm">@maciaszczykm</a>
+      <a href="https://github.com/shu-mutou">@shu-mutou</a>
     </td>
   </tr>
   
@@ -45,6 +47,7 @@ This document describes the set of roles individuals may have within the Kuberne
     <td>
       <a href="https://github.com/floreks">@floreks</a>
       <a href="https://github.com/maciaszczykm">@maciaszczykm</a>
+      <a href="https://github.com/shu-mutou">@shu-mutou</a>
     </td>
   </tr>
 
