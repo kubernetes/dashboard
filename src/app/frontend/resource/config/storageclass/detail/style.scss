@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-@import '../../../../variables';
-@import '../../../../mixins';
+@use '../../../../variables' as *;
+@use '../../../../mixins' as *;
 
 .kd-storage-class-parameter-icon {
   @include kd-icon-size($caption-font-size-base);

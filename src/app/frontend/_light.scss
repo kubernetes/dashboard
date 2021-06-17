@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-@import '~@angular/material/theming';
-@import './theming';
+@use '~@angular/material/theming' as mat-theming;
+@use './theming';
 
 $colors-light: (
   primary: #326de6,
@@ -31,9 +31,9 @@ $colors-light: (
 );
 
 // sass-lint:disable function-name-format
-$kd-blue: map_merge($mat-blue, (500: #326de6));
+$kd-blue: map_merge(mat-theming.$mat-blue, (500: #326de6));
 
-$theme-light: mat-light-theme(mat-palette($kd-blue), mat-palette($kd-blue), mat-palette($kd-blue));
+$theme-light: mat-theming.mat-light-theme(mat-theming.mat-palette($kd-blue), mat-theming.mat-palette($kd-blue), mat-theming.mat-palette($kd-blue));
 
 $background: map-get($theme-light, background);
 $background: map_merge($background, (background: #edeff0));
@@ -42,8 +42,8 @@ $theme-light: map_merge($theme-light, (background: $background));
 
 // sass-lint:disable no-color-literals
 .kd-light-theme {
-  @include angular-material-theme($theme-light);
-  @include kd-theme($theme-light, $colors-light);
+  @include mat-theming.angular-material-theme($theme-light);
+  @include theming.kd-theme($theme-light, $colors-light);
 
   .kd-toolbar-logo-text,
   .kd-primary-toolbar-icon {

@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-@import '~@angular/material/theming';
-@import './theming';
+@use '~@angular/material/theming' as mat-theming;
+@use './theming';
 
 $colors-dark: (
   primary: #327df4,
@@ -31,9 +31,9 @@ $colors-dark: (
 );
 
 // sass-lint:disable function-name-format
-$kd-blue: map_merge($mat-blue, (500: #327df4));
+$kd-blue: map_merge(mat-theming.$mat-blue, (500: #327df4));
 
-$theme-dark: mat-dark-theme(mat-palette($kd-blue), mat-palette($kd-blue), mat-palette($kd-blue));
+$theme-dark: mat-theming.mat-dark-theme(mat-theming.mat-palette($kd-blue), mat-theming.mat-palette($kd-blue), mat-theming.mat-palette($kd-blue));
 
 $background: map-get($theme-dark, background);
 $background: map_merge($background, (background: #1d1d1d));
@@ -45,8 +45,8 @@ $theme-dark: map_merge($theme-dark, (background: $background));
 
 // sass-lint:disable no-color-literals
 .kd-dark-theme {
-  @include angular-material-theme($theme-dark);
-  @include kd-theme($theme-dark, $colors-dark);
+  @include mat-theming.angular-material-theme($theme-dark);
+  @include theming.kd-theme($theme-dark, $colors-dark);
 
   .kd-toolbar-logo-text,
   .kd-primary-toolbar-icon,
