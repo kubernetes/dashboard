@@ -41,4 +41,17 @@ export class ProbeComponent {
 
     return uri;
   }
+
+  get tcpSocketAddr(): string {
+    if (!this.probe || !this.probe.tcpSocket) {
+      return '';
+    }
+
+    let addr = this.probe.tcpSocket.host || '[host]';
+    if (this.probe.tcpSocket.port) {
+      addr += `:${this.probe.tcpSocket.port}`;
+    }
+
+    return addr;
+  }
 }
