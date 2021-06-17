@@ -189,7 +189,7 @@
   },
   "engines": {
     "node": ">=14.16.1",
-    "npm": ">=6.0.0 <7.0.0"
+    "npm": ">=6.0.0"
   },
   "eslintConfig": {
     "parser": "@typescript-eslint/parser",
