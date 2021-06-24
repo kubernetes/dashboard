@@ -3381,7 +3381,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/resource/config/persistentvolumeclaim/detail/template.html</context>
-          <context context-type="linenumber">39</context>
+          <context context-type="linenumber">51</context>
         </context-group>
       </trans-unit>
       <trans-unit id="5055611162892898285" datatype="html">
@@ -3397,7 +3397,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/resource/config/persistentvolumeclaim/detail/template.html</context>
-          <context context-type="linenumber">48</context>
+          <context context-type="linenumber">60</context>
         </context-group>
       </trans-unit>
       <trans-unit id="3026305820283888836" datatype="html">
@@ -3733,7 +3733,7 @@
         <target state="new">TCP Socket</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/probe/template.html</context>
-          <context context-type="linenumber">91</context>
+          <context context-type="linenumber">90</context>
         </context-group>
       </trans-unit>
       <trans-unit id="367969280410641978" datatype="html">
@@ -3741,7 +3741,7 @@
         <target state="new">Exec Commands </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/probe/template.html</context>
-          <context context-type="linenumber">104</context>
+          <context context-type="linenumber">99</context>
         </context-group>
       </trans-unit>
       <trans-unit id="4749936818577754995" datatype="html">
@@ -5418,6 +5418,14 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/resource/config/secret/detail/template.html</context>
           <context context-type="linenumber">40</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="149997197907824533" datatype="html">
+        <source>Volume Name</source>
+        <target state="new">Volume Name</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/resource/config/persistentvolumeclaim/detail/template.html</context>
+          <context context-type="linenumber">38</context>
         </context-group>
       </trans-unit>
       <trans-unit id="3583123851975839013" datatype="html">
