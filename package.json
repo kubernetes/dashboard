@@ -138,7 +138,7 @@
     "@cypress/webpack-preprocessor": "5.9.1",
     "@types/c3": "0.7.5",
     "@types/d3": "6.7.3",
-    "@types/d3-scale": "3.2.3",
+    "@types/d3-scale": "4.0.0",
     "@types/file-saver": "2.0.2",
     "@types/jasmine": "3.7.7",
     "@types/jasminewd2": "2.0.8",
