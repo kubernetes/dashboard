@@ -37,8 +37,8 @@ metadata:
 {{ toYaml . | indent 4 }}
 {{- end }}
 spec:
-  {{- if .Values.ingress.class.name }}
-  ingressClassName: {{ .Values.ingress.class.name | quote }}
+  {{- with .Values.ingress.className }}
+  ingressClassName: {{ . | quote }}
   {{- end }}
   rules:
   {{- if .Values.ingress.hosts }}
