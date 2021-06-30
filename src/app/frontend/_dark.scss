@@ -30,7 +30,7 @@ $colors-dark: (
   log-viewer-scrollbar: rgba(200, 200, 200, .66),
 );
 
-// sass-lint:disable function-name-format
+// sass-lint:disable
 $kd-blue: map_merge(mat-theming.$mat-blue, (500: #327df4));
 
 $theme-dark: mat-theming.mat-dark-theme(mat-theming.mat-palette($kd-blue), mat-theming.mat-palette($kd-blue), mat-theming.mat-palette($kd-blue));
@@ -41,9 +41,7 @@ $background: map_merge($background, (app-bar: #1d1d1d));
 $background: map_merge($background, (card: #2d2d2d));
 $background: map_merge($background, (dialog: #2d2d2d));
 $theme-dark: map_merge($theme-dark, (background: $background));
-// sass-lint:enable function-name-format
 
-// sass-lint:disable no-color-literals
 .kd-dark-theme {
   @include mat-theming.angular-material-theme($theme-dark);
   @include theming.kd-theme($theme-dark, $colors-dark);
@@ -63,4 +61,4 @@ $theme-dark: map_merge($theme-dark, (background: $background));
     stroke: none;
   }
 }
-// sass-lint:enable no-color-literals
+// sass-lint:enable

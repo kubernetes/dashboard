@@ -51,6 +51,7 @@ $shell-background-color: #000;
 
       mat-card-content {
         @include flex-full-height;
+
         background: $shell-background-color;
         padding: 0;
 

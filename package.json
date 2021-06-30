@@ -41,7 +41,7 @@
     "check:codegen": "aio/scripts/verify-codegen.sh",
     "check:frontend": "concurrently \"npm run check:frontend:ts\" \"npm run check:frontend:scss\" \"npm run check:frontend:html\"",
     "check:frontend:ts": "gts lint",
-    "check:frontend:scss": "./aio/scripts/format.sh --styles --check && ./node_modules/sass-lint/bin/sass-lint.js -c .sass-lint.yml 'src/app/frontend/**/*.scss' -v -q",
+    "check:frontend:scss": "stylelint \"src/**/*.scss\"",
     "check:frontend:html": "./aio/scripts/format.sh --html --check",
     "check:license": "license-check-and-add check",
     "check:i18n": "aio/scripts/pre-commit-i18n.sh",
@@ -49,7 +49,7 @@
     "fix:backend": "golangci-lint run -c .golangci.yml --fix ./src/app/backend/...",
     "fix:frontend": "concurrently \"npm run fix:frontend:ts\" \"npm run fix:frontend:scss\" \"npm run fix:frontend:html\"",
     "fix:frontend:ts": "gts fix",
-    "fix:frontend:scss": "scssfmt -r 'src/**/*.scss'",
+    "fix:frontend:scss": "stylelint \"src/**/*.scss\" --fix",
     "fix:frontend:html": "./aio/scripts/format.sh --html",
     "fix:license": "license-check-and-add add",
     "fix:i18n": "npm run check:i18n",
@@ -63,7 +63,7 @@
       "gts fix"
     ],
     "src/**/*.scss": [
-      "scssfmt"
+      "stylelint --fix"
     ],
     "src/**/*.go": [
       "./aio/scripts/pre-commit-golangci-lint.sh"
@@ -173,11 +173,13 @@
     "raw-loader": "4.0.2",
     "run-node": "2.0.0",
     "sass": "1.35.1",
-    "sass-lint": "1.13.1",
     "sass-loader": "12.1.0",
-    "scssfmt": "1.0.7",
     "semver": "7.3.5",
     "source-map-explorer": "2.5.2",
+    "stylelint": "13.13.1",
+    "stylelint-config-standard": "22.0.0",
+    "stylelint-no-unsupported-browser-features": "5.0.1",
+    "stylelint-order": "4.1.0",
     "tar": "6.1.0",
     "through2": "4.0.2",
     "ts-jest": "27.0.3",
@@ -246,6 +248,48 @@
     "aio/*",
     "src/app/frontend/common/services/global/history.ts"
   ],
+  "stylelint": {
+    "extends": "stylelint-config-standard",
+    "plugins": [
+      "stylelint-no-unsupported-browser-features",
+      "stylelint-order"
+    ],
+    "rules": {
+      "at-rule-no-unknown": null,
+      "font-family-no-missing-generic-family-keyword": null,
+      "no-invalid-position-at-import-rule": null,
+      "no-descending-specificity": null,
+      "number-leading-zero": null,
+      "order/order": [
+        "dollar-variables",
+        {
+          "type": "at-rule",
+          "name": "extend"
+        },
+        {
+          "type": "at-rule",
+          "name": "include"
+        },
+        "declarations",
+        {
+          "type": "at-rule",
+          "name": "include",
+          "hasBlock": true
+        },
+        "at-rules",
+        "rules"
+      ],
+      "order/properties-alphabetical-order": true,
+      "plugin/no-unsupported-browser-features": [
+        true,
+        {
+          "severity": "warning"
+        }
+      ],
+      "selector-pseudo-element-no-unknown": null,
+      "selector-type-no-unknown": null
+    }
+  },
   "browserslist": [
     "> 0.5%",
     "last 2 versions",

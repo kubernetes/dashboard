@@ -39,8 +39,7 @@ We use following tools and settings for each check and formatting:
 |---------|--------------------------------------------------------------------------|---------|
 | go      | [golangci-lint](https://github.com/golangci/golangci-lint)               | [`.golangci.yml`](../../.golangci.yml) |
 | ts      | [gts](https://github.com/google/gts)                                     | `eslintConfig` in [`package.json`](../../package.json) and [`.prettierrc.js`](../../.prettierrc.js) |
-| scss    | [sass-lint](https://github.com/sasstools/sass-lint)                      | [`.sass-lint.yml`](../../.sass-lint.yml) |
-| scss    | [scssfmt](https://github.com/morishitter/scssfmt)                        | - |
+| scss    | [stylelint](https://github.com/stylelint/stylelint)                      | `stylelint` in [`package.json`](../../package.json) |
 | html    | [js-beautify](https://github.com/beautify-web/js-beautify)               | options in [`format.sh`](../../aio/scripts/format.sh) |
 | license | [licence-check-and-add](https://github.com/awjh/license-check-and-add)   | [`license-checker-config.json`](../../license-checker-config.json)
 | i18n    | [xliffmerge](https://github.com/martinroob/ngx-i18nsupport)              | `xliffmergeOptions` in [`package.json`](../../package.json) |
