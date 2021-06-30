@@ -414,6 +414,10 @@ func CreateHTTPAPIHandler(iManager integration.IntegrationManager, cManager clie
 			Writes(common.EventList{}))
 
 	apiV1Ws.Route(
+		apiV1Ws.GET("/event").
+			To(apiHandler.handleGetClusterEvents).
+			Writes(common.EventList{}))
+	apiV1Ws.Route(
 		apiV1Ws.GET("/secret").
 			To(apiHandler.handleGetSecretList).
 			Writes(secret.SecretList{}))
@@ -1906,6 +1910,22 @@ func (apiHandler *APIHandler) handleGetNamespaceEvents(request *restful.Request,
 	name := request.PathParameter("name")
 	dataSelect := parser.ParseDataSelectPathParameter(request)
 	result, err := event.GetNamespaceEvents(k8sClient, dataSelect, name)
+	if err != nil {
+		errors.HandleInternalError(response, err)
+		return
+	}
+	response.WriteHeaderAndEntity(http.StatusOK, result)
+}
+
+func (apiHandler *APIHandler) handleGetClusterEvents(request *restful.Request, response *restful.Response) {
+	k8sClient, err := apiHandler.cManager.Client(request)
+	if err != nil {
+		errors.HandleInternalError(response, err)
+		return
+	}
+
+	dataSelect := parser.ParseDataSelectPathParameter(request)
+	result, err := event.GetNamespaceEvents(k8sClient, dataSelect, v1.NamespaceAll)
 	if err != nil {
 		errors.HandleInternalError(response, err)
 		return
