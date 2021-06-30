@@ -110,7 +110,7 @@ code {
 
 .mat-header-cell {
   font-size: $body-font-size-base;
-  padding: 0 ($baseline-grid / 2);
+  padding: 0 ($baseline-grid * .5);
 
   &:first-child,
   &:last-child {
@@ -123,7 +123,7 @@ code {
 
   &:not(:first-child) {
     &:not(:last-child) {
-      padding: 0 ($baseline-grid / 2);
+      padding: 0 ($baseline-grid * .5);
     }
   }
 
@@ -198,7 +198,7 @@ router-outlet::after {
 ////////////////////////////////////////////
 
 .kd-equivalent-block {
-  border-radius: $baseline-grid / 4;
+  border-radius: $baseline-grid * .25;
   font-size: $body-font-size-base;
   margin: (1.5 * $baseline-grid) 0;
   padding: $baseline-grid;
@@ -221,7 +221,7 @@ router-outlet::after {
 }
 
 .kd-code-block {
-  border-radius: $baseline-grid / 4;
+  border-radius: $baseline-grid * .25;
   display: block;
   font-family: $font-family-monospace;
   font-size: $body-font-size-base;
@@ -355,7 +355,7 @@ router-outlet::after {
 
 .kd-sparkline {
   height: 4 * $baseline-grid;
-  vertical-align: -$baseline-grid / 2; // 20% below baseline, to flow with text
+  vertical-align: -$baseline-grid * .5; // 20% below baseline, to flow with text
   width: 15 * $baseline-grid;
 }
 

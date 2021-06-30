@@ -23,7 +23,7 @@
 .kd-zerostate-title {
   font-size: $headline-font-size-base;
   font-weight: $regular-font-weight;
-  margin-bottom: $baseline-grid / 2;
+  margin-bottom: $baseline-grid * .5;
 }
 
 .kd-zerostate-text {

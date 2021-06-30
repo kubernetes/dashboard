@@ -19,5 +19,5 @@
   @include kd-icon-size($caption-font-size-base);
 
   align-self: center;
-  margin-left: $baseline-grid / 2;
+  margin-left: $baseline-grid * .5;
 }
