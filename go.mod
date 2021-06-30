@@ -18,5 +18,6 @@ require (
 	k8s.io/apiextensions-apiserver v0.21.2
 	k8s.io/apimachinery v0.21.2
 	k8s.io/client-go v0.21.2
+	k8s.io/code-generator v0.21.2 // indirect
 	k8s.io/heapster v1.5.4
 )
