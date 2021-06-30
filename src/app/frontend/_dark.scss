@@ -30,7 +30,6 @@ $colors-dark: (
   log-viewer-scrollbar: rgba(200, 200, 200, .66),
 );
 
-// sass-lint:disable
 $kd-blue: map_merge(mat-theming.$mat-blue, (500: #327df4));
 
 $theme-dark: mat-theming.mat-dark-theme(mat-theming.mat-palette($kd-blue), mat-theming.mat-palette($kd-blue), mat-theming.mat-palette($kd-blue));
@@ -61,4 +60,3 @@ $theme-dark: map_merge($theme-dark, (background: $background));
     stroke: none;
   }
 }
-// sass-lint:enable

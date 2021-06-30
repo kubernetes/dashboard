@@ -30,7 +30,6 @@ $colors-light: (
   log-viewer-scrollbar: rgba(200, 200, 200, .66),
 );
 
-// sass-lint:disable function-name-format
 $kd-blue: map_merge(mat-theming.$mat-blue, (500: #326de6));
 
 $theme-light: mat-theming.mat-light-theme(mat-theming.mat-palette($kd-blue), mat-theming.mat-palette($kd-blue), mat-theming.mat-palette($kd-blue));
@@ -38,9 +37,7 @@ $theme-light: mat-theming.mat-light-theme(mat-theming.mat-palette($kd-blue), mat
 $background: map-get($theme-light, background);
 $background: map_merge($background, (background: #edeff0));
 $theme-light: map_merge($theme-light, (background: $background));
-// sass-lint:enable function-name-format
 
-// sass-lint:disable no-color-literals
 .kd-light-theme {
   @include mat-theming.angular-material-theme($theme-light);
   @include theming.kd-theme($theme-light, $colors-light);
@@ -58,4 +55,3 @@ $theme-light: map_merge($theme-light, (background: $background));
     background-color: #fafafa;
   }
 }
-// sass-lint:enable no-color-literals
