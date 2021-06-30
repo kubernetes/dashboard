@@ -3325,7 +3325,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/resource/config/persistentvolumeclaim/detail/template.html</context>
-          <context context-type="linenumber">39</context>
+          <context context-type="linenumber">51</context>
         </context-group>
       </trans-unit>
       <trans-unit id="5055611162892898285" datatype="html">
@@ -3341,7 +3341,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/resource/config/persistentvolumeclaim/detail/template.html</context>
-          <context context-type="linenumber">48</context>
+          <context context-type="linenumber">60</context>
         </context-group>
       </trans-unit>
       <trans-unit id="3026305820283888836" datatype="html">
@@ -4004,8 +4004,7 @@
       <trans-unit id="2135976822395163664" datatype="html">
         <source> Please select the kubeconfig file that you have created to configure access to the cluster. To find out more about how to configure and use kubeconfig file, please refer to the <x id="START_LINK" ctype="x-a" equiv-text="&quot;\uFFFD#2\uFFFD&quot;"/>Configure Access to Multiple Clusters<x id="CLOSE_LINK" ctype="x-a" equiv-text="&quot;\uFFFD/#2\uFFFD&quot;"/> section. </source>
         <target>
-                Bitte wählen Sie eine Kubeconfig-Datei, die verwendet werden kann, um auf das Cluster zuzugreifen. Um mehr über die Konfigurationsoption und die allgemeine Benutzung der Kubeconfig-Datei zu erfahren, konsultieren Sie den Abschnitt
-                veuillez vous référer à la section <x id="START_LINK" ctype="x-a" equiv-text="&lt;a>"/>Zugang zu mehreren Clustern konfigurieren<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a>"/>.
+                Bitte wählen Sie eine Kubeconfig-Datei, die verwendet werden kann, um auf das Cluster zuzugreifen. Um mehr über die Konfigurationsoption und die allgemeine Benutzung der Kubeconfig-Datei zu erfahren, konsultieren Sie den Abschnitt <x id="START_LINK" ctype="x-a" equiv-text="&lt;a>"/>Zugang zu mehreren Clustern konfigurieren<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a>"/>.
               </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/login/template.html</context>
@@ -5340,6 +5339,14 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/resource/config/secret/detail/template.html</context>
           <context context-type="linenumber">40</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="149997197907824533" datatype="html">
+        <source>Volume Name</source>
+        <target state="new">Volume Name</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/resource/config/persistentvolumeclaim/detail/template.html</context>
+          <context context-type="linenumber">38</context>
         </context-group>
       </trans-unit>
       <trans-unit id="3583123851975839013" datatype="html">

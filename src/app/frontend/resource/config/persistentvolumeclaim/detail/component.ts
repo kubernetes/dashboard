@@ -22,6 +22,8 @@ import {ActionbarService, ResourceMeta} from '../../../../common/services/global
 import {NotificationsService} from '../../../../common/services/global/notifications';
 import {EndpointManager, Resource} from '../../../../common/services/resource/endpoint';
 import {NamespacedResourceService} from '../../../../common/services/resource/resource';
+import {KdStateService} from '../../../../common/services/global/state';
+import {GlobalServicesModule} from '../../../../common/services/global/module';
 
 @Component({
   selector: 'kd-persistent-volume-claim-detail',
@@ -30,6 +32,8 @@ import {NamespacedResourceService} from '../../../../common/services/resource/re
 export class PersistentVolumeClaimDetailComponent implements OnInit, OnDestroy {
   private readonly endpoint_ = EndpointManager.resource(Resource.persistentVolumeClaim, true);
   private readonly unsubscribe_ = new Subject<void>();
+
+  private readonly kdState_: KdStateService = GlobalServicesModule.injector.get(KdStateService);
 
   persistentVolumeClaim: PersistentVolumeClaimDetail;
   isInitialized = false;
@@ -60,5 +64,9 @@ export class PersistentVolumeClaimDetailComponent implements OnInit, OnDestroy {
     this.unsubscribe_.next();
     this.unsubscribe_.complete();
     this.actionbar_.onDetailsLeave.emit();
+  }
+
+  getPersistentVolumeHref(persistentVolumeReference: string): string {
+    return this.kdState_.href('persistentvolume', persistentVolumeReference);
   }
 }
