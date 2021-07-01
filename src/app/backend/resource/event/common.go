@@ -170,17 +170,20 @@ func FillEventsType(events []v1.Event) []v1.Event {
 // ToEvent converts event api Event to Event model object.
 func ToEvent(event v1.Event) common.Event {
 	result := common.Event{
-		ObjectMeta:      api.NewObjectMeta(event.ObjectMeta),
-		TypeMeta:        api.NewTypeMeta(api.ResourceKindEvent),
-		Message:         event.Message,
-		SourceComponent: event.Source.Component,
-		SourceHost:      event.Source.Host,
-		SubObject:       event.InvolvedObject.FieldPath,
-		Count:           event.Count,
-		FirstSeen:       event.FirstTimestamp,
-		LastSeen:        event.LastTimestamp,
-		Reason:          event.Reason,
-		Type:            event.Type,
+		ObjectMeta:         api.NewObjectMeta(event.ObjectMeta),
+		TypeMeta:           api.NewTypeMeta(api.ResourceKindEvent),
+		Message:            event.Message,
+		SourceComponent:    event.Source.Component,
+		SourceHost:         event.Source.Host,
+		SubObject:          event.InvolvedObject.FieldPath,
+		SubObjectKind:      event.InvolvedObject.Kind,
+		SubObjectName:      event.InvolvedObject.Name,
+		SubObjectNamespace: event.InvolvedObject.Namespace,
+		Count:              event.Count,
+		FirstSeen:          event.FirstTimestamp,
+		LastSeen:           event.LastTimestamp,
+		Reason:             event.Reason,
+		Type:               event.Type,
 	}
 
 	return result

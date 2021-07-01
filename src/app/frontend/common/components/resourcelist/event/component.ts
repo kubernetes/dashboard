@@ -22,6 +22,8 @@ import {NotificationsService} from '../../../services/global/notifications';
 import {NamespacedResourceService} from '../../../services/resource/resource';
 import {ListGroupIdentifier, ListIdentifier} from '../groupids';
 import {Status} from '../statuses';
+import {KdStateService} from '../../../services/global/state';
+import {GlobalServicesModule} from '../../../../common/services/global/module';
 
 const EVENT_TYPE_WARNING = 'Warning';
 
@@ -33,6 +35,7 @@ const EVENT_TYPE_WARNING = 'Warning';
 export class EventListComponent extends ResourceListWithStatuses<EventList, Event> implements OnInit {
   @Input() endpoint: string;
   @Input() showNamespaceColumn = false;
+  readonly kdState_: KdStateService = GlobalServicesModule.injector.get(KdStateService);
 
   constructor(
     private readonly eventList: NamespacedResourceService<EventList>,
@@ -69,6 +72,10 @@ export class EventListComponent extends ResourceListWithStatuses<EventList, Even
 
   getDisplayColumns(): string[] {
     return ['statusicon', 'message', 'source', 'subobject', 'count', 'firstseen', 'lastseen'];
+  }
+
+  getObjectHref(kind: string, name: string, namespace: string): string {
+    return this.kdState_.href(kind.toLowerCase(), name, namespace);
   }
 
   private shouldShowNamespaceColumn_(): boolean {

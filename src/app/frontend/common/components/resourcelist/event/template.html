@@ -73,7 +73,12 @@ limitations under the License.
                          i18n>Sub-object</mat-header-cell>
         <mat-cell *matCellDef="let event"
                   class="kd-col-sm">
-          <div *ngIf="event.object">{{event.object}}</div>
+          <div *ngIf="event.object">
+            <a [routerLink]="getObjectHref(event.objectKind, event.objectName, event.objectNamespace)"
+               queryParamsHandling="preserve">
+              {{event.object}}
+            </a>
+          </div>
           <div *ngIf="!event.object">-</div>
         </mat-cell>
       </ng-container>
