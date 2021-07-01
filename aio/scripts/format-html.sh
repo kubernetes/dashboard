@@ -20,26 +20,17 @@ source "${ROOT_DIR}/aio/scripts/conf.sh"
 # Define variables.
 CHECK=false
 CHECK_FAILED=0
-FORMAT_HTML=false
 
 function format::html {
-  ${BEAUTIFY_BIN} --type html \
-                  --end-with-newline \
-                  --indent-size 2 \
-                  --wrap-attributes "force-aligned" \
-                  --replace 'src/app/frontend/**/*.html' > /dev/null
+  ${BEAUTIFY_BIN} ${BEAUTIFY_OPTS} --replace 'src/app/frontend/**/*.html' > /dev/null
 }
 
-function format::html::check {
+function check::html {
   local needsFormat=false
   local files=($(find ${FRONTEND_SRC} -type f -name '*.html'))
   for file in "${files[@]}"; do
     local fileContent=$(cat ${file})
-    local formattedFile=$(${BEAUTIFY_BIN} --type html \
-                  --end-with-newline \
-                  --indent-size 2 \
-                  --wrap-attributes "force-aligned" \
-                  ${file})
+    local formattedFile=$(${BEAUTIFY_BIN} ${BEAUTIFY_OPTS} -f ${file})
     local isFormatted=$(diff <(echo "${formattedFile}") <(echo "${fileContent}"))
     if [[ ! -z "${isFormatted}" ]] ; then
       needsFormat=true
@@ -62,10 +53,6 @@ function parse::args {
       CHECK=true
       shift
       ;;
-      -h|--html)
-      FORMAT_HTML=true
-      shift
-      ;;
     esac
   done
   set -- "${POSITIONAL[@]}" # Restore positional parameters.
@@ -75,19 +62,14 @@ function parse::args {
 parse::args "$@"
 
 if [ "${CHECK}" = true ] ; then
-  if [ "${FORMAT_HTML}" = true ] ; then
-    format::html::check
-    CHECK_FAILED=$?
-    if [ "${CHECK_FAILED}" -gt 0 ]; then
-      saye "HTML code is not properly formatted. Please run 'npm run fix:frontend'.";
-      exit 1
-    fi
-    say "HTML is properly formatted!"
+  check::html
+  CHECK_FAILED=$?
+  if [ "${CHECK_FAILED}" -gt 0 ]; then
+    saye "HTML code is not properly formatted. Please run 'npm run fix:frontend'.";
+    exit 1
   fi
-
+  say "HTML is properly formatted!"
   exit 0
 fi
 
-if [ "${FORMAT_HTML}" = true ] ; then
-  format::html
-fi
+format::html
