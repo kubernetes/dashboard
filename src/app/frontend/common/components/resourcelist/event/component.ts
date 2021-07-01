@@ -71,7 +71,7 @@ export class EventListComponent extends ResourceListWithStatuses<EventList, Even
   }
 
   getDisplayColumns(): string[] {
-    return ['statusicon', 'message', 'source', 'subobject', 'count', 'firstseen', 'lastseen'];
+    return ['statusicon', 'type', 'message', 'source', 'object', 'count', 'firstseen', 'lastseen'];
   }
 
   getObjectHref(kind: string, name: string, namespace: string): string {
