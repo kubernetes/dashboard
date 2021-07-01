@@ -18,7 +18,6 @@ import {DEFAULT_ACTIONBAR} from '../../../common/components/actionbars/routing';
 
 import {CLUSTER_ROUTE} from '../routing';
 
-// import {EventDetailComponent} from './detail/component';
 import {EventListComponent} from './list/component';
 
 const EVENT_LIST_ROUTE: Route = {
@@ -30,17 +29,8 @@ const EVENT_LIST_ROUTE: Route = {
   },
 };
 
-// const EVENT_DETAIL_ROUTE: Route = {
-//   path: ':resourceName',
-//   component: EventDetailComponent,
-//   data: {
-//     breadcrumb: '{{ resourceName }}',
-//     parent: EVENT_LIST_ROUTE,
-//   },
-// };
-
 @NgModule({
-  imports: [RouterModule.forChild([EVENT_LIST_ROUTE, /* EVENT_DETAIL_ROUTE, */ DEFAULT_ACTIONBAR])],
+  imports: [RouterModule.forChild([EVENT_LIST_ROUTE,  DEFAULT_ACTIONBAR])],
   exports: [RouterModule],
 })
 export class EventRoutingModule {}

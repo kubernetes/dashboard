@@ -30,7 +30,7 @@ limitations under the License.
 
     <mat-table [dataSource]="getData()"
                [trackBy]="trackByResource">
-      <ng-container [matColumnDef]="getDisplayColumns()[0]">
+      <ng-container matColumnDef="statusicon">
         <mat-header-cell *matHeaderCellDef></mat-header-cell>
         <mat-cell *matCellDef="let event">
           <mat-icon [ngClass]="getStatus(event).iconClass"
@@ -40,7 +40,16 @@ limitations under the License.
         </mat-cell>
       </ng-container>
 
-      <ng-container [matColumnDef]="getDisplayColumns()[1]">
+      <ng-container *ngIf="shouldShowColumn('namespace')"
+                    matColumnDef="namespace">
+        <mat-header-cell *matHeaderCellDef
+                         class="kd-col-md"
+                         i18n>Namespace</mat-header-cell>
+        <mat-cell *matCellDef="let event"
+                  class="kd-col-md">{{event.objectMeta.namespace}}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="message">
         <mat-header-cell *matHeaderCellDef
                          class="kd-col-gt"
                          i18n>Message</mat-header-cell>
@@ -48,7 +57,7 @@ limitations under the License.
                   class="kd-col-gt">{{event.message}}</mat-cell>
       </ng-container>
 
-      <ng-container [matColumnDef]="getDisplayColumns()[2]">
+      <ng-container matColumnDef="source">
         <mat-header-cell *matHeaderCellDef
                          class="kd-col-md"
                          i18n>Source</mat-header-cell>
@@ -58,7 +67,7 @@ limitations under the License.
         </mat-cell>
       </ng-container>
 
-      <ng-container [matColumnDef]="getDisplayColumns()[3]">
+      <ng-container matColumnDef="subobject">
         <mat-header-cell *matHeaderCellDef
                          class="kd-col-sm"
                          i18n>Sub-object</mat-header-cell>
@@ -69,7 +78,7 @@ limitations under the License.
         </mat-cell>
       </ng-container>
 
-      <ng-container [matColumnDef]="getDisplayColumns()[4]">
+      <ng-container matColumnDef="count">
         <mat-header-cell *matHeaderCellDef
                          class="kd-col-xs"
                          i18n>Count</mat-header-cell>
@@ -77,7 +86,7 @@ limitations under the License.
                   class="kd-col-xs">{{event.count}}</mat-cell>
       </ng-container>
 
-      <ng-container [matColumnDef]="getDisplayColumns()[5]">
+      <ng-container matColumnDef="firstseen">
         <mat-header-cell *matHeaderCellDef
                          class="kd-col-sm"
                          i18n>First Seen</mat-header-cell>
@@ -88,7 +97,7 @@ limitations under the License.
         </mat-cell>
       </ng-container>
 
-      <ng-container [matColumnDef]="getDisplayColumns()[6]">
+      <ng-container matColumnDef="lastseen">
         <mat-header-cell *matHeaderCellDef
                          class="kd-col-sm"
                          i18n>Last Seen</mat-header-cell>

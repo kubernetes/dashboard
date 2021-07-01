@@ -32,6 +32,7 @@ const EVENT_TYPE_WARNING = 'Warning';
 })
 export class EventListComponent extends ResourceListWithStatuses<EventList, Event> implements OnInit {
   @Input() endpoint: string;
+  @Input() showNamespaceColumn = false;
 
   constructor(
     private readonly eventList: NamespacedResourceService<EventList>,
@@ -45,6 +46,9 @@ export class EventListComponent extends ResourceListWithStatuses<EventList, Even
     // Register status icon handler
     this.registerBinding('kd-warning', e => e.type === EVENT_TYPE_WARNING, Status.Warning);
     this.registerBinding('kd-hidden', e => e.type !== EVENT_TYPE_WARNING, Status.Normal);
+
+    // Register dynamic columns.
+    this.registerDynamicColumn('namespace', 'statusicon', this.shouldShowNamespaceColumn_.bind(this));
   }
 
   ngOnInit(): void {
@@ -65,5 +69,9 @@ export class EventListComponent extends ResourceListWithStatuses<EventList, Even
 
   getDisplayColumns(): string[] {
     return ['statusicon', 'message', 'source', 'subobject', 'count', 'firstseen', 'lastseen'];
+  }
+
+  private shouldShowNamespaceColumn_(): boolean {
+    return this.showNamespaceColumn;
   }
 }
