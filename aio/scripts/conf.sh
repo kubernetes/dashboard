@@ -32,7 +32,6 @@ GO_COVERAGE_FILE="${ROOT_DIR}/coverage/coverage.go.txt"
 # Binaries.
 NG_BIN="${ROOT_DIR}/node_modules/.bin/ng"
 GULP_BIN="${ROOT_DIR}/node_modules/.bin/gulp"
-SCSSFMT_BIN="${ROOT_DIR}/node_modules/.bin/scssfmt"
 BEAUTIFY_BIN="${ROOT_DIR}/node_modules/.bin/js-beautify"
 
 # Global constants.

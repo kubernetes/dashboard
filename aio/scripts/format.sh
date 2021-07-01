@@ -20,30 +20,7 @@ source "${ROOT_DIR}/aio/scripts/conf.sh"
 # Define variables.
 CHECK=false
 CHECK_FAILED=0
-FORMAT_STYLES=false
 FORMAT_HTML=false
-
-function format::styles {
-  ${SCSSFMT_BIN} -r "${FRONTEND_SRC}/**/*.scss"
-}
-
-function format::styles::check {
-  local needsFormat=false
-  local files=($(find ${FRONTEND_SRC} -type f -name '*.scss'))
-  for file in "${files[@]}"; do
-    local out=$(${SCSSFMT_BIN} ${file} --diff)
-    local isNotFormatted=$(echo ${out} | grep 'There is no difference')
-    if [[ -z "${isNotFormatted}" ]] ; then
-      needsFormat=true
-    fi
-  done
-
-  if [ "${needsFormat}" = true ] ; then
-    return 1
-  fi
-
-  return 0
-}
 
 function format::html {
   ${BEAUTIFY_BIN} --type html \
@@ -85,10 +62,6 @@ function parse::args {
       CHECK=true
       shift
       ;;
-      -s|--styles)
-      FORMAT_STYLES=true
-      shift
-      ;;
       -h|--html)
       FORMAT_HTML=true
       shift
@@ -102,16 +75,6 @@ function parse::args {
 parse::args "$@"
 
 if [ "${CHECK}" = true ] ; then
-  if [ "${FORMAT_STYLES}" = true ] ; then
-    format::styles::check
-    CHECK_FAILED=$?
-    if [ "${CHECK_FAILED}" -gt 0 ]; then
-      saye "Styles are not properly formatted. Please run 'npm run fix:frontend'.";
-      exit 1
-    fi
-    say "Styles are properly formatted!"
-  fi
-
   if [ "${FORMAT_HTML}" = true ] ; then
     format::html::check
     CHECK_FAILED=$?
@@ -123,10 +86,6 @@ if [ "${CHECK}" = true ] ; then
   fi
 
   exit 0
-fi
-
-if [ "${FORMAT_STYLES}" = true ] ; then
-  format::styles
 fi
 
 if [ "${FORMAT_HTML}" = true ] ; then

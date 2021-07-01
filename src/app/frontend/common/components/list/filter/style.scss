@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-@import '../../../../variables';
+@use '../../../../variables' as *;
 
 :host {
   display: flex;
@@ -20,7 +20,7 @@
 }
 
 .kd-resource-card-list-filter-wrapper {
-  padding-right: ($baseline-grid / 2);
+  padding-right: ($baseline-grid * .5);
 }
 
 .kd-search-icon {

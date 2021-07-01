@@ -12,10 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-@import '../../../variables';
+@use '../../../variables' as *;
 
 :host {
-  border-radius: $baseline-grid / 4;
+  border-radius: $baseline-grid * .25;
   height: 4.75 * $baseline-grid;
   line-height: 4.5 * $baseline-grid;
   margin-right: 2 * $baseline-grid;

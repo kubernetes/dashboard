@@ -12,10 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-@import '../../variables';
+@use '../../variables' as *;
 
 .kd-search {
-  border-radius: $baseline-grid / 4;
+  border-radius: $baseline-grid * .25;
   padding-left: $baseline-grid;
 
   input {

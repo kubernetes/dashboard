@@ -12,13 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-@import '../../variables';
-@import '../../mixins';
+@use '../../variables' as *;
+@use '../../mixins' as *;
 
 $counter-size: $baseline-grid * 2;
 $drawer-size: $baseline-grid * 50;
 $drawer-z-index: 1000;
-$drawer-border-radius: $baseline-grid / 4;
+$drawer-border-radius: $baseline-grid * .25;
 $drawer-controls-size: $baseline-grid * 4;
 
 .kd-notifications-container {
@@ -47,7 +47,7 @@ $drawer-controls-size: $baseline-grid * 4;
 }
 
 .kd-notifications-panel {
-  border-radius: $baseline-grid / 2;
+  border-radius: $baseline-grid * .5;
   height: $drawer-size;
   left: -$drawer-size + 5 * $baseline-grid;
   overflow: hidden;
