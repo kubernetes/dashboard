@@ -81,7 +81,7 @@ limitations under the License.
                          i18n>Object</mat-header-cell>
         <mat-cell *matCellDef="let event"
                   class="kd-col-sm">
-          <div *ngIf="event.object">
+          <div *ngIf="event.objectName">
             <a [routerLink]="getObjectHref(event.objectKind, event.objectName, event.objectNamespace)"
                queryParamsHandling="preserve">
               {{event.objectKind}}/{{event.objectName}}
