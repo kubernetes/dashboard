@@ -67,7 +67,7 @@ export class EventListComponent extends ResourceListWithStatuses<EventList, Even
   }
 
   map(eventList: EventList): Event[] {
-    return eventList.events;
+    return eventList.events.sort((a: Event, b: Event) => a.lastSeen == b.lastSeen ? 0 : (b.lastSeen > a.lastSeen ? 1 : -1));
   }
 
   getDisplayColumns(): string[] {
