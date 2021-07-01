@@ -30,7 +30,7 @@ const EVENT_LIST_ROUTE: Route = {
 };
 
 @NgModule({
-  imports: [RouterModule.forChild([EVENT_LIST_ROUTE,  DEFAULT_ACTIONBAR])],
+  imports: [RouterModule.forChild([EVENT_LIST_ROUTE, DEFAULT_ACTIONBAR])],
   exports: [RouterModule],
 })
 export class EventRoutingModule {}
