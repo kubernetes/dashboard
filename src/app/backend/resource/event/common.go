@@ -229,8 +229,14 @@ func (self EventCell) GetProperty(name dataselect.PropertyName) dataselect.Compa
 		return dataselect.StdComparableString(self.ObjectMeta.Name)
 	case dataselect.CreationTimestampProperty:
 		return dataselect.StdComparableTime(self.ObjectMeta.CreationTimestamp.Time)
+	case dataselect.FirstSeenProperty:
+		return dataselect.StdComparableTime(self.FirstTimestamp.Time)
+	case dataselect.LastSeenProperty:
+		return dataselect.StdComparableTime(self.LastTimestamp.Time)
 	case dataselect.NamespaceProperty:
 		return dataselect.StdComparableString(self.ObjectMeta.Namespace)
+	case dataselect.ReasonProperty:
+		return dataselect.StdComparableString(self.Reason)
 	default:
 		// if name is not supported then just return a constant dummy value, sort will have no effect.
 		return nil

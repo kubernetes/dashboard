@@ -15,7 +15,7 @@ limitations under the License.
 -->
 
 <kd-card role="table"
-         [expanded]="totalItems > 0"
+         [expanded]="expanded"
          [hidden]="isHidden()">
   <div title
        fxLayout="row"
@@ -29,7 +29,11 @@ limitations under the License.
          [isLoading]="isLoading"></div>
 
     <mat-table [dataSource]="getData()"
-               [trackBy]="trackByResource">
+               [trackBy]="trackByResource"
+               matSort
+               matSortActive="lastSeen"
+               matSortDisableClear
+               matSortDirection="asc">
       <ng-container matColumnDef="statusicon">
         <mat-header-cell *matHeaderCellDef></mat-header-cell>
         <mat-cell *matCellDef="let event">
@@ -38,6 +42,14 @@ limitations under the License.
             {{getStatus(event).iconName}}
           </mat-icon>
         </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="name">
+        <mat-header-cell *matHeaderCellDef
+                         class="kd-col-md"
+                         i18n>Name</mat-header-cell>
+        <mat-cell *matCellDef="let event"
+                  class="kd-col-md">{{event.objectMeta.name}}</mat-cell>
       </ng-container>
 
       <ng-container *ngIf="shouldShowColumn('namespace')"
@@ -51,6 +63,7 @@ limitations under the License.
 
       <ng-container matColumnDef="reason">
         <mat-header-cell *matHeaderCellDef
+                         mat-sort-header
                          class="kd-col-xs"
                          i18n>Reason</mat-header-cell>
         <mat-cell *matCellDef="let event"
@@ -75,19 +88,34 @@ limitations under the License.
         </mat-cell>
       </ng-container>
 
-      <ng-container matColumnDef="object">
+      <ng-container *ngIf="shouldShowColumn('object')"
+                    matColumnDef="object">
         <mat-header-cell *matHeaderCellDef
-                         class="kd-col-sm"
+                         class="kd-col-md"
                          i18n>Object</mat-header-cell>
         <mat-cell *matCellDef="let event"
-                  class="kd-col-sm">
+                  class="kd-col-md">
           <div *ngIf="event.objectName">
-            <a [routerLink]="getObjectHref(event.objectKind, event.objectName, event.objectNamespace)"
+            <a *ngIf="getObjectHref(event.objectKind, event.objectName, event.objectNamespace); else unsupportedObject"
+               [routerLink]="getObjectHref(event.objectKind, event.objectName, event.objectNamespace)"
                queryParamsHandling="preserve">
               {{event.objectKind}}/{{event.objectName}}
             </a>
+            <ng-template #unsupportedObject>{{event.objectKind}}/{{event.objectName}}</ng-template>
           </div>
           <div *ngIf="!event.objectName">-</div>
+        </mat-cell>
+      </ng-container>
+
+      <ng-container *ngIf="shouldShowColumn('subobject')"
+                    matColumnDef="subobject">
+        <mat-header-cell *matHeaderCellDef
+                         class="kd-col-md"
+                         i18n>Sub-object</mat-header-cell>
+        <mat-cell *matCellDef="let event"
+                  class="kd-col-md">
+          <div *ngIf="event.object">{{event.object}}</div>
+          <div *ngIf="!event.object">-</div>
         </mat-cell>
       </ng-container>
 
@@ -99,8 +127,9 @@ limitations under the License.
                   class="kd-col-xs">{{event.count}}</mat-cell>
       </ng-container>
 
-      <ng-container matColumnDef="firstseen">
+      <ng-container matColumnDef="firstSeen">
         <mat-header-cell *matHeaderCellDef
+                         mat-sort-header
                          class="kd-col-sm"
                          i18n>First Seen</mat-header-cell>
         <mat-cell *matCellDef="let event"
@@ -110,8 +139,9 @@ limitations under the License.
         </mat-cell>
       </ng-container>
 
-      <ng-container matColumnDef="lastseen">
+      <ng-container matColumnDef="lastSeen">
         <mat-header-cell *matHeaderCellDef
+                         mat-sort-header
                          class="kd-col-sm"
                          i18n>Last Seen</mat-header-cell>
         <mat-cell *matCellDef="let event"

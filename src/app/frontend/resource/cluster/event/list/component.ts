@@ -14,13 +14,8 @@
 
 import {Component} from '@angular/core';
 
-import {EndpointManager, Resource} from '../../../../common/services/resource/endpoint';
-
 @Component({
   selector: 'kd-event-list-state',
-  template: '<kd-event-list [showNamespaceColumn]=true [endpoint]="eventListEndpoint"></kd-event-list>',
+  template: '<kd-event-list></kd-event-list>',
 })
-export class EventListComponent {
-  private readonly endpoint_ = EndpointManager.resource(Resource.event, false);
-  eventListEndpoint = this.endpoint_.list();
-}
+export class EventListComponent {}
