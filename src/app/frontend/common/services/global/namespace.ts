@@ -60,6 +60,6 @@ export class NamespaceService {
   }
 
   areMultipleNamespacesSelected(): boolean {
-    return this.currentNamespace_ ? this.currentNamespace_ === this.allNamespacesKey_ : true;
+    return this.current() ? this.current() === this.allNamespacesKey_ : true;
   }
 }

@@ -15,15 +15,14 @@
 import {HttpParams} from '@angular/common/http';
 import {ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnInit} from '@angular/core';
 import {Event, EventList} from '@api/root.api';
-import {Observable} from 'rxjs';
 
-import {ResourceListWithStatuses} from '../../../resources/list';
-import {NotificationsService} from '../../../services/global/notifications';
-import {NamespacedResourceService} from '../../../services/resource/resource';
+import {ResourceListWithStatuses} from '@common/resources/list';
+import {NotificationsService} from '@common/services/global/notifications';
+import {EndpointManager, Resource} from '@common/services/resource/endpoint';
+import {NamespacedResourceService} from '@common/services/resource/resource';
+import {Observable} from 'rxjs';
 import {ListGroupIdentifier, ListIdentifier} from '../groupids';
 import {Status} from '../statuses';
-
-const EVENT_TYPE_WARNING = 'Warning';
 
 @Component({
   selector: 'kd-event-list',
@@ -33,8 +32,15 @@ const EVENT_TYPE_WARNING = 'Warning';
 export class EventListComponent extends ResourceListWithStatuses<EventList, Event> implements OnInit {
   @Input() endpoint: string;
 
+  private _isStandalone = false;
+  private readonly _eventTypeWarning = 'Warning';
+
+  get expanded(): boolean {
+    return this.totalItems > 0 || this._isStandalone;
+  }
+
   constructor(
-    private readonly eventList: NamespacedResourceService<EventList>,
+    private readonly _eventList: NamespacedResourceService<EventList>,
     notifications: NotificationsService,
     cdr: ChangeDetectorRef
   ) {
@@ -43,20 +49,26 @@ export class EventListComponent extends ResourceListWithStatuses<EventList, Even
     this.groupId = ListGroupIdentifier.none;
 
     // Register status icon handler
-    this.registerBinding('kd-warning', e => e.type === EVENT_TYPE_WARNING, Status.Warning);
-    this.registerBinding('kd-hidden', e => e.type !== EVENT_TYPE_WARNING, Status.Normal);
+    this.registerBinding('kd-warning', e => e.type === this._eventTypeWarning, Status.Warning);
+    this.registerBinding('kd-hidden', e => e.type !== this._eventTypeWarning, Status.Normal);
+
+    // Register dynamic columns.
+    this.registerDynamicColumn('namespace', 'name', this.shouldShowNamespaceColumn_.bind(this));
+    this.registerDynamicColumn('object', 'source', this.shouldShowObjectColumn_.bind(this));
+    this.registerDynamicColumn('subobject', 'source', this.shouldShowSubObjectColumn_.bind(this));
   }
 
   ngOnInit(): void {
-    if (this.endpoint === undefined) {
-      throw Error('Endpoint is a required parameter of event list.');
+    if (!this.endpoint) {
+      this.endpoint = EndpointManager.resource(Resource.event, true).list();
+      this._isStandalone = true;
     }
 
     super.ngOnInit();
   }
 
   getResourceObservable(params?: HttpParams): Observable<EventList> {
-    return this.eventList.get(this.endpoint, undefined, undefined, params);
+    return this._eventList.get(this.endpoint, undefined, undefined, params);
   }
 
   map(eventList: EventList): Event[] {
@@ -64,6 +76,26 @@ export class EventListComponent extends ResourceListWithStatuses<EventList, Even
   }
 
   getDisplayColumns(): string[] {
-    return ['statusicon', 'message', 'source', 'subobject', 'count', 'firstseen', 'lastseen'];
+    return ['statusicon', 'name', 'reason', 'message', 'source', 'count', 'firstSeen', 'lastSeen'];
+  }
+
+  getObjectHref(kind: string, name: string, namespace: string): string {
+    if (!Object.values(Resource).includes(kind.toLowerCase() as Resource)) {
+      return '';
+    }
+
+    return this.kdState_.href(kind.toLowerCase(), name, namespace);
+  }
+
+  private shouldShowNamespaceColumn_(): boolean {
+    return this.namespaceService_.areMultipleNamespacesSelected() && this._isStandalone;
+  }
+
+  private shouldShowObjectColumn_(): boolean {
+    return this._isStandalone;
+  }
+
+  private shouldShowSubObjectColumn_(): boolean {
+    return !this._isStandalone;
   }
 }
