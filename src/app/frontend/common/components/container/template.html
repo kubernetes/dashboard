@@ -147,9 +147,9 @@ limitations under the License.
             </mat-icon>
           </div>
           <div whenVisible
-               class="kd-code-block">{{formatSecretValue(env.value)}}</div>
+               class="kd-code-block">{{decoder.base64(env.value)}}</div>
           <div whenHidden
-               i18n>{{formatSecretValue(env.value).length}} bytes
+               i18n>{{decoder.base64(env.value).length}} bytes
           </div>
         </kd-hidden-property>
       </ng-container>

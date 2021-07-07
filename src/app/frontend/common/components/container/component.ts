@@ -15,6 +15,7 @@
 import {Component, Input, OnChanges} from '@angular/core';
 import {ConfigMapKeyRef, Container, EnvVar, SecretKeyRef} from '@api/root.api';
 import {Status, StatusClass} from '@common/components/resourcelist/statuses';
+import {DecoderService} from '@common/services/global/decoder';
 import {KdStateService} from '@common/services/global/state';
 import _ from 'lodash';
 
@@ -28,7 +29,7 @@ export class ContainerCardComponent implements OnChanges {
   @Input() namespace: string;
   @Input() initialized: boolean;
 
-  constructor(private readonly state_: KdStateService) {}
+  constructor(private readonly state_: KdStateService, readonly decoder: DecoderService) {}
 
   get containerStatusClass(): string {
     if (this.isTerminated_() && this.container.status.state.terminated.reason !== Status.Completed) {
@@ -72,10 +73,6 @@ export class ContainerCardComponent implements OnChanges {
 
   isConfigMap(envVar: EnvVar): boolean {
     return !!envVar.valueFrom && !!envVar.valueFrom.configMapKeyRef;
-  }
-
-  formatSecretValue(s: string): string {
-    return atob(s);
   }
 
   getEnvConfigMapHref(configMapKeyRef: ConfigMapKeyRef): string {
