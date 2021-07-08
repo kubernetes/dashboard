@@ -136,7 +136,7 @@
     "@babel/preset-env": "7.14.7",
     "@babel/register": "7.14.5",
     "@cypress/webpack-preprocessor": "5.9.1",
-    "@types/c3": "0.7.5",
+    "@types/c3": "0.7.6",
     "@types/d3": "7.0.0",
     "@types/d3-scale": "4.0.1",
     "@types/file-saver": "2.0.2",
