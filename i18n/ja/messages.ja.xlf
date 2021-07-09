@@ -1366,7 +1366,7 @@
       </trans-unit>
       <trans-unit id="6781275439159942913" datatype="html">
         <source>Ready </source>
-        <target state="new">Ready </target>
+        <target>準備 </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/container/template.html</context>
           <context context-type="linenumber">47</context>
@@ -1374,7 +1374,7 @@
       </trans-unit>
       <trans-unit id="6186926147473970029" datatype="html">
         <source>Started </source>
-        <target state="new">Started </target>
+        <target>起動 </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/container/template.html</context>
           <context context-type="linenumber">54</context>
@@ -1382,7 +1382,7 @@
       </trans-unit>
       <trans-unit id="5750690922112993540" datatype="html">
         <source>Reason </source>
-        <target state="new">Reason </target>
+        <target>理由 </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/container/template.html</context>
           <context context-type="linenumber">63</context>
@@ -1394,7 +1394,7 @@
       </trans-unit>
       <trans-unit id="5404234362924331791" datatype="html">
         <source>Message </source>
-        <target state="new">Message </target>
+        <target>メッセージ </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/container/template.html</context>
           <context context-type="linenumber">70</context>
@@ -1406,7 +1406,7 @@
       </trans-unit>
       <trans-unit id="664832051969137830" datatype="html">
         <source>Exit Code </source>
-        <target state="new">Exit Code </target>
+        <target>終了コード </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/container/template.html</context>
           <context context-type="linenumber">93</context>
@@ -1414,7 +1414,7 @@
       </trans-unit>
       <trans-unit id="4147521548456679722" datatype="html">
         <source>Signal </source>
-        <target state="new">Signal </target>
+        <target>シグナル </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/container/template.html</context>
           <context context-type="linenumber">100</context>
@@ -1422,7 +1422,7 @@
       </trans-unit>
       <trans-unit id="3065353233062460166" datatype="html">
         <source>Started At </source>
-        <target state="new">Started At </target>
+        <target>起動時刻 </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/container/template.html</context>
           <context context-type="linenumber">109</context>
@@ -1430,7 +1430,7 @@
       </trans-unit>
       <trans-unit id="1983115678915099234" datatype="html">
         <source>Environment Variables</source>
-        <target state="new">Environment Variables</target>
+        <target>環境変数</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/container/template.html</context>
           <context context-type="linenumber">118</context>
@@ -1510,7 +1510,7 @@
       </trans-unit>
       <trans-unit id="6987864942421621952" datatype="html">
         <source>Liveness Probe </source>
-        <target state="new">Liveness Probe </target>
+        <target>生存プローブ </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/container/template.html</context>
           <context context-type="linenumber">246,247</context>
@@ -1518,7 +1518,7 @@
       </trans-unit>
       <trans-unit id="411889937376498888" datatype="html">
         <source>Readiness Probe </source>
-        <target state="new">Readiness Probe </target>
+        <target>準備プローブ </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/container/template.html</context>
           <context context-type="linenumber">258,259</context>
@@ -1526,7 +1526,7 @@
       </trans-unit>
       <trans-unit id="4469810524935263635" datatype="html">
         <source>Startup Probe </source>
-        <target state="new">Startup Probe </target>
+        <target>起動プローブ </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/container/template.html</context>
           <context context-type="linenumber">270,271</context>
@@ -1806,7 +1806,7 @@
       </trans-unit>
       <trans-unit id="1788882133182474939" datatype="html">
         <source> Waiting for more data to display chart... </source>
-        <target state="new"> Waiting for more data to display chart... </target>
+        <target> 図の表示のためのデータを取得しています... </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/graph/template.html</context>
           <context context-type="linenumber">23,24</context>
@@ -1982,7 +1982,7 @@
       </trans-unit>
       <trans-unit id="3381412717703555378" datatype="html">
         <source>Object</source>
-        <target state="new">Object</target>
+        <target>オブジェクト</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/resourcelist/event/template.html</context>
           <context context-type="linenumber">95</context>
@@ -1990,10 +1990,10 @@
       </trans-unit>
       <trans-unit id="2914974644465021764" datatype="html">
         <source>Sub-object</source>
-        <target state="new">Sub-object</target>
+        <target>サブオブジェクト</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/resourcelist/event/template.html</context>
-          <context context-type="linenumber">112</context>
+          <context context-type="linenumber">114</context>
         </context-group>
       </trans-unit>
       <trans-unit id="8177873832400820695" datatype="html">
@@ -2001,7 +2001,7 @@
         <target>回数</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/resourcelist/event/template.html</context>
-          <context context-type="linenumber">123</context>
+          <context context-type="linenumber">125</context>
         </context-group>
       </trans-unit>
       <trans-unit id="8299215096475112763" datatype="html">
@@ -2009,7 +2009,7 @@
         <target>初回</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/resourcelist/event/template.html</context>
-          <context context-type="linenumber">132</context>
+          <context context-type="linenumber">134</context>
         </context-group>
       </trans-unit>
       <trans-unit id="3856193213296741054" datatype="html">
@@ -2017,7 +2017,7 @@
         <target>直近</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/resourcelist/event/template.html</context>
-          <context context-type="linenumber">144</context>
+          <context context-type="linenumber">146</context>
         </context-group>
       </trans-unit>
       <trans-unit id="6157826473930539567" datatype="html">
@@ -2584,7 +2584,7 @@
       </trans-unit>
       <trans-unit id="2120991562304016894" datatype="html">
         <source>Initial Delay (Seconds) </source>
-        <target state="new">Initial Delay (Seconds) </target>
+        <target>初期遅延 (秒) </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/probe/template.html</context>
           <context context-type="linenumber">26</context>
@@ -2592,7 +2592,7 @@
       </trans-unit>
       <trans-unit id="5821699818018482070" datatype="html">
         <source>Timeout (Seconds) </source>
-        <target state="new">Timeout (Seconds) </target>
+        <target>タイムアウト (秒) </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/probe/template.html</context>
           <context context-type="linenumber">32</context>
@@ -2600,7 +2600,7 @@
       </trans-unit>
       <trans-unit id="1754024291861061976" datatype="html">
         <source>Probe Period (Seconds) </source>
-        <target state="new">Probe Period (Seconds) </target>
+        <target>探査期間 (秒) </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/probe/template.html</context>
           <context context-type="linenumber">38</context>
@@ -2608,7 +2608,7 @@
       </trans-unit>
       <trans-unit id="8195974205472351044" datatype="html">
         <source>Success Threshold </source>
-        <target state="new">Success Threshold </target>
+        <target>成功閾値 </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/probe/template.html</context>
           <context context-type="linenumber">44</context>
@@ -2616,7 +2616,7 @@
       </trans-unit>
       <trans-unit id="5158394458624484785" datatype="html">
         <source>Failure Threshold </source>
-        <target state="new">Failure Threshold </target>
+        <target>失敗閾値 </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/probe/template.html</context>
           <context context-type="linenumber">50</context>
@@ -2624,7 +2624,7 @@
       </trans-unit>
       <trans-unit id="3676668621220865916" datatype="html">
         <source>Termination Grace Period (Seconds) </source>
-        <target state="new">Termination Grace Period (Seconds) </target>
+        <target>終了処理待ち時間 (秒) </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/probe/template.html</context>
           <context context-type="linenumber">56</context>
@@ -2632,7 +2632,7 @@
       </trans-unit>
       <trans-unit id="515094234886642041" datatype="html">
         <source>HTTP Healthcheck URI</source>
-        <target state="new">HTTP Healthcheck URI</target>
+        <target>HTTP ヘルスチェック URI</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/probe/template.html</context>
           <context context-type="linenumber">64</context>
@@ -2640,7 +2640,7 @@
       </trans-unit>
       <trans-unit id="6846205659630194861" datatype="html">
         <source>HTTP Headers </source>
-        <target state="new">HTTP Headers </target>
+        <target>HTTP ヘッダー </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/probe/template.html</context>
           <context context-type="linenumber">76</context>
@@ -2648,7 +2648,7 @@
       </trans-unit>
       <trans-unit id="6393773098525856112" datatype="html">
         <source>TCP Socket</source>
-        <target state="new">TCP Socket</target>
+        <target>TCP ソケット</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/probe/template.html</context>
           <context context-type="linenumber">90</context>
@@ -2656,7 +2656,7 @@
       </trans-unit>
       <trans-unit id="367969280410641978" datatype="html">
         <source>Exec Commands </source>
-        <target state="new">Exec Commands </target>
+        <target>実行コマンド </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/probe/template.html</context>
           <context context-type="linenumber">99</context>
@@ -3141,7 +3141,7 @@
       </trans-unit>
       <trans-unit id="1861657886309326" datatype="html">
         <source>Events </source>
-        <target state="new">Events </target>
+        <target>イベント </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/chrome/nav/template.html</context>
           <context context-type="linenumber">140</context>
@@ -3256,7 +3256,7 @@
       </trans-unit>
       <trans-unit id="5943454400955467108" datatype="html">
         <source><x id="START_TAG_KD_DATE" ctype="x-kd_date" equiv-text="&quot;\uFFFD#9\uFFFD&quot;"/><x id="CLOSE_TAG_KD_DATE" ctype="x-kd_date" equiv-text="&quot;\uFFFD/#9\uFFFD&quot;"/></source>
-        <target state="new"><x id="START_TAG_KD_DATE" ctype="x-kd_date" equiv-text="&quot;\uFFFD#9\uFFFD&quot;"/><x id="CLOSE_TAG_KD_DATE" ctype="x-kd_date" equiv-text="&quot;\uFFFD/#9\uFFFD&quot;"/></target>
+        <target><x id="START_TAG_KD_DATE" ctype="x-kd_date" equiv-text="&quot;\uFFFD#9\uFFFD&quot;"/><x id="CLOSE_TAG_KD_DATE" ctype="x-kd_date" equiv-text="&quot;\uFFFD/#9\uFFFD&quot;"/></target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/chrome/notifications/template.html</context>
           <context context-type="linenumber">45,46</context>
@@ -5447,7 +5447,7 @@
       </trans-unit>
       <trans-unit id="149997197907824533" datatype="html">
         <source>Volume Name</source>
-        <target state="new">Volume Name</target>
+        <target>ボリューム名</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/resource/config/persistentvolumeclaim/detail/template.html</context>
           <context context-type="linenumber">38</context>
@@ -5535,7 +5535,7 @@
       </trans-unit>
       <trans-unit id="4343527844687153745" datatype="html">
         <source>Starting deadline seconds</source>
-        <target>開始期限秒数</target>
+        <target>起動期限秒数</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/resource/workloads/cronjob/detail/template.html</context>
           <context context-type="linenumber">82</context>
