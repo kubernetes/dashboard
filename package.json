@@ -131,7 +131,7 @@
     "@angular-devkit/build-angular": "12.1.1",
     "@angular/cli": "12.1.1",
     "@angular/compiler-cli": "12.1.1",
-    "@angular/language-service": "12.1.1",
+    "@angular/language-service": "12.1.2",
     "@babel/core": "7.14.6",
     "@babel/preset-env": "7.14.7",
     "@babel/register": "7.14.5",
