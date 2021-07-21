@@ -103,7 +103,7 @@
     "@swimlane/ngx-charts": "17.0.1",
     "ace-builds": "1.4.12",
     "angular-page-visibility": "11.0.0",
-    "ansi-to-html": "0.7.0",
+    "ansi-to-html": "0.7.1",
     "c3": "0.7.20",
     "core-js": "3.15.2",
     "d3": "6.7.0",
