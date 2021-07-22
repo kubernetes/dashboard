@@ -21,15 +21,15 @@ limitations under the License.
 
   <div description>
     <div class="kd-inline-property"
-         *ngIf="ingressSpecRules?.length">
+         *ngIf="ingressRuleFlatList_.length">
       <span class="kd-muted-light"
             i18n>Items:&nbsp;</span>
-      <span>{{ingressSpecRules.length}}</span>
+      <span>{{ingressRuleFlatList_.length}}</span>
     </div>
   </div>
 
   <div content
-       [hidden]="ingressSpecRules?.length === 0">
+       [hidden]="ingressRuleFlatList_.length === 0">
     <mat-table [dataSource]="getDataSource()">
       <ng-container [matColumnDef]="getIngressRulesFlatColumns()[0]">
         <mat-header-cell *matHeaderCellDef
@@ -80,8 +80,8 @@ limitations under the License.
         <mat-header-cell *matHeaderCellDef
                          i18n>Service Port</mat-header-cell>
         <mat-cell *matCellDef="let ingressRuleFlat">
-          <ng-container *ngIf="ingressRuleFlat.path.backend.service.port.name">{{ingressRuleFlat.path.backend.service.port.name}}</ng-container>
-          <ng-container *ngIf="ingressRuleFlat.path.backend.service.port.number">{{ingressRuleFlat.path.backend.service.port.number}}</ng-container>
+          <ng-container *ngIf="ingressRuleFlat.path.backend.service?.port?.name">{{ingressRuleFlat.path.backend.service.port.name}}</ng-container>
+          <ng-container *ngIf="ingressRuleFlat.path.backend.service?.port?.number">{{ingressRuleFlat.path.backend.service.port.number}}</ng-container>
         </mat-cell>
       </ng-container>
       <ng-container [matColumnDef]="getIngressRulesFlatColumns()[5]">
@@ -104,7 +104,7 @@ limitations under the License.
   </div>
 
   <div content
-       [hidden]="ingressSpecRules?.length != 0">
+       [hidden]="ingressRuleFlatList_.length != 0">
     <kd-list-zero-state></kd-list-zero-state>
   </div>
 </kd-card>

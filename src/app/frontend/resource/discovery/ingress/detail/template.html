@@ -24,25 +24,10 @@ limitations under the License.
   <div content
        *ngIf="isInitialized"
        fxLayout="row wrap">
-    <kd-property *ngIf="ingress?.spec?.backend?.service?.Name">
+    <kd-property *ngIf="ingress?.spec?.ingressClassName">
       <div key
-           i18n>Service Name</div>
-      <div value>{{ingress.spec.backend.service.Name}}</div>
-    </kd-property>
-
-    <kd-property *ngIf="ingress?.spec?.backend?.service?.port">
-      <div key
-           i18n>Service Port</div>
-      <div *ngIf="ingress?.spec?.backend?.service?.port?.name"
-           value>{{ingress.spec.backend.service.port.name}}</div>
-      <div *ngIf="ingress?.spec?.backend?.service?.port?.number"
-           value>{{ingress.spec.backend.service.port.number}}</div>
-    </kd-property>
-
-    <kd-property *ngIf="ingress?.spec?.backend?.resource?.name">
-      <div key
-           i18n>{{ingress.spec.backend.resource.kind}}</div>
-      <div value>{{ingress.spec.backend.resource.name}}</div>
+           i18n>Ingress Class</div>
+      <div value>{{ingress?.spec?.ingressClassName}}</div>
     </kd-property>
 
     <kd-property *ngIf="ingress?.endpoints"
@@ -57,8 +42,7 @@ limitations under the License.
   </div>
 </kd-card>
 
-<kd-ingressruleflat-card-list [ingressSpecRules]="ingress?.spec.rules"
-                              [tlsList]="ingress?.spec.tls"
+<kd-ingressruleflat-card-list [ingressSpec]="ingress?.spec"
                               [namespace]="ingress?.objectMeta.namespace"
                               [initialized]="isInitialized">
 </kd-ingressruleflat-card-list>

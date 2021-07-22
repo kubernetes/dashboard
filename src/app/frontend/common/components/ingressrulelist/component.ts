@@ -14,7 +14,7 @@
 
 import {Component, Input, OnChanges, OnInit, SimpleChange} from '@angular/core';
 import {MatTableDataSource} from '@angular/material/table';
-import {IngressSpecRule, IngressSpecRuleHttpPath, IngressSpecTLS} from '@api/root.api';
+import {IngressSpec, IngressSpecRuleHttpPath, IngressSpecTLS} from '@api/root.api';
 import _ from 'lodash';
 import {GlobalServicesModule} from '../../services/global/module';
 import {KdStateService} from '../../services/global/state';
@@ -36,17 +36,21 @@ interface IngressSpecTLSFlat {
 })
 export class IngressRuleFlatListComponent implements OnInit, OnChanges {
   @Input() initialized: boolean;
-  @Input() ingressSpecRules: IngressSpecRule[];
-  @Input() tlsList: IngressSpecTLS[];
+  @Input() ingressSpec: IngressSpec;
   @Input() namespace: string;
 
   private readonly kdState_: KdStateService = GlobalServicesModule.injector.get(KdStateService);
   // Flat map of host -> secret name pairs.
   private tlsHostMap_ = new Map<string, string>();
 
-  private get ingressRuleFlatList_(): IngressRuleFlat[] {
-    return [].concat(
-      ...this.ingressSpecRules.map(rule => {
+  get ingressRuleFlatList_(): IngressRuleFlat[] {
+
+    if(Object.keys(this.ingressSpec).length === 0 ){
+      return [] as IngressRuleFlat[];
+    }
+
+    var result =  [].concat(
+      ...this.ingressSpec.rules.map(rule => {
         if (!rule.http) {
           return [] as IngressRuleFlat[];
         }
@@ -61,11 +65,25 @@ export class IngressRuleFlatListComponent implements OnInit, OnChanges {
         );
       })
     );
+
+    if(this.ingressSpec && this.ingressSpec.defaultBackend ){
+      var defaultBackendPath = {
+        path: "[defaultBackend]",
+        pathType: "[defaultBackend]",
+        backend: this.ingressSpec.defaultBackend
+      } as IngressSpecRuleHttpPath;
+
+      var defaultBackend = {
+        path: defaultBackendPath
+      } as IngressRuleFlat
+
+      result.push(defaultBackend)
+    }
+    return result;
   }
 
   ngOnInit(): void {
-    this.tlsList = this.tlsList || [];
-    this.ingressSpecRules = this.ingressSpecRules || [];
+    this.ingressSpec = this.ingressSpec || {};
   }
 
   ngOnChanges(changes: {tlsList: SimpleChange}): void {
