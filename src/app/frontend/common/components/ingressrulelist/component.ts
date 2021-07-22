@@ -44,12 +44,11 @@ export class IngressRuleFlatListComponent implements OnInit, OnChanges {
   private tlsHostMap_ = new Map<string, string>();
 
   get ingressRuleFlatList_(): IngressRuleFlat[] {
-
-    if(Object.keys(this.ingressSpec).length === 0 ){
+    if (Object.keys(this.ingressSpec).length === 0) {
       return [] as IngressRuleFlat[];
     }
 
-    var result =  [].concat(
+    const result = [].concat(
       ...this.ingressSpec.rules.map(rule => {
         if (!rule.http) {
           return [] as IngressRuleFlat[];
@@ -66,18 +65,18 @@ export class IngressRuleFlatListComponent implements OnInit, OnChanges {
       })
     );
 
-    if(this.ingressSpec && this.ingressSpec.defaultBackend ){
-      var defaultBackendPath = {
-        path: "[defaultBackend]",
-        pathType: "[defaultBackend]",
-        backend: this.ingressSpec.defaultBackend
+    if (this.ingressSpec && this.ingressSpec.defaultBackend) {
+      const defaultBackendPath = {
+        path: '[defaultBackend]',
+        pathType: '[defaultBackend]',
+        backend: this.ingressSpec.defaultBackend,
       } as IngressSpecRuleHttpPath;
 
-      var defaultBackend = {
-        path: defaultBackendPath
-      } as IngressRuleFlat
+      const defaultBackend = {
+        path: defaultBackendPath,
+      } as IngressRuleFlat;
 
-      result.push(defaultBackend)
+      result.push(defaultBackend);
     }
     return result;
   }
