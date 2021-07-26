@@ -15,12 +15,12 @@
 package handler
 
 import (
+	"fmt"
+	v1 "k8s.io/api/core/v1"
 	"log"
 	"net/http"
 	"strconv"
 	"strings"
-
-	v1 "k8s.io/api/core/v1"
 
 	"github.com/kubernetes/dashboard/src/app/backend/resource/networkpolicy"
 
@@ -244,6 +244,10 @@ func CreateHTTPAPIHandler(iManager integration.IntegrationManager, cManager clie
 		apiV1Ws.GET("/pod/{namespace}/{pod}/shell/{container}").
 			To(apiHandler.handleExecShell).
 			Writes(TerminalResponse{}))
+	apiV1Ws.Route(
+		apiV1Ws.GET("/pod/{namespace}/{pod}/ls/{container}/{path}").
+			To(apiHandler.handleExecLs).
+			Writes(FilesystemObject{}))
 	apiV1Ws.Route(
 		apiV1Ws.GET("/pod/{namespace}/{pod}/persistentvolumeclaim").
 			To(apiHandler.handleGetPodPersistentVolumeClaims).
@@ -1536,6 +1540,32 @@ func (apiHandler *APIHandler) handleGetPodEvents(request *restful.Request, respo
 		errors.HandleInternalError(response, err)
 		return
 	}
+	response.WriteHeaderAndEntity(http.StatusOK, result)
+}
+
+// Handles execute shell API call to `ls`
+func (apiHandler *APIHandler) handleExecLs(request *restful.Request, response *restful.Response) {
+	k8sClient, err := apiHandler.cManager.Client(request)
+	if err != nil {
+		errors.HandleInternalError(response, err)
+		return
+	}
+
+	cfg, err := apiHandler.cManager.Config(request)
+	if err != nil {
+		errors.HandleInternalError(response, err)
+		return
+	}
+
+	path := request.PathParameter("path")
+	fmt.Printf("path: %+v\n", path)
+
+	result, err := runLsCommand(k8sClient, cfg, request, path)
+	if err != nil {
+		errors.HandleInternalError(response, err)
+		return
+	}
+	fmt.Printf("result: %+v\n", result)
 	response.WriteHeaderAndEntity(http.StatusOK, result)
 }
 

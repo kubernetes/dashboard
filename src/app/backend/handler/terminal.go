@@ -212,7 +212,7 @@ func CreateAttachHandler(path string) http.Handler {
 
 // startProcess is called by handleAttach
 // Executed cmd in the container specified in request and connects it up with the ptyHandler (a session)
-func startProcess(k8sClient kubernetes.Interface, cfg *rest.Config, request *restful.Request, cmd []string, ptyHandler PtyHandler) error {
+func startProcessHelper(k8sClient kubernetes.Interface, cfg *rest.Config, request *restful.Request, cmd []string, streamOptions remotecommand.StreamOptions) error {
 	namespace := request.PathParameter("namespace")
 	podName := request.PathParameter("pod")
 	containerName := request.PathParameter("container")
@@ -226,7 +226,7 @@ func startProcess(k8sClient kubernetes.Interface, cfg *rest.Config, request *res
 	req.VersionedParams(&v1.PodExecOptions{
 		Container: containerName,
 		Command:   cmd,
-		Stdin:     true,
+		Stdin:     streamOptions.Stdin != nil,
 		Stdout:    true,
 		Stderr:    true,
 		TTY:       true,
@@ -237,18 +237,63 @@ func startProcess(k8sClient kubernetes.Interface, cfg *rest.Config, request *res
 		return err
 	}
 
-	err = exec.Stream(remotecommand.StreamOptions{
-		Stdin:             ptyHandler,
-		Stdout:            ptyHandler,
-		Stderr:            ptyHandler,
-		TerminalSizeQueue: ptyHandler,
-		Tty:               true,
-	})
+	err = exec.Stream(streamOptions)
 	if err != nil {
 		return err
 	}
 
 	return nil
+}
+
+// startProcess is called by handleAttach
+// Executed cmd in the container specified in request and connects it up with the ptyHandler (a session)
+func startProcess(k8sClient kubernetes.Interface, cfg *rest.Config, request *restful.Request, cmd []string, ptyHandler PtyHandler) error {
+
+	streamOptions := remotecommand.StreamOptions{
+		Stdin:             ptyHandler,
+		Stdout:            ptyHandler,
+		Stderr:            ptyHandler,
+		TerminalSizeQueue: ptyHandler,
+		Tty:               true,
+	}
+
+	return startProcessHelper(k8sClient, cfg, request, cmd, streamOptions)
+	// namespace := request.PathParameter("namespace")
+	// podName := request.PathParameter("pod")
+	// containerName := request.PathParameter("container")
+
+	// req := k8sClient.CoreV1().RESTClient().Post().
+	// 	Resource("pods").
+	// 	Name(podName).
+	// 	Namespace(namespace).
+	// 	SubResource("exec")
+
+	// req.VersionedParams(&v1.PodExecOptions{
+	// 	Container: containerName,
+	// 	Command:   cmd,
+	// 	Stdin:     true,
+	// 	Stdout:    true,
+	// 	Stderr:    true,
+	// 	TTY:       true,
+	// }, scheme.ParameterCodec)
+
+	// exec, err := remotecommand.NewSPDYExecutor(cfg, "POST", req.URL())
+	// if err != nil {
+	// 	return err
+	// }
+
+	// err = exec.Stream(remotecommand.StreamOptions{
+	// 	Stdin:             ptyHandler,
+	// 	Stdout:            ptyHandler,
+	// 	Stderr:            ptyHandler,
+	// 	TerminalSizeQueue: ptyHandler,
+	// 	Tty:               true,
+	// })
+	// if err != nil {
+	// 	return err
+	// }
+
+	// return nil
 }
 
 // genTerminalSessionId generates a random session ID string. The format is not really interesting.
