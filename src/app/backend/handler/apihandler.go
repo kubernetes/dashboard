@@ -245,7 +245,7 @@ func CreateHTTPAPIHandler(iManager integration.IntegrationManager, cManager clie
 			To(apiHandler.handleExecShell).
 			Writes(TerminalResponse{}))
 	apiV1Ws.Route(
-		apiV1Ws.GET("/pod/{namespace}/{pod}/ls/{container}/{path}").
+		apiV1Ws.GET("/pod/{namespace}/{pod}/ls/{container}").
 			To(apiHandler.handleExecLs).
 			Writes(FilesystemObject{}))
 	apiV1Ws.Route(
@@ -1557,7 +1557,7 @@ func (apiHandler *APIHandler) handleExecLs(request *restful.Request, response *r
 		return
 	}
 
-	path := request.PathParameter("path")
+	path := request.QueryParameter("path")
 	log.Println("Getting contents of a folder in a container")
 	result, err := runLsCommand(k8sClient, cfg, request, path)
 	if err != nil {

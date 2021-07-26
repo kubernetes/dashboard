@@ -39,7 +39,10 @@ func runLsCommand(k8sClient kubernetes.Interface, cfg *rest.Config, request *res
 		Tty:    true,
 	}
 
-	path = "/"
+	if path == "" {
+		path = "/"
+	}
+
 	cmd := []string{"ls", "-la", "--full-time", "--color=never", path}
 	err := startProcessHelper(k8sClient, cfg, request, cmd, streamOptions)
 
@@ -86,15 +89,15 @@ func parseLsOutput(path string, lsOutput string) (FilesystemObject, error) {
 
 func parseLsLine(line string) FilesystemElement {
 	elem := FilesystemElement{}
-	elem.ElementType = string(line[0])
 
 	date := ""
 	time := ""
 	timezone := ""
+	permissions := ""
 
 	// drwxrwxr-x  2 mdiez mdiez  4096 2021-02-25 12:34:27.605691421 -0300 args
 	fmt.Sscanf(line, "%s %d %s %s %d %s %s %s %s",
-		&elem.Permissions,
+		&permissions,
 		&elem.NumberOfLinks,
 		&elem.Owner,
 		&elem.Group,
@@ -105,6 +108,8 @@ func parseLsLine(line string) FilesystemElement {
 		&elem.Name,
 	)
 
+	elem.ElementType = string(permissions[0])
+	elem.Permissions = permissions[1:len(permissions)]
 	elem.LastModified = fmt.Sprintf("%s %s %s", date, time, timezone)
 
 	return elem
