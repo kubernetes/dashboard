@@ -12,20 +12,20 @@ import (
 )
 
 type FilesystemElement struct {
-	name          string `json:"name"`
-	elementType   string `json:"elementType"`
-	permissions   string `json:"permissions"`
-	numberOfLinks uint   `json:"numberOfLinks"`
-	owner         string `json:"owner"`
-	group         string `json:"group"`
-	size          uint   `json:"size"`
-	lastModified  string `json:"lastModified"`
+	Name          string `json:"name"`
+	ElementType   string `json:"elementType"`
+	Permissions   string `json:"permissions"`
+	NumberOfLinks uint   `json:"numberOfLinks"`
+	Owner         string `json:"owner"`
+	Group         string `json:"group"`
+	Size          uint   `json:"size"`
+	LastModified  string `json:"lastModified"`
 }
 
 type FilesystemObject struct {
-	path      string              `json:"path"`
-	totalSize uint                `json:"totalSize"`
-	elements  []FilesystemElement `json:"elements"`
+	Path      string              `json:"path"`
+	TotalSize uint                `json:"totalSize"`
+	Elements  []FilesystemElement `json:"elements"`
 }
 
 func runLsCommand(k8sClient kubernetes.Interface, cfg *rest.Config, request *restful.Request, path string) (*FilesystemObject, error) {
@@ -41,34 +41,18 @@ func runLsCommand(k8sClient kubernetes.Interface, cfg *rest.Config, request *res
 
 	path = "/"
 	cmd := []string{"ls", "-la", "--full-time", "--color=never", path}
-	fmt.Println("AAAAAAAAAAAAAAAAAAAAAAA")
 	err := startProcessHelper(k8sClient, cfg, request, cmd, streamOptions)
 
 	if err != nil {
 		return nil, err
 	}
-	fmt.Println("BBBBBBBBBBBBBBBBBBBBBBB")
 	the_stdout := my_stdout.String()
-	fmt.Println(the_stdout)
-	fmt.Println("CCCCCCCCCCCCCCCCC")
-	fmt.Println(my_stderr.String())
-	fmt.Println("DDDDDDDDDDDDDD")
 	output, err := parseLsOutput(path, the_stdout)
-	fmt.Println("EEEEEEEEEEEEE")
 
 	if err != nil {
 		return nil, err
 	}
-
-	fmt.Printf("%+v\n", output)
-
-	return &FilesystemObject{
-		path:      "some_path",
-		totalSize: 42,
-		elements:  nil,
-	}, nil
-
-	// return &output, err
+	return &output, err
 }
 
 // total 84
@@ -81,28 +65,28 @@ func runLsCommand(k8sClient kubernetes.Interface, cfg *rest.Config, request *res
 
 func parseLsOutput(path string, lsOutput string) (FilesystemObject, error) {
 	output := FilesystemObject{
-		path:      path,
-		elements:  []FilesystemElement{},
-		totalSize: 0,
+		Path:      path,
+		Elements:  []FilesystemElement{},
+		TotalSize: 0,
 	}
 
 	scanner := bufio.NewScanner(strings.NewReader(lsOutput))
 	for scanner.Scan() {
 		line := scanner.Text()
 		if strings.HasPrefix(line, "total ") {
-			fmt.Sscanf(line, "total %d", &output.totalSize)
+			fmt.Sscanf(line, "total %d", &output.TotalSize)
 			continue
 		}
 
 		parsedLine := parseLsLine(line)
-		output.elements = append(output.elements, parsedLine)
+		output.Elements = append(output.Elements, parsedLine)
 	}
 	return output, nil
 }
 
 func parseLsLine(line string) FilesystemElement {
 	elem := FilesystemElement{}
-	elem.elementType = string(line[0])
+	elem.ElementType = string(line[0])
 
 	date := ""
 	time := ""
@@ -110,19 +94,18 @@ func parseLsLine(line string) FilesystemElement {
 
 	// drwxrwxr-x  2 mdiez mdiez  4096 2021-02-25 12:34:27.605691421 -0300 args
 	fmt.Sscanf(line, "%s %d %s %s %d %s %s %s %s",
-		&elem.permissions,
-		&elem.numberOfLinks,
-		&elem.owner,
-		&elem.group,
-		&elem.size,
+		&elem.Permissions,
+		&elem.NumberOfLinks,
+		&elem.Owner,
+		&elem.Group,
+		&elem.Size,
 		&date,
 		&time,
 		&timezone,
-		&elem.name,
+		&elem.Name,
 	)
 
-	elem.lastModified = fmt.Sprintf("%s %s %s", date, time, timezone)
+	elem.LastModified = fmt.Sprintf("%s %s %s", date, time, timezone)
 
-	fmt.Printf("%+v\n", elem)
 	return elem
 }

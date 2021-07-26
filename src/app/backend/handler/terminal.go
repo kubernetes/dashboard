@@ -258,42 +258,6 @@ func startProcess(k8sClient kubernetes.Interface, cfg *rest.Config, request *res
 	}
 
 	return startProcessHelper(k8sClient, cfg, request, cmd, streamOptions)
-	// namespace := request.PathParameter("namespace")
-	// podName := request.PathParameter("pod")
-	// containerName := request.PathParameter("container")
-
-	// req := k8sClient.CoreV1().RESTClient().Post().
-	// 	Resource("pods").
-	// 	Name(podName).
-	// 	Namespace(namespace).
-	// 	SubResource("exec")
-
-	// req.VersionedParams(&v1.PodExecOptions{
-	// 	Container: containerName,
-	// 	Command:   cmd,
-	// 	Stdin:     true,
-	// 	Stdout:    true,
-	// 	Stderr:    true,
-	// 	TTY:       true,
-	// }, scheme.ParameterCodec)
-
-	// exec, err := remotecommand.NewSPDYExecutor(cfg, "POST", req.URL())
-	// if err != nil {
-	// 	return err
-	// }
-
-	// err = exec.Stream(remotecommand.StreamOptions{
-	// 	Stdin:             ptyHandler,
-	// 	Stdout:            ptyHandler,
-	// 	Stderr:            ptyHandler,
-	// 	TerminalSizeQueue: ptyHandler,
-	// 	Tty:               true,
-	// })
-	// if err != nil {
-	// 	return err
-	// }
-
-	// return nil
 }
 
 // genTerminalSessionId generates a random session ID string. The format is not really interesting.

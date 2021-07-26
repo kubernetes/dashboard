@@ -15,12 +15,12 @@
 package handler
 
 import (
-	"fmt"
-	v1 "k8s.io/api/core/v1"
 	"log"
 	"net/http"
 	"strconv"
 	"strings"
+
+	v1 "k8s.io/api/core/v1"
 
 	"github.com/kubernetes/dashboard/src/app/backend/resource/networkpolicy"
 
@@ -1558,14 +1558,12 @@ func (apiHandler *APIHandler) handleExecLs(request *restful.Request, response *r
 	}
 
 	path := request.PathParameter("path")
-	fmt.Printf("path: %+v\n", path)
-
+	log.Println("Getting contents of a folder in a container")
 	result, err := runLsCommand(k8sClient, cfg, request, path)
 	if err != nil {
 		errors.HandleInternalError(response, err)
 		return
 	}
-	fmt.Printf("result: %+v\n", result)
 	response.WriteHeaderAndEntity(http.StatusOK, result)
 }
 
