@@ -139,6 +139,8 @@ ingress:
   ## if you use ingress-nginx >= 0.21.0
   #   nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
 
+  ## Kubernetes Dashboard Ingress Class
+  # className: "example-lb"
 
   ## Kubernetes Dashboard Ingress paths
   ##
