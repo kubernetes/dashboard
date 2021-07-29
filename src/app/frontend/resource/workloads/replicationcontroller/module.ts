@@ -13,10 +13,10 @@
 // limitations under the License.
 
 import {NgModule} from '@angular/core';
-import {ComponentsModule} from '../../../common/components/module';
+import {ComponentsModule} from '@common/components/module';
 
 import {SharedModule} from '../../../shared.module';
-import {ReplicationControllerDetailComponent} from '../replicationcontroller/detail/component';
+import {ReplicationControllerDetailComponent} from './detail/component';
 import {ReplicationControllerListComponent} from './list/component';
 import {ReplicationControllerRoutingModule} from './routing';
 

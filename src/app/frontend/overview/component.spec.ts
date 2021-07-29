@@ -23,11 +23,11 @@ import {MatTooltipModule} from '@angular/material/tooltip';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {AppConfig, CronJobList, DaemonSetList, PodList} from '@api/root.api';
 
-import {CardComponent} from '../common/components/card/component';
-import {ListGroupIdentifier, ListIdentifier} from '../common/components/resourcelist/groupids';
-import {emptyResourcesRatio, WorkloadStatusComponent} from '../common/components/workloadstatus/component';
-import {ConfigService} from '../common/services/global/config';
-import {NotificationsService} from '../common/services/global/notifications';
+import {CardComponent} from '@common/components/card/component';
+import {ListGroupIdentifier, ListIdentifier} from '@common/components/resourcelist/groupids';
+import {emptyResourcesRatio, WorkloadStatusComponent} from '@common/components/workloadstatus/component';
+import {ConfigService} from '@common/services/global/config';
+import {NotificationsService} from '@common/services/global/notifications';
 
 import {OverviewComponent} from './component';
 import {Helper, ResourceRatioModes} from './helper';

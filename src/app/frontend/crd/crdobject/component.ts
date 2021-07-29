@@ -19,12 +19,12 @@ import {HttpClient} from '@angular/common/http';
 import {dump as toYaml, load as fromYaml} from 'js-yaml';
 import {Subscription} from 'rxjs';
 import {CRDObjectDetail} from '@api/root.api';
-import {EditorMode} from '../../common/components/textinput/component';
-import {ActionbarService, ResourceMeta} from '../../common/services/global/actionbar';
-import {NamespacedResourceService} from '../../common/services/resource/resource';
-import {EndpointManager, Resource} from '../../common/services/resource/endpoint';
-import {NotificationsService} from '../../common/services/global/notifications';
-import {RawResource} from '../../common/resources/rawresource';
+import {EditorMode} from '@common/components/textinput/component';
+import {ActionbarService, ResourceMeta} from '@common/services/global/actionbar';
+import {NamespacedResourceService} from '@common/services/resource/resource';
+import {EndpointManager, Resource} from '@common/services/resource/endpoint';
+import {NotificationsService} from '@common/services/global/notifications';
+import {RawResource} from '@common/resources/rawresource';
 
 @Component({selector: 'kd-crd-object-detail', templateUrl: './template.html'})
 export class CRDObjectDetailComponent implements OnInit, OnDestroy {

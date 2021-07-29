@@ -16,9 +16,9 @@ import {Component, ViewChild} from '@angular/core';
 import {NgForm} from '@angular/forms';
 import {KdFile} from '@api/root.ui';
 
-import {CreateService} from '../../../common/services/create/service';
-import {HistoryService} from '../../../common/services/global/history';
-import {NamespaceService} from '../../../common/services/global/namespace';
+import {CreateService} from '@common/services/create/service';
+import {HistoryService} from '@common/services/global/history';
+import {NamespaceService} from '@common/services/global/namespace';
 
 @Component({
   selector: 'kd-create-from-file',

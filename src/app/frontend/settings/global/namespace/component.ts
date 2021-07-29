@@ -13,18 +13,17 @@
 // limitations under the License.
 
 import {BreakpointObserver, Breakpoints} from '@angular/cdk/layout';
-import {Component, forwardRef, Input, OnDestroy, OnInit} from '@angular/core';
+import {Component, forwardRef, OnDestroy, OnInit} from '@angular/core';
 import {ControlValueAccessor, FormArray, FormBuilder, FormGroup, NG_VALUE_ACCESSOR} from '@angular/forms';
 import {MatDialog, MatDialogConfig} from '@angular/material/dialog';
 import {GlobalSettings, NamespaceList} from '@api/root.api';
 import {Subject} from 'rxjs';
 import {map, take, takeUntil} from 'rxjs/operators';
-import {EndpointManager, Resource} from '../../../common/services/resource/endpoint';
-import {ResourceService} from '../../../common/services/resource/resource';
+import {EndpointManager, Resource} from '@common/services/resource/endpoint';
+import {ResourceService} from '@common/services/resource/resource';
 import {SettingsHelperService} from '../service';
 import {AddFallbackNamespaceDialog, AddFallbackNamespaceDialogData} from './adddialog/dialog';
 import {EditFallbackNamespaceDialog, EditFallbackNamespaceDialogData} from './editdialog/dialog';
-import set = Reflect.set;
 
 enum BreakpointElementCount {
   XLarge = 5,

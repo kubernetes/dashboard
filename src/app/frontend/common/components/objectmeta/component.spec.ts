@@ -14,7 +14,7 @@
 
 import {HttpClientTestingModule, HttpTestingController} from '@angular/common/http/testing';
 import {Component, CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
-import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
+import {waitForAsync, TestBed} from '@angular/core/testing';
 import {MatCardModule} from '@angular/material/card';
 import {MatChipsModule} from '@angular/material/chips';
 import {MatDialogModule} from '@angular/material/dialog';
@@ -26,12 +26,9 @@ import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {RouterModule} from '@angular/router';
 import {AppConfig, ObjectMeta} from '@api/root.api';
 import {CardComponent} from '@common/components/card/component';
-import {ChipsComponent} from '@common/components/chips/component';
 import {PropertyComponent} from '@common/components/property/component';
 import {PipesModule} from '@common/pipes/module';
-import {AuthorizerService} from '@common/services/global/authorizer';
 import {ConfigService} from '@common/services/global/config';
-import {GlobalSettingsService} from '@common/services/global/globalsettings';
 
 import {ObjectMetaComponent} from './component';
 

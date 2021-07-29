@@ -27,7 +27,7 @@ import {
 } from '@angular/forms';
 import {PortMapping} from '@api/root.api';
 import {Observable} from 'rxjs';
-import {first, map, startWith} from 'rxjs/operators';
+import {filter, map, startWith, take} from 'rxjs/operators';
 import {FormValidators} from '../validator/validators';
 import {validateProtocol} from '../validator/validprotocol.validator';
 
@@ -102,7 +102,8 @@ export class PortMappingsComponent implements OnInit, ControlValueAccessor {
   validate(_: FormControl): Observable<{[key: string]: boolean} | null> {
     return this.portMappingForm.statusChanges.pipe(
       startWith(this.portMappingForm.status),
-      first(() => !this.portMappingForm.pending),
+      filter(() => !this.portMappingForm.pending),
+      take(1),
       map(() => {
         return this.portMappingForm.invalid ? {error: true} : null;
       })

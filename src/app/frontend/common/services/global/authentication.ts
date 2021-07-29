@@ -19,7 +19,7 @@ import {IConfig} from '@api/root.ui';
 import {CookieService} from 'ngx-cookie-service';
 import {of} from 'rxjs';
 import {Observable} from 'rxjs';
-import {first, switchMap} from 'rxjs/operators';
+import {switchMap, take} from 'rxjs/operators';
 import {AuthResponse, CsrfToken, LoginSpec, LoginStatus} from 'typings/root.api';
 import {CONFIG_DI_TOKEN} from '../../../index.config';
 
@@ -131,7 +131,7 @@ export class AuthService {
           );
         })
       )
-      .pipe(first())
+      .pipe(take(1))
       .subscribe((authResponse: AuthResponse) => {
         if (authResponse.jweToken.length !== 0 && authResponse.errors.length === 0) {
           this.setTokenCookie_(authResponse.jweToken);

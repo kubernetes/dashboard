@@ -15,7 +15,7 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Subject} from 'rxjs';
 import {takeUntil} from 'rxjs/operators';
-import {ActionbarService, ResourceMeta} from '../../../services/global/actionbar';
+import {ActionbarService, ResourceMeta} from '@common/services/global/actionbar';
 
 @Component({
   selector: '',

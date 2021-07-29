@@ -17,7 +17,7 @@ import {ActivatedRoute} from '@angular/router';
 import {StateError} from '@api/root.ui';
 import {map} from 'rxjs/operators';
 
-import {KdError} from '../common/errors/errors';
+import {KdError} from '@common/errors/errors';
 
 @Component({
   selector: 'kd-error',

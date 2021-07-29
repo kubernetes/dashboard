@@ -15,9 +15,9 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {ObjectMeta, TypeMeta} from '@api/root.api';
-import {first} from 'rxjs/operators';
+import {take} from 'rxjs/operators';
 
-import {VerberService} from '../../../../services/global/verber';
+import {VerberService} from '@common/services/global/verber';
 
 @Component({
   selector: 'kd-actionbar-detail-delete',
@@ -35,7 +35,7 @@ export class ActionbarDetailDeleteComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.verber_.onDelete.pipe(first()).subscribe(() => {
+    this.verber_.onDelete.pipe(take(1)).subscribe(() => {
       this.router_.navigate(['.'], {relativeTo: this.route_, queryParamsHandling: 'preserve'});
     });
   }

@@ -15,7 +15,7 @@
 import {NgModule} from '@angular/core';
 import {Route, RouterModule} from '@angular/router';
 
-import {EXEC_PARENT_PLACEHOLDER} from '../common/components/breadcrumbs/component';
+import {EXEC_PARENT_PLACEHOLDER} from '@common/components/breadcrumbs/component';
 
 import {ShellComponent} from './component';
 

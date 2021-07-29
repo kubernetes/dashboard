@@ -17,7 +17,7 @@ import {Component, Inject, OnDestroy} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {LogOptions} from '@api/root.api';
 import {saveAs} from 'file-saver';
-import {Subject, Subscription} from 'rxjs';
+import {Subject} from 'rxjs';
 import {takeUntil} from 'rxjs/operators';
 
 import {LogService} from '../../services/global/logs';

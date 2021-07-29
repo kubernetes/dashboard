@@ -14,7 +14,7 @@
 
 import {NgModule} from '@angular/core';
 import {Route, RouterModule} from '@angular/router';
-import {LOGS_SCALE_DEFAULT_ACTIONBAR} from '../../../common/components/actionbars/routing';
+import {LOGS_SCALE_DEFAULT_ACTIONBAR} from '@common/components/actionbars/routing';
 
 import {WORKLOADS_ROUTE} from '../routing';
 

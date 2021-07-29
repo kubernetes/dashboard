@@ -223,6 +223,12 @@
       "node/no-extraneous-require": "error",
       "node/no-unpublished-require": "error",
       "prefer-rest-params": "error",
+      "rxjs/ban-operators": [
+        "error",
+        {
+          "first": "use take(1) instead"
+        }
+      ],
       "rxjs/no-ignored-observable": "error",
       "rxjs/no-unbound-methods": "error",
       "rxjs/no-unsafe-takeuntil": "error",
