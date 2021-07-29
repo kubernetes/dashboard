@@ -13,24 +13,9 @@
 // limitations under the License.
 
 import {Component} from '@angular/core';
-import {
-  CronJobList,
-  DaemonSetList,
-  DeploymentList,
-  JobList,
-  Metric,
-  PodList,
-  ReplicaSetList,
-  ReplicationControllerList,
-  StatefulSetList,
-} from '@api/root.api';
-import {OnListChangeEvent, ResourcesRatio} from '@api/root.ui';
 
-import {ListGroupIdentifier, ListIdentifier} from '../common/components/resourcelist/groupids';
-import {emptyResourcesRatio} from '../common/components/workloadstatus/component';
-import {GroupedResourceList} from '../common/resources/groupedlist';
-
-import {Helper, ResourceRatioModes} from './helper';
+import {ListGroupIdentifier} from '@common/components/resourcelist/groupids';
+import {GroupedResourceList} from '@common/resources/groupedlist';
 
 @Component({
   selector: 'kd-overview',

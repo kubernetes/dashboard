@@ -15,7 +15,7 @@
 import {NgModule} from '@angular/core';
 import {Route, RouterModule} from '@angular/router';
 
-import {LOGS_PARENT_PLACEHOLDER} from '../common/components/breadcrumbs/component';
+import {LOGS_PARENT_PLACEHOLDER} from '@common/components/breadcrumbs/component';
 
 import {LogsComponent} from './component';
 

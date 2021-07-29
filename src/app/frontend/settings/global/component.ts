@@ -22,9 +22,9 @@ import {of, Subject} from 'rxjs';
 import {Observable} from 'rxjs/Observable';
 import {catchError, take, takeUntil, tap} from 'rxjs/operators';
 
-import {GlobalSettingsService} from '../../common/services/global/globalsettings';
-import {TitleService} from '../../common/services/global/title';
-import {ResourceService} from '../../common/services/resource/resource';
+import {GlobalSettingsService} from '@common/services/global/globalsettings';
+import {TitleService} from '@common/services/global/title';
+import {ResourceService} from '@common/services/resource/resource';
 
 import {SaveAnywayDialog} from './saveanywaysdialog/dialog';
 import {SettingsHelperService} from './service';

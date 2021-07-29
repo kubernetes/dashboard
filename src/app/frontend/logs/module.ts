@@ -15,7 +15,7 @@
 import {CommonModule} from '@angular/common';
 import {NgModule} from '@angular/core';
 
-import {ComponentsModule} from '../common/components/module';
+import {ComponentsModule} from '@common/components/module';
 import {SharedModule} from '../shared.module';
 
 import {LogsComponent} from './component';

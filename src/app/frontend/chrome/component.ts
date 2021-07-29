@@ -17,8 +17,8 @@ import {HttpClient} from '@angular/common/http';
 import {Component, Inject, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 
-import {AssetsService} from '../common/services/global/assets';
-import {GlobalSettingsService} from '../common/services/global/globalsettings';
+import {AssetsService} from '@common/services/global/assets';
+import {GlobalSettingsService} from '@common/services/global/globalsettings';
 
 class SystemBanner {
   message: string;

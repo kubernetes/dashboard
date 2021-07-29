@@ -18,12 +18,12 @@ import {PersistentVolumeClaimDetail} from '@api/root.api';
 import {Subject} from 'rxjs';
 import {takeUntil} from 'rxjs/operators';
 
-import {ActionbarService, ResourceMeta} from '../../../../common/services/global/actionbar';
-import {NotificationsService} from '../../../../common/services/global/notifications';
-import {EndpointManager, Resource} from '../../../../common/services/resource/endpoint';
-import {NamespacedResourceService} from '../../../../common/services/resource/resource';
-import {KdStateService} from '../../../../common/services/global/state';
-import {GlobalServicesModule} from '../../../../common/services/global/module';
+import {ActionbarService, ResourceMeta} from '@common/services/global/actionbar';
+import {NotificationsService} from '@common/services/global/notifications';
+import {EndpointManager, Resource} from '@common/services/resource/endpoint';
+import {NamespacedResourceService} from '@common/services/resource/resource';
+import {KdStateService} from '@common/services/global/state';
+import {GlobalServicesModule} from '@common/services/global/module';
 
 @Component({
   selector: 'kd-persistent-volume-claim-detail',

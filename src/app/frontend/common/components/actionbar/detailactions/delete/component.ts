@@ -17,7 +17,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {ObjectMeta, TypeMeta} from '@api/root.api';
 import {first} from 'rxjs/operators';
 
-import {VerberService} from '../../../../services/global/verber';
+import {VerberService} from '@common/services/global/verber';
 
 @Component({
   selector: 'kd-actionbar-detail-delete',

@@ -14,7 +14,7 @@
 
 import {Component, OnInit} from '@angular/core';
 import {LoginStatus} from '@api/root.api';
-import {AuthService} from '../../common/services/global/authentication';
+import {AuthService} from '@common/services/global/authentication';
 
 @Component({
   selector: 'kd-user-panel',
