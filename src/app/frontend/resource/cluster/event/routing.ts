@@ -12,14 +12,25 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-@use '../../../variables' as *;
+import {NgModule} from '@angular/core';
+import {Route, RouterModule} from '@angular/router';
+import {DEFAULT_ACTIONBAR} from '../../../common/components/actionbars/routing';
 
-.kd-graph-container {
-  flex: auto;
-  text-align: center;
-}
+import {CLUSTER_ROUTE} from '../routing';
 
-.kd-graph-title {
-  font-size: $subhead-font-size-base;
-  padding-bottom: 2 * $baseline-grid;
-}
+import {EventListComponent} from './list/component';
+
+const EVENT_LIST_ROUTE: Route = {
+  path: '',
+  component: EventListComponent,
+  data: {
+    breadcrumb: 'Events',
+    parent: CLUSTER_ROUTE,
+  },
+};
+
+@NgModule({
+  imports: [RouterModule.forChild([EVENT_LIST_ROUTE, DEFAULT_ACTIONBAR])],
+  exports: [RouterModule],
+})
+export class EventRoutingModule {}

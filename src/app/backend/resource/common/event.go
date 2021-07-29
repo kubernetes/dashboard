@@ -50,6 +50,18 @@ type Event struct {
 	// index 2 in this pod.
 	SubObject string `json:"object"`
 
+	// Kind of the referent.
+	// +optional
+	SubObjectKind string `json:"objectKind,omitempty"`
+
+	// Name of the referent.
+	// +optional
+	SubObjectName string `json:"objectName,omitempty"`
+
+	// Namespace of the referent.
+	// +optional
+	SubObjectNamespace string `json:"objectNamespace,omitempty"`
+
 	// The number of times this event has occurred.
 	Count int32 `json:"count"`
 

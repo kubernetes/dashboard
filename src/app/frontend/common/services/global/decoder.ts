@@ -12,14 +12,18 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-@use '../../../variables' as *;
+import {Injectable} from '@angular/core';
 
-.kd-graph-container {
-  flex: auto;
-  text-align: center;
-}
-
-.kd-graph-title {
-  font-size: $subhead-font-size-base;
-  padding-bottom: 2 * $baseline-grid;
+@Injectable({providedIn: 'root'})
+export class DecoderService {
+  base64(encoded: string): string {
+    return decodeURIComponent(
+      atob(encoded)
+        .split('')
+        .map(c => {
+          return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+        })
+        .join('')
+    );
+  }
 }

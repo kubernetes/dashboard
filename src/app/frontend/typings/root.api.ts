@@ -298,6 +298,9 @@ export interface Event extends Resource {
   sourceComponent: string;
   sourceHost: string;
   object: string;
+  objectKind?: string;
+  objectName?: string;
+  objectNamespace?: string;
   count: number;
   firstSeen: string;
   lastSeen: string;
@@ -517,7 +520,7 @@ export interface IngressDetail extends ResourceDetail {
 
 export interface IngressSpec {
   ingressClassName?: string;
-  backend?: IngressBackend;
+  defaultBackend?: IngressBackend;
   rules?: IngressSpecRule[];
   tls?: IngressSpecTLS[];
 }

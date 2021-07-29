@@ -15,6 +15,7 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {SecretDetail} from '@api/root.api';
+import {DecoderService} from '@common/services/global/decoder';
 import {Subject} from 'rxjs';
 import {takeUntil} from 'rxjs/operators';
 import {HiddenPropertyMode} from '../../../../common/components/hiddenproperty/component';
@@ -40,7 +41,8 @@ export class SecretDetailComponent implements OnInit, OnDestroy {
     private readonly secret_: NamespacedResourceService<SecretDetail>,
     private readonly actionbar_: ActionbarService,
     private readonly activatedRoute_: ActivatedRoute,
-    private readonly notifications_: NotificationsService
+    private readonly notifications_: NotificationsService,
+    readonly decoder: DecoderService
   ) {}
 
   ngOnInit(): void {
@@ -66,9 +68,5 @@ export class SecretDetailComponent implements OnInit, OnDestroy {
 
   getDataKeys(): string[] {
     return this.secret && this.secret.data ? Object.keys(this.secret.data) : [];
-  }
-
-  decode(s: string): string {
-    return atob(s);
   }
 }

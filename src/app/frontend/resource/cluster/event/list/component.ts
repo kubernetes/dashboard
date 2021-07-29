@@ -12,14 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-@use '../../../variables' as *;
+import {Component} from '@angular/core';
 
-.kd-graph-container {
-  flex: auto;
-  text-align: center;
-}
-
-.kd-graph-title {
-  font-size: $subhead-font-size-base;
-  padding-bottom: 2 * $baseline-grid;
-}
+@Component({
+  selector: 'kd-event-list-state',
+  template: '<kd-event-list></kd-event-list>',
+})
+export class EventListComponent {}

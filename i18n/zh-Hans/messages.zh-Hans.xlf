@@ -307,6 +307,10 @@
         <source>Resource information </source>
         <target state="new">资源信息</target>
         <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/resource/discovery/ingress/detail/template.html</context>
+          <context context-type="linenumber">23</context>
+        </context-group>
+        <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/resource/workloads/pod/detail/template.html</context>
           <context context-type="linenumber">24</context>
         </context-group>
@@ -707,10 +711,6 @@
           <context context-type="linenumber">22</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/frontend/resource/discovery/ingress/detail/template.html</context>
-          <context context-type="linenumber">23</context>
-        </context-group>
-        <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/resource/discovery/service/detail/template.html</context>
           <context context-type="linenumber">22</context>
         </context-group>
@@ -870,7 +870,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/resourcelist/pod/template.html</context>
-          <context context-type="linenumber">124</context>
+          <context context-type="linenumber">123</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/resource/cluster/namespace/detail/template.html</context>
@@ -898,7 +898,7 @@
         <target>重启</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/resourcelist/pod/template.html</context>
-          <context context-type="linenumber">132</context>
+          <context context-type="linenumber">131</context>
         </context-group>
       </trans-unit>
       <trans-unit id="6869304038391725752" datatype="html">
@@ -1018,7 +1018,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/ingressrulelist/template.html</context>
-          <context context-type="linenumber">26</context>
+          <context context-type="linenumber">27</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/limits/template.html</context>
@@ -1209,6 +1209,10 @@
           <context context-type="linenumber">70</context>
         </context-group>
         <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/common/components/resourcelist/event/template.html</context>
+          <context context-type="linenumber">50</context>
+        </context-group>
+        <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/resourcelist/horizontalpodautoscaler/template.html</context>
           <context context-type="linenumber">46</context>
         </context-group>
@@ -1327,6 +1331,10 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/resourcelist/deployment/template.html</context>
           <context context-type="linenumber">85</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/common/components/resourcelist/event/template.html</context>
+          <context context-type="linenumber">59</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/resourcelist/horizontalpodautoscaler/template.html</context>
@@ -1618,7 +1626,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/resourcelist/pod/template.html</context>
-          <context context-type="linenumber">168</context>
+          <context context-type="linenumber">167</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/resourcelist/replicaset/template.html</context>
@@ -1655,6 +1663,22 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/resourcelist/storageclass/template.html</context>
           <context context-type="linenumber">76</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="2176017937730560842" datatype="html">
+        <source>Rules </source>
+        <target state="new">Rules </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/common/components/ingressrulelist/template.html</context>
+          <context context-type="linenumber">20,21</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="7198836215060144081" datatype="html">
+        <source>Host </source>
+        <target state="new">Host </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/common/components/ingressrulelist/template.html</context>
+          <context context-type="linenumber">37,38</context>
         </context-group>
       </trans-unit>
       <trans-unit id="1130652265542107236" datatype="html">
@@ -1945,6 +1969,10 @@
           <context context-type="linenumber">68</context>
         </context-group>
         <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/common/components/resourcelist/event/template.html</context>
+          <context context-type="linenumber">68</context>
+        </context-group>
+        <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/resourcelist/persistentvolume/template.html</context>
           <context context-type="linenumber">126</context>
         </context-group>
@@ -1962,7 +1990,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/resourcelist/event/template.html</context>
-          <context context-type="linenumber">46</context>
+          <context context-type="linenumber">76</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/resource/cluster/persistentvolume/detail/template.html</context>
@@ -2200,10 +2228,6 @@
           <context context-type="sourcefile">src/app/frontend/common/components/endpoint/cardlist/template.html</context>
           <context context-type="linenumber">20</context>
         </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/frontend/resource/discovery/ingress/detail/template.html</context>
-          <context context-type="linenumber">51</context>
-        </context-group>
       </trans-unit>
       <trans-unit id="6641024648411549335" datatype="html">
         <source>Host</source>
@@ -2211,10 +2235,6 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/endpoint/cardlist/template.html</context>
           <context context-type="linenumber">37</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/frontend/common/components/ingressrulelist/template.html</context>
-          <context context-type="linenumber">36</context>
         </context-group>
       </trans-unit>
       <trans-unit id="6595420178679632820" datatype="html">
@@ -2258,15 +2278,23 @@
         <target>事件源</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/resourcelist/event/template.html</context>
-          <context context-type="linenumber">54</context>
+          <context context-type="linenumber">84</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="3381412717703555378" datatype="html">
+        <source>Object</source>
+        <target state="new">Object</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/common/components/resourcelist/event/template.html</context>
+          <context context-type="linenumber">95</context>
         </context-group>
       </trans-unit>
       <trans-unit id="2914974644465021764" datatype="html">
         <source>Sub-object</source>
-        <target>子对象</target>
+        <target state="new">Sub-object</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/resourcelist/event/template.html</context>
-          <context context-type="linenumber">64</context>
+          <context context-type="linenumber">114</context>
         </context-group>
       </trans-unit>
       <trans-unit id="8177873832400820695" datatype="html">
@@ -2274,7 +2302,7 @@
         <target>次数</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/resourcelist/event/template.html</context>
-          <context context-type="linenumber">75</context>
+          <context context-type="linenumber">125</context>
         </context-group>
       </trans-unit>
       <trans-unit id="8299215096475112763" datatype="html">
@@ -2282,7 +2310,7 @@
         <target>初次</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/resourcelist/event/template.html</context>
-          <context context-type="linenumber">83</context>
+          <context context-type="linenumber">134</context>
         </context-group>
       </trans-unit>
       <trans-unit id="3856193213296741054" datatype="html">
@@ -2290,7 +2318,7 @@
         <target>最后一次</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/resourcelist/event/template.html</context>
-          <context context-type="linenumber">94</context>
+          <context context-type="linenumber">146</context>
         </context-group>
       </trans-unit>
       <trans-unit id="6157826473930539567" datatype="html">
@@ -2642,7 +2670,7 @@
         <target>CPU 使用率 (cores)</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/resourcelist/pod/template.html</context>
-          <context context-type="linenumber">142</context>
+          <context context-type="linenumber">141</context>
         </context-group>
       </trans-unit>
       <trans-unit id="2620018130971633920" datatype="html">
@@ -2650,7 +2678,7 @@
         <target>内存使用 (bytes)</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/resourcelist/pod/template.html</context>
-          <context context-type="linenumber">154</context>
+          <context context-type="linenumber">153</context>
         </context-group>
       </trans-unit>
       <trans-unit id="6407858727320871864" datatype="html">
@@ -2792,10 +2820,6 @@
       <trans-unit id="4645345687322304891" datatype="html">
         <source>Rules</source>
         <target>规则</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/frontend/common/components/ingressrulelist/template.html</context>
-          <context context-type="linenumber">20</context>
-        </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/policyrule/template.html</context>
           <context context-type="linenumber">20</context>
@@ -3293,12 +3317,20 @@
           <context context-type="linenumber">134</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="1861657886309326" datatype="html">
+        <source>Events </source>
+        <target state="new">Events </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/chrome/nav/template.html</context>
+          <context context-type="linenumber">140</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="4613805182430195952" datatype="html">
         <source>Namespaces </source>
         <target>命名空间 </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/chrome/nav/template.html</context>
-          <context context-type="linenumber">139</context>
+          <context context-type="linenumber">145</context>
         </context-group>
       </trans-unit>
       <trans-unit id="7446822750532518350" datatype="html">
@@ -3306,7 +3338,7 @@
         <target>网络策略 </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/chrome/nav/template.html</context>
-          <context context-type="linenumber">145</context>
+          <context context-type="linenumber">151</context>
         </context-group>
       </trans-unit>
       <trans-unit id="7682253854615514679" datatype="html">
@@ -3314,7 +3346,7 @@
         <target>Nodes </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/chrome/nav/template.html</context>
-          <context context-type="linenumber">150</context>
+          <context context-type="linenumber">156</context>
         </context-group>
       </trans-unit>
       <trans-unit id="6852503341223458730" datatype="html">
@@ -3322,7 +3354,7 @@
         <target>Persistent Volumes </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/chrome/nav/template.html</context>
-          <context context-type="linenumber">155</context>
+          <context context-type="linenumber">161</context>
         </context-group>
       </trans-unit>
       <trans-unit id="4052052481087794292" datatype="html">
@@ -3330,7 +3362,7 @@
         <target>Role Bindings </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/chrome/nav/template.html</context>
-          <context context-type="linenumber">161</context>
+          <context context-type="linenumber">167</context>
         </context-group>
       </trans-unit>
       <trans-unit id="4499651527836994743" datatype="html">
@@ -3338,7 +3370,7 @@
         <target>Roles </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/chrome/nav/template.html</context>
-          <context context-type="linenumber">167</context>
+          <context context-type="linenumber">173</context>
         </context-group>
       </trans-unit>
       <trans-unit id="6462224380417375328" datatype="html">
@@ -3346,7 +3378,7 @@
         <target>服务账号 </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/chrome/nav/template.html</context>
-          <context context-type="linenumber">173</context>
+          <context context-type="linenumber">179</context>
         </context-group>
       </trans-unit>
       <trans-unit id="7206849842963127297" datatype="html">
@@ -3354,7 +3386,7 @@
         <target>自定义资源 </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/chrome/nav/template.html</context>
-          <context context-type="linenumber">181</context>
+          <context context-type="linenumber">187</context>
         </context-group>
       </trans-unit>
       <trans-unit id="7293190222859783293" datatype="html">
@@ -3362,7 +3394,7 @@
         <target>插件 </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/chrome/nav/template.html</context>
-          <context context-type="linenumber">192</context>
+          <context context-type="linenumber">198</context>
         </context-group>
       </trans-unit>
       <trans-unit id="7207867066492367466" datatype="html">
@@ -3370,7 +3402,7 @@
         <target>设置 </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/chrome/nav/template.html</context>
-          <context context-type="linenumber">201</context>
+          <context context-type="linenumber">207</context>
         </context-group>
       </trans-unit>
       <trans-unit id="4894366697856944217" datatype="html">
@@ -3378,7 +3410,7 @@
         <target>关于 </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/chrome/nav/template.html</context>
-          <context context-type="linenumber">207</context>
+          <context context-type="linenumber">213</context>
         </context-group>
       </trans-unit>
       <trans-unit id="444174825108794574" datatype="html">
@@ -4978,10 +5010,50 @@
           <context context-type="sourcefile">src/app/frontend/resource/cluster/persistentvolume/detail/source/template.html</context>
           <context context-type="linenumber">196</context>
         </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/resource/discovery/ingress/detail/template.html</context>
+          <context context-type="linenumber">31</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="6479218245295850588" datatype="html">
+        <source>Default Backend </source>
+        <target state="new">Default Backend </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/resource/discovery/ingress/detail/template.html</context>
+          <context context-type="linenumber">45,46</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="386936461513068856" datatype="html">
+        <source>Service Port Name </source>
+        <target state="new">Service Port Name </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/resource/discovery/ingress/detail/template.html</context>
+          <context context-type="linenumber">59,60</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="8983622285399626514" datatype="html">
+        <source>Service Port Number </source>
+        <target state="new">Service Port Number </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/resource/discovery/ingress/detail/template.html</context>
+          <context context-type="linenumber">66,67</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="187187500641108332" datatype="html">
+        <source><x id="INTERPOLATION" equiv-text="&quot;\uFFFD0\uFFFD&quot;"/></source>
+        <target state="new"><x id="INTERPOLATION" equiv-text="&quot;\uFFFD0\uFFFD&quot;"/></target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/resource/discovery/ingress/detail/template.html</context>
+          <context context-type="linenumber">73</context>
+        </context-group>
       </trans-unit>
       <trans-unit id="607655052894272917" datatype="html">
         <source>Path </source>
         <target state="new">Path </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/common/components/ingressrulelist/template.html</context>
+          <context context-type="linenumber">51</context>
+        </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/resource/cluster/persistentvolume/detail/source/template.html</context>
           <context context-type="linenumber">203</context>
@@ -5041,6 +5113,42 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/resource/cluster/persistentvolume/detail/source/template.html</context>
           <context context-type="linenumber">272</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="2411065404041685586" datatype="html">
+        <source>Path Type </source>
+        <target state="new">Path Type </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/common/components/ingressrulelist/template.html</context>
+          <context context-type="linenumber">59,60</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="1134765132854526890" datatype="html">
+        <source>Service Name </source>
+        <target state="new">Service Name </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/common/components/ingressrulelist/template.html</context>
+          <context context-type="linenumber">67,68</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/resource/discovery/ingress/detail/template.html</context>
+          <context context-type="linenumber">52,53</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="3426643717372750272" datatype="html">
+        <source>Service Port </source>
+        <target state="new">Service Port </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/common/components/ingressrulelist/template.html</context>
+          <context context-type="linenumber">94</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="1575304063225693008" datatype="html">
+        <source>TLS Secret </source>
+        <target state="new">TLS Secret </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/common/components/ingressrulelist/template.html</context>
+          <context context-type="linenumber">104</context>
         </context-group>
       </trans-unit>
       <trans-unit id="3274706130081828538" datatype="html">
@@ -5315,54 +5423,6 @@
           <context context-type="linenumber">114</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="8911059720204770105" datatype="html">
-        <source>Path</source>
-        <target>路径</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/frontend/common/components/ingressrulelist/template.html</context>
-          <context context-type="linenumber">49</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="7283715162033649942" datatype="html">
-        <source>Path Type</source>
-        <target state="new">路径类型</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/frontend/common/components/ingressrulelist/template.html</context>
-          <context context-type="linenumber">56</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="8604852007710946848" datatype="html">
-        <source>Service Name</source>
-        <target state="new">Service 名称</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/frontend/common/components/ingressrulelist/template.html</context>
-          <context context-type="linenumber">63</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/frontend/resource/discovery/ingress/detail/template.html</context>
-          <context context-type="linenumber">29</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="8368593625463243463" datatype="html">
-        <source>Service Port</source>
-        <target state="new">Service 端口</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/frontend/common/components/ingressrulelist/template.html</context>
-          <context context-type="linenumber">81</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/frontend/resource/discovery/ingress/detail/template.html</context>
-          <context context-type="linenumber">35</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="2820656367103016808" datatype="html">
-        <source>TLS Secret</source>
-        <target state="new">TLS Secret</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/frontend/common/components/ingressrulelist/template.html</context>
-          <context context-type="linenumber">89</context>
-        </context-group>
-      </trans-unit>
       <trans-unit id="1183601349925746054" datatype="html">
         <source>Parameter</source>
         <target>参数</target>
@@ -5393,14 +5453,6 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/resource/config/secret/detail/template.html</context>
           <context context-type="linenumber">22</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="187187500641108332" datatype="html">
-        <source><x id="INTERPOLATION" equiv-text="&quot;\uFFFD0\uFFFD&quot;"/></source>
-        <target state="new"><x id="INTERPOLATION" equiv-text="{{ingress.spec.backend.resource.kind}}"/></target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/frontend/resource/discovery/ingress/detail/template.html</context>
-          <context context-type="linenumber">44</context>
         </context-group>
       </trans-unit>
       <trans-unit id="7298863100332850221" datatype="html">

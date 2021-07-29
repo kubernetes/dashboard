@@ -12,14 +12,17 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-@use '../../../variables' as *;
+import {NgModule} from '@angular/core';
 
-.kd-graph-container {
-  flex: auto;
-  text-align: center;
-}
+import {ComponentsModule} from '../../../common/components/module';
+import {SharedModule} from '../../../shared.module';
 
-.kd-graph-title {
-  font-size: $subhead-font-size-base;
-  padding-bottom: 2 * $baseline-grid;
-}
+// import {EventDetailComponent} from './detail/component';
+import {EventListComponent} from './list/component';
+import {EventRoutingModule} from './routing';
+
+@NgModule({
+  imports: [SharedModule, ComponentsModule, EventRoutingModule],
+  declarations: [EventListComponent /* , EventDetailComponent */],
+})
+export class EventModule {}
