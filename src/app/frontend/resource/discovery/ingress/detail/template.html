@@ -25,6 +25,13 @@ limitations under the License.
   <div content
        *ngIf="isInitialized"
        fxLayout="row wrap">
+    <kd-property *ngIf="ingress?.spec?.ingressClassName">
+      <div key
+           i18n>Ingress Class Name
+      </div>
+      <div value>{{ingress.spec.ingressClassName}}</div>
+    </kd-property>
+
     <kd-property *ngIf="ingress?.endpoints?.length > 0"
                  fxFlex="100">
       <div key
