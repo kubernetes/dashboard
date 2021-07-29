@@ -5237,7 +5237,7 @@
         <target state="new">Service Port </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/ingressrulelist/template.html</context>
-          <context context-type="linenumber">95,96</context>
+          <context context-type="linenumber">94</context>
         </context-group>
       </trans-unit>
       <trans-unit id="1575304063225693008" datatype="html">
@@ -5245,7 +5245,7 @@
         <target state="new">TLS Secret </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/ingressrulelist/template.html</context>
-          <context context-type="linenumber">107,108</context>
+          <context context-type="linenumber">104</context>
         </context-group>
       </trans-unit>
       <trans-unit id="3274706130081828538" datatype="html">
