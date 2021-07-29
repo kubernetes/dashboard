@@ -16,7 +16,7 @@ import {HttpClient} from '@angular/common/http';
 import {Directive, forwardRef, Input} from '@angular/core';
 import {AbstractControl, AsyncValidator, AsyncValidatorFn, NG_ASYNC_VALIDATORS} from '@angular/forms';
 import {Observable, of} from 'rxjs';
-import {debounceTime, first, map} from 'rxjs/operators';
+import {debounceTime, map, take} from 'rxjs/operators';
 
 export const validProtocolValidationKey = 'validProtocol';
 
@@ -57,7 +57,7 @@ export function validateProtocol(http: HttpClient, isExternal: boolean): AsyncVa
         protocol,
         isExternal,
       })
-      .pipe(first())
+      .pipe(take(1))
       .pipe(
         debounceTime(500),
         map(res => {
