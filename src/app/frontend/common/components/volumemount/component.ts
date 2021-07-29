@@ -42,9 +42,7 @@ export class VolumeMountComponent {
   }
 
   isResourceSupported(sourceType: string): boolean {
-    return Object.values(SupportedResources)
-      .map(r => r as string)
-      .includes(sourceType);
+    return SupportedResources.isSupported(sourceType);
   }
 
   getDetailsHref(name: string, kind: string): string {

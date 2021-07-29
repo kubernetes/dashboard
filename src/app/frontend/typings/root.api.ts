@@ -519,7 +519,7 @@ export interface IngressDetail extends ResourceDetail {
 
 export interface IngressSpec {
   ingressClassName?: string;
-  backend?: IngressBackend;
+  defaultBackend?: IngressBackend;
   rules?: IngressSpecRule[];
   tls?: IngressSpecTLS[];
 }
