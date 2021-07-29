@@ -77,9 +77,8 @@ limitations under the License.
           <ng-container *ngIf="ingressRuleFlat.path?.backend?.resource">
 
             <ng-container *ngIf="isResourceSupported(ingressRuleFlat.path.backend.resource)">
-              <a
-                [routerLink]="getDetailsHref(ingressRuleFlat.path.backend.resource.name, ingressRuleFlat.path.backend.resource.kind)"
-                queryParamsHandling="preserve">
+              <a [routerLink]="getDetailsHref(ingressRuleFlat.path.backend.resource.name, ingressRuleFlat.path.backend.resource.kind)"
+                 queryParamsHandling="preserve">
                 {{ingressRuleFlat.path.backend.resource.apiGroup}}/{{ingressRuleFlat.path.backend.resource.name}}
               </a>
             </ng-container>
@@ -95,10 +94,8 @@ limitations under the License.
                          i18n>Service Port
         </mat-header-cell>
         <mat-cell *matCellDef="let ingressRuleFlat">
-          <ng-container
-            *ngIf="ingressRuleFlat.path.backend.service?.port.name">{{ingressRuleFlat.path.backend.service.port.name}}</ng-container>
-          <ng-container
-            *ngIf="ingressRuleFlat.path.backend.service?.port.number">{{ingressRuleFlat.path.backend.service.port.number}}</ng-container>
+          <ng-container *ngIf="ingressRuleFlat.path.backend.service?.port.name">{{ingressRuleFlat.path.backend.service.port.name}}</ng-container>
+          <ng-container *ngIf="ingressRuleFlat.path.backend.service?.port.number">{{ingressRuleFlat.path.backend.service.port.number}}</ng-container>
           <ng-container *ngIf="!ingressRuleFlat.path.backend.service?.port">-</ng-container>
         </mat-cell>
       </ng-container>
