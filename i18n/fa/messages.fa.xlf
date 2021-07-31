@@ -1168,7 +1168,7 @@
       </trans-unit>
       <trans-unit id="130fd872c78271a8f86b1ab16a76e823969c47d9" datatype="html">
         <source>Namespace</source>
-        <target state="needs-translation">Namespace</target>
+        <target>فضای نام</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/cronjob/template.html</context>
           <context context-type="linenumber">67</context>
@@ -2098,7 +2098,7 @@
       </trans-unit>
       <trans-unit id="85550e95dc12c58e2e711dbebe89f3448eb66c72" datatype="html">
         <source>Memory requests (bytes)</source>
-        <target>حافظه درخواست شده (بایت)</target>
+        <target>حافظه درخواستی (بایت)</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/node/template.html</context>
           <context context-type="linenumber">96</context>
@@ -2366,7 +2366,7 @@
       </trans-unit>
       <trans-unit id="b1ac30ff1f228e365d4697daf8b7fbc166899498" datatype="html">
         <source>Access Modes</source>
-        <target>دسترسی بیشتر</target>
+        <target>حالت‌های دسترسی</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/persistentvolume/template.html</context>
           <context context-type="linenumber">67</context>
@@ -2382,7 +2382,7 @@
       </trans-unit>
       <trans-unit id="a7c36b970853f8ce7692119881d2550dbd7fa19d" datatype="html">
         <source>Reclaim Policy</source>
-        <target>سیاست بازپس‌گیریy</target>
+        <target>سیاست بازپس‌گیری</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/common/components/resourcelist/persistentvolume/template.html</context>
           <context context-type="linenumber">75</context>
@@ -4172,7 +4172,7 @@
       </trans-unit>
       <trans-unit id="96f2b8de376e3dbfaae05e9de836f8a740c0b803" datatype="html">
         <source>Use dark theme in the whole app</source>
-        <target>استفاده از پوسته‌ی تیره در تمامی پنل</target>
+        <target>استفاده از پوسته‌ی تیره در تمامی برنامه</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../src/app/frontend/settings/local/template.html</context>
           <context context-type="linenumber">27</context>
