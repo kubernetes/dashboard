@@ -17,8 +17,8 @@ import {Inject, Injectable} from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
 import {Router} from '@angular/router';
 import {AppDeploymentContentResponse, AppDeploymentContentSpec, AppDeploymentSpec} from '@api/root.api';
-
-import {Config, CONFIG_DI_TOKEN} from '../../../index.config';
+import {IConfig} from '@api/root.ui';
+import {CONFIG_DI_TOKEN} from '../../../index.config';
 import {AlertDialog, AlertDialogConfig} from '../../dialogs/alert/dialog';
 import {NAMESPACE_STATE_PARAM} from '../../params/params';
 import {CsrfTokenService} from '../global/csrftoken';
@@ -54,7 +54,7 @@ export class CreateService {
     private readonly csrfToken_: CsrfTokenService,
     private readonly matDialog_: MatDialog,
     private readonly router_: Router,
-    @Inject(CONFIG_DI_TOKEN) private readonly CONFIG: Config
+    @Inject(CONFIG_DI_TOKEN) private readonly CONFIG: IConfig
   ) {}
 
   async createContent(content: string, validate = true, name = ''): Promise<AppDeploymentContentResponse> {

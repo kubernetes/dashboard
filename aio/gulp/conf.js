@@ -17,11 +17,15 @@
  */
 import minimist from 'minimist';
 import path from 'path';
+import {fileURLToPath} from "url";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 /**
  * Base path for all other paths.
  */
-const basePath = path.join(__dirname, '../../');
+const basePath = path.resolve(__dirname + '/../../');
 
 /**
  * Compilation architecture configuration.
@@ -53,7 +57,7 @@ const version = {
   /**
    * Current release version of the project.
    */
-  release: 'v2.2.0',
+  release: 'v2.3.1',
   /**
    * Version name of the head release of the project.
    */

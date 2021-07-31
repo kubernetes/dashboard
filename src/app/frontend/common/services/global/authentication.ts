@@ -15,13 +15,14 @@
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Inject, Injectable} from '@angular/core';
 import {Router} from '@angular/router';
+import {IConfig} from '@api/root.ui';
 import {CookieService} from 'ngx-cookie-service';
 import {of} from 'rxjs';
 import {Observable} from 'rxjs';
-import {first, switchMap} from 'rxjs/operators';
+import {switchMap, take} from 'rxjs/operators';
 import {AuthResponse, CsrfToken, LoginSpec, LoginStatus} from 'typings/root.api';
+import {CONFIG_DI_TOKEN} from '../../../index.config';
 
-import {Config, CONFIG_DI_TOKEN} from '../../../index.config';
 import {K8SError} from '../../errors/errors';
 
 import {CsrfTokenService} from './csrftoken';
@@ -35,7 +36,7 @@ export class AuthService {
     private readonly http_: HttpClient,
     private readonly csrfTokenService_: CsrfTokenService,
     private readonly stateService_: KdStateService,
-    @Inject(CONFIG_DI_TOKEN) private readonly config_: Config
+    @Inject(CONFIG_DI_TOKEN) private readonly config_: IConfig
   ) {
     this.init_();
   }
@@ -130,7 +131,7 @@ export class AuthService {
           );
         })
       )
-      .pipe(first())
+      .pipe(take(1))
       .subscribe((authResponse: AuthResponse) => {
         if (authResponse.jweToken.length !== 0 && authResponse.errors.length === 0) {
           this.setTokenCookie_(authResponse.jweToken);

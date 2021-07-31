@@ -3,7 +3,6 @@
   "compilerOptions": {
     "outDir": "../out-tsc/app",
     "baseUrl": "../src/app/frontend",
-    "target": "es5",
     "types": ["node"]
   },
   "include": [

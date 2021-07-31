@@ -23,13 +23,13 @@ import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {ActivatedRoute, Router} from '@angular/router';
 import {RouterTestingModule} from '@angular/router/testing';
 import {EnabledAuthenticationModes, LoginSkippableResponse, LoginSpec} from '@api/root.api';
-import {PluginMetadata} from '@api/root.ui';
+import {IConfig, PluginMetadata} from '@api/root.ui';
 import {K8SError, KdError} from '@common/errors/errors';
 import {AuthService} from '@common/services/global/authentication';
 import {HistoryService} from '@common/services/global/history';
 import {PluginsConfigService} from '@common/services/global/plugin';
 import {from, Observable, of, throwError} from 'rxjs';
-import {Config, CONFIG_DI_TOKEN} from '../index.config';
+import {CONFIG_DI_TOKEN} from '../index.config';
 import {LoginComponent} from './component';
 
 const queries = {
@@ -39,7 +39,7 @@ const queries = {
   token: '#token',
 };
 const loginToken = 'supersecret';
-const MOCK_CONFIG_DI_TOKEN = new InjectionToken<Config>('kd.config');
+const MOCK_CONFIG_DI_TOKEN = new InjectionToken<IConfig>('kd.config');
 
 class MockAuthService {
   login(loginSpec: LoginSpec): Observable<K8SError[]> {

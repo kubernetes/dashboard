@@ -48,6 +48,9 @@ type CronJob struct {
 	Suspend      *bool          `json:"suspend"`
 	Active       int            `json:"active"`
 	LastSchedule *metav1.Time   `json:"lastSchedule"`
+
+	// ContainerImages holds a list of the CronJob images.
+	ContainerImages []string `json:"containerImages"`
 }
 
 // GetCronJobList returns a list of all CronJobs in the cluster.
@@ -111,11 +114,12 @@ func toCronJobList(cronJobs []v1beta1.CronJob, nonCriticalErrors []error, dsQuer
 
 func toCronJob(cj *v1beta1.CronJob) CronJob {
 	return CronJob{
-		ObjectMeta:   api.NewObjectMeta(cj.ObjectMeta),
-		TypeMeta:     api.NewTypeMeta(api.ResourceKindCronJob),
-		Schedule:     cj.Spec.Schedule,
-		Suspend:      cj.Spec.Suspend,
-		Active:       len(cj.Status.Active),
-		LastSchedule: cj.Status.LastScheduleTime,
+		ObjectMeta:      api.NewObjectMeta(cj.ObjectMeta),
+		TypeMeta:        api.NewTypeMeta(api.ResourceKindCronJob),
+		Schedule:        cj.Spec.Schedule,
+		Suspend:         cj.Spec.Suspend,
+		Active:          len(cj.Status.Active),
+		LastSchedule:    cj.Status.LastScheduleTime,
+		ContainerImages: getContainerImages(cj),
 	}
 }

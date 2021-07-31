@@ -15,9 +15,9 @@
 import {Inject, NgModule, Optional, SkipSelf} from '@angular/core';
 import {CookieService} from 'ngx-cookie-service';
 
-import {DialogsModule} from './common/dialogs/module';
-import {GlobalServicesModule} from './common/services/global/module';
-import {ResourceModule} from './common/services/resource/module';
+import {DialogsModule} from '@common/dialogs/module';
+import {GlobalServicesModule} from '@common/services/global/module';
+import {ResourceModule} from '@common/services/resource/module';
 import {CONFIG, CONFIG_DI_TOKEN} from './index.config';
 
 @NgModule({

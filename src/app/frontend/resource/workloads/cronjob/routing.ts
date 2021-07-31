@@ -14,7 +14,7 @@
 
 import {NgModule} from '@angular/core';
 import {Route, RouterModule} from '@angular/router';
-import {TRIGGER_DEFAULT_ACTIONBAR} from '../../../common/components/actionbars/routing';
+import {TRIGGER_DEFAULT_ACTIONBAR} from '@common/components/actionbars/routing';
 
 import {WORKLOADS_ROUTE} from '../routing';
 

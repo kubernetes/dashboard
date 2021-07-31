@@ -26,7 +26,7 @@ import (
 	"k8s.io/client-go/kubernetes/fake"
 )
 
-func TestGetJobDetail(t *testing.T) {
+func TestGetCronJobDetail(t *testing.T) {
 	cases := []struct {
 		namespace, name string
 		expectedActions []string
@@ -54,8 +54,9 @@ func TestGetJobDetail(t *testing.T) {
 						Namespace: namespace,
 						Labels:    labels,
 					},
-					TypeMeta: api.TypeMeta{Kind: api.ResourceKindCronJob},
-					Suspend:  &suspend,
+					TypeMeta:        api.TypeMeta{Kind: api.ResourceKindCronJob},
+					Suspend:         &suspend,
+					ContainerImages: []string{},
 				},
 			},
 		},

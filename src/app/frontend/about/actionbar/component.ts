@@ -14,7 +14,7 @@
 
 import {Component} from '@angular/core';
 import {VersionInfo} from '@api/root.ui';
-import {ConfigService} from '../../common/services/global/config';
+import {ConfigService} from '@common/services/global/config';
 
 @Component({selector: '', templateUrl: './template.html'})
 export class ActionbarComponent {

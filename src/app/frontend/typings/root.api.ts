@@ -12,16 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-// Shared resource types
-import {KdError} from '@api/root.ui';
+import {KdError} from '@api/root.shared';
 import {PersistentVolumeSource} from '@api/volume.api';
-import {SecurityContext} from '@angular/core';
-
-export enum SupportedResources {
-  ConfigMap = 'ConfigMap',
-  Secret = 'Secret',
-  PersistentVolumeClaim = 'PersistentVolumeClaim',
-}
 
 export interface TypeMeta {
   kind: string;
@@ -244,6 +236,7 @@ export interface CronJob extends Resource {
   suspend: boolean;
   active: number;
   lastSchedule: string;
+  containerImages: string[];
 }
 
 export interface CRD extends Resource {
@@ -305,6 +298,9 @@ export interface Event extends Resource {
   sourceComponent: string;
   sourceHost: string;
   object: string;
+  objectKind?: string;
+  objectName?: string;
+  objectNamespace?: string;
   count: number;
   firstSeen: string;
   lastSeen: string;
@@ -364,6 +360,7 @@ export interface Pod extends Resource {
   warnings: Event[];
   nodeName: string;
   serviceAccountName: string;
+  containerImages: string[];
 }
 
 export interface PodContainer {
@@ -522,7 +519,7 @@ export interface IngressDetail extends ResourceDetail {
 
 export interface IngressSpec {
   ingressClassName?: string;
-  backend?: IngressBackend;
+  defaultBackend?: IngressBackend;
   rules?: IngressSpecRule[];
   tls?: IngressSpecTLS[];
 }
@@ -533,9 +530,18 @@ export interface IngressSpecTLS {
 }
 
 export interface IngressBackend {
-  serviceName?: string;
-  servicePort?: string | number;
+  service?: IngressBackendService;
   resource?: ResourceRef;
+}
+
+export interface IngressBackendService {
+  name: string;
+  port: IngressBackendServicePort;
+}
+
+export interface IngressBackendServicePort {
+  name?: string;
+  number?: number;
 }
 
 export interface IngressSpecRule {
@@ -878,6 +884,38 @@ export interface Container {
   volumeMounts: VolumeMounts[];
   securityContext: ContainerSecurityContext;
   status: ContainerStatus;
+  livenessProbe: Probe;
+  readinessProbe: Probe;
+  startupProbe: Probe;
+}
+
+export interface Probe {
+  httpGet?: ProbeHttpGet;
+  tcpSocket?: ProbeTcpSocket;
+  exec?: ProbeExec;
+  initialDelaySeconds?: number;
+  timeoutSeconds?: number;
+  periodSeconds?: number;
+  successThreshold?: number;
+  failureThreshold?: number;
+  terminationGracePeriodSeconds?: number;
+}
+
+export interface ProbeHttpGet {
+  path?: string;
+  port: string | number;
+  host?: string;
+  scheme?: string;
+  httpHeaders?: string[];
+}
+
+export interface ProbeTcpSocket {
+  port: string | number;
+  host?: string;
+}
+
+export interface ProbeExec {
+  command?: string[];
 }
 
 export interface ContainerStatus {
@@ -1140,6 +1178,11 @@ export interface LogLineReference {
   timestamp: LogControl;
   lineNum: number;
 }
+
+export type LogOptions = {
+  previous: boolean;
+  timestamps: boolean;
+};
 
 export interface Protocols {
   protocols: string[];

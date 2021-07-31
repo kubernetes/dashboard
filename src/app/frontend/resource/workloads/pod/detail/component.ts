@@ -20,7 +20,7 @@ import {NotificationsService} from '@common/services/global/notifications';
 import {KdStateService} from '@common/services/global/state';
 import {EndpointManager, Resource} from '@common/services/resource/endpoint';
 import {NamespacedResourceService} from '@common/services/resource/resource';
-import * as _ from 'lodash';
+import _ from 'lodash';
 import {Subject} from 'rxjs';
 import {takeUntil} from 'rxjs/operators';
 

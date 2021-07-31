@@ -14,7 +14,7 @@
 
 import {Component, Injector, Input, OnInit, ViewChild, ViewContainerRef} from '@angular/core';
 
-import {PluginLoaderService} from '../common/services/pluginloader/pluginloader.service';
+import {PluginLoaderService} from '@common/services/pluginloader/pluginloader.service';
 
 @Component({
   selector: 'kd-plugin-holder',

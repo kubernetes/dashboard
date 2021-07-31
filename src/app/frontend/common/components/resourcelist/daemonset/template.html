@@ -65,9 +65,11 @@ limitations under the License.
       <ng-container matColumnDef="name">
         <mat-header-cell *matHeaderCellDef
                          mat-sort-header
+                         class="kd-col-gt"
                          disableClear="true"
                          i18n>Name</mat-header-cell>
-        <mat-cell *matCellDef="let daemonSet">
+        <mat-cell *matCellDef="let daemonSet"
+                  class="kd-col-gt">
           <a (click)="$event.stopPropagation()"
              [routerLink]="getDetailsHref(daemonSet.objectMeta.name, daemonSet.objectMeta.namespace)"
              queryParamsHandling="preserve">
@@ -79,22 +81,38 @@ limitations under the License.
       <ng-container *ngIf="shouldShowColumn('namespace')"
                     matColumnDef="namespace">
         <mat-header-cell *matHeaderCellDef
+                         class="kd-col-md"
                          i18n>Namespace</mat-header-cell>
-        <mat-cell *matCellDef="let daemonSet">{{daemonSet.objectMeta.namespace}}</mat-cell>
+        <mat-cell *matCellDef="let daemonSet"
+                  class="kd-col-md">{{daemonSet.objectMeta.namespace}}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="images">
+        <mat-header-cell *matHeaderCellDef
+                         class="kd-col-gt"
+                         i18n>Images</mat-header-cell>
+        <mat-cell *matCellDef="let daemonSet"
+                  class="kd-col-gt">
+          <kd-chips [map]="daemonSet.containerImages"></kd-chips>
+        </mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="labels">
         <mat-header-cell *matHeaderCellDef
+                         class="kd-col-gt"
                          i18n>Labels</mat-header-cell>
-        <mat-cell *matCellDef="let daemonSet">
+        <mat-cell *matCellDef="let daemonSet"
+                  class="kd-col-gt">
           <kd-chips [map]="daemonSet.objectMeta.labels"></kd-chips>
         </mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="pods">
         <mat-header-cell *matHeaderCellDef
+                         class="kd-col-sm"
                          i18n>Pods</mat-header-cell>
-        <mat-cell *matCellDef="let daemonSet">
+        <mat-cell *matCellDef="let daemonSet"
+                  class="kd-col-sm">
           {{daemonSet.podInfo.running}} / {{daemonSet.podInfo.desired}}
         </mat-cell>
       </ng-container>
@@ -103,18 +121,12 @@ limitations under the License.
         <mat-header-cell *matHeaderCellDef
                          mat-sort-header
                          disableClear="true"
+                         class="kd-col-sm"
                          i18n>Created</mat-header-cell>
-        <mat-cell *matCellDef="let daemonSet">
+        <mat-cell *matCellDef="let daemonSet"
+                  class="kd-col-sm">
           <kd-date [date]="daemonSet.objectMeta.creationTimestamp"
                    relative></kd-date>
-        </mat-cell>
-      </ng-container>
-
-      <ng-container matColumnDef="images">
-        <mat-header-cell *matHeaderCellDef
-                         i18n>Images</mat-header-cell>
-        <mat-cell *matCellDef="let daemonSet">
-          <kd-chips [map]="daemonSet.containerImages"></kd-chips>
         </mat-cell>
       </ng-container>
 

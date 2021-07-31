@@ -170,17 +170,20 @@ func FillEventsType(events []v1.Event) []v1.Event {
 // ToEvent converts event api Event to Event model object.
 func ToEvent(event v1.Event) common.Event {
 	result := common.Event{
-		ObjectMeta:      api.NewObjectMeta(event.ObjectMeta),
-		TypeMeta:        api.NewTypeMeta(api.ResourceKindEvent),
-		Message:         event.Message,
-		SourceComponent: event.Source.Component,
-		SourceHost:      event.Source.Host,
-		SubObject:       event.InvolvedObject.FieldPath,
-		Count:           event.Count,
-		FirstSeen:       event.FirstTimestamp,
-		LastSeen:        event.LastTimestamp,
-		Reason:          event.Reason,
-		Type:            event.Type,
+		ObjectMeta:         api.NewObjectMeta(event.ObjectMeta),
+		TypeMeta:           api.NewTypeMeta(api.ResourceKindEvent),
+		Message:            event.Message,
+		SourceComponent:    event.Source.Component,
+		SourceHost:         event.Source.Host,
+		SubObject:          event.InvolvedObject.FieldPath,
+		SubObjectKind:      event.InvolvedObject.Kind,
+		SubObjectName:      event.InvolvedObject.Name,
+		SubObjectNamespace: event.InvolvedObject.Namespace,
+		Count:              event.Count,
+		FirstSeen:          event.FirstTimestamp,
+		LastSeen:           event.LastTimestamp,
+		Reason:             event.Reason,
+		Type:               event.Type,
 	}
 
 	return result
@@ -226,8 +229,14 @@ func (self EventCell) GetProperty(name dataselect.PropertyName) dataselect.Compa
 		return dataselect.StdComparableString(self.ObjectMeta.Name)
 	case dataselect.CreationTimestampProperty:
 		return dataselect.StdComparableTime(self.ObjectMeta.CreationTimestamp.Time)
+	case dataselect.FirstSeenProperty:
+		return dataselect.StdComparableTime(self.FirstTimestamp.Time)
+	case dataselect.LastSeenProperty:
+		return dataselect.StdComparableTime(self.LastTimestamp.Time)
 	case dataselect.NamespaceProperty:
 		return dataselect.StdComparableString(self.ObjectMeta.Namespace)
+	case dataselect.ReasonProperty:
+		return dataselect.StdComparableString(self.Reason)
 	default:
 		// if name is not supported then just return a constant dummy value, sort will have no effect.
 		return nil

@@ -14,8 +14,7 @@
 
 import {NgModule} from '@angular/core';
 
-import {ComponentsModule} from '../common/components/module';
-import {WorkloadStatusComponent} from '../common/components/workloadstatus/component';
+import {ComponentsModule} from '@common/components/module';
 import {SharedModule} from '../shared.module';
 
 import {OverviewComponent} from './component';

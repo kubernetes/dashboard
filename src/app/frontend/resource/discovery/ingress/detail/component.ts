@@ -15,24 +15,23 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {IngressDetail} from '@api/root.api';
+
+import {ActionbarService, ResourceMeta} from '@common/services/global/actionbar';
+import {NotificationsService} from '@common/services/global/notifications';
+import {EndpointManager, Resource} from '@common/services/resource/endpoint';
+import {NamespacedResourceService} from '@common/services/resource/resource';
 import {Subject} from 'rxjs';
 import {takeUntil} from 'rxjs/operators';
-
-import {ActionbarService, ResourceMeta} from '../../../../common/services/global/actionbar';
-import {NotificationsService} from '../../../../common/services/global/notifications';
-import {EndpointManager, Resource} from '../../../../common/services/resource/endpoint';
-import {NamespacedResourceService} from '../../../../common/services/resource/resource';
 
 @Component({
   selector: 'kd-ingress-detail',
   templateUrl: './template.html',
 })
 export class IngressDetailComponent implements OnInit, OnDestroy {
-  private readonly endpoint_ = EndpointManager.resource(Resource.ingress, true);
-  private readonly unsubscribe_ = new Subject<void>();
-
   ingress: IngressDetail;
   isInitialized = false;
+  private readonly endpoint_ = EndpointManager.resource(Resource.ingress, true);
+  private readonly unsubscribe_ = new Subject<void>();
 
   constructor(
     private readonly ingress_: NamespacedResourceService<IngressDetail>,

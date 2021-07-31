@@ -16,10 +16,11 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Component, Inject, OnInit} from '@angular/core';
 import {AbstractControl, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material/dialog';
+import {IConfig} from '@api/root.ui';
 import {switchMap} from 'rxjs/operators';
-import {AlertDialog, AlertDialogConfig} from '../../../../common/dialogs/alert/dialog';
-import {CsrfTokenService} from '../../../../common/services/global/csrftoken';
-import {Config, CONFIG_DI_TOKEN} from '../../../../index.config';
+import {AlertDialog, AlertDialogConfig} from '@common/dialogs/alert/dialog';
+import {CsrfTokenService} from '@common/services/global/csrftoken';
+import {CONFIG_DI_TOKEN} from '../../../../index.config';
 
 export interface CreateNamespaceDialogMeta {
   namespaces: string[];
@@ -51,7 +52,7 @@ export class CreateNamespaceDialog implements OnInit {
     private readonly csrfToken_: CsrfTokenService,
     private readonly matDialog_: MatDialog,
     private readonly fb_: FormBuilder,
-    @Inject(CONFIG_DI_TOKEN) private readonly appConfig_: Config
+    @Inject(CONFIG_DI_TOKEN) private readonly appConfig_: IConfig
   ) {}
 
   ngOnInit(): void {

@@ -17,9 +17,9 @@ import {Route, RouterModule} from '@angular/router';
 
 import {CRDDetailComponent} from './detail/component';
 import {CRDListComponent} from './list/component';
-import {DEFAULT_ACTIONBAR, PIN_DEFAULT_ACTIONBAR} from '../common/components/actionbars/routing';
+import {DEFAULT_ACTIONBAR, PIN_DEFAULT_ACTIONBAR} from '@common/components/actionbars/routing';
 import {CRDObjectDetailComponent} from './crdobject/component';
-import {SCALE_DEFAULT_ACTIONBAR} from '../common/components/actionbars/routing';
+import {SCALE_DEFAULT_ACTIONBAR} from '@common/components/actionbars/routing';
 
 const CRD_LIST_ROUTE: Route = {
   path: '',

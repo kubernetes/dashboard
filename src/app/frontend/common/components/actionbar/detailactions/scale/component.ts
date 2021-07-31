@@ -15,7 +15,7 @@
 import {Component, Input} from '@angular/core';
 import {ObjectMeta, TypeMeta} from '@api/root.api';
 
-import {VerberService} from '../../../../services/global/verber';
+import {VerberService} from '@common/services/global/verber';
 
 @Component({
   selector: 'kd-actionbar-detail-scale',

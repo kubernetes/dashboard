@@ -12,20 +12,20 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-@import '~@angular/material/theming';
-@import 'variables';
+@use '~@angular/material/theming';
+@use 'variables' as *;
 
 @mixin kd-theme($theme, $colors) {
   $foreground-palette: map-get($theme, foreground);
   $background-palette: map-get($theme, background);
 
-  $background: mat-color($background-palette, background);
-  $card-background: mat-color($background-palette, card);
+  $background: theming.mat-color($background-palette, background);
+  $card-background: theming.mat-color($background-palette, card);
   $card-background-dark: darken($card-background, 5%);
 
-  $muted: mat-color($foreground-palette, secondary-text);
-  $muted-light: mat-color($foreground-palette, disabled);
-  $border: mat-color($foreground-palette, divider);
+  $muted: theming.mat-color($foreground-palette, secondary-text);
+  $muted-light: theming.mat-color($foreground-palette, disabled);
+  $border: theming.mat-color($foreground-palette, divider);
 
   $box-shadow-1: rgba(0, 0, 0, .2);
   $box-shadow-2: rgba(0, 0, 0, .14);
@@ -183,7 +183,7 @@
     background-color: darken($background, 2.5%);
 
     input {
-      color: mat-color($foreground-palette, base);
+      color: theming.mat-color($foreground-palette, base);
     }
   }
 
@@ -192,14 +192,14 @@
   }
 
   .kd-nav-item-button-active {
-    background-color: mat-color($background-palette, selected-button);
+    background-color: theming.mat-color($background-palette, selected-button);
     color: map-get($colors, primary);
   }
 
   .kd-search-input {
     background: $card-background;
     border-bottom-color: $border;
-    color: mat-color($foreground-palette, text);
+    color: theming.mat-color($foreground-palette, text);
   }
 
   .kd-graph-legend-entry {
@@ -221,7 +221,7 @@
     border: 1px solid $border;
 
     .kd-namespace-select {
-      color: mat-color($foreground-palette, secondary-text);
+      color: theming.mat-color($foreground-palette, secondary-text);
     }
 
     .kd-namespace-select-input-container {
@@ -237,12 +237,12 @@
 
   .kd-namespace-select-input {
     background: $card-background;
-    color: mat-color($foreground-palette, secondary-text);
+    color: theming.mat-color($foreground-palette, secondary-text);
   }
 
   .kd-namespaced-item {
     background: $border;
-    color: mat-color($foreground-palette, secondary-text);
+    color: theming.mat-color($foreground-palette, secondary-text);
   }
 
   .kd-namespace-select-input-border,
@@ -283,12 +283,12 @@
   }
 
   .c3-tooltip {
-    color: $dark-primary-text;
+    color: theming.$dark-primary-text;
   }
 
   .ngx-charts {
     text {
-      fill: mat-color($foreground-palette, text) !important;
+      fill: theming.mat-color($foreground-palette, text) !important;
     }
   }
 

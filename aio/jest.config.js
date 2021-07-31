@@ -12,22 +12,22 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-const tsJestPreset = require('jest-preset-angular/jest-preset').globals['ts-jest'];
-
-module.exports = {
-  verbose: true,
-  preset: 'jest-preset-angular',
+const config = {
   rootDir: '../src/app/frontend',
+  coverageDirectory: '../../../coverage',
+  preset: "jest-preset-angular/presets/defaults",
   setupFilesAfterEnv: ["<rootDir>/test.base.ts"],
   globals: {
-    "ts-jest": {
-      tsconfig: "aio/tsconfig.spec.json",
-    }
+    'ts-jest': {
+      tsconfig: 'aio/tsconfig.spec.json',
+    },
   },
   moduleNameMapper: {
-    "^@api/(.*)$": "<rootDir>/api/$1",
+    "^@api/(.*)$": "<rootDir>/typings/$1",
     "^@common/(.*)$": "<rootDir>/common/$1",
     "^@environments/(.*)$": "<rootDir>/environments/$1",
-    "^@root/(.*)$": "<rootDir>/$1"
   },
+
 };
+
+export default config;

@@ -13,9 +13,9 @@
 // limitations under the License.
 
 import {NgModule} from '@angular/core';
-import {ComponentsModule} from '../../common/components/module';
+import {ComponentsModule} from '@common/components/module';
 
-import {NavServiceModule} from '../../common/services/nav/module';
+import {NavServiceModule} from '@common/services/nav/module';
 import {SharedModule} from '../../shared.module';
 
 import {NavComponent} from './component';

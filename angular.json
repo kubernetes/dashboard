@@ -51,14 +51,18 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "aot": true,
-            "progress": false,
+            "optimization": false,
+            "progress": true,
             "outputPath": ".tmp/frontend",
             "index": "src/app/frontend/index.html",
             "main": "src/app/frontend/index.ts",
-            "tsConfig": "src/app/frontend/../../../aio/tsconfig.app.json",
+            "tsConfig": "aio/tsconfig.app.json",
             "polyfills": "src/app/frontend/polyfills.ts",
             "i18nMissingTranslation": "error",
+            "allowedCommonJsDependencies": [
+              "truncate-url",
+              "strip-ansi"
+            ],
             "assets": [
               {
                 "glob": "**/*",
@@ -82,7 +86,6 @@
               ]
             },
             "styles": [
-              "node_modules/highlight.js/styles/github.css",
               "node_modules/material-design-icons/iconfont/material-icons.css",
               "node_modules/roboto-fontface/css/roboto/roboto-fontface.css",
               "node_modules/xterm/css/xterm.css",
@@ -104,6 +107,7 @@
                   "maximumWarning": "6kb"
                 }
               ],
+              "aot": true,
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
@@ -124,7 +128,6 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "aot": true,
             "browserTarget": "kubernetes-dashboard:build",
             "port": 8080
           },

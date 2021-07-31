@@ -16,10 +16,10 @@ import {Component, Input} from '@angular/core';
 import {Router} from '@angular/router';
 import {ObjectMeta, TypeMeta} from '@api/root.api';
 import {ActionColumn} from '@api/root.ui';
-import {PinnerService} from '../../../../services/global/pinner';
-import {KdStateService} from '../../../../services/global/state';
-import {VerberService} from '../../../../services/global/verber';
-import {Resource} from '../../../../services/resource/endpoint';
+import {PinnerService} from '@common/services/global/pinner';
+import {KdStateService} from '@common/services/global/state';
+import {VerberService} from '@common/services/global/verber';
+import {Resource} from '@common/services/resource/endpoint';
 
 const loggableResources: string[] = [
   Resource.daemonSet,

@@ -1,0 +1,110 @@
+<!--
+Copyright 2017 The Kubernetes Authors.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<kd-card [initialized]="initialized"
+         [expandable]="false"
+         [withTitle]="false"
+         role="inner">
+  <div content
+       *ngIf="initialized"
+       fxLayout="row wrap">
+    <kd-property *ngIf="probe?.initialDelaySeconds">
+      <div key
+           i18n>Initial Delay (Seconds)
+      </div>
+      <div value>{{probe.initialDelaySeconds}}</div>
+    </kd-property>
+    <kd-property *ngIf="probe?.timeoutSeconds">
+      <div key
+           i18n>Timeout (Seconds)
+      </div>
+      <div value>{{probe.timeoutSeconds}}</div>
+    </kd-property>
+    <kd-property *ngIf="probe?.periodSeconds">
+      <div key
+           i18n>Probe Period (Seconds)
+      </div>
+      <div value>{{probe.periodSeconds}}</div>
+    </kd-property>
+    <kd-property *ngIf="probe?.successThreshold">
+      <div key
+           i18n>Success Threshold
+      </div>
+      <div value>{{probe.successThreshold}}</div>
+    </kd-property>
+    <kd-property *ngIf="probe?.failureThreshold">
+      <div key
+           i18n>Failure Threshold
+      </div>
+      <div value>{{probe.failureThreshold}}</div>
+    </kd-property>
+    <kd-property *ngIf="probe?.terminationGracePeriodSeconds">
+      <div key
+           i18n>Termination Grace Period (Seconds)
+      </div>
+      <div value>{{probe.terminationGracePeriodSeconds}}</div>
+    </kd-property>
+
+    <ng-container *ngIf="probe?.httpGet">
+      <kd-property>
+        <div key
+             i18n>HTTP Healthcheck URI</div>
+        <div value>
+          <div class="kd-code-block">
+            {{healthcheckUri}}
+          </div>
+        </div>
+      </kd-property>
+      <kd-property *ngIf="probe?.httpGet?.httpHeaders?.length"
+                   fxFlex="100">
+        <div key
+             fxFlex
+             class="kd-muted section-header"
+             i18n>HTTP Headers
+        </div>
+        <div value>
+          <div class="kd-code-block kd-no-whitespace">
+            <div *ngFor="let httpHeader of probe.httpGet.httpHeaders"
+                 class="kd-code-block-font">{{httpHeader}}</div>
+          </div>
+        </div>
+      </kd-property>
+    </ng-container>
+
+    <ng-container *ngIf="probe?.tcpSocket">
+      <kd-property>
+        <div key
+             i18n>TCP Socket</div>
+        <div value>
+          <div class="kd-code-block">{{tcpSocketAddr}}</div>
+        </div>
+      </kd-property>
+    </ng-container>
+
+    <kd-property *ngIf="probe?.exec?.command?.length">
+      <div key
+           i18n>Exec Commands
+      </div>
+      <div value>
+        <div class="kd-code-block">
+          <div *ngFor="let command of probe.exec.command"
+               class="kd-code-block-font">{{command}}</div>
+        </div>
+      </div>
+    </kd-property>
+
+  </div>
+</kd-card>

@@ -15,7 +15,8 @@
 import {Component, Input, OnChanges, OnInit, SimpleChange} from '@angular/core';
 import {MatTableDataSource} from '@angular/material/table';
 import {IngressSpecRule, IngressSpecRuleHttpPath, IngressSpecTLS} from '@api/root.api';
-import * as _ from 'lodash';
+import {SupportedResources} from '@api/root.shared';
+import _ from 'lodash';
 import {GlobalServicesModule} from '../../services/global/module';
 import {KdStateService} from '../../services/global/state';
 
@@ -101,5 +102,9 @@ export class IngressRuleFlatListComponent implements OnInit, OnChanges {
 
   getDetailsHref(name: string, kind: string): string {
     return this.kdState_.href(kind, name, this.namespace);
+  }
+
+  isResourceSupported(sourceType: string): boolean {
+    return SupportedResources.isSupported(sourceType);
   }
 }

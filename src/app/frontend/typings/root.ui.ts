@@ -13,8 +13,9 @@
 // limitations under the License.
 
 import {Type} from '@angular/core';
-import {GlobalSettings, K8sError, ObjectMeta, ResourceList, TypeMeta} from '@api/root.api';
-import {ListIdentifier} from '../common/components/resourcelist/groupids';
+import {GlobalSettings, ObjectMeta, ResourceList, Theme, TypeMeta} from '@api/root.api';
+import {KdError} from '@api/root.shared';
+import {ListIdentifier} from '@common/components/resourcelist/groupids';
 
 export interface BreadcrumbConfig {
   label?: string;
@@ -31,14 +32,6 @@ export type ColumnWhenCallback = () => boolean;
 
 export type onSettingsLoadCallback = (settings?: GlobalSettings) => void;
 export type onSettingsFailCallback = (err?: KdError) => void;
-
-export interface KdError {
-  status: string;
-  code: number;
-  message: string;
-
-  localize(): KdError;
-}
 
 export interface OnListChangeEvent {
   id: ListIdentifier;
@@ -139,6 +132,22 @@ export interface PluginsConfig {
 export interface ViewportMetadata {
   target: HTMLElement;
   visible: boolean;
+}
+
+export interface AppConfig {
+  themes: Theme[];
+}
+
+export interface IConfig {
+  authTokenCookieName: string;
+  skipLoginPageCookieName: string;
+  csrfHeaderName: string;
+  authTokenHeaderName: string;
+  defaultNamespace: string;
+  authModeCookieName: string;
+  supportedLanguages: LanguageConfig[];
+  defaultLanguage: string;
+  languageCookieName: string;
 }
 
 export interface LanguageConfig {

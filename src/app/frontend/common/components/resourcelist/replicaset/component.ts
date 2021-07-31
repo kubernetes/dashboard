@@ -18,10 +18,10 @@ import {ActivatedRoute} from '@angular/router';
 import {Event, Metric, ReplicaSet, ReplicaSetList} from '@api/root.api';
 import {Observable} from 'rxjs';
 
-import {ResourceListWithStatuses} from '../../../resources/list';
-import {NotificationsService} from '../../../services/global/notifications';
-import {EndpointManager, Resource} from '../../../services/resource/endpoint';
-import {NamespacedResourceService} from '../../../services/resource/resource';
+import {ResourceListWithStatuses} from '@common/resources/list';
+import {NotificationsService} from '@common/services/global/notifications';
+import {EndpointManager, Resource} from '@common/services/resource/endpoint';
+import {NamespacedResourceService} from '@common/services/resource/resource';
 import {MenuComponent} from '../../list/column/menu/component';
 import {ListGroupIdentifier, ListIdentifier} from '../groupids';
 import {Status} from '../statuses';
@@ -77,7 +77,7 @@ export class ReplicaSetListComponent extends ResourceListWithStatuses<ReplicaSet
   }
 
   protected getDisplayColumns(): string[] {
-    return ['statusicon', 'name', 'labels', 'pods', 'created', 'images'];
+    return ['statusicon', 'name', 'images', 'labels', 'pods', 'created'];
   }
 
   private shouldShowNamespaceColumn_(): boolean {

@@ -43,7 +43,7 @@ jobs:
           python-version: 3.7
 
       - name: Set up chart-testing
-        uses: helm/chart-testing-action@v2.0.1
+        uses: helm/chart-testing-action@v2.1.0
 
       - name: Cleanup charts directory
         id: cleanup
@@ -54,7 +54,7 @@ jobs:
         run: ct lint --config=aio/deploy/helm-chart/.helm-chart-testing.yaml
 
       - name: Create kind cluster
-        uses: helm/kind-action@v1.1.0
+        uses: helm/kind-action@v1.2.0
 
       - name: Run chart-testing (install)
         run: ct install --config=aio/deploy/helm-chart/.helm-chart-testing.yaml

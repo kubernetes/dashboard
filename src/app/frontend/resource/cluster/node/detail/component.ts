@@ -18,12 +18,12 @@ import {NodeAddress, NodeDetail, NodeTaint} from '@api/root.api';
 import {RatioItem} from '@api/root.ui';
 import {Subject} from 'rxjs';
 import {takeUntil} from 'rxjs/operators';
-import {FormattedValue} from '../../../../common/components/graph/helper';
+import {FormattedValue} from '@common/components/graph/helper';
 
-import {ActionbarService, ResourceMeta} from '../../../../common/services/global/actionbar';
-import {NotificationsService} from '../../../../common/services/global/notifications';
-import {EndpointManager, Resource} from '../../../../common/services/resource/endpoint';
-import {ResourceService} from '../../../../common/services/resource/resource';
+import {ActionbarService, ResourceMeta} from '@common/services/global/actionbar';
+import {NotificationsService} from '@common/services/global/notifications';
+import {EndpointManager, Resource} from '@common/services/resource/endpoint';
+import {ResourceService} from '@common/services/resource/resource';
 
 @Component({
   selector: 'kd-node-detail',

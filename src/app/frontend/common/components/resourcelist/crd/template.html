@@ -50,8 +50,10 @@ limitations under the License.
         <mat-header-cell *matHeaderCellDef
                          mat-sort-header
                          disableClear="true"
+                         class="kd-col-gt"
                          i18n>Name</mat-header-cell>
-        <mat-cell *matCellDef="let crd">
+        <mat-cell *matCellDef="let crd"
+                  class="kd-col-gt">
           <a [routerLink]="getDetailsHref(crd.objectMeta.name)"
              queryParamsHandling="preserve">{{getDisplayName(crd.names.kind)}}</a>
         </mat-cell>
@@ -59,28 +61,36 @@ limitations under the License.
 
       <ng-container [matColumnDef]="getColumns()[2]">
         <mat-header-cell *matHeaderCellDef
+                         class="kd-col-md"
                          i18n>Group</mat-header-cell>
-        <mat-cell *matCellDef="let crd">{{crd.group}}</mat-cell>
+        <mat-cell *matCellDef="let crd"
+                  class="kd-col-md">{{crd.group}}</mat-cell>
       </ng-container>
 
       <ng-container [matColumnDef]="getColumns()[3]">
         <mat-header-cell *matHeaderCellDef
+                         class="kd-col-gt"
                          i18n>Full Name</mat-header-cell>
-        <mat-cell *matCellDef="let crd">{{crd.objectMeta.name}}</mat-cell>
+        <mat-cell *matCellDef="let crd"
+                  class="kd-col-gt">{{crd.objectMeta.name}}</mat-cell>
       </ng-container>
 
       <ng-container [matColumnDef]="getColumns()[4]">
         <mat-header-cell *matHeaderCellDef
+                         class="kd-col-sm"
                          i18n>Namespaced</mat-header-cell>
-        <mat-cell *matCellDef="let crd">{{isNamespaced(crd)}}</mat-cell>
+        <mat-cell *matCellDef="let crd"
+                  class="kd-col-sm">{{isNamespaced(crd)}}</mat-cell>
       </ng-container>
 
       <ng-container [matColumnDef]="getColumns()[5]">
         <mat-header-cell *matHeaderCellDef
                          mat-sort-header
                          disableClear="true"
+                         class="kd-col-sm"
                          i18n>Created</mat-header-cell>
-        <mat-cell *matCellDef="let crd">
+        <mat-cell *matCellDef="let crd"
+                  class="kd-col-sm">
           <kd-date [date]="crd.objectMeta.creationTimestamp"
                    relative></kd-date>
         </mat-cell>

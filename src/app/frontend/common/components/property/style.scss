@@ -12,14 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-@import '../../../variables';
+@use '../../../variables' as *;
 
 .kd-property-container {
   margin: (.75 * $baseline-grid) (5 * $baseline-grid) (.75 * $baseline-grid) 0;
+}
 
-  &.stretched {
-    margin-right: 0;
-  }
+.kd-property-container.stretched {
+  margin-right: 0;
 }
 
 .kd-property-label {

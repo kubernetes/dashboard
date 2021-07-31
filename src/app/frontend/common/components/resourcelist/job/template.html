@@ -69,8 +69,10 @@ limitations under the License.
         <mat-header-cell *matHeaderCellDef
                          mat-sort-header
                          disableClear="true"
+                         class="kd-col-gt"
                          i18n>Name</mat-header-cell>
-        <mat-cell *matCellDef="let job">
+        <mat-cell *matCellDef="let job"
+                  class="kd-col-gt">
           <a (click)="$event.stopPropagation()"
              [routerLink]="getDetailsHref(job.objectMeta.name, job.objectMeta.namespace)"
              queryParamsHandling="preserve">
@@ -82,22 +84,38 @@ limitations under the License.
       <ng-container *ngIf="shouldShowColumn('namespace')"
                     matColumnDef="namespace">
         <mat-header-cell *matHeaderCellDef
+                         class="kd-col-md"
                          i18n>Namespace</mat-header-cell>
-        <mat-cell *matCellDef="let job">{{job.objectMeta.namespace}}</mat-cell>
+        <mat-cell *matCellDef="let job"
+                  class="kd-col-md">{{job.objectMeta.namespace}}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="images">
+        <mat-header-cell *matHeaderCellDef
+                         class="kd-col-gt"
+                         i18n>Images</mat-header-cell>
+        <mat-cell *matCellDef="let job"
+                  class="kd-col-gt">
+          <kd-chips [map]="job.containerImages"></kd-chips>
+        </mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="labels">
         <mat-header-cell *matHeaderCellDef
+                         class="kd-col-gt"
                          i18n>Labels</mat-header-cell>
-        <mat-cell *matCellDef="let job">
+        <mat-cell *matCellDef="let job"
+                  class="kd-col-gt">
           <kd-chips [map]="job.objectMeta.labels"></kd-chips>
         </mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="pods">
         <mat-header-cell *matHeaderCellDef
+                         class="kd-col-xs"
                          i18n>Pods</mat-header-cell>
-        <mat-cell *matCellDef="let job">
+        <mat-cell *matCellDef="let job"
+                  class="kd-col-xs">
           {{job.podInfo.running}} / {{job.podInfo.desired}}
         </mat-cell>
       </ng-container>
@@ -106,18 +124,12 @@ limitations under the License.
         <mat-header-cell *matHeaderCellDef
                          mat-sort-header
                          disableClear="true"
+                         class="kd-col-sm"
                          i18n>Created</mat-header-cell>
-        <mat-cell *matCellDef="let job">
+        <mat-cell *matCellDef="let job"
+                  class="kd-col-sm">
           <kd-date [date]="job.objectMeta.creationTimestamp"
                    relative></kd-date>
-        </mat-cell>
-      </ng-container>
-
-      <ng-container matColumnDef="images">
-        <mat-header-cell *matHeaderCellDef
-                         i18n>Images</mat-header-cell>
-        <mat-cell *matCellDef="let job">
-          <kd-chips [map]="job.containerImages"></kd-chips>
         </mat-cell>
       </ng-container>
 

@@ -15,13 +15,13 @@
 import {DOCUMENT} from '@angular/common';
 import {Component, Inject, OnInit, ViewChild} from '@angular/core';
 import {MatSelect} from '@angular/material/select';
-import {CookieService} from 'ngx-cookie-service';
-import {LocalSettingsService} from '../../common/services/global/localsettings';
-import {environment} from '../../environments/environment';
-import {Config, CONFIG_DI_TOKEN} from '../../index.config';
-import {ThemeService} from '../../common/services/global/theme';
 import {LocalSettings, Theme} from '@api/root.api';
-import {LanguageConfig} from '@api/root.ui';
+import {IConfig, LanguageConfig} from '@api/root.ui';
+import {LocalSettingsService} from '@common/services/global/localsettings';
+import {ThemeService} from '@common/services/global/theme';
+import {environment} from '@environments/environment';
+import {CookieService} from 'ngx-cookie-service';
+import {CONFIG_DI_TOKEN} from '../../index.config';
 
 @Component({
   selector: 'kd-local-settings',
@@ -43,7 +43,7 @@ export class LocalSettingsComponent implements OnInit {
     private readonly theme_: ThemeService,
     private readonly cookies_: CookieService,
     @Inject(DOCUMENT) private readonly document_: Document,
-    @Inject(CONFIG_DI_TOKEN) private readonly appConfig_: Config
+    @Inject(CONFIG_DI_TOKEN) private readonly appConfig_: IConfig
   ) {}
 
   ngOnInit(): void {

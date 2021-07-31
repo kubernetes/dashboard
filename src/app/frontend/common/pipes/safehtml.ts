@@ -14,8 +14,7 @@
 
 import {Pipe, SecurityContext} from '@angular/core';
 import {DomSanitizer, SafeHtml} from '@angular/platform-browser';
-
-import stripAnsi = require('strip-ansi');
+import stripAnsi from 'strip-ansi';
 
 /**
  * Formats the given value as raw HTML to display to the user.

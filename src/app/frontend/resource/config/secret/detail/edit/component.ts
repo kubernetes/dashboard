@@ -14,6 +14,7 @@
 
 import {Component, OnInit, Input, EventEmitter, Output} from '@angular/core';
 import {SecretDetail} from '@api/root.api';
+import {DecoderService} from '@common/services/global/decoder';
 import {RawResource} from 'common/resources/rawresource';
 import {HttpClient, HttpErrorResponse, HttpHeaders} from '@angular/common/http';
 import {AlertDialogConfig, AlertDialog} from 'common/dialogs/alert/dialog';
@@ -50,7 +51,11 @@ export class SecretDetailEditComponent implements OnInit {
     return this.secret_;
   }
 
-  constructor(private readonly dialog_: MatDialog, private readonly http_: HttpClient) {}
+  constructor(
+    private readonly dialog_: MatDialog,
+    private readonly http_: HttpClient,
+    private readonly decoder_: DecoderService
+  ) {}
 
   ngOnInit(): void {
     this.updateText_();
@@ -79,11 +84,7 @@ export class SecretDetailEditComponent implements OnInit {
   }
 
   private updateText_(): void {
-    this.text = this.secret && this.key ? this.decode_(this.secret.data[this.key]) : '';
-  }
-
-  private decode_(s: string): string {
-    return atob(s);
+    this.text = this.secret && this.key ? this.decoder_.base64(this.secret.data[this.key]) : '';
   }
 
   private encode_(s: string): string {

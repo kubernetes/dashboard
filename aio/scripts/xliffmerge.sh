@@ -13,12 +13,16 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+# Import config.
+ROOT_DIR="$(cd $(dirname "${BASH_SOURCE}")/../.. && pwd -P)"
+. "${ROOT_DIR}/aio/scripts/conf.sh"
+
 # Collect current localized files
-languages=($(find i18n/* -type d|cut -d"/" -f2))
+languages=($(find "${I18N_DIR}"/* -type d -exec basename {} \;))
 for language in "${languages[@]}"; do
-  if [ ! -L i18n/${language}/messages.${language}.xlf ]; then
-    echo "Move translation file messages.${language}.xlf to be merged by xliffmerge."
-    mv i18n/${language}/messages.${language}.xlf i18n
+  if [ ! -L "${I18N_DIR}/${language}/messages.${language}.xlf" ]; then
+    say "Move translation file messages.${language}.xlf to be merged by xliffmerge."
+    mv "${I18N_DIR}/${language}/messages.${language}.xlf" "${I18N_DIR}"
   fi
 done
 
@@ -27,8 +31,8 @@ xliffmerge
 
 # Deliver merged localized files into each locale directories.
 for language in "${languages[@]}"; do
-  if [ -e i18n/messages.${language}.xlf ]; then
-    echo "Move merged file i18n/messages.${language}.xlf to i18n/${language}"
-    mv i18n/messages.${language}.xlf i18n/${language}
+  if [ -e "${I18N_DIR}/messages.${language}.xlf" ]; then
+    say "Move merged file i18n/messages.${language}.xlf to i18n/${language}"
+    mv "${I18N_DIR}/messages.${language}.xlf" "${I18N_DIR}/${language}"
   fi
 done

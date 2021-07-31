@@ -16,10 +16,10 @@ import {HttpErrorResponse} from '@angular/common/http';
 import {ErrorHandler, Injectable, Injector, NgZone} from '@angular/core';
 import {Router} from '@angular/router';
 import {StateError} from '@api/root.ui';
-import {YAMLException} from 'js-yaml';
 
-import {ApiError, AsKdError, KdError} from '../common/errors/errors';
-import {AuthService} from '../common/services/global/authentication';
+import {ApiError, AsKdError, KdError} from '@common/errors/errors';
+import {AuthService} from '@common/services/global/authentication';
+import {YAMLException} from 'js-yaml';
 
 @Injectable()
 export class GlobalErrorHandler implements ErrorHandler {

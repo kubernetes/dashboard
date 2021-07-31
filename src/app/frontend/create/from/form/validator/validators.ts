@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {AsyncValidatorFn, FormControl} from '@angular/forms';
+import {FormControl} from '@angular/forms';
 
 export class FormValidators {
   /**

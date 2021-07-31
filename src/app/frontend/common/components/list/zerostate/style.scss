@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-@import '../../../../variables';
+@use '../../../../variables' as *;
 
 .kd-zerostate-container {
   padding: 2 * $baseline-grid;
@@ -21,7 +21,7 @@
 .kd-zerostate-title {
   font-size: $headline-font-size-base;
   font-weight: $regular-font-weight;
-  margin-bottom: $baseline-grid / 2;
+  margin-bottom: $baseline-grid * .5;
 }
 
 .kd-zerostate-text {

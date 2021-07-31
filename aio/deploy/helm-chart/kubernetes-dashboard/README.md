@@ -82,7 +82,7 @@ The following table lists the configurable parameters of the kubernetes-dashboar
 Parameter                                       | Description                                                                                                                      | Default
 ------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------
 `image.repository`                              | Repository for container image                                                                                                   | `kubernetesui/dashboard`
-`image.tag`                                     | Image tag                                                                                                                        | `v2.2.0`
+`image.tag`                                     | Image tag                                                                                                                        | `v2.3.1`
 `image.pullPolicy`                              | Image pull policy                                                                                                                | `IfNotPresent`
 `image.pullSecrets`                             | Image pull secrets                                                                                                               | `[]`
 `replicaCount`                                  | Number of replicas                                                                                                               | `1`

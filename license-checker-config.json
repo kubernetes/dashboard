@@ -13,7 +13,7 @@
     "append": ""
   },
   "licenseFormats": {
-    "go|ts|js|scss": {
+    "go|ts|js|scss|mjs|cjs": {
       "eachLine": {
         "prepend": "// "
       },

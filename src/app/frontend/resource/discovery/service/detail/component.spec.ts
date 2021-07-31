@@ -26,14 +26,10 @@ import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {RouterModule} from '@angular/router';
 import {AppConfig, K8sError, ServiceDetail} from '@api/root.api';
 import {CardComponent} from '@common/components/card/component';
-import {ChipsComponent} from '@common/components/chips/component';
 import {ObjectMetaComponent} from '@common/components/objectmeta/component';
 import {PropertyComponent} from '@common/components/property/component';
 import {PipesModule} from '@common/pipes/module';
-import {AuthorizerService} from '@common/services/global/authorizer';
 import {ConfigService} from '@common/services/global/config';
-import {GlobalSettingsService} from '@common/services/global/globalsettings';
-import {NamespacedResourceService} from '@common/services/resource/resource';
 
 import {ServiceDetailComponent} from './component';
 
@@ -76,6 +72,7 @@ class MaxiTestComponent {
         {
           status: 'Running',
           restartCount: 1,
+          containerImages: [],
           metrics: {
             cpuUsage: 10,
             memoryUsage: 10,
@@ -144,7 +141,6 @@ describe('ServiceDetailComponent', () => {
           MaxiTestComponent,
           CardComponent,
           PropertyComponent,
-          ChipsComponent,
           ServiceDetailComponent,
         ],
         imports: [
@@ -157,10 +153,9 @@ describe('ServiceDetailComponent', () => {
           NoopAnimationsModule,
           PipesModule,
           HttpClientTestingModule,
-          MatIconModule,
           RouterModule,
         ],
-        providers: [AuthorizerService, ConfigService, GlobalSettingsService, NamespacedResourceService],
+        providers: [ConfigService],
         schemas: [CUSTOM_ELEMENTS_SCHEMA],
       }).compileComponents();
       httpMock = TestBed.inject(HttpTestingController);

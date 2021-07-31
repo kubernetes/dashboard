@@ -48,8 +48,10 @@ limitations under the License.
         <mat-header-cell *matHeaderCellDef
                          mat-sort-header
                          disableClear="true"
+                         class="kd-col-md"
                          i18n>Name</mat-header-cell>
-        <mat-cell *matCellDef="let pvc">
+        <mat-cell *matCellDef="let pvc"
+                  class="kd-col-md">
           <a [routerLink]="getDetailsHref(pvc.objectMeta.name, pvc.objectMeta.namespace)"
              queryParamsHandling="preserve">
             {{pvc.objectMeta.name}}
@@ -60,14 +62,18 @@ limitations under the License.
       <ng-container *ngIf="shouldShowColumn('namespace')"
                     matColumnDef="namespace">
         <mat-header-cell *matHeaderCellDef
+                         class="kd-col-md"
                          i18n>Namespace</mat-header-cell>
-        <mat-cell *matCellDef="let pvc">{{pvc.objectMeta.namespace}}</mat-cell>
+        <mat-cell *matCellDef="let pvc"
+                  class="kd-col-md">{{pvc.objectMeta.namespace}}</mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="labels">
         <mat-header-cell *matHeaderCellDef
+                         class="kd-col-gt"
                          i18n>Labels</mat-header-cell>
-        <mat-cell *matCellDef="let pvc">
+        <mat-cell *matCellDef="let pvc"
+                  class="kd-col-gt">
           <kd-chips [map]="pvc.objectMeta.labels"></kd-chips>
         </mat-cell>
       </ng-container>
@@ -76,14 +82,18 @@ limitations under the License.
         <mat-header-cell *matHeaderCellDef
                          mat-sort-header
                          disableClear="true"
+                         class="kd-col-xs"
                          i18n>Status</mat-header-cell>
-        <mat-cell *matCellDef="let pvc">{{pvc.status}}</mat-cell>
+        <mat-cell *matCellDef="let pvc"
+                  class="kd-col-xs">{{pvc.status}}</mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="volume">
         <mat-header-cell *matHeaderCellDef
+                         class="kd-col-gt"
                          i18n>Volume</mat-header-cell>
-        <mat-cell *matCellDef="let pvc">
+        <mat-cell *matCellDef="let pvc"
+                  class="kd-col-gt">
           <ng-container *ngIf="pvc.volume">
             <a [routerLink]="getVolumeHref(pvc.volume)"
                queryParamsHandling="preserve">{{pvc.volume}}</a>
@@ -94,8 +104,10 @@ limitations under the License.
 
       <ng-container matColumnDef="capacity">
         <mat-header-cell *matHeaderCellDef
+                         class="kd-col-xs"
                          i18n>Capacity</mat-header-cell>
-        <mat-cell *matCellDef="let pvc">
+        <mat-cell *matCellDef="let pvc"
+                  class="kd-col-xs">
           <ng-container *ngIf="pvc?.capacity?.storage">{{pvc.capacity.storage}}</ng-container>
           <ng-container *ngIf="!pvc?.capacity?.storage">-</ng-container>
         </mat-cell>
@@ -103,16 +115,20 @@ limitations under the License.
 
       <ng-container matColumnDef="accmodes">
         <mat-header-cell *matHeaderCellDef
+                         class="kd-col-md"
                          i18n>Access Modes</mat-header-cell>
-        <mat-cell *matCellDef="let pvc">
+        <mat-cell *matCellDef="let pvc"
+                  class="kd-col-md">
           <kd-chips [map]="pvc.accessModes"></kd-chips>
         </mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="storagecl">
         <mat-header-cell *matHeaderCellDef
+                         class="kd-col-md"
                          i18n>Storage Class</mat-header-cell>
-        <mat-cell *matCellDef="let pvc">
+        <mat-cell *matCellDef="let pvc"
+                  class="kd-col-md">
           <ng-container *ngIf="pvc?.storageClass">{{pvc.storageClass}}</ng-container>
           <ng-container *ngIf="!pvc?.storageClass">-</ng-container>
         </mat-cell>
@@ -122,8 +138,10 @@ limitations under the License.
         <mat-header-cell *matHeaderCellDef
                          mat-sort-header
                          disableClear="true"
+                         class="kd-col-sm"
                          i18n>Created</mat-header-cell>
-        <mat-cell *matCellDef="let pvc">
+        <mat-cell *matCellDef="let pvc"
+                  class="kd-col-sm">
           <kd-date [date]="pvc.objectMeta.creationTimestamp"
                    relative></kd-date>
         </mat-cell>
