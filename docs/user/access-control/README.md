@@ -60,6 +60,8 @@ Basic authentication is disabled by default. The reason is that Kubernetes API s
 
 In order to enable basic auth in Dashboard `--authentication-mode=basic` flag has to be provided. By default it is set to `--authentication-mode=token`.
 
+Note: Basic authentication with `--basic-auth-file` has been deprecated since Kubernetes v1.19. For similar functionality to `--basic-auth-file` flag, use `--token-auth-file`  with [Static Token File](https://kubernetes.io/docs/reference/access-authn-authz/authentication/#static-token-file).
+
 ### Kubeconfig
 
 This method of logging in is provided for convenience. Only authentication options specified by `--authentication-mode` flag are supported in kubeconfig file. In case it is configured to use any other way, error will be shown in Dashboard. External identity providers or certificate-based authentication are not supported at this time.
