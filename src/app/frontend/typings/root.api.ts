@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {KdError} from '@api/root.shared';
+import {KdError, StringMap} from '@api/root.shared';
 import {PersistentVolumeSource} from '@api/volume.api';
 
 export interface TypeMeta {
@@ -341,6 +341,7 @@ export interface PersistentVolume extends Resource {
   storageClass: string;
   accessModes: string[];
   reclaimPolicy: string;
+  mountOptions?: string[];
   status: string;
   claim: string;
   reason: string;
@@ -634,6 +635,7 @@ export interface PersistentVolumeDetail extends ResourceDetail {
   storageClass: string;
   reason: string;
   persistentVolumeSource: PersistentVolumeSource;
+  mountOptions?: string[];
 }
 
 export interface PodDetail extends ResourceDetail {
@@ -783,10 +785,6 @@ export interface Theme {
 
 export interface AppConfig {
   serverTime: number;
-}
-
-export interface StringMap {
-  [key: string]: string;
 }
 
 export interface ErrStatus {

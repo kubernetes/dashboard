@@ -33,3 +33,7 @@ export namespace SupportedResources {
       .includes(sourceType);
   }
 }
+
+export interface StringMap {
+  [key: string]: string;
+}
