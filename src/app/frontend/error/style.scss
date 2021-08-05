@@ -17,6 +17,7 @@
 
 .kd-about-logo-icon {
   @include kd-icon-size(8 * $baseline-grid);
+
   margin: 0;
   margin-inline-end: (2 * $baseline-grid);
 }
