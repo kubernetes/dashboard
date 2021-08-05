@@ -14,7 +14,7 @@
 
 import {NgModule} from '@angular/core';
 import {Route, RouterModule} from '@angular/router';
-import {DEFAULT_ACTIONBAR} from '../../../common/components/actionbars/routing';
+import {DEFAULT_ACTIONBAR} from '@common/components/actionbars/routing';
 
 import {CLUSTER_ROUTE} from '../routing';
 

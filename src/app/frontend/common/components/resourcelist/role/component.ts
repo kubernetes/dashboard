@@ -14,13 +14,13 @@
 
 import {HttpParams} from '@angular/common/http';
 import {ChangeDetectionStrategy, ChangeDetectorRef, Component, Input} from '@angular/core';
-import {Role, RoleList, ServiceAccount, ServiceAccountList} from '@api/root.api';
+import {Role, RoleList} from '@api/root.api';
 import {Observable} from 'rxjs';
 
-import {ResourceListBase} from '../../../resources/list';
-import {NotificationsService} from '../../../services/global/notifications';
-import {EndpointManager, Resource} from '../../../services/resource/endpoint';
-import {NamespacedResourceService, ResourceService} from '../../../services/resource/resource';
+import {ResourceListBase} from '@common/resources/list';
+import {NotificationsService} from '@common/services/global/notifications';
+import {EndpointManager, Resource} from '@common/services/resource/endpoint';
+import {NamespacedResourceService} from '@common/services/resource/resource';
 import {MenuComponent} from '../../list/column/menu/component';
 import {ListGroupIdentifier, ListIdentifier} from '../groupids';
 

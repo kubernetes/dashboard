@@ -13,7 +13,6 @@
 // limitations under the License.
 
 import {Pipe} from '@angular/core';
-import {Observable} from 'rxjs';
 import {ConfigService} from '../services/global/config';
 
 const i18n = {

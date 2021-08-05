@@ -18,12 +18,12 @@ import {SecretDetail} from '@api/root.api';
 import {DecoderService} from '@common/services/global/decoder';
 import {Subject} from 'rxjs';
 import {takeUntil} from 'rxjs/operators';
-import {HiddenPropertyMode} from '../../../../common/components/hiddenproperty/component';
+import {HiddenPropertyMode} from '@common/components/hiddenproperty/component';
 
-import {ActionbarService, ResourceMeta} from '../../../../common/services/global/actionbar';
-import {NotificationsService} from '../../../../common/services/global/notifications';
-import {EndpointManager, Resource} from '../../../../common/services/resource/endpoint';
-import {NamespacedResourceService} from '../../../../common/services/resource/resource';
+import {ActionbarService, ResourceMeta} from '@common/services/global/actionbar';
+import {NotificationsService} from '@common/services/global/notifications';
+import {EndpointManager, Resource} from '@common/services/resource/endpoint';
+import {NamespacedResourceService} from '@common/services/resource/resource';
 
 @Component({
   selector: 'kd-secret-detail',

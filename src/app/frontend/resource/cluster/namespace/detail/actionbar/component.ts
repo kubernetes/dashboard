@@ -17,8 +17,8 @@ import {Router} from '@angular/router';
 import {Subject} from 'rxjs';
 import {takeUntil} from 'rxjs/operators';
 
-import {NAMESPACE_STATE_PARAM} from '../../../../../common/params/params';
-import {ActionbarService, ResourceMeta} from '../../../../../common/services/global/actionbar';
+import {NAMESPACE_STATE_PARAM} from '@common/params/params';
+import {ActionbarService, ResourceMeta} from '@common/services/global/actionbar';
 
 @Component({
   selector: '',
