@@ -95,6 +95,12 @@ func (handler *LocaleHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) 
 		w.Header().Add("Cache-Control", "no-cache, no-store, must-revalidate")
 	}
 
+	// Disable directory listing.
+	if r.URL.Path != "/" && strings.HasSuffix(r.URL.Path, "/") {
+		http.NotFound(w, r)
+		return
+	}
+
 	acceptLanguage := ""
 	cookie, err := r.Cookie("lang")
 	if err == nil {

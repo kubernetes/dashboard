@@ -4,8 +4,9 @@ src/app/frontend/environments/version.ts
 # Temporary translation file:
 i18n/messages.new.xlf
 
-# Local copies of dependencies that should stay on developers' local machines:
+# Dependencies:
 node_modules/
+vendor/
 
 # Build and test artifacts:
 .go_workspace/
