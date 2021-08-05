@@ -635,6 +635,7 @@ export interface PersistentVolumeDetail extends ResourceDetail {
   storageClass: string;
   reason: string;
   persistentVolumeSource: PersistentVolumeSource;
+  mountOptions?: string[];
 }
 
 export interface PodDetail extends ResourceDetail {

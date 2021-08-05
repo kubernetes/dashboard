@@ -113,9 +113,9 @@ limitations under the License.
 
       <kd-property *ngIf="source.fc.lun">
         <div key
-             i18n>Volume ID
+             i18n>Lun number
         </div>
-        <div value>{{source.fc.volumeID}}</div>
+        <div value>{{source.fc.lun}}</div>
       </kd-property>
 
       <kd-property *ngIf="source.fc.targetWWNs"
@@ -260,11 +260,17 @@ limitations under the License.
         </div>
         <div value>{{source.csi.readOnly}}</div>
       </kd-property>
-      <kd-property *ngIf="source.csi.volumeAttributes"
+
+      <kd-property *ngIf="source.csi?.volumeAttributes"
+                   [stretched]="true"
                    fxFlex="100">
         <div key
-             i18n>Volume Attributes</div>
-        <div value>
+             fxFlex
+             class="kd-muted section-header"
+             i18n>Volume Attributes
+        </div>
+        <div value
+             class="kd-volume-mounts">
           <mat-table [dataSource]="getVolumeAttributesDataSource()"
                      [trackBy]="trackByCapacityItemName">
             <ng-container [matColumnDef]="getVolumeAttributesColumns()[0]">
@@ -289,6 +295,7 @@ limitations under the License.
         </div>
       </kd-property>
     </ng-container>
+
     <ng-container *ngIf="source?.iscsi">
       <kd-property>
         <div key

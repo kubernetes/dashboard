@@ -20,6 +20,7 @@ import {StringMap} from '@api/root.shared';
 @Component({
   selector: 'kd-persistent-volume-source',
   templateUrl: './template.html',
+  styleUrls: ['./style.scss'],
 })
 export class PersistentVolumeSourceComponent {
   @Input() source: PersistentVolumeSource;
@@ -30,19 +31,16 @@ export class PersistentVolumeSourceComponent {
   }
 
   getVolumeAttributesDataSource(): MatTableDataSource<StringMap> {
-    const data: StringMap[] = [];
+    const tableData = new MatTableDataSource<StringMap>();
 
-    if (this.initialized) {
-      for (const rName of Array.from<string>(Object.keys(this.source.csi.volumeAttributes))) {
-        data.push({
-          key: rName,
-          value: this.source.csi.volumeAttributes[rName],
-        });
-      }
+    if (!this.initialized) {
+      return tableData;
     }
 
-    const tableData = new MatTableDataSource<StringMap>();
-    tableData.data = data;
+    tableData.data = Object.keys(this.source.csi.volumeAttributes).map(attr => ({
+      key: attr,
+      value: this.source.csi.volumeAttributes[attr],
+    }));
 
     return tableData;
   }

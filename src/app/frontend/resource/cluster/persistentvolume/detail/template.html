@@ -68,17 +68,17 @@ limitations under the License.
     </kd-property>
 
     <kd-property *ngIf="persistentVolume?.mountOptions"
-                 fxFlex="100">
+                 fxFlex="0 0 auto">
       <div key
            i18n>Mount Option(s)</div>
-      <div value
-           *ngFor="let mountOption of persistentVolume?.mountOptions">
-        <div value>{{mountOption}}</div>
+      <div value>
+        <kd-chips [map]="persistentVolume.mountOptions"
+                  [displayAll]="true"></kd-chips>
       </div>
     </kd-property>
 
     <kd-property *ngIf="persistentVolume?.accessModes"
-                 fxFlex="100">
+                 fxFlex="0 0 auto">
       <div key
            i18n>Access modes</div>
       <div value>
