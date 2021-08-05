@@ -18,11 +18,13 @@
 # name: value
 
 image:
+  ## Repository for container
   repository: kubernetesui/dashboard
   tag: v2.3.1
   pullPolicy: IfNotPresent
   pullSecrets: []
 
+## Number of replicas
 replicaCount: 1
 
 ## Here annotations can be added to the kubernetes dashboard deployment
@@ -51,7 +53,7 @@ extraVolumes: []
 #     defaultMode: 420
 #     secretName: dashboard-kubeconfig
 
-## Additional volumeMounts to be added to kubernetes dashboard pods
+## Additional volumeMounts to be added to kubernetes dashboard container
 ##
 extraVolumeMounts: []
 # - mountPath: /kubeconfig
@@ -60,7 +62,7 @@ extraVolumeMounts: []
 
 # Annotations to be added to kubernetes dashboard pods
 podAnnotations:
-  seccomp.security.alpha.kubernetes.io/pod: 'runtime/default'
+  seccomp.security.alpha.kubernetes.io/pod: "runtime/default"
 
 # Labels to be added to kubernetes dashboard pods
 podLabels: {}
@@ -77,12 +79,14 @@ tolerations: []
 #    value: "value"
 #    effect: "NoSchedule|PreferNoSchedule|NoExecute"
 
-## Affinity
+## Affinity for pod assignment
 ## ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity
 affinity: {}
 
+## Name of Priority Class of pods
 # priorityClassName: ""
 
+## Pod resource requests & limits
 resources:
   requests:
     cpu: 100m
@@ -98,20 +102,21 @@ protocolHttp: false
 
 service:
   type: ClusterIP
+  # Dashboard service port
   externalPort: 443
 
-  # LoadBalancerSourcesRange is a list of allowed CIDR values, which are combined with ServicePort to
-  # set allowed inbound rules on the security group assigned to the master load balancer
+  ## LoadBalancerSourcesRange is a list of allowed CIDR values, which are combined with ServicePort to
+  ## set allowed inbound rules on the security group assigned to the master load balancer
   # loadBalancerSourceRanges: []
+
+  ## A user-specified IP address for load balancer to use as External IP (if supported)
+  # loadBalancerIP:
 
   ## Additional Kubernetes Dashboard Service annotations
   annotations: {}
 
   ## Here labels can be added to the Kubernetes Dashboard service
   labels: {}
-
-  ## set a specific load balancer Ip if you're using one
-  # loadBalancerIP:
 
   ## Enable or disable the kubernetes.io/cluster-service label. Should be disabled for GKE clusters >=1.15.
   ## Otherwise, the addon manager will presume ownership of the service and try to delete it.
@@ -124,14 +129,15 @@ ingress:
   ##
   enabled: false
 
-  ## Kubernetes Dashboard Ingress annotations
-  ##
-  ## Add custom labels
+  ## Kubernetes Dashboard Ingress labels
   # labels:
   #   key: value
+
+  ## Kubernetes Dashboard Ingress annotations
   # annotations:
   #   kubernetes.io/ingress.class: nginx
   #   kubernetes.io/tls-acme: 'true'
+
   ## If you plan to use TLS backend with enableInsecureLogin set to false
   ## (default), you need to uncomment the below.
   ## If you use ingress-nginx < 0.21.0
@@ -143,7 +149,7 @@ ingress:
   # className: "example-lb"
 
   ## Kubernetes Dashboard Ingress paths
-  ##
+  ## Both `/` and `/*` are required to work on gce ingress.
   paths:
     - /
   #  - /*
@@ -159,13 +165,11 @@ ingress:
   #        {{ include "kubernetes-dashboard.fullname" . }}
   #      # Don't use string here, use only integer value!
   #      servicePort: 443
-
   ## Kubernetes Dashboard Ingress hostnames
   ## Must be provided if Ingress is enabled
   ##
   # hosts:
   #   - kubernetes-dashboard.domain.com
-
   ## Kubernetes Dashboard Ingress TLS configuration
   ## Secrets must be manually created in the namespace
   ##
@@ -174,7 +178,9 @@ ingress:
   #     hosts:
   #       - kubernetes-dashboard.domain.com
 
-settings: {}
+# Global dashboard settings
+settings:
+  {}
   ## Cluster name that appears in the browser window title if it is set
   # clusterName: ""
   ## Max number of items that can be displayed on each list page
@@ -187,7 +193,8 @@ settings: {}
   # disableAccessDeniedNotifications: false
 
 ## Pinned CRDs that will be displayed in dashboard's menu
-pinnedCRDs: []
+pinnedCRDs:
+  []
   # - kind: customresourcedefinition
   ##  Fully qualified name of a CRD
   #   name: prometheuses.monitoring.coreos.com
@@ -200,12 +207,13 @@ pinnedCRDs: []
 ## Container to scrape, store, and retrieve a window of time from the Metrics Server.
 ## refs: https://github.com/kubernetes-sigs/dashboard-metrics-scraper
 metricsScraper:
+  ## Wether to enable dashboard-metrics-scraper
   enabled: false
   image:
     repository: kubernetesui/metrics-scraper
     tag: v1.0.6
   resources: {}
-  ## SecurityContext for the metrics scraper container
+  ## SecurityContext for the kubernetes dashboard metrics scraper container
   containerSecurityContext:
     allowPrivilegeEscalation: false
     readOnlyRootFilesystem: true
@@ -237,6 +245,7 @@ rbac:
   clusterRoleMetrics: true
 
   # Start in ReadOnly mode.
+  # Specifies whether cluster-wide RBAC resources (ClusterRole, ClusterRolebinding) with read only permissions to all resources listed inside the cluster should be created
   # Only dashboard-related Secrets and ConfigMaps will still be available for writing.
   #
   # The basic idea of the clusterReadOnlyRole
@@ -267,7 +276,9 @@ livenessProbe:
 ## ref: https://kubernetes.io/docs/tasks/run-application/configure-pdb/
 podDisruptionBudget:
   enabled: false
+  ## Minimum available instances; ignored if there is no PodDisruptionBudget
   minAvailable:
+  ## Maximum unavailable instances; ignored if there is no PodDisruptionBudget
   maxUnavailable:
 
 ## PodSecurityContext for pod level securityContext
@@ -283,6 +294,7 @@ containerSecurityContext:
   runAsGroup: 2001
 
 networkPolicy:
+  # Whether to create a network policy that allows/restricts access to the service
   enabled: false
 
 ## podSecurityPolicy for fine-grained authorization of pod creation and updates
