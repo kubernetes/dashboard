@@ -180,7 +180,7 @@
     "stylelint-config-standard": "22.0.0",
     "stylelint-no-unsupported-browser-features": "5.0.1",
     "stylelint-order": "4.1.0",
-    "tar": "6.1.6",
+    "tar": "6.1.7",
     "through2": "4.0.2",
     "ts-jest": "27.0.4",
     "ts-loader": "9.2.5",
