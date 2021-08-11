@@ -19,7 +19,7 @@
 
 # golang is based on debian:jessie
 # Specify version to clarify which version we use.
-FROM golang:1.15.1-buster
+FROM golang:1.16.7-buster
 
 # Install Node.js. Go is already installed.
 # A small tweak, apt-get update is already run by the nodejs setup script,
@@ -84,7 +84,7 @@ RUN mv ./kubectl /usr/local/bin/kubectl
 # `npm ci` installs golangci, but this installation is needed
 # for running `npm run check` singlely, like
 # `aio/develop/run-npm-on-container.sh run check`.
-RUN curl -sfL https://install.goreleaser.com/github.com/golangci/golangci-lint.sh | sh -s -- -b $(go env GOPATH)/bin v1.30.0
+RUN curl -sfL https://install.goreleaser.com/github.com/golangci/golangci-lint.sh | sh -s -- -b $(go env GOPATH)/bin v1.41.1
 
 # Install delve for debuging go files.
 RUN go get github.com/go-delve/delve/cmd/dlv
@@ -97,6 +97,10 @@ ENV GOPROXY=https://proxy.golang.org
 
 # Set NODE_OPTIONS to increase NodeJS heap size
 ENV NODE_OPTIONS=--max-old-space-size=8192
+
+# To install go modules by user, add write access to $GOPATH (default: 755)
+# `chmod +w` does not work, so set 777. 
+RUN chmod 777 -R /go
 
 # Volume for source code
 VOLUME ["/go/src/github.com/kubernetes/dashboard"]
