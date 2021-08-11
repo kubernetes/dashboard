@@ -28,4 +28,6 @@ const (
 	FirstSeenProperty         = "firstSeen"
 	LastSeenProperty          = "lastSeen"
 	ReasonProperty            = "reason"
+	HostIpProperty            = "hostIp"
+	PodIpProperty             = "podIp"
 )
