@@ -101,6 +101,10 @@ func (self PodCell) GetProperty(name dataselect.PropertyName) dataselect.Compara
 		return dataselect.StdComparableTime(self.ObjectMeta.CreationTimestamp.Time)
 	case dataselect.NamespaceProperty:
 		return dataselect.StdComparableString(self.ObjectMeta.Namespace)
+	case dataselect.HostIpProperty:
+		return dataselect.StdComparableString(self.Status.HostIP)
+	case dataselect.PodIpProperty:
+		return dataselect.StdComparableString(self.Status.PodIP)
 	default:
 		// if name is not supported then just return a constant dummy value, sort will have no effect.
 		return nil

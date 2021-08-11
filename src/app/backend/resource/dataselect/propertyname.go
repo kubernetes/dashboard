@@ -25,4 +25,6 @@ const (
 	NamespaceProperty         = "namespace"
 	StatusProperty            = "status"
 	TypeProperty              = "type"
+	HostIpProperty            = "hostIp"
+	PodIpProperty             = "podIp"
 )
