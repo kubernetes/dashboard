@@ -54,7 +54,7 @@ export class LocalSettingsComponent implements OnInit {
 
     this.themes = this.theme_.themes;
     this.selectedTheme = this.theme_.theme;
-    this.systemTheme = this.theme_.systemTheme;
+    this.systemTheme = ThemeService.SystemTheme;
   }
 
   onThemeChange(): void {
