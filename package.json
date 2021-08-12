@@ -55,7 +55,7 @@
     "fix:i18n": "npm run check:i18n",
     "clean": "rm -rf .go_workspace .tmp coverage dist npm-debug.log",
     "postversion": "node aio/scripts/version.mjs",
-    "postinstall": "node aio/scripts/version.mjs && command -v golangci-lint >/dev/null 2>&1 || { curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $(go env GOPATH)/bin v1.30.0; } && go mod download && ./aio/scripts/install-codegen.sh && ngcc",
+    "postinstall": "node aio/scripts/version.mjs && command -v golangci-lint >/dev/null 2>&1 || { curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $(go env GOPATH)/bin v1.41.1; } && go mod download && ./aio/scripts/install-codegen.sh && ngcc",
     "prepare": "husky install"
   },
   "lint-staged": {
