@@ -12,13 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-
-/**
- * @fileoverview Gulp tasks for deploying and releasing the application.
- */
-import child from 'child_process';
 import gulp from 'gulp';
-import lodash from 'lodash';
 import path from 'path';
 
 import {multiDest} from './common.js';
@@ -31,92 +25,6 @@ gulp.task('docker-file:cross', () => {
   return dockerFile(conf.paths.distCross);
 });
 
-/**
- * Creates head Docker image for the application for all architectures.
- * The image is tagged with the image name configuration constant.
- */
-gulp.task('docker-image:head:cross', gulp.series('docker-file:cross', () => {
-  return buildDockerImage(lodash.zip(conf.deploy.headImageNames, conf.paths.distCross));
-}));
-
-/**
- * Creates release Docker image for the application for all architectures.
- * The image is tagged with the image name configuration constant.
- */
-gulp.task('docker-image:release:cross', gulp.series('docker-file:cross', () => {
-  return buildDockerImage(lodash.zip(conf.deploy.releaseImageNames, conf.paths.distCross));
-}));
-
-/**
- * Pushes cross compiled head images to Docker Hub.
- */
-gulp.task('push-to-docker:head:cross', gulp.series('docker-image:head:cross', () => {
-  return pushToDocker(conf.deploy.headImageNames, conf.deploy.headManifestName);
-}));
-
-/**
- * Pushes cross compiled release images to Docker Hub.
- */
-gulp.task('push-to-docker:release:cross', gulp.series('docker-image:release:cross', () => {
-  return Promise.all([
-    pushToDocker(conf.deploy.releaseImageNames, conf.deploy.releaseManifestName),
-    pushToDocker(conf.deploy.releaseLatestImageNames, conf.deploy.releaseLatestManifestName),
-  ]);
-}));
-
-/**
- * @param {!Array<string>} args
- * @param {function(?Error=)} doneFn
- */
-function spawnDockerProcess(args, doneFn) {
-  let dockerTask = child.spawn('docker', args, {stdio: 'inherit'});
-
-  // Call Gulp callback on task exit. This has to be done to make Gulp dependency management
-  // work.
-  dockerTask.on('exit', function (code) {
-    if (code === 0) {
-      doneFn();
-    } else {
-      doneFn(new Error(`Docker command error, code: ${code}`));
-    }
-  });
-}
-
-/**
- * @param {!Array<!Array<string>>} imageNamesAndDirs (image name, directory) pairs
- * @return {!Promise}
- */
-function buildDockerImage(imageNamesAndDirs) {
-  let spawnPromises = imageNamesAndDirs.map((imageNameAndDir) => {
-    let [imageName, dir] = imageNameAndDir;
-    return new Promise((resolve, reject) => {
-      spawnDockerProcess(
-        [
-          'build',
-          // Remove intermediate containers after a successful build.
-          '--rm=true',
-          '--tag',
-          imageName,
-          dir,
-        ],
-        (err) => {
-          if (err) {
-            reject(err);
-          } else {
-            resolve();
-          }
-        });
-    });
-  });
-
-  return Promise.all(spawnPromises);
-}
-
-/**
- * @param {!Array<string>} imageNames
- * @param manifest
- * @return {!Promise}
- */
 function pushToDocker(imageNames, manifest) {
   let spawnPromises = imageNames.map((imageName) => {
     return new Promise((resolve, reject) => {
