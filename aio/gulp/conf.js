@@ -68,11 +68,6 @@ const version = {
   year: '2019',
 };
 
-/**
- * Base name for the docker image.
- */
-const imageNameBase = 'dashboard';
-
 function envToArgv() {
   let envArgs = process.env.DASHBOARD_ARGS;
   let result = {};
@@ -245,57 +240,6 @@ export default {
      * Project version info.
      */
     version: version,
-
-    /**
-     * Image name base for current architecture.
-     */
-    imageNameBase: `${imageNameBase}-${arch.default}`,
-
-    /**
-     * Image name for the head release for current architecture.
-     */
-    headImageName: `${containerRegistry.head}/${imageNameBase}-${arch.default}:${version.head}`,
-
-    /**
-     * Image name for the versioned release for current architecture.
-     */
-    releaseImageName:
-        `${containerRegistry.release}/${imageNameBase}-${arch.default}:${version.release}`,
-
-    /**
-     * Manifest name for the head release
-     */
-    headManifestName: `${containerRegistry.head}/${imageNameBase}:${version.head}`,
-
-    /**
-     * Manifest name for the versioned release
-     */
-    releaseManifestName:
-        `${containerRegistry.release}/${imageNameBase}:${version.release}`,
-
-    /**
-     * Manifest name for the latest versioned release
-     */
-    releaseLatestManifestName:
-        `${containerRegistry.release}/${imageNameBase}:latest`,
-
-    /**
-     * Image names for the head release for all supported architectures.
-     */
-    headImageNames: arch.list.map(
-        (arch) => `${containerRegistry.head}/${imageNameBase}-${arch}:${version.head}`),
-
-    /**
-     * Image names for the versioned release for all supported architectures.
-     */
-    releaseImageNames: arch.list.map(
-        (arch) => `${containerRegistry.release}/${imageNameBase}-${arch}:${version.release}`),
-
-    /**
-     * Image names for the latest versioned release for all supported architectures.
-     */
-    releaseLatestImageNames: arch.list.map(
-        (arch) => `${containerRegistry.release}/${imageNameBase}-${arch}:latest`),
   },
 
   /**
