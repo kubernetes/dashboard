@@ -28,3 +28,8 @@ docker-build-head: build-cross
 	for ARCH in $(ARCHITECTURES) ; do \
   		docker build --rm=true --tag $(HEAD_IMAGE)-$$ARCH:$(HEAD_VERSION) dist/$$ARCH ; \
   done
+
+docker-push-head: docker-build-head
+	for ARCH in $(ARCHITECTURES) ; do \
+  		docker push $(HEAD_IMAGE)-$$ARCH:$(HEAD_VERSION) ; \
+  done
