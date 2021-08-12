@@ -58,7 +58,10 @@ gulp.task('push-to-docker:head:cross', gulp.series('docker-image:head:cross', ()
  * Pushes cross compiled release images to Docker Hub.
  */
 gulp.task('push-to-docker:release:cross', gulp.series('docker-image:release:cross', () => {
-  return pushToDocker(conf.deploy.releaseImageNames, conf.deploy.releaseManifestName);
+  return Promise.all([
+    pushToDocker(conf.deploy.releaseImageNames, conf.deploy.releaseManifestName),
+    pushToDocker(conf.deploy.releaseLatestImageNames, conf.deploy.releaseLatestManifestName),
+  ]);
 }));
 
 /**

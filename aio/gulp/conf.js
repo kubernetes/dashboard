@@ -274,16 +274,28 @@ export default {
         `${containerRegistry.release}/${imageNameBase}:${version.release}`,
 
     /**
-     * Image name for the head release for all supported architecture.
+     * Manifest name for the latest versioned release
+     */
+    releaseLatestManifestName:
+        `${containerRegistry.release}/${imageNameBase}:latest`,
+
+    /**
+     * Image names for the head release for all supported architectures.
      */
     headImageNames: arch.list.map(
         (arch) => `${containerRegistry.head}/${imageNameBase}-${arch}:${version.head}`),
 
     /**
-     * Image name for the versioned release for all supported architecture.
+     * Image names for the versioned release for all supported architectures.
      */
     releaseImageNames: arch.list.map(
         (arch) => `${containerRegistry.release}/${imageNameBase}-${arch}:${version.release}`),
+
+    /**
+     * Image names for the latest versioned release for all supported architectures.
+     */
+    releaseLatestImageNames: arch.list.map(
+        (arch) => `${containerRegistry.release}/${imageNameBase}-${arch}:latest`),
   },
 
   /**
