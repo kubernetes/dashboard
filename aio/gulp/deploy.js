@@ -26,23 +26,7 @@ gulp.task('docker-file:cross', () => {
 });
 
 function pushToDocker(imageNames, manifest) {
-  let spawnPromises = imageNames.map((imageName) => {
-    return new Promise((resolve, reject) => {
-      spawnDockerProcess(
-        [
-          'push',
-          imageName,
-        ],
-        (err) => {
-          if (err) {
-            reject(err);
-          } else {
-            resolve();
-          }
-        });
-    });
-  });
-
+  //...
   // Create a new set of promises for annotating the manifest
   return Promise.all(spawnPromises).then(function () {
     return new Promise((resolve, reject) => {
@@ -102,11 +86,6 @@ function pushToDocker(imageNames, manifest) {
   });
 }
 
-/**
- * @param {string|!Array<string>} outputDirs
- * @param {function(?Error=)} doneFn
- * @return {stream}
- */
 function dockerFile(outputDirs, doneFn) {
   return gulp.src(path.join(conf.paths.deploySrc, 'Dockerfile'))
     .pipe(multiDest(outputDirs, doneFn));
