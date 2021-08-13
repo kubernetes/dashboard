@@ -16,7 +16,7 @@
 {{- $serviceName := include "kubernetes-dashboard.fullname" . -}}
 {{- $servicePort := .Values.service.externalPort -}}
 {{- $paths := .Values.ingress.paths -}}
-apiVersion: networking.k8s.io/v1beta1
+apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: {{ template "kubernetes-dashboard.fullname" . }}
@@ -51,9 +51,12 @@ spec:
   {{- else }}
   {{- range $p := $paths }}
           - path: {{ $p }}
+            pathType: ImplementationSpecific
             backend:
-              serviceName: {{ $serviceName }}
-              servicePort: {{ $servicePort }}
+              service:
+                name: {{ $serviceName }}
+                port:
+                  number:  {{ $servicePort }}
   {{- end -}}
   {{- end -}}
   {{- end -}}
@@ -65,9 +68,12 @@ spec:
   {{- else }}
   {{- range $p := $paths }}
           - path: {{ $p }}
+            pathType: ImplementationSpecific
             backend:
-              serviceName: {{ $serviceName }}
-              servicePort: {{ $servicePort }}
+              service:
+                name: {{ $serviceName }}
+                port:
+                  number:  {{ $servicePort }}
   {{- end -}}
   {{- end -}}
   {{- end -}}
