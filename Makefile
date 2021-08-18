@@ -2,6 +2,7 @@ SHELL=/bin/bash
 RELEASE_IMAGE=kubernetesui/dashboard
 RELEASE_VERSION=v2.3.1
 RELEASE_IMAGE_NAMES+=$(foreach arch, $(ARCHITECTURES), $(RELEASE_IMAGE)-$(arch):$(RELEASE_VERSION))
+RELEASE_IMAGE_NAMES_LATEST+=$(foreach arch, $(ARCHITECTURES), $(RELEASE_IMAGE)-$(arch):latest)
 HEAD_IMAGE=kubernetesdashboarddev/dashboard
 HEAD_VERSION=head
 HEAD_IMAGE_NAMES+=$(foreach arch, $(ARCHITECTURES), $(HEAD_IMAGE)-$(arch):$(HEAD_VERSION))
@@ -20,24 +21,28 @@ build-cross: clean
 .PHONY: docker-build-release
 docker-build-release: build-cross
 	for ARCH in $(ARCHITECTURES) ; do \
-  		docker build --rm=true -t $(RELEASE_IMAGE)-$$ARCH:$(RELEASE_VERSION) -t $(RELEASE_IMAGE)-$$ARCH:latest dist/$$ARCH ; \
+  		docker build -t $(RELEASE_IMAGE)-$$ARCH:$(RELEASE_VERSION) -t $(RELEASE_IMAGE)-$$ARCH:latest dist/$$ARCH ; \
   done
 
 .PHONY: docker-push-release
 docker-push-release: docker-build-release
 	for ARCH in $(ARCHITECTURES) ; do \
   		docker push $(RELEASE_IMAGE)-$$ARCH:$(RELEASE_VERSION) ; \
+  		docker push $(RELEASE_IMAGE)-$$ARCH:latest ; \
   done ; \
-  docker manifest create --amend $(RELEASE_IMAGE):$(RELEASE_VERSION) $(RELEASE_IMAGE_NAMES)
+  docker manifest create --amend $(RELEASE_IMAGE):$(RELEASE_VERSION) $(RELEASE_IMAGE_NAMES) ; \
+  docker manifest create --amend $(RELEASE_IMAGE):latest $(RELEASE_IMAGE_NAMES_LATEST) ; \
 	for ARCH in $(ARCHITECTURES) ; do \
   		docker manifest annotate $(RELEASE_IMAGE):$(RELEASE_VERSION) $(RELEASE_IMAGE)-$$ARCH:$(RELEASE_VERSION) --os linux --arch $$ARCH ; \
+  		docker manifest annotate $(RELEASE_IMAGE):latest $(RELEASE_IMAGE)-$$ARCH:latest --os linux --arch $$ARCH ; \
   done ; \
-  docker manifest push $(RELEASE_IMAGE):$(RELEASE_VERSION)
+  docker manifest push $(RELEASE_IMAGE):$(RELEASE_VERSION) ; \
+  docker manifest push $(RELEASE_IMAGE):latest
 
 .PHONY: docker-build-head
 docker-build-head: build-cross
 	for ARCH in $(ARCHITECTURES) ; do \
-  		docker build --rm=true -t $(HEAD_IMAGE)-$$ARCH:$(HEAD_VERSION) dist/$$ARCH ; \
+  		docker build -t $(HEAD_IMAGE)-$$ARCH:$(HEAD_VERSION) dist/$$ARCH ; \
   done
 
 .PHONY: docker-push-head
