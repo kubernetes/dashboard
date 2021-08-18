@@ -126,12 +126,12 @@ jobs:
           [ ! -d "node_modules" ] && npm ci || node aio/scripts/version.mjs && command -v golangci-lint >/dev/null 2>&1 || { curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $(go env GOPATH)/bin v1.41.1; } && go mod download
 
       - name: Run Frontend Unit Tests
-        run: npm run test:frontend:coverage
+        run: make coverage-frontend
 
       - name: Run Backend Unit Tests
         run: |
           export GOPATH=$(go env GOPATH)/bin
-          npm run test:backend:coverage
+          make backend-frontend
 
       - name: Cleanup & Upload Coverage
         shell: bash

@@ -24,18 +24,6 @@ import conf from './conf.js';
 
 const devPath = `${process.env.PATH}:${conf.paths.goTools}/bin`;
 const env = lodash.merge(process.env, {PATH: devPath});
-const minGoVersion = '1.16.6';
-
-export default function goCommand(args, doneFn, envOverride) {
-  checkPrerequisites()
-      .then(() => spawnGoProcess(args, envOverride))
-      .then(doneFn)
-      .fail((error) => doneFn(error));
-}
-
-function checkPrerequisites() {
-  return checkGo().then(checkGoVersion);
-}
 
 function checkGo() {
   let deferred = q.defer();
@@ -53,66 +41,4 @@ function checkGo() {
         deferred.resolve();
       });
   return deferred.promise;
-}
-
-function checkGoVersion() {
-  let deferred = q.defer();
-  child.exec(
-      'go version', {
-        env: env,
-      },
-      function(error, stdout) {
-        let match = /go version devel/.exec(stdout.toString());
-        if (match && match.length > 0) {
-          // If running a development version of Go we assume the version to be
-          // good enough, if compilation gives weird errors the developer also
-          // should know what is going on, since he uses a development version
-          // of Go :)
-          deferred.resolve();
-          return;
-        }
-        match = /[\d.]+/.exec(stdout.toString());  // matches version number
-        if (match && match.length < 1) {
-          deferred.reject(new Error('Go version not found.'));
-          return;
-        }
-        let currentGoVersion = match[0];
-        // semver requires a patch number, so we'll append '.0' if it isn't present.
-        if (currentGoVersion.split('.').length === 2) {
-          currentGoVersion = `${currentGoVersion}.0`;
-        }
-        if (semver.lt(currentGoVersion, minGoVersion)) {
-          deferred.reject(new Error(
-              `The current go version '${currentGoVersion}' is older than ` +
-              `the minimum required version '${minGoVersion}'. ` +
-              `Please upgrade your go version!`));
-          return;
-        }
-        deferred.resolve();
-      });
-
-  return deferred.promise;
-}
-
-function spawnProcess(processName, args, envOverride) {
-  let deferred = q.defer();
-  let envLocal = lodash.merge(env, envOverride);
-  let goTask = child.spawn(processName, args, {
-    env: envLocal,
-    stdio: 'inherit',
-  });
-  // Call Gulp callback on task exit. This has to be done to make Gulp dependency management
-  // work.
-  goTask.on('exit', function(code) {
-    if (code !== 0) {
-      deferred.reject(Error(`Go command error, code: ${code}`));
-      return;
-    }
-    deferred.resolve();
-  });
-  return deferred.promise;
-}
-
-function spawnGoProcess(args, envOverride) {
-  return spawnProcess('go', args, envOverride);
 }
