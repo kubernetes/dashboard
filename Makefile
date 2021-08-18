@@ -21,7 +21,7 @@ ARCHITECTURES=amd64 arm64 arm ppc64le s390x
 .PHONY: validate-go
 validate-go:
 ifndef GO_BINARY
-	exit 1
+	$(error "Cannot find go binary")
 endif
 	@if [ $(GO_MAJOR_VERSION) -gt $(MIN_GO_MAJOR_VERSION) ]; then \
 		exit 0 ;\
