@@ -13,9 +13,6 @@
 // limitations under the License.
 
 import gulp from 'gulp';
-import path from 'path';
-
-import {multiDest} from './common.js';
 import conf from './conf.js';
 
 /**
@@ -25,68 +22,3 @@ gulp.task('docker-file:cross', () => {
   return dockerFile(conf.paths.distCross);
 });
 
-function pushToDocker(imageNames, manifest) {
-  //...
-  // Create a new set of promises for annotating the manifest
-  return Promise.all(spawnPromises).then(function () {
-    return new Promise((resolve, reject) => {
-      spawnDockerProcess(
-        [
-          'manifest',
-          'create',
-          '--amend',
-          manifest,
-        ].concat(imageNames),
-        (err) => {
-          if (err) {
-            reject(err);
-          } else {
-            // Once all annotations have been made, push the manifest
-            let manifestPromises = imageNames.map((imageName) => {
-              return new Promise((resolveManifests, rejectManifests) => {
-                spawnDockerProcess(
-                  [
-                    'manifest',
-                    'annotate',
-                    manifest,
-                    imageName,
-                    '--os',
-                    'linux',
-                    '--arch',
-                    conf.arch.list.filter(arch => imageName.includes(arch))[0],
-                  ],
-                  (err) => {
-                    if (err) {
-                      rejectManifests(err);
-                    } else {
-                      resolveManifests();
-                    }
-                  });
-              });
-            });
-            // Once all annotations have been made, push the manifest
-            Promise.all(manifestPromises).then(function () {
-              spawnDockerProcess(
-                [
-                  'manifest',
-                  'push',
-                  manifest,
-                ],
-                (err) => {
-                  if (err) {
-                    reject(err);
-                  } else {
-                    resolve();
-                  }
-                });
-            });
-          }
-        });
-    });
-  });
-}
-
-function dockerFile(outputDirs, doneFn) {
-  return gulp.src(path.join(conf.paths.deploySrc, 'Dockerfile'))
-    .pipe(multiDest(outputDirs, doneFn));
-}

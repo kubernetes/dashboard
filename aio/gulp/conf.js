@@ -12,60 +12,21 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-/**
- * @fileoverview Common configuration constants used in other build/test files.
- */
 import minimist from 'minimist';
 import path from 'path';
 import {fileURLToPath} from "url";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-
-/**
- * Base path for all other paths.
- */
 const basePath = path.resolve(__dirname + '/../../');
 
-/**
- * Compilation architecture configuration.
- */
 const arch = {
-  /**
-   * Default architecture that the project is compiled to. Used for local development and testing.
-   */
   default: 'amd64',
-  /**
-   * List of all supported architectures by this project.
-   */
   list: ['amd64', 'arm64', 'arm', 'ppc64le', 's390x'],
 };
 
-/**
- * Configuration for container registry to push images to.
- */
-const containerRegistry = {
-  release: 'kubernetesui',
-  /** Default to an environment variable */
-  head: 'kubernetesdashboarddev',
-};
-
-/**
- * Package version information.
- */
 const version = {
-  /**
-   * Current release version of the project.
-   */
   release: 'v2.3.1',
-  /**
-   * Version name of the head release of the project.
-   */
-  head: 'head',
-  /**
-   * Year of last source change of the project
-   */
-  year: '2019',
 };
 
 function envToArgv() {
@@ -98,14 +59,8 @@ function envToArgv() {
   return result;
 }
 
-/**
- * Arguments
- */
 const argv = envToArgv();
 
-/**
- * Exported configuration object with common constants used in build pipeline.
- */
 export default {
   /**
    * the expression of recording version info into src/app/backend/client/manager.go
@@ -113,42 +68,16 @@ export default {
   recordVersionExpression:
       `-X github.com/kubernetes/dashboard/src/app/backend/client.Version=${version.release}`,
 
-  /**
-   * Configuration for container registry to push images to.
-   */
-  containerRegistry: containerRegistry,
-
-  /**
-   * Backend application constants.
-   */
   backend: {
-    /**
-     * The name of the backend binary.
-     */
     binaryName: 'dashboard',
-    /**
-     * Name of the main backend package that is used in go build command.
-     */
     mainPackageName: 'github.com/kubernetes/dashboard/src/app/backend',
-    /**
-     * Names of all backend packages prefixed with 'test' command.
-     */
     testCommandArgs:
         [
           'test',
           'github.com/kubernetes/dashboard/src/app/backend/...',
         ],
-    /**
-     * Insecure port number of the backend server. Only used during development.
-     */
     devServerPort: 9090,
-    /**
-     * Secure port number of the backend server. Only used during development.
-     */
     secureDevServerPort: 8443,
-    /**
-     * Address for the Kubernetes API server.
-     */
     apiServerHost: 'http://localhost:8080',
     /**
      * Env variable with path to kubeconfig file.
@@ -159,9 +88,6 @@ export default {
      * dashboard defaults to INFO, publishing sanitized logs to STDOUT
      */
     apiLogLevel: argv.apiLogLevel !== undefined ? argv.apiLogLevel : '',
-    /**
-     * Setting for metrics provider. Defaults to sidecar.
-     */
     metricsProvider: argv.metricsProvider !== undefined ? argv.metricsProvider : 'sidecar',
     /**
      * Address for the Heapster API server. If blank, the dashboard
@@ -227,61 +153,24 @@ export default {
       0,
   },
 
-  /**
-   * Project compilation architecture info.
-   */
   arch: arch,
 
-  /**
-   * Deployment constants configuration.
-   */
   deploy: {
-    /**
-     * Project version info.
-     */
     version: version,
   },
 
-  /**
-   * Frontend application constants.
-   */
   frontend: {
-    /**
-     * Port number to access the dashboard UI
-     */
     serverPort: 9090,
-    /**
-     * The name of the root Angular module, i.e., the module that bootstraps the application.
-     */
     rootModuleName: 'kubernetesDashboard',
-    /**
-     * If defined `gulp serve` will serve on HTTPS.
-     */
     serveHttps: argv.serveHttps !== undefined,
   },
 
-  /**
-   * Configuration for tests.
-   */
-  test: {
-    /**
-     * Whether to use sauce labs for running tests that require a browser.
-     */
-    useSauceLabs: !!process.env.TRAVIS,
-  },
-
-  /**
-   * Absolute paths to known directories, e.g., to source directory.
-   */
   paths: {
     base: basePath,
     backendSrc: path.join(basePath, 'src/app/backend'),
     deploySrc: path.join(basePath, 'aio'),
     dist: path.join(basePath, 'dist', arch.default),
     distCross: arch.list.map((arch) => path.join(basePath, 'dist', arch)),
-    distPre: path.join(basePath, '.tmp/dist'),
-    distPublic: path.join(basePath, 'dist', arch.default, 'public'),
-    distPublicCross: arch.list.map((arch) => path.join(basePath, 'dist', arch, 'public')),
     distRoot: path.join(basePath, 'dist'),
     goTools: path.join(basePath, '.tools/go'),
     prodTmp: path.join(basePath, '.tmp/prod'),

@@ -67,11 +67,6 @@ gulp.task('backend:prod:cross', gulp.series(() => {
   return backendProd(lodash.zip(outputBinaryPaths, conf.arch.list));
 }));
 
-/**
- * @param {!Array<!Array<string>>} outputBinaryPathsAndArchs array of
- *    (output binary path, architecture) pairs
- * @return {!Promise}
- */
 function backendProd(outputBinaryPathsAndArchs) {
   let promiseFn = (path, arch) => {
     return (resolve, reject) => {

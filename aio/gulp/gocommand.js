@@ -22,29 +22,10 @@ import semver from 'semver';
 
 import conf from './conf.js';
 
-// Add the project's required go tools to the PATH.
 const devPath = `${process.env.PATH}:${conf.paths.goTools}/bin`;
-
-/**
- * The environment needed for the execution of any go command.
- */
 const env = lodash.merge(process.env, {PATH: devPath});
-
-/**
- * Minimum required Go Version
- */
 const minGoVersion = '1.16.6';
 
-/**
- * Spawns a Go process after making sure all Go prerequisites are
- * present. Backend source files must be packaged with 'package-backend'
- * task before running
- * this command.
- *
- * @param {!Array<string>} args - Arguments of the go command.
- * @param {function(?Error=)} doneFn - Callback.
- * @param {!Object<string, string>=} [envOverride] optional environment variables overrides map.
- */
 export default function goCommand(args, doneFn, envOverride) {
   checkPrerequisites()
       .then(() => spawnGoProcess(args, envOverride))
@@ -52,18 +33,10 @@ export default function goCommand(args, doneFn, envOverride) {
       .fail((error) => doneFn(error));
 }
 
-/**
- * Checks if all prerequisites for a go-command execution are present.
- * @return {Q.Promise} A promise object.
- */
 function checkPrerequisites() {
   return checkGo().then(checkGoVersion);
 }
 
-/**
- * Checks if go is on the PATH prior to a go command execution, promises an error otherwise.
- * @return {Q.Promise} A promise object.
- */
 function checkGo() {
   let deferred = q.defer();
   child.exec(
@@ -82,10 +55,6 @@ function checkGo() {
   return deferred.promise;
 }
 
-/**
- * Checks if go version fulfills the minimum version prerequisite, promises an error otherwise.
- * @return {Q.Promise} A promise object.
- */
 function checkGoVersion() {
   let deferred = q.defer();
   child.exec(
@@ -125,15 +94,6 @@ function checkGoVersion() {
   return deferred.promise;
 }
 
-/**
- * Spawns a process.
- * Promises an error if the go command process fails.
- *
- * @param {string} processName - Process name to spawn.
- * @param {!Array<string>} args - Arguments of the go command.
- * @param {!Object<string, string>=} [envOverride] optional environment variables overrides map.
- * @return {Q.Promise} A promise object.
- */
 function spawnProcess(processName, args, envOverride) {
   let deferred = q.defer();
   let envLocal = lodash.merge(env, envOverride);
@@ -153,14 +113,6 @@ function spawnProcess(processName, args, envOverride) {
   return deferred.promise;
 }
 
-/**
- * Spawns go process.
- * Promises an error if the go command process fails.
- *
- * @param {!Array<string>} args - Arguments of the go command.
- * @param {!Object<string, string>=} [envOverride] optional environment variables overrides map.
- * @return {Q.Promise} A promise object.
- */
 function spawnGoProcess(args, envOverride) {
   return spawnProcess('go', args, envOverride);
 }
