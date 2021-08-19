@@ -160,7 +160,7 @@
     "jasmine-core": "3.8.0",
     "jasmine-spec-reporter": "7.0.0",
     "jest": "27.0.6",
-    "jest-preset-angular": "9.0.4",
+    "jest-preset-angular": "9.0.6",
     "js-beautify": "1.14.0",
     "license-check-and-add": "4.0.2",
     "lint-staged": "11.1.2",
@@ -187,6 +187,7 @@
     "ts-node": "10.2.0",
     "typescript": "4.3.5",
     "wait-on": "6.0.0",
+    "webpack": "5.50.0",
     "webpack-dev-server": "3.11.2"
   },
   "engines": {
