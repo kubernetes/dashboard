@@ -129,7 +129,7 @@
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "12.2.1",
-    "@angular/cli": "12.2.1",
+    "@angular/cli": "12.2.2",
     "@angular/compiler-cli": "12.2.1",
     "@angular/language-service": "12.2.1",
     "@babel/core": "7.15.0",
@@ -180,7 +180,7 @@
     "stylelint-config-standard": "22.0.0",
     "stylelint-no-unsupported-browser-features": "5.0.1",
     "stylelint-order": "4.1.0",
-    "tar": "6.1.8",
+    "tar": "6.1.10",
     "through2": "4.0.2",
     "ts-jest": "27.0.5",
     "ts-loader": "9.2.5",
