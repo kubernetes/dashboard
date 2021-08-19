@@ -40,6 +40,7 @@ jobs:
         with:
           path: aio/deploy/helm-chart
           config: aio/deploy/helm-chart/config_repos
+          version: 1.21.1
 
       - uses: actions/setup-python@v2
         with:
