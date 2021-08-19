@@ -19,9 +19,11 @@ on:
     branches: [ master ]
     paths:
     - 'aio/deploy/helm-chart/**'
+    - '.github/workflows/ci-helm-workflow.yml'
   pull_request:
     paths:
     - 'aio/deploy/helm-chart/**'
+    - '.github/workflows/ci-helm-workflow.yml'
 
 jobs:
   helm-lint-test:
@@ -34,9 +36,10 @@ jobs:
           fetch-depth: "0"
 
       - name: Validate schema
-        uses: desaintmartin/helm-kubeval-action@v1.0.2
+        uses: wiremind/helm-kubeval-action@v1.2.0
         with:
           path: aio/deploy/helm-chart
+          config: aio/deploy/helm-chart/config_repos
 
       - uses: actions/setup-python@v2
         with:
