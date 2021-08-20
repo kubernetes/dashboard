@@ -101,7 +101,7 @@
     "@angular/platform-browser": "12.2.2",
     "@angular/platform-browser-dynamic": "12.2.2",
     "@angular/router": "12.2.2",
-    "@swimlane/ngx-charts": "17.0.1",
+    "@swimlane/ngx-charts": "19.0.0",
     "ace-builds": "1.4.12",
     "angular-page-visibility": "11.0.0",
     "ansi-to-html": "0.7.1",
