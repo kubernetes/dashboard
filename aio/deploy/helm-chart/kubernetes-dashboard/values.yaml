@@ -60,9 +60,11 @@ extraVolumeMounts: []
 #   name: dashboard-kubeconfig
 #   readOnly: true
 
-# Annotations to be added to kubernetes dashboard pods
-podAnnotations:
-  seccomp.security.alpha.kubernetes.io/pod: "runtime/default"
+# SecurityContext to be added to kubernetes dashboard pods
+podSecurityContext:
+  seccompProfile:
+    type: RuntimeDefault
+
 
 # Labels to be added to kubernetes dashboard pods
 podLabels: {}
