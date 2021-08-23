@@ -158,7 +158,7 @@
     "gulp": "4.0.2",
     "gulp-filter": "7.0.0",
     "husky": "7.0.1",
-    "jasmine-core": "3.8.0",
+    "jasmine-core": "3.9.0",
     "jasmine-spec-reporter": "7.0.0",
     "jest": "27.0.6",
     "jest-preset-angular": "9.0.6",
