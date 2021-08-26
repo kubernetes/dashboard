@@ -19,7 +19,7 @@
 
 # golang is based on debian:jessie
 # Specify version to clarify which version we use.
-FROM golang:1.16.7-buster
+FROM golang:1.17.0-bullseye
 
 # Install Node.js. Go is already installed.
 # A small tweak, apt-get update is already run by the nodejs setup script,
@@ -86,11 +86,11 @@ RUN mv ./kubectl /usr/local/bin/kubectl
 # `aio/develop/run-npm-on-container.sh run check`.
 RUN curl -sfL https://install.goreleaser.com/github.com/golangci/golangci-lint.sh | sh -s -- -b $(go env GOPATH)/bin v1.41.1
 
-# Install delve for debuging go files.
-RUN go get github.com/go-delve/delve/cmd/dlv
-
-# Enable go mod. Note(shu-mutou): do not set this before `go get`
+# Enable go mod.
 ENV GO111MODULE=on
+
+# Install delve for debuging go files.
+RUN go install github.com/go-delve/delve/cmd/dlv@v1.7.1
 
 # Set GOPROXY to ensure download modules
 ENV GOPROXY=https://proxy.golang.org
