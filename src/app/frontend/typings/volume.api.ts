@@ -30,7 +30,7 @@ export class PersistentVolumeSource {
   rbd?: RBDVolumeSource;
   flexVolume?: FlexVolumeSource;
   cinder?: CinderVolumeSource;
-  cephFS?: CephFSVolumeSource;
+  cephfs?: CephFSVolumeSource;
   flocker?: FlockerVolumeSource;
   downwardAPI?: DownwardAPIVolumeSource;
   fc?: FCVolumeSource;
@@ -565,7 +565,7 @@ const VolumeSourceRegistry: Map<keyof PersistentVolumeSourceRaw, IVolumeSource> 
   ['rbd', new RBDVolumeSource()],
   ['flexVolume', new FlexVolumeSource()],
   ['cinder', new CinderVolumeSource()],
-  ['cephFS', new CephFSVolumeSource()],
+  ['cephfs', new CephFSVolumeSource()],
   ['flocker', new FlockerVolumeSource()],
   ['downwardAPI', new DownwardAPIVolumeSource()],
   ['fc', new FCVolumeSource()],
