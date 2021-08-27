@@ -29,9 +29,10 @@ spec:
     metadata:
       labels:
         k8s-app: dashboard-metrics-scraper-head
-      annotations:
-        seccomp.security.alpha.kubernetes.io/pod: 'runtime/default'
     spec:
+      securityContext:
+        seccompProfile:
+          type: RuntimeDefault
       containers:
       - name: dashboard-metrics-scraper-head
         image: kubernetesdashboarddev/dashboard-metrics-sidecar:latest
