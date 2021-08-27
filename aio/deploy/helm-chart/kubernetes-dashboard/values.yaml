@@ -161,12 +161,14 @@ ingress:
   ## Custom Kubernetes Dashboard Ingress paths. Will override default paths.
   ##
   customPaths: []
-  #  - backend:
+  #  - pathType: ImplementationSpecific
+  #    backend:
   #      service:
   #        name: ssl-redirect
   #        port:
   #          name: use-annotation
-  #  - backend:
+  #  - pathType: ImplementationSpecific
+  #    backend:
   #      service:
   #        name: >-
   #          {{ include "kubernetes-dashboard.fullname" . }}
