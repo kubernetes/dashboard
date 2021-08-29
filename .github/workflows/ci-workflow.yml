@@ -35,6 +35,7 @@ on:
       - '.github/workflows/cd-workflow.yml'
 
 jobs:
+<<<<<<< HEAD
   # check:
   #   name: Static Check
   #   runs-on: ubuntu-latest
@@ -84,6 +85,57 @@ jobs:
   #       run: |
   #         export GOPATH=$(go env GOPATH)/bin
   #         npm run check
+=======
+  check:
+    name: Static Check
+    runs-on: ubuntu-latest
+    env:
+      NG_CLI_ANALYTICS: ci
+      GO111MODULE: on
+      GOPROXY: "https://proxy.golang.org"
+      NODE_OPTIONS: "--max-old-space-size=8192"
+      TERM: xterm
+    steps:
+      - name: Setup Environment
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - name: Setup Go
+        uses: actions/setup-go@v2
+        with:
+          go-version: 1.15.1
+
+      - name: Setup NodeJS
+        uses: actions/setup-node@v2.1.2
+        with:
+          node-version: 14.16.1
+
+      - name: Cache Node Modules
+        uses: actions/cache@v2
+        env:
+          cache-name: cache-node-modules
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+
+      - name: Install Dependencies
+        shell: bash
+        run: |
+          [ ! -d "node_modules" ] && npm ci || node aio/scripts/version.js && command -v golangci-lint >/dev/null 2>&1 || { curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $(go env GOPATH)/bin v1.30.0; } && go mod download
+
+      - name: Install Codegen
+        shell: bash
+        run: |
+          export GOPATH=$(go env GOPATH)/bin
+          aio/scripts/install-codegen.sh
+
+      - name: Check Code
+        shell: bash
+        run: |
+          export GOPATH=$(go env GOPATH)/bin
+          npm run check
+>>>>>>> 688f30a9d4b10fc873a23e142c8a06e0b42bdd45
 
   unit:
     name: Unit Tests
@@ -110,7 +162,7 @@ jobs:
       - name: Setup NodeJS
         uses: actions/setup-node@v2.1.2
         with:
-          node-version: 12.6.0
+          node-version: 14.16.1
 
       - name: Cache Node Modules
         uses: actions/cache@v2

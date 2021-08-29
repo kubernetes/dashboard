@@ -39,7 +39,8 @@ limitations under the License.
       <ng-container [matColumnDef]="getColumns()[0]">
         <mat-header-cell *matHeaderCellDef></mat-header-cell>
         <mat-cell *matCellDef="let pv">
-          <mat-icon [ngClass]="getStatus(pv).iconClass">{{getStatus(pv).iconName}}</mat-icon>
+          <mat-icon [ngClass]="getStatus(pv).iconClass"
+                    [matTooltip]="getStatus(pv).iconTooltip">{{getStatus(pv).iconName}}</mat-icon>
         </mat-cell>
       </ng-container>
 
@@ -138,10 +139,12 @@ limitations under the License.
       <mat-row *matRowDef="let row; columns: getColumns();"></mat-row>
     </mat-table>
 
-    <mat-paginator [length]="totalItems"
-                   [pageSize]="itemsPerPage"
-                   [hidePageSize]="true"
-                   [showFirstLastButtons]="true"></mat-paginator>
+    <div [hidden]="totalItems <= itemsPerPage">
+      <mat-paginator [length]="totalItems"
+                     [pageSize]="itemsPerPage"
+                     hidePageSize
+                     showFirstLastButtons></mat-paginator>
+    </div>
   </div>
 
   <div content

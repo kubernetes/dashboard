@@ -23,6 +23,7 @@ import {EndpointManager, Resource} from '../../../services/resource/endpoint';
 import {NamespacedResourceService} from '../../../services/resource/resource';
 import {MenuComponent} from '../../list/column/menu/component';
 import {ListGroupIdentifier, ListIdentifier} from '../groupids';
+import {Status} from '../statuses';
 
 @Component({
   selector: 'kd-daemon-set-list',
@@ -44,9 +45,9 @@ export class DaemonSetListComponent extends ResourceListWithStatuses<DaemonSetLi
     this.groupId = ListGroupIdentifier.workloads;
 
     // Register status icon handlers
-    this.registerBinding(this.icon.checkCircle, 'kd-success', this.isInSuccessState);
-    this.registerBinding(this.icon.timelapse, 'kd-muted', this.isInPendingState);
-    this.registerBinding(this.icon.error, 'kd-error', this.isInErrorState);
+    this.registerBinding('kd-success', r => r.podInfo.warnings.length === 0 && r.podInfo.pending === 0, Status.Running);
+    this.registerBinding('kd-warning', r => r.podInfo.warnings.length === 0 && r.podInfo.pending > 0, Status.Pending);
+    this.registerBinding('kd-error', r => r.podInfo.warnings.length > 0, Status.Error);
 
     // Register action columns.
     this.registerActionColumn<MenuComponent>('menu', MenuComponent);
@@ -62,18 +63,6 @@ export class DaemonSetListComponent extends ResourceListWithStatuses<DaemonSetLi
   map(daemonSetList: DaemonSetList): DaemonSet[] {
     this.cumulativeMetrics = daemonSetList.cumulativeMetrics;
     return daemonSetList.daemonSets;
-  }
-
-  isInErrorState(resource: DaemonSet): boolean {
-    return resource.podInfo.warnings.length > 0;
-  }
-
-  isInPendingState(resource: DaemonSet): boolean {
-    return resource.podInfo.warnings.length === 0 && resource.podInfo.pending > 0;
-  }
-
-  isInSuccessState(resource: DaemonSet): boolean {
-    return resource.podInfo.warnings.length === 0 && resource.podInfo.pending === 0;
   }
 
   hasErrors(daemonSet: DaemonSet): boolean {

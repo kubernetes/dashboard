@@ -18,13 +18,22 @@ limitations under the License.
   <ng-container *ngFor="let key of keys; let i = index">
     <mat-chip *ngIf="isVisible(i)"
               [disableRipple]="true">
-      <ng-container *ngIf="isTooLong(map[key]) && !isHref(map[key])">
+      <ng-container *ngIf="isSerializedRef(map[key])">
+        <span>{{key}}:&nbsp;</span>
+        <a class="kd-clickable"
+           queryParamsHandling="preserve"
+           [routerLink]="getSerializedHref(map[key])">
+          {{getSerializedRefDisplayName(map[key])}}
+        </a>
+      </ng-container>
+
+      <ng-container *ngIf="isTooLong(map[key]) && !isHref(map[key]) && !isSerializedRef(map[key])">
         <a class="kd-clickable"
            (click)="openChipDialog(key, map[key])">{{key}}</a>
       </ng-container>
 
       <!-- beautify ignore:start -->
-      <ng-container *ngIf="!isTooLong(map[key]) || isHref(map[key])">
+      <ng-container *ngIf="!isTooLong(map[key]) || isHref(map[key]) && !isSerializedRef(map[key])">
         {{key}}<ng-container *ngIf="map[key]">:&nbsp;</ng-container>
         <ng-container *ngIf="map[key]">
           <ng-container *ngIf="isHref(map[key])">

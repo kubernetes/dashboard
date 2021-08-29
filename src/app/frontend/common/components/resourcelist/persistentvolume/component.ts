@@ -23,6 +23,7 @@ import {EndpointManager, Resource} from '../../../services/resource/endpoint';
 import {ResourceService} from '../../../services/resource/resource';
 import {MenuComponent} from '../../list/column/menu/component';
 import {ListGroupIdentifier, ListIdentifier} from '../groupids';
+import {Status} from '../statuses';
 
 @Component({
   selector: 'kd-persistent-volume-list',
@@ -45,9 +46,11 @@ export class PersistentVolumeListComponent extends ResourceListWithStatuses<Pers
     this.registerActionColumn<MenuComponent>('menu', MenuComponent);
 
     // Register status icon handlers
-    this.registerBinding(this.icon.checkCircle, 'kd-success', this.isInSuccessState);
-    this.registerBinding(this.icon.help, 'kd-muted', this.isInPendingState);
-    this.registerBinding(this.icon.error, 'kd-error', this.isInErrorState);
+    this.registerBinding('kd-success', r => r.status === Status.Available, Status.Available);
+    this.registerBinding('kd-success', r => r.status === Status.Bound, Status.Bound);
+    this.registerBinding('kd-warning', r => r.status === Status.Pending, Status.Pending);
+    this.registerBinding('kd-muted', r => r.status === Status.Released, Status.Released);
+    this.registerBinding('kd-error', r => r.status === Status.Failed, Status.Failed);
   }
 
   getResourceObservable(params?: HttpParams): Observable<PersistentVolumeList> {
@@ -56,18 +59,6 @@ export class PersistentVolumeListComponent extends ResourceListWithStatuses<Pers
 
   map(persistentVolumeList: PersistentVolumeList): PersistentVolume[] {
     return persistentVolumeList.items;
-  }
-
-  isInErrorState(resource: PersistentVolume): boolean {
-    return resource.status === 'Failed';
-  }
-
-  isInPendingState(resource: PersistentVolume): boolean {
-    return resource.status === 'Pending' || resource.status === 'Released';
-  }
-
-  isInSuccessState(resource: PersistentVolume): boolean {
-    return resource.status === 'Available' || resource.status === 'Bound';
   }
 
   getClaimHref(claimReference: string): string {

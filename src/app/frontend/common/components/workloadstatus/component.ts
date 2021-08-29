@@ -34,6 +34,10 @@ export const emptyResourcesRatio: ResourcesRatio = {
 export class WorkloadStatusComponent {
   @Input() resourcesRatio = emptyResourcesRatio;
   colors: string[] = [];
+  animations = false;
+  labels = true;
+  trimLabels = false;
+  size = [350, 250];
 
   getCustomColor(label: string): string {
     if (label.includes('Running')) {

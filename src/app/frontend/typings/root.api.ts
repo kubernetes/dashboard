@@ -391,6 +391,7 @@ export interface Pod extends Resource {
   metrics: PodMetrics;
   warnings: Event[];
   nodeName: string;
+  serviceAccountName: string;
 }
 
 export interface PodContainer {
@@ -837,17 +838,19 @@ export interface Condition {
 }
 
 export interface ContainerStateWaiting {
-  reason: string;
+  reason?: string;
+  message?: string;
 }
 
 export interface ContainerStateRunning {
-  startedAt: string;
+  startedAt?: string;
 }
 
 export interface ContainerStateTerminated {
-  reason: string;
-  signal: number;
   exitCode: number;
+  reason?: string;
+  message?: string;
+  signal?: number;
 }
 
 export interface ContainerState {
@@ -906,6 +909,16 @@ export interface Container {
   args: string[];
   volumeMounts: VolumeMounts[];
   securityContext: ContainerSecurityContext;
+  status: ContainerStatus;
+}
+
+export interface ContainerStatus {
+  name: string;
+  state: ContainerState;
+  lastTerminationState: ContainerState;
+  ready: boolean;
+  restartCount: number;
+  started?: boolean;
 }
 
 export interface ISecurityContext {

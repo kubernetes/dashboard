@@ -51,12 +51,20 @@ export class VolumeMountComponent {
   }
 
   getMountTypeFromVolume(volume: PersistentVolumeSource): string {
+    if (!volume) {
+      return '-';
+    }
+
     // This is to make sure that volume is an actual class instance with all methods.
     volume = new PersistentVolumeSource(volume);
     return volume.source ? volume.source.mountType : '-';
   }
 
   getNameFromVolume(volume: PersistentVolumeSource): string {
+    if (!volume) {
+      return '-';
+    }
+
     // This is to make sure that volume is an actual class instance with all methods.
     volume = new PersistentVolumeSource(volume);
     return volume.source ? volume.source.displayName : '-';

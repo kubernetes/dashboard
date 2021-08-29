@@ -10,7 +10,10 @@
     "resolveJsonModule": true, 
     "esModuleInterop": true,
     "paths": {
-      "@api/*": ["typings/*"]
+      "@api/*": ["typings/*"],
+      "@common/*": ["common/*"],
+      "@environments/*": ["environments/*"],
+      "@root/*": ["./*"],
     },
     "outDir": ".tmp/out-tsc",
     "target": "esnext",
@@ -24,7 +27,7 @@
     "noImplicitAny": false,
     "resolveJsonModule": true,
     "lib": [
-      "es2017",
+      "ES2020",
       "dom"
     ],
     "typeRoots": [

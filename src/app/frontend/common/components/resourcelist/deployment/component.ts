@@ -22,6 +22,7 @@ import {EndpointManager, Resource} from '../../../services/resource/endpoint';
 import {NamespacedResourceService} from '../../../services/resource/resource';
 import {MenuComponent} from '../../list/column/menu/component';
 import {ListGroupIdentifier, ListIdentifier} from '../groupids';
+import {Status} from '../statuses';
 
 @Component({
   selector: 'kd-deployment-list',
@@ -43,9 +44,17 @@ export class DeploymentListComponent extends ResourceListWithStatuses<Deployment
     this.groupId = ListGroupIdentifier.workloads;
 
     // Register status icon handlers
-    this.registerBinding(this.icon.checkCircle, 'kd-success', this.isInSuccessState);
-    this.registerBinding(this.icon.timelapse, 'kd-muted', this.isInPendingState);
-    this.registerBinding(this.icon.error, 'kd-error', this.isInErrorState);
+    this.registerBinding(
+      'kd-success',
+      r => r.pods.warnings.length === 0 && r.pods.pending === 0 && r.pods.running === r.pods.desired,
+      Status.Running
+    );
+    this.registerBinding(
+      'kd-muted',
+      r => r.pods.warnings.length === 0 && (r.pods.pending > 0 || r.pods.running !== r.pods.desired),
+      Status.Pending
+    );
+    this.registerBinding('kd-error', r => r.pods.warnings.length > 0, Status.Error);
 
     // Register action columns.
     this.registerActionColumn<MenuComponent>('menu', MenuComponent);
@@ -61,25 +70,6 @@ export class DeploymentListComponent extends ResourceListWithStatuses<Deployment
   map(deploymentList: DeploymentList): Deployment[] {
     this.cumulativeMetrics = deploymentList.cumulativeMetrics;
     return deploymentList.deployments;
-  }
-
-  isInErrorState(resource: Deployment): boolean {
-    return resource.pods.warnings.length > 0;
-  }
-
-  isInPendingState(resource: Deployment): boolean {
-    return (
-      resource.pods.warnings.length === 0 &&
-      (resource.pods.pending > 0 || resource.pods.running !== resource.pods.desired)
-    );
-  }
-
-  isInSuccessState(resource: Deployment): boolean {
-    return (
-      resource.pods.warnings.length === 0 &&
-      resource.pods.pending === 0 &&
-      resource.pods.running === resource.pods.desired
-    );
   }
 
   getDisplayColumns(): string[] {

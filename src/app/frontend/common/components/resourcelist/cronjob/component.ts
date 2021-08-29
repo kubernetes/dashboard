@@ -22,6 +22,7 @@ import {EndpointManager, Resource} from '../../../services/resource/endpoint';
 import {NamespacedResourceService} from '../../../services/resource/resource';
 import {MenuComponent} from '../../list/column/menu/component';
 import {ListGroupIdentifier, ListIdentifier} from '../groupids';
+import {Status} from '../statuses';
 
 @Component({
   selector: 'kd-cron-job-list',
@@ -43,8 +44,8 @@ export class CronJobListComponent extends ResourceListWithStatuses<CronJobList, 
     this.groupId = ListGroupIdentifier.workloads;
 
     // Register status icon handlers
-    this.registerBinding(this.icon.checkCircle, 'kd-success', this.isInSuccessState);
-    this.registerBinding(this.icon.error, 'kd-error', this.isInErrorState);
+    this.registerBinding('kd-success', r => !r.suspend, Status.Running);
+    this.registerBinding('kd-muted', r => r.suspend, Status.Suspended);
 
     // Register action columns.
     this.registerActionColumn<MenuComponent>('menu', MenuComponent);
@@ -60,14 +61,6 @@ export class CronJobListComponent extends ResourceListWithStatuses<CronJobList, 
   map(cronJobList: CronJobList): CronJob[] {
     this.cumulativeMetrics = cronJobList.cumulativeMetrics;
     return cronJobList.items;
-  }
-
-  isInErrorState(resource: CronJob): boolean {
-    return resource.suspend;
-  }
-
-  isInSuccessState(resource: CronJob): boolean {
-    return !resource.suspend;
   }
 
   getDisplayColumns(): string[] {

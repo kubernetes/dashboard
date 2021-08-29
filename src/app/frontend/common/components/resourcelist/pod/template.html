@@ -45,7 +45,8 @@ limitations under the License.
       <ng-container matColumnDef="statusicon">
         <mat-header-cell *matHeaderCellDef></mat-header-cell>
         <mat-cell *matCellDef="let pod; let index=index">
-          <mat-icon [ngClass]="getStatus(pod).iconClass">
+          <mat-icon [ngClass]="getStatus(pod).iconClass"
+                    [matTooltip]="getStatus(pod).iconTooltip">
             <ng-container *ngIf="showHoverIcon(index, pod); else showStatus">
               remove_red_eye
             </ng-container>
@@ -164,10 +165,12 @@ limitations under the License.
                *matRowDef="let row; columns: ['statusDetail']; let index=index"></mat-row>
     </mat-table>
 
-    <mat-paginator [length]="totalItems"
-                   [pageSize]="itemsPerPage"
-                   [hidePageSize]="true"
-                   [showFirstLastButtons]="true"></mat-paginator>
+    <div [hidden]="totalItems <= itemsPerPage">
+      <mat-paginator [length]="totalItems"
+                     [pageSize]="itemsPerPage"
+                     hidePageSize
+                     showFirstLastButtons></mat-paginator>
+    </div>
   </div>
 
   <div content
