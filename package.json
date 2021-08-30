@@ -149,7 +149,7 @@
     "@types/node": "16.7.2",
     "codelyzer": "6.0.2",
     "concurrently": "6.2.1",
-    "cypress": "8.3.0",
+    "cypress": "8.3.1",
     "del": "6.0.0",
     "eslint": "7.32.0",
     "eslint-plugin-rxjs": "3.3.6",
