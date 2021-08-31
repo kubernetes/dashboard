@@ -15,7 +15,7 @@
 import {HttpClient, HttpErrorResponse} from '@angular/common/http';
 import {Component, Inject, NgZone, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import {ConfigService} from 'common/services/global/config';
+import {ConfigService} from '@common/services/global/config';
 
 import {AuthenticationMode, EnabledAuthenticationModes, LoginSkippableResponse, LoginSpec} from '@api/root.api';
 import {KdError} from '@api/root.shared';
