@@ -18,7 +18,7 @@
 import child from 'child_process';
 import gulp from 'gulp';
 import path from 'path';
-import conf from './conf';
+import conf from './conf.js';
 
 /**
  * Currently running backend process object. Null if the backend is not running.

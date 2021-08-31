@@ -82,8 +82,18 @@ limitations under the License.
       <ng-container *ngIf="shouldShowColumn('namespace')"
                     matColumnDef="namespace">
         <mat-header-cell *matHeaderCellDef
+                         class="kd-col-md"
                          i18n>Namespace</mat-header-cell>
-        <mat-cell *matCellDef="let replicaSet">{{replicaSet.objectMeta.namespace}}</mat-cell>
+        <mat-cell *matCellDef="let replicaSet"
+                  class="kd-col-md">{{replicaSet.objectMeta.namespace}}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="images">
+        <mat-header-cell *matHeaderCellDef
+                         i18n>Images</mat-header-cell>
+        <mat-cell *matCellDef="let replicaSet">
+          <kd-chips [map]="replicaSet.containerImages"></kd-chips>
+        </mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="labels">
@@ -96,8 +106,10 @@ limitations under the License.
 
       <ng-container matColumnDef="pods">
         <mat-header-cell *matHeaderCellDef
+                         class="kd-col-sm"
                          i18n>Pods</mat-header-cell>
-        <mat-cell *matCellDef="let replicaSet">
+        <mat-cell *matCellDef="let replicaSet"
+                  class="kd-col-sm">
           {{replicaSet.podInfo.running}} / {{replicaSet.podInfo.desired}}
         </mat-cell>
       </ng-container>
@@ -106,18 +118,12 @@ limitations under the License.
         <mat-header-cell *matHeaderCellDef
                          mat-sort-header
                          disableClear="true"
+                         class="kd-col-sm"
                          i18n>Created</mat-header-cell>
-        <mat-cell *matCellDef="let replicaSet">
+        <mat-cell *matCellDef="let replicaSet"
+                  class="kd-col-sm">
           <kd-date [date]="replicaSet.objectMeta.creationTimestamp"
                    relative></kd-date>
-        </mat-cell>
-      </ng-container>
-
-      <ng-container matColumnDef="images">
-        <mat-header-cell *matHeaderCellDef
-                         i18n>Images</mat-header-cell>
-        <mat-cell *matCellDef="let replicaSet">
-          <kd-chips [map]="replicaSet.containerImages"></kd-chips>
         </mat-cell>
       </ng-container>
 

@@ -16,7 +16,7 @@ import {Component, Input, OnChanges} from '@angular/core';
 import {ConfigMapKeyRef, Container, EnvVar, SecretKeyRef} from '@api/root.api';
 import {Status, StatusClass} from '@common/components/resourcelist/statuses';
 import {KdStateService} from '@common/services/global/state';
-import * as _ from 'lodash';
+import _ from 'lodash';
 
 @Component({
   selector: 'kd-container-card',

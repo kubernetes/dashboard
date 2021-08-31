@@ -15,7 +15,7 @@
 import {Component, Input, OnChanges, OnInit, SimpleChange} from '@angular/core';
 import {MatTableDataSource} from '@angular/material/table';
 import {IngressSpecRule, IngressSpecRuleHttpPath, IngressSpecTLS} from '@api/root.api';
-import * as _ from 'lodash';
+import _ from 'lodash';
 import {GlobalServicesModule} from '../../services/global/module';
 import {KdStateService} from '../../services/global/state';
 

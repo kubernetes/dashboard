@@ -79,8 +79,18 @@ limitations under the License.
       <ng-container *ngIf="shouldShowColumn('namespace')"
                     matColumnDef="namespace">
         <mat-header-cell *matHeaderCellDef
+                         class="kd-col-md"
                          i18n>Namespace</mat-header-cell>
-        <mat-cell *matCellDef="let ss">{{ss.objectMeta.namespace}}</mat-cell>
+        <mat-cell *matCellDef="let ss"
+                  class="kd-col-md">{{ss.objectMeta.namespace}}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="images">
+        <mat-header-cell *matHeaderCellDef
+                         i18n>Images</mat-header-cell>
+        <mat-cell *matCellDef="let ss">
+          <kd-chips [map]="ss.containerImages"></kd-chips>
+        </mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="labels">
@@ -93,8 +103,10 @@ limitations under the License.
 
       <ng-container matColumnDef="pods">
         <mat-header-cell *matHeaderCellDef
+                         class="kd-col-sm"
                          i18n>Pods</mat-header-cell>
-        <mat-cell *matCellDef="let ss">
+        <mat-cell *matCellDef="let ss"
+                  class="kd-col-sm">
           {{ss.podInfo.running}} / {{ss.podInfo.desired}}
         </mat-cell>
       </ng-container>
@@ -103,18 +115,12 @@ limitations under the License.
         <mat-header-cell *matHeaderCellDef
                          mat-sort-header
                          disableClear="true"
+                         class="kd-col-sm"
                          i18n>Created</mat-header-cell>
-        <mat-cell *matCellDef="let ss">
+        <mat-cell *matCellDef="let ss"
+                  class="kd-col-sm">
           <kd-date [date]="ss.objectMeta.creationTimestamp"
                    relative></kd-date>
-        </mat-cell>
-      </ng-container>
-
-      <ng-container matColumnDef="images">
-        <mat-header-cell *matHeaderCellDef
-                         i18n>Images</mat-header-cell>
-        <mat-cell *matCellDef="let ss">
-          <kd-chips [map]="ss.containerImages"></kd-chips>
         </mat-cell>
       </ng-container>
 

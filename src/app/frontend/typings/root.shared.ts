@@ -12,24 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-@import '../variables';
+export interface KdError {
+  status: string;
+  code: number;
+  message: string;
 
-.kd-login-mode-description {
-  padding: $baseline-grid (3.5 * $baseline-grid) (2 * $baseline-grid);
-}
-
-.kd-login-input {
-  padding: 0 (3.5 * $baseline-grid);
-}
-
-.kd-login-button {
-  margin: (4 * $baseline-grid) $baseline-grid $baseline-grid 0;
-}
-
-.kd-error-text {
-  text-align: left;
-}
-
-:host {
-  height: 100vh;
+  localize(): KdError;
 }

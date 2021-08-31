@@ -135,8 +135,31 @@ code {
   }
 }
 
+.mat-cell,
+.mat-header-cell {
+  &.kd-col-xs {
+    flex: 0 0 (5 * $baseline-grid);
+  }
+
+  &.kd-col-sm {
+    flex: 0 1 (10 * $baseline-grid);
+  }
+
+  &.kd-col-md {
+    flex: 0 1 (15 * $baseline-grid);
+  }
+
+  &.kd-col-gt {
+    flex: 0 1 (30 * $baseline-grid);
+  }
+
+  &.kd-col-auto {
+    flex: 1 1 auto;
+  }
+}
+
 .mat-column-statusicon {
-  flex: 0 0 ($baseline-grid * 5) !important;
+  flex: 0 0 ($baseline-grid * 5);
 
   .mat-icon {
     cursor: default;

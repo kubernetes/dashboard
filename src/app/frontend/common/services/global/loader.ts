@@ -12,22 +12,25 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-const tsJestPreset = require('jest-preset-angular/jest-preset').globals['ts-jest'];
+import {HttpClient} from '@angular/common/http';
+import {Injectable} from '@angular/core';
+import {AppConfig} from '@api/root.ui';
+import {tap} from 'rxjs/operators';
 
-module.exports = {
-  verbose: true,
-  preset: 'jest-preset-angular',
-  rootDir: '../src/app/frontend',
-  setupFilesAfterEnv: ["<rootDir>/test.base.ts"],
-  globals: {
-    "ts-jest": {
-      tsconfig: "aio/tsconfig.spec.json",
-    }
-  },
-  moduleNameMapper: {
-    "^@api/(.*)$": "<rootDir>/api/$1",
-    "^@common/(.*)$": "<rootDir>/common/$1",
-    "^@environments/(.*)$": "<rootDir>/environments/$1",
-    "^@root/(.*)$": "<rootDir>/$1"
-  },
-};
+@Injectable()
+export class LocalConfigLoaderService {
+  private appConfig_: AppConfig = {} as AppConfig;
+
+  constructor(private readonly http_: HttpClient) {}
+
+  get appConfig(): AppConfig {
+    return this.appConfig_;
+  }
+
+  init(): Promise<{}> {
+    return this.http_
+      .get('assets/config/config.json')
+      .pipe(tap(response => (this.appConfig_ = response as AppConfig)))
+      .toPromise();
+  }
+}

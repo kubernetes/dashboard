@@ -15,11 +15,11 @@
 import {HttpParams} from '@angular/common/http';
 import {ChangeDetectionStrategy, ChangeDetectorRef, Component, Input} from '@angular/core';
 import {CronJob, CronJobList, Metric} from '@api/root.api';
+import {ResourceListWithStatuses} from '@common/resources/list';
+import {NotificationsService} from '@common/services/global/notifications';
+import {EndpointManager, Resource} from '@common/services/resource/endpoint';
+import {NamespacedResourceService} from '@common/services/resource/resource';
 import {Observable} from 'rxjs';
-import {ResourceListWithStatuses} from '../../../resources/list';
-import {NotificationsService} from '../../../services/global/notifications';
-import {EndpointManager, Resource} from '../../../services/resource/endpoint';
-import {NamespacedResourceService} from '../../../services/resource/resource';
 import {MenuComponent} from '../../list/column/menu/component';
 import {ListGroupIdentifier, ListIdentifier} from '../groupids';
 import {Status} from '../statuses';
@@ -64,7 +64,7 @@ export class CronJobListComponent extends ResourceListWithStatuses<CronJobList, 
   }
 
   getDisplayColumns(): string[] {
-    return ['statusicon', 'name', 'labels', 'schedule', 'suspend', 'active', 'lastschedule', 'created'];
+    return ['statusicon', 'name', 'images', 'labels', 'schedule', 'suspend', 'active', 'lastschedule', 'created'];
   }
 
   private shouldShowNamespaceColumn_(): boolean {
