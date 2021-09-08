@@ -12,47 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-/**
- * @fileoverview Gulp tasks for compiling backend application.
- */
 import gulp from 'gulp';
 import lodash from 'lodash';
 import path from 'path';
 
 import conf from './conf.js';
-import goCommand from './gocommand.js';
-
-/**
- * Compiles backend application in development mode and places the binary in the serve
- * directory.
- */
-gulp.task('backend', gulp.series((doneFn) => {
-  goCommand(
-      [
-        'build',
-        // record version info into src/version/version.go
-        '-ldflags',
-        conf.recordVersionExpression,
-        // for debugging backend
-        '-gcflags="all=-N -l"',
-        '-o',
-        path.join(conf.paths.serve, conf.backend.binaryName),
-        conf.backend.mainPackageName,
-      ],
-      doneFn);
-}));
-
-/**
- * Compiles backend application in production mode for the current architecture and places the
- * binary in the dist directory.
- *
- * The production binary difference from development binary is only that it contains all
- * dependencies inside it and is targeted for a specific architecture.
- */
-gulp.task('backend:prod', gulp.series(() => {
-  let outputBinaryPath = path.join(conf.paths.dist, conf.backend.binaryName);
-  return backendProd([[outputBinaryPath, conf.arch.default]]);
-}));
 
 /**
  * Compiles backend application in production mode for all architectures and places the

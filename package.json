@@ -12,7 +12,6 @@
     "start:https": "concurrently \"npm run start:backend:https --kubernetes-dashboard:sidecar_host=$npm_package_config_sidecar_host\" \"npm run start:frontend:https --kubernetes-dashboard:bind_address=$npm_package_config_bind_address --kubernetes-dashboard:port=$npm_package_config_port\"",
     "start:frontend": "npm run postversion && ng serve --proxy-config aio/proxy.conf.json --host $npm_package_config_bind_address --port $npm_package_config_port",
     "start:frontend:https": "node aio/scripts/version.mjs && ng serve --proxy-config aio/https-proxy.conf.json --ssl --host $npm_package_config_bind_address --port $npm_package_config_port",
-    "start:backend": "KUBECONFIG=${KUBECONFIG:-$npm_package_config_kubeconfig}; gulp serve --kubeconfig $KUBECONFIG --sidecarServerHost $npm_package_config_sidecar_host",
     "start:backend:https": "KUBECONFIG=${KUBECONFIG:-$npm_package_config_kubeconfig}; gulp serve --kubeconfig $KUBECONFIG --autoGenerateCerts true --sidecarServerHost $npm_package_config_sidecar_host",
     "start:prod": "npm run build && ./$npm_package_config_dashboard_binary_path --kubeconfig $npm_package_config_kubeconfig --locale-config $npm_package_config_dashboard_locale_config --auto-generate-certificates --bind-address $npm_package_config_bind_address --sidecar-host $npm_package_config_sidecar_host --port $npm_package_config_port",
     "build": "./aio/scripts/build.sh",

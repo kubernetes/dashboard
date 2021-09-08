@@ -174,7 +174,6 @@ export default {
     distRoot: path.join(basePath, 'dist'),
     goTools: path.join(basePath, '.tools/go'),
     prodTmp: path.join(basePath, '.tmp/prod'),
-    serve: path.join(basePath, '.tmp/serve'),
     src: path.join(basePath, 'src'),
     tmp: path.join(basePath, '.tmp'),
   },
