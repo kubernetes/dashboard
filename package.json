@@ -179,7 +179,7 @@
     "source-map-explorer": "2.5.2",
     "stylelint": "13.13.1",
     "stylelint-config-standard": "22.0.0",
-    "stylelint-no-unsupported-browser-features": "5.0.1",
+    "stylelint-no-unsupported-browser-features": "5.0.2",
     "stylelint-order": "4.1.0",
     "tar": "6.1.11",
     "through2": "4.0.2",
