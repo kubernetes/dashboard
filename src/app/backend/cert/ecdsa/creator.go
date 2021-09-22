@@ -21,7 +21,6 @@ import (
 	"crypto/x509"
 	"crypto/x509/pkix"
 	"encoding/pem"
-	"io/ioutil"
 	"log"
 	"math/big"
 	"net"
@@ -90,10 +89,10 @@ func (self *ecdsaCreator) StoreCertificates(path string, key interface{}, certBy
 	if err != nil {
 		log.Fatalf("[ECDSAManager] Failed to marshal cert/key pair: %v", err)
 	}
-	if err := ioutil.WriteFile(path+string(os.PathSeparator)+self.GetCertFileName(), certPEM, os.FileMode(0644)); err != nil {
+	if err := os.WriteFile(path+string(os.PathSeparator)+self.GetCertFileName(), certPEM, os.FileMode(0644)); err != nil {
 		log.Fatalf("[ECDSAManager] Failed to open %s for writing: %s", self.GetCertFileName(), err)
 	}
-	if err := ioutil.WriteFile(path+string(os.PathSeparator)+self.GetKeyFileName(), keyPEM, os.FileMode(0600)); err != nil {
+	if err := os.WriteFile(path+string(os.PathSeparator)+self.GetKeyFileName(), keyPEM, os.FileMode(0600)); err != nil {
 		log.Fatalf("[ECDSAManager] Failed to open %s for writing: %s", self.GetKeyFileName(), err)
 	}
 }

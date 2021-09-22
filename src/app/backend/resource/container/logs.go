@@ -17,7 +17,6 @@ package container
 import (
 	"context"
 	"io"
-	"io/ioutil"
 
 	"github.com/kubernetes/dashboard/src/app/backend/resource/logs"
 	v1 "k8s.io/api/core/v1"
@@ -104,7 +103,7 @@ func readRawLogs(client kubernetes.Interface, namespace, podID string, logOption
 
 	defer readCloser.Close()
 
-	result, err := ioutil.ReadAll(readCloser)
+	result, err := io.ReadAll(readCloser)
 	if err != nil {
 		return "", err
 	}

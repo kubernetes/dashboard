@@ -16,7 +16,6 @@ package handler
 
 import (
 	"encoding/json"
-	"io/ioutil"
 	"net/http"
 	"os"
 	"path/filepath"
@@ -54,7 +53,7 @@ func CreateLocaleHandler() *LocaleHandler {
 
 func getSupportedLocales(configFile string) ([]language.Tag, error) {
 	// read config file
-	localesFile, err := ioutil.ReadFile(configFile)
+	localesFile, err := os.ReadFile(configFile)
 	if err != nil {
 		return []language.Tag{}, err
 	}
