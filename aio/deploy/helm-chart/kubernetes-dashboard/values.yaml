@@ -234,7 +234,7 @@ metricsScraper:
 #    - --logtostderr=true
 
 ## Optional Metrics Server sub-chart
-## Enable this is you don't already have metrics-server enabled on your cluster and
+## Enable this if you don't already have metrics-server enabled on your cluster and
 ## want to use it with dashboard metrics-scraper
 ## refs:
 ##  - https://hub.helm.sh/charts/stable/metrics-server
