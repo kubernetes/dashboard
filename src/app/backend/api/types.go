@@ -65,6 +65,34 @@ type ObjectMeta struct {
 	// don't ONLY use UUIDs, this is an alias to string.  Being a type captures
 	// intent and helps make sure that UIDs and names do not get conflated.
 	UID types.UID `json:"uid,omitempty"`
+
+	// List of objects depended by this object. If ALL objects in the list have
+	// been deleted, this object will be garbage collected. If this object is managed by a controller,
+	// then an entry in this list will point to this controller, with the controller field set to true.
+	// There cannot be more than one managing controller.
+	// +optional
+	OwnerReferences []OwnerReference `json:"ownerReferences,omitempty"`
+}
+
+type OwnerReference struct {
+	// Kind of the referent.
+	// More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+	Kind string `json:"kind"`
+	// Name of the referent.
+	// More info: http://kubernetes.io/docs/user-guide/identifiers#names
+	Name string `json:"name"`
+}
+
+func getOwnerRerefereces(k8SOwnerReferences []metaV1.OwnerReference) []OwnerReference {
+	ownerReferences := make([]OwnerReference, 0, len(k8SOwnerReferences))
+	for _, k8sOwnerReference := range k8SOwnerReferences {
+		myOwnerReferences := OwnerReference{
+			Kind: k8sOwnerReference.Kind,
+			Name: k8sOwnerReference.Name,
+		}
+		ownerReferences = append(ownerReferences, myOwnerReferences)
+	}
+	return ownerReferences
 }
 
 // TypeMeta describes an individual object in an API response or request with strings representing
@@ -99,6 +127,7 @@ func NewObjectMeta(k8SObjectMeta metaV1.ObjectMeta) ObjectMeta {
 		CreationTimestamp: k8SObjectMeta.CreationTimestamp,
 		Annotations:       k8SObjectMeta.Annotations,
 		UID:               k8SObjectMeta.UID,
+		OwnerReferences:   getOwnerRerefereces(k8SObjectMeta.OwnerReferences),
 	}
 }
 
