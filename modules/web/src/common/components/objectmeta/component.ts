@@ -14,6 +14,9 @@
 
 import {Component, Input} from '@angular/core';
 import {ObjectMeta} from '@api/root.api';
+import {GlobalServicesModule} from '../../services/global/module';
+import {KdStateService} from '../../services/global/state';
+import {Resource} from '@common/services/resource/endpoint';
 
 @Component({
   selector: 'kd-object-meta',
@@ -23,6 +26,8 @@ export class ObjectMetaComponent {
   @Input() initialized = false;
 
   private objectMeta_: ObjectMeta;
+  private readonly kdState_: KdStateService = GlobalServicesModule.injector.get(KdStateService);
+
   get objectMeta(): ObjectMeta {
     return this.objectMeta_;
   }
@@ -34,5 +39,13 @@ export class ObjectMetaComponent {
     } else {
       this.objectMeta_ = val;
     }
+  }
+
+  getObjectHref(kind: string, name: string): string {
+    if (!Object.values(Resource).includes(kind.toLowerCase() as Resource)) {
+      return '';
+    }
+
+    return this.kdState_.href(kind.toLowerCase(), name, this.objectMeta_.namespace);
   }
 }
