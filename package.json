@@ -148,7 +148,7 @@
     "@types/lodash": "4.14.175",
     "@types/node": "16.10.1",
     "codelyzer": "6.0.2",
-    "concurrently": "6.2.1",
+    "concurrently": "6.2.2",
     "cypress": "8.5.0",
     "del": "6.0.0",
     "eslint": "7.32.0",
