@@ -4,7 +4,7 @@
     ".cached_tools", ".git", ".github/ISSUE_TEMPLATE", ".tmp", "coverage", "cypress", ".idea",
     "aio/test-resources",
     "**/*.json", "**/*.yaml", "**/*.svg", "**/*.txt", "**/*.md", "**/OWNERS",
-    "**/.helmignore", "**/*.lock", "**/config_repos"
+    "**/.helmignore", "**/*.lock", "**/config_repos","**/.DS_Store"
   ],
   "license": "aio/scripts/license-header.txt",
   "defaultFormat": {
