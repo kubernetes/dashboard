@@ -31,3 +31,4 @@ function install_codegen() {
 }
 
 install_codegen
+go mod tidy
