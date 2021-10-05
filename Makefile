@@ -14,13 +14,12 @@ MAIN_PACKAGE = github.com/kubernetes/dashboard/src/app/backend
 KUBECONFIG ?= $(HOME)/.kube/config
 SIDECAR_HOST ?= http://localhost:8000
 TOKEN_TTL ?= 900
-TLS_CERT ?=
-TLS_KEY ?=
 AUTO_GENERATE_CERTS ?= false
 ENABLE_INSECURE_LOGIN ?= false
 ENABLE_SKIP_LOGIN ?= false
 SYSTEM_BANNER ?=
 SYSTEM_BANNER_SEVERITY ?=
+PROD_BINARY = dist/amd64/dashboard
 SERVE_BINARY = .tmp/serve/dashboard
 SERVE_PID = .tmp/serve/dashboard.pid
 RELEASE_IMAGE = kubernetesui/dashboard
@@ -77,8 +76,6 @@ serve-backend: build-backend
 		--system-banner=$(SYSTEM_BANNER) \
 		--system-banner-severity=$(SYSTEM_BANNER_SEVERITY) \
 		--token-ttl=$(TOKEN_TTL) \
-		--tls-cert-file=$(TLS_CERT) \
-		--tls-key-file=$(TLS_KEY) \
 		--auto-generate-certificates=$(AUTO_GENERATE_CERTS) \
 		--enable-insecure-login=$(ENABLE_INSECURE_LOGIN) \
 		--enable-skip-login=$(ENABLE_SKIP_LOGIN) & echo $$! > $(SERVE_PID)
@@ -94,6 +91,19 @@ restart-backend: kill-backend serve-backend
 .PHONY: watch-backend
 watch-backend: validate-fswatch restart-backend
 	fswatch -o -r -e '.*' -i '\.go$$'  . | xargs -n1 -I{} make restart-backend || make kill-backend
+
+.PHONY: prod-backend
+prod-backend: clean validate-go
+	go build -a -installsuffix cgo -ldflags "-X $(MAIN_PACKAGE)/client.Version=$(RELEASE_VERSION)" -o $(PROD_BINARY) $(MAIN_PACKAGE)
+
+.PHONY: prod
+prod: build
+	$(PROD_BINARY) --kubeconfig=$(KUBECONFIG) \
+		--sidecar-host=$(SIDECAR_HOST) \
+		--auto-generate-certificates \
+		--locale-config=dist/amd64/locale_conf.json \
+		--bind-address=127.0.0.1 \
+		--port=8080
 
 .PHONY: test-backend
 test-backend: validate-go

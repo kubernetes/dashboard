@@ -13,7 +13,6 @@
 // limitations under the License.
 
 import gulp from 'gulp';
-import conf from './conf.js';
 
 /**
  * Processes the Docker file and places it in the dist folder for all architectures.

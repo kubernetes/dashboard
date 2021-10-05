@@ -50,7 +50,7 @@ function build::frontend {
 
 function build::backend {
   say "\nBuilding backend"
-  ${GULP_BIN} backend:prod
+  make prod-backend
 }
 
 function build::backend::cross {
@@ -113,7 +113,7 @@ START=$(date +%s)
 parse::args "$@"
 clean
 
-npm run postversion
+npm run version
 
 if [ "${FRONTEND_ONLY}" = true ] ; then
   build::frontend
