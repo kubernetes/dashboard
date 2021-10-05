@@ -63,7 +63,7 @@ build-backend: clean validate-go
 	go build -ldflags "-X $(MAIN_PACKAGE)/client.Version=$(RELEASE_VERSION)" -gcflags="all=-N -l" -o $(SERVE_BINARY) $(MAIN_PACKAGE)
 
 .PHONY: build
-build-cross: clean validate
+build: clean validate
 	./aio/scripts/build.sh
 
 .PHONY: build-cross
@@ -117,6 +117,21 @@ coverage-frontend:
 
 .PHONY: coverage
 coverage: coverage-backend coverage-frontend
+
+.PHONY: start-cluster
+start-cluster:
+	./aio/scripts/start-cluster.sh
+
+.PHONY: stop-cluster
+stop-cluster:
+	./aio/scripts/stop-cluster.sh
+
+.PHONY: e2e
+e2e: start-cluster
+	npm start
+	$(shell while ! echo exit | nc -z localhost 8080 </dev/null; do sleep 10; done)
+	npx cypress run
+	make stop-cluster
 
 .PHONY: docker-build-release
 docker-build-release: build-cross
