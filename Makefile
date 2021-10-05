@@ -96,6 +96,12 @@ watch-backend: validate-fswatch restart-backend
 prod-backend: clean validate-go
 	go build -a -installsuffix cgo -ldflags "-X $(MAIN_PACKAGE)/client.Version=$(RELEASE_VERSION)" -o $(PROD_BINARY) $(MAIN_PACKAGE)
 
+.PHONY: prod-backend-cross
+prod-backend-cross: clean validate-go
+	for ARCH in $(ARCHITECTURES) ; do \
+  	GOOS=linux GOARCH=$$ARCH go build -a -installsuffix cgo -ldflags "-X $(MAIN_PACKAGE)/client.Version=$(RELEASE_VERSION)" -o dist/$$ARCH/dashboard $(MAIN_PACKAGE) ; \
+  done
+
 .PHONY: prod
 prod: build
 	$(PROD_BINARY) --kubeconfig=$(KUBECONFIG) \

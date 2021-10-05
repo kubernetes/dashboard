@@ -12,7 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import gulp from 'gulp';
 
 /**
  * Processes the Docker file and places it in the dist folder for all architectures.
