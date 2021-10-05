@@ -13,6 +13,14 @@ MIN_GO_MINOR_VERSION = 17
 MAIN_PACKAGE = github.com/kubernetes/dashboard/src/app/backend
 KUBECONFIG ?= $(HOME)/.kube/config
 SIDECAR_HOST ?= http://localhost:8000
+TOKEN_TTL ?= 900
+TLS_CERT ?=
+TLS_KEY ?=
+AUTO_GENERATE_CERTS ?= false
+ENABLE_INSECURE_LOGIN ?= false
+ENABLE_SKIP_LOGIN ?= false
+SYSTEM_BANNER ?=
+SYSTEM_BANNER_SEVERITY ?=
 SERVE_BINARY = .tmp/serve/dashboard
 SERVE_PID = .tmp/serve/dashboard.pid
 RELEASE_IMAGE = kubernetesui/dashboard
@@ -48,11 +56,15 @@ validate: validate-go
 
 .PHONY: clean
 clean:
-	rm -rf .go_workspace .tmp coverage dist npm-debug.log
+	rm -rf .tmp
 
 .PHONY: build-backend
 build-backend: clean validate-go
 	go build -ldflags "-X $(MAIN_PACKAGE)/client.Version=$(RELEASE_VERSION)" -gcflags="all=-N -l" -o $(SERVE_BINARY) $(MAIN_PACKAGE)
+
+.PHONY: build
+build-cross: clean validate
+	./aio/scripts/build.sh
 
 .PHONY: build-cross
 build-cross: clean validate
@@ -60,11 +72,20 @@ build-cross: clean validate
 
 .PHONY: serve-backend
 serve-backend: build-backend
-	$(SERVE_BINARY) --kubeconfig $(KUBECONFIG) --sidecar-host $(SIDECAR_HOST) & echo $$! > $(SERVE_PID)
+	$(SERVE_BINARY) --kubeconfig=$(KUBECONFIG) \
+		--sidecar-host=$(SIDECAR_HOST) \
+		--system-banner=$(SYSTEM_BANNER) \
+		--system-banner-severity=$(SYSTEM_BANNER_SEVERITY) \
+		--token-ttl=$(TOKEN_TTL) \
+		--tls-cert-file=$(TLS_CERT) \
+		--tls-key-file=$(TLS_KEY) \
+		--auto-generate-certificates=$(AUTO_GENERATE_CERTS) \
+		--enable-insecure-login=$(ENABLE_INSECURE_LOGIN) \
+		--enable-skip-login=$(ENABLE_SKIP_LOGIN) & echo $$! > $(SERVE_PID)
 
 .PHONY: kill-backend
 kill-backend:
-	@kill `cat $(SERVE_PID)` || true
+	kill `cat $(SERVE_PID)` || true
 	rm -rf $(SERVE_PID)
 
 .PHONY: restart-backend
@@ -72,7 +93,7 @@ restart-backend: kill-backend serve-backend
 
 .PHONY: watch-backend
 watch-backend: validate-fswatch restart-backend
-	@fswatch -o -r -e '.*' -i '\.go$$'  . | xargs -n1 -I{} make restart-backend || make kill-backend
+	fswatch -o -r -e '.*' -i '\.go$$'  . | xargs -n1 -I{} make restart-backend || make kill-backend
 
 .PHONY: test-backend
 test-backend: validate-go

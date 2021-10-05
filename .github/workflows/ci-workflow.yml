@@ -129,14 +129,12 @@ jobs:
         run: make coverage-frontend
 
       - name: Run Backend Unit Tests
-        run: |
-          export GOPATH=$(go env GOPATH)/bin
-          make backend-frontend
+        run: make coverage-backend
 
       - name: Cleanup & Upload Coverage
         shell: bash
         run: |
-          rm -rf .tmp
+          make clean
           bash <(curl -s https://codecov.io/bash) -c -K || echo "Codecov upload failed"
 
   e2e:
