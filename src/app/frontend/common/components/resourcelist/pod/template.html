@@ -120,10 +120,10 @@ limitations under the License.
       <ng-container matColumnDef="status">
         <mat-header-cell *matHeaderCellDef
                          mat-sort-header
-                         class="kd-col-gt"
+                         class="kd-col-md"
                          i18n>Status</mat-header-cell>
         <mat-cell *matCellDef="let pod"
-                  class="kd-col-gt">{{getDisplayStatus(pod)}}</mat-cell>
+                  class="kd-col-md">{{getDisplayStatus(pod)}}</mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="restarts">

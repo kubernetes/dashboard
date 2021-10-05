@@ -6091,7 +6091,7 @@
       <trans-unit id="2373297655012668535" datatype="html">
         <source> Global settings are stored in config map, so all of them are applied for every instance of the app. </source>
         <target>
-        Les paramètres généraux sont enregistrés dans une config map, ils sont donc utilisés pour 
+        Les paramètres généraux sont enregistrés dans une config map, ils sont donc utilisés pour
         toutes les instances de l'application.
     </target>
         <context-group purpose="location">
