@@ -17,6 +17,7 @@
     "test": "jest --config aio/jest.config.js",
     "test:coverage": "jest --config aio/jest.config.js --coverage -i",
     "test:watch": "jest --config aio/jest.config.js --watch",
+    "e2e": "concurrently -kill-others --success first \"npm run start\" \"wait-on http://localhost:8080 && npm run npx cypress run\"",
     "check": "concurrently \"npm run check:backend\" \"npm run check:codegen\" \"npm run check:frontend\" \"npm run check:i18n\"",
     "check:backend": "golangci-lint run -c .golangci.yml ./src/app/backend/...",
     "check:codegen": "aio/scripts/verify-codegen.sh",

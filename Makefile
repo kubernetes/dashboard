@@ -128,9 +128,7 @@ stop-cluster:
 
 .PHONY: e2e
 e2e: start-cluster
-	npm start
-	$(shell while ! echo exit | nc -z localhost 8080 </dev/null; do sleep 10; done)
-	npx cypress run
+	npm run e2e
 	make stop-cluster
 
 .PHONY: docker-build-release
