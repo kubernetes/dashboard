@@ -14,7 +14,7 @@
 
 apiVersion: v2
 name: kubernetes-dashboard
-version: 5.0.1
+version: 5.0.2
 appVersion: 2.3.1
 description: General-purpose web UI for Kubernetes clusters
 keywords:
@@ -30,6 +30,6 @@ icon: https://raw.githubusercontent.com/kubernetes/kubernetes/master/logo/logo.s
 kubeVersion: ">=1.19.0-0"
 dependencies:
 - name: metrics-server
-  version: 2.11.1
-  repository: https://charts.helm.sh/stable/
+  version: 3.5.0
+  repository: https://kubernetes-sigs.github.io/metrics-server/
   condition: metrics-server.enabled
