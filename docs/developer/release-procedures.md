@@ -21,7 +21,7 @@ Official release procedures are done by CI after successful TAG build automatica
 
 ### Versioning guidelines
 
-Kubernetes Dashboard versioning follows [semver](http://semver.org/) in spirit. This means that it uses `vMAJOR.MINOR.PATCH` version numbers, but uses UX and consumer-centric approach for incrementing version numbers.
+Kubernetes Dashboard versioning follows [semver](https://semver.org/) in spirit. This means that it uses `vMAJOR.MINOR.PATCH` version numbers, but uses UX and consumer-centric approach for incrementing version numbers.
 
 1. Increment MAJOR when there are breaking changes that affect user's workflows or the UX gets major redesign.
 2. Increment MINOR when new functionality is added or there are minor UX changes.
