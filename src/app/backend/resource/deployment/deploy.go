@@ -189,7 +189,7 @@ func DeployApp(spec *AppDeploymentSpec, client client.Interface) error {
 		containerSpec.Command = []string{*spec.ContainerCommand}
 	}
 	if spec.ContainerCommandArgs != nil {
-		containerSpec.Args = []string{*spec.ContainerCommandArgs}
+		containerSpec.Args = strings.Fields(*spec.ContainerCommandArgs)
 	}
 
 	if spec.CpuRequirement != nil {
