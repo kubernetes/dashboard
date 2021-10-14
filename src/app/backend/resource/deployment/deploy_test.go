@@ -17,6 +17,7 @@ package deployment
 import (
 	"reflect"
 	"regexp"
+	"strings"
 	"testing"
 
 	apps "k8s.io/api/apps/v1"
@@ -90,7 +91,7 @@ func TestDeployApp(t *testing.T) {
 
 func TestDeployAppContainerCommands(t *testing.T) {
 	command := "foo-command"
-	commandArgs := "foo-command-args"
+	commandArgs := "foo-command-args1 foo-command-args2"
 	spec := &AppDeploymentSpec{
 		Namespace:            "foo-namespace",
 		Name:                 "foo-name",
@@ -109,9 +110,13 @@ func TestDeployAppContainerCommands(t *testing.T) {
 			command, container.Command)
 	}
 
-	if container.Args[0] != commandArgs {
-		t.Errorf("Expected command args to be %#v but got %#v",
-			commandArgs, container.Args)
+	if container.Args[0] != strings.Fields(commandArgs)[0] {
+		t.Errorf("Expected command args 1st argument to be %#v but got %#v",
+			strings.Fields(commandArgs)[0], container.Args[0])
+	}
+	if container.Args[1] != strings.Fields(commandArgs)[1] {
+		t.Errorf("Expected command args 2nd argument to be %#v but got %#v",
+			strings.Fields(commandArgs)[1], container.Args[1])
 	}
 }
 
