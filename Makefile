@@ -134,6 +134,37 @@ coverage-frontend:
 .PHONY: coverage
 coverage: coverage-backend coverage-frontend
 
+.PHONY: check-i18n
+check-i18n:
+	./aio/scripts/pre-commit-i18n.sh
+
+.PHONY: check-license
+check-license:
+	license-check-and-add check -f license-checker-config.json
+
+.PHONY: check-codegen
+check-codegen:
+	./aio/scripts/verify-codegen.sh
+
+.PHONY: check-go
+check-go:
+	golangci-lint run -c .golangci.yml ./src/app/backend/...
+
+.PHONY: check-html
+check-html:
+	./aio/scripts/format-html.sh --check
+
+.PHONY: check-scss
+check-scss:
+	stylelint "src/**/*.scss"
+
+.PHONY: check-ts
+check-ts:
+	gts lint
+
+.PHONY: check
+check: check-i18n check-license check-go check-codegen check-html check-scss check-ts
+
 .PHONY: start-cluster
 start-cluster:
 	./aio/scripts/start-cluster.sh
