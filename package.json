@@ -183,7 +183,7 @@
     "stylelint-order": "4.1.0",
     "tar": "6.1.11",
     "through2": "4.0.2",
-    "ts-jest": "27.0.5",
+    "ts-jest": "27.0.6",
     "ts-loader": "9.2.6",
     "ts-node": "10.3.0",
     "typescript": "4.3.5",
