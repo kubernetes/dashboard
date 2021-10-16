@@ -133,7 +133,7 @@ export class LoginComponent implements OnInit {
         this.onFileLoad_(event as KdFile);
         break;
       case LoginModes.Token:
-        this.token_ = (event.target as HTMLInputElement).value;
+        this.token_ = (event.target as HTMLInputElement).value.trim();
         break;
       case LoginModes.Basic:
         if ((event.target as HTMLInputElement).id === 'username') {
@@ -147,7 +147,7 @@ export class LoginComponent implements OnInit {
   }
 
   private hasEmptyToken_(): boolean {
-    return this.selectedAuthenticationMode === LoginModes.Token && (!this.token_ || !this.token_.trim());
+    return this.selectedAuthenticationMode === LoginModes.Token && (!this.token_);
   }
 
   private saveLastLoginMode_(): void {
