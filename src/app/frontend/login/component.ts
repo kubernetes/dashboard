@@ -147,7 +147,7 @@ export class LoginComponent implements OnInit {
   }
 
   private hasEmptyToken_(): boolean {
-    return this.selectedAuthenticationMode === LoginModes.Token && (!this.token_);
+    return this.selectedAuthenticationMode === LoginModes.Token && !this.token_;
   }
 
   private saveLastLoginMode_(): void {
