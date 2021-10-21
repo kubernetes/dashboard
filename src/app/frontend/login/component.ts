@@ -18,7 +18,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {AuthenticationMode, EnabledAuthenticationModes, LoginSkippableResponse, LoginSpec} from '@api/root.api';
 import {KdError} from '@api/root.shared';
 import {IConfig, KdFile, StateError} from '@api/root.ui';
-import {AsKdError, K8SError} from '@common/errors/errors';
+import {AsKdError, ErrorCode, ErrorStatus, K8SError} from '@common/errors/errors';
 import {AuthService} from '@common/services/global/authentication';
 import {HistoryService} from '@common/services/global/history';
 import {PluginsConfigService} from '@common/services/global/plugin';
@@ -97,8 +97,8 @@ export class LoginComponent implements OnInit {
     if (this.hasEmptyToken_()) {
       this.errors = [
         {
-          status: 'Bad Request',
-          code: 400,
+          code: ErrorCode.badRequest,
+          status: ErrorStatus.badRequest,
           message: 'Empty token provided',
         } as KdError,
       ];
@@ -172,8 +172,8 @@ export class LoginComponent implements OnInit {
     } catch (e) {
       this.errors = [
         {
-          code: 400,
-          status: 'Bad Request',
+          code: ErrorCode.badRequest,
+          status: ErrorStatus.badRequest,
           message: 'Invalid token provided',
         } as KdError,
       ];
