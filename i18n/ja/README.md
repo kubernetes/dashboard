@@ -63,7 +63,7 @@ Kubernetes Dashboard の和訳を実施するにあたって、下記の配慮�
 * 「～ください」のかな漢字表記は、「○○を下さい」と「○○してください」のように使用します。
   + (例) ○ ボタンを押下してください
   + (例) × ボタンを押下ください
-  + [参考](http://www.koho.or.jp/useful/qa/hyouki/hyouki06.html)
+  + [参考](https://www.koho.or.jp/useful/qa/hyouki/hyouki06.html)
 * 「〜なし」「〜のため」「〜すること」もひらがなで記載します。「〜無し」「〜の為」「〜する事」などは避けます。
 
 #### Dashboard 特有
