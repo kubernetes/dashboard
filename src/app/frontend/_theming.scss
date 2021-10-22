@@ -12,6 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+@use 'sass:map';
+@use 'sass:color';
 @use '~@angular/material/theming';
 @use 'variables' as *;
 
@@ -82,7 +84,7 @@
   }
 
   .kd-bg-success-light {
-    background-color: colors.adjust(map.get($colors, indicator-success), $lightness: 60%);
+    background-color: color.adjust(map.get($colors, indicator-success), $lightness: 60%);
   }
 
   .kd-warning {
@@ -94,7 +96,7 @@
   }
 
   .kd-bg-warning-light {
-    background-color: colors.adjust(map.get($colors, indicator-warning), $lightness: 20%);
+    background-color: color.adjust(map.get($colors, indicator-warning), $lightness: 20%);
   }
 
   .kd-error {
@@ -106,7 +108,7 @@
   }
 
   .kd-bg-error-light {
-    background-color: colors.adjust(map.get($colors, indicator-error), $lightness: 33%);
+    background-color: color.adjust(map.get($colors, indicator-error), $lightness: 33%);
   }
 
   .kd-help {
@@ -322,8 +324,8 @@
 
   kd-logs {
     .kd-card-content {
-      border-bottom: 1px solid colors.adjust(map.get($colors, log-viewer-bg), $lightness: 75%);
-      border-top: 1px solid colors.adjust(map.get($colors, log-viewer-bg), $lightness: 75%);
+      border-bottom: 1px solid color.adjust(map.get($colors, log-viewer-bg), $lightness: 75%);
+      border-top: 1px solid color.adjust(map.get($colors, log-viewer-bg), $lightness: 75%);
     }
 
     .kd-log-line-container {
@@ -335,7 +337,7 @@
       }
 
       &.kd-logs-text-color-invert {
-        filter: color.invert(100%);
+        filter: color.invert(map.get($colors, log-viewer-text), 100%);
       }
     }
   }

@@ -12,6 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+@use 'sass:map';
 @use './variables' as *;
 @use './mixins' as *;
 @import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
