@@ -12,6 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+@use 'sass:math';
 @use '../variables' as *;
 @use '../mixins' as *;
 
@@ -45,7 +46,10 @@
 kd-card {
   display: flex;
   max-height: 100%;
-  min-height: 100%;
+
+  /* stylelint-disable scss/no-global-function-names */
+  min-height: max(100%, 550px);
+  /* stylelint-enable scss/no-global-function-names */
 }
 
 .footer {
