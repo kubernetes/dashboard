@@ -26,12 +26,14 @@ export enum ErrorStatus {
   forbidden = 'Forbidden',
   internal = 'Internal error',
   unknown = 'Unknown error',
+  badRequest = 'Bad Request',
 }
 
 export enum ErrorCode {
   unauthorized = 401,
   forbidden = 403,
   internal = 500,
+  badRequest = 400,
 }
 
 const localizedErrors: {[key: string]: string} = {
