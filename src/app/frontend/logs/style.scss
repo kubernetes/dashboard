@@ -45,7 +45,7 @@
 kd-card {
   display: flex;
   max-height: 100%;
-  min-height: max(100%, 550px);
+  min-height: math.max(100%, 550px);
 }
 
 .footer {

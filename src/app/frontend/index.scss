@@ -14,7 +14,6 @@
 
 @use './variables' as *;
 @use './mixins' as *;
-
 @import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
 @import './dark';
 @import './light';
@@ -41,7 +40,7 @@ button {
 
 code {
   font-family: $font-family-monospace;
-  padding: .25 * $baseline-grid;
+  padding: 0.25 * $baseline-grid;
 }
 
 * {
@@ -79,7 +78,8 @@ code {
   height: fit-content;
   line-height: $body-font-size-base;
   min-height: unset;
-  padding: ($baseline-grid * .75) ($baseline-grid * 1.25);
+  padding: ($baseline-grid * 0.75) ($baseline-grid * 1.25);
+
   transition: none !important;
   word-break: break-all !important;
 
@@ -95,6 +95,7 @@ code {
 .mat-header-row,
 .mat-row {
   min-height: (5 * $baseline-grid) !important;
+
   padding: 0 (2 * $baseline-grid) !important;
 
   // Remove margin and padding on detail rows/cells
@@ -110,7 +111,7 @@ code {
 
 .mat-header-cell {
   font-size: $body-font-size-base;
-  padding: 0 ($baseline-grid * .5);
+  padding: 0 ($baseline-grid * 0.5);
 
   &:first-child,
   &:last-child {
@@ -119,11 +120,11 @@ code {
 }
 
 .mat-cell {
-  margin: (.5 * $baseline-grid) 0 !important;
+  margin: (0.5 * $baseline-grid) 0 !important;
 
   &:not(:first-child) {
     &:not(:last-child) {
-      padding: 0 ($baseline-grid * .5);
+      padding: 0 ($baseline-grid * 0.5);
     }
   }
 
@@ -161,7 +162,7 @@ code {
   .mat-icon {
     cursor: default;
     font-size: 2.5 * $baseline-grid;
-    margin-top: .66 * $baseline-grid;
+    margin-top: 0.66 * $baseline-grid;
   }
 }
 
@@ -198,7 +199,7 @@ router-outlet::after {
 ////////////////////////////////////////////
 
 .kd-equivalent-block {
-  border-radius: $baseline-grid * .25;
+  border-radius: $baseline-grid * 0.25;
   font-size: $body-font-size-base;
   margin: (1.5 * $baseline-grid) 0;
   padding: $baseline-grid;
@@ -212,16 +213,16 @@ router-outlet::after {
 
 .kd-dialog-text {
   font-family: $font-family-sans;
-  padding-bottom: .5 * $baseline-grid;
+  padding-bottom: 0.5 * $baseline-grid;
   padding-top: 0;
 }
 
 .kd-toolbar-action {
-  margin: 0 (.75 * $baseline-grid) !important;
+  margin: 0 (0.75 * $baseline-grid) !important;
 }
 
 .kd-code-block {
-  border-radius: $baseline-grid * .25;
+  border-radius: $baseline-grid * 0.25;
   display: block;
   font-family: $font-family-monospace;
   font-size: $body-font-size-base;
@@ -255,8 +256,8 @@ router-outlet::after {
 }
 
 .kd-card-top-radius {
-  border-top-left-radius: .25 * $baseline-grid;
-  border-top-right-radius: .25 * $baseline-grid;
+  border-top-left-radius: 0.25 * $baseline-grid;
+  border-top-right-radius: 0.25 * $baseline-grid;
 }
 
 .kd-bold {
@@ -332,7 +333,7 @@ router-outlet::after {
   font-weight: $regular-font-weight;
   height: fit-content;
   line-height: $body-font-size-base;
-  padding: ($baseline-grid * .75) ($baseline-grid * 1.75);
+  padding: ($baseline-grid * 0.75) ($baseline-grid * 1.75);
 }
 
 .kd-on-top {
@@ -355,7 +356,7 @@ router-outlet::after {
 
 .kd-sparkline {
   height: 4 * $baseline-grid;
-  vertical-align: -$baseline-grid * .5; // 20% below baseline, to flow with text
+  vertical-align: -$baseline-grid * 0.5; // 20% below baseline, to flow with text
   width: 15 * $baseline-grid;
 }
 
@@ -428,7 +429,7 @@ kd-logs {
     width: auto;
 
     .mat-form-field-underline {
-      margin-top: .25 * $baseline-grid;
+      margin-top: 0.25 * $baseline-grid;
       position: initial;
     }
 

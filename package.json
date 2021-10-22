@@ -178,7 +178,7 @@
     "semver": "7.3.5",
     "source-map-explorer": "2.5.2",
     "stylelint": "14.0.0",
-    "stylelint-config-standard": "23.0.0",
+    "stylelint-config-standard-scss": "2.0.0",
     "stylelint-no-unsupported-browser-features": "5.0.2",
     "stylelint-order": "5.0.0",
     "tar": "6.1.11",
@@ -256,17 +256,16 @@
     "src/app/frontend/common/services/global/history.ts"
   ],
   "stylelint": {
-    "extends": "stylelint-config-standard",
+    "extends": [
+      "stylelint-config-standard-scss"
+    ],
     "plugins": [
       "stylelint-no-unsupported-browser-features",
       "stylelint-order"
     ],
     "rules": {
-      "at-rule-no-unknown": null,
-      "font-family-no-missing-generic-family-keyword": null,
-      "no-invalid-position-at-import-rule": null,
+      "alpha-value-notation": "number",
       "no-descending-specificity": null,
-      "number-leading-zero": null,
       "order/order": [
         "dollar-variables",
         {
@@ -293,8 +292,9 @@
           "severity": "warning"
         }
       ],
+      "scss/comment-no-empty": null,
       "selector-pseudo-element-no-unknown": null,
-      "selector-type-no-unknown": null
+      "string-quotes": "single"
     }
   },
   "browserslist": [
