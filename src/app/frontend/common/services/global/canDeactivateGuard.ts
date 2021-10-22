@@ -12,23 +12,19 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {NgModule} from '@angular/core';
-import {Route, RouterModule} from '@angular/router';
-import {CanDeactivateGuard} from '@common/services/global/canDeactivateGuard';
+import {Injectable} from '@angular/core';
+import {CanDeactivate} from '@angular/router';
+import {ComponentCanDeactivate} from '../../components/can-deactivate/component-can-deactivate';
 
-import {CreateComponent} from './component';
-
-const CREATE_ROUTE: Route = {
-  path: '',
-  component: CreateComponent,
-  data: {
-    breadcrumb: 'Create',
-  },
-  canDeactivate: [CanDeactivateGuard],
-};
-
-@NgModule({
-  imports: [RouterModule.forChild([CREATE_ROUTE])],
-  exports: [RouterModule],
-})
-export class CreateRoutingModule {}
+@Injectable()
+export class CanDeactivateGuard implements CanDeactivate<ComponentCanDeactivate> {
+  canDeactivate(component: ComponentCanDeactivate): boolean {
+    if (!component.canDeactivate()) {
+      if (confirm('You have unsaved changes! If you leave, your changes will be lost.')) {
+        return true;
+      }
+      return false;
+    }
+    return true;
+  }
+}
