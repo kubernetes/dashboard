@@ -29,6 +29,10 @@ export class CreateComponent extends ComponentCanDeactivate {
   @ViewChild(CreateFromFormComponent) fromForm: CreateFromFormComponent;
 
   canDeactivate(): boolean {
-    return this.fromInput.isCreateDisabled() && this.fromFile.isCreateDisabled() && this.fromForm.hasUnsavedChanges();
+    return (
+      (this.fromInput.isCreateDisabled() || this.fromInput.submitted) &&
+      (this.fromFile.isCreateDisabled() || this.fromFile.submitted) &&
+      (!this.fromForm.hasUnsavedChanges() || this.fromForm.submitted)
+    );
   }
 }

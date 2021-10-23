@@ -55,6 +55,7 @@ export class CreateFromFormComponent implements OnInit {
   secrets: string[];
   isExternal = false;
   labelArr: DeployLabel[] = [];
+  submitted = false;
 
   form: FormGroup;
 
@@ -102,6 +103,7 @@ export class CreateFromFormComponent implements OnInit {
           ? this.route_.snapshot.params.namespace || this.namespaces[0]
           : this.namespaces[0]
       );
+      this.form.markAsPristine();
     });
     this.http_
       .get('api/v1/appdeployment/protocols')
@@ -173,7 +175,7 @@ export class CreateFromFormComponent implements OnInit {
   }
 
   hasUnsavedChanges(): boolean {
-    return !this.form.dirty;
+    return this.form.dirty;
   }
 
   isCreateDisabled(): boolean {
@@ -276,7 +278,8 @@ export class CreateFromFormComponent implements OnInit {
     });
   }
 
-  deploy(): void {
+  async deploy(): Promise<void> {
+    this.submitted = true;
     const portMappings = this.portMappings.value.portMappings || [];
     const variables = this.variables.value.variables || [];
     const labels = this.labels.value.labels || [];
@@ -297,6 +300,10 @@ export class CreateFromFormComponent implements OnInit {
       labels: this.toBackendApiLabels(labels),
       runAsPrivileged: this.runAsPrivileged.value,
     };
-    this.create_.deploy(spec);
+    try {
+      await this.create_.deploy(spec);
+    } catch (e) {
+      this.submitted = false;
+    }
   }
 }

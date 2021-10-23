@@ -25,6 +25,7 @@ import {NamespaceService} from '@common/services/global/namespace';
 })
 export class CreateFromInputComponent {
   inputData = '';
+  submitted = false;
 
   constructor(
     private readonly namespace_: NamespaceService,
@@ -36,8 +37,13 @@ export class CreateFromInputComponent {
     return !this.inputData || this.inputData.length === 0 || this.create_.isDeployDisabled();
   }
 
-  create(): void {
-    this.create_.createContent(this.inputData);
+  async create(): Promise<void> {
+    this.submitted = true;
+    try {
+      await this.create_.createContent(this.inputData);
+    } catch (e) {
+      this.submitted = false;
+    }
   }
 
   cancel(): void {

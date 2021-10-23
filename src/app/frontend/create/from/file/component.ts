@@ -28,6 +28,7 @@ import {NamespaceService} from '@common/services/global/namespace';
 export class CreateFromFileComponent {
   @ViewChild(NgForm, {static: true}) private readonly ngForm: NgForm;
   file: KdFile;
+  submitted = false;
 
   constructor(
     private readonly namespace_: NamespaceService,
@@ -39,8 +40,13 @@ export class CreateFromFileComponent {
     return !this.file || this.file.content.length === 0 || this.create_.isDeployDisabled();
   }
 
-  create(): void {
-    this.create_.createContent(this.file.content, true, this.file.name);
+  async create(): Promise<void> {
+    this.submitted = true;
+    try {
+      await this.create_.createContent(this.file.content, true, this.file.name);
+    } catch (e) {
+      this.submitted = false;
+    }
   }
 
   onFileLoad(file: KdFile): void {
