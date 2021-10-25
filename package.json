@@ -89,18 +89,18 @@
     "beautifyOutput": true
   },
   "dependencies": {
-    "@angular/animations": "12.2.10",
-    "@angular/cdk": "12.2.10",
-    "@angular/common": "12.2.10",
-    "@angular/compiler": "12.2.10",
-    "@angular/core": "12.2.10",
+    "@angular/animations": "12.2.11",
+    "@angular/cdk": "12.2.11",
+    "@angular/common": "12.2.11",
+    "@angular/compiler": "12.2.11",
+    "@angular/core": "12.2.11",
     "@angular/flex-layout": "12.0.0-beta.35",
-    "@angular/forms": "12.2.10",
-    "@angular/localize": "12.2.10",
-    "@angular/material": "12.2.10",
-    "@angular/platform-browser": "12.2.10",
-    "@angular/platform-browser-dynamic": "12.2.10",
-    "@angular/router": "12.2.10",
+    "@angular/forms": "12.2.11",
+    "@angular/localize": "12.2.11",
+    "@angular/material": "12.2.11",
+    "@angular/platform-browser": "12.2.11",
+    "@angular/platform-browser-dynamic": "12.2.11",
+    "@angular/router": "12.2.11",
     "@swimlane/ngx-charts": "19.1.0",
     "ace-builds": "1.4.13",
     "ansi-to-html": "0.7.2",
@@ -119,7 +119,7 @@
     "rxjs": "6.6.7",
     "rxjs-compat": "6.6.7",
     "sockjs-client": "1.5.2",
-    "strip-ansi": "6.0.0",
+    "strip-ansi": "6.0.1",
     "systemjs": "6.11.0",
     "truncate-url": "1.0.0",
     "tslib": "2.3.1",
@@ -129,10 +129,10 @@
     "zone.js": "0.11.4"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "12.2.10",
-    "@angular/cli": "12.2.10",
-    "@angular/compiler-cli": "12.2.10",
-    "@angular/language-service": "12.2.10",
+    "@angular-devkit/build-angular": "12.2.11",
+    "@angular/cli": "12.2.11",
+    "@angular/compiler-cli": "12.2.11",
+    "@angular/language-service": "12.2.11",
     "@babel/core": "7.15.8",
     "@babel/preset-env": "7.15.8",
     "@babel/register": "7.15.3",
@@ -145,14 +145,16 @@
     "@types/jasminewd2": "2.0.10",
     "@types/jest": "27.0.2",
     "@types/js-yaml": "4.0.3",
-    "@types/lodash": "4.14.175",
-    "@types/node": "16.11.1",
+    "@types/lodash": "4.14.176",
+    "@types/node": "16.11.3",
+    "@typescript-eslint/eslint-plugin": "5.1.0",
+    "@typescript-eslint/parser": "5.1.0",
     "codelyzer": "6.0.2",
     "concurrently": "6.3.0",
     "cypress": "8.6.0",
     "del": "6.0.0",
-    "eslint": "7.32.0",
-    "eslint-plugin-rxjs": "3.3.7",
+    "eslint": "8.0.1",
+    "eslint-plugin-rxjs": "4.0.0",
     "git-describe": "4.1.0",
     "gts": "3.1.0",
     "gulp": "4.0.2",
@@ -173,22 +175,22 @@
     "q": "1.5.1",
     "raw-loader": "4.0.2",
     "run-node": "2.0.0",
-    "sass": "1.43.2",
+    "sass": "1.43.3",
     "sass-loader": "12.2.0",
     "semver": "7.3.5",
     "source-map-explorer": "2.5.2",
-    "stylelint": "13.13.1",
-    "stylelint-config-standard": "22.0.0",
+    "stylelint": "14.0.0",
+    "stylelint-config-standard-scss": "2.0.0",
     "stylelint-no-unsupported-browser-features": "5.0.2",
-    "stylelint-order": "4.1.0",
+    "stylelint-order": "5.0.0",
     "tar": "6.1.11",
     "through2": "4.0.2",
     "ts-jest": "27.0.7",
     "ts-loader": "9.2.6",
-    "ts-node": "10.3.0",
+    "ts-node": "10.3.1",
     "typescript": "4.3.5",
     "wait-on": "6.0.0",
-    "webpack-dev-server": "3.11.2"
+    "webpack-dev-server": "4.3.1"
   },
   "engines": {
     "node": ">=14.17.6 <15 || >=16.8 <16.11",
@@ -256,17 +258,16 @@
     "src/app/frontend/common/services/global/history.ts"
   ],
   "stylelint": {
-    "extends": "stylelint-config-standard",
+    "extends": [
+      "stylelint-config-standard-scss"
+    ],
     "plugins": [
       "stylelint-no-unsupported-browser-features",
       "stylelint-order"
     ],
     "rules": {
-      "at-rule-no-unknown": null,
-      "font-family-no-missing-generic-family-keyword": null,
-      "no-invalid-position-at-import-rule": null,
+      "alpha-value-notation": "number",
       "no-descending-specificity": null,
-      "number-leading-zero": null,
       "order/order": [
         "dollar-variables",
         {
@@ -293,8 +294,9 @@
           "severity": "warning"
         }
       ],
+      "scss/comment-no-empty": null,
       "selector-pseudo-element-no-unknown": null,
-      "selector-type-no-unknown": null
+      "string-quotes": "single"
     }
   },
   "browserslist": [
