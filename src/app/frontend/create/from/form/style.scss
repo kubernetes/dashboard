@@ -23,7 +23,7 @@
   margin-top: $baseline-grid;
 }
 
-$bar-height: .5px;
+$bar-height: 0.5px;
 
 ::ng-deep mat-progress-bar {
   &.kd-deploy-form-progress {

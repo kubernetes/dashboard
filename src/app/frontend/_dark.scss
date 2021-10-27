@@ -12,6 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+@use 'sass:map';
 @use '~@angular/material/theming' as mat-theming;
 @use './theming';
 
@@ -27,14 +28,15 @@ $colors-dark: (
   toolbar-button: #fff,
   log-viewer-bg: #000,
   log-viewer-text: #fff,
-  log-viewer-scrollbar: rgba(200, 200, 200, .66),
+  log-viewer-scrollbar: rgb(200 200 200 / 0.66),
 );
-
 $kd-blue: map_merge(mat-theming.$mat-blue, (500: #327df4));
-
-$theme-dark: mat-theming.mat-dark-theme(mat-theming.mat-palette($kd-blue), mat-theming.mat-palette($kd-blue), mat-theming.mat-palette($kd-blue));
-
-$background: map-get($theme-dark, background);
+$theme-dark: mat-theming.mat-dark-theme(
+  mat-theming.mat-palette($kd-blue),
+  mat-theming.mat-palette($kd-blue),
+  mat-theming.mat-palette($kd-blue)
+);
+$background: map.get($theme-dark, background);
 $background: map_merge($background, (background: #1d1d1d));
 $background: map_merge($background, (app-bar: #1d1d1d));
 $background: map_merge($background, (card: #2d2d2d));
