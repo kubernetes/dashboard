@@ -79,13 +79,13 @@
     "defaultLanguage": "en",
     "languages": [
       "de",
+      "es",
       "fr",
       "ja",
       "ko",
       "zh-Hans",
       "zh-Hant",
-      "zh-Hant-HK",
-      "es"
+      "zh-Hant-HK"
     ],
     "beautifyOutput": true
   },
