@@ -57,6 +57,6 @@ export class CreateFromInputComponent extends ICanDeactivate {
   }
 
   canDeactivate(): boolean {
-    return this.isCreateDisabled() || this.creating_;
+    return this.isCreateDisabled() && !this.creating_;
   }
 }

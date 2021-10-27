@@ -17,23 +17,22 @@ import {MatDialog} from '@angular/material/dialog';
 import {CanDeactivate} from '@angular/router';
 import {ConfirmDialog, ConfirmDialogConfig} from '@common/dialogs/config/dialog';
 import {ICanDeactivate} from '@common/interfaces/candeactivate';
+import {Observable, of} from 'rxjs';
 
 @Injectable()
 export class CanDeactivateGuard implements CanDeactivate<ICanDeactivate> {
   constructor(private readonly dialog_: MatDialog) {}
 
-  canDeactivate(component: ICanDeactivate): boolean {
-    if (!component.canDeactivate()) {
-      const config = {
-        title: 'Unsaved changes',
-        message: 'The form has not been submitted yet, do you really want to leave?',
-      } as ConfirmDialogConfig;
-
-      this.dialog_.open(ConfirmDialog, {data: config});
-
-      return false;
+  canDeactivate(component: ICanDeactivate): Observable<boolean> {
+    if (component.canDeactivate()) {
+      return of(true);
     }
 
-    return true;
+    const config = {
+      title: 'Unsaved changes',
+      message: 'The form has not been submitted yet, do you really want to leave?',
+    } as ConfirmDialogConfig;
+
+    return this.dialog_.open(ConfirmDialog, {data: config}).afterClosed();
   }
 }

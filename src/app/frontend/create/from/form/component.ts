@@ -311,6 +311,6 @@ export class CreateFromFormComponent extends ICanDeactivate implements OnInit {
   }
 
   canDeactivate(): boolean {
-    return this.hasUnsavedChanges() || this.creating_;
+    return !this.hasUnsavedChanges() && !this.creating_;
   }
 }
