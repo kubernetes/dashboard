@@ -84,7 +84,8 @@
       "ko",
       "zh-Hans",
       "zh-Hant",
-      "zh-Hant-HK"
+      "zh-Hant-HK",
+      "es"
     ],
     "beautifyOutput": true
   },
