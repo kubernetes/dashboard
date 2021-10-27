@@ -15,6 +15,7 @@
 import {Component, ViewChild} from '@angular/core';
 import {NgForm} from '@angular/forms';
 import {KdFile} from '@api/root.ui';
+import {ICanDeactivate} from '@common/interfaces/candeactivate';
 
 import {CreateService} from '@common/services/create/service';
 import {HistoryService} from '@common/services/global/history';
@@ -25,28 +26,29 @@ import {NamespaceService} from '@common/services/global/namespace';
   templateUrl: './template.html',
   styleUrls: ['./style.scss'],
 })
-export class CreateFromFileComponent {
-  @ViewChild(NgForm, {static: true}) private readonly ngForm: NgForm;
+export class CreateFromFileComponent extends ICanDeactivate {
   file: KdFile;
-  submitted = false;
+  @ViewChild(NgForm, {static: true}) private readonly ngForm: NgForm;
+  private creating_ = false;
 
   constructor(
     private readonly namespace_: NamespaceService,
     private readonly create_: CreateService,
     private readonly history_: HistoryService
-  ) {}
+  ) {
+    super();
+  }
 
   isCreateDisabled(): boolean {
     return !this.file || this.file.content.length === 0 || this.create_.isDeployDisabled();
   }
 
-  async create(): Promise<void> {
-    this.submitted = true;
-    try {
-      await this.create_.createContent(this.file.content, true, this.file.name);
-    } catch (e) {
-      this.submitted = false;
-    }
+  create(): void {
+    this.creating_ = true;
+    this.create_
+      .createContent(this.file.content, true, this.file.name)
+      .then(() => (this.creating_ = false))
+      .finally(() => (this.creating_ = false));
   }
 
   onFileLoad(file: KdFile): void {
@@ -59,5 +61,9 @@ export class CreateFromFileComponent {
 
   areMultipleNamespacesSelected(): boolean {
     return this.namespace_.areMultipleNamespacesSelected();
+  }
+
+  canDeactivate(): boolean {
+    return this.isCreateDisabled() || this.creating_;
   }
 }

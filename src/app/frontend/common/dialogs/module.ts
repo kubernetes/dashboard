@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import {NgModule} from '@angular/core';
+import {ConfirmDialog} from '@common/dialogs/config/dialog';
 
 import {SharedModule} from '../../shared.module';
 import {ComponentsModule} from '../components/module';
@@ -35,6 +36,7 @@ import {TriggerResourceDialog} from './triggerresource/dialog';
     RestartResourceDialog,
     ScaleResourceDialog,
     TriggerResourceDialog,
+    ConfirmDialog,
   ],
   exports: [
     AlertDialog,

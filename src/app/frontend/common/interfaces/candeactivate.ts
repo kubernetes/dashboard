@@ -12,12 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {Component, HostListener} from '@angular/core';
+import {Directive, HostListener} from '@angular/core';
 
-@Component({
-  template: '',
-})
-export abstract class ComponentCanDeactivate {
+@Directive()
+export abstract class ICanDeactivate {
   abstract canDeactivate(): boolean;
 
   @HostListener('window:beforeunload', ['$event'])

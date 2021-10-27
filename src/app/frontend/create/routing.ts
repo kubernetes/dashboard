@@ -14,7 +14,7 @@
 
 import {NgModule} from '@angular/core';
 import {Route, RouterModule} from '@angular/router';
-import {CanDeactivateGuard} from '@common/services/global/canDeactivateGuard';
+import {CanDeactivateGuard} from '@common/services/guard/candeactivate';
 
 import {CreateComponent} from './component';
 

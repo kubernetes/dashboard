@@ -12,19 +12,18 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {Injectable} from '@angular/core';
-import {CanDeactivate} from '@angular/router';
-import {ComponentCanDeactivate} from '../../components/can-deactivate/component-can-deactivate';
+import {Component, Inject} from '@angular/core';
+import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 
-@Injectable()
-export class CanDeactivateGuard implements CanDeactivate<ComponentCanDeactivate> {
-  canDeactivate(component: ComponentCanDeactivate): boolean {
-    if (!component.canDeactivate()) {
-      if (confirm('You have unsaved changes! If you leave, your changes will be lost.')) {
-        return true;
-      }
-      return false;
-    }
-    return true;
-  }
+export interface ConfirmDialogConfig {
+  title: string;
+  message: string;
+}
+
+@Component({
+  selector: 'kd-confirm-dialog',
+  templateUrl: 'template.html',
+})
+export class ConfirmDialog {
+  constructor(@Inject(MAT_DIALOG_DATA) public data: ConfirmDialogConfig) {}
 }

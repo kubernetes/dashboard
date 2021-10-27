@@ -16,7 +16,7 @@ import {NgModule} from '@angular/core';
 
 import {ComponentsModule} from '@common/components/module';
 import {CreateServiceModule} from '@common/services/create/module';
-import {CanDeactivateGuard} from '@common/services/global/canDeactivateGuard';
+import {CanDeactivateGuard} from '@common/services/guard/candeactivate';
 import {SharedModule} from '../shared.module';
 
 import {CreateComponent} from './component';

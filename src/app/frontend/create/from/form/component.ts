@@ -26,11 +26,12 @@ import {
   Protocols,
   SecretList,
 } from '@api/root.api';
-import {take} from 'rxjs/operators';
+import {ICanDeactivate} from '@common/interfaces/candeactivate';
 
 import {CreateService} from '@common/services/create/service';
 import {HistoryService} from '@common/services/global/history';
 import {NamespaceService} from '@common/services/global/namespace';
+import {take} from 'rxjs/operators';
 
 import {CreateNamespaceDialog} from './createnamespace/dialog';
 import {CreateSecretDialog} from './createsecret/dialog';
@@ -46,7 +47,7 @@ const APP_LABEL_KEY = 'k8s-app';
   templateUrl: './template.html',
   styleUrls: ['./style.scss'],
 })
-export class CreateFromFormComponent implements OnInit {
+export class CreateFromFormComponent extends ICanDeactivate implements OnInit {
   readonly nameMaxLength = 24;
 
   showMoreOptions_ = false;
@@ -55,9 +56,9 @@ export class CreateFromFormComponent implements OnInit {
   secrets: string[];
   isExternal = false;
   labelArr: DeployLabel[] = [];
-  submitted = false;
-
   form: FormGroup;
+
+  private creating_ = false;
 
   constructor(
     private readonly namespace_: NamespaceService,
@@ -67,47 +68,8 @@ export class CreateFromFormComponent implements OnInit {
     private readonly route_: ActivatedRoute,
     private readonly fb_: FormBuilder,
     private readonly dialog_: MatDialog
-  ) {}
-
-  ngOnInit(): void {
-    this.form = this.fb_.group({
-      name: ['', Validators.compose([Validators.required, FormValidators.namePattern])],
-      containerImage: ['', Validators.required],
-      replicas: [1, Validators.compose([Validators.required, FormValidators.isInteger])],
-      description: [''],
-      namespace: [this.route_.snapshot.params.namespace || '', Validators.required],
-      imagePullSecret: [''],
-      cpuRequirement: ['', Validators.compose([Validators.min(0), FormValidators.isInteger])],
-      memoryRequirement: ['', Validators.compose([Validators.min(0), FormValidators.isInteger])],
-      containerCommand: [''],
-      containerCommandArgs: [''],
-      runAsPrivileged: [false],
-      portMappings: this.fb_.control([]),
-      variables: this.fb_.control([]),
-      labels: this.fb_.control([]),
-    });
-    this.labelArr = [new DeployLabel(APP_LABEL_KEY, '', false), new DeployLabel()];
-    this.name.valueChanges.subscribe(v => {
-      this.labelArr[0].value = v;
-      this.labels.patchValue([{index: 0, value: v}]);
-    });
-    this.namespace.valueChanges.subscribe((namespace: string) => {
-      this.name.clearAsyncValidators();
-      this.name.setAsyncValidators(validateUniqueName(this.http_, namespace));
-      this.name.updateValueAndValidity();
-    });
-    this.http_.get('api/v1/namespace').subscribe((result: NamespaceList) => {
-      this.namespaces = result.namespaces.map((namespace: Namespace) => namespace.objectMeta.name);
-      this.namespace.patchValue(
-        !this.namespace_.areMultipleNamespacesSelected()
-          ? this.route_.snapshot.params.namespace || this.namespaces[0]
-          : this.namespaces[0]
-      );
-      this.form.markAsPristine();
-    });
-    this.http_
-      .get('api/v1/appdeployment/protocols')
-      .subscribe((protocols: Protocols) => (this.protocols = protocols.protocols));
+  ) {
+    super();
   }
 
   get name(): AbstractControl {
@@ -164,6 +126,47 @@ export class CreateFromFormComponent implements OnInit {
 
   get labels(): FormArray {
     return this.form.get('labels') as FormArray;
+  }
+
+  ngOnInit(): void {
+    this.form = this.fb_.group({
+      name: ['', Validators.compose([Validators.required, FormValidators.namePattern])],
+      containerImage: ['', Validators.required],
+      replicas: [1, Validators.compose([Validators.required, FormValidators.isInteger])],
+      description: [''],
+      namespace: [this.route_.snapshot.params.namespace || '', Validators.required],
+      imagePullSecret: [''],
+      cpuRequirement: ['', Validators.compose([Validators.min(0), FormValidators.isInteger])],
+      memoryRequirement: ['', Validators.compose([Validators.min(0), FormValidators.isInteger])],
+      containerCommand: [''],
+      containerCommandArgs: [''],
+      runAsPrivileged: [false],
+      portMappings: this.fb_.control([]),
+      variables: this.fb_.control([]),
+      labels: this.fb_.control([]),
+    });
+    this.labelArr = [new DeployLabel(APP_LABEL_KEY, '', false), new DeployLabel()];
+    this.name.valueChanges.subscribe(v => {
+      this.labelArr[0].value = v;
+      this.labels.patchValue([{index: 0, value: v}]);
+    });
+    this.namespace.valueChanges.subscribe((namespace: string) => {
+      this.name.clearAsyncValidators();
+      this.name.setAsyncValidators(validateUniqueName(this.http_, namespace));
+      this.name.updateValueAndValidity();
+    });
+    this.http_.get('api/v1/namespace').subscribe((result: NamespaceList) => {
+      this.namespaces = result.namespaces.map((namespace: Namespace) => namespace.objectMeta.name);
+      this.namespace.patchValue(
+        !this.namespace_.areMultipleNamespacesSelected()
+          ? this.route_.snapshot.params.namespace || this.namespaces[0]
+          : this.namespaces[0]
+      );
+      this.form.markAsPristine();
+    });
+    this.http_
+      .get('api/v1/appdeployment/protocols')
+      .subscribe((protocols: Protocols) => (this.protocols = protocols.protocols));
   }
 
   changeExternal(isExternal: boolean): void {
@@ -278,8 +281,8 @@ export class CreateFromFormComponent implements OnInit {
     });
   }
 
-  async deploy(): Promise<void> {
-    this.submitted = true;
+  deploy(): void {
+    this.creating_ = true;
     const portMappings = this.portMappings.value.portMappings || [];
     const variables = this.variables.value.variables || [];
     const labels = this.labels.value.labels || [];
@@ -300,10 +303,14 @@ export class CreateFromFormComponent implements OnInit {
       labels: this.toBackendApiLabels(labels),
       runAsPrivileged: this.runAsPrivileged.value,
     };
-    try {
-      await this.create_.deploy(spec);
-    } catch (e) {
-      this.submitted = false;
-    }
+
+    this.create_
+      .deploy(spec)
+      .then(() => (this.creating_ = false))
+      .finally(() => (this.creating_ = false));
+  }
+
+  canDeactivate(): boolean {
+    return this.hasUnsavedChanges() || this.creating_;
   }
 }
