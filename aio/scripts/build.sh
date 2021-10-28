@@ -113,7 +113,7 @@ START=$(date +%s)
 parse::args "$@"
 clean
 
-npm run version
+make ensure-version
 
 if [ "${FRONTEND_ONLY}" = true ] ; then
   build::frontend

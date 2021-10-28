@@ -6,13 +6,15 @@ ROOT_DIRECTORY := $(shell dirname $(realpath $(firstword $(MAKEFILE_LIST))))
 COVERAGE_DIRECTORY = $(ROOT_DIRECTORY)/coverage
 GO_COVERAGE_FILE = $(ROOT_DIRECTORY)/coverage/go.txt
 FSWATCH_BINARY := $(shell which fswatch)
-GOLANGCILINT_BINARY := $(shell which golangci-lint)
+CODEGEN_VERSION := v0.22.3
+CODEGEN_BIN := $(GOPATH)/pkg/mod/k8s.io/code-generator@$(CODEGEN_VERSION)/generate-groups.sh
 GOLANGCILINT_VERSION := v1.42.1
-GO_BINARY := $(shell which go)
+GOLANGCILINT_BINARY := $(shell which golangci-lint)
 GO_MAJOR_VERSION = $(shell go version | cut -c 14- | cut -d' ' -f1 | cut -d'.' -f1)
 GO_MINOR_VERSION = $(shell go version | cut -c 14- | cut -d' ' -f1 | cut -d'.' -f2)
 MIN_GO_MAJOR_VERSION = 1
 MIN_GO_MINOR_VERSION = 17
+GO_BINARY := $(shell which go)
 MAIN_PACKAGE = github.com/kubernetes/dashboard/src/app/backend
 KUBECONFIG ?= $(HOME)/.kube/config
 SIDECAR_HOST ?= http://localhost:8000
@@ -35,12 +37,6 @@ HEAD_VERSION = head
 HEAD_IMAGE_NAMES += $(foreach arch, $(ARCHITECTURES), $(HEAD_IMAGE)-$(arch):$(HEAD_VERSION))
 ARCHITECTURES = amd64 arm64 arm ppc64le s390x
 
-.PHONY: post-install
-post-install: ensure-version
-	go mod vendor
-	./aio/scripts/install-codegen.sh
-	npx ngcc
-
 .PHONY: ensure-version
 ensure-version:
 	node ./aio/scripts/version.mjs
@@ -50,6 +46,11 @@ ensure-golangcilint:
 ifndef GOLANGCILINT_BINARY
 	curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $(GOPATH)/bin $(GOLANGCILINT_VERSION)
 endif
+
+.PHONY: ensure-codegen
+ensure-codegen: ensure-go
+	go get -d k8s.io/code-generator@$(CODEGEN_VERSION)
+	chmod +x $(CODEGEN_BIN)
 
 .PHONY: ensure-fswatch
 ensure-fswatch:
@@ -168,12 +169,13 @@ fix-license:
 	license-check-and-add add -f license-checker-config.json
 
 .PHONY: check-codegen
-check-codegen:
+check-codegen: ensure-codegen
 	./aio/scripts/verify-codegen.sh
 
 .PHONY: fix-codegen
-fix-codegen:
-	./aio/scripts/update-codegen.sh
+fix-codegen: ensure-codegen 
+	$(CODEGEN_BIN) all github.com/kubernetes/dashboard/src/app/backend/plugin/client github.com/kubernetes/dashboard/src/app/backend/plugin apis:v1alpha1 \
+	--go-header-file $(ROOT_DIRECTORY)/aio/scripts/license-header.go.txt
 
 .PHONY: check-go
 check-go: ensure-golangcilint
