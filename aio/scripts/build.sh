@@ -55,7 +55,7 @@ function build::backend {
 
 function build::backend::cross {
   say "\nBuilding backends for all supported architectures"
-  ${GULP_BIN} backend:prod:cross
+  make prod-backend-cross
 }
 
 function copy::frontend {

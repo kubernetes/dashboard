@@ -1,10 +1,13 @@
 SHELL = /bin/bash
 GOOS ?= $(shell go env GOOS)
 GOARCH ?= $(shell go env GOARCH)
+GOPATH ?= $(shell go env GOPATH)
 ROOT_DIRECTORY := $(shell dirname $(realpath $(firstword $(MAKEFILE_LIST))))
 COVERAGE_DIRECTORY = $(ROOT_DIRECTORY)/coverage
 GO_COVERAGE_FILE = $(ROOT_DIRECTORY)/coverage/go.txt
 FSWATCH_BINARY := $(shell which fswatch)
+GOLANGCILINT_BINARY := $(shell which golangci-lint)
+GOLANGCILINT_VERSION := v1.42.1
 GO_BINARY := $(shell which go)
 GO_MAJOR_VERSION = $(shell go version | cut -c 14- | cut -d' ' -f1 | cut -d'.' -f1)
 GO_MINOR_VERSION = $(shell go version | cut -c 14- | cut -d' ' -f1 | cut -d'.' -f2)
@@ -20,6 +23,7 @@ ENABLE_SKIP_LOGIN ?= false
 SYSTEM_BANNER ?=
 SYSTEM_BANNER_SEVERITY ?=
 PROD_BINARY = dist/amd64/dashboard
+SERVE_DIRECTORY = .tmp/serve
 SERVE_BINARY = .tmp/serve/dashboard
 SERVE_PID = .tmp/serve/dashboard.pid
 RELEASE_IMAGE = kubernetesui/dashboard
@@ -31,14 +35,30 @@ HEAD_VERSION = head
 HEAD_IMAGE_NAMES += $(foreach arch, $(ARCHITECTURES), $(HEAD_IMAGE)-$(arch):$(HEAD_VERSION))
 ARCHITECTURES = amd64 arm64 arm ppc64le s390x
 
-.PHONY: validate-fswatch
-validate-fswatch:
+.PHONY: post-install
+post-install: ensure-version
+	go mod vendor
+	./aio/scripts/install-codegen.sh
+	npx ngcc
+
+.PHONY: ensure-version
+ensure-version:
+	node ./aio/scripts/version.mjs
+
+.PHONY: ensure-golangcilint
+ensure-golangcilint:
+ifndef GOLANGCILINT_BINARY
+	curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $(GOPATH)/bin $(GOLANGCILINT_VERSION)
+endif
+
+.PHONY: ensure-fswatch
+ensure-fswatch:
 ifndef FSWATCH_BINARY
 	$(error "Cannot find fswatch binary")
 endif
 
-.PHONY: validate-go
-validate-go:
+.PHONY: ensure-go
+ensure-go:
 ifndef GO_BINARY
 	$(error "Cannot find go binary")
 endif
@@ -50,15 +70,12 @@ endif
 		exit 1; \
   fi
 
-.PHONY: validate
-validate: validate-go
-
 .PHONY: clean
 clean:
 	rm -rf .tmp
 
 .PHONY: build-backend
-build-backend: clean validate-go
+build-backend: validate-go
 	go build -ldflags "-X $(MAIN_PACKAGE)/client.Version=$(RELEASE_VERSION)" -gcflags="all=-N -l" -o $(SERVE_BINARY) $(MAIN_PACKAGE)
 
 .PHONY: build
@@ -71,6 +88,7 @@ build-cross: clean validate
 
 .PHONY: serve-backend
 serve-backend: build-backend
+	cp i18n/locale_conf.json $(SERVE_DIRECTORY)/locale_conf.json
 	$(SERVE_BINARY) --kubeconfig=$(KUBECONFIG) \
 		--sidecar-host=$(SIDECAR_HOST) \
 		--system-banner=$(SYSTEM_BANNER) \
@@ -94,7 +112,7 @@ watch-backend: validate-fswatch restart-backend
 
 .PHONY: prod-backend
 prod-backend: clean validate-go
-	go build -a -installsuffix cgo -ldflags "-X $(MAIN_PACKAGE)/client.Version=$(RELEASE_VERSION)" -o $(PROD_BINARY) $(MAIN_PACKAGE)
+	GOOS=linux go build -a -installsuffix cgo -ldflags "-X $(MAIN_PACKAGE)/client.Version=$(RELEASE_VERSION)" -o $(PROD_BINARY) $(MAIN_PACKAGE)
 
 .PHONY: prod-backend-cross
 prod-backend-cross: clean validate-go
@@ -135,35 +153,65 @@ coverage-frontend:
 coverage: coverage-backend coverage-frontend
 
 .PHONY: check-i18n
-check-i18n:
+check-i18n: fix-i18n
+
+.PHONY: fix-i18n
+fix-i18n:
 	./aio/scripts/pre-commit-i18n.sh
 
 .PHONY: check-license
 check-license:
 	license-check-and-add check -f license-checker-config.json
 
+.PHONY: fix-license
+fix-license:
+	license-check-and-add add -f license-checker-config.json
+
 .PHONY: check-codegen
 check-codegen:
 	./aio/scripts/verify-codegen.sh
 
+.PHONY: fix-codegen
+fix-codegen:
+	./aio/scripts/update-codegen.sh
+
 .PHONY: check-go
-check-go:
+check-go: ensure-golangcilint
 	golangci-lint run -c .golangci.yml ./src/app/backend/...
+
+.PHONY: fix-go
+fix-go: ensure-golangcilint
+	golangci-lint run -c .golangci.yml --fix ./src/app/backend/...
 
 .PHONY: check-html
 check-html:
 	./aio/scripts/format-html.sh --check
 
+.PHONY: fix-html
+fix-html:
+	./aio/scripts/format-html.sh
+
 .PHONY: check-scss
 check-scss:
 	stylelint "src/**/*.scss"
+
+.PHONY: fix-scss
+fix-scss:
+	stylelint "src/**/*.scss" --fix
 
 .PHONY: check-ts
 check-ts:
 	gts lint
 
+.PHONY: fix-ts
+fix-ts:
+	gts fix
+
 .PHONY: check
-check: check-i18n check-license check-go check-codegen check-html check-scss check-ts
+check: check-i18n check-license check-codegen check-go check-html check-scss check-ts
+
+.PHONY: fix
+check: fix-i18n fix-license fix-codegen fix-go fix-html fix-scss fix-ts
 
 .PHONY: start-cluster
 start-cluster:
