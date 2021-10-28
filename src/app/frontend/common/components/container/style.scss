@@ -19,13 +19,13 @@
   @include kd-icon-size($caption-font-size-base);
 
   align-self: baseline;
-  margin-left: $baseline-grid * .5;
+  margin-left: $baseline-grid * 0.5;
 }
 
 .kd-volume-mounts {
-  border-radius: $baseline-grid * .25;
+  border-radius: $baseline-grid * 0.25;
   margin-right: $baseline-grid;
-  margin-top: $baseline-grid * .5;
+  margin-top: $baseline-grid * 0.5;
 }
 
 .container-status-icon {

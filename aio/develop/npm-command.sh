@@ -24,9 +24,9 @@ if [[ -n "${K8S_DASHBOARD_NPM_CMD}" ]] ; then
   # Run npm command
   echo "Run npm '${K8S_DASHBOARD_NPM_CMD}'"
   npm ${K8S_DASHBOARD_NPM_CMD} \
-    --kubernetes-dashboard:bind_address=${K8S_DASHBOARD_BIND_ADDRESS} \
-    --kubernetes-dashboard:sidecar_host=${K8S_DASHBOARD_SIDECAR_HOST} \
-    --kubernetes-dashboard:port=${K8S_DASHBOARD_PORT}
+    --bind_address=${K8S_DASHBOARD_BIND_ADDRESS} \
+    --sidecar_host=${K8S_DASHBOARD_SIDECAR_HOST} \
+    --port=${K8S_DASHBOARD_PORT}
 else
   if [[ "${K8S_OWN_CLUSTER}" != true ]] ; then
     # Stop cluster.
@@ -55,7 +55,7 @@ else
   # Start dashboard.
   echo "Start dashboard"
   npm start \
-    --kubernetes-dashboard:bind_address=${K8S_DASHBOARD_BIND_ADDRESS} \
-    --kubernetes-dashboard:sidecar_host=${K8S_DASHBOARD_SIDECAR_HOST} \
-    --kubernetes-dashboard:port=${K8S_DASHBOARD_PORT}
+    --bind_address=${K8S_DASHBOARD_BIND_ADDRESS} \
+    --sidecar_host=${K8S_DASHBOARD_SIDECAR_HOST} \
+    --port=${K8S_DASHBOARD_PORT}
 fi

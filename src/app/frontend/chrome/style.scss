@@ -57,7 +57,8 @@
   box-shadow: $whiteframe-shadow-1dp;
   height: 7 * $baseline-grid;
   min-height: 7 * $baseline-grid;
-  padding-left: .5 * $baseline-grid;
+  padding-left: 0.5 * $baseline-grid;
+
   // Move entire second toolbar above content to avoid elements overlap with
   // shadow (there was problem with it on IE).
   z-index: 100;
@@ -73,6 +74,7 @@
   overflow: hidden;
   padding: 0 (3 * $baseline-grid);
   white-space: nowrap;
+
   // Move entire system banner above content to avoid elements overlap with
   // shadow (there was problem with it on IE).
   z-index: 200;

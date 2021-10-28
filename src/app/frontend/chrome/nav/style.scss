@@ -20,11 +20,11 @@
   width: $nav-width + 8px;
 
   &.visible {
-    transition: width .3s;
+    transition: width 0.3s;
   }
 
   &.hidden {
-    transition: width .2s;
+    transition: width 0.2s;
     width: 0;
   }
 

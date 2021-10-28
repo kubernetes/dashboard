@@ -8,7 +8,7 @@ formalization of ideas and discussions from #1441.
 ## Background
 
 Kubernetes now allows cluster admins to use 
-[Role-Based Access Control](http://kubernetes.io/docs/admin/authorization/) to secure their clusters. 
+[Role-Based Access Control](https://kubernetes.io/docs/admin/authorization/) to secure their clusters. 
 Permissions are managed using the following Kubernetes Resources:
 * Role
 * ClusterRole

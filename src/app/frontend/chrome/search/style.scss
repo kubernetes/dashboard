@@ -15,7 +15,7 @@
 @use '../../variables' as *;
 
 .kd-search {
-  border-radius: $baseline-grid * .25;
+  border-radius: $baseline-grid * 0.25;
   padding-left: $baseline-grid;
 
   input {

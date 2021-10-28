@@ -47,7 +47,7 @@ npm start
 Another way to connect to real cluster while developing dashboard is to specify options for `npm` like following:
 
 ```shell
-npm run start:https --kubernetes-dashboard:kubeconfig=<path to your kubeconfig>
+npm run start:https --kubeconfig=<path to your kubeconfig>
 ```
 
 Please see [here](https://github.com/kubernetes/dashboard/blob/master/.npmrc) which options you can specify to run dashboard with `npm`.
@@ -159,7 +159,7 @@ To allow accessing dashboard from outside the development container,
 pass value for `--insecure-bind-address` option to dashboard as follows:
 
 * Set `K8S_DASHBOARD_BIND_ADDRESS` environment variable as `"0.0.0.0"` before using `aio/develop/run-npm-on-container.sh`.
-* Run like `npm run [command] --kubernetes-dashboard:bind_address="0.0.0.0"`, when you run dashboard from inside the container.
+* Run like `npm run [command] --bind_address="0.0.0.0"`, when you run dashboard from inside the container.
 
 ### Change port number for dashboard
 
