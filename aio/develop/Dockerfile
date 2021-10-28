@@ -14,8 +14,7 @@
 
 # This is a Dockerfile for running and building Kubernetes dashboard
 # It installs all deps in the container and adds the dashboard source
-# This way it abstracts all required build tools away and lets the user
-# run gulp tasks on the code with only docker installed
+# This way it abstracts all required build tools away
 
 # golang is based on debian:jessie
 # Specify version to clarify which version we use.
