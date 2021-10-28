@@ -26,7 +26,6 @@ CACHE_DIR="${ROOT_DIR}/.cached_tools"
 
 # Binaries.
 NG_BIN="${ROOT_DIR}/node_modules/.bin/ng"
-GULP_BIN="${ROOT_DIR}/node_modules/.bin/gulp"
 BEAUTIFY_BIN="${ROOT_DIR}/node_modules/.bin/html-beautify"
 BEAUTIFY_OPTS="--end-with-newline \
                --indent-size 2 \

@@ -20,8 +20,8 @@ TOKEN_TTL ?= 900
 AUTO_GENERATE_CERTS ?= false
 ENABLE_INSECURE_LOGIN ?= false
 ENABLE_SKIP_LOGIN ?= false
-SYSTEM_BANNER ?=
-SYSTEM_BANNER_SEVERITY ?=
+SYSTEM_BANNER ?= "Local test environment"
+SYSTEM_BANNER_SEVERITY ?= INFO
 PROD_BINARY = dist/amd64/dashboard
 SERVE_DIRECTORY = .tmp/serve
 SERVE_BINARY = .tmp/serve/dashboard
@@ -75,15 +75,15 @@ clean:
 	rm -rf .tmp
 
 .PHONY: build-backend
-build-backend: validate-go
+build-backend: ensure-go
 	go build -ldflags "-X $(MAIN_PACKAGE)/client.Version=$(RELEASE_VERSION)" -gcflags="all=-N -l" -o $(SERVE_BINARY) $(MAIN_PACKAGE)
 
 .PHONY: build
-build: clean validate
+build: clean ensure-go
 	./aio/scripts/build.sh
 
 .PHONY: build-cross
-build-cross: clean validate
+build-cross: clean ensure-go
 	./aio/scripts/build.sh -c
 
 .PHONY: serve-backend
@@ -107,15 +107,15 @@ kill-backend:
 restart-backend: kill-backend serve-backend
 
 .PHONY: watch-backend
-watch-backend: validate-fswatch restart-backend
+watch-backend: ensure-fswatch restart-backend
 	fswatch -o -r -e '.*' -i '\.go$$'  . | xargs -n1 -I{} make restart-backend || make kill-backend
 
 .PHONY: prod-backend
-prod-backend: clean validate-go
+prod-backend: clean ensure-go
 	GOOS=linux go build -a -installsuffix cgo -ldflags "-X $(MAIN_PACKAGE)/client.Version=$(RELEASE_VERSION)" -o $(PROD_BINARY) $(MAIN_PACKAGE)
 
 .PHONY: prod-backend-cross
-prod-backend-cross: clean validate-go
+prod-backend-cross: clean ensure-go
 	for ARCH in $(ARCHITECTURES) ; do \
   	GOOS=linux GOARCH=$$ARCH go build -a -installsuffix cgo -ldflags "-X $(MAIN_PACKAGE)/client.Version=$(RELEASE_VERSION)" -o dist/$$ARCH/dashboard $(MAIN_PACKAGE) ; \
   done
@@ -130,7 +130,7 @@ prod: build
 		--port=8080
 
 .PHONY: test-backend
-test-backend: validate-go
+test-backend: ensure-go
 	go test $(MAIN_PACKAGE)/...
 
 .PHONY: test-frontend
@@ -141,7 +141,7 @@ test-frontend:
 test: test-backend test-frontend
 
 .PHONY: coverage-backend
-coverage-backend: validate-go
+coverage-backend: ensure-go
 	$(shell mkdir -p $(COVERAGE_DIRECTORY)) \
 	go test -coverprofile=$(GO_COVERAGE_FILE) -covermode=atomic $(MAIN_PACKAGE)/...
 

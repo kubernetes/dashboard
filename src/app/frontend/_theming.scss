@@ -84,7 +84,7 @@
   }
 
   .kd-bg-success-light {
-    background-color: color.adjust(map.get($colors, indicator-success), $lightness: 60%);
+    background-color: color.adjust(map.get($colors, indicator-success), $lightness: 15%);
   }
 
   .kd-warning {

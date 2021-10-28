@@ -10,8 +10,8 @@
   "scripts": {
     "start": "concurrently \"make watch-backend\" \"npm run start:frontend\"",
     "start:https": "concurrently \"AUTO_GENERATE_CERTS=true make watch-backend\" \"npm run start:frontend:https\"",
-    "start:frontend": "make version && ng serve --proxy-config aio/proxy.conf.json --host 127.0.0.1 --port 8080",
-    "start:frontend:https": "make version && ng serve --proxy-config aio/https-proxy.conf.json --ssl --host 127.0.0.1 --port 8080",
+    "start:frontend": "make ensure-version && ng serve --proxy-config aio/proxy.conf.json --host 127.0.0.1 --port 8080",
+    "start:frontend:https": "make ensure-version && ng serve --proxy-config aio/https-proxy.conf.json --ssl --host 127.0.0.1 --port 8080",
     "check": "make -j16 check",
     "fix": "make fix",
     "test": "make test",
