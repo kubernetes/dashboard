@@ -30,6 +30,7 @@ import {takeUntil} from 'rxjs/operators';
 export class IngressDetailComponent implements OnInit, OnDestroy {
   ingress: IngressDetail;
   isInitialized = false;
+  eventListEndpoint: string;
   private readonly endpoint_ = EndpointManager.resource(Resource.ingress, true);
   private readonly unsubscribe_ = new Subject<void>();
 
@@ -43,6 +44,8 @@ export class IngressDetailComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     const resourceName = this.activatedRoute_.snapshot.params.resourceName;
     const resourceNamespace = this.activatedRoute_.snapshot.params.resourceNamespace;
+
+    this.eventListEndpoint = this.endpoint_.child(resourceName, Resource.event, resourceNamespace);
 
     this.ingress_
       .get(this.endpoint_.detail(), resourceName, resourceNamespace)
