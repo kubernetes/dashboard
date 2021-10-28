@@ -73,12 +73,6 @@ jobs:
         run: |
           [ ! -d "node_modules" ] && npm ci || node aio/scripts/version.mjs && command -v golangci-lint >/dev/null 2>&1 || { curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $(go env GOPATH)/bin v1.41.1; } && go mod download
 
-      - name: Install Codegen
-        shell: bash
-        run: |
-          export GOPATH=$(go env GOPATH)/bin
-          aio/scripts/install-codegen.sh
-
       - name: Check Code
         shell: bash
         run: |
