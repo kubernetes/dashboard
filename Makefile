@@ -174,8 +174,12 @@ check-codegen: ensure-codegen
 
 .PHONY: fix-codegen
 fix-codegen: ensure-codegen 
-	$(CODEGEN_BIN) all github.com/kubernetes/dashboard/src/app/backend/plugin/client github.com/kubernetes/dashboard/src/app/backend/plugin apis:v1alpha1 \
-	--go-header-file $(ROOT_DIRECTORY)/aio/scripts/license-header.go.txt
+	$(CODEGEN_BIN) all \
+	 github.com/kubernetes/dashboard/src/app/backend/plugin/client \
+	 github.com/kubernetes/dashboard/src/app/backend/plugin \
+	 "apis:v1alpha1" \
+	-h $(ROOT_DIRECTORY)/aio/scripts/license-header.go.txt \
+	-v=8
 
 .PHONY: check-go
 check-go: ensure-golangcilint
