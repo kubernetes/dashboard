@@ -129,7 +129,7 @@
     "zone.js": "0.11.4"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "12.2.11",
+    "@angular-devkit/build-angular": "12.2.12",
     "@angular/cli": "12.2.11",
     "@angular/compiler-cli": "12.2.11",
     "@angular/language-service": "12.2.11",
@@ -165,7 +165,7 @@
     "jest": "27.3.1",
     "jest-preset-angular": "10.1.0",
     "js-beautify": "1.14.0",
-    "license-check-and-add": "4.0.2",
+    "license-check-and-add": "4.0.3",
     "lint-staged": "11.2.6",
     "lodash": "4.17.21",
     "minimatch": "3.0.4",
