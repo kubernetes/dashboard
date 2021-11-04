@@ -14,7 +14,7 @@
     "start:e2e": "concurrently \"make serve-backend\" \"npm run start:frontend\"",
     "start:frontend": "make ensure-version && ng serve --proxy-config aio/proxy.conf.json --host 127.0.0.1 --port 8080",
     "start:frontend:https": "make ensure-version && ng serve --proxy-config aio/https-proxy.conf.json --ssl --host 127.0.0.1 --port 8080",
-    "check": "make -j16 check",
+    "check": "make check",
     "fix": "make fix",
     "test": "make test",
     "test:frontend": "jest -c aio/jest.config.js",
