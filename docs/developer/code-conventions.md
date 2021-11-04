@@ -17,18 +17,18 @@ Additionally, check the list of rules and tips, that we are using:
 
 An overview of the features provided by the dashboard can be found [here](https://kubernetes.io/docs/tasks/access-application-cluster/web-ui-dashboard).
 
-## Code style check and formatting
+## Code Style
 
 The code style check suite includes format checks can be executed with:
 
 ```shell
-npm run check
+make check
 ```
 
 The code formatting can be executed with:
 
 ```shell
-npm run fix
+make fix
 ```
 
 These check and formatting involves in go, ts, scss, html, license and i18n files.
