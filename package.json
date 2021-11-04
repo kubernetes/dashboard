@@ -17,7 +17,6 @@
     "fix": "make fix",
     "test": "make test",
     "test:frontend": "jest -c aio/jest.config.js",
-    "test:frontend:coverage": "jest -c aio/jest.config.js --coverage -i",
     "test:frontend:watch": "jest -c aio/jest.config.js --watch",
     "e2e": "concurrently -kill-others --success first \"npm run start\" \"wait-on http://localhost:8080 && npx cypress run\"",
     "postinstall": "make ensure-version && go mod vendor && ngcc",

@@ -148,7 +148,7 @@ coverage-backend: ensure-go
 
 .PHONY: coverage-frontend
 coverage-frontend:
-	npm run test:coverage
+	npx jest -c aio/jest.config.js --coverage -i
 
 .PHONY: coverage
 coverage: coverage-backend coverage-frontend
