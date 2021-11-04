@@ -30,7 +30,8 @@ source "${ROOT_DIR}/aio/scripts/conf.sh"
   github.com/kubernetes/dashboard/src/app/backend/plugin/client github.com/kubernetes/dashboard/src/app/backend/plugin \
   apis:v1alpha1 \
   --go-header-file "${ROOT_DIR}"/aio/scripts/license-header.go.txt \
-  --output-base "$(dirname "${BASH_SOURCE[0]}")/.."
+  --output-base "$(dirname "${BASH_SOURCE[0]}")/.." \
+  -v=8
 
 # Remove old generated client
 rm -rf ./src/app/backend/plugin/client
