@@ -30,7 +30,7 @@
       "stylelint --fix"
     ],
     "src/**/*.go": [
-      "./aio/scripts/pre-commit-golangci-lint.sh"
+      "make fix-go"
     ],
     "src/**/*.html": [
       "./aio/scripts/pre-commit-i18n.sh"

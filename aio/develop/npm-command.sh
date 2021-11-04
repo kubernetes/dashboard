@@ -16,7 +16,6 @@
 # Install dependencies
 echo "Install dependencies"
 npm ci
-aio/scripts/install-codegen.sh
 
 # Run npm command if K8S_DASHBOARD_NPM_CMD is set,
 # otherwise start dashboard.
@@ -31,10 +30,10 @@ else
   if [[ "${K8S_OWN_CLUSTER}" != true ]] ; then
     # Stop cluster.
     echo "Stop cluster"
-    sudo npm run cluster:stop
+    sudo make stop-cluster
     # Start cluster.
     echo "Start cluster"
-    sudo npm run cluster:start
+    sudo make start-cluster
     # Copy kubeconfig from /root/.kube/config
     sudo cat /root/.kube/config > /tmp/kind.kubeconfig
     sudo chown ${LOCAL_UID}:${LOCAL_GID} /tmp/kind.kubeconfig

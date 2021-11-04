@@ -31,9 +31,7 @@ GOSU="exec /usr/sbin/gosu user"
 if [[ -n "${K8S_DASHBOARD_CMD}" ]] ; then
   # Run specified command
   echo "Run '${K8S_DASHBOARD_CMD}'"
-  echo "Dependencies are not fully installed. You need run following commands before running other npm commands for dashboard."
-  echo "  npm ci"
-  echo "  aio/scripts/install-codegen.sh"
+  echo "Dependencies are not installed. Run 'npm ci' before running other commands."
   ${GOSU} ${K8S_DASHBOARD_CMD}
 else
   # Run npm command
