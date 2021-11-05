@@ -29,7 +29,7 @@ SERVE_DIRECTORY = .tmp/serve
 SERVE_BINARY = .tmp/serve/dashboard
 SERVE_PID = .tmp/serve/dashboard.pid
 RELEASE_IMAGE = kubernetesui/dashboard
-RELEASE_VERSION = v2.3.1
+RELEASE_VERSION = v2.4.0
 RELEASE_IMAGE_NAMES += $(foreach arch, $(ARCHITECTURES), $(RELEASE_IMAGE)-$(arch):$(RELEASE_VERSION))
 RELEASE_IMAGE_NAMES_LATEST += $(foreach arch, $(ARCHITECTURES), $(RELEASE_IMAGE)-$(arch):latest)
 HEAD_IMAGE = kubernetesdashboarddev/dashboard
@@ -136,7 +136,7 @@ test-backend: ensure-go
 
 .PHONY: test-frontend
 test-frontend:
-	npm run test
+	npx jest -c aio/jest.config.js
 
 .PHONY: test
 test: test-backend test-frontend
