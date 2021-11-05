@@ -193,8 +193,8 @@
     "webpack-dev-server": "4.4.0"
   },
   "engines": {
-    "node": ">=14.17.6 <15 || >=16.8 <16.11",
-    "npm": ">=6.14.15 <7 || >=7.21 <8"
+    "node": ">=16.13.0 <17",
+    "npm": ">=8.1.0 <9"
   },
   "eslintConfig": {
     "parser": "@typescript-eslint/parser",
