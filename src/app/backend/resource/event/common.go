@@ -16,7 +16,6 @@ package event
 
 import (
 	"context"
-	"time"
 
 	v1 "k8s.io/api/core/v1"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
@@ -172,15 +171,14 @@ func FillEventsType(events []v1.Event) []v1.Event {
 // ToEvent converts event api Event to Event model object.
 func ToEvent(event v1.Event) common.Event {
 	firstTimestamp, lastTimestamp := event.FirstTimestamp, event.LastTimestamp
+	eventTime := metaV1.NewTime(event.EventTime.Time)
 
-	if !event.EventTime.IsZero() {
-		eventTime := metaV1.NewTime(time.Unix(event.EventTime.Unix(), 0))
-		if event.FirstTimestamp.IsZero() {
-			firstTimestamp = eventTime
-		}
-		if event.LastTimestamp.IsZero() {
-			lastTimestamp = firstTimestamp
-		}
+	if firstTimestamp.IsZero() {
+		firstTimestamp = eventTime
+	}
+
+	if lastTimestamp.IsZero() {
+		lastTimestamp = firstTimestamp
 	}
 
 	result := common.Event{
