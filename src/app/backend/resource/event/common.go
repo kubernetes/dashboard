@@ -17,10 +17,6 @@ package event
 import (
 	"context"
 
-	"github.com/kubernetes/dashboard/src/app/backend/api"
-	"github.com/kubernetes/dashboard/src/app/backend/errors"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	v1 "k8s.io/api/core/v1"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/fields"
@@ -28,6 +24,11 @@ import (
 	"k8s.io/apimachinery/pkg/runtime"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 	"k8s.io/client-go/kubernetes"
+
+	"github.com/kubernetes/dashboard/src/app/backend/api"
+	"github.com/kubernetes/dashboard/src/app/backend/errors"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 )
 
 // EmptyEventList is a empty list of events.
@@ -169,6 +170,17 @@ func FillEventsType(events []v1.Event) []v1.Event {
 
 // ToEvent converts event api Event to Event model object.
 func ToEvent(event v1.Event) common.Event {
+	firstTimestamp, lastTimestamp := event.FirstTimestamp, event.LastTimestamp
+	eventTime := metaV1.NewTime(event.EventTime.Time)
+
+	if firstTimestamp.IsZero() {
+		firstTimestamp = eventTime
+	}
+
+	if lastTimestamp.IsZero() {
+		lastTimestamp = firstTimestamp
+	}
+
 	result := common.Event{
 		ObjectMeta:         api.NewObjectMeta(event.ObjectMeta),
 		TypeMeta:           api.NewTypeMeta(api.ResourceKindEvent),
@@ -180,8 +192,8 @@ func ToEvent(event v1.Event) common.Event {
 		SubObjectName:      event.InvolvedObject.Name,
 		SubObjectNamespace: event.InvolvedObject.Namespace,
 		Count:              event.Count,
-		FirstSeen:          event.FirstTimestamp,
-		LastSeen:           event.LastTimestamp,
+		FirstSeen:          firstTimestamp,
+		LastSeen:           lastTimestamp,
 		Reason:             event.Reason,
 		Type:               event.Type,
 	}
