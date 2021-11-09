@@ -1751,7 +1751,7 @@
       </trans-unit>
       <trans-unit id="6781275439159942913" datatype="html">
         <source>Ready </source>
-        <target state="new">Ready </target>
+        <target>已就绪 </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/container/template.html</context>
           <context context-type="linenumber">47</context>
@@ -1759,7 +1759,7 @@
       </trans-unit>
       <trans-unit id="6186926147473970029" datatype="html">
         <source>Started </source>
-        <target state="new">Started </target>
+        <target>已启动</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/container/template.html</context>
           <context context-type="linenumber">54</context>
@@ -1807,7 +1807,7 @@
       </trans-unit>
       <trans-unit id="3065353233062460166" datatype="html">
         <source>Started At </source>
-        <target state="new">Started At </target>
+        <target>启动时间</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/container/template.html</context>
           <context context-type="linenumber">109</context>
@@ -1815,7 +1815,7 @@
       </trans-unit>
       <trans-unit id="1983115678915099234" datatype="html">
         <source>Environment Variables</source>
-        <target state="new">Environment Variables</target>
+        <target>环境变量</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/container/template.html</context>
           <context context-type="linenumber">118</context>
