@@ -212,7 +212,7 @@ fix-ts:
 check: check-i18n check-license check-codegen check-go check-html check-scss check-ts
 
 .PHONY: fix
-check: fix-i18n fix-license fix-codegen fix-go fix-html fix-scss fix-ts
+fix: fix-i18n fix-license fix-codegen fix-go fix-html fix-scss fix-ts
 
 .PHONY: start-cluster
 start-cluster:
