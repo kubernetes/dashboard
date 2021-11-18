@@ -3,17 +3,17 @@ tmp_dir = "tmp"
 
 [build]
   bin = ".tmp/serve/dashboard"
-  cmd = "make serve-backend"
-  delay = 1000
-  exclude_dir = ["assets", "tmp", "vendor"]
+  cmd = "make build-backend"
+  delay = 2000
+  exclude_dir = []
   exclude_file = []
   exclude_regex = []
   exclude_unchanged = false
   follow_symlink = false
-  full_bin = ""
+  full_bin = "make run-backend"
   include_dir = ["src/app/backend"]
   include_ext = ["go"]
-  kill_delay = "0s"
+  kill_delay = "1s"
   log = "build-errors.log"
   send_interrupt = true
   stop_on_error = true
@@ -29,4 +29,4 @@ tmp_dir = "tmp"
   time = false
 
 [misc]
-  clean_on_exit = false
+  clean_on_exit = true

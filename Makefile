@@ -87,7 +87,10 @@ build-cross: clean ensure-go
 	./aio/scripts/build.sh -c
 
 .PHONY: serve-backend
-serve-backend: build-backend
+serve-backend: build-backend run-backend
+
+.PHONY: run-backend
+run-backend:
 	cp i18n/locale_conf.json $(SERVE_DIRECTORY)/locale_conf.json
 	$(SERVE_BINARY) --kubeconfig=$(KUBECONFIG) \
 		--sidecar-host=$(SIDECAR_HOST) \
