@@ -5,7 +5,7 @@ GOPATH ?= $(shell go env GOPATH)
 ROOT_DIRECTORY := $(shell dirname $(realpath $(firstword $(MAKEFILE_LIST))))
 COVERAGE_DIRECTORY = $(ROOT_DIRECTORY)/coverage
 GO_COVERAGE_FILE = $(ROOT_DIRECTORY)/coverage/go.txt
-FSWATCH_BINARY := $(shell which fswatch)
+AIR_BINARY := $(shell which air)
 CODEGEN_VERSION := v0.22.3
 CODEGEN_BIN := $(GOPATH)/pkg/mod/k8s.io/code-generator@$(CODEGEN_VERSION)/generate-groups.sh
 GOLANGCILINT_VERSION := v1.42.1
@@ -27,7 +27,6 @@ SYSTEM_BANNER_SEVERITY ?= INFO
 PROD_BINARY = dist/amd64/dashboard
 SERVE_DIRECTORY = .tmp/serve
 SERVE_BINARY = .tmp/serve/dashboard
-SERVE_PID = .tmp/serve/dashboard.pid
 RELEASE_IMAGE = kubernetesui/dashboard
 RELEASE_VERSION = v2.4.0
 RELEASE_IMAGE_NAMES += $(foreach arch, $(ARCHITECTURES), $(RELEASE_IMAGE)-$(arch):$(RELEASE_VERSION))
@@ -52,10 +51,10 @@ ensure-codegen: ensure-go
 	go get -d k8s.io/code-generator@$(CODEGEN_VERSION)
 	chmod +x $(CODEGEN_BIN)
 
-.PHONY: ensure-fswatch
-ensure-fswatch:
-ifndef FSWATCH_BINARY
-	$(error "Cannot find fswatch binary")
+.PHONY: ensure-air
+ensure-air:
+ifndef AIR_BINARY
+	curl -sSfL https://raw.githubusercontent.com/cosmtrek/air/master/install.sh | sh -s -- -b $(GOPATH)/bin
 endif
 
 .PHONY: ensure-go
@@ -97,19 +96,11 @@ serve-backend: build-backend
 		--token-ttl=$(TOKEN_TTL) \
 		--auto-generate-certificates=$(AUTO_GENERATE_CERTS) \
 		--enable-insecure-login=$(ENABLE_INSECURE_LOGIN) \
-		--enable-skip-login=$(ENABLE_SKIP_LOGIN) & echo $$! > $(SERVE_PID)
-
-.PHONY: kill-backend
-kill-backend:
-	kill `cat $(SERVE_PID)` || true
-	rm -rf $(SERVE_PID)
-
-.PHONY: restart-backend
-restart-backend: kill-backend serve-backend
+		--enable-skip-login=$(ENABLE_SKIP_LOGIN)
 
 .PHONY: watch-backend
-watch-backend: ensure-fswatch restart-backend
-	fswatch -o -r -e '.*' -i '\.go$$'  . | xargs -n1 -I{} make restart-backend || make kill-backend
+watch-backend: ensure-air
+	air
 
 .PHONY: prod-backend
 prod-backend: clean ensure-go
