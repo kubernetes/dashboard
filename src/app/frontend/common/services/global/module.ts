@@ -106,10 +106,8 @@ export function init(
   history: HistoryService,
   pluginsConfig: PluginsConfigService,
   theme: ThemeService,
-  loader: LocalConfigLoaderService
 ): Function {
   return () => {
-    return loader.init().then(() => {
       globalSettings.init();
       localSettings.init();
       pluginsConfig.init();
@@ -118,6 +116,5 @@ export function init(
       opa.init();
       history.init();
       theme.init();
-    });
   };
 }
