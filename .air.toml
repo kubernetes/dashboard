@@ -1,5 +1,5 @@
 root = "."
-tmp_dir = "tmp"
+tmp_dir = ".tmp"
 
 [build]
   bin = ".tmp/serve/dashboard"
