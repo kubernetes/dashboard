@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {SupportedResources} from '@api/root.api';
+import {SupportedResources} from '@api/root.shared';
 import {isObject} from 'lodash';
 
 export class PersistentVolumeSource {
@@ -164,7 +164,7 @@ export class NFSVolumeSource implements IVolumeSource {
   }
 
   get displayName(): string {
-    return `${this.server}/${this.path}`;
+    return `${this.server}:${this.path}`;
   }
 }
 

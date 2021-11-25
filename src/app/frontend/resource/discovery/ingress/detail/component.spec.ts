@@ -26,13 +26,10 @@ import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {RouterModule} from '@angular/router';
 import {AppConfig, IngressDetail} from '@api/root.api';
 import {CardComponent} from '@common/components/card/component';
-import {ChipsComponent} from '@common/components/chips/component';
 import {ObjectMetaComponent} from '@common/components/objectmeta/component';
 import {PropertyComponent} from '@common/components/property/component';
 import {PipesModule} from '@common/pipes/module';
-import {AuthorizerService} from '@common/services/global/authorizer';
 import {ConfigService} from '@common/services/global/config';
-import {GlobalSettingsService} from '@common/services/global/globalsettings';
 
 import {IngressDetailComponent} from './component';
 
@@ -61,8 +58,12 @@ class MiniTestComponent {
                 path: '/testpath',
                 pathType: 'Prefix',
                 backend: {
-                  serviceName: 'test',
-                  servicePort: 80,
+                  service: {
+                    name: 'test',
+                    port: {
+                      number: 80,
+                    },
+                  },
                 },
               },
             ],
@@ -76,8 +77,12 @@ class MiniTestComponent {
                 path: '/bar',
                 pathType: 'Prefix',
                 backend: {
-                  serviceName: 'service1',
-                  servicePort: 'a_port_name',
+                  service: {
+                    name: 'test',
+                    port: {
+                      name: 'a_port_name',
+                    },
+                  },
                 },
               },
             ],
@@ -116,8 +121,12 @@ class MaxiTestComponent {
                 path: '/',
                 pathType: 'Prefix',
                 backend: {
-                  serviceName: 'service1',
-                  servicePort: 80,
+                  service: {
+                    name: 'service1',
+                    port: {
+                      number: 80,
+                    },
+                  },
                 },
               },
             ],
@@ -131,8 +140,12 @@ class MaxiTestComponent {
                 path: '/',
                 pathType: 'Prefix',
                 backend: {
-                  serviceName: 'service2',
-                  servicePort: 80,
+                  service: {
+                    name: 'service2',
+                    port: {
+                      number: 80,
+                    },
+                  },
                 },
               },
             ],
@@ -156,11 +169,9 @@ describe('IngressDetailComponent', () => {
           MiniTestComponent,
           CardComponent,
           PropertyComponent,
-          ChipsComponent,
           IngressDetailComponent,
         ],
         imports: [
-          MatIconModule,
           MatCardModule,
           MatDividerModule,
           MatTooltipModule,
@@ -172,7 +183,7 @@ describe('IngressDetailComponent', () => {
           MatIconModule,
           RouterModule,
         ],
-        providers: [AuthorizerService, ConfigService, GlobalSettingsService],
+        providers: [ConfigService],
         schemas: [CUSTOM_ELEMENTS_SCHEMA],
       }).compileComponents();
       httpMock = TestBed.inject(HttpTestingController);

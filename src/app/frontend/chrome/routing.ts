@@ -14,14 +14,14 @@
 
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
-import {AuthGuard} from '../common/services/guard/auth';
+import {AuthGuard} from '@common/services/guard/auth';
 import {ChromeComponent} from './component';
 import {RedirectGuard} from './redirectGuard';
 import {ConfigMapOpaModule} from 'resource/config/configmapopa/module';
 //import {ExtPageComponent} from './externalPage/component'
 
 const routes: Routes = [
-  {path: '', redirectTo: '/overview', pathMatch: 'full'},
+  {path: '', redirectTo: '/workloads', pathMatch: 'full'},
   {
     path: '',
     component: ChromeComponent,

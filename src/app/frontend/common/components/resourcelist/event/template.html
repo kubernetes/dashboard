@@ -42,22 +42,28 @@ limitations under the License.
 
       <ng-container [matColumnDef]="getDisplayColumns()[1]">
         <mat-header-cell *matHeaderCellDef
+                         class="kd-col-gt"
                          i18n>Message</mat-header-cell>
-        <mat-cell *matCellDef="let event">{{event.message}}</mat-cell>
+        <mat-cell *matCellDef="let event"
+                  class="kd-col-gt">{{event.message}}</mat-cell>
       </ng-container>
 
       <ng-container [matColumnDef]="getDisplayColumns()[2]">
         <mat-header-cell *matHeaderCellDef
+                         class="kd-col-md"
                          i18n>Source</mat-header-cell>
-        <mat-cell *matCellDef="let event">
+        <mat-cell *matCellDef="let event"
+                  class="kd-col-md">
           {{event.sourceComponent}} {{event.sourceHost}}
         </mat-cell>
       </ng-container>
 
       <ng-container [matColumnDef]="getDisplayColumns()[3]">
         <mat-header-cell *matHeaderCellDef
+                         class="kd-col-sm"
                          i18n>Sub-object</mat-header-cell>
-        <mat-cell *matCellDef="let event">
+        <mat-cell *matCellDef="let event"
+                  class="kd-col-sm">
           <div *ngIf="event.object">{{event.object}}</div>
           <div *ngIf="!event.object">-</div>
         </mat-cell>
@@ -65,14 +71,18 @@ limitations under the License.
 
       <ng-container [matColumnDef]="getDisplayColumns()[4]">
         <mat-header-cell *matHeaderCellDef
+                         class="kd-col-xs"
                          i18n>Count</mat-header-cell>
-        <mat-cell *matCellDef="let event">{{event.count}}</mat-cell>
+        <mat-cell *matCellDef="let event"
+                  class="kd-col-xs">{{event.count}}</mat-cell>
       </ng-container>
 
       <ng-container [matColumnDef]="getDisplayColumns()[5]">
         <mat-header-cell *matHeaderCellDef
+                         class="kd-col-sm"
                          i18n>First Seen</mat-header-cell>
-        <mat-cell *matCellDef="let event">
+        <mat-cell *matCellDef="let event"
+                  class="kd-col-sm">
           <kd-date [date]="event.firstSeen"
                    [relative]="true"></kd-date>
         </mat-cell>
@@ -80,8 +90,10 @@ limitations under the License.
 
       <ng-container [matColumnDef]="getDisplayColumns()[6]">
         <mat-header-cell *matHeaderCellDef
+                         class="kd-col-sm"
                          i18n>Last Seen</mat-header-cell>
-        <mat-cell *matCellDef="let event">
+        <mat-cell *matCellDef="let event"
+                  class="kd-col-sm">
           <kd-date [date]="event.lastSeen"
                    [relative]="true"></kd-date>
         </mat-cell>

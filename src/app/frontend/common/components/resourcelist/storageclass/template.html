@@ -41,8 +41,10 @@ limitations under the License.
         <mat-header-cell *matHeaderCellDef
                          mat-sort-header
                          disableClear="true"
+                         class="kd-col-gt"
                          i18n>Name</mat-header-cell>
-        <mat-cell *matCellDef="let sc">
+        <mat-cell *matCellDef="let sc"
+                  class="kd-col-gt">
           <a [routerLink]="getDetailsHref(sc.objectMeta.name, sc.objectMeta.namespace)"
              queryParamsHandling="preserve">{{sc.objectMeta.name}}</a>
         </mat-cell>
@@ -50,14 +52,18 @@ limitations under the License.
 
       <ng-container [matColumnDef]="getColumns()[1]">
         <mat-header-cell *matHeaderCellDef
+                         class="kd-col-md"
                          i18n>Provisioner</mat-header-cell>
-        <mat-cell *matCellDef="let sc">{{sc.provisioner}}</mat-cell>
+        <mat-cell *matCellDef="let sc"
+                  class="kd-col-md">{{sc.provisioner}}</mat-cell>
       </ng-container>
 
       <ng-container [matColumnDef]="getColumns()[2]">
         <mat-header-cell *matHeaderCellDef
+                         class="kd-col-gt"
                          i18n>Parameters</mat-header-cell>
-        <mat-cell *matCellDef="let sc">
+        <mat-cell *matCellDef="let sc"
+                  class="kd-col-gt">
           <kd-chips [map]="sc.parameters"></kd-chips>
         </mat-cell>
       </ng-container>
@@ -66,8 +72,10 @@ limitations under the License.
         <mat-header-cell *matHeaderCellDef
                          mat-sort-header
                          disableClear="true"
+                         class="kd-col-sm"
                          i18n>Created</mat-header-cell>
-        <mat-cell *matCellDef="let sc">
+        <mat-cell *matCellDef="let sc"
+                  class="kd-col-sm">
           <kd-date [date]="sc.objectMeta.creationTimestamp"
                    relative></kd-date>
         </mat-cell>

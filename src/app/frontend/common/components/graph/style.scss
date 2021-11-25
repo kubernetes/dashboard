@@ -14,21 +14,12 @@
 
 @import '../../../variables';
 
-.kd-property-container {
-  margin: (.75 * $baseline-grid) (5 * $baseline-grid) (.75 * $baseline-grid) 0;
+.chart-container {
+  padding: 2 * $baseline-grid;
 }
 
-.kd-property-container.stretched {
-  margin-right: 0;
-}
-
-.kd-property-label {
-  font-size: $caption-font-size-base;
-  margin-bottom: .25 * $baseline-grid;
-}
-
-.kd-property-value {
-  font-size: $title-font-size-base;
-  margin-bottom: $baseline-grid;
-  word-break: break-all;
+.empty-chart-text {
+  font-size: $headline-font-size-base;
+  font-weight: $regular-font-weight;
+  margin-bottom: $baseline-grid / 2;
 }

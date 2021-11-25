@@ -55,8 +55,8 @@ export class ChromeComponent implements OnInit {
     this.registerVisibilityChangeHandler_();
   }
 
-  getOverviewStateName(): string {
-    return '/overview';
+  getWorkloadsStateName(): string {
+    return '/workloads';
   }
 
   isSystemBannerVisible(): boolean {

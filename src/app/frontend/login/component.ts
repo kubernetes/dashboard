@@ -19,15 +19,15 @@ import {ConfigService} from '@common/services/global/config';
 
 import {AuthenticationMode, EnabledAuthenticationModes, LoginSkippableResponse, LoginSpec} from '@api/root.api';
 import {KdError} from '@api/root.shared';
-import {KdFile, StateError} from '@api/root.ui';
+import {IConfig, KdFile, StateError} from '@api/root.ui';
 import {AsKdError, K8SError} from '@common/errors/errors';
 import {AuthService} from '@common/services/global/authentication';
 import {HistoryService} from '@common/services/global/history';
 import {PluginsConfigService} from '@common/services/global/plugin';
-import {Config, CONFIG_DI_TOKEN} from '@root/index.config';
 import {PermissionsService} from '@common/services/global/permissions';
 import {CookieService} from 'ngx-cookie-service';
 import {map} from 'rxjs/operators';
+import {CONFIG_DI_TOKEN} from '../index.config';
 
 enum LoginModes {
   Kubeconfig = 'kubeconfig',
@@ -66,7 +66,7 @@ export class LoginComponent implements OnInit {
     public config: ConfigService,
     public permission: PermissionsService,
     private readonly historyService_: HistoryService,
-    @Inject(CONFIG_DI_TOKEN) private readonly CONFIG: Config
+    @Inject(CONFIG_DI_TOKEN) private readonly CONFIG: IConfig
   ) {}
 
   ngOnInit(): void {

@@ -15,26 +15,25 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {ServiceDetail} from '@api/root.api';
+import {ActionbarService, ResourceMeta} from '@common/services/global/actionbar';
+import {NotificationsService} from '@common/services/global/notifications';
+import {EndpointManager, Resource} from '@common/services/resource/endpoint';
+import {NamespacedResourceService} from '@common/services/resource/resource';
 import {Subject} from 'rxjs';
 import {takeUntil} from 'rxjs/operators';
-
-import {ActionbarService, ResourceMeta} from '../../../../common/services/global/actionbar';
-import {NotificationsService} from '../../../../common/services/global/notifications';
-import {EndpointManager, Resource} from '../../../../common/services/resource/endpoint';
-import {NamespacedResourceService} from '../../../../common/services/resource/resource';
 
 @Component({
   selector: 'kd-service-detail',
   templateUrl: './template.html',
 })
 export class ServiceDetailComponent implements OnInit, OnDestroy {
-  private readonly endpoint_ = EndpointManager.resource(Resource.service, true);
-  private readonly unsubscribe_ = new Subject<void>();
-
   service: ServiceDetail;
   isInitialized = false;
   podListEndpoint: string;
   eventListEndpoint: string;
+
+  private readonly endpoint_ = EndpointManager.resource(Resource.service, true);
+  private readonly unsubscribe_ = new Subject<void>();
 
   constructor(
     private readonly service_: NamespacedResourceService<ServiceDetail>,

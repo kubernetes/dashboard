@@ -13,14 +13,7 @@
 // limitations under the License.
 
 import {KdError} from '@api/root.shared';
-// Shared resource types
 import {PersistentVolumeSource} from '@api/volume.api';
-
-export enum SupportedResources {
-  ConfigMap = 'ConfigMap',
-  Secret = 'Secret',
-  PersistentVolumeClaim = 'PersistentVolumeClaim',
-}
 
 export interface TypeMeta {
   kind: string;
@@ -566,9 +559,18 @@ export interface IngressSpecTLS {
 }
 
 export interface IngressBackend {
-  serviceName?: string;
-  servicePort?: string | number;
+  service?: IngressBackendService;
   resource?: ResourceRef;
+}
+
+export interface IngressBackendService {
+  name: string;
+  port: IngressBackendServicePort;
+}
+
+export interface IngressBackendServicePort {
+  name?: string;
+  number?: number;
 }
 
 export interface IngressSpecRule {
@@ -911,6 +913,38 @@ export interface Container {
   volumeMounts: VolumeMounts[];
   securityContext: ContainerSecurityContext;
   status: ContainerStatus;
+  livenessProbe: Probe;
+  readinessProbe: Probe;
+  startupProbe: Probe;
+}
+
+export interface Probe {
+  httpGet?: ProbeHttpGet;
+  tcpSocket?: ProbeTcpSocket;
+  exec?: ProbeExec;
+  initialDelaySeconds?: number;
+  timeoutSeconds?: number;
+  periodSeconds?: number;
+  successThreshold?: number;
+  failureThreshold?: number;
+  terminationGracePeriodSeconds?: number;
+}
+
+export interface ProbeHttpGet {
+  path?: string;
+  port: string | number;
+  host?: string;
+  scheme?: string;
+  httpHeaders?: string[];
+}
+
+export interface ProbeTcpSocket {
+  port: string | number;
+  host?: string;
+}
+
+export interface ProbeExec {
+  command?: string[];
 }
 
 export interface ContainerStatus {

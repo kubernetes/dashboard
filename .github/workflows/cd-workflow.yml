@@ -61,7 +61,7 @@ jobs:
       - name: Install Dependencies
         shell: bash
         run: |
-          [ ! -d "node_modules" ] && npm ci || node aio/scripts/version.js && go mod download
+          [ ! -d "node_modules" ] && npm ci || node aio/scripts/version.mjs && go mod download
 
       - name: Docker Login
         env:
@@ -114,7 +114,7 @@ jobs:
       - name: Install Dependencies
         shell: bash
         run: |
-          [ ! -d "node_modules" ] && npm ci || node aio/scripts/version.js && go mod download
+          [ ! -d "node_modules" ] && npm ci || node aio/scripts/version.mjs && go mod download
 
       - name: Docker Login
         env:

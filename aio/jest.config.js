@@ -12,23 +12,22 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-@import '../../../variables';
+const config = {
+  rootDir: '../src/app/frontend',
+  coverageDirectory: '../../../coverage',
+  preset: "jest-preset-angular/presets/defaults",
+  setupFilesAfterEnv: ["<rootDir>/test.base.ts"],
+  globals: {
+    'ts-jest': {
+      tsconfig: 'aio/tsconfig.spec.json',
+    },
+  },
+  moduleNameMapper: {
+    "^@api/(.*)$": "<rootDir>/typings/$1",
+    "^@common/(.*)$": "<rootDir>/common/$1",
+    "^@environments/(.*)$": "<rootDir>/environments/$1",
+  },
 
-.kd-property-container {
-  margin: (.75 * $baseline-grid) (5 * $baseline-grid) (.75 * $baseline-grid) 0;
-}
+};
 
-.kd-property-container.stretched {
-  margin-right: 0;
-}
-
-.kd-property-label {
-  font-size: $caption-font-size-base;
-  margin-bottom: .25 * $baseline-grid;
-}
-
-.kd-property-value {
-  font-size: $title-font-size-base;
-  margin-bottom: $baseline-grid;
-  word-break: break-all;
-}
+export default config;

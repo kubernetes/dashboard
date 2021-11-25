@@ -12,6 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+// eslint-disable-next-line node/no-extraneous-import
+import {jest} from '@jest/globals';
+
 Object.defineProperty(document, 'doctype', {value: '<!DOCTYPE html>'});
 
 /**

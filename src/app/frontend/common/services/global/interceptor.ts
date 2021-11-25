@@ -14,13 +14,17 @@
 
 import {HttpEvent, HttpHandler, HttpInterceptor, HttpRequest} from '@angular/common/http';
 import {Inject, Injectable} from '@angular/core';
+import {IConfig} from '@api/root.ui';
 import {CookieService} from 'ngx-cookie-service';
 import {Observable} from 'rxjs';
-import {Config, CONFIG_DI_TOKEN} from '../../../index.config';
+import {CONFIG_DI_TOKEN} from '../../../index.config';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
-  constructor(private readonly cookies_: CookieService, @Inject(CONFIG_DI_TOKEN) private readonly appConfig_: Config) {}
+  constructor(
+    private readonly cookies_: CookieService,
+    @Inject(CONFIG_DI_TOKEN) private readonly appConfig_: IConfig
+  ) {}
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     const authCookie = this.cookies_.get(this.appConfig_.authTokenCookieName);
