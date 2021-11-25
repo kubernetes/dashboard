@@ -46,6 +46,10 @@ const routes: Routes = [
         loadChildren: () => import('resource/cluster/clusterrole/module').then(m => m.ClusterRoleModule),
       },
       {
+        path: 'event',
+        loadChildren: () => import('resource/cluster/event/module').then(m => m.EventModule),
+      },
+      {
         path: 'namespace',
         loadChildren: () => import('resource/cluster/namespace/module').then(m => m.NamespaceModule),
       },

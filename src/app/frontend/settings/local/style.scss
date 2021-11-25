@@ -12,13 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-@import '../../variables';
+@use '../../variables' as *;
 
 .mat-button-toggle-group {
   border: 0;
 
   .mat-button-toggle {
-    border-radius: $baseline-grid / 2;
+    border-radius: $baseline-grid * .5;
     margin-right: $baseline-grid;
   }
 }

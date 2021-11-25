@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {SupportedResources} from '@api/root.shared';
+import {SupportedResources, StringMap} from '@api/root.shared';
 import {isObject} from 'lodash';
 
 export class PersistentVolumeSource {
@@ -30,7 +30,7 @@ export class PersistentVolumeSource {
   rbd?: RBDVolumeSource;
   flexVolume?: FlexVolumeSource;
   cinder?: CinderVolumeSource;
-  cephFS?: CephFSVolumeSource;
+  cephfs?: CephFSVolumeSource;
   flocker?: FlockerVolumeSource;
   downwardAPI?: DownwardAPIVolumeSource;
   fc?: FCVolumeSource;
@@ -44,7 +44,7 @@ export class PersistentVolumeSource {
   portworxVolume: PortworxVolumeSource;
   scaleIO: ScaleIOVolumeSource;
   storageOS: StorageOSVolumeSource;
-  csi: CSIVolumeSource;
+  csi?: CSIVolumeSource;
 
   constructor(volume: PersistentVolumeSource) {
     Object.assign(this, volume);
@@ -377,9 +377,10 @@ export class QuobyteVolumeSource implements IVolumeSource {
 
 export class CSIVolumeSource implements IVolumeSource {
   driver: string;
+  volumeHandle: string;
   readOnly?: boolean;
   fSType?: string;
-  volumeAttributes?: any;
+  volumeAttributes?: StringMap;
   nodePublishSecretRef?: LocalObjectReference;
 
   get mountType(): string {
@@ -387,7 +388,7 @@ export class CSIVolumeSource implements IVolumeSource {
   }
 
   get displayName(): string {
-    return this.driver;
+    return `${this.driver}/${this.volumeHandle}`;
   }
 }
 
@@ -564,7 +565,7 @@ const VolumeSourceRegistry: Map<keyof PersistentVolumeSourceRaw, IVolumeSource> 
   ['rbd', new RBDVolumeSource()],
   ['flexVolume', new FlexVolumeSource()],
   ['cinder', new CinderVolumeSource()],
-  ['cephFS', new CephFSVolumeSource()],
+  ['cephfs', new CephFSVolumeSource()],
   ['flocker', new FlockerVolumeSource()],
   ['downwardAPI', new DownwardAPIVolumeSource()],
   ['fc', new FCVolumeSource()],

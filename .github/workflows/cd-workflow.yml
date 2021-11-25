@@ -43,7 +43,7 @@ jobs:
       - name: Setup Go
         uses: actions/setup-go@v2
         with:
-          go-version: 1.15.1
+          go-version: 1.17.0
 
       - name: Setup NodeJS
         uses: actions/setup-node@v2.1.2
@@ -96,7 +96,7 @@ jobs:
       - name: Setup Go
         uses: actions/setup-go@v2
         with:
-          go-version: 1.15.1
+          go-version: 1.17.0
 
       - name: Setup NodeJS
         uses: actions/setup-node@v2.1.2

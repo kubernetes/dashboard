@@ -16,15 +16,16 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {MatTableDataSource} from '@angular/material/table';
 import {ActivatedRoute} from '@angular/router';
 import {CapacityItem, PersistentVolumeDetail} from '@api/root.api';
+import {StringMap} from '@api/root.shared';
 import {Subject} from 'rxjs';
 import {takeUntil} from 'rxjs/operators';
 
-import {ActionbarService, ResourceMeta} from '../../../../common/services/global/actionbar';
-import {NotificationsService} from '../../../../common/services/global/notifications';
-import {EndpointManager, Resource} from '../../../../common/services/resource/endpoint';
-import {ResourceService} from '../../../../common/services/resource/resource';
-import {KdStateService} from '../../../../common/services/global/state';
-import {GlobalServicesModule} from '../../../../common/services/global/module';
+import {ActionbarService, ResourceMeta} from '@common/services/global/actionbar';
+import {NotificationsService} from '@common/services/global/notifications';
+import {EndpointManager, Resource} from '@common/services/resource/endpoint';
+import {ResourceService} from '@common/services/resource/resource';
+import {KdStateService} from '@common/services/global/state';
+import {GlobalServicesModule} from '@common/services/global/module';
 
 @Component({
   selector: 'kd-persistent-volume-detail',
@@ -71,19 +72,19 @@ export class PersistentVolumeDetailComponent implements OnInit, OnDestroy {
   }
 
   getCapacityDataSource(): MatTableDataSource<CapacityItem> {
-    const data: CapacityItem[] = [];
+    const tableData = new MatTableDataSource<CapacityItem>();
 
-    if (this.isInitialized) {
-      for (const rName of Array.from<string>(Object.keys(this.persistentVolume.capacity))) {
-        data.push({
-          resourceName: rName,
-          quantity: this.persistentVolume.capacity[rName],
-        });
-      }
+    if (!this.isInitialized) {
+      return tableData;
     }
 
-    const tableData = new MatTableDataSource<CapacityItem>();
-    tableData.data = data;
+    tableData.data = Object.keys(this.persistentVolume.capacity).map(
+      key =>
+        ({
+          resourceName: key,
+          quantity: this.persistentVolume.capacity[key],
+        } as CapacityItem)
+    );
 
     return tableData;
   }

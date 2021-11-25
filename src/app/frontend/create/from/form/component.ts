@@ -28,9 +28,9 @@ import {
 } from '@api/root.api';
 import {take} from 'rxjs/operators';
 
-import {CreateService} from '../../../common/services/create/service';
-import {HistoryService} from '../../../common/services/global/history';
-import {NamespaceService} from '../../../common/services/global/namespace';
+import {CreateService} from '@common/services/create/service';
+import {HistoryService} from '@common/services/global/history';
+import {NamespaceService} from '@common/services/global/namespace';
 
 import {CreateNamespaceDialog} from './createnamespace/dialog';
 import {CreateSecretDialog} from './createsecret/dialog';

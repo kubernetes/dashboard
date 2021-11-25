@@ -30,8 +30,6 @@ gulp.task('backend', gulp.series((doneFn) => {
   goCommand(
       [
         'build',
-        // Install dependencies to speed up subsequent compilations.
-        '-i',
         // record version info into src/version/version.go
         '-ldflags',
         conf.recordVersionExpression,

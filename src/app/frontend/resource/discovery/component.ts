@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import {Component} from '@angular/core';
-import {GroupedResourceList} from '../../common/resources/groupedlist';
+import {GroupedResourceList} from '@common/resources/groupedlist';
 
 @Component({
   selector: 'kd-discovery',

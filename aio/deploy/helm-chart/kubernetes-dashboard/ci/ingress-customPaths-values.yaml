@@ -2,10 +2,16 @@ ingress:
   enabled: true
 
   customPaths:
-    - backend:
-        serviceName: ssl-redirect
-        servicePort: use-annotation
-    - backend:
-        serviceName: >-
-          {{ include "kubernetes-dashboard.fullname" . }}
-        servicePort: 443
+    - pathType: ImplementationSpecific
+      backend:
+        service:
+          name: ssl-redirect
+          port:
+            name: use-annotation
+    - pathType: ImplementationSpecific
+      backend:
+        service:
+          name: >-
+            {{ include "kubernetes-dashboard.fullname" . }}
+          port:
+            number: 443

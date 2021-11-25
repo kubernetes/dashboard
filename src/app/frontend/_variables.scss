@@ -14,6 +14,7 @@
 
 @function rem($multiplier) {
   $font-size: 10px;
+
   @return $multiplier * $font-size;
 }
 
@@ -30,7 +31,7 @@ $footer-font-size-base: rem(1) !default;
 $font-family-monospace: 'Roboto Mono Regular', monospace;
 $font-family-medium-monospace: 'Roboto Mono Medium', monospace;
 $font-family-medium: 'Roboto-Medium';
-$font-family-sans: Roboto, 'Helvetica Neue', sans-serif;
+$font-family-sans: roboto, 'Helvetica Neue', sans-serif;
 
 $regular-font-weight: 400;
 $bold-font-weight: 500;

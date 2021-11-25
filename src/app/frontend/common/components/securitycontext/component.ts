@@ -13,7 +13,8 @@
 // limitations under the License.
 
 import {Component, Input} from '@angular/core';
-import {ContainerSecurityContext, PodSecurityContext, StringMap, Sysctl} from '@api/root.api';
+import {StringMap} from '@api/root.shared';
+import {ContainerSecurityContext, PodSecurityContext, Sysctl} from '@api/root.api';
 
 @Component({
   selector: 'kd-security-context',

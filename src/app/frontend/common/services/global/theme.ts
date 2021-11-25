@@ -20,7 +20,7 @@ import {LocalConfigLoaderService} from '@common/services/global/loader';
 
 @Injectable()
 export class ThemeService {
-  readonly systemTheme = '__system_theme__';
+  static readonly SystemTheme = '__system_theme__';
   private _customThemes: Theme[] = [];
   private readonly _defaultThemes: Theme[] = [
     {name: 'kd-light-theme', displayName: 'Light', isDark: false},
@@ -34,7 +34,7 @@ export class ThemeService {
     private readonly _config: LocalConfigLoaderService
   ) {}
 
-  private _theme = 'kd-light-theme';
+  private _theme = ThemeService.SystemTheme;
 
   get theme(): string {
     return this._theme;
@@ -43,7 +43,7 @@ export class ThemeService {
   set theme(theme: string) {
     this._theme = theme;
 
-    if (theme === this.systemTheme) {
+    if (theme === ThemeService.SystemTheme) {
       theme = this._isSystemThemeDark() ? 'kd-dark-theme' : 'kd-light-theme';
     }
     this._onThemeSwitchEvent.emit(theme);
@@ -58,7 +58,7 @@ export class ThemeService {
 
   init(): void {
     this._document.defaultView.matchMedia(this._colorSchemeQuery).addEventListener('change', e => {
-      if (this.theme === this.systemTheme) {
+      if (this.theme === ThemeService.SystemTheme) {
         this._onThemeSwitchEvent.emit(e.matches ? 'kd-dark-theme' : 'kd-light-theme');
       }
     });
@@ -71,7 +71,7 @@ export class ThemeService {
   }
 
   isThemeDark(): boolean {
-    if (this.theme === this.systemTheme) {
+    if (this.theme === ThemeService.SystemTheme) {
       return this._isSystemThemeDark();
     }
 

@@ -14,7 +14,7 @@
 
 import {Component, Input} from '@angular/core';
 import {ObjectMeta, TypeMeta} from '@api/root.api';
-import {PinnerService} from '../../../../services/global/pinner';
+import {PinnerService} from '@common/services/global/pinner';
 
 @Component({
   selector: 'kd-actionbar-detail-pin',

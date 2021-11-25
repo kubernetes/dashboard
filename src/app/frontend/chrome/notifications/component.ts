@@ -12,10 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {Component, ElementRef, HostListener, OnInit} from '@angular/core';
+import {Component, ElementRef, HostListener} from '@angular/core';
 
-import {Animations} from '../../common/animations/animations';
-import {Notification, NotificationsService} from '../../common/services/global/notifications';
+import {Animations} from '@common/animations/animations';
+import {Notification, NotificationsService} from '@common/services/global/notifications';
 
 @Component({
   selector: 'kd-notifications',

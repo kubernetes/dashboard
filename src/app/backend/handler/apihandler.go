@@ -21,6 +21,8 @@ import (
 	"strings"
 
 	"io/ioutil"
+	v1 "k8s.io/api/core/v1"
+
 	"github.com/kubernetes/dashboard/src/app/backend/resource/networkpolicy"
 
 	"github.com/kubernetes/dashboard/src/app/backend/handler/parser"
@@ -410,6 +412,15 @@ func CreateHTTPAPIHandler(iManager integration.IntegrationManager, cManager clie
 	apiV1Ws.Route(
 		apiV1Ws.GET("/namespace/{name}/event").
 			To(apiHandler.handleGetNamespaceEvents).
+			Writes(common.EventList{}))
+
+	apiV1Ws.Route(
+		apiV1Ws.GET("/event").
+			To(apiHandler.handleGetEventList).
+			Writes(common.EventList{}))
+	apiV1Ws.Route(
+		apiV1Ws.GET("/event/{namespace}").
+			To(apiHandler.handleGetEventList).
 			Writes(common.EventList{}))
 
 	apiV1Ws.Route(
@@ -1930,6 +1941,23 @@ func (apiHandler *APIHandler) handleGetNamespaceEvents(request *restful.Request,
 	response.WriteHeaderAndEntity(http.StatusOK, result)
 }
 
+func (apiHandler *APIHandler) handleGetEventList(request *restful.Request, response *restful.Response) {
+	k8sClient, err := apiHandler.cManager.Client(request)
+	if err != nil {
+		errors.HandleInternalError(response, err)
+		return
+	}
+
+	dataSelect := parser.ParseDataSelectPathParameter(request)
+	namespace := parseNamespacePathParameter(request)
+	result, err := event.GetEventList(k8sClient, namespace, dataSelect)
+	if err != nil {
+		errors.HandleInternalError(response, err)
+		return
+	}
+	response.WriteHeaderAndEntity(http.StatusOK, result)
+}
+
 func (apiHandler *APIHandler) handleCreateImagePullSecret(request *restful.Request, response *restful.Response) {
 	k8sClient, err := apiHandler.cManager.Client(request)
 	if err != nil {
@@ -2777,16 +2805,19 @@ func (apiHandler *APIHandler) handleLogs(request *restful.Request, response *res
 
 func (apiHandler *APIHandler) handleLogFile(request *restful.Request, response *restful.Response) {
 	k8sClient, err := apiHandler.cManager.Client(request)
+	opts := new(v1.PodLogOptions)
 	if err != nil {
 		errors.HandleInternalError(response, err)
 		return
 	}
+
 	namespace := request.PathParameter("namespace")
 	podID := request.PathParameter("pod")
 	containerID := request.PathParameter("container")
-	usePreviousLogs := request.QueryParameter("previous") == "true"
+	opts.Previous = request.QueryParameter("previous") == "true"
+	opts.Timestamps = request.QueryParameter("timestamps") == "true"
 
-	logStream, err := container.GetLogFile(k8sClient, namespace, podID, containerID, usePreviousLogs)
+	logStream, err := container.GetLogFile(k8sClient, namespace, podID, containerID, opts)
 	if err != nil {
 		errors.HandleInternalError(response, err)
 		return

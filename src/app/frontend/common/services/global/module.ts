@@ -14,6 +14,7 @@
 
 import {HTTP_INTERCEPTORS} from '@angular/common/http';
 import {APP_INITIALIZER, Injector, NgModule} from '@angular/core';
+import {DecoderService} from '@common/services/global/decoder';
 import {LocalConfigLoaderService} from '@common/services/global/loader';
 
 import {ActionbarService} from './actionbar';
@@ -65,6 +66,7 @@ import {PinnerService} from './pinner';
     LogService,
     ParamsService,
     LocalConfigLoaderService,
+    DecoderService,
     {
       provide: APP_INITIALIZER,
       useFactory: init,

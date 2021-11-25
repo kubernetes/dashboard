@@ -12,27 +12,19 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {
-  AfterViewInit,
-  ChangeDetectorRef,
-  Component,
-  ElementRef,
-  EventEmitter,
-  OnDestroy,
-  ViewChild,
-} from '@angular/core';
+import {AfterViewInit, ChangeDetectorRef, Component, ElementRef, OnDestroy, ViewChild} from '@angular/core';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {ActivatedRoute, Router} from '@angular/router';
 import {PodContainerList, ShellFrame, SJSCloseEvent, SJSMessageEvent, TerminalResponse} from '@api/root.api';
 import {debounce} from 'lodash';
-import {ReplaySubject, Subject, Subscription} from 'rxjs';
+import {ReplaySubject, Subject} from 'rxjs';
 import {takeUntil} from 'rxjs/operators';
 import {Terminal} from 'xterm';
 import {FitAddon} from 'xterm-addon-fit';
 
-import {EndpointManager, Resource, Utility} from '../common/services/resource/endpoint';
-import {NamespacedResourceService} from '../common/services/resource/resource';
-import {UtilityService} from '../common/services/resource/utility';
+import {EndpointManager, Resource, Utility} from '@common/services/resource/endpoint';
+import {NamespacedResourceService} from '@common/services/resource/resource';
+import {UtilityService} from '@common/services/resource/utility';
 
 declare let SockJS: any;
 

@@ -14,8 +14,8 @@
 
 apiVersion: v2
 name: kubernetes-dashboard
-version: 4.3.1
-appVersion: 2.3.0
+version: 5.0.2
+appVersion: 2.3.1
 description: General-purpose web UI for Kubernetes clusters
 keywords:
 - kubernetes
@@ -27,9 +27,9 @@ maintainers:
 - name: desaintmartin
   email: cdesaintmartin@wiremind.fr
 icon: https://raw.githubusercontent.com/kubernetes/kubernetes/master/logo/logo.svg
-kubeVersion: ">=1.14.0-0"
+kubeVersion: ">=1.19.0-0"
 dependencies:
 - name: metrics-server
-  version: 2.11.1
-  repository: https://charts.helm.sh/stable/
+  version: 3.5.0
+  repository: https://kubernetes-sigs.github.io/metrics-server/
   condition: metrics-server.enabled

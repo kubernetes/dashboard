@@ -16,7 +16,7 @@ import {Injectable} from '@angular/core';
 import {CanActivate, Router, UrlTree} from '@angular/router';
 import {LoginStatus} from '@api/root.api';
 import {Observable, of} from 'rxjs';
-import {catchError, first, switchMap} from 'rxjs/operators';
+import {catchError, switchMap, take} from 'rxjs/operators';
 import {AuthService} from '../global/authentication';
 import {HistoryService} from '../global/history';
 
@@ -31,7 +31,7 @@ export class AuthGuard implements CanActivate {
   canActivate(): Observable<boolean | UrlTree> {
     return this.authService_
       .getLoginStatus()
-      .pipe(first())
+      .pipe(take(1))
       .pipe(
         switchMap((loginStatus: LoginStatus) => {
           if (

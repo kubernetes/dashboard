@@ -29,12 +29,13 @@ spec:
     metadata:
       labels:
         k8s-app: kubernetes-dashboard
-      annotations:
-        seccomp.security.alpha.kubernetes.io/pod: 'runtime/default'
     spec:
+      securityContext:
+        seccompProfile:
+          type: RuntimeDefault
       containers:
         - name: kubernetes-dashboard
-          image: kubernetesui/dashboard:v2.3.1
+          image: kubernetesui/dashboard:v2.4.0
           imagePullPolicy: Always
           ports:
             - containerPort: 8443

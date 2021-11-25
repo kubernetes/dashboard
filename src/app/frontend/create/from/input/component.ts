@@ -14,9 +14,9 @@
 
 import {Component} from '@angular/core';
 
-import {CreateService} from '../../../common/services/create/service';
-import {HistoryService} from '../../../common/services/global/history';
-import {NamespaceService} from '../../../common/services/global/namespace';
+import {CreateService} from '@common/services/create/service';
+import {HistoryService} from '@common/services/global/history';
+import {NamespaceService} from '@common/services/global/namespace';
 
 @Component({
   selector: 'kd-create-from-input',

@@ -17,7 +17,6 @@ package container
 import (
 	"context"
 	"io"
-	"io/ioutil"
 
 	"github.com/kubernetes/dashboard/src/app/backend/resource/logs"
 	v1 "k8s.io/api/core/v1"
@@ -104,7 +103,7 @@ func readRawLogs(client kubernetes.Interface, namespace, podID string, logOption
 
 	defer readCloser.Close()
 
-	result, err := ioutil.ReadAll(readCloser)
+	result, err := io.ReadAll(readCloser)
 	if err != nil {
 		return "", err
 	}
@@ -114,12 +113,12 @@ func readRawLogs(client kubernetes.Interface, namespace, podID string, logOption
 
 // GetLogFile returns a stream to the log file which can be piped directly to the response. This avoids out of memory
 // issues. Previous indicates to read archived logs created by log rotation or container crash
-func GetLogFile(client kubernetes.Interface, namespace, podID string, container string, usePreviousLogs bool) (io.ReadCloser, error) {
+func GetLogFile(client kubernetes.Interface, namespace, podID string, container string, opts *v1.PodLogOptions) (io.ReadCloser, error) {
 	logOptions := &v1.PodLogOptions{
 		Container:  container,
 		Follow:     false,
-		Previous:   usePreviousLogs,
-		Timestamps: false,
+		Previous:   opts.Previous,
+		Timestamps: opts.Timestamps,
 	}
 	logStream, err := openStream(client, namespace, podID, logOptions)
 	return logStream, err

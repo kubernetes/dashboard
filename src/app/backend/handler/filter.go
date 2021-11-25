@@ -17,7 +17,7 @@ package handler
 import (
 	"bytes"
 	"fmt"
-	"io/ioutil"
+	"io"
 	"log"
 	"net/http"
 	"strings"
@@ -81,13 +81,13 @@ func formatRequestLog(request *restful.Request) string {
 		uri = request.Request.URL.RequestURI()
 	}
 
-	byteArr, err := ioutil.ReadAll(request.Request.Body)
+	byteArr, err := io.ReadAll(request.Request.Body)
 	if err == nil {
 		content = string(byteArr)
 	}
 
 	// Restore request body so we can read it again in regular request handlers
-	request.Request.Body = ioutil.NopCloser(bytes.NewReader(byteArr))
+	request.Request.Body = io.NopCloser(bytes.NewReader(byteArr))
 
 	// Is DEBUG level logging enabled? Yes?
 	// Great now let's filter out any content from sensitive URLs

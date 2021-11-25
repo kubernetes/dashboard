@@ -14,14 +14,14 @@
 
 import {Component, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
 import {MatDrawer} from '@angular/material/sidenav';
-import {ConfigService} from 'common/services/global/config';
-import {NavService} from '../../common/services/nav/service';
-import {PluginsConfigService} from '../../common/services/global/plugin';
+import {ConfigService} from '@common/services/global/config';
 import {Router} from '@angular/router';
-import {ResourceService} from 'common/services/resource/resource';
+import {ResourceService} from '@common/services/resource/resource';
 import {NamespaceDetail} from '@api/root.api';
-import {EndpointManager, Resource} from 'common/services/resource/endpoint';
+import {EndpointManager, Resource} from '@common/services/resource/endpoint';
 import {first} from 'rxjs/operators';
+import {NavService} from '@common/services/nav/service';
+import {PluginsConfigService} from '@common/services/global/plugin';
 
 @Component({
   selector: 'kd-nav',

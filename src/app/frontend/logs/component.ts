@@ -23,7 +23,7 @@ import {NotificationSeverity, NotificationsService} from 'common/services/global
 import {merge, Observable, of, Subject, timer} from 'rxjs';
 import {switchMap, takeUntil} from 'rxjs/operators';
 
-import {LogsDownloadDialog} from '../common/dialogs/download/dialog';
+import {LogsDownloadDialog} from '@common/dialogs/download/dialog';
 
 const i18n = {
   MSG_LOGS_ZEROSTATE_TEXT: 'The selected container has not logged any messages yet.',

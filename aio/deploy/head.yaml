@@ -38,8 +38,8 @@ metadata:
   namespace: kubernetes-dashboard-head
 spec:
   ports:
-    - port: 443
-      targetPort: 8443
+    - port: 8000
+      targetPort: 8000
   selector:
     k8s-app: kubernetes-dashboard-head
 
@@ -260,9 +260,10 @@ spec:
     metadata:
       labels:
         k8s-app: dashboard-metrics-scraper-head
-      annotations:
-        seccomp.security.alpha.kubernetes.io/pod: 'runtime/default'
     spec:
+      securityContext:
+        seccompProfile:
+          type: RuntimeDefault
       containers:
         - name: dashboard-metrics-scraper-head
           image: kubernetesdashboarddev/dashboard-metrics-sidecar:latest

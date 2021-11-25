@@ -16,7 +16,6 @@ package handler
 
 import (
 	"encoding/json"
-	"io/ioutil"
 	"os"
 	"path/filepath"
 	"reflect"
@@ -51,7 +50,7 @@ func TestGetSupportedLocales(t *testing.T) {
 	}
 
 	for _, c := range cases {
-		configFile, err := ioutil.TempFile("", "test-locale-config")
+		configFile, err := os.CreateTemp("", "test-locale-config")
 		if err != nil {
 			t.Fatalf("%s", err)
 		}

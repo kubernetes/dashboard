@@ -15,8 +15,8 @@
 import {Component, OnInit} from '@angular/core';
 import {NgForm} from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router';
-import {SEARCH_QUERY_STATE_PARAM} from '../../common/params/params';
-import {ParamsService} from '../../common/services/global/params';
+import {SEARCH_QUERY_STATE_PARAM} from '@common/params/params';
+import {ParamsService} from '@common/services/global/params';
 
 @Component({
   selector: 'kd-search',

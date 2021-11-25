@@ -113,9 +113,9 @@ limitations under the License.
 
       <kd-property *ngIf="source.fc.lun">
         <div key
-             i18n>Volume ID
+             i18n>Lun number
         </div>
-        <div value>{{source.fc.volumeID}}</div>
+        <div value>{{source.fc.lun}}</div>
       </kd-property>
 
       <kd-property *ngIf="source.fc.targetWWNs"
@@ -226,6 +226,73 @@ limitations under the License.
              i18n>Path
         </div>
         <div value>{{source.hostPath.path}}</div>
+      </kd-property>
+    </ng-container>
+
+    <ng-container *ngIf="source?.csi">
+      <kd-property>
+        <div key
+             i18n>Type
+        </div>
+        <div value>CSI</div>
+      </kd-property>
+      <kd-property *ngIf="source.csi.driver">
+        <div key
+             i18n>Driver
+        </div>
+        <div value>{{source.csi.driver}}</div>
+      </kd-property>
+      <kd-property *ngIf="source.csi.volumeHandle">
+        <div key
+             i18n>Volume Handle
+        </div>
+        <div value>{{source.csi.volumeHandle}}</div>
+      </kd-property>
+      <kd-property *ngIf="source.csi.fSType">
+        <div key
+             i18n>File System Type
+        </div>
+        <div value>{{source.csi.fSType}}</div>
+      </kd-property>
+      <kd-property *ngIf="source.csi.readOnly">
+        <div key
+             i18n>Read Only
+        </div>
+        <div value>{{source.csi.readOnly}}</div>
+      </kd-property>
+
+      <kd-property *ngIf="source.csi?.volumeAttributes"
+                   [stretched]="true"
+                   fxFlex="100">
+        <div key
+             fxFlex
+             class="kd-muted section-header"
+             i18n>Volume Attributes
+        </div>
+        <div value
+             class="kd-volume-mounts">
+          <mat-table [dataSource]="getVolumeAttributesDataSource()"
+                     [trackBy]="trackByCapacityItemName">
+            <ng-container [matColumnDef]="getVolumeAttributesColumns()[0]">
+              <mat-header-cell *matHeaderCellDef
+                               i18n>Key</mat-header-cell>
+              <mat-cell *matCellDef="let element">
+                <ng-container *ngIf="element.key">{{element.key}}</ng-container>
+                <ng-container *ngIf="!element.key">-</ng-container>
+              </mat-cell>
+            </ng-container>
+            <ng-container [matColumnDef]="getVolumeAttributesColumns()[1]">
+              <mat-header-cell *matHeaderCellDef
+                               i18n>Value</mat-header-cell>
+              <mat-cell *matCellDef="let element">
+                <ng-container *ngIf="element.value">{{element.value}}</ng-container>
+                <ng-container *ngIf="!element.value">-</ng-container>
+              </mat-cell>
+            </ng-container>
+            <mat-header-row *matHeaderRowDef="getVolumeAttributesColumns()"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: getVolumeAttributesColumns();"></mat-row>
+          </mat-table>
+        </div>
       </kd-property>
     </ng-container>
 

@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import {Component} from '@angular/core';
-import {NavService} from '../../../common/services/nav/service';
+import {NavService} from '@common/services/nav/service';
 
 @Component({
   selector: 'kd-nav-hamburger',

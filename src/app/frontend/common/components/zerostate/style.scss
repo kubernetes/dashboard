@@ -12,18 +12,19 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-@import '../../../variables';
-@import '../../../mixins';
+@use '../../../variables' as *;
+@use '../../../mixins' as *;
 
 .kd-zerostate-icon {
   @include kd-icon-size($body-font-size-base);
+
   vertical-align: middle;
 }
 
 .kd-zerostate-title {
   font-size: $headline-font-size-base;
   font-weight: $regular-font-weight;
-  margin-bottom: $baseline-grid / 2;
+  margin-bottom: $baseline-grid * .5;
 }
 
 .kd-zerostate-text {

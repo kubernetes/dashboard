@@ -14,8 +14,8 @@
 
 import {NgModule} from '@angular/core';
 
-import {ComponentsModule} from '../common/components/module';
-import {CreateServiceModule} from '../common/services/create/module';
+import {ComponentsModule} from '@common/components/module';
+import {CreateServiceModule} from '@common/services/create/module';
 import {SharedModule} from '../shared.module';
 
 import {CreateComponent} from './component';
