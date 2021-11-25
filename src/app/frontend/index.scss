@@ -80,7 +80,6 @@ code {
   line-height: $body-font-size-base;
   min-height: unset;
   padding: ($baseline-grid * 0.75) ($baseline-grid * 1.25);
-
   transition: none !important;
   word-break: break-all !important;
 
@@ -96,7 +95,6 @@ code {
 .mat-header-row,
 .mat-row {
   min-height: (5 * $baseline-grid) !important;
-
   padding: 0 (2 * $baseline-grid) !important;
 
   // Remove margin and padding on detail rows/cells
