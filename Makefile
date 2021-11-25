@@ -49,6 +49,7 @@ endif
 .PHONY: ensure-codegen
 ensure-codegen: ensure-go
 	go get -d k8s.io/code-generator@$(CODEGEN_VERSION)
+	go mod tidy
 	chmod +x $(CODEGEN_BIN)
 
 .PHONY: ensure-air
@@ -203,10 +204,10 @@ fix-ts:
 	gts fix
 
 .PHONY: check
-check: check-i18n check-license check-codegen check-go check-html check-scss check-ts
+check: check-i18n check-license check-go check-codegen check-html check-scss check-ts
 
 .PHONY: fix
-fix: fix-i18n fix-license fix-codegen fix-go fix-html fix-scss fix-ts
+fix: fix-i18n fix-license fix-go fix-codegen  fix-html fix-scss fix-ts
 
 .PHONY: start-cluster
 start-cluster:
