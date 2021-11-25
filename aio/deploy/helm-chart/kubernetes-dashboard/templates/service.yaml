@@ -17,16 +17,22 @@ kind: Service
 metadata:
   name: {{ template "kubernetes-dashboard.fullname" . }}
   labels:
-{{ include "kubernetes-dashboard.labels" . | indent 4 }}
+    {{ include "kubernetes-dashboard.labels" . | nindent 4 }}
     app.kubernetes.io/component: kubernetes-dashboard
-{{ .Values.service.clusterServiceLabel.key | indent 4}}: {{ .Values.service.clusterServiceLabel.enabled | quote }}
-{{- if .Values.service.labels }}
-{{ toYaml .Values.service.labels | indent 4 }}
-{{- end }}
-{{- if .Values.service.annotations }}
+    {{ .Values.service.clusterServiceLabel.key | nindent 4}}: {{ .Values.service.clusterServiceLabel.enabled | quote }}
+    {{- if .Values.service.labels }}
+    {{ toYaml .Values.service.labels | nindent 4 }}
+    {{- end }}
+    {{- if .Values.commonLabels }}
+    {{- include "common.tplvalues.render" ( dict "value" .Values.commonLabels "context" $ ) | nindent 4 }}
+    {{- end }}
   annotations:
-{{ toYaml .Values.service.annotations | indent 4 }}
-{{- end }}
+    {{- if .Values.commonAnnotations }}
+    {{- include "common.tplvalues.render" ( dict "value" .Values.commonAnnotations "context" $ ) | nindent 4 }}
+    {{- end }}
+    {{- if .Values.service.annotations }}
+    {{ toYaml .Values.service.annotations | nindent 4 }}
+    {{- end }}
 spec:
   type: {{ .Values.service.type }}
   ports:
@@ -43,10 +49,10 @@ spec:
 {{- end }}
 {{- if .Values.service.loadBalancerSourceRanges }}
   loadBalancerSourceRanges:
-{{ toYaml .Values.service.loadBalancerSourceRanges | indent 4 }}
+{{ toYaml .Values.service.loadBalancerSourceRanges | nindent 4 }}
 {{- end }}
   selector:
-{{ include "kubernetes-dashboard.matchLabels" . | indent 4 }}
+{{ include "kubernetes-dashboard.matchLabels" . | nindent 4 }}
     app.kubernetes.io/component: kubernetes-dashboard
 {{- if .Values.service.loadBalancerIP }}
   loadBalancerIP: {{ .Values.service.loadBalancerIP }}
