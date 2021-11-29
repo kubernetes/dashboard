@@ -15,7 +15,7 @@ Make sure, that `metrics-server` and `dashboard-metrics-scraper` are up and runn
 You probably need to update your npm dependencies. Run following commands from Dashboard's root directory:
 
 ```shell
-rm -rf node_modules && npm ci
+npm ci
 ```
 
 ### Why my `Go is not in the path`?

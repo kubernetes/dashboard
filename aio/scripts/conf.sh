@@ -23,15 +23,9 @@ FRONTEND_DIR="${TMP_DIR}/frontend"
 FRONTEND_SRC="${SRC_DIR}/app/frontend"
 DIST_DIR="${ROOT_DIR}/dist"
 CACHE_DIR="${ROOT_DIR}/.cached_tools"
-BACKEND_SRC_DIR="${ROOT_DIR}/src/app/backend"
-COVERAGE_DIR="${ROOT_DIR}/coverage"
-
-# Paths.
-GO_COVERAGE_FILE="${ROOT_DIR}/coverage/coverage.go.txt"
 
 # Binaries.
 NG_BIN="${ROOT_DIR}/node_modules/.bin/ng"
-GULP_BIN="${ROOT_DIR}/node_modules/.bin/gulp"
 BEAUTIFY_BIN="${ROOT_DIR}/node_modules/.bin/html-beautify"
 BEAUTIFY_OPTS="--end-with-newline \
                --indent-size 2 \

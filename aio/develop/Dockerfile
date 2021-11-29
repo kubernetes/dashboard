@@ -14,8 +14,7 @@
 
 # This is a Dockerfile for running and building Kubernetes dashboard
 # It installs all deps in the container and adds the dashboard source
-# This way it abstracts all required build tools away and lets the user
-# run gulp tasks on the code with only docker installed
+# This way it abstracts all required build tools away
 
 # golang is based on debian:jessie
 # Specify version to clarify which version we use.
@@ -24,7 +23,7 @@ FROM golang:1.17.0-bullseye
 # Install Node.js. Go is already installed.
 # A small tweak, apt-get update is already run by the nodejs setup script,
 # so there's no need to run it again.
-RUN curl -sL https://deb.nodesource.com/setup_14.x | bash - \
+RUN curl -sL https://deb.nodesource.com/setup_16.x | bash - \
 	&& apt-get install -y --no-install-recommends \
 	nodejs \
 	patch \
@@ -99,7 +98,7 @@ ENV GOPROXY=https://proxy.golang.org
 ENV NODE_OPTIONS=--max-old-space-size=8192
 
 # To install go modules by user, add write access to $GOPATH (default: 755)
-# `chmod +w` does not work, so set 777. 
+# `chmod +w` does not work, so set 777.
 RUN chmod 777 -R /go
 
 # Volume for source code

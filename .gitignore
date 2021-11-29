@@ -12,6 +12,7 @@ vendor/
 .go_workspace/
 .sass-cache/
 .tmp/
+.angular/
 .cached_tools/
 dist/
 coverage/
