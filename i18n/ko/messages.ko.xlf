@@ -339,6 +339,14 @@
           <context context-type="linenumber">21</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="2023790308226638135" datatype="html">
+        <source>Restart resource</source>
+        <target state="new">Restart resource</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/common/components/actionbar/detailactions/restart/template.html</context>
+          <context context-type="linenumber">21</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="315761510234903605" datatype="html">
         <source>Exec into pod</source>
         <target>파드에 Exec</target>

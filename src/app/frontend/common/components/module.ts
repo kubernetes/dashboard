@@ -25,6 +25,7 @@ import {ActionbarDetailEditComponent} from './actionbar/detailactions/edit/compo
 import {ActionbarDetailExecComponent} from './actionbar/detailactions/exec/component';
 import {ActionbarDetailLogsComponent} from './actionbar/detailactions/logs/component';
 import {ActionbarDetailPinComponent} from './actionbar/detailactions/pin/component';
+import {ActionbarDetailRestartComponent} from './actionbar/detailactions/restart/component';
 import {ActionbarDetailScaleComponent} from './actionbar/detailactions/scale/component';
 import {ActionbarDetailTriggerComponent} from './actionbar/detailactions/trigger/component';
 import {DefaultActionbar} from './actionbars/default/component';
@@ -113,6 +114,7 @@ const components = [
   ActionbarDetailLogsComponent,
   ActionbarDetailExecComponent,
   ActionbarDetailPinComponent,
+  ActionbarDetailRestartComponent,
   ActionbarComponent,
   ActionbarDetailTriggerComponent,
   BreadcrumbsComponent,

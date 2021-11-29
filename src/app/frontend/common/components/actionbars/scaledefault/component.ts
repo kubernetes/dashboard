@@ -48,4 +48,8 @@ export class ScaleDefaultActionbar implements OnInit, OnDestroy {
   scalable(): boolean {
     return this.resourceMeta.typeMeta.scalable;
   }
+
+  restartable(): boolean {
+    return this.resourceMeta.typeMeta.restartable;
+  }
 }
