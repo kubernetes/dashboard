@@ -26,10 +26,6 @@ CACHE_DIR="${ROOT_DIR}/.cached_tools"
 
 # Binaries.
 NG_BIN="${ROOT_DIR}/node_modules/.bin/ng"
-BEAUTIFY_BIN="${ROOT_DIR}/node_modules/.bin/html-beautify"
-BEAUTIFY_OPTS="--end-with-newline \
-               --indent-size 2 \
-               --wrap-attributes force-aligned"
 
 # Global constants.
 ARCH=$(uname | awk '{print tolower($0)}')

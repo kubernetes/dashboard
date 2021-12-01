@@ -15,20 +15,15 @@ limitations under the License.
 -->
 
 <div fxLayoutAlign="center">
-  <kd-card fxFlex="none"
-           [expandable]="false">
-    <div title
-         fxLayout>
+  <kd-card fxFlex="none" [expandable]="false">
+    <div title fxLayout>
       <mat-icon class="kd-error-icon">error_outline</mat-icon>
       <div>{{getErrorStatus()}}</div>
     </div>
 
-    <div content>
-      {{getErrorData()}}
-    </div>
+    <div content>{{getErrorData()}}</div>
   </kd-card>
 </div>
-
 
 <!--<div class="kd-error-center-fixed">
   <div layout="column"

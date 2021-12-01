@@ -181,11 +181,11 @@ fix-go: ensure-golangcilint
 
 .PHONY: check-html
 check-html:
-	./aio/scripts/format-html.sh --check
+	npx prettier -c --parser=html src/app/frontend/**/*.html
 
 .PHONY: fix-html
 fix-html:
-	./aio/scripts/format-html.sh
+	npx prettier -w --parser=html src/app/frontend/**/*.html
 
 .PHONY: check-scss
 check-scss:
