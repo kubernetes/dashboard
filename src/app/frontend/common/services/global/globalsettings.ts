@@ -22,22 +22,24 @@ import {catchError, switchMap, takeUntil} from 'rxjs/operators';
 
 import {AuthorizerService} from './authorizer';
 
+export const DEFAULT_SETTINGS: GlobalSettings = {
+  itemsPerPage: 10,
+  clusterName: '',
+  labelsLimit: 3,
+  logsAutoRefreshTimeInterval: 5,
+  resourceAutoRefreshTimeInterval: 5,
+  disableAccessDeniedNotifications: false,
+  defaultNamespace: 'default',
+  namespaceFallbackList: ['default'],
+};
+
 @Injectable()
 export class GlobalSettingsService {
   onSettingsUpdate = new ReplaySubject<void>();
   onPageVisibilityChange = new EventEmitter<boolean>();
 
   private readonly endpoint_ = 'api/v1/settings/global';
-  private settings_: GlobalSettings = {
-    itemsPerPage: 10,
-    clusterName: '',
-    labelsLimit: 3,
-    logsAutoRefreshTimeInterval: 5,
-    resourceAutoRefreshTimeInterval: 5,
-    disableAccessDeniedNotifications: false,
-    defaultNamespace: 'default',
-    namespaceFallbackList: ['default'],
-  };
+  private settings_: GlobalSettings = DEFAULT_SETTINGS;
   private unsubscribe_ = new Subject<void>();
   private isInitialized_ = false;
   private isPageVisible_ = true;
@@ -63,10 +65,10 @@ export class GlobalSettingsService {
       .toPromise()
       .then(
         settings => {
-          this.settings_ = settings;
+          this.settings_ = this._defaultSettings(settings);
           this.isInitialized_ = true;
           this.onSettingsUpdate.next();
-          if (onLoad) onLoad(settings);
+          if (onLoad) onLoad(this.settings_);
         },
         err => {
           this.isInitialized_ = false;
@@ -74,6 +76,19 @@ export class GlobalSettingsService {
           if (onFail) onFail(err);
         }
       );
+  }
+
+  private _defaultSettings(settings: GlobalSettings): GlobalSettings {
+    if (!settings) {
+      return DEFAULT_SETTINGS;
+    }
+
+    Object.keys(DEFAULT_SETTINGS).forEach(key => {
+      // @ts-ignore
+      settings[key] = settings[key] === undefined ? DEFAULT_SETTINGS[key] : settings[key];
+    });
+
+    return settings;
   }
 
   canI(): Observable<boolean> {
