@@ -707,11 +707,11 @@
         <target>Charges de travail</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/overview/template.html</context>
-          <context context-type="linenumber">19</context>
+          <context context-type="linenumber">17</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/search/template.html</context>
-          <context context-type="linenumber">20</context>
+          <context context-type="linenumber">18</context>
         </context-group>
       </trans-unit>
       <trans-unit id="4052582653153593975" datatype="html">
@@ -719,11 +719,11 @@
         <target>Configuration et Stockage</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/overview/template.html</context>
-          <context context-type="linenumber">56</context>
+          <context context-type="linenumber">39</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/search/template.html</context>
-          <context context-type="linenumber">52</context>
+          <context context-type="linenumber">39</context>
         </context-group>
       </trans-unit>
       <trans-unit id="444174825108794574" datatype="html">
@@ -731,7 +731,7 @@
         <target>Créer une nouvelle ressource</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/chrome/template.html</context>
-          <context context-type="linenumber">47</context>
+          <context context-type="linenumber">35</context>
         </context-group>
       </trans-unit>
       <trans-unit id="5943454400955467108" datatype="html">
@@ -747,11 +747,11 @@
         <target>Cluster</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/overview/template.html</context>
-          <context context-type="linenumber">73</context>
+          <context context-type="linenumber">48</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/search/template.html</context>
-          <context context-type="linenumber">68</context>
+          <context context-type="linenumber">47</context>
         </context-group>
       </trans-unit>
       <trans-unit id="218403386307979629" datatype="html">
@@ -1215,7 +1215,7 @@
         <target>Journaux de</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/logs/template.html</context>
-          <context context-type="linenumber">24</context>
+          <context context-type="linenumber">19</context>
         </context-group>
       </trans-unit>
       <trans-unit id="6869304038391725752" datatype="html">
@@ -1223,7 +1223,7 @@
         <target>Conteneurs</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/logs/template.html</context>
-          <context context-type="linenumber">28</context>
+          <context context-type="linenumber">22</context>
         </context-group>
       </trans-unit>
       <trans-unit id="7281870845577621674" datatype="html">
@@ -1231,7 +1231,7 @@
         <target>Conteneurs d'initilisation</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/logs/template.html</context>
-          <context context-type="linenumber">36</context>
+          <context context-type="linenumber">25</context>
         </context-group>
       </trans-unit>
       <trans-unit id="7136018875175606726" datatype="html">
@@ -1239,7 +1239,7 @@
         <target>dans</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/logs/template.html</context>
-          <context context-type="linenumber">47</context>
+          <context context-type="linenumber">31</context>
         </context-group>
       </trans-unit>
       <trans-unit id="8601511221316154701" datatype="html">
@@ -1247,7 +1247,7 @@
         <target>Télécharger les journaux</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/logs/template.html</context>
-          <context context-type="linenumber">63</context>
+          <context context-type="linenumber">40</context>
         </context-group>
       </trans-unit>
       <trans-unit id="5519023941949331063" datatype="html">
@@ -1255,7 +1255,7 @@
         <target>Inverser les couleurs</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/logs/template.html</context>
-          <context context-type="linenumber">134</context>
+          <context context-type="linenumber">95</context>
         </context-group>
       </trans-unit>
       <trans-unit id="8926664967847390286" datatype="html">
@@ -1263,7 +1263,7 @@
         <target>Réduire les caractères</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/logs/template.html</context>
-          <context context-type="linenumber">139</context>
+          <context context-type="linenumber">99</context>
         </context-group>
       </trans-unit>
       <trans-unit id="6046016632304545069" datatype="html">
@@ -1271,7 +1271,7 @@
         <target>Voir les horodatages</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/logs/template.html</context>
-          <context context-type="linenumber">144</context>
+          <context context-type="linenumber">103</context>
         </context-group>
       </trans-unit>
       <trans-unit id="1045499538393271132" datatype="html">
@@ -1279,7 +1279,7 @@
         <target state="new">Auto-refresh (every <x id="INTERPOLATION" equiv-text="{{refreshInterval}}"/> s.)</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/logs/template.html</context>
-          <context context-type="linenumber">149</context>
+          <context context-type="linenumber">107</context>
         </context-group>
       </trans-unit>
       <trans-unit id="8918818541808624034" datatype="html">
@@ -1287,7 +1287,7 @@
         <target>Voir les journaux précédents</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/logs/template.html</context>
-          <context context-type="linenumber">154</context>
+          <context context-type="linenumber">111</context>
         </context-group>
       </trans-unit>
       <trans-unit id="7109976949603290892" datatype="html">
@@ -1297,7 +1297,7 @@
                format=&quot;short&quot;>"/><x id="CLOSE_TAG_KD_DATE" ctype="x-kd_date" equiv-text="&lt;/kd-date>"/> UTC </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/logs/template.html</context>
-          <context context-type="linenumber">97</context>
+          <context context-type="linenumber">67</context>
         </context-group>
       </trans-unit>
       <trans-unit id="664932904697940475" datatype="html">
@@ -2336,7 +2336,7 @@
         <target state="new">Secrets</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/overview/template.html</context>
-          <context context-type="linenumber">64</context>
+          <context context-type="linenumber">43</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/resource/cluster/serviceaccount/detail/template.html</context>
@@ -2352,7 +2352,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/search/template.html</context>
-          <context context-type="linenumber">60</context>
+          <context context-type="linenumber">43</context>
         </context-group>
       </trans-unit>
       <trans-unit id="788903633413068121" datatype="html">
@@ -4017,7 +4017,7 @@
         <target>À propos</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/about/template.html</context>
-          <context context-type="linenumber">19</context>
+          <context context-type="linenumber">18</context>
         </context-group>
       </trans-unit>
       <trans-unit id="4814940703935231049" datatype="html">
@@ -4025,7 +4025,7 @@
         <target>Inferface utilisateur web générique pour clusters Kubernetes</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/about/template.html</context>
-          <context context-type="linenumber">30</context>
+          <context context-type="linenumber">26</context>
         </context-group>
       </trans-unit>
       <trans-unit id="3319732415078214507" datatype="html">
@@ -4037,7 +4037,7 @@
     </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/about/template.html</context>
-          <context context-type="linenumber">37</context>
+          <context context-type="linenumber">32</context>
         </context-group>
       </trans-unit>
       <trans-unit id="8773342478342887379" datatype="html">
@@ -4138,7 +4138,7 @@
         <target>Kubernetes Dashboard</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/login/template.html</context>
-          <context context-type="linenumber">23</context>
+          <context context-type="linenumber">19</context>
         </context-group>
       </trans-unit>
       <trans-unit id="5666190010581393226" datatype="html">
@@ -4146,7 +4146,7 @@
         <target>Kubeconfig</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/login/template.html</context>
-          <context context-type="linenumber">34</context>
+          <context context-type="linenumber">26</context>
         </context-group>
       </trans-unit>
       <trans-unit id="8643289769990675407" datatype="html">
@@ -4154,7 +4154,7 @@
         <target>Basic</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/login/template.html</context>
-          <context context-type="linenumber">36</context>
+          <context context-type="linenumber">27</context>
         </context-group>
       </trans-unit>
       <trans-unit id="3039940756451018621" datatype="html">
@@ -4162,7 +4162,7 @@
         <target>Jeton</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/login/template.html</context>
-          <context context-type="linenumber">38</context>
+          <context context-type="linenumber">28</context>
         </context-group>
       </trans-unit>
       <trans-unit id="2135976822395163664" datatype="html">
@@ -4174,7 +4174,7 @@
               </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/login/template.html</context>
-          <context context-type="linenumber">44</context>
+          <context context-type="linenumber">32</context>
         </context-group>
       </trans-unit>
       <trans-unit id="7927427229271598667" datatype="html">
@@ -4186,7 +4186,7 @@
               </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/login/template.html</context>
-          <context context-type="linenumber">48</context>
+          <context context-type="linenumber">41</context>
         </context-group>
       </trans-unit>
       <trans-unit id="1268395641466243700" datatype="html">
@@ -4199,7 +4199,7 @@
               </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/login/template.html</context>
-          <context context-type="linenumber">52</context>
+          <context context-type="linenumber">47</context>
         </context-group>
       </trans-unit>
       <trans-unit id="5434669375404653384" datatype="html">
@@ -4207,7 +4207,7 @@
         <target>Saisissez un jeton</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/login/template.html</context>
-          <context context-type="linenumber">66</context>
+          <context context-type="linenumber">63</context>
         </context-group>
       </trans-unit>
       <trans-unit id="5248717555542428023" datatype="html">
@@ -4215,7 +4215,7 @@
         <target>Nom d'utilisateur</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/login/template.html</context>
-          <context context-type="linenumber">79</context>
+          <context context-type="linenumber">76</context>
         </context-group>
       </trans-unit>
       <trans-unit id="1431416938026210429" datatype="html">
@@ -4223,7 +4223,7 @@
         <target>Mot de passe</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/login/template.html</context>
-          <context context-type="linenumber">90</context>
+          <context context-type="linenumber">88</context>
         </context-group>
       </trans-unit>
       <trans-unit id="1498711031361519795" datatype="html">
@@ -4231,7 +4231,7 @@
         <target>Sélectionnez un fichier kubeconfig</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/login/template.html</context>
-          <context context-type="linenumber">99</context>
+          <context context-type="linenumber">97</context>
         </context-group>
       </trans-unit>
       <trans-unit id="1649590266934618453" datatype="html">
@@ -4244,7 +4244,7 @@
           </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/login/template.html</context>
-          <context context-type="linenumber">109</context>
+          <context context-type="linenumber">102</context>
         </context-group>
       </trans-unit>
       <trans-unit id="6663783128602596673" datatype="html">
@@ -4254,7 +4254,7 @@
           </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/login/template.html</context>
-          <context context-type="linenumber">125</context>
+          <context context-type="linenumber">122</context>
         </context-group>
       </trans-unit>
       <trans-unit id="4170719254013309689" datatype="html">
@@ -4264,7 +4264,7 @@
           </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/login/template.html</context>
-          <context context-type="linenumber">134</context>
+          <context context-type="linenumber">133</context>
         </context-group>
       </trans-unit>
       <trans-unit id="1911298252045423500" datatype="html">
@@ -4280,7 +4280,7 @@
         <target>Créer depuis un fichier</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/create/template.html</context>
-          <context context-type="linenumber">24</context>
+          <context context-type="linenumber">23</context>
         </context-group>
       </trans-unit>
       <trans-unit id="8451232601628619325" datatype="html">
@@ -4288,7 +4288,7 @@
         <target>Créer depuis un formulaire</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/create/template.html</context>
-          <context context-type="linenumber">28</context>
+          <context context-type="linenumber">26</context>
         </context-group>
       </trans-unit>
       <trans-unit id="728108318392658678" datatype="html">
@@ -4304,7 +4304,7 @@
   </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/shell/template.html</context>
-          <context context-type="linenumber">22</context>
+          <context context-type="linenumber">19</context>
         </context-group>
       </trans-unit>
       <trans-unit id="6099594451254122208" datatype="html">
@@ -5052,11 +5052,11 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/overview/template.html</context>
-          <context context-type="linenumber">46</context>
+          <context context-type="linenumber">33</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/search/template.html</context>
-          <context context-type="linenumber">42</context>
+          <context context-type="linenumber">33</context>
         </context-group>
       </trans-unit>
       <trans-unit id="6117946241126833991" datatype="html">

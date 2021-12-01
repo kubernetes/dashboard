@@ -50,14 +50,12 @@ limitations under the License.
     #logViewContainer
     class="kd-log-line-container"
     (scroll)="onLogsScroll()"
-    [ngClass]="{'kd-logs-text-color-invert': logService?.getInverted(), 'kd-logs-text-color': !logService?.getInverted()}"
-  >
+    [ngClass]="{'kd-logs-text-color-invert': logService?.getInverted(), 'kd-logs-text-color': !logService?.getInverted()}">
     <div kdLoadingSpinner [isLoading]="isLoading"></div>
     <div fxFlex fxLayout="column" fxLayoutGap="2px">
       <div
         *ngFor="let item of logsSet"
-        [ngClass]="{'kd-logs-element-compact': logService.getCompact(), 'kd-logs-element': !logService.getCompact()}"
-      >
+        [ngClass]="{'kd-logs-element-compact': logService.getCompact(), 'kd-logs-element': !logService.getCompact()}">
         <span>{{item}}</span>
       </div>
     </div>

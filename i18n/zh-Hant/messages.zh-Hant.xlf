@@ -908,7 +908,7 @@
         <target>容器</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/logs/template.html</context>
-          <context context-type="linenumber">28</context>
+          <context context-type="linenumber">22</context>
         </context-group>
       </trans-unit>
       <trans-unit id="8829497237648100098" datatype="html">
@@ -3073,7 +3073,7 @@
         <target state="new">Secrets</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/overview/template.html</context>
-          <context context-type="linenumber">64</context>
+          <context context-type="linenumber">43</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/resource/cluster/serviceaccount/detail/template.html</context>
@@ -3089,7 +3089,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/search/template.html</context>
-          <context context-type="linenumber">60</context>
+          <context context-type="linenumber">43</context>
         </context-group>
       </trans-unit>
       <trans-unit id="788903633413068121" datatype="html">
@@ -3445,7 +3445,7 @@
         <target>創建新資源</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/chrome/template.html</context>
-          <context context-type="linenumber">47</context>
+          <context context-type="linenumber">35</context>
         </context-group>
       </trans-unit>
       <trans-unit id="5943454400955467108" datatype="html">
@@ -3548,11 +3548,11 @@
         <target>集群</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/overview/template.html</context>
-          <context context-type="linenumber">73</context>
+          <context context-type="linenumber">48</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/search/template.html</context>
-          <context context-type="linenumber">68</context>
+          <context context-type="linenumber">47</context>
         </context-group>
       </trans-unit>
       <trans-unit id="7920227693577024356" datatype="html">
@@ -3560,11 +3560,11 @@
         <target>工作負載</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/overview/template.html</context>
-          <context context-type="linenumber">19</context>
+          <context context-type="linenumber">17</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/search/template.html</context>
-          <context context-type="linenumber">20</context>
+          <context context-type="linenumber">18</context>
         </context-group>
       </trans-unit>
       <trans-unit id="4052582653153593975" datatype="html">
@@ -3572,11 +3572,11 @@
         <target>配置和存儲</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/overview/template.html</context>
-          <context context-type="linenumber">56</context>
+          <context context-type="linenumber">39</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/search/template.html</context>
-          <context context-type="linenumber">52</context>
+          <context context-type="linenumber">39</context>
         </context-group>
       </trans-unit>
       <trans-unit id="7542300534444838884" datatype="html">
@@ -3584,7 +3584,7 @@
         <target>Kubernetes Dashboard</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/login/template.html</context>
-          <context context-type="linenumber">23</context>
+          <context context-type="linenumber">19</context>
         </context-group>
       </trans-unit>
       <trans-unit id="5666190010581393226" datatype="html">
@@ -3592,7 +3592,7 @@
         <target>Kubeconfig</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/login/template.html</context>
-          <context context-type="linenumber">34</context>
+          <context context-type="linenumber">26</context>
         </context-group>
       </trans-unit>
       <trans-unit id="8643289769990675407" datatype="html">
@@ -3600,7 +3600,7 @@
         <target>基本</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/login/template.html</context>
-          <context context-type="linenumber">36</context>
+          <context context-type="linenumber">27</context>
         </context-group>
       </trans-unit>
       <trans-unit id="3039940756451018621" datatype="html">
@@ -3608,7 +3608,7 @@
         <target>Token</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/login/template.html</context>
-          <context context-type="linenumber">38</context>
+          <context context-type="linenumber">28</context>
         </context-group>
       </trans-unit>
       <trans-unit id="2135976822395163664" datatype="html">
@@ -3618,7 +3618,7 @@
               </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/login/template.html</context>
-          <context context-type="linenumber">44</context>
+          <context context-type="linenumber">32</context>
         </context-group>
       </trans-unit>
       <trans-unit id="7927427229271598667" datatype="html">
@@ -3628,7 +3628,7 @@
               </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/login/template.html</context>
-          <context context-type="linenumber">48</context>
+          <context context-type="linenumber">41</context>
         </context-group>
       </trans-unit>
       <trans-unit id="1268395641466243700" datatype="html">
@@ -3638,7 +3638,7 @@
               </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/login/template.html</context>
-          <context context-type="linenumber">52</context>
+          <context context-type="linenumber">47</context>
         </context-group>
       </trans-unit>
       <trans-unit id="5434669375404653384" datatype="html">
@@ -3646,7 +3646,7 @@
         <target>輸入 token</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/login/template.html</context>
-          <context context-type="linenumber">66</context>
+          <context context-type="linenumber">63</context>
         </context-group>
       </trans-unit>
       <trans-unit id="5248717555542428023" datatype="html">
@@ -3654,7 +3654,7 @@
         <target>用戶名</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/login/template.html</context>
-          <context context-type="linenumber">79</context>
+          <context context-type="linenumber">76</context>
         </context-group>
       </trans-unit>
       <trans-unit id="1431416938026210429" datatype="html">
@@ -3662,7 +3662,7 @@
         <target>密碼</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/login/template.html</context>
-          <context context-type="linenumber">90</context>
+          <context context-type="linenumber">88</context>
         </context-group>
       </trans-unit>
       <trans-unit id="1498711031361519795" datatype="html">
@@ -3670,7 +3670,7 @@
         <target>選擇 kubeconfig 檔案</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/login/template.html</context>
-          <context context-type="linenumber">99</context>
+          <context context-type="linenumber">97</context>
         </context-group>
       </trans-unit>
       <trans-unit id="1649590266934618453" datatype="html">
@@ -3683,7 +3683,7 @@
           </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/login/template.html</context>
-          <context context-type="linenumber">109</context>
+          <context context-type="linenumber">102</context>
         </context-group>
       </trans-unit>
       <trans-unit id="6663783128602596673" datatype="html">
@@ -3693,7 +3693,7 @@
           </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/login/template.html</context>
-          <context context-type="linenumber">125</context>
+          <context context-type="linenumber">122</context>
         </context-group>
       </trans-unit>
       <trans-unit id="4170719254013309689" datatype="html">
@@ -3703,7 +3703,7 @@
           </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/login/template.html</context>
-          <context context-type="linenumber">134</context>
+          <context context-type="linenumber">133</context>
         </context-group>
       </trans-unit>
       <trans-unit id="1726363342938046830" datatype="html">
@@ -3711,7 +3711,7 @@
         <target>關於</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/about/template.html</context>
-          <context context-type="linenumber">19</context>
+          <context context-type="linenumber">18</context>
         </context-group>
       </trans-unit>
       <trans-unit id="4814940703935231049" datatype="html">
@@ -3719,7 +3719,7 @@
         <target>Kubernetes 叢集通用的 Web UI</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/about/template.html</context>
-          <context context-type="linenumber">30</context>
+          <context context-type="linenumber">26</context>
         </context-group>
       </trans-unit>
       <trans-unit id="3319732415078214507" datatype="html">
@@ -3731,7 +3731,7 @@
     </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/about/template.html</context>
-          <context context-type="linenumber">37</context>
+          <context context-type="linenumber">32</context>
         </context-group>
       </trans-unit>
       <trans-unit id="3207734347890377749" datatype="html">
@@ -3851,7 +3851,7 @@
         <target>從檔案建立</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/create/template.html</context>
-          <context context-type="linenumber">24</context>
+          <context context-type="linenumber">23</context>
         </context-group>
       </trans-unit>
       <trans-unit id="8451232601628619325" datatype="html">
@@ -3859,7 +3859,7 @@
         <target>從表單建立</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/create/template.html</context>
-          <context context-type="linenumber">28</context>
+          <context context-type="linenumber">26</context>
         </context-group>
       </trans-unit>
       <trans-unit id="6099594451254122208" datatype="html">
@@ -4653,11 +4653,11 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/overview/template.html</context>
-          <context context-type="linenumber">46</context>
+          <context context-type="linenumber">33</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/search/template.html</context>
-          <context context-type="linenumber">42</context>
+          <context context-type="linenumber">33</context>
         </context-group>
       </trans-unit>
       <trans-unit id="6117946241126833991" datatype="html">
@@ -4875,7 +4875,7 @@
         <target>日誌</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/logs/template.html</context>
-          <context context-type="linenumber">24</context>
+          <context context-type="linenumber">19</context>
         </context-group>
       </trans-unit>
       <trans-unit id="7281870845577621674" datatype="html">
@@ -4883,7 +4883,7 @@
         <target>初始化容器</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/logs/template.html</context>
-          <context context-type="linenumber">36</context>
+          <context context-type="linenumber">25</context>
         </context-group>
       </trans-unit>
       <trans-unit id="7136018875175606726" datatype="html">
@@ -4891,7 +4891,7 @@
         <target>in</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/logs/template.html</context>
-          <context context-type="linenumber">47</context>
+          <context context-type="linenumber">31</context>
         </context-group>
       </trans-unit>
       <trans-unit id="8601511221316154701" datatype="html">
@@ -4899,7 +4899,7 @@
         <target>下載日誌</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/logs/template.html</context>
-          <context context-type="linenumber">63</context>
+          <context context-type="linenumber">40</context>
         </context-group>
       </trans-unit>
       <trans-unit id="5519023941949331063" datatype="html">
@@ -4907,7 +4907,7 @@
         <target>反轉顔色</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/logs/template.html</context>
-          <context context-type="linenumber">134</context>
+          <context context-type="linenumber">95</context>
         </context-group>
       </trans-unit>
       <trans-unit id="8926664967847390286" datatype="html">
@@ -4915,7 +4915,7 @@
         <target>減小字體大小</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/logs/template.html</context>
-          <context context-type="linenumber">139</context>
+          <context context-type="linenumber">99</context>
         </context-group>
       </trans-unit>
       <trans-unit id="6046016632304545069" datatype="html">
@@ -4923,7 +4923,7 @@
         <target>顯示時間戳</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/logs/template.html</context>
-          <context context-type="linenumber">144</context>
+          <context context-type="linenumber">103</context>
         </context-group>
       </trans-unit>
       <trans-unit id="1045499538393271132" datatype="html">
@@ -4931,7 +4931,7 @@
         <target state="new">Auto-refresh (every <x id="INTERPOLATION" equiv-text="{{refreshInterval}}"/> s.)</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/logs/template.html</context>
-          <context context-type="linenumber">149</context>
+          <context context-type="linenumber">107</context>
         </context-group>
       </trans-unit>
       <trans-unit id="8918818541808624034" datatype="html">
@@ -4939,7 +4939,7 @@
         <target>顯示以前的日誌</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/logs/template.html</context>
-          <context context-type="linenumber">154</context>
+          <context context-type="linenumber">111</context>
         </context-group>
       </trans-unit>
       <trans-unit id="7109976949603290892" datatype="html">
@@ -4949,7 +4949,7 @@
                format=&quot;short&quot;>"/><x id="CLOSE_TAG_KD_DATE" ctype="x-kd_date" equiv-text="&lt;/kd-date>"/> UTC </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/logs/template.html</context>
-          <context context-type="linenumber">97</context>
+          <context context-type="linenumber">67</context>
         </context-group>
       </trans-unit>
       <trans-unit id="664932904697940475" datatype="html">
@@ -6343,7 +6343,7 @@
   </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/shell/template.html</context>
-          <context context-type="linenumber">22</context>
+          <context context-type="linenumber">19</context>
         </context-group>
       </trans-unit>
     </body>

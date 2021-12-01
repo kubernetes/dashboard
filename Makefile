@@ -181,11 +181,11 @@ fix-go: ensure-golangcilint
 
 .PHONY: check-html
 check-html:
-	npx prettier -c --parser=html src/app/frontend/**/*.html
+	npx prettier -c --parser=html --bracket-same-line src/app/frontend/**/*.html
 
 .PHONY: fix-html
 fix-html:
-	npx prettier -w --parser=html src/app/frontend/**/*.html
+	npx prettier -w --parser=html --bracket-same-line src/app/frontend/**/*.html
 
 .PHONY: check-scss
 check-scss:

@@ -63,8 +63,7 @@ limitations under the License.
               placeholder="Enter token"
               type="password"
               required
-              (change)="onChange($event)"
-            />
+              (change)="onChange($event)" />
           </mat-form-field>
           <div *ngSwitchCase="loginModes.Basic" fxLayout="column">
             <mat-form-field fxFlex class="kd-login-input">
@@ -75,8 +74,7 @@ limitations under the License.
                 i18n-placeholder
                 placeholder="Username"
                 required
-                (change)="onChange($event)"
-              />
+                (change)="onChange($event)" />
             </mat-form-field>
 
             <mat-form-field fxFlex class="kd-login-input">
@@ -88,8 +86,7 @@ limitations under the License.
                 placeholder="Password"
                 type="password"
                 required
-                (change)="onChange($event)"
-              />
+                (change)="onChange($event)" />
             </mat-form-field>
           </div>
 
@@ -104,8 +101,7 @@ limitations under the License.
             localhost. Read more
             <a
               href="https://github.com/kubernetes/dashboard/blob/master/docs/user/accessing-dashboard/README.md#login-not-available"
-              target="_blank"
-            >
+              target="_blank">
               here </a
             >.
           </mat-error>
@@ -118,8 +114,7 @@ limitations under the License.
             type="submit"
             class="kd-login-button"
             [disabled]="!isLoginEnabled()"
-            i18n
-          >
+            i18n>
             Sign in
           </button>
           <button
@@ -129,8 +124,7 @@ limitations under the License.
             class="kd-login-button"
             *ngIf="isSkipButtonEnabled()"
             (click)="skip()"
-            i18n
-          >
+            i18n>
             Skip
           </button>
         </div>
