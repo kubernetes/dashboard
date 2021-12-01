@@ -15,52 +15,21 @@ limitations under the License.
 -->
 
 <mat-menu #actions="matMenu">
-  <a mat-menu-item
-     *ngIf="isLogsEnabled()"
-     [routerLink]="getLogsHref()"
-     queryParamsHandling="preserve"
-     i18n>Logs</a>
-  <a mat-menu-item
-     *ngIf="isExecEnabled()"
-     [routerLink]="getExecHref()"
-     queryParamsHandling="preserve"
-     i18n>Exec</a>
-  <button mat-menu-item
-          *ngIf="isTriggerEnabled()"
-          (click)="onTrigger()"
-          i18n>Trigger</button>
-  <button mat-menu-item
-          *ngIf="isScaleEnabled()"
-          (click)="onScale()"
-          i18n>Scale</button>
-  <button mat-menu-item
-          *ngIf="isPinEnabled()"
-          (click)="isPinned() ? onUnpin() : onPin()">
+  <a mat-menu-item *ngIf="isLogsEnabled()" [routerLink]="getLogsHref()" queryParamsHandling="preserve" i18n>Logs</a>
+  <a mat-menu-item *ngIf="isExecEnabled()" [routerLink]="getExecHref()" queryParamsHandling="preserve" i18n>Exec</a>
+  <button mat-menu-item *ngIf="isTriggerEnabled()" (click)="onTrigger()" i18n>Trigger</button>
+  <button mat-menu-item *ngIf="isScaleEnabled()" (click)="onScale()" i18n>Scale</button>
+  <button mat-menu-item *ngIf="isPinEnabled()" (click)="isPinned() ? onUnpin() : onPin()">
     <ng-container [ngSwitch]="isPinned()">
-      <ng-container *ngSwitchCase="true"
-                    i18n>Unpin</ng-container>
-      <ng-container *ngSwitchCase="false"
-                    i18n>Pin</ng-container>
+      <ng-container *ngSwitchCase="true" i18n>Unpin</ng-container>
+      <ng-container *ngSwitchCase="false" i18n>Pin</ng-container>
     </ng-container>
   </button>
-  <button mat-menu-item
-          id="edit"
-          (click)="onEdit()"
-          i18n>Edit</button>
-  <button mat-menu-item
-          *ngIf="isRestartEnabled()"
-          (click)="onRestart()"
-          i18n>Restart</button>
-  <button mat-menu-item
-          id="delete"
-          (click)="onDelete()"
-          i18n>Delete</button>
+  <button mat-menu-item id="edit" (click)="onEdit()" i18n>Edit</button>
+  <button mat-menu-item *ngIf="isRestartEnabled()" (click)="onRestart()" i18n>Restart</button>
+  <button mat-menu-item id="delete" (click)="onDelete()" i18n>Delete</button>
 </mat-menu>
 
-<a mat-icon-button
-   class="kd-muted"
-   id="more-menu"
-   [matMenuTriggerFor]="actions"
-   (click)="$event.stopPropagation()">
+<a mat-icon-button class="kd-muted" id="more-menu" [matMenuTriggerFor]="actions" (click)="$event.stopPropagation()">
   <mat-icon matTooltip="Actions">more_vert</mat-icon>
 </a>

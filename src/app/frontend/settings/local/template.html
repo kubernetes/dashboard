@@ -15,43 +15,30 @@ limitations under the License.
 -->
 
 <kd-card [expandable]="true">
-  <div title
-       i18n>Local settings
-  </div>
+  <div title i18n>Local settings</div>
   <div content>
     <p i18n>
-      Local settings are stored in the browser cookies, so they are not synchronized between multiple devices.
-      Changes are applied automatically on every change.
+      Local settings are stored in the browser cookies, so they are not synchronized between multiple devices. Changes
+      are applied automatically on every change.
     </p>
-    <br>
-    <kd-settings-entry key="Theme"
-                       i18n-key
-                       desc="Choose color theme of the dashboard"
-                       i18n-desc>
+    <br />
+    <kd-settings-entry key="Theme" i18n-key desc="Choose color theme of the dashboard" i18n-desc>
       <mat-form-field fxFlex>
-        <mat-select [(value)]="selectedTheme"
-                    (valueChange)="onThemeChange()"
-                    fxFlex>
+        <mat-select [(value)]="selectedTheme" (valueChange)="onThemeChange()" fxFlex>
           <mat-option [value]="systemTheme">System</mat-option>
-          <mat-option *ngFor="let theme of themes"
-                      [value]="theme.name">
-            {{theme.displayName}}
-          </mat-option>
+          <mat-option *ngFor="let theme of themes" [value]="theme.name"> {{theme.displayName}} </mat-option>
         </mat-select>
       </mat-form-field>
     </kd-settings-entry>
-    <kd-settings-entry *ngIf="isProdMode()"
-                       key="Language"
-                       i18n-key
-                       desc="Change the language of the dashboard"
-                       i18n-desc>
+    <kd-settings-entry
+      *ngIf="isProdMode()"
+      key="Language"
+      i18n-key
+      desc="Change the language of the dashboard"
+      i18n-desc>
       <mat-form-field fxFlex>
-        <mat-select (ngModelChange)="onLanguageSelected($event)"
-                    [(ngModel)]="selectedLanguage">
-          <mat-option *ngFor="let language of languages"
-                      [value]="language.value">
-            {{language.label}}
-          </mat-option>
+        <mat-select (ngModelChange)="onLanguageSelected($event)" [(ngModel)]="selectedLanguage">
+          <mat-option *ngFor="let language of languages" [value]="language.value"> {{language.label}} </mat-option>
         </mat-select>
       </mat-form-field>
     </kd-settings-entry>

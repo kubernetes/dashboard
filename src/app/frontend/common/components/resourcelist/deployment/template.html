@@ -14,44 +14,33 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<kd-graph-metrics [metrics]="cumulativeMetrics"
-                  *ngIf="showMetrics"></kd-graph-metrics>
+<kd-graph-metrics [metrics]="cumulativeMetrics" *ngIf="showMetrics"></kd-graph-metrics>
 
-<kd-card role="table"
-         [hidden]="isHidden()">
-  <div title
-       fxLayout="row"
-       i18n>Deployments</div>
-  <div description><span class="kd-muted-light"
-          i18n>Items:&nbsp;</span>{{totalItems}}</div>
+<kd-card role="table" [hidden]="isHidden()">
+  <div title fxLayout="row" i18n>Deployments</div>
+  <div description><span class="kd-muted-light" i18n>Items:&nbsp;</span>{{totalItems}}</div>
   <div actions>
     <kd-card-list-filter></kd-card-list-filter>
   </div>
 
-  <div content
-       [hidden]="showZeroState()">
-    <div kdLoadingSpinner
-         [isLoading]="isLoading"></div>
+  <div content [hidden]="showZeroState()">
+    <div kdLoadingSpinner [isLoading]="isLoading"></div>
 
-    <mat-table [dataSource]="getData()"
-               [trackBy]="trackByResource"
-               matSort
-               matSortActive="created"
-               matSortDisableClear
-               matSortDirection="asc"
-               multiTemplateDataRows>
+    <mat-table
+      [dataSource]="getData()"
+      [trackBy]="trackByResource"
+      matSort
+      matSortActive="created"
+      matSortDisableClear
+      matSortDirection="asc"
+      multiTemplateDataRows>
       <ng-container matColumnDef="statusicon">
         <mat-header-cell *matHeaderCellDef></mat-header-cell>
         <mat-cell *matCellDef="let deployment; let index=index">
-          <mat-icon [ngClass]="getStatus(deployment).iconClass"
-                    [matTooltip]="getStatus(deployment).iconTooltip">
-            <ng-container *ngIf="showHoverIcon(index, deployment); else showStatus">
-              remove_red_eye
-            </ng-container>
+          <mat-icon [ngClass]="getStatus(deployment).iconClass" [matTooltip]="getStatus(deployment).iconTooltip">
+            <ng-container *ngIf="showHoverIcon(index, deployment); else showStatus"> remove_red_eye </ng-container>
 
-            <ng-template #showStatus>
-              {{getStatus(deployment).iconName}}
-            </ng-template>
+            <ng-template #showStatus> {{getStatus(deployment).iconName}} </ng-template>
           </mat-icon>
         </mat-cell>
       </ng-container>
@@ -63,103 +52,80 @@ limitations under the License.
       </ng-container>
 
       <ng-container matColumnDef="name">
-        <mat-header-cell *matHeaderCellDef
-                         mat-sort-header
-                         disableClear="true"
-                         class="kd-col-gt"
-                         i18n>Name</mat-header-cell>
-        <mat-cell *matCellDef="let deployment"
-                  class="kd-col-gt">
-          <a (click)="$event.stopPropagation()"
-             [routerLink]="getDetailsHref(deployment.objectMeta.name, deployment.objectMeta.namespace)"
-             queryParamsHandling="preserve">
+        <mat-header-cell *matHeaderCellDef mat-sort-header disableClear="true" class="kd-col-gt" i18n
+          >Name</mat-header-cell
+        >
+        <mat-cell *matCellDef="let deployment" class="kd-col-gt">
+          <a
+            (click)="$event.stopPropagation()"
+            [routerLink]="getDetailsHref(deployment.objectMeta.name, deployment.objectMeta.namespace)"
+            queryParamsHandling="preserve">
             {{deployment.objectMeta.name}}
           </a>
         </mat-cell>
       </ng-container>
 
-      <ng-container *ngIf="shouldShowColumn('namespace')"
-                    matColumnDef="namespace">
-        <mat-header-cell *matHeaderCellDef
-                         class="kd-col-md"
-                         i18n>Namespace</mat-header-cell>
-        <mat-cell *matCellDef="let deployment"
-                  class="kd-col-md">{{deployment.objectMeta.namespace}}</mat-cell>
+      <ng-container *ngIf="shouldShowColumn('namespace')" matColumnDef="namespace">
+        <mat-header-cell *matHeaderCellDef class="kd-col-md" i18n>Namespace</mat-header-cell>
+        <mat-cell *matCellDef="let deployment" class="kd-col-md">{{deployment.objectMeta.namespace}}</mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="images">
-        <mat-header-cell *matHeaderCellDef
-                         class="kd-col-gt"
-                         i18n>Images</mat-header-cell>
-        <mat-cell *matCellDef="let deployment"
-                  class="kd-col-gt">
+        <mat-header-cell *matHeaderCellDef class="kd-col-gt" i18n>Images</mat-header-cell>
+        <mat-cell *matCellDef="let deployment" class="kd-col-gt">
           <kd-chips [map]="deployment.containerImages"></kd-chips>
         </mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="labels">
-        <mat-header-cell *matHeaderCellDef
-                         class="kd-col-gt"
-                         i18n>Labels</mat-header-cell>
-        <mat-cell *matCellDef="let deployment"
-                  class="kd-col-gt">
+        <mat-header-cell *matHeaderCellDef class="kd-col-gt" i18n>Labels</mat-header-cell>
+        <mat-cell *matCellDef="let deployment" class="kd-col-gt">
           <kd-chips [map]="deployment.objectMeta.labels"></kd-chips>
         </mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="pods">
-        <mat-header-cell *matHeaderCellDef
-                         class="kd-col-xs"
-                         i18n>Pods</mat-header-cell>
-        <mat-cell *matCellDef="let deployment"
-                  class="kd-col-xs">
+        <mat-header-cell *matHeaderCellDef class="kd-col-xs" i18n>Pods</mat-header-cell>
+        <mat-cell *matCellDef="let deployment" class="kd-col-xs">
           {{deployment.pods.running}} / {{deployment.pods.desired}}
         </mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="created">
-        <mat-header-cell *matHeaderCellDef
-                         mat-sort-header
-                         disableClear="true"
-                         class="kd-col-sm"
-                         i18n>Created</mat-header-cell>
-        <mat-cell *matCellDef="let deployment"
-                  class="kd-col-sm">
-          <kd-date [date]="deployment.objectMeta.creationTimestamp"
-                   relative></kd-date>
+        <mat-header-cell *matHeaderCellDef mat-sort-header disableClear="true" class="kd-col-sm" i18n
+          >Created</mat-header-cell
+        >
+        <mat-cell *matCellDef="let deployment" class="kd-col-sm">
+          <kd-date [date]="deployment.objectMeta.creationTimestamp" relative></kd-date>
         </mat-cell>
       </ng-container>
 
-      <ng-container *ngFor="let col of getActionColumns()"
-                    [matColumnDef]="col.name">
+      <ng-container *ngFor="let col of getActionColumns()" [matColumnDef]="col.name">
         <mat-header-cell *matHeaderCellDef></mat-header-cell>
         <mat-cell *matCellDef="let deployment">
-          <kd-dynamic-cell [component]="col.component"
-                           [resource]="deployment"></kd-dynamic-cell>
+          <kd-dynamic-cell [component]="col.component" [resource]="deployment"></kd-dynamic-cell>
         </mat-cell>
       </ng-container>
 
       <mat-header-row *matHeaderRowDef="getColumns()"></mat-header-row>
-      <mat-row (mouseover)="onRowOver(index, row)"
-               (mouseleave)="onRowLeave()"
-               (click)="expand(index, row)"
-               [ngClass]="{'kd-no-bottom-border': isRowExpanded(index, row), 'kd-clickable': hasErrors(row)}"
-               *matRowDef="let row; columns: getColumns(); let index=index"></mat-row>
-      <mat-row class="kd-detail-row"
-               [ngClass]="{'kd-hidden': !isRowExpanded(index, row)}"
-               *matRowDef="let row; columns: ['statusDetail']; let index=index"></mat-row>
+      <mat-row
+        (mouseover)="onRowOver(index, row)"
+        (mouseleave)="onRowLeave()"
+        (click)="expand(index, row)"
+        [ngClass]="{'kd-no-bottom-border': isRowExpanded(index, row), 'kd-clickable': hasErrors(row)}"
+        *matRowDef="let row; columns: getColumns(); let index=index"></mat-row>
+      <mat-row
+        class="kd-detail-row"
+        [ngClass]="{'kd-hidden': !isRowExpanded(index, row)}"
+        *matRowDef="let row; columns: ['statusDetail']; let index=index"></mat-row>
     </mat-table>
 
     <div [hidden]="totalItems <= itemsPerPage">
-      <mat-paginator [length]="totalItems"
-                     [pageSize]="itemsPerPage"
-                     hidePageSize
-                     showFirstLastButtons></mat-paginator>
+      <mat-paginator [length]="totalItems" [pageSize]="itemsPerPage" hidePageSize showFirstLastButtons></mat-paginator>
     </div>
   </div>
 
-  <div content
-       [hidden]="!showZeroState()">
+  <div content [hidden]="!showZeroState()">
     <kd-list-zero-state></kd-list-zero-state>
   </div>
 </kd-card>

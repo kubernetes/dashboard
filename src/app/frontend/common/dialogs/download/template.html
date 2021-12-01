@@ -14,25 +14,13 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<h2 *ngIf="!hasForbiddenError()"
-    mat-dialog-title
-    i18n>
-  Download logs file
-</h2>
+<h2 *ngIf="!hasForbiddenError()" mat-dialog-title i18n>Download logs file</h2>
 <mat-dialog-content class="kd-dialog-text">
   <ng-container *ngIf="!hasForbiddenError()">
     <div i18n>Size: {{loaded | kdMemory}} B</div>
-    <mat-progress-bar class="kd-download-progress-bar"
-                      [mode]="getDownloadMode()"
-                      value="100"></mat-progress-bar>
-    <div *ngIf="!finished"
-         i18n>
-      Preparing file to download...
-    </div>
-    <div *ngIf="finished"
-         i18n>
-      File is ready to download!
-    </div>
+    <mat-progress-bar class="kd-download-progress-bar" [mode]="getDownloadMode()" value="100"></mat-progress-bar>
+    <div *ngIf="!finished" i18n>Preparing file to download...</div>
+    <div *ngIf="finished" i18n>File is ready to download!</div>
   </ng-container>
   <ng-container *ngIf="hasForbiddenError()">
     <div class="kd-download-info">
@@ -43,23 +31,13 @@ limitations under the License.
 </mat-dialog-content>
 <mat-dialog-actions>
   <ng-container *ngIf="!hasForbiddenError()">
-    <button mat-button
-            color="primary"
-            [disabled]="!finished"
-            (click)="save()"
-            i18n>Save</button>
-    <button mat-button
-            color="primary"
-            (click)="abort()"
-            i18n>Abort</button>
+    <button mat-button color="primary" [disabled]="!finished" (click)="save()" i18n>Save</button>
+    <button mat-button color="primary" (click)="abort()" i18n>Abort</button>
   </ng-container>
 
   <ng-container *ngIf="hasForbiddenError()">
     <div class="kd-download-error-button">
-      <button mat-button
-              color="primary"
-              (click)="abort()"
-              i18n>Close</button>
+      <button mat-button color="primary" (click)="abort()" i18n>Close</button>
     </div>
   </ng-container>
 </mat-dialog-actions>

@@ -15,170 +15,127 @@ limitations under the License.
 -->
 
 <kd-card [graphMode]="true">
-  <div title
-       fxLayout="row"
-       i18n>Workload Status</div>
-  <div content
-       fxLayout="row wrap">
-    <div class="kd-graph-container"
-         *ngIf="resourcesRatio.cronJobRatio.length">
-      <div fxLayout="column"
-           fxLayoutAlign="center center">
-        <ngx-charts-pie-chart [results]="resourcesRatio.cronJobRatio"
-                              [view]="size"
-                              [customColors]="getCustomColor"
-                              [animations]="animations"
-                              [labels]="labels"
-                              [trimLabels]="trimLabels">
-          <ng-template #tooltipTemplate
-                       let-model="model">
-            {{model.value | number}}%
-          </ng-template>
+  <div title fxLayout="row" i18n>Workload Status</div>
+  <div content fxLayout="row wrap">
+    <div class="kd-graph-container" *ngIf="resourcesRatio.cronJobRatio.length">
+      <div fxLayout="column" fxLayoutAlign="center center">
+        <ngx-charts-pie-chart
+          [results]="resourcesRatio.cronJobRatio"
+          [view]="size"
+          [customColors]="getCustomColor"
+          [animations]="animations"
+          [labels]="labels"
+          [trimLabels]="trimLabels">
+          <ng-template #tooltipTemplate let-model="model"> {{model.value | number}}% </ng-template>
         </ngx-charts-pie-chart>
       </div>
-      <div class="kd-graph-title"
-           i18n>Cron Jobs</div>
+      <div class="kd-graph-title" i18n>Cron Jobs</div>
     </div>
 
-    <div class="kd-graph-container"
-         *ngIf="resourcesRatio.daemonSetRatio.length">
-      <div fxLayout="column"
-           fxLayoutAlign="center center">
-        <ngx-charts-pie-chart [results]="resourcesRatio.daemonSetRatio"
-                              [view]="size"
-                              [customColors]="getCustomColor"
-                              [animations]="animations"
-                              [labels]="labels"
-                              [trimLabels]="trimLabels">
-          <ng-template #tooltipTemplate
-                       let-model="model">
-            {{model.value | number}}%
-          </ng-template>
+    <div class="kd-graph-container" *ngIf="resourcesRatio.daemonSetRatio.length">
+      <div fxLayout="column" fxLayoutAlign="center center">
+        <ngx-charts-pie-chart
+          [results]="resourcesRatio.daemonSetRatio"
+          [view]="size"
+          [customColors]="getCustomColor"
+          [animations]="animations"
+          [labels]="labels"
+          [trimLabels]="trimLabels">
+          <ng-template #tooltipTemplate let-model="model"> {{model.value | number}}% </ng-template>
         </ngx-charts-pie-chart>
       </div>
-      <div class="kd-graph-title"
-           i18n>Daemon Sets</div>
+      <div class="kd-graph-title" i18n>Daemon Sets</div>
     </div>
 
-    <div class="kd-graph-container"
-         *ngIf="resourcesRatio.deploymentRatio.length">
-      <div fxLayout="column"
-           fxLayoutAlign="center center">
-        <ngx-charts-pie-chart [results]="resourcesRatio.deploymentRatio"
-                              [view]="size"
-                              [customColors]="getCustomColor"
-                              [animations]="animations"
-                              [labels]="labels"
-                              [trimLabels]="trimLabels">
-          <ng-template #tooltipTemplate
-                       let-model="model">
-            {{model.value | number}}%
-          </ng-template>
+    <div class="kd-graph-container" *ngIf="resourcesRatio.deploymentRatio.length">
+      <div fxLayout="column" fxLayoutAlign="center center">
+        <ngx-charts-pie-chart
+          [results]="resourcesRatio.deploymentRatio"
+          [view]="size"
+          [customColors]="getCustomColor"
+          [animations]="animations"
+          [labels]="labels"
+          [trimLabels]="trimLabels">
+          <ng-template #tooltipTemplate let-model="model"> {{model.value | number}}% </ng-template>
         </ngx-charts-pie-chart>
       </div>
-      <div class="kd-graph-title"
-           i18n>Deployments</div>
+      <div class="kd-graph-title" i18n>Deployments</div>
     </div>
 
-    <div class="kd-graph-container"
-         *ngIf="resourcesRatio.jobRatio.length">
-      <div fxLayout="column"
-           fxLayoutAlign="center center">
-        <ngx-charts-pie-chart [results]="resourcesRatio.jobRatio"
-                              [view]="size"
-                              [customColors]="getCustomColor"
-                              [animations]="animations"
-                              [labels]="labels"
-                              [trimLabels]="trimLabels">
-          <ng-template #tooltipTemplate
-                       let-model="model">
-            {{model.value | number}}%
-          </ng-template>
+    <div class="kd-graph-container" *ngIf="resourcesRatio.jobRatio.length">
+      <div fxLayout="column" fxLayoutAlign="center center">
+        <ngx-charts-pie-chart
+          [results]="resourcesRatio.jobRatio"
+          [view]="size"
+          [customColors]="getCustomColor"
+          [animations]="animations"
+          [labels]="labels"
+          [trimLabels]="trimLabels">
+          <ng-template #tooltipTemplate let-model="model"> {{model.value | number}}% </ng-template>
         </ngx-charts-pie-chart>
       </div>
-      <div class="kd-graph-title"
-           i18n>Jobs</div>
+      <div class="kd-graph-title" i18n>Jobs</div>
     </div>
 
-    <div class="kd-graph-container"
-         *ngIf="resourcesRatio.podRatio.length">
-      <div fxLayout="column"
-           fxLayoutAlign="center center">
-        <ngx-charts-pie-chart [results]="resourcesRatio.podRatio"
-                              [view]="size"
-                              [customColors]="getCustomColor"
-                              [animations]="animations"
-                              [labels]="labels"
-                              [trimLabels]="trimLabels"
-                              id="kd-graph-pods">
-          <ng-template #tooltipTemplate
-                       let-model="model">
-            {{model.value | number}}%
-          </ng-template>
+    <div class="kd-graph-container" *ngIf="resourcesRatio.podRatio.length">
+      <div fxLayout="column" fxLayoutAlign="center center">
+        <ngx-charts-pie-chart
+          [results]="resourcesRatio.podRatio"
+          [view]="size"
+          [customColors]="getCustomColor"
+          [animations]="animations"
+          [labels]="labels"
+          [trimLabels]="trimLabels"
+          id="kd-graph-pods">
+          <ng-template #tooltipTemplate let-model="model"> {{model.value | number}}% </ng-template>
         </ngx-charts-pie-chart>
       </div>
-      <div class="kd-graph-title"
-           i18n>Pods</div>
+      <div class="kd-graph-title" i18n>Pods</div>
     </div>
 
-    <div class="kd-graph-container"
-         *ngIf="resourcesRatio.replicaSetRatio.length">
-      <div fxLayout="column"
-           fxLayoutAlign="center center">
-        <ngx-charts-pie-chart [results]="resourcesRatio.replicaSetRatio"
-                              [view]="size"
-                              [customColors]="getCustomColor"
-                              [animations]="animations"
-                              [labels]="labels"
-                              [trimLabels]="trimLabels">
-          <ng-template #tooltipTemplate
-                       let-model="model">
-            {{model.value | number}}%
-          </ng-template>
+    <div class="kd-graph-container" *ngIf="resourcesRatio.replicaSetRatio.length">
+      <div fxLayout="column" fxLayoutAlign="center center">
+        <ngx-charts-pie-chart
+          [results]="resourcesRatio.replicaSetRatio"
+          [view]="size"
+          [customColors]="getCustomColor"
+          [animations]="animations"
+          [labels]="labels"
+          [trimLabels]="trimLabels">
+          <ng-template #tooltipTemplate let-model="model"> {{model.value | number}}% </ng-template>
         </ngx-charts-pie-chart>
       </div>
-      <div class="kd-graph-title"
-           i18n>Replica Sets</div>
+      <div class="kd-graph-title" i18n>Replica Sets</div>
     </div>
 
-    <div class="kd-graph-container"
-         *ngIf="resourcesRatio.replicationControllerRatio.length">
-      <div fxLayout="column"
-           fxLayoutAlign="center center">
-        <ngx-charts-pie-chart [results]="resourcesRatio.replicationControllerRatio"
-                              [view]="size"
-                              [customColors]="getCustomColor"
-                              [animations]="animations"
-                              [labels]="labels"
-                              [trimLabels]="trimLabels">
-          <ng-template #tooltipTemplate
-                       let-model="model">
-            {{model.value | number}}%
-          </ng-template>
+    <div class="kd-graph-container" *ngIf="resourcesRatio.replicationControllerRatio.length">
+      <div fxLayout="column" fxLayoutAlign="center center">
+        <ngx-charts-pie-chart
+          [results]="resourcesRatio.replicationControllerRatio"
+          [view]="size"
+          [customColors]="getCustomColor"
+          [animations]="animations"
+          [labels]="labels"
+          [trimLabels]="trimLabels">
+          <ng-template #tooltipTemplate let-model="model"> {{model.value | number}}% </ng-template>
         </ngx-charts-pie-chart>
       </div>
-      <div class="kd-graph-title"
-           i18n>Replication Controllers</div>
+      <div class="kd-graph-title" i18n>Replication Controllers</div>
     </div>
 
-    <div class="kd-graph-container"
-         *ngIf="resourcesRatio.statefulSetRatio.length">
-      <div fxLayout="column"
-           fxLayoutAlign="center center">
-        <ngx-charts-pie-chart [results]="resourcesRatio.statefulSetRatio"
-                              [view]="size"
-                              [customColors]="getCustomColor"
-                              [animations]="animations"
-                              [labels]="labels"
-                              [trimLabels]="trimLabels">
-          <ng-template #tooltipTemplate
-                       let-model="model">
-            {{model.value | number}}%
-          </ng-template>
+    <div class="kd-graph-container" *ngIf="resourcesRatio.statefulSetRatio.length">
+      <div fxLayout="column" fxLayoutAlign="center center">
+        <ngx-charts-pie-chart
+          [results]="resourcesRatio.statefulSetRatio"
+          [view]="size"
+          [customColors]="getCustomColor"
+          [animations]="animations"
+          [labels]="labels"
+          [trimLabels]="trimLabels">
+          <ng-template #tooltipTemplate let-model="model"> {{model.value | number}}% </ng-template>
         </ngx-charts-pie-chart>
       </div>
-      <div class="kd-graph-title"
-           i18n>Stateful Sets</div>
+      <div class="kd-graph-title" i18n>Stateful Sets</div>
     </div>
   </div>
 </kd-card>

@@ -14,31 +14,28 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<div class="kd-resource-card-list-filter-wrapper"
-     fxFlex>
-  <div class="kd-search-container"
-       fxFlex
-       fxLayoutAlign="flex-end">
-    <input *ngIf="isSearchVisible()"
-           (keyup)="keyUpEvent.next($event.target.value)"
-           (click)="$event.stopPropagation()"
-           kdAutofocus
-           [opened]="openedChange"
-           name="search"
-           i18n-placeholder
-           placeholder="Filter"
-           class="kd-search-input">
+<div class="kd-resource-card-list-filter-wrapper" fxFlex>
+  <div class="kd-search-container" fxFlex fxLayoutAlign="flex-end">
+    <input
+      *ngIf="isSearchVisible()"
+      (keyup)="keyUpEvent.next($event.target.value)"
+      (click)="$event.stopPropagation()"
+      kdAutofocus
+      [opened]="openedChange"
+      name="search"
+      i18n-placeholder
+      placeholder="Filter"
+      class="kd-search-input" />
     <button mat-icon-button>
-      <mat-icon class="kd-search-icon"
-                i18n-matTooltip
-                matTooltip="Filter objects by name"
-                *ngIf="!isSearchVisible()"
-                (click)="switchSearchVisibility($event)">
+      <mat-icon
+        class="kd-search-icon"
+        i18n-matTooltip
+        matTooltip="Filter objects by name"
+        *ngIf="!isSearchVisible()"
+        (click)="switchSearchVisibility($event)">
         filter_list
       </mat-icon>
-      <mat-icon class="material-icons kd-search-icon"
-                *ngIf="isSearchVisible()"
-                (click)="clearInput($event)">
+      <mat-icon class="material-icons kd-search-icon" *ngIf="isSearchVisible()" (click)="clearInput($event)">
         close
       </mat-icon>
     </button>

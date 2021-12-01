@@ -14,19 +14,20 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<div fxLayout="row"
-     *ngIf="isVisible">
-  <button mat-icon-button
-          color="accent"
-          class="kd-toolbar-action"
-          i18n-matTooltip
-          matTooltip="Go to namespace"
-          (click)="onClick()">
+<div fxLayout="row" *ngIf="isVisible">
+  <button
+    mat-icon-button
+    color="accent"
+    class="kd-toolbar-action"
+    i18n-matTooltip
+    matTooltip="Go to namespace"
+    (click)="onClick()">
     <mat-icon>description</mat-icon>
   </button>
 
-  <kd-actionbar-detail-actions *ngIf="isInitialized"
-                               [objectMeta]="resourceMeta.objectMeta"
-                               [typeMeta]="resourceMeta.typeMeta"
-                               [displayName]="resourceMeta.displayName"></kd-actionbar-detail-actions>
+  <kd-actionbar-detail-actions
+    *ngIf="isInitialized"
+    [objectMeta]="resourceMeta.objectMeta"
+    [typeMeta]="resourceMeta.typeMeta"
+    [displayName]="resourceMeta.displayName"></kd-actionbar-detail-actions>
 </div>

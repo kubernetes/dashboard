@@ -14,95 +14,75 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<kd-object-meta [initialized]="isInitialized"
-                [objectMeta]="persistentVolume?.objectMeta"></kd-object-meta>
+<kd-object-meta [initialized]="isInitialized" [objectMeta]="persistentVolume?.objectMeta"></kd-object-meta>
 
 <kd-card [initialized]="isInitialized">
-  <div title
-       i18n>Resource information</div>
+  <div title i18n>Resource information</div>
 
-  <div content
-       *ngIf="isInitialized"
-       fxLayout="row wrap">
+  <div content *ngIf="isInitialized" fxLayout="row wrap">
     <kd-property *ngIf="persistentVolume?.status">
-      <div key
-           i18n>Status</div>
+      <div key i18n>Status</div>
       <div value>{{persistentVolume.status}}</div>
     </kd-property>
 
     <kd-property *ngIf="persistentVolume?.claim">
-      <div key
-           i18n>Claim</div>
+      <div key i18n>Claim</div>
       <div value>
-        <a [routerLink]="getClaimHref(persistentVolume.claim)"
-           queryParamsHandling="preserve">
+        <a [routerLink]="getClaimHref(persistentVolume.claim)" queryParamsHandling="preserve">
           {{persistentVolume.claim}}
         </a>
       </div>
     </kd-property>
 
     <kd-property *ngIf="persistentVolume?.reclaimPolicy">
-      <div key
-           i18n>Reclaim policy</div>
+      <div key i18n>Reclaim policy</div>
       <div value>{{persistentVolume.reclaimPolicy}}</div>
     </kd-property>
 
     <kd-property *ngIf="persistentVolume?.storageClass">
-      <div key
-           i18n>Storage class</div>
+      <div key i18n>Storage class</div>
       <div value>
         <div value>{{persistentVolume.storageClass}}</div>
       </div>
     </kd-property>
 
     <kd-property *ngIf="persistentVolume?.reason">
-      <div key
-           i18n>Reason</div>
+      <div key i18n>Reason</div>
       <div value>{{persistentVolume.reason}}</div>
     </kd-property>
 
     <kd-property *ngIf="persistentVolume?.message">
-      <div key
-           i18n>Message</div>
+      <div key i18n>Message</div>
       <div value>{{persistentVolume.message}}</div>
     </kd-property>
 
-    <kd-property *ngIf="persistentVolume?.mountOptions"
-                 fxFlex="0 0 auto">
-      <div key
-           i18n>Mount Option(s)</div>
+    <kd-property *ngIf="persistentVolume?.mountOptions" fxFlex="0 0 auto">
+      <div key i18n>Mount Option(s)</div>
       <div value>
-        <kd-chips [map]="persistentVolume.mountOptions"
-                  [displayAll]="true"></kd-chips>
+        <kd-chips [map]="persistentVolume.mountOptions" [displayAll]="true"></kd-chips>
       </div>
     </kd-property>
 
-    <kd-property *ngIf="persistentVolume?.accessModes"
-                 fxFlex="0 0 auto">
-      <div key
-           i18n>Access modes</div>
+    <kd-property *ngIf="persistentVolume?.accessModes" fxFlex="0 0 auto">
+      <div key i18n>Access modes</div>
       <div value>
-        <kd-chips [map]="persistentVolume.accessModes"
-                  [displayAll]="true"></kd-chips>
+        <kd-chips [map]="persistentVolume.accessModes" [displayAll]="true"></kd-chips>
       </div>
     </kd-property>
   </div>
 </kd-card>
 
-<kd-persistent-volume-source [source]="persistentVolume?.persistentVolumeSource"
-                             [initialized]="isInitialized"></kd-persistent-volume-source>
+<kd-persistent-volume-source
+  [source]="persistentVolume?.persistentVolumeSource"
+  [initialized]="isInitialized"></kd-persistent-volume-source>
 
-<kd-card [initialized]="isInitialized"
-         role="table">
-  <div title
-       i18n>Capacity</div>
+<kd-card [initialized]="isInitialized" role="table">
+  <div title i18n>Capacity</div>
 
   <div content>
-    <mat-table [dataSource]="getCapacityDataSource()"
-               [trackBy]="trackByCapacityItemName">
+    <mat-table [dataSource]="getCapacityDataSource()" [trackBy]="trackByCapacityItemName">
       <ng-container [matColumnDef]="getCapacityColumns()[0]">
-        <mat-header-cell *matHeaderCellDef
-                         i18n>Resource name</mat-header-cell>
+        <mat-header-cell *matHeaderCellDef i18n>Resource name</mat-header-cell>
         <mat-cell *matCellDef="let capacity">
           <ng-container *ngIf="capacity.resourceName">{{capacity.resourceName}}</ng-container>
           <ng-container *ngIf="!capacity.resourceName">-</ng-container>
@@ -110,8 +90,7 @@ limitations under the License.
       </ng-container>
 
       <ng-container [matColumnDef]="getCapacityColumns()[1]">
-        <mat-header-cell *matHeaderCellDef
-                         i18n>Quantity</mat-header-cell>
+        <mat-header-cell *matHeaderCellDef i18n>Quantity</mat-header-cell>
         <mat-cell *matCellDef="let capacity">
           <ng-container *ngIf="capacity.quantity">{{capacity.quantity}}</ng-container>
           <ng-container *ngIf="!capacity.quantity">-</ng-container>

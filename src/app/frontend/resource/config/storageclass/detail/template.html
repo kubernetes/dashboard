@@ -14,28 +14,19 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<kd-object-meta [initialized]="isInitialized"
-                [objectMeta]="storageClass?.objectMeta"></kd-object-meta>
+<kd-object-meta [initialized]="isInitialized" [objectMeta]="storageClass?.objectMeta"></kd-object-meta>
 
 <kd-card [initialized]="isInitialized">
-  <div title
-       i18n>Resource information</div>
-  <div content
-       *ngIf="isInitialized"
-       fxLayout="row wrap">
-    <kd-property *ngIf="storageClass?.provisioner"
-                 fxFlex="100">
-      <div key
-           i18n>Provisioner</div>
+  <div title i18n>Resource information</div>
+  <div content *ngIf="isInitialized" fxLayout="row wrap">
+    <kd-property *ngIf="storageClass?.provisioner" fxFlex="100">
+      <div key i18n>Provisioner</div>
       <div value>{{storageClass?.provisioner}}</div>
     </kd-property>
     <kd-property *ngFor="let parameter of getParameterNames()">
-      <div key
-           fxLayout>
+      <div key fxLayout>
         {{parameter}}
-        <mat-icon i18n-matTooltip
-                  matTooltip="Parameter"
-                  class="kd-storage-class-parameter-icon">tune</mat-icon>
+        <mat-icon i18n-matTooltip matTooltip="Parameter" class="kd-storage-class-parameter-icon">tune</mat-icon>
       </div>
       <div value>{{storageClass?.parameters[parameter]}}</div>
     </kd-property>

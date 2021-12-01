@@ -14,27 +14,21 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<kd-object-meta [initialized]="isInitialized"
-                [objectMeta]="roleBinding?.objectMeta"></kd-object-meta>
+<kd-object-meta [initialized]="isInitialized" [objectMeta]="roleBinding?.objectMeta"></kd-object-meta>
 
 <kd-card [initialized]="isInitialized">
-  <div title
-       i18n>Resource information</div>
-  <div content
-       *ngIf="isInitialized"
-       fxLayout="row wrap">
+  <div title i18n>Resource information</div>
+  <div content *ngIf="isInitialized" fxLayout="row wrap">
     <kd-property>
-      <div key
-           i18n>Role Reference</div>
+      <div key i18n>Role Reference</div>
       <div value>
-        <a *ngIf="roleBinding.roleRef"
-           [routerLink]="getRoleHref()"
-           queryParamsHandling="preserve">{{roleBinding.roleRef.name}}</a>
+        <a *ngIf="roleBinding.roleRef" [routerLink]="getRoleHref()" queryParamsHandling="preserve"
+          >{{roleBinding.roleRef.name}}</a
+        >
         <span *ngIf="!roleBinding.roleRef">-</span>
       </div>
     </kd-property>
   </div>
 </kd-card>
 
-<kd-subject-list [subjects]="roleBinding?.subjects"
-                 [initialized]="isInitialized"></kd-subject-list>
+<kd-subject-list [subjects]="roleBinding?.subjects" [initialized]="isInitialized"></kd-subject-list>

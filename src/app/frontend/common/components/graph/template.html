@@ -15,34 +15,29 @@ limitations under the License.
 -->
 
 <ng-template #noData>
-  <div fxLayout="column"
-       class="kd-muted chart-container">
-    <div fxFlexAlign="center"
-         class="empty-chart-text"
-         i18n>
-      Waiting for more data to display chart...
-    </div>
+  <div fxLayout="column" class="kd-muted chart-container">
+    <div fxFlexAlign="center" class="empty-chart-text" i18n>Waiting for more data to display chart...</div>
   </div>
 </ng-template>
 
 <ng-container *ngIf="shouldShowGraph; else noData">
-  <ngx-charts-area-chart fxFlex
-                         inViewport
-                         [inViewportOptions]="{partial: false}"
-                         (inViewportAction)="changeState($event)"
-                         [xAxis]="true"
-                         [yAxis]="true"
-                         [showYAxisLabel]="true"
-                         [yAxisLabel]="yAxisLabel"
-                         [yAxisTickFormatting]="yAxisTickFormatting"
-                         [yScaleMax]="yScaleMax"
-                         [results]="series"
-                         [showGridLines]="true"
-                         [curve]="curve"
-                         [customColors]="customColors"
-                         [gradient]="true">
-    <ng-template #seriesTooltipTemplate
-                 let-model="model">
+  <ngx-charts-area-chart
+    fxFlex
+    inViewport
+    [inViewportOptions]="{partial: false}"
+    (inViewportAction)="changeState($event)"
+    [xAxis]="true"
+    [yAxis]="true"
+    [showYAxisLabel]="true"
+    [yAxisLabel]="yAxisLabel"
+    [yAxisTickFormatting]="yAxisTickFormatting"
+    [yScaleMax]="yScaleMax"
+    [results]="series"
+    [showGridLines]="true"
+    [curve]="curve"
+    [customColors]="customColors"
+    [gradient]="true">
+    <ng-template #seriesTooltipTemplate let-model="model">
       <pre>{{model[0].series}}: {{getTooltipValue(model[0].value)}}</pre>
     </ng-template>
   </ngx-charts-area-chart>

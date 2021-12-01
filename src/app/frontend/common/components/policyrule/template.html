@@ -14,79 +14,59 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<kd-card [initialized]="initialized"
-         role="table">
-  <div title
-       i18n>Rules</div>
+<kd-card [initialized]="initialized" role="table">
+  <div title i18n>Rules</div>
 
   <div description>
-    <div class="kd-inline-property"
-         *ngIf="rules?.length">
-      <span class="kd-muted-light"
-            i18n>Items:&nbsp;</span>
+    <div class="kd-inline-property" *ngIf="rules?.length">
+      <span class="kd-muted-light" i18n>Items:&nbsp;</span>
       <span>{{rules.length}}</span>
     </div>
   </div>
 
-  <div content
-       [hidden]="!rules">
+  <div content [hidden]="!rules">
     <mat-table [dataSource]="getDataSource()">
       <ng-container [matColumnDef]="getRuleColumns()[0]">
-        <mat-header-cell *matHeaderCellDef
-                         i18n>Resources</mat-header-cell>
+        <mat-header-cell *matHeaderCellDef i18n>Resources</mat-header-cell>
         <mat-cell *matCellDef="let rule">
           <ng-container *ngIf="rule.resources">
-            <span>
-              {{ rule.resources | commaSeparated }}
-            </span>
+            <span> {{ rule.resources | commaSeparated }} </span>
           </ng-container>
           <ng-container *ngIf="!rule.resources">-</ng-container>
         </mat-cell>
       </ng-container>
       <ng-container [matColumnDef]="getRuleColumns()[1]">
-        <mat-header-cell *matHeaderCellDef
-                         i18n>Non-resource URL</mat-header-cell>
+        <mat-header-cell *matHeaderCellDef i18n>Non-resource URL</mat-header-cell>
         <mat-cell *matCellDef="let rule">
           <ng-container *ngIf="rule.nonResourceURLs">
-            <span>
-              {{ rule.nonResourceURLs | commaSeparated }}
-            </span>
+            <span> {{ rule.nonResourceURLs | commaSeparated }} </span>
           </ng-container>
           <ng-container *ngIf="!rule.nonResourceURLs">-</ng-container>
         </mat-cell>
       </ng-container>
       <ng-container [matColumnDef]="getRuleColumns()[2]">
-        <mat-header-cell *matHeaderCellDef
-                         i18n>Resource Names</mat-header-cell>
+        <mat-header-cell *matHeaderCellDef i18n>Resource Names</mat-header-cell>
         <mat-cell *matCellDef="let rule">
           <ng-container *ngIf="rule.resourceNames">
-            <span>
-              {{ rule.resourceNames | commaSeparated }}
-            </span>
+            <span> {{ rule.resourceNames | commaSeparated }} </span>
           </ng-container>
           <ng-container *ngIf="!rule.resourceNames">-</ng-container>
         </mat-cell>
       </ng-container>
       <ng-container [matColumnDef]="getRuleColumns()[3]">
-        <mat-header-cell *matHeaderCellDef
-                         i18n>Verbs</mat-header-cell>
+        <mat-header-cell *matHeaderCellDef i18n>Verbs</mat-header-cell>
         <mat-cell *matCellDef="let rule">
           <ng-container *ngIf="rule.verbs">
-            <span>
-              {{ rule.verbs | commaSeparated }}
-            </span>
+            <span> {{ rule.verbs | commaSeparated }} </span>
           </ng-container>
           <ng-container *ngIf="!rule.verbs">-</ng-container>
         </mat-cell>
       </ng-container>
       <ng-container [matColumnDef]="getRuleColumns()[4]">
-        <mat-header-cell *matHeaderCellDef
-                         i18n>API Groups</mat-header-cell>
+        <mat-header-cell *matHeaderCellDef i18n>API Groups</mat-header-cell>
         <mat-cell *matCellDef="let rule">
           <ng-container *ngIf="rule.apiGroups && rule.apiGroups.length > 0">
-            <span>
-              {{ rule.apiGroups | commaSeparated }}
-            </span>
+            <span> {{ rule.apiGroups | commaSeparated }} </span>
           </ng-container>
           <ng-container *ngIf="!rule.apiGroups || rule.apiGroups.length === 0">-</ng-container>
         </mat-cell>
@@ -96,8 +76,7 @@ limitations under the License.
     </mat-table>
   </div>
 
-  <div content
-       [hidden]="rules">
+  <div content [hidden]="rules">
     <kd-list-zero-state></kd-list-zero-state>
   </div>
 </kd-card>

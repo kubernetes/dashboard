@@ -14,13 +14,12 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<div fxLayout="row"
-     *ngIf="isVisible">
-  <kd-actionbar-detail-logs *ngIf="isInitialized"
-                            [resourceMeta]="resourceMeta"></kd-actionbar-detail-logs>
+<div fxLayout="row" *ngIf="isVisible">
+  <kd-actionbar-detail-logs *ngIf="isInitialized" [resourceMeta]="resourceMeta"></kd-actionbar-detail-logs>
 
-  <kd-actionbar-detail-actions *ngIf="isInitialized"
-                               [objectMeta]="resourceMeta.objectMeta"
-                               [typeMeta]="resourceMeta.typeMeta"
-                               [displayName]="resourceMeta.displayName"></kd-actionbar-detail-actions>
+  <kd-actionbar-detail-actions
+    *ngIf="isInitialized"
+    [objectMeta]="resourceMeta.objectMeta"
+    [typeMeta]="resourceMeta.typeMeta"
+    [displayName]="resourceMeta.displayName"></kd-actionbar-detail-actions>
 </div>

@@ -15,10 +15,12 @@ limitations under the License.
 -->
 
 <div *ngIf="isInitialized()">
-  <kd-nav-item *ngFor="let resource of getPinnedResources()"
-               class="kd-nav-item"
-               [state]="getResourceHref(resource)"
-               [namespaced]="resource.namespaced"
-               i18n>{{getDisplayName(resource)}}
+  <kd-nav-item
+    *ngFor="let resource of getPinnedResources()"
+    class="kd-nav-item"
+    [state]="getResourceHref(resource)"
+    [namespaced]="resource.namespaced"
+    i18n
+    >{{getDisplayName(resource)}}
   </kd-nav-item>
 </div>
