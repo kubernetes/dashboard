@@ -222,6 +222,11 @@ e2e: start-cluster
 	npm run e2e
 	make stop-cluster
 
+.PHONY: e2e-headed
+e2e-headed: start-cluster
+	npm run e2e:headed
+	make stop-cluster
+
 .PHONY: docker-build-release
 docker-build-release: build-cross
 	for ARCH in $(ARCHITECTURES) ; do \

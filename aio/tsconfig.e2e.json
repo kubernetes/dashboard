@@ -2,12 +2,11 @@
   "extends": "../tsconfig.json",
   "compilerOptions": {
     "strict": true,
-    "outDir": "../out-tsc/e2e",
-    "baseUrl": "../cypress",
+    "baseUrl": "../node_modules",
     "types": ["cypress"]
   },
   "include": [
-    "../cypress/integration/**/*.ts",
-    "../cypress/pages/**/*.ts",
-    "../node_modules/cypress/**/*.ts"]
+    "integration/**/*.ts",
+    "pages/**/*.ts",
+    "../node_modules/cypress"]
 }
