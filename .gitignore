@@ -19,7 +19,6 @@ dist/
 coverage/
 cypress/screenshots
 cypress/videos
-cypress/support
 
 # System specific files:
 .DS_Store
