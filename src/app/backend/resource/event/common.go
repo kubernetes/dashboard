@@ -135,6 +135,7 @@ func GetNodeEvents(client kubernetes.Interface, dsQuery *dataselect.DataSelectQu
 	if err != nil {
 		return &eventList, err
 	}
+	node.UID = ""
 
 	events, err := client.CoreV1().Events(v1.NamespaceAll).Search(scheme, node)
 	_, criticalError := errors.HandleError(err)
