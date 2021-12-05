@@ -53,7 +53,7 @@ Please see [here](https://github.com/kubernetes/dashboard/blob/master/.npmrc) wh
 
 Open a browser and access the UI under `localhost:8080`.
 
-In the background, `npm start` makes a [concurrently](https://github.com/kimmobrunfeldt/concurrently#readme) call to start the `golang` backend server and the `angular` development server.
+In the background, `npm start` makes a [concurrently](https://github.com/open-cli-tools/concurrently) call to start the `golang` backend server and the `angular` development server.
 
 Once the angular server starts, it takes some time to pre-compile all assets before serving them. By default, the angular development server watches for file changes and will update accordingly.
 
