@@ -8,9 +8,9 @@
   },
   "license": "Apache-2.0",
   "scripts": {
-    "start": "concurrently \"make watch-backend\" \"npm run start:frontend\"",
-    "start:https": "concurrently \"AUTO_GENERATE_CERTS=true make watch-backend\" \"npm run start:frontend:https\"",
-    "start:prod": "make prod",
+    "start": "concurrently \"SIDECAR_HOST=$npm_config_sidecar_host make watch-backend\" \"npm run start:frontend --bind_address=$npm_config_bind_address --port=$npm_config_port\"",
+    "start:https": "concurrently \"AUTO_GENERATE_CERTS=true SIDECAR_HOST=$npm_config_sidecar_host make watch-backend\" \"npm run start:frontend:https --bind_address=$npm_config_bind_address --port=$npm_config_port\"",
+    "start:prod": "SIDECAR_HOST=$npm_config_sidecar_host BIND_ADDRESS=$npm_config_bind_address PORT=$npm_config_port make prod",
     "start:e2e": "concurrently \"make serve-backend\" \"npm run start:frontend\"",
     "start:frontend": "make ensure-version && ng serve --proxy-config aio/proxy.conf.json --host $npm_config_bind_address --port $npm_config_port",
     "start:frontend:https": "make ensure-version && ng serve --proxy-config aio/https-proxy.conf.json --ssl --host $npm_config_bind_address --port $npm_config_port",
