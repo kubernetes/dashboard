@@ -20,6 +20,8 @@ KUBECONFIG ?= $(HOME)/.kube/config
 SIDECAR_HOST ?= http://localhost:8000
 TOKEN_TTL ?= 900
 AUTO_GENERATE_CERTS ?= false
+BIND_ADDRESS ?= 127.0.0.1
+PORT ?= 8080
 ENABLE_INSECURE_LOGIN ?= false
 ENABLE_SKIP_LOGIN ?= false
 SYSTEM_BANNER ?= "Local test environment"
@@ -122,8 +124,8 @@ prod: build
 		--sidecar-host=$(SIDECAR_HOST) \
 		--auto-generate-certificates \
 		--locale-config=dist/amd64/locale_conf.json \
-		--bind-address=127.0.0.1 \
-		--port=8080
+		--bind-address=${BIND_ADDRESS} \
+		--port=${PORT}
 
 .PHONY: test-backend
 test-backend: ensure-go
