@@ -13,7 +13,7 @@
 
 - Use [npm](https://www.npmjs.com/) as package manager.
 - Run `npm ci` after checking out the repository to install dependencies.
-- [Dependabot Preview](https://github.com/marketplace/dependabot-preview/) updates packages by creating pull requests for
+- [Dependabot](https://github.com/dependabot) updates packages by creating pull requests for
 the new releases of used packages. Its pull requests are marked with `area/dependency` label.
 - Update `package-lock.json` before sending any changes.
 
