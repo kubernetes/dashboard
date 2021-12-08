@@ -15,7 +15,6 @@ tmp_dir = ".tmp"
   include_ext = ["go"]
   kill_delay = "1s"
   log = "build-errors.log"
-  send_interrupt = true
   stop_on_error = true
 
 [color]
