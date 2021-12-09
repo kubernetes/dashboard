@@ -231,9 +231,15 @@ e2e-headed: start-cluster
 
 .PHONY: docker-build-release
 docker-build-release: build-cross
-	for ARCH in $(ARCHITECTURES) ; do \
-  		docker build -t $(RELEASE_IMAGE)-$$ARCH:$(RELEASE_VERSION) -t $(RELEASE_IMAGE)-$$ARCH:latest dist/$$ARCH ; \
-  done
+		for ARCH in $(ARCHITECTURES) ; do \
+				docker build \
+					-t $(RELEASE_IMAGE)-$$ARCH:$(RELEASE_VERSION) \
+					-t $(RELEASE_IMAGE)-$$ARCH:latest \
+					--build-arg BUILDPLATFORM=linux/$$ARCH \
+					--platform linux/$$ARCH \
+					--pull \
+					dist/$$ARCH ; \
+		done
 
 .PHONY: docker-push-release
 docker-push-release: docker-build-release
@@ -242,13 +248,10 @@ docker-push-release: docker-build-release
   		docker push $(RELEASE_IMAGE)-$$ARCH:latest ; \
   done ; \
   docker manifest create --amend $(RELEASE_IMAGE):$(RELEASE_VERSION) $(RELEASE_IMAGE_NAMES) ; \
-  docker manifest create --amend $(RELEASE_IMAGE):latest $(RELEASE_IMAGE_NAMES_LATEST) ; \
 	for ARCH in $(ARCHITECTURES) ; do \
   		docker manifest annotate $(RELEASE_IMAGE):$(RELEASE_VERSION) $(RELEASE_IMAGE)-$$ARCH:$(RELEASE_VERSION) --os linux --arch $$ARCH ; \
   		docker manifest annotate $(RELEASE_IMAGE):latest $(RELEASE_IMAGE)-$$ARCH:latest --os linux --arch $$ARCH ; \
   done ; \
-  docker manifest push $(RELEASE_IMAGE):$(RELEASE_VERSION) ; \
-  docker manifest push $(RELEASE_IMAGE):latest
 
 .PHONY: docker-build-head
 docker-build-head: build-cross
