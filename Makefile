@@ -248,10 +248,13 @@ docker-push-release: docker-build-release
   		docker push $(RELEASE_IMAGE)-$$ARCH:latest ; \
   done ; \
   docker manifest create --amend $(RELEASE_IMAGE):$(RELEASE_VERSION) $(RELEASE_IMAGE_NAMES) ; \
+  docker manifest create --amend $(RELEASE_IMAGE):latest $(RELEASE_IMAGE_NAMES_LATEST) ; \
 	for ARCH in $(ARCHITECTURES) ; do \
   		docker manifest annotate $(RELEASE_IMAGE):$(RELEASE_VERSION) $(RELEASE_IMAGE)-$$ARCH:$(RELEASE_VERSION) --os linux --arch $$ARCH ; \
   		docker manifest annotate $(RELEASE_IMAGE):latest $(RELEASE_IMAGE)-$$ARCH:latest --os linux --arch $$ARCH ; \
   done ; \
+  docker manifest push $(RELEASE_IMAGE):$(RELEASE_VERSION) ; \
+  docker manifest push $(RELEASE_IMAGE):latest
 
 .PHONY: docker-build-head
 docker-build-head: build-cross
