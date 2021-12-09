@@ -1,5 +1,3 @@
-import webpack from '@cypress/webpack-preprocessor';
-
 const webpackOptions = {
   resolve: {extensions: ['.ts', '.js']},
   module: {
@@ -18,6 +16,4 @@ const webpackOptions = {
   },
 };
 
-export default async (on) => {
-  on('file:preprocessor', webpack({webpackOptions}));
-}
+export const configuration = {webpackOptions};

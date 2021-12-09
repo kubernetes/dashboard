@@ -50,12 +50,12 @@ function build::frontend {
 
 function build::backend {
   say "\nBuilding backend"
-  ${GULP_BIN} backend:prod
+  make prod-backend
 }
 
 function build::backend::cross {
   say "\nBuilding backends for all supported architectures"
-  ${GULP_BIN} backend:prod:cross
+  make prod-backend-cross
 }
 
 function copy::frontend {
@@ -113,7 +113,7 @@ START=$(date +%s)
 parse::args "$@"
 clean
 
-npm run postversion
+make ensure-version
 
 if [ "${FRONTEND_ONLY}" = true ] ; then
   build::frontend

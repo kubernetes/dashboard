@@ -18,6 +18,7 @@ import {PersistentVolumeSource} from '@api/volume.api';
 export interface TypeMeta {
   kind: string;
   scalable?: boolean;
+  restartable?: boolean;
 }
 
 export interface ListMeta {

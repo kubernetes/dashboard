@@ -58,7 +58,7 @@ jobs:
       - name: Setup NodeJS
         uses: actions/setup-node@v2.1.2
         with:
-          node-version: 14.17.0
+          node-version: 16.13.0
 
       - name: Cache Node Modules
         uses: actions/cache@v2
@@ -72,12 +72,6 @@ jobs:
         shell: bash
         run: |
           [ ! -d "node_modules" ] && npm ci || node aio/scripts/version.mjs && command -v golangci-lint >/dev/null 2>&1 || { curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $(go env GOPATH)/bin v1.41.1; } && go mod download
-
-      - name: Install Codegen
-        shell: bash
-        run: |
-          export GOPATH=$(go env GOPATH)/bin
-          aio/scripts/install-codegen.sh
 
       - name: Check Code
         shell: bash
@@ -109,7 +103,7 @@ jobs:
       - name: Setup NodeJS
         uses: actions/setup-node@v2.1.2
         with:
-          node-version: 14.17.0
+          node-version: 16.13.0
 
       - name: Cache Node Modules
         uses: actions/cache@v2
@@ -126,17 +120,15 @@ jobs:
           [ ! -d "node_modules" ] && npm ci || node aio/scripts/version.mjs && command -v golangci-lint >/dev/null 2>&1 || { curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $(go env GOPATH)/bin v1.41.1; } && go mod download
 
       - name: Run Frontend Unit Tests
-        run: npm run test:frontend:coverage
+        run: make coverage-frontend
 
       - name: Run Backend Unit Tests
-        run: |
-          export GOPATH=$(go env GOPATH)/bin
-          npm run test:backend:coverage
+        run: make coverage-backend
 
       - name: Cleanup & Upload Coverage
         shell: bash
         run: |
-          rm -rf .tmp
+          make clean
           bash <(curl -s https://codecov.io/bash) -c -K || echo "Codecov upload failed"
 
   e2e:
@@ -166,20 +158,22 @@ jobs:
       - name: Setup NodeJS
         uses: actions/setup-node@v2.1.2
         with:
-          node-version: 14.17.0
+          node-version: 16.13.0
 
       - name: Cache Node Modules
         uses: actions/cache@v2
         env:
           cache-name: cache-node-modules
         with:
-          path: node_modules
+          path: |
+            ~/.cache/Cypress
+            node_modules
           key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
 
       - name: Install Dependencies
         shell: bash
         run: |
-          [ ! -d "node_modules" ] && npm ci || node aio/scripts/version.mjs && command -v golangci-lint >/dev/null 2>&1 || { curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $(go env GOPATH)/bin v1.41.1; } && go mod download && npm install cypress
+          [ ! -d "node_modules" ] && npm ci && npm install cypress || node aio/scripts/version.mjs && command -v golangci-lint >/dev/null 2>&1 || { curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $(go env GOPATH)/bin v1.41.1; } && go mod download
 
       - name: Run E2E Tests
-        run: npm run cluster:start && npm run e2e
+        run: make e2e

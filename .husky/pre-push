@@ -15,6 +15,4 @@
 . "$(dirname "$0")/_/husky.sh"
 
 npm run check
-npm run check:license
-npm run test:frontend
-npm run test:backend
+npm run test

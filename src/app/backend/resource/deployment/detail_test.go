@@ -112,8 +112,9 @@ func TestGetDeploymentDetail(t *testing.T) {
 						Labels:    map[string]string{"foo": "bar"},
 					},
 					TypeMeta: api.TypeMeta{
-						Kind:     api.ResourceKindDeployment,
-						Scalable: true,
+						Kind:        api.ResourceKindDeployment,
+						Scalable:    true,
+						Restartable: true,
 					},
 					Pods: common.PodInfo{
 						Desired:  &desired,

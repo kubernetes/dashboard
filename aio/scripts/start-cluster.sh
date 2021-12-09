@@ -36,7 +36,7 @@ function start-ci-heapster {
 }
 
 function start-kind {
-  ${KIND_BIN} create cluster --name="k8s-cluster-ci" --image=kindest/node:v1.21.1
+  ${KIND_BIN} create cluster --name="k8s-cluster-ci" --image="kindest/node:${K8S_VERSION}"
   ensure-kubeconfig
   if [ "${CI}" = true ] ; then
     start-ci-heapster

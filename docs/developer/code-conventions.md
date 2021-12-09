@@ -17,18 +17,18 @@ Additionally, check the list of rules and tips, that we are using:
 
 An overview of the features provided by the dashboard can be found [here](https://kubernetes.io/docs/tasks/access-application-cluster/web-ui-dashboard).
 
-## Code style check and formatting
+## Code Style
 
 The code style check suite includes format checks can be executed with:
 
 ```shell
-npm run check
+make check
 ```
 
 The code formatting can be executed with:
 
 ```shell
-npm run fix
+make fix
 ```
 
 These check and formatting involves in go, ts, scss, html, license and i18n files.
@@ -38,10 +38,10 @@ We use following tools and settings for each check and formatting:
 | code    | tools                                                                    | setting |
 |---------|--------------------------------------------------------------------------|---------|
 | go      | [golangci-lint](https://github.com/golangci/golangci-lint)               | [`.golangci.yml`](../../.golangci.yml) |
-| ts      | [gts](https://github.com/google/gts)                                     | `eslintConfig` in [`package.json`](../../package.json) and [`.prettierrc.js`](../../.prettierrc.js) |
+| ts      | [gts](https://github.com/google/gts)                                     | `eslintConfig` in [`package.json`](../../package.json) and [`.prettierrc.cjs`](../../.prettierrc.cjs) |
 | scss    | [stylelint](https://github.com/stylelint/stylelint)                      | `stylelint` in [`package.json`](../../package.json) |
-| html    | [js-beautify](https://github.com/beautify-web/js-beautify)               | options in [`format.sh`](../../aio/scripts/format.sh) |
-| license | [licence-check-and-add](https://github.com/awjh/license-check-and-add)   | [`license-checker-config.json`](../../license-checker-config.json)
+| html    | [js-beautify](https://github.com/beautify-web/js-beautify)               | options in [`format-html.sh`](../../aio/scripts/format-html.sh) |
+| license | [license-check-and-add](https://github.com/awjh/license-check-and-add)   | [`license-checker-config.json`](../../license-checker-config.json)
 | i18n    | [xliffmerge](https://github.com/martinroob/ngx-i18nsupport)              | `xliffmergeOptions` in [`package.json`](../../package.json) |
 
 ----
