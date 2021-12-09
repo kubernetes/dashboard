@@ -231,15 +231,15 @@ e2e-headed: start-cluster
 
 .PHONY: docker-build-release
 docker-build-release: build-cross
-		for ARCH in $(ARCHITECTURES) ; do \
-				docker build \
-					-t $(RELEASE_IMAGE)-$$ARCH:$(RELEASE_VERSION) \
-					-t $(RELEASE_IMAGE)-$$ARCH:latest \
-					--build-arg BUILDPLATFORM=linux/$$ARCH \
-					--platform linux/$$ARCH \
-					--pull \
-					dist/$$ARCH ; \
-		done
+	for ARCH in $(ARCHITECTURES) ; do \
+			docker build \
+				-t $(RELEASE_IMAGE)-$$ARCH:$(RELEASE_VERSION) \
+				-t $(RELEASE_IMAGE)-$$ARCH:latest \
+				--build-arg BUILDPLATFORM=linux/$$ARCH \
+				--platform linux/$$ARCH \
+				--pull \
+				dist/$$ARCH ; \
+	done ; \
 
 .PHONY: docker-push-release
 docker-push-release: docker-build-release
@@ -256,8 +256,13 @@ docker-push-release: docker-build-release
 .PHONY: docker-build-head
 docker-build-head: build-cross
 	for ARCH in $(ARCHITECTURES) ; do \
-  		docker build -t $(HEAD_IMAGE)-$$ARCH:$(HEAD_VERSION) dist/$$ARCH ; \
-  done
+			docker build \
+				-t $(HEAD_IMAGE)-$$ARCH:$(HEAD_VERSION) \
+				--build-arg BUILDPLATFORM=linux/$$ARCH \
+				--platform linux/$$ARCH \
+				--pull \
+				dist/$$ARCH ; \
+	done ; \
 
 .PHONY: docker-push-head
 docker-push-head: docker-build-head
