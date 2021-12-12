@@ -21,21 +21,26 @@ kind: Ingress
 metadata:
   name: {{ template "kubernetes-dashboard.fullname" . }}
   labels:
-{{ include "kubernetes-dashboard.labels" . | indent 4 }}
-  {{- range $key, $value := .Values.ingress.labels }}
+    {{- include "kubernetes-dashboard.labels" . | nindent 4 }}
+    {{- range $key, $value := .Values.ingress.labels }}
     {{ $key }}: {{ $value | quote }}
-  {{- end }}
-
+    {{- end }}
+    {{- if .Values.commonLabels }}
+    {{- include "common.tplvalues.render" ( dict "value" .Values.commonLabels "context" $ ) | nindent 4 }}
+    {{- end }}
   annotations:
-{{- if not .Values.protocolHttp }}
+    {{- if .Values.commonAnnotations }}
+    {{- include "common.tplvalues.render" ( dict "value" .Values.commonAnnotations "context" $ ) | nindent 4 }}
+    {{- end }}
+    {{- if not .Values.protocolHttp }}
     # Add https backend protocol support for ingress-nginx
     nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
     # Add https backend protocol support for GKE
     service.alpha.kubernetes.io/app-protocols: '{"https":"HTTPS"}'
-{{- end }}
-{{- with .Values.ingress.annotations }}
-{{ toYaml . | indent 4 }}
-{{- end }}
+    {{- end }}
+    {{- with .Values.ingress.annotations }}
+    {{ toYaml . | nindent 4 }}
+    {{- end }}
 spec:
   {{- with .Values.ingress.className }}
   ingressClassName: {{ . | quote }}
@@ -47,7 +52,7 @@ spec:
       http:
         paths:
   {{- if len ($.Values.ingress.customPaths) }}
-  {{- "\n" }}{{ tpl (toYaml $.Values.ingress.customPaths | indent 10) $ }}
+  {{- "\n" }}{{ tpl (toYaml $.Values.ingress.customPaths | nindent 10) $ }}
   {{- else }}
   {{- range $p := $paths }}
           - path: {{ $p }}
@@ -64,7 +69,7 @@ spec:
     - http:
         paths:
   {{- if len ($.Values.ingress.customPaths) }}
-  {{- "\n" }}{{ tpl (toYaml $.Values.ingress.customPaths | indent 10) $ }}
+  {{- "\n" }}{{ tpl (toYaml $.Values.ingress.customPaths | nindent 10) $ }}
   {{- else }}
   {{- range $p := $paths }}
           - path: {{ $p }}
@@ -79,6 +84,6 @@ spec:
   {{- end -}}
   {{- if .Values.ingress.tls }}
   tls:
-{{ toYaml .Values.ingress.tls | indent 4 }}
+{{ toYaml .Values.ingress.tls | nindent 4 }}
   {{- end -}}
 {{- end -}}

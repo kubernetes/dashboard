@@ -17,7 +17,14 @@ apiVersion: policy/v1beta1
 kind: PodDisruptionBudget
 metadata:
   labels:
-{{ include "kubernetes-dashboard.labels" . | indent 4 }}
+    {{- include "kubernetes-dashboard.labels" . | nindent 4 }}
+    {{- if .Values.commonLabels }}
+    {{- include "common.tplvalues.render" ( dict "value" .Values.commonLabels "context" $ ) | nindent 4 }}
+    {{- end }}
+  annotations:
+    {{- if .Values.commonAnnotations }}
+    {{- include "common.tplvalues.render" ( dict "value" .Values.commonAnnotations "context" $ ) | nindent 4 }}
+    {{- end }}
   name: {{ template "kubernetes-dashboard.fullname" . }}
 spec:
   {{- if .Values.podDisruptionBudget.minAvailable }}
@@ -28,5 +35,5 @@ spec:
   {{- end  }}
   selector:
     matchLabels:
-{{ include "kubernetes-dashboard.matchLabels" . | indent 6 }}
+{{ include "kubernetes-dashboard.matchLabels" . | nindent 6 }}
 {{- end -}}
