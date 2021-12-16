@@ -21,7 +21,7 @@ import {ThemeService} from './theme';
 export class LocalSettingsService {
   private readonly _settingsKey = 'localSettings';
   private settings_: LocalSettings = {
-    theme: ThemeService.SystemTheme,
+    theme: 'kd-light-theme',
   };
 
   constructor(private readonly theme_: ThemeService) {}
