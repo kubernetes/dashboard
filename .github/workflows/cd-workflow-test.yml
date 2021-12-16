@@ -12,11 +12,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-name: Continuous Deployment - App
+name: Continuous Deployment - Test
 
 on:
-  push:
-    branches: [ pull_request ]
+  pull_request:
+    branches: [ master ]
 
 jobs:
   deploy:
@@ -58,11 +58,18 @@ jobs:
         run: |
           [ ! -d "node_modules" ] && npm ci || node aio/scripts/version.mjs && go mod download
 
-      - name: Docker Login
-        env:
-          DOCKER_USER: ${{ secrets.DOCKER_USER }}
-          DOCKER_PASS: ${{ secrets.DOCKER_PASS }}
-        run: docker login -u $DOCKER_USER -p $DOCKER_PASS
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v1
+
+      - name: Set up Docker Buildx
+        id: buildx
+        uses: docker/setup-buildx-action@v1
+
+#      - name: Docker Login
+#        env:
+#          DOCKER_USER: ${{ secrets.DOCKER_USER }}
+#          DOCKER_PASS: ${{ secrets.DOCKER_PASS }}
+#        run: docker login -u $DOCKER_USER -p $DOCKER_PASS
 
       - name: Push Image
         shell: bash
