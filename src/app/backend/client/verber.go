@@ -121,7 +121,6 @@ func (verber *resourceVerber) getResourceSpecFromKind(kind string, namespaceSet 
 func (verber *resourceVerber) getCRDGroupAndVersion(kind string) (info crdInfo, err error) {
 	var crdv1 apiextensionsv1.CustomResourceDefinition
 
-
 	err = verber.apiExtensionsClient.Get().Resource("customresourcedefinitions").Name(kind).Do(context.TODO()).Into(&crdv1)
 	if err != nil {
 		if errors.IsNotFoundError(err) {
@@ -140,6 +139,7 @@ func (verber *resourceVerber) getCRDGroupAndVersion(kind string) (info crdInfo, 
 		return
 	}
 
+	return
 }
 
 // RESTClient is an interface for REST operations used in this file.
