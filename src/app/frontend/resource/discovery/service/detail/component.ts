@@ -30,6 +30,7 @@ export class ServiceDetailComponent implements OnInit, OnDestroy {
   service: ServiceDetail;
   isInitialized = false;
   podListEndpoint: string;
+  ingressListEndpoint: string;
   eventListEndpoint: string;
 
   private readonly endpoint_ = EndpointManager.resource(Resource.service, true);
@@ -47,6 +48,7 @@ export class ServiceDetailComponent implements OnInit, OnDestroy {
     const resourceNamespace = this.activatedRoute_.snapshot.params.resourceNamespace;
 
     this.podListEndpoint = this.endpoint_.child(resourceName, Resource.pod, resourceNamespace);
+    this.ingressListEndpoint = this.endpoint_.child(resourceName, Resource.ingress, resourceNamespace);
     this.eventListEndpoint = this.endpoint_.child(resourceName, Resource.event, resourceNamespace);
 
     this.service_
