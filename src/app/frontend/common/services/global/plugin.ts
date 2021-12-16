@@ -16,6 +16,7 @@ import {HttpClient} from '@angular/common/http';
 import {Injectable} from '@angular/core';
 import {PluginMetadata, PluginsConfig} from '@api/root.ui';
 import {Observable} from 'rxjs';
+import {tap} from 'rxjs/operators';
 
 @Injectable()
 export class PluginsConfigService {
@@ -24,16 +25,16 @@ export class PluginsConfigService {
 
   constructor(private readonly http: HttpClient) {}
 
-  init(): void {
-    this.fetchConfig();
+  init(): Promise<PluginsConfig> {
+    return this.fetchConfig();
   }
 
   refreshConfig(): void {
     this.fetchConfig();
   }
 
-  private fetchConfig(): void {
-    this.getConfig()
+  private fetchConfig(): Promise<PluginsConfig> {
+    return this.getConfig()
       .toPromise()
       .then(config => (this.config_ = config));
   }

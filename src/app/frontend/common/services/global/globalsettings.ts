@@ -18,7 +18,7 @@ import {GlobalSettings} from '@api/root.api';
 import {onSettingsFailCallback, onSettingsLoadCallback} from '@api/root.ui';
 import _ from 'lodash';
 import {Observable, of, ReplaySubject, Subject} from 'rxjs';
-import {catchError, switchMap, takeUntil} from 'rxjs/operators';
+import {catchError, switchMap, takeUntil, tap} from 'rxjs/operators';
 
 import {AuthorizerService} from './authorizer';
 
@@ -33,7 +33,7 @@ export const DEFAULT_SETTINGS: GlobalSettings = {
   namespaceFallbackList: ['default'],
 };
 
-@Injectable()
+@Injectable({providedIn: 'root'})
 export class GlobalSettingsService {
   onSettingsUpdate = new ReplaySubject<void>();
   onPageVisibilityChange = new EventEmitter<boolean>();
@@ -46,36 +46,38 @@ export class GlobalSettingsService {
 
   constructor(private readonly http_: HttpClient, private readonly authorizer_: AuthorizerService) {}
 
-  init(): void {
-    this.load();
-
+  init(): Promise<GlobalSettings> {
     this.onPageVisibilityChange.pipe(takeUntil(this.unsubscribe_)).subscribe(visible => {
       this.isPageVisible_ = visible;
       this.onSettingsUpdate.next();
     });
+
+    return this.load();
   }
 
   isInitialized(): boolean {
     return this.isInitialized_;
   }
 
-  load(onLoad?: onSettingsLoadCallback, onFail?: onSettingsFailCallback): void {
-    this.http_
+  load(onLoad?: onSettingsLoadCallback, onFail?: onSettingsFailCallback): Promise<GlobalSettings> {
+    return this.http_
       .get<GlobalSettings>(this.endpoint_)
-      .toPromise()
-      .then(
-        settings => {
+      .pipe(
+        tap(settings => {
+          console.log(settings);
           this.settings_ = this._defaultSettings(settings);
           this.isInitialized_ = true;
           this.onSettingsUpdate.next();
           if (onLoad) onLoad(this.settings_);
-        },
-        err => {
+        }),
+        catchError(err => {
           this.isInitialized_ = false;
           this.onSettingsUpdate.next();
           if (onFail) onFail(err);
-        }
-      );
+          return of(DEFAULT_SETTINGS);
+        })
+      )
+      .toPromise();
   }
 
   private _defaultSettings(settings: GlobalSettings): GlobalSettings {
@@ -113,6 +115,7 @@ export class GlobalSettingsService {
   }
 
   getItemsPerPage(): number {
+    console.log(this.settings_.itemsPerPage);
     return this.settings_.itemsPerPage;
   }
 
