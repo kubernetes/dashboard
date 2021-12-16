@@ -34,7 +34,7 @@ export class ThemeService {
     private readonly _config: LocalConfigLoaderService
   ) {}
 
-  private _theme = ThemeService.SystemTheme;
+  private _theme = 'kd-light-theme';
 
   get theme(): string {
     return this._theme;
