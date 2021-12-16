@@ -19,7 +19,7 @@ import (
 	"fmt"
 
 	apiextensionsv1 "k8s.io/apiextensions-apiserver/pkg/apis/apiextensions/v1"
-	apiextensionsv1beta1 "k8s.io/apiextensions-apiserver/pkg/apis/apiextensions/v1beta1"
+
 	v1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime"
 	restclient "k8s.io/client-go/rest"
@@ -120,7 +120,7 @@ func (verber *resourceVerber) getResourceSpecFromKind(kind string, namespaceSet 
 
 func (verber *resourceVerber) getCRDGroupAndVersion(kind string) (info crdInfo, err error) {
 	var crdv1 apiextensionsv1.CustomResourceDefinition
-	var crdv1beta1 apiextensionsv1beta1.CustomResourceDefinition
+
 
 	err = verber.apiExtensionsClient.Get().Resource("customresourcedefinitions").Name(kind).Do(context.TODO()).Into(&crdv1)
 	if err != nil {
@@ -140,23 +140,6 @@ func (verber *resourceVerber) getCRDGroupAndVersion(kind string) (info crdInfo, 
 		return
 	}
 
-	err = verber.apiExtensionsClient.Get().Resource("customresourcedefinitions").Name(kind).Do(context.TODO()).Into(&crdv1beta1)
-	if err != nil {
-		if errors.IsNotFoundError(err) {
-			return info, errors.NewInvalid(fmt.Sprintf("Unknown resource kind: %s", kind))
-		}
-
-		return
-	}
-
-	if len(crdv1beta1.Spec.Versions) > 0 {
-		info.group = crdv1beta1.Spec.Group
-		info.version = crdv1beta1.Spec.Versions[0].Name
-		info.pluralName = crdv1beta1.Status.AcceptedNames.Plural
-		info.namespaced = crdv1beta1.Spec.Scope == apiextensionsv1beta1.NamespaceScoped
-	}
-
-	return
 }
 
 // RESTClient is an interface for REST operations used in this file.
