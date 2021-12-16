@@ -1,0 +1,71 @@
+# Copyright 2017 The Kubernetes Authors.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+name: Continuous Deployment - App
+
+on:
+  push:
+    branches: [ pull_request ]
+
+jobs:
+  deploy:
+    name: Development Release
+    runs-on: ubuntu-latest
+    env:
+      NG_CLI_ANALYTICS: ci
+      GOPROXY: "https://proxy.golang.org"
+      NODE_OPTIONS: "--max-old-space-size=8192"
+      DOCKER_CLI_EXPERIMENTAL: enabled
+      TERM: xterm
+
+    steps:
+      - name: Setup Environment
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - name: Setup Go
+        uses: actions/setup-go@v2
+        with:
+          go-version: 1.17.0
+
+      - name: Setup NodeJS
+        uses: actions/setup-node@v2.1.2
+        with:
+          node-version: 16.13.0
+
+      - name: Cache Node Modules
+        uses: actions/cache@v2
+        env:
+          cache-name: cache-node-modules
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+
+      - name: Install Dependencies
+        shell: bash
+        run: |
+          [ ! -d "node_modules" ] && npm ci || node aio/scripts/version.mjs && go mod download
+
+      - name: Docker Login
+        env:
+          DOCKER_USER: ${{ secrets.DOCKER_USER }}
+          DOCKER_PASS: ${{ secrets.DOCKER_PASS }}
+        run: docker login -u $DOCKER_USER -p $DOCKER_PASS
+
+      - name: Push Image
+        shell: bash
+        run: |
+          export GOPATH=$(go env GOPATH)/bin
+          make docker-push-head
