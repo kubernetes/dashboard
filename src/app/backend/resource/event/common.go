@@ -16,6 +16,7 @@ package event
 
 import (
 	"context"
+	"k8s.io/apimachinery/pkg/types"
 
 	v1 "k8s.io/api/core/v1"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
@@ -135,15 +136,21 @@ func GetNodeEvents(client kubernetes.Interface, dsQuery *dataselect.DataSelectQu
 	if err != nil {
 		return &eventList, err
 	}
-	node.UID = ""
 
-	events, err := client.CoreV1().Events(v1.NamespaceAll).Search(scheme, node)
+	eventsInvUID, err := client.CoreV1().Events(v1.NamespaceAll).Search(scheme, node)
 	_, criticalError := errors.HandleError(err)
 	if criticalError != nil {
 		return &eventList, criticalError
 	}
 
-	eventList = CreateEventList(FillEventsType(events.Items), dsQuery)
+	node.UID = types.UID(node.Name)
+	eventsInvName, err := client.CoreV1().Events(v1.NamespaceAll).Search(scheme, node)
+	_, criticalError = errors.HandleError(err)
+	if criticalError != nil {
+		return &eventList, criticalError
+	}
+
+	eventList = CreateEventList(FillEventsType(append(eventsInvName.Items, eventsInvUID.Items...)), dsQuery)
 	return &eventList, nil
 }
 
