@@ -34,7 +34,6 @@ import (
 // DELETE, PUT, UPDATE.
 type resourceVerber struct {
 	client              RESTClient
-	extensionsClient    RESTClient
 	appsClient          RESTClient
 	batchClient         RESTClient
 	betaBatchClient     RESTClient
@@ -56,8 +55,6 @@ type crdInfo struct {
 
 func (verber *resourceVerber) getRESTClientByType(clientType api.ClientType) RESTClient {
 	switch clientType {
-	case api.ClientTypeExtensionClient:
-		return verber.extensionsClient
 	case api.ClientTypeAppsClient:
 		return verber.appsClient
 	case api.ClientTypeBatchClient:
@@ -150,8 +147,8 @@ type RESTClient interface {
 }
 
 // NewResourceVerber creates a new resource verber that uses the given client for performing operations.
-func NewResourceVerber(client, extensionsClient, appsClient, batchClient, betaBatchClient, autoscalingClient, storageClient, rbacClient, networkingClient, apiExtensionsClient, pluginsClient RESTClient, config *restclient.Config) clientapi.ResourceVerber {
-	return &resourceVerber{client, extensionsClient, appsClient,
+func NewResourceVerber(client, appsClient, batchClient, betaBatchClient, autoscalingClient, storageClient, rbacClient, networkingClient, apiExtensionsClient, pluginsClient RESTClient, config *restclient.Config) clientapi.ResourceVerber {
+	return &resourceVerber{client, appsClient,
 		batchClient, betaBatchClient, autoscalingClient, storageClient, rbacClient, networkingClient, apiExtensionsClient, pluginsClient, config}
 }
 
