@@ -64,7 +64,6 @@ export class GlobalSettingsService {
       .get<GlobalSettings>(this.endpoint_)
       .pipe(
         tap(settings => {
-          console.log(settings);
           this.settings_ = this._defaultSettings(settings);
           this.isInitialized_ = true;
           this.onSettingsUpdate.next();
@@ -115,7 +114,6 @@ export class GlobalSettingsService {
   }
 
   getItemsPerPage(): number {
-    console.log(this.settings_.itemsPerPage);
     return this.settings_.itemsPerPage;
   }
 
