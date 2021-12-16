@@ -22,7 +22,7 @@ import (
 	batch "k8s.io/api/batch/v1"
 	batch2 "k8s.io/api/batch/v1beta1"
 	v1 "k8s.io/api/core/v1"
-	extensions "k8s.io/api/extensions/v1beta1"
+	networkingv1 "k8s.io/api/networking/v1"
 	rbac "k8s.io/api/rbac/v1"
 	storage "k8s.io/api/storage/v1"
 	apiextensions "k8s.io/apiextensions-apiserver/pkg/apis/apiextensions/v1"
@@ -160,7 +160,7 @@ func GetServiceListChannel(client client.Interface, nsQuery *NamespaceQuery,
 
 // IngressListChannel is a list and error channels to Ingresss.
 type IngressListChannel struct {
-	List  chan *extensions.IngressList
+	List  chan *networkingv1.IngressList
 	Error chan error
 }
 
@@ -170,12 +170,12 @@ func GetIngressListChannel(client client.Interface, nsQuery *NamespaceQuery,
 	numReads int) IngressListChannel {
 
 	channel := IngressListChannel{
-		List:  make(chan *extensions.IngressList, numReads),
+		List:  make(chan *networkingv1.IngressList, numReads),
 		Error: make(chan error, numReads),
 	}
 	go func() {
-		list, err := client.ExtensionsV1beta1().Ingresses(nsQuery.ToRequestParam()).List(context.TODO(), api.ListEverything)
-		var filteredItems []extensions.Ingress
+		list, err := client.NetworkingV1().Ingresses(nsQuery.ToRequestParam()).List(context.TODO(), api.ListEverything)
+		var filteredItems []networkingv1.Ingress
 		for _, item := range list.Items {
 			if nsQuery.Matches(item.ObjectMeta.Namespace) {
 				filteredItems = append(filteredItems, item)
