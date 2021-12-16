@@ -27,6 +27,13 @@ image:
 ## Number of replicas
 replicaCount: 1
 
+## @param commonLabels Labels to add to all deployed objects
+##
+commonLabels: {}
+## @param commonAnnotations Annotations to add to all deployed objects
+##
+commonAnnotations: {}
+
 ## Here annotations can be added to the kubernetes dashboard deployment
 annotations: {}
 ## Here labels can be added to the kubernetes dashboard deployment
@@ -68,8 +75,14 @@ securityContext:
   seccompProfile:
     type: RuntimeDefault
 
-# Labels to be added to kubernetes dashboard pods
+## @param podLabels Extra labels for OAuth2 Proxy pods
+## ref: https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/
+##
 podLabels: {}
+## @param podAnnotations Annotations for OAuth2 Proxy pods
+## ref: https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/
+##
+podAnnotations: {}
 
 ## Node labels for pod assignment
 ## Ref: https://kubernetes.io/docs/user-guide/node-selection/

@@ -22,10 +22,17 @@ metadata:
     chart: {{ template "kubernetes-dashboard.chart" . }}
     release: {{ .Release.Name }}
     heritage: {{ .Release.Service }}
+    {{- if .Values.commonLabels }}
+    {{- include "common.tplvalues.render" ( dict "value" .Values.commonLabels "context" $ ) | nindent 4 }}
+    {{- end }}
+  annotations:
+    {{- if .Values.commonAnnotations }}
+    {{- include "common.tplvalues.render" ( dict "value" .Values.commonAnnotations "context" $ ) | nindent 4 }}
+    {{- end }}
 spec:
   podSelector:
     matchLabels:
-{{ include "kubernetes-dashboard.matchLabels" . | indent 6 }}
+{{ include "kubernetes-dashboard.matchLabels" . | nindent 6 }}
   ingress:
   - ports:
 {{- if .Values.protocolHttp }}
