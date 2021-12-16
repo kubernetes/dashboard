@@ -79,7 +79,7 @@ clean:
 
 .PHONY: build-backend
 build-backend: ensure-go
-	go build -ldflags "-X $(MAIN_PACKAGE)/client.Version=$(RELEASE_VERSION)" -gcflags="all=-N -l" -o $(SERVE_BINARY) $(MAIN_PACKAGE)
+	CGO_ENABLED=0 go build -ldflags "-X $(MAIN_PACKAGE)/client.Version=$(RELEASE_VERSION)" -gcflags="all=-N -l" -o $(SERVE_BINARY) $(MAIN_PACKAGE)
 
 .PHONY: build
 build: clean ensure-go
@@ -110,12 +110,12 @@ watch-backend: ensure-air
 
 .PHONY: prod-backend
 prod-backend: clean ensure-go
-	GOOS=linux go build -a -installsuffix cgo -ldflags "-X $(MAIN_PACKAGE)/client.Version=$(RELEASE_VERSION)" -o $(PROD_BINARY) $(MAIN_PACKAGE)
+	CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -ldflags "-X $(MAIN_PACKAGE)/client.Version=$(RELEASE_VERSION)" -o $(PROD_BINARY) $(MAIN_PACKAGE)
 
 .PHONY: prod-backend-cross
 prod-backend-cross: clean ensure-go
 	for ARCH in $(ARCHITECTURES) ; do \
-  	GOOS=linux GOARCH=$$ARCH go build -a -installsuffix cgo -ldflags "-X $(MAIN_PACKAGE)/client.Version=$(RELEASE_VERSION)" -o dist/$$ARCH/dashboard $(MAIN_PACKAGE) ; \
+  	CGO_ENABLED=0 GOOS=linux GOARCH=$$ARCH go build -a -installsuffix cgo -ldflags "-X $(MAIN_PACKAGE)/client.Version=$(RELEASE_VERSION)" -o dist/$$ARCH/dashboard $(MAIN_PACKAGE) ; \
   done
 
 .PHONY: prod
@@ -232,7 +232,7 @@ e2e-headed: start-cluster
 .PHONY: docker-build-release
 docker-build-release: build-cross
 	for ARCH in $(ARCHITECTURES) ; do \
-  		docker build -t $(RELEASE_IMAGE)-$$ARCH:$(RELEASE_VERSION) -t $(RELEASE_IMAGE)-$$ARCH:latest dist/$$ARCH ; \
+  		CGO_ENABLED=0 docker build -t $(RELEASE_IMAGE)-$$ARCH:$(RELEASE_VERSION) -t $(RELEASE_IMAGE)-$$ARCH:latest dist/$$ARCH ; \
   done
 
 .PHONY: docker-push-release
