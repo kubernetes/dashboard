@@ -368,5 +368,5 @@ limitations under the License.
         (click)="switchMoreOptions()"
         [hidden]="!isMoreOptionsEnabled()"
         i18n>
-  {isMoreOptionsEnabled(), select, 1 {Hide advanced options} other {Show advanced options}}
+  {isMoreOptionsEnabled(), select, true {Hide advanced options} other {Show advanced options}}
 </button>
