@@ -110,14 +110,14 @@
     "@types/js-yaml": "4.0.5",
     "@types/lodash": "4.14.177",
     "@types/node": "16.11.10",
-    "@typescript-eslint/eslint-plugin": "5.4.0",
-    "@typescript-eslint/parser": "5.4.0",
+    "@typescript-eslint/eslint-plugin": "5.8.0",
+    "@typescript-eslint/parser": "5.8.0",
     "codelyzer": "6.0.2",
     "concurrently": "6.4.0",
     "cypress": "8.7.0",
     "cypress-fail-fast": "3.3.0",
     "del": "6.0.0",
-    "eslint": "8.3.0",
+    "eslint": "8.5.0",
     "eslint-plugin-node": "11.1.0",
     "eslint-plugin-prettier": "4.0.0",
     "eslint-plugin-rxjs": "4.0.3",
@@ -163,11 +163,17 @@
   "eslintConfig": {
     "parser": "@typescript-eslint/parser",
     "parserOptions": {
-      "ecmaVersion": 2020,
-      "project": "./tsconfig.json",
+      "ecmaVersion": "2020",
+      "project": [
+        "aio/tsconfig.app.json",
+        "aio/tsconfig.spec.json",
+        "aio/tsconfig.e2e.json"
+      ],
       "sourceType": "module"
     },
-    "extends": "./node_modules/gts/",
+    "extends": [
+      "./node_modules/gts"
+    ],
     "plugins": [
       "rxjs"
     ],
@@ -201,25 +207,13 @@
       "rxjs/no-unsafe-takeuntil": "error",
       "rxjs/no-nested-subscribe": "error"
     },
-    "overrides": [
-      {
-        "files": [
-          "src/**/*.spec.ts"
-        ],
-        "env": {
-          "browser": true,
-          "jest": true
-        }
-      }
-    ],
     "ignorePatterns": [
       "**/*.js"
     ]
   },
   "eslintIgnore": [
     "node_modules/*",
-    "aio/*",
-    "src/app/frontend/common/services/global/history.ts"
+    "aio/*"
   ],
   "stylelint": {
     "extends": [

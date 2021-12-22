@@ -32,7 +32,7 @@ export class HistoryService {
       .pipe(filter(e => e instanceof NavigationEnd))
       .pipe(pairwise())
       .subscribe((e: [NavigationEnd, NavigationEnd]) => {
-        if(e[0].url !== e[1].url) {
+        if (e[0].url !== e[1].url) {
           this.previousStateUrl_ = e[0].url;
           this.currentStateUrl_ = e[1].url;
         }
