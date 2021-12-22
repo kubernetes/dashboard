@@ -62,6 +62,13 @@ jobs:
         run: |
           [ ! -d "node_modules" ] && npm ci || node aio/scripts/version.mjs && go mod download
 
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v1
+
+      - name: Set up Docker Buildx
+        id: buildx
+        uses: docker/setup-buildx-action@v1
+
       - name: Docker Login
         env:
           DOCKER_USER: ${{ secrets.DOCKER_USER }}
@@ -72,7 +79,7 @@ jobs:
         shell: bash
         run: |
           export GOPATH=$(go env GOPATH)/bin
-          npm run docker:push:head
+          make docker-push-head
 
   release:
     name: Release
@@ -114,6 +121,13 @@ jobs:
         run: |
           [ ! -d "node_modules" ] && npm ci || node aio/scripts/version.mjs && go mod download
 
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v1
+
+      - name: Set up Docker Buildx
+        id: buildx
+        uses: docker/setup-buildx-action@v1
+
       - name: Docker Login
         env:
           DOCKER_USER: ${{ secrets.DOCKER_RELEASE_USER }}
@@ -124,4 +138,4 @@ jobs:
         shell: bash
         run: |
           export GOPATH=$(go env GOPATH)/bin
-          npm run docker:push
+          make docker-push-release
