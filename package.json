@@ -133,6 +133,7 @@
     "minimist": "1.2.5",
     "ngx-i18nsupport": "0.17.1",
     "node-gyp": "8.3.0",
+    "prettier": "2.5.1",
     "q": "1.5.1",
     "raw-loader": "4.0.2",
     "run-node": "2.0.0",
