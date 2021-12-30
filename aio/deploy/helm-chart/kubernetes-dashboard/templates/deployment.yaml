@@ -16,16 +16,22 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: {{ template "kubernetes-dashboard.fullname" . }}
-{{- with .Values.annotations }}
   annotations:
-{{ toYaml . | indent 4 }}
-{{- end }}
+    {{- if .Values.commonAnnotations }}
+    {{- include "common.tplvalues.render" ( dict "value" .Values.commonAnnotations "context" $ ) | nindent 4 }}
+    {{- end }}
+    {{- with .Values.annotations }}
+    {{ toYaml . | nindent 4 }}
+    {{- end }}
   labels:
-{{ include "kubernetes-dashboard.labels" . | indent 4 }}
+    {{- include "kubernetes-dashboard.labels" . | nindent 4 }}
     app.kubernetes.io/component: kubernetes-dashboard
-{{- with .Values.labels }}
-{{ toYaml . | indent 4 }}
-{{- end }}
+    {{- with .Values.labels }}
+    {{ toYaml . | nindent 4 }}
+    {{- end }}
+    {{- if .Values.commonLabels }}
+    {{- include "common.tplvalues.render" ( dict "value" .Values.commonLabels "context" $ ) | nindent 4 }}
+    {{- end }}
 spec:
   replicas: {{ .Values.replicaCount }}
   strategy:
@@ -35,24 +41,24 @@ spec:
     type: RollingUpdate
   selector:
     matchLabels:
-{{ include "kubernetes-dashboard.matchLabels" . | indent 6 }}
+{{ include "kubernetes-dashboard.matchLabels" . | nindent 6 }}
       app.kubernetes.io/component: kubernetes-dashboard
   template:
     metadata:
-{{- with .Values.podAnnotations }}
       annotations:
-{{ toYaml . | indent 8 }}
-{{- end }}
+        {{- if .Values.podAnnotations }}
+        {{- include "common.tplvalues.render" (dict "value" .Values.podAnnotations "context" $) | nindent 8 }}
+        {{- end }}
       labels:
-{{ include "kubernetes-dashboard.labels" . | indent 8 }}
+        {{- include "kubernetes-dashboard.labels" . | nindent 8 }}
         app.kubernetes.io/component: kubernetes-dashboard
-{{- with .Values.podLabels }}
-{{ toYaml . | indent 8 }}
-{{- end }}
+        {{- if .Values.podLabels }}
+        {{- include "common.tplvalues.render" (dict "value" .Values.podLabels "context" $) | nindent 8 }}
+        {{- end }}
     spec:
 {{- with .Values.securityContext }}
       securityContext:
-{{ toYaml . | indent 8 }}
+{{ toYaml . | nindent 8 }}
 {{- end }}
       serviceAccountName: {{ template "kubernetes-dashboard.serviceAccountName" . }}
       containers:
@@ -70,11 +76,11 @@ spec:
           - --metrics-provider=none
 {{- end }}
 {{- with .Values.extraArgs }}
-{{ toYaml . | indent 10 }}
+{{ toYaml . | nindent 10 }}
 {{- end }}
 {{- with .Values.extraEnv }}
         env:
-{{ toYaml . | indent 10 }}
+{{ toYaml . | nindent 10 }}
 {{- end }}
         ports:
 {{- if .Values.protocolHttp }}
@@ -93,7 +99,7 @@ spec:
         - mountPath: /tmp
           name: tmp-volume
 {{- with .Values.extraVolumeMounts }}
-{{ toYaml . | indent 8 }}
+{{ toYaml . | nindent 8 }}
 {{- end }}
         livenessProbe:
           httpGet:
@@ -110,11 +116,11 @@ spec:
           timeoutSeconds: {{ .Values.livenessProbe.timeoutSeconds }}
 {{- with .Values.resources }}
         resources:
-{{ toYaml . | indent 10 }}
+{{ toYaml . | nindent 10 }}
 {{- end }}
 {{- with .Values.containerSecurityContext }}
         securityContext:
-{{ toYaml . | indent 10 }}
+{{ toYaml . | nindent 10 }}
 {{- end }}
 {{- if .Values.metricsScraper.enabled }}
       - name: dashboard-metrics-scraper
@@ -122,7 +128,7 @@ spec:
         imagePullPolicy: {{ .Values.image.pullPolicy }}
 {{- with .Values.metricsScraper.args }}
         args:
-{{ toYaml . | indent 10 }}
+{{ toYaml . | nindent 10 }}
 {{- end }}
         ports:
           - containerPort: 8000
@@ -139,11 +145,11 @@ spec:
           name: tmp-volume
 {{- with .Values.metricsScraper.containerSecurityContext }}
         securityContext:
-{{ toYaml . | indent 10 }}
+{{ toYaml . | nindent 10 }}
 {{- end }}
 {{- with .Values.metricsScraper.resources }}
         resources:
-{{ toYaml . | indent 10 }}
+{{ toYaml . | nindent 10 }}
 {{- end }}
 {{- end }}
 {{- with .Values.image.pullSecrets }}
@@ -154,7 +160,7 @@ spec:
 {{- end }}
 {{- with .Values.nodeSelector }}
       nodeSelector:
-{{ toYaml . | indent 8 }}
+{{ toYaml . | nindent 8 }}
 {{- end }}
 {{- with .Values.priorityClassName }}
       priorityClassName: "{{ . }}"
@@ -166,13 +172,13 @@ spec:
       - name: tmp-volume
         emptyDir: {}
 {{- with .Values.extraVolumes }}
-{{ toYaml . | indent 6 }}
+{{ toYaml . | nindent 6 }}
 {{- end }}
 {{- with .Values.tolerations }}
       tolerations:
-{{ toYaml . | indent 8 }}
+{{ toYaml . | nindent 8 }}
 {{- end }}
 {{- with .Values.affinity }}
       affinity:
-{{ toYaml . | indent 8 }}
+{{ toYaml . | nindent 8 }}
 {{- end }}

@@ -22,11 +22,11 @@ import (
 	batch "k8s.io/api/batch/v1"
 	batch2 "k8s.io/api/batch/v1beta1"
 	v1 "k8s.io/api/core/v1"
-	extensions "k8s.io/api/extensions/v1beta1"
+	networkingv1 "k8s.io/api/networking/v1"
 	rbac "k8s.io/api/rbac/v1"
 	storage "k8s.io/api/storage/v1"
 	apiextensions "k8s.io/apiextensions-apiserver/pkg/apis/apiextensions/v1"
-	apiextensionsv1beta1 "k8s.io/apiextensions-apiserver/pkg/apis/apiextensions/v1beta1"
+
 	apiextensionsclientset "k8s.io/apiextensions-apiserver/pkg/client/clientset/clientset"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	client "k8s.io/client-go/kubernetes"
@@ -160,7 +160,7 @@ func GetServiceListChannel(client client.Interface, nsQuery *NamespaceQuery,
 
 // IngressListChannel is a list and error channels to Ingresss.
 type IngressListChannel struct {
-	List  chan *extensions.IngressList
+	List  chan *networkingv1.IngressList
 	Error chan error
 }
 
@@ -170,12 +170,12 @@ func GetIngressListChannel(client client.Interface, nsQuery *NamespaceQuery,
 	numReads int) IngressListChannel {
 
 	channel := IngressListChannel{
-		List:  make(chan *extensions.IngressList, numReads),
+		List:  make(chan *networkingv1.IngressList, numReads),
 		Error: make(chan error, numReads),
 	}
 	go func() {
-		list, err := client.ExtensionsV1beta1().Ingresses(nsQuery.ToRequestParam()).List(context.TODO(), api.ListEverything)
-		var filteredItems []extensions.Ingress
+		list, err := client.NetworkingV1().Ingresses(nsQuery.ToRequestParam()).List(context.TODO(), api.ListEverything)
+		var filteredItems []networkingv1.Ingress
 		for _, item := range list.Items {
 			if nsQuery.Matches(item.ObjectMeta.Namespace) {
 				filteredItems = append(filteredItems, item)
@@ -856,31 +856,6 @@ func GetCustomResourceDefinitionChannelV1(client apiextensionsclientset.Interfac
 
 	go func() {
 		list, err := client.ApiextensionsV1().CustomResourceDefinitions().List(context.TODO(), api.ListEverything)
-		for i := 0; i < numReads; i++ {
-			channel.List <- list
-			channel.Error <- err
-		}
-	}()
-
-	return channel
-}
-
-// CustomResourceDefinitionChannel is a list and error channels to CustomResourceDefinition.
-type CustomResourceDefinitionChannelV1beta1 struct {
-	List  chan *apiextensionsv1beta1.CustomResourceDefinitionList
-	Error chan error
-}
-
-// GetCustomResourceDefinitionChannelV1beta1 returns a pair of channels to a CustomResourceDefinition list and errors
-// that both must be read numReads times.
-func GetCustomResourceDefinitionChannelV1beta1(client apiextensionsclientset.Interface, numReads int) CustomResourceDefinitionChannelV1beta1 {
-	channel := CustomResourceDefinitionChannelV1beta1{
-		List:  make(chan *apiextensionsv1beta1.CustomResourceDefinitionList, numReads),
-		Error: make(chan error, numReads),
-	}
-
-	go func() {
-		list, err := client.ApiextensionsV1beta1().CustomResourceDefinitions().List(context.TODO(), api.ListEverything)
 		for i := 0; i < numReads; i++ {
 			channel.List <- list
 			channel.Error <- err

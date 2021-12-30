@@ -105,13 +105,12 @@ export function init(
 ): Function {
   return () => {
     return loader.init().then(() => {
-      globalSettings.init();
       localSettings.init();
-      pluginsConfig.init();
       pinner.init();
       config.init();
       history.init();
       theme.init();
+      return globalSettings.init().then(() => pluginsConfig.init());
     });
   };
 }

@@ -319,7 +319,7 @@ limitations under the License.
       </div>
       <kd-user-help>
         <ng-container i18n>Processes in privileged containers are equivalent to processes running as root on the host.</ng-container>
-        <a href="https://kubernetes.io/docs/user-guide/pods/#privileged-mode-for-pod-containers"
+        <a href="https://kubernetes.io/docs/concepts/workloads/pods/#privileged-mode-for-containers"
            target="_blank"
            tabindex="-1"
            i18n>
@@ -368,5 +368,5 @@ limitations under the License.
         (click)="switchMoreOptions()"
         [hidden]="!isMoreOptionsEnabled()"
         i18n>
-  {isMoreOptionsEnabled(), select, 1 {Hide advanced options} other {Show advanced options}}
+  {isMoreOptionsEnabled(), select, true {Hide advanced options} other {Show advanced options}}
 </button>

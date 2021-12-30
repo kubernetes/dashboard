@@ -18,7 +18,6 @@ import (
 	"fmt"
 
 	apiextensionsv1 "k8s.io/apiextensions-apiserver/pkg/apis/apiextensions/v1"
-	apiextensionsv1beta "k8s.io/apiextensions-apiserver/pkg/apis/apiextensions/v1beta1"
 	"k8s.io/apiextensions-apiserver/pkg/client/clientset/clientset"
 	apiextensionsclientset "k8s.io/apiextensions-apiserver/pkg/client/clientset/clientset"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
@@ -31,14 +30,12 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/customresourcedefinition/types"
 	crdv1 "github.com/kubernetes/dashboard/src/app/backend/resource/customresourcedefinition/v1"
-	crdv1beta1 "github.com/kubernetes/dashboard/src/app/backend/resource/customresourcedefinition/v1beta1"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 )
 
 var (
 	groupName = apiextensionsv1.GroupName
 	v1        = apiextensionsv1.SchemeGroupVersion.Version
-	v1beta1   = apiextensionsv1beta.SchemeGroupVersion.Version
 )
 
 func GetExtensionsAPIVersion(client clientset.Interface) (string, error) {
@@ -65,8 +62,6 @@ func GetExtensionsAPIRestClient(client clientset.Interface) (rest.Interface, err
 	switch version {
 	case v1:
 		return client.ApiextensionsV1().RESTClient(), nil
-	case v1beta1:
-		return client.ApiextensionsV1beta1().RESTClient(), nil
 	}
 
 	return nil, errors.NewNotFound(fmt.Sprintf("unsupported extensions api version: %s", version))
@@ -81,8 +76,6 @@ func GetCustomResourceDefinitionList(client apiextensionsclientset.Interface, ds
 	switch version {
 	case v1:
 		return crdv1.GetCustomResourceDefinitionList(client, dsQuery)
-	case v1beta1:
-		return crdv1beta1.GetCustomResourceDefinitionList(client, dsQuery)
 	}
 
 	return nil, errors.NewNotFound(fmt.Sprintf("unsupported extensions api version: %s", version))
@@ -97,8 +90,6 @@ func GetCustomResourceDefinitionDetail(client apiextensionsclientset.Interface, 
 	switch version {
 	case v1:
 		return crdv1.GetCustomResourceDefinitionDetail(client, config, name)
-	case v1beta1:
-		return crdv1beta1.GetCustomResourceDefinitionDetail(client, config, name)
 	}
 
 	return nil, errors.NewNotFound(fmt.Sprintf("unsupported extensions api versions: %s", version))
@@ -114,8 +105,6 @@ func GetCustomResourceObjectList(client apiextensionsclientset.Interface, config
 	switch version {
 	case v1:
 		return crdv1.GetCustomResourceObjectList(client, config, namespace, dsQuery, crdName)
-	case v1beta1:
-		return crdv1beta1.GetCustomResourceObjectList(client, config, namespace, dsQuery, crdName)
 	}
 
 	return nil, errors.NewNotFound(fmt.Sprintf("unsupported extensions api versions: %s", version))
@@ -130,8 +119,6 @@ func GetCustomResourceObjectDetail(client apiextensionsclientset.Interface, name
 	switch version {
 	case v1:
 		return crdv1.GetCustomResourceObjectDetail(client, namespace, config, crdName, name)
-	case v1beta1:
-		return crdv1beta1.GetCustomResourceObjectDetail(client, namespace, config, crdName, name)
 	}
 
 	return nil, errors.NewNotFound(fmt.Sprintf("unsupported extensions api versions: %s", version))

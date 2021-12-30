@@ -6,7 +6,7 @@
     "types": ["node"]
   },
   "include": [
-    "../src/app/frontend/**/*"
+    "../src/app/frontend/**/*.ts"
   ],
   "exclude": [
     "../src/app/frontend/**/*.spec.ts",

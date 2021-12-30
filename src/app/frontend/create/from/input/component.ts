@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import {Component} from '@angular/core';
+import {ICanDeactivate} from '@common/interfaces/candeactivate';
 
 import {CreateService} from '@common/services/create/service';
 import {HistoryService} from '@common/services/global/history';
@@ -23,21 +24,28 @@ import {NamespaceService} from '@common/services/global/namespace';
   templateUrl: './template.html',
   styleUrls: ['./style.scss'],
 })
-export class CreateFromInputComponent {
+export class CreateFromInputComponent extends ICanDeactivate {
   inputData = '';
+  private creating_ = false;
 
   constructor(
     private readonly namespace_: NamespaceService,
     private readonly create_: CreateService,
     private readonly history_: HistoryService
-  ) {}
+  ) {
+    super();
+  }
 
   isCreateDisabled(): boolean {
     return !this.inputData || this.inputData.length === 0 || this.create_.isDeployDisabled();
   }
 
   create(): void {
-    this.create_.createContent(this.inputData);
+    this.creating_ = true;
+    this.create_
+      .createContent(this.inputData)
+      .then(() => (this.creating_ = false))
+      .finally(() => (this.creating_ = false));
   }
 
   cancel(): void {
@@ -46,5 +54,9 @@ export class CreateFromInputComponent {
 
   areMultipleNamespacesSelected(): boolean {
     return this.namespace_.areMultipleNamespacesSelected();
+  }
+
+  canDeactivate(): boolean {
+    return this.isCreateDisabled() && !this.creating_;
   }
 }

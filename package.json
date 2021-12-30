@@ -8,9 +8,9 @@
   },
   "license": "Apache-2.0",
   "scripts": {
-    "start": "concurrently \"make watch-backend\" \"npm run start:frontend\"",
-    "start:https": "concurrently \"AUTO_GENERATE_CERTS=true make watch-backend\" \"npm run start:frontend:https\"",
-    "start:prod": "make prod",
+    "start": "concurrently \"SIDECAR_HOST=$npm_config_sidecar_host make watch-backend\" \"npm run start:frontend --bind_address=$npm_config_bind_address --port=$npm_config_port\"",
+    "start:https": "concurrently \"AUTO_GENERATE_CERTS=true SIDECAR_HOST=$npm_config_sidecar_host make watch-backend\" \"npm run start:frontend:https --bind_address=$npm_config_bind_address --port=$npm_config_port\"",
+    "start:prod": "SIDECAR_HOST=$npm_config_sidecar_host BIND_ADDRESS=$npm_config_bind_address PORT=$npm_config_port make prod",
     "start:e2e": "concurrently \"make serve-backend\" \"npm run start:frontend\"",
     "start:frontend": "make ensure-version && ng serve --proxy-config aio/proxy.conf.json --host $npm_config_bind_address --port $npm_config_port",
     "start:frontend:https": "make ensure-version && ng serve --proxy-config aio/https-proxy.conf.json --ssl --host $npm_config_bind_address --port $npm_config_port",
@@ -52,18 +52,18 @@
     "beautifyOutput": true
   },
   "dependencies": {
-    "@angular/animations": "13.0.2",
-    "@angular/cdk": "13.0.2",
-    "@angular/common": "13.0.2",
-    "@angular/compiler": "13.0.2",
-    "@angular/core": "13.0.2",
-    "@angular/flex-layout": "12.0.0-beta.35",
-    "@angular/forms": "13.0.2",
-    "@angular/localize": "13.0.2",
-    "@angular/material": "13.0.2",
-    "@angular/platform-browser": "13.0.2",
-    "@angular/platform-browser-dynamic": "13.0.2",
-    "@angular/router": "13.0.2",
+    "@angular/animations": "13.1.0",
+    "@angular/cdk": "13.1.0",
+    "@angular/common": "13.1.0",
+    "@angular/compiler": "13.1.0",
+    "@angular/core": "13.1.0",
+    "@angular/flex-layout": "13.0.0-beta.36",
+    "@angular/forms": "13.1.0",
+    "@angular/localize": "13.1.0",
+    "@angular/material": "13.1.0",
+    "@angular/platform-browser": "13.1.0",
+    "@angular/platform-browser-dynamic": "13.1.0",
+    "@angular/router": "13.1.0",
     "@swimlane/ngx-charts": "19.1.0",
     "ace-builds": "1.4.13",
     "ansi-to-html": "0.7.2",
@@ -75,7 +75,7 @@
     "jwt-decode": "3.1.2",
     "material-design-icons": "3.0.1",
     "ng-in-viewport": "6.1.5",
-    "ngx-cookie-service": "12.0.3",
+    "ngx-cookie-service": "13.1.2",
     "ngx-pipes": "2.7.6",
     "normalize.css": "8.0.1",
     "roboto-fontface": "0.10.0",
@@ -92,10 +92,10 @@
     "zone.js": "0.11.4"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "13.0.3",
-    "@angular/cli": "13.0.3",
-    "@angular/compiler-cli": "13.0.2",
-    "@angular/language-service": "13.0.2",
+    "@angular-devkit/build-angular": "13.1.1",
+    "@angular/cli": "13.1.1",
+    "@angular/compiler-cli": "13.1.0",
+    "@angular/language-service": "13.1.0",
     "@babel/core": "7.16.0",
     "@babel/preset-env": "7.16.4",
     "@babel/register": "7.16.0",
@@ -110,14 +110,14 @@
     "@types/js-yaml": "4.0.5",
     "@types/lodash": "4.14.177",
     "@types/node": "16.11.10",
-    "@typescript-eslint/eslint-plugin": "5.4.0",
-    "@typescript-eslint/parser": "5.4.0",
+    "@typescript-eslint/eslint-plugin": "5.8.0",
+    "@typescript-eslint/parser": "5.8.0",
     "codelyzer": "6.0.2",
     "concurrently": "6.4.0",
     "cypress": "8.7.0",
     "cypress-fail-fast": "3.3.0",
     "del": "6.0.0",
-    "eslint": "8.3.0",
+    "eslint": "8.5.0",
     "eslint-plugin-node": "11.1.0",
     "eslint-plugin-prettier": "4.0.0",
     "eslint-plugin-rxjs": "4.0.3",
@@ -163,11 +163,17 @@
   "eslintConfig": {
     "parser": "@typescript-eslint/parser",
     "parserOptions": {
-      "ecmaVersion": 2020,
-      "project": "./tsconfig.json",
+      "ecmaVersion": "2020",
+      "project": [
+        "aio/tsconfig.app.json",
+        "aio/tsconfig.spec.json",
+        "aio/tsconfig.e2e.json"
+      ],
       "sourceType": "module"
     },
-    "extends": "./node_modules/gts/",
+    "extends": [
+      "./node_modules/gts"
+    ],
     "plugins": [
       "rxjs"
     ],
@@ -201,25 +207,13 @@
       "rxjs/no-unsafe-takeuntil": "error",
       "rxjs/no-nested-subscribe": "error"
     },
-    "overrides": [
-      {
-        "files": [
-          "src/**/*.spec.ts"
-        ],
-        "env": {
-          "browser": true,
-          "jest": true
-        }
-      }
-    ],
     "ignorePatterns": [
       "**/*.js"
     ]
   },
   "eslintIgnore": [
     "node_modules/*",
-    "aio/*",
-    "src/app/frontend/common/services/global/history.ts"
+    "aio/*"
   ],
   "stylelint": {
     "extends": [

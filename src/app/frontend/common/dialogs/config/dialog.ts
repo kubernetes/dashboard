@@ -12,23 +12,18 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {NgModule} from '@angular/core';
-import {Route, RouterModule} from '@angular/router';
-import {CanDeactivateGuard} from '@common/services/guard/candeactivate';
+import {Component, Inject} from '@angular/core';
+import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 
-import {CreateComponent} from './component';
+export interface ConfirmDialogConfig {
+  title: string;
+  message: string;
+}
 
-const CREATE_ROUTE: Route = {
-  path: '',
-  component: CreateComponent,
-  data: {
-    breadcrumb: 'Create',
-  },
-  canDeactivate: [CanDeactivateGuard],
-};
-
-@NgModule({
-  imports: [RouterModule.forChild([CREATE_ROUTE])],
-  exports: [RouterModule],
+@Component({
+  selector: 'kd-confirm-dialog',
+  templateUrl: 'template.html',
 })
-export class CreateRoutingModule {}
+export class ConfirmDialog {
+  constructor(@Inject(MAT_DIALOG_DATA) public data: ConfirmDialogConfig) {}
+}

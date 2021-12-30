@@ -12,23 +12,16 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {NgModule} from '@angular/core';
-import {Route, RouterModule} from '@angular/router';
-import {CanDeactivateGuard} from '@common/services/guard/candeactivate';
+import {Directive, HostListener} from '@angular/core';
 
-import {CreateComponent} from './component';
+@Directive()
+export abstract class ICanDeactivate {
+  abstract canDeactivate(): boolean;
 
-const CREATE_ROUTE: Route = {
-  path: '',
-  component: CreateComponent,
-  data: {
-    breadcrumb: 'Create',
-  },
-  canDeactivate: [CanDeactivateGuard],
-};
-
-@NgModule({
-  imports: [RouterModule.forChild([CREATE_ROUTE])],
-  exports: [RouterModule],
-})
-export class CreateRoutingModule {}
+  @HostListener('window:beforeunload', ['$event'])
+  unloadNotification($event: any) {
+    if (!this.canDeactivate()) {
+      $event.returnValue = true;
+    }
+  }
+}
