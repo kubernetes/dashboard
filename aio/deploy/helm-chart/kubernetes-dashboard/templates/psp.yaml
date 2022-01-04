@@ -23,11 +23,10 @@ metadata:
     {{- include "common.tplvalues.render" ( dict "value" .Values.commonLabels "context" $ ) | nindent 4 }}
     {{- end }}
   annotations:
+    seccomp.security.alpha.kubernetes.io/allowedProfileNames: '*'
     {{- if .Values.commonAnnotations }}
     {{- include "common.tplvalues.render" ( dict "value" .Values.commonAnnotations "context" $ ) | nindent 4 }}
     {{- end }}
-  annotations:
-    seccomp.security.alpha.kubernetes.io/allowedProfileNames: '*'
 spec:
   privileged: false
   fsGroup:

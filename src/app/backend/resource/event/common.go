@@ -17,18 +17,18 @@ package event
 import (
 	"context"
 
+	"github.com/kubernetes/dashboard/src/app/backend/api"
+	"github.com/kubernetes/dashboard/src/app/backend/errors"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	v1 "k8s.io/api/core/v1"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/fields"
 	"k8s.io/apimachinery/pkg/labels"
 	"k8s.io/apimachinery/pkg/runtime"
 	"k8s.io/apimachinery/pkg/runtime/schema"
+	"k8s.io/apimachinery/pkg/types"
 	"k8s.io/client-go/kubernetes"
-
-	"github.com/kubernetes/dashboard/src/app/backend/api"
-	"github.com/kubernetes/dashboard/src/app/backend/errors"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 )
 
 // EmptyEventList is a empty list of events.
@@ -136,13 +136,20 @@ func GetNodeEvents(client kubernetes.Interface, dsQuery *dataselect.DataSelectQu
 		return &eventList, err
 	}
 
-	events, err := client.CoreV1().Events(v1.NamespaceAll).Search(scheme, node)
+	eventsInvUID, err := client.CoreV1().Events(v1.NamespaceAll).Search(scheme, node)
 	_, criticalError := errors.HandleError(err)
 	if criticalError != nil {
 		return &eventList, criticalError
 	}
 
-	eventList = CreateEventList(FillEventsType(events.Items), dsQuery)
+	node.UID = types.UID(node.Name)
+	eventsInvName, err := client.CoreV1().Events(v1.NamespaceAll).Search(scheme, node)
+	_, criticalError = errors.HandleError(err)
+	if criticalError != nil {
+		return &eventList, criticalError
+	}
+
+	eventList = CreateEventList(FillEventsType(append(eventsInvName.Items, eventsInvUID.Items...)), dsQuery)
 	return &eventList, nil
 }
 
