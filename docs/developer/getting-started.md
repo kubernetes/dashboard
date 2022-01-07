@@ -147,9 +147,8 @@ At first, change directory to kubernetes dashboard repository of your fork.
 
 ### Allow accessing dashboard from outside the container
 
-Development container runs Kubernetes Dashboard in insecure mode by default,
-but Kubernetes Dashboard is not exposed to outside the container in insecure
-mode by default.
+Development container builds Kubernetes Dashboard and runs it with self-certificates by default,
+but Kubernetes Dashboard is not exposed to outside the container with insecure certificates by default.
 
 To allow accessing dashboard from outside the development container,
 pass value for `--insecure-bind-address` option to dashboard as follows:
@@ -166,7 +165,7 @@ As default, development container uses `8080` port to expose dashboard. If you n
 1. Run `aio/develop/run-npm-on-container.sh`.
 
 That's all. It will build dashboard container from your local repository, will create also kubernetes cluster container for your dashboard using [`kind`](https://github.com/kubernetes-sigs/kind), and will run dashboard.
-Then you can see dashboard `http://localhost:8080` with your browser.
+Then you can see dashboard `http://localhost:8080` with your browser. Since dashboard uses self-certificates, so you need ignore warning or error about it in your browser.
 
 ### To run with your another Kubernetes cluster
 
@@ -186,7 +185,7 @@ e.g.
 1. To test dashboard, run `aio/develop/run-npm-on-container.sh run test`.
 2. To check your code changes, run `aio/develop/run-npm-on-container.sh run check`.
 
-This container create `user` with `UID` and `GID` same as local user, switch user to `user` with `gosu` and run commands. So created or updated files like results of `npm run fix` or `npm run build` would have same ownership as your host. You can commit them immediately from your host.
+This container create `user` with `UID` and `GID` same as local user, switch user to `user` with `gosu` and run commands. So created or updated files like results of `npm run fix` or `npm run check` would have same ownership as your host. You can commit them immediately from your host.
 
 ### To run container without creating cluster and running dashboard
 
