@@ -56,10 +56,6 @@ spec:
         {{- include "common.tplvalues.render" (dict "value" .Values.podLabels "context" $) | nindent 8 }}
         {{- end }}
     spec:
-{{- with .Values.securityContext }}
-      securityContext:
-{{ toYaml . | nindent 8 }}
-{{- end }}
       serviceAccountName: {{ template "kubernetes-dashboard.serviceAccountName" . }}
       containers:
       - name: {{ .Chart.Name }}
