@@ -71,6 +71,7 @@ extraVolumeMounts: []
 # podAnnotations:
 
 # SecurityContext to be added to kubernetes dashboard pods
+# To disable set `securityContext: null`
 securityContext:
   seccompProfile:
     type: RuntimeDefault
