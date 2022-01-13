@@ -70,11 +70,21 @@ extraVolumeMounts: []
 ## Annotations to be added to kubernetes dashboard pods
 # podAnnotations:
 
-# SecurityContext to be added to kubernetes dashboard pods
-# To disable set `securityContext: null`
+## SecurityContext to be added to kubernetes dashboard pods
+## To disable set the following configuration to null:
+# securityContext: null
 securityContext:
   seccompProfile:
     type: RuntimeDefault
+
+## SecurityContext defaults for the kubernetes dashboard container and metrics scraper container
+## To disable set the following configuration to null:
+# containerSecurityContext: null
+containerSecurityContext:
+  allowPrivilegeEscalation: false
+  readOnlyRootFilesystem: true
+  runAsUser: 1001
+  runAsGroup: 2001
 
 ## @param podLabels Extra labels for OAuth2 Proxy pods
 ## ref: https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/
@@ -237,12 +247,13 @@ metricsScraper:
     repository: kubernetesui/metrics-scraper
     tag: v1.0.7
   resources: {}
-  ## SecurityContext for the kubernetes dashboard metrics scraper container
-  containerSecurityContext:
-    allowPrivilegeEscalation: false
-    readOnlyRootFilesystem: true
-    runAsUser: 1001
-    runAsGroup: 2001
+  ## SecurityContext especially for the kubernetes dashboard metrics scraper container
+  ## If not set, the global containterSecurityContext values will define these values
+  # containerSecurityContext:
+  #   allowPrivilegeEscalation: false
+  #   readOnlyRootFilesystem: true
+  #   runAsUser: 1001
+  #   runAsGroup: 2001
 #  args:
 #    - --log-level=info
 #    - --logtostderr=true
@@ -309,13 +320,6 @@ podDisruptionBudget:
 # securityContext:
 #   runAsUser: 1001
 #   runAsGroup: 2001
-
-## SecurityContext for the kubernetes dashboard container
-containerSecurityContext:
-  allowPrivilegeEscalation: false
-  readOnlyRootFilesystem: true
-  runAsUser: 1001
-  runAsGroup: 2001
 
 networkPolicy:
   # Whether to create a network policy that allows/restricts access to the service
