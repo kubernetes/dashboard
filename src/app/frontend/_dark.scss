@@ -56,9 +56,4 @@ $theme-dark: map_merge($theme-dark, (background: $background));
   .kd-cross-line-primary {
     stroke: #fff;
   }
-
-  // Remove the border of the graphs.
-  .c3-chart-arc path {
-    stroke: none;
-  }
 }
