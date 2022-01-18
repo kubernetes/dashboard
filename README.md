@@ -1,4 +1,4 @@
-# Kubernetes Dashboard
+# Kubernetes Dashboard Hadock
 
 [![Continuous Integration](https://github.com/kubernetes/dashboard/workflows/Continuous%20Integration/badge.svg)](https://github.com/kubernetes/dashboard/actions?query=workflow%3A%22Continuous+Integration%22)
 [![Continuous Deployment](https://github.com/kubernetes/dashboard/workflows/Continuous%20Deployment/badge.svg)](https://github.com/kubernetes/dashboard/actions?query=workflow%3A%22Continuous+Deployment%22)
