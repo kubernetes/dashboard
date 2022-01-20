@@ -7,15 +7,24 @@ export class RedirectGuard implements CanActivate {
 
   canActivate(route: ActivatedRouteSnapshot): boolean {
     if (route.params['redirect'] === 'true') {
-      window.open(route.params['externalUrl'], '_blank');
+      
+      var regex = new RegExp('https://grafana-projet.([bcwl][a-z]{2,10}).had.enedis.fr/');
+      if(regex.test(route.params['externalUrl'])){
+        window.open(route.params['externalUrl'], '_blank');
+      }
+      else{
+        alert("WARNING: Tentative d'open redirect.")
+      }
     } else {
-      setTimeout(() => {
-        window.location.reload();
-      }, 100);
-
-      this.router.navigate(['externalPage'], {
-        queryParams: {url: route.params['externalUrl'], namespace: 'default'},
-      });
+      if(route.params['externalUrl'] === "https://hadock.enedis.fr"){
+        //setTimeout(() => {
+        //  window.location.reload();
+        //}, 100);
+  
+        this.router.navigate(['externalPage'], {
+          queryParams: {url: route.params['externalUrl'], namespace: 'default'},
+        });
+      }
     }
 
     return true;
