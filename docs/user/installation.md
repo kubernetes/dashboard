@@ -19,7 +19,7 @@ kubectl create secret generic kubernetes-dashboard-certs --from-file=$HOME/certs
 For Dashboard to pickup the certificates, you must pass arguments `--tls-cert-file=/tls.crt` and `--tls-key-file=/tls.key` to the container. You can edit YAML definition and deploy Dashboard in one go:
 
 ```shell
-kubectl create --edit -f https://raw.githubusercontent.com/kubernetes/dashboard/v2.4.1/aio/deploy/recommended.yaml
+kubectl create --edit -f https://raw.githubusercontent.com/kubernetes/dashboard/v2.4.0/aio/deploy/recommended.yaml
 ```
 
 Under Deployment section, add arguments to pod definition, it should look as follows:
