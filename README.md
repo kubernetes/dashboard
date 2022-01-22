@@ -66,7 +66,7 @@ You can reach the maintainers of this project at:
 
 ### Contribution
 
-Learn how to start contribution on the [Contributing Guidline](CONTRIBUTING.md).
+Learn how to start contribution on the [Contributing Guideline](CONTRIBUTING.md).
 
 ### Code of conduct
 
