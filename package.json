@@ -76,7 +76,7 @@
     "material-design-icons": "3.0.1",
     "ng-in-viewport": "6.1.5",
     "ngx-cookie-service": "13.1.2",
-    "ngx-pipes": "2.7.6",
+    "ngx-pipes": "3.0.0",
     "normalize.css": "8.0.1",
     "roboto-fontface": "0.10.0",
     "rxjs": "6.6.7",
@@ -152,7 +152,7 @@
     "ts-jest": "27.1.2",
     "ts-loader": "9.2.6",
     "ts-node": "10.4.0",
-    "typescript": "4.5.4",
+    "typescript": "4.5.5",
     "wait-on": "6.0.0",
     "webpack-dev-server": "4.7.3"
   },
