@@ -143,7 +143,7 @@
     "sass-loader": "12.4.0",
     "semver": "7.3.5",
     "source-map-explorer": "2.5.2",
-    "stylelint": "14.2.0",
+    "stylelint": "14.3.0",
     "stylelint-config-standard-scss": "3.0.0",
     "stylelint-no-unsupported-browser-features": "5.0.2",
     "stylelint-order": "5.0.0",
@@ -152,7 +152,7 @@
     "ts-jest": "27.1.2",
     "ts-loader": "9.2.6",
     "ts-node": "10.4.0",
-    "typescript": "4.5.4",
+    "typescript": "4.5.5",
     "wait-on": "6.0.0",
     "webpack-dev-server": "4.7.3"
   },
