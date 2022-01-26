@@ -120,7 +120,7 @@
     "eslint": "8.7.0",
     "eslint-plugin-node": "11.1.0",
     "eslint-plugin-prettier": "4.0.0",
-    "eslint-plugin-rxjs": "5.0.1",
+    "eslint-plugin-rxjs": "5.0.2",
     "git-describe": "4.1.0",
     "gts": "3.1.0",
     "husky": "7.0.4",
