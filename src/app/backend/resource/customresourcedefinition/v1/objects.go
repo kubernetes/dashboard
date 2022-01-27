@@ -38,7 +38,7 @@ func GetCustomResourceObjectList(client apiextensionsclientset.Interface, config
 
 	customResourceDefinition, err := client.ApiextensionsV1().
 		CustomResourceDefinitions().
-		Get(context.TODO(), crdName, metav1.GetOptions{ResourceVersion: "0"})
+		Get(context.TODO(), crdName, metav1.GetOptions{})
 	nonCriticalErrors, criticalError := errors.HandleError(err)
 	if criticalError != nil {
 		return nil, criticalError
