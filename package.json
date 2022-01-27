@@ -65,7 +65,7 @@
     "@angular/platform-browser-dynamic": "13.1.1",
     "@angular/router": "13.1.1",
     "@swimlane/ngx-charts": "20.0.1",
-    "ace-builds": "1.4.13",
+    "ace-builds": "1.4.14",
     "ansi-to-html": "0.7.2",
     "c3": "0.7.20",
     "core-js": "3.20.3",
