@@ -23,7 +23,7 @@ const supportedLanguages: LanguageConfig[] = [
   },
   {
     label: 'Spanish',
-    value: 'es'
+    value: 'es',
   },
   {
     label: 'French',
