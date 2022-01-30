@@ -153,4 +153,22 @@ limitations under the License.
     <mat-icon>{{logService.getPrevious() ? 'check_box' : 'check_box_outline_blank'}}</mat-icon>
     <span i18n>Show previous logs</span>
   </button>
+  <div mat-menu-item
+       fxLayout="row"
+       fxLayoutAlign="start center"
+       fxLayoutGap="8px"
+       fxFlex="100"
+       (click)="$event.stopPropagation()">
+    <span i18n>Show Last</span>
+    <mat-form-field [style.width.%]="25">
+      <mat-select [(ngModel)]="logsPerView"
+                  (selectionChange)="setLogsPerView($event.value)">
+        <mat-option *ngFor="let logs of getLogsPerViewConfig()"
+                    [value]="logs">
+          {{logs}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <span i18n>Logs</span>
+  </div>
 </mat-menu>

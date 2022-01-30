@@ -47,10 +47,11 @@ export class LogsComponent implements OnDestroy {
   itemsPerPage = 10;
   currentSelection: LogSelection;
   isLoading: boolean;
+  logsPerView = 100;
 
   private readonly refreshUnsubscribe_ = new Subject<void>();
-  private readonly logsPerView = 100;
   private readonly maxLogSize = 2e9;
+  private readonly logsPerViewConfig = [100, 200, 500, 1000];
 
   constructor(
     readonly logService: LogService,
@@ -206,6 +207,15 @@ export class LogsComponent implements OnDestroy {
    */
   onLogsScroll(): void {
     this.logService.setFollowing(this.isScrolledBottom_());
+  }
+
+  setLogsPerView(logs: number): void {
+    this.logsPerView = logs;
+    this.loadNewer();
+  }
+
+  getLogsPerViewConfig(): Array<Number> {
+    return this.logsPerViewConfig;
   }
 
   /**

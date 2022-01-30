@@ -567,6 +567,10 @@
           <context context-type="sourcefile">src/app/frontend/common/components/list/column/menu/template.html</context>
           <context context-type="linenumber">22</context>
         </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/logs/template.html</context>
+          <context context-type="linenumber">173</context>
+        </context-group>
       </trans-unit>
       <trans-unit id="3796390051357100906" datatype="html">
         <source>Exec</source>
@@ -4656,6 +4660,14 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/logs/template.html</context>
           <context context-type="linenumber">154</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="2155284316455697331" datatype="html">
+        <source>Show Last</source>
+        <target state="new">Show Last</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/logs/template.html</context>
+          <context context-type="linenumber">163</context>
         </context-group>
       </trans-unit>
       <trans-unit id="7109976949603290892" datatype="html">
