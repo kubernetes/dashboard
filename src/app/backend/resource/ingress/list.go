@@ -56,7 +56,7 @@ func GetIngressList(client client.Interface, namespace *common.NamespaceQuery,
 		return nil, criticalError
 	}
 
-	return toIngressList(ingressList.Items, nonCriticalErrors, dsQuery), nil
+	return ToIngressList(ingressList.Items, nonCriticalErrors, dsQuery), nil
 }
 
 func getEndpoints(ingress *v1.Ingress) []common.Endpoint {
@@ -99,7 +99,7 @@ func toIngress(ingress *v1.Ingress) Ingress {
 	}
 }
 
-func toIngressList(ingresses []v1.Ingress, nonCriticalErrors []error, dsQuery *dataselect.DataSelectQuery) *IngressList {
+func ToIngressList(ingresses []v1.Ingress, nonCriticalErrors []error, dsQuery *dataselect.DataSelectQuery) *IngressList {
 	newIngressList := &IngressList{
 		ListMeta: api.ListMeta{TotalItems: len(ingresses)},
 		Items:    make([]Ingress, 0),
