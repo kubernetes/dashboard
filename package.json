@@ -57,7 +57,7 @@
     "@angular/common": "13.2.0",
     "@angular/compiler": "13.2.0",
     "@angular/core": "13.2.0",
-    "@angular/flex-layout": "13.0.0-beta.36",
+    "@angular/flex-layout": "13.0.0-beta.37",
     "@angular/forms": "13.2.0",
     "@angular/localize": "13.2.0",
     "@angular/material": "13.2.0",
