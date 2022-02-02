@@ -37,5 +37,5 @@ spec:
       path: /metrics
   selector:
     matchLabels:
-      {{ include "kubernetes-dashboard.labels" . | nindent 4 }}
+      {{ include "kubernetes-dashboard.labels" . | nindent 6 }}
 {{- end }}
