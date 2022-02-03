@@ -15,11 +15,6 @@
 name: Continuous Integration - Helm
 
 on:
-  push:
-    branches: [ master ]
-    paths:
-    - 'aio/deploy/helm-chart/**'
-    - '.github/workflows/ci-helm-workflow.yml'
   pull_request:
     paths:
     - 'aio/deploy/helm-chart/**'
@@ -47,7 +42,7 @@ jobs:
           python-version: 3.7
 
       - name: Set up chart-testing
-        uses: helm/chart-testing-action@v2.1.0
+        uses: helm/chart-testing-action@v2.2.0
 
       - name: Cleanup charts directory
         id: cleanup
