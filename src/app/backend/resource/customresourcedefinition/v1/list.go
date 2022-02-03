@@ -47,11 +47,21 @@ func toCustomResourceDefinitionList(crds []apiextensionsv1.CustomResourceDefinit
 		Errors:   nonCriticalErrors,
 	}
 
+	for i, crd := range crds {
+		crds[i] = removeNonServedVersions(crd)
+	}
+
 	crdCells, filteredTotal := dataselect.GenericDataSelectWithFilter(toCells(crds), dsQuery)
 	crds = fromCells(crdCells)
 	crdList.ListMeta = api.ListMeta{TotalItems: filteredTotal}
 
 	for _, crd := range crds {
+		if !isServed(crd) {
+			filteredTotal--
+			crdList.ListMeta = api.ListMeta{TotalItems: filteredTotal}
+			continue
+		}
+
 		crdList.Items = append(crdList.Items, toCustomResourceDefinition(&crd))
 	}
 
