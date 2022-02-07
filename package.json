@@ -72,7 +72,7 @@
     "js-yaml": "4.1.0",
     "jwt-decode": "3.1.2",
     "material-design-icons": "3.0.1",
-    "ng-in-viewport": "6.1.5",
+    "ng-in-viewport": "13.0.0",
     "ngx-cookie-service": "13.1.2",
     "ngx-pipes": "3.0.0",
     "normalize.css": "8.0.1",
