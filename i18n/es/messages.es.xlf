@@ -40,7 +40,7 @@
       </trans-unit>
       <trans-unit id="8280397690227731001" datatype="html">
         <source>Restart a resource</source>
-        <target >Reiniciar un recurso</target>
+        <target>Reiniciar un recurso</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/dialogs/restartresource/template.html</context>
           <context context-type="linenumber">18</context>
@@ -48,7 +48,7 @@
       </trans-unit>
       <trans-unit id="3758898250164236993" datatype="html">
         <source>This action is equivalent to: </source>
-        <target >Esta acción es equivalente a: </target>
+        <target>Esta acción es equivalente a: </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/dialogs/restartresource/template.html</context>
           <context context-type="linenumber">31</context>
@@ -56,7 +56,7 @@
       </trans-unit>
       <trans-unit id="6096531998816402984" datatype="html">
         <source> Restart </source>
-        <target > Reiniciar </target>
+        <target> Reiniciar </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/dialogs/restartresource/template.html</context>
           <context context-type="linenumber">44</context>
@@ -264,12 +264,12 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/create/from/file/template.html</context>
-          <context context-type="linenumber">53</context>
+          <context context-type="linenumber">52</context>
         </context-group>
       </trans-unit>
       <trans-unit id="4342607865016428668" datatype="html">
         <source><x id="START_TAG_SPAN" ctype="x-span" equiv-text="&quot;[\uFFFD#5\uFFFD|\uFFFD#8\uFFFD]&quot;"/><x id="INTERPOLATION" equiv-text="&quot;\uFFFD0\uFFFD&quot;"/> <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&quot;[\uFFFD#6\uFFFD|\uFFFD#2:1\uFFFD]&quot;"/><x id="INTERPOLATION_1" equiv-text="&quot;\uFFFD1\uFFFD&quot;"/> <x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&quot;[\uFFFD/#6\uFFFD|\uFFFD/#2:1\uFFFD]&quot;"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&quot;[\uFFFD/#5\uFFFD|\uFFFD/#1:1\uFFFD\uFFFD/*7:1\uFFFD|\uFFFD/#8\uFFFD]&quot;"/><x id="START_TAG_SPAN_1" ctype="x-span_1" equiv-text="&quot;\uFFFD*7:1\uFFFD\uFFFD#1:1\uFFFD&quot;"/> in namespace <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&quot;[\uFFFD#6\uFFFD|\uFFFD#2:1\uFFFD]&quot;"/><x id="INTERPOLATION_2" equiv-text="&quot;\uFFFD0:1\uFFFD&quot;"/> <x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&quot;[\uFFFD/#6\uFFFD|\uFFFD/#2:1\uFFFD]&quot;"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&quot;[\uFFFD/#5\uFFFD|\uFFFD/#1:1\uFFFD\uFFFD/*7:1\uFFFD|\uFFFD/#8\uFFFD]&quot;"/><x id="START_TAG_SPAN" ctype="x-span" equiv-text="&quot;[\uFFFD#5\uFFFD|\uFFFD#8\uFFFD]&quot;"/>will be restarted.<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&quot;[\uFFFD/#5\uFFFD|\uFFFD/#1:1\uFFFD\uFFFD/*7:1\uFFFD|\uFFFD/#8\uFFFD]&quot;"/></source>
-        <target ><x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span>"/><x id="INTERPOLATION" equiv-text="{{data.displayName}}"/> <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i>"/><x id="INTERPOLATION_1" equiv-text="{{data.objectMeta.name}}"/> <x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i>"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span>"/><x id="START_TAG_SPAN_1" ctype="x-span_1" equiv-text="&lt;span *ngIf=&quot;data.objectMeta.namespace&quot;>"/> en el espacio de nombre <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i>"/><x id="INTERPOLATION_2" equiv-text="{{data.objectMeta.namespace}}"/> <x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i>"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span>"/><x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span>"/>será reiniciado.<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span>"/></target>
+        <target><x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span>"/><x id="INTERPOLATION" equiv-text="{{data.displayName}}"/> <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i>"/><x id="INTERPOLATION_1" equiv-text="{{data.objectMeta.name}}"/> <x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i>"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span>"/><x id="START_TAG_SPAN_1" ctype="x-span_1" equiv-text="&lt;span *ngIf=&quot;data.objectMeta.namespace&quot;>"/> en el espacio de nombre <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i>"/><x id="INTERPOLATION_2" equiv-text="{{data.objectMeta.namespace}}"/> <x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i>"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span>"/><x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span>"/>será reiniciado.<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span>"/></target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/dialogs/restartresource/template.html</context>
           <context context-type="linenumber">21</context>
@@ -311,7 +311,7 @@
       </trans-unit>
       <trans-unit id="7343483184381401407" datatype="html">
         <source>SE Linux User </source>
-        <target >Usuario SE Linux</target>
+        <target>Usuario SE Linux</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/securitycontext/template.html</context>
           <context context-type="linenumber">23</context>
@@ -319,7 +319,7 @@
       </trans-unit>
       <trans-unit id="1356300595362298765" datatype="html">
         <source>SE Linux Role </source>
-        <target >Rol SE Linux </target>
+        <target>Rol SE Linux </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/securitycontext/template.html</context>
           <context context-type="linenumber">31</context>
@@ -327,7 +327,7 @@
       </trans-unit>
       <trans-unit id="1761166764907274626" datatype="html">
         <source>SE Linux Type </source>
-        <target >Tipo SE Linux </target>
+        <target>Tipo SE Linux </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/securitycontext/template.html</context>
           <context context-type="linenumber">39</context>
@@ -335,7 +335,7 @@
       </trans-unit>
       <trans-unit id="4941963884517239806" datatype="html">
         <source>SE Linux Level </source>
-        <target >Nivel SE Linux </target>
+        <target>Nivel SE Linux </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/securitycontext/template.html</context>
           <context context-type="linenumber">47</context>
@@ -343,7 +343,7 @@
       </trans-unit>
       <trans-unit id="1233914213470394025" datatype="html">
         <source>Windows GMSA Credential Spec Name </source>
-        <target >Nombre de especificación Windows GMSA Credential</target>
+        <target>Nombre de especificación Windows GMSA Credential</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/securitycontext/template.html</context>
           <context context-type="linenumber">56</context>
@@ -351,7 +351,7 @@
       </trans-unit>
       <trans-unit id="117899463287665600" datatype="html">
         <source>Windows GMSA Credential Spec </source>
-        <target >Especificación Windows GMSA Credential </target>
+        <target>Especificación Windows GMSA Credential </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/securitycontext/template.html</context>
           <context context-type="linenumber">64</context>
@@ -359,7 +359,7 @@
       </trans-unit>
       <trans-unit id="1654153322510871049" datatype="html">
         <source>Windows Run as User </source>
-        <target >Windows ejecutar como usuario </target>
+        <target>Windows ejecutar como usuario </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/securitycontext/template.html</context>
           <context context-type="linenumber">72</context>
@@ -367,7 +367,7 @@
       </trans-unit>
       <trans-unit id="5781682011070523008" datatype="html">
         <source>Run as User </source>
-        <target >Ejecutar como Usuario </target>
+        <target>Ejecutar como Usuario </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/securitycontext/template.html</context>
           <context context-type="linenumber">81</context>
@@ -375,7 +375,7 @@
       </trans-unit>
       <trans-unit id="5486775480854773895" datatype="html">
         <source>Run as Group </source>
-        <target >Ejecutar como Grupo</target>
+        <target>Ejecutar como Grupo</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/securitycontext/template.html</context>
           <context context-type="linenumber">87</context>
@@ -383,7 +383,7 @@
       </trans-unit>
       <trans-unit id="7724297586956676471" datatype="html">
         <source>Run as Non-Root </source>
-        <target >Ejecutar como no root </target>
+        <target>Ejecutar como no root </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/securitycontext/template.html</context>
           <context context-type="linenumber">93</context>
@@ -391,7 +391,7 @@
       </trans-unit>
       <trans-unit id="3246397737977227378" datatype="html">
         <source>Seccomp Profile Type </source>
-        <target >Tipo de perfil Seccomp </target>
+        <target>Tipo de perfil Seccomp </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/securitycontext/template.html</context>
           <context context-type="linenumber">100</context>
@@ -399,7 +399,7 @@
       </trans-unit>
       <trans-unit id="6225613709839074305" datatype="html">
         <source>Seccomp Localhost Profile </source>
-        <target >Perfil localhost Seccomp </target>
+        <target>Perfil localhost Seccomp </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/securitycontext/template.html</context>
           <context context-type="linenumber">108</context>
@@ -407,7 +407,7 @@
       </trans-unit>
       <trans-unit id="4197350792381713533" datatype="html">
         <source>Added Capabilities </source>
-        <target >Capacidades añadidas </target>
+        <target>Capacidades añadidas </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/securitycontext/template.html</context>
           <context context-type="linenumber">118</context>
@@ -415,7 +415,7 @@
       </trans-unit>
       <trans-unit id="899842149025207177" datatype="html">
         <source>Dropped Capabilities </source>
-        <target >Capacidades perdidas </target>
+        <target>Capacidades perdidas </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/securitycontext/template.html</context>
           <context context-type="linenumber">126</context>
@@ -423,7 +423,7 @@
       </trans-unit>
       <trans-unit id="8399828080828228514" datatype="html">
         <source>Privileged </source>
-        <target >Privilegiado </target>
+        <target>Privilegiado </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/securitycontext/template.html</context>
           <context context-type="linenumber">134</context>
@@ -431,7 +431,7 @@
       </trans-unit>
       <trans-unit id="3065105727383369510" datatype="html">
         <source>Read Only Filesystem </source>
-        <target >Sistema de ficheros solo lectura </target>
+        <target>Sistema de ficheros solo lectura </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/securitycontext/template.html</context>
           <context context-type="linenumber">140</context>
@@ -439,7 +439,7 @@
       </trans-unit>
       <trans-unit id="6715681529462111698" datatype="html">
         <source>Allow Privilege Escalation </source>
-        <target >Permitir escalado de privilegios </target>
+        <target>Permitir escalado de privilegios </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/securitycontext/template.html</context>
           <context context-type="linenumber">146</context>
@@ -447,7 +447,7 @@
       </trans-unit>
       <trans-unit id="981202027022252292" datatype="html">
         <source>Proc Mount </source>
-        <target >Proc Mount </target>
+        <target>Proc Mount </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/securitycontext/template.html</context>
           <context context-type="linenumber">152</context>
@@ -455,7 +455,7 @@
       </trans-unit>
       <trans-unit id="906267150444604953" datatype="html">
         <source>Filesystem Group </source>
-        <target >Grupo de sistema de fichero </target>
+        <target>Grupo de sistema de fichero </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/securitycontext/template.html</context>
           <context context-type="linenumber">160</context>
@@ -463,7 +463,7 @@
       </trans-unit>
       <trans-unit id="3207807417617057985" datatype="html">
         <source>Filesystem Group Change Policy </source>
-        <target >Política de cambio de grupo del sistema de archivos </target>
+        <target>Política de cambio de grupo del sistema de archivos </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/securitycontext/template.html</context>
           <context context-type="linenumber">168</context>
@@ -471,7 +471,7 @@
       </trans-unit>
       <trans-unit id="4433548639081577433" datatype="html">
         <source>Supplemental Groups </source>
-        <target >Grupos suplementarios </target>
+        <target>Grupos suplementarios </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/securitycontext/template.html</context>
           <context context-type="linenumber">177</context>
@@ -479,7 +479,7 @@
       </trans-unit>
       <trans-unit id="4233724195043429358" datatype="html">
         <source>Sysctls </source>
-        <target >Sysctls </target>
+        <target>Sysctls </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/securitycontext/template.html</context>
           <context context-type="linenumber">186</context>
@@ -735,7 +735,7 @@
       </trans-unit>
       <trans-unit id="5943454400955467108" datatype="html">
         <source><x id="START_TAG_KD_DATE" ctype="x-kd_date" equiv-text="&quot;\uFFFD#9\uFFFD&quot;"/><x id="CLOSE_TAG_KD_DATE" ctype="x-kd_date" equiv-text="&quot;\uFFFD/#9\uFFFD&quot;"/></source>
-        <target ><x id="START_TAG_KD_DATE" ctype="x-kd_date" equiv-text="&quot;\uFFFD#9\uFFFD&quot;"/><x id="CLOSE_TAG_KD_DATE" ctype="x-kd_date" equiv-text="&quot;\uFFFD/#9\uFFFD&quot;"/></target>
+        <target><x id="START_TAG_KD_DATE" ctype="x-kd_date" equiv-text="&quot;\uFFFD#9\uFFFD&quot;"/><x id="CLOSE_TAG_KD_DATE" ctype="x-kd_date" equiv-text="&quot;\uFFFD/#9\uFFFD&quot;"/></target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/chrome/notifications/template.html</context>
           <context context-type="linenumber">45,46</context>
@@ -1275,7 +1275,7 @@
       </trans-unit>
       <trans-unit id="1045499538393271132" datatype="html">
         <source>Auto-refresh (every <x id="INTERPOLATION" equiv-text="&quot;\uFFFD0\uFFFD&quot;"/> s.)</source>
-        <target >Refrescar auto (cada <x id="INTERPOLATION" equiv-text="{{refreshInterval}}"/> s.)</target>
+        <target>Refrescar auto (cada <x id="INTERPOLATION" equiv-text="{{refreshInterval}}"/> s.)</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/logs/template.html</context>
           <context context-type="linenumber">149</context>
@@ -1291,7 +1291,7 @@
       </trans-unit>
       <trans-unit id="7109976949603290892" datatype="html">
         <source> Logs from <x id="START_TAG_KD_DATE" ctype="x-kd_date" equiv-text="&quot;\uFFFD#2\uFFFD&quot;"/><x id="CLOSE_TAG_KD_DATE" ctype="x-kd_date" equiv-text="&quot;[\uFFFD/#2\uFFFD|\uFFFD/#3\uFFFD]&quot;"/> to <x id="START_TAG_KD_DATE_1" ctype="x-kd_date_1" equiv-text="&quot;\uFFFD#3\uFFFD&quot;"/><x id="CLOSE_TAG_KD_DATE" ctype="x-kd_date" equiv-text="&quot;[\uFFFD/#2\uFFFD|\uFFFD/#3\uFFFD]&quot;"/> UTC </source>
-        <target > Logs desde <x id="START_TAG_KD_DATE" ctype="x-kd_date" equiv-text="&lt;kd-date [date]=&quot;podLogs?.info.fromDate&quot;
+        <target> Logs desde <x id="START_TAG_KD_DATE" ctype="x-kd_date" equiv-text="&lt;kd-date [date]=&quot;podLogs?.info.fromDate&quot;
                format=&quot;short&quot;>"/><x id="CLOSE_TAG_KD_DATE" ctype="x-kd_date" equiv-text="&lt;/kd-date>"/> a <x id="START_TAG_KD_DATE_1" ctype="x-kd_date_1" equiv-text="&lt;kd-date [date]=&quot;podLogs?.info.toDate&quot;
                format=&quot;short&quot;>"/><x id="CLOSE_TAG_KD_DATE" ctype="x-kd_date" equiv-text="&lt;/kd-date>"/> UTC </target>
         <context-group purpose="location">
@@ -1301,7 +1301,7 @@
       </trans-unit>
       <trans-unit id="664932904697940475" datatype="html">
         <source>Pod Selector</source>
-        <target >Selector de Pod</target>
+        <target>Selector de Pod</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/resource/cluster/networkpolicy/detail/template.html</context>
           <context context-type="linenumber">28</context>
@@ -1309,7 +1309,7 @@
       </trans-unit>
       <trans-unit id="602509887851402383" datatype="html">
         <source>Policy Types</source>
-        <target >Tipos de política</target>
+        <target>Tipos de política</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/resource/cluster/networkpolicy/detail/template.html</context>
           <context context-type="linenumber">37</context>
@@ -1317,7 +1317,7 @@
       </trans-unit>
       <trans-unit id="8495323198420668903" datatype="html">
         <source>Ingress Rules</source>
-        <target >Reglas de Ingreso </target>
+        <target>Reglas de Ingreso </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/resource/cluster/networkpolicy/detail/template.html</context>
           <context context-type="linenumber">49</context>
@@ -1325,7 +1325,7 @@
       </trans-unit>
       <trans-unit id="5635791387483695444" datatype="html">
         <source>Egress Rules</source>
-        <target >Reglas de Egreso</target>
+        <target>Reglas de Egreso</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/resource/cluster/networkpolicy/detail/template.html</context>
           <context context-type="linenumber">61</context>
@@ -1333,7 +1333,7 @@
       </trans-unit>
       <trans-unit id="1586493265991424782" datatype="html">
         <source>Source </source>
-        <target >Fuente </target>
+        <target>Fuente </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/resource/cluster/persistentvolume/detail/source/template.html</context>
           <context context-type="linenumber">19</context>
@@ -1341,7 +1341,7 @@
       </trans-unit>
       <trans-unit id="7136714849371279335" datatype="html">
         <source>Type </source>
-        <target >Tipo </target>
+        <target>Tipo </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/resource/cluster/persistentvolume/detail/source/template.html</context>
           <context context-type="linenumber">28</context>
@@ -1389,7 +1389,7 @@
       </trans-unit>
       <trans-unit id="4195458531892415970" datatype="html">
         <source>Filesystem type </source>
-        <target >Tipo de sistema de ficheros </target>
+        <target>Tipo de sistema de ficheros </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/resource/cluster/persistentvolume/detail/source/template.html</context>
           <context context-type="linenumber">35</context>
@@ -1417,7 +1417,7 @@
       </trans-unit>
       <trans-unit id="7504635688919228808" datatype="html">
         <source>Partition </source>
-        <target >Partición </target>
+        <target>Partición </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/resource/cluster/persistentvolume/detail/source/template.html</context>
           <context context-type="linenumber">42</context>
@@ -1429,7 +1429,7 @@
       </trans-unit>
       <trans-unit id="8592129781564493084" datatype="html">
         <source>Read only </source>
-        <target >Solo lectura </target>
+        <target>Solo lectura </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/resource/cluster/persistentvolume/detail/source/template.html</context>
           <context context-type="linenumber">49</context>
@@ -1465,7 +1465,7 @@
       </trans-unit>
       <trans-unit id="1726143019720107300" datatype="html">
         <source>Volume ID </source>
-        <target > ID de Volumen</target>
+        <target> ID de Volumen</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/resource/cluster/persistentvolume/detail/source/template.html</context>
           <context context-type="linenumber">56</context>
@@ -1477,7 +1477,7 @@
       </trans-unit>
       <trans-unit id="6831814159402424308" datatype="html">
         <source>Lun number </source>
-        <target >Lun number </target>
+        <target>Lun number </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/resource/cluster/persistentvolume/detail/source/template.html</context>
           <context context-type="linenumber">116,117</context>
@@ -1485,7 +1485,7 @@
       </trans-unit>
       <trans-unit id="756295084539716730" datatype="html">
         <source>Target World Wide Names </source>
-        <target >Target World Wide Names </target>
+        <target>Target World Wide Names </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/resource/cluster/persistentvolume/detail/source/template.html</context>
           <context context-type="linenumber">124</context>
@@ -1493,7 +1493,7 @@
       </trans-unit>
       <trans-unit id="9097525942588468054" datatype="html">
         <source>Dataset name </source>
-        <target >Nombre del conjunto de datos </target>
+        <target>Nombre del conjunto de datos </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/resource/cluster/persistentvolume/detail/source/template.html</context>
           <context context-type="linenumber">143</context>
@@ -1501,7 +1501,7 @@
       </trans-unit>
       <trans-unit id="1686873856439544350" datatype="html">
         <source>Persistent disk name </source>
-        <target >Nombre de disco persistente </target>
+        <target>Nombre de disco persistente </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/resource/cluster/persistentvolume/detail/source/template.html</context>
           <context context-type="linenumber">180</context>
@@ -1509,7 +1509,7 @@
       </trans-unit>
       <trans-unit id="8687586423224410057" datatype="html">
         <source>Endpoints </source>
-        <target >Endpoints </target>
+        <target>Endpoints </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/resource/cluster/persistentvolume/detail/source/template.html</context>
           <context context-type="linenumber">196</context>
@@ -1521,7 +1521,7 @@
       </trans-unit>
       <trans-unit id="6479218245295850588" datatype="html">
         <source>Default Backend </source>
-        <target > Backend por defecto </target>
+        <target> Backend por defecto </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/resource/discovery/ingress/detail/template.html</context>
           <context context-type="linenumber">52</context>
@@ -1529,7 +1529,7 @@
       </trans-unit>
       <trans-unit id="386936461513068856" datatype="html">
         <source>Service Port Name </source>
-        <target >Nombre del Puerto del Service </target>
+        <target>Nombre del Puerto del Service </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/resource/discovery/ingress/detail/template.html</context>
           <context context-type="linenumber">66</context>
@@ -1537,7 +1537,7 @@
       </trans-unit>
       <trans-unit id="8983622285399626514" datatype="html">
         <source>Service Port Number </source>
-        <target >Número de Puerto del Service </target>
+        <target>Número de Puerto del Service </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/resource/discovery/ingress/detail/template.html</context>
           <context context-type="linenumber">73</context>
@@ -1545,7 +1545,7 @@
       </trans-unit>
       <trans-unit id="187187500641108332" datatype="html">
         <source><x id="INTERPOLATION" equiv-text="&quot;\uFFFD0\uFFFD&quot;"/></source>
-        <target ><x id="INTERPOLATION" equiv-text="&quot;\uFFFD0\uFFFD&quot;"/></target>
+        <target><x id="INTERPOLATION" equiv-text="&quot;\uFFFD0\uFFFD&quot;"/></target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/resource/discovery/ingress/detail/template.html</context>
           <context context-type="linenumber">80</context>
@@ -1553,7 +1553,7 @@
       </trans-unit>
       <trans-unit id="607655052894272917" datatype="html">
         <source>Path </source>
-        <target >Ruta </target>
+        <target>Ruta </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/ingressrulelist/template.html</context>
           <context context-type="linenumber">51</context>
@@ -1573,7 +1573,7 @@
       </trans-unit>
       <trans-unit id="4372477307700603091" datatype="html">
         <source>Driver </source>
-        <target >Controlador </target>
+        <target>Controlador </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/resource/cluster/persistentvolume/detail/source/template.html</context>
           <context context-type="linenumber">241,242</context>
@@ -1581,7 +1581,7 @@
       </trans-unit>
       <trans-unit id="3484004334011698486" datatype="html">
         <source>Volume Handle </source>
-        <target >Volume Handle </target>
+        <target>Volume Handle </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/resource/cluster/persistentvolume/detail/source/template.html</context>
           <context context-type="linenumber">247,248</context>
@@ -1589,7 +1589,7 @@
       </trans-unit>
       <trans-unit id="6270177812357522409" datatype="html">
         <source>File System Type </source>
-        <target >Tipo de sistema de Fichero </target>
+        <target>Tipo de sistema de Fichero </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/resource/cluster/persistentvolume/detail/source/template.html</context>
           <context context-type="linenumber">253,254</context>
@@ -1597,7 +1597,7 @@
       </trans-unit>
       <trans-unit id="1282234315324797493" datatype="html">
         <source>Read Only </source>
-        <target >Solo Lectura </target>
+        <target>Solo Lectura </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/resource/cluster/persistentvolume/detail/source/template.html</context>
           <context context-type="linenumber">259,260</context>
@@ -1605,7 +1605,7 @@
       </trans-unit>
       <trans-unit id="4153404657647853039" datatype="html">
         <source>Volume Attributes </source>
-        <target >Atributos de Volumen </target>
+        <target>Atributos de Volumen </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/resource/cluster/persistentvolume/detail/source/template.html</context>
           <context context-type="linenumber">270,271</context>
@@ -1613,7 +1613,7 @@
       </trans-unit>
       <trans-unit id="2176659033176029418" datatype="html">
         <source>Key</source>
-        <target >Clave</target>
+        <target>Clave</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/resource/cluster/persistentvolume/detail/source/template.html</context>
           <context context-type="linenumber">278</context>
@@ -1621,7 +1621,7 @@
       </trans-unit>
       <trans-unit id="2411065404041685586" datatype="html">
         <source>Path Type </source>
-        <target >Tipo de ruta </target>
+        <target>Tipo de ruta </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/ingressrulelist/template.html</context>
           <context context-type="linenumber">59,60</context>
@@ -1629,7 +1629,7 @@
       </trans-unit>
       <trans-unit id="1134765132854526890" datatype="html">
         <source>Service Name </source>
-        <target >Nombre del Servicio </target>
+        <target>Nombre del Servicio </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/ingressrulelist/template.html</context>
           <context context-type="linenumber">67</context>
@@ -1641,7 +1641,7 @@
       </trans-unit>
       <trans-unit id="3426643717372750272" datatype="html">
         <source>Service Port </source>
-        <target >Puerto del Servicio </target>
+        <target>Puerto del Servicio </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/ingressrulelist/template.html</context>
           <context context-type="linenumber">94</context>
@@ -1649,7 +1649,7 @@
       </trans-unit>
       <trans-unit id="1575304063225693008" datatype="html">
         <source>TLS Secret </source>
-        <target >Secreto TLS </target>
+        <target>Secreto TLS </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/ingressrulelist/template.html</context>
           <context context-type="linenumber">104</context>
@@ -1657,7 +1657,7 @@
       </trans-unit>
       <trans-unit id="3274706130081828538" datatype="html">
         <source>iSCSI Qualified Name </source>
-        <target >Nombre Cualificado iSCSI </target>
+        <target>Nombre Cualificado iSCSI </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/resource/cluster/persistentvolume/detail/source/template.html</context>
           <context context-type="linenumber">316</context>
@@ -1665,7 +1665,7 @@
       </trans-unit>
       <trans-unit id="7684543396992988133" datatype="html">
         <source>iSCSI target lun number </source>
-        <target >Número lnu iSCSI objetivo </target>
+        <target>Número lnu iSCSI objetivo </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/resource/cluster/persistentvolume/detail/source/template.html</context>
           <context context-type="linenumber">330</context>
@@ -1673,7 +1673,7 @@
       </trans-unit>
       <trans-unit id="3683154834311156269" datatype="html">
         <source>Target portal </source>
-        <target >Portal objetivo </target>
+        <target>Portal objetivo </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/resource/cluster/persistentvolume/detail/source/template.html</context>
           <context context-type="linenumber">337</context>
@@ -1681,7 +1681,7 @@
       </trans-unit>
       <trans-unit id="267208488818140018" datatype="html">
         <source>Server </source>
-        <target >Servidor </target>
+        <target>Servidor </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/resource/cluster/persistentvolume/detail/source/template.html</context>
           <context context-type="linenumber">353</context>
@@ -1689,7 +1689,7 @@
       </trans-unit>
       <trans-unit id="432743934060941064" datatype="html">
         <source>Image </source>
-        <target >Imagen </target>
+        <target>Imagen </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/container/template.html</context>
           <context context-type="linenumber">34</context>
@@ -1701,7 +1701,7 @@
       </trans-unit>
       <trans-unit id="7545601861936260834" datatype="html">
         <source>Keyring </source>
-        <target >LLavero </target>
+        <target>LLavero </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/resource/cluster/persistentvolume/detail/source/template.html</context>
           <context context-type="linenumber">397</context>
@@ -1709,7 +1709,7 @@
       </trans-unit>
       <trans-unit id="867233679607290480" datatype="html">
         <source>Monitors </source>
-        <target >Monitores </target>
+        <target>Monitores </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/resource/cluster/persistentvolume/detail/source/template.html</context>
           <context context-type="linenumber">404</context>
@@ -1717,7 +1717,7 @@
       </trans-unit>
       <trans-unit id="469738892046376278" datatype="html">
         <source>Pool </source>
-        <target >Pool </target>
+        <target>Pool </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/resource/cluster/persistentvolume/detail/source/template.html</context>
           <context context-type="linenumber">414</context>
@@ -1725,7 +1725,7 @@
       </trans-unit>
       <trans-unit id="3536850913930903238" datatype="html">
         <source>Secret reference name </source>
-        <target >Nombre de referencia del Secreto </target>
+        <target>Nombre de referencia del Secreto </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/resource/cluster/persistentvolume/detail/source/template.html</context>
           <context context-type="linenumber">428</context>
@@ -1733,7 +1733,7 @@
       </trans-unit>
       <trans-unit id="4272296016036632982" datatype="html">
         <source>User </source>
-        <target >Usuario </target>
+        <target>Usuario </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/resource/cluster/persistentvolume/detail/source/template.html</context>
           <context context-type="linenumber">435</context>
@@ -1789,7 +1789,11 @@
       </trans-unit>
       <trans-unit id="1236604279860679031" datatype="html">
         <source>Restart</source>
-        <target >Reiniciar</target>
+        <target>Reiniciar</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/common/components/actionbar/detailactions/restart/template.html</context>
+          <context context-type="linenumber">21</context>
+        </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/list/column/menu/template.html</context>
           <context context-type="linenumber">53</context>
@@ -1817,7 +1821,7 @@
       </trans-unit>
       <trans-unit id="6501135579599829770" datatype="html">
         <source>Network Policies</source>
-        <target >Políticas de red</target>
+        <target>Políticas de red</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/resourcelist/networkpolicy/template.html</context>
           <context context-type="linenumber">21</context>
@@ -1825,7 +1829,7 @@
       </trans-unit>
       <trans-unit id="795890916060309463" datatype="html">
         <source>Roles</source>
-        <target >Roles</target>
+        <target>Roles</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/resourcelist/role/template.html</context>
           <context context-type="linenumber">21</context>
@@ -1833,7 +1837,7 @@
       </trans-unit>
       <trans-unit id="4230227443728227002" datatype="html">
         <source>Role Bindings</source>
-        <target >Vinculaciones de roles</target>
+        <target>Vinculaciones de roles</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/resourcelist/rolebinding/template.html</context>
           <context context-type="linenumber">21</context>
@@ -1841,7 +1845,7 @@
       </trans-unit>
       <trans-unit id="5972502836680454671" datatype="html">
         <source>Subjects</source>
-        <target >Sujetos</target>
+        <target>Sujetos</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/subject/template.html</context>
           <context context-type="linenumber">20</context>
@@ -1849,7 +1853,7 @@
       </trans-unit>
       <trans-unit id="656108017672590950" datatype="html">
         <source>API Group</source>
-        <target >Grupo API</target>
+        <target>Grupo API</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/subject/template.html</context>
           <context context-type="linenumber">64</context>
@@ -1857,7 +1861,7 @@
       </trans-unit>
       <trans-unit id="686980668228952182" datatype="html">
         <source>Workloads </source>
-        <target >Cargas de trabajo </target>
+        <target>Cargas de trabajo </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/chrome/nav/template.html</context>
           <context context-type="linenumber">28</context>
@@ -1865,7 +1869,7 @@
       </trans-unit>
       <trans-unit id="5333782621798086225" datatype="html">
         <source>Cron Jobs </source>
-        <target >Cron Jobs
+        <target>Cron Jobs
       </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/chrome/nav/template.html</context>
@@ -1874,7 +1878,7 @@
       </trans-unit>
       <trans-unit id="1421956494366769351" datatype="html">
         <source>Daemon Sets </source>
-        <target >Daemon Sets
+        <target>Daemon Sets
       </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/chrome/nav/template.html</context>
@@ -1883,7 +1887,7 @@
       </trans-unit>
       <trans-unit id="5608319401828876510" datatype="html">
         <source>Deployments </source>
-        <target >Deployments
+        <target>Deployments
       </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/chrome/nav/template.html</context>
@@ -1892,7 +1896,7 @@
       </trans-unit>
       <trans-unit id="5925034162028212293" datatype="html">
         <source>Jobs </source>
-        <target >Jobs
+        <target>Jobs
       </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/chrome/nav/template.html</context>
@@ -1901,7 +1905,7 @@
       </trans-unit>
       <trans-unit id="5175014003399520919" datatype="html">
         <source>Pods </source>
-        <target >Pods
+        <target>Pods
       </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/chrome/nav/template.html</context>
@@ -1910,7 +1914,7 @@
       </trans-unit>
       <trans-unit id="8859359379943639539" datatype="html">
         <source>Replica Sets </source>
-        <target >Replica Sets
+        <target>Replica Sets
       </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/chrome/nav/template.html</context>
@@ -1919,7 +1923,7 @@
       </trans-unit>
       <trans-unit id="8193431940379462508" datatype="html">
         <source>Replication Controllers </source>
-        <target >Controladores de Replicación
+        <target>Controladores de Replicación
       </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/chrome/nav/template.html</context>
@@ -1928,7 +1932,7 @@
       </trans-unit>
       <trans-unit id="1707219526222951180" datatype="html">
         <source>Stateful Sets </source>
-        <target >Stateful Sets
+        <target>Stateful Sets
       </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/chrome/nav/template.html</context>
@@ -1937,7 +1941,7 @@
       </trans-unit>
       <trans-unit id="5937630659228234115" datatype="html">
         <source>Service </source>
-        <target >Service
+        <target>Service
       </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/chrome/nav/template.html</context>
@@ -1946,7 +1950,7 @@
       </trans-unit>
       <trans-unit id="5813540454109761631" datatype="html">
         <source>Ingresses </source>
-        <target >Ingresses
+        <target>Ingresses
       </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/chrome/nav/template.html</context>
@@ -1955,7 +1959,7 @@
       </trans-unit>
       <trans-unit id="1473017346308176259" datatype="html">
         <source>Services </source>
-        <target >Services
+        <target>Services
       </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/chrome/nav/template.html</context>
@@ -1964,7 +1968,7 @@
       </trans-unit>
       <trans-unit id="7330483736355831593" datatype="html">
         <source>Config and Storage </source>
-        <target >Configuración y Almacenamiento
+        <target>Configuración y Almacenamiento
       </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/chrome/nav/template.html</context>
@@ -1973,7 +1977,7 @@
       </trans-unit>
       <trans-unit id="4287392502726135197" datatype="html">
         <source>Config Maps </source>
-        <target >Config Maps
+        <target>Config Maps
       </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/chrome/nav/template.html</context>
@@ -1982,7 +1986,7 @@
       </trans-unit>
       <trans-unit id="2304348476142864790" datatype="html">
         <source>Persistent Volume Claims </source>
-        <target >Persistent Volume Claims
+        <target>Persistent Volume Claims
       </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/chrome/nav/template.html</context>
@@ -1991,7 +1995,7 @@
       </trans-unit>
       <trans-unit id="2104548579314351919" datatype="html">
         <source>Secrets </source>
-        <target >Secrets
+        <target>Secrets
       </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/chrome/nav/template.html</context>
@@ -2000,7 +2004,7 @@
       </trans-unit>
       <trans-unit id="2733722431826186016" datatype="html">
         <source>Storage Classes </source>
-        <target >Storage Classes
+        <target>Storage Classes
       </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/chrome/nav/template.html</context>
@@ -2009,7 +2013,7 @@
       </trans-unit>
       <trans-unit id="6283035888557195281" datatype="html">
         <source>Cluster </source>
-        <target >Cluster
+        <target>Cluster
       </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/chrome/nav/template.html</context>
@@ -2018,7 +2022,7 @@
       </trans-unit>
       <trans-unit id="1243984730371237241" datatype="html">
         <source>Cluster Role Bindings </source>
-        <target >Cluster Role Bindings
+        <target>Cluster Role Bindings
       </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/chrome/nav/template.html</context>
@@ -2027,7 +2031,7 @@
       </trans-unit>
       <trans-unit id="4740026766388750543" datatype="html">
         <source>Cluster Roles </source>
-        <target >Cluster Roles
+        <target>Cluster Roles
       </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/chrome/nav/template.html</context>
@@ -2036,7 +2040,7 @@
       </trans-unit>
       <trans-unit id="1861657886309326" datatype="html">
         <source>Events </source>
-        <target >Eventos </target>
+        <target>Eventos </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/chrome/nav/template.html</context>
           <context context-type="linenumber">140</context>
@@ -2044,7 +2048,7 @@
       </trans-unit>
       <trans-unit id="4613805182430195952" datatype="html">
         <source>Namespaces </source>
-        <target >Espacios de Nombre </target>
+        <target>Espacios de Nombre </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/chrome/nav/template.html</context>
           <context context-type="linenumber">145</context>
@@ -2052,7 +2056,7 @@
       </trans-unit>
       <trans-unit id="7446822750532518350" datatype="html">
         <source>Network Policies </source>
-        <target >Políticas de Red </target>
+        <target>Políticas de Red </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/chrome/nav/template.html</context>
           <context context-type="linenumber">151</context>
@@ -2060,7 +2064,7 @@
       </trans-unit>
       <trans-unit id="7682253854615514679" datatype="html">
         <source>Nodes </source>
-        <target >Nodos </target>
+        <target>Nodos </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/chrome/nav/template.html</context>
           <context context-type="linenumber">156</context>
@@ -2068,7 +2072,7 @@
       </trans-unit>
       <trans-unit id="6852503341223458730" datatype="html">
         <source>Persistent Volumes </source>
-        <target >Volúmenes Persistentes </target>
+        <target>Volúmenes Persistentes </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/chrome/nav/template.html</context>
           <context context-type="linenumber">161</context>
@@ -2076,7 +2080,7 @@
       </trans-unit>
       <trans-unit id="4052052481087794292" datatype="html">
         <source>Role Bindings </source>
-        <target >Vinculaciones de roles </target>
+        <target>Vinculaciones de roles </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/chrome/nav/template.html</context>
           <context context-type="linenumber">167</context>
@@ -2084,7 +2088,7 @@
       </trans-unit>
       <trans-unit id="4499651527836994743" datatype="html">
         <source>Roles </source>
-        <target >Roles </target>
+        <target>Roles </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/chrome/nav/template.html</context>
           <context context-type="linenumber">173</context>
@@ -2092,7 +2096,7 @@
       </trans-unit>
       <trans-unit id="6462224380417375328" datatype="html">
         <source>Service Accounts </source>
-        <target >Cuentas de Servicio </target>
+        <target>Cuentas de Servicio </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/chrome/nav/template.html</context>
           <context context-type="linenumber">179</context>
@@ -2100,7 +2104,7 @@
       </trans-unit>
       <trans-unit id="7206849842963127297" datatype="html">
         <source>Custom Resource Definitions </source>
-        <target >Definiciones de recursos personalizadas </target>
+        <target>Definiciones de recursos personalizadas </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/chrome/nav/template.html</context>
           <context context-type="linenumber">187</context>
@@ -2108,7 +2112,7 @@
       </trans-unit>
       <trans-unit id="7293190222859783293" datatype="html">
         <source>Plugins </source>
-        <target >Complementos </target>
+        <target>Complementos </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/chrome/nav/template.html</context>
           <context context-type="linenumber">198</context>
@@ -2116,7 +2120,7 @@
       </trans-unit>
       <trans-unit id="7207867066492367466" datatype="html">
         <source>Settings </source>
-        <target >Ajustes </target>
+        <target>Ajustes </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/chrome/nav/template.html</context>
           <context context-type="linenumber">207</context>
@@ -2124,7 +2128,7 @@
       </trans-unit>
       <trans-unit id="4894366697856944217" datatype="html">
         <source>About </source>
-        <target >Acerca de
+        <target>Acerca de
       </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/chrome/nav/template.html</context>
@@ -2241,7 +2245,7 @@
       </trans-unit>
       <trans-unit id="7705450268368320451" datatype="html">
         <source>Endpoint links are external links that will be open in a new tab.</source>
-        <target >Los enlaces Endpoint son enlaces externos que serán abiertos en una nueva pestaña.</target>
+        <target>Los enlaces Endpoint son enlaces externos que serán abiertos en una nueva pestaña.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/resourcelist/ingress/template.html</context>
           <context context-type="linenumber">79</context>
@@ -2249,7 +2253,7 @@
       </trans-unit>
       <trans-unit id="8444287437490086299" datatype="html">
         <source> Endpoints <x id="START_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&quot;\uFFFD#2\uFFFD&quot;"/>open_in_new<x id="CLOSE_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&quot;\uFFFD/#2\uFFFD&quot;"/></source>
-        <target > Endpoints <x id="START_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;mat-icon class=&quot;external-link-icon kd-clickable&quot;
+        <target> Endpoints <x id="START_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;mat-icon class=&quot;external-link-icon kd-clickable&quot;
                     i18n-matTooltip
                     matTooltip=&quot;Endpoint links are external links that will be open in a new tab.&quot;>"/>open_in_new<x id="CLOSE_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;/mat-icon>"/></target>
         <context-group purpose="location">
@@ -2259,7 +2263,7 @@
       </trans-unit>
       <trans-unit id="2671339909368348918" datatype="html">
         <source>Host links are external links that will be open in a new tab.</source>
-        <target >Los enlaces Host son enlaces externos que serán abiertos en una nueva pestaña.</target>
+        <target>Los enlaces Host son enlaces externos que serán abiertos en una nueva pestaña.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/resourcelist/ingress/template.html</context>
           <context context-type="linenumber">95</context>
@@ -2267,7 +2271,7 @@
       </trans-unit>
       <trans-unit id="3283019513707383139" datatype="html">
         <source> Hosts <x id="START_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&quot;\uFFFD#2\uFFFD&quot;"/>open_in_new<x id="CLOSE_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&quot;\uFFFD/#2\uFFFD&quot;"/></source>
-        <target > Hosts <x id="START_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;mat-icon class=&quot;external-link-icon kd-clickable&quot;
+        <target> Hosts <x id="START_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;mat-icon class=&quot;external-link-icon kd-clickable&quot;
                     i18n-matTooltip
                     matTooltip=&quot;Host links are external links that will be open in a new tab.&quot;>"/>open_in_new<x id="CLOSE_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;/mat-icon>"/></target>
         <context-group purpose="location">
@@ -2321,7 +2325,7 @@
       </trans-unit>
       <trans-unit id="4588386421413885519" datatype="html">
         <source>Secrets</source>
-        <target >Secrets</target>
+        <target>Secrets</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/overview/template.html</context>
           <context context-type="linenumber">64</context>
@@ -2345,7 +2349,7 @@
       </trans-unit>
       <trans-unit id="788903633413068121" datatype="html">
         <source>Service Accounts</source>
-        <target >Cuentas de Servicio</target>
+        <target>Cuentas de Servicio</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/resourcelist/serviceaccount/template.html</context>
           <context context-type="linenumber">21</context>
@@ -2353,7 +2357,7 @@
       </trans-unit>
       <trans-unit id="5680114016457280827" datatype="html">
         <source> You can <x id="START_LINK" ctype="x-a" equiv-text="&quot;\uFFFD#6\uFFFD&quot;"/>deploy a containerized app<x id="CLOSE_LINK" ctype="x-a" equiv-text="&quot;[\uFFFD/#6\uFFFD|\uFFFD/#7\uFFFD]&quot;"/>, select other namespace or <x id="START_LINK_1" equiv-text="&quot;\uFFFD#7\uFFFD&quot;"/>take the Dashboard Tour <x id="START_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&quot;\uFFFD#8\uFFFD&quot;"/>open_in_new<x id="CLOSE_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&quot;\uFFFD/#8\uFFFD&quot;"/><x id="CLOSE_LINK" ctype="x-a" equiv-text="&quot;[\uFFFD/#6\uFFFD|\uFFFD/#7\uFFFD]&quot;"/> to learn more. </source>
-        <target >
+        <target>
       Puedes <x id="START_LINK" ctype="x-a" equiv-text="&lt;a>"/>desplegar una aplicación contenerizada<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a>"/>, selecciona otra espacio de nombre select o
       <x id="START_LINK_1" ctype="x-a" equiv-text="&lt;a>"/>haz el tour guiado del Dashboard
         <x id="START_TAG_MAT-ICON" ctype="x-mat-icon" equiv-text="&lt;mat-icon>"/>open_in_new<x id="CLOSE_TAG_MAT-ICON" ctype="x-mat-icon" equiv-text="&lt;/mat-icon>"/>
@@ -2582,7 +2586,7 @@
       </trans-unit>
       <trans-unit id="3381412717703555378" datatype="html">
         <source>Object</source>
-        <target >Objeto</target>
+        <target>Objeto</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/resourcelist/event/template.html</context>
           <context context-type="linenumber">95</context>
@@ -2590,7 +2594,7 @@
       </trans-unit>
       <trans-unit id="2914974644465021764" datatype="html">
         <source>Sub-object</source>
-        <target >Sub-objeto</target>
+        <target>Sub-objeto</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/resourcelist/event/template.html</context>
           <context context-type="linenumber">114</context>
@@ -2670,7 +2674,7 @@
       </trans-unit>
       <trans-unit id="432743934060941064" datatype="html">
         <source>Image </source>
-        <target >Imagen </target>
+        <target>Imagen </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/container/template.html</context>
           <context context-type="linenumber">34</context>
@@ -2678,7 +2682,7 @@
       </trans-unit>
       <trans-unit id="6781275439159942913" datatype="html">
         <source>Ready </source>
-        <target >Listo </target>
+        <target>Listo </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/container/template.html</context>
           <context context-type="linenumber">47</context>
@@ -2686,7 +2690,7 @@
       </trans-unit>
       <trans-unit id="6186926147473970029" datatype="html">
         <source>Started </source>
-        <target >Iniciado </target>
+        <target>Iniciado </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/container/template.html</context>
           <context context-type="linenumber">54</context>
@@ -2694,7 +2698,7 @@
       </trans-unit>
       <trans-unit id="5750690922112993540" datatype="html">
         <source>Reason </source>
-        <target >Razón </target>
+        <target>Razón </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/container/template.html</context>
           <context context-type="linenumber">63</context>
@@ -2706,7 +2710,7 @@
       </trans-unit>
       <trans-unit id="5404234362924331791" datatype="html">
         <source>Message </source>
-        <target >Mensaje </target>
+        <target>Mensaje </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/container/template.html</context>
           <context context-type="linenumber">70</context>
@@ -2718,7 +2722,7 @@
       </trans-unit>
       <trans-unit id="664832051969137830" datatype="html">
         <source>Exit Code </source>
-        <target >Código de finalización</target>
+        <target>Código de finalización</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/container/template.html</context>
           <context context-type="linenumber">93</context>
@@ -2726,7 +2730,7 @@
       </trans-unit>
       <trans-unit id="4147521548456679722" datatype="html">
         <source>Signal </source>
-        <target >Señal </target>
+        <target>Señal </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/container/template.html</context>
           <context context-type="linenumber">100</context>
@@ -2734,7 +2738,7 @@
       </trans-unit>
       <trans-unit id="3065353233062460166" datatype="html">
         <source>Started At </source>
-        <target >Iniciado a las </target>
+        <target>Iniciado a las </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/container/template.html</context>
           <context context-type="linenumber">109</context>
@@ -2742,7 +2746,7 @@
       </trans-unit>
       <trans-unit id="1983115678915099234" datatype="html">
         <source>Environment Variables</source>
-        <target >Variables de Entorno</target>
+        <target>Variables de Entorno</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/container/template.html</context>
           <context context-type="linenumber">118</context>
@@ -2766,7 +2770,7 @@
       </trans-unit>
       <trans-unit id="6286810098678473039" datatype="html">
         <source><x id="INTERPOLATION" equiv-text="&quot;\uFFFD0\uFFFD&quot;"/> bytes </source>
-        <target ><x id="INTERPOLATION" equiv-text="{{formatSecretValue(env.value).length}}"/> bytes </target>
+        <target><x id="INTERPOLATION" equiv-text="{{formatSecretValue(env.value).length}}"/> bytes </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/container/template.html</context>
           <context context-type="linenumber">152</context>
@@ -2778,7 +2782,7 @@
       </trans-unit>
       <trans-unit id="6286810098678473039" datatype="html">
         <source><x id="INTERPOLATION" equiv-text="&quot;\uFFFD0\uFFFD&quot;"/> bytes </source>
-        <target ><x id="INTERPOLATION" equiv-text="{{env.value.length}}"/> bytes </target>
+        <target><x id="INTERPOLATION" equiv-text="{{env.value.length}}"/> bytes </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/container/template.html</context>
           <context context-type="linenumber">174</context>
@@ -2786,7 +2790,7 @@
       </trans-unit>
       <trans-unit id="7658146875243568678" datatype="html">
         <source>Commands </source>
-        <target >Comandos </target>
+        <target>Comandos </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/container/template.html</context>
           <context context-type="linenumber">185</context>
@@ -2794,7 +2798,7 @@
       </trans-unit>
       <trans-unit id="4575555824637733722" datatype="html">
         <source>Arguments </source>
-        <target >Argumentos </target>
+        <target>Argumentos </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/container/template.html</context>
           <context context-type="linenumber">200</context>
@@ -2802,7 +2806,7 @@
       </trans-unit>
       <trans-unit id="108998659550554652" datatype="html">
         <source>Mounts </source>
-        <target >Montajes </target>
+        <target>Montajes </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/container/template.html</context>
           <context context-type="linenumber">216</context>
@@ -2810,7 +2814,7 @@
       </trans-unit>
       <trans-unit id="6798994819630693894" datatype="html">
         <source>Security Context </source>
-        <target >Contexto de Seguridad </target>
+        <target>Contexto de Seguridad </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/container/template.html</context>
           <context context-type="linenumber">232</context>
@@ -2822,7 +2826,7 @@
       </trans-unit>
       <trans-unit id="6987864942421621952" datatype="html">
         <source>Liveness Probe </source>
-        <target >Liveness Probe </target>
+        <target>Liveness Probe </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/container/template.html</context>
           <context context-type="linenumber">246,247</context>
@@ -2830,7 +2834,7 @@
       </trans-unit>
       <trans-unit id="411889937376498888" datatype="html">
         <source>Readiness Probe </source>
-        <target >Readiness Probe </target>
+        <target>Readiness Probe </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/container/template.html</context>
           <context context-type="linenumber">258,259</context>
@@ -2838,7 +2842,7 @@
       </trans-unit>
       <trans-unit id="4469810524935263635" datatype="html">
         <source>Startup Probe </source>
-        <target >Startup Probe </target>
+        <target>Startup Probe </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/container/template.html</context>
           <context context-type="linenumber">270,271</context>
@@ -2890,7 +2894,7 @@
       </trans-unit>
       <trans-unit id="8790013339766634216" datatype="html">
         <source>Read Only</source>
-        <target >Solo lectura</target>
+        <target>Solo lectura</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/volumemount/template.html</context>
           <context context-type="linenumber">42</context>
@@ -2898,7 +2902,7 @@
       </trans-unit>
       <trans-unit id="1557022594772514553" datatype="html">
         <source>Mount Path</source>
-        <target >Ruta de Montaje</target>
+        <target>Ruta de Montaje</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/volumemount/template.html</context>
           <context context-type="linenumber">49</context>
@@ -2906,7 +2910,7 @@
       </trans-unit>
       <trans-unit id="6448155059518842389" datatype="html">
         <source>Sub Path</source>
-        <target >Sub Ruta</target>
+        <target>Sub Ruta</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/volumemount/template.html</context>
           <context context-type="linenumber">56</context>
@@ -2914,7 +2918,7 @@
       </trans-unit>
       <trans-unit id="284876663522831141" datatype="html">
         <source>Source Type</source>
-        <target >Tipo de Origen</target>
+        <target>Tipo de Origen</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/volumemount/template.html</context>
           <context context-type="linenumber">63</context>
@@ -2922,7 +2926,7 @@
       </trans-unit>
       <trans-unit id="3348508131663910333" datatype="html">
         <source>Source Name</source>
-        <target >Nombre de origen</target>
+        <target>Nombre de origen</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/volumemount/template.html</context>
           <context context-type="linenumber">70</context>
@@ -2974,7 +2978,7 @@
       </trans-unit>
       <trans-unit id="3463375855672784957" datatype="html">
         <source>Cluster Role Bindings</source>
-        <target >Cluster Role Bindings</target>
+        <target>Cluster Role Bindings</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/resourcelist/clusterrolebinding/template.html</context>
           <context context-type="linenumber">21</context>
@@ -3170,7 +3174,7 @@
       </trans-unit>
       <trans-unit id="2176017937730560842" datatype="html">
         <source>Rules </source>
-        <target >Reglas </target>
+        <target>Reglas </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/ingressrulelist/template.html</context>
           <context context-type="linenumber">20,21</context>
@@ -3178,7 +3182,7 @@
       </trans-unit>
       <trans-unit id="7198836215060144081" datatype="html">
         <source>Host </source>
-        <target >Host </target>
+        <target>Host </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/ingressrulelist/template.html</context>
           <context context-type="linenumber">37,38</context>
@@ -3354,7 +3358,7 @@
       </trans-unit>
       <trans-unit id="1788882133182474939" datatype="html">
         <source> Waiting for more data to display chart... </source>
-        <target > Esperando más datos para mostrar gráfico... </target>
+        <target> Esperando más datos para mostrar gráfico... </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/graph/template.html</context>
           <context context-type="linenumber">22</context>
@@ -3406,7 +3410,7 @@
       </trans-unit>
       <trans-unit id="7824700034195875723" datatype="html">
         <source>No resources found in the selected namespace.</source>
-        <target >No se encontraron recursos en el espacio de nombres seleccionado.</target>
+        <target>No se encontraron recursos en el espacio de nombres seleccionado.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/resourcelist/crdobject/template.html</context>
           <context context-type="linenumber">94</context>
@@ -3760,7 +3764,7 @@
       </trans-unit>
       <trans-unit id="2120991562304016894" datatype="html">
         <source>Initial Delay (Seconds) </source>
-        <target >Retraso inicial (Segundos) </target>
+        <target>Retraso inicial (Segundos) </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/probe/template.html</context>
           <context context-type="linenumber">26</context>
@@ -3768,7 +3772,7 @@
       </trans-unit>
       <trans-unit id="5821699818018482070" datatype="html">
         <source>Timeout (Seconds) </source>
-        <target >Tiempo de espera (Segundos) </target>
+        <target>Tiempo de espera (Segundos) </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/probe/template.html</context>
           <context context-type="linenumber">32</context>
@@ -3776,7 +3780,7 @@
       </trans-unit>
       <trans-unit id="1754024291861061976" datatype="html">
         <source>Probe Period (Seconds) </source>
-        <target >Periodo de sondeo (segundos) </target>
+        <target>Periodo de sondeo (segundos) </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/probe/template.html</context>
           <context context-type="linenumber">38</context>
@@ -3784,7 +3788,7 @@
       </trans-unit>
       <trans-unit id="8195974205472351044" datatype="html">
         <source>Success Threshold </source>
-        <target >Umbral de éxito </target>
+        <target>Umbral de éxito </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/probe/template.html</context>
           <context context-type="linenumber">44</context>
@@ -3792,7 +3796,7 @@
       </trans-unit>
       <trans-unit id="5158394458624484785" datatype="html">
         <source>Failure Threshold </source>
-        <target >Umbral de fallo </target>
+        <target>Umbral de fallo </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/probe/template.html</context>
           <context context-type="linenumber">50</context>
@@ -3800,7 +3804,7 @@
       </trans-unit>
       <trans-unit id="3676668621220865916" datatype="html">
         <source>Termination Grace Period (Seconds) </source>
-        <target >Período de gracia de terminación (Segundos) </target>
+        <target>Período de gracia de terminación (Segundos) </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/probe/template.html</context>
           <context context-type="linenumber">56</context>
@@ -3808,7 +3812,7 @@
       </trans-unit>
       <trans-unit id="515094234886642041" datatype="html">
         <source>HTTP Healthcheck URI</source>
-        <target >URI comprobación de estado HTTP</target>
+        <target>URI comprobación de estado HTTP</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/probe/template.html</context>
           <context context-type="linenumber">64</context>
@@ -3816,7 +3820,7 @@
       </trans-unit>
       <trans-unit id="6846205659630194861" datatype="html">
         <source>HTTP Headers </source>
-        <target >Encabezados HTTP </target>
+        <target>Encabezados HTTP </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/probe/template.html</context>
           <context context-type="linenumber">76</context>
@@ -3824,7 +3828,7 @@
       </trans-unit>
       <trans-unit id="6393773098525856112" datatype="html">
         <source>TCP Socket</source>
-        <target >Socket TCP</target>
+        <target>Socket TCP</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/probe/template.html</context>
           <context context-type="linenumber">90</context>
@@ -3832,7 +3836,7 @@
       </trans-unit>
       <trans-unit id="367969280410641978" datatype="html">
         <source>Exec Commands </source>
-        <target >Exec Commands </target>
+        <target>Exec Commands </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/probe/template.html</context>
           <context context-type="linenumber">99</context>
@@ -3992,7 +3996,7 @@
       </trans-unit>
       <trans-unit id="8722023678367200695" datatype="html">
         <source>Local settings </source>
-        <target >Ajustes locales </target>
+        <target>Ajustes locales </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/settings/local/template.html</context>
           <context context-type="linenumber">19</context>
@@ -4099,7 +4103,7 @@
       </trans-unit>
       <trans-unit id="8323422358213440128" datatype="html">
         <source><x id="INTERPOLATION" equiv-text="&quot;\uFFFD0\uFFFD&quot;"/> </source>
-        <target ><x id="INTERPOLATION" equiv-text="{{getDisplayName(resource)}}"/>
+        <target><x id="INTERPOLATION" equiv-text="{{getDisplayName(resource)}}"/>
   </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/chrome/nav/pinner/template.html</context>
@@ -4108,7 +4112,7 @@
       </trans-unit>
       <trans-unit id="1138967786822653104" datatype="html">
         <source>Role Reference</source>
-        <target >Referencia de rol</target>
+        <target>Referencia de rol</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/resource/cluster/clusterrolebinding/detail/template.html</context>
           <context context-type="linenumber">28</context>
@@ -4217,7 +4221,7 @@
       </trans-unit>
       <trans-unit id="1649590266934618453" datatype="html">
         <source> Insecure access detected. Sign in will not be available. Access Dashboard securely over HTTPS or using localhost. Read more <x id="START_LINK" ctype="x-a" equiv-text="&quot;\uFFFD#2\uFFFD&quot;"/> here <x id="CLOSE_LINK" ctype="x-a" equiv-text="&quot;\uFFFD/#2\uFFFD&quot;"/>. </source>
-        <target >
+        <target>
         Acceso inseguro detectado. Iniciar sesión no estará disponible. Accede al Tablero de forma segura sobre HTTPS o usando localhost. Lee más
             <x id="START_LINK" ctype="x-a" equiv-text="&lt;a>"/>
               aquí
@@ -4368,7 +4372,7 @@
       </trans-unit>
       <trans-unit id="1119419133766787743" datatype="html">
         <source>Go to namespace</source>
-        <target >Ir al espacio de nombre</target>
+        <target>Ir al espacio de nombre</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/resource/cluster/namespace/detail/actionbar/template.html</context>
           <context context-type="linenumber">23</context>
@@ -4866,15 +4870,25 @@
         </context-group>
       </trans-unit>
       <trans-unit id="1791198005341902530" datatype="html">
-        <source> Deploy </source>
+        <source> Deploy
+</source>
         <target>Desplegar</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/create/from/form/template.html</context>
           <context context-type="linenumber">354</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="2986806881378584169" datatype="html">
+        <source>{VAR_SELECT, select, true {Hide advanced options} other {Show advanced options}}</source>
+        <target state="new">{VAR_SELECT, select, true {Hide advanced options} other {Show advanced options}}</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/create/from/form/template.html</context>
+          <context context-type="linenumber">371</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="1293084960403366485" datatype="html">
-        <source> Cancel </source>
+        <source> Cancel
+</source>
         <target> Cancelar </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/create/from/form/template.html</context>
@@ -4886,7 +4900,7 @@
         </context-group>
       </trans-unit>
       <trans-unit id="2380939390102386148" datatype="html">
-        <source> <x id="ICU" equiv-text="i18n_79"/>
+        <source> <x id="ICU" equiv-text="i18n_79" xid="2986806881378584169"/>
 </source>
         <target>
   <x id="ICU" equiv-text="{isMoreOptionsEnabled(), select, 1 {...} other {...}}"/>
@@ -4894,14 +4908,6 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/create/from/form/template.html</context>
           <context context-type="linenumber">370</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="4636387206823710509" datatype="html">
-        <source>{VAR_SELECT, select, 1 {Hide advanced options} other {Show advanced options}}</source>
-        <target>{VAR_SELECT, select, 1 {Ocultar opciones avanzadas} other {Mostrar opciones avanzadas} }</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/frontend/create/from/form/template.html</context>
-          <context context-type="linenumber">371</context>
         </context-group>
       </trans-unit>
       <trans-unit id="4773463022110715023" datatype="html">
@@ -4984,7 +4990,7 @@
         <target>Cargar</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/create/from/file/template.html</context>
-          <context context-type="linenumber">45</context>
+          <context context-type="linenumber">44</context>
         </context-group>
       </trans-unit>
       <trans-unit id="4708304467453184793" datatype="html">
@@ -5377,7 +5383,7 @@
       </trans-unit>
       <trans-unit id="1328651869817330586" datatype="html">
         <source>Mount Option(s)</source>
-        <target >Opcion(es) de Montaje</target>
+        <target>Opcion(es) de Montaje</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/resource/cluster/persistentvolume/detail/template.html</context>
           <context context-type="linenumber">73</context>
@@ -5557,7 +5563,7 @@
       </trans-unit>
       <trans-unit id="2397234605876541174" datatype="html">
         <source>Image Pull Secrets</source>
-        <target >Pull Secrets de imagen</target>
+        <target>Pull Secrets de imagen</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/resource/cluster/serviceaccount/detail/template.html</context>
           <context context-type="linenumber">25</context>
@@ -5841,7 +5847,7 @@
       </trans-unit>
       <trans-unit id="3365868385313025367" datatype="html">
         <source>Status </source>
-        <target >Estado </target>
+        <target>Estado </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/resource/workloads/pod/detail/template.html</context>
           <context context-type="linenumber">57</context>
@@ -5849,7 +5855,7 @@
       </trans-unit>
       <trans-unit id="2390014888726156802" datatype="html">
         <source>IP </source>
-        <target >IP </target>
+        <target>IP </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/resource/workloads/pod/detail/template.html</context>
           <context context-type="linenumber">64</context>
@@ -5857,7 +5863,7 @@
       </trans-unit>
       <trans-unit id="3979401854176957349" datatype="html">
         <source>QoS Class </source>
-        <target >Clase QoS </target>
+        <target>Clase QoS </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/resource/workloads/pod/detail/template.html</context>
           <context context-type="linenumber">71</context>
@@ -5865,7 +5871,7 @@
       </trans-unit>
       <trans-unit id="5725496021764153459" datatype="html">
         <source>Restarts </source>
-        <target >Reinicios </target>
+        <target>Reinicios </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/resource/workloads/pod/detail/template.html</context>
           <context context-type="linenumber">78</context>
@@ -5873,7 +5879,7 @@
       </trans-unit>
       <trans-unit id="2843009981840880796" datatype="html">
         <source>Service Account </source>
-        <target >Cuenta de Servicio </target>
+        <target>Cuenta de Servicio </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/resource/workloads/pod/detail/template.html</context>
           <context context-type="linenumber">85</context>
@@ -5881,23 +5887,25 @@
       </trans-unit>
       <trans-unit id="3652807554317132826" datatype="html">
         <source>Image Pull Secrets </source>
-        <target >Pull Secrets de imagen</target>
+        <target>Pull Secrets de imagen</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/resource/workloads/pod/detail/template.html</context>
           <context context-type="linenumber">96</context>
         </context-group>
       </trans-unit>
       <trans-unit id="5627532611656563474" datatype="html">
-        <source>Containers </source>
-        <target >Contenedores</target>
+        <source>Containers
+</source>
+        <target>Contenedores</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/resource/workloads/pod/detail/template.html</context>
           <context context-type="linenumber">134</context>
         </context-group>
       </trans-unit>
       <trans-unit id="4184691462431557662" datatype="html">
-        <source>Init containers </source>
-        <target >Contenedores de inicialización</target>
+        <source>Init containers
+</source>
+        <target>Contenedores de inicialización</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/resource/workloads/pod/detail/template.html</context>
           <context context-type="linenumber">143</context>
@@ -5905,7 +5913,7 @@
       </trans-unit>
       <trans-unit id="2397234605876541174" datatype="html">
         <source>Image Pull Secrets</source>
-        <target >Pull Secrets de la imagen</target>
+        <target>Pull Secrets de la imagen</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/resource/workloads/pod/detail/component.ts</context>
           <context context-type="linenumber">84</context>
@@ -5949,7 +5957,7 @@
       </trans-unit>
       <trans-unit id="1014173530798491135" datatype="html">
         <source>Default namespace</source>
-        <target >Espacio de nombre por defecto</target>
+        <target>Espacio de nombre por defecto</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/settings/global/namespace/template.html</context>
           <context context-type="linenumber">18</context>
@@ -5957,7 +5965,7 @@
       </trans-unit>
       <trans-unit id="4216509171965074904" datatype="html">
         <source>Namespace that should be selected by default after logging in.</source>
-        <target >Espacio de nombre que debería ser seleccionado por defecto después de iniciar sesión.</target>
+        <target>Espacio de nombre que debería ser seleccionado por defecto después de iniciar sesión.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/settings/global/namespace/template.html</context>
           <context context-type="linenumber">20</context>
@@ -5965,7 +5973,7 @@
       </trans-unit>
       <trans-unit id="1027767960138955738" datatype="html">
         <source>Namespace fallback list</source>
-        <target >Listado de espacio de nombre de respaldo</target>
+        <target>Listado de espacio de nombre de respaldo</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/settings/global/namespace/template.html</context>
           <context context-type="linenumber">40</context>
@@ -5973,7 +5981,7 @@
       </trans-unit>
       <trans-unit id="3208716248295885865" datatype="html">
         <source>List of namespaces that should be presented to user without namespace list privileges.</source>
-        <target >Listado de espacios de nombres que deberían ser presentados al usuario sin privilegios de mostrar espacios de nombre.</target>
+        <target>Listado de espacios de nombres que deberían ser presentados al usuario sin privilegios de mostrar espacios de nombre.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/settings/global/namespace/template.html</context>
           <context context-type="linenumber">42</context>
@@ -5981,7 +5989,7 @@
       </trans-unit>
       <trans-unit id="2046668453758144264" datatype="html">
         <source>Add namespaces...</source>
-        <target >Añadir espacio de nombre...</target>
+        <target>Añadir espacio de nombre...</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/settings/global/namespace/template.html</context>
           <context context-type="linenumber">60</context>
@@ -5989,7 +5997,7 @@
       </trans-unit>
       <trans-unit id="1244504753529533521" datatype="html">
         <source>Edit Namespace List</source>
-        <target >Editar listado de espacio de nombre</target>
+        <target>Editar listado de espacio de nombre</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/settings/global/namespace/editdialog/template.html</context>
           <context context-type="linenumber">20</context>
@@ -5997,7 +6005,7 @@
       </trans-unit>
       <trans-unit id="8030904345187828957" datatype="html">
         <source>Remove namespaces from the list and confirm to save the changes.</source>
-        <target >Remueve espacios de nombre del listado y confirma para salvar los cambios.</target>
+        <target>Remueve espacios de nombre del listado y confirma para salvar los cambios.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/settings/global/namespace/editdialog/template.html</context>
           <context context-type="linenumber">23</context>
@@ -6005,7 +6013,7 @@
       </trans-unit>
       <trans-unit id="7565155156017938502" datatype="html">
         <source>Edit </source>
-        <target >Editar </target>
+        <target>Editar </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/settings/global/namespace/editdialog/template.html</context>
           <context context-type="linenumber">45</context>
@@ -6013,7 +6021,7 @@
       </trans-unit>
       <trans-unit id="1476552057166072952" datatype="html">
         <source>Close </source>
-        <target >Cerrar </target>
+        <target>Cerrar </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/settings/global/namespace/adddialog/template.html</context>
           <context context-type="linenumber">52</context>
@@ -6025,7 +6033,7 @@
       </trans-unit>
       <trans-unit id="5793766132158032827" datatype="html">
         <source>No namespaces selected</source>
-        <target >No se ha seleccionado espacios de nombres</target>
+        <target>No se ha seleccionado espacios de nombres</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/settings/global/namespace/editdialog/template.html</context>
           <context context-type="linenumber">36</context>
@@ -6033,7 +6041,7 @@
       </trans-unit>
       <trans-unit id="2634769168106360285" datatype="html">
         <source>Add Namespace</source>
-        <target >Añadir Espacio de nombre</target>
+        <target>Añadir Espacio de nombre</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/settings/global/namespace/adddialog/template.html</context>
           <context context-type="linenumber">20</context>
@@ -6041,7 +6049,7 @@
       </trans-unit>
       <trans-unit id="8000125105974293495" datatype="html">
         <source>Provide a namespace name that should be added to the namespace fallback list</source>
-        <target >Provee un espacio de nombre que debería ser añadido al listado de espacios de nombre de respaldo</target>
+        <target>Provee un espacio de nombre que debería ser añadido al listado de espacios de nombre de respaldo</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/settings/global/namespace/adddialog/template.html</context>
           <context context-type="linenumber">23</context>
@@ -6103,7 +6111,7 @@
       </trans-unit>
       <trans-unit id="1440494756566469853" datatype="html">
         <source>Labels limit</source>
-        <target >Límite de etiquetas</target>
+        <target>Límite de etiquetas</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/settings/global/template.html</context>
           <context context-type="linenumber">65</context>
@@ -6111,7 +6119,7 @@
       </trans-unit>
       <trans-unit id="8107673552387655091" datatype="html">
         <source>Max number of labels that are displayed by default on most views.</source>
-        <target >Número máximo de etiquetas que son mostradas por defecto en la mayoría de las vistas☺.</target>
+        <target>Número máximo de etiquetas que son mostradas por defecto en la mayoría de las vistas☺.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/settings/global/template.html</context>
           <context context-type="linenumber">67</context>
@@ -6199,7 +6207,7 @@
       </trans-unit>
       <trans-unit id="5371126920581174501" datatype="html">
         <source>Choose color theme of the dashboard</source>
-        <target >Elige un tema de color para el tablero</target>
+        <target>Elige un tema de color para el tablero</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/settings/local/template.html</context>
           <context context-type="linenumber">29</context>
@@ -6207,7 +6215,7 @@
       </trans-unit>
       <trans-unit id="2826581353496868063" datatype="html">
         <source>Language</source>
-        <target >Idioma</target>
+        <target>Idioma</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/settings/local/template.html</context>
           <context context-type="linenumber">44</context>
@@ -6215,7 +6223,7 @@
       </trans-unit>
       <trans-unit id="376256424703415146" datatype="html">
         <source>Change the language of the dashboard</source>
-        <target >Elige el idioma del tablero</target>
+        <target>Elige el idioma del tablero</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/settings/local/template.html</context>
           <context context-type="linenumber">46</context>
@@ -6223,7 +6231,7 @@
       </trans-unit>
       <trans-unit id="6348980293100229187" datatype="html">
         <source>Global settings </source>
-        <target >Ajustes globales</target>
+        <target>Ajustes globales</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/settings/global/template.html</context>
           <context context-type="linenumber">21</context>
