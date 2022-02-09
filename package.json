@@ -78,7 +78,7 @@
     "ngx-pipes": "3.0.0",
     "normalize.css": "8.0.1",
     "roboto-fontface": "0.10.0",
-    "rxjs": "6.6.7",
+    "rxjs": "7.5.4",
     "rxjs-compat": "6.6.7",
     "sockjs-client": "1.5.2",
     "strip-ansi": "6.0.1",
