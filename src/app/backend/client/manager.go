@@ -17,7 +17,11 @@ package client
 import (
 	"context"
 	"log"
+	"regexp"
 	"strings"
+
+	v12 "k8s.io/api/authentication/v1"
+	k8serrors "k8s.io/apimachinery/pkg/api/errors"
 
 	"github.com/emicklei/go-restful/v3"
 	v1 "k8s.io/api/authorization/v1"
@@ -223,25 +227,47 @@ func (self *clientManager) CSRFKey() string {
 
 // HasAccess configures K8S api client with provided auth info and executes a basic check against apiserver to see
 // if it is valid.
-func (self *clientManager) HasAccess(authInfo api.AuthInfo) error {
+func (self *clientManager) HasAccess(authInfo api.AuthInfo) (string, error) {
 	cfg, err := self.buildConfigFromFlags(self.apiserverHost, self.kubeConfigPath)
 	if err != nil {
-		return err
+		return "", err
 	}
 
 	clientConfig := self.buildCmdConfig(&authInfo, cfg)
 	cfg, err = clientConfig.ClientConfig()
 	if err != nil {
-		return err
+		return "", err
 	}
 
 	client, err := kubernetes.NewForConfig(cfg)
 	if err != nil {
-		return err
+		return "", err
 	}
 
 	_, err = client.ServerVersion()
-	return err
+	if err != nil {
+		if k8serrors.IsForbidden(err) {
+			return self.getUsernameFromError(err), err
+		}
+
+		return "", err
+	}
+
+	result, err := client.AuthenticationV1().TokenReviews().Create(context.TODO(), &v12.TokenReview{
+		Spec: v12.TokenReviewSpec{
+			Token: authInfo.Token,
+		},
+	}, metaV1.CreateOptions{})
+
+	if err != nil {
+		if k8serrors.IsForbidden(err) {
+			return self.getUsernameFromError(err), nil
+		}
+
+		return "", err
+	}
+
+	return self.getUsername(result.Status.User.Username), nil
 }
 
 // VerberClient returns new verber client based on authentication information extracted from request
@@ -537,6 +563,24 @@ func (self *clientManager) initInsecureConfig() {
 // Returns true if in-cluster config is used
 func (self *clientManager) isRunningInCluster() bool {
 	return self.inClusterConfig != nil
+}
+
+func (self *clientManager) getUsernameFromError(err error) string {
+	re := regexp.MustCompile(`^.* User "(.*)" cannot .*$`)
+	return re.ReplaceAllString(err.Error(), "$1")
+}
+
+func (self *clientManager) getUsername(name string) string {
+	const groups = 5
+	const nameGroupIdx = 4
+	re := regexp.MustCompile(`(?P<ignore>[\w-]+):(?P<type>[\w-]+):(?P<namespace>[\w-_]+):(?P<name>[\w-]+)`)
+	match := re.FindStringSubmatch(name)
+
+	if match == nil || len(match) != groups {
+		return name
+	}
+
+	return match[nameGroupIdx]
 }
 
 // NewClientManager creates client manager based on kubeConfigPath and apiserverHost parameters.

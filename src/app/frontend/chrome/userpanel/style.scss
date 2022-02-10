@@ -21,9 +21,7 @@
 
 .kd-auth-status {
   font-family: $font-family-sans;
-  font-weight: $bold-font-weight;
   padding: $baseline-grid (2 * $baseline-grid) (2 * $baseline-grid);
-  text-transform: uppercase;
 }
 
 .kd-auth-header {
@@ -44,4 +42,14 @@
 
 .kd-cross-outline {
   stroke-width: 4;
+}
+
+.username {
+  font-size: $body-font-size-base;
+  margin-right: 2 * $baseline-grid;
+}
+
+.method {
+  font-size: $body-font-size-base;
+  margin-right: 2 * $baseline-grid;
 }

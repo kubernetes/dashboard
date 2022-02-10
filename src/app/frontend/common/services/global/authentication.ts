@@ -64,6 +64,10 @@ export class AuthService {
     }
   }
 
+  private setUsernameCookie_(name: string): void {
+    this.cookies_.set(this.config_.usernameCookieName, name);
+  }
+
   private getTokenCookie_(): string {
     return this.cookies_.get(this.config_.authTokenCookieName) || '';
   }
@@ -79,6 +83,7 @@ export class AuthService {
   removeAuthCookies(): void {
     this.cookies_.delete(this.config_.authTokenCookieName);
     this.cookies_.delete(this.config_.skipLoginPageCookieName);
+    this.cookies_.delete(this.config_.usernameCookieName);
   }
 
   /**
@@ -98,6 +103,7 @@ export class AuthService {
         switchMap((authResponse: AuthResponse) => {
           if (authResponse.jweToken.length !== 0 && authResponse.errors.length === 0) {
             this.setTokenCookie_(authResponse.jweToken);
+            this.setUsernameCookie_(authResponse.name);
           }
 
           return of(authResponse.errors);

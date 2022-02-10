@@ -49,7 +49,7 @@ type ClientManager interface {
 	Config(req *restful.Request) (*rest.Config, error)
 	ClientCmdConfig(req *restful.Request) (clientcmd.ClientConfig, error)
 	CSRFKey() string
-	HasAccess(authInfo api.AuthInfo) error
+	HasAccess(authInfo api.AuthInfo) (string, error)
 	VerberClient(req *restful.Request, config *rest.Config) (ResourceVerber, error)
 	SetTokenManager(manager authApi.TokenManager)
 }

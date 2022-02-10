@@ -140,6 +140,7 @@ export interface AppConfig {
 
 export interface IConfig {
   authTokenCookieName: string;
+  usernameCookieName: string;
   skipLoginPageCookieName: string;
   csrfHeaderName: string;
   authTokenHeaderName: string;
