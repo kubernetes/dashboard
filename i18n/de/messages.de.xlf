@@ -198,7 +198,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/chrome/userpanel/template.html</context>
-          <context context-type="linenumber">58</context>
+          <context context-type="linenumber">57</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/chips/chipdialog/template.html</context>
@@ -230,7 +230,7 @@
         <target state="new">Default service account </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/chrome/userpanel/template.html</context>
-          <context context-type="linenumber">53,54</context>
+          <context context-type="linenumber">52</context>
         </context-group>
       </trans-unit>
       <trans-unit id="6929072613146586031" datatype="html">
@@ -4109,7 +4109,7 @@
         <target>Anmelden</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/chrome/userpanel/template.html</context>
-          <context context-type="linenumber">70</context>
+          <context context-type="linenumber">69</context>
         </context-group>
       </trans-unit>
       <trans-unit id="1239042569857077594" datatype="html">
@@ -4117,7 +4117,7 @@
         <target>Abmelden</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/chrome/userpanel/template.html</context>
-          <context context-type="linenumber">75</context>
+          <context context-type="linenumber">74</context>
         </context-group>
       </trans-unit>
       <trans-unit id="8323422358213440128" datatype="html">
