@@ -12,9 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {Component, OnInit} from '@angular/core';
+import {Component, Inject, OnInit, ViewChild} from '@angular/core';
+import {MatMenu, MatMenuTrigger} from '@angular/material/menu';
 import {LoginStatus} from '@api/root.api';
+import {IConfig} from '@api/root.ui';
 import {AuthService} from '@common/services/global/authentication';
+import {CookieService} from 'ngx-cookie-service';
+import {CONFIG_DI_TOKEN} from '../../index.config';
 
 @Component({
   selector: 'kd-user-panel',
@@ -25,10 +29,25 @@ import {AuthService} from '@common/services/global/authentication';
   },
 })
 export class UserPanelComponent implements OnInit {
+  @ViewChild(MatMenuTrigger)
+  private readonly trigger_: MatMenuTrigger;
+
   loginStatus: LoginStatus;
   isLoginStatusInitialized = false;
 
-  constructor(private readonly authService_: AuthService) {}
+  constructor(
+    private readonly authService_: AuthService,
+    private readonly cookieService_: CookieService,
+    @Inject(CONFIG_DI_TOKEN) private readonly config_: IConfig
+  ) {}
+
+  get hasUsername(): boolean {
+    return !!this.cookieService_.get(this.config_.usernameCookieName);
+  }
+
+  get username(): string {
+    return this.cookieService_.get(this.config_.usernameCookieName);
+  }
 
   ngOnInit(): void {
     this.authService_.getLoginStatus().subscribe(status => {
@@ -51,5 +70,9 @@ export class UserPanelComponent implements OnInit {
 
   logout(): void {
     this.authService_.logout();
+  }
+
+  close(): void {
+    this.trigger_.closeMenu();
   }
 }

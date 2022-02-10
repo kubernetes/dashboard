@@ -718,25 +718,13 @@ export interface ProtocolValiditySpec {
 
 // Auth related types
 export interface AuthResponse {
+  name?: string;
   jweToken: string;
   errors: K8sError[];
 }
 
 export interface CanIResponse {
   allowed: boolean;
-}
-
-export interface LoginSpec {
-  username: string;
-  password: string;
-  token: string;
-  kubeconfig: string;
-}
-
-export interface LoginStatus {
-  tokenPresent: boolean;
-  headerPresent: boolean;
-  httpsMode: boolean;
 }
 
 export interface AppDeploymentContentSpec {
@@ -1238,15 +1226,12 @@ export interface LoginSpec {
   kubeConfig: string;
 }
 
-export interface AuthResponse {
-  jweToken: string;
-  errors: K8sError[];
-}
-
 export interface LoginStatus {
   tokenPresent: boolean;
   headerPresent: boolean;
   httpsMode: boolean;
+  impersonationPresent?: boolean;
+  impersonatedUser?: string;
 }
 
 export type AuthenticationMode = string;

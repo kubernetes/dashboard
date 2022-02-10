@@ -132,6 +132,8 @@ type LoginSpec struct {
 // AuthResponse is returned from our backend as a response for login/refresh requests. It contains generated JWEToken
 // and a list of non-critical errors such as 'Failed authentication'.
 type AuthResponse struct {
+	// Name is a user/subject name if available
+	Name string `json:"name,omitempty"`
 	// JWEToken is a token generated during login request that contains AuthInfo data in the payload.
 	JWEToken string `json:"jweToken"`
 	// Errors are a list of non-critical errors that happened during login request.

@@ -82,8 +82,8 @@ func (self *fakeClientManager) CSRFKey() string {
 	return ""
 }
 
-func (self *fakeClientManager) HasAccess(authInfo api.AuthInfo) error {
-	return self.HasAccessError
+func (self *fakeClientManager) HasAccess(authInfo api.AuthInfo) (string, error) {
+	return "", self.HasAccessError
 }
 
 func (self *fakeClientManager) VerberClient(req *restful.Request, config *rest.Config) (clientapi.ResourceVerber, error) {

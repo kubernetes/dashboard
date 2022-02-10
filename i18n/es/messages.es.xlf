@@ -193,12 +193,44 @@
         <source>Close</source>
         <target>Cerrar</target>
         <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/chrome/userpanel/template.html</context>
+          <context context-type="linenumber">30</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/chrome/userpanel/template.html</context>
+          <context context-type="linenumber">57</context>
+        </context-group>
+        <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/chips/chipdialog/template.html</context>
           <context context-type="linenumber">27</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/dialogs/download/template.html</context>
           <context context-type="linenumber">62</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="2244223685971816410" datatype="html">
+        <source>Logged in with auth header </source>
+        <target state="new">Logged in with auth header </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/chrome/userpanel/template.html</context>
+          <context context-type="linenumber">45,46</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="677624622393809855" datatype="html">
+        <source>Logged in with token </source>
+        <target state="new">Logged in with token </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/chrome/userpanel/template.html</context>
+          <context context-type="linenumber">48,49</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="7327432642990246284" datatype="html">
+        <source>Default service account </source>
+        <target state="new">Default service account </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/chrome/userpanel/template.html</context>
+          <context context-type="linenumber">52</context>
         </context-group>
       </trans-unit>
       <trans-unit id="6929072613146586031" datatype="html">
@@ -4061,36 +4093,12 @@
           <context context-type="linenumber">67</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="8047723565849701689" datatype="html">
-        <source>Logged in with auth header</source>
-        <target>Sesión iniciada con encabezado de autentificación</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/frontend/chrome/userpanel/template.html</context>
-          <context context-type="linenumber">23</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="2821688061981458389" datatype="html">
-        <source>Logged in with token</source>
-        <target>Sesión iniciada con token</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/frontend/chrome/userpanel/template.html</context>
-          <context context-type="linenumber">25</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="1918436236852033577" datatype="html">
-        <source>Default service account</source>
-        <target>Cuenta de servicio por defecto</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/frontend/chrome/userpanel/template.html</context>
-          <context context-type="linenumber">28</context>
-        </context-group>
-      </trans-unit>
       <trans-unit id="2509978568586099561" datatype="html">
         <source>Sign in </source>
         <target>Iniciar sesión</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/chrome/userpanel/template.html</context>
-          <context context-type="linenumber">37</context>
+          <context context-type="linenumber">69</context>
         </context-group>
       </trans-unit>
       <trans-unit id="1239042569857077594" datatype="html">
@@ -4098,7 +4106,7 @@
         <target>Cerrar sesión</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/chrome/userpanel/template.html</context>
-          <context context-type="linenumber">42</context>
+          <context context-type="linenumber">74</context>
         </context-group>
       </trans-unit>
       <trans-unit id="8323422358213440128" datatype="html">
