@@ -1,0 +1,1 @@
+{"ast":null,"code":"import { AsyncSubject } from '../AsyncSubject';\nimport { multicast } from './multicast';\nexport function publishLast() {\n  return source => multicast(new AsyncSubject())(source);\n} //# sourceMappingURL=publishLast.js.map","map":null,"metadata":{},"sourceType":"module"}

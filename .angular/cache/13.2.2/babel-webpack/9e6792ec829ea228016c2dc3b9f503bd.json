@@ -1,0 +1,1 @@
+{"ast":null,"code":"import { tpmt } from \"./math.js\";\nexport function expIn(t) {\n  return tpmt(1 - +t);\n}\nexport function expOut(t) {\n  return 1 - tpmt(t);\n}\nexport function expInOut(t) {\n  return ((t *= 2) <= 1 ? tpmt(1 - t) : 2 - tpmt(t - 1)) / 2;\n}","map":null,"metadata":{},"sourceType":"module"}

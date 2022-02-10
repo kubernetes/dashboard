@@ -1,0 +1,1 @@
+{"ast":null,"code":"import { abs, epsilon } from \"./math.js\";\nexport default function (a, b) {\n  return abs(a[0] - b[0]) < epsilon && abs(a[1] - b[1]) < epsilon;\n}","map":null,"metadata":{},"sourceType":"module"}

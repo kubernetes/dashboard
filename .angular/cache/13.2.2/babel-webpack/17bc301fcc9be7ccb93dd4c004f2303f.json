@@ -1,0 +1,1 @@
+{"ast":null,"code":"export default function () {\n  var callback = arguments[0];\n  arguments[0] = this;\n  callback.apply(null, arguments);\n  return this;\n}","map":null,"metadata":{},"sourceType":"module"}

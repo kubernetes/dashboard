@@ -1,0 +1,1 @@
+{"ast":null,"code":"import interrupt from \"../interrupt.js\";\nexport default function (name) {\n  return this.each(function () {\n    interrupt(this, name);\n  });\n}","map":null,"metadata":{},"sourceType":"module"}

@@ -1,0 +1,1 @@
+{"ast":null,"code":"export default function () {\n  var leaves = [];\n  this.eachBefore(function (node) {\n    if (!node.children) {\n      leaves.push(node);\n    }\n  });\n  return leaves;\n}","map":null,"metadata":{},"sourceType":"module"}

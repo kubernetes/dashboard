@@ -1,0 +1,1 @@
+{"ast":null,"code":"export function optional(f) {\n  return f == null ? null : required(f);\n}\nexport function required(f) {\n  if (typeof f !== \"function\") throw new Error();\n  return f;\n}","map":null,"metadata":{},"sourceType":"module"}

@@ -1,0 +1,1 @@
+{"ast":null,"code":"export default function () {\n  var root = this,\n      links = [];\n  root.each(function (node) {\n    if (node !== root) {\n      // Don’t include the root’s parent, if any.\n      links.push({\n        source: node.parent,\n        target: node\n      });\n    }\n  });\n  return links;\n}","map":null,"metadata":{},"sourceType":"module"}

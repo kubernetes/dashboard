@@ -1,0 +1,1 @@
+{"ast":null,"code":"export default function set(values) {\n  return values instanceof Set ? values : new Set(values);\n}","map":null,"metadata":{},"sourceType":"module"}

@@ -1,0 +1,1 @@
+{"ast":null,"code":"export var xhtml = \"http://www.w3.org/1999/xhtml\";\nexport default {\n  svg: \"http://www.w3.org/2000/svg\",\n  xhtml: xhtml,\n  xlink: \"http://www.w3.org/1999/xlink\",\n  xml: \"http://www.w3.org/XML/1998/namespace\",\n  xmlns: \"http://www.w3.org/2000/xmlns/\"\n};","map":null,"metadata":{},"sourceType":"module"}

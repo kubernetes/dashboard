@@ -1,0 +1,1 @@
+{"ast":null,"code":"import sparse from \"./sparse.js\";\nimport { Selection } from \"./index.js\";\nexport default function () {\n  return new Selection(this._exit || this._groups.map(sparse), this._parents);\n}","map":null,"metadata":{},"sourceType":"module"}

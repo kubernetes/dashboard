@@ -1,0 +1,1 @@
+{"ast":null,"code":"export { now, timer, timerFlush } from \"./timer.js\";\nexport { default as timeout } from \"./timeout.js\";\nexport { default as interval } from \"./interval.js\";","map":null,"metadata":{},"sourceType":"module"}

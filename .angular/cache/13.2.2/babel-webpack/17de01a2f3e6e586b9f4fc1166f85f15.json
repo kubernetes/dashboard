@@ -1,0 +1,1 @@
+{"ast":null,"code":"import count from \"../count.js\";\nimport quantile from \"../quantile.js\";\nexport default function (values, min, max) {\n  return Math.ceil((max - min) / (2 * (quantile(values, 0.75) - quantile(values, 0.25)) * Math.pow(count(values), -1 / 3)));\n}","map":null,"metadata":{},"sourceType":"module"}

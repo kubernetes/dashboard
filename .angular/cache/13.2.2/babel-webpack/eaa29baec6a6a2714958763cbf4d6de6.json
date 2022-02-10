@@ -1,0 +1,1 @@
+{"ast":null,"code":"function removeFunction(id) {\n  return function () {\n    var parent = this.parentNode;\n\n    for (var i in this.__transition) if (+i !== id) return;\n\n    if (parent) parent.removeChild(this);\n  };\n}\n\nexport default function () {\n  return this.on(\"end.remove\", removeFunction(this._id));\n}","map":null,"metadata":{},"sourceType":"module"}

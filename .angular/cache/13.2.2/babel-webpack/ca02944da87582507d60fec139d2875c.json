@@ -1,0 +1,1 @@
+{"ast":null,"code":"export default class Polygon {\n  constructor() {\n    this._ = [];\n  }\n\n  moveTo(x, y) {\n    this._.push([x, y]);\n  }\n\n  closePath() {\n    this._.push(this._[0].slice());\n  }\n\n  lineTo(x, y) {\n    this._.push([x, y]);\n  }\n\n  value() {\n    return this._.length ? this._ : null;\n  }\n\n}","map":null,"metadata":{},"sourceType":"module"}

@@ -1,0 +1,1 @@
+{"ast":null,"code":"import count from \"../count.js\";\nimport deviation from \"../deviation.js\";\nexport default function (values, min, max) {\n  return Math.ceil((max - min) / (3.5 * deviation(values) * Math.pow(count(values), -1 / 3)));\n}","map":null,"metadata":{},"sourceType":"module"}

@@ -1,0 +1,1 @@
+{"ast":null,"code":"export default {\n  draw: function (context, size) {\n    var w = Math.sqrt(size),\n        x = -w / 2;\n    context.rect(x, x, w, w);\n  }\n};","map":null,"metadata":{},"sourceType":"module"}

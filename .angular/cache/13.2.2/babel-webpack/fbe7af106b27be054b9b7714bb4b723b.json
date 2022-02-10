@@ -1,0 +1,1 @@
+{"ast":null,"code":"import exponent from \"./exponent.js\";\nexport default function (step) {\n  return Math.max(0, -exponent(Math.abs(step)));\n}","map":null,"metadata":{},"sourceType":"module"}

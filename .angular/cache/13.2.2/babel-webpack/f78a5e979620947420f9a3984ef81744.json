@@ -1,0 +1,1 @@
+{"ast":null,"code":"import dice from \"./dice.js\";\nimport slice from \"./slice.js\";\nexport default function (parent, x0, y0, x1, y1) {\n  (parent.depth & 1 ? slice : dice)(parent, x0, y0, x1, y1);\n}","map":null,"metadata":{},"sourceType":"module"}

@@ -1,0 +1,1 @@
+{"ast":null,"code":"export default function () {\n  return this._root;\n}","map":null,"metadata":{},"sourceType":"module"}

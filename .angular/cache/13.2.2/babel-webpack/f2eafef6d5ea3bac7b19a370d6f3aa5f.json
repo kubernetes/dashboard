@@ -1,0 +1,1 @@
+{"ast":null,"code":"export default (x => () => x);","map":null,"metadata":{},"sourceType":"module"}

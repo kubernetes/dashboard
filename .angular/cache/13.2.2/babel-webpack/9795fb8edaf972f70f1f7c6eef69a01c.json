@@ -1,0 +1,1 @@
+{"ast":null,"code":"import { pi, tau } from \"../math.js\";\nexport default {\n  draw: function (context, size) {\n    var r = Math.sqrt(size / pi);\n    context.moveTo(r, 0);\n    context.arc(0, 0, r, 0, tau);\n  }\n};","map":null,"metadata":{},"sourceType":"module"}

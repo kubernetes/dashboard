@@ -1,0 +1,1 @@
+{"ast":null,"code":"function responseArrayBuffer(response) {\n  if (!response.ok) throw new Error(response.status + \" \" + response.statusText);\n  return response.arrayBuffer();\n}\n\nexport default function (input, init) {\n  return fetch(input, init).then(responseArrayBuffer);\n}","map":null,"metadata":{},"sourceType":"module"}

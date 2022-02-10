@@ -1,0 +1,1 @@
+{"ast":null,"code":"function responseBlob(response) {\n  if (!response.ok) throw new Error(response.status + \" \" + response.statusText);\n  return response.blob();\n}\n\nexport default function (input, init) {\n  return fetch(input, init).then(responseBlob);\n}","map":null,"metadata":{},"sourceType":"module"}

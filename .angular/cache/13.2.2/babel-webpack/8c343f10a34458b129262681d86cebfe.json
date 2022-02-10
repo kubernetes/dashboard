@@ -1,0 +1,1 @@
+{"ast":null,"code":"// https://en.wikipedia.org/wiki/Linear_congruential_generator#Parameters_in_common_use\nconst a = 1664525;\nconst c = 1013904223;\nconst m = 4294967296; // 2^32\n\nexport default function () {\n  let s = 1;\n  return () => (s = (a * s + c) % m) / m;\n}","map":null,"metadata":{},"sourceType":"module"}

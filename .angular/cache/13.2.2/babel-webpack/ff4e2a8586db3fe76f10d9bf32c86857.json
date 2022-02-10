@@ -1,0 +1,1 @@
+{"ast":null,"code":"export { default as Delaunay } from \"./delaunay.js\";\nexport { default as Voronoi } from \"./voronoi.js\";","map":null,"metadata":{},"sourceType":"module"}

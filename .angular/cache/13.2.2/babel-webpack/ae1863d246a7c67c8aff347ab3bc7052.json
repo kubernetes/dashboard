@@ -1,0 +1,1 @@
+{"ast":null,"code":"import length from \"./length.js\";\nvar coordinates = [null, null],\n    object = {\n  type: \"LineString\",\n  coordinates: coordinates\n};\nexport default function (a, b) {\n  coordinates[0] = a;\n  coordinates[1] = b;\n  return length(object);\n}","map":null,"metadata":{},"sourceType":"module"}

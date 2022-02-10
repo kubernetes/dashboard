@@ -1,0 +1,1 @@
+{"ast":null,"code":"import { selection } from \"d3-selection\";\nvar Selection = selection.prototype.constructor;\nexport default function () {\n  return new Selection(this._groups, this._parents);\n}","map":null,"metadata":{},"sourceType":"module"}

@@ -1,0 +1,1 @@
+{"ast":null,"code":"import { cubehelix } from \"d3-color\";\nimport { interpolateCubehelixLong } from \"d3-interpolate\";\nexport default interpolateCubehelixLong(cubehelix(300, 0.5, 0.0), cubehelix(-240, 0.5, 1.0));","map":null,"metadata":{},"sourceType":"module"}

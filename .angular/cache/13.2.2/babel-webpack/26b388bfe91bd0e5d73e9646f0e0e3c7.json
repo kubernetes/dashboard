@@ -1,0 +1,1 @@
+{"ast":null,"code":"import { reduce } from './reduce';\nexport function max(comparer) {\n  const max = typeof comparer === 'function' ? (x, y) => comparer(x, y) > 0 ? x : y : (x, y) => x > y ? x : y;\n  return reduce(max);\n} //# sourceMappingURL=max.js.map","map":null,"metadata":{},"sourceType":"module"}

@@ -1,0 +1,1 @@
+{"ast":null,"code":"export default function () {\n  var data = [];\n  this.visit(function (node) {\n    if (!node.length) do data.push(node.data); while (node = node.next);\n  });\n  return data;\n}","map":null,"metadata":{},"sourceType":"module"}

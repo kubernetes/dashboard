@@ -1,0 +1,1 @@
+{"ast":null,"code":"import count from \"../count.js\";\nexport default function (values) {\n  return Math.ceil(Math.log(count(values)) / Math.LN2) + 1;\n}","map":null,"metadata":{},"sourceType":"module"}

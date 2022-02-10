@@ -1,0 +1,1 @@
+{"ast":null,"code":"import { reduce } from './reduce';\nexport function min(comparer) {\n  const min = typeof comparer === 'function' ? (x, y) => comparer(x, y) < 0 ? x : y : (x, y) => x < y ? x : y;\n  return reduce(min);\n} //# sourceMappingURL=min.js.map","map":null,"metadata":{},"sourceType":"module"}

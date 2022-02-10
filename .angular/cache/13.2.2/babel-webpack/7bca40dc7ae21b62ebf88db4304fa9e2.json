@@ -1,0 +1,1 @@
+{"ast":null,"code":"export const subscribeToArray = array => subscriber => {\n  for (let i = 0, len = array.length; i < len && !subscriber.closed; i++) {\n    subscriber.next(array[i]);\n  }\n\n  subscriber.complete();\n}; //# sourceMappingURL=subscribeToArray.js.map","map":null,"metadata":{},"sourceType":"module"}

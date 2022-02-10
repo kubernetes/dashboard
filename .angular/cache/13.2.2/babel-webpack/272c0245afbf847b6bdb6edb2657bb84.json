@@ -1,0 +1,1 @@
+{"ast":null,"code":"export default function (a, b) {\n  var d = new Date();\n  return a = +a, b = +b, function (t) {\n    return d.setTime(a * (1 - t) + b * t), d;\n  };\n}","map":null,"metadata":{},"sourceType":"module"}

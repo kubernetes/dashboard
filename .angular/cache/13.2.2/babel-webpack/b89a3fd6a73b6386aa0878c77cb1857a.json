@@ -1,0 +1,1 @@
+{"ast":null,"code":"export { default as drag } from \"./drag.js\";\nexport { default as dragDisable, yesdrag as dragEnable } from \"./nodrag.js\";","map":null,"metadata":{},"sourceType":"module"}

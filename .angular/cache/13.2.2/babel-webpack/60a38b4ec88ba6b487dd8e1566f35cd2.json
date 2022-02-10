@@ -1,0 +1,1 @@
+{"ast":null,"code":"var sqrt3 = Math.sqrt(3);\nexport default {\n  draw: function (context, size) {\n    var y = -Math.sqrt(size / (sqrt3 * 3));\n    context.moveTo(0, y * 2);\n    context.lineTo(-sqrt3 * y, -y);\n    context.lineTo(sqrt3 * y, -y);\n    context.closePath();\n  }\n};","map":null,"metadata":{},"sourceType":"module"}

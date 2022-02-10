@@ -1,0 +1,1 @@
+{"ast":null,"code":"import { selection } from \"d3-selection\";\nimport selection_interrupt from \"./interrupt.js\";\nimport selection_transition from \"./transition.js\";\nselection.prototype.interrupt = selection_interrupt;\nselection.prototype.transition = selection_transition;","map":null,"metadata":{},"sourceType":"module"}

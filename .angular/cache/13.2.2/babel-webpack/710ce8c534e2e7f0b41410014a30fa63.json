@@ -1,0 +1,1 @@
+{"ast":null,"code":"export default function (specifier) {\n  var n = specifier.length / 6 | 0,\n      colors = new Array(n),\n      i = 0;\n\n  while (i < n) colors[i] = \"#\" + specifier.slice(i * 6, ++i * 6);\n\n  return colors;\n}","map":null,"metadata":{},"sourceType":"module"}

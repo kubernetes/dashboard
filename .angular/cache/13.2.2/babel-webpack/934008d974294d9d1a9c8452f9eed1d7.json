@@ -1,0 +1,1 @@
+{"ast":null,"code":"export default function (update) {\n  return new Array(update.length);\n}","map":null,"metadata":{},"sourceType":"module"}

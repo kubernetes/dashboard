@@ -1,0 +1,1 @@
+{"ast":null,"code":"import { formatDecimalParts } from \"./formatDecimal.js\";\nexport default function (x) {\n  return x = formatDecimalParts(Math.abs(x)), x ? x[1] : NaN;\n}","map":null,"metadata":{},"sourceType":"module"}

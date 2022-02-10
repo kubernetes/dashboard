@@ -1,0 +1,1 @@
+{"ast":null,"code":"export default function (series) {\n  var n = series.length,\n      o = new Array(n);\n\n  while (--n >= 0) o[n] = n;\n\n  return o;\n}","map":null,"metadata":{},"sourceType":"module"}

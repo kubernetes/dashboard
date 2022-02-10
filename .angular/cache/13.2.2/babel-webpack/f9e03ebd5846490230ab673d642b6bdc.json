@@ -1,0 +1,1 @@
+{"ast":null,"code":"import none from \"./none.js\";\nexport default function (series) {\n  return none(series).reverse();\n}","map":null,"metadata":{},"sourceType":"module"}

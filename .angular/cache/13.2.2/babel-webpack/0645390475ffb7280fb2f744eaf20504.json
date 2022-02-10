@@ -1,0 +1,1 @@
+{"ast":null,"code":"export function quadIn(t) {\n  return t * t;\n}\nexport function quadOut(t) {\n  return t * (2 - t);\n}\nexport function quadInOut(t) {\n  return ((t *= 2) <= 1 ? t * t : --t * (2 - t) + 1) / 2;\n}","map":null,"metadata":{},"sourceType":"module"}

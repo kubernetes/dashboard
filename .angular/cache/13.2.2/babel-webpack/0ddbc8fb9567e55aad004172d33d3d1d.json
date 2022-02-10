@@ -1,0 +1,1 @@
+{"ast":null,"code":"export default function (node) {\n  node.x0 = Math.round(node.x0);\n  node.y0 = Math.round(node.y0);\n  node.x1 = Math.round(node.x1);\n  node.y1 = Math.round(node.y1);\n}","map":null,"metadata":{},"sourceType":"module"}

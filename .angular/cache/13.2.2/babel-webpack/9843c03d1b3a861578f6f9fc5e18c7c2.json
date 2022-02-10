@@ -1,0 +1,1 @@
+{"ast":null,"code":"export default function (selector) {\n  return function () {\n    return this.matches(selector);\n  };\n}\nexport function childMatcher(selector) {\n  return function (node) {\n    return node.matches(selector);\n  };\n}","map":null,"metadata":{},"sourceType":"module"}

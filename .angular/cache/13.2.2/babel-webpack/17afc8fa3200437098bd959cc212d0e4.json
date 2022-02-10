@@ -1,0 +1,1 @@
+{"ast":null,"code":"function* flatten(arrays) {\n  for (const array of arrays) {\n    yield* array;\n  }\n}\n\nexport default function merge(arrays) {\n  return Array.from(flatten(arrays));\n}","map":null,"metadata":{},"sourceType":"module"}
