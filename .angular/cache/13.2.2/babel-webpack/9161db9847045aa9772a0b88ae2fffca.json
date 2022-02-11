@@ -1,1 +1,0 @@
-{"ast":null,"code":"export default function (interpolator, n) {\n  var samples = new Array(n);\n\n  for (var i = 0; i < n; ++i) samples[i] = interpolator(i / (n - 1));\n\n  return samples;\n}","map":null,"metadata":{},"sourceType":"module"}

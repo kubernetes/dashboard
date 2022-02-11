@@ -5,6 +5,7 @@ Based on current browser locale the Dashboard can be displayed in one of the sup
 | Language            | Code       | Remarks         |
 |---------------------|------------|-----------------|
 | English (default)   | en         | -               |
+| Spanish             | es         | -               |
 | French              | fr         | -               |
 | German              | de         | -               |
 | Japanese            | ja         | -               |
@@ -46,7 +47,20 @@ Since dashboard team can not review translation files in your language, so dashb
 2. Add your locale, e.g. `fr` or `ja`, into `"languages"` array of `"xliffmergeOptions"` in `package.json` file. If you want to add only locale using an existing translation file, i.e. add `zh` but use existing `i18n/zh-Hans/messages.zh-Hans.xlf` file for it, skip this step and go step 5.
 3. Run `npm run fix:i18n`. Then translation file for your language, e.g. `i18n/fr/messages.fr.xlf`, would be generated in your locale directory.
 4. Open your translation file and translate texts in `<target>` element into your language, and remove `state="new"` to mark it as translated.
-5. To build dashboard for your language, add your locale into `locales` in `angular.json` like follow:
+5. Extend the `index.config.ts` in the `dashboard/src/app/frontend/` folder with the new language. 
+```typescript
+const supportedLanguages: LanguageConfig[] = [ 
+   { 
+     label: 'German', 
+     value: 'de', 
+   },
+  {
+    label: 'Japanese', 
+    value: 'ja'
+  }
+];
+```
+6. To build dashboard for your language, add your locale into `locales` in `angular.json` like follow:
   ```json
           "ja": {
             "translation": "i18n/ja/messages.ja.xlf",

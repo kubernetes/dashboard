@@ -1,1 +1,0 @@
-{"ast":null,"code":"import text from \"./text.js\";\n\nfunction parser(type) {\n  return (input, init) => text(input, init).then(text => new DOMParser().parseFromString(text, type));\n}\n\nexport default parser(\"application/xml\");\nexport var html = parser(\"text/html\");\nexport var svg = parser(\"image/svg+xml\");","map":null,"metadata":{},"sourceType":"module"}

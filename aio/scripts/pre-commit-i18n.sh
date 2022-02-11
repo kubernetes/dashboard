@@ -18,7 +18,7 @@ ROOT_DIR="$(cd $(dirname "${BASH_SOURCE}")/../.. && pwd -P)"
 . "${ROOT_DIR}/aio/scripts/conf.sh"
 
 # Extract i18n messages for update check.
-ng extract-i18n --output-path "${I18N_DIR}" --out-file "messages.new.xlf"
+${NG_BIN} extract-i18n --output-path "${I18N_DIR}" --out-file "messages.new.xlf"
 
 # Generate MD5 existing and new messages file
 MD5_OLD=$(md5sum "${I18N_DIR}/messages.xlf" | cut -c -32)

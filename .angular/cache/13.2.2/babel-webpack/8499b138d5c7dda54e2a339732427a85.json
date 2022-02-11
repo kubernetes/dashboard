@@ -1,1 +1,0 @@
-{"ast":null,"code":"function none() {}\n\nexport default function (selector) {\n  return selector == null ? none : function () {\n    return this.querySelector(selector);\n  };\n}","map":null,"metadata":{},"sourceType":"module"}

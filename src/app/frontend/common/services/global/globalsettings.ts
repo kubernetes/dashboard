@@ -18,11 +18,22 @@ import {GlobalSettings} from '@api/root.api';
 import {onSettingsFailCallback, onSettingsLoadCallback} from '@api/root.ui';
 import _ from 'lodash';
 import {Observable, of, ReplaySubject, Subject} from 'rxjs';
-import {catchError, switchMap, takeUntil} from 'rxjs/operators';
+import {catchError, switchMap, takeUntil, tap} from 'rxjs/operators';
 
 import {AuthorizerService} from './authorizer';
 
-@Injectable()
+export const DEFAULT_SETTINGS: GlobalSettings = {
+  itemsPerPage: 10,
+  clusterName: '',
+  labelsLimit: 3,
+  logsAutoRefreshTimeInterval: 5,
+  resourceAutoRefreshTimeInterval: 5,
+  disableAccessDeniedNotifications: false,
+  defaultNamespace: 'default',
+  namespaceFallbackList: ['default'],
+};
+
+@Injectable({providedIn: 'root'})
 export class GlobalSettingsService {
   onSettingsUpdate = new ReplaySubject<void>();
   onPageVisibilityChange = new EventEmitter<boolean>();
@@ -44,36 +55,50 @@ export class GlobalSettingsService {
 
   constructor(private readonly http_: HttpClient, private readonly authorizer_: AuthorizerService) {}
 
-  init(): void {
-    this.load();
-
+  init(): Promise<GlobalSettings> {
     this.onPageVisibilityChange.pipe(takeUntil(this.unsubscribe_)).subscribe(visible => {
       this.isPageVisible_ = visible;
       this.onSettingsUpdate.next();
     });
+
+    return this.load();
   }
 
   isInitialized(): boolean {
     return this.isInitialized_;
   }
 
-  load(onLoad?: onSettingsLoadCallback, onFail?: onSettingsFailCallback): void {
-    this.http_
+  load(onLoad?: onSettingsLoadCallback, onFail?: onSettingsFailCallback): Promise<GlobalSettings> {
+    return this.http_
       .get<GlobalSettings>(this.endpoint_)
-      .toPromise()
-      .then(
-        settings => {
-          this.settings_ = settings;
+      .pipe(
+        tap(settings => {
+          this.settings_ = this._defaultSettings(settings);
           this.isInitialized_ = true;
           this.onSettingsUpdate.next();
-          if (onLoad) onLoad(settings);
-        },
-        err => {
+          if (onLoad) onLoad(this.settings_);
+        }),
+        catchError(err => {
           this.isInitialized_ = false;
           this.onSettingsUpdate.next();
           if (onFail) onFail(err);
-        }
-      );
+          return of(DEFAULT_SETTINGS);
+        })
+      )
+      .toPromise();
+  }
+
+  private _defaultSettings(settings: GlobalSettings): GlobalSettings {
+    if (!settings) {
+      return DEFAULT_SETTINGS;
+    }
+
+    Object.keys(DEFAULT_SETTINGS).forEach(key => {
+      // @ts-ignore
+      settings[key] = settings[key] === undefined ? DEFAULT_SETTINGS[key] : settings[key];
+    });
+
+    return settings;
   }
 
   canI(): Observable<boolean> {

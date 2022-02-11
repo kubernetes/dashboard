@@ -20,11 +20,12 @@ import {ConfigService} from '@common/services/global/config';
 import {AuthenticationMode, EnabledAuthenticationModes, LoginSkippableResponse, LoginSpec} from '@api/root.api';
 import {KdError} from '@api/root.shared';
 import {IConfig, KdFile, StateError} from '@api/root.ui';
-import {AsKdError, K8SError} from '@common/errors/errors';
+import {AsKdError, ErrorCode, ErrorStatus, K8SError} from '@common/errors/errors';
 import {AuthService} from '@common/services/global/authentication';
 import {HistoryService} from '@common/services/global/history';
 import {PluginsConfigService} from '@common/services/global/plugin';
 import {PermissionsService} from '@common/services/global/permissions';
+import jwtDecode, {InvalidTokenError, JwtPayload} from 'jwt-decode';
 import {CookieService} from 'ngx-cookie-service';
 import {map} from 'rxjs/operators';
 import {CONFIG_DI_TOKEN} from '../index.config';
@@ -108,6 +109,17 @@ export class LoginComponent implements OnInit {
 
   login(): void {
     if (this.hasEmptyToken_()) {
+      this.errors = [
+        {
+          code: ErrorCode.badRequest,
+          status: ErrorStatus.badRequest,
+          message: 'Empty token provided',
+        } as KdError,
+      ];
+      return;
+    }
+
+    if (!this.isValidToken_()) {
       return;
     }
 
@@ -149,7 +161,7 @@ export class LoginComponent implements OnInit {
         this.onFileLoad_(event as KdFile);
         break;
       case LoginModes.Token:
-        this.token_ = (event.target as HTMLInputElement).value;
+        this.token_ = (event.target as HTMLInputElement).value.trim();
         break;
       case LoginModes.Basic:
         if ((event.target as HTMLInputElement).id === 'username') {
@@ -164,6 +176,28 @@ export class LoginComponent implements OnInit {
 
   private hasEmptyToken_(): boolean {
     return this.selectedAuthenticationMode === LoginModes.Token && (!this.token_ || !this.token_.trim());
+  }
+
+  private isValidToken_(): boolean {
+    if (this.selectedAuthenticationMode !== LoginModes.Token) {
+      return true;
+    }
+
+    try {
+      jwtDecode<JwtPayload>(this.token_);
+    } catch (e) {
+      this.errors = [
+        {
+          code: ErrorCode.badRequest,
+          status: ErrorStatus.badRequest,
+          message: 'Invalid token provided',
+        } as KdError,
+      ];
+
+      return false;
+    }
+
+    return true;
   }
 
   private saveLastLoginMode_(): void {

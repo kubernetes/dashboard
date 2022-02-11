@@ -1,1 +1,0 @@
-{"ast":null,"code":"export default function (a, b) {\n  return a = +a, b = +b, function (t) {\n    return a * (1 - t) + b * t;\n  };\n}","map":null,"metadata":{},"sourceType":"module"}

@@ -1,1 +1,0 @@
-{"ast":null,"code":"export default function cumsum(values, valueof) {\n  var sum = 0,\n      index = 0;\n  return Float64Array.from(values, valueof === undefined ? v => sum += +v || 0 : v => sum += +valueof(v, index++, values) || 0);\n}","map":null,"metadata":{},"sourceType":"module"}

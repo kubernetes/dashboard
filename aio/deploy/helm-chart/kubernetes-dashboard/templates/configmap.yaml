@@ -16,7 +16,14 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   labels:
-{{ include "kubernetes-dashboard.labels" . | indent 4 }}
+    {{- include "kubernetes-dashboard.labels" . | nindent 4 }}
+    {{- if .Values.commonLabels }}
+    {{- include "common.tplvalues.render" ( dict "value" .Values.commonLabels "context" $ ) | nindent 4 }}
+    {{- end }}
+  annotations:
+    {{- if .Values.commonAnnotations }}
+    {{- include "common.tplvalues.render" ( dict "value" .Values.commonAnnotations "context" $ ) | nindent 4 }}
+    {{- end }}
   name: kubernetes-dashboard-settings
 data:
 {{- with .Values.settings }}

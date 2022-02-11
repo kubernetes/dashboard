@@ -12,11 +12,23 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {Component} from '@angular/core';
+import {Component, ViewChild} from '@angular/core';
+import {ICanDeactivate} from '@common/interfaces/candeactivate';
+import {CreateFromFileComponent} from './from/file/component';
+import {CreateFromFormComponent} from './from/form/component';
+import {CreateFromInputComponent} from './from/input/component';
 
 @Component({
   selector: 'kd-create',
   templateUrl: './template.html',
   styleUrls: ['./style.scss'],
 })
-export class CreateComponent {}
+export class CreateComponent extends ICanDeactivate {
+  @ViewChild(CreateFromInputComponent) fromInput: CreateFromInputComponent;
+  @ViewChild(CreateFromFileComponent) fromFile: CreateFromFileComponent;
+  @ViewChild(CreateFromFormComponent) fromForm: CreateFromFormComponent;
+
+  canDeactivate(): boolean {
+    return this.fromInput.canDeactivate() && this.fromFile.canDeactivate() && this.fromForm.canDeactivate();
+  }
+}

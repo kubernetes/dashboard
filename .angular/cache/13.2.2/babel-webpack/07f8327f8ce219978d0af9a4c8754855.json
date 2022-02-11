@@ -1,1 +1,0 @@
-{"ast":null,"code":"import { Timer } from \"./timer.js\";\nexport default function (callback, delay, time) {\n  var t = new Timer();\n  delay = delay == null ? 0 : +delay;\n  t.restart(elapsed => {\n    t.stop();\n    callback(elapsed + delay);\n  }, delay, time);\n  return t;\n}","map":null,"metadata":{},"sourceType":"module"}

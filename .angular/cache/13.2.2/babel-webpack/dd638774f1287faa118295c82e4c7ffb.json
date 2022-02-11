@@ -1,1 +1,0 @@
-{"ast":null,"code":"import superset from \"./superset.js\";\nexport default function subset(values, other) {\n  return superset(other, values);\n}","map":null,"metadata":{},"sourceType":"module"}

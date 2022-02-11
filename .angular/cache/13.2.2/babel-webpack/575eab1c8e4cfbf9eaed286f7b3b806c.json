@@ -1,1 +1,0 @@
-{"ast":null,"code":"var pi = Math.PI,\n    halfPi = pi / 2;\nexport function sinIn(t) {\n  return +t === 1 ? 1 : 1 - Math.cos(t * halfPi);\n}\nexport function sinOut(t) {\n  return Math.sin(t * halfPi);\n}\nexport function sinInOut(t) {\n  return (1 - Math.cos(pi * t)) / 2;\n}","map":null,"metadata":{},"sourceType":"module"}

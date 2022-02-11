@@ -15,7 +15,7 @@
 @use '../../../variables' as *;
 
 .kd-property-container {
-  margin: (.75 * $baseline-grid) (5 * $baseline-grid) (.75 * $baseline-grid) 0;
+  margin: (0.75 * $baseline-grid) (5 * $baseline-grid) (0.75 * $baseline-grid) 0;
 }
 
 .kd-property-container.stretched {
@@ -24,7 +24,7 @@
 
 .kd-property-label {
   font-size: $caption-font-size-base;
-  margin-bottom: .25 * $baseline-grid;
+  margin-bottom: 0.25 * $baseline-grid;
 }
 
 .kd-property-value {

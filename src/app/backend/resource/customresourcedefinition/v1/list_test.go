@@ -47,7 +47,8 @@ func TestGetCustomResourceDefinition(t *testing.T) {
 							},
 							Versions: []apiextensionsv1.CustomResourceDefinitionVersion{
 								{
-									Name: "v1alpha1",
+									Served: true,
+									Name:   "v1alpha1",
 								},
 							},
 						},

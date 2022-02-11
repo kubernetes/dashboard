@@ -20,6 +20,7 @@
     &.kd-inner-content {
       display: flex;
       flex-direction: column;
+
       // Reserve 70px for the footer
       height: calc(100% - 70px);
       max-height: calc(100% - 70px);

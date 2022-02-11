@@ -7,7 +7,7 @@ After significant improvements have been done it is worth to release a new versi
 1. Test everything twice on Docker image and `npm run start:prod`.
 2. Send a pull request that increases version numbers in all files. Follow versioning guidelines. Files to keep in sync are listed below:
     * `package.json` and `package-lock.json`
-    * `aio/gulp/conf.js`
+    * `RELEASE_VERSION` in `Makefile`
     * YAML files from `aio/deploy`
     * Helm Chart from `aio/deploy/helm-chart/kubernetes-dashboard`: `image.tag` of `README.md` and `values.yaml`, `version` and `appVersion` of `Chart.yaml`
 3. Get the pull request reviewed and merged.
@@ -21,7 +21,7 @@ Official release procedures are done by CI after successful TAG build automatica
 
 ### Versioning guidelines
 
-Kubernetes Dashboard versioning follows [semver](http://semver.org/) in spirit. This means that it uses `vMAJOR.MINOR.PATCH` version numbers, but uses UX and consumer-centric approach for incrementing version numbers.
+Kubernetes Dashboard versioning follows [semver](https://semver.org/) in spirit. This means that it uses `vMAJOR.MINOR.PATCH` version numbers, but uses UX and consumer-centric approach for incrementing version numbers.
 
 1. Increment MAJOR when there are breaking changes that affect user's workflows or the UX gets major redesign.
 2. Increment MINOR when new functionality is added or there are minor UX changes.

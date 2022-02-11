@@ -1,1 +1,0 @@
-{"ast":null,"code":"import projection from \"./index.js\";\nexport function equirectangularRaw(lambda, phi) {\n  return [lambda, phi];\n}\nequirectangularRaw.invert = equirectangularRaw;\nexport default function () {\n  return projection(equirectangularRaw).scale(152.63);\n}","map":null,"metadata":{},"sourceType":"module"}

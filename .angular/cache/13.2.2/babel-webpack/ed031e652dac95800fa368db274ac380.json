@@ -1,1 +1,0 @@
-{"ast":null,"code":"import ascending from \"./ascending.js\";\nexport default function (series) {\n  return ascending(series).reverse();\n}","map":null,"metadata":{},"sourceType":"module"}

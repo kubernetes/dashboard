@@ -1,1 +1,0 @@
-{"ast":null,"code":"import \"./selection/index.js\";\nexport { default as transition } from \"./transition/index.js\";\nexport { default as active } from \"./active.js\";\nexport { default as interrupt } from \"./interrupt.js\";","map":null,"metadata":{},"sourceType":"module"}

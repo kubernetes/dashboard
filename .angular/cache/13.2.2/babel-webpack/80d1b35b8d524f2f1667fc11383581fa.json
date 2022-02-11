@@ -1,1 +1,0 @@
-{"ast":null,"code":"function lower() {\n  if (this.previousSibling) this.parentNode.insertBefore(this, this.parentNode.firstChild);\n}\n\nexport default function () {\n  return this.each(lower);\n}","map":null,"metadata":{},"sourceType":"module"}

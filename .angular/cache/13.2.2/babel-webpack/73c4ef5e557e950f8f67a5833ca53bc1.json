@@ -1,1 +1,0 @@
-{"ast":null,"code":"export function nopropagation(event) {\n  event.stopImmediatePropagation();\n}\nexport default function (event) {\n  event.preventDefault();\n  event.stopImmediatePropagation();\n}","map":null,"metadata":{},"sourceType":"module"}

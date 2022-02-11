@@ -1,1 +1,0 @@
-{"ast":null,"code":"export function cubicIn(t) {\n  return t * t * t;\n}\nexport function cubicOut(t) {\n  return --t * t * t + 1;\n}\nexport function cubicInOut(t) {\n  return ((t *= 2) <= 1 ? t * t * t : (t -= 2) * t * t + 2) / 2;\n}","map":null,"metadata":{},"sourceType":"module"}

@@ -1,1 +1,0 @@
-{"ast":null,"code":"import { reduce } from './reduce';\n\nfunction toArrayReducer(arr, item, index) {\n  if (index === 0) {\n    return [item];\n  }\n\n  arr.push(item);\n  return arr;\n}\n\nexport function toArray() {\n  return reduce(toArrayReducer, []);\n} //# sourceMappingURL=toArray.js.map","map":null,"metadata":{},"sourceType":"module"}

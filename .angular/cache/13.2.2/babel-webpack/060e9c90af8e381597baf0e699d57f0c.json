@@ -1,1 +1,0 @@
-{"ast":null,"code":"import variance from \"./variance.js\";\nexport default function deviation(values, valueof) {\n  const v = variance(values, valueof);\n  return v ? Math.sqrt(v) : v;\n}","map":null,"metadata":{},"sourceType":"module"}

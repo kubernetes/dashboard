@@ -1,1 +1,0 @@
-{"ast":null,"code":"export function isPromise(value) {\n  return !!value && typeof value.subscribe !== 'function' && typeof value.then === 'function';\n} //# sourceMappingURL=isPromise.js.map","map":null,"metadata":{},"sourceType":"module"}

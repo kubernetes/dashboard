@@ -1,1 +1,0 @@
-{"ast":null,"code":"import { of } from './of';\nimport { concatAll } from '../operators/concatAll';\nexport function concat(...observables) {\n  return concatAll()(of(...observables));\n} //# sourceMappingURL=concat.js.map","map":null,"metadata":{},"sourceType":"module"}

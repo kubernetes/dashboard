@@ -1,1 +1,0 @@
-{"ast":null,"code":"export var slice = Array.prototype.slice;\nexport default function (x) {\n  return typeof x === \"object\" && \"length\" in x ? x // Array, TypedArray, NodeList, array-like\n  : Array.from(x); // Map, Set, iterable, string, or anything else\n}","map":null,"metadata":{},"sourceType":"module"}

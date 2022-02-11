@@ -1,1 +1,0 @@
-{"ast":null,"code":"function raise() {\n  if (this.nextSibling) this.parentNode.appendChild(this);\n}\n\nexport default function () {\n  return this.each(raise);\n}","map":null,"metadata":{},"sourceType":"module"}

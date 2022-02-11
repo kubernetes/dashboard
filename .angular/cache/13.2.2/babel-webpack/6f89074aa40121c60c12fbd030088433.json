@@ -1,1 +1,0 @@
-{"ast":null,"code":"export default function () {\n  let size = 0;\n\n  for (const node of this) ++size; // eslint-disable-line no-unused-vars\n\n\n  return size;\n}","map":null,"metadata":{},"sourceType":"module"}

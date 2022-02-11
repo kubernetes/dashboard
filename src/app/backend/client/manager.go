@@ -268,7 +268,6 @@ func (self *clientManager) VerberClient(req *restful.Request, config *rest.Confi
 
 	return NewResourceVerber(
 		k8sClient.CoreV1().RESTClient(),
-		k8sClient.ExtensionsV1beta1().RESTClient(),
 		k8sClient.AppsV1().RESTClient(),
 		k8sClient.BatchV1().RESTClient(),
 		k8sClient.BatchV1beta1().RESTClient(),

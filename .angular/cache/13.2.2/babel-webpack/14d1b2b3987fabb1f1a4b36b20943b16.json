@@ -1,1 +1,0 @@
-{"ast":null,"code":"/*!\n * isobject <https://github.com/jonschlinkert/isobject>\n *\n * Copyright (c) 2014-2017, Jon Schlinkert.\n * Released under the MIT License.\n */\n'use strict';\n\nmodule.exports = function isObject(val) {\n  return val != null && typeof val === 'object' && Array.isArray(val) === false;\n};","map":null,"metadata":{},"sourceType":"script"}

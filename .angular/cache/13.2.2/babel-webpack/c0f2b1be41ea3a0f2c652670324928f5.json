@@ -1,1 +1,0 @@
-{"ast":null,"code":"export default function (value) {\n  return this.eachAfter(function (node) {\n    var sum = +value(node.data) || 0,\n        children = node.children,\n        i = children && children.length;\n\n    while (--i >= 0) sum += children[i].value;\n\n    node.value = sum;\n  });\n}","map":null,"metadata":{},"sourceType":"module"}

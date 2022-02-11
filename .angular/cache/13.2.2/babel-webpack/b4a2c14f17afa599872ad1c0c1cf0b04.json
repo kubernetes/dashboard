@@ -1,1 +1,0 @@
-{"ast":null,"code":"export default function (callback, that) {\n  let index = -1;\n\n  for (const node of this) {\n    if (callback.call(that, node, ++index, this)) {\n      return node;\n    }\n  }\n}","map":null,"metadata":{},"sourceType":"module"}

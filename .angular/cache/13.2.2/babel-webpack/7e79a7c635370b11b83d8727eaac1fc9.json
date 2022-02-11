@@ -1,1 +1,0 @@
-{"ast":null,"code":"export default function (node, x0, y0, x1, y1) {\n  this.node = node;\n  this.x0 = x0;\n  this.y0 = y0;\n  this.x1 = x1;\n  this.y1 = y1;\n}","map":null,"metadata":{},"sourceType":"module"}

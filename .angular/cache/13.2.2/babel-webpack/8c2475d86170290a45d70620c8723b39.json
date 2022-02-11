@@ -1,1 +1,0 @@
-{"ast":null,"code":"function remove() {\n  var parent = this.parentNode;\n  if (parent) parent.removeChild(this);\n}\n\nexport default function () {\n  return this.each(remove);\n}","map":null,"metadata":{},"sourceType":"module"}

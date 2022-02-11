@@ -1,6 +1,6 @@
 {
   "name": "kubernetes-dashboard",
-  "version": "2.4.21",
+  "version": "2.5.0",
   "type": "module",
   "repository": {
     "type": "git",
@@ -8,55 +8,18 @@
   },
   "license": "Apache-2.0",
   "scripts": {
-    "start": "concurrently \"npm run start:backend --kubernetes-dashboard:sidecar_host=$npm_package_config_sidecar_host\" \"npm run start:frontend --kubernetes-dashboard:bind_address=$npm_package_config_bind_address --kubernetes-dashboard:port=$npm_package_config_port\"",
-    "start:https": "concurrently \"npm run start:backend:https --kubernetes-dashboard:sidecar_host=$npm_package_config_sidecar_host\" \"npm run start:frontend:https --kubernetes-dashboard:bind_address=$npm_package_config_bind_address --kubernetes-dashboard:port=$npm_package_config_port\"",
-    "start:frontend": "npm run postversion && ng serve --proxy-config aio/proxy.conf.json --host $npm_package_config_bind_address --port $npm_package_config_port",
-    "start:frontend:https": "node aio/scripts/version.mjs && ng serve --proxy-config aio/https-proxy.conf.json --ssl --host $npm_package_config_bind_address --port $npm_package_config_port",
-    "start:backend": "KUBECONFIG=${KUBECONFIG:-$npm_package_config_kubeconfig}; gulp serve --kubeconfig $KUBECONFIG --sidecarServerHost $npm_package_config_sidecar_host",
-    "start:backend:https": "KUBECONFIG=${KUBECONFIG:-$npm_package_config_kubeconfig}; gulp serve --kubeconfig $KUBECONFIG --autoGenerateCerts true --sidecarServerHost $npm_package_config_sidecar_host",
-    "start:prod": "npm run build && ./$npm_package_config_dashboard_binary_path --kubeconfig $npm_package_config_kubeconfig --locale-config $npm_package_config_dashboard_locale_config --auto-generate-certificates --bind-address $npm_package_config_bind_address --sidecar-host $npm_package_config_sidecar_host --port $npm_package_config_port",
-    "build": "./aio/scripts/build.sh",
-    "build:cross": "./aio/scripts/build.sh -c",
-    "build:frontend": "npm run clean && ng build --configuration production --localize --outputPath=$npm_package_config_frontend_build_dir",
-    "build:backend": "npm run clean && gulp backend:prod",
-    "build:backend:cross": "npm run clean && gulp backend:prod:cross",
-    "docker:build": "npm run clean && npm run build:cross && gulp docker-image:release:cross",
-    "docker:build:head": "npm run clean && npm run build:cross && gulp docker-image:head:cross",
-    "docker:push": "npm run docker:build && gulp push-to-docker:release:cross",
-    "docker:push:head": "npm run docker:build:head && gulp push-to-docker:head:cross",
-    "cy:open": "npx cypress open",
-    "cy:run": "npx cypress run",
-    "test": "npm run test:frontend && npm run test:backend && npm run e2e",
-    "test:frontend": "jest --config aio/jest.config.js",
-    "test:frontend:coverage": "jest --config aio/jest.config.js --coverage -i",
-    "test:frontend:watch": "jest --config aio/jest.config.js --watch",
-    "test:backend": "go test github.com/kubernetes/dashboard/src/app/backend/...",
-    "test:backend:coverage": "./aio/scripts/coverage-backend.sh",
-    "test:coverage": "npm run test:frontend:coverage && npm run test:backend:coverage",
-    "e2e": "concurrently -kill-others --success first \"npm run start\" \"wait-on http://localhost:8080 && npm run cy:run\"",
-    "cluster:start": "./aio/scripts/start-cluster.sh",
-    "cluster:stop": "./aio/scripts/stop-cluster.sh",
-    "check": "concurrently \"npm run check:backend\" \"npm run check:codegen\" \"npm run check:frontend\" \"npm run check:i18n\"",
-    "check:backend": "golangci-lint run -c .golangci.yml ./src/app/backend/...",
-    "check:codegen": "aio/scripts/verify-codegen.sh",
-    "check:frontend": "concurrently \"npm run check:frontend:ts\" \"npm run check:frontend:scss\" \"npm run check:frontend:html\"",
-    "check:frontend:ts": "gts lint",
-    "check:frontend:scss": "stylelint \"src/**/*.scss\"",
-    "check:frontend:html": "./aio/scripts/format-html.sh --check",
-    "check:license": "license-check-and-add check",
-    "check:i18n": "aio/scripts/pre-commit-i18n.sh",
-    "fix": "concurrently \"npm run fix:backend\" \"npm run fix:frontend\" \"npm run fix:license\" \"npm run fix:i18n\" \"npm run fix:codegen\"",
-    "fix:backend": "golangci-lint run -c .golangci.yml --fix ./src/app/backend/...",
-    "fix:frontend": "concurrently \"npm run fix:frontend:ts\" \"npm run fix:frontend:scss\" \"npm run fix:frontend:html\"",
-    "fix:frontend:ts": "gts fix",
-    "fix:frontend:scss": "stylelint \"src/**/*.scss\" --fix",
-    "fix:frontend:html": "./aio/scripts/format-html.sh",
-    "fix:license": "license-check-and-add add",
-    "fix:i18n": "npm run check:i18n",
-    "fix:codegen": "aio/scripts/update-codegen.sh",
-    "clean": "rm -rf .go_workspace .tmp coverage dist npm-debug.log",
-    "postversion": "node aio/scripts/version.mjs",
-    "postinstall": "node aio/scripts/version.mjs && command -v golangci-lint >/dev/null 2>&1 || { curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $(go env GOPATH)/bin v1.41.1; } && go mod download && ./aio/scripts/install-codegen.sh && ngcc",
+    "start": "concurrently \"SIDECAR_HOST=$npm_config_sidecar_host make watch-backend\" \"npm run start:frontend --bind_address=$npm_config_bind_address --port=$npm_config_port\"",
+    "start:https": "concurrently \"AUTO_GENERATE_CERTS=true SIDECAR_HOST=$npm_config_sidecar_host make watch-backend\" \"npm run start:frontend:https --bind_address=$npm_config_bind_address --port=$npm_config_port\"",
+    "start:prod": "SIDECAR_HOST=$npm_config_sidecar_host BIND_ADDRESS=$npm_config_bind_address PORT=$npm_config_port make prod",
+    "start:e2e": "concurrently \"make serve-backend\" \"npm run start:frontend\"",
+    "start:frontend": "make ensure-version && ng serve --proxy-config aio/proxy.conf.json --host $npm_config_bind_address --port $npm_config_port",
+    "start:frontend:https": "make ensure-version && ng serve --proxy-config aio/https-proxy.conf.json --ssl --host $npm_config_bind_address --port $npm_config_port",
+    "check": "make check",
+    "fix": "make fix",
+    "test": "make test",
+    "e2e": "concurrently -kill-others --success first \"npm run start:e2e\" \"wait-on http://localhost:8080 && npx cypress run\"",
+    "e2e:headed": "concurrently -kill-others --success first \"npm run start:e2e\" \"wait-on http://localhost:8080 && npx cypress run --headed\"",
+    "postinstall": "make ensure-version && go mod vendor && ngcc",
     "prepare": "husky install"
   },
   "lint-staged": {
@@ -67,7 +30,7 @@
       "stylelint --fix"
     ],
     "src/**/*.go": [
-      "./aio/scripts/pre-commit-golangci-lint.sh"
+      "make fix-go"
     ],
     "src/**/*.html": [
       "./aio/scripts/pre-commit-i18n.sh"
@@ -79,6 +42,7 @@
     "defaultLanguage": "en",
     "languages": [
       "de",
+      "es",
       "fr",
       "ja",
       "ko",
@@ -89,70 +53,72 @@
     "beautifyOutput": true
   },
   "dependencies": {
-    "@angular/animations": "12.2.9",
-    "@angular/cdk": "12.2.9",
-    "@angular/common": "12.2.9",
-    "@angular/compiler": "12.2.9",
-    "@angular/core": "12.2.9",
-    "@angular/flex-layout": "12.0.0-beta.35",
-    "@angular/forms": "12.2.9",
-    "@angular/localize": "12.2.9",
-    "@angular/material": "12.2.9",
-    "@angular/platform-browser": "12.2.9",
-    "@angular/platform-browser-dynamic": "12.2.9",
-    "@angular/router": "12.2.9",
-    "@swimlane/ngx-charts": "19.1.0",
-    "ace-builds": "1.4.13",
-    "angular-page-visibility": "11.0.0",
-    "ansi-to-html": "0.7.2",
-    "c3": "0.7.20",
-    "core-js": "3.18.3",
+    "@angular/animations": "13.2.2",
+    "@angular/cdk": "13.2.1",
+    "@angular/common": "13.2.2",
+    "@angular/compiler": "13.2.2",
+    "@angular/core": "13.2.2",
+    "@angular/flex-layout": "13.0.0-beta.38",
+    "@angular/forms": "13.2.2",
+    "@angular/localize": "13.2.2",
+    "@angular/material": "13.2.1",
+    "@angular/platform-browser": "13.2.2",
+    "@angular/platform-browser-dynamic": "13.2.2",
+    "@angular/router": "13.2.2",
+    "@swimlane/ngx-charts": "20.0.1",
+    "ace-builds": "1.4.14",
+    "core-js": "3.21.0",
     "d3": "6.7.0",
     "file-saver": "2.0.5",
     "js-yaml": "4.1.0",
+    "jwt-decode": "3.1.2",
     "material-design-icons": "3.0.1",
-    "ng-in-viewport": "6.1.5",
-    "ngx-cookie-service": "12.0.3",
-    "ngx-pipes": "2.7.5",
+    "ng-in-viewport": "13.0.0",
+    "ngx-cookie-service": "13.1.2",
+    "ngx-pipes": "3.0.0",
     "normalize.css": "8.0.1",
     "roboto-fontface": "0.10.0",
     "rxjs": "6.6.7",
     "rxjs-compat": "6.6.7",
     "sockjs-client": "1.5.2",
-    "strip-ansi": "6.0.0",
-    "systemjs": "6.10.3",
+    "strip-ansi": "6.0.1",
+    "systemjs": "6.12.1",
     "truncate-url": "1.0.0",
     "tslib": "2.3.1",
     "web-animations-js": "2.3.2",
-    "xterm": "4.14.1",
+    "xterm": "4.17.0",
     "xterm-addon-fit": "0.5.0",
     "zone.js": "0.11.4"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "12.2.9",
-    "@angular/cli": "12.2.9",
-    "@angular/compiler-cli": "12.2.9",
-    "@angular/language-service": "12.2.9",
-    "@babel/core": "7.15.8",
-    "@babel/preset-env": "7.15.8",
-    "@babel/register": "7.15.3",
-    "@cypress/webpack-preprocessor": "5.9.1",
-    "@types/c3": "0.7.6",
-    "@types/d3": "7.0.0",
-    "@types/d3-scale": "4.0.1",
-    "@types/file-saver": "2.0.2",
-    "@types/jasmine": "3.9.1",
+    "@angular-devkit/build-angular": "13.2.3",
+    "@angular/cli": "13.2.3",
+    "@angular/compiler-cli": "13.2.2",
+    "@angular/language-service": "13.2.2",
+    "@babel/core": "7.17.2",
+    "@babel/preset-env": "7.16.11",
+    "@babel/register": "7.17.0",
+    "@cypress/webpack-preprocessor": "5.11.1",
+    "@types/d3": "7.1.0",
+    "@types/d3-scale": "4.0.2",
+    "@types/file-saver": "2.0.5",
+    "@types/jasmine": "3.10.3",
     "@types/jasminewd2": "2.0.10",
-    "@types/jest": "27.0.2",
-    "@types/js-yaml": "4.0.3",
-    "@types/lodash": "4.14.175",
-    "@types/node": "16.10.9",
+    "@types/jest": "27.4.0",
+    "@types/js-yaml": "4.0.5",
+    "@types/lodash": "4.14.178",
+    "@types/node": "17.0.17",
+    "@typescript-eslint/eslint-plugin": "5.11.0",
+    "@typescript-eslint/parser": "5.11.0",
     "codelyzer": "6.0.2",
-    "concurrently": "6.3.0",
-    "cypress": "8.6.0",
+    "concurrently": "7.0.0",
+    "cypress": "9.3.1",
+    "cypress-fail-fast": "3.3.0",
     "del": "6.0.0",
-    "eslint": "7.32.0",
-    "eslint-plugin-rxjs": "3.3.7",
+    "eslint": "8.8.0",
+    "eslint-plugin-node": "11.1.0",
+    "eslint-plugin-prettier": "4.0.0",
+    "eslint-plugin-rxjs": "5.0.2",
     "git-describe": "4.1.0",
     "gts": "3.1.0",
     "gulp": "^4.0.2",
@@ -160,48 +126,54 @@
     "husky": "7.0.2",
     "jasmine-core": "3.10.0",
     "jasmine-spec-reporter": "7.0.0",
-    "jest": "27.2.5",
-    "jest-preset-angular": "10.0.1",
+    "jest": "27.5.1",
+    "jest-preset-angular": "11.1.0",
     "js-beautify": "1.14.0",
-    "license-check-and-add": "4.0.2",
-    "lint-staged": "11.2.3",
+    "license-check-and-add": "4.0.3",
+    "lint-staged": "12.3.3",
     "lodash": "4.17.21",
-    "minimatch": "3.0.4",
+    "minimatch": "3.0.5",
     "minimist": "1.2.5",
     "ngx-i18nsupport": "0.17.1",
-    "node-gyp": "8.2.0",
+    "node-gyp": "8.4.1",
     "q": "1.5.1",
     "raw-loader": "4.0.2",
     "run-node": "2.0.0",
-    "sass": "1.43.2",
-    "sass-loader": "12.2.0",
+    "sass": "1.49.7",
+    "sass-loader": "12.4.0",
     "semver": "7.3.5",
     "source-map-explorer": "2.5.2",
-    "stylelint": "13.13.1",
-    "stylelint-config-standard": "22.0.0",
+    "stylelint": "14.4.0",
+    "stylelint-config-standard-scss": "3.0.0",
     "stylelint-no-unsupported-browser-features": "5.0.2",
-    "stylelint-order": "4.1.0",
+    "stylelint-order": "5.0.0",
     "tar": "6.1.11",
     "through2": "4.0.2",
-    "ts-jest": "27.0.5",
+    "ts-jest": "27.1.3",
     "ts-loader": "9.2.6",
-    "ts-node": "10.3.0",
-    "typescript": "4.3.5",
+    "ts-node": "10.5.0",
+    "typescript": "4.5.5",
     "wait-on": "6.0.0",
-    "webpack-dev-server": "3.11.2"
+    "webpack-dev-server": "4.7.4"
   },
   "engines": {
-    "node": ">=14.16.1",
-    "npm": ">=6.0.0 <7.0.0"
+    "node": ">=14.18.3 <17",
+    "npm": ">=7.21.0 <9"
   },
   "eslintConfig": {
     "parser": "@typescript-eslint/parser",
     "parserOptions": {
-      "ecmaVersion": 2020,
-      "project": "./tsconfig.json",
+      "ecmaVersion": "2020",
+      "project": [
+        "aio/tsconfig.app.json",
+        "aio/tsconfig.spec.json",
+        "aio/tsconfig.e2e.json"
+      ],
       "sourceType": "module"
     },
-    "extends": "./node_modules/gts/",
+    "extends": [
+      "./node_modules/gts"
+    ],
     "plugins": [
       "rxjs"
     ],
@@ -235,38 +207,25 @@
       "rxjs/no-unsafe-takeuntil": "error",
       "rxjs/no-nested-subscribe": "error"
     },
-    "overrides": [
-      {
-        "files": [
-          "src/**/*.spec.ts"
-        ],
-        "env": {
-          "browser": true,
-          "jest": true
-        }
-      }
-    ],
     "ignorePatterns": [
       "**/*.js"
     ]
   },
   "eslintIgnore": [
     "node_modules/*",
-    "aio/*",
-    "src/app/frontend/common/services/global/history.ts"
+    "aio/*"
   ],
   "stylelint": {
-    "extends": "stylelint-config-standard",
+    "extends": [
+      "stylelint-config-standard-scss"
+    ],
     "plugins": [
       "stylelint-no-unsupported-browser-features",
       "stylelint-order"
     ],
     "rules": {
-      "at-rule-no-unknown": null,
-      "font-family-no-missing-generic-family-keyword": null,
-      "no-invalid-position-at-import-rule": null,
+      "alpha-value-notation": "number",
       "no-descending-specificity": null,
-      "number-leading-zero": null,
       "order/order": [
         "dollar-variables",
         {
@@ -293,8 +252,9 @@
           "severity": "warning"
         }
       ],
+      "scss/comment-no-empty": null,
       "selector-pseudo-element-no-unknown": null,
-      "selector-type-no-unknown": null
+      "string-quotes": "single"
     }
   },
   "browserslist": [
@@ -313,5 +273,8 @@
     "not last 2 and_uc versions",
     "not last 2 and_qq versions",
     "not last 2 edge versions"
-  ]
+  ],
+  "overrides": {
+    "colors": "1.40.0"
+  }
 }

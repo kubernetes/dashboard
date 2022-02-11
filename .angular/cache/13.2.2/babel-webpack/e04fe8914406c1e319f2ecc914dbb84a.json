@@ -1,1 +1,0 @@
-{"ast":null,"code":"import { iterator as Symbol_iterator } from '../symbol/iterator';\nexport function isIterable(input) {\n  return input && typeof input[Symbol_iterator] === 'function';\n} //# sourceMappingURL=isIterable.js.map","map":null,"metadata":{},"sourceType":"module"}

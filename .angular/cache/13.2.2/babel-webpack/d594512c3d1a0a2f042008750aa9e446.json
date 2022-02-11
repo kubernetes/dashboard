@@ -1,1 +1,0 @@
-{"ast":null,"code":"import { zip as zipStatic } from '../observable/zip';\nexport function zip(...observables) {\n  return function zipOperatorFunction(source) {\n    return source.lift.call(zipStatic(source, ...observables));\n  };\n} //# sourceMappingURL=zip.js.map","map":null,"metadata":{},"sourceType":"module"}

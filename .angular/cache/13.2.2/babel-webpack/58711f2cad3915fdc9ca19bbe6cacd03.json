@@ -1,1 +1,0 @@
-{"ast":null,"code":"import conicEqualArea from \"./conicEqualArea.js\";\nexport default function () {\n  return conicEqualArea().parallels([29.5, 45.5]).scale(1070).translate([480, 250]).rotate([96, 0]).center([-0.6, 38.7]);\n}","map":null,"metadata":{},"sourceType":"module"}

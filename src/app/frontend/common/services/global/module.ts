@@ -112,9 +112,9 @@ export function init(
   return () => {
       globalSettings.init();
       localSettings.init();
-      pluginsConfig.init();
       pinner.init();
       config.init();
+      pluginsConfig.init();
       opa.init();
       history.init();
       theme.init();

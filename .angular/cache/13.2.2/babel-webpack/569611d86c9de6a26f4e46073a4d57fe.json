@@ -1,1 +1,0 @@
-{"ast":null,"code":"export var abs = Math.abs;\nexport var cos = Math.cos;\nexport var sin = Math.sin;\nexport var pi = Math.PI;\nexport var halfPi = pi / 2;\nexport var tau = pi * 2;\nexport var max = Math.max;\nexport var epsilon = 1e-12;","map":null,"metadata":{},"sourceType":"module"}

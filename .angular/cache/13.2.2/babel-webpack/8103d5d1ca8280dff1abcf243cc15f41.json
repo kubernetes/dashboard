@@ -1,1 +1,0 @@
-{"ast":null,"code":"export default function difference(values, ...others) {\n  values = new Set(values);\n\n  for (const other of others) {\n    for (const value of other) {\n      values.delete(value);\n    }\n  }\n\n  return values;\n}","map":null,"metadata":{},"sourceType":"module"}

@@ -1,1 +1,0 @@
-{"ast":null,"code":"export function defaultX(d) {\n  return d[0];\n}\nexport default function (_) {\n  return arguments.length ? (this._x = _, this) : this._x;\n}","map":null,"metadata":{},"sourceType":"module"}

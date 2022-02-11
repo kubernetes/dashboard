@@ -1,1 +1,0 @@
-{"ast":null,"code":"export default function every(values, test) {\n  if (typeof test !== \"function\") throw new TypeError(\"test is not a function\");\n  let index = -1;\n\n  for (const value of values) {\n    if (!test(value, ++index, values)) {\n      return false;\n    }\n  }\n\n  return true;\n}","map":null,"metadata":{},"sourceType":"module"}

@@ -1,1 +1,0 @@
-{"ast":null,"code":"function empty() {\n  return [];\n}\n\nexport default function (selector) {\n  return selector == null ? empty : function () {\n    return this.querySelectorAll(selector);\n  };\n}","map":null,"metadata":{},"sourceType":"module"}

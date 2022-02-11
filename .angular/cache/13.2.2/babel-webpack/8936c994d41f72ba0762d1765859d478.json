@@ -1,1 +1,0 @@
-{"ast":null,"code":"export default function (node) {\n  return node.ownerDocument && node.ownerDocument.defaultView // node is a Node\n  || node.document && node // node is a Window\n  || node.defaultView; // node is a Document\n}","map":null,"metadata":{},"sourceType":"module"}

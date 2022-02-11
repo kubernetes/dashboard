@@ -1,1 +1,0 @@
-{"ast":null,"code":"export default function (numerals) {\n  return function (value) {\n    return value.replace(/[0-9]/g, function (i) {\n      return numerals[+i];\n    });\n  };\n}","map":null,"metadata":{},"sourceType":"module"}

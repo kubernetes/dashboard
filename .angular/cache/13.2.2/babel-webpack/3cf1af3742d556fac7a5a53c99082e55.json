@@ -1,1 +1,0 @@
-{"ast":null,"code":"export function isObject(x) {\n  return x !== null && typeof x === 'object';\n} //# sourceMappingURL=isObject.js.map","map":null,"metadata":{},"sourceType":"module"}

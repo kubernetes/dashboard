@@ -308,7 +308,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/create/from/file/template.html</context>
-          <context context-type="linenumber">54</context>
+          <context context-type="linenumber">52</context>
         </context-group>
       </trans-unit>
       <trans-unit id="4342607865016428668" datatype="html">
@@ -2083,8 +2083,12 @@
         <source>Auto-refresh (every <x id="INTERPOLATION" equiv-text="&quot;\uFFFD0\uFFFD&quot;"/> s.)</source>
         <target state="new">Auto-refresh (every <x id="INTERPOLATION" equiv-text="{{refreshInterval}}"/> s.)</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/frontend/logs/template.html</context>
-          <context context-type="linenumber">149</context>
+          <context context-type="sourcefile">src/app/frontend/common/components/actionbar/detailactions/restart/template.html</context>
+          <context context-type="linenumber">21</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/common/components/list/column/menu/template.html</context>
+          <context context-type="linenumber">53</context>
         </context-group>
       </trans-unit>
       <trans-unit id="8918818541808624034" datatype="html">
@@ -4451,8 +4455,8 @@
         <source>Persistent Volume Claims</source>
         <target>Demandes de volume persistant</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/frontend/common/components/resourcelist/persistentvolumeclaim/template.html</context>
-          <context context-type="linenumber">21</context>
+          <context context-type="sourcefile">src/app/frontend/shell/template.html</context>
+          <context context-type="linenumber">22</context>
         </context-group>
       </trans-unit>
       <trans-unit id="434404492084234684" datatype="html">
@@ -4914,6 +4918,21 @@
           <context context-type="sourcefile">src/app/frontend/common/components/resourcelist/event/template.html</context>
           <context context-type="linenumber">50</context>
         </context-group>
+      </trans-unit>
+      <trans-unit id="2986806881378584169" datatype="html">
+        <source>{VAR_SELECT, select, true {Hide advanced options} other {Show advanced options}}</source>
+        <target state="new">{VAR_SELECT, select, true {Cacher les options avancées} other {Afficher les options avancées}}</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/create/from/form/template.html</context>
+          <context context-type="linenumber">371</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="1293084960403366485" datatype="html">
+        <source> Cancel
+</source>
+        <target>
+  Annuler
+</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/resourcelist/horizontalpodautoscaler/template.html</context>
           <context context-type="linenumber">46</context>
@@ -4922,14 +4941,21 @@
           <context context-type="sourcefile">src/app/frontend/common/components/resourcelist/ingress/template.html</context>
           <context context-type="linenumber">44</context>
         </context-group>
+      </trans-unit>
+      <trans-unit id="2380939390102386148" datatype="html">
+        <source> <x id="ICU" equiv-text="i18n_79" xid="2986806881378584169"/>
+</source>
+        <target>
+  <x id="ICU" equiv-text="{isMoreOptionsEnabled(), select, 1 {...} other {...}}"/>
+</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/resourcelist/job/template.html</context>
           <context context-type="linenumber">73</context>
         </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/frontend/common/components/resourcelist/namespace/template.html</context>
-          <context context-type="linenumber">53</context>
-        </context-group>
+      </trans-unit>
+      <trans-unit id="4773463022110715023" datatype="html">
+        <source> Enter YAML or JSON content specifying the resources to create to the namespace specified in the file. </source>
+        <target>Entrez un contenu YAML ou JSON spécifiant les ressources à créer dans l'espace de nom spécifié dans le contenu.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/resourcelist/networkpolicy/template.html</context>
           <context context-type="linenumber">42</context>
@@ -4963,7 +4989,7 @@
           <context context-type="linenumber">67</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/frontend/common/components/resourcelist/role/template.html</context>
+          <context context-type="sourcefile">src/app/frontend/create/from/file/template.html</context>
           <context context-type="linenumber">44</context>
         </context-group>
         <context-group purpose="location">

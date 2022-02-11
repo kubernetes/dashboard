@@ -27,6 +27,7 @@ import (
 	"k8s.io/apimachinery/pkg/labels"
 	"k8s.io/apimachinery/pkg/runtime"
 	"k8s.io/apimachinery/pkg/runtime/schema"
+	"k8s.io/apimachinery/pkg/types"
 	"k8s.io/client-go/kubernetes"
 )
 
@@ -135,13 +136,20 @@ func GetNodeEvents(client kubernetes.Interface, dsQuery *dataselect.DataSelectQu
 		return &eventList, err
 	}
 
-	events, err := client.CoreV1().Events(v1.NamespaceAll).Search(scheme, node)
+	eventsInvUID, err := client.CoreV1().Events(v1.NamespaceAll).Search(scheme, node)
 	_, criticalError := errors.HandleError(err)
 	if criticalError != nil {
 		return &eventList, criticalError
 	}
 
-	eventList = CreateEventList(FillEventsType(events.Items), dsQuery)
+	node.UID = types.UID(node.Name)
+	eventsInvName, err := client.CoreV1().Events(v1.NamespaceAll).Search(scheme, node)
+	_, criticalError = errors.HandleError(err)
+	if criticalError != nil {
+		return &eventList, criticalError
+	}
+
+	eventList = CreateEventList(FillEventsType(append(eventsInvName.Items, eventsInvUID.Items...)), dsQuery)
 	return &eventList, nil
 }
 
@@ -169,6 +177,17 @@ func FillEventsType(events []v1.Event) []v1.Event {
 
 // ToEvent converts event api Event to Event model object.
 func ToEvent(event v1.Event) common.Event {
+	firstTimestamp, lastTimestamp := event.FirstTimestamp, event.LastTimestamp
+	eventTime := metaV1.NewTime(event.EventTime.Time)
+
+	if firstTimestamp.IsZero() {
+		firstTimestamp = eventTime
+	}
+
+	if lastTimestamp.IsZero() {
+		lastTimestamp = firstTimestamp
+	}
+
 	result := common.Event{
 		ObjectMeta:         api.NewObjectMeta(event.ObjectMeta),
 		TypeMeta:           api.NewTypeMeta(api.ResourceKindEvent),
@@ -180,8 +199,8 @@ func ToEvent(event v1.Event) common.Event {
 		SubObjectName:      event.InvolvedObject.Name,
 		SubObjectNamespace: event.InvolvedObject.Namespace,
 		Count:              event.Count,
-		FirstSeen:          event.FirstTimestamp,
-		LastSeen:           event.LastTimestamp,
+		FirstSeen:          firstTimestamp,
+		LastSeen:           lastTimestamp,
 		Reason:             event.Reason,
 		Type:               event.Type,
 	}

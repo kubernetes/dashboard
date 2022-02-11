@@ -1,1 +1,0 @@
-{"ast":null,"code":"import { BehaviorSubject } from '../BehaviorSubject';\nimport { multicast } from './multicast';\nexport function publishBehavior(value) {\n  return source => multicast(new BehaviorSubject(value))(source);\n} //# sourceMappingURL=publishBehavior.js.map","map":null,"metadata":{},"sourceType":"module"}

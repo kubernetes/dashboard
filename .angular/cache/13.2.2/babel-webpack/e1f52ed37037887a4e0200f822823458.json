@@ -1,1 +1,0 @@
-{"ast":null,"code":"function responseJson(response) {\n  if (!response.ok) throw new Error(response.status + \" \" + response.statusText);\n  if (response.status === 204 || response.status === 205) return;\n  return response.json();\n}\n\nexport default function (input, init) {\n  return fetch(input, init).then(responseJson);\n}","map":null,"metadata":{},"sourceType":"module"}

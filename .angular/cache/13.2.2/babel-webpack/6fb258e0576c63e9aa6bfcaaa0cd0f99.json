@@ -1,1 +1,0 @@
-{"ast":null,"code":"export { default as polygonArea } from \"./area.js\";\nexport { default as polygonCentroid } from \"./centroid.js\";\nexport { default as polygonHull } from \"./hull.js\";\nexport { default as polygonContains } from \"./contains.js\";\nexport { default as polygonLength } from \"./length.js\";","map":null,"metadata":{},"sourceType":"module"}

@@ -1,1 +1,0 @@
-{"ast":null,"code":"import transpose from \"./transpose.js\";\nexport default function () {\n  return transpose(arguments);\n}","map":null,"metadata":{},"sourceType":"module"}

@@ -1,1 +1,0 @@
-{"ast":null,"code":"export default function (value) {\n  return arguments.length ? this.property(\"__data__\", value) : this.node().__data__;\n}","map":null,"metadata":{},"sourceType":"module"}

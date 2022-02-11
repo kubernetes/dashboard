@@ -1,1 +1,0 @@
-{"ast":null,"code":"import { hue } from \"./color.js\";\nexport default function (a, b) {\n  var i = hue(+a, +b);\n  return function (t) {\n    var x = i(t);\n    return x - 360 * Math.floor(x / 360);\n  };\n}","map":null,"metadata":{},"sourceType":"module"}

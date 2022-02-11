@@ -1,1 +1,0 @@
-{"ast":null,"code":"export default function (x) {\n  return function constant() {\n    return x;\n  };\n}","map":null,"metadata":{},"sourceType":"module"}

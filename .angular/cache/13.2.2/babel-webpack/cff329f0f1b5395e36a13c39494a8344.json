@@ -1,1 +1,0 @@
-{"ast":null,"code":"function count(node) {\n  var sum = 0,\n      children = node.children,\n      i = children && children.length;\n  if (!i) sum = 1;else while (--i >= 0) sum += children[i].value;\n  node.value = sum;\n}\n\nexport default function () {\n  return this.eachAfter(count);\n}","map":null,"metadata":{},"sourceType":"module"}

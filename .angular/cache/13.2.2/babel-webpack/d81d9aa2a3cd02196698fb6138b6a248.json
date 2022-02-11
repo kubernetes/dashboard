@@ -1,1 +1,0 @@
-{"ast":null,"code":"export default function (compare) {\n  return this.eachBefore(function (node) {\n    if (node.children) {\n      node.children.sort(compare);\n    }\n  });\n}","map":null,"metadata":{},"sourceType":"module"}

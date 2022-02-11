@@ -26,12 +26,16 @@ export enum ErrorStatus {
   forbidden = 'Forbidden',
   internal = 'Internal error',
   unknown = 'Unknown error',
+  badRequest = 'Bad Request',
+  notFound = 'Not Found',
 }
 
 export enum ErrorCode {
   unauthorized = 401,
   forbidden = 403,
   internal = 500,
+  badRequest = 400,
+  notFound = 404,
 }
 
 const localizedErrors: {[key: string]: string} = {
@@ -112,6 +116,9 @@ export function AsKdError(error: HttpErrorResponse): KdError {
       break;
     case ErrorCode.internal:
       status = ErrorStatus.internal;
+      break;
+    case ErrorCode.notFound:
+      status = ErrorStatus.notFound;
       break;
     default:
       status = ErrorStatus.unknown;

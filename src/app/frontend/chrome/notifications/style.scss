@@ -18,7 +18,7 @@
 $counter-size: $baseline-grid * 2;
 $drawer-size: $baseline-grid * 50;
 $drawer-z-index: 1000;
-$drawer-border-radius: $baseline-grid * .25;
+$drawer-border-radius: $baseline-grid * 0.25;
 $drawer-controls-size: $baseline-grid * 4;
 
 .kd-notifications-container {
@@ -37,7 +37,7 @@ $drawer-controls-size: $baseline-grid * 4;
 
 .kd-notifications-counter {
   border-radius: $counter-size;
-  font-size: $counter-size * .6;
+  font-size: $counter-size * 0.6;
   height: $counter-size;
   left: $baseline-grid * 3;
   line-height: $counter-size;
@@ -47,7 +47,7 @@ $drawer-controls-size: $baseline-grid * 4;
 }
 
 .kd-notifications-panel {
-  border-radius: $baseline-grid * .5;
+  border-radius: $baseline-grid * 0.5;
   height: $drawer-size;
   left: -$drawer-size + 5 * $baseline-grid;
   overflow: hidden;

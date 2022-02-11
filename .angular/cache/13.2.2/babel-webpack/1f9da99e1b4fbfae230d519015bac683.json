@@ -1,1 +1,0 @@
-{"ast":null,"code":"export default function (a, b) {\n  return a - b;\n}","map":null,"metadata":{},"sourceType":"module"}

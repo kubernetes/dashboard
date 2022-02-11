@@ -1,1 +1,0 @@
-{"ast":null,"code":"export default function (range) {\n  var n = range.length;\n  return function (t) {\n    return range[Math.max(0, Math.min(n - 1, Math.floor(t * n)))];\n  };\n}","map":null,"metadata":{},"sourceType":"module"}

@@ -1,1 +1,0 @@
-{"ast":null,"code":"export default function (polygon) {\n  var i = -1,\n      n = polygon.length,\n      a,\n      b = polygon[n - 1],\n      area = 0;\n\n  while (++i < n) {\n    a = b;\n    b = polygon[i];\n    area += a[1] * b[0] - a[0] * b[1];\n  }\n\n  return area / 2;\n}","map":null,"metadata":{},"sourceType":"module"}

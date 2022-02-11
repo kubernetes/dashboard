@@ -1,1 +1,0 @@
-{"ast":null,"code":"export default function () {\n  var size = 0;\n  this.visit(function (node) {\n    if (!node.length) do ++size; while (node = node.next);\n  });\n  return size;\n}","map":null,"metadata":{},"sourceType":"module"}

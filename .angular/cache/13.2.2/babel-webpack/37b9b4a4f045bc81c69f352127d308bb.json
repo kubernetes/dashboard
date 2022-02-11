@@ -1,1 +1,0 @@
-{"ast":null,"code":"export default function reverse(values) {\n  if (typeof values[Symbol.iterator] !== \"function\") throw new TypeError(\"values is not iterable\");\n  return Array.from(values).reverse();\n}","map":null,"metadata":{},"sourceType":"module"}

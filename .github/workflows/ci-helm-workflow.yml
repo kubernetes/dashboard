@@ -15,11 +15,6 @@
 name: Continuous Integration - Helm
 
 on:
-  push:
-    branches: [ master ]
-    paths:
-    - 'aio/deploy/helm-chart/**'
-    - '.github/workflows/ci-helm-workflow.yml'
   pull_request:
     paths:
     - 'aio/deploy/helm-chart/**'

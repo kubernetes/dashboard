@@ -1,1 +1,0 @@
-{"ast":null,"code":"import { interpolateRgbBasis } from \"d3-interpolate\";\nexport default (scheme => interpolateRgbBasis(scheme[scheme.length - 1]));","map":null,"metadata":{},"sourceType":"module"}

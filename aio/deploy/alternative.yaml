@@ -174,9 +174,12 @@ spec:
       labels:
         k8s-app: kubernetes-dashboard
     spec:
+      securityContext:
+        seccompProfile:
+          type: RuntimeDefault
       containers:
         - name: kubernetes-dashboard
-          image: kubernetesui/dashboard:v2.4.21
+          image: kubernetesui/dashboard:v2.5.0
           ports:
             - containerPort: 9090
               protocol: TCP

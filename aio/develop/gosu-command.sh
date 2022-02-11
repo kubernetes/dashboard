@@ -13,6 +13,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+# Install latest npm-check-updates
+npm i -g npm-check-updates
+
 # Create and switch user to "user" with same UID and GID as local.
 if [[ -z "$(cat /etc/group | grep ':${LOCAL_GID}:')" ]] ; then
   groupadd -g ${LOCAL_GID} user
@@ -31,9 +34,7 @@ GOSU="exec /usr/sbin/gosu user"
 if [[ -n "${K8S_DASHBOARD_CMD}" ]] ; then
   # Run specified command
   echo "Run '${K8S_DASHBOARD_CMD}'"
-  echo "Dependencies are not fully installed. You need run following commands before running other npm commands for dashboard."
-  echo "  npm ci"
-  echo "  aio/scripts/install-codegen.sh"
+  echo "Dependencies are not installed. Run 'npm ci' before running other commands."
   ${GOSU} ${K8S_DASHBOARD_CMD}
 else
   # Run npm command

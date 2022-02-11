@@ -10,11 +10,10 @@ Make sure the following software is installed and added to the `$PATH` variable:
 * Git 2.13.2+ ([installation manual](https://git-scm.com/downloads))
 * Docker 1.13.1+ ([installation manual](https://docs.docker.com/engine/installation/linux/docker-ce/ubuntu/))
 * Golang 1.17+ ([installation manual](https://golang.org/dl/))
-    * Dashboard uses `go mod` for go dependency management, so enable it with running `export GO111MODULE=on`.
-* Node.js 14+ and npm 6+ ([installation with nvm](https://github.com/creationix/nvm#usage))
-* Gulp.js 4+ ([installation manual](https://github.com/gulpjs/gulp/blob/master/docs/getting-started/1-quick-start.md))
+    * Dashboard uses `go mod` for go dependency management.
+* Node.js 16+ and npm 8+ ([installation with nvm](https://github.com/creationix/nvm#usage))
 
-Clone the repository into `$GOPATH/src/github.com/kubernetes/dashboard` and install the dependencies:
+Clone the repository and install the dependencies:
 
 ```shell
 npm ci
@@ -47,14 +46,14 @@ npm start
 Another way to connect to real cluster while developing dashboard is to specify options for `npm` like following:
 
 ```shell
-npm run start:https --kubernetes-dashboard:kubeconfig=<path to your kubeconfig>
+npm run start:https --kubeconfig=<path to your kubeconfig>
 ```
 
 Please see [here](https://github.com/kubernetes/dashboard/blob/master/.npmrc) which options you can specify to run dashboard with `npm`.
 
 Open a browser and access the UI under `localhost:8080`.
 
-In the background, `npm start` makes a [concurrently](https://github.com/kimmobrunfeldt/concurrently#readme) call to start the `golang` backend server and the `angular` development server.
+In the background, `npm start` makes a [concurrently](https://github.com/open-cli-tools/concurrently) call to start the `golang` backend server and the `angular` development server.
 
 Once the angular server starts, it takes some time to pre-compile all assets before serving them. By default, the angular development server watches for file changes and will update accordingly.
 
@@ -71,7 +70,7 @@ To build dashboard for production, you still need to install `bc`.
 The Dashboard project can be built for production by using the following task:
 
 ```shell
-npm run build
+make build
 ```
 
 The code is compiled, compressed, i18n support is enabled and debug support removed. The dashboard binary can be found in the `dist` folder.
@@ -79,7 +78,7 @@ The code is compiled, compressed, i18n support is enabled and debug support remo
 To build and immediately serve Dashboard from the `dist` folder, use the following task:
 
 ```shell
-npm run start:prod
+make prod
 ```
 
 Open a browser and access the UI under `localhost:9090`. The following processes should be running (respective ports are given in parentheses):
@@ -95,7 +94,7 @@ export GOOS=linux
 In order to package everything into a ready-to-run Docker image, use the following task:
 
 ```shell
-npm run docker:build:head
+make docker-build-head
 ```
 
 You might notice that the Docker image is very small and requires only a few MB. Only Dashboard assets are added to a scratch image. This is possible, because the `dashboard` binary has no external dependencies. Awesome!
@@ -105,38 +104,35 @@ You might notice that the Docker image is very small and requires only a few MB.
 Unit tests should be executed after every source code change. The following task makes this a breeze. The full test suite includes unit tests and integration tests.
 
 ```shell
-npm run test
+make test
 ```
 
 You can also run individual tests on their own (such as the backend or frontend tests) by doing the following:
 
 ```shell
-npm run test:frontend
-```
-or
-```shell
-npm run test:backend
+make test-backend
+make test-frontend
 ```
 
 The code style check suite includes format checks can be executed with:
 
 ```shell
-npm run check
+make check
 ```
 
 The code formatting can be executed with:
 
 ```shell
-npm run fix
+make fix
 ```
 
 These check and formatting involves in go, ts, scss, html, license and i18n files.
 
 ## Committing changes to your fork
 
-Before committing any changes, please run `npm run check`. This will keep you from accidentally committing non tested and unformatted code.
+Before committing any changes, please run `make fix`. This will keep you from accidentally committing non tested and unformatted code.
 
-Since the hooks for commit has been set with `husky` into `<dashboard_home>/.git/hooks/pre-commit` already if you installed dashboard according to above, so it will run `npm run fix` and keep your code as formatted.
+Since the hooks for commit has been set with `husky` into `<dashboard_home>/.git/hooks/pre-commit` already if you installed dashboard according to above, so it will run `make fix` and keep your code as formatted.
 
 Then you can commit your changes and push them to your fork:
 
@@ -151,15 +147,14 @@ At first, change directory to kubernetes dashboard repository of your fork.
 
 ### Allow accessing dashboard from outside the container
 
-Development container runs Kubernetes Dashboard in insecure mode by default,
-but Kubernetes Dashboard is not exposed to outside the container in insecure
-mode by default.
+Development container builds Kubernetes Dashboard and runs it with self-certificates by default,
+but Kubernetes Dashboard is not exposed to outside the container with insecure certificates by default.
 
 To allow accessing dashboard from outside the development container,
 pass value for `--insecure-bind-address` option to dashboard as follows:
 
 * Set `K8S_DASHBOARD_BIND_ADDRESS` environment variable as `"0.0.0.0"` before using `aio/develop/run-npm-on-container.sh`.
-* Run like `npm run [command] --kubernetes-dashboard:bind_address="0.0.0.0"`, when you run dashboard from inside the container.
+* Run like `npm run [command] --bind_address="0.0.0.0"`, when you run dashboard from inside the container.
 
 ### Change port number for dashboard
 
@@ -170,7 +165,7 @@ As default, development container uses `8080` port to expose dashboard. If you n
 1. Run `aio/develop/run-npm-on-container.sh`.
 
 That's all. It will build dashboard container from your local repository, will create also kubernetes cluster container for your dashboard using [`kind`](https://github.com/kubernetes-sigs/kind), and will run dashboard.
-Then you can see dashboard `http://localhost:8080` with your browser.
+Then you can see dashboard `http://localhost:8080` with your browser. Since dashboard uses self-certificates, so you need ignore warning or error about it in your browser.
 
 ### To run with your another Kubernetes cluster
 
@@ -190,7 +185,7 @@ e.g.
 1. To test dashboard, run `aio/develop/run-npm-on-container.sh run test`.
 2. To check your code changes, run `aio/develop/run-npm-on-container.sh run check`.
 
-This container create `user` with `UID` and `GID` same as local user, switch user to `user` with `gosu` and run commands. So created or updated files like results of `npm run fix` or `npm run build` would have same ownership as your host. You can commit them immediately from your host.
+This container create `user` with `UID` and `GID` same as local user, switch user to `user` with `gosu` and run commands. So created or updated files like results of `npm run fix` or `npm run check` would have same ownership as your host. You can commit them immediately from your host.
 
 ### To run container without creating cluster and running dashboard
 

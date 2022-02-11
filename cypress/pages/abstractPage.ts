@@ -25,7 +25,7 @@ export class AbstractPage {
   }
 
   static clickSelectorItem(option: string) {
-    cy.get('mat-option').contains(option).click();
+    cy.get('mat-option').contains(option).click({force: true});
   }
 
   static assertUrlContains(url: string) {

@@ -1,1 +1,0 @@
-{"ast":null,"code":"export default function (source, keys) {\n  return Array.from(keys, key => source[key]);\n}","map":null,"metadata":{},"sourceType":"module"}

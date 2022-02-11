@@ -1,1 +1,0 @@
-{"ast":null,"code":"export default function filter(values, test) {\n  if (typeof test !== \"function\") throw new TypeError(\"test is not a function\");\n  const array = [];\n  let index = -1;\n\n  for (const value of values) {\n    if (test(value, ++index, values)) {\n      array.push(value);\n    }\n  }\n\n  return array;\n}","map":null,"metadata":{},"sourceType":"module"}

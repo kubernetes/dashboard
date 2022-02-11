@@ -17,7 +17,7 @@
 .kd-breadcrumbs-container {
   display: flex;
   font-size: $subhead-font-size-base-lg;
-  padding: (.25 * $baseline-grid) 0 0 $baseline-grid;
+  padding: (0.25 * $baseline-grid) 0 0 $baseline-grid;
 
   a {
     color: inherit;
@@ -26,7 +26,7 @@
 
 .kd-faded-breadcrumb {
   color: inherit;
-  opacity: .54;
+  opacity: 0.54;
 }
 
 .kd-inline-breadcrumb {
@@ -35,5 +35,5 @@
 
 .kd-breadcrumb-divider {
   align-self: center;
-  padding: 0 (.5 * $baseline-grid);
+  padding: 0 (0.5 * $baseline-grid);
 }

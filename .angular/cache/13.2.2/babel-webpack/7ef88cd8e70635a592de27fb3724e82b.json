@@ -1,1 +1,0 @@
-{"ast":null,"code":"var array = Array.prototype;\nexport var slice = array.slice;","map":null,"metadata":{},"sourceType":"module"}

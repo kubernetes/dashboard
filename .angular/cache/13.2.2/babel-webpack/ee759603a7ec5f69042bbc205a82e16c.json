@@ -1,1 +1,0 @@
-{"ast":null,"code":"export default function union(...others) {\n  const set = new Set();\n\n  for (const other of others) {\n    for (const o of other) {\n      set.add(o);\n    }\n  }\n\n  return set;\n}","map":null,"metadata":{},"sourceType":"module"}

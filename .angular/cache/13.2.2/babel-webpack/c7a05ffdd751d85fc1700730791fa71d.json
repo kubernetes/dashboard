@@ -1,1 +1,0 @@
-{"ast":null,"code":"import creator from \"../creator.js\";\nexport default function (name) {\n  var create = typeof name === \"function\" ? name : creator(name);\n  return this.select(function () {\n    return this.appendChild(create.apply(this, arguments));\n  });\n}","map":null,"metadata":{},"sourceType":"module"}

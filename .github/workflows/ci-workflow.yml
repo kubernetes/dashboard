@@ -110,7 +110,7 @@ jobs:
       - name: Setup NodeJS
         uses: actions/setup-node@v2.1.2
         with:
-          node-version: 14.17.0
+          node-version: 16.13.0
 
       - name: Cache Node Modules
         uses: actions/cache@v2
@@ -127,17 +127,15 @@ jobs:
           [ ! -d "node_modules" ] && npm ci || node aio/scripts/version.mjs && command -v golangci-lint >/dev/null 2>&1 || { curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $(go env GOPATH)/bin v1.41.1; } && go mod download
 
       - name: Run Frontend Unit Tests
-        run: npm run test:frontend:coverage
+        run: make coverage-frontend
 
       - name: Run Backend Unit Tests
-        run: |
-          export GOPATH=$(go env GOPATH)/bin
-          npm run test:backend:coverage
+        run: make coverage-backend
 
       - name: Cleanup & Upload Coverage
         shell: bash
         run: |
-          rm -rf .tmp
+          make clean
           bash <(curl -s https://codecov.io/bash) -c -K || echo "Codecov upload failed"
 
 

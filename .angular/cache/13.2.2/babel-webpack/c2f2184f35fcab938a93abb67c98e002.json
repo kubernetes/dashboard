@@ -1,1 +1,0 @@
-{"ast":null,"code":"export default function (input, init) {\n  return new Promise(function (resolve, reject) {\n    var image = new Image();\n\n    for (var key in init) image[key] = init[key];\n\n    image.onerror = reject;\n\n    image.onload = function () {\n      resolve(image);\n    };\n\n    image.src = input;\n  });\n}","map":null,"metadata":{},"sourceType":"module"}

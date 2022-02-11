@@ -1,1 +1,0 @@
-{"ast":null,"code":"import { concat as concatStatic } from '../observable/concat';\nexport function concat(...observables) {\n  return source => source.lift.call(concatStatic(source, ...observables));\n} //# sourceMappingURL=concat.js.map","map":null,"metadata":{},"sourceType":"module"}

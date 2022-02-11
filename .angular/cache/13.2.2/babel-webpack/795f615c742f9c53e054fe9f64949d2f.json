@@ -1,1 +1,0 @@
-{"ast":null,"code":"export { default as color, rgb, hsl } from \"./color.js\";\nexport { default as lab, hcl, lch, gray } from \"./lab.js\";\nexport { default as cubehelix } from \"./cubehelix.js\";","map":null,"metadata":{},"sourceType":"module"}

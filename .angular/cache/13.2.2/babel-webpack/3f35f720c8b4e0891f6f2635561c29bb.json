@@ -1,1 +1,0 @@
-{"ast":null,"code":"import leastIndex from \"./leastIndex.js\";\nexport default function scan(values, compare) {\n  const index = leastIndex(values, compare);\n  return index < 0 ? undefined : index;\n}","map":null,"metadata":{},"sourceType":"module"}

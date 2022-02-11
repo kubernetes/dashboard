@@ -1,1 +1,0 @@
-{"ast":null,"code":"function responseText(response) {\n  if (!response.ok) throw new Error(response.status + \" \" + response.statusText);\n  return response.text();\n}\n\nexport default function (input, init) {\n  return fetch(input, init).then(responseText);\n}","map":null,"metadata":{},"sourceType":"module"}

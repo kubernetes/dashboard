@@ -1,1 +1,0 @@
-{"ast":null,"code":"import { merge as mergeStatic } from '../observable/merge';\nexport function merge(...observables) {\n  return source => source.lift.call(mergeStatic(source, ...observables));\n} //# sourceMappingURL=merge.js.map","map":null,"metadata":{},"sourceType":"module"}
