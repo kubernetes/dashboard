@@ -3,7 +3,7 @@ module github.com/kubernetes/dashboard
 go 1.17
 
 require (
-	github.com/docker/distribution v2.7.1+incompatible
+	github.com/docker/distribution v2.8.0+incompatible
 	github.com/emicklei/go-restful/v3 v3.3.3
 	github.com/golang/glog v1.0.0
 	github.com/opencontainers/go-digest v1.0.0 // indirect
