@@ -17,24 +17,11 @@ import {DomSanitizer, SafeHtml} from '@angular/platform-browser';
 import stripAnsi from 'strip-ansi';
 
 /**
- * Formats the given value as raw HTML to display to the user.
+ * Strips ANSI codes from string.
  */
-@Pipe({name: 'kdSafeHtml'})
-export class SafeHtmlFormatter {
-  constructor(private readonly sanitizer: DomSanitizer) {}
-
+@Pipe({name: 'kdStripAnsi'})
+export class StripAnsiPipe {
   transform(value: string): SafeHtml {
-    value = stripAnsi(value);
-    value = this.escape_(value);
-    return this.sanitizer.sanitize(SecurityContext.HTML, value);
-  }
-
-  private escape_(unsafe: string): string {
-    return unsafe
-      .replace(/&/g, '&amp;')
-      .replace(/</g, '&lt;')
-      .replace(/>/g, '&gt;')
-      .replace(/"/g, '&quot;')
-      .replace(/'/g, '&#039;');
+    return stripAnsi(value);
   }
 }
