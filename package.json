@@ -132,7 +132,7 @@
     "license-check-and-add": "4.0.3",
     "lint-staged": "12.3.3",
     "lodash": "4.17.21",
-    "minimatch": "3.0.5",
+    "minimatch": "4.1.1",
     "minimist": "1.2.5",
     "ngx-i18nsupport": "0.17.1",
     "node-gyp": "8.4.1",
