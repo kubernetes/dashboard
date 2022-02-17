@@ -69,7 +69,7 @@
     "@angular/router": "13.2.2",
     "@swimlane/ngx-charts": "20.0.1",
     "ace-builds": "1.4.14",
-    "core-js": "3.21.0",
+    "core-js": "3.21.1",
     "d3": "6.7.0",
     "file-saver": "2.0.5",
     "js-yaml": "4.1.0",
