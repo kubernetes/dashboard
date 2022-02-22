@@ -55,5 +55,9 @@ jobs:
       - name: Create kind cluster
         uses: helm/kind-action@v1.2.0
 
+      - name: Install Prometheus Operator CRDs
+        id: prom
+        run: kubectl apply --server-side -f https://raw.githubusercontent.com/prometheus-operator/prometheus-operator/v0.54.0/example/prometheus-operator-crd/monitoring.coreos.com_servicemonitors.yaml
+
       - name: Run chart-testing (install)
         run: ct install --config=aio/deploy/helm-chart/.helm-chart-testing.yaml
