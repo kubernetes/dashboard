@@ -127,7 +127,7 @@ func removeNonServedVersions(crd apiextensions.CustomResourceDefinition) apiexte
 		versions = make([]apiextensions.CustomResourceDefinitionVersion, 0)
 	} else {
 		for i := 0; i < len(versions); i++ {
-			if !version.Served {
+			if !versions[i].Served {
 				versions = append(versions[:i], versions[i+1:]...)
 				i--
 			}
