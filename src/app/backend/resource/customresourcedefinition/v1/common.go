@@ -122,18 +122,14 @@ func isServed(crd apiextensions.CustomResourceDefinition) bool {
 }
 
 func removeNonServedVersions(crd apiextensions.CustomResourceDefinition) apiextensions.CustomResourceDefinition {
-	versions := append(crd.Spec.Versions)
-	if len(versions) == 1 && !versions[0].Served {
-		versions = make([]apiextensions.CustomResourceDefinitionVersion, 0)
-	} else {
-		for i := 0; i < len(versions); i++ {
-			if !versions[i].Served {
-				versions = append(versions[:i], versions[i+1:]...)
-				i--
-			}
+	versions := make([]apiextensions.CustomResourceDefinitionVersion, 0)
+
+	for _, version := range crd.Spec.Versions {
+		if version.Served {
+			versions = append(versions, version)
 		}
 	}
-	
+
 	crd.Spec.Versions = versions
 	return crd
 }
