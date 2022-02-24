@@ -67,6 +67,51 @@ func TestGetCustomResourceDefinition(t *testing.T) {
 				},
 				Errors: []error{},
 			},
+		}, {
+			[]string{"list"},
+			&apiextensionsv1.CustomResourceDefinitionList{
+				Items: []apiextensionsv1.CustomResourceDefinition{
+					{
+						ObjectMeta: metaV1.ObjectMeta{Name: "foos.samplecontroller.k8s.io"},
+						Spec: apiextensionsv1.CustomResourceDefinitionSpec{
+							Names: apiextensionsv1.CustomResourceDefinitionNames{
+								Kind:   "Foo",
+								Plural: "foos",
+							},
+							Versions: []apiextensionsv1.CustomResourceDefinitionVersion{
+								{
+									Served: true,
+									Name:   "v1alpha1",
+								},
+								{
+									Served: false,
+									Name:   "v1beta1",
+								},
+								{
+									Served: true,
+									Name:   "v1gamma1",
+								},
+								{
+									Served: false,
+									Name:   "v1zeta1",
+								},
+							},
+						},
+					},
+				},
+			},
+			&types.CustomResourceDefinitionList{
+				ListMeta: api.ListMeta{TotalItems: 1},
+				Items: []types.CustomResourceDefinition{
+					{
+						ObjectMeta:  api.ObjectMeta{Name: "foos.samplecontroller.k8s.io"},
+						TypeMeta:    api.TypeMeta{Kind: api.ResourceKindCustomResourceDefinition},
+						Version:     "v1alpha1",
+						Established: apiextensions.ConditionUnknown,
+					},
+				},
+				Errors: []error{},
+			},
 		},
 	}
 
