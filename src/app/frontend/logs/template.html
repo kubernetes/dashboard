@@ -83,7 +83,7 @@ limitations under the License.
          fxLayoutGap="2px">
       <div *ngFor="let item of logsSet"
            [ngClass]="{'kd-logs-element-compact': logService.getCompact(), 'kd-logs-element': !logService.getCompact()}">
-        <span>{{item | kdStripAnsi}}</span>
+        <span>{{item | kdStripAnsi | kdUntrim}}</span>
       </div>
     </div>
   </div>
