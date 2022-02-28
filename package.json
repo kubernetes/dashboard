@@ -82,7 +82,7 @@
     "roboto-fontface": "0.10.0",
     "rxjs": "6.6.7",
     "rxjs-compat": "6.6.7",
-    "sockjs-client": "1.5.2",
+    "sockjs-client": "1.6.0",
     "strip-ansi": "6.0.1",
     "systemjs": "6.12.1",
     "truncate-url": "1.0.0",
