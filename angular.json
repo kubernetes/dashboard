@@ -76,7 +76,7 @@
               },
               { "glob": "**/*",
                 "input": "node_modules/monaco-editor",
-                "output": "assets/monaco-editor"
+                "output": "/assets/monaco-editor"
               }
             ],
             "stylePreprocessorOptions": {
@@ -93,8 +93,7 @@
             "scripts": [
               "node_modules/sockjs-client/dist/sockjs.min.js",
               "node_modules/systemjs/dist/s.js",
-              "node_modules/systemjs/dist/extras/named-register.js",
-              "node_modules/systemjs/dist/extras/amd.js"
+              "node_modules/systemjs/dist/extras/named-register.js"
             ]
           },
           "configurations": {

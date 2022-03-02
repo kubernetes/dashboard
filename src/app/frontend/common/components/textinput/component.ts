@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {AfterViewInit, Component, EventEmitter, Input, OnChanges, Output} from '@angular/core';
+import {AfterViewInit, Component, EventEmitter, Input, OnChanges, OnInit, Output} from '@angular/core';
 import {ThemeService} from '../../services/global/theme';
 
 enum EditorTheme {
@@ -30,30 +30,34 @@ export enum EditorMode {
   templateUrl: './template.html',
   styleUrls: ['./style.scss'],
 })
-export class TextInputComponent implements AfterViewInit, OnChanges {
+export class TextInputComponent implements OnInit, AfterViewInit, OnChanges {
   @Output() textChange = new EventEmitter<string>();
   @Input() text: string;
   @Input() readOnly = false;
   @Input() mode = EditorMode.YAML;
   @Input() prettify = true;
   @Input() border = true;
-
-  options: any = {
-    contextmenu: false,
-    fontFamily: 'Roboto Mono Regular, monospace',
-    fontSize: 14,
-    lineNumbersMinChars: 4,
-    language: this.mode,
-    minimap: {enabled: false},
-    scrollbar: {vertical: 'hidden'},
-    hideCursorInOverviewRuler: true,
-    readOnly: this.readOnly,
-    renderLineHighlight: 'line',
-    theme: this._themeService.isThemeDark() ? EditorTheme.dark : EditorTheme.light,
-    wordWrap: 'on',
-  };
+  options: any;
 
   constructor(private readonly _themeService: ThemeService) {}
+
+  ngOnInit() {
+    this.options = {
+      contextmenu: false,
+      fontFamily: 'Roboto Mono Regular, monospace',
+      fontSize: 14,
+      lineNumbersMinChars: 4,
+      language: this.mode,
+      minimap: {enabled: false},
+      scrollbar: {vertical: 'hidden'},
+      scrollBeyondLastLine: false,
+      hideCursorInOverviewRuler: true,
+      readOnly: this.readOnly,
+      renderLineHighlight: 'line',
+      theme: this._themeService.isThemeDark() ? EditorTheme.dark : EditorTheme.light,
+      wordWrap: 'on',
+    };
+  }
 
   ngAfterViewInit(): void {
     this._prettify();
