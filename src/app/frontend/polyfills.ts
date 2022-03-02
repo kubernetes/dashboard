@@ -31,9 +31,6 @@ import 'web-animations-js';
 
 import 'zone.js/dist/zone';
 
-// Load `$localize` onto the global scope - used if i18n tags appear in Angular templates.
 import '@angular/localize/init';
 
-// Global variables required by some 3rd party libraries.
 (window as any).global = window;
-(window as any).process = {browser: true, env: {}};
