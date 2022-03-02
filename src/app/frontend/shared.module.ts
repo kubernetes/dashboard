@@ -51,6 +51,7 @@ import {NgPipesModule} from 'ngx-pipes';
 
 import {PipesModule} from '@common/pipes/module';
 import {KD_TOOLTIP_DEFAULT_OPTIONS} from './index.config';
+import {MonacoEditorModule} from "ngx-monaco-editor";
 
 const SHARED_DEPENDENCIES = [
   // Angular imports
@@ -94,6 +95,7 @@ const SHARED_DEPENDENCIES = [
   NgPipesModule,
   NgxChartsModule,
   InViewportModule,
+  MonacoEditorModule,
 
   // Custom application modules
   PipesModule,

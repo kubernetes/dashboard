@@ -23,6 +23,7 @@ import {GlobalErrorHandler} from './error/handler';
 import {RootComponent} from './index.component';
 import {routes} from './index.routing';
 import {LoginModule} from './login/module';
+import {MonacoEditorModule} from "ngx-monaco-editor";
 
 @NgModule({
   imports: [
@@ -36,6 +37,7 @@ import {LoginModule} from './login/module';
       useHash: true,
       onSameUrlNavigation: 'reload',
     }),
+    MonacoEditorModule.forRoot(),
   ],
   providers: [{provide: ErrorHandler, useClass: GlobalErrorHandler}],
   declarations: [RootComponent],
