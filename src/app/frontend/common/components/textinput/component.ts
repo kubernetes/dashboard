@@ -12,16 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {
-  AfterViewInit,
-  Component,
-  EventEmitter,
-  Input,
-  OnChanges,
-  OnInit,
-  Output,
-  SimpleChanges,
-} from '@angular/core';
+import {AfterViewInit, Component, EventEmitter, Input, OnChanges, Output} from '@angular/core';
 import {ThemeService} from '../../services/global/theme';
 
 enum EditorTheme {
@@ -39,7 +30,7 @@ export enum EditorMode {
   templateUrl: './template.html',
   styleUrls: ['./style.scss'],
 })
-export class TextInputComponent implements OnInit, AfterViewInit, OnChanges {
+export class TextInputComponent implements AfterViewInit, OnChanges {
   @Output() textChange = new EventEmitter<string>();
   @Input() text: string;
   @Input() readOnly = false;
@@ -52,28 +43,23 @@ export class TextInputComponent implements OnInit, AfterViewInit, OnChanges {
     fontFamily: 'Roboto Mono Regular, monospace',
     fontSize: 14,
     lineNumbersMinChars: 4,
+    language: this.mode,
     minimap: {enabled: false},
     scrollbar: {vertical: 'hidden'},
     hideCursorInOverviewRuler: true,
+    readOnly: this.readOnly,
     renderLineHighlight: 'line',
+    theme: this._themeService.isThemeDark() ? EditorTheme.dark : EditorTheme.light,
     wordWrap: 'on',
   };
 
-  constructor(private readonly themeService_: ThemeService) {}
-
-  ngOnInit(): void {
-    this.options.theme = this.themeService_.isThemeDark() ? EditorTheme.dark : EditorTheme.light;
-    this.options.language = this.mode;
-    this.options.readOnly = this.readOnly;
-
-    // TODO: Move above.
-  }
+  constructor(private readonly _themeService: ThemeService) {}
 
   ngAfterViewInit(): void {
     this._prettify();
   }
 
-  ngOnChanges(_: SimpleChanges): void {
+  ngOnChanges(): void {
     this._prettify();
   }
 

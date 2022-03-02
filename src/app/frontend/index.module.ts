@@ -23,7 +23,7 @@ import {GlobalErrorHandler} from './error/handler';
 import {RootComponent} from './index.component';
 import {routes} from './index.routing';
 import {LoginModule} from './login/module';
-import {MonacoEditorModule} from "ngx-monaco-editor";
+import {MonacoEditorModule} from 'ngx-monaco-editor';
 
 @NgModule({
   imports: [
