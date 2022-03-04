@@ -120,6 +120,14 @@
           <context context-type="linenumber">45</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="3193976279273491157" datatype="html">
+        <source>Actions</source>
+        <target>操作</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/common/components/list/column/menu/template.html</context>
+          <context context-type="linenumber">66</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="2912107960899863277" datatype="html">
         <source> Download logs file
 </source>
@@ -369,6 +377,22 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/actionbar/detailactions/logs/template.html</context>
           <context context-type="linenumber">21</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="6112370555453604229" datatype="html">
+        <source>Unpin resource</source>
+        <target>取消固定资源</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/common/components/actionbar/detailactions/pin/template.html</context>
+          <context context-type="linenumber">25</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="4285755342959217630" datatype="html">
+        <source>Pin resource</source>
+        <target>固定资源</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/common/components/actionbar/detailactions/pin/template.html</context>
+          <context context-type="linenumber">27</context>
         </context-group>
       </trans-unit>
       <trans-unit id="315761510234903605" datatype="html">
@@ -3457,12 +3481,28 @@
           <context context-type="linenumber">47</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="3798186563647127215" datatype="html">
+        <source>Open notifications panel</source>
+        <target>打开通知面板</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/chrome/notifications/template.html</context>
+          <context context-type="linenumber">28</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="3117139905742018214" datatype="html">
+        <source>Close notifications panel</source>
+        <target>关闭通知面板</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/chrome/notifications/template.html</context>
+          <context context-type="linenumber">30</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="5943454400955467108" datatype="html">
         <source><x id="START_TAG_KD_DATE" ctype="x-kd_date" equiv-text="&quot;\uFFFD#9\uFFFD&quot;"/><x id="CLOSE_TAG_KD_DATE" ctype="x-kd_date" equiv-text="&quot;\uFFFD/#9\uFFFD&quot;"/></source>
         <target state="new"><x id="START_TAG_KD_DATE" ctype="x-kd_date" equiv-text="&quot;\uFFFD#9\uFFFD&quot;"/><x id="CLOSE_TAG_KD_DATE" ctype="x-kd_date" equiv-text="&quot;\uFFFD/#9\uFFFD&quot;"/></target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/chrome/notifications/template.html</context>
-          <context context-type="linenumber">45,46</context>
+          <context context-type="linenumber">49</context>
         </context-group>
       </trans-unit>
       <trans-unit id="4580988005648117665" datatype="html">
@@ -3478,7 +3518,7 @@
         <target>没有通知</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/chrome/notifications/template.html</context>
-          <context context-type="linenumber">61</context>
+          <context context-type="linenumber">65</context>
         </context-group>
       </trans-unit>
       <trans-unit id="3415340061451880090" datatype="html">
@@ -3486,7 +3526,7 @@
         <target>删除所有通知</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/chrome/notifications/template.html</context>
-          <context context-type="linenumber">67</context>
+          <context context-type="linenumber">71</context>
         </context-group>
       </trans-unit>
       <trans-unit id="2509978568586099561" datatype="html">
@@ -3512,6 +3552,22 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/chrome/nav/pinner/template.html</context>
           <context context-type="linenumber">22</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="6008724430266446705" datatype="html">
+        <source>Minimize card</source>
+        <target>折叠卡片</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/common/components/card/template.html</context>
+          <context context-type="linenumber">48</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="1547349004541912871" datatype="html">
+        <source>Expand card</source>
+        <target>展开卡片</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/common/components/card/template.html</context>
+          <context context-type="linenumber">50</context>
         </context-group>
       </trans-unit>
       <trans-unit id="1138967786822653104" datatype="html">
@@ -4426,7 +4482,7 @@
         </context-group>
       </trans-unit>
       <trans-unit id="2380939390102386148" datatype="html">
-        <source> <x id="ICU" equiv-text="i18n_79" xid="2986806881378584169"/>
+        <source> <x id="ICU" equiv-text="i18n_79"/>
 </source>
         <target> <x id="ICU" equiv-text="{isMoreOptionsEnabled(), select, 1 {隐藏高级选项} other {显示高级选项}}"/></target>
         <context-group purpose="location">

@@ -40,10 +40,14 @@ limitations under the License.
             (click)="expand(); $event.stopPropagation()"
             *ngIf="expandable">
       <mat-icon class="kd-muted"
-                [matTooltip]="expanded ? 'Minimize card' : 'Expand card'">
+                [matTooltip]="expanded ? template_minimize.innerText : template_expand.innerText">
         <ng-container *ngIf="expanded">arrow_drop_up</ng-container>
         <ng-container *ngIf="!expanded">arrow_drop_down</ng-container>
       </mat-icon>
+      <template #template_minimize
+                i18n>Minimize card</template>
+      <template #template_expand
+                i18n>Expand card</template>
     </button>
   </mat-card-title>
 

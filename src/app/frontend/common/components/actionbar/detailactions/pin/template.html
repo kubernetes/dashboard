@@ -18,7 +18,11 @@ limitations under the License.
         color="accent"
         class="kd-toolbar-action"
         i18n-matTooltip
-        [matTooltip]="isPinned() ? 'Unpin resource' : 'Pin resource'"
+        [matTooltip]="isPinned() ? template_unpin.innerText : template_pin.innerText"
         (click)="onClick()">
   <mat-icon [svgIcon]="isPinned() ? 'pin-crossed' : 'pin'"></mat-icon>
+  <template #template_unpin
+            i18n>Unpin resource</template>
+  <template #template_pin
+            i18n>Pin resource</template>
 </button>
