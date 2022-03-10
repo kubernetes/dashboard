@@ -39,7 +39,6 @@ import {MonacoEditorModule} from 'ng-monaco-editor';
     }),
     MonacoEditorModule.forRoot({
       dynamicImport: () => import('monaco-editor'),
-      baseUrl: 'lib/v1',
       defaultOptions: {
         contextmenu: false,
         fontFamily: 'Roboto Mono Regular, monospace',
