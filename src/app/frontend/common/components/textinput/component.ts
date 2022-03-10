@@ -43,19 +43,9 @@ export class TextInputComponent implements OnInit, AfterViewInit, OnChanges {
 
   ngOnInit() {
     this.options = {
-      contextmenu: false,
-      fontFamily: 'Roboto Mono Regular, monospace',
-      fontSize: 14,
-      lineNumbersMinChars: 4,
       language: this.mode,
-      minimap: {enabled: false},
-      scrollbar: {vertical: 'hidden'},
-      scrollBeyondLastLine: false,
-      hideCursorInOverviewRuler: true,
       readOnly: this.readOnly,
-      renderLineHighlight: 'line',
       theme: this._themeService.isThemeDark() ? EditorTheme.dark : EditorTheme.light,
-      wordWrap: 'on',
     };
   }
 
