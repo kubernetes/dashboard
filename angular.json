@@ -17,6 +17,10 @@
             "translation": "i18n/de/messages.de.xlf",
             "baseHref": ""
           },
+          "es": {
+            "translation": "i18n/es/messages.es.xlf",
+            "baseHref": ""
+          },
           "fr": {
             "translation": "i18n/fr/messages.fr.xlf",
             "baseHref": ""
@@ -85,7 +89,6 @@
               "node_modules/material-design-icons/iconfont/material-icons.css",
               "node_modules/roboto-fontface/css/roboto/roboto-fontface.css",
               "node_modules/xterm/css/xterm.css",
-              "node_modules/c3/c3.min.css",
               "src/app/frontend/index.scss"
             ],
             "scripts": [

@@ -17,13 +17,13 @@ import {Component, ElementRef, OnDestroy, ViewChild} from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
 import {ActivatedRoute, Router} from '@angular/router';
 import {LogControl, LogDetails, LogLine, LogSelection, LogSources} from '@api/root.api';
+
+import {LogsDownloadDialog} from '@common/dialogs/download/dialog';
 import {GlobalSettingsService} from 'common/services/global/globalsettings';
 import {LogService} from 'common/services/global/logs';
 import {NotificationSeverity, NotificationsService} from 'common/services/global/notifications';
 import {merge, Observable, of, Subject, timer} from 'rxjs';
-import {switchMap, takeUntil} from 'rxjs/operators';
-
-import {LogsDownloadDialog} from '@common/dialogs/download/dialog';
+import {switchMap, take, takeUntil, tap} from 'rxjs/operators';
 
 const i18n = {
   MSG_LOGS_ZEROSTATE_TEXT: 'The selected container has not logged any messages yet.',
@@ -49,7 +49,6 @@ export class LogsComponent implements OnDestroy {
   isLoading: boolean;
 
   private readonly refreshUnsubscribe_ = new Subject<void>();
-  private readonly unsubscribe_ = new Subject<void>();
   private readonly logsPerView = 100;
   private readonly maxLogSize = 2e9;
 
@@ -82,7 +81,8 @@ export class LogsComponent implements OnDestroy {
           return this.logService.getResource(`${namespace}/${this.pod}/${this.container}`);
         })
       )
-      .pipe(takeUntil(this.unsubscribe_))
+      .pipe(tap(_ => (this.logService.getAutoRefresh() ? this.toggleIntervalFunction_() : undefined)))
+      .pipe(take(1))
       .subscribe(data => {
         this.updateUiModel_(data);
         this.isLoading = false;
@@ -94,9 +94,6 @@ export class LogsComponent implements OnDestroy {
       queryParams: {['container']: null},
       queryParamsHandling: 'merge',
     });
-
-    this.unsubscribe_.next();
-    this.unsubscribe_.complete();
 
     this.refreshUnsubscribe_.next();
     this.refreshUnsubscribe_.complete();
@@ -277,7 +274,7 @@ export class LogsComponent implements OnDestroy {
       .set('previous', `${this.logService.getPrevious()}`);
     this.logService
       .getResource(`${namespace}/${this.pod}/${this.container}`, params)
-      .pipe(takeUntil(this.unsubscribe_))
+      .pipe(take(1))
       .subscribe((podLogs: LogDetails) => {
         this.updateUiModel_(podLogs);
         if (onLoad) {

@@ -82,12 +82,12 @@ func (self *fakeClientManager) CSRFKey() string {
 	return ""
 }
 
-func (self *fakeClientManager) HasAccess(authInfo api.AuthInfo) error {
-	return self.HasAccessError
+func (self *fakeClientManager) HasAccess(authInfo api.AuthInfo) (string, error) {
+	return "", self.HasAccessError
 }
 
 func (self *fakeClientManager) VerberClient(req *restful.Request, config *rest.Config) (clientapi.ResourceVerber, error) {
-	return client.NewResourceVerber(nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil), nil
+	return client.NewResourceVerber(nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil), nil
 }
 
 func (self *fakeClientManager) CanI(req *restful.Request, ssar *v1.SelfSubjectAccessReview) bool {

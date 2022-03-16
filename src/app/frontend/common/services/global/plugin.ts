@@ -24,16 +24,16 @@ export class PluginsConfigService {
 
   constructor(private readonly http: HttpClient) {}
 
-  init(): void {
-    this.fetchConfig();
+  init(): Promise<PluginsConfig> {
+    return this.fetchConfig();
   }
 
   refreshConfig(): void {
     this.fetchConfig();
   }
 
-  private fetchConfig(): void {
-    this.getConfig()
+  private fetchConfig(): Promise<PluginsConfig> {
+    return this.getConfig()
       .toPromise()
       .then(config => (this.config_ = config));
   }

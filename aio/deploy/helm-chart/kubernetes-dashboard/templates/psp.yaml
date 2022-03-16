@@ -18,9 +18,15 @@ kind: PodSecurityPolicy
 metadata:
   name: {{ template "kubernetes-dashboard.fullname" . }}-psp
   labels:
-{{ include "kubernetes-dashboard.labels" . | indent 4 }}
+    {{- include "kubernetes-dashboard.labels" . | nindent 4 }}
+    {{- if .Values.commonLabels }}
+    {{- include "common.tplvalues.render" ( dict "value" .Values.commonLabels "context" $ ) | nindent 4 }}
+    {{- end }}
   annotations:
     seccomp.security.alpha.kubernetes.io/allowedProfileNames: '*'
+    {{- if .Values.commonAnnotations }}
+    {{- include "common.tplvalues.render" ( dict "value" .Values.commonAnnotations "context" $ ) | nindent 4 }}
+    {{- end }}
 spec:
   privileged: false
   fsGroup:
@@ -47,7 +53,7 @@ kind: RoleBinding
 metadata:
   name: {{ template "kubernetes-dashboard.fullname" . }}-psp
   labels:
-{{ include "kubernetes-dashboard.labels" . | indent 4 }}
+{{ include "kubernetes-dashboard.labels" . | nindent 4 }}
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: Role
@@ -62,7 +68,7 @@ kind: Role
 metadata:
   name: {{ template "kubernetes-dashboard.fullname" . }}-psp
   labels:
-{{ include "kubernetes-dashboard.labels" . | indent 4 }}
+{{ include "kubernetes-dashboard.labels" . | nindent 4 }}
 rules:
 - apiGroups:
   - extensions

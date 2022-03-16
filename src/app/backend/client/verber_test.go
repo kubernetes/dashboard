@@ -80,9 +80,8 @@ func normalize(msg string) string {
 
 func TestDeleteShouldPropagateErrorsAndChooseClient(t *testing.T) {
 	verber := resourceVerber{
-		client:           &FakeRESTClient{err: errors.NewInvalid("err")},
-		extensionsClient: &FakeRESTClient{err: errors.NewInvalid("err from extensions")},
-		appsClient:       &FakeRESTClient{err: errors.NewInvalid("err from apps")},
+		client:     &FakeRESTClient{err: errors.NewInvalid("err")},
+		appsClient: &FakeRESTClient{err: errors.NewInvalid("err from apps")},
 	}
 
 	err := verber.Delete("replicaset", true, "bar", "baz")
@@ -106,9 +105,8 @@ func TestDeleteShouldPropagateErrorsAndChooseClient(t *testing.T) {
 
 func TestGetShouldPropagateErrorsAndChoseClient(t *testing.T) {
 	verber := resourceVerber{
-		client:           &FakeRESTClient{err: errors.NewInvalid("err")},
-		extensionsClient: &FakeRESTClient{err: errors.NewInvalid("err from extensions")},
-		appsClient:       &FakeRESTClient{err: errors.NewInvalid("err from apps")},
+		client:     &FakeRESTClient{err: errors.NewInvalid("err")},
+		appsClient: &FakeRESTClient{err: errors.NewInvalid("err from apps")},
 	}
 
 	_, err := verber.Get("replicaset", true, "bar", "baz")

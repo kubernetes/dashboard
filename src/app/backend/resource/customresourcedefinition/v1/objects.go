@@ -17,6 +17,7 @@ package v1
 import (
 	"context"
 	"encoding/json"
+	"fmt"
 
 	apiextensionsv1 "k8s.io/apiextensions-apiserver/pkg/apis/apiextensions/v1"
 	apiextensionsclientset "k8s.io/apiextensions-apiserver/pkg/client/clientset/clientset"
@@ -41,6 +42,12 @@ func GetCustomResourceObjectList(client apiextensionsclientset.Interface, config
 	nonCriticalErrors, criticalError := errors.HandleError(err)
 	if criticalError != nil {
 		return nil, criticalError
+	}
+
+	customResourceDefinition = &[]apiextensionsv1.CustomResourceDefinition{removeNonServedVersions(*customResourceDefinition)}[0]
+
+	if !isServed(*customResourceDefinition) {
+		return nil, errors.NewNotFound(fmt.Sprintf("could not find any served versions for the requested resource (%s)", customResourceDefinition.Name))
 	}
 
 	restClient, err := NewRESTClient(config, customResourceDefinition)

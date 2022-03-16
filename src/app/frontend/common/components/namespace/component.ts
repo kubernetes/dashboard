@@ -178,6 +178,8 @@ export class NamespaceSelectorComponent implements OnInit, OnDestroy {
             this.namespaces = this.settingsService_.getNamespaceFallbackList();
           }
 
+          this.namespaces = this.namespaces.sort((a, b) => a.toLowerCase().localeCompare(b.toLowerCase()));
+
           if (namespaceList.errors.length > 0) {
             for (const err of namespaceList.errors) {
               this.notifications_.pushErrors([err]);

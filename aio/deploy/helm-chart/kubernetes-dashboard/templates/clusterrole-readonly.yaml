@@ -18,7 +18,14 @@ kind: ClusterRole
 metadata:
   name: "{{ template "kubernetes-dashboard.fullname" . }}-readonly"
   labels:
-{{ include "kubernetes-dashboard.labels" . | indent 4 }}
+    {{- include "kubernetes-dashboard.labels" . | nindent 4 }}
+    {{- if .Values.commonLabels }}
+    {{- include "common.tplvalues.render" ( dict "value" .Values.commonLabels "context" $ ) | nindent 4 }}
+    {{- end }}
+  annotations:
+    {{- if .Values.commonAnnotations }}
+    {{- include "common.tplvalues.render" ( dict "value" .Values.commonAnnotations "context" $ ) | nindent 4 }}
+    {{- end }}
 rules:
   - apiGroups:
       - ""

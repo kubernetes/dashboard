@@ -8,7 +8,7 @@ _As contributors and maintainers of this project, and in the interest of fosteri
 
 To learn more about the project, please read through the following documents:
 
-- https://github.com/kubernetes/dashboard/wiki
+- https://github.com/kubernetes/dashboard/tree/master/docs
 - https://kubernetes.io/docs/tasks/access-application-cluster/web-ui-dashboard/
 
 All the contributions are done via GitHub.

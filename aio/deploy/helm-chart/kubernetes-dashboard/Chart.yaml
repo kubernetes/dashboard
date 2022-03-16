@@ -14,22 +14,22 @@
 
 apiVersion: v2
 name: kubernetes-dashboard
-version: 5.0.4
-appVersion: 2.4.0
+version: 5.3.0
+appVersion: 2.5.1
 description: General-purpose web UI for Kubernetes clusters
 keywords:
-- kubernetes
-- dashboard
+  - kubernetes
+  - dashboard
 home: https://github.com/kubernetes/dashboard
 sources:
-- https://github.com/kubernetes/dashboard
+  - https://github.com/kubernetes/dashboard
 maintainers:
-- name: desaintmartin
-  email: cdesaintmartin@wiremind.fr
+  - name: desaintmartin
+    email: cdesaintmartin@wiremind.fr
 icon: https://raw.githubusercontent.com/kubernetes/kubernetes/master/logo/logo.svg
 kubeVersion: ">=1.19.0-0"
 dependencies:
-- name: metrics-server
-  version: 3.5.0
-  repository: https://kubernetes-sigs.github.io/metrics-server/
-  condition: metrics-server.enabled
+  - name: metrics-server
+    version: 3.5.0
+    repository: https://kubernetes-sigs.github.io/metrics-server/
+    condition: metrics-server.enabled

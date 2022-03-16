@@ -281,10 +281,6 @@
     background-color: $border !important;
   }
 
-  .c3-tooltip {
-    color: theming.$dark-primary-text;
-  }
-
   .ngx-charts {
     text {
       fill: theming.mat-color($foreground-palette, text) !important;

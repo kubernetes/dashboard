@@ -42,7 +42,7 @@ func (self authManager) Login(spec *authApi.LoginSpec) (*authApi.AuthResponse, e
 		return nil, err
 	}
 
-	err = self.healthCheck(authInfo)
+	username, err := self.healthCheck(authInfo)
 	nonCriticalErrors, criticalError := errors.HandleError(err)
 	if criticalError != nil || len(nonCriticalErrors) > 0 {
 		return &authApi.AuthResponse{Errors: nonCriticalErrors}, criticalError
@@ -53,7 +53,7 @@ func (self authManager) Login(spec *authApi.LoginSpec) (*authApi.AuthResponse, e
 		return nil, err
 	}
 
-	return &authApi.AuthResponse{JWEToken: token, Errors: nonCriticalErrors}, nil
+	return &authApi.AuthResponse{JWEToken: token, Errors: nonCriticalErrors, Name: username}, nil
 }
 
 // Refresh implements auth manager. See AuthManager interface for more information.
@@ -89,7 +89,7 @@ func (self authManager) getAuthenticator(spec *authApi.LoginSpec) (authApi.Authe
 
 // Checks if user data extracted from provided AuthInfo structure is valid and user is correctly authenticated
 // by K8S apiserver.
-func (self authManager) healthCheck(authInfo api.AuthInfo) error {
+func (self authManager) healthCheck(authInfo api.AuthInfo) (string, error) {
 	return self.clientManager.HasAccess(authInfo)
 }
 

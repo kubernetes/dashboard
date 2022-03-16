@@ -20,12 +20,19 @@
 image:
   ## Repository for container
   repository: kubernetesui/dashboard
-  tag: v2.4.0
+  tag: v2.5.1
   pullPolicy: IfNotPresent
   pullSecrets: []
 
 ## Number of replicas
 replicaCount: 1
+
+## @param commonLabels Labels to add to all deployed objects
+##
+commonLabels: {}
+## @param commonAnnotations Annotations to add to all deployed objects
+##
+commonAnnotations: {}
 
 ## Here annotations can be added to the kubernetes dashboard deployment
 annotations: {}
@@ -63,13 +70,30 @@ extraVolumeMounts: []
 ## Annotations to be added to kubernetes dashboard pods
 # podAnnotations:
 
-# SecurityContext to be added to kubernetes dashboard pods
+## SecurityContext to be added to kubernetes dashboard pods
+## To disable set the following configuration to null:
+# securityContext: null
 securityContext:
   seccompProfile:
     type: RuntimeDefault
 
-# Labels to be added to kubernetes dashboard pods
+## SecurityContext defaults for the kubernetes dashboard container and metrics scraper container
+## To disable set the following configuration to null:
+# containerSecurityContext: null
+containerSecurityContext:
+  allowPrivilegeEscalation: false
+  readOnlyRootFilesystem: true
+  runAsUser: 1001
+  runAsGroup: 2001
+
+## @param podLabels Extra labels for OAuth2 Proxy pods
+## ref: https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/
+##
 podLabels: {}
+## @param podAnnotations Annotations for OAuth2 Proxy pods
+## ref: https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/
+##
+podAnnotations: {}
 
 ## Node labels for pod assignment
 ## Ref: https://kubernetes.io/docs/user-guide/node-selection/
@@ -223,12 +247,13 @@ metricsScraper:
     repository: kubernetesui/metrics-scraper
     tag: v1.0.7
   resources: {}
-  ## SecurityContext for the kubernetes dashboard metrics scraper container
-  containerSecurityContext:
-    allowPrivilegeEscalation: false
-    readOnlyRootFilesystem: true
-    runAsUser: 1001
-    runAsGroup: 2001
+  ## SecurityContext especially for the kubernetes dashboard metrics scraper container
+  ## If not set, the global containterSecurityContext values will define these values
+  # containerSecurityContext:
+  #   allowPrivilegeEscalation: false
+  #   readOnlyRootFilesystem: true
+  #   runAsUser: 1001
+  #   runAsGroup: 2001
 #  args:
 #    - --log-level=info
 #    - --logtostderr=true
@@ -237,8 +262,8 @@ metricsScraper:
 ## Enable this if you don't already have metrics-server enabled on your cluster and
 ## want to use it with dashboard metrics-scraper
 ## refs:
-##  - https://hub.helm.sh/charts/stable/metrics-server
 ##  - https://github.com/kubernetes-sigs/metrics-server
+##  - https://github.com/kubernetes-sigs/metrics-server/tree/master/charts/metrics-server
 metrics-server:
   enabled: false
   ## Example for additional args
@@ -296,13 +321,6 @@ podDisruptionBudget:
 #   runAsUser: 1001
 #   runAsGroup: 2001
 
-## SecurityContext for the kubernetes dashboard container
-containerSecurityContext:
-  allowPrivilegeEscalation: false
-  readOnlyRootFilesystem: true
-  runAsUser: 1001
-  runAsGroup: 2001
-
 networkPolicy:
   # Whether to create a network policy that allows/restricts access to the service
   enabled: false
@@ -310,4 +328,8 @@ networkPolicy:
 ## podSecurityPolicy for fine-grained authorization of pod creation and updates
 podSecurityPolicy:
   # Specifies whether a pod security policy should be created
+  enabled: false
+
+serviceMonitor:
+  # Whether or not to create a Prometheus Operator service monitor.
   enabled: false

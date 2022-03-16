@@ -20,7 +20,7 @@ Kubernetes Dashboard is a general purpose, web-based UI for Kubernetes clusters.
 To deploy Dashboard, execute following command:
 
 ```shell
-kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v2.4.0/aio/deploy/recommended.yaml
+kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v2.5.1/aio/deploy/recommended.yaml
 ```
 
 Alternatively, you can install Dashboard using Helm as described at [`https://artifacthub.io/packages/helm/k8s-dashboard/kubernetes-dashboard`](https://artifacthub.io/packages/helm/k8s-dashboard/kubernetes-dashboard).
@@ -66,7 +66,7 @@ You can reach the maintainers of this project at:
 
 ### Contribution
 
-Learn how to start contribution on the [Contributing Guidline](CONTRIBUTING.md).
+Learn how to start contribution on the [Contributing Guideline](CONTRIBUTING.md).
 
 ### Code of conduct
 

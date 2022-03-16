@@ -15,13 +15,12 @@
 package v1
 
 import (
-	api "k8s.io/api/core/v1"
-	apiextensions "k8s.io/apiextensions-apiserver/pkg/apis/apiextensions/v1"
-	"k8s.io/apimachinery/pkg/runtime/schema"
-
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/customresourcedefinition/types"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
+	api "k8s.io/api/core/v1"
+	apiextensions "k8s.io/apiextensions-apiserver/pkg/apis/apiextensions/v1"
+	"k8s.io/apimachinery/pkg/runtime/schema"
 )
 
 type CustomResourceDefinitionCell apiextensions.CustomResourceDefinition
@@ -110,4 +109,27 @@ func getCRDConditions(crd *apiextensions.CustomResourceDefinition) []common.Cond
 		})
 	}
 	return conditions
+}
+
+func isServed(crd apiextensions.CustomResourceDefinition) bool {
+	for _, version := range crd.Spec.Versions {
+		if version.Served {
+			return true
+		}
+	}
+
+	return false
+}
+
+func removeNonServedVersions(crd apiextensions.CustomResourceDefinition) apiextensions.CustomResourceDefinition {
+	versions := make([]apiextensions.CustomResourceDefinitionVersion, 0)
+
+	for _, version := range crd.Spec.Versions {
+		if version.Served {
+			versions = append(versions, version)
+		}
+	}
+
+	crd.Spec.Versions = versions
+	return crd
 }

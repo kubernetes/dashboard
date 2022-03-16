@@ -6,7 +6,7 @@ ROOT_DIRECTORY := $(shell dirname $(realpath $(firstword $(MAKEFILE_LIST))))
 COVERAGE_DIRECTORY = $(ROOT_DIRECTORY)/coverage
 GO_COVERAGE_FILE = $(ROOT_DIRECTORY)/coverage/go.txt
 AIR_BINARY := $(shell which air)
-CODEGEN_VERSION := v0.22.4
+CODEGEN_VERSION := v0.23.4
 CODEGEN_BIN := $(GOPATH)/pkg/mod/k8s.io/code-generator@$(CODEGEN_VERSION)/generate-groups.sh
 GOLANGCILINT_VERSION := v1.42.1
 GOLANGCILINT_BINARY := $(shell which golangci-lint)
@@ -20,6 +20,8 @@ KUBECONFIG ?= $(HOME)/.kube/config
 SIDECAR_HOST ?= http://localhost:8000
 TOKEN_TTL ?= 900
 AUTO_GENERATE_CERTS ?= false
+BIND_ADDRESS ?= 127.0.0.1
+PORT ?= 8080
 ENABLE_INSECURE_LOGIN ?= false
 ENABLE_SKIP_LOGIN ?= false
 SYSTEM_BANNER ?= "Local test environment"
@@ -28,11 +30,11 @@ PROD_BINARY = dist/amd64/dashboard
 SERVE_DIRECTORY = .tmp/serve
 SERVE_BINARY = .tmp/serve/dashboard
 RELEASE_IMAGE = kubernetesui/dashboard
-RELEASE_VERSION = v2.4.0
+RELEASE_VERSION = v2.5.1
 RELEASE_IMAGE_NAMES += $(foreach arch, $(ARCHITECTURES), $(RELEASE_IMAGE)-$(arch):$(RELEASE_VERSION))
 RELEASE_IMAGE_NAMES_LATEST += $(foreach arch, $(ARCHITECTURES), $(RELEASE_IMAGE)-$(arch):latest)
 HEAD_IMAGE = kubernetesdashboarddev/dashboard
-HEAD_VERSION = head
+HEAD_VERSION = latest
 HEAD_IMAGE_NAMES += $(foreach arch, $(ARCHITECTURES), $(HEAD_IMAGE)-$(arch):$(HEAD_VERSION))
 ARCHITECTURES = amd64 arm64 arm ppc64le s390x
 
@@ -77,7 +79,7 @@ clean:
 
 .PHONY: build-backend
 build-backend: ensure-go
-	go build -ldflags "-X $(MAIN_PACKAGE)/client.Version=$(RELEASE_VERSION)" -gcflags="all=-N -l" -o $(SERVE_BINARY) $(MAIN_PACKAGE)
+	CGO_ENABLED=0 go build -ldflags "-X $(MAIN_PACKAGE)/client.Version=$(RELEASE_VERSION)" -gcflags="all=-N -l" -o $(SERVE_BINARY) $(MAIN_PACKAGE)
 
 .PHONY: build
 build: clean ensure-go
@@ -108,12 +110,12 @@ watch-backend: ensure-air
 
 .PHONY: prod-backend
 prod-backend: clean ensure-go
-	GOOS=linux go build -a -installsuffix cgo -ldflags "-X $(MAIN_PACKAGE)/client.Version=$(RELEASE_VERSION)" -o $(PROD_BINARY) $(MAIN_PACKAGE)
+	CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -ldflags "-X $(MAIN_PACKAGE)/client.Version=$(RELEASE_VERSION)" -o $(PROD_BINARY) $(MAIN_PACKAGE)
 
 .PHONY: prod-backend-cross
 prod-backend-cross: clean ensure-go
 	for ARCH in $(ARCHITECTURES) ; do \
-  	GOOS=linux GOARCH=$$ARCH go build -a -installsuffix cgo -ldflags "-X $(MAIN_PACKAGE)/client.Version=$(RELEASE_VERSION)" -o dist/$$ARCH/dashboard $(MAIN_PACKAGE) ; \
+  	CGO_ENABLED=0 GOOS=linux GOARCH=$$ARCH go build -a -installsuffix cgo -ldflags "-X $(MAIN_PACKAGE)/client.Version=$(RELEASE_VERSION)" -o dist/$$ARCH/dashboard $(MAIN_PACKAGE) ; \
   done
 
 .PHONY: prod
@@ -122,8 +124,8 @@ prod: build
 		--sidecar-host=$(SIDECAR_HOST) \
 		--auto-generate-certificates \
 		--locale-config=dist/amd64/locale_conf.json \
-		--bind-address=127.0.0.1 \
-		--port=8080
+		--bind-address=${BIND_ADDRESS} \
+		--port=${PORT}
 
 .PHONY: test-backend
 test-backend: ensure-go
@@ -222,40 +224,42 @@ e2e: start-cluster
 	npm run e2e
 	make stop-cluster
 
+.PHONY: e2e-headed
+e2e-headed: start-cluster
+	npm run e2e:headed
+	make stop-cluster
+
 .PHONY: docker-build-release
 docker-build-release: build-cross
 	for ARCH in $(ARCHITECTURES) ; do \
-  		docker build -t $(RELEASE_IMAGE)-$$ARCH:$(RELEASE_VERSION) -t $(RELEASE_IMAGE)-$$ARCH:latest dist/$$ARCH ; \
-  done
+		docker buildx build \
+			-t $(RELEASE_IMAGE)-$$ARCH:$(RELEASE_VERSION) \
+			-t $(RELEASE_IMAGE)-$$ARCH:latest \
+			--build-arg BUILDPLATFORM=linux/$$ARCH \
+			--platform linux/$$ARCH \
+			--push \
+			dist/$$ARCH ; \
+	done ; \
 
 .PHONY: docker-push-release
 docker-push-release: docker-build-release
-	for ARCH in $(ARCHITECTURES) ; do \
-  		docker push $(RELEASE_IMAGE)-$$ARCH:$(RELEASE_VERSION) ; \
-  		docker push $(RELEASE_IMAGE)-$$ARCH:latest ; \
-  done ; \
-  docker manifest create --amend $(RELEASE_IMAGE):$(RELEASE_VERSION) $(RELEASE_IMAGE_NAMES) ; \
+	docker manifest create --amend $(RELEASE_IMAGE):$(RELEASE_VERSION) $(RELEASE_IMAGE_NAMES) ; \
   docker manifest create --amend $(RELEASE_IMAGE):latest $(RELEASE_IMAGE_NAMES_LATEST) ; \
-	for ARCH in $(ARCHITECTURES) ; do \
-  		docker manifest annotate $(RELEASE_IMAGE):$(RELEASE_VERSION) $(RELEASE_IMAGE)-$$ARCH:$(RELEASE_VERSION) --os linux --arch $$ARCH ; \
-  		docker manifest annotate $(RELEASE_IMAGE):latest $(RELEASE_IMAGE)-$$ARCH:latest --os linux --arch $$ARCH ; \
-  done ; \
   docker manifest push $(RELEASE_IMAGE):$(RELEASE_VERSION) ; \
   docker manifest push $(RELEASE_IMAGE):latest
 
 .PHONY: docker-build-head
 docker-build-head: build-cross
 	for ARCH in $(ARCHITECTURES) ; do \
-  		docker build -t $(HEAD_IMAGE)-$$ARCH:$(HEAD_VERSION) dist/$$ARCH ; \
-  done
+		docker buildx build \
+			-t $(HEAD_IMAGE)-$$ARCH:$(HEAD_VERSION) \
+			--build-arg BUILDPLATFORM=linux/$$ARCH \
+			--platform linux/$$ARCH \
+			--push \
+			dist/$$ARCH ; \
+	done ; \
 
 .PHONY: docker-push-head
 docker-push-head: docker-build-head
-	for ARCH in $(ARCHITECTURES) ; do \
-  		docker push $(HEAD_IMAGE)-$$ARCH:$(HEAD_VERSION) ; \
-  done ; \
-  docker manifest create --amend $(HEAD_IMAGE):$(HEAD_VERSION) $(HEAD_IMAGE_NAMES)
-	for ARCH in $(ARCHITECTURES) ; do \
-  		docker manifest annotate $(HEAD_IMAGE):$(HEAD_VERSION) $(HEAD_IMAGE)-$$ARCH:$(HEAD_VERSION) --os linux --arch $$ARCH ; \
-  done ; \
-  docker manifest push $(HEAD_IMAGE):$(HEAD_VERSION)
+	docker manifest create --amend $(HEAD_IMAGE):$(HEAD_VERSION) $(HEAD_IMAGE_NAMES)
+	docker manifest push $(HEAD_IMAGE):$(HEAD_VERSION) ; \

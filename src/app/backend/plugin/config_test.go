@@ -119,7 +119,7 @@ func (cm *fakeClientManager) CSRFKey() string {
 	panic("implement me")
 }
 
-func (cm *fakeClientManager) HasAccess(authInfo api.AuthInfo) error {
+func (cm *fakeClientManager) HasAccess(authInfo api.AuthInfo) (string, error) {
 	panic("implement me")
 }
 

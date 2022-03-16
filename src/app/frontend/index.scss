@@ -454,3 +454,9 @@ kd-logs {
     }
   }
 }
+
+.mat-menu-panel {
+  &.kd-user-panel {
+    min-width: 15 * $baseline-grid;
+  }
+}

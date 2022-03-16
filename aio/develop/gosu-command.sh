@@ -13,6 +13,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+# Install latest npm-check-updates
+npm i -g npm-check-updates
+
 # Create and switch user to "user" with same UID and GID as local.
 if [[ -z "$(cat /etc/group | grep ':${LOCAL_GID}:')" ]] ; then
   groupadd -g ${LOCAL_GID} user

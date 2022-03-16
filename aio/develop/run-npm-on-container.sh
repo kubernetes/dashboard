@@ -36,13 +36,24 @@ K8S_DASHBOARD_NPM_CMD=${K8S_DASHBOARD_NPM_CMD:-$*}
 # kubeconfig for dashboard.
 # This will be mounted and certain npm command can modify it,
 # so this should not be set for original kubeconfig.
-# Set defult as kubeconfig made by `npm run cluster:start`.
 if [[ -n "${K8S_DASHBOARD_KUBECONFIG}" ]] ; then
+  # Use your own kubernetes cluster.
   K8S_OWN_CLUSTER=true
 else
+  # Use the kind cluster that will be created later by the script.
+  # Set defult as kubeconfig made by `make start-cluster`.
   touch /tmp/kind.kubeconfig
   K8S_DASHBOARD_KUBECONFIG=/tmp/kind.kubeconfig
+  # Set docker network to "kind" that will be created by `kind`.
+  K8S_DASHBOARD_NETWORK="kind"
 fi
+
+# Create docker network to work with kind cluster
+K8S_DASHBOARD_NETWORK=${K8S_DASHBOARD_NETWORK:-"k8s-dashboard"}
+docker network create ${K8S_DASHBOARD_NETWORK} \
+  -d=bridge \
+  -o com.docker.network.bridge.enable_ip_masquerade=true \
+  -o com.docker.network.driver.mtu=1500
 
 # Bind addres for dashboard
 K8S_DASHBOARD_BIND_ADDRESS=${K8S_DASHBOARD_BIND_ADDRESS:-"127.0.0.1"}
@@ -76,6 +87,7 @@ docker run \
   -it \
   --name=${K8S_DASHBOARD_CONTAINER_NAME} \
   --cap-add=SYS_PTRACE \
+  --network=${K8S_DASHBOARD_NETWORK} \
   -v /var/run/docker.sock:/var/run/docker.sock \
   -v ${K8S_DASHBOARD_SRC}:${K8S_DASHBOARD_SRC_ON_CONTAINER} \
   -v ${K8S_DASHBOARD_KUBECONFIG}:/home/user/.kube/config \

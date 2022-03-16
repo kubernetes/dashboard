@@ -199,12 +199,44 @@
         <source>Close</source>
         <target>關閉</target>
         <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/chrome/userpanel/template.html</context>
+          <context context-type="linenumber">30</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/chrome/userpanel/template.html</context>
+          <context context-type="linenumber">57</context>
+        </context-group>
+        <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/chips/chipdialog/template.html</context>
           <context context-type="linenumber">27</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/dialogs/download/template.html</context>
           <context context-type="linenumber">62</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="2244223685971816410" datatype="html">
+        <source>Logged in with auth header </source>
+        <target state="new">Logged in with auth header </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/chrome/userpanel/template.html</context>
+          <context context-type="linenumber">45,46</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="677624622393809855" datatype="html">
+        <source>Logged in with token </source>
+        <target state="new">Logged in with token </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/chrome/userpanel/template.html</context>
+          <context context-type="linenumber">48,49</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="7327432642990246284" datatype="html">
+        <source>Default service account </source>
+        <target state="new">Default service account </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/chrome/userpanel/template.html</context>
+          <context context-type="linenumber">52</context>
         </context-group>
       </trans-unit>
       <trans-unit id="6929072613146586031" datatype="html">
@@ -270,7 +302,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/create/from/file/template.html</context>
-          <context context-type="linenumber">53</context>
+          <context context-type="linenumber">52</context>
         </context-group>
       </trans-unit>
       <trans-unit id="4342607865016428668" datatype="html">
@@ -994,6 +1026,10 @@
       <trans-unit id="1236604279860679031" datatype="html">
         <source>Restart</source>
         <target state="new">Restart</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/common/components/actionbar/detailactions/restart/template.html</context>
+          <context context-type="linenumber">21</context>
+        </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/list/column/menu/template.html</context>
           <context context-type="linenumber">53</context>
@@ -3484,37 +3520,13 @@
           <context context-type="linenumber">67</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="8047723565849701689" datatype="html">
-        <source>Logged in with auth header</source>
-        <target>使用 auth header 登錄</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/frontend/chrome/userpanel/template.html</context>
-          <context context-type="linenumber">23</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="2821688061981458389" datatype="html">
-        <source>Logged in with token</source>
-        <target>使用 token 登錄</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/frontend/chrome/userpanel/template.html</context>
-          <context context-type="linenumber">25</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="1918436236852033577" datatype="html">
-        <source>Default service account</source>
-        <target>默認 service account</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/frontend/chrome/userpanel/template.html</context>
-          <context context-type="linenumber">28</context>
-        </context-group>
-      </trans-unit>
       <trans-unit id="2509978568586099561" datatype="html">
         <source>Sign in </source>
         <target>登錄
   </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/chrome/userpanel/template.html</context>
-          <context context-type="linenumber">37</context>
+          <context context-type="linenumber">69</context>
         </context-group>
       </trans-unit>
       <trans-unit id="1239042569857077594" datatype="html">
@@ -3523,7 +3535,7 @@
   </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/chrome/userpanel/template.html</context>
-          <context context-type="linenumber">42</context>
+          <context context-type="linenumber">74</context>
         </context-group>
       </trans-unit>
       <trans-unit id="8323422358213440128" datatype="html">
@@ -4510,6 +4522,14 @@
           <context context-type="linenumber">354</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="2986806881378584169" datatype="html">
+        <source>{VAR_SELECT, select, true {Hide advanced options} other {Show advanced options}}</source>
+        <target state="new">{VAR_SELECT, select, true {隱藏高級設置} other {顯示高級選項}}</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/create/from/form/template.html</context>
+          <context context-type="linenumber">371</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="1293084960403366485" datatype="html">
         <source> Cancel
 </source>
@@ -4526,7 +4546,7 @@
         </context-group>
       </trans-unit>
       <trans-unit id="2380939390102386148" datatype="html">
-        <source> <x id="ICU" equiv-text="i18n_79"/>
+        <source> <x id="ICU" equiv-text="i18n_79" xid="2986806881378584169"/>
 </source>
         <target>
   <x id="ICU" equiv-text="{isMoreOptionsEnabled(), select, 1 {...} other {...}}"/>
@@ -4534,14 +4554,6 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/create/from/form/template.html</context>
           <context context-type="linenumber">370</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="4636387206823710509" datatype="html">
-        <source>{VAR_SELECT, select, 1 {Hide advanced options} other {Show advanced options}}</source>
-        <target>{VAR_SELECT, select, 1 {隱藏高級設置} other {顯示高級選項} }</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/frontend/create/from/form/template.html</context>
-          <context context-type="linenumber">371</context>
         </context-group>
       </trans-unit>
       <trans-unit id="4773463022110715023" datatype="html">
@@ -4631,7 +4643,7 @@
   </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/create/from/file/template.html</context>
-          <context context-type="linenumber">45</context>
+          <context context-type="linenumber">44</context>
         </context-group>
       </trans-unit>
       <trans-unit id="4708304467453184793" datatype="html">

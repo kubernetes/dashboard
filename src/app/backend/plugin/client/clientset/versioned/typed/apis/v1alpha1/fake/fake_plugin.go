@@ -103,7 +103,7 @@ func (c *FakePlugins) Update(ctx context.Context, plugin *v1alpha1.Plugin, opts 
 // Delete takes name of the plugin and deletes it. Returns an error if one occurs.
 func (c *FakePlugins) Delete(ctx context.Context, name string, opts v1.DeleteOptions) error {
 	_, err := c.Fake.
-		Invokes(testing.NewDeleteAction(pluginsResource, c.ns, name), &v1alpha1.Plugin{})
+		Invokes(testing.NewDeleteActionWithOptions(pluginsResource, c.ns, name, opts), &v1alpha1.Plugin{})
 
 	return err
 }
