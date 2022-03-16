@@ -14,78 +14,43 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<kd-object-meta
-  [initialized]="isInitialized"
-  [objectMeta]="replicaSet?.objectMeta"></kd-object-meta>
+<kd-object-meta [initialized]="isInitialized" [objectMeta]="replicaSet?.objectMeta"></kd-object-meta>
 
 <kd-card [initialized]="isInitialized">
-  <div
-    title
-    i18n>
-    Resource information
-  </div>
+  <div title i18n>Resource information</div>
 
   <div description>
-    <div
-      class="kd-inline-property"
-      *ngIf="replicaSet?.podInfo">
-      <span
-        class="kd-muted-light"
-        i18n
-        >Pods:&nbsp;</span
-      >
+    <div class="kd-inline-property" *ngIf="replicaSet?.podInfo">
+      <span class="kd-muted-light" i18n>Pods:&nbsp;</span>
       <span>{{replicaSet.podInfo.running}} / {{replicaSet.podInfo.desired}}</span>
     </div>
   </div>
 
-  <div
-    content
-    *ngIf="isInitialized"
-    fxLayout="row wrap">
+  <div content *ngIf="isInitialized" fxLayout="row wrap">
     <kd-property *ngIf="replicaSet?.selector">
-      <div
-        key
-        i18n>
-        Selector
-      </div>
+      <div key i18n>Selector</div>
       <div value>
-        <kd-chips
-          [map]="replicaSet.selector.matchLabels"
-          [displayAll]="true"></kd-chips>
+        <kd-chips [map]="replicaSet.selector.matchLabels" [displayAll]="true"></kd-chips>
       </div>
     </kd-property>
 
     <kd-property *ngIf="replicaSet?.containerImages">
-      <div
-        key
-        i18n>
-        Images
-      </div>
+      <div key i18n>Images</div>
       <div value>
-        <kd-chips
-          [map]="replicaSet.containerImages"
-          [displayAll]="true"></kd-chips>
+        <kd-chips [map]="replicaSet.containerImages" [displayAll]="true"></kd-chips>
       </div>
     </kd-property>
 
     <kd-property *ngIf="replicaSet?.initContainerImages">
-      <div
-        key
-        i18n>
-        Init images
-      </div>
+      <div key i18n>Init images</div>
       <div value>
-        <kd-chips
-          [map]="replicaSet.initContainerImages"
-          [displayAll]="true"></kd-chips>
+        <kd-chips [map]="replicaSet.initContainerImages" [displayAll]="true"></kd-chips>
       </div>
     </kd-property>
   </div>
 </kd-card>
 
-<kd-pod-status-card
-  [podInfo]="replicaSet?.podInfo"
-  [initialized]="isInitialized"></kd-pod-status-card>
+<kd-pod-status-card [podInfo]="replicaSet?.podInfo" [initialized]="isInitialized"></kd-pod-status-card>
 
 <kd-pod-list [endpoint]="podListEndpoint"></kd-pod-list>
 

@@ -14,72 +14,35 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<kd-object-meta
-  [initialized]="isInitialized"
-  [objectMeta]="persistentVolumeClaim?.objectMeta"></kd-object-meta>
+<kd-object-meta [initialized]="isInitialized" [objectMeta]="persistentVolumeClaim?.objectMeta"></kd-object-meta>
 
 <kd-card [initialized]="isInitialized">
-  <div
-    title
-    i18n>
-    Resource information
-  </div>
-  <div
-    content
-    *ngIf="isInitialized"
-    fxLayout="row wrap">
+  <div title i18n>Resource information</div>
+  <div content *ngIf="isInitialized" fxLayout="row wrap">
     <kd-property *ngIf="persistentVolumeClaim?.status">
-      <div
-        key
-        i18n>
-        Status
-      </div>
+      <div key i18n>Status</div>
       <div value>{{persistentVolumeClaim.status}}</div>
     </kd-property>
     <kd-property *ngIf="persistentVolumeClaim?.storageClass">
-      <div
-        key
-        i18n>
-        Storage Class
-      </div>
+      <div key i18n>Storage Class</div>
       <div value>{{persistentVolumeClaim.storageClass}}</div>
     </kd-property>
     <kd-property *ngIf="persistentVolumeClaim?.volume">
-      <div
-        key
-        i18n>
-        Volume Name
-      </div>
+      <div key i18n>Volume Name</div>
       <div value>
-        <a
-          [routerLink]="getPersistentVolumeHref(persistentVolumeClaim.volume)"
-          queryParamsHandling="preserve">
+        <a [routerLink]="getPersistentVolumeHref(persistentVolumeClaim.volume)" queryParamsHandling="preserve">
           {{persistentVolumeClaim.volume}}
         </a>
       </div>
     </kd-property>
-    <kd-property
-      *ngIf="persistentVolumeClaim?.capacity"
-      fxFlex="100">
-      <div
-        key
-        i18n>
-        Capacity
-      </div>
+    <kd-property *ngIf="persistentVolumeClaim?.capacity" fxFlex="100">
+      <div key i18n>Capacity</div>
       <div value>
-        <kd-chips
-          [map]="persistentVolumeClaim.capacity"
-          [displayAll]="true"></kd-chips>
+        <kd-chips [map]="persistentVolumeClaim.capacity" [displayAll]="true"></kd-chips>
       </div>
     </kd-property>
-    <kd-property
-      *ngIf="persistentVolumeClaim?.accessModes"
-      fxFlex="100">
-      <div
-        key
-        i18n>
-        Access Modes
-      </div>
+    <kd-property *ngIf="persistentVolumeClaim?.accessModes" fxFlex="100">
+      <div key i18n>Access Modes</div>
       <div value>
         <kd-chips [map]="persistentVolumeClaim.accessModes"></kd-chips>
       </div>

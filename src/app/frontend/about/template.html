@@ -15,33 +15,19 @@ limitations under the License.
 -->
 
 <kd-card [withFooter]="true">
-  <div
-    title
-    i18n>
-    About
-  </div>
+  <div title i18n>About</div>
 
-  <div
-    content
-    fxLayout="row">
-    <mat-icon
-      class="kd-about-logo-icon"
-      [svgIcon]="assets.getAppLogo()"></mat-icon>
+  <div content fxLayout="row">
+    <mat-icon class="kd-about-logo-icon" [svgIcon]="assets.getAppLogo()"></mat-icon>
     <div fxFlexAlign="center">
       <div class="kd-h1">
         <span>Dashboard v{{versionInfo.semverString}}</span>
       </div>
-      <div
-        class="kd-h3"
-        i18n>
-        General-purpose web UI for Kubernetes clusters
-      </div>
+      <div class="kd-h3" i18n>General-purpose web UI for Kubernetes clusters</div>
     </div>
   </div>
 
-  <div
-    class="kd-muted"
-    footer>
+  <div class="kd-muted" footer>
     <div>Copyright 2015 - {{latestCopyrightYear}} The Kubernetes Authors.</div>
     <div i18n>
       Kubernetes Dashboard is made possible by the Dashboard

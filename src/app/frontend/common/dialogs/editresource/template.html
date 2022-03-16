@@ -14,28 +14,15 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<h2
-  mat-dialog-title
-  i18n>
-  Edit a resource
-</h2>
+<h2 mat-dialog-title i18n>Edit a resource</h2>
 <mat-dialog-content class="kd-dialog-text">
   <mat-button-toggle-group #group="matButtonToggleGroup">
-    <mat-button-toggle
-      [value]="modes.YAML"
-      [checked]="true"
-      >YAML</mat-button-toggle
-    >
+    <mat-button-toggle [value]="modes.YAML" [checked]="true">YAML</mat-button-toggle>
     <mat-button-toggle [value]="modes.JSON">JSON</mat-button-toggle>
   </mat-button-toggle-group>
 
-  <kd-text-input
-    [(text)]="text"
-    [prettify]="false"
-    [mode]="getSelectedMode()"></kd-text-input>
-  <div
-    class="kd-equivalent-block kd-muted kd-bg-card-dark"
-    fxLayoutAlign=" center">
+  <kd-text-input [(text)]="text" [prettify]="false" [mode]="getSelectedMode()"></kd-text-input>
+  <div class="kd-equivalent-block kd-muted kd-bg-card-dark" fxLayoutAlign=" center">
     <mat-icon>info</mat-icon>
     <div>
       <span i18n>This action is equivalent to:</span>
@@ -44,19 +31,6 @@ limitations under the License.
   </div>
 </mat-dialog-content>
 <mat-dialog-actions>
-  <button
-    mat-button
-    color="primary"
-    id="confirm-edit"
-    [mat-dialog-close]="getJSON()"
-    i18n>
-    Update
-  </button>
-  <button
-    mat-button
-    color="primary"
-    [mat-dialog-close]="false"
-    i18n>
-    Cancel
-  </button>
+  <button mat-button color="primary" id="confirm-edit" [mat-dialog-close]="getJSON()" i18n>Update</button>
+  <button mat-button color="primary" [mat-dialog-close]="false" i18n>Cancel</button>
 </mat-dialog-actions>

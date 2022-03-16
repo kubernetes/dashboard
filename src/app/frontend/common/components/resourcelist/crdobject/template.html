@@ -14,32 +14,15 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<kd-card
-  role="table"
-  [hidden]="isHidden()">
-  <div
-    title
-    fxLayout="row"
-    i18n>
-    Objects
-  </div>
-  <div description>
-    <span
-      class="kd-muted-light"
-      i18n
-      >Items:&nbsp;</span
-    >{{totalItems}}
-  </div>
+<kd-card role="table" [hidden]="isHidden()">
+  <div title fxLayout="row" i18n>Objects</div>
+  <div description><span class="kd-muted-light" i18n>Items:&nbsp;</span>{{totalItems}}</div>
   <div actions>
     <kd-card-list-filter></kd-card-list-filter>
   </div>
 
-  <div
-    content
-    [hidden]="showZeroState()">
-    <div
-      kdLoadingSpinner
-      [isLoading]="isLoading"></div>
+  <div content [hidden]="showZeroState()">
+    <div kdLoadingSpinner [isLoading]="isLoading"></div>
 
     <mat-table
       [dataSource]="getData()"
@@ -49,11 +32,7 @@ limitations under the License.
       matSortDisableClear
       matSortDirection="asc">
       <ng-container [matColumnDef]="getColumns()[0]">
-        <mat-header-cell
-          *matHeaderCellDef
-          i18n
-          >Name</mat-header-cell
-        >
+        <mat-header-cell *matHeaderCellDef i18n>Name</mat-header-cell>
         <mat-cell *matCellDef="let object">
           <a
             [routerLink]="getDetailsHref(object.objectMeta.name, object.objectMeta.namespace)"
@@ -64,35 +43,21 @@ limitations under the License.
       </ng-container>
 
       <ng-container [matColumnDef]="getColumns()[1]">
-        <mat-header-cell
-          *matHeaderCellDef
-          i18n
-          >Namespace</mat-header-cell
-        >
+        <mat-header-cell *matHeaderCellDef i18n>Namespace</mat-header-cell>
         <mat-cell *matCellDef="let object">{{object.objectMeta.namespace}}</mat-cell>
       </ng-container>
 
       <ng-container [matColumnDef]="getColumns()[2]">
-        <mat-header-cell
-          *matHeaderCellDef
-          i18n
-          >Created</mat-header-cell
-        >
+        <mat-header-cell *matHeaderCellDef i18n>Created</mat-header-cell>
         <mat-cell *matCellDef="let object">
-          <kd-date
-            [date]="object.objectMeta.creationTimestamp"
-            relative></kd-date>
+          <kd-date [date]="object.objectMeta.creationTimestamp" relative></kd-date>
         </mat-cell>
       </ng-container>
 
-      <ng-container
-        *ngFor="let col of getActionColumns()"
-        [matColumnDef]="col.name">
+      <ng-container *ngFor="let col of getActionColumns()" [matColumnDef]="col.name">
         <mat-header-cell *matHeaderCellDef></mat-header-cell>
         <mat-cell *matCellDef="let object">
-          <kd-dynamic-cell
-            [component]="col.component"
-            [resource]="object"></kd-dynamic-cell>
+          <kd-dynamic-cell [component]="col.component" [resource]="object"></kd-dynamic-cell>
         </mat-cell>
       </ng-container>
 
@@ -101,26 +66,14 @@ limitations under the License.
     </mat-table>
 
     <div [hidden]="totalItems <= itemsPerPage">
-      <mat-paginator
-        [length]="totalItems"
-        [pageSize]="itemsPerPage"
-        hidePageSize
-        showFirstLastButtons></mat-paginator>
+      <mat-paginator [length]="totalItems" [pageSize]="itemsPerPage" hidePageSize showFirstLastButtons></mat-paginator>
     </div>
   </div>
 
-  <div
-    content
-    [hidden]="!showZeroState()">
+  <div content [hidden]="!showZeroState()">
     <kd-list-zero-state>
-      <ng-template
-        #textTemplate
-        *ngIf="!areMultipleNamespacesSelected() && namespaced">
-        <div
-          fxFlexAlign="center"
-          i18n>
-          No resources found in the selected namespace.
-        </div>
+      <ng-template #textTemplate *ngIf="!areMultipleNamespacesSelected() && namespaced">
+        <div fxFlexAlign="center" i18n>No resources found in the selected namespace.</div>
       </ng-template>
     </kd-list-zero-state>
   </div>

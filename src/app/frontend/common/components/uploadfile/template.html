@@ -14,9 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<div
-  fxLayout="row"
-  fxLayoutAlign="space-between start">
+<div fxLayout="row" fxLayoutAlign="space-between start">
   <mat-form-field fxFlex>
     <input
       matInput
@@ -26,17 +24,8 @@ limitations under the License.
       [readonly]="true"
       (click)="fileInput.click()" />
   </mat-form-field>
-  <button
-    mat-button
-    type="button"
-    color="primary"
-    (click)="fileInput.click()"
-    class="kd-upload-button">
+  <button mat-button type="button" color="primary" (click)="fileInput.click()" class="kd-upload-button">
     <mat-icon>more_horiz</mat-icon>
   </button>
-  <input
-    hidden
-    type="file"
-    #fileInput
-    (change)="onChange($event)" />
+  <input hidden type="file" #fileInput (change)="onChange($event)" />
 </div>

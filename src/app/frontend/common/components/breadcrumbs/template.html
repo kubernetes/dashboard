@@ -14,22 +14,11 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<div
-  class="kd-breadcrumbs-container kd-accent"
-  fxFlex="auto">
-  <div
-    *ngFor="let breadcrumb of breadcrumbs; let last = last"
-    [ngClass]="{'kd-inline-breadcrumb': !last}">
-    <a
-      [routerLink]="breadcrumb.stateLink"
-      queryParamsHandling="preserve"
-      [ngClass]="{'kd-faded-breadcrumb': !last}">
+<div class="kd-breadcrumbs-container kd-accent" fxFlex="auto">
+  <div *ngFor="let breadcrumb of breadcrumbs; let last = last" [ngClass]="{'kd-inline-breadcrumb': !last}">
+    <a [routerLink]="breadcrumb.stateLink" queryParamsHandling="preserve" [ngClass]="{'kd-faded-breadcrumb': !last}">
       {{breadcrumb.label}}
     </a>
-    <mat-icon
-      *ngIf="!last"
-      class="kd-faded-breadcrumb kd-breadcrumb-divider">
-      keyboard_arrow_right
-    </mat-icon>
+    <mat-icon *ngIf="!last" class="kd-faded-breadcrumb kd-breadcrumb-divider"> keyboard_arrow_right </mat-icon>
   </div>
 </div>

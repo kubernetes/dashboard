@@ -15,41 +15,21 @@ limitations under the License.
 -->
 
 <div class="kd-create-from-input-info">
-  <span
-    *ngIf="areMultipleNamespacesSelected()"
-    i18n>
+  <span *ngIf="areMultipleNamespacesSelected()" i18n>
     Enter YAML or JSON content specifying the resources to create to the namespace specified in the file.
   </span>
-  <span
-    *ngIf="!areMultipleNamespacesSelected()"
-    i18n>
+  <span *ngIf="!areMultipleNamespacesSelected()" i18n>
     Enter YAML or JSON content specifying the resources to create to the currently selected namespace.
   </span>
-  <a
-    href="https://kubernetes.io/docs/tasks/run-application/run-stateless-application-deployment/"
-    target="_blank"
-    i18n>
+  <a href="https://kubernetes.io/docs/tasks/run-application/run-stateless-application-deployment/" target="_blank" i18n>
     Learn more <i class="material-icons">open_in_new</i>
   </a>
 </div>
 
 <kd-text-input [(text)]="inputData"></kd-text-input>
 
-<button
-  type="button"
-  (click)="create()"
-  [disabled]="isCreateDisabled()"
-  color="primary"
-  mat-raised-button
-  i18n>
+<button type="button" (click)="create()" [disabled]="isCreateDisabled()" color="primary" mat-raised-button i18n>
   Upload
 </button>
 
-<button
-  type="button"
-  (click)="cancel()"
-  color="primary"
-  mat-button
-  i18n>
-  Cancel
-</button>
+<button type="button" (click)="cancel()" color="primary" mat-button i18n>Cancel</button>
