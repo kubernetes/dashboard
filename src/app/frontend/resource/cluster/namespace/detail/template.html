@@ -14,13 +14,26 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<kd-object-meta [initialized]="isInitialized" [objectMeta]="namespace?.objectMeta"></kd-object-meta>
+<kd-object-meta
+  [initialized]="isInitialized"
+  [objectMeta]="namespace?.objectMeta"></kd-object-meta>
 
 <kd-card [initialized]="isInitialized">
-  <div title i18n>Resource information</div>
-  <div content *ngIf="isInitialized" fxLayout="row wrap">
+  <div
+    title
+    i18n>
+    Resource information
+  </div>
+  <div
+    content
+    *ngIf="isInitialized"
+    fxLayout="row wrap">
     <kd-property *ngIf="namespace?.phase">
-      <div key i18n>Status</div>
+      <div
+        key
+        i18n>
+        Status
+      </div>
       <div value>{{namespace?.phase}}</div>
     </kd-property>
   </div>
@@ -30,6 +43,8 @@ limitations under the License.
   [quotas]="namespace?.resourceQuotaList?.items"
   [initialized]="isInitialized"></kd-resource-quota-list>
 
-<kd-resource-limit-list [limits]="namespace?.resourceLimits" [initialized]="isInitialized"></kd-resource-limit-list>
+<kd-resource-limit-list
+  [limits]="namespace?.resourceLimits"
+  [initialized]="isInitialized"></kd-resource-limit-list>
 
 <kd-event-list [endpoint]="eventListEndpoint"></kd-event-list>

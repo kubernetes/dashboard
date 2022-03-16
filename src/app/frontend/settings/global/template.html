@@ -14,8 +14,15 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<kd-card [initialized]="isInitialized()" [expandable]="true" *ngIf="!hasLoadError">
-  <div title i18n>Global settings</div>
+<kd-card
+  [initialized]="isInitialized()"
+  [expandable]="true"
+  *ngIf="!hasLoadError">
+  <div
+    title
+    i18n>
+    Global settings
+  </div>
   <div content>
     <p i18n>Global settings are stored in config map, so all of them are applied for every instance of the app.</p>
     <br />
@@ -44,9 +51,19 @@ limitations under the License.
         desc="Max number of items that can be displayed on every list view."
         i18n-desc>
         <div fxFlex>
-          <mat-slider [formControlName]="Controls.ItemsPerPage" color="primary" min="5" max="50" step="5" fxFlex>
+          <mat-slider
+            [formControlName]="Controls.ItemsPerPage"
+            color="primary"
+            min="5"
+            max="50"
+            step="5"
+            fxFlex>
           </mat-slider>
-          <div class="kd-slider-value kd-muted" fxFlexAlign=" center">{{settings.itemsPerPage}}</div>
+          <div
+            class="kd-slider-value kd-muted"
+            fxFlexAlign=" center">
+            {{settings.itemsPerPage}}
+          </div>
         </div>
       </kd-settings-entry>
       <kd-settings-entry
@@ -55,9 +72,19 @@ limitations under the License.
         desc="Max number of labels that are displayed by default on most views."
         i18n-desc>
         <div fxFlex>
-          <mat-slider [formControlName]="Controls.LabelsLimit" color="primary" min="1" max="10" step="1" fxFlex>
+          <mat-slider
+            [formControlName]="Controls.LabelsLimit"
+            color="primary"
+            min="1"
+            max="10"
+            step="1"
+            fxFlex>
           </mat-slider>
-          <div class="kd-slider-value kd-muted" fxFlexAlign=" center">{{settings.labelsLimit}}</div>
+          <div
+            class="kd-slider-value kd-muted"
+            fxFlexAlign=" center">
+            {{settings.labelsLimit}}
+          </div>
         </div>
       </kd-settings-entry>
       <kd-settings-entry
@@ -74,7 +101,11 @@ limitations under the License.
             step="1"
             fxFlex>
           </mat-slider>
-          <span class="kd-slider-value kd-muted" fxFlexAlign=" center"> {{settings.logsAutoRefreshTimeInterval}} </span>
+          <span
+            class="kd-slider-value kd-muted"
+            fxFlexAlign=" center">
+            {{settings.logsAutoRefreshTimeInterval}}
+          </span>
         </div>
       </kd-settings-entry>
       <kd-settings-entry
@@ -91,7 +122,9 @@ limitations under the License.
             step="5"
             fxFlex>
           </mat-slider>
-          <span class="kd-slider-value kd-muted" fxFlexAlign=" center">
+          <span
+            class="kd-slider-value kd-muted"
+            fxFlexAlign=" center">
             {{settings.resourceAutoRefreshTimeInterval}}
           </span>
         </div>
@@ -101,7 +134,9 @@ limitations under the License.
         i18n-key
         desc="Hides all access denied warnings in the notification panel."
         i18n-desc>
-        <div fxFlex fxLayoutAlign=" center">
+        <div
+          fxFlex
+          fxLayoutAlign=" center">
           <mat-slide-toggle
             color="primary"
             name="disableAccessDeniedNotifications"
@@ -110,8 +145,22 @@ limitations under the License.
         </div>
       </kd-settings-entry>
       <br /><br />
-      <button [disabled]="!canSave()" (click)="save()" color="primary" mat-raised-button i18n>Save</button>
-      <button type="button" (click)="reload()" color="primary" mat-raised-button i18n>Reload</button>
+      <button
+        [disabled]="!canSave()"
+        (click)="save()"
+        color="primary"
+        mat-raised-button
+        i18n>
+        Save
+      </button>
+      <button
+        type="button"
+        (click)="reload()"
+        color="primary"
+        mat-raised-button
+        i18n>
+        Reload
+      </button>
     </form>
   </div>
 </kd-card>

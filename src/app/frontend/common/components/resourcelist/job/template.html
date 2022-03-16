@@ -14,20 +14,40 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<kd-graph-metrics [metrics]="cumulativeMetrics" *ngIf="showMetrics"></kd-graph-metrics>
+<kd-graph-metrics
+  [metrics]="cumulativeMetrics"
+  *ngIf="showMetrics"></kd-graph-metrics>
 
-<kd-card role="table" [hidden]="isHidden()">
-  <div title fxLayout="row">
+<kd-card
+  role="table"
+  [hidden]="isHidden()">
+  <div
+    title
+    fxLayout="row">
     <ng-container *ngIf="title;else defaultTitle">{{title}}</ng-container>
-    <ng-template #defaultTitle i18n>Jobs</ng-template>
+    <ng-template
+      #defaultTitle
+      i18n
+      >Jobs</ng-template
+    >
   </div>
-  <div description><span class="kd-muted-light" i18n>Items:&nbsp;</span>{{totalItems}}</div>
+  <div description>
+    <span
+      class="kd-muted-light"
+      i18n
+      >Items:&nbsp;</span
+    >{{totalItems}}
+  </div>
   <div actions>
     <kd-card-list-filter></kd-card-list-filter>
   </div>
 
-  <div content [hidden]="showZeroState()">
-    <div kdLoadingSpinner [isLoading]="isLoading"></div>
+  <div
+    content
+    [hidden]="showZeroState()">
+    <div
+      kdLoadingSpinner
+      [isLoading]="isLoading"></div>
 
     <mat-table
       [dataSource]="getData()"
@@ -40,7 +60,9 @@ limitations under the License.
       <ng-container matColumnDef="statusicon">
         <mat-header-cell *matHeaderCellDef></mat-header-cell>
         <mat-cell *matCellDef="let job; let index=index">
-          <mat-icon [ngClass]="getStatus(job).iconClass" [matTooltip]="getStatus(job).iconTooltip">
+          <mat-icon
+            [ngClass]="getStatus(job).iconClass"
+            [matTooltip]="getStatus(job).iconTooltip">
             <ng-container *ngIf="showHoverIcon(index, job); else showStatus"> remove_red_eye </ng-container>
 
             <ng-template #showStatus> {{getStatus(job).iconName}} </ng-template>
@@ -55,10 +77,17 @@ limitations under the License.
       </ng-container>
 
       <ng-container matColumnDef="name">
-        <mat-header-cell *matHeaderCellDef mat-sort-header disableClear="true" class="kd-col-gt" i18n
+        <mat-header-cell
+          *matHeaderCellDef
+          mat-sort-header
+          disableClear="true"
+          class="kd-col-gt"
+          i18n
           >Name</mat-header-cell
         >
-        <mat-cell *matCellDef="let job" class="kd-col-gt">
+        <mat-cell
+          *matCellDef="let job"
+          class="kd-col-gt">
           <a
             (click)="$event.stopPropagation()"
             [routerLink]="getDetailsHref(job.objectMeta.name, job.objectMeta.namespace)"
@@ -68,43 +97,90 @@ limitations under the License.
         </mat-cell>
       </ng-container>
 
-      <ng-container *ngIf="shouldShowColumn('namespace')" matColumnDef="namespace">
-        <mat-header-cell *matHeaderCellDef class="kd-col-md" i18n>Namespace</mat-header-cell>
-        <mat-cell *matCellDef="let job" class="kd-col-md">{{job.objectMeta.namespace}}</mat-cell>
+      <ng-container
+        *ngIf="shouldShowColumn('namespace')"
+        matColumnDef="namespace">
+        <mat-header-cell
+          *matHeaderCellDef
+          class="kd-col-md"
+          i18n
+          >Namespace</mat-header-cell
+        >
+        <mat-cell
+          *matCellDef="let job"
+          class="kd-col-md"
+          >{{job.objectMeta.namespace}}</mat-cell
+        >
       </ng-container>
 
       <ng-container matColumnDef="images">
-        <mat-header-cell *matHeaderCellDef class="kd-col-gt" i18n>Images</mat-header-cell>
-        <mat-cell *matCellDef="let job" class="kd-col-gt">
+        <mat-header-cell
+          *matHeaderCellDef
+          class="kd-col-gt"
+          i18n
+          >Images</mat-header-cell
+        >
+        <mat-cell
+          *matCellDef="let job"
+          class="kd-col-gt">
           <kd-chips [map]="job.containerImages"></kd-chips>
         </mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="labels">
-        <mat-header-cell *matHeaderCellDef class="kd-col-gt" i18n>Labels</mat-header-cell>
-        <mat-cell *matCellDef="let job" class="kd-col-gt">
+        <mat-header-cell
+          *matHeaderCellDef
+          class="kd-col-gt"
+          i18n
+          >Labels</mat-header-cell
+        >
+        <mat-cell
+          *matCellDef="let job"
+          class="kd-col-gt">
           <kd-chips [map]="job.objectMeta.labels"></kd-chips>
         </mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="pods">
-        <mat-header-cell *matHeaderCellDef class="kd-col-xs" i18n>Pods</mat-header-cell>
-        <mat-cell *matCellDef="let job" class="kd-col-xs"> {{job.podInfo.running}} / {{job.podInfo.desired}} </mat-cell>
-      </ng-container>
-
-      <ng-container matColumnDef="created">
-        <mat-header-cell *matHeaderCellDef mat-sort-header disableClear="true" class="kd-col-sm" i18n
-          >Created</mat-header-cell
+        <mat-header-cell
+          *matHeaderCellDef
+          class="kd-col-xs"
+          i18n
+          >Pods</mat-header-cell
         >
-        <mat-cell *matCellDef="let job" class="kd-col-sm">
-          <kd-date [date]="job.objectMeta.creationTimestamp" relative></kd-date>
+        <mat-cell
+          *matCellDef="let job"
+          class="kd-col-xs">
+          {{job.podInfo.running}} / {{job.podInfo.desired}}
         </mat-cell>
       </ng-container>
 
-      <ng-container *ngFor="let col of getActionColumns()" [matColumnDef]="col.name">
+      <ng-container matColumnDef="created">
+        <mat-header-cell
+          *matHeaderCellDef
+          mat-sort-header
+          disableClear="true"
+          class="kd-col-sm"
+          i18n
+          >Created</mat-header-cell
+        >
+        <mat-cell
+          *matCellDef="let job"
+          class="kd-col-sm">
+          <kd-date
+            [date]="job.objectMeta.creationTimestamp"
+            relative></kd-date>
+        </mat-cell>
+      </ng-container>
+
+      <ng-container
+        *ngFor="let col of getActionColumns()"
+        [matColumnDef]="col.name">
         <mat-header-cell *matHeaderCellDef></mat-header-cell>
         <mat-cell *matCellDef="let job">
-          <kd-dynamic-cell [component]="col.component" [resource]="job"></kd-dynamic-cell>
+          <kd-dynamic-cell
+            [component]="col.component"
+            [resource]="job"></kd-dynamic-cell>
         </mat-cell>
       </ng-container>
 
@@ -122,11 +198,17 @@ limitations under the License.
     </mat-table>
 
     <div [hidden]="totalItems <= itemsPerPage">
-      <mat-paginator [length]="totalItems" [pageSize]="itemsPerPage" hidePageSize showFirstLastButtons></mat-paginator>
+      <mat-paginator
+        [length]="totalItems"
+        [pageSize]="itemsPerPage"
+        hidePageSize
+        showFirstLastButtons></mat-paginator>
     </div>
   </div>
 
-  <div content [hidden]="!showZeroState()">
+  <div
+    content
+    [hidden]="!showZeroState()">
     <kd-list-zero-state></kd-list-zero-state>
   </div>
 </kd-card>

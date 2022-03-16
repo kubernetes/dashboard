@@ -14,12 +14,30 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<kd-card role="table" [expanded]="expanded" [hidden]="isHidden()">
-  <div title fxLayout="row" i18n>Events</div>
-  <div description><span class="kd-muted-light" i18n>Items:&nbsp;</span>{{totalItems}}</div>
+<kd-card
+  role="table"
+  [expanded]="expanded"
+  [hidden]="isHidden()">
+  <div
+    title
+    fxLayout="row"
+    i18n>
+    Events
+  </div>
+  <div description>
+    <span
+      class="kd-muted-light"
+      i18n
+      >Items:&nbsp;</span
+    >{{totalItems}}
+  </div>
 
-  <div content [hidden]="showZeroState()">
-    <div kdLoadingSpinner [isLoading]="isLoading"></div>
+  <div
+    content
+    [hidden]="showZeroState()">
+    <div
+      kdLoadingSpinner
+      [isLoading]="isLoading"></div>
 
     <mat-table
       [dataSource]="getData()"
@@ -31,40 +49,99 @@ limitations under the License.
       <ng-container matColumnDef="statusicon">
         <mat-header-cell *matHeaderCellDef></mat-header-cell>
         <mat-cell *matCellDef="let event">
-          <mat-icon [ngClass]="getStatus(event).iconClass" [matTooltip]="getStatus(event).iconTooltip">
+          <mat-icon
+            [ngClass]="getStatus(event).iconClass"
+            [matTooltip]="getStatus(event).iconTooltip">
             {{getStatus(event).iconName}}
           </mat-icon>
         </mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="name">
-        <mat-header-cell *matHeaderCellDef class="kd-col-md" i18n>Name</mat-header-cell>
-        <mat-cell *matCellDef="let event" class="kd-col-md">{{event.objectMeta.name}}</mat-cell>
+        <mat-header-cell
+          *matHeaderCellDef
+          class="kd-col-md"
+          i18n
+          >Name</mat-header-cell
+        >
+        <mat-cell
+          *matCellDef="let event"
+          class="kd-col-md"
+          >{{event.objectMeta.name}}</mat-cell
+        >
       </ng-container>
 
-      <ng-container *ngIf="shouldShowColumn('namespace')" matColumnDef="namespace">
-        <mat-header-cell *matHeaderCellDef class="kd-col-sm" i18n>Namespace</mat-header-cell>
-        <mat-cell *matCellDef="let event" class="kd-col-sm">{{event.objectMeta.namespace}}</mat-cell>
+      <ng-container
+        *ngIf="shouldShowColumn('namespace')"
+        matColumnDef="namespace">
+        <mat-header-cell
+          *matHeaderCellDef
+          class="kd-col-sm"
+          i18n
+          >Namespace</mat-header-cell
+        >
+        <mat-cell
+          *matCellDef="let event"
+          class="kd-col-sm"
+          >{{event.objectMeta.namespace}}</mat-cell
+        >
       </ng-container>
 
       <ng-container matColumnDef="reason">
-        <mat-header-cell *matHeaderCellDef mat-sort-header class="kd-col-xs" i18n>Reason</mat-header-cell>
-        <mat-cell *matCellDef="let event" class="kd-col-xs">{{event.reason}}</mat-cell>
+        <mat-header-cell
+          *matHeaderCellDef
+          mat-sort-header
+          class="kd-col-xs"
+          i18n
+          >Reason</mat-header-cell
+        >
+        <mat-cell
+          *matCellDef="let event"
+          class="kd-col-xs"
+          >{{event.reason}}</mat-cell
+        >
       </ng-container>
 
       <ng-container matColumnDef="message">
-        <mat-header-cell *matHeaderCellDef class="kd-col-gt" i18n>Message</mat-header-cell>
-        <mat-cell *matCellDef="let event" class="kd-col-gt">{{event.message}}</mat-cell>
+        <mat-header-cell
+          *matHeaderCellDef
+          class="kd-col-gt"
+          i18n
+          >Message</mat-header-cell
+        >
+        <mat-cell
+          *matCellDef="let event"
+          class="kd-col-gt"
+          >{{event.message}}</mat-cell
+        >
       </ng-container>
 
       <ng-container matColumnDef="source">
-        <mat-header-cell *matHeaderCellDef class="kd-col-md" i18n>Source</mat-header-cell>
-        <mat-cell *matCellDef="let event" class="kd-col-md"> {{event.sourceComponent}} {{event.sourceHost}} </mat-cell>
+        <mat-header-cell
+          *matHeaderCellDef
+          class="kd-col-md"
+          i18n
+          >Source</mat-header-cell
+        >
+        <mat-cell
+          *matCellDef="let event"
+          class="kd-col-md">
+          {{event.sourceComponent}} {{event.sourceHost}}
+        </mat-cell>
       </ng-container>
 
-      <ng-container *ngIf="shouldShowColumn('object')" matColumnDef="object">
-        <mat-header-cell *matHeaderCellDef class="kd-col-md" i18n>Object</mat-header-cell>
-        <mat-cell *matCellDef="let event" class="kd-col-md">
+      <ng-container
+        *ngIf="shouldShowColumn('object')"
+        matColumnDef="object">
+        <mat-header-cell
+          *matHeaderCellDef
+          class="kd-col-md"
+          i18n
+          >Object</mat-header-cell
+        >
+        <mat-cell
+          *matCellDef="let event"
+          class="kd-col-md">
           <div *ngIf="event.objectName">
             <a
               *ngIf="getObjectHref(event.objectKind, event.objectName, event.objectNamespace); else unsupportedObject"
@@ -78,50 +155,100 @@ limitations under the License.
         </mat-cell>
       </ng-container>
 
-      <ng-container *ngIf="shouldShowColumn('subobject')" matColumnDef="subobject">
-        <mat-header-cell *matHeaderCellDef class="kd-col-md" i18n>Sub-object</mat-header-cell>
-        <mat-cell *matCellDef="let event" class="kd-col-md">
+      <ng-container
+        *ngIf="shouldShowColumn('subobject')"
+        matColumnDef="subobject">
+        <mat-header-cell
+          *matHeaderCellDef
+          class="kd-col-md"
+          i18n
+          >Sub-object</mat-header-cell
+        >
+        <mat-cell
+          *matCellDef="let event"
+          class="kd-col-md">
           <div *ngIf="event.object">{{event.object}}</div>
           <div *ngIf="!event.object">-</div>
         </mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="count">
-        <mat-header-cell *matHeaderCellDef class="kd-col-xs" i18n>Count</mat-header-cell>
-        <mat-cell *matCellDef="let event" class="kd-col-xs">{{event.count}}</mat-cell>
+        <mat-header-cell
+          *matHeaderCellDef
+          class="kd-col-xs"
+          i18n
+          >Count</mat-header-cell
+        >
+        <mat-cell
+          *matCellDef="let event"
+          class="kd-col-xs"
+          >{{event.count}}</mat-cell
+        >
       </ng-container>
 
       <ng-container matColumnDef="firstSeen">
-        <mat-header-cell *matHeaderCellDef mat-sort-header class="kd-col-sm" i18n>First Seen</mat-header-cell>
-        <mat-cell *matCellDef="let event" class="kd-col-sm">
-          <kd-date [date]="event.firstSeen" [relative]="true"></kd-date>
+        <mat-header-cell
+          *matHeaderCellDef
+          mat-sort-header
+          class="kd-col-sm"
+          i18n
+          >First Seen</mat-header-cell
+        >
+        <mat-cell
+          *matCellDef="let event"
+          class="kd-col-sm">
+          <kd-date
+            [date]="event.firstSeen"
+            [relative]="true"></kd-date>
         </mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="lastSeen">
-        <mat-header-cell *matHeaderCellDef mat-sort-header class="kd-col-sm" i18n>Last Seen</mat-header-cell>
-        <mat-cell *matCellDef="let event" class="kd-col-sm">
-          <kd-date [date]="event.lastSeen" [relative]="true"></kd-date>
+        <mat-header-cell
+          *matHeaderCellDef
+          mat-sort-header
+          class="kd-col-sm"
+          i18n
+          >Last Seen</mat-header-cell
+        >
+        <mat-cell
+          *matCellDef="let event"
+          class="kd-col-sm">
+          <kd-date
+            [date]="event.lastSeen"
+            [relative]="true"></kd-date>
         </mat-cell>
       </ng-container>
 
-      <ng-container *ngFor="let col of getActionColumns()" [matColumnDef]="col.name">
+      <ng-container
+        *ngFor="let col of getActionColumns()"
+        [matColumnDef]="col.name">
         <mat-header-cell *matHeaderCellDef></mat-header-cell>
         <mat-cell *matCellDef="let event">
-          <kd-dynamic-cell [component]="col.component" [resource]="event"></kd-dynamic-cell>
+          <kd-dynamic-cell
+            [component]="col.component"
+            [resource]="event"></kd-dynamic-cell>
         </mat-cell>
       </ng-container>
 
       <mat-header-row *matHeaderRowDef="getColumns()"></mat-header-row>
-      <mat-row #matrow *matRowDef="let row; columns: getColumns()"></mat-row>
+      <mat-row
+        #matrow
+        *matRowDef="let row; columns: getColumns()"></mat-row>
     </mat-table>
 
     <div [hidden]="totalItems <= itemsPerPage">
-      <mat-paginator [length]="totalItems" [pageSize]="itemsPerPage" hidePageSize showFirstLastButtons></mat-paginator>
+      <mat-paginator
+        [length]="totalItems"
+        [pageSize]="itemsPerPage"
+        hidePageSize
+        showFirstLastButtons></mat-paginator>
     </div>
   </div>
 
-  <div content [hidden]="!showZeroState()">
+  <div
+    content
+    [hidden]="!showZeroState()">
     <kd-list-zero-state></kd-list-zero-state>
   </div>
 </kd-card>

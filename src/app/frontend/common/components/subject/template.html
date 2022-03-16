@@ -14,30 +14,56 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<kd-card [initialized]="initialized" role="table">
-  <div title i18n>Subjects</div>
+<kd-card
+  [initialized]="initialized"
+  role="table">
+  <div
+    title
+    i18n>
+    Subjects
+  </div>
 
   <div description>
-    <div class="kd-inline-property" *ngIf="subjects?.length">
-      <span class="kd-muted-light" i18n>Items:&nbsp;</span>
+    <div
+      class="kd-inline-property"
+      *ngIf="subjects?.length">
+      <span
+        class="kd-muted-light"
+        i18n
+        >Items:&nbsp;</span
+      >
       <span>{{subjects.length}}</span>
     </div>
   </div>
 
-  <div content [hidden]="!subjects">
+  <div
+    content
+    [hidden]="!subjects">
     <mat-table [dataSource]="getDataSource()">
       <ng-container [matColumnDef]="getColumns()[0]">
-        <mat-header-cell *matHeaderCellDef i18n>Name</mat-header-cell>
+        <mat-header-cell
+          *matHeaderCellDef
+          i18n
+          >Name</mat-header-cell
+        >
         <mat-cell *matCellDef="let subject">
           <ng-container *ngIf="isSubjectKindKnown(subject)">
-            <a [routerLink]="getSubjectHref(subject)" queryParamsHandling="preserve">{{subject.name}}</a>
+            <a
+              [routerLink]="getSubjectHref(subject)"
+              queryParamsHandling="preserve"
+              >{{subject.name}}</a
+            >
           </ng-container>
           <ng-container *ngIf="!isSubjectKindKnown(subject)">{{subject.name}}</ng-container>
         </mat-cell>
       </ng-container>
 
       <ng-container [matColumnDef]="getColumns()[1]">
-        <mat-header-cell *matHeaderCellDef i18n>Namespace</mat-header-cell>
+        <mat-header-cell
+          *matHeaderCellDef
+          i18n
+          >Namespace</mat-header-cell
+        >
         <mat-cell *matCellDef="let subject">
           <ng-container *ngIf="subject.namespace">{{ subject.namespace }}</ng-container>
           <ng-container *ngIf="!subject.namespace">-</ng-container>
@@ -45,12 +71,20 @@ limitations under the License.
       </ng-container>
 
       <ng-container [matColumnDef]="getColumns()[2]">
-        <mat-header-cell *matHeaderCellDef i18n>Kind</mat-header-cell>
+        <mat-header-cell
+          *matHeaderCellDef
+          i18n
+          >Kind</mat-header-cell
+        >
         <mat-cell *matCellDef="let subject">{{ subject.kind }}</mat-cell>
       </ng-container>
 
       <ng-container [matColumnDef]="getColumns()[3]">
-        <mat-header-cell *matHeaderCellDef i18n>API Group</mat-header-cell>
+        <mat-header-cell
+          *matHeaderCellDef
+          i18n
+          >API Group</mat-header-cell
+        >
         <mat-cell *matCellDef="let subject">{{ subject.apiGroup }}</mat-cell>
       </ng-container>
 
@@ -59,7 +93,9 @@ limitations under the License.
     </mat-table>
   </div>
 
-  <div content [hidden]="subjects">
+  <div
+    content
+    [hidden]="subjects">
     <kd-list-zero-state></kd-list-zero-state>
   </div>
 </kd-card>

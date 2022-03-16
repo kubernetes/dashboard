@@ -15,10 +15,16 @@ limitations under the License.
 -->
 
 <div fxLayout="column">
-  <div class="kd-margin-bottom" i18n>Environment variables</div>
+  <div
+    class="kd-margin-bottom"
+    i18n>
+    Environment variables
+  </div>
   <ng-container [formGroup]="form">
     <ng-container formArrayName="variables">
-      <div *ngFor="let variable of variables.controls; let i = index;" [formGroupName]="i">
+      <div
+        *ngFor="let variable of variables.controls; let i = index;"
+        [formGroupName]="i">
         <mat-form-field fxFlex="auto">
           <input
             matInput
@@ -27,7 +33,9 @@ limitations under the License.
             i18n-placeholder
             placeholder="Name"
             (change)="addVariableIfNeeed(i)" />
-          <mat-error *ngIf="variable.get('name').errors?.pattern" i18n>
+          <mat-error
+            *ngIf="variable.get('name').errors?.pattern"
+            i18n>
             Variable name must be a valid C identifier.
           </mat-error>
         </mat-form-field>
@@ -35,11 +43,19 @@ limitations under the License.
         <div fxFlex="5"></div>
 
         <mat-form-field fxFlex="auto">
-          <input matInput name="value" formControlName="value" i18n-placeholder placeholder="Value" />
+          <input
+            matInput
+            name="value"
+            formControlName="value"
+            i18n-placeholder
+            placeholder="Value" />
         </mat-form-field>
 
         <div fxFlex="10">
-          <button mat-icon-button *ngIf="isRemovable(i)" (click)="remove(i)">
+          <button
+            mat-icon-button
+            *ngIf="isRemovable(i)"
+            (click)="remove(i)">
             <mat-icon>delete</mat-icon>
           </button>
         </div>

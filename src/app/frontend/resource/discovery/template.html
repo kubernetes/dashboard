@@ -15,8 +15,12 @@ limitations under the License.
 -->
 
 <div [hidden]="shouldShowZeroState()">
-  <kd-ingress-list (onchange)="onListUpdate($event)" [hideable]="true"></kd-ingress-list>
-  <kd-service-list (onchange)="onListUpdate($event)" [hideable]="true"></kd-service-list>
+  <kd-ingress-list
+    (onchange)="onListUpdate($event)"
+    [hideable]="true"></kd-ingress-list>
+  <kd-service-list
+    (onchange)="onListUpdate($event)"
+    [hideable]="true"></kd-service-list>
 </div>
 
 <kd-zero-state [hidden]="!shouldShowZeroState()"></kd-zero-state>

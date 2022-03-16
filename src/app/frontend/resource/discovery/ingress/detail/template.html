@@ -14,18 +14,39 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<kd-object-meta [initialized]="isInitialized" [objectMeta]="ingress?.objectMeta"></kd-object-meta>
+<kd-object-meta
+  [initialized]="isInitialized"
+  [objectMeta]="ingress?.objectMeta"></kd-object-meta>
 
-<kd-card *ngIf="ingress?.spec?.defaultBackend || ingress?.endpoints" [initialized]="isInitialized">
-  <div title i18n>Resource information</div>
-  <div content *ngIf="isInitialized" fxLayout="row wrap">
+<kd-card
+  *ngIf="ingress?.spec?.defaultBackend || ingress?.endpoints"
+  [initialized]="isInitialized">
+  <div
+    title
+    i18n>
+    Resource information
+  </div>
+  <div
+    content
+    *ngIf="isInitialized"
+    fxLayout="row wrap">
     <kd-property *ngIf="ingress?.spec?.ingressClassName">
-      <div key i18n>Ingress Class Name</div>
+      <div
+        key
+        i18n>
+        Ingress Class Name
+      </div>
       <div value>{{ingress.spec.ingressClassName}}</div>
     </kd-property>
 
-    <kd-property *ngIf="ingress?.endpoints?.length > 0" fxFlex="100">
-      <div key i18n>Endpoints</div>
+    <kd-property
+      *ngIf="ingress?.endpoints?.length > 0"
+      fxFlex="100">
+      <div
+        key
+        i18n>
+        Endpoints
+      </div>
       <div value>
         <kd-external-endpoint
           *ngFor="let endpoint of ingress.endpoints"
@@ -33,28 +54,53 @@ limitations under the License.
       </div>
     </kd-property>
 
-    <div fxFlex="100" fxLayout="column" fxLayoutGap="8px" *ngIf="ingress?.spec?.defaultBackend">
-      <div fxFlex class="kd-muted section-header" i18n>Default Backend</div>
+    <div
+      fxFlex="100"
+      fxLayout="column"
+      fxLayoutGap="8px"
+      *ngIf="ingress?.spec?.defaultBackend">
+      <div
+        fxFlex
+        class="kd-muted section-header"
+        i18n>
+        Default Backend
+      </div>
 
       <div fxLayout="row wrap">
         <ng-container *ngIf="ingress.spec.defaultBackend.service">
           <kd-property>
-            <div key i18n>Service Name</div>
+            <div
+              key
+              i18n>
+              Service Name
+            </div>
             <div value>{{ingress.spec.defaultBackend.service.name}}</div>
           </kd-property>
 
           <kd-property *ngIf="ingress.spec.defaultBackend.service.port?.name">
-            <div key i18n>Service Port Name</div>
+            <div
+              key
+              i18n>
+              Service Port Name
+            </div>
             <div value>{{ingress.spec.defaultBackend.service.port.name}}</div>
           </kd-property>
 
           <kd-property *ngIf="ingress.spec.defaultBackend.service.port?.number !== undefined">
-            <div key i18n>Service Port Number</div>
+            <div
+              key
+              i18n>
+              Service Port Number
+            </div>
             <div value>{{ingress.spec.defaultBackend.service.port.number}}</div>
           </kd-property>
 
           <kd-property *ngIf="ingress.spec.defaultBackend.resource">
-            <div key i18n>{{ingress.spec.defaultBackend.resource.kind}}</div>
+            <div
+              key
+              i18n>
+              {{ingress.spec.defaultBackend.resource.kind}}
+            </div>
             <div value>{{ingress.spec.defaultBackend.resource.name}}</div>
           </kd-property>
         </ng-container>

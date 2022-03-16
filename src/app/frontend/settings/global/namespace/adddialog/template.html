@@ -14,9 +14,17 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<div fxFlex fxLayout="column">
-  <h2 mat-dialog-title i18n>Add Namespace</h2>
-  <mat-dialog-content fxLayout="column" class="kd-dialog-text">
+<div
+  fxFlex
+  fxLayout="column">
+  <h2
+    mat-dialog-title
+    i18n>
+    Add Namespace
+  </h2>
+  <mat-dialog-content
+    fxLayout="column"
+    class="kd-dialog-text">
     <div i18n>Provide a namespace name that should be added to the namespace fallback list</div>
 
     <mat-form-field fxFlex>
@@ -29,7 +37,9 @@ limitations under the License.
         [matAutocomplete]="auto"
         matInput />
       <mat-autocomplete #auto="matAutocomplete">
-        <mat-option *ngFor="let namespace of data.namespaces | kdFilterBy: namespaceInput.value" [value]="namespace">
+        <mat-option
+          *ngFor="let namespace of data.namespaces | kdFilterBy: namespaceInput.value"
+          [value]="namespace">
           {{namespace}}
         </mat-option>
       </mat-autocomplete>
@@ -45,6 +55,12 @@ limitations under the License.
       i18n>
       Add
     </button>
-    <button mat-button color="primary" [mat-dialog-close]="" i18n>Close</button>
+    <button
+      mat-button
+      color="primary"
+      [mat-dialog-close]=""
+      i18n>
+      Close
+    </button>
   </mat-dialog-actions>
 </div>

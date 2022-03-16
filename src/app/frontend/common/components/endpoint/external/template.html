@@ -23,22 +23,40 @@ limitations under the License.
   <div *ngFor="let endpoint of endpoints">
     <div *ngFor="let port of endpoint?.ports">
       <div>
-        <a href="http://{{endpoint.host}}:{{port.port}}" target="_blank">
+        <a
+          href="http://{{endpoint.host}}:{{port.port}}"
+          target="_blank">
           {{endpoint.host}}:{{port.port}}
-          <mat-icon *ngIf="!hideExternalIcon" class="kd-endpoint-icon">open_in_new</mat-icon>
+          <mat-icon
+            *ngIf="!hideExternalIcon"
+            class="kd-endpoint-icon"
+            >open_in_new</mat-icon
+          >
         </a>
       </div>
       <div *ngIf="!port.port">
-        <a href="http://{{endpoint.host}}:{{port.nodePort}}" target="_blank">
+        <a
+          href="http://{{endpoint.host}}:{{port.nodePort}}"
+          target="_blank">
           {{endpoint.host}}:{{port.nodePort}}
-          <mat-icon *ngIf="!hideExternalIcon" class="kd-endpoint-icon">open_in_new</mat-icon>
+          <mat-icon
+            *ngIf="!hideExternalIcon"
+            class="kd-endpoint-icon"
+            >open_in_new</mat-icon
+          >
         </a>
       </div>
     </div>
     <div *ngIf="!endpoint.ports?.length">
-      <a href="http://{{endpoint.host}}" target="_blank">
+      <a
+        href="http://{{endpoint.host}}"
+        target="_blank">
         {{endpoint.host}}
-        <mat-icon *ngIf="!hideExternalIcon" class="kd-endpoint-icon">open_in_new</mat-icon>
+        <mat-icon
+          *ngIf="!hideExternalIcon"
+          class="kd-endpoint-icon"
+          >open_in_new</mat-icon
+        >
       </a>
     </div>
   </div>

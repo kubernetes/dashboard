@@ -21,27 +21,45 @@ limitations under the License.
     [ngClass]="getTitleClasses()"
     (click)="onCardHeaderClick(); $event.stopPropagation()"
     fxLayoutAlign=" center">
-    <div class="kd-card-title" fxFlex="100%">
+    <div
+      class="kd-card-title"
+      fxFlex="100%">
       <ng-content select="[title]"></ng-content>
     </div>
 
-    <div *ngIf="!expanded" class="kd-card-description kd-muted" fxLayoutAlign=" center" fxFlex="80">
+    <div
+      *ngIf="!expanded"
+      class="kd-card-description kd-muted"
+      fxLayoutAlign=" center"
+      fxFlex="80">
       <ng-content select="[description]"></ng-content>
     </div>
 
-    <div *ngIf="expanded && expandable" class="kd-card-actions kd-muted">
+    <div
+      *ngIf="expanded && expandable"
+      class="kd-card-actions kd-muted">
       <ng-content select="[actions]"></ng-content>
     </div>
-    <button class="kd-card-toggle" mat-icon-button (click)="expand(); $event.stopPropagation()" *ngIf="expandable">
-      <mat-icon class="kd-muted" [matTooltip]="expanded ? 'Minimize card' : 'Expand card'">
+    <button
+      class="kd-card-toggle"
+      mat-icon-button
+      (click)="expand(); $event.stopPropagation()"
+      *ngIf="expandable">
+      <mat-icon
+        class="kd-muted"
+        [matTooltip]="expanded ? 'Minimize card' : 'Expand card'">
         <ng-container *ngIf="expanded">arrow_drop_up</ng-container>
         <ng-container *ngIf="!expanded">arrow_drop_down</ng-container>
       </mat-icon>
     </button>
   </mat-card-title>
 
-  <div [@expandInOut]="!expanded" [ngClass]="{'kd-inner-content': role === 'inner-content'}">
-    <mat-card-content class="kd-card-content" [ngClass]="{'kd-card-content-table': role === 'table'}">
+  <div
+    [@expandInOut]="!expanded"
+    [ngClass]="{'kd-inner-content': role === 'inner-content'}">
+    <mat-card-content
+      class="kd-card-content"
+      [ngClass]="{'kd-card-content-table': role === 'table'}">
       <div *ngIf="initialized; else loading">
         <ng-content select="[content]"></ng-content>
       </div>
@@ -51,7 +69,9 @@ limitations under the License.
     </mat-card-content>
 
     <mat-card-footer>
-      <div class="mat-small" [ngClass]="{'kd-card-footer': withFooter}">
+      <div
+        class="mat-small"
+        [ngClass]="{'kd-card-footer': withFooter}">
         <ng-content select="[footer]"></ng-content>
       </div>
     </mat-card-footer>

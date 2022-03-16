@@ -14,8 +14,13 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<div class="kd-resource-card-list-filter-wrapper" fxFlex>
-  <div class="kd-search-container" fxFlex fxLayoutAlign="flex-end">
+<div
+  class="kd-resource-card-list-filter-wrapper"
+  fxFlex>
+  <div
+    class="kd-search-container"
+    fxFlex
+    fxLayoutAlign="flex-end">
     <input
       *ngIf="isSearchVisible()"
       (keyup)="keyUpEvent.next($event.target.value)"
@@ -35,7 +40,10 @@ limitations under the License.
         (click)="switchSearchVisibility($event)">
         filter_list
       </mat-icon>
-      <mat-icon class="material-icons kd-search-icon" *ngIf="isSearchVisible()" (click)="clearInput($event)">
+      <mat-icon
+        class="material-icons kd-search-icon"
+        *ngIf="isSearchVisible()"
+        (click)="clearInput($event)">
         close
       </mat-icon>
     </button>

@@ -14,7 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<div fxLayout="row" *ngIf="isVisible">
+<div
+  fxLayout="row"
+  *ngIf="isVisible">
   <kd-actionbar-detail-scale
     *ngIf="isInitialized && scalable()"
     [objectMeta]="resourceMeta?.objectMeta"

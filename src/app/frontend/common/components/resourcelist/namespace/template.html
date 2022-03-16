@@ -14,15 +14,32 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<kd-card role="table" [hidden]="isHidden()">
-  <div title fxLayout="row" i18n>Namespaces</div>
-  <div description><span class="kd-muted-light" i18n>Items:&nbsp;</span>{{totalItems}}</div>
+<kd-card
+  role="table"
+  [hidden]="isHidden()">
+  <div
+    title
+    fxLayout="row"
+    i18n>
+    Namespaces
+  </div>
+  <div description>
+    <span
+      class="kd-muted-light"
+      i18n
+      >Items:&nbsp;</span
+    >{{totalItems}}
+  </div>
   <div actions>
     <kd-card-list-filter></kd-card-list-filter>
   </div>
 
-  <div content [hidden]="showZeroState()">
-    <div kdLoadingSpinner [isLoading]="isLoading"></div>
+  <div
+    content
+    [hidden]="showZeroState()">
+    <div
+      kdLoadingSpinner
+      [isLoading]="isLoading"></div>
 
     <mat-table
       [dataSource]="getData()"
@@ -34,44 +51,74 @@ limitations under the License.
       <ng-container [matColumnDef]="getColumns()[0]">
         <mat-header-cell *matHeaderCellDef></mat-header-cell>
         <mat-cell *matCellDef="let namespace">
-          <mat-icon [ngClass]="getStatus(namespace).iconClass" [matTooltip]="getStatus(namespace).iconTooltip">
+          <mat-icon
+            [ngClass]="getStatus(namespace).iconClass"
+            [matTooltip]="getStatus(namespace).iconTooltip">
             {{getStatus(namespace).iconName}}
           </mat-icon>
         </mat-cell>
       </ng-container>
 
       <ng-container [matColumnDef]="getColumns()[1]">
-        <mat-header-cell *matHeaderCellDef mat-sort-header disableClear="true" i18n>Name</mat-header-cell>
+        <mat-header-cell
+          *matHeaderCellDef
+          mat-sort-header
+          disableClear="true"
+          i18n
+          >Name</mat-header-cell
+        >
         <mat-cell *matCellDef="let namespace">
-          <a [routerLink]="getDetailsHref(namespace.objectMeta.name)" queryParamsHandling="preserve">
+          <a
+            [routerLink]="getDetailsHref(namespace.objectMeta.name)"
+            queryParamsHandling="preserve">
             {{namespace.objectMeta.name}}
           </a>
         </mat-cell>
       </ng-container>
 
       <ng-container [matColumnDef]="getColumns()[2]">
-        <mat-header-cell *matHeaderCellDef i18n>Labels</mat-header-cell>
+        <mat-header-cell
+          *matHeaderCellDef
+          i18n
+          >Labels</mat-header-cell
+        >
         <mat-cell *matCellDef="let namespace">
           <kd-chips [map]="namespace.objectMeta.labels"></kd-chips>
         </mat-cell>
       </ng-container>
 
       <ng-container [matColumnDef]="getColumns()[3]">
-        <mat-header-cell *matHeaderCellDef i18n>Phase</mat-header-cell>
+        <mat-header-cell
+          *matHeaderCellDef
+          i18n
+          >Phase</mat-header-cell
+        >
         <mat-cell *matCellDef="let namespace">{{namespace.phase}}</mat-cell>
       </ng-container>
 
       <ng-container [matColumnDef]="getColumns()[4]">
-        <mat-header-cell *matHeaderCellDef mat-sort-header disableClear="true" i18n>Created</mat-header-cell>
+        <mat-header-cell
+          *matHeaderCellDef
+          mat-sort-header
+          disableClear="true"
+          i18n
+          >Created</mat-header-cell
+        >
         <mat-cell *matCellDef="let namespace">
-          <kd-date [date]="namespace.objectMeta.creationTimestamp" relative></kd-date>
+          <kd-date
+            [date]="namespace.objectMeta.creationTimestamp"
+            relative></kd-date>
         </mat-cell>
       </ng-container>
 
-      <ng-container *ngFor="let col of getActionColumns()" [matColumnDef]="col.name">
+      <ng-container
+        *ngFor="let col of getActionColumns()"
+        [matColumnDef]="col.name">
         <mat-header-cell *matHeaderCellDef></mat-header-cell>
         <mat-cell *matCellDef="let namespace">
-          <kd-dynamic-cell [component]="col.component" [resource]="namespace"></kd-dynamic-cell>
+          <kd-dynamic-cell
+            [component]="col.component"
+            [resource]="namespace"></kd-dynamic-cell>
         </mat-cell>
       </ng-container>
 
@@ -80,11 +127,17 @@ limitations under the License.
     </mat-table>
 
     <div [hidden]="totalItems <= itemsPerPage">
-      <mat-paginator [length]="totalItems" [pageSize]="itemsPerPage" hidePageSize showFirstLastButtons></mat-paginator>
+      <mat-paginator
+        [length]="totalItems"
+        [pageSize]="itemsPerPage"
+        hidePageSize
+        showFirstLastButtons></mat-paginator>
     </div>
   </div>
 
-  <div content [hidden]="!showZeroState()">
+  <div
+    content
+    [hidden]="!showZeroState()">
     <kd-list-zero-state></kd-list-zero-state>
   </div>
 </kd-card>

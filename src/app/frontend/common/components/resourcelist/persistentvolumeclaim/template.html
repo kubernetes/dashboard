@@ -14,15 +14,32 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<kd-card role="table" [hidden]="isHidden()">
-  <div title fxLayout="row" i18n>Persistent Volume Claims</div>
-  <div description><span class="kd-muted-light" i18n>Items:&nbsp;</span>{{totalItems}}</div>
+<kd-card
+  role="table"
+  [hidden]="isHidden()">
+  <div
+    title
+    fxLayout="row"
+    i18n>
+    Persistent Volume Claims
+  </div>
+  <div description>
+    <span
+      class="kd-muted-light"
+      i18n
+      >Items:&nbsp;</span
+    >{{totalItems}}
+  </div>
   <div actions>
     <kd-card-list-filter></kd-card-list-filter>
   </div>
 
-  <div content [hidden]="showZeroState()">
-    <div kdLoadingSpinner [isLoading]="isLoading"></div>
+  <div
+    content
+    [hidden]="showZeroState()">
+    <div
+      kdLoadingSpinner
+      [isLoading]="isLoading"></div>
 
     <mat-table
       [dataSource]="getData()"
@@ -34,17 +51,26 @@ limitations under the License.
       <ng-container matColumnDef="statusicon">
         <mat-header-cell *matHeaderCellDef></mat-header-cell>
         <mat-cell *matCellDef="let pvc">
-          <mat-icon [ngClass]="getStatus(pvc).iconClass" [matTooltip]="getStatus(pvc).iconTooltip"
+          <mat-icon
+            [ngClass]="getStatus(pvc).iconClass"
+            [matTooltip]="getStatus(pvc).iconTooltip"
             >{{getStatus(pvc).iconName}}</mat-icon
           >
         </mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="name">
-        <mat-header-cell *matHeaderCellDef mat-sort-header disableClear="true" class="kd-col-md" i18n
+        <mat-header-cell
+          *matHeaderCellDef
+          mat-sort-header
+          disableClear="true"
+          class="kd-col-md"
+          i18n
           >Name</mat-header-cell
         >
-        <mat-cell *matCellDef="let pvc" class="kd-col-md">
+        <mat-cell
+          *matCellDef="let pvc"
+          class="kd-col-md">
           <a
             [routerLink]="getDetailsHref(pvc.objectMeta.name, pvc.objectMeta.namespace)"
             queryParamsHandling="preserve">
@@ -53,71 +79,143 @@ limitations under the License.
         </mat-cell>
       </ng-container>
 
-      <ng-container *ngIf="shouldShowColumn('namespace')" matColumnDef="namespace">
-        <mat-header-cell *matHeaderCellDef class="kd-col-md" i18n>Namespace</mat-header-cell>
-        <mat-cell *matCellDef="let pvc" class="kd-col-md">{{pvc.objectMeta.namespace}}</mat-cell>
+      <ng-container
+        *ngIf="shouldShowColumn('namespace')"
+        matColumnDef="namespace">
+        <mat-header-cell
+          *matHeaderCellDef
+          class="kd-col-md"
+          i18n
+          >Namespace</mat-header-cell
+        >
+        <mat-cell
+          *matCellDef="let pvc"
+          class="kd-col-md"
+          >{{pvc.objectMeta.namespace}}</mat-cell
+        >
       </ng-container>
 
       <ng-container matColumnDef="labels">
-        <mat-header-cell *matHeaderCellDef class="kd-col-gt" i18n>Labels</mat-header-cell>
-        <mat-cell *matCellDef="let pvc" class="kd-col-gt">
+        <mat-header-cell
+          *matHeaderCellDef
+          class="kd-col-gt"
+          i18n
+          >Labels</mat-header-cell
+        >
+        <mat-cell
+          *matCellDef="let pvc"
+          class="kd-col-gt">
           <kd-chips [map]="pvc.objectMeta.labels"></kd-chips>
         </mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="status">
-        <mat-header-cell *matHeaderCellDef mat-sort-header disableClear="true" class="kd-col-xs" i18n
+        <mat-header-cell
+          *matHeaderCellDef
+          mat-sort-header
+          disableClear="true"
+          class="kd-col-xs"
+          i18n
           >Status</mat-header-cell
         >
-        <mat-cell *matCellDef="let pvc" class="kd-col-xs">{{pvc.status}}</mat-cell>
+        <mat-cell
+          *matCellDef="let pvc"
+          class="kd-col-xs"
+          >{{pvc.status}}</mat-cell
+        >
       </ng-container>
 
       <ng-container matColumnDef="volume">
-        <mat-header-cell *matHeaderCellDef class="kd-col-gt" i18n>Volume</mat-header-cell>
-        <mat-cell *matCellDef="let pvc" class="kd-col-gt">
+        <mat-header-cell
+          *matHeaderCellDef
+          class="kd-col-gt"
+          i18n
+          >Volume</mat-header-cell
+        >
+        <mat-cell
+          *matCellDef="let pvc"
+          class="kd-col-gt">
           <ng-container *ngIf="pvc.volume">
-            <a [routerLink]="getVolumeHref(pvc.volume)" queryParamsHandling="preserve">{{pvc.volume}}</a>
+            <a
+              [routerLink]="getVolumeHref(pvc.volume)"
+              queryParamsHandling="preserve"
+              >{{pvc.volume}}</a
+            >
           </ng-container>
           <ng-container *ngIf="!pvc.volume">-</ng-container>
         </mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="capacity">
-        <mat-header-cell *matHeaderCellDef class="kd-col-xs" i18n>Capacity</mat-header-cell>
-        <mat-cell *matCellDef="let pvc" class="kd-col-xs">
+        <mat-header-cell
+          *matHeaderCellDef
+          class="kd-col-xs"
+          i18n
+          >Capacity</mat-header-cell
+        >
+        <mat-cell
+          *matCellDef="let pvc"
+          class="kd-col-xs">
           <ng-container *ngIf="pvc?.capacity?.storage">{{pvc.capacity.storage}}</ng-container>
           <ng-container *ngIf="!pvc?.capacity?.storage">-</ng-container>
         </mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="accmodes">
-        <mat-header-cell *matHeaderCellDef class="kd-col-md" i18n>Access Modes</mat-header-cell>
-        <mat-cell *matCellDef="let pvc" class="kd-col-md">
+        <mat-header-cell
+          *matHeaderCellDef
+          class="kd-col-md"
+          i18n
+          >Access Modes</mat-header-cell
+        >
+        <mat-cell
+          *matCellDef="let pvc"
+          class="kd-col-md">
           <kd-chips [map]="pvc.accessModes"></kd-chips>
         </mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="storagecl">
-        <mat-header-cell *matHeaderCellDef class="kd-col-md" i18n>Storage Class</mat-header-cell>
-        <mat-cell *matCellDef="let pvc" class="kd-col-md">
+        <mat-header-cell
+          *matHeaderCellDef
+          class="kd-col-md"
+          i18n
+          >Storage Class</mat-header-cell
+        >
+        <mat-cell
+          *matCellDef="let pvc"
+          class="kd-col-md">
           <ng-container *ngIf="pvc?.storageClass">{{pvc.storageClass}}</ng-container>
           <ng-container *ngIf="!pvc?.storageClass">-</ng-container>
         </mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="created">
-        <mat-header-cell *matHeaderCellDef mat-sort-header disableClear="true" class="kd-col-sm" i18n
+        <mat-header-cell
+          *matHeaderCellDef
+          mat-sort-header
+          disableClear="true"
+          class="kd-col-sm"
+          i18n
           >Created</mat-header-cell
         >
-        <mat-cell *matCellDef="let pvc" class="kd-col-sm">
-          <kd-date [date]="pvc.objectMeta.creationTimestamp" relative></kd-date>
+        <mat-cell
+          *matCellDef="let pvc"
+          class="kd-col-sm">
+          <kd-date
+            [date]="pvc.objectMeta.creationTimestamp"
+            relative></kd-date>
         </mat-cell>
       </ng-container>
 
-      <ng-container *ngFor="let col of getActionColumns()" [matColumnDef]="col.name">
+      <ng-container
+        *ngFor="let col of getActionColumns()"
+        [matColumnDef]="col.name">
         <mat-header-cell *matHeaderCellDef></mat-header-cell>
         <mat-cell *matCellDef="let pvc">
-          <kd-dynamic-cell [component]="col.component" [resource]="pvc"></kd-dynamic-cell>
+          <kd-dynamic-cell
+            [component]="col.component"
+            [resource]="pvc"></kd-dynamic-cell>
         </mat-cell>
       </ng-container>
 
@@ -126,11 +224,17 @@ limitations under the License.
     </mat-table>
 
     <div [hidden]="totalItems <= itemsPerPage">
-      <mat-paginator [length]="totalItems" [pageSize]="itemsPerPage" hidePageSize showFirstLastButtons></mat-paginator>
+      <mat-paginator
+        [length]="totalItems"
+        [pageSize]="itemsPerPage"
+        hidePageSize
+        showFirstLastButtons></mat-paginator>
     </div>
   </div>
 
-  <div content [hidden]="!showZeroState()">
+  <div
+    content
+    [hidden]="!showZeroState()">
     <kd-list-zero-state></kd-list-zero-state>
   </div>
 </kd-card>
