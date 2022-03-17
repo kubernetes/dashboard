@@ -20,6 +20,7 @@ import {MatIconModule} from '@angular/material/icon';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {By} from '@angular/platform-browser';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
+import {MESSAGES, MESSAGES_DI_TOKEN} from '../../../index.messages';
 
 import {CardComponent} from './component';
 
@@ -52,6 +53,7 @@ describe('CardComponent', () => {
         declarations: [CardComponent, TestComponent],
         imports: [MatIconModule, MatCardModule, MatDividerModule, MatTooltipModule, NoopAnimationsModule],
         schemas: [CUSTOM_ELEMENTS_SCHEMA],
+        providers: [{provide: MESSAGES_DI_TOKEN, useValue: MESSAGES}],
       }).compileComponents();
     })
   );

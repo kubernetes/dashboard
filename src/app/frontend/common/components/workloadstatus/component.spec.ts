@@ -26,6 +26,7 @@ import {AppConfig} from '@api/root.api';
 import {ResourcesRatio} from '@api/root.ui';
 import {CardComponent} from '@common/components/card/component';
 import {ConfigService} from '@common/services/global/config';
+import {MESSAGES, MESSAGES_DI_TOKEN} from '../../../index.messages';
 
 import {WorkloadStatusComponent} from './component';
 
@@ -79,7 +80,7 @@ describe('WorkloadStatusComponent', () => {
           HttpClientTestingModule,
           FlexLayoutModule,
         ],
-        providers: [ConfigService],
+        providers: [ConfigService, {provide: MESSAGES_DI_TOKEN, useValue: MESSAGES}],
         schemas: [CUSTOM_ELEMENTS_SCHEMA],
       }).compileComponents();
       httpMock = TestBed.inject(HttpTestingController);
