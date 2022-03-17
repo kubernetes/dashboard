@@ -14,14 +14,23 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<h2 mat-dialog-title fxLayout="row" i18n>Namespace conflict</h2>
+<h2 mat-dialog-title
+    fxLayout="row"
+    i18n>Namespace conflict</h2>
 <mat-dialog-content>
-  <div class="kd-dialog-text" i18n>Selected namespace is different than namespace of currently selected resource.</div>
-  <div class="kd-dialog-text" i18n>
+  <div class="kd-dialog-text"
+       i18n>Selected namespace is different than namespace of currently selected resource.</div>
+  <div class="kd-dialog-text"
+       i18n>
     Do you want to stay on current page and change namespace from <i>{{ namespace }}</i> to <i>{{ newNamespace }}</i>?
   </div>
 </mat-dialog-content>
 <mat-dialog-actions fxLayoutAlign="end">
-  <button mat-button color="primary" [mat-dialog-close]="true" i18n>Yes</button>
-  <button mat-button [mat-dialog-close]="false" i18n>No</button>
+  <button mat-button
+          color="primary"
+          [mat-dialog-close]="true"
+          i18n>Yes</button>
+  <button mat-button
+          [mat-dialog-close]="false"
+          i18n>No</button>
 </mat-dialog-actions>

@@ -14,30 +14,38 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<kd-card [initialized]="initialized" role="table">
-  <div title i18n>Versions</div>
+<kd-card [initialized]="initialized"
+         role="table">
+  <div title
+       i18n>Versions</div>
 
   <div description>
-    <div class="kd-inline-property" *ngIf="versions?.length">
-      <span class="kd-muted-light" i18n>Items:&nbsp;</span>
+    <div class="kd-inline-property"
+         *ngIf="versions?.length">
+      <span class="kd-muted-light"
+            i18n>Items:&nbsp;</span>
       <span>{{ versions.length }}</span>
     </div>
   </div>
 
   <div content>
-    <mat-table [dataSource]="getDataSource()" [trackBy]="trackByCRDVersionName">
+    <mat-table [dataSource]="getDataSource()"
+               [trackBy]="trackByCRDVersionName">
       <ng-container [matColumnDef]="getDisplayColumns()[0]">
-        <mat-header-cell *matHeaderCellDef i18n>Name</mat-header-cell>
+        <mat-header-cell *matHeaderCellDef
+                         i18n>Name</mat-header-cell>
         <mat-cell *matCellDef="let version">{{ version.name }}</mat-cell>
       </ng-container>
 
       <ng-container [matColumnDef]="getDisplayColumns()[1]">
-        <mat-header-cell *matHeaderCellDef i18n>Served</mat-header-cell>
+        <mat-header-cell *matHeaderCellDef
+                         i18n>Served</mat-header-cell>
         <mat-cell *matCellDef="let version">{{ version.served ? 'True' : 'False' }}</mat-cell>
       </ng-container>
 
       <ng-container [matColumnDef]="getDisplayColumns()[2]">
-        <mat-header-cell *matHeaderCellDef i18n>Storage</mat-header-cell>
+        <mat-header-cell *matHeaderCellDef
+                         i18n>Storage</mat-header-cell>
         <mat-cell *matCellDef="let version">{{ version.storage ? 'True' : 'False' }}</mat-cell>
       </ng-container>
 

@@ -14,19 +14,23 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<kd-card [expandable]="false" class="kd-shell-content-card">
-  <div title class="kd-shell-content-card-title" i18n>
+<kd-card [expandable]="false"
+         class="kd-shell-content-card">
+  <div title
+       class="kd-shell-content-card-title"
+       i18n>
     Shell in
-    <mat-select
-      *ngIf="containers?.length > 0"
-      class="kd-shell-toolbar-select"
-      (ngModelChange)="onPodContainerChange($event)"
-      [(ngModel)]="selectedContainer"
-    >
-      <mat-option *ngFor="let item of containers" [value]="item"> {{ item }} </mat-option>
+    <mat-select *ngIf="containers?.length > 0"
+                class="kd-shell-toolbar-select"
+                (ngModelChange)="onPodContainerChange($event)"
+                [(ngModel)]="selectedContainer">
+      <mat-option *ngFor="let item of containers"
+                  [value]="item"> {{ item }} </mat-option>
     </mat-select>
     in {{ podName }}
   </div>
 
-  <div #anchor content class="xterm-anchor"></div>
+  <div #anchor
+       content
+       class="xterm-anchor"></div>
 </kd-card>

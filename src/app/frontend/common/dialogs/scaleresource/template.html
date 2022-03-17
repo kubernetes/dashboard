@@ -14,37 +14,35 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<h2 mat-dialog-title i18n>Scale a resource</h2>
+<h2 mat-dialog-title
+    i18n>Scale a resource</h2>
 <mat-dialog-content class="kd-dialog-text">
   <p i18n>{{ data.displayName }} {{ data.objectMeta.name }} will be updated to reflect the desired replicas count.</p>
   <mat-form-field class="kd-margin-right">
-    <input
-      [(ngModel)]="desired"
-      name="desired"
-      aria-label="Desired replicas"
-      i18n-placeholder
-      placeholder="Desired replicas"
-      type="number"
-      min="0"
-      required
-      matInput
-    />
+    <input [(ngModel)]="desired"
+           name="desired"
+           aria-label="Desired replicas"
+           i18n-placeholder
+           placeholder="Desired replicas"
+           type="number"
+           min="0"
+           required
+           matInput />
   </mat-form-field>
   <mat-form-field>
-    <input
-      [(ngModel)]="actual"
-      [disabled]="true"
-      name="actual"
-      aria-label="Actual replicas"
-      i18n-placeholder
-      placeholder="Actual replicas"
-      type="number"
-      min="0"
-      required
-      matInput
-    />
+    <input [(ngModel)]="actual"
+           [disabled]="true"
+           name="actual"
+           aria-label="Actual replicas"
+           i18n-placeholder
+           placeholder="Actual replicas"
+           type="number"
+           min="0"
+           required
+           matInput />
   </mat-form-field>
-  <div class="kd-equivalent-block kd-muted kd-bg-card-dark" fxLayoutAlign=" center">
+  <div class="kd-equivalent-block kd-muted kd-bg-card-dark"
+       fxLayoutAlign=" center">
     <mat-icon>info</mat-icon>
     <div>
       <span i18n>This action is equivalent to:</span>
@@ -57,6 +55,12 @@ limitations under the License.
   </div>
 </mat-dialog-content>
 <mat-dialog-actions>
-  <button mat-button color="primary" [mat-dialog-close]="desired" i18n>Scale</button>
-  <button mat-button color="primary" [mat-dialog-close]="false" i18n>Cancel</button>
+  <button mat-button
+          color="primary"
+          [mat-dialog-close]="desired"
+          i18n>Scale</button>
+  <button mat-button
+          color="primary"
+          [mat-dialog-close]="false"
+          i18n>Cancel</button>
 </mat-dialog-actions>

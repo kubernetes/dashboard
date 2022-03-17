@@ -14,18 +14,24 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<div fxLayout="row" fxLayoutAlign="center center">
-  <svg
-    viewBox="0,0 1,1"
-    preserveAspectRatio="none"
-    class="kd-sparkline kd-bg-background kd-border"
-    xmlns:svg="http://www.w3.org/2000/svg"
-  >
-    <svg:linearGradient id="cpugradient" x1="0%" y1="0%" x2="0%" y2="100%">
-      <svg:stop offset="0%" style="stop-color: #2b914f; stop-opacity: 1" />
-      <svg:stop offset="100%" style="stop-color: #2bdb6c; stop-opacity: 1" />
+<div fxLayout="row"
+     fxLayoutAlign="center center">
+  <svg viewBox="0,0 1,1"
+       preserveAspectRatio="none"
+       class="kd-sparkline kd-bg-background kd-border"
+       xmlns:svg="http://www.w3.org/2000/svg">
+    <svg:linearGradient id="cpugradient"
+                        x1="0%"
+                        y1="0%"
+                        x2="0%"
+                        y2="100%">
+      <svg:stop offset="0%"
+                style="stop-color: #2b914f; stop-opacity: 1" />
+      <svg:stop offset="100%"
+                style="stop-color: #2bdb6c; stop-opacity: 1" />
     </svg:linearGradient>
-    <svg:polygon fill="url(#cpugradient)" [attr.points]="getPolygonPoints()" />
+    <svg:polygon fill="url(#cpugradient)"
+                 [attr.points]="getPolygonPoints()" />
   </svg>
   <div class="kd-sparkline-value kd-muted-light">{{ lastValue | kdCores }}</div>
 </div>

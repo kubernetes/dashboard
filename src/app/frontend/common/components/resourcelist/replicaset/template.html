@@ -14,34 +14,40 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<kd-graph-metrics [metrics]="cumulativeMetrics" *ngIf="showMetrics"></kd-graph-metrics>
+<kd-graph-metrics [metrics]="cumulativeMetrics"
+                  *ngIf="showMetrics"></kd-graph-metrics>
 
-<kd-card role="table" [hidden]="isHidden()">
-  <div title fxLayout="row">
+<kd-card role="table"
+         [hidden]="isHidden()">
+  <div title
+       fxLayout="row">
     <ng-container *ngIf="title; else defaultTitle">{{ title }}</ng-container>
-    <ng-template #defaultTitle i18n>Replica Sets</ng-template>
+    <ng-template #defaultTitle
+                 i18n>Replica Sets</ng-template>
   </div>
-  <div description><span class="kd-muted-light" i18n>Items:&nbsp;</span>{{ totalItems }}</div>
+  <div description><span class="kd-muted-light"
+          i18n>Items:&nbsp;</span>{{ totalItems }}</div>
   <div actions>
     <kd-card-list-filter></kd-card-list-filter>
   </div>
 
-  <div content [hidden]="showZeroState()">
-    <div kdLoadingSpinner [isLoading]="isLoading"></div>
+  <div content
+       [hidden]="showZeroState()">
+    <div kdLoadingSpinner
+         [isLoading]="isLoading"></div>
 
-    <mat-table
-      [dataSource]="getData()"
-      [trackBy]="trackByResource"
-      matSort
-      matSortActive="created"
-      matSortDisableClear
-      matSortDirection="asc"
-      multiTemplateDataRows
-    >
+    <mat-table [dataSource]="getData()"
+               [trackBy]="trackByResource"
+               matSort
+               matSortActive="created"
+               matSortDisableClear
+               matSortDirection="asc"
+               multiTemplateDataRows>
       <ng-container matColumnDef="statusicon">
         <mat-header-cell *matHeaderCellDef></mat-header-cell>
         <mat-cell *matCellDef="let replicaSet; let index = index">
-          <mat-icon [ngClass]="getStatus(replicaSet).iconClass" [matTooltip]="getStatus(replicaSet).iconTooltip">
+          <mat-icon [ngClass]="getStatus(replicaSet).iconClass"
+                    [matTooltip]="getStatus(replicaSet).iconTooltip">
             <ng-container *ngIf="showHoverIcon(index, replicaSet); else showStatus"> remove_red_eye </ng-container>
 
             <ng-template #showStatus> {{ getStatus(replicaSet).iconName }} </ng-template>
@@ -56,83 +62,103 @@ limitations under the License.
       </ng-container>
 
       <ng-container matColumnDef="name">
-        <mat-header-cell *matHeaderCellDef mat-sort-header disableClear="true" class="kd-col-gt" i18n
-          >Name</mat-header-cell
-        >
-        <mat-cell *matCellDef="let replicaSet" class="kd-col-gt">
-          <a
-            (click)="$event.stopPropagation()"
-            [routerLink]="getDetailsHref(replicaSet.objectMeta.name, replicaSet.objectMeta.namespace)"
-            queryParamsHandling="preserve"
-          >
+        <mat-header-cell *matHeaderCellDef
+                         mat-sort-header
+                         disableClear="true"
+                         class="kd-col-gt"
+                         i18n>Name</mat-header-cell>
+        <mat-cell *matCellDef="let replicaSet"
+                  class="kd-col-gt">
+          <a (click)="$event.stopPropagation()"
+             [routerLink]="getDetailsHref(replicaSet.objectMeta.name, replicaSet.objectMeta.namespace)"
+             queryParamsHandling="preserve">
             {{ replicaSet.objectMeta.name }}
           </a>
         </mat-cell>
       </ng-container>
 
-      <ng-container *ngIf="shouldShowColumn('namespace')" matColumnDef="namespace">
-        <mat-header-cell *matHeaderCellDef class="kd-col-md" i18n>Namespace</mat-header-cell>
-        <mat-cell *matCellDef="let replicaSet" class="kd-col-md">{{ replicaSet.objectMeta.namespace }}</mat-cell>
+      <ng-container *ngIf="shouldShowColumn('namespace')"
+                    matColumnDef="namespace">
+        <mat-header-cell *matHeaderCellDef
+                         class="kd-col-md"
+                         i18n>Namespace</mat-header-cell>
+        <mat-cell *matCellDef="let replicaSet"
+                  class="kd-col-md">{{ replicaSet.objectMeta.namespace }}</mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="images">
-        <mat-header-cell *matHeaderCellDef class="kd-col-gt" i18n>Images</mat-header-cell>
-        <mat-cell *matCellDef="let replicaSet" class="kd-col-gt">
+        <mat-header-cell *matHeaderCellDef
+                         class="kd-col-gt"
+                         i18n>Images</mat-header-cell>
+        <mat-cell *matCellDef="let replicaSet"
+                  class="kd-col-gt">
           <kd-chips [map]="replicaSet.containerImages"></kd-chips>
         </mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="labels">
-        <mat-header-cell *matHeaderCellDef class="kd-col-gt" i18n>Labels</mat-header-cell>
-        <mat-cell *matCellDef="let replicaSet" class="kd-col-gt">
+        <mat-header-cell *matHeaderCellDef
+                         class="kd-col-gt"
+                         i18n>Labels</mat-header-cell>
+        <mat-cell *matCellDef="let replicaSet"
+                  class="kd-col-gt">
           <kd-chips [map]="replicaSet.objectMeta.labels"></kd-chips>
         </mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="pods">
-        <mat-header-cell *matHeaderCellDef class="kd-col-sm" i18n>Pods</mat-header-cell>
-        <mat-cell *matCellDef="let replicaSet" class="kd-col-sm">
+        <mat-header-cell *matHeaderCellDef
+                         class="kd-col-sm"
+                         i18n>Pods</mat-header-cell>
+        <mat-cell *matCellDef="let replicaSet"
+                  class="kd-col-sm">
           {{ replicaSet.podInfo.running }} / {{ replicaSet.podInfo.desired }}
         </mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="created">
-        <mat-header-cell *matHeaderCellDef mat-sort-header disableClear="true" class="kd-col-sm" i18n
-          >Created</mat-header-cell
-        >
-        <mat-cell *matCellDef="let replicaSet" class="kd-col-sm">
-          <kd-date [date]="replicaSet.objectMeta.creationTimestamp" relative></kd-date>
+        <mat-header-cell *matHeaderCellDef
+                         mat-sort-header
+                         disableClear="true"
+                         class="kd-col-sm"
+                         i18n>Created</mat-header-cell>
+        <mat-cell *matCellDef="let replicaSet"
+                  class="kd-col-sm">
+          <kd-date [date]="replicaSet.objectMeta.creationTimestamp"
+                   relative></kd-date>
         </mat-cell>
       </ng-container>
 
-      <ng-container *ngFor="let col of getActionColumns()" [matColumnDef]="col.name">
+      <ng-container *ngFor="let col of getActionColumns()"
+                    [matColumnDef]="col.name">
         <mat-header-cell *matHeaderCellDef></mat-header-cell>
         <mat-cell *matCellDef="let rs">
-          <kd-dynamic-cell [component]="col.component" [resource]="rs"></kd-dynamic-cell>
+          <kd-dynamic-cell [component]="col.component"
+                           [resource]="rs"></kd-dynamic-cell>
         </mat-cell>
       </ng-container>
 
       <mat-header-row *matHeaderRowDef="getColumns()"></mat-header-row>
-      <mat-row
-        (mouseover)="onRowOver(index, row)"
-        (mouseleave)="onRowLeave()"
-        (click)="expand(index, row)"
-        [ngClass]="{'kd-no-bottom-border': isRowExpanded(index, row), 'kd-clickable': hasErrors(row)}"
-        *matRowDef="let row; columns: getColumns(); let index = index"
-      ></mat-row>
-      <mat-row
-        class="kd-detail-row"
-        [ngClass]="{'kd-hidden': !isRowExpanded(index, row)}"
-        *matRowDef="let row; columns: ['statusDetail']; let index = index"
-      ></mat-row>
+      <mat-row (mouseover)="onRowOver(index, row)"
+               (mouseleave)="onRowLeave()"
+               (click)="expand(index, row)"
+               [ngClass]="{'kd-no-bottom-border': isRowExpanded(index, row), 'kd-clickable': hasErrors(row)}"
+               *matRowDef="let row; columns: getColumns(); let index = index"></mat-row>
+      <mat-row class="kd-detail-row"
+               [ngClass]="{'kd-hidden': !isRowExpanded(index, row)}"
+               *matRowDef="let row; columns: ['statusDetail']; let index = index"></mat-row>
     </mat-table>
 
     <div [hidden]="totalItems <= itemsPerPage">
-      <mat-paginator [length]="totalItems" [pageSize]="itemsPerPage" hidePageSize showFirstLastButtons></mat-paginator>
+      <mat-paginator [length]="totalItems"
+                     [pageSize]="itemsPerPage"
+                     hidePageSize
+                     showFirstLastButtons></mat-paginator>
     </div>
   </div>
 
-  <div content [hidden]="!showZeroState()">
+  <div content
+       [hidden]="!showZeroState()">
     <kd-list-zero-state></kd-list-zero-state>
   </div>
 </kd-card>

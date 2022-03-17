@@ -183,11 +183,11 @@ fix-go: ensure-golangcilint
 
 .PHONY: check-html
 check-html:
-	npx prettier --config .prettierrc.cjs --parser=html -c 'src/**/*.html'
+	npx html-beautify ./src/**/*.html | awk '!/unchanged/'
 
 .PHONY: fix-html
 fix-html:
-	npx prettier --config .prettierrc.cjs --parser=html -w 'src/**/*.html'
+	npx html-beautify -f=./src/**/*.html | awk '!/unchanged/'
 
 .PHONY: check-scss
 check-scss:

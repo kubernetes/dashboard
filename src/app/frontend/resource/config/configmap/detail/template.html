@@ -14,18 +14,21 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<kd-object-meta [initialized]="isInitialized" [objectMeta]="configMap?.objectMeta"></kd-object-meta>
+<kd-object-meta [initialized]="isInitialized"
+                [objectMeta]="configMap?.objectMeta"></kd-object-meta>
 
-<kd-card [initialized]="isInitialized" role="table">
-  <div title i18n>Data</div>
+<kd-card [initialized]="isInitialized"
+         role="table">
+  <div title
+       i18n>Data</div>
   <div content>
-    <kd-text-input
-      *ngIf="configMap?.data"
-      [text]="getConfigMapData(configMap)"
-      [readOnly]="true"
-      [border]="false"
-      mode="json"
-    ></kd-text-input>
-    <div *ngIf="!configMap?.data" class="kd-card-padding" i18n>There is no data to display.</div>
+    <kd-text-input *ngIf="configMap?.data"
+                   [text]="getConfigMapData(configMap)"
+                   [readOnly]="true"
+                   [border]="false"
+                   mode="json"></kd-text-input>
+    <div *ngIf="!configMap?.data"
+         class="kd-card-padding"
+         i18n>There is no data to display.</div>
   </div>
 </kd-card>

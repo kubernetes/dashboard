@@ -15,57 +15,80 @@ limitations under the License.
 -->
 
 <kd-card [initialized]="initialized">
-  <div title i18n>Metadata</div>
+  <div title
+       i18n>Metadata</div>
   <div description>
     <div class="kd-inline-property">
-      <span class="kd-muted-light" i18n>Name:&nbsp;</span>
+      <span class="kd-muted-light"
+            i18n>Name:&nbsp;</span>
       <span>{{ objectMeta?.name }}</span>
     </div>
-    <div class="kd-inline-property" *ngIf="objectMeta?.namespace">
-      <span class="kd-muted-light" i18n>Namespace:&nbsp;</span>
+    <div class="kd-inline-property"
+         *ngIf="objectMeta?.namespace">
+      <span class="kd-muted-light"
+            i18n>Namespace:&nbsp;</span>
       <span>{{ objectMeta?.namespace }}</span>
     </div>
-    <div class="kd-inline-property" *ngIf="objectMeta?.creationTimestamp">
-      <span class="kd-muted-light" i18n>Age:&nbsp;</span>
-      <kd-date [date]="objectMeta?.creationTimestamp" relative></kd-date>
+    <div class="kd-inline-property"
+         *ngIf="objectMeta?.creationTimestamp">
+      <span class="kd-muted-light"
+            i18n>Age:&nbsp;</span>
+      <kd-date [date]="objectMeta?.creationTimestamp"
+               relative></kd-date>
     </div>
   </div>
   <div content>
     <div fxLayout="row wrap">
       <kd-property [ngClass]="'object-meta-name'">
-        <div key i18n>Name</div>
+        <div key
+             i18n>Name</div>
         <div value>{{ objectMeta?.name }}</div>
       </kd-property>
-      <kd-property *ngIf="objectMeta?.namespace" [ngClass]="'object-meta-namespace'">
-        <div key i18n>Namespace</div>
+      <kd-property *ngIf="objectMeta?.namespace"
+                   [ngClass]="'object-meta-namespace'">
+        <div key
+             i18n>Namespace</div>
         <div value>{{ objectMeta?.namespace }}</div>
       </kd-property>
       <kd-property [ngClass]="'object-meta-creation'">
-        <div key i18n>Created</div>
+        <div key
+             i18n>Created</div>
         <div value>
           <kd-date [date]="objectMeta?.creationTimestamp"></kd-date>
         </div>
       </kd-property>
       <kd-property [ngClass]="'object-meta-age'">
-        <div key i18n>Age</div>
+        <div key
+             i18n>Age</div>
         <div value>
-          <kd-date [date]="objectMeta?.creationTimestamp" relative></kd-date>
+          <kd-date [date]="objectMeta?.creationTimestamp"
+                   relative></kd-date>
         </div>
       </kd-property>
-      <kd-property *ngIf="objectMeta?.uid" [ngClass]="'object-meta-uid'">
-        <div key i18n>UID</div>
+      <kd-property *ngIf="objectMeta?.uid"
+                   [ngClass]="'object-meta-uid'">
+        <div key
+             i18n>UID</div>
         <div value>{{ objectMeta?.uid }}</div>
       </kd-property>
-      <kd-property *ngIf="objectMeta?.labels" fxFlex="100" [ngClass]="'object-meta-labels'">
-        <div key i18n>Labels</div>
+      <kd-property *ngIf="objectMeta?.labels"
+                   fxFlex="100"
+                   [ngClass]="'object-meta-labels'">
+        <div key
+             i18n>Labels</div>
         <div value>
-          <kd-chips [map]="objectMeta?.labels" [displayAll]="true"></kd-chips>
+          <kd-chips [map]="objectMeta?.labels"
+                    [displayAll]="true"></kd-chips>
         </div>
       </kd-property>
-      <kd-property *ngIf="objectMeta?.annotations" fxFlex="100" [ngClass]="'object-meta-annotations'">
-        <div key i18n>Annotations</div>
+      <kd-property *ngIf="objectMeta?.annotations"
+                   fxFlex="100"
+                   [ngClass]="'object-meta-annotations'">
+        <div key
+             i18n>Annotations</div>
         <div value>
-          <kd-chips [map]="objectMeta?.annotations" [displayAll]="true"></kd-chips>
+          <kd-chips [map]="objectMeta?.annotations"
+                    [displayAll]="true"></kd-chips>
         </div>
       </kd-property>
     </div>

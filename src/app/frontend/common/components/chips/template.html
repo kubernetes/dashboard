@@ -16,16 +16,20 @@ limitations under the License.
 
 <mat-chip-list>
   <ng-container *ngFor="let key of keys; let i = index">
-    <mat-chip *ngIf="isVisible(i)" [disableRipple]="true">
+    <mat-chip *ngIf="isVisible(i)"
+              [disableRipple]="true">
       <ng-container *ngIf="isSerializedRef(map[key])">
         <span>{{ key }}:&nbsp;</span>
-        <a class="kd-clickable" queryParamsHandling="preserve" [routerLink]="getSerializedHref(map[key])">
+        <a class="kd-clickable"
+           queryParamsHandling="preserve"
+           [routerLink]="getSerializedHref(map[key])">
           {{ getSerializedRefDisplayName(map[key]) }}
         </a>
       </ng-container>
 
       <ng-container *ngIf="isTooLong(map[key]) && !isHref(map[key]) && !isSerializedRef(map[key])">
-        <a class="kd-clickable" (click)="openChipDialog(key, map[key])">{{ key }}</a>
+        <a class="kd-clickable"
+           (click)="openChipDialog(key, map[key])">{{ key }}</a>
       </ng-container>
 
       <!-- beautify ignore:start -->
@@ -44,9 +48,13 @@ limitations under the License.
       <!-- beautify ignore:end -->
     </mat-chip>
   </ng-container>
-  <div *ngIf="isAnythingHidden()" (click)="toggleView()" class="kd-chips-show-button">
-    <ng-container *ngIf="isShowingAll" i18n>Show less</ng-container>
-    <ng-container *ngIf="!isShowingAll" i18n>Show all</ng-container>
+  <div *ngIf="isAnythingHidden()"
+       (click)="toggleView()"
+       class="kd-chips-show-button">
+    <ng-container *ngIf="isShowingAll"
+                  i18n>Show less</ng-container>
+    <ng-container *ngIf="!isShowingAll"
+                  i18n>Show all</ng-container>
   </div>
   <ng-container *ngIf="keys.length === 0">-</ng-container>
 </mat-chip-list>

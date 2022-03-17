@@ -14,9 +14,13 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<kd-card *ngIf="shouldShowGraph()" [graphMode]="true">
+<kd-card *ngIf="shouldShowGraph()"
+         [graphMode]="true">
   <div title>{{ graphTitle }} <span *ngIf="graphInfo">{{ graphTitle }}</span></div>
   <div content>
-    <kd-graph fxFlex="100" [id]="graphTitle" [graphType]="graphType" [metric]="selectedMetric"></kd-graph>
+    <kd-graph fxFlex="100"
+              [id]="graphTitle"
+              [graphType]="graphType"
+              [metric]="selectedMetric"></kd-graph>
   </div>
 </kd-card>

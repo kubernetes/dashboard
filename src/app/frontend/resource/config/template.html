@@ -15,13 +15,16 @@ limitations under the License.
 -->
 
 <div [hidden]="shouldShowZeroState()">
-  <kd-config-map-list (onchange)="onListUpdate($event)" [hideable]="true"></kd-config-map-list>
-  <kd-persistent-volume-claim-list
-    (onchange)="onListUpdate($event)"
-    [hideable]="true"
-  ></kd-persistent-volume-claim-list>
-  <kd-secret-list (onchange)="onListUpdate($event)" [hideable]="true" title="Secrets" i18n-title></kd-secret-list>
-  <kd-storage-class-list (onchange)="onListUpdate($event)" [hideable]="true"></kd-storage-class-list>
+  <kd-config-map-list (onchange)="onListUpdate($event)"
+                      [hideable]="true"></kd-config-map-list>
+  <kd-persistent-volume-claim-list (onchange)="onListUpdate($event)"
+                                   [hideable]="true"></kd-persistent-volume-claim-list>
+  <kd-secret-list (onchange)="onListUpdate($event)"
+                  [hideable]="true"
+                  title="Secrets"
+                  i18n-title></kd-secret-list>
+  <kd-storage-class-list (onchange)="onListUpdate($event)"
+                         [hideable]="true"></kd-storage-class-list>
 </div>
 
 <kd-zero-state [hidden]="!shouldShowZeroState()"></kd-zero-state>

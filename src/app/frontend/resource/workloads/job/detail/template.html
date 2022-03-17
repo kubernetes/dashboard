@@ -14,53 +14,70 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<kd-object-meta [initialized]="isInitialized" [objectMeta]="job?.objectMeta"></kd-object-meta>
+<kd-object-meta [initialized]="isInitialized"
+                [objectMeta]="job?.objectMeta"></kd-object-meta>
 
 <kd-card [initialized]="isInitialized">
-  <div title i18n>Resource information</div>
+  <div title
+       i18n>Resource information</div>
 
   <div description>
-    <div class="kd-inline-property" *ngIf="job?.completions">
-      <span class="kd-muted-light" i18n>Completions:&nbsp;</span>
+    <div class="kd-inline-property"
+         *ngIf="job?.completions">
+      <span class="kd-muted-light"
+            i18n>Completions:&nbsp;</span>
       <span>{{ job.completions }}</span>
     </div>
 
-    <div class="kd-inline-property" *ngIf="job?.parallelism">
-      <span class="kd-muted-light" i18n>Parallelism:&nbsp;</span>
+    <div class="kd-inline-property"
+         *ngIf="job?.parallelism">
+      <span class="kd-muted-light"
+            i18n>Parallelism:&nbsp;</span>
       <span>{{ job.parallelism }}</span>
     </div>
   </div>
 
-  <div content *ngIf="isInitialized" fxLayout="row wrap">
+  <div content
+       *ngIf="isInitialized"
+       fxLayout="row wrap">
     <kd-property *ngIf="job?.completions">
-      <div key i18n>Completions</div>
+      <div key
+           i18n>Completions</div>
       <div value>{{ job.completions }}</div>
     </kd-property>
 
     <kd-property *ngIf="job?.parallelism">
-      <div key i18n>Parallelism</div>
+      <div key
+           i18n>Parallelism</div>
       <div value>{{ job.parallelism }}</div>
     </kd-property>
 
-    <kd-property *ngIf="job?.containerImages" fxFlex="100">
-      <div key i18n>Images</div>
+    <kd-property *ngIf="job?.containerImages"
+                 fxFlex="100">
+      <div key
+           i18n>Images</div>
       <div value>
-        <kd-chips [map]="job.containerImages" [displayAll]="true"></kd-chips>
+        <kd-chips [map]="job.containerImages"
+                  [displayAll]="true"></kd-chips>
       </div>
     </kd-property>
 
     <kd-property *ngIf="job?.initContainerImages">
-      <div key i18n>Init images</div>
+      <div key
+           i18n>Init images</div>
       <div value>
-        <kd-chips [map]="job.initContainerImages" [displayAll]="true"></kd-chips>
+        <kd-chips [map]="job.initContainerImages"
+                  [displayAll]="true"></kd-chips>
       </div>
     </kd-property>
   </div>
 </kd-card>
 
-<kd-condition-list [conditions]="job?.jobStatus?.conditions" [initialized]="isInitialized"></kd-condition-list>
+<kd-condition-list [conditions]="job?.jobStatus?.conditions"
+                   [initialized]="isInitialized"></kd-condition-list>
 
-<kd-pod-status-card [podInfo]="job?.podInfo" [initialized]="isInitialized"></kd-pod-status-card>
+<kd-pod-status-card [podInfo]="job?.podInfo"
+                    [initialized]="isInitialized"></kd-pod-status-card>
 
 <kd-pod-list [endpoint]="podListEndpoint"></kd-pod-list>
 

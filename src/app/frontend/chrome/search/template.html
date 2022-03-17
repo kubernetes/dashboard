@@ -14,20 +14,23 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<div class="kd-search" fxFlex="50">
-  <form #form="ngForm" (ngSubmit)="submit(form)" fxFlex fxLayout="row" fxLayoutAlign=" center">
+<div class="kd-search"
+     fxFlex="50">
+  <form #form="ngForm"
+        (ngSubmit)="submit(form)"
+        fxFlex
+        fxLayout="row"
+        fxLayoutAlign=" center">
     <mat-icon class="kd-search-icon kd-muted">search</mat-icon>
-    <input
-      type="search"
-      name="query"
-      i18n-placeholder
-      id="search"
-      placeholder="Search"
-      [(ngModel)]="query"
-      minlength="1"
-      required
-      fxFlex
-    />
+    <input type="search"
+           name="query"
+           i18n-placeholder
+           id="search"
+           placeholder="Search"
+           [(ngModel)]="query"
+           minlength="1"
+           required
+           fxFlex />
   </form>
 </div>
 <div fxFlex></div>

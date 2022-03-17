@@ -14,35 +14,42 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<kd-card [initialized]="initialized" role="table">
-  <div title i18n>Resource Quotas</div>
+<kd-card [initialized]="initialized"
+         role="table">
+  <div title
+       i18n>Resource Quotas</div>
 
   <div description>
-    <div class="kd-inline-property" *ngIf="quotas?.length">
-      <span class="kd-muted-light" i18n>Items:&nbsp;</span>
+    <div class="kd-inline-property"
+         *ngIf="quotas?.length">
+      <span class="kd-muted-light"
+            i18n>Items:&nbsp;</span>
       <span>{{ quotas.length }}</span>
     </div>
   </div>
 
-  <div content [hidden]="!quotas?.length">
-    <mat-table [dataSource]="getDataSource()" [trackBy]="trackByResourceQuotaDetail">
+  <div content
+       [hidden]="!quotas?.length">
+    <mat-table [dataSource]="getDataSource()"
+               [trackBy]="trackByResourceQuotaDetail">
       <ng-container [matColumnDef]="getQuotaColumns()[0]">
-        <mat-header-cell *matHeaderCellDef i18n>Name</mat-header-cell>
+        <mat-header-cell *matHeaderCellDef
+                         i18n>Name</mat-header-cell>
         <mat-cell *matCellDef="let quota">{{ quota.objectMeta.name }}</mat-cell>
       </ng-container>
       <ng-container [matColumnDef]="getQuotaColumns()[1]">
-        <mat-header-cell *matHeaderCellDef i18n>Created</mat-header-cell>
+        <mat-header-cell *matHeaderCellDef
+                         i18n>Created</mat-header-cell>
         <mat-cell *matCellDef="let quota">
-          <kd-date
-            *ngIf="quota.objectMeta.creationTimestamp"
-            [date]="quota.objectMeta.creationTimestamp"
-            relative
-          ></kd-date>
+          <kd-date *ngIf="quota.objectMeta.creationTimestamp"
+                   [date]="quota.objectMeta.creationTimestamp"
+                   relative></kd-date>
           <ng-container *ngIf="!quota.objectMeta.creationTimestamp">-</ng-container>
         </mat-cell>
       </ng-container>
       <ng-container [matColumnDef]="getQuotaColumns()[2]">
-        <mat-header-cell *matHeaderCellDef i18n>Status</mat-header-cell>
+        <mat-header-cell *matHeaderCellDef
+                         i18n>Status</mat-header-cell>
         <mat-cell *matCellDef="let quota">
           <ng-container *ngIf="quota.statusList">{{ quota.statusList | json }}</ng-container>
           <ng-container *ngIf="!quota.statusList">-</ng-container>
@@ -53,7 +60,8 @@ limitations under the License.
     </mat-table>
   </div>
 
-  <div content [hidden]="quotas?.length">
+  <div content
+       [hidden]="quotas?.length">
     <kd-list-zero-state></kd-list-zero-state>
   </div>
 </kd-card>

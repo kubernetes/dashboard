@@ -14,18 +14,24 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<kd-object-meta [initialized]="isInitialized" [objectMeta]="object?.objectMeta"></kd-object-meta>
+<kd-object-meta [initialized]="isInitialized"
+                [objectMeta]="object?.objectMeta"></kd-object-meta>
 
 <kd-card>
-  <div title i18n>Data</div>
+  <div title
+       i18n>Data</div>
 
   <div content>
     <mat-button-toggle-group #group="matButtonToggleGroup">
-      <mat-button-toggle [value]="modes.YAML" [checked]="true">YAML</mat-button-toggle>
+      <mat-button-toggle [value]="modes.YAML"
+                         [checked]="true">YAML</mat-button-toggle>
       <mat-button-toggle [value]="modes.JSON">JSON</mat-button-toggle>
     </mat-button-toggle-group>
 
-    <kd-text-input [(text)]="text" [prettify]="false" [readOnly]="true" [mode]="getSelectedMode()"></kd-text-input>
+    <kd-text-input [(text)]="text"
+                   [prettify]="false"
+                   [readOnly]="true"
+                   [mode]="getSelectedMode()"></kd-text-input>
   </div>
 </kd-card>
 

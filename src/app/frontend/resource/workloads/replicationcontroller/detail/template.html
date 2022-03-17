@@ -14,36 +14,48 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<kd-object-meta [initialized]="isInitialized" [objectMeta]="replicationController?.objectMeta"></kd-object-meta>
+<kd-object-meta [initialized]="isInitialized"
+                [objectMeta]="replicationController?.objectMeta"></kd-object-meta>
 
 <kd-card [initialized]="isInitialized">
-  <div title i18n>Resource information</div>
+  <div title
+       i18n>Resource information</div>
 
-  <div content *ngIf="isInitialized" fxLayout="row wrap">
-    <kd-property *ngIf="replicationController?.labelSelector" fxFlex="100">
-      <div key i18n>Label Selector</div>
+  <div content
+       *ngIf="isInitialized"
+       fxLayout="row wrap">
+    <kd-property *ngIf="replicationController?.labelSelector"
+                 fxFlex="100">
+      <div key
+           i18n>Label Selector</div>
       <div value>
-        <kd-chips [map]="replicationController.labelSelector" [displayAll]="true"></kd-chips>
+        <kd-chips [map]="replicationController.labelSelector"
+                  [displayAll]="true"></kd-chips>
       </div>
     </kd-property>
 
     <kd-property *ngIf="replicationController?.containerImages">
-      <div key i18n>Images</div>
+      <div key
+           i18n>Images</div>
       <div value>
-        <kd-chips [map]="replicationController.containerImages" [displayAll]="true"></kd-chips>
+        <kd-chips [map]="replicationController.containerImages"
+                  [displayAll]="true"></kd-chips>
       </div>
     </kd-property>
 
     <kd-property *ngIf="replicationController?.initContainerImages">
-      <div key i18n>Init images</div>
+      <div key
+           i18n>Init images</div>
       <div value>
-        <kd-chips [map]="replicationController.initContainerImages" [displayAll]="true"></kd-chips>
+        <kd-chips [map]="replicationController.initContainerImages"
+                  [displayAll]="true"></kd-chips>
       </div>
     </kd-property>
   </div>
 </kd-card>
 
-<kd-pod-status-card [podInfo]="replicationController?.podInfo" [initialized]="isInitialized"></kd-pod-status-card>
+<kd-pod-status-card [podInfo]="replicationController?.podInfo"
+                    [initialized]="isInitialized"></kd-pod-status-card>
 
 <kd-pod-list [endpoint]="podListEndpoint"></kd-pod-list>
 
