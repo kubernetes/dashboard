@@ -20,7 +20,7 @@
 image:
   ## Repository for container
   repository: kubernetesui/dashboard
-  tag: v2.5.0
+  tag: v2.5.1
   pullPolicy: IfNotPresent
   pullSecrets: []
 
