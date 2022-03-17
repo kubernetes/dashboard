@@ -133,35 +133,27 @@ describe('ServiceDetailComponent', () => {
   let httpMock: HttpTestingController;
   let configService: ConfigService;
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        declarations: [
-          ObjectMetaComponent,
-          MaxiTestComponent,
-          CardComponent,
-          PropertyComponent,
-          ServiceDetailComponent,
-        ],
-        imports: [
-          MatIconModule,
-          MatCardModule,
-          MatDividerModule,
-          MatTooltipModule,
-          MatDialogModule,
-          MatChipsModule,
-          NoopAnimationsModule,
-          PipesModule,
-          HttpClientTestingModule,
-          RouterModule,
-        ],
-        providers: [ConfigService],
-        schemas: [CUSTOM_ELEMENTS_SCHEMA],
-      }).compileComponents();
-      httpMock = TestBed.inject(HttpTestingController);
-      configService = TestBed.inject(ConfigService);
-    })
-  );
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      declarations: [ObjectMetaComponent, MaxiTestComponent, CardComponent, PropertyComponent, ServiceDetailComponent],
+      imports: [
+        MatIconModule,
+        MatCardModule,
+        MatDividerModule,
+        MatTooltipModule,
+        MatDialogModule,
+        MatChipsModule,
+        NoopAnimationsModule,
+        PipesModule,
+        HttpClientTestingModule,
+        RouterModule,
+      ],
+      providers: [ConfigService],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA],
+    }).compileComponents();
+    httpMock = TestBed.inject(HttpTestingController);
+    configService = TestBed.inject(ConfigService);
+  }));
 
   beforeEach(() => {
     configService.init();
