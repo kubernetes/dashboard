@@ -55,30 +55,28 @@ describe('ObjectMetaComponent', () => {
   let httpMock: HttpTestingController;
   let configService: ConfigService;
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        declarations: [ObjectMetaComponent, TestComponent, CardComponent, PropertyComponent],
-        imports: [
-          MatIconModule,
-          MatCardModule,
-          MatDividerModule,
-          MatTooltipModule,
-          MatDialogModule,
-          MatChipsModule,
-          NoopAnimationsModule,
-          PipesModule,
-          HttpClientTestingModule,
-          MatIconModule,
-          RouterModule,
-        ],
-        providers: [ConfigService, {provide: MESSAGES_DI_TOKEN, useValue: MESSAGES}],
-        schemas: [CUSTOM_ELEMENTS_SCHEMA],
-      }).compileComponents();
-      httpMock = TestBed.inject(HttpTestingController);
-      configService = TestBed.inject(ConfigService);
-    })
-  );
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      declarations: [ObjectMetaComponent, TestComponent, CardComponent, PropertyComponent],
+      imports: [
+        MatIconModule,
+        MatCardModule,
+        MatDividerModule,
+        MatTooltipModule,
+        MatDialogModule,
+        MatChipsModule,
+        NoopAnimationsModule,
+        PipesModule,
+        HttpClientTestingModule,
+        MatIconModule,
+        RouterModule,
+      ],
+      providers: [ConfigService, {provide: MESSAGES_DI_TOKEN, useValue: MESSAGES}],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA],
+    }).compileComponents();
+    httpMock = TestBed.inject(HttpTestingController);
+    configService = TestBed.inject(ConfigService);
+  }));
 
   beforeEach(() => {
     configService.init();

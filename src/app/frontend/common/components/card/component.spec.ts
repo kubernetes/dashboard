@@ -47,16 +47,14 @@ describe('CardComponent', () => {
   let component: TestComponent;
   let fixture: ComponentFixture<TestComponent>;
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        declarations: [CardComponent, TestComponent],
-        imports: [MatIconModule, MatCardModule, MatDividerModule, MatTooltipModule, NoopAnimationsModule],
-        schemas: [CUSTOM_ELEMENTS_SCHEMA],
-        providers: [{provide: MESSAGES_DI_TOKEN, useValue: MESSAGES}],
-      }).compileComponents();
-    })
-  );
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      declarations: [CardComponent, TestComponent],
+      imports: [MatIconModule, MatCardModule, MatDividerModule, MatTooltipModule, NoopAnimationsModule],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA],
+      providers: [{provide: MESSAGES_DI_TOKEN, useValue: MESSAGES}],
+    }).compileComponents();
+  }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(TestComponent);

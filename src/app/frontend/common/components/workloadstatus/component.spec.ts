@@ -67,26 +67,24 @@ describe('WorkloadStatusComponent', () => {
   let configService: ConfigService;
   let testHostFixture: ComponentFixture<WorkloadStatusComponent>;
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        declarations: [CardComponent, WorkloadStatusComponent],
-        imports: [
-          MatIconModule,
-          MatCardModule,
-          MatDividerModule,
-          MatTooltipModule,
-          NoopAnimationsModule,
-          HttpClientTestingModule,
-          FlexLayoutModule,
-        ],
-        providers: [ConfigService, {provide: MESSAGES_DI_TOKEN, useValue: MESSAGES}],
-        schemas: [CUSTOM_ELEMENTS_SCHEMA],
-      }).compileComponents();
-      httpMock = TestBed.inject(HttpTestingController);
-      configService = TestBed.inject(ConfigService);
-    })
-  );
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      declarations: [CardComponent, WorkloadStatusComponent],
+      imports: [
+        MatIconModule,
+        MatCardModule,
+        MatDividerModule,
+        MatTooltipModule,
+        NoopAnimationsModule,
+        HttpClientTestingModule,
+        FlexLayoutModule,
+      ],
+      providers: [ConfigService, {provide: MESSAGES_DI_TOKEN, useValue: MESSAGES}],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA],
+    }).compileComponents();
+    httpMock = TestBed.inject(HttpTestingController);
+    configService = TestBed.inject(ConfigService);
+  }));
 
   beforeEach(() => {
     configService.init();

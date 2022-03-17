@@ -34,42 +34,35 @@ describe('AboutComponent', () => {
   // set the predefined values
   const copyrightYear = 2019;
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        imports: [SharedModule, HttpClientTestingModule, BrowserAnimationsModule],
-        declarations: [AboutComponent, CardComponent],
-        providers: [AssetsService, ConfigService, {provide: MESSAGES_DI_TOKEN, useValue: MESSAGES}],
-      }).compileComponents();
-      httpMock = TestBed.inject(HttpTestingController);
-      configService = TestBed.inject(ConfigService);
-    })
-  );
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      imports: [SharedModule, HttpClientTestingModule, BrowserAnimationsModule],
+      declarations: [AboutComponent, CardComponent],
+      providers: [AssetsService, ConfigService, {provide: MESSAGES_DI_TOKEN, useValue: MESSAGES}],
+    }).compileComponents();
+    httpMock = TestBed.inject(HttpTestingController);
+    configService = TestBed.inject(ConfigService);
+  }));
 
-  beforeEach(
-    waitForAsync(() => {
-      // prepare the component
-      configService.init();
-      fixture = TestBed.createComponent(AboutComponent);
-      component = fixture.componentInstance;
+  beforeEach(waitForAsync(() => {
+    // prepare the component
+    configService.init();
+    fixture = TestBed.createComponent(AboutComponent);
+    component = fixture.componentInstance;
 
-      const configRequest = httpMock.expectOne('config');
-      const config: AppConfig = {serverTime: new Date().getTime()};
-      configRequest.flush(config);
+    const configRequest = httpMock.expectOne('config');
+    const config: AppConfig = {serverTime: new Date().getTime()};
+    configRequest.flush(config);
 
-      // set the fixed values
-      component.latestCopyrightYear = copyrightYear;
+    // set the fixed values
+    component.latestCopyrightYear = copyrightYear;
 
-      // grab the HTML element
-      element = fixture.debugElement.query(By.css('kd-card')).nativeElement;
-    })
-  );
+    // grab the HTML element
+    element = fixture.debugElement.query(By.css('kd-card')).nativeElement;
+  }));
 
-  it(
-    'should print current year',
-    waitForAsync(() => {
-      fixture.detectChanges();
-      expect(element.textContent).toContain(`2015 - ${copyrightYear}`);
-    })
-  );
+  it('should print current year', waitForAsync(() => {
+    fixture.detectChanges();
+    expect(element.textContent).toContain(`2015 - ${copyrightYear}`);
+  }));
 });

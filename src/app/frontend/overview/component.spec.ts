@@ -64,26 +64,24 @@ describe('OverviewComponent', () => {
   let configService: ConfigService;
   let testHostFixture: ComponentFixture<OverviewComponent>;
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        declarations: [CardComponent, OverviewComponent, MockDaemonSetListComponent, WorkloadStatusComponent],
-        imports: [
-          MatIconModule,
-          MatCardModule,
-          MatDividerModule,
-          MatTooltipModule,
-          NoopAnimationsModule,
-          HttpClientTestingModule,
-          FlexLayoutModule,
-        ],
-        providers: [ConfigService, NotificationsService],
-        schemas: [CUSTOM_ELEMENTS_SCHEMA],
-      }).compileComponents();
-      httpMock = TestBed.inject(HttpTestingController);
-      configService = TestBed.inject(ConfigService);
-    })
-  );
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      declarations: [CardComponent, OverviewComponent, MockDaemonSetListComponent, WorkloadStatusComponent],
+      imports: [
+        MatIconModule,
+        MatCardModule,
+        MatDividerModule,
+        MatTooltipModule,
+        NoopAnimationsModule,
+        HttpClientTestingModule,
+        FlexLayoutModule,
+      ],
+      providers: [ConfigService, NotificationsService],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA],
+    }).compileComponents();
+    httpMock = TestBed.inject(HttpTestingController);
+    configService = TestBed.inject(ConfigService);
+  }));
 
   beforeEach(() => {
     configService.init();
