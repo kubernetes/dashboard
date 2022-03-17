@@ -12,9 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {Component, Input} from '@angular/core';
+import {Component, Inject, Input} from '@angular/core';
 import {ObjectMeta, TypeMeta} from '@api/root.api';
+import {IMessage} from '@api/root.ui';
 import {PinnerService} from '@common/services/global/pinner';
+import {MESSAGES_DI_TOKEN} from '../../../../../index.messages';
 
 @Component({
   selector: 'kd-actionbar-detail-pin',
@@ -26,7 +28,7 @@ export class ActionbarDetailPinComponent {
   @Input() displayName: string;
   @Input() namespaced = false;
 
-  constructor(private readonly pinner_: PinnerService) {}
+  constructor(private readonly pinner_: PinnerService, @Inject(MESSAGES_DI_TOKEN) readonly message: IMessage) {}
 
   onClick(): void {
     if (this.isPinned()) {

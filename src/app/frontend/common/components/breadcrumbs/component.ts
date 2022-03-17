@@ -12,10 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {Component, OnInit} from '@angular/core';
+import {Component, Inject, OnInit} from '@angular/core';
 import {ActivatedRoute, NavigationEnd, Params, Route, Router} from '@angular/router';
-import {Breadcrumb} from '@api/root.ui';
+import {Breadcrumb, IMessage} from '@api/root.ui';
 import {distinctUntilChanged, filter} from 'rxjs/operators';
+import {MESSAGES_DI_TOKEN} from '../../../index.messages';
 import {POD_DETAIL_ROUTE} from '../../../resource/workloads/pod/routing';
 import {REPLICASET_DETAIL_ROUTE} from '../../../resource/workloads/replicaset/routing';
 import {REPLICATIONCONTROLLER_DETAIL_ROUTE} from '../../../resource/workloads/replicationcontroller/routing';
@@ -33,7 +34,11 @@ export const SEARCH_BREADCRUMB_PLACEHOLDER = '___SEARCH_BREADCRUMB_PLACEHOLDER__
 export class BreadcrumbsComponent implements OnInit {
   breadcrumbs: Breadcrumb[];
 
-  constructor(private readonly _router: Router, private readonly _activatedRoute: ActivatedRoute) {}
+  constructor(
+    private readonly _router: Router,
+    private readonly _activatedRoute: ActivatedRoute,
+    @Inject(MESSAGES_DI_TOKEN) private readonly message_: IMessage
+  ) {}
 
   ngOnInit(): void {
     this._initBreadcrumbs();
@@ -139,12 +144,12 @@ export class BreadcrumbsComponent implements OnInit {
         breadcrumb = breadcrumb.slice(2, breadcrumb.length - 2).trim();
         breadcrumb = params[breadcrumb];
       } else if (breadcrumb === SEARCH_BREADCRUMB_PLACEHOLDER) {
-        return `Search for ${this._activatedRoute.snapshot.queryParams[SEARCH_QUERY_STATE_PARAM]}`;
+        return $localize`Search for ${this._activatedRoute.snapshot.queryParams[SEARCH_QUERY_STATE_PARAM]}`;
       }
       return breadcrumb;
     } else if (route && route.component) {
       return route.component.name;
     }
-    return 'Unknown';
+    return this.message_.Unknown;
   }
 }

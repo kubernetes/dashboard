@@ -92,7 +92,7 @@ export class GraphComponent implements OnInit, OnChanges {
         series = this.metric.dataPoints.map(point => FormattedValue.NewFormattedCoreValue(point.y));
         break;
       default:
-        throw new Error(`Unsupported graph type ${this.graphType}.`);
+        throw new Error($localize`Unsupported graph type ${this.graphType}.`);
     }
 
     // Find out the highest suffix and normalize all values to a single suffix

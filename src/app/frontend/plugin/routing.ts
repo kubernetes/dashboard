@@ -14,6 +14,7 @@
 
 import {NgModule} from '@angular/core';
 import {Route, RouterModule} from '@angular/router';
+import {BREADCRUMBS} from '../index.messages';
 import {PluginListComponent} from './list/component';
 import {PluginDetailComponent} from './detail/component';
 
@@ -21,7 +22,7 @@ export const PLUGIN_LIST_ROUTE: Route = {
   path: '',
   component: PluginListComponent,
   data: {
-    breadcrumb: 'Plugins',
+    breadcrumb: BREADCRUMBS.Plugins,
   },
 };
 

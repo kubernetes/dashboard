@@ -15,6 +15,7 @@
 import {NgModule} from '@angular/core';
 import {Route, RouterModule} from '@angular/router';
 import {DEFAULT_ACTIONBAR} from '@common/components/actionbars/routing';
+import {BREADCRUMBS} from '../../../index.messages';
 
 import {CONFIG_ROUTE} from '../routing';
 
@@ -25,7 +26,7 @@ const PERSISTENTVOLUMECLAIM_LIST_ROUTE: Route = {
   path: '',
   component: PersistentVolumeClaimListComponent,
   data: {
-    breadcrumb: 'Persistent Volume Claims',
+    breadcrumb: BREADCRUMBS.PersistentVolumeClaims,
     parent: CONFIG_ROUTE,
   },
 };

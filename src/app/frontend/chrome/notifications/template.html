@@ -18,16 +18,12 @@ limitations under the License.
   <button mat-icon-button
           color="primary"
           class="kd-global-action kd-notifications-button"
-          [matTooltip]="isOpen() ? template_close.innerText : template_open.innerText"
+          [matTooltip]="isOpen() ? message.Close : message.Open"
           (click)="toggle()">
     <mat-icon class="kd-notifications-icon kd-primary-toolbar-icon">notifications</mat-icon>
     <div *ngIf="getUnreadCount() > 0"
          @easeOut
          class="kd-notifications-counter kd-white kd-bg-error">{{getUnreadCount()}}</div>
-    <template #template_open
-              i18n>Open notifications panel</template>
-    <template #template_close
-              i18n>Close notifications panel</template>
   </button>
   <div class="kd-notifications-panel"
        fxLayout="column"

@@ -14,13 +14,14 @@
 
 import {NgModule} from '@angular/core';
 import {Route, RouterModule} from '@angular/router';
+import {BREADCRUMBS} from '../../index.messages';
 import {ClusterComponent} from './component';
 
 export const CLUSTER_ROUTE: Route = {
   path: '',
   component: ClusterComponent,
   data: {
-    breadcrumb: 'Cluster',
+    breadcrumb: BREADCRUMBS.Cluster,
     link: ['', 'cluster'],
   },
 };

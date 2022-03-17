@@ -14,13 +14,14 @@
 
 import {NgModule} from '@angular/core';
 import {Route, RouterModule} from '@angular/router';
+import {BREADCRUMBS} from '../../index.messages';
 import {DiscoveryComponent} from './component';
 
 export const DISCOVERY_ROUTE: Route = {
   path: '',
   component: DiscoveryComponent,
   data: {
-    breadcrumb: 'Discovery and Load Balancing',
+    breadcrumb: BREADCRUMBS.Service,
     link: ['', 'discovery'],
   },
 };

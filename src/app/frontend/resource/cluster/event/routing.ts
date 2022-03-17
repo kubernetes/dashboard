@@ -15,6 +15,7 @@
 import {NgModule} from '@angular/core';
 import {Route, RouterModule} from '@angular/router';
 import {DEFAULT_ACTIONBAR} from '@common/components/actionbars/routing';
+import {BREADCRUMBS} from '../../../index.messages';
 
 import {CLUSTER_ROUTE} from '../routing';
 
@@ -24,7 +25,7 @@ const EVENT_LIST_ROUTE: Route = {
   path: '',
   component: EventListComponent,
   data: {
-    breadcrumb: 'Events',
+    breadcrumb: BREADCRUMBS.Events,
     parent: CLUSTER_ROUTE,
   },
 };

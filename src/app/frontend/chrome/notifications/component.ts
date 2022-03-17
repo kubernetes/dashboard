@@ -12,10 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {Component, ElementRef, HostListener} from '@angular/core';
+import {Component, ElementRef, HostListener, Inject} from '@angular/core';
+import {IMessage} from '@api/root.ui';
 
 import {Animations} from '@common/animations/animations';
 import {Notification, NotificationsService} from '@common/services/global/notifications';
+import {MESSAGES_DI_TOKEN} from '../../index.messages';
 
 @Component({
   selector: 'kd-notifications',
@@ -27,7 +29,11 @@ export class NotificationsComponent {
   isOpen_ = false;
   notifications: Notification[] = [];
 
-  constructor(private readonly notifications_: NotificationsService, private readonly element_: ElementRef) {}
+  constructor(
+    private readonly notifications_: NotificationsService,
+    private readonly element_: ElementRef,
+    @Inject(MESSAGES_DI_TOKEN) readonly message: IMessage
+  ) {}
 
   @HostListener('document:click', ['$event'])
   private onOutsideClick_(event: Event): void {

@@ -15,6 +15,7 @@
 import {NgModule} from '@angular/core';
 import {Route, RouterModule} from '@angular/router';
 import {LOGS_DEFAULT_ACTIONBAR} from '@common/components/actionbars/routing';
+import {BREADCRUMBS} from '../../../index.messages';
 import {WORKLOADS_ROUTE} from '../routing';
 
 import {JobDetailComponent} from './detail/component';
@@ -24,7 +25,7 @@ const JOB_LIST_ROUTE: Route = {
   path: '',
   component: JobListComponent,
   data: {
-    breadcrumb: 'Jobs',
+    breadcrumb: BREADCRUMBS.Jobs,
     parent: WORKLOADS_ROUTE,
   },
 };

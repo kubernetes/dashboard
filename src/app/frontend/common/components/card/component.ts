@@ -12,7 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {Component, Input} from '@angular/core';
+import {Component, Inject, Input} from '@angular/core';
+import {IMessage} from '@api/root.ui';
+import {MESSAGES_DI_TOKEN} from '../../../index.messages';
 import {Animations} from '../../animations/animations';
 
 @Component({
@@ -35,6 +37,8 @@ export class CardComponent {
   set titleClasses(val: string) {
     this.classes_ = val.split(/\s+/);
   }
+
+  constructor(@Inject(MESSAGES_DI_TOKEN) readonly message: IMessage) {}
 
   expand(): void {
     if (this.expandable) {
