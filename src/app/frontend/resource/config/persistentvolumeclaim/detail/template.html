@@ -26,12 +26,12 @@ limitations under the License.
     <kd-property *ngIf="persistentVolumeClaim?.status">
       <div key
            i18n>Status</div>
-      <div value>{{persistentVolumeClaim.status}}</div>
+      <div value>{{ persistentVolumeClaim.status }}</div>
     </kd-property>
     <kd-property *ngIf="persistentVolumeClaim?.storageClass">
       <div key
            i18n>Storage Class</div>
-      <div value>{{persistentVolumeClaim.storageClass}}</div>
+      <div value>{{ persistentVolumeClaim.storageClass }}</div>
     </kd-property>
     <kd-property *ngIf="persistentVolumeClaim?.volume">
       <div key
@@ -39,11 +39,9 @@ limitations under the License.
       <div value>
         <a [routerLink]="getPersistentVolumeHref(persistentVolumeClaim.volume)"
            queryParamsHandling="preserve">
-          {{persistentVolumeClaim.volume}}
+          {{ persistentVolumeClaim.volume }}
         </a>
       </div>
-
-
     </kd-property>
     <kd-property *ngIf="persistentVolumeClaim?.capacity"
                  fxFlex="100">

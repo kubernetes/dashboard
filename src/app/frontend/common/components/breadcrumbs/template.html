@@ -21,11 +21,9 @@ limitations under the License.
     <a [routerLink]="breadcrumb.stateLink"
        queryParamsHandling="preserve"
        [ngClass]="{'kd-faded-breadcrumb': !last}">
-      {{breadcrumb.label}}
+      {{ breadcrumb.label }}
     </a>
     <mat-icon *ngIf="!last"
-              class="kd-faded-breadcrumb kd-breadcrumb-divider">
-      keyboard_arrow_right
-    </mat-icon>
+              class="kd-faded-breadcrumb kd-breadcrumb-divider"> keyboard_arrow_right </mat-icon>
   </div>
 </div>

@@ -24,34 +24,34 @@ limitations under the License.
          *ngIf="podInfo.running > 0">
       <span class="kd-muted-light"
             i18n>Running:&nbsp;</span>
-      <span>{{podInfo.running}}</span>
+      <span>{{ podInfo.running }}</span>
     </div>
 
     <div class="kd-inline-property"
          *ngIf="podInfo.succeeded > 0">
       <span class="kd-muted-light"
             i18n>Succeeded:&nbsp;</span>
-      <span>{{podInfo.succeeded}}</span>
+      <span>{{ podInfo.succeeded }}</span>
     </div>
 
     <div class="kd-inline-property"
          *ngIf="podInfo.pending > 0">
       <span class="kd-muted-light"
             i18n>Pending:&nbsp;</span>
-      <span>{{podInfo.pending}}</span>
+      <span>{{ podInfo.pending }}</span>
     </div>
 
     <div class="kd-inline-property"
          *ngIf="podInfo.failed > 0">
       <span class="kd-muted-light"
             i18n>Failed:&nbsp;</span>
-      <span>{{podInfo.failed}}</span>
+      <span>{{ podInfo.failed }}</span>
     </div>
 
     <div class="kd-inline-property">
       <span class="kd-muted-light"
             i18n>Desired:&nbsp;</span>
-      <span>{{podInfo.desired}}</span>
+      <span>{{ podInfo.desired }}</span>
     </div>
   </div>
 
@@ -61,32 +61,32 @@ limitations under the License.
     <kd-property *ngIf="podInfo.running > 0">
       <div key
            i18n>Running</div>
-      <div value>{{podInfo.running}}</div>
+      <div value>{{ podInfo.running }}</div>
     </kd-property>
 
     <kd-property *ngIf="podInfo.succeeded > 0">
       <div key
            i18n>Succeeded</div>
-      <div value>{{podInfo.succeeded}}</div>
+      <div value>{{ podInfo.succeeded }}</div>
     </kd-property>
 
     <kd-property *ngIf="podInfo.pending > 0">
       <div key
            i18n>Pending</div>
-      <div value>{{podInfo.pending}}</div>
+      <div value>{{ podInfo.pending }}</div>
     </kd-property>
 
     <kd-property [ngClass]="{'kd-error': podInfo.failed > 0}"
                  *ngIf="podInfo.failed > 0">
       <div key
            i18n>Failed</div>
-      <div value>{{podInfo.failed}}</div>
+      <div value>{{ podInfo.failed }}</div>
     </kd-property>
 
     <kd-property>
       <div key
            i18n>Desired</div>
-      <div value>{{podInfo.desired}}</div>
+      <div value>{{ podInfo.desired }}</div>
     </kd-property>
   </div>
 </kd-card>
