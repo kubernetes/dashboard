@@ -16,7 +16,7 @@ limitations under the License.
 
 <kd-card role="table" [hidden]="isHidden()">
   <div title fxLayout="row" i18n>Storage Classes</div>
-  <div description><span class="kd-muted-light" i18n>Items:&nbsp;</span>{{totalItems}}</div>
+  <div description><span class="kd-muted-light" i18n>Items:&nbsp;</span>{{ totalItems }}</div>
   <div actions>
     <kd-card-list-filter></kd-card-list-filter>
   </div>
@@ -30,21 +30,22 @@ limitations under the License.
       matSort
       [matSortActive]="getColumns()[3]"
       matSortDisableClear
-      matSortDirection="asc">
+      matSortDirection="asc"
+    >
       <ng-container [matColumnDef]="getColumns()[0]">
         <mat-header-cell *matHeaderCellDef mat-sort-header disableClear="true" class="kd-col-gt" i18n
           >Name</mat-header-cell
         >
         <mat-cell *matCellDef="let sc" class="kd-col-gt">
           <a [routerLink]="getDetailsHref(sc.objectMeta.name, sc.objectMeta.namespace)" queryParamsHandling="preserve"
-            >{{sc.objectMeta.name}}</a
+            >{{ sc.objectMeta.name }}</a
           >
         </mat-cell>
       </ng-container>
 
       <ng-container [matColumnDef]="getColumns()[1]">
         <mat-header-cell *matHeaderCellDef class="kd-col-md" i18n>Provisioner</mat-header-cell>
-        <mat-cell *matCellDef="let sc" class="kd-col-md">{{sc.provisioner}}</mat-cell>
+        <mat-cell *matCellDef="let sc" class="kd-col-md">{{ sc.provisioner }}</mat-cell>
       </ng-container>
 
       <ng-container [matColumnDef]="getColumns()[2]">
@@ -71,7 +72,7 @@ limitations under the License.
       </ng-container>
 
       <mat-header-row *matHeaderRowDef="getColumns()"></mat-header-row>
-      <mat-row *matRowDef="let row; columns: getColumns();"></mat-row>
+      <mat-row *matRowDef="let row; columns: getColumns()"></mat-row>
     </mat-table>
 
     <div [hidden]="totalItems <= itemsPerPage">

@@ -23,19 +23,19 @@ limitations under the License.
   <div content *ngIf="isInitialized" fxLayout="row wrap">
     <kd-property *ngIf="node?.phase">
       <div key i18n>Phase</div>
-      <div value>{{node?.phase}}</div>
+      <div value>{{ node?.phase }}</div>
     </kd-property>
     <kd-property *ngIf="node?.podCIDR">
       <div key i18n>Pod CIDR</div>
-      <div value>{{node?.podCIDR}}</div>
+      <div value>{{ node?.podCIDR }}</div>
     </kd-property>
     <kd-property *ngIf="node?.providerID">
       <div key i18n>Provider ID</div>
-      <div value>{{node?.providerID}}</div>
+      <div value>{{ node?.providerID }}</div>
     </kd-property>
     <kd-property *ngIf="node?.unschedulable">
       <div key i18n>Unschedulable</div>
-      <div value>{{node?.unschedulable}}</div>
+      <div value>{{ node?.unschedulable }}</div>
     </kd-property>
     <kd-property *ngIf="node?.addresses" fxFlex="100">
       <div key i18n>Addresses</div>
@@ -57,43 +57,43 @@ limitations under the License.
   <div content *ngIf="isInitialized" fxLayout="row wrap">
     <kd-property *ngIf="node?.nodeInfo.machineID">
       <div key i18n>Machine ID</div>
-      <div value>{{node?.nodeInfo.machineID}}</div>
+      <div value>{{ node?.nodeInfo.machineID }}</div>
     </kd-property>
     <kd-property *ngIf="node?.nodeInfo.systemUUID">
       <div key i18n>System UUID</div>
-      <div value>{{node?.nodeInfo.systemUUID}}</div>
+      <div value>{{ node?.nodeInfo.systemUUID }}</div>
     </kd-property>
     <kd-property *ngIf="node?.nodeInfo.bootID">
       <div key i18n>Boot ID</div>
-      <div value>{{node?.nodeInfo.bootID}}</div>
+      <div value>{{ node?.nodeInfo.bootID }}</div>
     </kd-property>
     <kd-property *ngIf="node?.nodeInfo.kernelVersion">
       <div key i18n>Kernel version</div>
-      <div value>{{node?.nodeInfo.kernelVersion}}</div>
+      <div value>{{ node?.nodeInfo.kernelVersion }}</div>
     </kd-property>
     <kd-property *ngIf="node?.nodeInfo.osImage">
       <div key i18n>OS Image</div>
-      <div value>{{node?.nodeInfo.osImage}}</div>
+      <div value>{{ node?.nodeInfo.osImage }}</div>
     </kd-property>
     <kd-property *ngIf="node?.nodeInfo.containerRuntimeVersion">
       <div key i18n>Container runtime version</div>
-      <div value>{{node?.nodeInfo.containerRuntimeVersion}}</div>
+      <div value>{{ node?.nodeInfo.containerRuntimeVersion }}</div>
     </kd-property>
     <kd-property *ngIf="node?.nodeInfo.kubeletVersion">
       <div key i18n>kubelet version</div>
-      <div value>{{node?.nodeInfo.kubeletVersion}}</div>
+      <div value>{{ node?.nodeInfo.kubeletVersion }}</div>
     </kd-property>
     <kd-property *ngIf="node?.nodeInfo.kubeProxyVersion">
       <div key i18n>kube-proxy version</div>
-      <div value>{{node?.nodeInfo.kubeProxyVersion}}</div>
+      <div value>{{ node?.nodeInfo.kubeProxyVersion }}</div>
     </kd-property>
     <kd-property *ngIf="node?.nodeInfo.operatingSystem">
       <div key i18n>Operating system</div>
-      <div value>{{node?.nodeInfo.operatingSystem}}</div>
+      <div value>{{ node?.nodeInfo.operatingSystem }}</div>
     </kd-property>
     <kd-property *ngIf="node?.nodeInfo.architecture">
       <div key i18n>Architecture</div>
-      <div value>{{node?.nodeInfo.architecture}}</div>
+      <div value>{{ node?.nodeInfo.architecture }}</div>
     </kd-property>
   </div>
 </kd-card>
@@ -109,8 +109,9 @@ limitations under the License.
           [designatedTotal]="cpuCapacity"
           [customColors]="customColors"
           [animations]="false"
-          [view]="[500,250]"
-          [label]="cpuLabel">
+          [view]="[500, 250]"
+          [label]="cpuLabel"
+        >
         </ngx-charts-pie-grid>
       </div>
       <div fxLayoutAlign="center center" fxLayout="column" fxFlex>
@@ -120,8 +121,9 @@ limitations under the License.
           [designatedTotal]="memoryCapacity"
           [customColors]="customColors"
           [animations]="false"
-          [view]="[500,250]"
-          [label]="memoryLabel">
+          [view]="[500, 250]"
+          [label]="memoryLabel"
+        >
         </ngx-charts-pie-grid>
       </div>
       <div fxLayoutAlign="center center" fxLayout="column" fxFlex>
@@ -131,8 +133,9 @@ limitations under the License.
           [designatedTotal]="node?.allocatedResources.podCapacity"
           [customColors]="customColors"
           [animations]="false"
-          [view]="[250,250]"
-          label="Pods">
+          [view]="[250, 250]"
+          label="Pods"
+        >
         </ngx-charts-pie-grid>
       </div>
     </div>

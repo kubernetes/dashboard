@@ -26,22 +26,22 @@ limitations under the License.
 
       <kd-property *ngIf="source.awsElasticBlockStore.fsType">
         <div key i18n>Filesystem type</div>
-        <div value>{{source.awsElasticBlockStore.fsType}}</div>
+        <div value>{{ source.awsElasticBlockStore.fsType }}</div>
       </kd-property>
 
       <kd-property *ngIf="source.awsElasticBlockStore.partition !== undefined">
         <div key i18n>Partition</div>
-        <div value>{{source.awsElasticBlockStore.partition}}</div>
+        <div value>{{ source.awsElasticBlockStore.partition }}</div>
       </kd-property>
 
       <kd-property *ngIf="source.awsElasticBlockStore.readOnly !== undefined">
         <div key i18n>Read only</div>
-        <div value>{{source.awsElasticBlockStore.readOnly}}</div>
+        <div value>{{ source.awsElasticBlockStore.readOnly }}</div>
       </kd-property>
 
       <kd-property *ngIf="source.awsElasticBlockStore.volumeID">
         <div key i18n>Volume ID</div>
-        <div value>{{source.awsElasticBlockStore.volumeID}}</div>
+        <div value>{{ source.awsElasticBlockStore.volumeID }}</div>
       </kd-property>
     </ng-container>
 
@@ -53,17 +53,17 @@ limitations under the License.
 
       <kd-property *ngIf="source.cinder.fsType">
         <div key i18n>Filesystem type</div>
-        <div value>{{source.cinder.fsType}}</div>
+        <div value>{{ source.cinder.fsType }}</div>
       </kd-property>
 
       <kd-property *ngIf="source.cinder.readOnly !== undefined">
         <div key i18n>Read only</div>
-        <div value>{{source.cinder.readOnly}}</div>
+        <div value>{{ source.cinder.readOnly }}</div>
       </kd-property>
 
       <kd-property *ngIf="source.cinder.volumeID">
         <div key i18n>Volume ID</div>
-        <div value>{{source.cinder.volumeID}}</div>
+        <div value>{{ source.cinder.volumeID }}</div>
       </kd-property>
     </ng-container>
 
@@ -75,17 +75,17 @@ limitations under the License.
 
       <kd-property *ngIf="source.fc.fsType">
         <div key i18n>Filesystem type</div>
-        <div value>{{source.fc.fsType}}</div>
+        <div value>{{ source.fc.fsType }}</div>
       </kd-property>
 
       <kd-property *ngIf="source.fc.readOnly !== undefined">
         <div key i18n>Read only</div>
-        <div value>{{source.fc.readOnly}}</div>
+        <div value>{{ source.fc.readOnly }}</div>
       </kd-property>
 
       <kd-property *ngIf="source.fc.lun">
         <div key i18n>Lun number</div>
-        <div value>{{source.fc.lun}}</div>
+        <div value>{{ source.fc.lun }}</div>
       </kd-property>
 
       <kd-property *ngIf="source.fc.targetWWNs" fxFlex="100">
@@ -104,7 +104,7 @@ limitations under the License.
 
       <kd-property *ngIf="source.flocker.datasetName">
         <div key i18n>Dataset name</div>
-        <div value>{{source.flocker.datasetName}}</div>
+        <div value>{{ source.flocker.datasetName }}</div>
       </kd-property>
     </ng-container>
 
@@ -116,22 +116,22 @@ limitations under the License.
 
       <kd-property *ngIf="source.gcePersistentDisk.fsType">
         <div key i18n>Filesystem type</div>
-        <div value>{{source.gcePersistentDisk.fsType}}</div>
+        <div value>{{ source.gcePersistentDisk.fsType }}</div>
       </kd-property>
 
       <kd-property *ngIf="source.gcePersistentDisk.partition !== undefined">
         <div key i18n>Partition</div>
-        <div value>{{source.gcePersistentDisk.partition}}</div>
+        <div value>{{ source.gcePersistentDisk.partition }}</div>
       </kd-property>
 
       <kd-property *ngIf="source.gcePersistentDisk.readOnly !== undefined">
         <div key i18n>Read only</div>
-        <div value>{{source.gcePersistentDisk.readOnly}}</div>
+        <div value>{{ source.gcePersistentDisk.readOnly }}</div>
       </kd-property>
 
       <kd-property *ngIf="source.gcePersistentDisk.pdName">
         <div key i18n>Persistent disk name</div>
-        <div value>{{source.gcePersistentDisk.pdName}}</div>
+        <div value>{{ source.gcePersistentDisk.pdName }}</div>
       </kd-property>
     </ng-container>
 
@@ -143,17 +143,17 @@ limitations under the License.
 
       <kd-property *ngIf="source.glusterfs.endpoints">
         <div key i18n>Endpoints</div>
-        <div value>{{source.glusterfs.endpoints}}</div>
+        <div value>{{ source.glusterfs.endpoints }}</div>
       </kd-property>
 
       <kd-property *ngIf="source.glusterfs.path">
         <div key i18n>Path</div>
-        <div value>{{source.glusterfs.path}}</div>
+        <div value>{{ source.glusterfs.path }}</div>
       </kd-property>
 
       <kd-property *ngIf="source.glusterfs.readOnly !== undefined">
         <div key i18n>Read only</div>
-        <div value>{{source.glusterfs.readOnly}}</div>
+        <div value>{{ source.glusterfs.readOnly }}</div>
       </kd-property>
     </ng-container>
 
@@ -165,7 +165,7 @@ limitations under the License.
 
       <kd-property *ngIf="source.hostPath.path">
         <div key i18n>Path</div>
-        <div value>{{source.hostPath.path}}</div>
+        <div value>{{ source.hostPath.path }}</div>
       </kd-property>
     </ng-container>
 
@@ -176,19 +176,19 @@ limitations under the License.
       </kd-property>
       <kd-property *ngIf="source.csi.driver">
         <div key i18n>Driver</div>
-        <div value>{{source.csi.driver}}</div>
+        <div value>{{ source.csi.driver }}</div>
       </kd-property>
       <kd-property *ngIf="source.csi.volumeHandle">
         <div key i18n>Volume Handle</div>
-        <div value>{{source.csi.volumeHandle}}</div>
+        <div value>{{ source.csi.volumeHandle }}</div>
       </kd-property>
       <kd-property *ngIf="source.csi.fSType">
         <div key i18n>File System Type</div>
-        <div value>{{source.csi.fSType}}</div>
+        <div value>{{ source.csi.fSType }}</div>
       </kd-property>
       <kd-property *ngIf="source.csi.readOnly">
         <div key i18n>Read Only</div>
-        <div value>{{source.csi.readOnly}}</div>
+        <div value>{{ source.csi.readOnly }}</div>
       </kd-property>
 
       <kd-property *ngIf="source.csi?.volumeAttributes" [stretched]="true" fxFlex="100">
@@ -198,19 +198,19 @@ limitations under the License.
             <ng-container [matColumnDef]="getVolumeAttributesColumns()[0]">
               <mat-header-cell *matHeaderCellDef i18n>Key</mat-header-cell>
               <mat-cell *matCellDef="let element">
-                <ng-container *ngIf="element.key">{{element.key}}</ng-container>
+                <ng-container *ngIf="element.key">{{ element.key }}</ng-container>
                 <ng-container *ngIf="!element.key">-</ng-container>
               </mat-cell>
             </ng-container>
             <ng-container [matColumnDef]="getVolumeAttributesColumns()[1]">
               <mat-header-cell *matHeaderCellDef i18n>Value</mat-header-cell>
               <mat-cell *matCellDef="let element">
-                <ng-container *ngIf="element.value">{{element.value}}</ng-container>
+                <ng-container *ngIf="element.value">{{ element.value }}</ng-container>
                 <ng-container *ngIf="!element.value">-</ng-container>
               </mat-cell>
             </ng-container>
             <mat-header-row *matHeaderRowDef="getVolumeAttributesColumns()"></mat-header-row>
-            <mat-row *matRowDef="let row; columns: getVolumeAttributesColumns();"></mat-row>
+            <mat-row *matRowDef="let row; columns: getVolumeAttributesColumns()"></mat-row>
           </mat-table>
         </div>
       </kd-property>
@@ -224,27 +224,27 @@ limitations under the License.
 
       <kd-property *ngIf="source.iscsi.fsType">
         <div key i18n>Filesystem type</div>
-        <div value>{{source.iscsi.fsType}}</div>
+        <div value>{{ source.iscsi.fsType }}</div>
       </kd-property>
 
       <kd-property *ngIf="source.iscsi.iqn">
         <div key i18n>iSCSI Qualified Name</div>
-        <div value>{{source.iscsi.iqn}}</div>
+        <div value>{{ source.iscsi.iqn }}</div>
       </kd-property>
 
       <kd-property *ngIf="source.iscsi.readOnly !== undefined">
         <div key i18n>Read only</div>
-        <div value>{{source.iscsi.readOnly}}</div>
+        <div value>{{ source.iscsi.readOnly }}</div>
       </kd-property>
 
       <kd-property *ngIf="source.iscsi.lun !== undefined">
         <div key i18n>iSCSI target lun number</div>
-        <div value>{{source.iscsi.lun}}</div>
+        <div value>{{ source.iscsi.lun }}</div>
       </kd-property>
 
       <kd-property *ngIf="source.iscsi.targetPortal">
         <div key i18n>Target portal</div>
-        <div value>{{source.iscsi.targetPortal}}</div>
+        <div value>{{ source.iscsi.targetPortal }}</div>
       </kd-property>
     </ng-container>
 
@@ -256,17 +256,17 @@ limitations under the License.
 
       <kd-property *ngIf="source.nfs.server">
         <div key i18n>Server</div>
-        <div value>{{source.nfs.server}}</div>
+        <div value>{{ source.nfs.server }}</div>
       </kd-property>
 
       <kd-property *ngIf="source.nfs.path">
         <div key i18n>Path</div>
-        <div value>{{source.nfs.path}}</div>
+        <div value>{{ source.nfs.path }}</div>
       </kd-property>
 
       <kd-property *ngIf="source.nfs.readOnly !== undefined">
         <div key i18n>Read only</div>
-        <div value>{{source.nfs.readOnly}}</div>
+        <div value>{{ source.nfs.readOnly }}</div>
       </kd-property>
     </ng-container>
 
@@ -278,17 +278,17 @@ limitations under the License.
 
       <kd-property *ngIf="source.rbd.fsType">
         <div key i18n>Filesystem type</div>
-        <div value>{{source.rbd.fsType}}</div>
+        <div value>{{ source.rbd.fsType }}</div>
       </kd-property>
 
       <kd-property *ngIf="source.rbd.image">
         <div key i18n>Image</div>
-        <div value>{{source.rbd.image}}</div>
+        <div value>{{ source.rbd.image }}</div>
       </kd-property>
 
       <kd-property *ngIf="source.rbd.keyring">
         <div key i18n>Keyring</div>
-        <div value>{{source.rbd.keyring}}</div>
+        <div value>{{ source.rbd.keyring }}</div>
       </kd-property>
 
       <kd-property *ngIf="source.rbd.monitors">
@@ -300,22 +300,22 @@ limitations under the License.
 
       <kd-property *ngIf="source.rbd.pool">
         <div key i18n>Pool</div>
-        <div value>{{source.rbd.pool}}</div>
+        <div value>{{ source.rbd.pool }}</div>
       </kd-property>
 
       <kd-property *ngIf="source.rbd.readOnly !== undefined">
         <div key i18n>Read only</div>
-        <div value>{{source.rbd.readOnly}}</div>
+        <div value>{{ source.rbd.readOnly }}</div>
       </kd-property>
 
       <kd-property *ngIf="source.rbd.secretRef?.name">
         <div key i18n>Secret reference name</div>
-        <div value>{{source.rbd.secretRef.name}}</div>
+        <div value>{{ source.rbd.secretRef.name }}</div>
       </kd-property>
 
       <kd-property *ngIf="source.rbd.user">
         <div key i18n>User</div>
-        <div value>{{source.rbd.user}}</div>
+        <div value>{{ source.rbd.user }}</div>
       </kd-property>
     </ng-container>
   </div>

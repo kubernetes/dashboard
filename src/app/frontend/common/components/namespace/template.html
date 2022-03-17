@@ -25,16 +25,17 @@ limitations under the License.
         name="selectNamespaceInput"
         class="kd-namespace-select-input"
         autocomplete="off"
-        (keydown)="$event.code === 'Enter' ? selectNamespace() : null" />
+        (keydown)="$event.code === 'Enter' ? selectNamespace() : null"
+      />
     </div>
     <mat-option *ngIf="namespaces.length && !usingFallbackNamespaces" [value]="allNamespacesKey" i18n
       >All namespaces</mat-option
     >
     <mat-optgroup label="NAMESPACES" i18n-label *ngIf="(namespaces | kdFilterBy: selectNamespaceInput).length">
       <mat-option *ngFor="let namespace of namespaces | kdFilterBy: selectNamespaceInput" [value]="namespace">
-        {{namespace}}
+        {{ namespace }}
       </mat-option>
     </mat-optgroup>
-    <mat-option class="kd-hidden" [value]="selectedNamespace">{{formatNamespaceName(selectedNamespace)}}</mat-option>
+    <mat-option class="kd-hidden" [value]="selectedNamespace">{{ formatNamespaceName(selectedNamespace) }}</mat-option>
   </mat-select>
 </mat-form-field>

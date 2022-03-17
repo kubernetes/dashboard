@@ -21,7 +21,8 @@ limitations under the License.
       *ngIf="containers?.length > 0"
       class="kd-shell-toolbar-select"
       (ngModelChange)="onPodContainerChange($event)"
-      [(ngModel)]="selectedContainer">
+      [(ngModel)]="selectedContainer"
+    >
       <mat-option *ngFor="let item of containers" [value]="item"> {{ item }} </mat-option>
     </mat-select>
     in {{ podName }}

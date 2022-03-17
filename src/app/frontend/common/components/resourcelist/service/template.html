@@ -16,7 +16,7 @@ limitations under the License.
 
 <kd-card role="table" [hidden]="isHidden()">
   <div title fxLayout="row" i18n>Services</div>
-  <div description><span class="kd-muted-light" i18n>Items:&nbsp;</span>{{totalItems}}</div>
+  <div description><span class="kd-muted-light" i18n>Items:&nbsp;</span>{{ totalItems }}</div>
   <div actions>
     <kd-card-list-filter></kd-card-list-filter>
   </div>
@@ -30,12 +30,13 @@ limitations under the License.
       matSort
       matSortActive="created"
       matSortDisableClear
-      matSortDirection="asc">
+      matSortDirection="asc"
+    >
       <ng-container matColumnDef="statusicon">
         <mat-header-cell *matHeaderCellDef></mat-header-cell>
         <mat-cell *matCellDef="let service">
           <mat-icon [ngClass]="getStatus(service).iconClass" [matTooltip]="getStatus(service).iconTooltip">
-            {{getStatus(service).iconName}}
+            {{ getStatus(service).iconName }}
           </mat-icon>
         </mat-cell>
       </ng-container>
@@ -47,15 +48,16 @@ limitations under the License.
         <mat-cell *matCellDef="let service" class="kd-col-gt">
           <a
             [routerLink]="getDetailsHref(service.objectMeta.name, service.objectMeta.namespace)"
-            queryParamsHandling="preserve">
-            {{service.objectMeta.name}}
+            queryParamsHandling="preserve"
+          >
+            {{ service.objectMeta.name }}
           </a>
         </mat-cell>
       </ng-container>
 
       <ng-container *ngIf="shouldShowColumn('namespace')" matColumnDef="namespace">
         <mat-header-cell *matHeaderCellDef class="kd-col-md" i18n>Namespace</mat-header-cell>
-        <mat-cell *matCellDef="let service" class="kd-col-md">{{service.objectMeta.namespace}}</mat-cell>
+        <mat-cell *matCellDef="let service" class="kd-col-md">{{ service.objectMeta.namespace }}</mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="labels">
@@ -67,12 +69,12 @@ limitations under the License.
 
       <ng-container matColumnDef="type">
         <mat-header-cell *matHeaderCellDef class="kd-col-md" i18n>Type</mat-header-cell>
-        <mat-cell *matCellDef="let service" class="kd-col-md">{{service.type}}</mat-cell>
+        <mat-cell *matCellDef="let service" class="kd-col-md">{{ service.type }}</mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="clusterip">
         <mat-header-cell *matHeaderCellDef class="kd-col-md" i18n>Cluster IP</mat-header-cell>
-        <mat-cell *matCellDef="let service" class="kd-col-md">{{service.clusterIP}}</mat-cell>
+        <mat-cell *matCellDef="let service" class="kd-col-md">{{ service.clusterIP }}</mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="internalendp">
@@ -106,7 +108,7 @@ limitations under the License.
       </ng-container>
 
       <mat-header-row *matHeaderRowDef="getColumns()"></mat-header-row>
-      <mat-row *matRowDef="let row; columns: getColumns();"></mat-row>
+      <mat-row *matRowDef="let row; columns: getColumns()"></mat-row>
     </mat-table>
 
     <div [hidden]="totalItems <= itemsPerPage">

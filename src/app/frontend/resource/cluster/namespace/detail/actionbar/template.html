@@ -21,7 +21,8 @@ limitations under the License.
     class="kd-toolbar-action"
     i18n-matTooltip
     matTooltip="Go to namespace"
-    (click)="onClick()">
+    (click)="onClick()"
+  >
     <mat-icon>description</mat-icon>
   </button>
 
@@ -29,5 +30,6 @@ limitations under the License.
     *ngIf="isInitialized"
     [objectMeta]="resourceMeta.objectMeta"
     [typeMeta]="resourceMeta.typeMeta"
-    [displayName]="resourceMeta.displayName"></kd-actionbar-detail-actions>
+    [displayName]="resourceMeta.displayName"
+  ></kd-actionbar-detail-actions>
 </div>

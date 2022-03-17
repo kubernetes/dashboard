@@ -17,7 +17,7 @@ limitations under the License.
 <h2 *ngIf="!hasForbiddenError()" mat-dialog-title i18n>Download logs file</h2>
 <mat-dialog-content class="kd-dialog-text">
   <ng-container *ngIf="!hasForbiddenError()">
-    <div i18n>Size: {{loaded | kdMemory}} B</div>
+    <div i18n>Size: {{ loaded | kdMemory }} B</div>
     <mat-progress-bar class="kd-download-progress-bar" [mode]="getDownloadMode()" value="100"></mat-progress-bar>
     <div *ngIf="!finished" i18n>Preparing file to download...</div>
     <div *ngIf="finished" i18n>File is ready to download!</div>

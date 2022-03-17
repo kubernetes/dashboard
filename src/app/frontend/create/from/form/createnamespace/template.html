@@ -29,11 +29,12 @@ limitations under the License.
               placeholder="Namespace name"
               name="namespace"
               formControlName="namespace"
-              required />
-            <mat-hint align="end">{{namespace.value.length}} / {{namespaceMaxLength}}</mat-hint>
+              required
+            />
+            <mat-hint align="end">{{ namespace.value.length }} / {{ namespaceMaxLength }}</mat-hint>
             <mat-error *ngIf="namespace.errors?.required" i18n> Name is required. </mat-error>
             <mat-error *ngIf="namespace.errors?.maxlength" i18n>
-              Name must be up to {{namespaceMaxLength}} characters long.
+              Name must be up to {{ namespaceMaxLength }} characters long.
             </mat-error>
             <mat-error *ngIf="namespace.errors?.pattern" i18n>
               Name must be alphanumeric and may contain dashes.

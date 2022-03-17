@@ -16,7 +16,7 @@ limitations under the License.
 
 <ng-container [formGroup]="labelForm">
   <div formArrayName="labels">
-    <div *ngFor="let label of labels.controls; let i = index;" [formGroupName]="i">
+    <div *ngFor="let label of labels.controls; let i = index" [formGroupName]="i">
       <mat-form-field md-no-float class="kd-deploy-input-row" fxFlex="45">
         <input
           matInput
@@ -25,8 +25,9 @@ limitations under the License.
           (keyup)="check(i)"
           [readonly]="!label.get('editable').value"
           i18n-placeholder
-          placeholder="key" />
-        <mat-error *ngIf="label.get('key').errors?.unique" i18n> {{label.get('key').value}} is not unique </mat-error>
+          placeholder="key"
+        />
+        <mat-error *ngIf="label.get('key').errors?.unique" i18n> {{ label.get('key').value }} is not unique </mat-error>
         <mat-error *ngIf="label.get('key').errors?.kdValidLabelKeyPrefixPattern" i18n>
           Prefix is not a valid DNS subdomain prefix (eg. my-domain.com).
         </mat-error>
@@ -50,8 +51,9 @@ limitations under the License.
           (keyup)="check(i)"
           [readonly]="!label.get('editable').value"
           i18n-placeholder
-          placeholder="value" />
-        <mat-hint align="end">{{label.get('value').value?.length}} / 253</mat-hint>
+          placeholder="value"
+        />
+        <mat-hint align="end">{{ label.get('value').value?.length }} / 253</mat-hint>
         <mat-error *ngIf="label.get('value').errors?.kdValidLabelValuePattern" i18n>
           Label value must be alphanumeric separated by '.' , '-' or '_'.
         </mat-error>

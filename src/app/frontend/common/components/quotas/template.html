@@ -20,7 +20,7 @@ limitations under the License.
   <div description>
     <div class="kd-inline-property" *ngIf="quotas?.length">
       <span class="kd-muted-light" i18n>Items:&nbsp;</span>
-      <span>{{quotas.length}}</span>
+      <span>{{ quotas.length }}</span>
     </div>
   </div>
 
@@ -28,7 +28,7 @@ limitations under the License.
     <mat-table [dataSource]="getDataSource()" [trackBy]="trackByResourceQuotaDetail">
       <ng-container [matColumnDef]="getQuotaColumns()[0]">
         <mat-header-cell *matHeaderCellDef i18n>Name</mat-header-cell>
-        <mat-cell *matCellDef="let quota">{{quota.objectMeta.name}}</mat-cell>
+        <mat-cell *matCellDef="let quota">{{ quota.objectMeta.name }}</mat-cell>
       </ng-container>
       <ng-container [matColumnDef]="getQuotaColumns()[1]">
         <mat-header-cell *matHeaderCellDef i18n>Created</mat-header-cell>
@@ -36,19 +36,20 @@ limitations under the License.
           <kd-date
             *ngIf="quota.objectMeta.creationTimestamp"
             [date]="quota.objectMeta.creationTimestamp"
-            relative></kd-date>
+            relative
+          ></kd-date>
           <ng-container *ngIf="!quota.objectMeta.creationTimestamp">-</ng-container>
         </mat-cell>
       </ng-container>
       <ng-container [matColumnDef]="getQuotaColumns()[2]">
         <mat-header-cell *matHeaderCellDef i18n>Status</mat-header-cell>
         <mat-cell *matCellDef="let quota">
-          <ng-container *ngIf="quota.statusList">{{quota.statusList | json}}</ng-container>
+          <ng-container *ngIf="quota.statusList">{{ quota.statusList | json }}</ng-container>
           <ng-container *ngIf="!quota.statusList">-</ng-container>
         </mat-cell>
       </ng-container>
       <mat-header-row *matHeaderRowDef="getQuotaColumns()"></mat-header-row>
-      <mat-row *matRowDef="let row; columns: getQuotaColumns();"></mat-row>
+      <mat-row *matRowDef="let row; columns: getQuotaColumns()"></mat-row>
     </mat-table>
   </div>
 

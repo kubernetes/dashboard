@@ -23,7 +23,7 @@ limitations under the License.
       <div key i18n>Role Reference</div>
       <div value>
         <a *ngIf="clusterRoleBinding.roleRef" [routerLink]="getRoleHref()" queryParamsHandling="preserve"
-          >{{clusterRoleBinding.roleRef.name}}</a
+          >{{ clusterRoleBinding.roleRef.name }}</a
         >
         <span *ngIf="!clusterRoleBinding.roleRef">-</span>
       </div>

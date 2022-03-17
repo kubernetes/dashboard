@@ -16,7 +16,7 @@ limitations under the License.
 
 <kd-card role="table" [hidden]="isHidden()">
   <div title fxLayout="row" i18n>Namespaces</div>
-  <div description><span class="kd-muted-light" i18n>Items:&nbsp;</span>{{totalItems}}</div>
+  <div description><span class="kd-muted-light" i18n>Items:&nbsp;</span>{{ totalItems }}</div>
   <div actions>
     <kd-card-list-filter></kd-card-list-filter>
   </div>
@@ -30,12 +30,13 @@ limitations under the License.
       matSort
       [matSortActive]="getColumns()[4]"
       matSortDisableClear
-      matSortDirection="asc">
+      matSortDirection="asc"
+    >
       <ng-container [matColumnDef]="getColumns()[0]">
         <mat-header-cell *matHeaderCellDef></mat-header-cell>
         <mat-cell *matCellDef="let namespace">
           <mat-icon [ngClass]="getStatus(namespace).iconClass" [matTooltip]="getStatus(namespace).iconTooltip">
-            {{getStatus(namespace).iconName}}
+            {{ getStatus(namespace).iconName }}
           </mat-icon>
         </mat-cell>
       </ng-container>
@@ -44,7 +45,7 @@ limitations under the License.
         <mat-header-cell *matHeaderCellDef mat-sort-header disableClear="true" i18n>Name</mat-header-cell>
         <mat-cell *matCellDef="let namespace">
           <a [routerLink]="getDetailsHref(namespace.objectMeta.name)" queryParamsHandling="preserve">
-            {{namespace.objectMeta.name}}
+            {{ namespace.objectMeta.name }}
           </a>
         </mat-cell>
       </ng-container>
@@ -58,7 +59,7 @@ limitations under the License.
 
       <ng-container [matColumnDef]="getColumns()[3]">
         <mat-header-cell *matHeaderCellDef i18n>Phase</mat-header-cell>
-        <mat-cell *matCellDef="let namespace">{{namespace.phase}}</mat-cell>
+        <mat-cell *matCellDef="let namespace">{{ namespace.phase }}</mat-cell>
       </ng-container>
 
       <ng-container [matColumnDef]="getColumns()[4]">
@@ -76,7 +77,7 @@ limitations under the License.
       </ng-container>
 
       <mat-header-row *matHeaderRowDef="getColumns()"></mat-header-row>
-      <mat-row *matRowDef="let row; columns: getColumns();"></mat-row>
+      <mat-row *matRowDef="let row; columns: getColumns()"></mat-row>
     </mat-table>
 
     <div [hidden]="totalItems <= itemsPerPage">

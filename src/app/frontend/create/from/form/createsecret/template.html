@@ -29,11 +29,12 @@ limitations under the License.
               placeholder="Secret name"
               name="secretName"
               formControlName="secretName"
-              required />
-            <mat-hint align="end">{{secretName.value.length}} / {{secretNameMaxLength}}</mat-hint>
+              required
+            />
+            <mat-hint align="end">{{ secretName.value.length }} / {{ secretNameMaxLength }}</mat-hint>
             <mat-error *ngIf="secretName.errors?.required" i18n> Name is required. </mat-error>
             <mat-error *ngIf="secretName.errors?.maxlength" i18n>
-              Name must be up to {{secretNameMaxLength}} characters long.
+              Name must be up to {{ secretNameMaxLength }} characters long.
             </mat-error>
             <mat-error *ngIf="secretName.errors?.pattern" i18n>
               Name must follow the DNS domain name syntax (e.g. new.image-pull.secret).
@@ -56,7 +57,8 @@ limitations under the License.
               placeholder="Image pull secret data"
               name="data"
               formControlName="data"
-              required />
+              required
+            />
             <mat-error *ngIf="data.errors?.required" i18n> Data is required. </mat-error>
             <mat-error *ngIf="data.errors?.pattern" i18n> Data must be Base64 encoded. </mat-error>
           </mat-form-field>
@@ -69,7 +71,8 @@ limitations under the License.
               href="http://kubernetes.io/docs/user-guide/images/#specifying-imagepullsecrets-on-a-pod"
               target="_blank"
               tabindex="-1"
-              i18n>
+              i18n
+            >
               Learn more
               <i class="material-icons">open_in_new</i>
             </a>

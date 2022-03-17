@@ -20,7 +20,7 @@ limitations under the License.
   <div description>
     <div class="kd-inline-property" *ngIf="limits?.length">
       <span class="kd-muted-light" i18n>Items:&nbsp;</span>
-      <span>{{limits.length}}</span>
+      <span>{{ limits.length }}</span>
     </div>
   </div>
 
@@ -28,22 +28,22 @@ limitations under the License.
     <mat-table [dataSource]="getDataSource()" [trackBy]="trackByLimitRage">
       <ng-container [matColumnDef]="getColumnIds()[0]">
         <mat-header-cell *matHeaderCellDef i18n>Resource name</mat-header-cell>
-        <mat-cell *matCellDef="let limit">{{limit.resourceName}}</mat-cell>
+        <mat-cell *matCellDef="let limit">{{ limit.resourceName }}</mat-cell>
       </ng-container>
       <ng-container [matColumnDef]="getColumnIds()[1]">
         <mat-header-cell *matHeaderCellDef i18n>Resource type</mat-header-cell>
-        <mat-cell *matCellDef="let limit">{{limit.resourceType}}</mat-cell>
+        <mat-cell *matCellDef="let limit">{{ limit.resourceType }}</mat-cell>
       </ng-container>
       <ng-container [matColumnDef]="getColumnIds()[2]">
         <mat-header-cell *matHeaderCellDef i18n>Default</mat-header-cell>
-        <mat-cell *matCellDef="let limit">{{limit.default}}</mat-cell>
+        <mat-cell *matCellDef="let limit">{{ limit.default }}</mat-cell>
       </ng-container>
       <ng-container [matColumnDef]="getColumnIds()[3]">
         <mat-header-cell *matHeaderCellDef i18n>Default request</mat-header-cell>
-        <mat-cell *matCellDef="let limit">{{limit.defaultRequest}}</mat-cell>
+        <mat-cell *matCellDef="let limit">{{ limit.defaultRequest }}</mat-cell>
       </ng-container>
       <mat-header-row *matHeaderRowDef="getColumnIds()"></mat-header-row>
-      <mat-row *matRowDef="let row; columns: getColumnIds();"></mat-row>
+      <mat-row *matRowDef="let row; columns: getColumnIds()"></mat-row>
     </mat-table>
   </div>
 

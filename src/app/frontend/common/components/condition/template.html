@@ -20,7 +20,7 @@ limitations under the License.
   <div description>
     <div class="kd-inline-property" *ngIf="conditions?.length">
       <span class="kd-muted-light" i18n>Items:&nbsp;</span>
-      <span>{{conditions.length}}</span>
+      <span>{{ conditions.length }}</span>
     </div>
   </div>
 
@@ -29,14 +29,14 @@ limitations under the License.
       <ng-container [matColumnDef]="getConditionsColumns()[0]">
         <mat-header-cell *matHeaderCellDef i18n>Type</mat-header-cell>
         <mat-cell *matCellDef="let condition">
-          <ng-container *ngIf="condition.type">{{condition.type}}</ng-container>
+          <ng-container *ngIf="condition.type">{{ condition.type }}</ng-container>
           <ng-container *ngIf="!condition.type">-</ng-container>
         </mat-cell>
       </ng-container>
       <ng-container [matColumnDef]="getConditionsColumns()[1]">
         <mat-header-cell *matHeaderCellDef i18n>Status</mat-header-cell>
         <mat-cell *matCellDef="let condition">
-          <ng-container *ngIf="condition.status">{{condition.status}}</ng-container>
+          <ng-container *ngIf="condition.status">{{ condition.status }}</ng-container>
           <ng-container *ngIf="!condition.status">-</ng-container>
         </mat-cell>
       </ng-container>
@@ -55,19 +55,19 @@ limitations under the License.
       <ng-container [matColumnDef]="getConditionsColumns()[4]">
         <mat-header-cell *matHeaderCellDef i18n>Reason</mat-header-cell>
         <mat-cell *matCellDef="let condition">
-          <ng-container *ngIf="condition.reason">{{condition.reason}}</ng-container>
+          <ng-container *ngIf="condition.reason">{{ condition.reason }}</ng-container>
           <ng-container *ngIf="!condition.reason">-</ng-container>
         </mat-cell>
       </ng-container>
       <ng-container [matColumnDef]="getConditionsColumns()[5]">
         <mat-header-cell *matHeaderCellDef i18n>Message</mat-header-cell>
         <mat-cell *matCellDef="let condition">
-          <ng-container *ngIf="condition.message">{{condition.message}}</ng-container>
+          <ng-container *ngIf="condition.message">{{ condition.message }}</ng-container>
           <ng-container *ngIf="!condition.message">-</ng-container>
         </mat-cell>
       </ng-container>
       <mat-header-row *matHeaderRowDef="getColumnKeys()"></mat-header-row>
-      <mat-row *matRowDef="let row; columns: getColumnKeys();"></mat-row>
+      <mat-row *matRowDef="let row; columns: getColumnKeys()"></mat-row>
     </mat-table>
   </div>
 </kd-card>

@@ -16,7 +16,7 @@ limitations under the License.
 
 <kd-card role="table" [hidden]="isHidden()">
   <div title fxLayout="row" i18n>Persistent Volumes</div>
-  <div description><span class="kd-muted-light" i18n>Items:&nbsp;</span>{{totalItems}}</div>
+  <div description><span class="kd-muted-light" i18n>Items:&nbsp;</span>{{ totalItems }}</div>
   <div actions>
     <kd-card-list-filter></kd-card-list-filter>
   </div>
@@ -30,12 +30,13 @@ limitations under the License.
       matSort
       [matSortActive]="getColumns()[9]"
       matSortDisableClear
-      matSortDirection="asc">
+      matSortDirection="asc"
+    >
       <ng-container [matColumnDef]="getColumns()[0]">
         <mat-header-cell *matHeaderCellDef></mat-header-cell>
         <mat-cell *matCellDef="let pv">
           <mat-icon [ngClass]="getStatus(pv).iconClass" [matTooltip]="getStatus(pv).iconTooltip"
-            >{{getStatus(pv).iconName}}</mat-icon
+            >{{ getStatus(pv).iconName }}</mat-icon
           >
         </mat-cell>
       </ng-container>
@@ -45,7 +46,9 @@ limitations under the License.
           >Name</mat-header-cell
         >
         <mat-cell *matCellDef="let pv" class="kd-col-gt">
-          <a [routerLink]="getDetailsHref(pv.objectMeta.name)" queryParamsHandling="preserve">{{pv.objectMeta.name}}</a>
+          <a [routerLink]="getDetailsHref(pv.objectMeta.name)" queryParamsHandling="preserve"
+            >{{ pv.objectMeta.name }}</a
+          >
         </mat-cell>
       </ng-container>
 
@@ -65,21 +68,21 @@ limitations under the License.
 
       <ng-container [matColumnDef]="getColumns()[4]">
         <mat-header-cell *matHeaderCellDef class="kd-col-xs" i18n>Reclaim Policy</mat-header-cell>
-        <mat-cell *matCellDef="let pv" class="kd-col-xs">{{pv.reclaimPolicy}}</mat-cell>
+        <mat-cell *matCellDef="let pv" class="kd-col-xs">{{ pv.reclaimPolicy }}</mat-cell>
       </ng-container>
 
       <ng-container [matColumnDef]="getColumns()[5]">
         <mat-header-cell *matHeaderCellDef mat-sort-header disableClear="true" class="kd-col-xs" i18n
           >Status</mat-header-cell
         >
-        <mat-cell *matCellDef="let pv" class="kd-col-xs">{{pv.status}}</mat-cell>
+        <mat-cell *matCellDef="let pv" class="kd-col-xs">{{ pv.status }}</mat-cell>
       </ng-container>
 
       <ng-container [matColumnDef]="getColumns()[6]">
         <mat-header-cell *matHeaderCellDef class="kd-col-gt" i18n>Claim</mat-header-cell>
         <mat-cell *matCellDef="let pv" class="kd-col-gt">
           <ng-container *ngIf="pv.claim">
-            <a [routerLink]="getClaimHref(pv.claim)" queryParamsHandling="preserve">{{pv.claim}}</a>
+            <a [routerLink]="getClaimHref(pv.claim)" queryParamsHandling="preserve">{{ pv.claim }}</a>
           </ng-container>
           <ng-container *ngIf="!pv.claim">-</ng-container>
         </mat-cell>
@@ -88,7 +91,7 @@ limitations under the License.
       <ng-container [matColumnDef]="getColumns()[7]">
         <mat-header-cell *matHeaderCellDef class="kd-col-sm" i18n>Storage Class</mat-header-cell>
         <mat-cell *matCellDef="let pv" class="kd-col-sm">
-          <div *ngIf="pv.storageClass">{{pv.storageClass}}</div>
+          <div *ngIf="pv.storageClass">{{ pv.storageClass }}</div>
           <div *ngIf="!pv.storageClass">-</div>
         </mat-cell>
       </ng-container>
@@ -96,7 +99,7 @@ limitations under the License.
       <ng-container [matColumnDef]="getColumns()[8]">
         <mat-header-cell *matHeaderCellDef class="kd-col-xs" i18n>Reason</mat-header-cell>
         <mat-cell *matCellDef="let pv" class="kd-col-xs">
-          <ng-container *ngIf="pv.reason">{{pv.reason}}</ng-container>
+          <ng-container *ngIf="pv.reason">{{ pv.reason }}</ng-container>
           <ng-container *ngIf="!pv.reason">-</ng-container>
         </mat-cell>
       </ng-container>
@@ -118,7 +121,7 @@ limitations under the License.
       </ng-container>
 
       <mat-header-row *matHeaderRowDef="getColumns()"></mat-header-row>
-      <mat-row *matRowDef="let row; columns: getColumns();"></mat-row>
+      <mat-row *matRowDef="let row; columns: getColumns()"></mat-row>
     </mat-table>
 
     <div [hidden]="totalItems <= itemsPerPage">

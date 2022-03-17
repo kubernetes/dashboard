@@ -21,7 +21,7 @@ limitations under the License.
   <div content *ngIf="isInitialized" fxLayout="row wrap">
     <kd-property *ngIf="ingress?.spec?.ingressClassName">
       <div key i18n>Ingress Class Name</div>
-      <div value>{{ingress.spec.ingressClassName}}</div>
+      <div value>{{ ingress.spec.ingressClassName }}</div>
     </kd-property>
 
     <kd-property *ngIf="ingress?.endpoints?.length > 0" fxFlex="100">
@@ -29,7 +29,8 @@ limitations under the License.
       <div value>
         <kd-external-endpoint
           *ngFor="let endpoint of ingress.endpoints"
-          [endpoints]="[endpoint]"></kd-external-endpoint>
+          [endpoints]="[endpoint]"
+        ></kd-external-endpoint>
       </div>
     </kd-property>
 
@@ -40,22 +41,22 @@ limitations under the License.
         <ng-container *ngIf="ingress.spec.defaultBackend.service">
           <kd-property>
             <div key i18n>Service Name</div>
-            <div value>{{ingress.spec.defaultBackend.service.name}}</div>
+            <div value>{{ ingress.spec.defaultBackend.service.name }}</div>
           </kd-property>
 
           <kd-property *ngIf="ingress.spec.defaultBackend.service.port?.name">
             <div key i18n>Service Port Name</div>
-            <div value>{{ingress.spec.defaultBackend.service.port.name}}</div>
+            <div value>{{ ingress.spec.defaultBackend.service.port.name }}</div>
           </kd-property>
 
           <kd-property *ngIf="ingress.spec.defaultBackend.service.port?.number !== undefined">
             <div key i18n>Service Port Number</div>
-            <div value>{{ingress.spec.defaultBackend.service.port.number}}</div>
+            <div value>{{ ingress.spec.defaultBackend.service.port.number }}</div>
           </kd-property>
 
           <kd-property *ngIf="ingress.spec.defaultBackend.resource">
-            <div key i18n>{{ingress.spec.defaultBackend.resource.kind}}</div>
-            <div value>{{ingress.spec.defaultBackend.resource.name}}</div>
+            <div key i18n>{{ ingress.spec.defaultBackend.resource.kind }}</div>
+            <div value>{{ ingress.spec.defaultBackend.resource.name }}</div>
           </kd-property>
         </ng-container>
       </div>
@@ -67,7 +68,8 @@ limitations under the License.
   [ingressSpecRules]="ingress?.spec?.rules"
   [tlsList]="ingress?.spec?.tls"
   [namespace]="ingress?.objectMeta.namespace"
-  [initialized]="isInitialized">
+  [initialized]="isInitialized"
+>
 </kd-ingressruleflat-card-list>
 
 <kd-event-list [endpoint]="eventListEndpoint"></kd-event-list>

@@ -18,7 +18,7 @@ limitations under the License.
   <div class="kd-margin-bottom" i18n>Environment variables</div>
   <ng-container [formGroup]="form">
     <ng-container formArrayName="variables">
-      <div *ngFor="let variable of variables.controls; let i = index;" [formGroupName]="i">
+      <div *ngFor="let variable of variables.controls; let i = index" [formGroupName]="i">
         <mat-form-field fxFlex="auto">
           <input
             matInput
@@ -26,7 +26,8 @@ limitations under the License.
             formControlName="name"
             i18n-placeholder
             placeholder="Name"
-            (change)="addVariableIfNeeed(i)" />
+            (change)="addVariableIfNeeed(i)"
+          />
           <mat-error *ngIf="variable.get('name').errors?.pattern" i18n>
             Variable name must be a valid C identifier.
           </mat-error>

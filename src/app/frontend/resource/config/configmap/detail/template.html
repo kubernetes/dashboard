@@ -24,7 +24,8 @@ limitations under the License.
       [text]="getConfigMapData(configMap)"
       [readOnly]="true"
       [border]="false"
-      mode="json"></kd-text-input>
+      mode="json"
+    ></kd-text-input>
     <div *ngIf="!configMap?.data" class="kd-card-padding" i18n>There is no data to display.</div>
   </div>
 </kd-card>

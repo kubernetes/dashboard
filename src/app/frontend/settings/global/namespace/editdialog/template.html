@@ -21,7 +21,7 @@ limitations under the License.
 
     <mat-list>
       <mat-list-item *ngFor="let namespace of namespaces">
-        <div fxFlex="100">{{namespace}}</div>
+        <div fxFlex="100">{{ namespace }}</div>
         <button mat-icon-button (click)="remove(namespace)" (focus)="$event.stopPropagation()">
           <mat-icon>close</mat-icon>
         </button>

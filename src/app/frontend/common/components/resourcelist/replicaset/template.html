@@ -18,10 +18,10 @@ limitations under the License.
 
 <kd-card role="table" [hidden]="isHidden()">
   <div title fxLayout="row">
-    <ng-container *ngIf="title;else defaultTitle">{{title}}</ng-container>
+    <ng-container *ngIf="title; else defaultTitle">{{ title }}</ng-container>
     <ng-template #defaultTitle i18n>Replica Sets</ng-template>
   </div>
-  <div description><span class="kd-muted-light" i18n>Items:&nbsp;</span>{{totalItems}}</div>
+  <div description><span class="kd-muted-light" i18n>Items:&nbsp;</span>{{ totalItems }}</div>
   <div actions>
     <kd-card-list-filter></kd-card-list-filter>
   </div>
@@ -36,14 +36,15 @@ limitations under the License.
       matSortActive="created"
       matSortDisableClear
       matSortDirection="asc"
-      multiTemplateDataRows>
+      multiTemplateDataRows
+    >
       <ng-container matColumnDef="statusicon">
         <mat-header-cell *matHeaderCellDef></mat-header-cell>
-        <mat-cell *matCellDef="let replicaSet; let index=index">
+        <mat-cell *matCellDef="let replicaSet; let index = index">
           <mat-icon [ngClass]="getStatus(replicaSet).iconClass" [matTooltip]="getStatus(replicaSet).iconTooltip">
             <ng-container *ngIf="showHoverIcon(index, replicaSet); else showStatus"> remove_red_eye </ng-container>
 
-            <ng-template #showStatus> {{getStatus(replicaSet).iconName}} </ng-template>
+            <ng-template #showStatus> {{ getStatus(replicaSet).iconName }} </ng-template>
           </mat-icon>
         </mat-cell>
       </ng-container>
@@ -62,15 +63,16 @@ limitations under the License.
           <a
             (click)="$event.stopPropagation()"
             [routerLink]="getDetailsHref(replicaSet.objectMeta.name, replicaSet.objectMeta.namespace)"
-            queryParamsHandling="preserve">
-            {{replicaSet.objectMeta.name}}
+            queryParamsHandling="preserve"
+          >
+            {{ replicaSet.objectMeta.name }}
           </a>
         </mat-cell>
       </ng-container>
 
       <ng-container *ngIf="shouldShowColumn('namespace')" matColumnDef="namespace">
         <mat-header-cell *matHeaderCellDef class="kd-col-md" i18n>Namespace</mat-header-cell>
-        <mat-cell *matCellDef="let replicaSet" class="kd-col-md">{{replicaSet.objectMeta.namespace}}</mat-cell>
+        <mat-cell *matCellDef="let replicaSet" class="kd-col-md">{{ replicaSet.objectMeta.namespace }}</mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="images">
@@ -90,7 +92,7 @@ limitations under the License.
       <ng-container matColumnDef="pods">
         <mat-header-cell *matHeaderCellDef class="kd-col-sm" i18n>Pods</mat-header-cell>
         <mat-cell *matCellDef="let replicaSet" class="kd-col-sm">
-          {{replicaSet.podInfo.running}} / {{replicaSet.podInfo.desired}}
+          {{ replicaSet.podInfo.running }} / {{ replicaSet.podInfo.desired }}
         </mat-cell>
       </ng-container>
 
@@ -116,11 +118,13 @@ limitations under the License.
         (mouseleave)="onRowLeave()"
         (click)="expand(index, row)"
         [ngClass]="{'kd-no-bottom-border': isRowExpanded(index, row), 'kd-clickable': hasErrors(row)}"
-        *matRowDef="let row; columns: getColumns(); let index=index"></mat-row>
+        *matRowDef="let row; columns: getColumns(); let index = index"
+      ></mat-row>
       <mat-row
         class="kd-detail-row"
         [ngClass]="{'kd-hidden': !isRowExpanded(index, row)}"
-        *matRowDef="let row; columns: ['statusDetail']; let index=index"></mat-row>
+        *matRowDef="let row; columns: ['statusDetail']; let index = index"
+      ></mat-row>
     </mat-table>
 
     <div [hidden]="totalItems <= itemsPerPage">

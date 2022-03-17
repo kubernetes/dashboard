@@ -63,7 +63,8 @@ limitations under the License.
               placeholder="Enter token"
               type="password"
               required
-              (change)="onChange($event)" />
+              (change)="onChange($event)"
+            />
           </mat-form-field>
           <div *ngSwitchCase="loginModes.Basic" fxLayout="column">
             <mat-form-field fxFlex class="kd-login-input">
@@ -74,7 +75,8 @@ limitations under the License.
                 i18n-placeholder
                 placeholder="Username"
                 required
-                (change)="onChange($event)" />
+                (change)="onChange($event)"
+              />
             </mat-form-field>
 
             <mat-form-field fxFlex class="kd-login-input">
@@ -86,7 +88,8 @@ limitations under the License.
                 placeholder="Password"
                 type="password"
                 required
-                (change)="onChange($event)" />
+                (change)="onChange($event)"
+              />
             </mat-form-field>
           </div>
 
@@ -94,14 +97,15 @@ limitations under the License.
             <kd-upload-file label="Choose kubeconfig file" i18n-label (onLoad)="onChange($event)"></kd-upload-file>
           </div>
           <mat-error *ngFor="let error of errors" class="kd-login-input kd-error kd-error-text">
-            {{error.status}} ({{error.code}}): {{error.message}}
+            {{ error.status }} ({{ error.code }}): {{ error.message }}
           </mat-error>
           <mat-error *ngIf="!isLoginEnabled()" class="kd-login-input kd-error kd-error-text" i18n>
             Insecure access detected. Sign in will not be available. Access Dashboard securely over HTTPS or using
             localhost. Read more
             <a
               href="https://github.com/kubernetes/dashboard/blob/master/docs/user/accessing-dashboard/README.md#login-not-available"
-              target="_blank">
+              target="_blank"
+            >
               here </a
             >.
           </mat-error>
@@ -114,7 +118,8 @@ limitations under the License.
             type="submit"
             class="kd-login-button"
             [disabled]="!isLoginEnabled()"
-            i18n>
+            i18n
+          >
             Sign in
           </button>
           <button
@@ -124,7 +129,8 @@ limitations under the License.
             class="kd-login-button"
             *ngIf="isSkipButtonEnabled()"
             (click)="skip()"
-            i18n>
+            i18n
+          >
             Skip
           </button>
         </div>

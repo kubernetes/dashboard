@@ -25,7 +25,7 @@ limitations under the License.
       *ngIf="enableEdit"
       class="kd-hidden-property-icon"
       [ngClass]="mode == HiddenPropertyMode.Edit ? 'kd-edit-active' : ''"
-      (click)="toggleEdit(); $event.stopPropagation();"
+      (click)="toggleEdit(); $event.stopPropagation()"
       >edit</mat-icon
     >
   </div>

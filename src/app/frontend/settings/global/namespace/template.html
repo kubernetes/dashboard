@@ -19,7 +19,8 @@ limitations under the License.
     key="Default namespace"
     i18n-key
     desc="Namespace that should be selected by default after logging in."
-    i18n-desc>
+    i18n-desc
+  >
     <mat-form-field fxFlex>
       <input
         #namespaceInput
@@ -29,10 +30,11 @@ limitations under the License.
         placeholder="Namespace"
         type="text"
         [matAutocomplete]="auto"
-        matInput />
+        matInput
+      />
       <mat-autocomplete #auto="matAutocomplete">
         <mat-option *ngFor="let namespace of namespaces | kdFilterBy: namespaceInput.value" [value]="namespace">
-          {{namespace}}
+          {{ namespace }}
         </mat-option>
       </mat-autocomplete>
     </mat-form-field>
@@ -42,27 +44,30 @@ limitations under the License.
     key="Namespace fallback list"
     i18n-key
     desc="List of namespaces that should be presented to user without namespace list privileges."
-    i18n-desc>
+    i18n-desc
+  >
     <mat-form-field fxFlex>
       <div fxFlex="100" fxLayout="row">
         <mat-chip-list
           [formArrayName]="Controls.FallbackList"
           fxFlex="80"
           fxLayoutAlign=" center"
-          class="kd-namespace-chip-list">
+          class="kd-namespace-chip-list"
+        >
           <mat-chip
-            *ngFor="let namespace of form.get(Controls.FallbackList).value | slice:0:visibleNamespaces"
+            *ngFor="let namespace of form.get(Controls.FallbackList).value | slice: 0:visibleNamespaces"
             style="max-width: 100px; text-overflow: ellipsis; white-space: nowrap; overflow: hidden; display: block"
             [matTooltip]="namespace"
             [selectable]="false"
-            [removable]="false">
-            {{namespace}}
+            [removable]="false"
+          >
+            {{ namespace }}
           </mat-chip>
           <mat-chip *ngIf="form.get(Controls.FallbackList).value.length === 0" [disabled]="true" i18n
             >Add namespaces...</mat-chip
           >
           <mat-chip *ngIf="invisibleCount > 0" [disabled]="true" fxFlex fxLayoutAlign=" center"
-            >+ {{invisibleCount}}</mat-chip
+            >+ {{ invisibleCount }}</mat-chip
           >
         </mat-chip-list>
         <div fxFlex="20" fxLayoutAlign="end">

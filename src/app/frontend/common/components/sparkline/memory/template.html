@@ -19,12 +19,13 @@ limitations under the License.
     viewBox="0,0 1,1"
     preserveAspectRatio="none"
     class="kd-sparkline kd-bg-background kd-border"
-    xmlns:svg="http://www.w3.org/2000/svg">
+    xmlns:svg="http://www.w3.org/2000/svg"
+  >
     <svg:linearGradient id="memgradient" x1="0%" y1="0%" x2="0%" y2="100%">
       <svg:stop offset="0%" style="stop-color: #326de6; stop-opacity: 1" />
       <svg:stop offset="100%" style="stop-color: #7da2ed; stop-opacity: 1" />
     </svg:linearGradient>
     <svg:polygon fill="url(#memgradient)" [attr.points]="getPolygonPoints()" />
   </svg>
-  <div class="kd-sparkline-value kd-muted-light">{{lastValue | kdMemory}}</div>
+  <div class="kd-sparkline-value kd-muted-light">{{ lastValue | kdMemory }}</div>
 </div>

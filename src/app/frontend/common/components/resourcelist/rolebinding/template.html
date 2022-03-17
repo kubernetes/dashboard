@@ -16,7 +16,7 @@ limitations under the License.
 
 <kd-card role="table" [hidden]="isHidden()">
   <div title fxLayout="row" i18n>Role Bindings</div>
-  <div description><span class="kd-muted-light" i18n>Items:&nbsp;</span>{{totalItems}}</div>
+  <div description><span class="kd-muted-light" i18n>Items:&nbsp;</span>{{ totalItems }}</div>
   <div actions>
     <kd-card-list-filter></kd-card-list-filter>
   </div>
@@ -30,21 +30,22 @@ limitations under the License.
       matSort
       matSortActive="created"
       matSortDisableClear
-      matSortDirection="asc">
+      matSortDirection="asc"
+    >
       <ng-container [matColumnDef]="getColumns()[0]">
         <mat-header-cell *matHeaderCellDef mat-sort-header disableClear="true" i18n>Name</mat-header-cell>
         <mat-cell *matCellDef="let roleBinding">
           <a
             [routerLink]="getDetailsHref(roleBinding.objectMeta.name, roleBinding.objectMeta.namespace)"
             queryParamsHandling="preserve"
-            >{{roleBinding.objectMeta.name}}</a
+            >{{ roleBinding.objectMeta.name }}</a
           >
         </mat-cell>
       </ng-container>
 
       <ng-container *ngIf="shouldShowColumn('namespace')" matColumnDef="namespace">
         <mat-header-cell *matHeaderCellDef i18n>Namespace</mat-header-cell>
-        <mat-cell *matCellDef="let roleBinding">{{roleBinding.objectMeta.namespace}}</mat-cell>
+        <mat-cell *matCellDef="let roleBinding">{{ roleBinding.objectMeta.namespace }}</mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="created">
@@ -62,7 +63,7 @@ limitations under the License.
       </ng-container>
 
       <mat-header-row *matHeaderRowDef="getColumns()"></mat-header-row>
-      <mat-row *matRowDef="let row; columns: getColumns();"></mat-row>
+      <mat-row *matRowDef="let row; columns: getColumns()"></mat-row>
     </mat-table>
 
     <div [hidden]="totalItems <= itemsPerPage">

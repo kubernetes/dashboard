@@ -19,11 +19,11 @@ limitations under the License.
   <div description>
     <div class="kd-inline-property">
       <span class="kd-muted-light" i18n>Name:&nbsp;</span>
-      <span>{{objectMeta?.name}}</span>
+      <span>{{ objectMeta?.name }}</span>
     </div>
     <div class="kd-inline-property" *ngIf="objectMeta?.namespace">
       <span class="kd-muted-light" i18n>Namespace:&nbsp;</span>
-      <span>{{objectMeta?.namespace}}</span>
+      <span>{{ objectMeta?.namespace }}</span>
     </div>
     <div class="kd-inline-property" *ngIf="objectMeta?.creationTimestamp">
       <span class="kd-muted-light" i18n>Age:&nbsp;</span>
@@ -34,11 +34,11 @@ limitations under the License.
     <div fxLayout="row wrap">
       <kd-property [ngClass]="'object-meta-name'">
         <div key i18n>Name</div>
-        <div value>{{objectMeta?.name}}</div>
+        <div value>{{ objectMeta?.name }}</div>
       </kd-property>
       <kd-property *ngIf="objectMeta?.namespace" [ngClass]="'object-meta-namespace'">
         <div key i18n>Namespace</div>
-        <div value>{{objectMeta?.namespace}}</div>
+        <div value>{{ objectMeta?.namespace }}</div>
       </kd-property>
       <kd-property [ngClass]="'object-meta-creation'">
         <div key i18n>Created</div>
@@ -54,7 +54,7 @@ limitations under the License.
       </kd-property>
       <kd-property *ngIf="objectMeta?.uid" [ngClass]="'object-meta-uid'">
         <div key i18n>UID</div>
-        <div value>{{objectMeta?.uid}}</div>
+        <div value>{{ objectMeta?.uid }}</div>
       </kd-property>
       <kd-property *ngIf="objectMeta?.labels" fxFlex="100" [ngClass]="'object-meta-labels'">
         <div key i18n>Labels</div>

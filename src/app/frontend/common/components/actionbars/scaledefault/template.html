@@ -19,17 +19,20 @@ limitations under the License.
     *ngIf="isInitialized && scalable()"
     [objectMeta]="resourceMeta?.objectMeta"
     [typeMeta]="resourceMeta?.typeMeta"
-    [displayName]="resourceMeta?.displayName"></kd-actionbar-detail-scale>
+    [displayName]="resourceMeta?.displayName"
+  ></kd-actionbar-detail-scale>
 
   <kd-actionbar-detail-restart
     *ngIf="isInitialized && restartable()"
     [objectMeta]="resourceMeta?.objectMeta"
     [typeMeta]="resourceMeta?.typeMeta"
-    [displayName]="resourceMeta?.displayName"></kd-actionbar-detail-restart>
+    [displayName]="resourceMeta?.displayName"
+  ></kd-actionbar-detail-restart>
 
   <kd-actionbar-detail-actions
     *ngIf="isInitialized"
     [objectMeta]="resourceMeta.objectMeta"
     [typeMeta]="resourceMeta.typeMeta"
-    [displayName]="resourceMeta.displayName"></kd-actionbar-detail-actions>
+    [displayName]="resourceMeta.displayName"
+  ></kd-actionbar-detail-actions>
 </div>

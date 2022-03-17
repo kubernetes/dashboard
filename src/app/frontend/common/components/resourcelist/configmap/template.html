@@ -16,7 +16,7 @@ limitations under the License.
 
 <kd-card role="table" [hidden]="isHidden()">
   <div title fxLayout="row" i18n>Config Maps</div>
-  <div description><span class="kd-muted-light" i18n>Items:&nbsp;</span>{{totalItems}}</div>
+  <div description><span class="kd-muted-light" i18n>Items:&nbsp;</span>{{ totalItems }}</div>
   <div actions>
     <kd-card-list-filter></kd-card-list-filter>
   </div>
@@ -30,21 +30,22 @@ limitations under the License.
       matSort
       matSortActive="created"
       matSortDisableClear
-      matSortDirection="asc">
+      matSortDirection="asc"
+    >
       <ng-container matColumnDef="name">
         <mat-header-cell *matHeaderCellDef mat-sort-header disableClear="true" class="kd-col-gt" i18n
           >Name</mat-header-cell
         >
         <mat-cell *matCellDef="let cm" class="kd-col-gt">
           <a [routerLink]="getDetailsHref(cm.objectMeta.name, cm.objectMeta.namespace)" queryParamsHandling="preserve">
-            {{cm.objectMeta.name}}
+            {{ cm.objectMeta.name }}
           </a>
         </mat-cell>
       </ng-container>
 
       <ng-container *ngIf="shouldShowColumn('namespace')" matColumnDef="namespace">
         <mat-header-cell *matHeaderCellDef class="kd-col-md" i18n>Namespace</mat-header-cell>
-        <mat-cell *matCellDef="let cm" class="kd-col-md">{{cm.objectMeta.namespace}}</mat-cell>
+        <mat-cell *matCellDef="let cm" class="kd-col-md">{{ cm.objectMeta.namespace }}</mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="labels">
@@ -71,7 +72,7 @@ limitations under the License.
       </ng-container>
 
       <mat-header-row *matHeaderRowDef="getColumns()"></mat-header-row>
-      <mat-row *matRowDef="let row; columns: getColumns();"></mat-row>
+      <mat-row *matRowDef="let row; columns: getColumns()"></mat-row>
     </mat-table>
 
     <div [hidden]="totalItems <= itemsPerPage">

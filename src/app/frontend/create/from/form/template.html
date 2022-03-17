@@ -25,13 +25,15 @@ limitations under the License.
         [maxlength]="nameMaxLength"
         [namespace]="namespace.value"
         kdUniqueName
-        required />
+        required
+      />
       <mat-progress-bar
         class="kd-deploy-form-progress"
         [ngClass]="{'kd-deploy-form-progress-show': name.pending}"
-        mode="indeterminate">
+        mode="indeterminate"
+      >
       </mat-progress-bar>
-      <mat-hint align="end">{{name.value?.length}} / {{ nameMaxLength }}</mat-hint>
+      <mat-hint align="end">{{ name.value?.length }} / {{ nameMaxLength }}</mat-hint>
       <mat-error *ngIf="name.errors?.uniqueName" i18n>
         Deployment or service with this name already exists within namespace.
       </mat-error>
@@ -61,10 +63,11 @@ limitations under the License.
         placeholder="Container image"
         i18n-placeholder
         kdValidImageReference
-        required />
+        required
+      />
       <mat-error *ngIf="containerImage.errors?.required" i18n> Container image is required </mat-error>
       <mat-error *ngIf="containerImage.errors?.validImageReference" i18n>
-        Container image is invalid: {{containerImage.errors?.validImageReference}}
+        Container image is invalid: {{ containerImage.errors?.validImageReference }}
       </mat-error>
     </mat-form-field>
 
@@ -90,7 +93,8 @@ limitations under the License.
         i18n-placeholder
         min="1"
         kdWarnThreshold="100"
-        required />
+        required
+      />
       <mat-error *ngIf="replicas.errors?.required" i18n> Number of pods is required </mat-error>
       <mat-error *ngIf="replicas.errors?.kdValidInteger" i18n> Number of pods must be a positive integer </mat-error>
       <!-- <mat-error when="min">[[Number of pods must be at least 1|Number of pods must be at least 1 warning on deploy from settings page.]]</mat-error> -->
@@ -106,7 +110,8 @@ limitations under the License.
         href="https://kubernetes.io/docs/concepts/workloads/controllers/deployment/"
         target="_blank"
         tabindex="-1"
-        i18n>
+        i18n
+      >
         Learn more
         <i class="material-icons">open_in_new</i>
       </a>
@@ -119,7 +124,8 @@ limitations under the License.
         [protocols]="protocols"
         [isExternal]="isExternal"
         (changeExternal)="changeExternal($event)"
-        formControlName="portMappings">
+        formControlName="portMappings"
+      >
       </kd-port-mappings>
     </div>
     <kd-user-help>
@@ -169,8 +175,9 @@ limitations under the License.
           (click)="resetImagePullSecret()"
           placeholder="Namespace"
           i18n-placeholder
-          required>
-          <mat-option *ngFor="let namespace of namespaces" [value]="namespace"> {{namespace}} </mat-option>
+          required
+        >
+          <mat-option *ngFor="let namespace of namespaces" [value]="namespace"> {{ namespace }} </mat-option>
           <mat-option (click)="handleNamespaceDialog()" i18n> Create a new namespace... </mat-option>
         </mat-select>
       </mat-form-field>
@@ -189,8 +196,9 @@ limitations under the License.
           formControlName="imagePullSecret"
           (click)="getSecrets()"
           placeholder="Image Pull Secret"
-          i18n-placeholder>
-          <mat-option *ngFor="let secret of secrets" [value]="secret"> {{secret}} </mat-option>
+          i18n-placeholder
+        >
+          <mat-option *ngFor="let secret of secrets" [value]="secret"> {{ secret }} </mat-option>
           <mat-option (click)="handleCreateSecretDialog()" i18n> Create a new secret... </mat-option>
         </mat-select>
       </mat-form-field>
@@ -216,7 +224,8 @@ limitations under the License.
             i18n-placeholder
             name="cpuRequirement"
             min="0"
-            formControlName="cpuRequirement" />
+            formControlName="cpuRequirement"
+          />
           <mat-error *ngIf="cpuRequirement.errors?.min" i18n>
             CPU requirement must be given as a positive number.
           </mat-error>
@@ -233,7 +242,8 @@ limitations under the License.
             i18n-placeholder
             name="memoryRequirement"
             min="0"
-            formControlName="memoryRequirement" />
+            formControlName="memoryRequirement"
+          />
           <mat-error *ngIf="memoryRequirement.errors?.min" i18n>
             Memory requirement must be given as a positive number.
           </mat-error>
@@ -284,7 +294,8 @@ limitations under the License.
           href="https://kubernetes.io/docs/concepts/workloads/pods/#privileged-mode-for-containers"
           target="_blank"
           tabindex="-1"
-          i18n>
+          i18n
+        >
           Learn more
           <i class="material-icons">open_in_new</i>
         </a>
@@ -302,7 +313,8 @@ limitations under the License.
           href="https://kubernetes.io/docs/tasks/inject-data-application/define-environment-variable-container/"
           target="_blank"
           tabindex="-1"
-          i18n>
+          i18n
+        >
           Learn more
           <i class="material-icons">open_in_new</i>
         </a>

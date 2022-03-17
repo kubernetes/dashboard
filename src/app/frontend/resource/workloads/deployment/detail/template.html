@@ -22,34 +22,34 @@ limitations under the License.
   <div description>
     <div class="kd-inline-property" *ngIf="deployment?.strategy">
       <span class="kd-muted-light" i18n>Strategy:&nbsp;</span>
-      <span>{{deployment.strategy}}</span>
+      <span>{{ deployment.strategy }}</span>
     </div>
 
     <div class="kd-inline-property" *ngIf="deployment?.minReadySeconds !== null">
       <span class="kd-muted-light" i18n>Min ready seconds:&nbsp;</span>
-      <span>{{deployment.minReadySeconds}}</span>
+      <span>{{ deployment.minReadySeconds }}</span>
     </div>
 
     <div class="kd-inline-property" *ngIf="deployment?.revisionHistoryLimit !== null">
       <span class="kd-muted-light" i18n>Revision history limit:&nbsp;</span>
-      <span>{{deployment.revisionHistoryLimit}}</span>
+      <span>{{ deployment.revisionHistoryLimit }}</span>
     </div>
   </div>
 
   <div content *ngIf="isInitialized" fxLayout="row wrap">
     <kd-property *ngIf="deployment?.strategy">
       <div key i18n>Strategy</div>
-      <div value>{{deployment.strategy}}</div>
+      <div value>{{ deployment.strategy }}</div>
     </kd-property>
 
     <kd-property *ngIf="deployment?.minReadySeconds !== null">
       <div key i18n>Min ready seconds</div>
-      <div value>{{deployment.minReadySeconds}}</div>
+      <div value>{{ deployment.minReadySeconds }}</div>
     </kd-property>
 
     <kd-property *ngIf="deployment?.revisionHistoryLimit !== null">
       <div key i18n>Revision history limit</div>
-      <div value>{{deployment.revisionHistoryLimit}}</div>
+      <div value>{{ deployment.revisionHistoryLimit }}</div>
     </kd-property>
 
     <kd-property *ngIf="deployment?.selector" fxFlex="100">
@@ -67,24 +67,24 @@ limitations under the License.
   <div description>
     <div class="kd-inline-property" *ngIf="deployment?.rollingUpdateStrategy?.maxSurge > 0">
       <span class="kd-muted-light" i18n>Max surge:&nbsp;</span>
-      <span>{{deployment.rollingUpdateStrategy.maxSurge}}</span>
+      <span>{{ deployment.rollingUpdateStrategy.maxSurge }}</span>
     </div>
 
     <div class="kd-inline-property" *ngIf="deployment?.rollingUpdateStrategy?.maxUnavailable > 0">
       <span class="kd-muted-light" i18n>Max unavailable:&nbsp;</span>
-      <span>{{deployment.rollingUpdateStrategy.maxUnavailable}}</span>
+      <span>{{ deployment.rollingUpdateStrategy.maxUnavailable }}</span>
     </div>
   </div>
 
   <div content *ngIf="isInitialized" fxLayout="row wrap">
     <kd-property *ngIf="deployment?.rollingUpdateStrategy?.maxSurge !== null">
       <div key i18n>Max surge</div>
-      <div value>{{deployment.rollingUpdateStrategy.maxSurge}}</div>
+      <div value>{{ deployment.rollingUpdateStrategy.maxSurge }}</div>
     </kd-property>
 
     <kd-property *ngIf="deployment?.rollingUpdateStrategy?.maxUnavailable !== null">
       <div key i18n>Max unavailable</div>
-      <div value>{{deployment.rollingUpdateStrategy.maxUnavailable}}</div>
+      <div value>{{ deployment.rollingUpdateStrategy.maxUnavailable }}</div>
     </kd-property>
   </div>
 </kd-card>
@@ -95,44 +95,44 @@ limitations under the License.
   <div description>
     <div class="kd-inline-property" *ngIf="deployment?.statusInfo?.updated > 0">
       <span class="kd-muted-light" i18n>Updated:&nbsp;</span>
-      <span>{{deployment.statusInfo.updated}}</span>
+      <span>{{ deployment.statusInfo.updated }}</span>
     </div>
 
     <div class="kd-inline-property" *ngIf="deployment?.statusInfo?.replicas > 0">
       <span class="kd-muted-light" i18n>Total:&nbsp;</span>
-      <span>{{deployment.statusInfo.replicas}}</span>
+      <span>{{ deployment.statusInfo.replicas }}</span>
     </div>
 
     <div class="kd-inline-property" *ngIf="deployment?.statusInfo?.available > 0">
       <span class="kd-muted-light" i18n>Available:&nbsp;</span>
-      <span>{{deployment.statusInfo.available}}</span>
+      <span>{{ deployment.statusInfo.available }}</span>
     </div>
 
     <div class="kd-inline-property" *ngIf="deployment?.statusInfo?.unavailable > 0">
       <span class="kd-muted-light" i18n>Unavailable:&nbsp;</span>
-      <span>{{deployment.statusInfo.unavailable}}</span>
+      <span>{{ deployment.statusInfo.unavailable }}</span>
     </div>
   </div>
 
   <div content *ngIf="isInitialized" fxLayout="row wrap">
     <kd-property *ngIf="deployment?.statusInfo?.updated > 0">
       <div key i18n>Updated</div>
-      <div value>{{deployment.statusInfo.updated}}</div>
+      <div value>{{ deployment.statusInfo.updated }}</div>
     </kd-property>
 
     <kd-property *ngIf="deployment?.statusInfo?.replicas > 0">
       <div key i18n>Total</div>
-      <div value>{{deployment.statusInfo.replicas}}</div>
+      <div value>{{ deployment.statusInfo.replicas }}</div>
     </kd-property>
 
     <kd-property *ngIf="deployment?.statusInfo?.available > 0">
       <div key i18n>Available</div>
-      <div value>{{deployment.statusInfo.available}}</div>
+      <div value>{{ deployment.statusInfo.available }}</div>
     </kd-property>
 
     <kd-property *ngIf="deployment?.statusInfo?.unavailable > 0">
       <div key i18n>Unavailable</div>
-      <div value>{{deployment.statusInfo.unavailable}}</div>
+      <div value>{{ deployment.statusInfo.unavailable }}</div>
     </kd-property>
   </div>
 </kd-card>
@@ -145,12 +145,12 @@ limitations under the License.
   <div description>
     <div class="kd-inline-property" *ngIf="newReplicaSet?.objectMeta.name">
       <span class="kd-muted-light" i18n>Name:&nbsp;</span>
-      <span>{{newReplicaSet.objectMeta.name}}</span>
+      <span>{{ newReplicaSet.objectMeta.name }}</span>
     </div>
 
     <div class="kd-inline-property" *ngIf="newReplicaSet?.objectMeta.namespace">
       <span class="kd-muted-light" i18n>Namespace:&nbsp;</span>
-      <span>{{newReplicaSet.objectMeta.namespace}}</span>
+      <span>{{ newReplicaSet.objectMeta.namespace }}</span>
     </div>
 
     <div class="kd-inline-property" *ngIf="newReplicaSet?.objectMeta.creationTimestamp">
@@ -160,7 +160,7 @@ limitations under the License.
 
     <div class="kd-inline-property" *ngIf="newReplicaSet?.podInfo">
       <span class="kd-muted-light" i18n>Pods:&nbsp;</span>
-      <span>{{newReplicaSet.podInfo.running}} / {{newReplicaSet.podInfo.desired}}</span>
+      <span>{{ newReplicaSet.podInfo.running }} / {{ newReplicaSet.podInfo.desired }}</span>
     </div>
   </div>
 
@@ -168,13 +168,13 @@ limitations under the License.
     <kd-property *ngIf="newReplicaSet?.objectMeta.name">
       <div key i18n>Name</div>
       <a value [routerLink]="getNewReplicaSetHref()" queryParamsHandling="preserve"
-        >{{newReplicaSet.objectMeta.name}}</a
+        >{{ newReplicaSet.objectMeta.name }}</a
       >
     </kd-property>
 
     <kd-property *ngIf="newReplicaSet?.objectMeta.namespace">
       <div key i18n>Namespace</div>
-      <div value>{{newReplicaSet.objectMeta.namespace}}</div>
+      <div value>{{ newReplicaSet.objectMeta.namespace }}</div>
     </kd-property>
 
     <kd-property *ngIf="newReplicaSet?.objectMeta.creationTimestamp">
@@ -186,7 +186,7 @@ limitations under the License.
 
     <kd-property *ngIf="newReplicaSet?.podInfo">
       <div key i18n>Pods</div>
-      <div value>{{newReplicaSet.podInfo.running}} / {{newReplicaSet.podInfo.desired}}</div>
+      <div value>{{ newReplicaSet.podInfo.running }} / {{ newReplicaSet.podInfo.desired }}</div>
     </kd-property>
 
     <kd-property *ngIf="newReplicaSet?.objectMeta?.labels" fxFlex="100">
@@ -217,6 +217,7 @@ limitations under the License.
 <kd-horizontal-pod-autoscaler-list
   [endpoint]="horizontalPodAutoscalerEndpoint"
   i18n-title
-  title="Horizontal Pod Autoscaler"></kd-horizontal-pod-autoscaler-list>
+  title="Horizontal Pod Autoscaler"
+></kd-horizontal-pod-autoscaler-list>
 
 <kd-event-list [endpoint]="eventListEndpoint"></kd-event-list>
