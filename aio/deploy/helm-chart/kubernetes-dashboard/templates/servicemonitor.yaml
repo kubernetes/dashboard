@@ -33,6 +33,9 @@ spec:
     - port: http
     {{- else }}
     - port: https
+      scheme: https
+      tlsConfig:
+        insecureSkipVerify: true
     {{- end }}
       path: /metrics
   selector:
