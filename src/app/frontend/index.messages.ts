@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import {InjectionToken} from '@angular/core';
-import {IBreadcrumbMessage, IBreadcrumbMessageKey, IMessage, IMessageKey} from 'typings/root.ui';
+import {IBreadcrumbMessage, IBreadcrumbMessageKey, IMessage, IMessageKey} from '@api/root.ui';
 
 export const MESSAGES_DI_TOKEN = new InjectionToken<IMessage>('kd.messages');
 
