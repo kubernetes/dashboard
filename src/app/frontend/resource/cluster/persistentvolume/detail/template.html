@@ -27,7 +27,7 @@ limitations under the License.
     <kd-property *ngIf="persistentVolume?.status">
       <div key
            i18n>Status</div>
-      <div value>{{persistentVolume.status}}</div>
+      <div value>{{ persistentVolume.status }}</div>
     </kd-property>
 
     <kd-property *ngIf="persistentVolume?.claim">
@@ -36,7 +36,7 @@ limitations under the License.
       <div value>
         <a [routerLink]="getClaimHref(persistentVolume.claim)"
            queryParamsHandling="preserve">
-          {{persistentVolume.claim}}
+          {{ persistentVolume.claim }}
         </a>
       </div>
     </kd-property>
@@ -44,27 +44,27 @@ limitations under the License.
     <kd-property *ngIf="persistentVolume?.reclaimPolicy">
       <div key
            i18n>Reclaim policy</div>
-      <div value>{{persistentVolume.reclaimPolicy}}</div>
+      <div value>{{ persistentVolume.reclaimPolicy }}</div>
     </kd-property>
 
     <kd-property *ngIf="persistentVolume?.storageClass">
       <div key
            i18n>Storage class</div>
       <div value>
-        <div value>{{persistentVolume.storageClass}}</div>
+        <div value>{{ persistentVolume.storageClass }}</div>
       </div>
     </kd-property>
 
     <kd-property *ngIf="persistentVolume?.reason">
       <div key
            i18n>Reason</div>
-      <div value>{{persistentVolume.reason}}</div>
+      <div value>{{ persistentVolume.reason }}</div>
     </kd-property>
 
     <kd-property *ngIf="persistentVolume?.message">
       <div key
            i18n>Message</div>
-      <div value>{{persistentVolume.message}}</div>
+      <div value>{{ persistentVolume.message }}</div>
     </kd-property>
 
     <kd-property *ngIf="persistentVolume?.mountOptions"
@@ -104,7 +104,7 @@ limitations under the License.
         <mat-header-cell *matHeaderCellDef
                          i18n>Resource name</mat-header-cell>
         <mat-cell *matCellDef="let capacity">
-          <ng-container *ngIf="capacity.resourceName">{{capacity.resourceName}}</ng-container>
+          <ng-container *ngIf="capacity.resourceName">{{ capacity.resourceName }}</ng-container>
           <ng-container *ngIf="!capacity.resourceName">-</ng-container>
         </mat-cell>
       </ng-container>
@@ -113,13 +113,13 @@ limitations under the License.
         <mat-header-cell *matHeaderCellDef
                          i18n>Quantity</mat-header-cell>
         <mat-cell *matCellDef="let capacity">
-          <ng-container *ngIf="capacity.quantity">{{capacity.quantity}}</ng-container>
+          <ng-container *ngIf="capacity.quantity">{{ capacity.quantity }}</ng-container>
           <ng-container *ngIf="!capacity.quantity">-</ng-container>
         </mat-cell>
       </ng-container>
 
       <mat-header-row *matHeaderRowDef="getCapacityColumns()"></mat-header-row>
-      <mat-row *matRowDef="let row; columns: getCapacityColumns();"></mat-row>
+      <mat-row *matRowDef="let row; columns: getCapacityColumns()"></mat-row>
     </mat-table>
   </div>
 </kd-card>

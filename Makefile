@@ -30,7 +30,7 @@ PROD_BINARY = dist/amd64/dashboard
 SERVE_DIRECTORY = .tmp/serve
 SERVE_BINARY = .tmp/serve/dashboard
 RELEASE_IMAGE = kubernetesui/dashboard
-RELEASE_VERSION = v2.5.0
+RELEASE_VERSION = v2.5.1
 RELEASE_IMAGE_NAMES += $(foreach arch, $(ARCHITECTURES), $(RELEASE_IMAGE)-$(arch):$(RELEASE_VERSION))
 RELEASE_IMAGE_NAMES_LATEST += $(foreach arch, $(ARCHITECTURES), $(RELEASE_IMAGE)-$(arch):latest)
 HEAD_IMAGE = kubernetesdashboarddev/dashboard
@@ -183,11 +183,11 @@ fix-go: ensure-golangcilint
 
 .PHONY: check-html
 check-html:
-	./aio/scripts/format-html.sh --check
+	npx html-beautify ./src/**/*.html | awk '!/unchanged/'
 
 .PHONY: fix-html
 fix-html:
-	./aio/scripts/format-html.sh
+	npx html-beautify -f=./src/**/*.html | awk '!/unchanged/'
 
 .PHONY: check-scss
 check-scss:

@@ -29,11 +29,11 @@ limitations under the License.
              placeholder="Namespace"
              type="text"
              [matAutocomplete]="auto"
-             matInput>
+             matInput />
       <mat-autocomplete #auto="matAutocomplete">
         <mat-option *ngFor="let namespace of data.namespaces | kdFilterBy: namespaceInput.value"
                     [value]="namespace">
-          {{namespace}}
+          {{ namespace }}
         </mat-option>
       </mat-autocomplete>
     </mat-form-field>
@@ -44,12 +44,12 @@ limitations under the License.
             color="primary"
             [disabled]="namespaceInput?.value?.length === 0"
             [mat-dialog-close]="namespaceInput.value"
-            i18n>Add
+            i18n>
+      Add
     </button>
     <button mat-button
             color="primary"
             [mat-dialog-close]=""
-            i18n>Close
-    </button>
+            i18n>Close</button>
   </mat-dialog-actions>
 </div>

@@ -26,14 +26,14 @@ limitations under the License.
          *ngIf="job?.completions">
       <span class="kd-muted-light"
             i18n>Completions:&nbsp;</span>
-      <span>{{job.completions}}</span>
+      <span>{{ job.completions }}</span>
     </div>
 
     <div class="kd-inline-property"
          *ngIf="job?.parallelism">
       <span class="kd-muted-light"
             i18n>Parallelism:&nbsp;</span>
-      <span>{{job.parallelism}}</span>
+      <span>{{ job.parallelism }}</span>
     </div>
   </div>
 
@@ -43,13 +43,13 @@ limitations under the License.
     <kd-property *ngIf="job?.completions">
       <div key
            i18n>Completions</div>
-      <div value>{{job.completions}}</div>
+      <div value>{{ job.completions }}</div>
     </kd-property>
 
     <kd-property *ngIf="job?.parallelism">
       <div key
            i18n>Parallelism</div>
-      <div value>{{job.parallelism}}</div>
+      <div value>{{ job.parallelism }}</div>
     </kd-property>
 
     <kd-property *ngIf="job?.containerImages"

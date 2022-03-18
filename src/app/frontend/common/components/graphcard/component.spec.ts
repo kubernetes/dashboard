@@ -34,15 +34,13 @@ const testMetrics: Metric[] = [
 describe('GraphCardComponent', () => {
   let testHostFixture: ComponentFixture<GraphCardComponent>;
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        declarations: [GraphCardComponent, GraphComponent, CardComponent],
-        providers: [InViewportService],
-        imports: [SharedModule, NoopAnimationsModule, InViewportModule],
-      }).compileComponents();
-    })
-  );
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      declarations: [GraphCardComponent, GraphComponent, CardComponent],
+      providers: [InViewportService],
+      imports: [SharedModule, NoopAnimationsModule, InViewportModule],
+    }).compileComponents();
+  }));
 
   beforeEach(() => {
     testHostFixture = TestBed.createComponent(GraphCardComponent);

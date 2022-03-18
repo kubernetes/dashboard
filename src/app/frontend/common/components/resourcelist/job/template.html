@@ -21,12 +21,12 @@ limitations under the License.
          [hidden]="isHidden()">
   <div title
        fxLayout="row">
-    <ng-container *ngIf="title;else defaultTitle">{{title}}</ng-container>
+    <ng-container *ngIf="title; else defaultTitle">{{ title }}</ng-container>
     <ng-template #defaultTitle
                  i18n>Jobs</ng-template>
   </div>
   <div description><span class="kd-muted-light"
-          i18n>Items:&nbsp;</span>{{totalItems}}</div>
+          i18n>Items:&nbsp;</span>{{ totalItems }}</div>
   <div actions>
     <kd-card-list-filter></kd-card-list-filter>
   </div>
@@ -45,16 +45,12 @@ limitations under the License.
                multiTemplateDataRows>
       <ng-container matColumnDef="statusicon">
         <mat-header-cell *matHeaderCellDef></mat-header-cell>
-        <mat-cell *matCellDef="let job; let index=index">
+        <mat-cell *matCellDef="let job; let index = index">
           <mat-icon [ngClass]="getStatus(job).iconClass"
                     [matTooltip]="getStatus(job).iconTooltip">
-            <ng-container *ngIf="showHoverIcon(index, job); else showStatus">
-              remove_red_eye
-            </ng-container>
+            <ng-container *ngIf="showHoverIcon(index, job); else showStatus"> remove_red_eye </ng-container>
 
-            <ng-template #showStatus>
-              {{getStatus(job).iconName}}
-            </ng-template>
+            <ng-template #showStatus> {{ getStatus(job).iconName }} </ng-template>
           </mat-icon>
         </mat-cell>
       </ng-container>
@@ -76,7 +72,7 @@ limitations under the License.
           <a (click)="$event.stopPropagation()"
              [routerLink]="getDetailsHref(job.objectMeta.name, job.objectMeta.namespace)"
              queryParamsHandling="preserve">
-            {{job.objectMeta.name}}
+            {{ job.objectMeta.name }}
           </a>
         </mat-cell>
       </ng-container>
@@ -87,7 +83,7 @@ limitations under the License.
                          class="kd-col-md"
                          i18n>Namespace</mat-header-cell>
         <mat-cell *matCellDef="let job"
-                  class="kd-col-md">{{job.objectMeta.namespace}}</mat-cell>
+                  class="kd-col-md">{{ job.objectMeta.namespace }}</mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="images">
@@ -116,7 +112,7 @@ limitations under the License.
                          i18n>Pods</mat-header-cell>
         <mat-cell *matCellDef="let job"
                   class="kd-col-xs">
-          {{job.podInfo.running}} / {{job.podInfo.desired}}
+          {{ job.podInfo.running }} / {{ job.podInfo.desired }}
         </mat-cell>
       </ng-container>
 
@@ -147,10 +143,10 @@ limitations under the License.
                (mouseleave)="onRowLeave()"
                (click)="expand(index, row)"
                [ngClass]="{'kd-no-bottom-border': isRowExpanded(index, row), 'kd-clickable': hasErrors(row)}"
-               *matRowDef="let row; columns: getColumns(); let index=index"></mat-row>
+               *matRowDef="let row; columns: getColumns(); let index = index"></mat-row>
       <mat-row class="kd-detail-row"
                [ngClass]="{'kd-hidden': !isRowExpanded(index, row)}"
-               *matRowDef="let row; columns: ['statusDetail']; let index=index"></mat-row>
+               *matRowDef="let row; columns: ['statusDetail']; let index = index"></mat-row>
     </mat-table>
 
     <div [hidden]="totalItems <= itemsPerPage">

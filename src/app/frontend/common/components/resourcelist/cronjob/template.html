@@ -23,7 +23,7 @@ limitations under the License.
        fxLayout="row"
        i18n>Cron Jobs</div>
   <div description><span class="kd-muted-light"
-          i18n>Items:&nbsp;</span>{{totalItems}}</div>
+          i18n>Items:&nbsp;</span>{{ totalItems }}</div>
   <div actions>
     <kd-card-list-filter></kd-card-list-filter>
   </div>
@@ -44,7 +44,7 @@ limitations under the License.
         <mat-cell *matCellDef="let cronJob">
           <mat-icon [ngClass]="getStatus(cronJob).iconClass"
                     [matTooltip]="getStatus(cronJob).iconTooltip">
-            {{getStatus(cronJob).iconName}}
+            {{ getStatus(cronJob).iconName }}
           </mat-icon>
         </mat-cell>
       </ng-container>
@@ -59,7 +59,7 @@ limitations under the License.
                   class="kd-col-gt">
           <a [routerLink]="getDetailsHref(cronJob.objectMeta.name, cronJob.objectMeta.namespace)"
              queryParamsHandling="preserve">
-            {{cronJob.objectMeta.name}}
+            {{ cronJob.objectMeta.name }}
           </a>
         </mat-cell>
       </ng-container>
@@ -70,7 +70,7 @@ limitations under the License.
                          class="kd-col-md"
                          i18n>Namespace</mat-header-cell>
         <mat-cell *matCellDef="let cronJob"
-                  class="kd-col-md">{{cronJob.objectMeta.namespace}}</mat-cell>
+                  class="kd-col-md">{{ cronJob.objectMeta.namespace }}</mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="images">
@@ -99,7 +99,7 @@ limitations under the License.
                          i18n>Schedule</mat-header-cell>
         <mat-cell *matCellDef="let cronJob"
                   class="kd-col-sm">
-          <span>{{cronJob.schedule}}</span>
+          <span>{{ cronJob.schedule }}</span>
           <span *ngIf="!cronJob.schedule">-</span>
         </mat-cell>
       </ng-container>
@@ -109,7 +109,7 @@ limitations under the License.
                          class="kd-col-sm"
                          i18n>Suspend</mat-header-cell>
         <mat-cell *matCellDef="let cronJob"
-                  class="kd-col-sm">{{!!cronJob.suspend}}</mat-cell>
+                  class="kd-col-sm">{{ !!cronJob.suspend }}</mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="active">
@@ -119,7 +119,7 @@ limitations under the License.
                          class="kd-col-sm"
                          i18n>Active</mat-header-cell>
         <mat-cell *matCellDef="let cronJob"
-                  class="kd-col-sm">{{cronJob.active}}</mat-cell>
+                  class="kd-col-sm">{{ cronJob.active }}</mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="lastschedule">
@@ -158,7 +158,7 @@ limitations under the License.
       </ng-container>
 
       <mat-header-row *matHeaderRowDef="getColumns()"></mat-header-row>
-      <mat-row *matRowDef="let row; columns: getColumns();"></mat-row>
+      <mat-row *matRowDef="let row; columns: getColumns()"></mat-row>
     </mat-table>
 
     <div [hidden]="totalItems <= itemsPerPage">

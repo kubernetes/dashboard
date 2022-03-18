@@ -27,17 +27,17 @@ limitations under the License.
                  fxFlex="100">
       <div key
            i18n>Provisioner</div>
-      <div value>{{storageClass?.provisioner}}</div>
+      <div value>{{ storageClass?.provisioner }}</div>
     </kd-property>
     <kd-property *ngFor="let parameter of getParameterNames()">
       <div key
            fxLayout>
-        {{parameter}}
+        {{ parameter }}
         <mat-icon i18n-matTooltip
                   matTooltip="Parameter"
                   class="kd-storage-class-parameter-icon">tune</mat-icon>
       </div>
-      <div value>{{storageClass?.parameters[parameter]}}</div>
+      <div value>{{ storageClass?.parameters[parameter] }}</div>
     </kd-property>
   </div>
 </kd-card>

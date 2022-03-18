@@ -16,7 +16,7 @@ limitations under the License.
 
 <ng-container [formGroup]="labelForm">
   <div formArrayName="labels">
-    <div *ngFor="let label of labels.controls; let i = index;"
+    <div *ngFor="let label of labels.controls; let i = index"
          [formGroupName]="i">
       <mat-form-field md-no-float
                       class="kd-deploy-input-row"
@@ -27,18 +27,17 @@ limitations under the License.
                (keyup)="check(i)"
                [readonly]="!label.get('editable').value"
                i18n-placeholder
-               placeholder="key">
+               placeholder="key" />
         <mat-error *ngIf="label.get('key').errors?.unique"
-                   i18n>
-          {{label.get('key').value}} is not unique
-        </mat-error>
+                   i18n> {{ label.get('key').value }} is not unique </mat-error>
         <mat-error *ngIf="label.get('key').errors?.kdValidLabelKeyPrefixPattern"
                    i18n>
           Prefix is not a valid DNS subdomain prefix (eg. my-domain.com).
         </mat-error>
         <mat-error *ngIf="label.get('key').errors?.kdValidLabelKeyNamePattern"
                    i18n>
-          Label key name must be alphanumeric separated by '-', '_' or '.', optionally prefixed by a DNS subdomain and '/'.
+          Label key name must be alphanumeric separated by '-', '_' or '.', optionally prefixed by a DNS subdomain and
+          '/'.
         </mat-error>
         <mat-error *ngIf="label.get('key').errors?.kdValidLabelKeyPrefixLength"
                    i18n>
@@ -59,8 +58,8 @@ limitations under the License.
                (keyup)="check(i)"
                [readonly]="!label.get('editable').value"
                i18n-placeholder
-               placeholder="value">
-        <mat-hint align="end">{{label.get('value').value?.length}} / 253</mat-hint>
+               placeholder="value" />
+        <mat-hint align="end">{{ label.get('value').value?.length }} / 253</mat-hint>
         <mat-error *ngIf="label.get('value').errors?.kdValidLabelValuePattern"
                    i18n>
           Label value must be alphanumeric separated by '.' , '-' or '_'.

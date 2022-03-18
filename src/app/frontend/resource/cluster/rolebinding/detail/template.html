@@ -29,7 +29,7 @@ limitations under the License.
       <div value>
         <a *ngIf="roleBinding.roleRef"
            [routerLink]="getRoleHref()"
-           queryParamsHandling="preserve">{{roleBinding.roleRef.name}}</a>
+           queryParamsHandling="preserve">{{ roleBinding.roleRef.name }}</a>
         <span *ngIf="!roleBinding.roleRef">-</span>
       </div>
     </kd-property>

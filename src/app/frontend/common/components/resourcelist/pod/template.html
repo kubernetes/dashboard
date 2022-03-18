@@ -22,10 +22,8 @@ limitations under the License.
   <div title
        fxLayout="row"
        i18n>Pods</div>
-  <div description>
-    <span class="kd-muted-light"
-          i18n>Items:&nbsp;</span>{{totalItems}}
-  </div>
+  <div description><span class="kd-muted-light"
+          i18n>Items:&nbsp;</span>{{ totalItems }}</div>
   <div actions>
     <kd-card-list-filter></kd-card-list-filter>
   </div>
@@ -44,16 +42,12 @@ limitations under the License.
                multiTemplateDataRows>
       <ng-container matColumnDef="statusicon">
         <mat-header-cell *matHeaderCellDef></mat-header-cell>
-        <mat-cell *matCellDef="let pod; let index=index">
+        <mat-cell *matCellDef="let pod; let index = index">
           <mat-icon [ngClass]="getStatus(pod).iconClass"
                     [matTooltip]="getStatus(pod).iconTooltip">
-            <ng-container *ngIf="showHoverIcon(index, pod); else showStatus">
-              remove_red_eye
-            </ng-container>
+            <ng-container *ngIf="showHoverIcon(index, pod); else showStatus"> remove_red_eye </ng-container>
 
-            <ng-template #showStatus>
-              {{getStatus(pod).iconName}}
-            </ng-template>
+            <ng-template #showStatus> {{ getStatus(pod).iconName }} </ng-template>
           </mat-icon>
         </mat-cell>
       </ng-container>
@@ -75,7 +69,7 @@ limitations under the License.
           <a (click)="$event.stopPropagation()"
              [routerLink]="getDetailsHref(pod.objectMeta.name, pod.objectMeta.namespace)"
              queryParamsHandling="preserve">
-            {{pod.objectMeta.name}}
+            {{ pod.objectMeta.name }}
           </a>
         </mat-cell>
       </ng-container>
@@ -86,7 +80,7 @@ limitations under the License.
                          class="kd-col-md"
                          i18n>Namespace</mat-header-cell>
         <mat-cell *matCellDef="let pod"
-                  class="kd-col-md">{{pod.objectMeta.namespace}}</mat-cell>
+                  class="kd-col-md">{{ pod.objectMeta.namespace }}</mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="images">
@@ -114,7 +108,7 @@ limitations under the License.
                          class="kd-col-gt"
                          i18n>Node</mat-header-cell>
         <mat-cell *matCellDef="let pod"
-                  class="kd-col-gt">{{pod.nodeName}}</mat-cell>
+                  class="kd-col-gt">{{ pod.nodeName }}</mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="status">
@@ -123,7 +117,7 @@ limitations under the License.
                          class="kd-col-md"
                          i18n>Status</mat-header-cell>
         <mat-cell *matCellDef="let pod"
-                  class="kd-col-md">{{getDisplayStatus(pod)}}</mat-cell>
+                  class="kd-col-md">{{ getDisplayStatus(pod) }}</mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="restarts">
@@ -131,9 +125,7 @@ limitations under the License.
                          class="kd-col-sm"
                          i18n>Restarts</mat-header-cell>
         <mat-cell *matCellDef="let pod"
-                  class="kd-col-sm">
-          {{pod.restartCount}}
-        </mat-cell>
+                  class="kd-col-sm"> {{ pod.restartCount }} </mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="cpu">
@@ -187,10 +179,10 @@ limitations under the License.
                (mouseleave)="onRowLeave()"
                (click)="expand(index, row)"
                [ngClass]="{'kd-no-bottom-border': isRowExpanded(index, row), 'kd-clickable': hasErrors(row)}"
-               *matRowDef="let row; columns: getColumns(); let index=index"></mat-row>
+               *matRowDef="let row; columns: getColumns(); let index = index"></mat-row>
       <mat-row class="kd-detail-row"
                [ngClass]="{'kd-hidden': !isRowExpanded(index, row)}"
-               *matRowDef="let row; columns: ['statusDetail']; let index=index"></mat-row>
+               *matRowDef="let row; columns: ['statusDetail']; let index = index"></mat-row>
     </mat-table>
 
     <div [hidden]="totalItems <= itemsPerPage">

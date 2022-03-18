@@ -30,14 +30,12 @@ limitations under the License.
                    name="namespace"
                    formControlName="namespace"
                    required />
-            <mat-hint align="end">{{namespace.value.length}} / {{namespaceMaxLength}}</mat-hint>
+            <mat-hint align="end">{{ namespace.value.length }} / {{ namespaceMaxLength }}</mat-hint>
             <mat-error *ngIf="namespace.errors?.required"
-                       i18n>
-              Name is required.
-            </mat-error>
+                       i18n> Name is required. </mat-error>
             <mat-error *ngIf="namespace.errors?.maxlength"
                        i18n>
-              Name must be up to {{namespaceMaxLength}} characters long.
+              Name must be up to {{ namespaceMaxLength }} characters long.
             </mat-error>
             <mat-error *ngIf="namespace.errors?.pattern"
                        i18n>
@@ -66,7 +64,9 @@ limitations under the License.
             color="primary"
             (click)="createNamespace()"
             [disabled]="isDisabled()"
-            i18n>Create</button>
+            i18n>
+      Create
+    </button>
     <button mat-button
             (click)="cancel()"
             i18n>Cancel</button>

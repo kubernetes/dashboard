@@ -16,14 +16,13 @@ limitations under the License.
 
 <kd-card [expandable]="true">
   <div title
-       i18n>Local settings
-  </div>
+       i18n>Local settings</div>
   <div content>
     <p i18n>
-      Local settings are stored in the browser cookies, so they are not synchronized between multiple devices.
-      Changes are applied automatically on every change.
+      Local settings are stored in the browser cookies, so they are not synchronized between multiple devices. Changes
+      are applied automatically on every change.
     </p>
-    <br>
+    <br />
     <kd-settings-entry key="Theme"
                        i18n-key
                        desc="Choose color theme of the dashboard"
@@ -34,9 +33,7 @@ limitations under the License.
                     fxFlex>
           <mat-option [value]="systemTheme">System</mat-option>
           <mat-option *ngFor="let theme of themes"
-                      [value]="theme.name">
-            {{theme.displayName}}
-          </mat-option>
+                      [value]="theme.name"> {{ theme.displayName }} </mat-option>
         </mat-select>
       </mat-form-field>
     </kd-settings-entry>
@@ -49,9 +46,7 @@ limitations under the License.
         <mat-select (ngModelChange)="onLanguageSelected($event)"
                     [(ngModel)]="selectedLanguage">
           <mat-option *ngFor="let language of languages"
-                      [value]="language.value">
-            {{language.label}}
-          </mat-option>
+                      [value]="language.value"> {{ language.label }} </mat-option>
         </mat-select>
       </mat-form-field>
     </kd-settings-entry>

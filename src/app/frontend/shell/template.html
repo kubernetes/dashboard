@@ -25,15 +25,12 @@ limitations under the License.
                 (ngModelChange)="onPodContainerChange($event)"
                 [(ngModel)]="selectedContainer">
       <mat-option *ngFor="let item of containers"
-                  [value]="item">
-        {{ item }}
-      </mat-option>
+                  [value]="item"> {{ item }} </mat-option>
     </mat-select>
     in {{ podName }}
   </div>
 
   <div #anchor
        content
-       class="xterm-anchor">
-  </div>
+       class="xterm-anchor"></div>
 </kd-card>

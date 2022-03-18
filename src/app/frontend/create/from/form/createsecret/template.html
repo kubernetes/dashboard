@@ -30,14 +30,12 @@ limitations under the License.
                    name="secretName"
                    formControlName="secretName"
                    required />
-            <mat-hint align="end">{{secretName.value.length}} / {{secretNameMaxLength}}</mat-hint>
+            <mat-hint align="end">{{ secretName.value.length }} / {{ secretNameMaxLength }}</mat-hint>
             <mat-error *ngIf="secretName.errors?.required"
-                       i18n>
-              Name is required.
-            </mat-error>
+                       i18n> Name is required. </mat-error>
             <mat-error *ngIf="secretName.errors?.maxlength"
                        i18n>
-              Name must be up to {{secretNameMaxLength}} characters long.
+              Name must be up to {{ secretNameMaxLength }} characters long.
             </mat-error>
             <mat-error *ngIf="secretName.errors?.pattern"
                        i18n>
@@ -65,16 +63,13 @@ limitations under the License.
                    formControlName="data"
                    required />
             <mat-error *ngIf="data.errors?.required"
-                       i18n>
-              Data is required.
-            </mat-error>
+                       i18n> Data is required. </mat-error>
             <mat-error *ngIf="data.errors?.pattern"
-                       i18n>
-              Data must be Base64 encoded.
-            </mat-error>
+                       i18n> Data must be Base64 encoded. </mat-error>
           </mat-form-field>
           <kd-user-help>
-            <ng-container i18n>Specify the data for your secret to hold. The value is the Base64 encoded content of a .dockercfg file.</ng-container>
+            <ng-container i18n>Specify the data for your secret to hold. The value is the Base64 encoded content of a .dockercfg
+              file.</ng-container>
             <a href="http://kubernetes.io/docs/user-guide/images/#specifying-imagepullsecrets-on-a-pod"
                target="_blank"
                tabindex="-1"

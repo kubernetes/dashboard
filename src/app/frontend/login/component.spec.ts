@@ -107,53 +107,51 @@ describe('LoginComponent', () => {
   let fixture: ComponentFixture<LoginComponent>;
   let httpTestingController: HttpTestingController;
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        declarations: [LoginComponent],
-        imports: [
-          NoopAnimationsModule,
-          HttpClientTestingModule,
-          RouterTestingModule,
-          FormsModule,
-          ReactiveFormsModule,
-          MatRadioModule,
-          MatButtonModule,
-        ],
-        schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      declarations: [LoginComponent],
+      imports: [
+        NoopAnimationsModule,
+        HttpClientTestingModule,
+        RouterTestingModule,
+        FormsModule,
+        ReactiveFormsModule,
+        MatRadioModule,
+        MatButtonModule,
+      ],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA],
 
-        // inject mocks
-        providers: [
-          {
-            provide: AuthService,
-            useClass: MockAuthService,
+      // inject mocks
+      providers: [
+        {
+          provide: AuthService,
+          useClass: MockAuthService,
+        },
+        {
+          provide: ActivatedRoute,
+          useValue: {
+            paramMap: from([]),
           },
-          {
-            provide: ActivatedRoute,
-            useValue: {
-              paramMap: from([]),
-            },
-          },
-          {
-            provide: Router,
-            useClass: MockRouter,
-          },
-          {
-            provide: PluginsConfigService,
-            useClass: MockPluginsConfigService,
-          },
-          {
-            provide: CONFIG_DI_TOKEN,
-            useValue: MOCK_CONFIG_DI_TOKEN,
-          },
-          {
-            provide: HistoryService,
-            useClass: MockHistoryService,
-          },
-        ],
-      }).compileComponents();
-    })
-  );
+        },
+        {
+          provide: Router,
+          useClass: MockRouter,
+        },
+        {
+          provide: PluginsConfigService,
+          useClass: MockPluginsConfigService,
+        },
+        {
+          provide: CONFIG_DI_TOKEN,
+          useValue: MOCK_CONFIG_DI_TOKEN,
+        },
+        {
+          provide: HistoryService,
+          useClass: MockHistoryService,
+        },
+      ],
+    }).compileComponents();
+  }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(LoginComponent);
