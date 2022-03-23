@@ -133,7 +133,7 @@
     "lint-staged": "12.3.7",
     "lodash": "4.17.21",
     "minimatch": "5.0.1",
-    "minimist": "1.2.5",
+    "minimist": "1.2.6",
     "ngx-i18nsupport": "0.17.1",
     "node-gyp": "9.0.0",
     "q": "1.5.1",
