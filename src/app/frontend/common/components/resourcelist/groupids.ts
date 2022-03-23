@@ -42,6 +42,7 @@ export enum ListIdentifier {
   event = 'event',
   resource = 'resource',
   plugin = 'plugin',
+  priorityclass = 'priorityclassList',
 }
 
 export enum ListGroupIdentifier {

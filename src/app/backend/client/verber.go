@@ -43,6 +43,7 @@ type resourceVerber struct {
 	networkingClient    RESTClient
 	apiExtensionsClient RESTClient
 	pluginsClient       RESTClient
+	schedulingClient    RESTClient
 	config              *restclient.Config
 }
 
@@ -73,12 +74,15 @@ func (verber *resourceVerber) getRESTClientByType(clientType api.ClientType) RES
 		return verber.apiExtensionsClient
 	case api.ClientTypePluginsClient:
 		return verber.pluginsClient
+	case api.ClientTypeSchedulingClient:
+		return verber.schedulingClient
 	default:
 		return verber.client
 	}
 }
 
 func (verber *resourceVerber) getResourceSpecFromKind(kind string, namespaceSet bool) (client RESTClient, resourceSpec api.APIMapping, err error) {
+	fmt.Println(kind)
 	resourceSpec, ok := api.KindToAPIMapping[kind]
 	if !ok {
 		var crdInfo crdInfo
@@ -147,9 +151,9 @@ type RESTClient interface {
 }
 
 // NewResourceVerber creates a new resource verber that uses the given client for performing operations.
-func NewResourceVerber(client, appsClient, batchClient, betaBatchClient, autoscalingClient, storageClient, rbacClient, networkingClient, apiExtensionsClient, pluginsClient RESTClient, config *restclient.Config) clientapi.ResourceVerber {
+func NewResourceVerber(client, appsClient, batchClient, betaBatchClient, autoscalingClient, storageClient, rbacClient, networkingClient, apiExtensionsClient, pluginsClient, schedulingClient RESTClient, config *restclient.Config) clientapi.ResourceVerber {
 	return &resourceVerber{client, appsClient,
-		batchClient, betaBatchClient, autoscalingClient, storageClient, rbacClient, networkingClient, apiExtensionsClient, pluginsClient, config}
+		batchClient, betaBatchClient, autoscalingClient, storageClient, rbacClient, networkingClient, apiExtensionsClient, pluginsClient, schedulingClient, config}
 }
 
 // Delete deletes the resource of the given kind in the given namespace with the given name.
@@ -204,6 +208,7 @@ func (verber *resourceVerber) Get(kind string, namespaceSet bool, namespace stri
 	}
 
 	result := &runtime.Unknown{}
+
 	req := client.Get().Resource(resourceSpec.Resource).Name(name).SetHeader("Accept", "application/json")
 
 	if resourceSpec.Namespaced {

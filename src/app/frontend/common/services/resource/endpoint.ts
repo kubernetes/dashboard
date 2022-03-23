@@ -48,6 +48,7 @@ export enum Resource {
   event = 'event',
   container = 'container',
   plugin = 'plugin',
+  priorityclass = 'priorityclass'
 }
 
 export enum Utility {

@@ -105,6 +105,7 @@ import {UploadFileComponent} from './uploadfile/component';
 import {VolumeMountComponent} from './volumemount/component';
 import {WorkloadStatusComponent} from './workloadstatus/component';
 import {ZeroStateComponent} from './zerostate/component';
+import {PriorityClassListComponent} from './resourcelist/priorityclass/component';
 
 const components = [
   ActionbarDetailActionsComponent,
@@ -194,6 +195,7 @@ const components = [
   RoleBindingListComponent,
   SubjectListComponent,
   VolumeMountComponent,
+  PriorityClassListComponent,
 ];
 
 @NgModule({

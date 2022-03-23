@@ -24,6 +24,7 @@ import (
 	v1 "k8s.io/api/core/v1"
 	networkingv1 "k8s.io/api/networking/v1"
 	rbac "k8s.io/api/rbac/v1"
+	scheduling "k8s.io/api/scheduling/v1"
 	storage "k8s.io/api/storage/v1"
 	apiextensions "k8s.io/apiextensions-apiserver/pkg/apis/apiextensions/v1"
 
@@ -123,6 +124,9 @@ type ResourceChannels struct {
 
 	// List and error channels to ClusterRoleBindings
 	ClusterRoleBindingList ClusterRoleBindingListChannel
+
+	// List and error channels to ClusterRoleBindings
+	PriorityClassList PriorityClassListChannel
 }
 
 // ServiceListChannel is a list and error channels to Services.
@@ -935,6 +939,31 @@ func GetStorageClassListChannel(client client.Interface, numReads int) StorageCl
 
 	go func() {
 		list, err := client.StorageV1().StorageClasses().List(context.TODO(), api.ListEverything)
+		for i := 0; i < numReads; i++ {
+			channel.List <- list
+			channel.Error <- err
+		}
+	}()
+
+	return channel
+}
+
+// PriorityClassListChannel is a list and error channels to priorityclass.
+type PriorityClassListChannel struct {
+	List  chan *scheduling.PriorityClassList
+	Error chan error
+}
+
+// GetPriorityClassListChannel returns a pair of channels to a priorityclass list and
+// errors that both must be read numReads times.
+func GetPriorityClassListChannel(client client.Interface, numReads int) PriorityClassListChannel {
+	channel := PriorityClassListChannel{
+		List:  make(chan *scheduling.PriorityClassList, numReads),
+		Error: make(chan error, numReads),
+	}
+
+	go func() {
+		list, err := client.SchedulingV1().PriorityClasses().List(context.TODO(), api.ListEverything)
 		for i := 0; i < numReads; i++ {
 			channel.List <- list
 			channel.Error <- err

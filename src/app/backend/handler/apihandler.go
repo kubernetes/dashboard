@@ -61,6 +61,7 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/persistentvolume"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/persistentvolumeclaim"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/pod"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/priorityclass"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/replicaset"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/replicationcontroller"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/role"
@@ -706,6 +707,14 @@ func CreateHTTPAPIHandler(iManager integration.IntegrationManager, cManager clie
 			To(apiHandler.handleLogFile).
 			Writes(logs.LogDetails{}))
 
+	apiV1Ws.Route(
+		apiV1Ws.GET("/priorityclass").
+			To(apiHandler.handleGetPriorityClassList).
+			Writes(priorityclass.PriorityClassList{}))
+	apiV1Ws.Route(
+		apiV1Ws.GET("/priorityclass/{name}").
+			To(apiHandler.handleGetPriorityClassDetail).
+			Writes(priorityclass.PriorityClass{}))
 	return wsContainer, nil
 }
 
@@ -2786,4 +2795,38 @@ func parseNamespacePathParameter(request *restful.Request) *common.NamespaceQuer
 		}
 	}
 	return common.NewNamespaceQuery(nonEmptyNamespaces)
+}
+
+func (apiHandler *APIHandler) handleGetPriorityClassList(request *restful.Request, response *restful.Response) {
+	k8sClient, err := apiHandler.cManager.Client(request)
+	if err != nil {
+		errors.HandleInternalError(response, err)
+		return
+	}
+
+	dataSelect := parser.ParseDataSelectPathParameter(request)
+	result, err := priorityclass.GetPriorityClassList(k8sClient, dataSelect)
+	if err != nil {
+		errors.HandleInternalError(response, err)
+		return
+	}
+
+	response.WriteHeaderAndEntity(http.StatusOK, result)
+}
+
+func (apiHandler *APIHandler) handleGetPriorityClassDetail(request *restful.Request, response *restful.Response) {
+	k8sClient, err := apiHandler.cManager.Client(request)
+	if err != nil {
+		errors.HandleInternalError(response, err)
+		return
+	}
+
+	name := request.PathParameter("name")
+	result, err := priorityclass.GetPriorityClassDetail(k8sClient, name)
+	if err != nil {
+		errors.HandleInternalError(response, err)
+		return
+	}
+
+	response.WriteHeaderAndEntity(http.StatusOK, result)
 }

@@ -303,6 +303,7 @@ func (self *clientManager) VerberClient(req *restful.Request, config *rest.Confi
 		k8sClient.NetworkingV1().RESTClient(),
 		apiextensionsRestClient,
 		pluginsclient.DashboardV1alpha1().RESTClient(),
+		k8sClient.SchedulingV1().RESTClient(),
 		config), nil
 }
 

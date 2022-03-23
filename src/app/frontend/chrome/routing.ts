@@ -74,6 +74,10 @@ const routes: Routes = [
         path: 'rolebinding',
         loadChildren: () => import('resource/cluster/rolebinding/module').then(m => m.RoleBingingModule),
       },
+      {
+        path: 'priorityclass',
+        loadChildren: () => import('resource/cluster/priorityclass/module').then(m => m.PriorityClassModule),
+      },
 
       // Overview
       {

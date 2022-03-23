@@ -148,6 +148,7 @@ const (
 	ResourceKindPlugin                   = "plugin"
 	ResourceKindEndpoint                 = "endpoint"
 	ResourceKindNetworkPolicy            = "networkpolicy"
+	ResourceKindPriorityClass            = "priorityclass"
 )
 
 // Scalable method return whether ResourceKind is scalable.
@@ -201,6 +202,7 @@ const (
 	ClientTypeAPIExtensionsClient = "apiextensionsclient"
 	ClientTypeNetworkingClient    = "networkingclient"
 	ClientTypePluginsClient       = "plugin"
+	ClientTypeSchedulingClient    = "schedulingclient"
 )
 
 // APIMapping is the mapping from resource kind to ClientType and Namespaced.
@@ -248,6 +250,7 @@ var KindToAPIMapping = map[string]APIMapping{
 	ResourceKindRole:                     {"roles", ClientTypeRbacClient, true},
 	ResourceKindRoleBinding:              {"rolebindings", ClientTypeRbacClient, true},
 	ResourceKindPlugin:                   {"plugins", ClientTypePluginsClient, true},
+	ResourceKindPriorityClass:            {"priorityclasses", ClientTypeSchedulingClient, false},
 }
 
 // IsSelectorMatching returns true when an object with the given selector targets the same

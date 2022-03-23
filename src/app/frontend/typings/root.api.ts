@@ -211,6 +211,10 @@ export interface StorageClassList extends ResourceList {
   items: StorageClass[];
 }
 
+export interface PriorityClassList extends ResourceList {
+  items: PriorityClassDetail[];
+}
+
 // Simple detail types
 export type ClusterRole = Resource;
 
@@ -686,6 +690,13 @@ export interface HorizontalPodAutoscalerDetail extends ResourceDetail {
   currentReplicas: number;
   desiredReplicas: number;
   lastScaleTime: string;
+}
+
+export interface PriorityClassDetail extends ResourceDetail{
+  value: number;
+	globalDefault: boolean;
+	description: string;
+	preemptionPolicy: string;
 }
 
 // Validation types
