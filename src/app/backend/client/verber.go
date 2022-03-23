@@ -82,7 +82,6 @@ func (verber *resourceVerber) getRESTClientByType(clientType api.ClientType) RES
 }
 
 func (verber *resourceVerber) getResourceSpecFromKind(kind string, namespaceSet bool) (client RESTClient, resourceSpec api.APIMapping, err error) {
-	fmt.Println(kind)
 	resourceSpec, ok := api.KindToAPIMapping[kind]
 	if !ok {
 		var crdInfo crdInfo
