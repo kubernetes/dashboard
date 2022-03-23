@@ -692,11 +692,11 @@ export interface HorizontalPodAutoscalerDetail extends ResourceDetail {
   lastScaleTime: string;
 }
 
-export interface PriorityClassDetail extends ResourceDetail{
+export interface PriorityClassDetail extends ResourceDetail {
   value: number;
-	globalDefault: boolean;
-	description: string;
-	preemptionPolicy: string;
+  globalDefault: boolean;
+  description: string;
+  preemptionPolicy: string;
 }
 
 // Validation types
