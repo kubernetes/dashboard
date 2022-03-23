@@ -23,9 +23,8 @@ import (
 	k8sClient "k8s.io/client-go/kubernetes"
 )
 
-// PriorityClassDetail contains Cron Job details.
+// PriorityClassDetail
 type PriorityClassDetail struct {
-	// Extends list item structure.
 	PriorityClass `json:",inline"`
 
 	Value int32 `json:"value"`
@@ -40,7 +39,7 @@ type PriorityClassDetail struct {
 	Errors []error `json:"errors"`
 }
 
-// GetPriorityClassDetail gets Cluster Role details.
+// GetPriorityClassDetail gets Priority Class details.
 func GetPriorityClassDetail(client k8sClient.Interface, name string) (*PriorityClassDetail, error) {
 	rawObject, err := client.SchedulingV1().PriorityClasses().Get(context.TODO(), name, metaV1.GetOptions{})
 	if err != nil {
