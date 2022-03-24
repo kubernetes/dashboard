@@ -24,23 +24,22 @@ limitations under the License.
          *ngIf="subjects?.length">
       <span class="kd-muted-light"
             i18n>Items:&nbsp;</span>
-      <span>{{subjects.length}}</span>
+      <span>{{ subjects.length }}</span>
     </div>
   </div>
 
   <div content
        [hidden]="!subjects">
     <mat-table [dataSource]="getDataSource()">
-
       <ng-container [matColumnDef]="getColumns()[0]">
         <mat-header-cell *matHeaderCellDef
                          i18n>Name</mat-header-cell>
         <mat-cell *matCellDef="let subject">
           <ng-container *ngIf="isSubjectKindKnown(subject)">
             <a [routerLink]="getSubjectHref(subject)"
-               queryParamsHandling="preserve">{{subject.name}}</a>
+               queryParamsHandling="preserve">{{ subject.name }}</a>
           </ng-container>
-          <ng-container *ngIf="!isSubjectKindKnown(subject)">{{subject.name}}</ng-container>
+          <ng-container *ngIf="!isSubjectKindKnown(subject)">{{ subject.name }}</ng-container>
         </mat-cell>
       </ng-container>
 
@@ -66,7 +65,7 @@ limitations under the License.
       </ng-container>
 
       <mat-header-row *matHeaderRowDef="getColumns()"></mat-header-row>
-      <mat-row *matRowDef="let row; columns: getColumns();"></mat-row>
+      <mat-row *matRowDef="let row; columns: getColumns()"></mat-row>
     </mat-table>
   </div>
 

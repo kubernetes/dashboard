@@ -24,7 +24,7 @@ limitations under the License.
          *ngIf="endpoints?.length">
       <span class="kd-muted-light"
             i18n>Items:&nbsp;</span>
-      <span>{{endpoints.length}}</span>
+      <span>{{ endpoints.length }}</span>
     </div>
   </div>
 
@@ -36,7 +36,7 @@ limitations under the License.
         <mat-header-cell *matHeaderCellDef
                          i18n>Host</mat-header-cell>
         <mat-cell *matCellDef="let endpoint">
-          <ng-container *ngIf="endpoint.host">{{endpoint.host}}</ng-container>
+          <ng-container *ngIf="endpoint.host">{{ endpoint.host }}</ng-container>
           <ng-container *ngIf="!endpoint.host">-</ng-container>
         </mat-cell>
       </ng-container>
@@ -47,8 +47,8 @@ limitations under the License.
           <ng-container *ngIf="endpoint?.ports">
             <div *ngFor="let port of endpoint.ports"
                  class="ports-item-line-height">
-              <span *ngIf="port.name">{{port.name}},{{port.port}},{{port.protocol}}</span>
-              <span *ngIf="!port.name">&lt;<span i18n>unset</span>&gt;,{{port.port}},{{port.protocol}}</span>
+              <span *ngIf="port.name">{{ port.name }},{{ port.port }},{{ port.protocol }}</span>
+              <span *ngIf="!port.name">&lt;<span i18n>unset</span>&gt;,{{ port.port }},{{ port.protocol }}</span>
             </div>
           </ng-container>
           <ng-container *ngIf="!endpoint?.ports">-</ng-container>
@@ -58,9 +58,7 @@ limitations under the License.
         <mat-header-cell *matHeaderCellDef
                          i18n>Node</mat-header-cell>
         <mat-cell *matCellDef="let endpoint">
-          <ng-container *ngIf="endpoint.nodeName">
-            {{endpoint.nodeName}}
-          </ng-container>
+          <ng-container *ngIf="endpoint.nodeName"> {{ endpoint.nodeName }} </ng-container>
           <ng-container *ngIf="!endpoint.nodeName">-</ng-container>
         </mat-cell>
       </ng-container>
@@ -68,14 +66,12 @@ limitations under the License.
         <mat-header-cell *matHeaderCellDef
                          i18n>Ready</mat-header-cell>
         <mat-cell *matCellDef="let endpoint">
-          <ng-container *ngIf="endpoint.ready">
-            {{endpoint.ready}}
-          </ng-container>
+          <ng-container *ngIf="endpoint.ready"> {{ endpoint.ready }} </ng-container>
           <ng-container *ngIf="!endpoint.ready">-</ng-container>
         </mat-cell>
       </ng-container>
       <mat-header-row *matHeaderRowDef="getEndpointsColumns()"></mat-header-row>
-      <mat-row *matRowDef="let row; columns: getEndpointsColumns();"></mat-row>
+      <mat-row *matRowDef="let row; columns: getEndpointsColumns()"></mat-row>
     </mat-table>
   </div>
 

@@ -20,14 +20,14 @@ limitations under the License.
          *ngIf="creator?.objectMeta.name">
       <span class="kd-muted-light"
             i18n>Name:&nbsp;</span>
-      <span>{{creator.objectMeta.name}}</span>
+      <span>{{ creator.objectMeta.name }}</span>
     </div>
 
     <div class="kd-inline-property"
          *ngIf="creator?.typeMeta.kind">
       <span class="kd-muted-light"
             i18n>Kind:&nbsp;</span>
-      <span>{{creator.typeMeta.kind}}</span>
+      <span>{{ creator.typeMeta.kind }}</span>
     </div>
 
     <div class="kd-inline-property"
@@ -48,27 +48,24 @@ limitations under the License.
            i18n>Name</div>
       <a value
          [routerLink]="getHref()"
-         queryParamsHandling="preserve">
-        {{creator?.objectMeta.name}}
-      </a>
+         queryParamsHandling="preserve"> {{ creator?.objectMeta.name }} </a>
     </kd-property>
 
     <kd-property>
       <div key
            i18n>Kind</div>
-      <div value>{{creator?.typeMeta.kind}}</div>
+      <div value>{{ creator?.typeMeta.kind }}</div>
     </kd-property>
 
     <kd-property>
       <div key
            i18n>Pods</div>
-      <div value>{{creator?.pods.running}} / {{creator?.pods.desired}}</div>
+      <div value>{{ creator?.pods.running }} / {{ creator?.pods.desired }}</div>
     </kd-property>
 
     <kd-property>
       <div key
-           i18n>Age
-      </div>
+           i18n>Age</div>
       <div value>
         <kd-date [date]="creator?.objectMeta.creationTimestamp"
                  relative></kd-date>

@@ -23,7 +23,7 @@ limitations under the License.
        fxLayout="row"
        i18n>Nodes</div>
   <div description><span class="kd-muted-light"
-          i18n>Items:&nbsp;</span>{{totalItems}}</div>
+          i18n>Items:&nbsp;</span>{{ totalItems }}</div>
   <div actions>
     <kd-card-list-filter></kd-card-list-filter>
   </div>
@@ -44,7 +44,7 @@ limitations under the License.
         <mat-cell *matCellDef="let node">
           <mat-icon [ngClass]="getStatus(node).iconClass"
                     [matTooltip]="getStatus(node).iconTooltip">
-            {{getStatus(node).iconName}}
+            {{ getStatus(node).iconName }}
           </mat-icon>
         </mat-cell>
       </ng-container>
@@ -59,7 +59,7 @@ limitations under the License.
                   class="kd-col-gt">
           <a [routerLink]="getDetailsHref(node.objectMeta.name)"
              queryParamsHandling="preserve">
-            {{node.objectMeta.name}}
+            {{ node.objectMeta.name }}
           </a>
         </mat-cell>
       </ng-container>
@@ -79,7 +79,7 @@ limitations under the License.
                          class="kd-col-xs"
                          i18n>Ready</mat-header-cell>
         <mat-cell *matCellDef="let node"
-                  class="kd-col-xs">{{node.ready}}</mat-cell>
+                  class="kd-col-xs">{{ node.ready }}</mat-cell>
       </ng-container>
 
       <ng-container [matColumnDef]="getColumns()[4]">
@@ -88,7 +88,8 @@ limitations under the License.
                          i18n>CPU requests (cores)</mat-header-cell>
         <mat-cell *matCellDef="let node"
                   class="kd-col-sm">
-          {{node.allocatedResources.cpuRequests | kdCores}} ({{node.allocatedResources.cpuRequestsFraction | number:"1.2-2"}}%)
+          {{ node.allocatedResources.cpuRequests | kdCores }} ({{ node.allocatedResources.cpuRequestsFraction | number:
+          '1.2-2' }}%)
         </mat-cell>
       </ng-container>
 
@@ -98,7 +99,8 @@ limitations under the License.
                          i18n>CPU limits (cores)</mat-header-cell>
         <mat-cell *matCellDef="let node"
                   class="kd-col-sm">
-          {{node.allocatedResources.cpuLimits | kdCores}} ({{node.allocatedResources.cpuLimitsFraction | number:"1.2-2"}}%)
+          {{ node.allocatedResources.cpuLimits | kdCores }} ({{ node.allocatedResources.cpuLimitsFraction | number:
+          '1.2-2' }}%)
         </mat-cell>
       </ng-container>
 
@@ -108,7 +110,8 @@ limitations under the License.
                          i18n>Memory requests (bytes)</mat-header-cell>
         <mat-cell *matCellDef="let node"
                   class="kd-col-sm">
-          {{node.allocatedResources.memoryRequests | kdMemory}} ({{node.allocatedResources.memoryRequestsFraction | number:"1.2-2"}}%)
+          {{ node.allocatedResources.memoryRequests | kdMemory }} ({{ node.allocatedResources.memoryRequestsFraction |
+          number: '1.2-2' }}%)
         </mat-cell>
       </ng-container>
 
@@ -118,7 +121,8 @@ limitations under the License.
                          i18n>Memory limits (bytes)</mat-header-cell>
         <mat-cell *matCellDef="let node"
                   class="kd-col-sm">
-          {{node.allocatedResources.memoryLimits | kdMemory}} ({{node.allocatedResources.memoryLimitsFraction | number:"1.2-2"}}%)
+          {{ node.allocatedResources.memoryLimits | kdMemory }} ({{ node.allocatedResources.memoryLimitsFraction |
+          number: '1.2-2' }}%)
         </mat-cell>
       </ng-container>
 
@@ -128,7 +132,7 @@ limitations under the License.
                          i18n>Pods</mat-header-cell>
         <mat-cell *matCellDef="let node"
                   class="kd-col-sm">
-          {{node.allocatedResources.allocatedPods}} ({{node.allocatedResources.podFraction | number:"1.2-2"}}%)
+          {{ node.allocatedResources.allocatedPods }} ({{ node.allocatedResources.podFraction | number: '1.2-2' }}%)
         </mat-cell>
       </ng-container>
 
@@ -155,7 +159,7 @@ limitations under the License.
       </ng-container>
 
       <mat-header-row *matHeaderRowDef="getColumns()"></mat-header-row>
-      <mat-row *matRowDef="let row; columns: getColumns();"></mat-row>
+      <mat-row *matRowDef="let row; columns: getColumns()"></mat-row>
     </mat-table>
 
     <div [hidden]="totalItems <= itemsPerPage">

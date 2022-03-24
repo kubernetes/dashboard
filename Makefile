@@ -6,7 +6,7 @@ ROOT_DIRECTORY := $(shell dirname $(realpath $(firstword $(MAKEFILE_LIST))))
 COVERAGE_DIRECTORY = $(ROOT_DIRECTORY)/coverage
 GO_COVERAGE_FILE = $(ROOT_DIRECTORY)/coverage/go.txt
 AIR_BINARY := $(shell which air)
-CODEGEN_VERSION := v0.23.4
+CODEGEN_VERSION := v0.23.5
 CODEGEN_BIN := $(GOPATH)/pkg/mod/k8s.io/code-generator@$(CODEGEN_VERSION)/generate-groups.sh
 GOLANGCILINT_VERSION := v1.42.1
 GOLANGCILINT_BINARY := $(shell which golangci-lint)
@@ -183,11 +183,11 @@ fix-go: ensure-golangcilint
 
 .PHONY: check-html
 check-html:
-	./aio/scripts/format-html.sh --check
+	npx html-beautify ./src/**/*.html | awk '!/unchanged/'
 
 .PHONY: fix-html
 fix-html:
-	./aio/scripts/format-html.sh
+	npx html-beautify -f=./src/**/*.html | awk '!/unchanged/'
 
 .PHONY: check-scss
 check-scss:

@@ -17,9 +17,7 @@ limitations under the License.
 <h2 mat-dialog-title
     i18n>Scale a resource</h2>
 <mat-dialog-content class="kd-dialog-text">
-  <p i18n>
-    {{data.displayName}} {{data.objectMeta.name}} will be updated to reflect the desired replicas count.
-  </p>
+  <p i18n>{{ data.displayName }} {{ data.objectMeta.name }} will be updated to reflect the desired replicas count.</p>
   <mat-form-field class="kd-margin-right">
     <input [(ngModel)]="desired"
            name="desired"
@@ -29,7 +27,7 @@ limitations under the License.
            type="number"
            min="0"
            required
-           matInput>
+           matInput />
   </mat-form-field>
   <mat-form-field>
     <input [(ngModel)]="actual"
@@ -41,7 +39,7 @@ limitations under the License.
            type="number"
            min="0"
            required
-           matInput>
+           matInput />
   </mat-form-field>
   <div class="kd-equivalent-block kd-muted kd-bg-card-dark"
        fxLayoutAlign=" center">
@@ -50,8 +48,8 @@ limitations under the License.
       <span i18n>This action is equivalent to:</span>
       <code>
         <ng-container>kubectl scale </ng-container>
-        <ng-container *ngIf="data.objectMeta.namespace">-n {{data.objectMeta.namespace}} </ng-container>
-        <ng-container>{{data.typeMeta.kind}} {{data.objectMeta.name}} --replicas={{desired}}</ng-container>
+        <ng-container *ngIf="data.objectMeta.namespace">-n {{ data.objectMeta.namespace }} </ng-container>
+        <ng-container>{{ data.typeMeta.kind }} {{ data.objectMeta.name }} --replicas={{ desired }}</ng-container>
       </code>
     </div>
   </div>
@@ -60,13 +58,9 @@ limitations under the License.
   <button mat-button
           color="primary"
           [mat-dialog-close]="desired"
-          i18n>
-    Scale
-  </button>
+          i18n>Scale</button>
   <button mat-button
           color="primary"
           [mat-dialog-close]="false"
-          i18n>
-    Cancel
-  </button>
+          i18n>Cancel</button>
 </mat-dialog-actions>

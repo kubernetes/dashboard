@@ -67,6 +67,16 @@ extraVolumeMounts: []
 #   name: dashboard-kubeconfig
 #   readOnly: true
 
+## Array of extra K8s manifests to deploy
+##
+extraManifests: []
+# - apiVersion: v1
+#   kind: ConfigMap
+#   metadata:
+#     name: additional-configmap
+#   data:
+#     mykey: myvalue
+
 ## Annotations to be added to kubernetes dashboard pods
 # podAnnotations:
 

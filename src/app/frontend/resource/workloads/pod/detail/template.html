@@ -21,22 +21,21 @@ limitations under the License.
 
 <kd-card [initialized]="isInitialized">
   <div title
-       i18n>Resource information
-  </div>
+       i18n>Resource information</div>
 
   <div description>
     <div class="kd-inline-property"
          *ngIf="pod?.podPhase">
       <span class="kd-muted-light"
             i18n>Status:&nbsp;</span>
-      <span>{{pod.podPhase}}</span>
+      <span>{{ pod.podPhase }}</span>
     </div>
 
     <div class="kd-inline-property"
          *ngIf="pod?.podIP">
       <span class="kd-muted-light"
             i18n>IP:&nbsp;</span>
-      <span>{{pod.podIP}}</span>
+      <span>{{ pod.podIP }}</span>
     </div>
   </div>
 
@@ -45,60 +44,53 @@ limitations under the License.
        fxLayout="row wrap">
     <kd-property *ngIf="pod?.nodeName">
       <div key
-           i18n>Node
-      </div>
+           i18n>Node</div>
       <a value
          [routerLink]="getNodeHref(pod.nodeName)"
-         queryParamsHandling="preserve">{{pod.nodeName}}</a>
+         queryParamsHandling="preserve">{{ pod.nodeName }}</a>
     </kd-property>
 
     <kd-property *ngIf="pod?.podPhase">
       <div key
-           i18n>Status
-      </div>
-      <div value>{{pod?.podPhase}}</div>
+           i18n>Status</div>
+      <div value>{{ pod?.podPhase }}</div>
     </kd-property>
 
     <kd-property *ngIf="pod?.podIP">
       <div key
-           i18n>IP
-      </div>
-      <div value>{{pod.podIP}}</div>
+           i18n>IP</div>
+      <div value>{{ pod.podIP }}</div>
     </kd-property>
 
     <kd-property *ngIf="pod?.qosClass">
       <div key
-           i18n>QoS Class
-      </div>
-      <div value>{{pod.qosClass}}</div>
+           i18n>QoS Class</div>
+      <div value>{{ pod.qosClass }}</div>
     </kd-property>
 
     <kd-property *ngIf="pod?.restartCount !== undefined">
       <div key
-           i18n>Restarts
-      </div>
-      <div value>{{pod.restartCount}}</div>
+           i18n>Restarts</div>
+      <div value>{{ pod.restartCount }}</div>
     </kd-property>
 
     <kd-property *ngIf="pod?.serviceAccountName">
       <div key
-           i18n>Service Account
-      </div>
+           i18n>Service Account</div>
       <div value>
         <a [routerLink]="getObjectHref('serviceaccount', pod.serviceAccountName)"
-           queryParamsHandling="preserve">{{pod.serviceAccountName}}</a>
+           queryParamsHandling="preserve">{{ pod.serviceAccountName }}</a>
       </div>
     </kd-property>
 
     <kd-property *ngIf="pod?.imagePullSecrets"
                  fxFlex="100">
       <div key
-           i18n>Image Pull Secrets
-      </div>
+           i18n>Image Pull Secrets</div>
       <div value
            *ngFor="let imagePullSecret of pod?.imagePullSecrets">
         <a [routerLink]="getObjectHref('secret', imagePullSecret.name)"
-           queryParamsHandling="preserve">{{imagePullSecret.name}}</a>
+           queryParamsHandling="preserve">{{ imagePullSecret.name }}</a>
       </div>
     </kd-property>
 
@@ -107,12 +99,10 @@ limitations under the License.
          fxLayout="column">
       <div fxFlex
            class="kd-muted section-header"
-           i18n>Security Context
-      </div>
+           i18n>Security Context</div>
 
       <kd-security-context [securityContext]="pod?.securityContext"
-                           [initialized]="true">
-      </kd-security-context>
+                           [initialized]="true"> </kd-security-context>
     </div>
   </div>
 </kd-card>
@@ -131,18 +121,16 @@ limitations under the License.
 
 <div *ngIf="pod?.containers?.length"
      class="kd-card-group-header kd-muted"
-     i18n>Containers
-</div>
-<kd-container-card *ngFor="let container of pod?.containers;trackBy:getContainerName"
+     i18n>Containers</div>
+<kd-container-card *ngFor="let container of pod?.containers; trackBy: getContainerName"
                    [container]="container"
                    [namespace]="pod.objectMeta.namespace"
                    [initialized]="isInitialized"></kd-container-card>
 
 <div *ngIf="pod?.initContainers?.length"
      class="kd-card-group-header kd-muted"
-     i18n>Init containers
-</div>
-<kd-container-card *ngFor="let container of pod?.initContainers;trackBy:getContainerName"
+     i18n>Init containers</div>
+<kd-container-card *ngFor="let container of pod?.initContainers; trackBy: getContainerName"
                    [container]="container"
                    [namespace]="pod.objectMeta.namespace"
                    [initialized]="isInitialized"></kd-container-card>

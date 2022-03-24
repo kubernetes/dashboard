@@ -20,7 +20,7 @@ limitations under the License.
        fxLayout="row"
        i18n>Ingresses</div>
   <div description><span class="kd-muted-light"
-          i18n>Items:&nbsp;</span>{{totalItems}}</div>
+          i18n>Items:&nbsp;</span>{{ totalItems }}</div>
   <div actions>
     <kd-card-list-filter></kd-card-list-filter>
   </div>
@@ -46,7 +46,7 @@ limitations under the License.
                   class="kd-col-gt">
           <a [routerLink]="getDetailsHref(ingress.objectMeta.name, ingress.objectMeta.namespace)"
              queryParamsHandling="preserve">
-            {{ingress.objectMeta.name}}
+            {{ ingress.objectMeta.name }}
           </a>
         </mat-cell>
       </ng-container>
@@ -57,7 +57,7 @@ limitations under the License.
                          class="kd-col-md"
                          i18n>Namespace</mat-header-cell>
         <mat-cell *matCellDef="let ingress"
-                  class="kd-col-md">{{ingress.objectMeta.namespace}}</mat-cell>
+                  class="kd-col-md">{{ ingress.objectMeta.namespace }}</mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="labels">
@@ -74,7 +74,8 @@ limitations under the License.
         <mat-header-cell *matHeaderCellDef
                          class="kd-col-md"
                          i18n>
-          Endpoints <mat-icon class="external-link-icon kd-clickable"
+          Endpoints
+          <mat-icon class="external-link-icon kd-clickable"
                     i18n-matTooltip
                     matTooltip="Endpoint links are external links that will be open in a new tab.">open_in_new</mat-icon>
         </mat-header-cell>
@@ -90,7 +91,8 @@ limitations under the License.
                          disableClear="true"
                          class="kd-col-gt"
                          i18n>
-          Hosts <mat-icon class="external-link-icon kd-clickable"
+          Hosts
+          <mat-icon class="external-link-icon kd-clickable"
                     i18n-matTooltip
                     matTooltip="Host links are external links that will be open in a new tab.">open_in_new</mat-icon>
         </mat-header-cell>
@@ -98,10 +100,8 @@ limitations under the License.
                   class="kd-col-gt">
           <div *ngFor="let host of ingress?.hosts"
                class="kd-ellipsised">
-            <a href="https://{{host}}"
-               target="_blank">
-              {{host}}
-            </a>
+            <a href="https://{{ host }}"
+               target="_blank"> {{ host }} </a>
           </div>
 
           <div *ngIf="ingress?.hosts?.length === 0">-</div>
@@ -131,7 +131,7 @@ limitations under the License.
       </ng-container>
 
       <mat-header-row *matHeaderRowDef="getColumns()"></mat-header-row>
-      <mat-row *matRowDef="let row; columns: getColumns();"></mat-row>
+      <mat-row *matRowDef="let row; columns: getColumns()"></mat-row>
     </mat-table>
 
     <div [hidden]="totalItems <= itemsPerPage">

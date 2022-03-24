@@ -29,17 +29,13 @@ limitations under the License.
                       i18n-label
                       *ngIf="logSources?.containerNames?.length > 0">
           <mat-option *ngFor="let item of logSources?.containerNames"
-                      [value]="item">
-            {{item}}
-          </mat-option>
+                      [value]="item"> {{ item }} </mat-option>
         </mat-optgroup>
         <mat-optgroup label="Init Containers"
                       i18n-label
                       *ngIf="logSources?.initContainerNames?.length > 0">
           <mat-option *ngFor="let item of logSources?.initContainerNames"
-                      [value]="item">
-            {{item}}
-          </mat-option>
+                      [value]="item"> {{ item }} </mat-option>
         </mat-optgroup>
       </mat-select>
     </mat-form-field>
@@ -49,9 +45,7 @@ limitations under the License.
       <mat-select [(ngModel)]="pod"
                   (selectionChange)="loadNewest()">
         <mat-option *ngFor="let item of logSources?.podNames"
-                    [value]="item">
-          {{item}}
-        </mat-option>
+                    [value]="item"> {{ item }} </mat-option>
       </mat-select>
     </mat-form-field>
 
@@ -75,7 +69,10 @@ limitations under the License.
        #logViewContainer
        class="kd-log-line-container"
        (scroll)="onLogsScroll()"
-       [ngClass]="{'kd-logs-text-color-invert': logService?.getInverted(), 'kd-logs-text-color': !logService?.getInverted()}">
+       [ngClass]="{
+      'kd-logs-text-color-invert': logService?.getInverted(),
+      'kd-logs-text-color': !logService?.getInverted()
+    }">
     <div kdLoadingSpinner
          [isLoading]="isLoading"></div>
     <div fxFlex
@@ -83,7 +80,7 @@ limitations under the License.
          fxLayoutGap="2px">
       <div *ngFor="let item of logsSet"
            [ngClass]="{'kd-logs-element-compact': logService.getCompact(), 'kd-logs-element': !logService.getCompact()}">
-        <span>{{item | kdStripAnsi | kdUntrim}}</span>
+        <span>{{ item | kdStripAnsi | kdUntrim }}</span>
       </div>
     </div>
   </div>
@@ -97,11 +94,11 @@ limitations under the License.
          i18n>
       Logs from
       <kd-date [date]="podLogs?.info.fromDate"
-               format="short">
-      </kd-date> to
+               format="short"> </kd-date>
+      to
       <kd-date [date]="podLogs?.info.toDate"
-               format="short">
-      </kd-date> UTC
+               format="short"> </kd-date>
+      UTC
     </div>
 
     <div fxFlex></div>
@@ -130,27 +127,27 @@ limitations under the License.
 <mat-menu #kdMenu="matMenu">
   <button mat-menu-item
           (click)="onTextColorChange()">
-    <mat-icon>{{logService?.getInverted() ? 'check_box' : 'check_box_outline_blank'}}</mat-icon>
+    <mat-icon>{{ logService?.getInverted() ? 'check_box' : 'check_box_outline_blank' }}</mat-icon>
     <span i18n>Invert colors</span>
   </button>
   <button mat-menu-item
           (click)="onFontSizeChange()">
-    <mat-icon>{{logService.getCompact() ? 'check_box' : 'check_box_outline_blank'}}</mat-icon>
+    <mat-icon>{{ logService.getCompact() ? 'check_box' : 'check_box_outline_blank' }}</mat-icon>
     <span i18n>Reduce font size</span>
   </button>
   <button mat-menu-item
           (click)="onShowTimestamp()">
-    <mat-icon>{{logService.getShowTimestamp() ? 'check_box' : 'check_box_outline_blank'}}</mat-icon>
+    <mat-icon>{{ logService.getShowTimestamp() ? 'check_box' : 'check_box_outline_blank' }}</mat-icon>
     <span i18n>Show timestamps</span>
   </button>
   <button mat-menu-item
           (click)="toggleLogAutoRefresh()">
-    <mat-icon>{{logService.getAutoRefresh() ? 'check_box' : 'check_box_outline_blank'}}</mat-icon>
-    <span i18n>Auto-refresh (every {{refreshInterval}} s.)</span>
+    <mat-icon>{{ logService.getAutoRefresh() ? 'check_box' : 'check_box_outline_blank' }}</mat-icon>
+    <span i18n>Auto-refresh (every {{ refreshInterval }} s.)</span>
   </button>
   <button mat-menu-item
           (click)="onPreviousChange()">
-    <mat-icon>{{logService.getPrevious() ? 'check_box' : 'check_box_outline_blank'}}</mat-icon>
+    <mat-icon>{{ logService.getPrevious() ? 'check_box' : 'check_box_outline_blank' }}</mat-icon>
     <span i18n>Show previous logs</span>
   </button>
 </mat-menu>

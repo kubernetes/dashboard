@@ -28,24 +28,24 @@ limitations under the License.
       <div key
            i18n>Version</div>
       <div id="resource-version"
-           value>{{crd?.version}}</div>
+           value>{{ crd?.version }}</div>
     </kd-property>
     <kd-property>
       <div key
            i18n>Scope</div>
       <div id="resource-scope"
-           value>{{crd?.scope}}</div>
+           value>{{ crd?.scope }}</div>
     </kd-property>
     <kd-property>
       <div key
            i18n>Group</div>
       <div id="resource-group"
-           value>{{crd?.group}}</div>
+           value>{{ crd?.group }}</div>
     </kd-property>
     <kd-property *ngIf="crd.subresources.length > 0">
       <div key
            i18n>Subresources</div>
-      <div value>{{crd.subresources.join(", ")}}</div>
+      <div value>{{ crd.subresources.join(', ') }}</div>
     </kd-property>
   </div>
 </kd-card>
@@ -60,32 +60,32 @@ limitations under the License.
     <kd-property>
       <div key
            i18n>Plural</div>
-      <div value>{{crd?.names.plural}}</div>
+      <div value>{{ crd?.names.plural }}</div>
     </kd-property>
     <kd-property *ngIf="crd?.names.singular">
       <div key
            i18n>Singular</div>
-      <div value>{{crd?.names.singular}}</div>
+      <div value>{{ crd?.names.singular }}</div>
     </kd-property>
     <kd-property>
       <div key
            i18n>Kind</div>
-      <div value>{{crd?.names.kind}}</div>
+      <div value>{{ crd?.names.kind }}</div>
     </kd-property>
     <kd-property>
       <div key
            i18n>List Kind</div>
-      <div value>{{crd?.names.listKind}}</div>
+      <div value>{{ crd?.names.listKind }}</div>
     </kd-property>
     <kd-property *ngIf="crd?.names.shortNames">
       <div key
            i18n>Short Names</div>
-      <div value>{{crd?.names.shortNames.join(", ")}}</div>
+      <div value>{{ crd?.names.shortNames.join(', ') }}</div>
     </kd-property>
     <kd-property *ngIf="crd?.names.categories">
       <div key
            i18n>Categories</div>
-      <div value>{{crd?.names.categories.join(", ")}}</div>
+      <div value>{{ crd?.names.categories.join(', ') }}</div>
     </kd-property>
   </div>
 </kd-card>

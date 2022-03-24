@@ -26,21 +26,21 @@ limitations under the License.
          *ngIf="cronJob?.schedule">
       <span class="kd-muted-light"
             i18n>Schedule:&nbsp;</span>
-      <span>{{cronJob.schedule}}</span>
+      <span>{{ cronJob.schedule }}</span>
     </div>
 
     <div class="kd-inline-property"
          *ngIf="cronJob?.active !== null">
       <span class="kd-muted-light"
             i18n>Active Jobs:&nbsp;</span>
-      <span>{{cronJob.active}}</span>
+      <span>{{ cronJob.active }}</span>
     </div>
 
     <div class="kd-inline-property"
          *ngIf="cronJob?.suspend !== null">
       <span class="kd-muted-light"
             i18n>Suspend:&nbsp;</span>
-      <span>{{cronJob.suspend}}</span>
+      <span>{{ cronJob.suspend }}</span>
     </div>
   </div>
 
@@ -50,37 +50,37 @@ limitations under the License.
     <kd-property *ngIf="cronJob?.schedule">
       <div key
            i18n>Schedule</div>
-      <div value>{{cronJob.schedule}}</div>
+      <div value>{{ cronJob.schedule }}</div>
     </kd-property>
 
     <kd-property *ngIf="cronJob?.active !== null">
       <div key
            i18n>Active Jobs</div>
-      <div value>{{cronJob.active}}</div>
+      <div value>{{ cronJob.active }}</div>
     </kd-property>
 
     <kd-property *ngIf="cronJob?.suspend !== null">
       <div key
            i18n>Suspend</div>
-      <div value>{{cronJob.suspend}}</div>
+      <div value>{{ cronJob.suspend }}</div>
     </kd-property>
 
     <kd-property *ngIf="cronJob?.lastSchedule">
       <div key
            i18n>Last schedule</div>
-      <div value>{{cronJob.lastSchedule}}</div>
+      <div value>{{ cronJob.lastSchedule }}</div>
     </kd-property>
 
     <kd-property *ngIf="cronJob?.concurrencyPolicy">
       <div key
            i18n>Concurrency policy</div>
-      <div value>{{cronJob.concurrencyPolicy}}</div>
+      <div value>{{ cronJob.concurrencyPolicy }}</div>
     </kd-property>
 
     <kd-property *ngIf="cronJob?.startingDeadlineSeconds !== null">
       <div key
            i18n>Starting deadline seconds</div>
-      <div value>{{cronJob.startingDeadlineSeconds}}</div>
+      <div value>{{ cronJob.startingDeadlineSeconds }}</div>
     </kd-property>
   </div>
 </kd-card>

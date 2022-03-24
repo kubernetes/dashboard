@@ -28,10 +28,9 @@ limitations under the License.
     <mat-icon *ngIf="enableEdit"
               class="kd-hidden-property-icon"
               [ngClass]="mode == HiddenPropertyMode.Edit ? 'kd-edit-active' : ''"
-              (click)="toggleEdit(); $event.stopPropagation();">edit</mat-icon>
+              (click)="toggleEdit(); $event.stopPropagation()">edit</mat-icon>
   </div>
   <div value>
-
     <div [hidden]="mode != HiddenPropertyMode.Hidden">
       <ng-content select="[whenHidden]"></ng-content>
     </div>
@@ -43,6 +42,5 @@ limitations under the License.
     <div [hidden]="mode != HiddenPropertyMode.Edit">
       <ng-content select="[whenEdit]"></ng-content>
     </div>
-
   </div>
 </kd-property>

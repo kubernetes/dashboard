@@ -26,10 +26,6 @@ CACHE_DIR="${ROOT_DIR}/.cached_tools"
 
 # Binaries.
 NG_BIN="${ROOT_DIR}/node_modules/.bin/ng"
-BEAUTIFY_BIN="${ROOT_DIR}/node_modules/.bin/html-beautify"
-BEAUTIFY_OPTS="--end-with-newline \
-               --indent-size 2 \
-               --wrap-attributes force-aligned"
 
 # Global constants.
 ARCH=$(uname | awk '{print tolower($0)}')
@@ -40,7 +36,7 @@ HEAPSTER_PORT=8082
 KIND_VERSION="v0.11.1"
 K8S_VERSION="v1.21.1"
 KIND_BIN=${CACHE_DIR}/kind-${KIND_VERSION}
-CODEGEN_VERSION="v0.23.4"
+CODEGEN_VERSION="v0.23.5"
 CODEGEN_BIN=${GOPATH}/pkg/mod/k8s.io/code-generator@${CODEGEN_VERSION}/generate-groups.sh
 
 # Setup logger.

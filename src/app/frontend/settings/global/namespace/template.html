@@ -27,11 +27,11 @@ limitations under the License.
              placeholder="Namespace"
              type="text"
              [matAutocomplete]="auto"
-             matInput>
+             matInput />
       <mat-autocomplete #auto="matAutocomplete">
         <mat-option *ngFor="let namespace of namespaces | kdFilterBy: namespaceInput.value"
                     [value]="namespace">
-          {{namespace}}
+          {{ namespace }}
         </mat-option>
       </mat-autocomplete>
     </mat-form-field>
@@ -48,12 +48,12 @@ limitations under the License.
                        fxFlex="80"
                        fxLayoutAlign=" center"
                        class="kd-namespace-chip-list">
-          <mat-chip *ngFor="let namespace of form.get(Controls.FallbackList).value | slice:0:visibleNamespaces"
+          <mat-chip *ngFor="let namespace of form.get(Controls.FallbackList).value | slice: 0:visibleNamespaces"
                     style="max-width: 100px; text-overflow: ellipsis; white-space: nowrap; overflow: hidden; display: block"
                     [matTooltip]="namespace"
                     [selectable]="false"
                     [removable]="false">
-            {{namespace}}
+            {{ namespace }}
           </mat-chip>
           <mat-chip *ngIf="form.get(Controls.FallbackList).value.length === 0"
                     [disabled]="true"
@@ -61,7 +61,7 @@ limitations under the License.
           <mat-chip *ngIf="invisibleCount > 0"
                     [disabled]="true"
                     fxFlex
-                    fxLayoutAlign=" center">+ {{invisibleCount}}</mat-chip>
+                    fxLayoutAlign=" center">+ {{ invisibleCount }}</mat-chip>
         </mat-chip-list>
         <div fxFlex="20"
              fxLayoutAlign="end">
