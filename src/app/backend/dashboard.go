@@ -68,7 +68,7 @@ var (
 	argAPILogLevel               = pflag.String("api-log-level", "INFO", "level of API request logging, should be one of 'NONE', 'INFO' or 'DEBUG'")
 	argDisableSettingsAuthorizer = pflag.Bool("disable-settings-authorizer", false, "disables settings page user authorizer so anyone can access settings page")
 	argNamespace                 = pflag.String("namespace", getEnv("POD_NAMESPACE", "kube-system"), "if non-default namespace is used encryption key will be created in the specified namespace")
-	argSecureDomains             = pflag.StringSlice("secure-domains", []string{"localhost", "127.0.0.1"}, "Set domains that allowed to login within insecure HTTP, usefull for local development server")
+	argSecureDomains             = pflag.StringSlice("secure-domains", []string{"localhost", "127.0.0.1"}, "Set domains that allowed to login within insecure HTTP, useful for local development server")
 	localeConfig                 = pflag.String("locale-config", "./locale_conf.json", "path to file containing the locale configuration")
 )
 
