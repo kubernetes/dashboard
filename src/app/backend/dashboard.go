@@ -68,6 +68,7 @@ var (
 	argAPILogLevel               = pflag.String("api-log-level", "INFO", "level of API request logging, should be one of 'NONE', 'INFO' or 'DEBUG'")
 	argDisableSettingsAuthorizer = pflag.Bool("disable-settings-authorizer", false, "disables settings page user authorizer so anyone can access settings page")
 	argNamespace                 = pflag.String("namespace", getEnv("POD_NAMESPACE", "kube-system"), "if non-default namespace is used encryption key will be created in the specified namespace")
+	argSecureDomains             = pflag.StringSlice("secure-domains", []string{"localhost", "127.0.0.1"}, "Set domains that allowed to login within insecure HTTP, usefull for local development server")
 	localeConfig                 = pflag.String("locale-config", "./locale_conf.json", "path to file containing the locale configuration")
 )
 
@@ -215,7 +216,10 @@ func initAuthManager(clientManager clientapi.ClientManager) authApi.AuthManager 
 	// UI logic dictates this should be the inverse of the cli option
 	authenticationSkippable := args.Holder.GetEnableSkipLogin()
 
-	return auth.NewAuthManager(clientManager, tokenManager, authModes, authenticationSkippable)
+	// List of domain that allowed to login with HTPP
+	secureDomains := args.Holder.GetSecureDomains()
+
+	return auth.NewAuthManager(clientManager, tokenManager, authModes, authenticationSkippable, secureDomains)
 }
 
 func initArgHolder() {
@@ -243,6 +247,7 @@ func initArgHolder() {
 	builder.SetDisableSettingsAuthorizer(*argDisableSettingsAuthorizer)
 	builder.SetEnableSkipLogin(*argEnableSkip)
 	builder.SetNamespace(*argNamespace)
+	builder.SetSecureDomains(*argSecureDomains)
 	builder.SetLocaleConfig(*localeConfig)
 }
 

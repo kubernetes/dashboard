@@ -89,6 +89,8 @@ type AuthManager interface {
 	AuthenticationModes() []AuthenticationMode
 	// AuthenticationSkippable tells if the Skip button should be enabled or not
 	AuthenticationSkippable() bool
+	// SecureDomains returns array of domain that allowed to login.
+	SecureDomains() []string
 }
 
 // TokenManager is responsible for generating and decrypting tokens used for authorization. Authorization is handled
@@ -155,4 +157,9 @@ type LoginModesResponse struct {
 // Note that this only hides the button, it doesn't disable unauthenticated access.
 type LoginSkippableResponse struct {
 	Skippable bool `json:"skippable"`
+}
+
+// SecureDomainsResponse contains list of domain that allowed to login with insecure HTTP
+type SecureDomainsResponse struct {
+	SecureDomains []string `json:"secureDomains"`
 }

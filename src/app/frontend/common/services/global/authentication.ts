@@ -20,7 +20,7 @@ import {CookieService} from 'ngx-cookie-service';
 import {of} from 'rxjs';
 import {Observable} from 'rxjs';
 import {switchMap, take} from 'rxjs/operators';
-import {AuthResponse, CsrfToken, LoginSpec, LoginStatus} from 'typings/root.api';
+import {AuthResponse, CsrfToken, LoginSpec, LoginStatus, SecureDomainsResponse} from 'typings/root.api';
 import {CONFIG_DI_TOKEN} from '../../../index.config';
 
 import {K8SError} from '../../errors/errors';
@@ -30,6 +30,7 @@ import {KdStateService} from './state';
 
 @Injectable()
 export class AuthService {
+  private secureDomains_: string[]
   constructor(
     private readonly cookies_: CookieService,
     private readonly router_: Router,
@@ -47,6 +48,9 @@ export class AuthService {
         this.refreshToken();
       }
     });
+    this.stateService_.onBefore.pipe(switchMap(() => this.getSecureDomains())).subscribe( secureDomains => {
+      this.secureDomains_ = secureDomains.secureDomains
+    })
   }
 
   private setTokenCookie_(token: string): void {
@@ -63,6 +67,11 @@ export class AuthService {
       this.cookies_.set(this.config_.authTokenCookieName, token, null, null, location.hostname, false, 'Strict');
     }
   }
+  
+  /** Get secure domain list from server. */
+  getSecureDomains(): Observable<SecureDomainsResponse> {
+    return this.http_.get<SecureDomainsResponse>(`api/v1/securedomains`);
+  }
 
   private setUsernameCookie_(name: string): void {
     this.cookies_.set(this.config_.usernameCookieName, name);
@@ -73,7 +82,7 @@ export class AuthService {
   }
 
   private isCurrentDomainSecure_(): boolean {
-    return ['localhost', '127.0.0.1'].indexOf(location.hostname) > -1;
+    return this.secureDomains_.indexOf(location.hostname) > -1;
   }
 
   private isCurrentProtocolSecure_(): boolean {

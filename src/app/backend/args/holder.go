@@ -47,6 +47,7 @@ type holder struct {
 	namespace            string
 
 	authenticationMode []string
+	secureDomains      []string
 
 	autoGenerateCertificates  bool
 	enableInsecureLogin       bool
@@ -153,6 +154,11 @@ func (self *holder) GetAPILogLevel() string {
 // GetAuthenticationMode 'authentication-mode' argument of Dashboard binary.
 func (self *holder) GetAuthenticationMode() []string {
 	return self.authenticationMode
+}
+
+// GetSecureDomains 'secure-domains' argument of Dashboard binary.
+func (self *holder) GetSecureDomains() []string {
+	return self.secureDomains
 }
 
 // GetAutoGenerateCertificates 'auto-generate-certificates' argument of Dashboard binary.

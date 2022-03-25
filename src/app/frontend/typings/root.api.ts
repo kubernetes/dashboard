@@ -1244,6 +1244,10 @@ export interface LoginSkippableResponse {
   skippable: boolean;
 }
 
+export interface SecureDomainsResponse {
+  secureDomains: string[];
+}
+
 export interface SystemBanner {
   message: string;
   severity: string;

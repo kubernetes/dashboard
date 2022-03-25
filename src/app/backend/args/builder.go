@@ -162,6 +162,12 @@ func (self *holderBuilder) SetNamespace(namespace string) *holderBuilder {
 	return self
 }
 
+// SetSecureDomains 'secure-domains' argument of Dashboard binary.
+func (self *holderBuilder) SetSecureDomains(secureDomains []string) *holderBuilder {
+	self.holder.secureDomains = secureDomains
+	return self
+}
+
 // SetLocaleConfig 'locale-config' argument of Dashboard binary.
 func (self *holderBuilder) SetLocaleConfig(localeConfig string) *holderBuilder {
 	self.holder.localeConfig = localeConfig

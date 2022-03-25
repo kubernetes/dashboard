@@ -54,6 +54,10 @@ func (self AuthHandler) Install(ws *restful.WebService) {
 		ws.GET("/login/skippable").
 			To(self.handleLoginSkippable).
 			Writes(authApi.LoginSkippableResponse{}))
+	ws.Route(
+		ws.GET("/securedomains").
+			To(self.handleSecureDomains).
+			Writes([]string{}))
 }
 
 func (self AuthHandler) handleLogin(request *restful.Request, response *restful.Response) {
@@ -105,6 +109,10 @@ func (self *AuthHandler) handleLoginModes(request *restful.Request, response *re
 
 func (self *AuthHandler) handleLoginSkippable(request *restful.Request, response *restful.Response) {
 	response.WriteHeaderAndEntity(http.StatusOK, authApi.LoginSkippableResponse{Skippable: self.manager.AuthenticationSkippable()})
+}
+
+func (self *AuthHandler) handleSecureDomains(request *restful.Request, response *restful.Response) {
+	response.WriteHeaderAndEntity(http.StatusOK, authApi.SecureDomainsResponse{SecureDomains: self.manager.SecureDomains()})
 }
 
 // NewAuthHandler created AuthHandler instance.

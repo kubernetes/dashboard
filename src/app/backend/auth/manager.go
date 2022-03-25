@@ -28,6 +28,7 @@ type authManager struct {
 	clientManager           clientapi.ClientManager
 	authenticationModes     authApi.AuthenticationModes
 	authenticationSkippable bool
+	secureDomains           []string
 }
 
 // Login implements auth manager. See AuthManager interface for more information.
@@ -65,6 +66,10 @@ func (self authManager) AuthenticationModes() []authApi.AuthenticationMode {
 	return self.authenticationModes.Array()
 }
 
+func (self authManager) SecureDomains() []string {
+	return self.secureDomains
+}
+
 func (self authManager) AuthenticationSkippable() bool {
 	return self.authenticationSkippable
 }
@@ -95,11 +100,12 @@ func (self authManager) healthCheck(authInfo api.AuthInfo) (string, error) {
 
 // NewAuthManager creates auth manager.
 func NewAuthManager(clientManager clientapi.ClientManager, tokenManager authApi.TokenManager,
-	authenticationModes authApi.AuthenticationModes, authenticationSkippable bool) authApi.AuthManager {
+	authenticationModes authApi.AuthenticationModes, authenticationSkippable bool, secureDomains []string) authApi.AuthManager {
 	return &authManager{
 		tokenManager:            tokenManager,
 		clientManager:           clientManager,
 		authenticationModes:     authenticationModes,
 		authenticationSkippable: authenticationSkippable,
+		secureDomains:           secureDomains,
 	}
 }
