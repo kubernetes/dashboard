@@ -31,7 +31,7 @@ jobs:
           fetch-depth: "0"
 
       - name: Validate schema
-        uses: wiremind/helm-kubeval-action@v1.2.0
+        uses: wiremind/helm-kubeval-action@v1.2.1
         with:
           path: aio/deploy/helm-chart
           config: aio/deploy/helm-chart/config_repos
