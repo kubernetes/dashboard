@@ -16,23 +16,18 @@
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE}")/../.." && pwd -P)"
 source "${ROOT_DIR}/aio/scripts/conf.sh"
 
-CHECK_FAILED=false
+CODE=0
 FILES=($(find ${SRC_DIR} -type f -name '*.html'))
 for FILE in "${FILES[@]}"; do
   CONTENT=$(cat ${FILE})
   FORMATTED_CONTENT=$(npx html-beautify -f "${FILE}")
   OK=$(diff <(echo "${FORMATTED_CONTENT}") <(echo "${CONTENT}"))
   if [[ ! -z "${OK}" ]]; then
-    CHECK_FAILED=true
-    echo "${FILE} - error"
+    CODE=1
+    saye "$FILE - error"
   else
-    echo "${FILE} - ok"
+    say "$FILE - ok"
   fi
 done
 
-if [ "${CHECK_FAILED}" = true ]; then
-  saye "HTML files are not formatted"
-  exit 1
-fi
-
-exit 0
+exit $CODE
