@@ -109,7 +109,7 @@
     "@types/jasminewd2": "2.0.10",
     "@types/jest": "27.4.1",
     "@types/js-yaml": "4.0.5",
-    "@types/lodash": "4.14.180",
+    "@types/lodash": "4.14.181",
     "@types/node": "17.0.23",
     "@typescript-eslint/eslint-plugin": "5.17.0",
     "@typescript-eslint/parser": "5.17.0",
