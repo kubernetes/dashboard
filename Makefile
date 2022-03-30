@@ -183,11 +183,11 @@ fix-go: ensure-golangcilint
 
 .PHONY: check-html
 check-html:
-	npx html-beautify ./src/**/*.html | awk '!/unchanged/'
+	./aio/scripts/check-html.sh
 
 .PHONY: fix-html
 fix-html:
-	npx html-beautify -f=./src/**/*.html | awk '!/unchanged/'
+	npx html-beautify -f=./src/**/*.html
 
 .PHONY: check-scss
 check-scss:
