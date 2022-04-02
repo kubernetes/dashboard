@@ -74,10 +74,6 @@ const routes: Routes = [
         path: 'rolebinding',
         loadChildren: () => import('resource/cluster/rolebinding/module').then(m => m.RoleBingingModule),
       },
-      {
-        path: 'priorityclass',
-        loadChildren: () => import('resource/cluster/priorityclass/module').then(m => m.PriorityClassModule),
-      },
 
       // Overview
       {
@@ -197,6 +193,10 @@ const routes: Routes = [
         path: 'search',
         loadChildren: () => import('search/module').then(m => m.SearchModule),
         runGuardsAndResolvers: 'always',
+      },
+      {
+        path: 'priorityclass',
+        loadChildren: () => import('resource/cluster/priorityclass/module').then(m => m.PriorityClassModule),
       },
     ],
   },

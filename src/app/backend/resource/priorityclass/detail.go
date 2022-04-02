@@ -23,9 +23,8 @@ import (
 	k8sClient "k8s.io/client-go/kubernetes"
 )
 
-// PriorityClassDetail contains Cron Job details.
+// PriorityClassDetail for Priority Class separate view.
 type PriorityClassDetail struct {
-	// Extends list item structure.
 	PriorityClass `json:",inline"`
 
 	Value int32 `json:"value"`
@@ -40,7 +39,16 @@ type PriorityClassDetail struct {
 	Errors []error `json:"errors"`
 }
 
-// GetPriorityClassDetail gets Cluster Role details.
+// PriorityClassBrief for Pod view.
+type PriorityClassBrief struct {
+	Name string `json:"name"`
+
+	Value int32 `json:"value"`
+
+	PreemptionPolicy api.PreemptionPolicy `json:"preemptionPolicy"`
+}
+
+// GetPriorityClassDetail gets Priority Class details.
 func GetPriorityClassDetail(client k8sClient.Interface, name string) (*PriorityClassDetail, error) {
 	rawObject, err := client.SchedulingV1().PriorityClasses().Get(context.TODO(), name, metaV1.GetOptions{})
 	if err != nil {
@@ -59,5 +67,24 @@ func toPriorityClassDetail(pc scheduling.PriorityClass) PriorityClassDetail {
 		GlobalDefault:    *&pc.GlobalDefault,
 		Description:      *&pc.Description,
 		Errors:           []error{},
+	}
+}
+
+// GetPriorityClassDetail gets brief info of Priority Class.
+func GetPriorityClassBrief(client k8sClient.Interface, name string) (*PriorityClassBrief, error) {
+	rawObject, err := client.SchedulingV1().PriorityClasses().Get(context.TODO(), name, metaV1.GetOptions{})
+	if err != nil {
+		return nil, err
+	}
+
+	pc := toPriorityClassBrief(*rawObject, name)
+	return &pc, nil
+}
+
+func toPriorityClassBrief(pc scheduling.PriorityClass, name string) PriorityClassBrief {
+	return PriorityClassBrief{
+		Name:             name,
+		PreemptionPolicy: *pc.PreemptionPolicy,
+		Value:            *&pc.Value,
 	}
 }

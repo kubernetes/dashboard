@@ -37,6 +37,7 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/controller"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/persistentvolumeclaim"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/priorityclass"
 )
 
 // PodDetail is a presentation layer view of Kubernetes Pod resource.
@@ -58,6 +59,7 @@ type PodDetail struct {
 	EventList                 common.EventList                                `json:"eventList"`
 	PersistentvolumeclaimList persistentvolumeclaim.PersistentVolumeClaimList `json:"persistentVolumeClaimList"`
 	SecurityContext           *v1.PodSecurityContext                          `json:"securityContext"`
+	PriorityClass             *priorityclass.PriorityClassBrief               `json:"priorityClass"`
 
 	// List of non-critical errors, that occurred during resource retrieval.
 	Errors []error `json:"errors"`
@@ -178,8 +180,11 @@ func GetPodDetail(client kubernetes.Interface, metricClient metricapi.MetricClie
 		return nil, criticalError
 	}
 
+	priorityClass := getPriorityClassBrief(client, pod.Spec.PriorityClassName)
+
 	podDetail := toPodDetail(pod, metrics, configMapList, secretList, podController,
-		eventList, persistentVolumeClaimList, nonCriticalErrors)
+		eventList, persistentVolumeClaimList, priorityClass, nonCriticalErrors)
+
 	return &podDetail, nil
 }
 
@@ -277,7 +282,7 @@ func extractContainerInfo(containerList []v1.Container, pod *v1.Pod, configMaps 
 
 func toPodDetail(pod *v1.Pod, metrics []metricapi.Metric, configMaps *v1.ConfigMapList, secrets *v1.SecretList,
 	controller *controller.ResourceOwner, events *common.EventList,
-	persistentVolumeClaimList *persistentvolumeclaim.PersistentVolumeClaimList, nonCriticalErrors []error) PodDetail {
+	persistentVolumeClaimList *persistentvolumeclaim.PersistentVolumeClaimList, priorityClass *priorityclass.PriorityClassBrief, nonCriticalErrors []error) PodDetail {
 	return PodDetail{
 		ObjectMeta:                api.NewObjectMeta(pod.ObjectMeta),
 		TypeMeta:                  api.NewTypeMeta(api.ResourceKindPod),
@@ -296,6 +301,7 @@ func toPodDetail(pod *v1.Pod, metrics []metricapi.Metric, configMaps *v1.ConfigM
 		EventList:                 *events,
 		PersistentvolumeclaimList: *persistentVolumeClaimList,
 		SecurityContext:           pod.Spec.SecurityContext,
+		PriorityClass:             priorityClass,
 		Errors:                    nonCriticalErrors,
 	}
 }
@@ -443,4 +449,13 @@ func extractContainerStatus(pod *v1.Pod, container *v1.Container) *v1.ContainerS
 	}
 
 	return nil
+}
+
+func getPriorityClassBrief(client kubernetes.Interface, priorityClassName string) *priorityclass.PriorityClassBrief {
+	pc, err := priorityclass.GetPriorityClassBrief(client, priorityClassName)
+	if err != nil {
+		log.Println(err)
+		return nil
+	}
+	return pc
 }

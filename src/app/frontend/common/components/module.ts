@@ -63,6 +63,8 @@ import {NamespaceSelectorComponent} from './namespace/component';
 import {ObjectMetaComponent} from './objectmeta/component';
 import {PodStatusCardComponent} from './podstatus/component';
 import {PolicyRuleListComponent} from './policyrule/component';
+import {PriorityClassCardComponent} from './priorityclass/component';
+import {PriorityClassListComponent} from './resourcelist/priorityclass/component';
 import {ProbeComponent} from './probe/component';
 import {PropertyComponent} from './property/component';
 import {ProxyComponent} from './proxy/component';
@@ -105,7 +107,6 @@ import {UploadFileComponent} from './uploadfile/component';
 import {VolumeMountComponent} from './volumemount/component';
 import {WorkloadStatusComponent} from './workloadstatus/component';
 import {ZeroStateComponent} from './zerostate/component';
-import {PriorityClassListComponent} from './resourcelist/priorityclass/component';
 
 const components = [
   ActionbarDetailActionsComponent,
@@ -196,6 +197,7 @@ const components = [
   SubjectListComponent,
   VolumeMountComponent,
   PriorityClassListComponent,
+  PriorityClassCardComponent,
 ];
 
 @NgModule({

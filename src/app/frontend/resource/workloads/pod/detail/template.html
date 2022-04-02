@@ -107,6 +107,10 @@ limitations under the License.
   </div>
 </kd-card>
 
+<kd-priority-class-card *ngIf="pod?.priorityClass"
+                         [priorityclass]="pod?.priorityClass"
+                         [initialized]="isInitialized"></kd-priority-class-card>
+
 <kd-condition-list [conditions]="pod?.conditions"
                    [initialized]="isInitialized"></kd-condition-list>
 

@@ -658,6 +658,7 @@ export interface PodDetail extends ResourceDetail {
   eventList: EventList;
   persistentVolumeClaimList: PersistentVolumeClaimList;
   securityContext: PodSecurityContext;
+  priorityClass: PriorityClassDetail;
 }
 
 export interface LocalObjectReference {
