@@ -147,6 +147,8 @@ service:
   ## set allowed inbound rules on the security group assigned to the master load balancer
   # loadBalancerSourceRanges: []
 
+  # clusterIP: ""
+
   ## A user-specified IP address for load balancer to use as External IP (if supported)
   # loadBalancerIP:
 
