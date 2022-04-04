@@ -14,33 +14,19 @@
 
 import {NgModule} from '@angular/core';
 import {Route, RouterModule} from '@angular/router';
-import {DEFAULT_ACTIONBAR} from '@common/components/actionbars/routing';
+import {MetadataComponent} from './component';
 
-import {CLUSTER_ROUTE} from '../routing';
-
-import {PriorityClassDetailComponent} from './detail/component';
-import {PriorityClassListComponent} from './list/component';
-
-const PRIORITYCLASS_LIST_ROUTE: Route = {
+export const Metadata_ROUTE: Route = {
   path: '',
-  component: PriorityClassListComponent,
+  component: MetadataComponent,
   data: {
-    breadcrumb: 'Priority Classes',
-    parent: CLUSTER_ROUTE,
-  },
-};
-
-const PRIORITYCLASS_DETAIL_ROUTE: Route = {
-  path: ':resourceName',
-  component: PriorityClassDetailComponent,
-  data: {
-    breadcrumb: '{{ resourceName }}',
-    parent: PRIORITYCLASS_LIST_ROUTE,
+    breadcrumb: 'Metadata',
+    link: ['', 'metadata'],
   },
 };
 
 @NgModule({
-  imports: [RouterModule.forChild([PRIORITYCLASS_LIST_ROUTE, PRIORITYCLASS_DETAIL_ROUTE, DEFAULT_ACTIONBAR])],
+  imports: [RouterModule.forChild([Metadata_ROUTE])],
   exports: [RouterModule],
 })
-export class PriorityClassRoutingModule {}
+export class MetadataRoutingModule {}

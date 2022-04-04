@@ -166,7 +166,11 @@ const routes: Routes = [
         path: 'customresourcedefinition',
         loadChildren: () => import('crd/module').then(m => m.CrdModule),
       },
-
+      // Metadata
+      {
+        path: 'metadata',
+        loadChildren: () => import('resource/metadata/module').then(m => m.MetadataModule),
+      },
       // Others
       {
         path: 'settings',
@@ -196,7 +200,7 @@ const routes: Routes = [
       },
       {
         path: 'priorityclass',
-        loadChildren: () => import('resource/cluster/priorityclass/module').then(m => m.PriorityClassModule),
+        loadChildren: () => import('resource/metadata/priorityclass/module').then(m => m.PriorityClassModule),
       },
     ],
   },
