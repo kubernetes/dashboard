@@ -26,28 +26,28 @@ limitations under the License.
        fxLayout="row wrap">
 
     <kd-property *ngIf="priorityClass?.description">
-        <div key
-             i18n>Description</div>
-        <div value> {{ priorityClass.description }} </div>
-    </kd-property>
-    
-    <kd-property *ngIf="priorityClass?.value">
-        <div key
-             i18n>Value</div>
-        <div value>{{ priorityClass.value }}</div>
+      <div key
+           i18n>Description</div>
+      <div value> {{ priorityClass.description }} </div>
     </kd-property>
 
-   <kd-property *ngIf="priorityClass?.globalDefault">
-       <div key
-            i18n>Global Default</div>
-       <div value> {{ priorityClass.globalDefault }} </div>
-   </kd-property>
+    <kd-property *ngIf="priorityClass?.value">
+      <div key
+           i18n>Value</div>
+      <div value>{{ priorityClass.value }}</div>
+    </kd-property>
+
+    <kd-property *ngIf="priorityClass?.globalDefault">
+      <div key
+           i18n>Global Default</div>
+      <div value> {{ priorityClass.globalDefault }} </div>
+    </kd-property>
 
     <kd-property *ngIf="priorityClass?.preemptionPolicy">
-        <div key
-             i18n>Preemption Policy</div>
-        <div value> {{ priorityClass.preemptionPolicy }} </div>
+      <div key
+           i18n>Preemption Policy</div>
+      <div value> {{ priorityClass.preemptionPolicy }} </div>
     </kd-property>
-    
+
   </div>
 </kd-card>

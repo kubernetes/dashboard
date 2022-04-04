@@ -15,27 +15,29 @@ limitations under the License.
 -->
 
 <kd-card [initialized]="initialized"
-        *ngIf="priorityclass">
+         *ngIf="priorityclass">
   <div title
        i18n>Priority Class</div>
 
-  <div content fxFlex fxLayout="row wrap">
+  <div content
+       fxFlex
+       fxLayout="row wrap">
     <kd-property>
-        <div key
-             i18n>Name</div>
-        <a value
-           [routerLink]="getHref(priorityclass.name)"
-           queryParamsHandling="preserve"> {{ priorityclass.name }} </a>
+      <div key
+           i18n>Name</div>
+      <a value
+         [routerLink]="getHref(priorityclass.name)"
+         queryParamsHandling="preserve"> {{ priorityclass.name }} </a>
     </kd-property>
     <kd-property>
-        <div key
-             i18n>Value</div>
-        <div value>{{ priorityclass.value }}</div>
+      <div key
+           i18n>Value</div>
+      <div value>{{ priorityclass.value }}</div>
     </kd-property>
     <kd-property>
-        <div key
-             i18n>Preemption Policy</div>
-        <div value>{{ priorityclass.preemptionPolicy }}</div>
+      <div key
+           i18n>Preemption Policy</div>
+      <div value>{{ priorityclass.preemptionPolicy }}</div>
     </kd-property>
   </div>
 </kd-card>
