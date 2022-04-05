@@ -1,6 +1,3 @@
-# golangci-lint configuration file.
-# Read more at: https://github.com/golangci/golangci-lint#config-file
-
 run:
   timeout: 30m
   issues-exit-code: 1
