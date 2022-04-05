@@ -31,3 +31,6 @@ cypress/videos
 
 # npm debug log:
 npm-debug.log
+
+# Helm
+aio/deploy/helm-chart/kubernetes-dashboard/charts
