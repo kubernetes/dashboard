@@ -39,4 +39,3 @@ rules:
   rxjs/no-nested-subscribe: error
 ignorePatterns:
   - "**/*.js"
-
