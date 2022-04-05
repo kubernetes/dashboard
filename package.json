@@ -157,8 +157,8 @@
     "webpack-dev-server": "4.7.4"
   },
   "engines": {
-    "node": ">=14.18.3 <17",
-    "npm": ">=7.21.0 <9"
+    "node": ">=16.14.2",
+    "npm": ">=8.5.0"
   },
   "eslintConfig": {
     "parser": "@typescript-eslint/parser",
