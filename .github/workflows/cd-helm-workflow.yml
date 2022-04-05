@@ -44,18 +44,21 @@ jobs:
         env:
           TERM: xterm-256color
 
+      - name: Remove remote Pull Request branch if it already exists
+        # Note: closes related PR if exists
+        run: |
+          git ls-remote --heads --exit-code origin gh-pages-pull-request && git push origin :gh-pages-pull-request
+
       - name: Create Pull Request branch
         run: |
           git checkout -b gh-pages-pull-request
 
-      # Note that will fail if branch already exists.
       - name: Push Git Branch
         uses: ad-m/github-push-action@v0.6.0
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           branch: gh-pages-pull-request
 
-      # Note that will silently fail if PR already exists.
       - name: Create Pull Request
         uses: repo-sync/pull-request@v2
         with:
