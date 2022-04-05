@@ -2,11 +2,15 @@
   "name": "kubernetes-dashboard",
   "version": "2.5.1",
   "type": "module",
+  "license": "Apache-2.0",
   "repository": {
     "type": "git",
     "url": "https://github.com/kubernetes/dashboard.git"
   },
-  "license": "Apache-2.0",
+  "engines": {
+    "node": ">=16.14.2",
+    "npm": ">=8.5.0"
+  },
   "scripts": {
     "start": "concurrently \"SIDECAR_HOST=$npm_config_sidecar_host make watch-backend\" \"npm run start:frontend --bind_address=$npm_config_bind_address --port=$npm_config_port\"",
     "start:https": "concurrently \"AUTO_GENERATE_CERTS=true SIDECAR_HOST=$npm_config_sidecar_host make watch-backend\" \"npm run start:frontend:https --bind_address=$npm_config_bind_address --port=$npm_config_port\"",
@@ -162,10 +166,6 @@
     "typescript": "4.6.3",
     "wait-on": "6.0.1",
     "webpack-dev-server": "4.7.4"
-  },
-  "engines": {
-    "node": ">=16.14.2",
-    "npm": ">=8.5.0"
   },
   "overrides": {
     "colors": "1.40.0"
