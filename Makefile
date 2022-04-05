@@ -205,6 +205,18 @@ check-ts:
 fix-ts:
 	gts fix
 
+.PHONY: check-backend
+check-backend: check-license check-go check-codegen
+
+.PHONY: fix-backend
+fix-backend: fix-license fix-go fix-codegen
+
+.PHONY: check-frontend
+check-frontend: check-i18n check-license check-html check-scss check-ts
+
+.PHONY: fix-frontend
+fix-frontend: fix-i18n fix-license fix-html fix-scss fix-ts
+
 .PHONY: check
 check: check-i18n check-license check-go check-codegen check-html check-scss check-ts
 
