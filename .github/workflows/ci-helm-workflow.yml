@@ -48,12 +48,21 @@ jobs:
         id: cleanup
         run: sudo rm -rf aio/deploy/helm-chart/kubernetes-dashboard/charts
 
+      - name: Run chart-testing (list-changed)
+        id: list-changed
+        run: |
+          changed=$(ct --config=aio/deploy/helm-chart/.helm-chart-testing.yaml list-changed)
+          if [[ -n "$changed" ]]; then
+            echo "::set-output name=changed::true"
+          fi
+
       - name: Run chart-testing (lint)
         id: lint
         run: ct lint --config=aio/deploy/helm-chart/.helm-chart-testing.yaml
 
       - name: Create kind cluster
         uses: helm/kind-action@v1.2.0
+        if: steps.list-changed.outputs.changed == 'true'
 
       - name: Install Prometheus Operator CRDs
         id: prom
