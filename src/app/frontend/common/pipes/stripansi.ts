@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {Pipe, SecurityContext} from '@angular/core';
-import {DomSanitizer, SafeHtml} from '@angular/platform-browser';
+import {Pipe} from '@angular/core';
+import {SafeHtml} from '@angular/platform-browser';
 import stripAnsi from 'strip-ansi';
 
 /**
