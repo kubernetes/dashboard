@@ -12,10 +12,12 @@ extends:
 plugins:
   - rxjs
 rules:
+  "@typescript-eslint/no-unused-vars":
+    - error
+    - argsIgnorePattern: "^_"
   "@typescript-eslint/ban-ts-comment": off
   "@typescript-eslint/interface-name-prefix": off
   "@typescript-eslint/no-namespace": off
-  "@typescript-eslint/no-unused-vars": off
   "@typescript-eslint/no-this-alias": off
   "@typescript-eslint/no-explicit-any": off
   node/no-unpublished-import: off
