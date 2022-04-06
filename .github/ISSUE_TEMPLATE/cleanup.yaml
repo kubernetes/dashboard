@@ -12,6 +12,6 @@ body:
   - type: textarea
     id: rationale
     attributes:
-      label: Provide any links for context
+      label: Why should it be done?
     validations:
       required: true
