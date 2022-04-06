@@ -61,7 +61,7 @@ jobs:
       - name: Setup NodeJS
         uses: actions/setup-node@5b52f097d36d4b0b2f94ed6de710023fbb8b2236 # v2.1.2
         with:
-          node-version: 16.13.0
+          node-version: 16.14.2
 
       - name: Cache Node Modules
         uses: actions/cache@661fd3eb7f2f20d8c7c84bc2b0509efd7a826628 # v2
@@ -106,7 +106,7 @@ jobs:
       - name: Setup NodeJS
         uses: actions/setup-node@5b52f097d36d4b0b2f94ed6de710023fbb8b2236 # v2.1.2
         with:
-          node-version: 16.13.0
+          node-version: 16.14.2
 
       - name: Cache Node Modules
         uses: actions/cache@661fd3eb7f2f20d8c7c84bc2b0509efd7a826628 # v2
@@ -161,7 +161,7 @@ jobs:
       - name: Setup NodeJS
         uses: actions/setup-node@5b52f097d36d4b0b2f94ed6de710023fbb8b2236 # v2.1.2
         with:
-          node-version: 16.13.0
+          node-version: 16.14.2
 
       - name: Cache Node Modules
         uses: actions/cache@661fd3eb7f2f20d8c7c84bc2b0509efd7a826628 # v2

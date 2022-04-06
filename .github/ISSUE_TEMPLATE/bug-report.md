@@ -1,0 +1,70 @@
+name: Bug Report
+description: Report a bug encountered while using Kubernetes Dashboard
+labels: kind/bug
+body:
+- type: textarea
+  id: problem
+  attributes:
+  label: What happened?
+  description: |
+  Please provide as much info as possible. Not doing so may result in your bug not being addressed in a timely manner.
+  If this matter is security related, please disclose it privately via https://kubernetes.io/security.
+  validations:
+  required: true
+
+- type: textarea
+  id: expected
+  attributes:
+  label: What did you expect to happen?
+  validations:
+  required: true
+
+- type: textarea
+  id: repro
+  attributes:
+  label: How can we reproduce it (as minimally and precisely as possible)?
+  validations:
+  required: true
+
+- type: textarea
+  id: additional
+  attributes:
+  label: Anything else we need to know?
+
+- type: textarea
+  id: dashboardVersion
+  attributes:
+  label: Kubernetes Dashboard version
+  validations:
+  required: true
+
+- type: textarea
+  id: kubernetesVersion
+  attributes:
+  label: Kubernetes version
+  validations:
+  required: true
+
+- type: textarea
+  id: installationMethod
+  attributes:
+  label: Installation method
+
+- type: textarea
+  id: webBrowser
+  attributes:
+  label: Web browser
+
+- type: textarea
+  id: goVersion
+  attributes:
+  label: Go version
+  description: |
+  Please provide 'go version' output. For developers only.
+
+- type: textarea
+  id: nodeVersion
+  attributes:
+  label: Node version
+  description: |
+  Please provide 'node --version' output. For developers only.

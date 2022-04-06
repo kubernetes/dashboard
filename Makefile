@@ -8,7 +8,7 @@ GO_COVERAGE_FILE = $(ROOT_DIRECTORY)/coverage/go.txt
 AIR_BINARY := $(shell which air)
 CODEGEN_VERSION := v0.23.5
 CODEGEN_BIN := $(GOPATH)/pkg/mod/k8s.io/code-generator@$(CODEGEN_VERSION)/generate-groups.sh
-GOLANGCILINT_VERSION := v1.42.1
+GOLANGCILINT_VERSION := v1.45.2
 GOLANGCILINT_BINARY := $(shell which golangci-lint)
 GO_MAJOR_VERSION = $(shell go version | cut -c 14- | cut -d' ' -f1 | cut -d'.' -f1)
 GO_MINOR_VERSION = $(shell go version | cut -c 14- | cut -d' ' -f1 | cut -d'.' -f2)
@@ -204,6 +204,18 @@ check-ts:
 .PHONY: fix-ts
 fix-ts:
 	gts fix
+
+.PHONY: check-backend
+check-backend: check-license check-go check-codegen
+
+.PHONY: fix-backend
+fix-backend: fix-license fix-go fix-codegen
+
+.PHONY: check-frontend
+check-frontend: check-i18n check-license check-html check-scss check-ts
+
+.PHONY: fix-frontend
+fix-frontend: fix-i18n fix-license fix-html fix-scss fix-ts
 
 .PHONY: check
 check: check-i18n check-license check-go check-codegen check-html check-scss check-ts

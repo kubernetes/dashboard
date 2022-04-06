@@ -1,12 +1,17 @@
----
-name: Cleanup 
-about: Pay down technical debt, reduce friction, etc.
+name: Cleanup
+description: Pay down technical debt, reduce friction, etc.
 labels: kind/cleanup
+body:
+- type: textarea
+  id: feature
+  attributes:
+  label: What should be cleaned up or changed?
+  validations:
+  required: true
 
----
-
-<!-- Please use this template while filing an issue to highlight technical debt to be paid down, or friction to be reduced -->
-
-##### What should be cleaned up or changed
-
-##### Provide any links for context
+- type: textarea
+  id: rationale
+  attributes:
+  label: Provide any links for context
+  validations:
+  required: true

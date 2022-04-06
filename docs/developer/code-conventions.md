@@ -35,14 +35,14 @@ These check and formatting involves in go, ts, scss, html, license and i18n file
 
 We use following tools and settings for each check and formatting:
 
-| code    | tools                                                                  | setting                                                                                             |
-|---------|------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------|
-| go      | [golangci-lint](https://github.com/golangci/golangci-lint)             | [`.golangci.yml`](../../.golangci.yml)                                                              |
-| ts      | [gts](https://github.com/google/gts)                                   | `eslintConfig` in [`package.json`](../../package.json) and [`.prettierrc.js`](../../.prettierrc.js) |
-| scss    | [stylelint](https://github.com/stylelint/stylelint)                    | `stylelint` in [`package.json`](../../package.json)                                                 |
-| html    | [prettier](https://prettier.io/)                                       | options in [`Makefile`](../../Makefile)                                                                   |
-| license | [license-check-and-add](https://github.com/awjh/license-check-and-add) | [`license-checker-config.json`](../../license-checker-config.json)                                  
-| i18n    | [xliffmerge](https://github.com/martinroob/ngx-i18nsupport)            | `xliffmergeOptions` in [`package.json`](../../package.json)                                         |
+| code    | tools                                                                  | setting                                                                               |
+|---------|------------------------------------------------------------------------|---------------------------------------------------------------------------------------|
+| go      | [golangci-lint](https://github.com/golangci/golangci-lint)             | [`.golangci.yml`](../../.golangci.yml)                                                |
+| ts      | [gts](https://github.com/google/gts)                                   | [`.eslintrc.yaml`](../../.eslintrc.yaml) and [`.prettierrc.js`](../../.prettierrc.js) |
+| scss    | [stylelint](https://github.com/stylelint/stylelint)                    | [`.stylelintrc.yaml`](../../.stylelintrc.yaml)                           |
+| html    | [prettier](https://prettier.io/)                                       | [`.jsbeautifyrc`](../../.jsbeautifyrc)                                               |
+| license | [license-check-and-add](https://github.com/awjh/license-check-and-add) | [`license-checker-config.json`](../../license-checker-config.json)                    
+| i18n    | [xliffmerge](https://github.com/martinroob/ngx-i18nsupport)            | `xliffmergeOptions` in [`package.json`](../../package.json)                           |
 
 ----
 _Copyright 2019 [The Kubernetes Dashboard Authors](https://github.com/kubernetes/dashboard/graphs/contributors)_
