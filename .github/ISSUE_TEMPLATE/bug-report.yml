@@ -43,32 +43,27 @@ body:
         - Firefox
         - Others
 
-  - type: textarea
+  - type: input
     id: dashboardVersion
     attributes:
       label: Kubernetes Dashboard version
     validations:
       required: true
 
-  - type: textarea
+  - type: input
     id: kubernetesVersion
     attributes:
       label: Kubernetes version
     validations:
       required: true
 
-  - type: textarea
-    id: installationMethod
-    attributes:
-      label: Installation method
-
-  - type: textarea
+  - type: input
     id: goVersion
     attributes:
       label: Go version
       description: Please provide 'go version' output. For developers only.
 
-  - type: textarea
+  - type: input
     id: nodeVersion
     attributes:
       label: Node.js version
