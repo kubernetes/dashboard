@@ -5,13 +5,13 @@ body:
 - type: textarea
   id: feature
   attributes:
-  label: What would you like to be added?
+    label: What would you like to be added?
   validations:
-  required: true
+    required: true
 
 - type: textarea
   id: rationale
   attributes:
-  label: Why is this needed?
+    label: Why is this needed?
   validations:
-  required: true
+    required: true
