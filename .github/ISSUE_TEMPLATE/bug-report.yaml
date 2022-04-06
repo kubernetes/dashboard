@@ -7,8 +7,8 @@ body:
     attributes:
       label: What happened?
       description: |
-      Please provide as much info as possible. Not doing so may result in your bug not being addressed in a timely manner.
-      If this matter is security related, please disclose it privately via https://kubernetes.io/security.
+        Please provide as much info as possible. Not doing so may result in your bug not being addressed in a timely manner.
+        If this matter is security related, please disclose it privately via https://kubernetes.io/security.
     validations:
       required: true
 
@@ -31,6 +31,18 @@ body:
     attributes:
       label: Anything else we need to know?
 
+  - type: dropdown
+    id: browsers
+    attributes:
+      label: What browsers are you seeing the problem on?
+      multiple: true
+      options:
+        - Chrome
+        - Safari
+        - Microsoft Edge
+        - Firefox
+        - Others
+
   - type: textarea
     id: dashboardVersion
     attributes:
@@ -51,20 +63,13 @@ body:
       label: Installation method
 
   - type: textarea
-    id: webBrowser
-    attributes:
-      label: Web browser
-
-  - type: textarea
     id: goVersion
     attributes:
       label: Go version
-      description: |
-      Please provide 'go version' output. For developers only.
+      description: Please provide 'go version' output. For developers only.
 
   - type: textarea
     id: nodeVersion
     attributes:
-      label: Node version
-      description: |
-      Please provide 'node --version' output. For developers only.
+      label: Node.js version
+      description: Please provide 'node --version' output. For developers only.
