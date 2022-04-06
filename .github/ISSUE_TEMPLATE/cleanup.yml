@@ -1,5 +1,5 @@
 name: Cleanup
-description: Pay down technical debt, reduce friction, etc.
+description: Pay down technical debt, reduce friction etc.
 labels: kind/cleanup
 body:
   - type: textarea
@@ -12,6 +12,6 @@ body:
   - type: textarea
     id: rationale
     attributes:
-      label: Why should it be done?
+      label: Why is this needed?
     validations:
       required: true
