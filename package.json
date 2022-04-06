@@ -11,6 +11,7 @@
     "node": ">=16.14.2",
     "yarn": ">=1.22.18"
   },
+  "packageManager": "yarn@3.2.0",
   "scripts": {
     "start": "concurrently \"SIDECAR_HOST=$npm_config_sidecar_host make watch-backend\" \"yarn run start:frontend\"",
     "start:https": "concurrently \"AUTO_GENERATE_CERTS=true SIDECAR_HOST=$npm_config_sidecar_host make watch-backend\" \"yarn run start:frontend:https",
