@@ -80,16 +80,10 @@ export class GlobalSettingsService {
   }
 
   private _defaultSettings(settings: GlobalSettings): GlobalSettings {
-    if (!settings) {
-      return DEFAULT_SETTINGS;
-    }
-
-    Object.keys(DEFAULT_SETTINGS).forEach(key => {
-      // @ts-ignore
-      settings[key] = settings[key] === undefined ? DEFAULT_SETTINGS[key] : settings[key];
-    });
-
-    return settings;
+    return {
+      ...DEFAULT_SETTINGS,
+      ...settings,
+    };
   }
 
   canI(): Observable<boolean> {
