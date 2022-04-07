@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import {Component, Inject} from '@angular/core';
-import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
+import {MAT_DIALOG_DATA} from '@angular/material/dialog';
 
 export interface ConfirmDialogConfig {
   title: string;

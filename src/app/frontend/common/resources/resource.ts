@@ -14,7 +14,6 @@
 
 import {HttpClient} from '@angular/common/http';
 
-// @ts-ignore
-export abstract class ResourceBase<T> {
+export abstract class ResourceBase {
   protected constructor(protected readonly http_: HttpClient) {}
 }
