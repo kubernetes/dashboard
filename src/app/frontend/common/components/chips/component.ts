@@ -23,6 +23,7 @@ import {
 } from '@angular/core';
 import {MatDialog, MatDialogConfig} from '@angular/material/dialog';
 import {StringMap} from '@api/root.shared';
+// @ts-ignore
 import truncateUrl from 'truncate-url';
 
 import {GlobalSettingsService} from '../../services/global/globalsettings';
