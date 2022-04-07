@@ -16,7 +16,7 @@ import {NgModule} from '@angular/core';
 import {Route, RouterModule} from '@angular/router';
 import {MetadataComponent} from './component';
 
-export const Metadata_ROUTE: Route = {
+export const METADATA_ROUTE: Route = {
   path: '',
   component: MetadataComponent,
   data: {
@@ -26,7 +26,7 @@ export const Metadata_ROUTE: Route = {
 };
 
 @NgModule({
-  imports: [RouterModule.forChild([Metadata_ROUTE])],
+  imports: [RouterModule.forChild([METADATA_ROUTE])],
   exports: [RouterModule],
 })
 export class MetadataRoutingModule {}

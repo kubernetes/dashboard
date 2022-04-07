@@ -16,7 +16,7 @@ import {NgModule} from '@angular/core';
 import {Route, RouterModule} from '@angular/router';
 import {DEFAULT_ACTIONBAR} from '@common/components/actionbars/routing';
 
-import {Metadata_ROUTE} from '../../metadata/routing';
+import {METADATA_ROUTE} from '../../metadata/routing';
 
 import {PriorityClassDetailComponent} from './detail/component';
 import {PriorityClassListComponent} from './list/component';
@@ -26,7 +26,7 @@ const PRIORITYCLASS_LIST_ROUTE: Route = {
   component: PriorityClassListComponent,
   data: {
     breadcrumb: 'Priority Classes',
-    parent: Metadata_ROUTE,
+    parent: METADATA_ROUTE,
   },
 };
 
