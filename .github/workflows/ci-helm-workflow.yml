@@ -37,7 +37,7 @@ jobs:
           config: aio/deploy/helm-chart/config_repos
           version: 1.23.0
 
-      - uses: actions/setup-python@v3.1.0
+      - uses: actions/setup-python@v3.1.1
         with:
           python-version: 3.7
 
