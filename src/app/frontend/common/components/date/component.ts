@@ -60,7 +60,7 @@ export class DateComponent implements OnChanges, OnDestroy {
   private intervalChanged_ = new Subject<void>();
   private timeBaseIntervals_ = [
     60, // Seconds in a minute
-    60, // Minutes in a second
+    60, // Minutes in a hour
     24, // Hours in a day
   ];
   private unsubscribe_ = new Subject<void>();
