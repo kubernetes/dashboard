@@ -30,7 +30,7 @@ export class CanDeactivateGuard implements CanDeactivate<ICanDeactivate> {
 
     const config = {
       title: 'Unsaved changes',
-      message: 'The form has not been submitted yet, do you really want to leave?',
+      message: 'The form has not been submitted yet. Do you really want to leave?',
     } as ConfirmDialogConfig;
 
     return this.dialog_.open(ConfirmDialog, {data: config}).afterClosed();

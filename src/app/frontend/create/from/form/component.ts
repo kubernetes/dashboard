@@ -297,7 +297,9 @@ export class CreateFromFormComponent extends ICanDeactivate implements OnInit {
 
     this.create_
       .deploy(spec)
-      .then(() => (this.creating_ = false))
+      .then(() => {
+        this.form.markAsPristine();
+      })
       .finally(() => (this.creating_ = false));
   }
 
