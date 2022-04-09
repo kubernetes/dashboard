@@ -88,7 +88,7 @@
     "jwt-decode": "3.1.2",
     "material-design-icons": "3.0.1",
     "ng-in-viewport": "13.0.1",
-    "ngx-cookie-service": "13.1.2",
+    "ngx-cookie-service": "13.2.0",
     "ngx-pipes": "3.0.0",
     "normalize.css": "8.0.1",
     "roboto-fontface": "0.10.0",
