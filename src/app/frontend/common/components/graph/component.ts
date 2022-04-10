@@ -95,16 +95,16 @@ export class GraphComponent implements OnInit, OnChanges {
         throw new Error(`Unsupported graph type ${this.graphType}.`);
     }
 
-    // Find out the highest suffix and normalize all values to a single suffix
-    series.map(value => {
+    // Find out the highest suffix and normalize all values to a single suffix.
+    // We have to loop twice to get the highest suffix (which could be later on)
+    // and then normalise *all* values to that one suffix.
+    series.forEach(value => {
       if (highestSuffixPower < value.suffixPower) {
         highestSuffixPower = value.suffixPower;
         highestSuffix = value.suffix;
       }
-
-      value.normalize(highestSuffix);
-      return value;
     });
+    series.forEach(value => value.normalize(highestSuffix));
 
     this.yAxisSuffix_ = highestSuffix;
 
@@ -144,7 +144,7 @@ export class GraphComponent implements OnInit, OnChanges {
         this.yScaleMax = maxValue + 0.01;
         break;
       case GraphType.Memory:
-        this.yScaleMax = maxValue + 10;
+        this.yScaleMax = maxValue + 1;
         break;
       default:
     }
