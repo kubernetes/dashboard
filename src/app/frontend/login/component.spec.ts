@@ -92,8 +92,6 @@ class MockPluginsConfigService {
 
 class MockHistoryService {
   router_: MockRouter;
-  private previousStateUrl_: '';
-  private currentStateUrl_: '';
 
   init(): void {}
 

@@ -17,15 +17,7 @@ import {Component, OnInit} from '@angular/core';
 import {AbstractControl, FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {MatDialog} from '@angular/material/dialog';
 import {ActivatedRoute} from '@angular/router';
-import {
-  AppDeploymentSpec,
-  EnvironmentVariable,
-  Namespace,
-  NamespaceList,
-  PortMapping,
-  Protocols,
-  SecretList,
-} from '@api/root.api';
+import {AppDeploymentSpec, EnvironmentVariable, Namespace, NamespaceList, PortMapping, Protocols} from '@api/root.api';
 import {ICanDeactivate} from '@common/interfaces/candeactivate';
 import {PreviewDeploymentDialog} from '@common/dialogs/previewdeployment/dialog';
 
@@ -35,7 +27,6 @@ import {NamespaceService} from '@common/services/global/namespace';
 import {take} from 'rxjs/operators';
 
 import {CreateNamespaceDialog} from './createnamespace/dialog';
-import {CreateSecretDialog} from './createsecret/dialog';
 import {DeployLabel} from './deploylabel/deploylabel';
 import {validateUniqueName} from './validator/uniquename.validator';
 import {FormValidators} from './validator/validators';
@@ -49,8 +40,6 @@ const APP_LABEL_KEY = 'k8s-app';
   styleUrls: ['./style.scss'],
 })
 export class CreateFromFormComponent extends ICanDeactivate implements OnInit {
-  readonly nameMaxLength = 24;
-
   showMoreOptions_ = false;
   namespaces: string[];
   protocols: string[];
@@ -170,26 +159,12 @@ export class CreateFromFormComponent extends ICanDeactivate implements OnInit {
       .subscribe((protocols: Protocols) => (this.protocols = protocols.protocols));
   }
 
-  changeExternal(isExternal: boolean): void {
-    this.isExternal = isExternal;
-  }
-
-  resetImagePullSecret(): void {
-    this.imagePullSecret.patchValue('');
-  }
-
   hasUnsavedChanges(): boolean {
     return this.form.dirty;
   }
 
   isCreateDisabled(): boolean {
     return !this.form.valid || this.create_.isDeployDisabled();
-  }
-
-  getSecrets(): void {
-    this.http_.get(`api/v1/secret/${this.namespace.value}`).subscribe((result: SecretList) => {
-      this.secrets = result.secrets.map(secret => secret.objectMeta.name);
-    });
   }
 
   cancel(): void {
@@ -205,14 +180,6 @@ export class CreateFromFormComponent extends ICanDeactivate implements OnInit {
    */
   isMoreOptionsEnabled(): boolean {
     return this.showMoreOptions_;
-  }
-
-  /**
-   * Shows or hides more options.
-   * @export
-   */
-  switchMoreOptions(): void {
-    this.showMoreOptions_ = !this.showMoreOptions_;
   }
 
   handleNamespaceDialog(): void {
@@ -231,27 +198,6 @@ export class CreateFromFormComponent extends ICanDeactivate implements OnInit {
           this.namespace.patchValue(answer);
         } else {
           this.namespace.patchValue(this.namespaces[0]);
-        }
-      });
-  }
-
-  handleCreateSecretDialog(): void {
-    const dialogData = {data: {namespace: this.namespace.value}};
-    const dialogDef = this.dialog_.open(CreateSecretDialog, dialogData);
-    dialogDef
-      .afterClosed()
-      .pipe(take(1))
-      .subscribe(response => {
-        /**
-         * Handles create secret dialog result. If the secret was created successfully, then it
-         * will be selected,
-         * otherwise None is selected.
-         */
-        if (response) {
-          this.secrets.push(response);
-          this.imagePullSecret.patchValue(response);
-        } else {
-          this.imagePullSecret.patchValue('');
         }
       });
   }
