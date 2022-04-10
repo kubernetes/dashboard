@@ -27,6 +27,7 @@ import {
   SecretList,
 } from '@api/root.api';
 import {ICanDeactivate} from '@common/interfaces/candeactivate';
+import {PreviewDeploymentDialog} from '@common/dialogs/previewdeployment/dialog';
 
 import {CreateService} from '@common/services/create/service';
 import {HistoryService} from '@common/services/global/history';
@@ -281,12 +282,30 @@ export class CreateFromFormComponent extends ICanDeactivate implements OnInit {
     });
   }
 
+  preview(): void {
+    this.dialog_.open(PreviewDeploymentDialog, {
+      width: '900px',
+      data: {
+        spec: this.getSpec(),
+      },
+    });
+  }
+
   deploy(): void {
     this.creating_ = true;
+    const spec = this.getSpec();
+
+    this.create_
+      .deploy(spec)
+      .then(() => (this.creating_ = false))
+      .finally(() => (this.creating_ = false));
+  }
+
+  private getSpec(): AppDeploymentSpec {
     const portMappings = this.portMappings.value.portMappings || [];
     const variables = this.variables.value.variables || [];
     const labels = this.labels.value.labels || [];
-    const spec: AppDeploymentSpec = {
+    return {
       containerImage: this.containerImage.value,
       imagePullSecret: this.imagePullSecret.value ? this.imagePullSecret.value : null,
       containerCommand: this.containerCommand.value ? this.containerCommand.value : null,
@@ -303,11 +322,6 @@ export class CreateFromFormComponent extends ICanDeactivate implements OnInit {
       labels: this.toBackendApiLabels(labels),
       runAsPrivileged: this.runAsPrivileged.value,
     };
-
-    this.create_
-      .deploy(spec)
-      .then(() => (this.creating_ = false))
-      .finally(() => (this.creating_ = false));
   }
 
   canDeactivate(): boolean {

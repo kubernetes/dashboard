@@ -25,6 +25,7 @@ import {EditResourceDialog} from './editresource/dialog';
 import {RestartResourceDialog} from './restartresource/dialog';
 import {ScaleResourceDialog} from './scaleresource/dialog';
 import {TriggerResourceDialog} from './triggerresource/dialog';
+import {PreviewDeploymentDialog} from './previewdeployment/dialog';
 
 @NgModule({
   imports: [SharedModule, ComponentsModule],
@@ -37,6 +38,7 @@ import {TriggerResourceDialog} from './triggerresource/dialog';
     ScaleResourceDialog,
     TriggerResourceDialog,
     ConfirmDialog,
+    PreviewDeploymentDialog,
   ],
   exports: [
     AlertDialog,
@@ -46,6 +48,7 @@ import {TriggerResourceDialog} from './triggerresource/dialog';
     RestartResourceDialog,
     ScaleResourceDialog,
     TriggerResourceDialog,
+    PreviewDeploymentDialog,
   ],
   entryComponents: [
     AlertDialog,
@@ -55,6 +58,7 @@ import {TriggerResourceDialog} from './triggerresource/dialog';
     RestartResourceDialog,
     ScaleResourceDialog,
     TriggerResourceDialog,
+    PreviewDeploymentDialog,
   ],
 })
 export class DialogsModule {}

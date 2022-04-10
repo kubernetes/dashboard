@@ -345,6 +345,15 @@ limitations under the License.
 </button>
 
 <button type="button"
+        [disabled]="isCreateDisabled()"
+        color="primary"
+        (click)="preview()"
+        mat-button
+        i18n>
+  Preview
+</button>
+
+<button type="button"
         (click)="cancel()"
         color="primary"
         mat-button
