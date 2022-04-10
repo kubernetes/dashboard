@@ -43,17 +43,17 @@ export class CreateFromFileComponent extends ICanDeactivate {
     return !this.file || this.file.content.length === 0 || this.create_.isDeployDisabled();
   }
 
-  async create(): Promise<void> {
+  create(): void {
     this.creating_ = true;
-    try {
-      await this.create_.createContent(this.file.content, true, this.file.name);
-      this.file = {
-        name: '',
-        content: '',
-      };
-    } finally {
-      this.creating_ = false;
-    }
+    this.create_
+      .createContent(this.file.content, true, this.file.name)
+      .then(() => {
+        this.file = {
+          name: '',
+          content: '',
+        };
+      })
+      .finally(() => (this.creating_ = false));
   }
 
   onFileLoad(file: KdFile): void {

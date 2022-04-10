@@ -40,14 +40,12 @@ export class CreateFromInputComponent extends ICanDeactivate {
     return !this.inputData || this.inputData.length === 0 || this.create_.isDeployDisabled();
   }
 
-  async create(): Promise<void> {
+  create(): void {
     this.creating_ = true;
-    try {
-      await this.create_.createContent(this.inputData);
-      this.inputData = '';
-    } finally {
-      this.creating_ = false;
-    }
+    this.create_
+      .createContent(this.inputData)
+      .then(() => (this.inputData = ''))
+      .finally(() => (this.creating_ = false));
   }
 
   cancel(): void {
