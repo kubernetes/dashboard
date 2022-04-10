@@ -90,6 +90,9 @@ export class CreateService {
     } else {
       this.router_.navigate(['overview'], {
         queryParams: {[NAMESPACE_STATE_PARAM]: this.namespace_.current()},
+        state: {
+          bypassGuard: true,
+        },
       });
     }
 

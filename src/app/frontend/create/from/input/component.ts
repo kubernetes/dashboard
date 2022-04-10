@@ -26,7 +26,6 @@ import {NamespaceService} from '@common/services/global/namespace';
 })
 export class CreateFromInputComponent extends ICanDeactivate {
   inputData = '';
-  private creating_ = false;
 
   constructor(
     private readonly namespace_: NamespaceService,
@@ -41,11 +40,7 @@ export class CreateFromInputComponent extends ICanDeactivate {
   }
 
   create(): void {
-    this.creating_ = true;
-    this.create_
-      .createContent(this.inputData)
-      .then(() => (this.inputData = ''))
-      .finally(() => (this.creating_ = false));
+    this.create_.createContent(this.inputData);
   }
 
   cancel(): void {
@@ -57,6 +52,6 @@ export class CreateFromInputComponent extends ICanDeactivate {
   }
 
   canDeactivate(): boolean {
-    return this.isCreateDisabled() && !this.creating_;
+    return this.isCreateDisabled();
   }
 }

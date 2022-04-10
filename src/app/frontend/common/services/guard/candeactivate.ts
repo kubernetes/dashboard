@@ -14,18 +14,18 @@
 
 import {Injectable} from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
-import {CanDeactivate} from '@angular/router';
+import {CanDeactivate, Router} from '@angular/router';
 import {ConfirmDialog, ConfirmDialogConfig} from '@common/dialogs/config/dialog';
 import {ICanDeactivate} from '@common/interfaces/candeactivate';
-import {Observable, of} from 'rxjs';
+import {Observable} from 'rxjs';
 
 @Injectable()
 export class CanDeactivateGuard implements CanDeactivate<ICanDeactivate> {
-  constructor(private readonly dialog_: MatDialog) {}
+  constructor(private readonly dialog_: MatDialog, private router: Router) {}
 
-  canDeactivate(component: ICanDeactivate): Observable<boolean> {
-    if (component.canDeactivate()) {
-      return of(true);
+  canDeactivate(component: ICanDeactivate): boolean | Observable<boolean> {
+    if (component.canDeactivate() || this.router.getCurrentNavigation()?.extras?.state?.bypassGuard) {
+      return true;
     }
 
     const config = {

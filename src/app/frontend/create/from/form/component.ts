@@ -59,8 +59,6 @@ export class CreateFromFormComponent extends ICanDeactivate implements OnInit {
   labelArr: DeployLabel[] = [];
   form: FormGroup;
 
-  private creating_ = false;
-
   constructor(
     private readonly namespace_: NamespaceService,
     private readonly create_: CreateService,
@@ -178,10 +176,6 @@ export class CreateFromFormComponent extends ICanDeactivate implements OnInit {
     this.imagePullSecret.patchValue('');
   }
 
-  hasUnsavedChanges(): boolean {
-    return this.form.dirty;
-  }
-
   isCreateDisabled(): boolean {
     return !this.form.valid || this.create_.isDeployDisabled();
   }
@@ -292,13 +286,9 @@ export class CreateFromFormComponent extends ICanDeactivate implements OnInit {
   }
 
   deploy(): void {
-    this.creating_ = true;
+    this.form.markAsPristine();
     const spec = this.getSpec();
-
-    this.create_
-      .deploy(spec)
-      .then(() => this.form.markAsPristine())
-      .finally(() => (this.creating_ = false));
+    this.create_.deploy(spec);
   }
 
   private getSpec(): AppDeploymentSpec {
@@ -325,6 +315,6 @@ export class CreateFromFormComponent extends ICanDeactivate implements OnInit {
   }
 
   canDeactivate(): boolean {
-    return !this.hasUnsavedChanges() && !this.creating_;
+    return this.form.pristine;
   }
 }

@@ -12,8 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {Component, ViewChild} from '@angular/core';
-import {NgForm} from '@angular/forms';
+import {Component} from '@angular/core';
 import {KdFile} from '@api/root.ui';
 import {ICanDeactivate} from '@common/interfaces/candeactivate';
 
@@ -28,8 +27,6 @@ import {NamespaceService} from '@common/services/global/namespace';
 })
 export class CreateFromFileComponent extends ICanDeactivate {
   file: KdFile;
-  @ViewChild(NgForm, {static: true}) private readonly ngForm: NgForm;
-  private creating_ = false;
 
   constructor(
     private readonly namespace_: NamespaceService,
@@ -44,16 +41,7 @@ export class CreateFromFileComponent extends ICanDeactivate {
   }
 
   create(): void {
-    this.creating_ = true;
-    this.create_
-      .createContent(this.file.content, true, this.file.name)
-      .then(() => {
-        this.file = {
-          name: '',
-          content: '',
-        };
-      })
-      .finally(() => (this.creating_ = false));
+    this.create_.createContent(this.file.content, true, this.file.name);
   }
 
   onFileLoad(file: KdFile): void {
@@ -69,6 +57,6 @@ export class CreateFromFileComponent extends ICanDeactivate {
   }
 
   canDeactivate(): boolean {
-    return this.isCreateDisabled() && !this.creating_;
+    return this.isCreateDisabled();
   }
 }
