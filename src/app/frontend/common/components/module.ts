@@ -29,6 +29,7 @@ import {ActionbarDetailRestartComponent} from './actionbar/detailactions/restart
 import {ActionbarDetailScaleComponent} from './actionbar/detailactions/scale/component';
 import {ActionbarDetailTriggerComponent} from './actionbar/detailactions/trigger/component';
 import {DefaultActionbar} from './actionbars/default/component';
+import {EditorGroup} from './editorgroup/component';
 import {LogsDefaultActionbar} from './actionbars/logsdefault/component';
 import {LogsExecDefaultActionbar} from './actionbars/logsexecdefault/component';
 import {LogsScaleDefaultActionbar} from './actionbars/logsscaledefault/component';
@@ -138,6 +139,7 @@ const components = [
   DateComponent,
   DeploymentListComponent,
   DefaultActionbar,
+  EditorGroup,
   EndpointListComponent,
   ExternalEndpointComponent,
   EventListComponent,
