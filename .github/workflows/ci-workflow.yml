@@ -59,7 +59,7 @@ jobs:
           go-version: 1.17.0
 
       - name: Setup NodeJS
-        uses: actions/setup-node@5b52f097d36d4b0b2f94ed6de710023fbb8b2236 # v2.1.2
+        uses: actions/setup-node@56337c425554a6be30cdef71bf441f15be286854 # v2.1.2
         with:
           node-version: 16.14.2
 
@@ -104,7 +104,7 @@ jobs:
           go-version: 1.17.0
 
       - name: Setup NodeJS
-        uses: actions/setup-node@5b52f097d36d4b0b2f94ed6de710023fbb8b2236 # v2.1.2
+        uses: actions/setup-node@56337c425554a6be30cdef71bf441f15be286854 # v2.1.2
         with:
           node-version: 16.14.2
 
@@ -159,7 +159,7 @@ jobs:
           go-version: 1.17.0
 
       - name: Setup NodeJS
-        uses: actions/setup-node@5b52f097d36d4b0b2f94ed6de710023fbb8b2236 # v2.1.2
+        uses: actions/setup-node@56337c425554a6be30cdef71bf441f15be286854 # v2.1.2
         with:
           node-version: 16.14.2
 
