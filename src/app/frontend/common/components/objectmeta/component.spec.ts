@@ -29,6 +29,7 @@ import {CardComponent} from '@common/components/card/component';
 import {PropertyComponent} from '@common/components/property/component';
 import {PipesModule} from '@common/pipes/module';
 import {ConfigService} from '@common/services/global/config';
+import {MESSAGES, MESSAGES_DI_TOKEN} from '../../../index.messages';
 
 import {ObjectMetaComponent} from './component';
 
@@ -70,7 +71,7 @@ describe('ObjectMetaComponent', () => {
         MatIconModule,
         RouterModule,
       ],
-      providers: [ConfigService],
+      providers: [ConfigService, {provide: MESSAGES_DI_TOKEN, useValue: MESSAGES}],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
     }).compileComponents();
     httpMock = TestBed.inject(HttpTestingController);

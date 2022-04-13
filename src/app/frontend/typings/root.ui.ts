@@ -155,3 +155,61 @@ export interface LanguageConfig {
   value: string;
   label: string;
 }
+
+export enum IMessageKey {
+  Open = 'Open',
+  Close = 'Close',
+  Pin = 'Pin',
+  Unpin = 'Unpin',
+  Expand = 'Expand',
+  Minimize = 'Minimize',
+  Unknown = 'Unknown',
+}
+
+export type IMessage = {
+  [key in IMessageKey]: string;
+};
+
+export enum IBreadcrumbMessageKey {
+  Logs = 'Logs',
+  Error = 'Error',
+  Create = 'Create',
+  Plugins = 'Plugins',
+  Shell = 'Shell',
+  Events = 'Events',
+  Overview = 'Overview',
+  Workloads = 'Workloads',
+  CronJobs = 'CronJobs',
+  DaemonSets = 'DaemonSets',
+  Deployments = 'Deployments',
+  Jobs = 'Jobs',
+  Pods = 'Pods',
+  ReplicaSets = 'ReplicaSets',
+  ReplicationControllers = 'ReplicationControllers',
+  StatefulSets = 'StatefulSets',
+  Service = 'Service',
+  Ingresses = 'Ingresses',
+  Services = 'Services',
+  ConfigAndStorage = 'ConfigAndStorage',
+  ConfigMaps = 'ConfigMaps',
+  PersistentVolumeClaims = 'PersistentVolumeClaims',
+  Secrets = 'Secrets',
+  StorageClasses = 'StorageClasses',
+  Cluster = 'Cluster',
+  ClusterRoleBindings = 'ClusterRoleBindings',
+  ClusterRoles = 'ClusterRoles',
+  Namespaces = 'Namespaces',
+  NetworkPolicies = 'NetworkPolicies',
+  Nodes = 'Nodes',
+  PersistentVolumes = 'PersistentVolumes',
+  RoleBindings = 'RoleBindings',
+  Roles = 'Roles',
+  ServiceAccounts = 'ServiceAccounts',
+  CustomResourceDefinitions = 'CustomResourceDefinitions',
+  Settings = 'Settings',
+  About = 'About',
+}
+
+export type IBreadcrumbMessage = {
+  [key in IBreadcrumbMessageKey]: string;
+};

@@ -55,7 +55,7 @@ export class FormattedValue {
     const expectedPower = this.suffixes_.indexOf(suffix);
 
     if (expectedPower < 0) {
-      throw new Error(`Suffix '${suffix}' not recognized.`);
+      throw new Error($localize`Suffix '${suffix}' not recognized.`);
     }
     const powerDiff = expectedPower - currentPower;
     const value = this.value_ / Math.pow(this.base_, powerDiff);

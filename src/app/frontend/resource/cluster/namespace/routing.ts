@@ -14,6 +14,7 @@
 
 import {NgModule} from '@angular/core';
 import {Route, RouterModule} from '@angular/router';
+import {BREADCRUMBS} from '../../../index.messages';
 
 import {CLUSTER_ROUTE} from '../routing';
 
@@ -25,7 +26,7 @@ const NAMESPACE_LIST_ROUTE: Route = {
   path: '',
   component: NamespaceListComponent,
   data: {
-    breadcrumb: 'Namespaces',
+    breadcrumb: BREADCRUMBS.Namespaces,
     parent: CLUSTER_ROUTE,
   },
 };

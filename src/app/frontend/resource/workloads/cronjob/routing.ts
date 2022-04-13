@@ -15,6 +15,7 @@
 import {NgModule} from '@angular/core';
 import {Route, RouterModule} from '@angular/router';
 import {TRIGGER_DEFAULT_ACTIONBAR} from '@common/components/actionbars/routing';
+import {BREADCRUMBS} from '../../../index.messages';
 
 import {WORKLOADS_ROUTE} from '../routing';
 
@@ -25,7 +26,7 @@ const CRONJOB_LIST_ROUTE: Route = {
   path: '',
   component: CronJobListComponent,
   data: {
-    breadcrumb: 'Cron Jobs',
+    breadcrumb: BREADCRUMBS.CronJobs,
     parent: WORKLOADS_ROUTE,
   },
 };

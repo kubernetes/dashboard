@@ -14,6 +14,7 @@
 
 import {NgModule} from '@angular/core';
 import {Route, RouterModule} from '@angular/router';
+import {BREADCRUMBS} from '../index.messages';
 import {ActionbarComponent} from './actionbar/component';
 import {AboutComponent} from './component';
 
@@ -21,7 +22,7 @@ export const ABOUT_ROUTE: Route = {
   path: '',
   component: AboutComponent,
   data: {
-    breadcrumb: 'About',
+    breadcrumb: BREADCRUMBS.About,
   },
 };
 

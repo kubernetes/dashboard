@@ -14,13 +14,14 @@
 
 import {NgModule} from '@angular/core';
 import {Route, RouterModule} from '@angular/router';
+import {BREADCRUMBS} from '../index.messages';
 import {OverviewComponent} from './component';
 
 export const OVERVIEW_ROUTE: Route = {
   path: '',
   component: OverviewComponent,
   data: {
-    breadcrumb: 'Overview',
+    breadcrumb: BREADCRUMBS.Overview,
   },
 };
 

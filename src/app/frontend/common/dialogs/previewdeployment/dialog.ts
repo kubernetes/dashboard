@@ -93,6 +93,7 @@ export class PreviewDeploymentDialog implements OnInit, OnDestroy {
       kind: 'Deployment',
       metadata: {
         name: spec.name,
+        namespace: spec.namespace,
         labels,
       },
       annotations: {

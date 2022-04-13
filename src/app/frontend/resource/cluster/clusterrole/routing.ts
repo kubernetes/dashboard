@@ -15,6 +15,7 @@
 import {NgModule} from '@angular/core';
 import {Route, RouterModule} from '@angular/router';
 import {DEFAULT_ACTIONBAR} from '@common/components/actionbars/routing';
+import {BREADCRUMBS} from '../../../index.messages';
 
 import {CLUSTER_ROUTE} from '../routing';
 
@@ -25,7 +26,7 @@ const CLUSTERROLE_LIST_ROUTE: Route = {
   path: '',
   component: ClusterRoleListComponent,
   data: {
-    breadcrumb: 'Cluster Roles',
+    breadcrumb: BREADCRUMBS.ClusterRoles,
     parent: CLUSTER_ROUTE,
   },
 };

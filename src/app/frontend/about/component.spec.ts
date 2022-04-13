@@ -20,6 +20,7 @@ import {AppConfig} from '@api/root.api';
 import {CardComponent} from '@common/components/card/component';
 import {AssetsService} from '@common/services/global/assets';
 import {ConfigService} from '@common/services/global/config';
+import {MESSAGES, MESSAGES_DI_TOKEN} from '../index.messages';
 import {SharedModule} from '../shared.module';
 import {AboutComponent} from './component';
 
@@ -37,7 +38,7 @@ describe('AboutComponent', () => {
     TestBed.configureTestingModule({
       imports: [SharedModule, HttpClientTestingModule, BrowserAnimationsModule],
       declarations: [AboutComponent, CardComponent],
-      providers: [AssetsService, ConfigService],
+      providers: [AssetsService, ConfigService, {provide: MESSAGES_DI_TOKEN, useValue: MESSAGES}],
     }).compileComponents();
     httpMock = TestBed.inject(HttpTestingController);
     configService = TestBed.inject(ConfigService);

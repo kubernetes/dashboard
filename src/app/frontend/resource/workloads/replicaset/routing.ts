@@ -15,6 +15,7 @@
 import {NgModule} from '@angular/core';
 import {Route, RouterModule} from '@angular/router';
 import {LOGS_SCALE_DEFAULT_ACTIONBAR} from '@common/components/actionbars/routing';
+import {BREADCRUMBS} from '../../../index.messages';
 
 import {WORKLOADS_ROUTE} from '../routing';
 
@@ -25,7 +26,7 @@ const REPLICASET_LIST_ROUTE: Route = {
   path: '',
   component: ReplicaSetListComponent,
   data: {
-    breadcrumb: 'Replica Sets',
+    breadcrumb: BREADCRUMBS.ReplicaSets,
     parent: WORKLOADS_ROUTE,
   },
 };

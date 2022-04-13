@@ -39,13 +39,13 @@ export class ClientPluginLoaderService extends PluginLoaderService {
     const plugins = this.pluginsConfigService_.pluginsMetadata();
     const plugin = plugins.find(p => p.name === pluginName);
     if (!plugin) {
-      throw Error(`Can't find plugin "${pluginName}"`);
+      throw Error($localize`Can't find plugin "${pluginName}"`);
     }
 
     const depsPromises = (plugin.dependencies || []).map(dep => {
       const dependency = plugins.find(d => d.name === dep);
       if (!dependency) {
-        throw Error(`Can't find dependency "${dep}" for plugin "${pluginName}"`);
+        throw Error($localize`Can't find dependency "${dep}" for plugin "${pluginName}"`);
       }
 
       return systemJS.import(dependency.path).then(m => {

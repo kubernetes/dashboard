@@ -16,7 +16,7 @@ import {HttpClient} from '@angular/common/http';
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {AbstractControl, FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {MatDialog} from '@angular/material/dialog';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {
   AppDeploymentSpec,
   EnvironmentVariable,
@@ -28,6 +28,7 @@ import {
 } from '@api/root.api';
 import {ICanDeactivate} from '@common/interfaces/candeactivate';
 import {PreviewDeploymentDialog} from '@common/dialogs/previewdeployment/dialog';
+import {NAMESPACE_STATE_PARAM} from '@common/params/params';
 
 import {CreateService} from '@common/services/create/service';
 import {HistoryService} from '@common/services/global/history';
@@ -58,7 +59,7 @@ export class CreateFromFormComponent extends ICanDeactivate implements OnInit, O
   labelArr: DeployLabel[] = [];
   form: FormGroup;
   readonly nameMaxLength = 24;
-  private creating_ = false;
+  private created_ = false;
   private unsubscribe_ = new Subject<void>();
 
   constructor(
@@ -68,7 +69,8 @@ export class CreateFromFormComponent extends ICanDeactivate implements OnInit, O
     private readonly http_: HttpClient,
     private readonly route_: ActivatedRoute,
     private readonly fb_: FormBuilder,
-    private readonly dialog_: MatDialog
+    private readonly dialog_: MatDialog,
+    private readonly router_: Router
   ) {
     super();
   }
@@ -290,13 +292,13 @@ export class CreateFromFormComponent extends ICanDeactivate implements OnInit, O
   }
 
   deploy(): void {
-    this.creating_ = true;
     const spec = this.getSpec();
-
-    this.create_
-      .deploy(spec)
-      .then(() => (this.creating_ = false))
-      .finally(() => (this.creating_ = false));
+    this.create_.deploy(spec).then(() => {
+      this.created_ = true;
+      this.router_.navigate(['overview'], {
+        queryParams: {[NAMESPACE_STATE_PARAM]: spec.namespace},
+      });
+    });
   }
 
   private getSpec(): AppDeploymentSpec {
@@ -323,6 +325,6 @@ export class CreateFromFormComponent extends ICanDeactivate implements OnInit, O
   }
 
   canDeactivate(): boolean {
-    return !this.hasUnsavedChanges() && !this.creating_;
+    return this.form.pristine || this.created_;
   }
 }

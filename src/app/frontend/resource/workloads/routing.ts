@@ -14,13 +14,14 @@
 
 import {NgModule} from '@angular/core';
 import {Route, RouterModule} from '@angular/router';
+import {BREADCRUMBS} from '../../index.messages';
 import {WorkloadsComponent} from './component';
 
 export const WORKLOADS_ROUTE: Route = {
   path: '',
   component: WorkloadsComponent,
   data: {
-    breadcrumb: 'Workloads',
+    breadcrumb: BREADCRUMBS.Workloads,
     link: ['', 'workloads'],
   },
 };

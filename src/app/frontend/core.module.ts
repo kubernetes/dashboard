@@ -19,9 +19,14 @@ import {DialogsModule} from '@common/dialogs/module';
 import {GlobalServicesModule} from '@common/services/global/module';
 import {ResourceModule} from '@common/services/resource/module';
 import {CONFIG, CONFIG_DI_TOKEN} from './index.config';
+import {MESSAGES_DI_TOKEN, MESSAGES} from './index.messages';
 
 @NgModule({
-  providers: [{provide: CONFIG_DI_TOKEN, useValue: CONFIG}, CookieService],
+  providers: [
+    {provide: CONFIG_DI_TOKEN, useValue: CONFIG},
+    {provide: MESSAGES_DI_TOKEN, useValue: MESSAGES},
+    CookieService,
+  ],
   imports: [GlobalServicesModule, DialogsModule, ResourceModule],
 })
 export class CoreModule {
