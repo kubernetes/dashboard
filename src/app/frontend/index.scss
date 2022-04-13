@@ -19,10 +19,6 @@
 @import './dark';
 @import './light';
 
-/////////////////////////////////
-// Overrides of default styles //
-/////////////////////////////////
-
 html,
 body {
   height: 100%;
@@ -52,9 +48,30 @@ code {
   }
 }
 
-//////////////////////////////////////////
-// Overrides of Angular Material styles //
-//////////////////////////////////////////
+.mat-cell,
+.mat-header-cell {
+  &.col-stretch-s {
+    flex: 1 1 (5 * $baseline-grid);
+  }
+
+  &.col-stretch-m {
+    flex: 1 1 (10 * $baseline-grid);
+  }
+
+  &.col-stretch-l {
+    flex: 1 1 (15 * $baseline-grid);
+  }
+
+  &.col-stretch-xl {
+    flex: 1 1 (30 * $baseline-grid);
+  }
+
+  @for $i from 30 through 150 {
+    &.col-min-#{$i} {
+      min-width: #{$i}#{'px'};
+    }
+  }
+}
 
 .mat-progress-spinner {
   margin: 0 auto;
@@ -133,25 +150,6 @@ code {
 
   &:first-child {
     padding-left: 0 !important;
-  }
-}
-
-.mat-cell,
-.mat-header-cell {
-  &.kd-col-xs {
-    flex: 1 1 (5 * $baseline-grid);
-  }
-
-  &.kd-col-sm {
-    flex: 1 1 (10 * $baseline-grid);
-  }
-
-  &.kd-col-md {
-    flex: 1 1 (15 * $baseline-grid);
-  }
-
-  &.kd-col-gt {
-    flex: 1 1 (30 * $baseline-grid);
   }
 }
 
@@ -362,15 +360,6 @@ router-outlet::after {
 .kd-sparkline-value {
   font-weight: $bold-font-weight;
   position: absolute;
-}
-
-.mat-column-cpu,
-.mat-column-mem {
-  min-width: 15 * $baseline-grid;
-}
-
-.mat-column-namespace {
-  min-width: 90px;
 }
 
 // This is a workaround to remove whitespace from code block element.

@@ -40,10 +40,10 @@ limitations under the License.
         <mat-header-cell *matHeaderCellDef
                          mat-sort-header
                          disableClear="true"
-                         class="kd-col-gt"
+                         class="col-stretch-xl"
                          i18n>Name</mat-header-cell>
         <mat-cell *matCellDef="let cm"
-                  class="kd-col-gt">
+                  class="col-stretch-xl">
           <a [routerLink]="getDetailsHref(cm.objectMeta.name, cm.objectMeta.namespace)"
              queryParamsHandling="preserve">
             {{ cm.objectMeta.name }}
@@ -54,18 +54,18 @@ limitations under the License.
       <ng-container *ngIf="shouldShowColumn('namespace')"
                     matColumnDef="namespace">
         <mat-header-cell *matHeaderCellDef
-                         class="kd-col-md"
+                         class="col-stretch-l col-min-90"
                          i18n>Namespace</mat-header-cell>
         <mat-cell *matCellDef="let cm"
-                  class="kd-col-md">{{ cm.objectMeta.namespace }}</mat-cell>
+                  class="col-stretch-l col-min-90">{{ cm.objectMeta.namespace }}</mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="labels">
         <mat-header-cell *matHeaderCellDef
-                         class="kd-col-gt"
+                         class="col-stretch-xl"
                          i18n>Labels</mat-header-cell>
         <mat-cell *matCellDef="let cm"
-                  class="kd-col-gt">
+                  class="col-stretch-xl">
           <kd-chips [map]="cm.objectMeta.labels"></kd-chips>
         </mat-cell>
       </ng-container>
@@ -74,10 +74,10 @@ limitations under the License.
         <mat-header-cell *matHeaderCellDef
                          mat-sort-header
                          disableClear="true"
-                         class="kd-col-sm"
+                         class="col-stretch-m"
                          i18n>Created</mat-header-cell>
         <mat-cell *matCellDef="let cm"
-                  class="kd-col-sm">
+                  class="col-stretch-m">
           <kd-date [date]="cm.objectMeta.creationTimestamp"
                    relative></kd-date>
         </mat-cell>

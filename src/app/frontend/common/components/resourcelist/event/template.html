@@ -46,44 +46,44 @@ limitations under the License.
 
       <ng-container matColumnDef="name">
         <mat-header-cell *matHeaderCellDef
-                         class="kd-col-md"
+                         class="col-stretch-l"
                          i18n>Name</mat-header-cell>
         <mat-cell *matCellDef="let event"
-                  class="kd-col-md">{{ event.objectMeta.name }}</mat-cell>
+                  class="col-stretch-l">{{ event.objectMeta.name }}</mat-cell>
       </ng-container>
 
       <ng-container *ngIf="shouldShowColumn('namespace')"
                     matColumnDef="namespace">
         <mat-header-cell *matHeaderCellDef
-                         class="kd-col-sm"
+                         class="col-stretch-m col-min-90"
                          i18n>Namespace</mat-header-cell>
         <mat-cell *matCellDef="let event"
-                  class="kd-col-sm">{{ event.objectMeta.namespace }}</mat-cell>
+                  class="col-stretch-m col-min-90">{{ event.objectMeta.namespace }}</mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="reason">
         <mat-header-cell *matHeaderCellDef
                          mat-sort-header
-                         class="kd-col-xs"
+                         class="col-stretch-s"
                          i18n>Reason</mat-header-cell>
         <mat-cell *matCellDef="let event"
-                  class="kd-col-xs">{{ event.reason }}</mat-cell>
+                  class="col-stretch-s">{{ event.reason }}</mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="message">
         <mat-header-cell *matHeaderCellDef
-                         class="kd-col-gt"
+                         class="col-stretch-xl"
                          i18n>Message</mat-header-cell>
         <mat-cell *matCellDef="let event"
-                  class="kd-col-gt">{{ event.message }}</mat-cell>
+                  class="col-stretch-xl">{{ event.message }}</mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="source">
         <mat-header-cell *matHeaderCellDef
-                         class="kd-col-md"
+                         class="col-stretch-l"
                          i18n>Source</mat-header-cell>
         <mat-cell *matCellDef="let event"
-                  class="kd-col-md">
+                  class="col-stretch-l">
           {{ event.sourceComponent }} {{ event.sourceHost }}
         </mat-cell>
       </ng-container>
@@ -91,10 +91,10 @@ limitations under the License.
       <ng-container *ngIf="shouldShowColumn('object')"
                     matColumnDef="object">
         <mat-header-cell *matHeaderCellDef
-                         class="kd-col-md"
+                         class="col-stretch-l"
                          i18n>Object</mat-header-cell>
         <mat-cell *matCellDef="let event"
-                  class="kd-col-md">
+                  class="col-stretch-l">
           <div *ngIf="event.objectName">
             <a *ngIf="getObjectHref(event.objectKind, event.objectName, event.objectNamespace); else unsupportedObject"
                [routerLink]="getObjectHref(event.objectKind, event.objectName, event.objectNamespace)"
@@ -110,10 +110,10 @@ limitations under the License.
       <ng-container *ngIf="shouldShowColumn('subobject')"
                     matColumnDef="subobject">
         <mat-header-cell *matHeaderCellDef
-                         class="kd-col-md"
+                         class="col-stretch-l"
                          i18n>Sub-object</mat-header-cell>
         <mat-cell *matCellDef="let event"
-                  class="kd-col-md">
+                  class="col-stretch-l">
           <div *ngIf="event.object">{{ event.object }}</div>
           <div *ngIf="!event.object">-</div>
         </mat-cell>
@@ -121,19 +121,19 @@ limitations under the License.
 
       <ng-container matColumnDef="count">
         <mat-header-cell *matHeaderCellDef
-                         class="kd-col-xs"
+                         class="col-stretch-s"
                          i18n>Count</mat-header-cell>
         <mat-cell *matCellDef="let event"
-                  class="kd-col-xs">{{ event.count }}</mat-cell>
+                  class="col-stretch-s">{{ event.count }}</mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="firstSeen">
         <mat-header-cell *matHeaderCellDef
                          mat-sort-header
-                         class="kd-col-sm"
+                         class="col-stretch-m"
                          i18n>First Seen</mat-header-cell>
         <mat-cell *matCellDef="let event"
-                  class="kd-col-sm">
+                  class="col-stretch-m">
           <kd-date [date]="event.firstSeen"
                    [relative]="true"></kd-date>
         </mat-cell>
@@ -142,10 +142,10 @@ limitations under the License.
       <ng-container matColumnDef="lastSeen">
         <mat-header-cell *matHeaderCellDef
                          mat-sort-header
-                         class="kd-col-sm"
+                         class="col-stretch-m"
                          i18n>Last Seen</mat-header-cell>
         <mat-cell *matCellDef="let event"
-                  class="kd-col-sm">
+                  class="col-stretch-m">
           <kd-date [date]="event.lastSeen"
                    [relative]="true"></kd-date>
         </mat-cell>

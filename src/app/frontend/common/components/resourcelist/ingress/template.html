@@ -40,10 +40,10 @@ limitations under the License.
         <mat-header-cell *matHeaderCellDef
                          mat-sort-header
                          disableClear="true"
-                         class="kd-col-gt"
+                         class="col-stretch-xl"
                          i18n>Name</mat-header-cell>
         <mat-cell *matCellDef="let ingress"
-                  class="kd-col-gt">
+                  class="col-stretch-xl">
           <a [routerLink]="getDetailsHref(ingress.objectMeta.name, ingress.objectMeta.namespace)"
              queryParamsHandling="preserve">
             {{ ingress.objectMeta.name }}
@@ -54,25 +54,25 @@ limitations under the License.
       <ng-container *ngIf="shouldShowColumn('namespace')"
                     matColumnDef="namespace">
         <mat-header-cell *matHeaderCellDef
-                         class="kd-col-md"
+                         class="col-stretch-l col-min-90"
                          i18n>Namespace</mat-header-cell>
         <mat-cell *matCellDef="let ingress"
-                  class="kd-col-md">{{ ingress.objectMeta.namespace }}</mat-cell>
+                  class="col-stretch-l col-min-90">{{ ingress.objectMeta.namespace }}</mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="labels">
         <mat-header-cell *matHeaderCellDef
-                         class="kd-col-gt"
+                         class="col-stretch-xl"
                          i18n>Labels</mat-header-cell>
         <mat-cell *matCellDef="let ingress"
-                  class="kd-col-gt">
+                  class="col-stretch-xl">
           <kd-chips [map]="ingress.objectMeta.labels"></kd-chips>
         </mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="endpoints">
         <mat-header-cell *matHeaderCellDef
-                         class="kd-col-md"
+                         class="col-stretch-l"
                          i18n>
           Endpoints
           <mat-icon class="external-link-icon kd-clickable"
@@ -80,7 +80,7 @@ limitations under the License.
                     matTooltip="Endpoint links are external links that will be open in a new tab.">open_in_new</mat-icon>
         </mat-header-cell>
         <mat-cell *matCellDef="let ingress"
-                  class="kd-col-md">
+                  class="col-stretch-l">
           <kd-external-endpoint [endpoints]="ingress.endpoints"
                                 [hideExternalIcon]="true"></kd-external-endpoint>
         </mat-cell>
@@ -89,7 +89,7 @@ limitations under the License.
       <ng-container matColumnDef="hosts">
         <mat-header-cell *matHeaderCellDef
                          disableClear="true"
-                         class="kd-col-gt"
+                         class="col-stretch-xl"
                          i18n>
           Hosts
           <mat-icon class="external-link-icon kd-clickable"
@@ -97,7 +97,7 @@ limitations under the License.
                     matTooltip="Host links are external links that will be open in a new tab.">open_in_new</mat-icon>
         </mat-header-cell>
         <mat-cell *matCellDef="let ingress"
-                  class="kd-col-gt">
+                  class="col-stretch-xl">
           <div *ngFor="let host of ingress?.hosts"
                class="kd-ellipsised">
             <a href="https://{{ host }}"
@@ -112,10 +112,10 @@ limitations under the License.
         <mat-header-cell *matHeaderCellDef
                          mat-sort-header
                          disableClear="true"
-                         class="kd-col-sm"
+                         class="col-stretch-m"
                          i18n>Created</mat-header-cell>
         <mat-cell *matCellDef="let ingress"
-                  class="kd-col-sm">
+                  class="col-stretch-m">
           <kd-date [date]="ingress.objectMeta.creationTimestamp"
                    relative></kd-date>
         </mat-cell>
