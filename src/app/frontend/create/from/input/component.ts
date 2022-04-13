@@ -13,7 +13,9 @@
 // limitations under the License.
 
 import {Component} from '@angular/core';
+import {Router} from '@angular/router';
 import {ICanDeactivate} from '@common/interfaces/candeactivate';
+import {NAMESPACE_STATE_PARAM} from '@common/params/params';
 
 import {CreateService} from '@common/services/create/service';
 import {HistoryService} from '@common/services/global/history';
@@ -26,26 +28,28 @@ import {NamespaceService} from '@common/services/global/namespace';
 })
 export class CreateFromInputComponent extends ICanDeactivate {
   inputData = '';
-  private creating_ = false;
+  private created_ = false;
 
   constructor(
     private readonly namespace_: NamespaceService,
     private readonly create_: CreateService,
-    private readonly history_: HistoryService
+    private readonly history_: HistoryService,
+    private readonly router_: Router
   ) {
     super();
   }
 
   isCreateDisabled(): boolean {
-    return !this.inputData || this.inputData.length === 0 || this.create_.isDeployDisabled();
+    return !this.inputData || this.inputData.length === 0;
   }
 
   create(): void {
-    this.creating_ = true;
-    this.create_
-      .createContent(this.inputData)
-      .then(() => (this.creating_ = false))
-      .finally(() => (this.creating_ = false));
+    this.create_.createContent(this.inputData).then(() => {
+      this.created_ = true;
+      this.router_.navigate(['overview'], {
+        queryParams: {[NAMESPACE_STATE_PARAM]: this.namespace_.current()},
+      });
+    });
   }
 
   cancel(): void {
@@ -57,6 +61,6 @@ export class CreateFromInputComponent extends ICanDeactivate {
   }
 
   canDeactivate(): boolean {
-    return this.isCreateDisabled() && !this.creating_;
+    return this.isCreateDisabled() || this.created_;
   }
 }

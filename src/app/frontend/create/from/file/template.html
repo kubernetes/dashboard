@@ -31,20 +31,21 @@ limitations under the License.
   </a>
 </div>
 
-<form (ngSubmit)="create()">
-  <kd-upload-file (onLoad)="onFileLoad($event)"
-                  label="Choose YAML or JSON file"
-                  i18n-label> </kd-upload-file>
+<kd-upload-file (onLoad)="onFileLoad($event)"
+                label="Choose YAML or JSON file"
+                i18n-label></kd-upload-file>
 
-  <button type="button"
-          [disabled]="isCreateDisabled()"
-          color="primary"
-          mat-raised-button
-          i18n>Upload</button>
+<button type="button"
+        [disabled]="isCreateDisabled()"
+        (click)="create()"
+        color="primary"
+        mat-raised-button
+        i18n>Upload
+</button>
 
-  <button type="button"
-          (click)="cancel()"
-          color="primary"
-          mat-button
-          i18n>Cancel</button>
-</form>
+<button type="button"
+        (click)="cancel()"
+        color="primary"
+        mat-button
+        i18n>Cancel
+</button>
