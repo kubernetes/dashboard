@@ -12,9 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-@use '../../../variables' as *;
-@use '../../../mixins' as *;
-
 .mat-chip-list {
   min-width: 80px;
 
@@ -22,4 +19,3 @@
     min-width: 80px;
   }
 }
-
