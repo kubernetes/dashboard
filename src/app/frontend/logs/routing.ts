@@ -16,6 +16,7 @@ import {NgModule} from '@angular/core';
 import {Route, RouterModule} from '@angular/router';
 
 import {LOGS_PARENT_PLACEHOLDER} from '@common/components/breadcrumbs/component';
+import {BREADCRUMBS} from '../index.messages';
 
 import {LogsComponent} from './component';
 
@@ -23,7 +24,7 @@ export const LOGS_ROUTE: Route = {
   path: ':resourceNamespace/:resourceName/:resourceType',
   component: LogsComponent,
   data: {
-    breadcrumb: 'Logs',
+    breadcrumb: BREADCRUMBS.Logs,
     parent: LOGS_PARENT_PLACEHOLDER,
   },
 };

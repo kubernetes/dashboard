@@ -14,6 +14,7 @@
 
 import {NgModule} from '@angular/core';
 import {Route, RouterModule} from '@angular/router';
+import {BREADCRUMBS} from '../index.messages';
 
 import {ErrorComponent} from './component';
 
@@ -21,7 +22,7 @@ const ERROR_ROUTE: Route = {
   path: '',
   component: ErrorComponent,
   data: {
-    breadcrumb: 'Error',
+    breadcrumb: BREADCRUMBS.Error,
   },
 };
 

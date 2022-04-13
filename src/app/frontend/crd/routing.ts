@@ -14,6 +14,7 @@
 
 import {NgModule} from '@angular/core';
 import {Route, RouterModule} from '@angular/router';
+import {BREADCRUMBS} from '../index.messages';
 
 import {CRDDetailComponent} from './detail/component';
 import {CRDListComponent} from './list/component';
@@ -27,7 +28,7 @@ const CRD_LIST_ROUTE: Route = {
     {
       path: '',
       component: CRDListComponent,
-      data: {breadcrumb: 'Custom Resource Definitions'},
+      data: {breadcrumb: BREADCRUMBS.CustomResourceDefinitions},
     },
     DEFAULT_ACTIONBAR,
   ],

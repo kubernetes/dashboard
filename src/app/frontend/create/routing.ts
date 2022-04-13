@@ -15,6 +15,7 @@
 import {NgModule} from '@angular/core';
 import {Route, RouterModule} from '@angular/router';
 import {CanDeactivateGuard} from '@common/services/guard/candeactivate';
+import {BREADCRUMBS} from '../index.messages';
 
 import {CreateComponent} from './component';
 
@@ -22,7 +23,7 @@ const CREATE_ROUTE: Route = {
   path: '',
   component: CreateComponent,
   data: {
-    breadcrumb: 'Create',
+    breadcrumb: BREADCRUMBS.Create,
   },
   canDeactivate: [CanDeactivateGuard],
 };

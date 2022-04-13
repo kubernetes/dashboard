@@ -15,6 +15,7 @@
 import {NgModule} from '@angular/core';
 import {Route, RouterModule} from '@angular/router';
 import {DEFAULT_ACTIONBAR} from '@common/components/actionbars/routing';
+import {BREADCRUMBS} from '../../../index.messages';
 
 import {DISCOVERY_ROUTE} from '../routing';
 
@@ -25,7 +26,7 @@ const INGRESS_LIST_ROUTE: Route = {
   path: '',
   component: IngressListComponent,
   data: {
-    breadcrumb: 'Ingresses',
+    breadcrumb: BREADCRUMBS.Ingresses,
     parent: DISCOVERY_ROUTE,
   },
 };

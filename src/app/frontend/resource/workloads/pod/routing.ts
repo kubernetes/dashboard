@@ -15,6 +15,7 @@
 import {NgModule} from '@angular/core';
 import {Route, RouterModule} from '@angular/router';
 import {LOGS_EXEC_DEFAULT_ACTIONBAR} from '@common/components/actionbars/routing';
+import {BREADCRUMBS} from '../../../index.messages';
 
 import {WORKLOADS_ROUTE} from '../routing';
 
@@ -25,7 +26,7 @@ const POD_LIST_ROUTE: Route = {
   path: '',
   component: PodListComponent,
   data: {
-    breadcrumb: 'Pods',
+    breadcrumb: BREADCRUMBS.Pods,
     parent: WORKLOADS_ROUTE,
   },
 };

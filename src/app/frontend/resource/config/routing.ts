@@ -14,13 +14,14 @@
 
 import {NgModule} from '@angular/core';
 import {Route, RouterModule} from '@angular/router';
+import {BREADCRUMBS} from '../../index.messages';
 import {ConfigComponent} from './component';
 
 export const CONFIG_ROUTE: Route = {
   path: '',
   component: ConfigComponent,
   data: {
-    breadcrumb: 'Config and Storage',
+    breadcrumb: BREADCRUMBS.ConfigAndStorage,
     link: ['', 'config'],
   },
 };

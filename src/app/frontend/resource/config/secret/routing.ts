@@ -15,6 +15,7 @@
 import {NgModule} from '@angular/core';
 import {Route, RouterModule} from '@angular/router';
 import {DEFAULT_ACTIONBAR} from '@common/components/actionbars/routing';
+import {BREADCRUMBS} from '../../../index.messages';
 
 import {CONFIG_ROUTE} from '../routing';
 
@@ -25,7 +26,7 @@ const SECRET_LIST_ROUTE: Route = {
   path: '',
   component: SecretListComponent,
   data: {
-    breadcrumb: 'Secrets',
+    breadcrumb: BREADCRUMBS.Secrets,
     parent: CONFIG_ROUTE,
   },
 };

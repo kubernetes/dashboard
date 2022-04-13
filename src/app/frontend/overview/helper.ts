@@ -29,7 +29,7 @@ export class Helper {
 
     let items = [
       {
-        name: `Running: ${status.running}`,
+        name: $localize`Running: ${status.running}`,
         value: (status.running / totalItems) * 100,
       },
     ];
@@ -37,22 +37,22 @@ export class Helper {
     switch (mode) {
       case ResourceRatioModes.Suspendable:
         items.push({
-          name: `Suspended: ${status.failed}`,
+          name: $localize`Suspended: ${status.failed}`,
           value: (status.failed / totalItems) * 100,
         });
         break;
       case ResourceRatioModes.Completable:
         items = items.concat([
           {
-            name: `Failed: ${status.failed}`,
+            name: $localize`Failed: ${status.failed}`,
             value: (status.failed / totalItems) * 100,
           },
           {
-            name: `Pending: ${status.pending}`,
+            name: $localize`Pending: ${status.pending}`,
             value: (status.pending / totalItems) * 100,
           },
           {
-            name: `Succeeded: ${status.succeeded}`,
+            name: $localize`Succeeded: ${status.succeeded}`,
             value: (status.succeeded / totalItems) * 100,
           },
         ]);
@@ -60,11 +60,11 @@ export class Helper {
       default:
         items = items.concat([
           {
-            name: `Failed: ${status.failed}`,
+            name: $localize`Failed: ${status.failed}`,
             value: (status.failed / totalItems) * 100,
           },
           {
-            name: `Pending: ${status.pending}`,
+            name: $localize`Pending: ${status.pending}`,
             value: (status.pending / totalItems) * 100,
           },
         ]);
