@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import {HttpClient} from '@angular/common/http';
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {AbstractControl, FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {MatDialog} from '@angular/material/dialog';
 import {ActivatedRoute} from '@angular/router';
@@ -32,13 +32,14 @@ import {PreviewDeploymentDialog} from '@common/dialogs/previewdeployment/dialog'
 import {CreateService} from '@common/services/create/service';
 import {HistoryService} from '@common/services/global/history';
 import {NamespaceService} from '@common/services/global/namespace';
-import {take} from 'rxjs/operators';
+import {take, takeUntil} from 'rxjs/operators';
 
 import {CreateNamespaceDialog} from './createnamespace/dialog';
-import {CreateSecretDialog} from './createsecret/dialog';
 import {DeployLabel} from './deploylabel/deploylabel';
 import {validateUniqueName} from './validator/uniquename.validator';
 import {FormValidators} from './validator/validators';
+import {CreateSecretDialog} from './createsecret/dialog';
+import {Subject} from 'rxjs';
 
 // Label keys for predefined labels
 const APP_LABEL_KEY = 'k8s-app';
@@ -48,9 +49,7 @@ const APP_LABEL_KEY = 'k8s-app';
   templateUrl: './template.html',
   styleUrls: ['./style.scss'],
 })
-export class CreateFromFormComponent extends ICanDeactivate implements OnInit {
-  readonly nameMaxLength = 24;
-
+export class CreateFromFormComponent extends ICanDeactivate implements OnInit, OnDestroy {
   showMoreOptions_ = false;
   namespaces: string[];
   protocols: string[];
@@ -58,8 +57,9 @@ export class CreateFromFormComponent extends ICanDeactivate implements OnInit {
   isExternal = false;
   labelArr: DeployLabel[] = [];
   form: FormGroup;
-
+  readonly nameMaxLength = 24;
   private creating_ = false;
+  private unsubscribe_ = new Subject<void>();
 
   constructor(
     private readonly namespace_: NamespaceService,
@@ -151,7 +151,7 @@ export class CreateFromFormComponent extends ICanDeactivate implements OnInit {
       this.labelArr[0].value = v;
       this.labels.patchValue([{index: 0, value: v}]);
     });
-    this.namespace.valueChanges.subscribe((namespace: string) => {
+    this.namespace.valueChanges.pipe(takeUntil(this.unsubscribe_)).subscribe((namespace: string) => {
       this.name.clearAsyncValidators();
       this.name.setAsyncValidators(validateUniqueName(this.http_, namespace));
       this.name.updateValueAndValidity();
@@ -168,6 +168,11 @@ export class CreateFromFormComponent extends ICanDeactivate implements OnInit {
     this.http_
       .get('api/v1/appdeployment/protocols')
       .subscribe((protocols: Protocols) => (this.protocols = protocols.protocols));
+  }
+
+  ngOnDestroy(): void {
+    this.unsubscribe_.next();
+    this.unsubscribe_.complete();
   }
 
   changeExternal(isExternal: boolean): void {
@@ -200,17 +205,10 @@ export class CreateFromFormComponent extends ICanDeactivate implements OnInit {
     return this.namespace_.areMultipleNamespacesSelected();
   }
 
-  /**
-   * Returns true if more options have been enabled and should be shown, false otherwise.
-   */
   isMoreOptionsEnabled(): boolean {
     return this.showMoreOptions_;
   }
 
-  /**
-   * Shows or hides more options.
-   * @export
-   */
   switchMoreOptions(): void {
     this.showMoreOptions_ = !this.showMoreOptions_;
   }

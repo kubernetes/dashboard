@@ -39,9 +39,9 @@ We use following tools and settings for each check and formatting:
 |---------|------------------------------------------------------------------------|---------------------------------------------------------------------------------------|
 | go      | [golangci-lint](https://github.com/golangci/golangci-lint)             | [`.golangci.yml`](../../.golangci.yml)                                                |
 | ts      | [gts](https://github.com/google/gts)                                   | [`.eslintrc.yaml`](../../.eslintrc.yaml) and [`.prettierrc.js`](../../.prettierrc.js) |
-| scss    | [stylelint](https://github.com/stylelint/stylelint)                    | [`.stylelintrc.yaml`](../../.stylelintrc.yaml)                           |
-| html    | [prettier](https://prettier.io/)                                       | [`.jsbeautifyrc`](../../.jsbeautifyrc)                                               |
-| license | [license-check-and-add](https://github.com/awjh/license-check-and-add) | [`license-checker-config.json`](../../license-checker-config.json)                    
+| scss    | [stylelint](https://github.com/stylelint/stylelint)                    | [`.stylelintrc.yaml`](../../.stylelintrc.yaml)                                        |
+| html    | [prettier](https://prettier.io/)                                       | [`.jsbeautifyrc`](../../.jsbeautifyrc)                                                |
+| license | [license-check-and-add](https://github.com/awjh/license-check-and-add) | [`license-checker-config.json`](../../license-checker-config.json)                    |
 | i18n    | [xliffmerge](https://github.com/martinroob/ngx-i18nsupport)            | `xliffmergeOptions` in [`package.json`](../../package.json)                           |
 
 ----

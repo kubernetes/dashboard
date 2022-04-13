@@ -12,12 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {Component, Inject, OnInit, ViewChild} from '@angular/core';
+import {Component, Inject, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {MatButtonToggleGroup} from '@angular/material/button-toggle';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {dump as toYaml, load as fromYaml} from 'js-yaml';
 import {EditorMode} from '@common/components/textinput/component';
 import {AppDeploymentSpec} from '@api/root.api';
+import {Subject} from 'rxjs';
+import {takeUntil} from 'rxjs/operators';
 
 export interface PreviewDeploymentDialogData {
   spec: AppDeploymentSpec;
@@ -27,12 +29,12 @@ export interface PreviewDeploymentDialogData {
   selector: 'kd-preview-deploy-dialog',
   templateUrl: 'template.html',
 })
-export class PreviewDeploymentDialog implements OnInit {
-  selectedMode = EditorMode.YAML;
-
+export class PreviewDeploymentDialog implements OnInit, OnDestroy {
   @ViewChild('group', {static: true}) buttonToggleGroup: MatButtonToggleGroup;
   text = '';
-  modes = EditorMode;
+  selectedMode = EditorMode.YAML;
+  readonly modes = EditorMode;
+  private unsubscribe_ = new Subject<void>();
 
   constructor(
     public dialogRef: MatDialogRef<PreviewDeploymentDialog>,
@@ -43,7 +45,7 @@ export class PreviewDeploymentDialog implements OnInit {
     const configuration = this.toDeploymentConfiguration(this.data.spec);
     this.text = JSON.stringify(this.removeEmptyField(configuration));
 
-    this.buttonToggleGroup.valueChange.subscribe((selectedMode: EditorMode) => {
+    this.buttonToggleGroup.valueChange.pipe(takeUntil(this.unsubscribe_)).subscribe((selectedMode: EditorMode) => {
       this.selectedMode = selectedMode;
       if (this.text) {
         this.updateText();
@@ -51,19 +53,12 @@ export class PreviewDeploymentDialog implements OnInit {
     });
   }
 
-  onNoClick(): void {
-    this.dialogRef.close();
+  ngOnDestroy(): void {
+    this.unsubscribe_.next();
+    this.unsubscribe_.complete();
   }
 
-  getJSON(): string {
-    if (this.selectedMode === EditorMode.YAML) {
-      return this.toRawJSON(fromYaml(this.text));
-    }
-
-    return this.text;
-  }
-
-  getSelectedMode(): string {
+  getSelectedMode(): EditorMode {
     return this.buttonToggleGroup.value;
   }
 
