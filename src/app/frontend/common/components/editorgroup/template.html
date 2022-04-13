@@ -25,12 +25,12 @@ limitations under the License.
                  [readOnly]="readOnly"
                  [mode]="getSelectedMode()"></kd-text-input>
 
-                 <div class="kd-equivalent-block kd-muted kd-bg-card-dark"
-fxLayoutAlign="center">
-<mat-icon>info</mat-icon>
-<div>
-<span i18n>This action is equivalent to:</span>
-<code>kubectl apply -f &lt;spec.{{ selectedMode }}&gt;</code>
-</div>
-</div>
+  <div class="kd-equivalent-block kd-muted kd-bg-card-dark"
+       fxLayoutAlign="center">
+    <mat-icon>info</mat-icon>
+    <div>
+      <span i18n>This action is equivalent to:</span>
+      <code>kubectl apply -f &lt;spec.{{ selectedMode }}&gt;</code>
+    </div>
+  </div>
 </mat-dialog-content>
