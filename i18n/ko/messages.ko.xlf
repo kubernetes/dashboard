@@ -2,6 +2,62 @@
 <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
   <file source-language="en" datatype="plaintext" original="ng2.template" target-language="ko">
     <body>
+      <trans-unit id="3798186563647127215" datatype="html">
+        <source>Open notifications panel</source>
+        <target state="new">Open notifications panel</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/index.messages.ts</context>
+          <context context-type="linenumber">21</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="3117139905742018214" datatype="html">
+        <source>Close notifications panel</source>
+        <target state="new">Close notifications panel</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/index.messages.ts</context>
+          <context context-type="linenumber">22</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="4285755342959217630" datatype="html">
+        <source>Pin resource</source>
+        <target state="new">Pin resource</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/index.messages.ts</context>
+          <context context-type="linenumber">23</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="6112370555453604229" datatype="html">
+        <source>Unpin resource</source>
+        <target state="new">Unpin resource</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/index.messages.ts</context>
+          <context context-type="linenumber">24</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="1547349004541912871" datatype="html">
+        <source>Expand card</source>
+        <target state="new">Expand card</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/index.messages.ts</context>
+          <context context-type="linenumber">25</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="6008724430266446705" datatype="html">
+        <source>Minimize card</source>
+        <target state="new">Minimize card</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/index.messages.ts</context>
+          <context context-type="linenumber">26</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="4467323362722952678" datatype="html">
+        <source>Unknown</source>
+        <target state="new">Unknown</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/index.messages.ts</context>
+          <context context-type="linenumber">27</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="4482184335435539588" datatype="html">
         <source>This action is equivalent to:</source>
         <target>이 액션은 다음 커맨드와 동일합니다. </target>
@@ -399,6 +455,10 @@
           <context context-type="sourcefile">src/app/frontend/common/components/workloadstatus/template.html</context>
           <context context-type="linenumber">92</context>
         </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/index.messages.ts</context>
+          <context context-type="linenumber">42</context>
+        </context-group>
       </trans-unit>
       <trans-unit id="7060498773332878646" datatype="html">
         <source>Namespaces</source>
@@ -406,6 +466,10 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/resourcelist/namespace/template.html</context>
           <context context-type="linenumber">21</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/index.messages.ts</context>
+          <context context-type="linenumber">58</context>
         </context-group>
       </trans-unit>
       <trans-unit id="8497130004540015213" datatype="html">
@@ -452,6 +516,10 @@
           <context context-type="linenumber">111</context>
         </context-group>
         <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/index.messages.ts</context>
+          <context context-type="linenumber">43</context>
+        </context-group>
+        <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/resource/cluster/node/detail/template.html</context>
           <context context-type="linenumber">164</context>
         </context-group>
@@ -471,6 +539,10 @@
           <context context-type="sourcefile">src/app/frontend/common/components/workloadstatus/template.html</context>
           <context context-type="linenumber">38</context>
         </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/index.messages.ts</context>
+          <context context-type="linenumber">39</context>
+        </context-group>
       </trans-unit>
       <trans-unit id="3802938417948102465" datatype="html">
         <source>Replica Sets</source>
@@ -483,6 +555,10 @@
           <context context-type="sourcefile">src/app/frontend/common/components/workloadstatus/template.html</context>
           <context context-type="linenumber">129</context>
         </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/index.messages.ts</context>
+          <context context-type="linenumber">44</context>
+        </context-group>
       </trans-unit>
       <trans-unit id="8019538712284963816" datatype="html">
         <source>Replication Controllers</source>
@@ -494,6 +570,10 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/workloadstatus/template.html</context>
           <context context-type="linenumber">147</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/index.messages.ts</context>
+          <context context-type="linenumber">45</context>
         </context-group>
       </trans-unit>
       <trans-unit id="5014304060513019917" datatype="html">
@@ -515,6 +595,10 @@
           <context context-type="sourcefile">src/app/frontend/common/components/workloadstatus/template.html</context>
           <context context-type="linenumber">165</context>
         </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/index.messages.ts</context>
+          <context context-type="linenumber">46</context>
+        </context-group>
       </trans-unit>
       <trans-unit id="795890916060309463" datatype="html">
         <source>Roles</source>
@@ -522,6 +606,10 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/resourcelist/role/template.html</context>
           <context context-type="linenumber">21</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/index.messages.ts</context>
+          <context context-type="linenumber">63</context>
         </context-group>
       </trans-unit>
       <trans-unit id="4230227443728227002" datatype="html">
@@ -531,6 +619,10 @@
           <context context-type="sourcefile">src/app/frontend/common/components/resourcelist/rolebinding/template.html</context>
           <context context-type="linenumber">21</context>
         </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/index.messages.ts</context>
+          <context context-type="linenumber">62</context>
+        </context-group>
       </trans-unit>
       <trans-unit id="7143579180750436311" datatype="html">
         <source>Services</source>
@@ -538,6 +630,18 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/resourcelist/service/template.html</context>
           <context context-type="linenumber">21</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/index.messages.ts</context>
+          <context context-type="linenumber">49</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="8146913170965682434" datatype="html">
+        <source>Config And Storage</source>
+        <target state="new">Config And Storage</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/index.messages.ts</context>
+          <context context-type="linenumber">50</context>
         </context-group>
       </trans-unit>
       <trans-unit id="8716879065476971568" datatype="html">
@@ -798,6 +902,18 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/list/column/menu/template.html</context>
           <context context-type="linenumber">22</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/index.messages.ts</context>
+          <context context-type="linenumber">31</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="1519954996184640001" datatype="html">
+        <source>Error</source>
+        <target state="new">Error</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/index.messages.ts</context>
+          <context context-type="linenumber">32</context>
         </context-group>
       </trans-unit>
       <trans-unit id="3796390051357100906" datatype="html">
@@ -1427,6 +1543,10 @@
           <context context-type="sourcefile">src/app/frontend/common/components/workloadstatus/template.html</context>
           <context context-type="linenumber">74</context>
         </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/index.messages.ts</context>
+          <context context-type="linenumber">41</context>
+        </context-group>
       </trans-unit>
       <trans-unit id="5729418620241283277" datatype="html">
         <source>Events</source>
@@ -1434,6 +1554,18 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/resourcelist/event/template.html</context>
           <context context-type="linenumber">22</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/index.messages.ts</context>
+          <context context-type="linenumber">36</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="2614607010577950577" datatype="html">
+        <source>Overview</source>
+        <target state="new">Overview</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/index.messages.ts</context>
+          <context context-type="linenumber">37</context>
         </context-group>
       </trans-unit>
       <trans-unit id="4207916966377787111" datatype="html">
@@ -1702,6 +1834,14 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/container/template.html</context>
           <context context-type="linenumber">246</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="2122768143452494504" datatype="html">
+        <source>Unsupported graph type <x id="PH" equiv-text="this.graphType"/>.</source>
+        <target state="new">Unsupported graph type <x id="PH" equiv-text="this.graphType"/>.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/common/components/graph/component.ts</context>
+          <context context-type="linenumber">95</context>
         </context-group>
       </trans-unit>
       <trans-unit id="3804893288209000257" datatype="html">
@@ -2059,6 +2199,10 @@
           <context context-type="sourcefile">src/app/frontend/common/components/workloadstatus/template.html</context>
           <context context-type="linenumber">56</context>
         </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/index.messages.ts</context>
+          <context context-type="linenumber">40</context>
+        </context-group>
       </trans-unit>
       <trans-unit id="6641024648411549335" datatype="html">
         <source>Host</source>
@@ -2255,6 +2399,10 @@
           <context context-type="sourcefile">src/app/frontend/common/components/resourcelist/networkpolicy/template.html</context>
           <context context-type="linenumber">21</context>
         </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/index.messages.ts</context>
+          <context context-type="linenumber">59</context>
+        </context-group>
       </trans-unit>
       <trans-unit id="1366161163946896063" datatype="html">
         <source>Ingresses</source>
@@ -2262,6 +2410,10 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/resourcelist/ingress/template.html</context>
           <context context-type="linenumber">21</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/index.messages.ts</context>
+          <context context-type="linenumber">48</context>
         </context-group>
       </trans-unit>
       <trans-unit id="3501167321553405640" datatype="html">
@@ -2302,6 +2454,10 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/resourcelist/persistentvolume/template.html</context>
           <context context-type="linenumber">21</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/index.messages.ts</context>
+          <context context-type="linenumber">61</context>
         </context-group>
       </trans-unit>
       <trans-unit id="2833767909565048391" datatype="html">
@@ -2433,6 +2589,10 @@
           <context context-type="sourcefile">src/app/frontend/common/components/resourcelist/node/template.html</context>
           <context context-type="linenumber">24</context>
         </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/index.messages.ts</context>
+          <context context-type="linenumber">60</context>
+        </context-group>
       </trans-unit>
       <trans-unit id="5799011743297017810" datatype="html">
         <source>Select namespace...</source>
@@ -2448,6 +2608,14 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/namespace/template.html</context>
           <context context-type="linenumber">33</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="5322465913003356908" datatype="html">
+        <source>Search for <x id="PH" equiv-text="this._activatedRoute.snapshot.queryParams[SEARCH_QUERY_STATE_PARAM]"/></source>
+        <target state="new">Search for <x id="PH" equiv-text="this._activatedRoute.snapshot.queryParams[SEARCH_QUERY_STATE_PARAM]"/></target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/common/components/breadcrumbs/component.ts</context>
+          <context context-type="linenumber">143</context>
         </context-group>
       </trans-unit>
       <trans-unit id="7571663901157580742" datatype="html">
@@ -2657,6 +2825,10 @@
           <context context-type="sourcefile">src/app/frontend/common/components/resourcelist/persistentvolumeclaim/template.html</context>
           <context context-type="linenumber">21</context>
         </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/index.messages.ts</context>
+          <context context-type="linenumber">52</context>
+        </context-group>
       </trans-unit>
       <trans-unit id="434404492084234684" datatype="html">
         <source>Volume</source>
@@ -2672,6 +2844,18 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/resourcelist/plugin/template.html</context>
           <context context-type="linenumber">21</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/index.messages.ts</context>
+          <context context-type="linenumber">34</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="5848501149784858236" datatype="html">
+        <source>Shell</source>
+        <target state="new">Shell</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/index.messages.ts</context>
+          <context context-type="linenumber">35</context>
         </context-group>
       </trans-unit>
       <trans-unit id="8790013339766634216" datatype="html">
@@ -2781,6 +2965,10 @@
           <context context-type="sourcefile">src/app/frontend/common/components/resourcelist/clusterrole/template.html</context>
           <context context-type="linenumber">21</context>
         </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/index.messages.ts</context>
+          <context context-type="linenumber">57</context>
+        </context-group>
       </trans-unit>
       <trans-unit id="3463375855672784957" datatype="html">
         <source>Cluster Role Bindings</source>
@@ -2788,6 +2976,10 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/resourcelist/clusterrolebinding/template.html</context>
           <context context-type="linenumber">21</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/index.messages.ts</context>
+          <context context-type="linenumber">56</context>
         </context-group>
       </trans-unit>
       <trans-unit id="3394717374488548686" datatype="html">
@@ -2797,6 +2989,10 @@
           <context context-type="sourcefile">src/app/frontend/common/components/resourcelist/configmap/template.html</context>
           <context context-type="linenumber">21</context>
         </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/index.messages.ts</context>
+          <context context-type="linenumber">51</context>
+        </context-group>
       </trans-unit>
       <trans-unit id="1730144297199101193" datatype="html">
         <source>Custom Resource Definitions</source>
@@ -2804,6 +3000,18 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/resourcelist/crd/template.html</context>
           <context context-type="linenumber">21</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/index.messages.ts</context>
+          <context context-type="linenumber">65</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="4930506384627295710" datatype="html">
+        <source>Settings</source>
+        <target state="new">Settings</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/index.messages.ts</context>
+          <context context-type="linenumber">66</context>
         </context-group>
       </trans-unit>
       <trans-unit id="6945090506337625182" datatype="html">
@@ -2852,6 +3060,14 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/settings/global/namespace/editdialog/template.html</context>
           <context context-type="linenumber">45</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="3193976279273491157" datatype="html">
+        <source>Actions</source>
+        <target state="new">Actions</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/common/components/list/column/menu/template.html</context>
+          <context context-type="linenumber">66</context>
         </context-group>
       </trans-unit>
       <trans-unit id="97066167691656299" datatype="html">
@@ -2917,6 +3133,10 @@
           <context context-type="sourcefile">src/app/frontend/common/components/resourcelist/serviceaccount/template.html</context>
           <context context-type="linenumber">21</context>
         </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/index.messages.ts</context>
+          <context context-type="linenumber">64</context>
+        </context-group>
       </trans-unit>
       <trans-unit id="960921869392057255" datatype="html">
         <source>Storage Classes</source>
@@ -2924,6 +3144,10 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/resourcelist/storageclass/template.html</context>
           <context context-type="linenumber">21</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/index.messages.ts</context>
+          <context context-type="linenumber">54</context>
         </context-group>
       </trans-unit>
       <trans-unit id="7806177791059234860" datatype="html">
@@ -2937,6 +3161,10 @@
       <trans-unit id="4588386421413885519" datatype="html">
         <source>Secrets</source>
         <target state="new">Secrets</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/index.messages.ts</context>
+          <context context-type="linenumber">53</context>
+        </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/overview/template.html</context>
           <context context-type="linenumber">64</context>
@@ -2961,6 +3189,10 @@
       <trans-unit id="2944102521023817891" datatype="html">
         <source>Cluster</source>
         <target state="new">Cluster</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/index.messages.ts</context>
+          <context context-type="linenumber">55</context>
+        </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/overview/template.html</context>
           <context context-type="linenumber">73</context>
@@ -3674,6 +3906,10 @@
         <source>Workloads</source>
         <target state="new">Workloads</target>
         <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/index.messages.ts</context>
+          <context context-type="linenumber">38</context>
+        </context-group>
+        <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/overview/template.html</context>
           <context context-type="linenumber">19</context>
         </context-group>
@@ -3805,6 +4041,10 @@
           <context context-type="sourcefile">src/app/frontend/about/template.html</context>
           <context context-type="linenumber">19</context>
         </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/index.messages.ts</context>
+          <context context-type="linenumber">67</context>
+        </context-group>
       </trans-unit>
       <trans-unit id="4814940703935231049" datatype="html">
         <source>General-purpose web UI for Kubernetes clusters</source>
@@ -3882,6 +4122,14 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/resource/cluster/namespace/detail/actionbar/template.html</context>
           <context context-type="linenumber">23</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="3000799346062046358" datatype="html">
+        <source>Suffix '<x id="PH" equiv-text="suffix"/>' not recognized.</source>
+        <target state="new">Suffix '<x id="PH" equiv-text="suffix"/>' not recognized.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/common/components/graph/helper.ts</context>
+          <context context-type="linenumber">58</context>
         </context-group>
       </trans-unit>
       <trans-unit id="1779450799694188695" datatype="html">
@@ -4048,6 +4296,10 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/create/from/form/createsecret/template.html</context>
           <context context-type="linenumber">92</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/index.messages.ts</context>
+          <context context-type="linenumber">33</context>
         </context-group>
       </trans-unit>
       <trans-unit id="7941428823403788384" datatype="html">
@@ -4578,6 +4830,54 @@
           <context context-type="linenumber">32</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="7873445996550708978" datatype="html">
+        <source>Running: <x id="PH" equiv-text="status.running"/></source>
+        <target state="new">Running: <x id="PH" equiv-text="status.running"/></target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/overview/helper.ts</context>
+          <context context-type="linenumber">32</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="8337788905474874574" datatype="html">
+        <source>Suspended: <x id="PH" equiv-text="status.failed"/></source>
+        <target state="new">Suspended: <x id="PH" equiv-text="status.failed"/></target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/overview/helper.ts</context>
+          <context context-type="linenumber">40</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="9182918211699394982" datatype="html">
+        <source>Failed: <x id="PH" equiv-text="status.failed"/></source>
+        <target state="new">Failed: <x id="PH" equiv-text="status.failed"/></target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/overview/helper.ts</context>
+          <context context-type="linenumber">47</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/overview/helper.ts</context>
+          <context context-type="linenumber">63</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="2782107425695587228" datatype="html">
+        <source>Pending: <x id="PH" equiv-text="status.pending"/></source>
+        <target state="new">Pending: <x id="PH" equiv-text="status.pending"/></target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/overview/helper.ts</context>
+          <context context-type="linenumber">51</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/overview/helper.ts</context>
+          <context context-type="linenumber">67</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="6142861985741036386" datatype="html">
+        <source>Succeeded: <x id="PH" equiv-text="status.succeeded"/></source>
+        <target state="new">Succeeded: <x id="PH" equiv-text="status.succeeded"/></target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/overview/helper.ts</context>
+          <context context-type="linenumber">55</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="6555318547274416232" datatype="html">
         <source>Value</source>
         <target>값</target>
@@ -4756,6 +5056,10 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/create/from/form/portmappings/template.html</context>
           <context context-type="linenumber">25</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/index.messages.ts</context>
+          <context context-type="linenumber">47</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/overview/template.html</context>
@@ -6016,6 +6320,22 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/settings/global/namespace/template.html</context>
           <context context-type="linenumber">60</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="3848712021572607026" datatype="html">
+        <source>Can't find plugin "<x id="PH" equiv-text="pluginName"/>"</source>
+        <target state="new">Can't find plugin "<x id="PH" equiv-text="pluginName"/>"</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/common/services/pluginloader/clientloader.service.ts</context>
+          <context context-type="linenumber">42</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="6185721657347844438" datatype="html">
+        <source>Can't find dependency "<x id="PH" equiv-text="dep"/>" for plugin "<x id="PH_1" equiv-text="pluginName"/>"</source>
+        <target state="new">Can't find dependency "<x id="PH" equiv-text="dep"/>" for plugin "<x id="PH_1" equiv-text="pluginName"/>"</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/common/services/pluginloader/clientloader.service.ts</context>
+          <context context-type="linenumber">48</context>
         </context-group>
       </trans-unit>
       <trans-unit id="8030904345187828957" datatype="html">
