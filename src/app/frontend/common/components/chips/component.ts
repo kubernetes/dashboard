@@ -53,6 +53,7 @@ const MAX_CHIP_VALUE_LENGTH = 63;
 
 @Component({
   selector: 'kd-chips',
+  styleUrls: ['./style.scss'],
   templateUrl: './template.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })

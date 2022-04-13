@@ -68,9 +68,9 @@
   box-shadow: $whiteframe-shadow-1dp;
   display: inline;
   font-size: $body-font-size-base;
-  height: 6 * $baseline-grid;
-  line-height: 6 * $baseline-grid;
-  min-height: 6 * $baseline-grid;
+  height: 4 * $baseline-grid;
+  line-height: 4 * $baseline-grid;
+  min-height: 4 * $baseline-grid;
   overflow: hidden;
   padding: 0 (3 * $baseline-grid);
   white-space: nowrap;

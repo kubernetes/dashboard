@@ -12,19 +12,22 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {NgForm} from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router';
 import {SEARCH_QUERY_STATE_PARAM} from '@common/params/params';
 import {ParamsService} from '@common/services/global/params';
+import {Subject} from 'rxjs';
+import {takeUntil} from 'rxjs/operators';
 
 @Component({
   selector: 'kd-search',
   templateUrl: './template.html',
   styleUrls: ['./style.scss'],
 })
-export class SearchComponent implements OnInit {
+export class SearchComponent implements OnInit, OnDestroy {
   query: string;
+  private _unsubscribe = new Subject<void>();
 
   constructor(
     private readonly router_: Router,
@@ -33,10 +36,15 @@ export class SearchComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.activatedRoute_.queryParamMap.subscribe(paramMap => {
+    this.activatedRoute_.queryParamMap.pipe(takeUntil(this._unsubscribe)).subscribe(paramMap => {
       this.query = paramMap.get(SEARCH_QUERY_STATE_PARAM);
       this.paramsService_.setQueryParam(SEARCH_QUERY_STATE_PARAM, this.query);
     });
+  }
+
+  ngOnDestroy(): void {
+    this._unsubscribe.next();
+    this._unsubscribe.complete();
   }
 
   submit(form: NgForm): void {
