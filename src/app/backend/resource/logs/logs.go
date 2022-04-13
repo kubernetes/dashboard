@@ -27,7 +27,7 @@ var DefaultDisplayNumLogLines = 100
 
 // MaxLogLines is a number that will be certainly bigger than any number of logs. Here 2 billion logs is certainly much larger
 // number of log lines than we can handle.
-var MaxLogLines int = 2000000000
+var MaxLogLines = 2000000000
 
 const (
 	NewestTimestamp = "newest"

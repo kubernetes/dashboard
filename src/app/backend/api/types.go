@@ -191,7 +191,6 @@ type ClientType string
 // List of client types supported by the UI.
 const (
 	ClientTypeDefault             = "restclient"
-	ClientTypeExtensionClient     = "extensionclient"
 	ClientTypeAppsClient          = "appsclient"
 	ClientTypeBatchClient         = "batchclient"
 	ClientTypeBetaBatchClient     = "betabatchclient"

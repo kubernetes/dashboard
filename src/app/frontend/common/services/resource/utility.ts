@@ -20,7 +20,7 @@ import {ResourceBase} from '../../resources/resource';
 import {NamespaceService} from '../global/namespace';
 
 @Injectable()
-export class UtilityService<T> extends ResourceBase<T> {
+export class UtilityService<T> extends ResourceBase {
   constructor(readonly http: HttpClient, private readonly namespace_: NamespaceService) {
     super(http);
   }

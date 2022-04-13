@@ -1,0 +1,43 @@
+root: true
+parser: "@typescript-eslint/parser"
+parserOptions:
+  ecmaVersion: '2020'
+  project:
+    - aio/tsconfig.app.json
+    - aio/tsconfig.spec.json
+    - aio/tsconfig.e2e.json
+  sourceType: module
+extends:
+  - "./node_modules/gts"
+plugins:
+  - rxjs
+rules:
+  "@typescript-eslint/no-unused-vars":
+    - error
+    - argsIgnorePattern: "^_"
+  "@typescript-eslint/ban-ts-comment": off
+  "@typescript-eslint/interface-name-prefix": off
+  "@typescript-eslint/no-namespace": off
+  "@typescript-eslint/no-this-alias": off
+  "@typescript-eslint/no-explicit-any": off
+  node/no-unpublished-import: off
+  no-undef: off
+  no-inner-declarations: off
+  no-redeclare: off
+  eol-last: error
+  no-console: off
+  no-prototype-builtins: off
+  no-extra-boolean-cast: error
+  no-else-return: error
+  node/no-extraneous-require: error
+  node/no-unpublished-require: error
+  prefer-rest-params: error
+  rxjs/ban-operators:
+    - error
+    - first: use take(1) instead
+  rxjs/no-ignored-observable: error
+  rxjs/no-unbound-methods: error
+  rxjs/no-unsafe-takeuntil: error
+  rxjs/no-nested-subscribe: error
+ignorePatterns:
+  - "**/*.js"

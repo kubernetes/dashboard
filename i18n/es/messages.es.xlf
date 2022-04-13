@@ -107,7 +107,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/create/from/form/template.html</context>
-          <context context-type="linenumber">351</context>
+          <context context-type="linenumber">360</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/create/from/input/template.html</context>
@@ -242,6 +242,10 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/dialogs/download/template.html</context>
           <context context-type="linenumber">56</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/common/dialogs/previewdeployment/template.html</context>
+          <context context-type="linenumber">34</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/settings/global/namespace/adddialog/template.html</context>
@@ -2643,6 +2647,14 @@
           <context context-type="linenumber">60</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="8607136960421332669" datatype="html">
+        <source>Preview Deployment</source>
+        <target state="new">Preview Deployment</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/common/dialogs/previewdeployment/template.html</context>
+          <context context-type="linenumber">18</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="7709318275445309520" datatype="html">
         <source>Last probe time</source>
         <target>último sondeo</target>
@@ -4881,23 +4893,33 @@
           <context context-type="linenumber">343</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="765635835361713756" datatype="html">
+        <source> Preview
+</source>
+        <target state="new"> Preview
+</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/create/from/form/template.html</context>
+          <context context-type="linenumber">352,354</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="2986806881378584169" datatype="html">
         <source>{VAR_SELECT, select, true {Hide advanced options} other {Show advanced options}}</source>
         <target state="new">{VAR_SELECT, select, true {Hide advanced options} other {Show advanced options}}</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/create/from/form/template.html</context>
-          <context context-type="linenumber">358</context>
+          <context context-type="linenumber">367</context>
         </context-group>
       </trans-unit>
       <trans-unit id="2380939390102386148" datatype="html">
-        <source> <x id="ICU" equiv-text="i18n_79" xid="2986806881378584169"/>
+        <source> <x id="ICU" equiv-text="i18n_81" xid="2986806881378584169"/>
 </source>
         <target>
   <x id="ICU" equiv-text="{isMoreOptionsEnabled(), select, 1 {...} other {...}}"/>
 </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/create/from/form/template.html</context>
-          <context context-type="linenumber">357</context>
+          <context context-type="linenumber">366</context>
         </context-group>
       </trans-unit>
       <trans-unit id="4773463022110715023" datatype="html">

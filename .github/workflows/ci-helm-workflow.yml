@@ -31,18 +31,18 @@ jobs:
           fetch-depth: "0"
 
       - name: Validate schema
-        uses: wiremind/helm-kubeval-action@v1.2.0
+        uses: wiremind/helm-kubeval-action@v1.2.1
         with:
           path: aio/deploy/helm-chart
           config: aio/deploy/helm-chart/config_repos
-          version: 1.21.1
+          version: 1.23.0
 
-      - uses: actions/setup-python@v2
+      - uses: actions/setup-python@v3.1.2
         with:
           python-version: 3.7
 
       - name: Set up chart-testing
-        uses: helm/chart-testing-action@v2.2.0
+        uses: helm/chart-testing-action@v2.2.1
 
       - name: Cleanup charts directory
         id: cleanup

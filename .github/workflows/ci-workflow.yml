@@ -34,6 +34,9 @@ on:
       - '.github/workflows/cd-helm-workflow.yml'
       - '.github/workflows/cd-workflow.yml'
 
+permissions:
+  contents: read
+
 jobs:
   check:
     name: Static Check
@@ -46,22 +49,22 @@ jobs:
       TERM: xterm
     steps:
       - name: Setup Environment
-        uses: actions/checkout@v2
+        uses: actions/checkout@629c2de402a417ea7690ca6ce3f33229e27606a5 # v2
         with:
           fetch-depth: 0
 
       - name: Setup Go
-        uses: actions/setup-go@v2
+        uses: actions/setup-go@f6164bd8c8acb4a71fb2791a8b6c4024ff038dab # v2
         with:
           go-version: 1.17.0
 
       - name: Setup NodeJS
-        uses: actions/setup-node@v2.1.2
+        uses: actions/setup-node@56337c425554a6be30cdef71bf441f15be286854 # v2.1.2
         with:
-          node-version: 16.13.0
+          node-version: 16.14.2
 
       - name: Cache Node Modules
-        uses: actions/cache@v2
+        uses: actions/cache@661fd3eb7f2f20d8c7c84bc2b0509efd7a826628 # v2
         env:
           cache-name: cache-node-modules
         with:
@@ -91,22 +94,22 @@ jobs:
 
     steps:
       - name: Setup Environment
-        uses: actions/checkout@v2
+        uses: actions/checkout@629c2de402a417ea7690ca6ce3f33229e27606a5 # v2
         with:
           fetch-depth: 0
 
       - name: Setup Go
-        uses: actions/setup-go@v2
+        uses: actions/setup-go@f6164bd8c8acb4a71fb2791a8b6c4024ff038dab # v2
         with:
           go-version: 1.17.0
 
       - name: Setup NodeJS
-        uses: actions/setup-node@v2.1.2
+        uses: actions/setup-node@56337c425554a6be30cdef71bf441f15be286854 # v2.1.2
         with:
-          node-version: 16.13.0
+          node-version: 16.14.2
 
       - name: Cache Node Modules
-        uses: actions/cache@v2
+        uses: actions/cache@661fd3eb7f2f20d8c7c84bc2b0509efd7a826628 # v2
         env:
           cache-name: cache-node-modules
         with:
@@ -143,7 +146,7 @@ jobs:
 
     steps:
       - name: Setup Environment
-        uses: actions/checkout@v2
+        uses: actions/checkout@629c2de402a417ea7690ca6ce3f33229e27606a5 # v2
         with:
           fetch-depth: 0
 
@@ -151,17 +154,17 @@ jobs:
       - run: echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf && sudo sysctl -p
 
       - name: Setup Go
-        uses: actions/setup-go@v2
+        uses: actions/setup-go@f6164bd8c8acb4a71fb2791a8b6c4024ff038dab # v2
         with:
           go-version: 1.17.0
 
       - name: Setup NodeJS
-        uses: actions/setup-node@v2.1.2
+        uses: actions/setup-node@56337c425554a6be30cdef71bf441f15be286854 # v2.1.2
         with:
-          node-version: 16.13.0
+          node-version: 16.14.2
 
       - name: Cache Node Modules
-        uses: actions/cache@v2
+        uses: actions/cache@661fd3eb7f2f20d8c7c84bc2b0509efd7a826628 # v2
         env:
           cache-name: cache-node-modules
         with:

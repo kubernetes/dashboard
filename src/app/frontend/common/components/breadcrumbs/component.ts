@@ -106,11 +106,7 @@ export class BreadcrumbsComponent implements OnInit {
 
         // Explore the route tree to the root route (parent references have to be defined by us on
         // each route).
-        if (route && route.data && route.data.parent) {
-          route = route.data.parent;
-        } else {
-          break;
-        }
+        route = route?.data?.parent;
       }
     }
 

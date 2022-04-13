@@ -1,0 +1,5 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Support Request
+    url: https://discuss.kubernetes.io
+    about: Support request or question relating to Kubernetes

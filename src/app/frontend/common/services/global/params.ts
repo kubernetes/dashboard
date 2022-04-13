@@ -45,10 +45,6 @@ export class ParamsService {
       });
   }
 
-  getRouteParam(name: string) {
-    return this.params_ ? this.params_[name] : undefined;
-  }
-
   getQueryParam(name: string) {
     return this.queryParamMap_ ? this.queryParamMap_[name] : undefined;
   }

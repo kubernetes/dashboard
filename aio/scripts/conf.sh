@@ -40,13 +40,16 @@ CODEGEN_VERSION="v0.23.5"
 CODEGEN_BIN=${GOPATH}/pkg/mod/k8s.io/code-generator@${CODEGEN_VERSION}/generate-groups.sh
 
 # Setup logger.
-ERROR_STYLE=`tput setaf 1`
-INFO_STYLE=`tput setaf 2`
-BOLD_STYLE=`tput bold`
-RESET_STYLE=`tput sgr0`
+if test -t 1; then
+  COLORS=`tput colors`
+  if test -n "$COLORS" && test $COLORS -ge 8; then
+    DEFAULT_STYLE=`tput sgr0`
+    RED_STYLE=`tput setaf 1`
+  fi
+fi
 
-function say { echo -e "${INFO_STYLE}${BOLD_STYLE}$@${RESET_STYLE}"; }
-function saye { echo -e "${ERROR_STYLE}${BOLD_STYLE}$@${RESET_STYLE}"; }
+function say { echo "$@"; }
+function saye { echo -e "${RED_STYLE}$@${DEFAULT_STYLE}"; }
 
 function ensure-cache {
   say "\nMaking sure that ${CACHE_DIR} directory exists"

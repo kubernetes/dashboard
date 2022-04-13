@@ -16,7 +16,6 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {MatTableDataSource} from '@angular/material/table';
 import {ActivatedRoute} from '@angular/router';
 import {CapacityItem, PersistentVolumeDetail} from '@api/root.api';
-import {StringMap} from '@api/root.shared';
 import {Subject} from 'rxjs';
 import {takeUntil} from 'rxjs/operators';
 
