@@ -26,6 +26,7 @@ import {Status} from '../statuses';
 
 @Component({
   selector: 'kd-pod-list',
+  styleUrls: ['./style.scss'],
   templateUrl: './template.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })

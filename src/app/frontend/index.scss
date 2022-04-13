@@ -369,6 +369,10 @@ router-outlet::after {
   min-width: 15 * $baseline-grid;
 }
 
+.mat-column-namespace {
+  min-width: 90px;
+}
+
 // This is a workaround to remove whitespace from code block element.
 .kd-no-whitespace {
   font-size: 0;
