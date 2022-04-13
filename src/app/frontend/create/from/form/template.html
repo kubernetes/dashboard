@@ -138,6 +138,31 @@ limitations under the License.
     </kd-user-help>
   </kd-help-section>
 
+  <kd-help-section>
+    <mat-form-field>
+      <mat-select formControlName="namespace"
+                  (click)="resetImagePullSecret()"
+                  placeholder="Namespace"
+                  i18n-placeholder
+                  required>
+        <mat-option *ngFor="let namespace of namespaces"
+                    [value]="namespace"> {{ namespace }} </mat-option>
+        <mat-option (click)="handleNamespaceDialog()"
+                    i18n> Create a new namespace... </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <kd-user-help>
+      <ng-container i18n>Namespaces let you partition resources into logically named groups.</ng-container>
+      <a href="https://kubernetes.io/docs/admin/namespaces/"
+         target="_blank"
+         tabindex="-1"
+         i18n>
+        Learn more
+        <i class="material-icons">open_in_new</i>
+      </a>
+    </kd-user-help>
+  </kd-help-section>
+
   <!-- advanced options -->
   <div [hidden]="!isMoreOptionsEnabled()">
     <kd-help-section>
@@ -163,31 +188,6 @@ limitations under the License.
         <ng-container i18n>The specified labels will be applied to the created Deployment, Service (if any) and Pods. Common labels
           include release, environment, tier, partition and track.</ng-container>
         <a href="https://kubernetes.io/docs/user-guide/labels/"
-           target="_blank"
-           tabindex="-1"
-           i18n>
-          Learn more
-          <i class="material-icons">open_in_new</i>
-        </a>
-      </kd-user-help>
-    </kd-help-section>
-
-    <kd-help-section>
-      <mat-form-field>
-        <mat-select formControlName="namespace"
-                    (click)="resetImagePullSecret()"
-                    placeholder="Namespace"
-                    i18n-placeholder
-                    required>
-          <mat-option *ngFor="let namespace of namespaces"
-                      [value]="namespace"> {{ namespace }} </mat-option>
-          <mat-option (click)="handleNamespaceDialog()"
-                      i18n> Create a new namespace... </mat-option>
-        </mat-select>
-      </mat-form-field>
-      <kd-user-help>
-        <ng-container i18n>Namespaces let you partition resources into logically named groups.</ng-container>
-        <a href="https://kubernetes.io/docs/admin/namespaces/"
            target="_blank"
            tabindex="-1"
            i18n>
