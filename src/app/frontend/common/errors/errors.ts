@@ -87,7 +87,6 @@ export class KdError implements KdApiError {
   localize(): KdError {
     const result = this;
 
-    console.log(this.message);
     const localizedErr = localizedErrors[this.message.trim()];
     if (localizedErr) {
       this.message = localizedErr;
