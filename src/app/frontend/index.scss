@@ -50,6 +50,12 @@ code {
 
 .mat-cell,
 .mat-header-cell {
+  @for $i from 30 through 150 {
+    &.col-min-#{$i} {
+      min-width: #{$i}#{'px'};
+    }
+  }
+
   &.col-stretch-s {
     flex: 1 1 (5 * $baseline-grid);
   }
@@ -64,12 +70,6 @@ code {
 
   &.col-stretch-xl {
     flex: 1 1 (30 * $baseline-grid);
-  }
-
-  @for $i from 30 through 150 {
-    &.col-min-#{$i} {
-      min-width: #{$i}#{'px'};
-    }
   }
 }
 
