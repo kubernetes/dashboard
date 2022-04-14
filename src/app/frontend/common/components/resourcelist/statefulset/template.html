@@ -62,10 +62,10 @@ limitations under the License.
         <mat-header-cell *matHeaderCellDef
                          mat-sort-header
                          disableClear="true"
-                         class="kd-col-gt"
+                         class="col-stretch-xl"
                          i18n>Name</mat-header-cell>
         <mat-cell *matCellDef="let ss"
-                  class="kd-col-gt">
+                  class="col-stretch-xl">
           <a (click)="$event.stopPropagation()"
              [routerLink]="getDetailsHref(ss.objectMeta.name, ss.objectMeta.namespace)"
              queryParamsHandling="preserve">
@@ -77,38 +77,38 @@ limitations under the License.
       <ng-container *ngIf="shouldShowColumn('namespace')"
                     matColumnDef="namespace">
         <mat-header-cell *matHeaderCellDef
-                         class="kd-col-md"
+                         class="col-stretch-l col-min-90"
                          i18n>Namespace</mat-header-cell>
         <mat-cell *matCellDef="let ss"
-                  class="kd-col-md">{{ ss.objectMeta.namespace }}</mat-cell>
+                  class="col-stretch-l col-min-90">{{ ss.objectMeta.namespace }}</mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="images">
         <mat-header-cell *matHeaderCellDef
-                         class="kd-col-gt"
+                         class="col-stretch-xl"
                          i18n>Images</mat-header-cell>
         <mat-cell *matCellDef="let ss"
-                  class="kd-col-gt">
+                  class="col-stretch-xl">
           <kd-chips [map]="ss.containerImages"></kd-chips>
         </mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="labels">
         <mat-header-cell *matHeaderCellDef
-                         class="kd-col-gt"
+                         class="col-stretch-xl"
                          i18n>Labels</mat-header-cell>
         <mat-cell *matCellDef="let ss"
-                  class="kd-col-gt">
+                  class="col-stretch-xl">
           <kd-chips [map]="ss.objectMeta.labels"></kd-chips>
         </mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="pods">
         <mat-header-cell *matHeaderCellDef
-                         class="kd-col-sm"
+                         class="col-stretch-m"
                          i18n>Pods</mat-header-cell>
         <mat-cell *matCellDef="let ss"
-                  class="kd-col-sm">
+                  class="col-stretch-m">
           {{ ss.podInfo.running }} / {{ ss.podInfo.desired }}
         </mat-cell>
       </ng-container>
@@ -117,10 +117,10 @@ limitations under the License.
         <mat-header-cell *matHeaderCellDef
                          mat-sort-header
                          disableClear="true"
-                         class="kd-col-sm"
+                         class="col-stretch-m"
                          i18n>Created</mat-header-cell>
         <mat-cell *matCellDef="let ss"
-                  class="kd-col-sm">
+                  class="col-stretch-m">
           <kd-date [date]="ss.objectMeta.creationTimestamp"
                    relative></kd-date>
         </mat-cell>

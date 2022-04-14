@@ -62,10 +62,10 @@ limitations under the License.
         <mat-header-cell *matHeaderCellDef
                          mat-sort-header
                          disableClear="true"
-                         class="kd-col-gt"
+                         class="col-stretch-xl"
                          i18n>Name</mat-header-cell>
         <mat-cell *matCellDef="let pod"
-                  class="kd-col-gt">
+                  class="col-stretch-xl">
           <a (click)="$event.stopPropagation()"
              [routerLink]="getDetailsHref(pod.objectMeta.name, pod.objectMeta.namespace)"
              queryParamsHandling="preserve">
@@ -77,63 +77,63 @@ limitations under the License.
       <ng-container *ngIf="shouldShowColumn('namespace')"
                     matColumnDef="namespace">
         <mat-header-cell *matHeaderCellDef
-                         class="kd-col-md"
+                         class="col-stretch-l col-min-90"
                          i18n>Namespace</mat-header-cell>
         <mat-cell *matCellDef="let pod"
-                  class="kd-col-md">{{ pod.objectMeta.namespace }}</mat-cell>
+                  class="col-stretch-l col-min-90">{{ pod.objectMeta.namespace }}</mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="images">
         <mat-header-cell *matHeaderCellDef
-                         class="kd-col-gt"
+                         class="col-stretch-xl"
                          i18n>Images</mat-header-cell>
         <mat-cell *matCellDef="let pod"
-                  class="kd-col-gt">
+                  class="col-stretch-xl">
           <kd-chips [map]="pod.containerImages"></kd-chips>
         </mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="labels">
         <mat-header-cell *matHeaderCellDef
-                         class="kd-col-gt"
+                         class="col-stretch-xl"
                          i18n>Labels</mat-header-cell>
         <mat-cell *matCellDef="let pod"
-                  class="kd-col-gt">
+                  class="col-stretch-xl">
           <kd-chips [map]="pod.objectMeta.labels"></kd-chips>
         </mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="node">
         <mat-header-cell *matHeaderCellDef
-                         class="kd-col-gt"
+                         class="col-stretch-xl"
                          i18n>Node</mat-header-cell>
         <mat-cell *matCellDef="let pod"
-                  class="kd-col-gt">{{ pod.nodeName }}</mat-cell>
+                  class="col-stretch-xl">{{ pod.nodeName }}</mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="status">
         <mat-header-cell *matHeaderCellDef
                          mat-sort-header
-                         class="kd-col-md"
+                         class="col-stretch-l"
                          i18n>Status</mat-header-cell>
         <mat-cell *matCellDef="let pod"
-                  class="kd-col-md">{{ getDisplayStatus(pod) }}</mat-cell>
+                  class="col-stretch-l">{{ getDisplayStatus(pod) }}</mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="restarts">
         <mat-header-cell *matHeaderCellDef
-                         class="kd-col-sm"
+                         class="col-stretch-m col-min-55"
                          i18n>Restarts</mat-header-cell>
         <mat-cell *matCellDef="let pod"
-                  class="kd-col-sm"> {{ pod.restartCount }} </mat-cell>
+                  class="col-stretch-m col-min-55"> {{ pod.restartCount }} </mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="cpu">
         <mat-header-cell *matHeaderCellDef
-                         class="kd-col-sm"
+                         class="col-stretch-m col-min-120"
                          i18n>CPU Usage (cores)</mat-header-cell>
         <mat-cell *matCellDef="let pod"
-                  class="kd-col-sm">
+                  class="col-stretch-m col-min-120">
           <kd-cpu-sparkline *ngIf="pod.metrics?.cpuUsageHistory"
                             [timeseries]="pod.metrics.cpuUsageHistory"></kd-cpu-sparkline>
           <span *ngIf="!pod.metrics?.cpuUsageHistory">-</span>
@@ -142,10 +142,10 @@ limitations under the License.
 
       <ng-container matColumnDef="mem">
         <mat-header-cell *matHeaderCellDef
-                         class="kd-col-sm"
+                         class="col-stretch-m col-min-120"
                          i18n>Memory Usage (bytes)</mat-header-cell>
         <mat-cell *matCellDef="let pod"
-                  class="kd-col-sm">
+                  class="col-stretch-m col-min-120">
           <kd-memory-sparkline *ngIf="pod.metrics?.memoryUsageHistory"
                                [timeseries]="pod.metrics.memoryUsageHistory"></kd-memory-sparkline>
           <span *ngIf="!pod.metrics?.memoryUsageHistory">-</span>
@@ -156,10 +156,10 @@ limitations under the License.
         <mat-header-cell *matHeaderCellDef
                          mat-sort-header
                          disableClear="true"
-                         class="kd-col-md"
+                         class="col-stretch-l col-min-70"
                          i18n>Created</mat-header-cell>
         <mat-cell *matCellDef="let pod"
-                  class="kd-col-md">
+                  class="col-stretch-l col-min-70">
           <kd-date [date]="pod.objectMeta.creationTimestamp"
                    relative></kd-date>
         </mat-cell>

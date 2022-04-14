@@ -52,11 +52,11 @@ limitations under the License.
       <ng-container matColumnDef="name">
         <mat-header-cell *matHeaderCellDef
                          mat-sort-header
-                         class="kd-col-gt"
+                         class="col-stretch-xl"
                          disableClear="true"
                          i18n>Name</mat-header-cell>
         <mat-cell *matCellDef="let cronJob"
-                  class="kd-col-gt">
+                  class="col-stretch-xl">
           <a [routerLink]="getDetailsHref(cronJob.objectMeta.name, cronJob.objectMeta.namespace)"
              queryParamsHandling="preserve">
             {{ cronJob.objectMeta.name }}
@@ -67,38 +67,38 @@ limitations under the License.
       <ng-container *ngIf="shouldShowColumn('namespace')"
                     matColumnDef="namespace">
         <mat-header-cell *matHeaderCellDef
-                         class="kd-col-md"
+                         class="col-stretch-l col-min-90"
                          i18n>Namespace</mat-header-cell>
         <mat-cell *matCellDef="let cronJob"
-                  class="kd-col-md">{{ cronJob.objectMeta.namespace }}</mat-cell>
+                  class="col-stretch-l col-min-90">{{ cronJob.objectMeta.namespace }}</mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="images">
         <mat-header-cell *matHeaderCellDef
-                         class="kd-col-gt"
+                         class="col-stretch-xl"
                          i18n>Images</mat-header-cell>
         <mat-cell *matCellDef="let cronJob"
-                  class="kd-col-gt">
+                  class="col-stretch-xl">
           <kd-chips [map]="cronJob.containerImages"></kd-chips>
         </mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="labels">
         <mat-header-cell *matHeaderCellDef
-                         class="kd-col-xs"
+                         class="col-stretch-s"
                          i18n>Labels</mat-header-cell>
         <mat-cell *matCellDef="let cronJob"
-                  class="kd-col-xs">
+                  class="col-stretch-s">
           <kd-chips [map]="cronJob.objectMeta.labels"></kd-chips>
         </mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="schedule">
         <mat-header-cell *matHeaderCellDef
-                         class="kd-col-sm"
+                         class="col-stretch-m"
                          i18n>Schedule</mat-header-cell>
         <mat-cell *matCellDef="let cronJob"
-                  class="kd-col-sm">
+                  class="col-stretch-m">
           <span>{{ cronJob.schedule }}</span>
           <span *ngIf="!cronJob.schedule">-</span>
         </mat-cell>
@@ -106,28 +106,28 @@ limitations under the License.
 
       <ng-container matColumnDef="suspend">
         <mat-header-cell *matHeaderCellDef
-                         class="kd-col-sm"
+                         class="col-stretch-m"
                          i18n>Suspend</mat-header-cell>
         <mat-cell *matCellDef="let cronJob"
-                  class="kd-col-sm">{{ !!cronJob.suspend }}</mat-cell>
+                  class="col-stretch-m">{{ !!cronJob.suspend }}</mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="active">
         <mat-header-cell *matHeaderCellDef
                          mat-sort-header
                          disableClear="true"
-                         class="kd-col-sm"
+                         class="col-stretch-m"
                          i18n>Active</mat-header-cell>
         <mat-cell *matCellDef="let cronJob"
-                  class="kd-col-sm">{{ cronJob.active }}</mat-cell>
+                  class="col-stretch-m">{{ cronJob.active }}</mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="lastschedule">
         <mat-header-cell *matHeaderCellDef
-                         class="kd-col-md"
+                         class="col-stretch-l"
                          i18n>Last Schedule</mat-header-cell>
         <mat-cell *matCellDef="let cronJob"
-                  class="kd-col-md">
+                  class="col-stretch-l">
           <kd-date *ngIf="cronJob.lastSchedule"
                    [date]="cronJob.lastSchedule"
                    relative></kd-date>
@@ -148,10 +148,10 @@ limitations under the License.
         <mat-header-cell *matHeaderCellDef
                          mat-sort-header
                          disableClear="true"
-                         class="kd-col-md"
+                         class="col-stretch-l"
                          i18n>Created</mat-header-cell>
         <mat-cell *matCellDef="let cronJob"
-                  class="kd-col-md">
+                  class="col-stretch-l">
           <kd-date [date]="cronJob.objectMeta.creationTimestamp"
                    relative></kd-date>
         </mat-cell>

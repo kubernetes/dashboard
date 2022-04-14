@@ -50,10 +50,10 @@ limitations under the License.
         <mat-header-cell *matHeaderCellDef
                          mat-sort-header
                          disableClear="true"
-                         class="kd-col-gt"
+                         class="col-stretch-xl"
                          i18n>Name</mat-header-cell>
         <mat-cell *matCellDef="let crd"
-                  class="kd-col-gt">
+                  class="col-stretch-xl">
           <a [routerLink]="getDetailsHref(crd.objectMeta.name)"
              queryParamsHandling="preserve">{{ getDisplayName(crd.names.kind) }}</a>
         </mat-cell>
@@ -61,36 +61,36 @@ limitations under the License.
 
       <ng-container [matColumnDef]="getColumns()[2]">
         <mat-header-cell *matHeaderCellDef
-                         class="kd-col-md"
+                         class="col-stretch-l"
                          i18n>Group</mat-header-cell>
         <mat-cell *matCellDef="let crd"
-                  class="kd-col-md">{{ crd.group }}</mat-cell>
+                  class="col-stretch-l">{{ crd.group }}</mat-cell>
       </ng-container>
 
       <ng-container [matColumnDef]="getColumns()[3]">
         <mat-header-cell *matHeaderCellDef
-                         class="kd-col-gt"
+                         class="col-stretch-xl"
                          i18n>Full Name</mat-header-cell>
         <mat-cell *matCellDef="let crd"
-                  class="kd-col-gt">{{ crd.objectMeta.name }}</mat-cell>
+                  class="col-stretch-xl">{{ crd.objectMeta.name }}</mat-cell>
       </ng-container>
 
       <ng-container [matColumnDef]="getColumns()[4]">
         <mat-header-cell *matHeaderCellDef
-                         class="kd-col-sm"
+                         class="col-stretch-m"
                          i18n>Namespaced</mat-header-cell>
         <mat-cell *matCellDef="let crd"
-                  class="kd-col-sm">{{ isNamespaced(crd) }}</mat-cell>
+                  class="col-stretch-m">{{ isNamespaced(crd) }}</mat-cell>
       </ng-container>
 
       <ng-container [matColumnDef]="getColumns()[5]">
         <mat-header-cell *matHeaderCellDef
                          mat-sort-header
                          disableClear="true"
-                         class="kd-col-sm"
+                         class="col-stretch-m"
                          i18n>Created</mat-header-cell>
         <mat-cell *matCellDef="let crd"
-                  class="kd-col-sm">
+                  class="col-stretch-m">
           <kd-date [date]="crd.objectMeta.creationTimestamp"
                    relative></kd-date>
         </mat-cell>

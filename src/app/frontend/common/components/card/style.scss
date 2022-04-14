@@ -35,7 +35,7 @@
   }
 
   .mat-card {
-    min-width: 170 * $baseline-grid;
+    min-width: $min-content-width;
     padding: 0;
 
     &.kd-inner-content {
