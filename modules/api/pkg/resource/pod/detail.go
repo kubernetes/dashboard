@@ -93,6 +93,9 @@ type Container struct {
 	LivenessProbe  *v1.Probe `json:"livenessProbe"`
 	ReadinessProbe *v1.Probe `json:"readinessProbe"`
 	StartupProbe   *v1.Probe `json:"startupProbe"`
+
+	// Resource Requirments
+	Resources v1.ResourceRequirements `json:"resources,omitempty"`
 }
 
 // EnvVar represents an environment variable of a container.
@@ -270,6 +273,7 @@ func extractContainerInfo(containerList []v1.Container, pod *v1.Pod, configMaps 
 			LivenessProbe:   container.LivenessProbe,
 			ReadinessProbe:  container.ReadinessProbe,
 			StartupProbe:    container.StartupProbe,
+			Resources:       container.Resources,
 		})
 	}
 	return containers
