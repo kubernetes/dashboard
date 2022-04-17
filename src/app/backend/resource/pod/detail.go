@@ -95,7 +95,7 @@ type Container struct {
 	StartupProbe   *v1.Probe `json:"startupProbe"`
 
 	// Resource Requirments
-	Resources      v1.ResourceRequirements   `json:"resources,omitempty"`
+	Resources v1.ResourceRequirements `json:"resources,omitempty"`
 }
 
 // EnvVar represents an environment variable of a container.

@@ -247,7 +247,32 @@ limitations under the License.
       <kd-probe-card [probe]="container?.startupProbe"
                      [initialized]="initialized"> </kd-probe-card>
     </div>
+
+    <kd-property *ngIf="container?.resources?.limits"
+                 fxFlex="100">
+      <div key
+           fxFlex
+           class="kd-muted section-header"
+           i18n>Resources - Limits</div>
+      <div value>
+        <kd-chips [map]="container?.resources?.limits"
+                  [displayAll]="true"></kd-chips>
+      </div>
+    </kd-property>
+    <kd-property *ngIf="container?.resources?.requests"
+                 fxFlex="100">
+      <div key
+           fxFlex
+           class="kd-muted section-header"
+           i18n>Resources - Requests</div>
+      <div value>
+        <kd-chips [map]="container?.resources?.requests"
+                  [displayAll]="true"></kd-chips>
+      </div>
+    </kd-property>
+
   </div>
+
 
   <div content></div>
 </kd-card>

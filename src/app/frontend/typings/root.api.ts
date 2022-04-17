@@ -887,6 +887,12 @@ export interface Container {
   livenessProbe: Probe;
   readinessProbe: Probe;
   startupProbe: Probe;
+  resources?: ResourceRequirements;
+}
+
+export interface ResourceRequirements {
+  limits?: StringMap;
+  requests?: StringMap;
 }
 
 export interface Probe {
