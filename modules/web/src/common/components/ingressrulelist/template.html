@@ -37,7 +37,8 @@ limitations under the License.
         <mat-cell *matCellDef="let ingressRuleFlat">
           <ng-container *ngIf="ingressRuleFlat.host">
             <a href="https://{{ ingressRuleFlat.host }}"
-               target="_blank"> {{ ingressRuleFlat.host }} </a>
+               target="_blank"
+               rel="noopener noreferrer"> {{ ingressRuleFlat.host }} </a>
           </ng-container>
           <ng-container *ngIf="!ingressRuleFlat.host">-</ng-container>
         </mat-cell>
@@ -46,7 +47,15 @@ limitations under the License.
         <mat-header-cell *matHeaderCellDef
                          i18n>Path </mat-header-cell>
         <mat-cell *matCellDef="let ingressRuleFlat">
-          {{ !!ingressRuleFlat?.path?.path ? ingressRuleFlat?.path?.path : '-' }}
+          <ng-container *ngIf="ingressRuleFlat.path.path">
+            <ng-container *ngIf="ingressRuleFlat.host">
+              <a rel="noopener noreferrer"
+                 href="https://{{ ingressRuleFlat.host }}{{ ingressRuleFlat.path.path }}"
+                 target="_blank">{{ ingressRuleFlat.path.path }}</a>
+            </ng-container>
+            <ng-container *ngIf="!ingressRuleFlat.host">{{ ingressRuleFlat.path.path }}</ng-container>
+          </ng-container>
+          <ng-container *ngIf="!ingressRuleFlat.path.path">-</ng-container>
         </mat-cell>
       </ng-container>
       <ng-container [matColumnDef]="getIngressRulesFlatColumns()[2]">
