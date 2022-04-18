@@ -141,7 +141,7 @@
     "jest": "27.5.1",
     "jest-preset-angular": "11.1.1",
     "license-check-and-add": "4.0.3",
-    "lint-staged": "12.3.7",
+    "lint-staged": "12.3.8",
     "lodash": "4.17.21",
     "minimatch": "5.0.1",
     "minimist": "1.2.6",
