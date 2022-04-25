@@ -139,7 +139,7 @@
     "jasmine-core": "4.1.0",
     "jasmine-spec-reporter": "7.0.0",
     "jest": "27.5.1",
-    "jest-preset-angular": "11.1.1",
+    "jest-preset-angular": "11.1.2",
     "license-check-and-add": "4.0.3",
     "lint-staged": "12.4.0",
     "lodash": "4.17.21",
