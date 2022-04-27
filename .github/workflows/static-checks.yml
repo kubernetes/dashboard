@@ -23,12 +23,13 @@ on:
 permissions:
   contents: read
 jobs:
-  analyze-codeql:
+
+  codeql:
     permissions:
       actions: read
       contents: read
       security-events: write
-    name: Analyze CodeQL
+    name: CodeQL
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
@@ -37,22 +38,22 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-      - name: Initialize CodeQL
-        uses: github/codeql-action/init@1ed1437484560351c5be56cf73a48a279d116b78 # v1
+      - name: Initialize
+        uses: github/codeql-action/init@v2
         with:
           languages: ${{ matrix.language }}
-      - name: Autobuild CodeQL
-        uses: github/codeql-action/autobuild@1ed1437484560351c5be56cf73a48a279d116b78 # v1
-      - name: Analyze CodeQL
-        uses: github/codeql-action/analyze@1ed1437484560351c5be56cf73a48a279d116b78 # v1
+      - name: Autobuild
+        uses: github/codeql-action/autobuild@v2
+      - name: Analyze
+        uses: github/codeql-action/analyze@v2
 
-  license-check:
-    name: License Check
+  license:
+    name: License
     runs-on: ubuntu-latest
     env:
       TERM: xterm
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-      - name: License Check
+      - name: Check
         uses: apache/skywalking-eyes@main

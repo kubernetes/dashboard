@@ -9,7 +9,7 @@
   },
   "engines": {
     "node": ">=16.15.0",
-    "npm": ">=8.7.0"
+    "npm": ">=8.6.0"
   },
   "scripts": {
     "start": "npm run ensure:version && ng serve --proxy-config proxy.conf.json --host $npm_config_bind_address --port $npm_config_port",

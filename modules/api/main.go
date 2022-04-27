@@ -137,12 +137,10 @@ func main() {
 		handleFatalInitServingCertError(err)
 	}
 
-	// Run HTTP server that handles API calls.
 	http.Handle("/api/", apiHandler)
 	http.Handle("/api/sockjs/", handler.CreateAttachHandler("/api/sockjs"))
 	http.Handle("/metrics", promhttp.Handler())
 
-	// Listen for http or https
 	if certs != nil {
 		serveTLS(certs)
 	} else {
