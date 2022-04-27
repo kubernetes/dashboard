@@ -19,7 +19,7 @@ import (
 	"k8s.io/apimachinery/pkg/runtime"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 
-	"github.com/kubernetes/dashboard/src/app/backend/plugin/apis"
+	"github.com/kubernetes/dashboard/api/src/plugin/apis"
 )
 
 // SchemeGroupVersion is group version used to register these objects

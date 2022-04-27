@@ -18,7 +18,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/kubernetes/dashboard/src/app/backend/sync/poll"
+	"github.com/kubernetes/dashboard/api/src/sync/poll"
 	v1 "k8s.io/api/core/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/watch"

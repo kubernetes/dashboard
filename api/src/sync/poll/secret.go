@@ -23,8 +23,8 @@ import (
 	"k8s.io/apimachinery/pkg/watch"
 	"k8s.io/client-go/kubernetes"
 
-	"github.com/kubernetes/dashboard/src/app/backend/errors"
-	syncapi "github.com/kubernetes/dashboard/src/app/backend/sync/api"
+	"github.com/kubernetes/dashboard/api/src/errors"
+	syncapi "github.com/kubernetes/dashboard/api/src/sync/api"
 )
 
 // SecretPoller implements Poller interface. See Poller for more information.

@@ -17,9 +17,9 @@ package customresourcedefinition
 import (
 	client "k8s.io/client-go/kubernetes"
 
-	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/event"
+	"github.com/kubernetes/dashboard/api/src/resource/common"
+	"github.com/kubernetes/dashboard/api/src/resource/dataselect"
+	"github.com/kubernetes/dashboard/api/src/resource/event"
 )
 
 // GetEventsForCustomResourceObject gets events that are associated with this CR object.

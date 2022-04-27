@@ -19,8 +19,8 @@ package v1alpha1
 import (
 	"net/http"
 
-	v1alpha1 "github.com/kubernetes/dashboard/src/app/backend/plugin/apis/v1alpha1"
-	"github.com/kubernetes/dashboard/src/app/backend/plugin/client/clientset/versioned/scheme"
+	v1alpha1 "github.com/kubernetes/dashboard/api/src/plugin/apis/v1alpha1"
+	"github.com/kubernetes/dashboard/api/src/plugin/client/clientset/versioned/scheme"
 	rest "k8s.io/client-go/rest"
 )
 

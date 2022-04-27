@@ -22,12 +22,12 @@ import (
 	k8serrors "k8s.io/apimachinery/pkg/api/errors"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 
-	"github.com/kubernetes/dashboard/src/app/backend/api"
-	"github.com/kubernetes/dashboard/src/app/backend/errors"
-	metricapi "github.com/kubernetes/dashboard/src/app/backend/integration/metric/api"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/pod"
+	"github.com/kubernetes/dashboard/api/src/api"
+	"github.com/kubernetes/dashboard/api/src/errors"
+	metricapi "github.com/kubernetes/dashboard/api/src/integration/metric/api"
+	"github.com/kubernetes/dashboard/api/src/resource/common"
+	"github.com/kubernetes/dashboard/api/src/resource/dataselect"
+	"github.com/kubernetes/dashboard/api/src/resource/pod"
 )
 
 func TestGetPodListFromChannels(t *testing.T) {

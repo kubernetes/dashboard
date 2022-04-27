@@ -15,10 +15,10 @@
 package service
 
 import (
-	"github.com/kubernetes/dashboard/src/app/backend/errors"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/ingress"
+	"github.com/kubernetes/dashboard/api/src/errors"
+	"github.com/kubernetes/dashboard/api/src/resource/common"
+	"github.com/kubernetes/dashboard/api/src/resource/dataselect"
+	"github.com/kubernetes/dashboard/api/src/resource/ingress"
 	client "k8s.io/client-go/kubernetes"
 )
 

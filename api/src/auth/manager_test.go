@@ -21,12 +21,12 @@ import (
 
 	restful "github.com/emicklei/go-restful/v3"
 
-	authApi "github.com/kubernetes/dashboard/src/app/backend/auth/api"
-	"github.com/kubernetes/dashboard/src/app/backend/client"
-	clientapi "github.com/kubernetes/dashboard/src/app/backend/client/api"
-	"github.com/kubernetes/dashboard/src/app/backend/errors"
+	authApi "github.com/kubernetes/dashboard/api/src/auth/api"
+	"github.com/kubernetes/dashboard/api/src/client"
+	clientapi "github.com/kubernetes/dashboard/api/src/client/api"
+	"github.com/kubernetes/dashboard/api/src/errors"
 
-	pluginclientset "github.com/kubernetes/dashboard/src/app/backend/plugin/client/clientset/versioned"
+	pluginclientset "github.com/kubernetes/dashboard/api/src/plugin/client/clientset/versioned"
 	v1 "k8s.io/api/authorization/v1"
 	apiextensionsclientset "k8s.io/apiextensions-apiserver/pkg/client/clientset/clientset"
 	"k8s.io/client-go/kubernetes"

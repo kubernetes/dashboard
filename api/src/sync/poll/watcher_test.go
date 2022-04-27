@@ -17,7 +17,7 @@ package poll_test
 import (
 	"testing"
 
-	"github.com/kubernetes/dashboard/src/app/backend/sync/poll"
+	"github.com/kubernetes/dashboard/api/src/sync/poll"
 )
 
 func TestNewPollWatcher(t *testing.T) {

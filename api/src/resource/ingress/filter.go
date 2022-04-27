@@ -15,7 +15,7 @@
 package ingress
 
 import (
-	"github.com/kubernetes/dashboard/src/app/backend/api"
+	"github.com/kubernetes/dashboard/api/src/api"
 	networkingv1 "k8s.io/api/networking/v1"
 )
 

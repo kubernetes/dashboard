@@ -21,10 +21,10 @@ import (
 	v1 "k8s.io/api/core/v1"
 	client "k8s.io/client-go/kubernetes"
 
-	"github.com/kubernetes/dashboard/src/app/backend/api"
-	"github.com/kubernetes/dashboard/src/app/backend/errors"
-	metricapi "github.com/kubernetes/dashboard/src/app/backend/integration/metric/api"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
+	"github.com/kubernetes/dashboard/api/src/api"
+	"github.com/kubernetes/dashboard/api/src/errors"
+	metricapi "github.com/kubernetes/dashboard/api/src/integration/metric/api"
+	"github.com/kubernetes/dashboard/api/src/resource/dataselect"
 )
 
 // NodeList contains a list of nodes in the cluster.

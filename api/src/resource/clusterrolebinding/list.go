@@ -17,10 +17,10 @@ package clusterrolebinding
 import (
 	"log"
 
-	"github.com/kubernetes/dashboard/src/app/backend/api"
-	"github.com/kubernetes/dashboard/src/app/backend/errors"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
+	"github.com/kubernetes/dashboard/api/src/api"
+	"github.com/kubernetes/dashboard/api/src/errors"
+	"github.com/kubernetes/dashboard/api/src/resource/common"
+	"github.com/kubernetes/dashboard/api/src/resource/dataselect"
 	rbac "k8s.io/api/rbac/v1"
 	"k8s.io/client-go/kubernetes"
 )

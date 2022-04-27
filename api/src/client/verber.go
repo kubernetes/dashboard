@@ -24,10 +24,10 @@ import (
 	"k8s.io/apimachinery/pkg/runtime"
 	restclient "k8s.io/client-go/rest"
 
-	"github.com/kubernetes/dashboard/src/app/backend/api"
-	clientapi "github.com/kubernetes/dashboard/src/app/backend/client/api"
-	"github.com/kubernetes/dashboard/src/app/backend/errors"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/customresourcedefinition"
+	"github.com/kubernetes/dashboard/api/src/api"
+	clientapi "github.com/kubernetes/dashboard/api/src/client/api"
+	"github.com/kubernetes/dashboard/api/src/errors"
+	"github.com/kubernetes/dashboard/api/src/resource/customresourcedefinition"
 )
 
 // resourceVerber is a struct responsible for doing common verb operations on resources, like

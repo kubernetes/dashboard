@@ -21,8 +21,8 @@ import (
 
 	"k8s.io/apiextensions-apiserver/pkg/apis/apiextensions"
 
-	"github.com/kubernetes/dashboard/src/app/backend/api"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
+	"github.com/kubernetes/dashboard/api/src/api"
+	"github.com/kubernetes/dashboard/api/src/resource/common"
 )
 
 // CustomResourceDefinitionList contains a list of Custom Resource Definitions in the cluster.

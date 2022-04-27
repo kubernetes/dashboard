@@ -32,14 +32,14 @@ import (
 	"k8s.io/client-go/tools/clientcmd"
 	"k8s.io/client-go/tools/clientcmd/api"
 
-	pluginclientset "github.com/kubernetes/dashboard/src/app/backend/plugin/client/clientset/versioned"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/customresourcedefinition"
+	pluginclientset "github.com/kubernetes/dashboard/api/src/plugin/client/clientset/versioned"
+	"github.com/kubernetes/dashboard/api/src/resource/customresourcedefinition"
 
-	"github.com/kubernetes/dashboard/src/app/backend/args"
-	authApi "github.com/kubernetes/dashboard/src/app/backend/auth/api"
-	clientapi "github.com/kubernetes/dashboard/src/app/backend/client/api"
-	"github.com/kubernetes/dashboard/src/app/backend/client/csrf"
-	"github.com/kubernetes/dashboard/src/app/backend/errors"
+	"github.com/kubernetes/dashboard/api/src/args"
+	authApi "github.com/kubernetes/dashboard/api/src/auth/api"
+	clientapi "github.com/kubernetes/dashboard/api/src/client/api"
+	"github.com/kubernetes/dashboard/api/src/client/csrf"
+	"github.com/kubernetes/dashboard/api/src/errors"
 )
 
 // Dashboard UI default values for client configs.

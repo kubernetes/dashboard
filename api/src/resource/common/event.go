@@ -15,7 +15,7 @@
 package common
 
 import (
-	"github.com/kubernetes/dashboard/src/app/backend/api"
+	"github.com/kubernetes/dashboard/api/src/api"
 	v1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 

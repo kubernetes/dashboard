@@ -15,7 +15,7 @@
 package role
 
 import (
-	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
+	"github.com/kubernetes/dashboard/api/src/resource/dataselect"
 )
 
 // The code below allows to perform complex data section on []Role

@@ -1,4 +1,4 @@
-module github.com/kubernetes/dashboard
+module github.com/kubernetes/dashboard/api
 
 go 1.17
 

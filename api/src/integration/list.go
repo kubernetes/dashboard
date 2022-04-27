@@ -15,7 +15,7 @@
 package integration
 
 import (
-	"github.com/kubernetes/dashboard/src/app/backend/integration/api"
+	"github.com/kubernetes/dashboard/api/src/integration/api"
 )
 
 // IntegrationsGetter is responsible for listing all supported integrations.

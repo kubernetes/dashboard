@@ -19,7 +19,7 @@ import (
 	"crypto/x509"
 	"encoding/pem"
 
-	"github.com/kubernetes/dashboard/src/app/backend/errors"
+	"github.com/kubernetes/dashboard/api/src/errors"
 )
 
 // Credits to David W. https://stackoverflow.com/a/44688503

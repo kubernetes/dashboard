@@ -19,11 +19,11 @@ import (
 	"log"
 	"time"
 
-	clientapi "github.com/kubernetes/dashboard/src/app/backend/client/api"
-	integrationapi "github.com/kubernetes/dashboard/src/app/backend/integration/api"
-	metricapi "github.com/kubernetes/dashboard/src/app/backend/integration/metric/api"
-	"github.com/kubernetes/dashboard/src/app/backend/integration/metric/heapster"
-	"github.com/kubernetes/dashboard/src/app/backend/integration/metric/sidecar"
+	clientapi "github.com/kubernetes/dashboard/api/src/client/api"
+	integrationapi "github.com/kubernetes/dashboard/api/src/integration/api"
+	metricapi "github.com/kubernetes/dashboard/api/src/integration/metric/api"
+	"github.com/kubernetes/dashboard/api/src/integration/metric/heapster"
+	"github.com/kubernetes/dashboard/api/src/integration/metric/sidecar"
 	"k8s.io/apimachinery/pkg/util/wait"
 )
 

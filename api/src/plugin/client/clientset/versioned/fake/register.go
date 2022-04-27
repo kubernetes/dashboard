@@ -17,7 +17,7 @@
 package fake
 
 import (
-	dashboardv1alpha1 "github.com/kubernetes/dashboard/src/app/backend/plugin/apis/v1alpha1"
+	dashboardv1alpha1 "github.com/kubernetes/dashboard/api/src/plugin/apis/v1alpha1"
 	v1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	runtime "k8s.io/apimachinery/pkg/runtime"
 	schema "k8s.io/apimachinery/pkg/runtime/schema"

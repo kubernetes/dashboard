@@ -26,11 +26,11 @@ import (
 	"k8s.io/client-go/rest"
 	heapster "k8s.io/heapster/metrics/api/v1/types"
 
-	"github.com/kubernetes/dashboard/src/app/backend/client"
-	"github.com/kubernetes/dashboard/src/app/backend/errors"
-	integrationapi "github.com/kubernetes/dashboard/src/app/backend/integration/api"
-	metricapi "github.com/kubernetes/dashboard/src/app/backend/integration/metric/api"
-	"github.com/kubernetes/dashboard/src/app/backend/integration/metric/common"
+	"github.com/kubernetes/dashboard/api/src/client"
+	"github.com/kubernetes/dashboard/api/src/errors"
+	integrationapi "github.com/kubernetes/dashboard/api/src/integration/api"
+	metricapi "github.com/kubernetes/dashboard/api/src/integration/metric/api"
+	"github.com/kubernetes/dashboard/api/src/integration/metric/common"
 )
 
 // Heapster client implements MetricClient and Integration interfaces.

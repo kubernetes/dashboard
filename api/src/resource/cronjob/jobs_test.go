@@ -19,7 +19,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/kubernetes/dashboard/src/app/backend/resource/cronjob"
+	"github.com/kubernetes/dashboard/api/src/resource/cronjob"
 	batch "k8s.io/api/batch/v1beta1"
 	"k8s.io/apimachinery/pkg/api/errors"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"

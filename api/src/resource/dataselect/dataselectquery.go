@@ -15,7 +15,7 @@
 package dataselect
 
 import (
-	metricapi "github.com/kubernetes/dashboard/src/app/backend/integration/metric/api"
+	metricapi "github.com/kubernetes/dashboard/api/src/integration/metric/api"
 )
 
 // DataSelectQuery is options for GenericDataSelect which takes []GenericDataCell and returns selected data.

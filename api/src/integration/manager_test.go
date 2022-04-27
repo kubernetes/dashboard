@@ -18,9 +18,9 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/kubernetes/dashboard/src/app/backend/client"
-	"github.com/kubernetes/dashboard/src/app/backend/errors"
-	"github.com/kubernetes/dashboard/src/app/backend/integration/api"
+	"github.com/kubernetes/dashboard/api/src/client"
+	"github.com/kubernetes/dashboard/api/src/errors"
+	"github.com/kubernetes/dashboard/api/src/integration/api"
 )
 
 func areErrorsEqual(err1, err2 error) bool {
@@ -52,16 +52,16 @@ func TestIntegrationManager_GetState(t *testing.T) {
 		{
 			"Server provided and using in-cluster heapster",
 			"http://127.0.0.1:8080", "", &api.IntegrationState{
-				Connected: false,
-				Error:     errors.NewInvalid("Get http://127.0.0.1:8080/api/v1/namespaces/kube-system/services/heapster/proxy/healthz: dial tcp 127.0.0.1:8080: connect: connection refused"),
-			}, nil,
+			Connected: false,
+			Error:     errors.NewInvalid("Get http://127.0.0.1:8080/api/v1/namespaces/kube-system/services/heapster/proxy/healthz: dial tcp 127.0.0.1:8080: connect: connection refused"),
+		}, nil,
 		},
 		{
 			"Server provided and using external heapster",
 			"http://127.0.0.1:8080", "http://127.0.0.1:8081", &api.IntegrationState{
-				Connected: false,
-				Error:     errors.NewInvalid("Get http://127.0.0.1:8081/healthz: dial tcp 127.0.0.1:8081: connect: connection refused"),
-			}, nil,
+			Connected: false,
+			Error:     errors.NewInvalid("Get http://127.0.0.1:8081/healthz: dial tcp 127.0.0.1:8081: connect: connection refused"),
+		}, nil,
 		},
 	}
 

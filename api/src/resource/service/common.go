@@ -15,7 +15,7 @@
 package service
 
 import (
-	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
+	"github.com/kubernetes/dashboard/api/src/resource/dataselect"
 	v1 "k8s.io/api/core/v1"
 )
 

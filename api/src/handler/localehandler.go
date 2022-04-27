@@ -24,7 +24,7 @@ import (
 	"github.com/golang/glog"
 	"golang.org/x/text/language"
 
-	"github.com/kubernetes/dashboard/src/app/backend/args"
+	"github.com/kubernetes/dashboard/api/src/args"
 )
 
 const defaultLocaleDir = "en"

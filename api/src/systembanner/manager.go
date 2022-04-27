@@ -15,7 +15,7 @@
 package systembanner
 
 import (
-	"github.com/kubernetes/dashboard/src/app/backend/systembanner/api"
+	"github.com/kubernetes/dashboard/api/src/systembanner/api"
 )
 
 // SystemBannerManager is a structure containing all system banner manager members.

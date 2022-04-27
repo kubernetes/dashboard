@@ -19,10 +19,10 @@ import (
 
 	restful "github.com/emicklei/go-restful/v3"
 
-	"github.com/kubernetes/dashboard/src/app/backend/args"
-	clientapi "github.com/kubernetes/dashboard/src/app/backend/client/api"
-	"github.com/kubernetes/dashboard/src/app/backend/errors"
-	"github.com/kubernetes/dashboard/src/app/backend/settings/api"
+	"github.com/kubernetes/dashboard/api/src/args"
+	clientapi "github.com/kubernetes/dashboard/api/src/client/api"
+	"github.com/kubernetes/dashboard/api/src/errors"
+	"github.com/kubernetes/dashboard/api/src/settings/api"
 )
 
 // SettingsHandler manages all endpoints related to settings management.

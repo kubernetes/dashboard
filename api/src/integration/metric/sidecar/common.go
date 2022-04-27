@@ -15,8 +15,8 @@
 package sidecar
 
 import (
-	"github.com/kubernetes/dashboard/src/app/backend/api"
-	metricapi "github.com/kubernetes/dashboard/src/app/backend/integration/metric/api"
+	"github.com/kubernetes/dashboard/api/src/api"
+	metricapi "github.com/kubernetes/dashboard/api/src/integration/metric/api"
 )
 
 // compress compresses list of SidecarSelectors to equivalent, shorter one in order to perform smaller number of requests.

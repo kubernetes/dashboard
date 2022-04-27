@@ -17,9 +17,9 @@ package integration
 import (
 	"fmt"
 
-	clientapi "github.com/kubernetes/dashboard/src/app/backend/client/api"
-	"github.com/kubernetes/dashboard/src/app/backend/integration/api"
-	"github.com/kubernetes/dashboard/src/app/backend/integration/metric"
+	clientapi "github.com/kubernetes/dashboard/api/src/client/api"
+	"github.com/kubernetes/dashboard/api/src/integration/api"
+	"github.com/kubernetes/dashboard/api/src/integration/metric"
 	v1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 

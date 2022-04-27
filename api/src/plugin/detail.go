@@ -17,7 +17,7 @@ package plugin
 import (
 	"context"
 
-	pluginclientset "github.com/kubernetes/dashboard/src/app/backend/plugin/client/clientset/versioned"
+	pluginclientset "github.com/kubernetes/dashboard/api/src/plugin/client/clientset/versioned"
 	v1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/client-go/kubernetes"
 )

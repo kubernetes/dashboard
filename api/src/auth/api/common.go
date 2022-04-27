@@ -17,7 +17,7 @@ package api
 import (
 	"strings"
 
-	"github.com/kubernetes/dashboard/src/app/backend/args"
+	"github.com/kubernetes/dashboard/api/src/args"
 )
 
 // ToAuthenticationModes transforms array of authentication mode strings to valid AuthenticationModes type.

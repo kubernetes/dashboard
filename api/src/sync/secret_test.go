@@ -18,7 +18,7 @@ import (
 	"testing"
 	"time"
 
-	syncApi "github.com/kubernetes/dashboard/src/app/backend/sync/api"
+	syncApi "github.com/kubernetes/dashboard/api/src/sync/api"
 	v1 "k8s.io/api/core/v1"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime"
