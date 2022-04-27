@@ -18,32 +18,30 @@ set -o errexit
 set -o nounset
 set -o pipefail
 
-SCRIPT_ROOT=$(dirname "${BASH_SOURCE[0]}")/../..
-
-DIFFROOT="${SCRIPT_ROOT}/src/app/backend"
-TMP_DIFFROOT="${SCRIPT_ROOT}/_tmp/src/app/backend"
-_tmp="${SCRIPT_ROOT}/_tmp"
+DIFF_ROOT="../src"
+TMP_DIFF_ROOT="../_tmp/src"
+_tmp="../_tmp"
 
 cleanup() {
   rm -rf "${_tmp}"
 }
-trap "cleanup" EXIT SIGINT
 
 cleanup
+trap "cleanup" EXIT SIGINT
 
-mkdir -p "${TMP_DIFFROOT}"
-cp -a "${DIFFROOT}"/* "${TMP_DIFFROOT}"
+mkdir -p "${TMP_DIFF_ROOT}"
+cp -a "${DIFF_ROOT}"/* "${TMP_DIFF_ROOT}"
 
-"${SCRIPT_ROOT}/aio/scripts/update-codegen.sh"
-echo "diffing ${DIFFROOT} against freshly generated codegen"
+"./codegen-update.sh"
+echo "diffing ${DIFF_ROOT} against freshly generated codegen"
 ret=0
-diff -Naupr "${DIFFROOT}" "${TMP_DIFFROOT}" || ret=$?
-cp -a "${TMP_DIFFROOT}"/* "${DIFFROOT}"
+diff -Naupr "${DIFF_ROOT}" "${TMP_DIFF_ROOT}" || ret=$?
+cp -a "${TMP_DIFF_ROOT}"/* "${DIFF_ROOT}"
 if [[ $ret -eq 0 ]]
 then
-  echo "${DIFFROOT} up to date."
+  echo "${DIFF_ROOT} up to date."
 else
-  echo "${DIFFROOT} is out of date. Please run aio/scripts/update-codegen.sh"
+  echo "${DIFF_ROOT} is out of date. Please run codegen-update.sh"
   exit 1
 fi
 
