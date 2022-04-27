@@ -159,11 +159,11 @@ fix-i18n:
 
 .PHONY: check-license
 check-license:
-	license-check-and-add check -f license-checker-config.json
+	${GOPATH}/bin/license-eye header check
 
 .PHONY: fix-license
 fix-license:
-	license-check-and-add add -f license-checker-config.json
+	${GOPATH}/bin/license-eye header fix
 
 .PHONY: check-codegen
 check-codegen: ensure-codegen
