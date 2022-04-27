@@ -18,58 +18,53 @@ import (
 	"reflect"
 	"testing"
 
-	v1 "k8s.io/api/core/v1"
-	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	batch "k8s.io/api/batch/v1beta1"
+	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/client-go/kubernetes/fake"
 	"k8s.io/dashboard/api/pkg/api"
-	"k8s.io/dashboard/api/pkg/resource/common"
-	"k8s.io/dashboard/api/pkg/resource/cronjob"
 	"k8s.io/dashboard/api/pkg/resource/dataselect"
 )
 
-func TestGetJobEvents(t *testing.T) {
+func TestGetCronJobDetail(t *testing.T) {
 	cases := []struct {
 		namespace, name string
-		eventList       *v1.EventList
 		expectedActions []string
-		expected        *common.EventList
+		raw             *batch.CronJob
+		expected        *CronJobDetail
 	}{
 		{
 			namespace,
 			name,
-			&v1.EventList{
-				Items: []v1.Event{{
-					Message: eventMessage,
-					ObjectMeta: metaV1.ObjectMeta{
-						Name:      name,
-						Namespace: namespace,
-						Labels:    labels,
-					}},
-				}},
-			[]string{"list"},
-			&common.EventList{
-				ListMeta: api.ListMeta{
-					TotalItems: 1,
+			[]string{"get"},
+			&batch.CronJob{
+				ObjectMeta: metav1.ObjectMeta{
+					Name:      name,
+					Namespace: namespace,
+					Labels:    labels,
 				},
-				Events: []common.Event{{
-					TypeMeta: api.TypeMeta{
-						Kind: api.ResourceKindEvent,
-					},
+				Spec: batch.CronJobSpec{
+					Suspend: &suspend,
+				},
+			},
+			&CronJobDetail{
+				CronJob: CronJob{
 					ObjectMeta: api.ObjectMeta{
 						Name:      name,
 						Namespace: namespace,
 						Labels:    labels,
 					},
-					Message: eventMessage,
-					Type:    v1.EventTypeNormal,
-				}}},
+					TypeMeta:        api.TypeMeta{Kind: api.ResourceKindCronJob},
+					Suspend:         &suspend,
+					ContainerImages: []string{},
+				},
+			},
 		},
 	}
 
 	for _, c := range cases {
-		fakeClient := fake.NewSimpleClientset(c.eventList)
-
-		actual, _ := cronjob.GetCronJobEvents(fakeClient, dataselect.NoDataSelect, c.namespace, c.name)
+		fakeClient := fake.NewSimpleClientset(c.raw)
+		dataselect.DefaultDataSelectWithMetrics.MetricQuery = dataselect.NoMetrics
+		actual, _ := GetCronJobDetail(fakeClient, c.namespace, c.name)
 
 		actions := fakeClient.Actions()
 		if len(actions) != len(c.expectedActions) {
@@ -86,8 +81,7 @@ func TestGetJobEvents(t *testing.T) {
 		}
 
 		if !reflect.DeepEqual(actual, c.expected) {
-			t.Errorf("TestGetJobEvents(client,metricClient,%#v, %#v) == \ngot: %#v, \nexpected %#v",
-				c.namespace, c.name, actual, c.expected)
+			t.Errorf("GetCronJobDetail() got:\n%#v,\nexpected:\n%#v", actual, c.expected)
 		}
 	}
 }

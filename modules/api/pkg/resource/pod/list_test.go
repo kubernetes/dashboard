@@ -27,7 +27,6 @@ import (
 	metricapi "k8s.io/dashboard/api/pkg/integration/metric/api"
 	"k8s.io/dashboard/api/pkg/resource/common"
 	"k8s.io/dashboard/api/pkg/resource/dataselect"
-	"k8s.io/dashboard/api/pkg/resource/pod"
 )
 
 func TestGetPodListFromChannels(t *testing.T) {
@@ -35,16 +34,16 @@ func TestGetPodListFromChannels(t *testing.T) {
 		k8sPod        v1.PodList
 		k8sPodError   error
 		pods          *v1.PodList
-		expected      *pod.PodList
+		expected      *PodList
 		expectedError error
 	}{
 		{
 			v1.PodList{},
 			nil,
 			&v1.PodList{},
-			&pod.PodList{
+			&PodList{
 				ListMeta:          api.ListMeta{},
-				Pods:              []pod.Pod{},
+				Pods:              []Pod{},
 				CumulativeMetrics: make([]metricapi.Metric, 0),
 				Errors:            []error{},
 			},
@@ -91,11 +90,11 @@ func TestGetPodListFromChannels(t *testing.T) {
 			},
 			nil,
 			&v1.PodList{},
-			&pod.PodList{
+			&PodList{
 				ListMeta:          api.ListMeta{TotalItems: 1},
 				CumulativeMetrics: make([]metricapi.Metric, 0),
 				Status:            common.ResourceStatus{Pending: 1},
-				Pods: []pod.Pod{{
+				Pods: []Pod{{
 					ObjectMeta: api.ObjectMeta{
 						Name:              "pod-name",
 						Namespace:         "pod-namespace",
@@ -130,7 +129,7 @@ func TestGetPodListFromChannels(t *testing.T) {
 		channels.EventList.List <- &v1.EventList{}
 		channels.EventList.Error <- nil
 
-		actual, err := pod.GetPodListFromChannels(channels, dataselect.NoDataSelect, nil)
+		actual, err := GetPodListFromChannels(channels, dataselect.NoDataSelect, nil)
 		if !reflect.DeepEqual(actual, c.expected) {
 			t.Errorf("GetPodListFromChannels() ==\n          %#v\nExpected: %#v", actual, c.expected)
 		}

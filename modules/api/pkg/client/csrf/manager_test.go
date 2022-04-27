@@ -22,7 +22,6 @@ import (
 	"k8s.io/client-go/kubernetes/fake"
 
 	"k8s.io/dashboard/api/pkg/client/api"
-	"k8s.io/dashboard/api/pkg/client/csrf"
 )
 
 func TestCsrfTokenManager_Token(t *testing.T) {
@@ -51,7 +50,7 @@ func TestCsrfTokenManager_Token(t *testing.T) {
 			}()
 
 			client := fake.NewSimpleClientset(c.csrfSecret)
-			manager := csrf.NewCsrfTokenManager(client)
+			manager := NewCsrfTokenManager(client)
 
 			if (len(manager.Token()) == 0) == c.wantToken {
 				t.Errorf("Expected token to exist: %v", c.wantToken)
