@@ -13,28 +13,21 @@
 // limitations under the License.
 
 import {HttpClient} from '@angular/common/http';
-import {Component, Inject, OnDestroy, OnInit, ViewChild} from '@angular/core';
-import {MatButtonToggleGroup} from '@angular/material/button-toggle';
+import {Component, Inject, OnInit, ViewChild} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
-import {dump as toYaml, load as fromYaml} from 'js-yaml';
-import {EditorMode} from '../../components/textinput/component';
+import {EditorGroup} from '@common/components/editorgroup/component';
+import {dump as toYaml} from 'js-yaml';
 
 import {RawResource} from '../../resources/rawresource';
 import {ResourceMeta} from '../../services/global/actionbar';
-import {Subject} from 'rxjs';
-import {takeUntil} from 'rxjs/operators';
 
 @Component({
   selector: 'kd-delete-resource-dialog',
   templateUrl: 'template.html',
 })
-export class EditResourceDialog implements OnInit, OnDestroy {
-  selectedMode = EditorMode.YAML;
-  private unsubscribe_ = new Subject<void>();
-
-  @ViewChild('group', {static: true}) buttonToggleGroup: MatButtonToggleGroup;
-  text = '';
-  modes = EditorMode;
+export class EditResourceDialog implements OnInit {
+  initialText = '';
+  @ViewChild('editorgroup') editorGroup: EditorGroup;
 
   constructor(
     public dialogRef: MatDialogRef<EditResourceDialog>,
@@ -48,48 +41,11 @@ export class EditResourceDialog implements OnInit, OnDestroy {
       .get(url)
       .toPromise()
       .then(response => {
-        this.text = toYaml(response);
+        this.initialText = toYaml(response);
       });
-
-    this.buttonToggleGroup.valueChange.pipe(takeUntil(this.unsubscribe_)).subscribe((selectedMode: EditorMode) => {
-      this.selectedMode = selectedMode;
-
-      if (this.text) {
-        this.updateText();
-      }
-    });
   }
 
-  ngOnDestroy(): void {
-    this.unsubscribe_.next();
-    this.unsubscribe_.complete();
-  }
-
-  onNoClick(): void {
-    this.dialogRef.close();
-  }
-
-  getJSON(): string {
-    if (this.selectedMode === EditorMode.YAML) {
-      return this.toRawJSON(fromYaml(this.text));
-    }
-
-    return this.text;
-  }
-
-  getSelectedMode(): string {
-    return this.buttonToggleGroup.value;
-  }
-
-  private updateText(): void {
-    if (this.selectedMode === EditorMode.YAML) {
-      this.text = toYaml(JSON.parse(this.text));
-    } else {
-      this.text = this.toRawJSON(fromYaml(this.text));
-    }
-  }
-
-  private toRawJSON(object: {}): string {
-    return JSON.stringify(object, null, '\t');
+  onUpdateClick(): void {
+    this.dialogRef.close(this.editorGroup.getJSON());
   }
 }

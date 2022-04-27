@@ -16,17 +16,10 @@ limitations under the License.
 
 <h2 mat-dialog-title
     i18n>Preview Deployment</h2>
-<mat-dialog-content class="kd-dialog-text">
-  <mat-button-toggle-group #group="matButtonToggleGroup">
-    <mat-button-toggle [value]="modes.YAML"
-                       [checked]="true">YAML</mat-button-toggle>
-    <mat-button-toggle [value]="modes.JSON">JSON</mat-button-toggle>
-  </mat-button-toggle-group>
+<kd-editor-group [readOnly]="false"
+                 [initialText]="initialText"
+                 #editorgroup></kd-editor-group>
 
-  <kd-text-input [(text)]="text"
-                 [readOnly]="true"
-                 [mode]="getSelectedMode()"></kd-text-input>
-</mat-dialog-content>
 <mat-dialog-actions>
   <button mat-button
           color="primary"
