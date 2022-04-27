@@ -41,7 +41,6 @@ import (
 	integrationapi "k8s.io/dashboard/api/pkg/integration/api"
 	"k8s.io/dashboard/api/pkg/settings"
 	"k8s.io/dashboard/api/pkg/sync"
-	"k8s.io/dashboard/api/pkg/systembanner"
 )
 
 var (
@@ -106,10 +105,6 @@ func main() {
 	// Init settings manager
 	settingsManager := settings.NewSettingsManager()
 
-	// Init system banner manager
-	systemBannerManager := systembanner.NewSystemBannerManager(args.Holder.GetSystemBanner(),
-		args.Holder.GetSystemBannerSeverity())
-
 	// Init integrations
 	integrationManager := integration.NewIntegrationManager(clientManager)
 
@@ -133,8 +128,7 @@ func main() {
 		integrationManager,
 		clientManager,
 		authManager,
-		settingsManager,
-		systemBannerManager)
+		settingsManager)
 	if err != nil {
 		handleFatalInitError(err)
 	}
@@ -159,14 +153,10 @@ func main() {
 		servingCerts = []tls.Certificate{servingCert}
 	}
 
-	// Run a HTTP server that serves static public files from './public' and handles API calls.
-	http.Handle("/", handler.MakeGzipHandler(handler.CreateLocaleHandler()))
 	http.Handle("/api/", apiHandler)
-	http.Handle("/config", handler.AppHandler(handler.ConfigHandler))
 	http.Handle("/api/sockjs/", handler.CreateAttachHandler("/api/sockjs"))
 	http.Handle("/metrics", promhttp.Handler())
 
-	// Listen for http or https
 	if servingCerts != nil {
 		log.Printf("Serving securely on HTTPS port: %d", args.Holder.GetPort())
 		secureAddr := fmt.Sprintf("%s:%d", args.Holder.GetBindAddress(), args.Holder.GetPort())

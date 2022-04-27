@@ -73,7 +73,6 @@ import (
 	"k8s.io/dashboard/api/pkg/scaling"
 	"k8s.io/dashboard/api/pkg/settings"
 	settingsApi "k8s.io/dashboard/api/pkg/settings/api"
-	"k8s.io/dashboard/api/pkg/systembanner"
 	"k8s.io/dashboard/api/pkg/validation"
 )
 
@@ -100,8 +99,7 @@ type TerminalResponse struct {
 
 // CreateHTTPAPIHandler creates a new HTTP handler that handles all requests to the API of the backend.
 func CreateHTTPAPIHandler(iManager integration.IntegrationManager, cManager clientapi.ClientManager,
-	authManager authApi.AuthManager, sManager settingsApi.SettingsManager,
-	sbManager systembanner.SystemBannerManager) (http.Handler, error) {
+	authManager authApi.AuthManager, sManager settingsApi.SettingsManager) (http.Handler, error) {
 	apiHandler := APIHandler{iManager: iManager, cManager: cManager, sManager: sManager}
 	wsContainer := restful.NewContainer()
 	wsContainer.EnableContentEncoding(true)
@@ -126,9 +124,6 @@ func CreateHTTPAPIHandler(iManager integration.IntegrationManager, cManager clie
 
 	settingsHandler := settings.NewSettingsHandler(sManager, cManager)
 	settingsHandler.Install(apiV1Ws)
-
-	systemBannerHandler := systembanner.NewSystemBannerHandler(sbManager)
-	systemBannerHandler.Install(apiV1Ws)
 
 	apiV1Ws.Route(
 		apiV1Ws.GET("csrftoken/{action}").

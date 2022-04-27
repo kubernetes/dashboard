@@ -25,7 +25,7 @@ import (
 )
 
 func languageMake(locales []string) []language.Tag {
-	result := []language.Tag{}
+	var result []language.Tag
 	for _, locale := range locales {
 		result = append(result, language.Make(locale))
 	}
