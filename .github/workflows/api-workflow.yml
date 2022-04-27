@@ -13,7 +13,6 @@
 # limitations under the License.
 
 name: Continuous Integration - API
-
 on:
   push:
     branches: [ master ]
@@ -29,74 +28,67 @@ on:
       - 'aio/**'
       - 'docs/**'
       - 'web/**'
-
 permissions:
   contents: read
-
 jobs:
   check:
     name: Static Check
     runs-on: ubuntu-latest
     env:
       NG_CLI_ANALYTICS: ci
-      GO111MODULE: on
       GOPROXY: "https://proxy.golang.org"
       TERM: xterm
+    defaults:
+      run:
+        working-directory: ./api
     steps:
       - name: Setup Environment
         uses: actions/checkout@629c2de402a417ea7690ca6ce3f33229e27606a5 # v2
         with:
           fetch-depth: 0
-
       - name: Setup Go
         uses: actions/setup-go@f6164bd8c8acb4a71fb2791a8b6c4024ff038dab # v2
         with:
           go-version: 1.17.0
-
       - name: Install Dependencies
         shell: bash
         run: |
           command -v golangci-lint >/dev/null 2>&1 || { curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $(go env GOPATH)/bin v1.41.1; }
           go mod download
-
       - name: Check Code
         shell: bash
         run: |
           export GOPATH=$(go env GOPATH)/bin
           npm run check
-
   unit:
     name: Unit Tests
     runs-on: ubuntu-latest
     env:
       NG_CLI_ANALYTICS: ci
-      GO111MODULE: on
       GOPROXY: "https://proxy.golang.org"
       TERM: xterm
-
+    defaults:
+      run:
+        working-directory: ./api
     steps:
       - name: Setup Environment
         uses: actions/checkout@629c2de402a417ea7690ca6ce3f33229e27606a5 # v2
         with:
           fetch-depth: 0
-
       - name: Setup Go
         uses: actions/setup-go@f6164bd8c8acb4a71fb2791a8b6c4024ff038dab # v2
         with:
           go-version: 1.17.0
-
       - name: Install Dependencies
         shell: bash
         run: |
           export GOPATH=$(go env GOPATH)/bin
           command -v golangci-lint >/dev/null 2>&1 || { curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $(go env GOPATH)/bin v1.41.1; }
           go mod download
-
-      - name: Run Backend Unit Tests
+      - name: Run Unit Tests
         run: make coverage-backend
-
-      - name: Cleanup & Upload Coverage
+      - name: Cleanup
+        run: make clean
+      - name: Upload Coverage
         shell: bash
-        run: |
-          make clean
-          bash <(curl -s https://codecov.io/bash) -c -K || echo "Codecov upload failed"
+        run: bash <(curl -s https://codecov.io/bash) -c -K || echo "Codecov upload failed"
