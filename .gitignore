@@ -1,27 +1,14 @@
-# Temporary files:
+.idea/
+.vscode/
+.DS_Store
+
 i18n/messages.new.xlf
 _tmp/
-
-# Dependencies:
-vendor/
-
-# Build and test artifacts:
-.go_workspace/
 .tmp/
 .cached_tools/
 dist/
 coverage/
 cypress/screenshots
 cypress/videos
-
-# System specific files:
-.DS_Store
-
-# IDE specific files:
-.idea/
-*.iml
 *.swp
-.vscode
-
-# Helm
 aio/deploy/helm-chart/kubernetes-dashboard/charts
