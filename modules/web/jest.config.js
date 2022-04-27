@@ -13,13 +13,13 @@
 // limitations under the License.
 
 const config = {
-  rootDir: '../src/app/frontend',
+  rootDir: '../src',
   coverageDirectory: '../../../coverage',
   preset: "jest-preset-angular/presets/defaults",
   setupFilesAfterEnv: ["<rootDir>/test.base.ts"],
   globals: {
     'ts-jest': {
-      tsconfig: 'aio/tsconfig.spec.json',
+      tsconfig: './tsconfig.spec.json',
     },
   },
   moduleNameMapper: {

@@ -1,0 +1,5 @@
+.angular/
+.sass-cache/
+node_modules/
+npm-debug.log
+src/environments/version.ts
