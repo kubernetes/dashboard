@@ -20,13 +20,13 @@ set -o pipefail
 
 CODEGEN_VERSION="v0.23.6"
 CODEGEN_BIN="${GOPATH}/pkg/mod/k8s.io/code-generator@${CODEGEN_VERSION}/generate-groups.sh"
-SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &> /dev/null && pwd)
-SOURCE_DIR="${SCRIPT_DIR}/../src"
-CODEGEN_DIR="${SCRIPT_DIR}/../codegen"
+HACK_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &> /dev/null && pwd)
+SOURCE_DIR="${HACK_DIR}/../src"
+CODEGEN_DIR="${HACK_DIR}/../codegen"
 
 "${CODEGEN_BIN}" "deepcopy,client,informer,lister" \
   github.com/kubernetes/dashboard/api/src/plugin/client github.com/kubernetes/dashboard/api/src/plugin apis:v1alpha1 \
-  --go-header-file "${SCRIPT_DIR}/../../aio/scripts/license-header.go.txt" --output-base "${CODEGEN_DIR}"
+  --go-header-file "${HACK_DIR}/../../aio/scripts/license-header.go.txt" --output-base "${CODEGEN_DIR}"
 
 rm -rf "${SOURCE_DIR}/plugin/client"
 
