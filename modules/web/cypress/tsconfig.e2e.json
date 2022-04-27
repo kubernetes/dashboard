@@ -2,10 +2,10 @@
   "extends": "../tsconfig.json",
   "compilerOptions": {
     "strict": true,
-    "baseUrl": "../node_modules",
+    "baseUrl": ".",
     "types": ["cypress"]
   },
   "include": [
-    "../cypress/**/*.ts",
+    "**/*.ts",
   ]
 }

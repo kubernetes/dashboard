@@ -17,79 +17,80 @@
 set -e
 
 # Import config.
-ROOT_DIR="$(cd $(dirname "${BASH_SOURCE}")/../.. && pwd -P)"
+ROOT_DIR="$(cd $(dirname "${BASH_SOURCE}")/../../.. && pwd -P)"
 . "${ROOT_DIR}/hack/scripts/conf.sh"
 
-# Declare variables.
-CROSS=false
-FRONTEND_ONLY=false
+ANGULAR_DIST_DIR="${WEB_DIST_DIR}/angular"
+GO_MODULE_NAME="k8s.io/dashboard/web"
+GO_BINARY_NAME="dashboard"
 
 function clean {
-  rm -rf ${DIST_DIR} ${TMP_DIR}
+  rm -rf "${WEB_DIST_DIR}"
 }
 
 function build::frontend {
-  say "\nBuilding localized frontend"
-  mkdir -p "${FRONTEND_DIST_DIR}"
+  say "Building localized frontend"
+  mkdir -p "${ANGULAR_DIST_DIR}"
 
-  cd "${FRONTEND_DIR}"
-  ${NG_BIN} build \
-            --configuration production \
-            --localize \
-            --outputPath="${FRONTEND_DIST_DIR}"
+  npx ng build \
+          --configuration production \
+          --localize \
+          --outputPath="${ANGULAR_DIST_DIR}"
 
   # Avoid locale caching due to the same output file naming
   # We'll add language code prefix to the generated main javascript file.
-  languages=($(ls "${FRONTEND_DIST_DIR}"))
+  languages=($(ls "${ANGULAR_DIST_DIR}"))
   for language in "${languages[@]}"; do
-    localeDir=${FRONTEND_DIST_DIR}/${language}
+    localeDir=${ANGULAR_DIST_DIR}/${language}
     filename=("$(find "${localeDir}" -name 'main.*.js' -exec basename {} \;)")
-
-    say "${localeDir}"
 
     mv "${localeDir}/${filename}" "${localeDir}/${language}.${filename}"
     perl -i -pe"s/${filename}/${language}.${filename}/" "${localeDir}/index.html"
   done
 
-  cd "${ROOT_DIR}"
+  cp "${WEB_DIR}/i18n/locale_conf.json" "${ANGULAR_DIST_DIR}"
 }
 
 function build::backend {
-  say "\nBuilding backend"
-  make prod-backend
+  say "Building backend"
+  CGO_ENABLED=0 go build -ldflags "-X ${GO_MODULE_NAME}/client.Version=${RELEASE_VERSION})" -gcflags="all=-N -l" -o ${WEB_DIST_DIR}/${DEFAULT_ARCHITECTURE}/${GO_BINARY_NAME} ${GO_MODULE_NAME}
 }
 
 function build::backend::cross {
-  say "\nBuilding backends for all supported architectures"
-  make prod-backend-cross
+  say "Building backends for all supported architectures"
+    languages=($(ls ${ANGULAR_DIST_DIR}))
+    for arch in "${ARCHITECTURES[@]}"; do
+      for language in "${languages[@]}"; do
+        OUT_DIR=${DIST_DIR}/${arch}/public
+        mkdir -p ${OUT_DIR}
+        cp -r ${WEB_DIST_DIR}/${language} ${OUT_DIR}
+      done
+    done
 }
 
 function copy::frontend {
-  say "\nCopying frontend to backend dist dir"
-  languages=($(ls ${FRONTEND_DIST_DIR}))
-  architectures=($(ls ${DIST_DIR}))
-  for arch in "${architectures[@]}"; do
+  say "Copying frontend to backend dist dir"
+  languages=($(ls ${ANGULAR_DIST_DIR}))
+  for arch in "${ARCHITECTURES[@]}"; do
     for language in "${languages[@]}"; do
-      OUT_DIR=${DIST_DIR}/${arch}/public
+      OUT_DIR=${WEB_DIST_DIR}/${arch}/public
       mkdir -p ${OUT_DIR}
-      cp -r ${FRONTEND_DIST_DIR}/${language} ${OUT_DIR}
+      cp -r ${ANGULAR_DIST_DIR}/${language} ${OUT_DIR}
     done
   done
 }
 
 function copy::supported-locales {
-  say "\nCopying locales file to backend dist dirs"
-  architectures=($(ls ${DIST_DIR}))
-  for arch in "${architectures[@]}"; do
+  say "Copying locales file to backend dist dirs"
+  for arch in "${ARCHITECTURES[@]}"; do
     OUT_DIR=${DIST_DIR}/${arch}
     cp ${I18N_DIR}/locale_conf.json ${OUT_DIR}
   done
 }
 
 function copy::dockerfile {
-  say "\nCopying Dockerfile to backend dist dirs"
-  architectures=($(ls ${DIST_DIR}))
-  for arch in "${architectures[@]}"; do
+  say "Copying Dockerfile to backend dist dirs"
+  for arch in "${ARCHITECTURES[@]}"; do
     OUT_DIR=${DIST_DIR}/${arch}
     cp ${AIO_DIR}/Dockerfile ${OUT_DIR}
   done
@@ -116,25 +117,11 @@ function parse::args {
 # Execute script.
 START=$(date +%s)
 
-parse::args "$@"
 clean
-
-if [ "${FRONTEND_ONLY}" = true ] ; then
-  build::frontend
-  exit
-fi
-
-if [ "${CROSS}" = true ] ; then
-  build::backend::cross
-else
-  build::backend
-fi
-
 build::frontend
+build::backend
 copy::frontend
-copy::supported-locales
-copy::dockerfile
 
 END=$(date +%s)
 TOOK=$(echo "${END} - ${START}" | bc)
-say "\nBuild finished successfully after ${TOOK}s"
+say "Build finished successfully after ${TOOK}s"

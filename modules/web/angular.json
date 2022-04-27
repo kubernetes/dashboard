@@ -53,11 +53,11 @@
           "options": {
             "optimization": false,
             "progress": true,
-            "outputPath": ".tmp/frontend",
-            "index": "src/app/frontend/index.html",
-            "main": "src/app/frontend/index.ts",
-            "tsConfig": "aio/tsconfig.app.json",
-            "polyfills": "src/app/frontend/polyfills.ts",
+            "outputPath": ".tmp/dist",
+            "index": "src/index.html",
+            "main": "src/index.ts",
+            "tsConfig": "tsconfig.app.json",
+            "polyfills": "src/polyfills.ts",
             "i18nMissingTranslation": "error",
             "allowedCommonJsDependencies": [
               "truncate-url",
@@ -66,12 +66,12 @@
             "assets": [
               {
                 "glob": "**/*",
-                "input": "src/app/frontend/assets",
+                "input": "src/assets",
                 "output": "/assets"
               },
               {
                 "glob": "robots.txt",
-                "input": "src/app/frontend/assets",
+                "input": "src/assets",
                 "output": "/"
               },
               {
@@ -82,14 +82,14 @@
             ],
             "stylePreprocessorOptions": {
               "includePaths": [
-                "src/app/frontend"
+                "src"
               ]
             },
             "styles": [
               "node_modules/material-design-icons/iconfont/material-icons.css",
               "node_modules/roboto-fontface/css/roboto/roboto-fontface.css",
               "node_modules/xterm/css/xterm.css",
-              "src/app/frontend/index.scss"
+              "src/index.scss"
             ],
             "scripts": [
               "node_modules/sockjs-client/dist/sockjs.min.js",
@@ -117,8 +117,8 @@
               "buildOptimizer": true,
               "fileReplacements": [
                 {
-                  "replace": "src/app/frontend/environments/environment.ts",
-                  "with": "src/app/frontend/environments/environment.prod.ts"
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.prod.ts"
                 }
               ]
             }

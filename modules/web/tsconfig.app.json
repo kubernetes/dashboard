@@ -1,16 +1,16 @@
 {
-  "extends": "../tsconfig.json",
+  "extends": "./tsconfig.json",
   "compilerOptions": {
-    "outDir": "../out-tsc/app",
-    "baseUrl": "../src/app/frontend",
+    "outDir": ".tmp/out-tsc/app",
+    "baseUrl": "./src",
     "types": ["node"]
   },
   "include": [
-    "../src/app/frontend/**/*.ts"
+    "src/**/*.ts"
   ],
   "exclude": [
-    "../src/app/frontend/**/*.spec.ts",
-    "../src/app/frontend/test.*.ts"
+    "src/**/*.spec.ts",
+    "src/test.*.ts"
   ],
   "lib": ["ES2020", "dom"]
 }

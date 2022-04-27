@@ -5,6 +5,7 @@
 i18n/messages.new.xlf
 _tmp/
 .tmp/
+.dist/
 .cached_tools/
 dist/
 coverage/

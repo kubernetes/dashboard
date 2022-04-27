@@ -3,9 +3,9 @@ parser: "@typescript-eslint/parser"
 parserOptions:
   ecmaVersion: '2020'
   project:
-    - aio/tsconfig.app.json
-    - aio/tsconfig.spec.json
-    - aio/tsconfig.e2e.json
+    - tsconfig.app.json
+    - tsconfig.spec.json
+    - cypress/tsconfig.e2e.json
   sourceType: module
 extends:
   - "./node_modules/gts"

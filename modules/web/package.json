@@ -8,16 +8,17 @@
     "url": "https://github.com/kubernetes/dashboard.git"
   },
   "engines": {
-    "node": ">=16.14.2",
-    "npm": ">=8.5.0"
+    "node": ">=16.15.0",
+    "npm": ">=8.7.0"
   },
   "scripts": {
-    "start": "concurrently \"SIDECAR_HOST=$npm_config_sidecar_host make watch-backend\" \"npm run start:frontend --bind_address=$npm_config_bind_address --port=$npm_config_port\"",
-    "start:https": "concurrently \"AUTO_GENERATE_CERTS=true SIDECAR_HOST=$npm_config_sidecar_host make watch-backend\" \"npm run start:frontend:https --bind_address=$npm_config_bind_address --port=$npm_config_port\"",
-    "start:prod": "SIDECAR_HOST=$npm_config_sidecar_host BIND_ADDRESS=$npm_config_bind_address PORT=$npm_config_port make prod",
+    "start": "npm run ensure:version && ng serve --proxy-config proxy.conf.json --host $npm_config_bind_address --port $npm_config_port",
+    "start:https": "npm run ensure:version && ng serve --proxy-config aio/https-proxy.conf.json --ssl --host $npm_config_bind_address --port $npm_config_port",
+
+    "build:prod": "scripts/build.sh",
+
+    "start:prod": "SIDECAR_HOST=$npm_config_sidecar_host BIND_ADDRESS=$npm_config_bind_address PORT=$npm_config_port ng build",
     "start:e2e": "concurrently \"make serve-backend\" \"npm run start:frontend\"",
-    "start:frontend": "make ensure-version && ng serve --proxy-config aio/proxy.conf.json --host $npm_config_bind_address --port $npm_config_port",
-    "start:frontend:https": "make ensure-version && ng serve --proxy-config aio/https-proxy.conf.json --ssl --host $npm_config_bind_address --port $npm_config_port",
     "check": "make check",
     "fix": "make fix",
     "fix:backend": "make fix-backend",
@@ -31,8 +32,9 @@
     "fix:ts": "make fix-ts",
     "test": "make test",
     "e2e": "concurrently -kill-others --success first \"npm run start:e2e\" \"wait-on http://localhost:8080 && npx cypress run\"",
+    "ensure:version": "node ./scripts/version.mjs",
     "e2e:headed": "concurrently -kill-others --success first \"npm run start:e2e\" \"wait-on http://localhost:8080 && npx cypress run --headed\"",
-    "postinstall": "make ensure-version && ngcc",
+    "postinstall": "npm run ensure:version && ngcc",
     "prepare": "husky install"
   },
   "lint-staged": {

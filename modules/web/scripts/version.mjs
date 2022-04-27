@@ -34,7 +34,7 @@ Object.assign(gitInfo.semver, {
 });
 
 const file =
-    resolve('src/', 'app', 'frontend', 'environments', 'version.ts');
+    resolve('src', 'environments', 'version.ts');
 writeFileSync(
     file, `// Copyright 2017 The Kubernetes Authors.
 //

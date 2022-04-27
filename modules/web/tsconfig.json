@@ -4,7 +4,7 @@
   },
   "compileOnSave": false,
   "compilerOptions": {
-    "baseUrl": "src/app/frontend",
+    "baseUrl": "./src",
     "paths": {
       "@api/*": [
         "typings/*"

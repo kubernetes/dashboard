@@ -15,17 +15,18 @@
 
 # Directories.
 ROOT_DIR="$(cd $(dirname "${BASH_SOURCE}")/../.. && pwd -P)"
-AIO_DIR="${ROOT_DIR}/aio"
-I18N_DIR="${ROOT_DIR}/i18n"
-TMP_DIR="${ROOT_DIR}/.tmp"
-SRC_DIR="${ROOT_DIR}/src"
-FRONTEND_DIR="${TMP_DIR}/frontend"
-FRONTEND_SRC="${SRC_DIR}/app/frontend"
-DIST_DIR="${ROOT_DIR}/dist"
+AIO_DIR="${ROOT_DIR}/hack"
+I18N_DIR="${FRONTEND_DIR}/i18n"
+DIST_DIR="${ROOT_DIR}/.dist"
+WEB_DIST_DIR="${DIST_DIR}/web"
+WEB_DIR="${ROOT_DIR}/modules/web"
 CACHE_DIR="${ROOT_DIR}/.cached_tools"
+DEFAULT_ARCHITECTURE=amd64
+ARCHITECTURES=(amd64 arm64 arm ppc64le s390x)
+RELEASE_VERSION=2.5.0
 
 # Binaries.
-NG_BIN="${ROOT_DIR}/node_modules/.bin/ng"
+NG_BIN="${FRONTEND_DIR}/node_modules/.bin/ng"
 
 # Global constants.
 ARCH=$(uname | awk '{print tolower($0)}')

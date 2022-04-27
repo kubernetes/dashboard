@@ -14,7 +14,7 @@
 
 import {InjectionToken} from '@angular/core';
 import {MatTooltipDefaultOptions} from '@angular/material/tooltip';
-import {IConfig, LanguageConfig} from 'typings/root.ui';
+import {IConfig, LanguageConfig} from '@api/root.ui';
 
 const supportedLanguages: LanguageConfig[] = [
   {
