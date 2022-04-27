@@ -10,5 +10,11 @@
     "secure": false,
     "ws": true,
     "changeOrigin": true
+  },
+  "/systembanner": {
+    "target": "http://localhost:8443",
+    "secure": false,
+    "ws": true,
+    "changeOrigin": true
   }
 }

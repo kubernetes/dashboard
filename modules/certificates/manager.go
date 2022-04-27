@@ -12,40 +12,50 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package cert
+package certificates
 
 import (
 	"crypto/tls"
 	"log"
 	"os"
 
-	certapi "k8s.io/dashboard/web/pkg/cert/api"
+	"k8s.io/dashboard/certificates/api"
 )
 
 // Manager is used to implement cert/api/types.Manager interface. See Manager for more information.
 type Manager struct {
-	creator certapi.Creator
-	certDir string
+	creator      api.Creator
+	certDir      string
+	autogenerate bool
 }
 
 // GetCertificates implements Manager interface. See Manager for more information.
-func (self *Manager) GetCertificates() (tls.Certificate, error) {
-	if self.keyFileExists() && self.certFileExists() {
+func (self *Manager) GetCertificates() ([]tls.Certificate, error) {
+	// Make the autogenerate the top priority option.
+	if self.autogenerate {
+		key := self.creator.GenerateKey()
+		cert := self.creator.GenerateCertificate(key)
+		log.Println("Successfully created certificates")
+		keyPEM, certPEM, err := self.creator.KeyCertPEMBytes(key, cert)
+		if err != nil {
+			return []tls.Certificate{}, err
+		}
+		certificate, err := tls.X509KeyPair(certPEM, keyPEM)
+		return []tls.Certificate{certificate}, err
+	}
+
+	// When autogenerate is disabled and provided cert files exist use them.
+	if self.keyFileExists() && self.certFileExists() && !self.autogenerate {
 		log.Println("Certificates already exist. Returning.")
-		return tls.LoadX509KeyPair(
+		certificate, err := tls.LoadX509KeyPair(
 			self.path(self.creator.GetCertFileName()),
 			self.path(self.creator.GetKeyFileName()),
 		)
-	}
 
-	key := self.creator.GenerateKey()
-	cert := self.creator.GenerateCertificate(key)
-	log.Println("Successfully created certificates")
-	keyPEM, certPEM, err := self.creator.KeyCertPEMBytes(key, cert)
-	if err != nil {
-		return tls.Certificate{}, err
+		return []tls.Certificate{certificate}, err
 	}
-	return tls.X509KeyPair(certPEM, keyPEM)
+	
+	return nil, nil
 }
 
 func (self *Manager) keyFileExists() bool {
@@ -66,6 +76,6 @@ func (self *Manager) exists(file string) bool {
 }
 
 // NewCertManager creates Manager object.
-func NewCertManager(creator certapi.Creator, certDir string) certapi.Manager {
-	return &Manager{creator: creator, certDir: certDir}
+func NewCertManager(creator api.Creator, certDir string, autogenerate bool) api.Manager {
+	return &Manager{creator: creator, certDir: certDir, autogenerate: autogenerate}
 }

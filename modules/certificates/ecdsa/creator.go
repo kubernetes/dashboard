@@ -29,7 +29,8 @@ import (
 
 	corev1 "k8s.io/api/core/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
-	certapi "k8s.io/dashboard/api/pkg/cert/api"
+
+	certapi "k8s.io/dashboard/certificates/api"
 )
 
 // Implements certificate Creator interface. See Creator for more information.
@@ -69,6 +70,9 @@ func (self *ecdsaCreator) GenerateCertificate(key interface{}) []byte {
 		template.Subject = pkix.Name{CommonName: podDomainName}
 		template.Issuer = pkix.Name{CommonName: podDomainName}
 		template.DNSNames = []string{podDomainName}
+	} else {
+		template.Subject = pkix.Name{CommonName: "kubernetes-dashboard", OrganizationalUnit: []string{"kubernetes-dashboard"}, Organization: []string{"kubernetes-dashboard"}}
+		template.Issuer = pkix.Name{CommonName: "kubernetes-dashboard", OrganizationalUnit: []string{"kubernetes-dashboard"}, Organization: []string{"kubernetes-dashboard"}}
 	}
 
 	if len(pod.Status.PodIP) > 0 {
@@ -137,7 +141,7 @@ func (self *ecdsaCreator) generateSerialNumber() *big.Int {
 }
 
 func (self *ecdsaCreator) getDashboardPod() *corev1.Pod {
-	// These variables are populated by kubernetes downward API when using in-cluster config
+	// These variables might be populated by kubernetes downward API when running inside the cluster
 	podName := os.Getenv("POD_NAME")
 	podNamespace := os.Getenv("POD_NAMESPACE")
 	podIP := os.Getenv("POD_IP")

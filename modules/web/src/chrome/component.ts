@@ -31,7 +31,7 @@ class SystemBanner {
   styleUrls: ['./style.scss'],
 })
 export class ChromeComponent implements OnInit {
-  private static readonly systemBannerEndpoint = 'api/v1/systembanner';
+  private static readonly systemBannerEndpoint = 'systembanner';
   private systemBanner_: SystemBanner;
   loading = false;
 

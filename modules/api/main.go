@@ -32,8 +32,6 @@ import (
 	"k8s.io/dashboard/api/pkg/auth"
 	authApi "k8s.io/dashboard/api/pkg/auth/api"
 	"k8s.io/dashboard/api/pkg/auth/jwe"
-	"k8s.io/dashboard/api/pkg/cert"
-	"k8s.io/dashboard/api/pkg/cert/ecdsa"
 	"k8s.io/dashboard/api/pkg/client"
 	clientapi "k8s.io/dashboard/api/pkg/client/api"
 	"k8s.io/dashboard/api/pkg/handler"
@@ -41,7 +39,8 @@ import (
 	integrationapi "k8s.io/dashboard/api/pkg/integration/api"
 	"k8s.io/dashboard/api/pkg/settings"
 	"k8s.io/dashboard/api/pkg/sync"
-	"k8s.io/dashboard/api/pkg/systembanner"
+	"k8s.io/dashboard/certificates"
+	"k8s.io/dashboard/certificates/ecdsa"
 )
 
 var (
@@ -63,12 +62,9 @@ var (
 	argAutoGenerateCertificates  = pflag.Bool("auto-generate-certificates", false, "enables automatic certificates generation used to serve HTTPS")
 	argEnableInsecureLogin       = pflag.Bool("enable-insecure-login", false, "enables login view when the app is not served over HTTPS")
 	argEnableSkip                = pflag.Bool("enable-skip-login", false, "enables skip button on the login page")
-	argSystemBanner              = pflag.String("system-banner", "", "system banner message displayed in the app if non-empty, it accepts simple HTML")
-	argSystemBannerSeverity      = pflag.String("system-banner-severity", "INFO", "severity of system banner, should be one of 'INFO', 'WARNING' or 'ERROR'")
 	argAPILogLevel               = pflag.String("api-log-level", "INFO", "level of API request logging, should be one of 'NONE', 'INFO' or 'DEBUG'")
 	argDisableSettingsAuthorizer = pflag.Bool("disable-settings-authorizer", false, "disables settings page user authorizer so anyone can access settings page")
 	argNamespace                 = pflag.String("namespace", getEnv("POD_NAMESPACE", "kube-system"), "if non-default namespace is used encryption key will be created in the specified namespace")
-	localeConfig                 = pflag.String("locale-config", "./locale_conf.json", "path to file containing the locale configuration")
 )
 
 func main() {
@@ -106,10 +102,6 @@ func main() {
 	// Init settings manager
 	settingsManager := settings.NewSettingsManager()
 
-	// Init system banner manager
-	systemBannerManager := systembanner.NewSystemBannerManager(args.Holder.GetSystemBanner(),
-		args.Holder.GetSystemBannerSeverity())
-
 	// Init integrations
 	integrationManager := integration.NewIntegrationManager(clientManager)
 
@@ -133,58 +125,51 @@ func main() {
 		integrationManager,
 		clientManager,
 		authManager,
-		settingsManager,
-		systemBannerManager)
+		settingsManager)
 	if err != nil {
 		handleFatalInitError(err)
 	}
 
-	var servingCerts []tls.Certificate
-	if args.Holder.GetAutoGenerateCertificates() {
-		log.Println("Auto-generating certificates")
-		certCreator := ecdsa.NewECDSACreator(args.Holder.GetKeyFile(), args.Holder.GetCertFile(), elliptic.P256())
-		certManager := cert.NewCertManager(certCreator, args.Holder.GetDefaultCertDir())
-		servingCert, err := certManager.GetCertificates()
-		if err != nil {
-			handleFatalInitServingCertError(err)
-		}
-		servingCerts = []tls.Certificate{servingCert}
-	} else if args.Holder.GetCertFile() != "" && args.Holder.GetKeyFile() != "" {
-		certFilePath := args.Holder.GetDefaultCertDir() + string(os.PathSeparator) + args.Holder.GetCertFile()
-		keyFilePath := args.Holder.GetDefaultCertDir() + string(os.PathSeparator) + args.Holder.GetKeyFile()
-		servingCert, err := tls.LoadX509KeyPair(certFilePath, keyFilePath)
-		if err != nil {
-			handleFatalInitServingCertError(err)
-		}
-		servingCerts = []tls.Certificate{servingCert}
+	certCreator := ecdsa.NewECDSACreator(args.Holder.GetKeyFile(), args.Holder.GetCertFile(), elliptic.P256())
+	certManager := certificates.NewCertManager(certCreator, args.Holder.GetDefaultCertDir(), args.Holder.GetAutoGenerateCertificates())
+	certs, err := certManager.GetCertificates()
+	if err != nil {
+		handleFatalInitServingCertError(err)
 	}
 
-	// Run a HTTP server that serves static public files from './public' and handles API calls.
-	http.Handle("/", handler.MakeGzipHandler(handler.CreateLocaleHandler()))
+	// Run HTTP server that handles API calls.
 	http.Handle("/api/", apiHandler)
-	http.Handle("/config", handler.AppHandler(handler.ConfigHandler))
 	http.Handle("/api/sockjs/", handler.CreateAttachHandler("/api/sockjs"))
 	http.Handle("/metrics", promhttp.Handler())
 
 	// Listen for http or https
-	if servingCerts != nil {
-		log.Printf("Serving securely on HTTPS port: %d", args.Holder.GetPort())
-		secureAddr := fmt.Sprintf("%s:%d", args.Holder.GetBindAddress(), args.Holder.GetPort())
-		server := &http.Server{
-			Addr:    secureAddr,
-			Handler: http.DefaultServeMux,
-			TLSConfig: &tls.Config{
-				Certificates: servingCerts,
-				MinVersion:   tls.VersionTLS12,
-			},
-		}
-		go func() { log.Fatal(server.ListenAndServeTLS("", "")) }()
+	if certs != nil {
+		serveTLS(certs)
 	} else {
-		log.Printf("Serving insecurely on HTTP port: %d", args.Holder.GetInsecurePort())
-		addr := fmt.Sprintf("%s:%d", args.Holder.GetInsecureBindAddress(), args.Holder.GetInsecurePort())
-		go func() { log.Fatal(http.ListenAndServe(addr, nil)) }()
+		serve()
 	}
+
 	select {}
+}
+
+func serve() {
+	log.Printf("Serving insecurely on HTTP port: %d", args.Holder.GetInsecurePort())
+	addr := fmt.Sprintf("%s:%d", args.Holder.GetInsecureBindAddress(), args.Holder.GetInsecurePort())
+	go func() { log.Fatal(http.ListenAndServe(addr, nil)) }()
+}
+
+func serveTLS(certificates []tls.Certificate) {
+	log.Printf("Serving securely on HTTPS port: %d", args.Holder.GetPort())
+	secureAddr := fmt.Sprintf("%s:%d", args.Holder.GetBindAddress(), args.Holder.GetPort())
+	server := &http.Server{
+		Addr:    secureAddr,
+		Handler: http.DefaultServeMux,
+		TLSConfig: &tls.Config{
+			Certificates: certificates,
+			MinVersion:   tls.VersionTLS12,
+		},
+	}
+	go func() { log.Fatal(server.ListenAndServeTLS("", "")) }()
 }
 
 func initAuthManager(clientManager clientapi.ClientManager) authApi.AuthManager {
@@ -234,8 +219,6 @@ func initArgHolder() {
 	builder.SetHeapsterHost(*argHeapsterHost)
 	builder.SetSidecarHost(*argSidecarHost)
 	builder.SetKubeConfigFile(*argKubeConfigFile)
-	builder.SetSystemBanner(*argSystemBanner)
-	builder.SetSystemBannerSeverity(*argSystemBannerSeverity)
 	builder.SetAPILogLevel(*argAPILogLevel)
 	builder.SetAuthenticationMode(*argAuthenticationMode)
 	builder.SetAutoGenerateCertificates(*argAutoGenerateCertificates)
@@ -243,7 +226,6 @@ func initArgHolder() {
 	builder.SetDisableSettingsAuthorizer(*argDisableSettingsAuthorizer)
 	builder.SetEnableSkipLogin(*argEnableSkip)
 	builder.SetNamespace(*argNamespace)
-	builder.SetLocaleConfig(*localeConfig)
 }
 
 /**

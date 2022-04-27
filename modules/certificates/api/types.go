@@ -27,7 +27,7 @@ const (
 // to serve over HTTPS.
 type Manager interface {
 	// GetCertificates loads existing certificates or generates self-signed certificates.
-	GetCertificates() (tls.Certificate, error)
+	GetCertificates() ([]tls.Certificate, error)
 }
 
 // Creator is responsible for preparing and generating certificates.
