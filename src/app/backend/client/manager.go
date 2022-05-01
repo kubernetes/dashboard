@@ -74,6 +74,10 @@ type clientManager struct {
 	kubeConfigPath string
 	// Address of apiserver host in format 'protocol://address:port'
 	apiserverHost string
+	// KubeConfig bytes
+	kubeConfigBytes []byte
+	// Should use a certificate based config using the kubeConfigBytes
+	certBasedConfig bool
 	// Initialized on clientManager creation and used if kubeconfigPath and apiserverHost are
 	// empty
 	inClusterConfig *rest.Config
@@ -204,22 +208,6 @@ func (self *clientManager) CanI(req *restful.Request, ssar *v1.SelfSubjectAccess
 	return response.Status.Allowed
 }
 
-// ClientCmdConfig creates ClientCmd Config based on authentication information extracted from request.
-// Currently request header is only checked for existence of 'Authentication: BearerToken'
-func (self *clientManager) ClientCmdConfig(req *restful.Request) (clientcmd.ClientConfig, error) {
-	authInfo, err := self.extractAuthInfo(req)
-	if err != nil {
-		return nil, err
-	}
-
-	cfg, err := self.buildConfigFromFlags(self.apiserverHost, self.kubeConfigPath)
-	if err != nil {
-		return nil, err
-	}
-
-	return self.buildCmdConfig(authInfo, cfg), nil
-}
-
 // CSRFKey returns key that is generated upon client manager creation
 func (self *clientManager) CSRFKey() string {
 	return self.csrfKey
@@ -228,13 +216,11 @@ func (self *clientManager) CSRFKey() string {
 // HasAccess configures K8S api client with provided auth info and executes a basic check against apiserver to see
 // if it is valid.
 func (self *clientManager) HasAccess(authInfo api.AuthInfo) (string, error) {
-	cfg, err := self.buildConfigFromFlags(self.apiserverHost, self.kubeConfigPath)
+	cmdConfig, err := self.newClientConfig(authInfo)
 	if err != nil {
 		return "", err
 	}
-
-	clientConfig := self.buildCmdConfig(&authInfo, cfg)
-	cfg, err = clientConfig.ClientConfig()
+	cfg, err := cmdConfig.ClientConfig()
 	if err != nil {
 		return "", err
 	}
@@ -251,6 +237,10 @@ func (self *clientManager) HasAccess(authInfo api.AuthInfo) (string, error) {
 		}
 
 		return "", err
+	}
+
+	if self.certBasedConfig {
+		return authInfo.Username, nil
 	}
 
 	result, err := client.AuthenticationV1().TokenReviews().Create(context.TODO(), &v12.TokenReview{
@@ -474,10 +464,12 @@ func (self *clientManager) securePluginClient(req *restful.Request) (pluginclien
 }
 
 func (self *clientManager) secureConfig(req *restful.Request) (*rest.Config, error) {
-	cmdConfig, err := self.ClientCmdConfig(req)
+	authInfo, err := self.extractAuthInfo(req)
 	if err != nil {
 		return nil, err
 	}
+
+	cmdConfig, err := self.newClientConfig(*authInfo)
 
 	cfg, err := cmdConfig.ClientConfig()
 	if err != nil {
@@ -583,12 +575,36 @@ func (self *clientManager) getUsername(name string) string {
 	return match[nameGroupIdx]
 }
 
+func (self *clientManager) SetKubeConfigBytes(configBytes []byte) {
+	self.kubeConfigBytes = configBytes
+}
+
+func (self *clientManager) newClientConfig(authInfo api.AuthInfo) (clientcmd.ClientConfig, error) {
+	var clientConfig clientcmd.ClientConfig
+	var err error
+	if len(self.kubeConfigBytes) > 0 {
+		clientConfig, err = clientcmd.NewClientConfigFromBytes(self.kubeConfigBytes)
+		if err != nil {
+			return nil, err
+		}
+	} else {
+		cfg, err := self.buildConfigFromFlags(self.apiserverHost, self.kubeConfigPath)
+		if err != nil {
+			return nil, err
+		}
+		clientConfig = self.buildCmdConfig(&authInfo, cfg)
+	}
+
+	return clientConfig, nil
+}
+
 // NewClientManager creates client manager based on kubeConfigPath and apiserverHost parameters.
 // If both are empty then in-cluster config is used.
-func NewClientManager(kubeConfigPath, apiserverHost string) clientapi.ClientManager {
+func NewClientManager(kubeConfigPath, apiserverHost string, certBasedConfig bool) clientapi.ClientManager {
 	result := &clientManager{
-		kubeConfigPath: kubeConfigPath,
-		apiserverHost:  apiserverHost,
+		kubeConfigPath:  kubeConfigPath,
+		apiserverHost:   apiserverHost,
+		certBasedConfig: certBasedConfig,
 	}
 
 	result.init()

@@ -138,7 +138,7 @@ func TestMetricManager_ConfigureHeapster(t *testing.T) {
 		manager         MetricManager
 		expectedClients int
 	}{
-		{NewMetricManager(client.NewClientManager("", "http://localhost:8080")), 1},
+		{NewMetricManager(client.NewClientManager("", "http://localhost:8080", false)), 1},
 	}
 
 	for _, c := range cases {

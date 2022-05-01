@@ -113,6 +113,10 @@ func (self *fakeTokenManager) Decrypt(jweToken string) (*api.AuthInfo, error) {
 	return nil, nil
 }
 
+func (self *fakeClientManager) SetKubeConfigBytes(configBytes []byte) {
+
+}
+
 func TestAuthManager_Login(t *testing.T) {
 	unauthorizedErr := errors.NewUnauthorized("Unauthorized")
 
@@ -156,7 +160,7 @@ func TestAuthManager_Login(t *testing.T) {
 	}
 
 	for _, c := range cases {
-		authManager := NewAuthManager(c.cManager, c.tManager, authApi.AuthenticationModes{authApi.Token: true}, true)
+		authManager := NewAuthManager(c.cManager, c.tManager, authApi.AuthenticationModes{authApi.Token: true}, true, false, "")
 		response, err := authManager.Login(c.spec)
 
 		if !areErrorsEqual(err, c.expectedErr) {
@@ -183,7 +187,7 @@ func TestAuthManager_AuthenticationModes(t *testing.T) {
 	}
 
 	for _, c := range cases {
-		authManager := NewAuthManager(cManager, tManager, c.modes, true)
+		authManager := NewAuthManager(cManager, tManager, c.modes, true, false, "")
 		got := authManager.AuthenticationModes()
 
 		if !reflect.DeepEqual(got, c.expected) {
@@ -198,7 +202,7 @@ func TestAuthManager_AuthenticationSkippable(t *testing.T) {
 	cModes := authApi.AuthenticationModes{}
 
 	for _, flag := range []bool{true, false} {
-		authManager := NewAuthManager(cManager, tManager, cModes, flag)
+		authManager := NewAuthManager(cManager, tManager, cModes, flag, false, "")
 		got := authManager.AuthenticationSkippable()
 		if got != flag {
 			t.Errorf("Expected %v, but got %v.", flag, got)

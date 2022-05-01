@@ -28,12 +28,13 @@ import (
 func TestNewClientManager(t *testing.T) {
 	cases := []struct {
 		kubeConfigPath, apiserverHost string
+		certBasedConfig               bool
 	}{
-		{"", "test"},
+		{"", "test", false},
 	}
 
 	for _, c := range cases {
-		manager := NewClientManager(c.kubeConfigPath, c.apiserverHost)
+		manager := NewClientManager(c.kubeConfigPath, c.apiserverHost, c.certBasedConfig)
 
 		if manager == nil {
 			t.Fatalf("NewClientManager(%s, %s): Expected manager not to be nil",
@@ -56,7 +57,7 @@ func TestClient(t *testing.T) {
 	}
 
 	for _, c := range cases {
-		manager := NewClientManager("", "http://localhost:8080")
+		manager := NewClientManager("", "http://localhost:8080", false)
 		_, err := manager.Client(c.request)
 
 		if err != nil {
@@ -95,7 +96,7 @@ func TestSecureClient(t *testing.T) {
 	}
 
 	for _, c := range cases {
-		manager := NewClientManager("", "http://localhost:8080")
+		manager := NewClientManager("", "http://localhost:8080", false)
 		_, err := manager.Client(c.request)
 
 		if err == nil && !c.expectedError {
@@ -131,7 +132,7 @@ func TestAPIExtensionsClient(t *testing.T) {
 	}
 
 	for _, c := range cases {
-		manager := NewClientManager("", "http://localhost:8080")
+		manager := NewClientManager("", "http://localhost:8080", false)
 		_, err := manager.APIExtensionsClient(c.request)
 
 		if err != nil {
@@ -170,7 +171,7 @@ func TestSecureAPIExtensionsClient(t *testing.T) {
 	}
 
 	for _, c := range cases {
-		manager := NewClientManager("", "http://localhost:8080")
+		manager := NewClientManager("", "http://localhost:8080", false)
 		_, err := manager.APIExtensionsClient(c.request)
 
 		if err == nil && !c.expectedError {
@@ -193,7 +194,7 @@ func TestSecureAPIExtensionsClient(t *testing.T) {
 }
 
 func TestCSRFKey(t *testing.T) {
-	manager := NewClientManager("", "http://localhost:8080")
+	manager := NewClientManager("", "http://localhost:8080", false)
 	key := manager.CSRFKey()
 
 	if len(key) == 0 {
@@ -220,7 +221,7 @@ func TestConfig(t *testing.T) {
 	}
 
 	for _, c := range cases {
-		manager := NewClientManager("", "https://localhost:8080")
+		manager := NewClientManager("", "https://localhost:8080", false)
 		cfg, err := manager.Config(c.request)
 
 		if err != nil {
@@ -236,58 +237,11 @@ func TestConfig(t *testing.T) {
 	}
 }
 
-func TestClientCmdConfig(t *testing.T) {
-	args.GetHolderBuilder().SetEnableSkipLogin(true)
-	cases := []struct {
-		request  *restful.Request
-		expected string
-	}{
-		{
-			&restful.Request{
-				Request: &http.Request{
-					Header: http.Header(map[string][]string{
-						"Authorization": {"Bearer test-token"},
-					}),
-					TLS: &tls.ConnectionState{},
-				},
-			},
-			"test-token",
-		},
-	}
-
-	for _, c := range cases {
-		manager := NewClientManager("", "https://localhost:8080")
-		cmdCfg, err := manager.ClientCmdConfig(c.request)
-
-		if err != nil {
-			t.Fatalf("Config(%v): Expected client config to be created but error was thrown:"+
-				" %s",
-				c.request, err.Error())
-		}
-
-		var bearerToken string
-		if cmdCfg != nil {
-			cfg, err := cmdCfg.ClientConfig()
-			if err != nil {
-				t.Fatalf("Config(%v): Expected config to be created but error was thrown:"+
-					" %s",
-					c.request, err.Error())
-			}
-			bearerToken = cfg.BearerToken
-		}
-
-		if bearerToken != c.expected {
-			t.Fatalf("Config(%v): Expected token to be %s but got %s",
-				c.request, c.expected, bearerToken)
-		}
-	}
-}
-
 func TestVerberClient(t *testing.T) {
 	// TODO: client manager needs a way of mocking created client to be able to test the logic inside
 	t.Skip("Skipping verber client test.")
 
-	manager := NewClientManager("", "")
+	manager := NewClientManager("", "", false)
 	_, err := manager.VerberClient(&restful.Request{Request: &http.Request{TLS: &tls.ConnectionState{}}}, &rest.Config{})
 
 	if err != nil {
@@ -297,14 +251,14 @@ func TestVerberClient(t *testing.T) {
 }
 
 func TestClientManager_InsecureClients(t *testing.T) {
-	manager := NewClientManager("", "http://localhost:8080")
+	manager := NewClientManager("", "http://localhost:8080", false)
 	if manager.InsecureClient() == nil {
 		t.Fatalf("InsecureClient(): Expected insecure client not to be nil")
 	}
 }
 
 func TestClientManager_InsecureAPIExtensionsClient(t *testing.T) {
-	manager := NewClientManager("", "http://localhost:8080")
+	manager := NewClientManager("", "http://localhost:8080", false)
 	if manager.InsecureAPIExtensionsClient() == nil {
 		t.Fatalf("InsecureClient(): Expected insecure client not to be nil")
 	}
@@ -333,7 +287,7 @@ func TestImpersonationUserClient(t *testing.T) {
 	}
 
 	for _, c := range cases {
-		manager := NewClientManager("", "https://localhost:8080")
+		manager := NewClientManager("", "https://localhost:8080", false)
 		cfg, err := manager.Config(c.request)
 		if err != nil {
 			t.Fatalf("Config(%v): Expected config to be created but error was thrown:"+
@@ -370,7 +324,7 @@ func TestNoImpersonationUserWithNoBearerClient(t *testing.T) {
 	}
 
 	for _, c := range cases {
-		manager := NewClientManager("", "https://localhost:8080")
+		manager := NewClientManager("", "https://localhost:8080", false)
 		cfg, err := manager.Config(c.request)
 		if err != nil {
 			t.Fatalf("Config(%v): Expected config to be created but error was thrown:"+
@@ -417,7 +371,7 @@ func TestImpersonationOneGroupClient(t *testing.T) {
 	}
 
 	for _, c := range cases {
-		manager := NewClientManager("", "https://localhost:8080")
+		manager := NewClientManager("", "https://localhost:8080", false)
 		cfg, err := manager.Config(c.request)
 		if err != nil {
 			t.Fatalf("Config(%v): Expected config to be created but error was thrown:"+
@@ -473,7 +427,7 @@ func TestImpersonationTwoGroupClient(t *testing.T) {
 	}
 
 	for _, c := range cases {
-		manager := NewClientManager("", "https://localhost:8080")
+		manager := NewClientManager("", "https://localhost:8080", false)
 		cfg, err := manager.Config(c.request)
 		if err != nil {
 			t.Fatalf("Config(%v): Expected config to be created but error was thrown:"+
@@ -536,7 +490,7 @@ func TestImpersonationExtrasClient(t *testing.T) {
 	}
 
 	for _, c := range cases {
-		manager := NewClientManager("", "https://localhost:8080")
+		manager := NewClientManager("", "https://localhost:8080", false)
 		cfg, err := manager.Config(c.request)
 		//authInfo := manager.extractAuthInfo(c.request)
 		if err != nil {

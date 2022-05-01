@@ -114,7 +114,7 @@ func TestKubeConfigAuthenticator(t *testing.T) {
 			t.Errorf("Test Case: %s. Failed to render kubeconfig: %v.", c.info, err)
 		}
 
-		kubeConfigAuthenticator := NewKubeConfigAuthenticator(&authApi.LoginSpec{KubeConfig: kb.String()}, c.authModes)
+		kubeConfigAuthenticator := NewKubeConfigAuthenticator(&authApi.LoginSpec{KubeConfig: kb.String()}, c.authModes, false)
 		response, err := kubeConfigAuthenticator.GetAuthInfo()
 
 		if !areErrorsEqual(err, c.expectedErr) {

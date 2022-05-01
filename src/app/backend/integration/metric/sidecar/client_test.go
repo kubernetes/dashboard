@@ -451,7 +451,7 @@ func TestDownloadMetrics(t *testing.T) {
 }
 
 func TestCreateSidecarClient(t *testing.T) {
-	k8sClient := client.NewClientManager("", "http://localhost:8080").InsecureClient()
+	k8sClient := client.NewClientManager("", "http://localhost:8080", false).InsecureClient()
 	cases := []struct {
 		info        string
 		sidecarHost string

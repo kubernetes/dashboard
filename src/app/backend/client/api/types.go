@@ -21,7 +21,6 @@ import (
 	"k8s.io/apimachinery/pkg/runtime"
 	"k8s.io/client-go/kubernetes"
 	"k8s.io/client-go/rest"
-	"k8s.io/client-go/tools/clientcmd"
 	"k8s.io/client-go/tools/clientcmd/api"
 
 	authApi "github.com/kubernetes/dashboard/src/app/backend/auth/api"
@@ -47,11 +46,11 @@ type ClientManager interface {
 	InsecurePluginClient() pluginclientset.Interface
 	CanI(req *restful.Request, ssar *v1.SelfSubjectAccessReview) bool
 	Config(req *restful.Request) (*rest.Config, error)
-	ClientCmdConfig(req *restful.Request) (clientcmd.ClientConfig, error)
 	CSRFKey() string
 	HasAccess(authInfo api.AuthInfo) (string, error)
 	VerberClient(req *restful.Request, config *rest.Config) (ResourceVerber, error)
 	SetTokenManager(manager authApi.TokenManager)
+	SetKubeConfigBytes(configBytes []byte)
 }
 
 // ResourceVerber is responsible for performing generic CRUD operations on all supported resources.

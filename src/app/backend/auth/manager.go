@@ -28,6 +28,8 @@ type authManager struct {
 	clientManager           clientapi.ClientManager
 	authenticationModes     authApi.AuthenticationModes
 	authenticationSkippable bool
+	certBasedAuthentication bool
+	apiServerHost           string
 }
 
 // Login implements auth manager. See AuthManager interface for more information.
@@ -35,6 +37,13 @@ func (self authManager) Login(spec *authApi.LoginSpec) (*authApi.AuthResponse, e
 	authenticator, err := self.getAuthenticator(spec)
 	if err != nil {
 		return nil, err
+	}
+
+	if len(spec.KubeConfig) > 0 {
+		err = InitialKubeConfigBytes(self.clientManager, []byte(spec.KubeConfig), self.apiServerHost)
+		if err != nil {
+			return nil, err
+		}
 	}
 
 	authInfo, err := authenticator.GetAuthInfo()
@@ -81,7 +90,7 @@ func (self authManager) getAuthenticator(spec *authApi.LoginSpec) (authApi.Authe
 	case len(spec.Username) > 0 && len(spec.Password) > 0 && self.authenticationModes.IsEnabled(authApi.Basic):
 		return NewBasicAuthenticator(spec), nil
 	case len(spec.KubeConfig) > 0:
-		return NewKubeConfigAuthenticator(spec, self.authenticationModes), nil
+		return NewKubeConfigAuthenticator(spec, self.authenticationModes, self.certBasedAuthentication), nil
 	}
 
 	return nil, errors.NewInvalid("Not enough data to create authenticator.")
@@ -95,11 +104,13 @@ func (self authManager) healthCheck(authInfo api.AuthInfo) (string, error) {
 
 // NewAuthManager creates auth manager.
 func NewAuthManager(clientManager clientapi.ClientManager, tokenManager authApi.TokenManager,
-	authenticationModes authApi.AuthenticationModes, authenticationSkippable bool) authApi.AuthManager {
+	authenticationModes authApi.AuthenticationModes, authenticationSkippable bool, certBasedAuthentication bool, apiServerHost string) authApi.AuthManager {
 	return &authManager{
 		tokenManager:            tokenManager,
 		clientManager:           clientManager,
 		authenticationModes:     authenticationModes,
 		authenticationSkippable: authenticationSkippable,
+		certBasedAuthentication: certBasedAuthentication,
+		apiServerHost:           apiServerHost,
 	}
 }

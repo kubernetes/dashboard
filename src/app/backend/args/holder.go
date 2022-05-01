@@ -52,7 +52,8 @@ type holder struct {
 	enableInsecureLogin       bool
 	disableSettingsAuthorizer bool
 
-	enableSkipLogin bool
+	enableSkipLogin     bool
+	enableCertBasedAuth bool
 
 	localeConfig string
 }
@@ -183,4 +184,9 @@ func (self *holder) GetNamespace() string {
 // GetLocaleConfig 'locale-config' argument of Dashboard binary.
 func (self *holder) GetLocaleConfig() string {
 	return self.localeConfig
+}
+
+// GetEnableCertBasedAuth 'enable-cert-based-auth' argument of Dashboard binary.
+func (self *holder) GetEnableCertBasedAuth() bool {
+	return self.enableCertBasedAuth
 }

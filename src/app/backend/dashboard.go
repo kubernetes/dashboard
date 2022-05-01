@@ -67,6 +67,7 @@ var (
 	argSystemBannerSeverity      = pflag.String("system-banner-severity", "INFO", "severity of system banner, should be one of 'INFO', 'WARNING' or 'ERROR'")
 	argAPILogLevel               = pflag.String("api-log-level", "INFO", "level of API request logging, should be one of 'NONE', 'INFO' or 'DEBUG'")
 	argDisableSettingsAuthorizer = pflag.Bool("disable-settings-authorizer", false, "disables settings page user authorizer so anyone can access settings page")
+	argEnableCertBasedAuth       = pflag.Bool("enable-cert-based-auth", false, "enable certificate based authentication")
 	argNamespace                 = pflag.String("namespace", getEnv("POD_NAMESPACE", "kube-system"), "if non-default namespace is used encryption key will be created in the specified namespace")
 	localeConfig                 = pflag.String("locale-config", "./locale_conf.json", "path to file containing the locale configuration")
 )
@@ -92,7 +93,7 @@ func main() {
 		log.Printf("Using namespace: %s", args.Holder.GetNamespace())
 	}
 
-	clientManager := client.NewClientManager(args.Holder.GetKubeConfigFile(), args.Holder.GetApiServerHost())
+	clientManager := client.NewClientManager(args.Holder.GetKubeConfigFile(), args.Holder.GetApiServerHost(), args.Holder.GetEnableCertBasedAuth())
 	versionInfo, err := clientManager.InsecureClient().Discovery().ServerVersion()
 	if err != nil {
 		handleFatalInitError(err)
@@ -215,7 +216,10 @@ func initAuthManager(clientManager clientapi.ClientManager) authApi.AuthManager 
 	// UI logic dictates this should be the inverse of the cli option
 	authenticationSkippable := args.Holder.GetEnableSkipLogin()
 
-	return auth.NewAuthManager(clientManager, tokenManager, authModes, authenticationSkippable)
+	// Whether should use certificate-based authentication
+	certBasedAuthentication := args.Holder.GetEnableCertBasedAuth()
+
+	return auth.NewAuthManager(clientManager, tokenManager, authModes, authenticationSkippable, certBasedAuthentication, args.Holder.GetApiServerHost())
 }
 
 func initArgHolder() {
@@ -244,6 +248,7 @@ func initArgHolder() {
 	builder.SetEnableSkipLogin(*argEnableSkip)
 	builder.SetNamespace(*argNamespace)
 	builder.SetLocaleConfig(*localeConfig)
+	builder.SetEnableCertBasedAuth(*argEnableCertBasedAuth)
 }
 
 /**

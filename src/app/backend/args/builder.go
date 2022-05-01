@@ -172,3 +172,9 @@ func (self *holderBuilder) SetLocaleConfig(localeConfig string) *holderBuilder {
 func GetHolderBuilder() *holderBuilder {
 	return builder
 }
+
+// SetEnableCertBasedAuth 'enable-cert-based-auth' argument of Dashboard binary.
+func (self *holderBuilder) SetEnableCertBasedAuth(enableCertBasedAuth bool) *holderBuilder {
+	self.holder.enableCertBasedAuth = enableCertBasedAuth
+	return self
+}

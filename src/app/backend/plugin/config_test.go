@@ -130,3 +130,7 @@ func (cm *fakeClientManager) VerberClient(req *restful.Request, config *rest.Con
 func (cm *fakeClientManager) SetTokenManager(manager authApi.TokenManager) {
 	panic("implement me")
 }
+
+func (self *fakeClientManager) SetKubeConfigBytes(configBytes []byte) {
+	panic("implement me")
+}

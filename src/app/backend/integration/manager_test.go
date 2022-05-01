@@ -66,7 +66,7 @@ func TestIntegrationManager_GetState(t *testing.T) {
 	}
 
 	for _, c := range cases {
-		cManager := client.NewClientManager("", c.apiServerHost)
+		cManager := client.NewClientManager("", c.apiServerHost, false)
 		iManager := NewIntegrationManager(cManager)
 		iManager.Metric().ConfigureHeapster(c.heapsterHost)
 

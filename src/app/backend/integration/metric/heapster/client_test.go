@@ -449,7 +449,7 @@ func TestDownloadMetrics(t *testing.T) {
 }
 
 func TestCreateHeapsterClient(t *testing.T) {
-	k8sClient := client.NewClientManager("", "http://localhost:8080").InsecureClient()
+	k8sClient := client.NewClientManager("", "http://localhost:8080", false).InsecureClient()
 	cases := []struct {
 		info         string
 		heapsterHost string

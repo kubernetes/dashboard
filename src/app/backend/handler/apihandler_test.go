@@ -43,8 +43,8 @@ func getTokenManager() authApi.TokenManager {
 }
 
 func TestCreateHTTPAPIHandler(t *testing.T) {
-	cManager := client.NewClientManager("", "http://localhost:8080")
-	authManager := auth.NewAuthManager(cManager, getTokenManager(), authApi.AuthenticationModes{}, true)
+	cManager := client.NewClientManager("", "http://localhost:8080", false)
+	authManager := auth.NewAuthManager(cManager, getTokenManager(), authApi.AuthenticationModes{}, true, false, "")
 	sManager := settings.NewSettingsManager()
 	sbManager := systembanner.NewSystemBannerManager("Hello world!", "INFO")
 	_, err := CreateHTTPAPIHandler(nil, cManager, authManager, sManager, sbManager)
