@@ -22,7 +22,7 @@ To install the [Chart](https://helm.sh/docs/intro/using_helm/#three-big-concepts
 
 ```console
 helm repo add kubernetes-dashboard https://kubernetes.github.io/dashboard/
-helm install kubernetes-dashboard kubernetes-dashboard/kubernetes-dashboard
+helm install my-release kubernetes-dashboard/kubernetes-dashboard
 ```
 
 The command deploys kubernetes-dashboard on the Kubernetes cluster in the default configuration.
