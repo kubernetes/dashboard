@@ -28,7 +28,7 @@
       </trans-unit>
       <trans-unit id="6112370555453604229" datatype="html">
         <source>Unpin resource</source>
-        <target>リソースにピンを解除する</target>
+        <target>リソースのピンを解除</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/index.messages.ts</context>
           <context context-type="linenumber">24</context>
