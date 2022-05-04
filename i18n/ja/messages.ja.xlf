@@ -683,7 +683,7 @@
       </trans-unit>
       <trans-unit id="6991803345598959405" datatype="html">
         <source>There is nothing to display here</source>
-        <target>ここに表示するものがありません</target>
+        <target>ここに表示するものはありません</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/list/zerostate/template.html</context>
           <context context-type="linenumber">22</context>
