@@ -36,7 +36,7 @@
       </trans-unit>
       <trans-unit id="1547349004541912871" datatype="html">
         <source>Expand card</source>
-        <target>カードを最大化する</target>
+        <target>カードを最大化</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/index.messages.ts</context>
           <context context-type="linenumber">25</context>
