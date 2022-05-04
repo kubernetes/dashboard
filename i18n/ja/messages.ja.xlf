@@ -154,7 +154,7 @@
       </trans-unit>
       <trans-unit id="8280397690227731001" datatype="html">
         <source>Restart a resource</source>
-        <target>リソースを再起動する</target>
+        <target>リソースの再起動</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/dialogs/restartresource/template.html</context>
           <context context-type="linenumber">18</context>
