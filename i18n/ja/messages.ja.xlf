@@ -659,7 +659,7 @@
       </trans-unit>
       <trans-unit id="8443285784216066352" datatype="html">
         <source>Download logs file</source>
-        <target>ログファイルをダウンロードする</target>
+        <target>ログファイルのダウンロード</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/dialogs/download/template.html</context>
           <context context-type="linenumber">19</context>
