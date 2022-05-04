@@ -4,7 +4,7 @@
     <body>
       <trans-unit id="3798186563647127215" datatype="html">
         <source>Open notifications panel</source>
-        <target state="new">Open notifications panel</target>
+        <target>通知パネルを開く</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/index.messages.ts</context>
           <context context-type="linenumber">21</context>
@@ -12,7 +12,7 @@
       </trans-unit>
       <trans-unit id="3117139905742018214" datatype="html">
         <source>Close notifications panel</source>
-        <target state="new">Close notifications panel</target>
+        <target>通知パネルを閉じる</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/index.messages.ts</context>
           <context context-type="linenumber">22</context>
@@ -20,7 +20,7 @@
       </trans-unit>
       <trans-unit id="4285755342959217630" datatype="html">
         <source>Pin resource</source>
-        <target state="new">Pin resource</target>
+        <target>リソースにピンを設定</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/index.messages.ts</context>
           <context context-type="linenumber">23</context>
@@ -28,7 +28,7 @@
       </trans-unit>
       <trans-unit id="6112370555453604229" datatype="html">
         <source>Unpin resource</source>
-        <target state="new">Unpin resource</target>
+        <target>リソースのピンを解除</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/index.messages.ts</context>
           <context context-type="linenumber">24</context>
@@ -36,7 +36,7 @@
       </trans-unit>
       <trans-unit id="1547349004541912871" datatype="html">
         <source>Expand card</source>
-        <target state="new">Expand card</target>
+        <target>カードを最大化</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/index.messages.ts</context>
           <context context-type="linenumber">25</context>
@@ -44,7 +44,7 @@
       </trans-unit>
       <trans-unit id="6008724430266446705" datatype="html">
         <source>Minimize card</source>
-        <target state="new">Minimize card</target>
+        <target>カードを最小化</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/index.messages.ts</context>
           <context context-type="linenumber">26</context>
@@ -52,7 +52,7 @@
       </trans-unit>
       <trans-unit id="4467323362722952678" datatype="html">
         <source>Unknown</source>
-        <target state="new">Unknown</target>
+        <target>不明</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/index.messages.ts</context>
           <context context-type="linenumber">27</context>
@@ -76,7 +76,7 @@
       </trans-unit>
       <trans-unit id="4021752662928002901" datatype="html">
         <source>Update</source>
-        <target state="new">Update</target>
+        <target>更新</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/dialogs/editresource/template.html</context>
           <context context-type="linenumber">43</context>
@@ -88,7 +88,7 @@
       </trans-unit>
       <trans-unit id="2159130950882492111" datatype="html">
         <source>Cancel</source>
-        <target state="new">Cancel</target>
+        <target>キャンセル</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/dialogs/deleteresource/template.html</context>
           <context context-type="linenumber">47</context>
@@ -154,7 +154,7 @@
       </trans-unit>
       <trans-unit id="8280397690227731001" datatype="html">
         <source>Restart a resource</source>
-        <target state="new">Restart a resource</target>
+        <target>リソースの再起動</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/dialogs/restartresource/template.html</context>
           <context context-type="linenumber">18</context>
@@ -170,7 +170,7 @@
       </trans-unit>
       <trans-unit id="1119485024840969330" datatype="html">
         <source>Preparing file to download...</source>
-        <target state="new">Preparing file to download...</target>
+        <target>ダウンロードファイル準備中...</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/dialogs/download/template.html</context>
           <context context-type="linenumber">27</context>
@@ -178,7 +178,7 @@
       </trans-unit>
       <trans-unit id="8548218669860642537" datatype="html">
         <source>File is ready to download!</source>
-        <target state="new">File is ready to download!</target>
+        <target>ファイルのダウンロード準備は整いました！</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/dialogs/download/template.html</context>
           <context context-type="linenumber">29</context>
@@ -202,7 +202,7 @@
       </trans-unit>
       <trans-unit id="3768927257183755959" datatype="html">
         <source>Save</source>
-        <target state="new">Save</target>
+        <target>保存</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/dialogs/download/template.html</context>
           <context context-type="linenumber">44</context>
@@ -218,7 +218,7 @@
       </trans-unit>
       <trans-unit id="3368417786821334758" datatype="html">
         <source>Abort</source>
-        <target state="new">Abort</target>
+        <target>中止</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/dialogs/download/template.html</context>
           <context context-type="linenumber">48</context>
@@ -226,7 +226,7 @@
       </trans-unit>
       <trans-unit id="8433565378732329468" datatype="html">
         <source><x id="INTERPOLATION" equiv-text="&quot;\uFFFD0\uFFFD&quot;"/> <x id="INTERPOLATION_1" equiv-text="&quot;\uFFFD1\uFFFD&quot;"/> will be updated to reflect the desired replicas count.</source>
-        <target state="new"><x id="INTERPOLATION" equiv-text="&quot;\uFFFD0\uFFFD&quot;"/> <x id="INTERPOLATION_1" equiv-text="&quot;\uFFFD1\uFFFD&quot;"/> will be updated to reflect the desired replicas count.</target>
+        <target><x id="INTERPOLATION" equiv-text="&quot;\uFFFD0\uFFFD&quot;"/> <x id="INTERPOLATION_1" equiv-text="&quot;\uFFFD1\uFFFD&quot;"/> 目標のレプリカ数を反映するように更新します。</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/dialogs/scaleresource/template.html</context>
           <context context-type="linenumber">20</context>
@@ -266,7 +266,7 @@
       </trans-unit>
       <trans-unit id="2244223685971816410" datatype="html">
         <source>Logged in with auth header </source>
-        <target state="new">Logged in with auth header </target>
+        <target>認証ヘッダーでログインしました </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/chrome/userpanel/template.html</context>
           <context context-type="linenumber">45,46</context>
@@ -274,7 +274,7 @@
       </trans-unit>
       <trans-unit id="677624622393809855" datatype="html">
         <source>Logged in with token </source>
-        <target state="new">Logged in with token </target>
+        <target>トークンでログインしました </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/chrome/userpanel/template.html</context>
           <context context-type="linenumber">48,49</context>
@@ -282,7 +282,7 @@
       </trans-unit>
       <trans-unit id="7327432642990246284" datatype="html">
         <source>Default service account </source>
-        <target state="new">Default service account </target>
+        <target>デフォルトサービスアカウント </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/chrome/userpanel/template.html</context>
           <context context-type="linenumber">51</context>
@@ -290,7 +290,7 @@
       </trans-unit>
       <trans-unit id="5207635742003539443" datatype="html">
         <source>Sign in</source>
-        <target state="new">Sign in</target>
+        <target>サインイン</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/chrome/userpanel/template.html</context>
           <context context-type="linenumber">67</context>
@@ -298,7 +298,7 @@
       </trans-unit>
       <trans-unit id="2949848596707725099" datatype="html">
         <source>Sign out</source>
-        <target state="new">Sign out</target>
+        <target>サインアウト</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/chrome/userpanel/template.html</context>
           <context context-type="linenumber">71</context>
@@ -322,7 +322,7 @@
       </trans-unit>
       <trans-unit id="1371553127733924023" datatype="html">
         <source>Scale</source>
-        <target state="new">Scale</target>
+        <target>スケールする</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/list/column/menu/template.html</context>
           <context context-type="linenumber">35</context>
@@ -334,7 +334,7 @@
       </trans-unit>
       <trans-unit id="9034287169969953424" datatype="html">
         <source>Trigger a <x id="INTERPOLATION" equiv-text="&quot;\uFFFD0\uFFFD&quot;"/></source>
-        <target state="new">Trigger a <x id="INTERPOLATION" equiv-text="&quot;\uFFFD0\uFFFD&quot;"/></target>
+        <target><x id="INTERPOLATION" equiv-text="&quot;\uFFFD0\uFFFD&quot;"/>のトリガー</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/dialogs/triggerresource/template.html</context>
           <context context-type="linenumber">18</context>
@@ -367,7 +367,7 @@
       </trans-unit>
       <trans-unit id="6929072613146586031" datatype="html">
         <source>Scale a resource</source>
-        <target state="new">Scale a resource</target>
+        <target>リソースをスケールする</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/dialogs/scaleresource/template.html</context>
           <context context-type="linenumber">18</context>
@@ -383,7 +383,7 @@
       </trans-unit>
       <trans-unit id="7343642247493540451" datatype="html">
         <source>Trigger</source>
-        <target state="new">Trigger</target>
+        <target>トリガー</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/list/column/menu/template.html</context>
           <context context-type="linenumber">31</context>
@@ -435,7 +435,7 @@
       </trans-unit>
       <trans-unit id="1161753671258784736" datatype="html">
         <source>Endpoints</source>
-        <target state="new">Endpoints</target>
+        <target>エンドポイント</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/endpoint/cardlist/template.html</context>
           <context context-type="linenumber">20</context>
@@ -475,7 +475,7 @@
       </trans-unit>
       <trans-unit id="512712988274106243" datatype="html">
         <source>IP</source>
-        <target state="new">IP</target>
+        <target>IP</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/resource/workloads/pod/detail/template.html</context>
           <context context-type="linenumber">61</context>
@@ -483,7 +483,7 @@
       </trans-unit>
       <trans-unit id="2276464361654844703" datatype="html">
         <source>QoS Class</source>
-        <target state="new">QoS Class</target>
+        <target>QoS クラス</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/resource/workloads/pod/detail/template.html</context>
           <context context-type="linenumber">67</context>
@@ -491,7 +491,7 @@
       </trans-unit>
       <trans-unit id="9092584317002115275" datatype="html">
         <source>Service Account</source>
-        <target state="new">Service Account</target>
+        <target>サービスアカウント</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/resource/workloads/pod/detail/template.html</context>
           <context context-type="linenumber">79</context>
@@ -559,7 +559,7 @@
       </trans-unit>
       <trans-unit id="3326877877555410533" datatype="html">
         <source>Started</source>
-        <target state="new">Started</target>
+        <target>起動</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/container/template.html</context>
           <context context-type="linenumber">50</context>
@@ -579,7 +579,7 @@
       </trans-unit>
       <trans-unit id="3787293861158300741" datatype="html">
         <source>Init containers</source>
-        <target state="new">Init containers</target>
+        <target>初期化コンテナー</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/resource/workloads/pod/detail/template.html</context>
           <context context-type="linenumber">132</context>
@@ -587,7 +587,7 @@
       </trans-unit>
       <trans-unit id="1686914328067460503" datatype="html">
         <source>Reclaim policy</source>
-        <target state="new">Reclaim policy</target>
+        <target>再要求ポリシー</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/resource/cluster/persistentvolume/detail/template.html</context>
           <context context-type="linenumber">46</context>
@@ -595,7 +595,7 @@
       </trans-unit>
       <trans-unit id="4222409682577085383" datatype="html">
         <source>Storage class</source>
-        <target state="new">Storage class</target>
+        <target>ストレージクラス</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/resource/cluster/persistentvolume/detail/template.html</context>
           <context context-type="linenumber">52</context>
@@ -603,7 +603,7 @@
       </trans-unit>
       <trans-unit id="1328651869817330586" datatype="html">
         <source>Mount Option(s)</source>
-        <target state="new">Mount Option(s)</target>
+        <target>マウントオプション</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/resource/cluster/persistentvolume/detail/template.html</context>
           <context context-type="linenumber">73</context>
@@ -611,7 +611,7 @@
       </trans-unit>
       <trans-unit id="4567232011016322094" datatype="html">
         <source>Access modes</source>
-        <target state="new">Access modes</target>
+        <target>アクセスモード</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/resource/cluster/persistentvolume/detail/template.html</context>
           <context context-type="linenumber">83</context>
@@ -659,7 +659,7 @@
       </trans-unit>
       <trans-unit id="8443285784216066352" datatype="html">
         <source>Download logs file</source>
-        <target state="new">Download logs file</target>
+        <target>ログファイルのダウンロード</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/dialogs/download/template.html</context>
           <context context-type="linenumber">19</context>
@@ -683,7 +683,7 @@
       </trans-unit>
       <trans-unit id="6991803345598959405" datatype="html">
         <source>There is nothing to display here</source>
-        <target state="new">There is nothing to display here</target>
+        <target>ここに表示するものはありません</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/list/zerostate/template.html</context>
           <context context-type="linenumber">22</context>
@@ -695,7 +695,7 @@
       </trans-unit>
       <trans-unit id="8830410678905901214" datatype="html">
         <source>No resources found.</source>
-        <target state="new">No resources found.</target>
+        <target>リソースはありません。</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/list/zerostate/template.html</context>
           <context context-type="linenumber">27</context>
@@ -703,7 +703,7 @@
       </trans-unit>
       <trans-unit id="2079395509894825886" datatype="html">
         <source>Conditions</source>
-        <target state="new">Conditions</target>
+        <target>条件</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/condition/template.html</context>
           <context context-type="linenumber">20</context>
@@ -723,7 +723,7 @@
       </trans-unit>
       <trans-unit id="1519954996184640001" datatype="html">
         <source>Error</source>
-        <target state="new">Error</target>
+        <target>エラー</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/index.messages.ts</context>
           <context context-type="linenumber">32</context>
@@ -755,7 +755,7 @@
       </trans-unit>
       <trans-unit id="218403386307979629" datatype="html">
         <source>Metadata</source>
-        <target state="new">Metadata</target>
+        <target>メタデータ</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/objectmeta/template.html</context>
           <context context-type="linenumber">19</context>
@@ -1191,7 +1191,7 @@
       </trans-unit>
       <trans-unit id="1480519621633238451" datatype="html">
         <source>UID</source>
-        <target state="new">UID</target>
+        <target>UID</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/objectmeta/template.html</context>
           <context context-type="linenumber">71</context>
@@ -1287,7 +1287,7 @@
       </trans-unit>
       <trans-unit id="8286804311024638809" datatype="html">
         <source>Annotations</source>
-        <target state="new">Annotations</target>
+        <target>アノテーション</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/objectmeta/template.html</context>
           <context context-type="linenumber">88</context>
@@ -1295,7 +1295,7 @@
       </trans-unit>
       <trans-unit id="7785878041239516628" datatype="html">
         <source>Pods status</source>
-        <target state="new">Pods status</target>
+        <target>ポッド状態</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/podstatus/template.html</context>
           <context context-type="linenumber">20</context>
@@ -1347,7 +1347,7 @@
       </trans-unit>
       <trans-unit id="8137040815577930934" datatype="html">
         <source>Deployments</source>
-        <target state="new">Deployments</target>
+        <target>デプロイメント</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/resourcelist/deployment/template.html</context>
           <context context-type="linenumber">24</context>
@@ -1363,7 +1363,7 @@
       </trans-unit>
       <trans-unit id="5729418620241283277" datatype="html">
         <source>Events</source>
-        <target state="new">Events</target>
+        <target>イベント</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/resourcelist/event/template.html</context>
           <context context-type="linenumber">22</context>
@@ -1375,7 +1375,7 @@
       </trans-unit>
       <trans-unit id="2614607010577950577" datatype="html">
         <source>Overview</source>
-        <target state="new">Overview</target>
+        <target>概要</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/index.messages.ts</context>
           <context context-type="linenumber">37</context>
@@ -1503,7 +1503,7 @@
       </trans-unit>
       <trans-unit id="1130652265542107236" datatype="html">
         <source>Age</source>
-        <target state="new">Age</target>
+        <target>経過時間</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/creator/template.html</context>
           <context context-type="linenumber">68</context>
@@ -1543,7 +1543,7 @@
       </trans-unit>
       <trans-unit id="3012906865384504293" datatype="html">
         <source>Image</source>
-        <target state="new">Image</target>
+        <target>イメージ</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/container/template.html</context>
           <context context-type="linenumber">32</context>
@@ -1555,7 +1555,7 @@
       </trans-unit>
       <trans-unit id="5156388212535235462" datatype="html">
         <source> Environment Variables </source>
-        <target state="new"> Environment Variables </target>
+        <target> 環境変数 </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/container/template.html</context>
           <context context-type="linenumber">106</context>
@@ -1579,7 +1579,7 @@
       </trans-unit>
       <trans-unit id="2275326697204049263" datatype="html">
         <source><x id="INTERPOLATION" equiv-text="&quot;\uFFFD0\uFFFD&quot;"/> bytes</source>
-        <target state="new"><x id="INTERPOLATION" equiv-text="&quot;\uFFFD0\uFFFD&quot;"/> bytes</target>
+        <target><x id="INTERPOLATION" equiv-text="&quot;\uFFFD0\uFFFD&quot;"/> バイト</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/container/template.html</context>
           <context context-type="linenumber">140</context>
