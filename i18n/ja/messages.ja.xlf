@@ -695,7 +695,7 @@
       </trans-unit>
       <trans-unit id="8830410678905901214" datatype="html">
         <source>No resources found.</source>
-        <target>該当リソースなし。</target>
+        <target>リソースはありません。</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/list/zerostate/template.html</context>
           <context context-type="linenumber">27</context>
