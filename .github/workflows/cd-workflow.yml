@@ -66,7 +66,7 @@ jobs:
           [ ! -d "node_modules" ] && npm ci || node aio/scripts/version.mjs && go mod download
 
       - name: Set up QEMU
-        uses: docker/setup-qemu-action@27d0a4f181a40b142cce983c5393082c365d1480 # v1
+        uses: docker/setup-qemu-action@8b122486cedac8393e77aa9734c3528886e4a1a8 # v1
 
       - name: Set up Docker Buildx
         id: buildx
@@ -125,7 +125,7 @@ jobs:
           [ ! -d "node_modules" ] && npm ci || node aio/scripts/version.mjs && go mod download
 
       - name: Set up QEMU
-        uses: docker/setup-qemu-action@27d0a4f181a40b142cce983c5393082c365d1480 # v1
+        uses: docker/setup-qemu-action@8b122486cedac8393e77aa9734c3528886e4a1a8 # v1
 
       - name: Set up Docker Buildx
         id: buildx
