@@ -1627,7 +1627,7 @@
       </trans-unit>
       <trans-unit id="5951136243699703695" datatype="html">
         <source>Liveness Probe</source>
-        <target>生存探査</target>
+        <target>生存プローブ</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/container/template.html</context>
           <context context-type="linenumber">226</context>
@@ -1635,7 +1635,7 @@
       </trans-unit>
       <trans-unit id="4111811676793706889" datatype="html">
         <source>Readiness Probe</source>
-        <target>準備探査</target>
+        <target>準備プローブ</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/container/template.html</context>
           <context context-type="linenumber">236</context>
@@ -1643,7 +1643,7 @@
       </trans-unit>
       <trans-unit id="8603225210556465773" datatype="html">
         <source>Startup Probe</source>
-        <target>起動探査</target>
+        <target>起動プローブ</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/container/template.html</context>
           <context context-type="linenumber">246</context>
@@ -1823,7 +1823,7 @@
       </trans-unit>
       <trans-unit id="8802433277842246383" datatype="html">
         <source>Started At</source>
-        <target>で起動</target>
+        <target>起動中</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/container/template.html</context>
           <context context-type="linenumber">98</context>
@@ -2259,7 +2259,7 @@
       </trans-unit>
       <trans-unit id="4964247147355186491" datatype="html">
         <source>Controlled by</source>
-        <target>によって制御される</target>
+        <target>制御</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/creator/template.html</context>
           <context context-type="linenumber">42</context>
@@ -2505,7 +2505,7 @@
       </trans-unit>
       <trans-unit id="2027381191177847167" datatype="html">
         <source>Exec Commands</source>
-        <target>コマンドを実行</target>
+        <target>実行コマンド</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/probe/template.html</context>
           <context context-type="linenumber">90</context>
@@ -2817,7 +2817,7 @@
       </trans-unit>
       <trans-unit id="8607136960421332669" datatype="html">
         <source>Preview Deployment</source>
-        <target>デプロイメントをプレビューする</target>
+        <target>デプロイメントのプレビュー</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/dialogs/previewdeployment/template.html</context>
           <context context-type="linenumber">18</context>
