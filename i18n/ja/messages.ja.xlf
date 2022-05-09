@@ -1815,7 +1815,7 @@
       </trans-unit>
       <trans-unit id="741892530496074339" datatype="html">
         <source>Signal</source>
-        <target>信号</target>
+        <target>シグナル</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/container/template.html</context>
           <context context-type="linenumber">90</context>
