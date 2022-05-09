@@ -211,6 +211,10 @@ export interface StorageClassList extends ResourceList {
   items: StorageClass[];
 }
 
+export interface IngressClassList extends ResourceList {
+  items: IngressClass[];
+}
+
 // Simple detail types
 export type ClusterRole = Resource;
 
@@ -405,6 +409,10 @@ export interface StorageClass extends Resource {
   parameters: StringMap[];
 }
 
+export interface IngressClass extends Resource {
+  controller: string;
+}
+
 // Detail types
 
 export interface ReplicaSetDetail extends ResourceDetail {
@@ -579,6 +587,11 @@ export interface PersistentVolumeClaimDetail extends ResourceDetail {
 export interface StorageClassDetail extends ResourceDetail {
   parameters: StringMap;
   provisioner: string;
+}
+
+export interface IngressClassDetail extends ResourceDetail {
+  parameters: StringMap;
+  controller: string;
 }
 
 export interface ConfigMapDetail extends ResourceDetail {

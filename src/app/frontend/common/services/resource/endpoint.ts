@@ -33,6 +33,7 @@ export enum Resource {
   namespace = 'namespace',
   persistentVolume = 'persistentvolume',
   storageClass = 'storageclass',
+  ingressClass = 'ingressclass',
   clusterRole = 'clusterrole',
   clusterRoleBinding = 'clusterrolebinding',
   role = 'role',
