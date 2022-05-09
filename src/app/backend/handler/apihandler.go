@@ -54,6 +54,7 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/event"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/horizontalpodautoscaler"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/ingress"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/ingressclass"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/job"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/logs"
 	ns "github.com/kubernetes/dashboard/src/app/backend/resource/namespace"
@@ -687,6 +688,15 @@ func CreateHTTPAPIHandler(iManager integration.IntegrationManager, cManager clie
 		apiV1Ws.GET("/storageclass/{storageclass}/persistentvolume").
 			To(apiHandler.handleGetStorageClassPersistentVolumes).
 			Writes(persistentvolume.PersistentVolumeList{}))
+
+	apiV1Ws.Route(
+		apiV1Ws.GET("/ingressclass").
+			To(apiHandler.handleGetIngressClassList).
+			Writes(ingressclass.IngressClassList{}))
+	apiV1Ws.Route(
+		apiV1Ws.GET("/ingressclass/{ingressclass}").
+			To(apiHandler.handleGetIngressClass).
+			Writes(ingressclass.IngressClass{}))
 
 	apiV1Ws.Route(
 		apiV1Ws.GET("/log/source/{namespace}/{resourceName}/{resourceType}").
@@ -2547,6 +2557,38 @@ func (apiHandler *APIHandler) handleGetStorageClassPersistentVolumes(request *re
 	dataSelect := parser.ParseDataSelectPathParameter(request)
 	result, err := persistentvolume.GetStorageClassPersistentVolumes(k8sClient,
 		name, dataSelect)
+	if err != nil {
+		errors.HandleInternalError(response, err)
+		return
+	}
+	response.WriteHeaderAndEntity(http.StatusOK, result)
+}
+
+func (apiHandler *APIHandler) handleGetIngressClassList(request *restful.Request, response *restful.Response) {
+	k8sClient, err := apiHandler.cManager.Client(request)
+	if err != nil {
+		errors.HandleInternalError(response, err)
+		return
+	}
+
+	dataSelect := parser.ParseDataSelectPathParameter(request)
+	result, err := ingressclass.GetIngressClassList(k8sClient, dataSelect)
+	if err != nil {
+		errors.HandleInternalError(response, err)
+		return
+	}
+	response.WriteHeaderAndEntity(http.StatusOK, result)
+}
+
+func (apiHandler *APIHandler) handleGetIngressClass(request *restful.Request, response *restful.Response) {
+	k8sClient, err := apiHandler.cManager.Client(request)
+	if err != nil {
+		errors.HandleInternalError(response, err)
+		return
+	}
+
+	name := request.PathParameter("ingressclass")
+	result, err := ingressclass.GetIngressClass(k8sClient, name)
 	if err != nil {
 		errors.HandleInternalError(response, err)
 		return
