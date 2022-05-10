@@ -63,6 +63,10 @@ export class PersistentVolumeSource {
     }
 
     const volumeSource = VolumeSourceRegistry.get(sourceKey);
+    if (!volumeSource) {
+      return undefined;
+    }
+
     return Object.assign(volumeSource, (this as any)[sourceKey]);
   }
 }
