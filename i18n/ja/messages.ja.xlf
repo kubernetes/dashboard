@@ -1685,6 +1685,14 @@
           <context context-type="linenumber">246</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="2354260153438339517" datatype="html">
+        <source>Resource Requests</source>
+        <target state="new">Resource Requests</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/common/components/container/template.html</context>
+          <context context-type="linenumber">267</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="2122768143452494504" datatype="html">
         <source>Unsupported graph type <x id="PH" equiv-text="this.graphType"/>.</source>
         <target state="new">Unsupported graph type <x id="PH" equiv-text="this.graphType"/>.</target>
@@ -1784,6 +1792,10 @@
       <trans-unit id="374277779600579508" datatype="html">
         <source>Resource Limits</source>
         <target state="new">Resource Limits</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/frontend/common/components/container/template.html</context>
+          <context context-type="linenumber">256</context>
+        </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/limits/template.html</context>
           <context context-type="linenumber">20</context>
