@@ -45,6 +45,7 @@ export class PersistentVolumeSource {
   scaleIO: ScaleIOVolumeSource;
   storageOS: StorageOSVolumeSource;
   csi?: CSIVolumeSource;
+  ephemeral?: EphemeralVolumeSource;
 
   constructor(volume: PersistentVolumeSource) {
     Object.assign(this, volume);
@@ -75,6 +76,17 @@ export class PersistentVolumeSource {
 export class IVolumeSource {
   mountType: string;
   displayName: string;
+}
+
+export class EphemeralVolumeSource implements IVolumeSource {
+  get mountType(): string {
+    return 'Ephemeral';
+  }
+
+  // TODO: Populate this with the ephemeral volume's PVC details
+  displayName = '-';
+  name: string;
+  volumeClaimTemplate?: {};
 }
 
 export class HostPathVolumeSource implements IVolumeSource {
@@ -584,4 +596,5 @@ const VolumeSourceRegistry: Map<keyof PersistentVolumeSourceRaw, IVolumeSource> 
   ['scaleIO', new ScaleIOVolumeSource()],
   ['storageOS', new StorageOSVolumeSource()],
   ['csi', new CSIVolumeSource()],
+  ['ephemeral', new EphemeralVolumeSource()],
 ]);
