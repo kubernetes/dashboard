@@ -249,22 +249,22 @@ limitations under the License.
     </div>
 
     <kd-property *ngIf="container?.resources?.limits"
-                 fxFlex="100">
+                 fxFlex="50">
       <div key
            fxFlex
            class="kd-muted section-header"
-           i18n>Resources - Limits</div>
+           i18n>Resource Limits</div>
       <div value>
         <kd-chips [map]="container?.resources?.limits"
                   [displayAll]="true"></kd-chips>
       </div>
     </kd-property>
     <kd-property *ngIf="container?.resources?.requests"
-                 fxFlex="100">
+                 fxFlex="50">
       <div key
            fxFlex
            class="kd-muted section-header"
-           i18n>Resources - Requests</div>
+           i18n>Resource Requests</div>
       <div value>
         <kd-chips [map]="container?.resources?.requests"
                   [displayAll]="true"></kd-chips>
