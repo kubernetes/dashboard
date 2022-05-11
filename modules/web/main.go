@@ -26,9 +26,9 @@ import (
 
 	"github.com/spf13/pflag"
 
+	"k8s.io/dashboard/certificates"
+	"k8s.io/dashboard/certificates/ecdsa"
 	"k8s.io/dashboard/web/pkg/args"
-	"k8s.io/dashboard/web/pkg/cert"
-	"k8s.io/dashboard/web/pkg/cert/ecdsa"
 	"k8s.io/dashboard/web/pkg/handler"
 	"k8s.io/dashboard/web/pkg/systembanner"
 )
@@ -48,6 +48,7 @@ var (
 )
 
 func main() {
+	// TODO: use klog instead?
 	// Set logging output to standard console out
 	log.SetOutput(os.Stdout)
 
@@ -55,59 +56,53 @@ func main() {
 	pflag.Parse()
 	_ = flag.CommandLine.Parse(make([]string, 0)) // Init for glog calls in kubernetes packages
 
-	// Initializes dashboard arguments holder so we can read them in other packages
+	// Initializes dashboard arguments holder, so we can read them in other packages
 	initArgHolder()
 
 	// Init system banner manager
 	systemBannerManager := systembanner.NewSystemBannerManager(args.Holder.GetSystemBanner(),
 		args.Holder.GetSystemBannerSeverity())
+	systembanner.NewSystemBannerHandler(systemBannerManager).Install()
 
-	var servingCerts []tls.Certificate
-	if args.Holder.GetAutoGenerateCertificates() {
-		log.Println("Auto-generating certificates")
-		certCreator := ecdsa.NewECDSACreator(args.Holder.GetKeyFile(), args.Holder.GetCertFile(), elliptic.P256())
-		certManager := cert.NewCertManager(certCreator, args.Holder.GetDefaultCertDir())
-		servingCert, err := certManager.GetCertificates()
-		if err != nil {
-			handleFatalInitServingCertError(err)
-		}
-		servingCerts = []tls.Certificate{servingCert}
-	} else if args.Holder.GetCertFile() != "" && args.Holder.GetKeyFile() != "" {
-		certFilePath := args.Holder.GetDefaultCertDir() + string(os.PathSeparator) + args.Holder.GetCertFile()
-		keyFilePath := args.Holder.GetDefaultCertDir() + string(os.PathSeparator) + args.Holder.GetKeyFile()
-		servingCert, err := tls.LoadX509KeyPair(certFilePath, keyFilePath)
-		if err != nil {
-			handleFatalInitServingCertError(err)
-		}
-		servingCerts = []tls.Certificate{servingCert}
+	certCreator := ecdsa.NewECDSACreator(args.Holder.GetKeyFile(), args.Holder.GetCertFile(), elliptic.P256())
+	certManager := certificates.NewCertManager(certCreator, args.Holder.GetDefaultCertDir(), args.Holder.GetAutoGenerateCertificates())
+	certs, err := certManager.GetCertificates()
+	if err != nil {
+		handleFatalInitServingCertError(err)
 	}
 
-	// Run a HTTP server that serves static public files from './public' and handles API calls.
+	// Run HTTP server that serves static public files from './public' and handles API calls.
 	http.Handle("/", handler.MakeGzipHandler(handler.CreateLocaleHandler()))
 	http.Handle("/config", handler.AppHandler(handler.ConfigHandler))
 
-	systemBannerHandler := systembanner.NewSystemBannerHandler(systemBannerManager)
-	systemBannerHandler.Install()
-
 	// Listen for http or https
-	if servingCerts != nil {
-		log.Printf("Serving securely on HTTPS port: %d", args.Holder.GetPort())
-		secureAddr := fmt.Sprintf("%s:%d", args.Holder.GetBindAddress(), args.Holder.GetPort())
-		server := &http.Server{
-			Addr:    secureAddr,
-			Handler: http.DefaultServeMux,
-			TLSConfig: &tls.Config{
-				Certificates: servingCerts,
-				MinVersion:   tls.VersionTLS12,
-			},
-		}
-		go func() { log.Fatal(server.ListenAndServeTLS("", "")) }()
+	if certs != nil {
+		serveTLS(certs)
 	} else {
-		log.Printf("Serving insecurely on HTTP port: %d", args.Holder.GetInsecurePort())
-		addr := fmt.Sprintf("%s:%d", args.Holder.GetInsecureBindAddress(), args.Holder.GetInsecurePort())
-		go func() { log.Fatal(http.ListenAndServe(addr, nil)) }()
+		serve()
 	}
+
 	select {}
+}
+
+func serve() {
+	log.Printf("Serving insecurely on HTTP port: %d", args.Holder.GetInsecurePort())
+	addr := fmt.Sprintf("%s:%d", args.Holder.GetInsecureBindAddress(), args.Holder.GetInsecurePort())
+	go func() { log.Fatal(http.ListenAndServe(addr, nil)) }()
+}
+
+func serveTLS(certificates []tls.Certificate) {
+	log.Printf("Serving securely on HTTPS port: %d", args.Holder.GetPort())
+	secureAddr := fmt.Sprintf("%s:%d", args.Holder.GetBindAddress(), args.Holder.GetPort())
+	server := &http.Server{
+		Addr:    secureAddr,
+		Handler: http.DefaultServeMux,
+		TLSConfig: &tls.Config{
+			Certificates: certificates,
+			MinVersion:   tls.VersionTLS12,
+		},
+	}
+	go func() { log.Fatal(server.ListenAndServeTLS("", "")) }()
 }
 
 func initArgHolder() {

@@ -15,16 +15,16 @@
 package handler
 
 import (
+	"bytes"
 	"encoding/json"
 	"net/http"
-	"testing"
-
-	"bytes"
 	"reflect"
 	"strings"
+	"testing"
 
-	restful "github.com/emicklei/go-restful/v3"
+	"github.com/emicklei/go-restful/v3"
 	"k8s.io/client-go/kubernetes/fake"
+
 	"k8s.io/dashboard/api/pkg/args"
 	"k8s.io/dashboard/api/pkg/auth"
 	authApi "k8s.io/dashboard/api/pkg/auth/api"
@@ -32,7 +32,6 @@ import (
 	"k8s.io/dashboard/api/pkg/client"
 	"k8s.io/dashboard/api/pkg/settings"
 	"k8s.io/dashboard/api/pkg/sync"
-	"k8s.io/dashboard/api/pkg/systembanner"
 )
 
 func getTokenManager() authApi.TokenManager {
@@ -46,8 +45,7 @@ func TestCreateHTTPAPIHandler(t *testing.T) {
 	cManager := client.NewClientManager("", "http://localhost:8080")
 	authManager := auth.NewAuthManager(cManager, getTokenManager(), authApi.AuthenticationModes{}, true)
 	sManager := settings.NewSettingsManager()
-	sbManager := systembanner.NewSystemBannerManager("Hello world!", "INFO")
-	_, err := CreateHTTPAPIHandler(nil, cManager, authManager, sManager, sbManager)
+	_, err := CreateHTTPAPIHandler(nil, cManager, authManager, sManager)
 	if err != nil {
 		t.Fatal("CreateHTTPAPIHandler() cannot create HTTP API handler")
 	}

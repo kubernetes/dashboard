@@ -6,5 +6,9 @@
   "/config": {
     "target": "http://localhost:9090",
     "secure": false
+  },
+  "/systembanner": {
+    "target": "http://localhost:8080",
+    "secure": false
   }
 }

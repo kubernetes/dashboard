@@ -15,6 +15,7 @@
 package systembanner
 
 import (
+	"encoding/json"
 	"net/http"
 
 	"k8s.io/dashboard/web/pkg/handler"
@@ -30,20 +31,19 @@ func (self *SystemBannerHandler) Install() {
 	http.Handle("/systembanner", handler.AppHandler(self.handleGet))
 }
 
-// TODO: Fix that
-func (self *SystemBannerHandler) handleGet(w http.ResponseWriter, r *http.Request) (int, error) {
-	//configTemplate, err := template.New(ConfigTemplateName).Parse(ConfigTemplate)
-	//w.Header().Set("Content-Type", "application/json")
-	//if err != nil {
-	//	return http.StatusInternalServerError, err
-	//}
+func (self *SystemBannerHandler) handleGet(w http.ResponseWriter, _ *http.Request) (int, error) {
+	w.Header().Set("Content-Type", "application/json")
+	encoder := json.NewEncoder(w)
+	systemBanner := self.manager.Get()
+	err := encoder.Encode(&systemBanner)
+	if err != nil {
+		return http.StatusInternalServerError, err
+	}
 
 	return http.StatusOK, nil
-
-	//response.WriteHeaderAndEntity(http.StatusOK, self.manager.Get())
 }
 
 // NewSystemBannerHandler creates SystemBannerHandler.
-func NewSystemBannerHandler(manager SystemBannerManager) SystemBannerHandler {
-	return SystemBannerHandler{manager: manager}
+func NewSystemBannerHandler(manager SystemBannerManager) *SystemBannerHandler {
+	return &SystemBannerHandler{manager: manager}
 }

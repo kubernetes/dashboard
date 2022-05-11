@@ -14,10 +14,11 @@
   "scripts": {
     "start": "npm run ensure:version && ng serve --proxy-config proxy.conf.json --host $npm_config_bind_address --port $npm_config_port",
     "start:https": "npm run ensure:version && ng serve --proxy-config aio/https-proxy.conf.json --ssl --host $npm_config_bind_address --port $npm_config_port",
+    "start:prod": "npm run ensure:version && ng serve -c production-en --proxy-config proxy.conf.json",
+    "start:prod:https": "npm run ensure:version && ng serve -c production-en --ssl --proxy-config proxy-https.conf.json",
 
     "build:prod": "scripts/build.sh",
 
-    "start:prod": "SIDECAR_HOST=$npm_config_sidecar_host BIND_ADDRESS=$npm_config_bind_address PORT=$npm_config_port ng build",
     "start:e2e": "concurrently \"make serve-backend\" \"npm run start:frontend\"",
     "check": "make check",
     "fix": "make fix",

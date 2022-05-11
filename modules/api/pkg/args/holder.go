@@ -17,7 +17,7 @@ package args
 import (
 	"net"
 
-	"k8s.io/dashboard/api/pkg/cert/api"
+	"k8s.io/dashboard/certificates/api"
 )
 
 var Holder = &holder{}
@@ -33,18 +33,16 @@ type holder struct {
 	insecureBindAddress net.IP
 	bindAddress         net.IP
 
-	defaultCertDir       string
-	certFile             string
-	keyFile              string
-	apiServerHost        string
-	metricsProvider      string
-	heapsterHost         string
-	sidecarHost          string
-	kubeConfigFile       string
-	systemBanner         string
-	systemBannerSeverity string
-	apiLogLevel          string
-	namespace            string
+	defaultCertDir  string
+	certFile        string
+	keyFile         string
+	apiServerHost   string
+	metricsProvider string
+	heapsterHost    string
+	sidecarHost     string
+	kubeConfigFile  string
+	apiLogLevel     string
+	namespace       string
 
 	authenticationMode []string
 
@@ -53,8 +51,6 @@ type holder struct {
 	disableSettingsAuthorizer bool
 
 	enableSkipLogin bool
-
-	localeConfig string
 }
 
 // GetInsecurePort 'insecure-port' argument of Dashboard binary.
@@ -135,17 +131,7 @@ func (self *holder) GetKubeConfigFile() string {
 	return self.kubeConfigFile
 }
 
-// GetSystemBanner 'system-banner' argument of Dashboard binary.
-func (self *holder) GetSystemBanner() string {
-	return self.systemBanner
-}
-
-// GetSystemBannerSeverity 'system-banner-severity' argument of Dashboard binary.
-func (self *holder) GetSystemBannerSeverity() string {
-	return self.systemBannerSeverity
-}
-
-// LogLevel 'api-log-level' argument of Dashboard binary.
+// GetAPILogLevel 'api-log-level' argument of Dashboard binary.
 func (self *holder) GetAPILogLevel() string {
 	return self.apiLogLevel
 }
@@ -178,9 +164,4 @@ func (self *holder) GetEnableSkipLogin() bool {
 // GetNamespace 'namespace' argument of Dashboard binary.
 func (self *holder) GetNamespace() string {
 	return self.namespace
-}
-
-// GetLocaleConfig 'locale-config' argument of Dashboard binary.
-func (self *holder) GetLocaleConfig() string {
-	return self.localeConfig
 }

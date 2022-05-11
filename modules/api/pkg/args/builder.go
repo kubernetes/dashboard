@@ -108,18 +108,6 @@ func (self *holderBuilder) SetKubeConfigFile(kubeConfigFile string) *holderBuild
 	return self
 }
 
-// SetSystemBanner 'system-banner' argument of Dashboard binary.
-func (self *holderBuilder) SetSystemBanner(systemBanner string) *holderBuilder {
-	self.holder.systemBanner = systemBanner
-	return self
-}
-
-// SetSystemBannerSeverity 'system-banner-severity' argument of Dashboard binary.
-func (self *holderBuilder) SetSystemBannerSeverity(systemBannerSeverity string) *holderBuilder {
-	self.holder.systemBannerSeverity = systemBannerSeverity
-	return self
-}
-
 // SetLogLevel 'api-log-level' argument of Dashboard binary.
 func (self *holderBuilder) SetAPILogLevel(apiLogLevel string) *holderBuilder {
 	self.holder.apiLogLevel = apiLogLevel
@@ -159,12 +147,6 @@ func (self *holderBuilder) SetEnableSkipLogin(enableSkipLogin bool) *holderBuild
 // SetNamespace 'namespace' argument of Dashboard binary.
 func (self *holderBuilder) SetNamespace(namespace string) *holderBuilder {
 	self.holder.namespace = namespace
-	return self
-}
-
-// SetLocaleConfig 'locale-config' argument of Dashboard binary.
-func (self *holderBuilder) SetLocaleConfig(localeConfig string) *holderBuilder {
-	self.holder.localeConfig = localeConfig
 	return self
 }
 

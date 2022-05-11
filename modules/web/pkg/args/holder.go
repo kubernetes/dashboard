@@ -17,7 +17,7 @@ package args
 import (
 	"net"
 
-	"k8s.io/dashboard/web/pkg/cert/api"
+	"k8s.io/dashboard/certificates/api"
 )
 
 var Holder = &holder{}
@@ -25,10 +25,8 @@ var Holder = &holder{}
 // Argument holder structure. It is private to make sure that only 1 instance can be created. It holds all
 // arguments values passed to Dashboard binary.
 type holder struct {
-	insecurePort            int
-	port                    int
-	tokenTTL                int
-	metricClientCheckPeriod int
+	insecurePort int
+	port         int
 
 	insecureBindAddress net.IP
 	bindAddress         net.IP
@@ -36,25 +34,11 @@ type holder struct {
 	defaultCertDir       string
 	certFile             string
 	keyFile              string
-	apiServerHost        string
-	metricsProvider      string
-	heapsterHost         string
-	sidecarHost          string
-	kubeConfigFile       string
+	localeConfig         string
 	systemBanner         string
 	systemBannerSeverity string
-	apiLogLevel          string
-	namespace            string
 
-	authenticationMode []string
-
-	autoGenerateCertificates  bool
-	enableInsecureLogin       bool
-	disableSettingsAuthorizer bool
-
-	enableSkipLogin bool
-
-	localeConfig string
+	autoGenerateCertificates bool
 }
 
 // GetInsecurePort 'insecure-port' argument of Dashboard binary.
@@ -65,16 +49,6 @@ func (self *holder) GetInsecurePort() int {
 // GetPort 'port' argument of Dashboard binary.
 func (self *holder) GetPort() int {
 	return self.port
-}
-
-// GetTokenTTL 'token-ttl' argument of Dashboard binary.
-func (self *holder) GetTokenTTL() int {
-	return self.tokenTTL
-}
-
-// GetMetricClientCheckPeriod 'metric-client-check-period' argument of Dashboard binary.
-func (self *holder) GetMetricClientCheckPeriod() int {
-	return self.metricClientCheckPeriod
 }
 
 // GetInsecureBindAddress 'insecure-bind-address' argument of Dashboard binary.
@@ -110,31 +84,6 @@ func (self *holder) GetKeyFile() string {
 	return self.keyFile
 }
 
-// GetApiServerHost 'apiserver-host' argument of Dashboard binary.
-func (self *holder) GetApiServerHost() string {
-	return self.apiServerHost
-}
-
-// GetMetricsProvider 'metrics-provider' argument of Dashboard binary.
-func (self *holder) GetMetricsProvider() string {
-	return self.metricsProvider
-}
-
-// GetHeapsterHost 'heapster-host' argument of Dashboard binary.
-func (self *holder) GetHeapsterHost() string {
-	return self.heapsterHost
-}
-
-// GetSidecarHost 'sidecar-host' argument of Dashboard binary.
-func (self *holder) GetSidecarHost() string {
-	return self.sidecarHost
-}
-
-// GetKubeConfigFile 'kubeconfig' argument of Dashboard binary.
-func (self *holder) GetKubeConfigFile() string {
-	return self.kubeConfigFile
-}
-
 // GetSystemBanner 'system-banner' argument of Dashboard binary.
 func (self *holder) GetSystemBanner() string {
 	return self.systemBanner
@@ -145,39 +94,9 @@ func (self *holder) GetSystemBannerSeverity() string {
 	return self.systemBannerSeverity
 }
 
-// LogLevel 'api-log-level' argument of Dashboard binary.
-func (self *holder) GetAPILogLevel() string {
-	return self.apiLogLevel
-}
-
-// GetAuthenticationMode 'authentication-mode' argument of Dashboard binary.
-func (self *holder) GetAuthenticationMode() []string {
-	return self.authenticationMode
-}
-
 // GetAutoGenerateCertificates 'auto-generate-certificates' argument of Dashboard binary.
 func (self *holder) GetAutoGenerateCertificates() bool {
 	return self.autoGenerateCertificates
-}
-
-// GetEnableInsecureLogin 'enable-insecure-login' argument of Dashboard binary.
-func (self *holder) GetEnableInsecureLogin() bool {
-	return self.enableInsecureLogin
-}
-
-// GetDisableSettingsAuthorizer 'disable-settings-authorizer' argument of Dashboard binary.
-func (self *holder) GetDisableSettingsAuthorizer() bool {
-	return self.disableSettingsAuthorizer
-}
-
-// GetEnableSkipLogin 'enable-skip-login' argument of Dashboard binary.
-func (self *holder) GetEnableSkipLogin() bool {
-	return self.enableSkipLogin
-}
-
-// GetNamespace 'namespace' argument of Dashboard binary.
-func (self *holder) GetNamespace() string {
-	return self.namespace
 }
 
 // GetLocaleConfig 'locale-config' argument of Dashboard binary.

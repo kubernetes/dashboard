@@ -36,18 +36,6 @@ func (self *holderBuilder) SetPort(port int) *holderBuilder {
 	return self
 }
 
-// SetTokenTTL 'token-ttl' argument of Dashboard binary.
-func (self *holderBuilder) SetTokenTTL(ttl int) *holderBuilder {
-	self.holder.tokenTTL = ttl
-	return self
-}
-
-// SetMetricClientCheckPeriod 'metric-client-check-period' argument of Dashboard binary.
-func (self *holderBuilder) SetMetricClientCheckPeriod(period int) *holderBuilder {
-	self.holder.metricClientCheckPeriod = period
-	return self
-}
-
 // SetInsecureBindAddress 'insecure-bind-address' argument of Dashboard binary.
 func (self *holderBuilder) SetInsecureBindAddress(ip net.IP) *holderBuilder {
 	self.holder.insecureBindAddress = ip
@@ -78,33 +66,9 @@ func (self *holderBuilder) SetKeyFile(keyFile string) *holderBuilder {
 	return self
 }
 
-// SetApiServerHost 'api-server-host' argument of Dashboard binary.
-func (self *holderBuilder) SetApiServerHost(apiServerHost string) *holderBuilder {
-	self.holder.apiServerHost = apiServerHost
-	return self
-}
-
-// SetMetricsProvider 'metrics-provider' argument of Dashboard binary.
-func (self *holderBuilder) SetMetricsProvider(metricsProvider string) *holderBuilder {
-	self.holder.metricsProvider = metricsProvider
-	return self
-}
-
-// SetHeapsterHost 'heapster-host' argument of Dashboard binary.
-func (self *holderBuilder) SetHeapsterHost(heapsterHost string) *holderBuilder {
-	self.holder.heapsterHost = heapsterHost
-	return self
-}
-
-// SetSidecarHost 'sidecar-host' argument of Dashboard binary.
-func (self *holderBuilder) SetSidecarHost(sidecarHost string) *holderBuilder {
-	self.holder.sidecarHost = sidecarHost
-	return self
-}
-
-// SetKubeConfigFile 'kubeconfig' argument of Dashboard binary.
-func (self *holderBuilder) SetKubeConfigFile(kubeConfigFile string) *holderBuilder {
-	self.holder.kubeConfigFile = kubeConfigFile
+// SetAutoGenerateCertificates 'auto-generate-certificates' argument of Dashboard binary.
+func (self *holderBuilder) SetAutoGenerateCertificates(autoGenerateCertificates bool) *holderBuilder {
+	self.holder.autoGenerateCertificates = autoGenerateCertificates
 	return self
 }
 
@@ -117,48 +81,6 @@ func (self *holderBuilder) SetSystemBanner(systemBanner string) *holderBuilder {
 // SetSystemBannerSeverity 'system-banner-severity' argument of Dashboard binary.
 func (self *holderBuilder) SetSystemBannerSeverity(systemBannerSeverity string) *holderBuilder {
 	self.holder.systemBannerSeverity = systemBannerSeverity
-	return self
-}
-
-// SetLogLevel 'api-log-level' argument of Dashboard binary.
-func (self *holderBuilder) SetAPILogLevel(apiLogLevel string) *holderBuilder {
-	self.holder.apiLogLevel = apiLogLevel
-	return self
-}
-
-// SetAuthenticationMode 'authentication-mode' argument of Dashboard binary.
-func (self *holderBuilder) SetAuthenticationMode(authMode []string) *holderBuilder {
-	self.holder.authenticationMode = authMode
-	return self
-}
-
-// SetAutoGenerateCertificates 'auto-generate-certificates' argument of Dashboard binary.
-func (self *holderBuilder) SetAutoGenerateCertificates(autoGenerateCertificates bool) *holderBuilder {
-	self.holder.autoGenerateCertificates = autoGenerateCertificates
-	return self
-}
-
-// SetEnableInsecureLogin 'enable-insecure-login' argument of Dashboard binary.
-func (self *holderBuilder) SetEnableInsecureLogin(enableInsecureLogin bool) *holderBuilder {
-	self.holder.enableInsecureLogin = enableInsecureLogin
-	return self
-}
-
-// SetDisableSettingsAuthorizer 'disable-settings-authorizer' argument of Dashboard binary.
-func (self *holderBuilder) SetDisableSettingsAuthorizer(disableSettingsAuthorizer bool) *holderBuilder {
-	self.holder.disableSettingsAuthorizer = disableSettingsAuthorizer
-	return self
-}
-
-// SetEnableSkipLogin 'enable-skip-login' argument of Dashboard binary.
-func (self *holderBuilder) SetEnableSkipLogin(enableSkipLogin bool) *holderBuilder {
-	self.holder.enableSkipLogin = enableSkipLogin
-	return self
-}
-
-// SetNamespace 'namespace' argument of Dashboard binary.
-func (self *holderBuilder) SetNamespace(namespace string) *holderBuilder {
-	self.holder.namespace = namespace
 	return self
 }
 
