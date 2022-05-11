@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-name: CI - Web
+name: CI / Web
 on:
   push:
     branches: [ master ]
@@ -27,8 +27,6 @@ jobs:
     runs-on: ubuntu-latest
     env:
       NG_CLI_ANALYTICS: ci
-      GO111MODULE: on
-      GOPROXY: "https://proxy.golang.org"
       NODE_OPTIONS: "--max-old-space-size=8192"
       TERM: xterm
     steps:
@@ -40,7 +38,7 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 16.15.0
-      - name: Cache
+      - name: Cache Node.js modules
         uses: actions/cache@v3
         env:
           cache-name: cache-node-modules
@@ -50,7 +48,7 @@ jobs:
       - name: Install Dependencies
         shell: bash
         run: |
-          [ ! -d "node_modules" ] && npm ci || node aio/scripts/version.mjs
+          [ ! -d "node_modules" ] && npm ci || node modules/web/scripts/version.mjs
       - name: Check Code
         shell: bash
         run: npm run check
@@ -63,18 +61,17 @@ jobs:
       GOPROXY: "https://proxy.golang.org"
       NODE_OPTIONS: "--max-old-space-size=8192"
       TERM: xterm
-
     steps:
-      - name: Setup Environment
-        uses: actions/checkout@629c2de402a417ea7690ca6ce3f33229e27606a5 # v2
+      - name: Checkout repository
+        uses: actions/checkout@v3
         with:
           fetch-depth: 0
-      - name: Setup NodeJS
-        uses: actions/setup-node@56337c425554a6be30cdef71bf441f15be286854 # v2.1.2
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
         with:
-          node-version: 16.14.2
-      - name: Cache Node Modules
-        uses: actions/cache@661fd3eb7f2f20d8c7c84bc2b0509efd7a826628 # v2
+          node-version: 16.15.0
+      - name: Cache Node.js modules
+        uses: actions/cache@v3
         env:
           cache-name: cache-node-modules
         with:
@@ -82,13 +79,9 @@ jobs:
           key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
       - name: Install Dependencies
         shell: bash
-        run: |
-          export GOPATH=$(go env GOPATH)/bin
-          [ ! -d "node_modules" ] && npm ci || node aio/scripts/version.mjs && command -v golangci-lint >/dev/null 2>&1 || { curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $(go env GOPATH)/bin v1.41.1; } && go mod download
-
+        run: [ ! -d "node_modules" ] && npm ci || node aio/scripts/version.mjs
       - name: Run Frontend Unit Tests
         run: make coverage-frontend
-
       - name: Cleanup & Upload Coverage
         shell: bash
         run: |

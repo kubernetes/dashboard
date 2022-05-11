@@ -12,18 +12,18 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-name: CI - API
+name: CI / API
 on:
   push:
     branches: [ master ]
-    ignore-paths:
+    paths-ignore:
       - '**/*.md'
       - 'aio/**'
       - 'docs/**'
       - 'web/**'
   pull_request:
     branches: [ master ]
-    ignore-paths:
+    paths-ignore:
       - '**/*.md'
       - 'aio/**'
       - 'docs/**'

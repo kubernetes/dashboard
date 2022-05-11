@@ -12,12 +12,16 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-name: CI - Global
+name: CI / Global
 on:
   push:
     branches: [ master ]
+    paths-ignore:
+      - '**/*.md'
   pull_request:
     branches: [ master ]
+    paths-ignore:
+      - '**/*.md'
   schedule:
     - cron: '0 0 * * 1'
 permissions:
