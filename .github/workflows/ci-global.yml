@@ -28,6 +28,39 @@ permissions:
   contents: read
 jobs:
 
+  lint-go:
+    name: Lint Go
+    runs-on: ubuntu-latest
+    env:
+      GOPROXY: "https://proxy.golang.org"
+      TERM: xterm
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: Setup Go
+        uses: actions/setup-go@v3
+        with:
+          go-version: 1.18
+      - name: Lint Go
+        uses: golangci/golangci-lint-action@v3
+        with:
+          version: v1.46.0
+
+  license-check:
+    name: License check
+    runs-on: ubuntu-latest
+    env:
+      TERM: xterm
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: Check licenses
+        uses: apache/skywalking-eyes@main
+
   codeql:
     permissions:
       actions: read
@@ -53,20 +86,7 @@ jobs:
       - name: Analyze
         uses: github/codeql-action/analyze@v2
 
-  license:
-    name: License check
-    runs-on: ubuntu-latest
-    env:
-      TERM: xterm
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
-      - name: Check licenses
-        uses: apache/skywalking-eyes@main
-
-  e2e:
+  e2e-tests:
     name: End-to-end tests
     runs-on: ubuntu-latest
     env:

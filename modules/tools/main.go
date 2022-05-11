@@ -17,3 +17,4 @@
 package tools
 
 import _ "github.com/apache/skywalking-eyes/cmd/license-eye"
+import _ "github.com/golangci/golangci-lint/cmd/golangci-lint"
