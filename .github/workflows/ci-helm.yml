@@ -12,52 +12,43 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-name: Continuous Integration - Helm
-
+name: CI - Helm
 on:
   pull_request:
     paths:
-    - 'aio/deploy/helm-chart/**'
-    - '.github/workflows/ci-helm-workflow.yml'
-
+    - 'charts/helm-chart/**'
+    - '.github/workflows/ci-helm.yml'
 jobs:
+
   helm-lint-test:
-    name: Lint & Test
+    name: Lint and test
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v2
         with:
           fetch-depth: "0"
-
       - name: Validate schema
         uses: wiremind/helm-kubeval-action@v1.2.1
         with:
-          path: aio/deploy/helm-chart
+          path: charts/helm-chart
           config: aio/deploy/helm-chart/config_repos
           version: 1.23.0
-
       - uses: actions/setup-python@v3.1.2
         with:
           python-version: 3.7
-
       - name: Set up chart-testing
         uses: helm/chart-testing-action@v2.2.1
-
       - name: Cleanup charts directory
         id: cleanup
-        run: sudo rm -rf aio/deploy/helm-chart/kubernetes-dashboard/charts
-
+        run: sudo rm -rf charts/helm-chart/kubernetes-dashboard/charts
       - name: Run chart-testing (lint)
         id: lint
-        run: ct lint --config=aio/deploy/helm-chart/.helm-chart-testing.yaml
-
+        run: ct lint --config=charts/helm-chart/.helm-chart-testing.yaml
       - name: Create kind cluster
         uses: helm/kind-action@v1.2.0
-
       - name: Install Prometheus Operator CRDs
         id: prom
         run: kubectl apply --server-side -f https://raw.githubusercontent.com/prometheus-operator/prometheus-operator/v0.54.0/example/prometheus-operator-crd/monitoring.coreos.com_servicemonitors.yaml
-
       - name: Run chart-testing (install)
-        run: ct install --config=aio/deploy/helm-chart/.helm-chart-testing.yaml
+        run: ct install --config=charts/helm-chart/.helm-chart-testing.yaml
