@@ -70,7 +70,7 @@ jobs:
       run:
         working-directory: ./api
     steps:
-      - name: Checkout
+      - name: Checkout repository
         uses: actions/checkout@v3
         with:
           fetch-depth: 0

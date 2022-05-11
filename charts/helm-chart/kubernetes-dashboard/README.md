@@ -47,7 +47,7 @@ It is highly recommended to use RBAC with minimal privileges needed for Dashboar
 
 ## Configuration
 
-Please refer to [values.yaml](https://github.com/kubernetes/dashboard/blob/master/aio/deploy/helm-chart/kubernetes-dashboard/values.yaml)
+Please refer to [values.yaml](https://github.com/kubernetes/dashboard/blob/master/charts/helm-chart/kubernetes-dashboard/values.yaml)
 for valid values and their defaults.
 
 Specify each parameter using the `--set key=value[,key=value]` argument to `helm install`. For example,

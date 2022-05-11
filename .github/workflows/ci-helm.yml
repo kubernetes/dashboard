@@ -24,15 +24,15 @@ jobs:
     name: Lint and test
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v2
+      - name: Checkout repository
+        uses: actions/checkout@v3
         with:
-          fetch-depth: "0"
+          fetch-depth: 0
       - name: Validate schema
         uses: wiremind/helm-kubeval-action@v1.2.1
         with:
           path: charts/helm-chart
-          config: aio/deploy/helm-chart/config_repos
+          config: charts/helm-chart/config_repos
           version: 1.23.0
       - uses: actions/setup-python@v3.1.2
         with:
@@ -45,7 +45,7 @@ jobs:
       - name: Run chart-testing (lint)
         id: lint
         run: ct lint --config=charts/helm-chart/.helm-chart-testing.yaml
-      - name: Create kind cluster
+      - name: Start kind cluster
         uses: helm/kind-action@v1.2.0
       - name: Install Prometheus Operator CRDs
         id: prom

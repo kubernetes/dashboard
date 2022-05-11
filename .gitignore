@@ -15,6 +15,7 @@
 .idea/
 .vscode/
 .DS_Store
+charts/helm-chart/kubernetes-dashboard/charts
 
 i18n/messages.new.xlf
 _tmp/
@@ -26,4 +27,3 @@ coverage/
 cypress/screenshots
 cypress/videos
 *.swp
-aio/deploy/helm-chart/kubernetes-dashboard/charts

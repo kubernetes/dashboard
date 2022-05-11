@@ -18,7 +18,7 @@ on:
   push:
     branches: [ master ]
     paths:
-    - 'aio/deploy/helm-chart/**'
+    - 'charts/helm-chart/**'
     - 'aio/scripts/helm-release-chart.sh'
     - '.github/workflows/cd-helm-workflow.yml'
 
@@ -28,16 +28,14 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Setup Environment
-        uses: actions/checkout@v2
+      - name: Checkout repository
+        uses: actions/checkout@v3
         with:
           fetch-depth: 0
-
       - name: Configure Git
         run: |
           git config user.name "$GITHUB_ACTOR"
           git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
-
       - name: Package
         shell: bash
         run: aio/scripts/helm-release-chart.sh
