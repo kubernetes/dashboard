@@ -13,19 +13,17 @@
 # limitations under the License.
 #
 root = "."
-tmp_dir = ".tmp"
+tmp_dir = "../../.dist/api"
 
 [build]
-  bin = ".tmp/serve/dashboard"
-  cmd = "make build-backend"
+  cmd = "make build"
   delay = 2000
-  exclude_dir = []
+  exclude_dir = ["hack"]
   exclude_file = []
   exclude_regex = []
   exclude_unchanged = false
   follow_symlink = false
-  full_bin = "make run-backend"
-  include_dir = ["src/app/backend"]
+  full_bin = "make run"
   include_ext = ["go"]
   kill_delay = "1s"
   log = "build-errors.log"

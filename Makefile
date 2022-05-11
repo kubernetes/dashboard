@@ -3,6 +3,7 @@ GOOS ?= $(shell go env GOOS)
 GOARCH ?= $(shell go env GOARCH)
 GOPATH ?= $(shell go env GOPATH)
 ROOT_DIRECTORY := $(shell dirname $(realpath $(firstword $(MAKEFILE_LIST))))
+MODULES_DIRECTORY := $(ROOT_DIRECTORY)/modules
 COVERAGE_DIRECTORY = $(ROOT_DIRECTORY)/coverage
 GO_COVERAGE_FILE = $(ROOT_DIRECTORY)/coverage/go.txt
 AIR_BINARY := $(shell which air)
@@ -38,18 +39,28 @@ HEAD_VERSION = latest
 HEAD_IMAGE_NAMES += $(foreach arch, $(ARCHITECTURES), $(HEAD_IMAGE)-$(arch):$(HEAD_VERSION))
 ARCHITECTURES = amd64 arm64 arm ppc64le s390x
 
+PRE = ensure-tools
+
+.PHONY: ensure-tools
+ensure-tools:
+	@$(MAKE) --no-print-directory -C $(MODULES_DIRECTORY)/tools install
+
 .PHONY: check-license
-check-license:
-	${GOPATH}/bin/license-eye header check
+check-license: $(PRE)
+	@${GOPATH}/bin/license-eye header check
 
 .PHONY: fix-license
-fix-license:
-	${GOPATH}/bin/license-eye header fix
+fix-license: $(PRE)
+	@${GOPATH}/bin/license-eye header fix
 
-#.PHONY: ensure-version
-#ensure-version:
-#	node ./aio/scripts/version.mjs
-#
+.PHONY: serve
+serve: $(PRE)
+	@$(MAKE) --no-print-directory -C $(MODULES_DIRECTORY) serve
+
+.PHONY: serve-https
+serve-https: $(PRE)
+	@$(MAKE) --no-print-directory -C $(MODULES_DIRECTORY) serve-https
+
 #.PHONY: ensure-golangcilint
 #ensure-golangcilint:
 #ifndef GOLANGCILINT_BINARY
@@ -61,12 +72,6 @@ fix-license:
 #	go get -d k8s.io/code-generator@$(CODEGEN_VERSION)
 #	go mod tidy
 #	chmod +x $(CODEGEN_BIN)
-#
-#.PHONY: ensure-air
-#ensure-air:
-#ifndef AIR_BINARY
-#	curl -sSfL https://raw.githubusercontent.com/cosmtrek/air/master/install.sh | sh -s -- -b $(GOPATH)/bin
-#endif
 #
 #.PHONY: ensure-go
 #ensure-go:

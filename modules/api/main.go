@@ -44,8 +44,8 @@ import (
 )
 
 var (
-	argInsecurePort              = pflag.Int("insecure-port", 9090, "port to listen to for incoming HTTP requests")
-	argPort                      = pflag.Int("port", 8443, "secure port to listen to for incoming HTTPS requests")
+	argInsecurePort              = pflag.Int("insecure-port", 9000, "port to listen to for incoming HTTP requests")
+	argPort                      = pflag.Int("port", 9001, "secure port to listen to for incoming HTTPS requests")
 	argInsecureBindAddress       = pflag.IP("insecure-bind-address", net.IPv4(127, 0, 0, 1), "IP address on which to serve the --insecure-port, set to 127.0.0.1 for all interfaces")
 	argBindAddress               = pflag.IP("bind-address", net.IPv4(0, 0, 0, 0), "IP address on which to serve the --port, set to 0.0.0.0 for all interfaces")
 	argDefaultCertDir            = pflag.String("default-cert-dir", "/certs", "directory path containing files from --tls-cert-file and --tls-key-file, used also when auto-generating certificates flag is set")
