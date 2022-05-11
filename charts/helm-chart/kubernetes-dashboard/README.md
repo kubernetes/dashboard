@@ -8,8 +8,8 @@ It allows users to manage applications running in the cluster and troubleshoot t
 ```console
 # Add kubernetes-dashboard repository
 helm repo add kubernetes-dashboard https://kubernetes.github.io/dashboard/
-# Deploy a Helm Release named "my-release" using the kubernetes-dashboard chart
-helm install my-release kubernetes-dashboard/kubernetes-dashboard
+# Deploy a Helm Release named "kubernetes-dashboard" using the kubernetes-dashboard chart
+helm install kubernetes-dashboard kubernetes-dashboard/kubernetes-dashboard
 ```
 
 ## Introduction
@@ -18,7 +18,7 @@ This chart bootstraps a [Kubernetes Dashboard](https://github.com/kubernetes/das
 
 ## Installing the Chart
 
-To install the [Chart](https://helm.sh/docs/intro/using_helm/#three-big-concepts) with the [Release](https://helm.sh/docs/intro/using_helm/#three-big-concepts) name `my-release`:
+To install the [Chart](https://helm.sh/docs/intro/using_helm/#three-big-concepts) with the [Release](https://helm.sh/docs/intro/using_helm/#three-big-concepts) name `kubernetes-dashboard`:
 
 ```console
 helm repo add kubernetes-dashboard https://kubernetes.github.io/dashboard/
@@ -30,10 +30,10 @@ The [configuration](#configuration) section lists the parameters that can be con
 
 ## Uninstalling the Chart
 
-To uninstall/delete the `my-release` deployment:
+To uninstall/delete the `kubernetes-dashboard` deployment:
 
 ```console
-helm delete my-release
+helm delete kubernetes-dashboard
 ```
 
 The command removes all the Kubernetes components associated with the chart and deletes the release.
@@ -47,20 +47,20 @@ It is highly recommended to use RBAC with minimal privileges needed for Dashboar
 
 ## Configuration
 
-Please refer to [values.yaml](https://github.com/kubernetes/dashboard/blob/master/aio/deploy/helm-chart/kubernetes-dashboard/values.yaml)
+Please refer to [values.yaml](https://github.com/kubernetes/dashboard/blob/master/charts/helm-chart/kubernetes-dashboard/values.yaml)
 for valid values and their defaults.
 
 Specify each parameter using the `--set key=value[,key=value]` argument to `helm install`. For example,
 
 ```console
-helm install kubernetes-dashboard/kubernetes-dashboard --name my-release \
+helm install kubernetes-dashboard/kubernetes-dashboard --name kubernetes-dashboard \
   --set=service.externalPort=8080,resources.limits.cpu=200m
 ```
 
 Alternatively, a YAML file that specifies the values for the above parameters can be provided while installing the chart. For example,
 
 ```console
-helm install kubernetes-dashboard/kubernetes-dashboard --name my-release -f values.yaml
+helm install kubernetes-dashboard/kubernetes-dashboard --name kubernetes-dashboard -f values.yaml
 ```
 
 > **Tip**: You can use the default [values.yaml](values.yaml), which is used by default, as reference

@@ -9,8 +9,6 @@ GO_COVERAGE_FILE = $(ROOT_DIRECTORY)/coverage/go.txt
 AIR_BINARY := $(shell which air)
 CODEGEN_VERSION := v0.23.6
 CODEGEN_BIN := $(GOPATH)/pkg/mod/k8s.io/code-generator@$(CODEGEN_VERSION)/generate-groups.sh
-GOLANGCILINT_VERSION := v1.45.2
-GOLANGCILINT_BINARY := $(shell which golangci-lint)
 GO_MAJOR_VERSION = $(shell go version | cut -c 14- | cut -d' ' -f1 | cut -d'.' -f1)
 GO_MINOR_VERSION = $(shell go version | cut -c 14- | cut -d' ' -f1 | cut -d'.' -f2)
 MIN_GO_MAJOR_VERSION = 1
@@ -61,12 +59,6 @@ serve: $(PRE)
 serve-https: $(PRE)
 	@$(MAKE) --no-print-directory -C $(MODULES_DIRECTORY) serve-https
 
-#.PHONY: ensure-golangcilint
-#ensure-golangcilint:
-#ifndef GOLANGCILINT_BINARY
-#	curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $(GOPATH)/bin $(GOLANGCILINT_VERSION)
-#endif
-#
 #.PHONY: ensure-codegen
 #ensure-codegen: ensure-go
 #	go get -d k8s.io/code-generator@$(CODEGEN_VERSION)

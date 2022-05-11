@@ -54,7 +54,7 @@ func (self *Manager) GetCertificates() ([]tls.Certificate, error) {
 
 		return []tls.Certificate{certificate}, err
 	}
-	
+
 	return nil, nil
 }
 

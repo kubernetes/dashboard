@@ -12,18 +12,18 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-name: Continuous Integration - API
+name: CI / API
 on:
   push:
     branches: [ master ]
-    ignore-paths:
+    paths-ignore:
       - '**/*.md'
       - 'aio/**'
       - 'docs/**'
       - 'web/**'
   pull_request:
     branches: [ master ]
-    ignore-paths:
+    paths-ignore:
       - '**/*.md'
       - 'aio/**'
       - 'docs/**'
@@ -40,20 +40,16 @@ jobs:
       TERM: xterm
     defaults:
       run:
-        working-directory: ./api
+        working-directory: modules/api
     steps:
-      - name: Checkout
+      - name: Checkout repository
         uses: actions/checkout@v3
         with:
           fetch-depth: 0
       - name: Setup Go
         uses: actions/setup-go@v3
         with:
-          go-version: 1.17.0
-      - name: golangci-lint
-        uses: golangci/golangci-lint-action@v3
-        with:
-          version: v1.41.1
+          go-version: 1.18
       - name: Check Code
         shell: bash
         run: |
@@ -70,14 +66,14 @@ jobs:
       run:
         working-directory: ./api
     steps:
-      - name: Checkout
+      - name: Checkout repository
         uses: actions/checkout@v3
         with:
           fetch-depth: 0
       - name: Setup Go
         uses: actions/setup-go@v3
         with:
-          go-version: 1.17.0
+          go-version: 1.18
       - name: Install Dependencies
         shell: bash
         run: |

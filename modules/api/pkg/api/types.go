@@ -148,6 +148,7 @@ const (
 	ResourceKindPlugin                   = "plugin"
 	ResourceKindEndpoint                 = "endpoint"
 	ResourceKindNetworkPolicy            = "networkpolicy"
+	ResourceKindIngressClass             = "ingressclass"
 )
 
 // Scalable method return whether ResourceKind is scalable.
@@ -223,6 +224,7 @@ var KindToAPIMapping = map[string]APIMapping{
 	ResourceKindEvent:                    {"events", ClientTypeDefault, true},
 	ResourceKindHorizontalPodAutoscaler:  {"horizontalpodautoscalers", ClientTypeAutoscalingClient, true},
 	ResourceKindIngress:                  {"ingresses", ClientTypeNetworkingClient, true},
+	ResourceKindIngressClass:             {"ingressclasses", ClientTypeNetworkingClient, false},
 	ResourceKindJob:                      {"jobs", ClientTypeBatchClient, true},
 	ResourceKindCronJob:                  {"cronjobs", ClientTypeBetaBatchClient, true},
 	ResourceKindLimitRange:               {"limitrange", ClientTypeDefault, true},

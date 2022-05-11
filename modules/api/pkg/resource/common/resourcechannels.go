@@ -112,6 +112,9 @@ type ResourceChannels struct {
 	// List and error channels to StorageClasses
 	StorageClassList StorageClassListChannel
 
+	// List and error channels to IngressClasses
+	IngressClassList IngressClassListChannel
+
 	// List and error channels to Roles
 	RoleList RoleListChannel
 
@@ -935,6 +938,31 @@ func GetStorageClassListChannel(client client.Interface, numReads int) StorageCl
 
 	go func() {
 		list, err := client.StorageV1().StorageClasses().List(context.TODO(), api.ListEverything)
+		for i := 0; i < numReads; i++ {
+			channel.List <- list
+			channel.Error <- err
+		}
+	}()
+
+	return channel
+}
+
+// IngressClassListChannel is a list and error channels to ingress classes.
+type IngressClassListChannel struct {
+	List  chan *networkingv1.IngressClassList
+	Error chan error
+}
+
+// GetIngressClassListChannel returns a pair of channels to a ingress class list and
+// errors that both must be read numReads times.
+func GetIngressClassListChannel(client client.Interface, numReads int) IngressClassListChannel {
+	channel := IngressClassListChannel{
+		List:  make(chan *networkingv1.IngressClassList, numReads),
+		Error: make(chan error, numReads),
+	}
+
+	go func() {
+		list, err := client.NetworkingV1().IngressClasses().List(context.TODO(), api.ListEverything)
 		for i := 0; i < numReads; i++ {
 			channel.List <- list
 			channel.Error <- err

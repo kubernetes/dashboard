@@ -1,0 +1,93 @@
+# Copyright 2017 The Kubernetes Authors.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+name: CI / Web
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+permissions:
+  contents: read
+jobs:
+
+  check:
+    name: Static Check
+    runs-on: ubuntu-latest
+    env:
+      NG_CLI_ANALYTICS: ci
+      NODE_OPTIONS: "--max-old-space-size=8192"
+      TERM: xterm
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16.15.0
+      - name: Cache Node.js modules
+        uses: actions/cache@v3
+        env:
+          cache-name: cache-node-modules
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+      - name: Install Dependencies
+        shell: bash
+        run: |
+          [ ! -d "node_modules" ] && npm ci || node modules/web/scripts/version.mjs
+      - name: Check Code
+        shell: bash
+        run: npm run check
+
+  unit:
+    name: Unit Tests
+    runs-on: ubuntu-latest
+    env:
+      NG_CLI_ANALYTICS: ci
+      NODE_OPTIONS: "--max-old-space-size=8192"
+      TERM: xterm
+    defaults:
+      run:
+        working-directory: modules/web
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16.15.0
+      - name: Cache Node.js modules
+        uses: actions/cache@v3
+        env:
+          cache-name: cache-node-modules
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+      - name: Install Dependencies
+        shell: bash
+        run: |
+          [ ! -d "node_modules" ] && npm ci && node modules/web/scripts/version.mjs
+      - name: Run unit tests
+        run: make coverage-frontend
+      - name: Cleanup
+        run: make clean
+      - name: Upload coverage
+        shell: bash
+        run: |
+          bash <(curl -s https://codecov.io/bash) -c -K || echo "Codecov upload failed"
