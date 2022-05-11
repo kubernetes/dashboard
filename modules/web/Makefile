@@ -7,6 +7,7 @@ AUTO_GENERATE_CERTIFICATES ?= false
 PROXY_CONFIG ?= proxy.conf.json
 SSL_ENABLED ?= false
 
+# List of targets that should be always executed before other targets
 PRE = --ensure-version
 
 MAKEFLAGS += -j2

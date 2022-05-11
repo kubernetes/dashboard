@@ -32,11 +32,8 @@ HEAD_VERSION = latest
 HEAD_IMAGE_NAMES += $(foreach arch, $(ARCHITECTURES), $(HEAD_IMAGE)-$(arch):$(HEAD_VERSION))
 ARCHITECTURES = amd64 arm64 arm ppc64le s390x
 
+# List of targets that should be always executed before other targets
 PRE = --ensure-tools
-
-.PHONY: --ensure-tools
---ensure-tools:
-	@$(MAKE) --no-print-directory -C $(MODULES_DIRECTORY)/tools install
 
 .PHONY: check-license
 check-license: $(PRE)
@@ -53,6 +50,10 @@ serve: $(PRE)
 .PHONY: serve-https
 serve-https: $(PRE)
 	@$(MAKE) --no-print-directory -C $(MODULES_DIRECTORY) serve-https
+
+.PHONY: --ensure-tools
+--ensure-tools:
+	@$(MAKE) --no-print-directory -C $(MODULES_DIRECTORY)/tools install
 
 #.PHONY: ensure-codegen
 #ensure-codegen: ensure-go
