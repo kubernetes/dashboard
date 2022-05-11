@@ -54,6 +54,7 @@ import (
 	"k8s.io/dashboard/api/pkg/resource/event"
 	"k8s.io/dashboard/api/pkg/resource/horizontalpodautoscaler"
 	"k8s.io/dashboard/api/pkg/resource/ingress"
+	"k8s.io/dashboard/api/pkg/resource/ingressclass"
 	"k8s.io/dashboard/api/pkg/resource/job"
 	"k8s.io/dashboard/api/pkg/resource/logs"
 	ns "k8s.io/dashboard/api/pkg/resource/namespace"

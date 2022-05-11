@@ -15,8 +15,8 @@
 package ingressclass
 
 import (
-	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	networkingv1 "k8s.io/api/networking/v1"
+	"k8s.io/dashboard/api/pkg/resource/dataselect"
 )
 
 // The code below allows to perform complex data section on []networkingv1.IngressClass

@@ -18,11 +18,11 @@ import (
 	"reflect"
 	"testing"
 
-	"github.com/kubernetes/dashboard/src/app/backend/api"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	networkingv1 "k8s.io/api/networking/v1"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/client-go/kubernetes/fake"
+	"k8s.io/dashboard/api/pkg/api"
+	"k8s.io/dashboard/api/pkg/resource/dataselect"
 )
 
 func TestGetIngressClassList(t *testing.T) {

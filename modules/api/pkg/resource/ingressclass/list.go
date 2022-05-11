@@ -17,12 +17,12 @@ package ingressclass
 import (
 	"log"
 
-	"github.com/kubernetes/dashboard/src/app/backend/api"
-	"github.com/kubernetes/dashboard/src/app/backend/errors"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	networkingv1 "k8s.io/api/networking/v1"
 	"k8s.io/client-go/kubernetes"
+	"k8s.io/dashboard/api/pkg/api"
+	"k8s.io/dashboard/api/pkg/errors"
+	"k8s.io/dashboard/api/pkg/resource/common"
+	"k8s.io/dashboard/api/pkg/resource/dataselect"
 )
 
 // IngressClassList holds a list of Ingress Class objects in the cluster.
