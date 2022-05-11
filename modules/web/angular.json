@@ -174,14 +174,14 @@
             "format": "xlf",
             "outputPath": "i18n",
             "targetFiles": [
-              "../de/messages.de.xlf",
-              "../es/messages.es.xlf",
-              "../fr/messages.fr.xlf",
-              "../ja/messages.ja.xlf",
-              "../ko/messages.ko.xlf",
-              "../zh-Hans/messages.zh-Hans.xlf",
-              "../zh-Hant/messages.zh-Hant.xlf",
-              "../zh-Hant-HK/messages.zh-Hant-HK.xlf"
+              "de/messages.de.xlf",
+              "es/messages.es.xlf",
+              "fr/messages.fr.xlf",
+              "ja/messages.ja.xlf",
+              "ko/messages.ko.xlf",
+              "zh-Hans/messages.zh-Hans.xlf",
+              "zh-Hant/messages.zh-Hant.xlf",
+              "zh-Hant-HK/messages.zh-Hant-HK.xlf"
             ]
           }
         }

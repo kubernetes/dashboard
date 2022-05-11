@@ -22,7 +22,7 @@
     "fix": "make fix",
     "fix:backend": "make fix-backend",
     "fix:frontend": "make fix-frontend",
-    "fix:i18n": "make fix-i18n",
+    "fix:i18n": "ng run kubernetes-dashboard:extract-i18n-merge",
     "fix:license": "make fix-license",
     "fix:go": "make fix-go",
     "fix:codegen": "make fix-codegen",
@@ -34,7 +34,6 @@
     "e2e:headed": "concurrently -kill-others --success first \"npm run start:e2e\" \"wait-on http://localhost:8080 && npx cypress run --headed\"",
     "postinstall": "ngcc",
     "prepare": "cd ../../ && husky install modules/web/.husky",
-    "extract-i18n-merge": "ng run kubernetes-dashboard:extract-i18n-merge"
   },
   "lint-staged": {
     "src/**/*.ts": [
@@ -49,22 +48,6 @@
     "src/**/*.html": [
       "./aio/scripts/pre-commit-i18n.sh"
     ]
-  },
-  "xliffmergeOptions": {
-    "srcDir": "i18n",
-    "genDir": "i18n",
-    "defaultLanguage": "en",
-    "languages": [
-      "de",
-      "es",
-      "fr",
-      "ja",
-      "ko",
-      "zh-Hans",
-      "zh-Hant",
-      "zh-Hant-HK"
-    ],
-    "beautifyOutput": true
   },
   "dependencies": {
     "@angular/animations": "13.3.4",
