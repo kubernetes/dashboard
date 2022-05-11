@@ -1,6 +1,11 @@
 # Web UI Arguments (overridable)
 SYSTEM_BANNER ?= "Local test environment"
 SYSTEM_BANNER_SEVERITY ?= INFO
+AUTO_GENERATE_CERTIFICATES ?= false
+
+# Angular Serve Arguments
+PROXY_CONFIG ?= proxy.conf.json
+SSL_ENABLED ?= false
 
 PRE = --ensure-version
 
@@ -16,22 +21,21 @@ serve-https: $(PRE) --serve-go-https --serve-angular-https
 --serve-go:
 	@go run k8s.io/dashboard/web \
 		--system-banner=$(SYSTEM_BANNER) \
-    --system-banner-severity=$(SYSTEM_BANNER_SEVERITY)
-
-.PHONY: serve-anulgar
---serve-angular:
-	@npx ng serve --proxy-config proxy.conf.json
+    --system-banner-severity=$(SYSTEM_BANNER_SEVERITY) \
+    --auto-generate-certificates=$(AUTO_GENERATE_CERTIFICATES)
 
 .PHONY: --serve-go-https
---serve-go-https:
-	@go run k8s.io/dashboard/web \
-		--system-banner=$(SYSTEM_BANNER) \
-    --system-banner-severity=$(SYSTEM_BANNER_SEVERITY) \
-    --auto-generate-certificates
+--serve-go-https: AUTO_GENERATE_CERTIFICATES = true
+--serve-go-https: --serve-go
+
+.PHONY: --serve-anulgar
+--serve-angular:
+	@npx ng serve --proxy-config $(PROXY_CONFIG) --ssl=$(SSL_ENABLED)
 
 .PHONY: serve-anulgar-https
---serve-angular-https:
-	@npx ng serve --proxy-config proxy-https.conf.json --ssl
+--serve-angular-https: PROXY_CONFIG = proxy-https.conf.json
+--serve-angular-https: SSL_ENABLED = true
+--serve-angular-https: --serve-angular
 
 .PHONY: --ensure-version
 --ensure-version:

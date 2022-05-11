@@ -9,7 +9,7 @@ VERSION = v2.5.1
 # API Arguments (overridable)
 KUBECONFIG ?= $(HOME)/.kube/config
 SIDECAR_HOST ?= http://localhost:7000
-TOKEN_TTL ?= 900
+TOKEN_TTL ?= 3600 # 1 hour
 AUTO_GENERATE_CERTS ?= false
 BIND_ADDRESS ?= 127.0.0.1
 PORT ?= 8080
