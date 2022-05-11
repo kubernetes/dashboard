@@ -78,6 +78,7 @@ import {DaemonSetListComponent} from './resourcelist/daemonset/component';
 import {DeploymentListComponent} from './resourcelist/deployment/component';
 import {EventListComponent} from './resourcelist/event/component';
 import {HorizontalPodAutoscalerListComponent} from './resourcelist/horizontalpodautoscaler/component';
+import {IngressClassListComponent} from './resourcelist/ingressclass/component';
 import {IngressListComponent} from './resourcelist/ingress/component';
 import {JobListComponent} from './resourcelist/job/component';
 import {NamespaceListComponent} from './resourcelist/namespace/component';
@@ -146,6 +147,7 @@ const components = [
   GraphMetricsComponent,
   HiddenPropertyComponent,
   HorizontalPodAutoscalerListComponent,
+  IngressClassListComponent,
   IngressListComponent,
   IngressRuleFlatListComponent,
   InternalEndpointComponent,
