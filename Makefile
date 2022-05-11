@@ -4,6 +4,7 @@ GOARCH ?= $(shell go env GOARCH)
 GOPATH ?= $(shell go env GOPATH)
 ROOT_DIRECTORY := $(shell dirname $(realpath $(firstword $(MAKEFILE_LIST))))
 MODULES_DIRECTORY := $(ROOT_DIRECTORY)/modules
+GATEWAY_DIRECTORY := $(ROOT_DIRECTORY)/hack/gateway
 COVERAGE_DIRECTORY = $(ROOT_DIRECTORY)/coverage
 GO_COVERAGE_FILE = $(ROOT_DIRECTORY)/coverage/go.txt
 AIR_BINARY := $(shell which air)
@@ -51,9 +52,33 @@ serve: $(PRE)
 serve-https: $(PRE)
 	@$(MAKE) --no-print-directory -C $(MODULES_DIRECTORY) serve-https
 
+.PHONY: run
+run: build-docker
+	docker run --rm -p 8001:8001 --net dashboard --name dashboard-web -d dashboard-web --locale-config /public/locale_conf.json --auto-generate-certificates
+	docker run --rm -p 9000:9000 -v $(KUBECONFIG):/config --net dashboard --name dashboard-api -d dashboard-api --kubeconfig config --auto-generate-certificates
+	docker run --rm -p 443:443 --net dashboard --name gateway -d gateway
+
+.PHONY: build-docker
+build-docker: --ensure-docker-network build
+	@docker build -f hack/gateway/Dockerfile -t gateway .
+	@docker build -f modules/api/Dockerfile --build-arg BUILDPLATFORM=linux/amd64 -t dashboard-api .
+	@docker build -f modules/web/Dockerfile --build-arg BUILDPLATFORM=linux/amd64 -t dashboard-web .
+
+.PHONY: build
+build:
+	@$(MAKE) --no-print-directory -C $(MODULES_DIRECTORY) build
+
 .PHONY: --ensure-tools
 --ensure-tools:
 	@$(MAKE) --no-print-directory -C $(MODULES_DIRECTORY)/tools install
+
+.PHONY: --ensure-docker-network
+--ensure-docker-network:
+	@docker network create dashboard || true
+
+.PHONY: --ensure-certificates
+--ensure-certificates:
+	@$(MAKE) --no-print-directory -C $(GATEWAY_DIRECTORY) generate-certificates
 
 #.PHONY: ensure-codegen
 #ensure-codegen: ensure-go

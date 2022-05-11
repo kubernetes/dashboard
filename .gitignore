@@ -27,3 +27,5 @@ coverage/
 cypress/screenshots
 cypress/videos
 *.swp
+**/*.crt
+**/*.key

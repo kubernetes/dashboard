@@ -18,6 +18,10 @@ serve: $(PRE) --serve-go --serve-angular
 .PHONY: serve-https
 serve-https: $(PRE) --serve-go-https --serve-angular-https
 
+.PHONY: build
+build: $(PRE)
+	scripts/build.sh
+
 .PHONY: --serve-go
 --serve-go:
 	@go run k8s.io/dashboard/web \

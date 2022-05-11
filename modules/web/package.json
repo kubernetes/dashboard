@@ -16,7 +16,7 @@
     "start:https": "make serve-https",
     "start:prod": "npm run ensure:version && ng serve -c production-en --proxy-config proxy.conf.json",
     "start:prod:https": "npm run ensure:version && ng serve -c production-en --ssl --proxy-config proxy-https.conf.json",
-    "build:prod": "scripts/build.sh",
+    "build:prod": "make build",
     "start:e2e": "concurrently \"make serve-backend\" \"npm run start:frontend\"",
     "check": "make check",
     "fix": "make fix",

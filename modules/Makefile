@@ -10,6 +10,9 @@ serve: --serve-api --serve-web
 .PHONY: serve-https
 serve-https: --serve-api-https --serve-web-https
 
+.PHONY: build
+build: --build-api --build-web
+
 .PHONY: --serve-api
 --serve-api:
 	@$(MAKE) --no-print-directory -C $(API_DIRECTORY) serve
@@ -25,3 +28,11 @@ serve-https: --serve-api-https --serve-web-https
 .PHONY: --serve-web-https
 --serve-web-https:
 	@$(MAKE) --no-print-directory -C $(WEB_DIRECTORY) serve-https
+
+.PHONY: --build-api
+--build-api:
+	@$(MAKE) --no-print-directory -C $(API_DIRECTORY) build
+
+.PHONY: --build-web
+--build-web:
+	@$(MAKE) --no-print-directory -C $(WEB_DIRECTORY) build
