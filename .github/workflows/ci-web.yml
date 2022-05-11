@@ -58,9 +58,11 @@ jobs:
     runs-on: ubuntu-latest
     env:
       NG_CLI_ANALYTICS: ci
-      GOPROXY: "https://proxy.golang.org"
       NODE_OPTIONS: "--max-old-space-size=8192"
       TERM: xterm
+    defaults:
+      run:
+        working-directory: modules/web
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -79,11 +81,13 @@ jobs:
           key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
       - name: Install Dependencies
         shell: bash
-        run: [ ! -d "node_modules" ] && npm ci || node aio/scripts/version.mjs
-      - name: Run Frontend Unit Tests
+        run: |
+          [ ! -d "node_modules" ] && npm ci && node modules/web/scripts/version.mjs
+      - name: Run unit tests
         run: make coverage-frontend
-      - name: Cleanup & Upload Coverage
+      - name: Cleanup
+        run: make clean
+      - name: Upload coverage
         shell: bash
         run: |
-          make clean
           bash <(curl -s https://codecov.io/bash) -c -K || echo "Codecov upload failed"
