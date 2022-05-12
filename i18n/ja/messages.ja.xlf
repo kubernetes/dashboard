@@ -3282,7 +3282,7 @@
       </trans-unit>
       <trans-unit id="7531425010556303342" datatype="html">
         <source>SE Linux Type</source>
-        <target>SE リナックスタイプ</target>
+        <target>SE Linux タイプ</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/securitycontext/template.html</context>
           <context context-type="linenumber">33</context>
