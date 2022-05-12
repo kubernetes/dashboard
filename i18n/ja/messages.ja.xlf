@@ -5044,7 +5044,7 @@
       </trans-unit>
       <trans-unit id="1341893810332676123" datatype="html">
         <source>Init images</source>
-        <target>初期化イメージ</target>
+        <target>初期イメージ</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/resource/workloads/daemonset/detail/template.html</context>
           <context context-type="linenumber">48</context>
