@@ -3189,7 +3189,7 @@
       </trans-unit>
       <trans-unit id="960921869392057255" datatype="html">
         <source>Storage Classes</source>
-        <target >ストレージクラス</target>
+        <target>ストレージクラス</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/resourcelist/storageclass/template.html</context>
           <context context-type="linenumber">21</context>
