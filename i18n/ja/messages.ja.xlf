@@ -3266,7 +3266,7 @@
       </trans-unit>
       <trans-unit id="6887151649401555160" datatype="html">
         <source>SE Linux User</source>
-        <target>SE リナックスユーザー</target>
+        <target>SE Linux ユーザー</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/securitycontext/template.html</context>
           <context context-type="linenumber">23</context>
