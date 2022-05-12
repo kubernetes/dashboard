@@ -3314,7 +3314,7 @@
       </trans-unit>
       <trans-unit id="6031271337180125854" datatype="html">
         <source>Windows Run as User</source>
-        <target>ウィンドウズ実行ユーザー</target>
+        <target>Windows 実行ユーザー</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/securitycontext/template.html</context>
           <context context-type="linenumber">54</context>
