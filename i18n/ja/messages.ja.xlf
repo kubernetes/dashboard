@@ -3274,7 +3274,7 @@
       </trans-unit>
       <trans-unit id="4972463622417704805" datatype="html">
         <source>SE Linux Role</source>
-        <target>SE リナックスロール</target>
+        <target>SE Linux ロール</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/securitycontext/template.html</context>
           <context context-type="linenumber">28</context>
