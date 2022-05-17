@@ -36,7 +36,7 @@ limitations under the License.
     <mat-table [dataSource]="getData()"
                [trackBy]="trackByResource"
                matSort
-               [matSortActive]="getColumns()[9]"
+               [matSortActive]="getColumns()[11]"
                matSortDisableClear
                matSortDirection="asc">
       <ng-container [matColumnDef]="getColumns()[0]">
@@ -107,6 +107,16 @@ limitations under the License.
       <ng-container [matColumnDef]="getColumns()[6]">
         <mat-header-cell *matHeaderCellDef
                          class="col-stretch-m"
+                         i18n>CPU capacity (cores)</mat-header-cell>
+        <mat-cell *matCellDef="let node"
+                  class="col-stretch-m">
+          {{ node.allocatedResources.cpuCapacity | kdCores }}
+        </mat-cell>
+      </ng-container>
+
+      <ng-container [matColumnDef]="getColumns()[7]">
+        <mat-header-cell *matHeaderCellDef
+                         class="col-stretch-m"
                          i18n>Memory requests (bytes)</mat-header-cell>
         <mat-cell *matCellDef="let node"
                   class="col-stretch-m">
@@ -115,7 +125,7 @@ limitations under the License.
         </mat-cell>
       </ng-container>
 
-      <ng-container [matColumnDef]="getColumns()[7]">
+      <ng-container [matColumnDef]="getColumns()[8]">
         <mat-header-cell *matHeaderCellDef
                          class="col-stretch-m"
                          i18n>Memory limits (bytes)</mat-header-cell>
@@ -126,7 +136,17 @@ limitations under the License.
         </mat-cell>
       </ng-container>
 
-      <ng-container [matColumnDef]="getColumns()[8]">
+      <ng-container [matColumnDef]="getColumns()[9]">
+        <mat-header-cell *matHeaderCellDef
+                         class="col-stretch-m"
+                         i18n>Memory capacity (bytes)</mat-header-cell>
+        <mat-cell *matCellDef="let node"
+                  class="col-stretch-m">
+          {{ node.allocatedResources.memoryCapacity | kdMemory }}
+        </mat-cell>
+      </ng-container>
+
+      <ng-container [matColumnDef]="getColumns()[10]">
         <mat-header-cell *matHeaderCellDef
                          class="col-stretch-m"
                          i18n>Pods</mat-header-cell>
@@ -136,7 +156,7 @@ limitations under the License.
         </mat-cell>
       </ng-container>
 
-      <ng-container [matColumnDef]="getColumns()[9]">
+      <ng-container [matColumnDef]="getColumns()[11]">
         <mat-header-cell *matHeaderCellDef
                          mat-sort-header
                          disableClear="true"
