@@ -4108,7 +4108,7 @@
         <source> Kubernetes Dashboard is made possible by the Dashboard <x id="START_LINK" ctype="x-a" equiv-text="&quot;\uFFFD#16\uFFFD&quot;"/>community<x id="CLOSE_LINK" ctype="x-a" equiv-text="&quot;[\uFFFD/#16\uFFFD|\uFFFD/#17\uFFFD]&quot;"/> as an <x id="START_LINK_1" equiv-text="&quot;\uFFFD#17\uFFFD&quot;"/>open source project<x id="CLOSE_LINK" ctype="x-a" equiv-text="&quot;[\uFFFD/#16\uFFFD|\uFFFD/#17\uFFFD]&quot;"/>. </source>
         <target>
       Das Kubernetes-Dashboard wird ermöglicht durch die Dashboard
-      <x id="START_LINK" ctype="x-a" equiv-text="&lt;a>"/>Comnunity<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a>"/> als
+      <x id="START_LINK" ctype="x-a" equiv-text="&lt;a>"/>Community<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a>"/> als
       <x id="START_LINK_1" ctype="x-a" equiv-text="&lt;a>"/>Open-Source-Projekt<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a>"/>.
     </target>
         <context-group purpose="location">
