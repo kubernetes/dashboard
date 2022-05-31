@@ -20,6 +20,9 @@ on:
     - 'aio/deploy/helm-chart/**'
     - '.github/workflows/ci-helm-workflow.yml'
 
+permissions:
+  contents: read
+
 jobs:
   helm-lint-test:
     name: Lint & Test
