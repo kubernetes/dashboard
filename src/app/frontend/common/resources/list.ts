@@ -31,7 +31,7 @@ import {MatTableDataSource} from '@angular/material/table';
 import {Router} from '@angular/router';
 import {Event as KdEvent, Resource, ResourceList} from '@api/root.api';
 import {ActionColumn, ActionColumnDef, ColumnWhenCallback, ColumnWhenCondition, OnListChangeEvent} from '@api/root.ui';
-import {isObservable, merge, Observable, ObservableInput, Subject} from 'rxjs';
+import {isObservable, merge, Observable, Subject} from 'rxjs';
 import {startWith, switchMap, takeUntil, tap} from 'rxjs/operators';
 
 import {CardListFilterComponent} from '../components/list/filter/component';
