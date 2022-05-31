@@ -37,7 +37,7 @@ endif
 install-air:
 ifndef AIR_BINARY
 	@echo "[tools] downloading air..."
-	@go install github.com/apache/skywalking-eyes/cmd/license-eye
+	@go install github.com/cosmtrek/air
 else
 	@echo "[tools] air already exists"
 endif
