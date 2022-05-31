@@ -22,7 +22,7 @@ import {VerberService} from './verber';
 
 @Injectable()
 export class PinnerService {
-  onPinUpdate = new Subject();
+  onPinUpdate = new Subject<void>();
   private isInitialized_ = false;
   private pinnedResources_: PinnedResource[] = [];
   private readonly endpoint_ = 'api/v1/settings/pinner';

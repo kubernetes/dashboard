@@ -68,7 +68,7 @@ export abstract class ResourceListBase<T extends ResourceList, R extends Resourc
   private readonly actionColumns_: Array<ActionColumnDef<ActionColumn>> = [];
   private readonly data_ = new MatTableDataSource<R>();
   private stateName_ = '';
-  private listUpdates_ = new Subject();
+  private listUpdates_ = new Subject<void>();
   private loaded_ = false;
   private readonly dynamicColumns_: ColumnWhenCondition[] = [];
   private paramsService_: ParamsService;
@@ -225,8 +225,8 @@ export abstract class ResourceListBase<T extends ResourceList, R extends Resourc
     }
   }
 
-  private getObservableWithDataSelect_<E>(): Observable<E> {
-    const obsInput = [this.matPaginator_.page] as Array<ObservableInput<E>>;
+  private getObservableWithDataSelect_(): Observable<unknown> {
+    const obsInput = [this.matPaginator_.page] as Array<EventEmitter<any>>;
 
     if (this.matSort_) {
       this.matSort_.sortChange.subscribe(() => (this.matPaginator_.pageIndex = 0));
@@ -238,7 +238,7 @@ export abstract class ResourceListBase<T extends ResourceList, R extends Resourc
       obsInput.push(this.cardFilter_.filterEvent);
     }
 
-    return merge(...obsInput, this.listUpdates_ as Subject<E>);
+    return merge(...obsInput, this.listUpdates_);
   }
 
   private getDataSelectParams_(): HttpParams {
