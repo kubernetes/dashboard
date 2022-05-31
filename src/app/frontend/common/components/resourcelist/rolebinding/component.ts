@@ -15,7 +15,6 @@
 import {HttpParams} from '@angular/common/http';
 import {ChangeDetectionStrategy, ChangeDetectorRef, Component, Input} from '@angular/core';
 import {Role, RoleBinding, RoleBindingList} from '@api/root.api';
-import {Observable} from 'rxjs/Observable';
 
 import {ResourceListBase} from '@common/resources/list';
 import {NotificationsService} from '@common/services/global/notifications';
@@ -23,6 +22,7 @@ import {EndpointManager, Resource} from '@common/services/resource/endpoint';
 import {NamespacedResourceService} from '@common/services/resource/resource';
 import {MenuComponent} from '../../list/column/menu/component';
 import {ListGroupIdentifier, ListIdentifier} from '../groupids';
+import {Observable} from 'rxjs';
 
 @Component({
   selector: 'kd-role-binding-list',

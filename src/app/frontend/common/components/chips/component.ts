@@ -24,7 +24,7 @@ import {
 import {MatDialog, MatDialogConfig} from '@angular/material/dialog';
 import {StringMap} from '@api/root.shared';
 // @ts-ignore
-import truncateUrl from 'truncate-url';
+import cropUrl from 'crop-url';
 
 import {GlobalSettingsService} from '../../services/global/globalsettings';
 import {ChipDialog} from './chipdialog/dialog';
@@ -99,7 +99,7 @@ export class ChipsComponent implements OnInit, OnChanges {
   }
 
   getTruncatedURL(url: string): string {
-    return truncateUrl(url, MAX_CHIP_VALUE_LENGTH);
+    return cropUrl(url, MAX_CHIP_VALUE_LENGTH);
   }
 
   isHref(value: string): boolean {
