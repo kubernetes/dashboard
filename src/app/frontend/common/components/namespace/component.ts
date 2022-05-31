@@ -45,8 +45,8 @@ export class NamespaceSelectorComponent implements OnInit, OnDestroy {
   resourceNamespaceParam: string;
   usingFallbackNamespaces = false;
 
-  private readonly namespaceUpdate_ = new Subject();
-  private readonly unsubscribe_ = new Subject();
+  private readonly namespaceUpdate_ = new Subject<void>();
+  private readonly unsubscribe_ = new Subject<void>();
   private readonly endpoint_ = EndpointManager.resource(Resource.namespace);
 
   @ViewChild(MatSelect, {static: true}) private readonly select_: MatSelect;

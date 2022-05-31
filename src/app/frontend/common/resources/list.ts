@@ -31,7 +31,7 @@ import {MatTableDataSource} from '@angular/material/table';
 import {Router} from '@angular/router';
 import {Event as KdEvent, Resource, ResourceList} from '@api/root.api';
 import {ActionColumn, ActionColumnDef, ColumnWhenCallback, ColumnWhenCondition, OnListChangeEvent} from '@api/root.ui';
-import {isObservable, merge, Observable, ObservableInput, Subject} from 'rxjs';
+import {isObservable, merge, Observable, Subject} from 'rxjs';
 import {startWith, switchMap, takeUntil, tap} from 'rxjs/operators';
 
 import {CardListFilterComponent} from '../components/list/filter/component';
@@ -68,7 +68,7 @@ export abstract class ResourceListBase<T extends ResourceList, R extends Resourc
   private readonly actionColumns_: Array<ActionColumnDef<ActionColumn>> = [];
   private readonly data_ = new MatTableDataSource<R>();
   private stateName_ = '';
-  private listUpdates_ = new Subject();
+  private listUpdates_ = new Subject<void>();
   private loaded_ = false;
   private readonly dynamicColumns_: ColumnWhenCondition[] = [];
   private paramsService_: ParamsService;
@@ -225,8 +225,8 @@ export abstract class ResourceListBase<T extends ResourceList, R extends Resourc
     }
   }
 
-  private getObservableWithDataSelect_<E>(): Observable<E> {
-    const obsInput = [this.matPaginator_.page] as Array<ObservableInput<E>>;
+  private getObservableWithDataSelect_(): Observable<unknown> {
+    const obsInput = [this.matPaginator_.page] as Array<EventEmitter<any>>;
 
     if (this.matSort_) {
       this.matSort_.sortChange.subscribe(() => (this.matPaginator_.pageIndex = 0));
@@ -238,7 +238,7 @@ export abstract class ResourceListBase<T extends ResourceList, R extends Resourc
       obsInput.push(this.cardFilter_.filterEvent);
     }
 
-    return merge(...obsInput, this.listUpdates_ as Subject<E>);
+    return merge(...obsInput, this.listUpdates_);
   }
 
   private getDataSelectParams_(): HttpParams {
