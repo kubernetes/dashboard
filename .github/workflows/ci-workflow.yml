@@ -54,7 +54,7 @@ jobs:
           fetch-depth: 0
 
       - name: Setup Go
-        uses: actions/setup-go@f6164bd8c8acb4a71fb2791a8b6c4024ff038dab # v2
+        uses: actions/setup-go@b22fbbc2921299758641fab08929b4ac52b32923 # v2
         with:
           go-version: 1.17.0
 
@@ -99,7 +99,7 @@ jobs:
           fetch-depth: 0
 
       - name: Setup Go
-        uses: actions/setup-go@f6164bd8c8acb4a71fb2791a8b6c4024ff038dab # v2
+        uses: actions/setup-go@b22fbbc2921299758641fab08929b4ac52b32923 # v2
         with:
           go-version: 1.17.0
 
@@ -154,7 +154,7 @@ jobs:
       - run: echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf && sudo sysctl -p
 
       - name: Setup Go
-        uses: actions/setup-go@f6164bd8c8acb4a71fb2791a8b6c4024ff038dab # v2
+        uses: actions/setup-go@b22fbbc2921299758641fab08929b4ac52b32923 # v2
         with:
           go-version: 1.17.0
 
