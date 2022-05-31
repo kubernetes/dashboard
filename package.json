@@ -1,6 +1,6 @@
 {
   "name": "kubernetes-dashboard",
-  "version": "2.5.1",
+  "version": "2.6.0",
   "type": "module",
   "license": "Apache-2.0",
   "repository": {
@@ -82,7 +82,7 @@
     "ace-builds": "1.5.3",
     "core-js": "3.22.7",
     "crop-url": "4.0.1",
-    "d3": "7.4.4",
+    "d3": "6.7.0",
     "file-saver": "2.0.5",
     "js-beautify": "1.14.3",
     "js-yaml": "4.1.0",
@@ -96,7 +96,7 @@
     "rxjs": "7.5.5",
     "rxjs-compat": "6.6.7",
     "sockjs-client": "1.6.1",
-    "strip-ansi": "7.0.1",
+    "strip-ansi": "6.0.1",
     "systemjs": "6.12.1",
     "tslib": "2.4.0",
     "web-animations-js": "2.3.2",
