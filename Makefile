@@ -44,25 +44,36 @@ check-license: $(PRE)
 fix-license: $(PRE)
 	@${GOPATH}/bin/license-eye header fix
 
+# Starts development version of the application.
+#
+# URL: http://localhost:8080
+#
+# Note: Make sure that the port 8080 is free on your localhost
 .PHONY: serve
 serve: $(PRE)
 	@$(MAKE) --no-print-directory -C $(MODULES_DIRECTORY) serve
 
+# Starts development version of the application with HTTPS enabled.
+#
+# URL: https://localhost:8080
+#
+# Note: Make sure that the port 8080 is free on your localhost
 .PHONY: serve-https
 serve-https: $(PRE)
 	@$(MAKE) --no-print-directory -C $(MODULES_DIRECTORY) serve-https
 
+# Starts a prod version of the application.
+#
+# URL: https://localhost:4443
+#
+# Note: Make sure that the port 4443 is free on your localhost
 .PHONY: run
-run: build-docker
-	docker run --rm -p 8001:8001 --net dashboard --name dashboard-web -d dashboard-web --locale-config /public/locale_conf.json --auto-generate-certificates
-	docker run --rm -p 9000:9000 -v $(KUBECONFIG):/config --net dashboard --name dashboard-api -d dashboard-api --kubeconfig config --auto-generate-certificates
-	docker run --rm -p 443:443 --net dashboard --name gateway -d gateway
+run: $(PRE) --ensure-compose-down compose
+	@docker compose -f hack/docker.compose.yml up
 
-.PHONY: build-docker
-build-docker: --ensure-docker-network build
-	@docker build -f hack/gateway/Dockerfile -t gateway .
-	@docker build -f modules/api/Dockerfile --build-arg BUILDPLATFORM=linux/amd64 -t dashboard-api .
-	@docker build -f modules/web/Dockerfile --build-arg BUILDPLATFORM=linux/amd64 -t dashboard-web .
+.PHONY: compose
+compose: --ensure-certificates build
+	@docker compose -f hack/docker.compose.yml build
 
 .PHONY: build
 build:
@@ -72,9 +83,9 @@ build:
 --ensure-tools:
 	@$(MAKE) --no-print-directory -C $(MODULES_DIRECTORY)/tools install
 
-.PHONY: --ensure-docker-network
---ensure-docker-network:
-	@docker network create dashboard || true
+.PHONY: --ensure-compose-down
+--ensure-compose-down:
+	@docker compose -f hack/docker.compose.yml down
 
 .PHONY: --ensure-certificates
 --ensure-certificates:
