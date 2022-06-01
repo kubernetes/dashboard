@@ -1,26 +1,14 @@
+# Unused
 SHELL = /bin/bash
 GOOS ?= $(shell go env GOOS)
 GOARCH ?= $(shell go env GOARCH)
-GOPATH ?= $(shell go env GOPATH)
-ROOT_DIRECTORY := $(shell dirname $(realpath $(firstword $(MAKEFILE_LIST))))
-MODULES_DIRECTORY := $(ROOT_DIRECTORY)/modules
-GATEWAY_DIRECTORY := $(ROOT_DIRECTORY)/hack/gateway
-COVERAGE_DIRECTORY = $(ROOT_DIRECTORY)/coverage
-GO_COVERAGE_FILE = $(ROOT_DIRECTORY)/coverage/go.txt
-AIR_BINARY := $(shell which air)
+#GOPATH ?= $(shell go env GOPATH)
 CODEGEN_VERSION := v0.23.6
 CODEGEN_BIN := $(GOPATH)/pkg/mod/k8s.io/code-generator@$(CODEGEN_VERSION)/generate-groups.sh
+GO_COVERAGE_FILE = $(ROOT_DIRECTORY)/coverage/go.txt
+COVERAGE_DIRECTORY = $(ROOT_DIRECTORY)/coverage
 MAIN_PACKAGE = github.com/kubernetes/dashboard/src/app/backend
-KUBECONFIG ?= $(HOME)/.kube/config
-SIDECAR_HOST ?= http://localhost:8000
-TOKEN_TTL ?= 900
-AUTO_GENERATE_CERTS ?= false
-BIND_ADDRESS ?= 127.0.0.1
-PORT ?= 8080
-ENABLE_INSECURE_LOGIN ?= false
-ENABLE_SKIP_LOGIN ?= false
-SYSTEM_BANNER ?= "Local test environment"
-SYSTEM_BANNER_SEVERITY ?= INFO
+
 PROD_BINARY = .dist/amd64/web/dashboard
 SERVE_DIRECTORY = .dist/web
 SERVE_BINARY = .dist/web/dashboard
@@ -32,6 +20,19 @@ HEAD_IMAGE = kubernetesdashboarddev/dashboard
 HEAD_VERSION = latest
 HEAD_IMAGE_NAMES += $(foreach arch, $(ARCHITECTURES), $(HEAD_IMAGE)-$(arch):$(HEAD_VERSION))
 ARCHITECTURES = amd64 arm64 arm ppc64le s390x
+
+# New
+ROOT_DIRECTORY := $(shell dirname $(realpath $(firstword $(MAKEFILE_LIST))))
+MODULES_DIRECTORY := $(ROOT_DIRECTORY)/modules
+GATEWAY_DIRECTORY := $(ROOT_DIRECTORY)/hack/gateway
+
+# Used by the run target to configure the application
+KUBECONFIG ?= $(HOME)/.kube/config
+WEB_SYSTEM_BANNER ?= "Local test environment"
+WEB_SYSTEM_BANNER_SEVERITY ?= INFO
+API_ENABLE_SKIP_LOGIN ?= true
+API_SIDECAR_HOST ?= http://sidecar:8000
+API_TOKEN_TTL ?= 0 # Never expire
 
 # List of targets that should be always executed before other targets
 PRE = --ensure-tools
@@ -69,11 +70,23 @@ serve-https: $(PRE)
 # Note: Make sure that the port 4443 is free on your localhost
 .PHONY: run
 run: $(PRE) --ensure-compose-down compose
-	@docker compose -f hack/docker.compose.yml up
+	@KUBECONFIG=$(KUBECONFIG) \
+	WEB_SYSTEM_BANNER=$(WEB_SYSTEM_BANNER) \
+	WEB_SYSTEM_BANNER_SEVERITY=$(WEB_SYSTEM_BANNER_SEVERITY) \
+	API_ENABLE_SKIP_LOGIN=$(API_ENABLE_SKIP_LOGIN) \
+	API_SIDECAR_HOST=$(API_SIDECAR_HOST) \
+	API_TOKEN_TTL=$(API_TOKEN_TTL) \
+	docker compose -f hack/docker.compose.yml up
 
 .PHONY: compose
 compose: --ensure-certificates build
-	@docker compose -f hack/docker.compose.yml build
+	@KUBECONFIG=$(KUBECONFIG) \
+	WEB_SYSTEM_BANNER=$(WEB_SYSTEM_BANNER) \
+	WEB_SYSTEM_BANNER_SEVERITY=$(WEB_SYSTEM_BANNER_SEVERITY) \
+	API_ENABLE_SKIP_LOGIN=$(API_ENABLE_SKIP_LOGIN) \
+	API_SIDECAR_HOST=$(API_SIDECAR_HOST) \
+	API_TOKEN_TTL=$(API_TOKEN_TTL) \
+	docker compose -f hack/docker.compose.yml build
 
 .PHONY: build
 build:
@@ -85,7 +98,13 @@ build:
 
 .PHONY: --ensure-compose-down
 --ensure-compose-down:
-	@docker compose -f hack/docker.compose.yml down
+	@KUBECONFIG=$(KUBECONFIG) \
+	WEB_SYSTEM_BANNER=$(WEB_SYSTEM_BANNER) \
+	WEB_SYSTEM_BANNER_SEVERITY=$(WEB_SYSTEM_BANNER_SEVERITY) \
+	API_ENABLE_SKIP_LOGIN=$(API_ENABLE_SKIP_LOGIN) \
+	API_SIDECAR_HOST=$(API_SIDECAR_HOST) \
+	API_TOKEN_TTL=$(API_TOKEN_TTL) \
+	docker compose -f hack/docker.compose.yml down
 
 .PHONY: --ensure-certificates
 --ensure-certificates:
@@ -118,7 +137,7 @@ build:
 #.PHONY: prod
 #prod: build
 #	$(PROD_BINARY) --kubeconfig=$(KUBECONFIG) \
-#		--sidecar-host=$(SIDECAR_HOST) \
+#		--sidecar-host=$(API_SIDECAR_HOST) \
 #		--auto-generate-certificates \
 #		--locale-config=dist/amd64/locale_conf.json \
 #		--bind-address=${BIND_ADDRESS} \
