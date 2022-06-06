@@ -8,7 +8,7 @@ PROXY_CONFIG ?= proxy.conf.json
 SSL_ENABLED ?= false
 
 # List of targets that should be always executed before other targets
-PRE = --ensure-version --npm-ci
+PRE = --ensure-version
 
 MAKEFLAGS += -j2
 
@@ -43,7 +43,7 @@ build: $(PRE)
 --serve-angular-https: --serve-angular
 
 .PHONY: --ensure-version
---ensure-version:
+--ensure-version: --npm-ci
 	@node ./scripts/version.mjs
 
 .PHONY: --npm-ci

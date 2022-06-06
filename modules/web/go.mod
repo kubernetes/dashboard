@@ -30,4 +30,4 @@ require (
 	sigs.k8s.io/structured-merge-diff/v4 v4.2.1 // indirect
 )
 
-replace k8s.io/dashboard/certificates => ../certificates
+replace k8s.io/dashboard/certificates => ./../common/certificates

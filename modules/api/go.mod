@@ -66,4 +66,4 @@ require (
 	sigs.k8s.io/yaml v1.2.0 // indirect
 )
 
-replace k8s.io/dashboard/certificates => ../certificates
+replace k8s.io/dashboard/certificates => ./../common/certificates

@@ -21,10 +21,14 @@ HEAD_VERSION = latest
 HEAD_IMAGE_NAMES += $(foreach arch, $(ARCHITECTURES), $(HEAD_IMAGE)-$(arch):$(HEAD_VERSION))
 ARCHITECTURES = amd64 arm64 arm ppc64le s390x
 
-# New
+# Dirs and paths
 ROOT_DIRECTORY := $(shell dirname $(realpath $(firstword $(MAKEFILE_LIST))))
 MODULES_DIRECTORY := $(ROOT_DIRECTORY)/modules
+TOOLS_DIRECTORY := $(MODULES_DIRECTORY)/common/tools
 GATEWAY_DIRECTORY := $(ROOT_DIRECTORY)/hack/gateway
+HACK_DIRECTORY := $(ROOT_DIRECTORY)/hack
+
+DOCKER_COMPOSE_PATH := $(HACK_DIRECTORY)/docker.compose.yaml
 
 # Used by the run target to configure the application
 KUBECONFIG ?= $(HOME)/.kube/config
@@ -76,7 +80,7 @@ run: $(PRE) --ensure-compose-down compose
 	API_ENABLE_SKIP_LOGIN=$(API_ENABLE_SKIP_LOGIN) \
 	API_SIDECAR_HOST=$(API_SIDECAR_HOST) \
 	API_TOKEN_TTL=$(API_TOKEN_TTL) \
-	docker compose -f hack/docker.compose.yml up
+	docker compose -f $(DOCKER_COMPOSE_PATH) up
 
 .PHONY: compose
 compose: --ensure-certificates build
@@ -86,7 +90,7 @@ compose: --ensure-certificates build
 	API_ENABLE_SKIP_LOGIN=$(API_ENABLE_SKIP_LOGIN) \
 	API_SIDECAR_HOST=$(API_SIDECAR_HOST) \
 	API_TOKEN_TTL=$(API_TOKEN_TTL) \
-	docker compose -f hack/docker.compose.yml build
+	docker compose -f $(DOCKER_COMPOSE_PATH) build
 
 .PHONY: build
 build:
@@ -94,7 +98,7 @@ build:
 
 .PHONY: --ensure-tools
 --ensure-tools:
-	@$(MAKE) --no-print-directory -C $(MODULES_DIRECTORY)/tools install
+	@$(MAKE) --no-print-directory -C $(TOOLS_DIRECTORY) install
 
 .PHONY: --ensure-compose-down
 --ensure-compose-down:
@@ -104,7 +108,7 @@ build:
 	API_ENABLE_SKIP_LOGIN=$(API_ENABLE_SKIP_LOGIN) \
 	API_SIDECAR_HOST=$(API_SIDECAR_HOST) \
 	API_TOKEN_TTL=$(API_TOKEN_TTL) \
-	docker compose -f hack/docker.compose.yml down
+	docker compose -f $(DOCKER_COMPOSE_PATH) down
 
 .PHONY: --ensure-certificates
 --ensure-certificates:
