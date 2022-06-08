@@ -5,12 +5,11 @@ go 1.18
 require (
 	github.com/docker/distribution v2.8.1+incompatible
 	github.com/emicklei/go-restful/v3 v3.7.4
-	github.com/golang/glog v1.0.0
 	github.com/opencontainers/go-digest v1.0.0 // indirect
 	github.com/prometheus/client_golang v1.12.2
 	github.com/spf13/pflag v1.0.5
 	golang.org/x/net v0.0.0-20220526153639-5463443f8c37
-	golang.org/x/text v0.3.7
+	golang.org/x/text v0.3.7 // indirect
 	gopkg.in/igm/sockjs-go.v2 v2.1.0
 	gopkg.in/square/go-jose.v2 v2.6.0
 	gopkg.in/yaml.v2 v2.4.0
@@ -35,7 +34,7 @@ require (
 	github.com/gogo/protobuf v1.3.2 // indirect
 	github.com/golang/protobuf v1.5.2 // indirect
 	github.com/google/gnostic v0.6.9 // indirect
-	github.com/google/go-cmp v0.5.5 // indirect
+	github.com/google/go-cmp v0.5.7 // indirect
 	github.com/google/gofuzz v1.2.0 // indirect
 	github.com/gorilla/websocket v1.5.0 // indirect
 	github.com/imdario/mergo v0.3.13 // indirect
