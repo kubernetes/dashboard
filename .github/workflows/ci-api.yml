@@ -18,24 +18,17 @@ on:
     branches: [ master ]
     paths-ignore:
       - '**/*.md'
-      - 'aio/**'
-      - 'docs/**'
-      - 'web/**'
   pull_request:
     branches: [ master ]
     paths-ignore:
       - '**/*.md'
-      - 'aio/**'
-      - 'docs/**'
-      - 'web/**'
 permissions:
   contents: read
 jobs:
-  check:
-    name: Static Check
+  static:
+    name: Static check
     runs-on: ubuntu-latest
     env:
-      NG_CLI_ANALYTICS: ci
       GOPROXY: "https://proxy.golang.org"
       TERM: xterm
     defaults:
@@ -50,11 +43,13 @@ jobs:
         uses: actions/setup-go@v3
         with:
           go-version: 1.18
-      - name: Check Code
-        shell: bash
-        run: |
-          export GOPATH=$(go env GOPATH)/bin
-          npm run check
+      - name: Lint Go
+        uses: golangci/golangci-lint-action@v3
+        with:
+          version: v1.46.0
+      - name: Verify codegen
+        run: make codegen-verify
+
   unit:
     name: Unit tests with coverage
     runs-on: ubuntu-latest

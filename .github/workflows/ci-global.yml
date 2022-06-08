@@ -27,27 +27,6 @@ on:
 permissions:
   contents: read
 jobs:
-
-  lint-go:
-    name: Lint Go
-    runs-on: ubuntu-latest
-    env:
-      GOPROXY: "https://proxy.golang.org"
-      TERM: xterm
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
-      - name: Setup Go
-        uses: actions/setup-go@v3
-        with:
-          go-version: 1.18
-      - name: Lint Go
-        uses: golangci/golangci-lint-action@v3
-        with:
-          version: v1.46.0
-
   e2e-tests:
     name: End-to-end tests
     runs-on: ubuntu-latest
