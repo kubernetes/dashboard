@@ -29,6 +29,9 @@ jobs:
       NG_CLI_ANALYTICS: ci
       NODE_OPTIONS: "--max-old-space-size=8192"
       TERM: xterm
+    defaults:
+      run:
+        working-directory: modules/web
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -48,7 +51,7 @@ jobs:
       - name: Install Dependencies
         shell: bash
         run: |
-          [ ! -d "node_modules" ] && npm ci || node modules/web/scripts/version.mjs
+          [ ! -d "node_modules" ] && npm ci || node scripts/version.mjs
       - name: Check Code
         shell: bash
         run: npm run check
