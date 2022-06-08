@@ -57,7 +57,7 @@ jobs:
         run: npm run check
 
   unit:
-    name: Unit Tests
+    name: Unit tests with coverage
     runs-on: ubuntu-latest
     env:
       NG_CLI_ANALYTICS: ci
@@ -82,15 +82,15 @@ jobs:
         with:
           path: node_modules
           key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
-      - name: Install Dependencies
+      - name: Install dependencies
         shell: bash
         run: |
-          [ ! -d "node_modules" ] && npm ci && node modules/web/scripts/version.mjs
-      - name: Run unit tests
+          [ ! -d "node_modules" ] && npm ci && node scripts/version.mjs
+      - name: Run unit tests with coverage
         run: make coverage-frontend
-      - name: Cleanup
-        run: make clean
       - name: Upload coverage
-        shell: bash
-        run: |
-          bash <(curl -s https://codecov.io/bash) -c -K || echo "Codecov upload failed"
+        uses: codecov/codecov-action@v2
+        with:
+          name: api-coverage
+          files: ./coverage
+          fail_ci_if_error: true
