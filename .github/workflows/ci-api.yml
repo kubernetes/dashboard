@@ -64,7 +64,7 @@ jobs:
       TERM: xterm
     defaults:
       run:
-        working-directory: ./api
+        working-directory: modules/api
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
