@@ -27,8 +27,37 @@ MODULES_DIRECTORY := $(ROOT_DIRECTORY)/modules
 TOOLS_DIRECTORY := $(MODULES_DIRECTORY)/common/tools
 GATEWAY_DIRECTORY := $(ROOT_DIRECTORY)/hack/gateway
 HACK_DIRECTORY := $(ROOT_DIRECTORY)/hack
+APP_NAME := kubernetes-dashboard
 
 DOCKER_COMPOSE_PATH := $(HACK_DIRECTORY)/docker.compose.yaml
+
+# BUILDARCH is the host machine architecture
+BUILDARCH ?= $(shell uname -m)
+
+# BUILDOS is the host machine OS
+BUILDOS ?= $(shell uname -s)
+
+ifeq ($(BUILDARCH),x86_64)
+	BUILDARCH=amd64
+endif
+ifeq ($(BUILDARCH),aarch64)
+	BUILDARCH=arm64
+endif
+ifeq ($(BUILDARCH),armv7l)
+	BUILDARCH=armv7
+endif
+
+ifeq ($(BUILDOS),Linux)
+	BUILDOS=linux
+endif
+ifeq ($(BUILOS),Darwin)
+	BUILDOS=darwin
+endif
+
+# ARCH is the target build architecture. Unless overridden during build, host architecture (BUILDARCH) will be used
+ARCH ?= $(BUILDARCH)
+# OS is the target build OS. Unless overridden during build, host OS (BUILDOS) will be used
+OS ?= $(BUILDOS)
 
 # Used by the run target to configure the application
 KUBECONFIG ?= $(HOME)/.kube/config
@@ -38,7 +67,7 @@ API_ENABLE_SKIP_LOGIN ?= true
 API_SIDECAR_HOST ?= http://sidecar:8000
 API_TOKEN_TTL ?= 0 # Never expire
 
-# List of targets that should be always executed before other targets
+# List of targets that should be executed before other targets
 PRE = --ensure-tools
 
 .PHONY: check-license
@@ -80,7 +109,9 @@ run: $(PRE) --ensure-compose-down compose
 	API_ENABLE_SKIP_LOGIN=$(API_ENABLE_SKIP_LOGIN) \
 	API_SIDECAR_HOST=$(API_SIDECAR_HOST) \
 	API_TOKEN_TTL=$(API_TOKEN_TTL) \
-	docker compose -f $(DOCKER_COMPOSE_PATH) up
+	ARCH=$(ARCH) \
+	OS=$(OS) \
+	docker compose -f $(DOCKER_COMPOSE_PATH) --project-name=$(APP_NAME) up
 
 .PHONY: compose
 compose: --ensure-certificates build
@@ -90,7 +121,9 @@ compose: --ensure-certificates build
 	API_ENABLE_SKIP_LOGIN=$(API_ENABLE_SKIP_LOGIN) \
 	API_SIDECAR_HOST=$(API_SIDECAR_HOST) \
 	API_TOKEN_TTL=$(API_TOKEN_TTL) \
-	docker compose -f $(DOCKER_COMPOSE_PATH) build
+	ARCH=$(ARCH) \
+	OS=$(OS) \
+	docker compose -f $(DOCKER_COMPOSE_PATH) --project-name=$(APP_NAME) build
 
 .PHONY: build
 build:
@@ -108,7 +141,9 @@ build:
 	API_ENABLE_SKIP_LOGIN=$(API_ENABLE_SKIP_LOGIN) \
 	API_SIDECAR_HOST=$(API_SIDECAR_HOST) \
 	API_TOKEN_TTL=$(API_TOKEN_TTL) \
-	docker compose -f $(DOCKER_COMPOSE_PATH) down
+	ARCH=$(ARCH) \
+	OS=$(OS) \
+	docker compose -f $(DOCKER_COMPOSE_PATH) --project-name=$(APP_NAME) down
 
 .PHONY: --ensure-certificates
 --ensure-certificates:

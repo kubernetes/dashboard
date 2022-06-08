@@ -22,7 +22,7 @@ ROOT_DIR="$(cd $(dirname "${BASH_SOURCE}")/../../.. && pwd -P)"
 
 ANGULAR_DIST_DIR="${WEB_DIST_DIR}/angular"
 GO_MODULE_NAME="k8s.io/dashboard/web"
-GO_BINARY_NAME="dashboard"
+GO_BINARY_NAME="dashboard-web"
 
 function clean {
   rm -rf "${WEB_DIST_DIR}"

@@ -1,6 +1,7 @@
 LICENSE_EYE_BINARY := $(shell which license-eye)
 AIR_BINARY := $(shell which air)
 GOLANGCI_LINT_BINARY := $(shell which golangci-lint)
+CLIENT_GEN_BINARY := $(shell which client-gen)
 
 GO_BINARY := $(shell which go)
 GO_MAJOR_VERSION = $(shell go version | cut -c 14- | cut -d' ' -f1 | cut -d'.' -f1)
@@ -9,7 +10,7 @@ MIN_GO_MAJOR_VERSION = 1
 MIN_GO_MINOR_VERSION = 18
 
 .PHONY: install
-install: ensure-go install-license-eye install-air install-golangci-lint
+install: ensure-go install-license-eye install-air install-golangci-lint install-client-gen
 
 .PHONY: ensure-go
 ensure-go:
@@ -51,3 +52,11 @@ else
 	@echo "[tools] golangci-lint already exists"
 endif
 
+.PHONY: install-client-gen
+install-client-gen:
+ifndef CLIENT_GEN_BINARY
+	@echo "[tools] downloading client-gen..."
+	@go install k8s.io/code-generator
+else
+	@echo "[tools] client-gen already exists"
+endif

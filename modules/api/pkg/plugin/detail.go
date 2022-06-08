@@ -19,7 +19,8 @@ import (
 
 	v1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/client-go/kubernetes"
-	pluginclientset "k8s.io/dashboard/api/pkg/plugin/client/clientset/versioned"
+
+	pluginclientset "k8s.io/dashboard/api/pkg/plugin/client/clientset"
 )
 
 // GetPluginSource has the logic to get the actual plugin source code from information in Plugin.Spec

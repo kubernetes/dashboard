@@ -21,14 +21,13 @@ import (
 	"testing"
 
 	"github.com/emicklei/go-restful/v3"
-
-	"k8s.io/dashboard/api/pkg/resource/dataselect"
-
-	"k8s.io/dashboard/api/pkg/plugin/apis/v1alpha1"
-	fakePluginClientset "k8s.io/dashboard/api/pkg/plugin/client/clientset/versioned/fake"
 	coreV1 "k8s.io/api/core/v1"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	v1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+
+	"k8s.io/dashboard/api/pkg/plugin/apis/v1alpha1"
+	fakePluginClientset "k8s.io/dashboard/api/pkg/plugin/client/clientset/fake"
+	"k8s.io/dashboard/api/pkg/resource/dataselect"
 )
 
 func TestGetPluginList(t *testing.T) {

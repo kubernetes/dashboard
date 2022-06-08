@@ -25,7 +25,7 @@ import (
 	"k8s.io/client-go/tools/clientcmd/api"
 
 	authApi "k8s.io/dashboard/api/pkg/auth/api"
-	pluginclientset "k8s.io/dashboard/api/pkg/plugin/client/clientset/versioned"
+	pluginclientset "k8s.io/dashboard/api/pkg/plugin/client/clientset"
 )
 
 const (

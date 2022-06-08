@@ -1,14 +1,12 @@
-version: "1.0"
-
-name: kubernetes-dashboard
-
+version: "3.8"
 services:
   web:
     build:
       context: ..
       dockerfile: modules/web/Dockerfile
       args:
-        - BUILDPLATFORM=linux/amd64
+        - TARGETPLATFORM=${OS:?}/${ARCH:?}
+        - TARGETARCH=${ARCH:?}
     command:
       --locale-config=/public/locale_conf.json
       --auto-generate-certificates
@@ -25,7 +23,8 @@ services:
       context: ..
       dockerfile: modules/api/Dockerfile
       args:
-        - BUILDPLATFORM=linux/amd64
+        - TARGETPLATFORM=${OS:?}/${ARCH:?}
+        - TARGETARCH=${ARCH:?}
     command:
       --kubeconfig=${KUBECONFIG:?}
       --auto-generate-certificates
@@ -72,4 +71,3 @@ services:
 
 networks:
   kubernetes-dashboard:
-    name: kubernetes-dashboard

@@ -19,6 +19,7 @@ import (
 
 	"github.com/emicklei/go-restful/v3"
 	apiErrors "k8s.io/apimachinery/pkg/api/errors"
+
 	"k8s.io/dashboard/api/pkg/handler/parser"
 )
 

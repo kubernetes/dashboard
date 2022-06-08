@@ -22,6 +22,7 @@ import (
 	"k8s.io/dashboard/api/pkg/handler/parser"
 
 	"github.com/emicklei/go-restful/v3"
+
 	clientapi "k8s.io/dashboard/api/pkg/client/api"
 	"k8s.io/dashboard/api/pkg/errors"
 )

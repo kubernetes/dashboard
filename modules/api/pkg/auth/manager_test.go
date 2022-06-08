@@ -19,20 +19,19 @@ import (
 	"testing"
 	"time"
 
-	restful "github.com/emicklei/go-restful/v3"
-
-	authApi "k8s.io/dashboard/api/pkg/auth/api"
-	"k8s.io/dashboard/api/pkg/client"
-	clientapi "k8s.io/dashboard/api/pkg/client/api"
-	"k8s.io/dashboard/api/pkg/errors"
-
-	pluginclientset "k8s.io/dashboard/api/pkg/plugin/client/clientset/versioned"
+	"github.com/emicklei/go-restful/v3"
 	v1 "k8s.io/api/authorization/v1"
 	apiextensionsclientset "k8s.io/apiextensions-apiserver/pkg/client/clientset/clientset"
 	"k8s.io/client-go/kubernetes"
 	"k8s.io/client-go/rest"
 	"k8s.io/client-go/tools/clientcmd"
 	"k8s.io/client-go/tools/clientcmd/api"
+
+	authApi "k8s.io/dashboard/api/pkg/auth/api"
+	"k8s.io/dashboard/api/pkg/client"
+	clientapi "k8s.io/dashboard/api/pkg/client/api"
+	"k8s.io/dashboard/api/pkg/errors"
+	pluginclientset "k8s.io/dashboard/api/pkg/plugin/client/clientset"
 )
 
 func areErrorsEqual(err1, err2 error) bool {

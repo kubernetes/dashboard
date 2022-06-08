@@ -20,7 +20,6 @@ import (
 )
 
 // +genclient
-// +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object
 
 // Plugin holds the object information for Plugin kind, it also implements runtime.Object
 type Plugin struct {

@@ -19,10 +19,11 @@ import (
 	"fmt"
 
 	v1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+
 	"k8s.io/dashboard/api/pkg/api"
 	"k8s.io/dashboard/api/pkg/errors"
 	"k8s.io/dashboard/api/pkg/plugin/apis/v1alpha1"
-	pluginclientset "k8s.io/dashboard/api/pkg/plugin/client/clientset/versioned"
+	pluginclientset "k8s.io/dashboard/api/pkg/plugin/client/clientset"
 	"k8s.io/dashboard/api/pkg/resource/dataselect"
 )
 

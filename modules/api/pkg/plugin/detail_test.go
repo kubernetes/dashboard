@@ -22,13 +22,13 @@ import (
 	"testing"
 
 	"github.com/emicklei/go-restful/v3"
-
 	coreV1 "k8s.io/api/core/v1"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	v1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	fakeK8sClient "k8s.io/client-go/kubernetes/fake"
+
 	"k8s.io/dashboard/api/pkg/plugin/apis/v1alpha1"
-	fakePluginClientset "k8s.io/dashboard/api/pkg/plugin/client/clientset/versioned/fake"
+	fakePluginClientset "k8s.io/dashboard/api/pkg/plugin/client/clientset/fake"
 )
 
 var srcData = "randomPluginSourceCode"

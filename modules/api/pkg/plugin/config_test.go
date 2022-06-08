@@ -20,13 +20,7 @@ import (
 	"net/http/httptest"
 	"testing"
 
-	"k8s.io/dashboard/api/pkg/plugin/apis/v1alpha1"
-
 	"github.com/emicklei/go-restful/v3"
-	authApi "k8s.io/dashboard/api/pkg/auth/api"
-	clientapi "k8s.io/dashboard/api/pkg/client/api"
-	"k8s.io/dashboard/api/pkg/plugin/client/clientset/versioned"
-	fakePluginClientset "k8s.io/dashboard/api/pkg/plugin/client/clientset/versioned/fake"
 	v1 "k8s.io/api/authorization/v1"
 	coreV1 "k8s.io/api/core/v1"
 	"k8s.io/apiextensions-apiserver/pkg/client/clientset/clientset"
@@ -36,6 +30,12 @@ import (
 	"k8s.io/client-go/rest"
 	"k8s.io/client-go/tools/clientcmd"
 	"k8s.io/client-go/tools/clientcmd/api"
+
+	authApi "k8s.io/dashboard/api/pkg/auth/api"
+	clientapi "k8s.io/dashboard/api/pkg/client/api"
+	"k8s.io/dashboard/api/pkg/plugin/apis/v1alpha1"
+	pluginclientset "k8s.io/dashboard/api/pkg/plugin/client/clientset"
+	fakePluginClientset "k8s.io/dashboard/api/pkg/plugin/client/clientset/fake"
 )
 
 func Test_handleConfig(t *testing.T) {
@@ -67,7 +67,7 @@ func Test_handleConfig(t *testing.T) {
 
 type fakeClientManager struct {
 	k8sClient    kubernetes.Interface
-	pluginClient versioned.Interface
+	pluginClient pluginclientset.Interface
 }
 
 func (cm *fakeClientManager) Client(req *restful.Request) (kubernetes.Interface, error) {
@@ -85,7 +85,7 @@ func (cm *fakeClientManager) APIExtensionsClient(req *restful.Request) (clientse
 	panic("implement me")
 }
 
-func (cm *fakeClientManager) PluginClient(req *restful.Request) (versioned.Interface, error) {
+func (cm *fakeClientManager) PluginClient(req *restful.Request) (pluginclientset.Interface, error) {
 	if cm.pluginClient == nil {
 		cm.pluginClient = fakePluginClientset.NewSimpleClientset()
 	}
@@ -96,7 +96,7 @@ func (cm *fakeClientManager) InsecureAPIExtensionsClient() clientset.Interface {
 	panic("implement me")
 }
 
-func (cm *fakeClientManager) InsecurePluginClient() versioned.Interface {
+func (cm *fakeClientManager) InsecurePluginClient() pluginclientset.Interface {
 	if cm.pluginClient == nil {
 		cm.pluginClient = fakePluginClientset.NewSimpleClientset()
 	}

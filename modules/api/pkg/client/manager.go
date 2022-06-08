@@ -20,26 +20,24 @@ import (
 	"regexp"
 	"strings"
 
-	v12 "k8s.io/api/authentication/v1"
-	k8serrors "k8s.io/apimachinery/pkg/api/errors"
-
 	"github.com/emicklei/go-restful/v3"
+	v12 "k8s.io/api/authentication/v1"
 	v1 "k8s.io/api/authorization/v1"
 	apiextensionsclientset "k8s.io/apiextensions-apiserver/pkg/client/clientset/clientset"
+	k8serrors "k8s.io/apimachinery/pkg/api/errors"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/client-go/kubernetes"
 	"k8s.io/client-go/rest"
 	"k8s.io/client-go/tools/clientcmd"
 	"k8s.io/client-go/tools/clientcmd/api"
 
-	pluginclientset "k8s.io/dashboard/api/pkg/plugin/client/clientset/versioned"
-	"k8s.io/dashboard/api/pkg/resource/customresourcedefinition"
-
 	"k8s.io/dashboard/api/pkg/args"
 	authApi "k8s.io/dashboard/api/pkg/auth/api"
 	clientapi "k8s.io/dashboard/api/pkg/client/api"
 	"k8s.io/dashboard/api/pkg/client/csrf"
 	"k8s.io/dashboard/api/pkg/errors"
+	pluginclientset "k8s.io/dashboard/api/pkg/plugin/client/clientset"
+	"k8s.io/dashboard/api/pkg/resource/customresourcedefinition"
 )
 
 // Dashboard UI default values for client configs.

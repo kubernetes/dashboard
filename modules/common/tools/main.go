@@ -16,6 +16,9 @@
 
 package tools
 
-import _ "github.com/apache/skywalking-eyes/cmd/license-eye"
-import _ "github.com/cosmtrek/air"
-import _ "github.com/golangci/golangci-lint/cmd/golangci-lint"
+import (
+	_ "github.com/apache/skywalking-eyes/cmd/license-eye"
+	_ "github.com/cosmtrek/air"
+	_ "github.com/golangci/golangci-lint/cmd/golangci-lint"
+	_ "k8s.io/code-generator"
+)
