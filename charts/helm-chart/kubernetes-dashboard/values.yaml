@@ -20,7 +20,7 @@
 image:
   ## Repository for container
   repository: kubernetesui/dashboard
-  tag: v2.5.1
+  tag: v2.6.0
   pullPolicy: IfNotPresent
   pullSecrets: []
 
@@ -257,7 +257,7 @@ metricsScraper:
   enabled: false
   image:
     repository: kubernetesui/metrics-scraper
-    tag: v1.0.7
+    tag: v1.0.8
   resources: {}
   ## SecurityContext especially for the kubernetes dashboard metrics scraper container
   ## If not set, the global containterSecurityContext values will define these values
@@ -345,3 +345,7 @@ podSecurityPolicy:
 serviceMonitor:
   # Whether or not to create a Prometheus Operator service monitor.
   enabled: false
+  ## Here labels can be added to the serviceMonitor
+  labels: {}
+  ## Here annotations can be added to the serviceMonitor
+  annotations: {}

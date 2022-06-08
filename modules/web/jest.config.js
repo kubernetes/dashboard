@@ -13,8 +13,8 @@
 // limitations under the License.
 
 const config = {
-  rootDir: '../src',
-  coverageDirectory: '../../../coverage',
+  rootDir: './src',
+  coverageDirectory: '../coverage',
   preset: "jest-preset-angular/presets/defaults",
   setupFilesAfterEnv: ["<rootDir>/test.base.ts"],
   globals: {

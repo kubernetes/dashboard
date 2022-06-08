@@ -29,6 +29,9 @@ jobs:
       NG_CLI_ANALYTICS: ci
       NODE_OPTIONS: "--max-old-space-size=8192"
       TERM: xterm
+    defaults:
+      run:
+        working-directory: modules/web
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -48,13 +51,13 @@ jobs:
       - name: Install Dependencies
         shell: bash
         run: |
-          [ ! -d "node_modules" ] && npm ci || node modules/web/scripts/version.mjs
+          [ ! -d "node_modules" ] && npm ci || node scripts/version.mjs
       - name: Check Code
         shell: bash
         run: npm run check
 
   unit:
-    name: Unit Tests
+    name: Unit tests with coverage
     runs-on: ubuntu-latest
     env:
       NG_CLI_ANALYTICS: ci
@@ -79,15 +82,15 @@ jobs:
         with:
           path: node_modules
           key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
-      - name: Install Dependencies
+      - name: Install dependencies
         shell: bash
         run: |
-          [ ! -d "node_modules" ] && npm ci && node modules/web/scripts/version.mjs
-      - name: Run unit tests
+          [ ! -d "node_modules" ] && npm ci && node scripts/version.mjs
+      - name: Run unit tests with coverage
         run: make coverage-frontend
-      - name: Cleanup
-        run: make clean
       - name: Upload coverage
-        shell: bash
-        run: |
-          bash <(curl -s https://codecov.io/bash) -c -K || echo "Codecov upload failed"
+        uses: codecov/codecov-action@v2
+        with:
+          name: api-coverage
+          files: ./coverage
+          fail_ci_if_error: true

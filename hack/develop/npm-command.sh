@@ -55,7 +55,7 @@ else
     echo "1. Run terminal for dashboard container."
     echo "  docker exec -it k8s-dashboard-dev gosu user bash"
     echo "2. Run following to get token for logging into dashboard."
-    echo "  kubectl -n kubernetes-dashboard get secrets \$(kubectl -n kubernetes-dashboard get sa kubernetes-dashboard -ojsonpath=\"{.secrets[0].name}\") -ojsonpath=\"{.data.token}\" | echo \"\$(base64 -d)\""
+    echo "  kubectl -n kubernetes-dashboard create token kubernetes-dashboard"
   fi
   # Start dashboard.
   echo "Start dashboard in production mode"

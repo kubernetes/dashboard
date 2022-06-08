@@ -18,8 +18,7 @@ import {FormBuilder, FormGroup} from '@angular/forms';
 import {MatDialog} from '@angular/material/dialog';
 import {GlobalSettings, NamespaceList} from '@api/root.api';
 import _ from 'lodash';
-import {of, Subject} from 'rxjs';
-import {Observable} from 'rxjs/Observable';
+import {Observable, of, Subject} from 'rxjs';
 import {catchError, take, takeUntil, tap} from 'rxjs/operators';
 
 import {GlobalSettingsService} from '@common/services/global/globalsettings';

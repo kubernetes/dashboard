@@ -18,6 +18,9 @@ on:
     paths:
     - 'charts/helm-chart/**'
     - '.github/workflows/ci-helm.yml'
+permissions:
+  contents: read
+
 jobs:
 
   helm-lint-test:

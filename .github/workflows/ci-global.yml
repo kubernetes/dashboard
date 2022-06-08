@@ -124,3 +124,11 @@ jobs:
           [ ! -d "node_modules" ] && npm ci && npm i cypress || node aio/scripts/version.mjs && go mod download
       - name: Run end-to-end tests
         run: make e2e
+
+  dependency-review:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+      - name: Review dependencies
+        uses: actions/dependency-review-action@v1
