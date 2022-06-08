@@ -47,6 +47,7 @@ jobs:
         uses: golangci/golangci-lint-action@v3
         with:
           version: v1.46.0
+          working-directory: modules/api
       - name: Verify codegen
         run: make codegen-verify
 
