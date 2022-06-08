@@ -56,7 +56,7 @@ jobs:
           export GOPATH=$(go env GOPATH)/bin
           npm run check
   unit:
-    name: Unit Tests
+    name: Unit tests with coverage
     runs-on: ubuntu-latest
     env:
       NG_CLI_ANALYTICS: ci
@@ -74,14 +74,16 @@ jobs:
         uses: actions/setup-go@v3
         with:
           go-version: 1.18
-      - name: Install Dependencies
+          check-latest: true
+          cache: true
+          cache-dependency-path: modules/api/go.sum
+      - name: Install dependencies
         shell: bash
-        run: |
-          export GOPATH=$(go env GOPATH)/bin
-          go mod download
-      - name: Run Unit Tests
+        run: go mod download
+      - name: Run unit tests with coverage
         run: make coverage
-      - uses: codecov/codecov-action@v2
+      - name: Upload coverage
+        uses: codecov/codecov-action@v2
         with:
           name: api-coverage
           files: ./coverage.out
