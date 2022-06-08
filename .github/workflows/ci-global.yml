@@ -48,44 +48,6 @@ jobs:
         with:
           version: v1.46.0
 
-  license-check:
-    name: License check
-    runs-on: ubuntu-latest
-    env:
-      TERM: xterm
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
-      - name: Check licenses
-        uses: apache/skywalking-eyes@main
-
-  codeql:
-    permissions:
-      actions: read
-      contents: read
-      security-events: write
-    name: CodeQL
-    runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
-      matrix:
-        language: [ 'go', 'typescript' ]
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
-      - name: Initialize
-        uses: github/codeql-action/init@v2
-        with:
-          languages: ${{ matrix.language }}
-      - name: Autobuild
-        uses: github/codeql-action/autobuild@v2
-      - name: Analyze
-        uses: github/codeql-action/analyze@v2
-
   e2e-tests:
     name: End-to-end tests
     runs-on: ubuntu-latest
@@ -124,6 +86,44 @@ jobs:
           [ ! -d "node_modules" ] && npm ci && npm i cypress || node aio/scripts/version.mjs && go mod download
       - name: Run end-to-end tests
         run: make e2e
+
+  license-check:
+    name: License check
+    runs-on: ubuntu-latest
+    env:
+      TERM: xterm
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: Check licenses
+        uses: apache/skywalking-eyes@main
+
+  codeql:
+    permissions:
+      actions: read
+      contents: read
+      security-events: write
+    name: CodeQL
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        language: [ 'go', 'typescript' ]
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v2
+        with:
+          languages: ${{ matrix.language }}
+      - name: Autobuild CodeQL
+        uses: github/codeql-action/autobuild@v2
+      - name: Analyze CodeQL
+        uses: github/codeql-action/analyze@v2
 
   dependency-review:
     runs-on: ubuntu-latest

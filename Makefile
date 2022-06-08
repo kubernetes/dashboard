@@ -178,13 +178,6 @@ build:
 #		--bind-address=${BIND_ADDRESS} \
 #		--port=${PORT}
 #
-#.PHONY: check-i18n
-#check-i18n: fix-i18n
-#
-#.PHONY: fix-i18n
-#fix-i18n:
-#	./aio/scripts/pre-commit-i18n.sh
-#
 #.PHONY: check-codegen
 #check-codegen: ensure-codegen
 #	./aio/scripts/verify-codegen.sh

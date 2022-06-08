@@ -11,6 +11,7 @@
     "node": ">=16.15.0",
     "npm": ">=8.5.5"
   },
+  "engineStrict": true,
   "scripts": {
     "start": "make serve",
     "start:https": "make serve-https",
@@ -18,16 +19,16 @@
     "start:prod:https": "npm run ensure:version && ng serve -c production-en --ssl --proxy-config proxy-https.conf.json",
     "build:prod": "make build",
     "start:e2e": "concurrently \"make serve-backend\" \"npm run start:frontend\"",
-    "check": "make check",
-    "check:html": "./aio/scripts/check-html.sh",
-    "check:scss": "stylelint src/**/*.scss --fix",
-    "check:ts": "gts lint",
-    "fix": "make fix",
+    "fix": "npm run fix:i18n && npm run fix:html && npm run fix:scss && npm run fix:ts",
     "fix:i18n": "ng run kubernetes-dashboard:extract-i18n-merge",
-    "fix:go": "make fix-go",
     "fix:html": "npx html-beautify -f=./src/**/*.html",
     "fix:scss": "stylelint src/**/*.scss",
     "fix:ts": "gts fix",
+    "check": "npm run check:i18n && npm run check:html && npm run check:scss && npm run check:ts",
+    "check:i18n": "npm run fix:i18n",
+    "check:html": "./scripts/check-html.sh",
+    "check:scss": "stylelint src/**/*.scss --fix",
+    "check:ts": "gts lint",
     "test": "npx jest -c jest.config.js",
     "coverage": "npx jest -c jest.config.js --coverage -i",
     "e2e": "concurrently -kill-others --success first \"npm run start:e2e\" \"wait-on http://localhost:8080 && npx cypress run\"",
@@ -41,9 +42,6 @@
     ],
     "src/**/*.scss": [
       "stylelint --fix"
-    ],
-    "src/**/*.go": [
-      "make fix-go"
     ],
     "src/**/*.html": [
       "./aio/scripts/pre-commit-i18n.sh"
@@ -68,7 +66,6 @@
     "crop-url": "4.0.1",
     "d3": "6.7.0",
     "file-saver": "2.0.5",
-    "js-beautify": "1.14.3",
     "js-yaml": "4.1.0",
     "jwt-decode": "3.1.2",
     "material-design-icons": "3.0.1",
@@ -124,6 +121,7 @@
     "jasmine-spec-reporter": "7.0.0",
     "jest": "28.1.0",
     "jest-preset-angular": "12.0.1",
+    "js-beautify": "1.14.3",
     "license-check-and-add": "4.0.5",
     "lint-staged": "12.4.3",
     "lodash": "4.17.21",
