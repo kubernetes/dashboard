@@ -147,10 +147,6 @@ build:
 #		--bind-address=${BIND_ADDRESS} \
 #		--port=${PORT}
 #
-#.PHONY: test-backend
-#test-backend: ensure-go
-#	go test $(MAIN_PACKAGE)/...
-#
 #.PHONY: test-frontend
 #test-frontend:
 #	npx jest -c aio/jest.config.js
@@ -158,17 +154,9 @@ build:
 #.PHONY: test
 #test: test-backend test-frontend
 #
-#.PHONY: coverage-backend
-#coverage-backend: ensure-go
-#	$(shell mkdir -p $(COVERAGE_DIRECTORY)) \
-#	go test -coverprofile=$(GO_COVERAGE_FILE) -covermode=atomic $(MAIN_PACKAGE)/...
-#
 #.PHONY: coverage-frontend
 #coverage-frontend:
 #	npx jest -c aio/jest.config.js --coverage -i
-#
-#.PHONY: coverage
-#coverage: coverage-backend coverage-frontend
 #
 #.PHONY: check-i18n
 #check-i18n: fix-i18n

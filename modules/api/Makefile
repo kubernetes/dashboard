@@ -3,6 +3,7 @@ ROOT_DIRECTORY = $(API_DIRECTORY)/../..
 DIST_DIRECTORY = $(ROOT_DIRECTORY)/.dist
 SERVE_DIRECTORY = $(DIST_DIRECTORY)/api
 SERVE_BINARY = $(DIST_DIRECTORY)/api/dashboard-api
+COVERAGE_FILE = $(API_DIRECTORY)/coverage.out
 MAIN_PACKAGE = k8s.io/dashboard/api
 VERSION = v1.0.0
 
@@ -70,6 +71,14 @@ serve: $(PRE)
 .PHONY: serve-https
 serve-https:
 	AUTO_GENERATE_CERTS=true $(MAKE) serve
+
+.PHONY: test
+test:
+	go test $(MAIN_PACKAGE)/...
+
+.PHONY: coverage
+coverage:
+	go test -coverprofile=$(GO_COVERAGE_FILE) -covermode=atomic $(MAIN_PACKAGE)/...
 
 .PHONY: deploy
 deploy: --docker-buildx

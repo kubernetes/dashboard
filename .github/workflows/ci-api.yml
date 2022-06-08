@@ -80,9 +80,9 @@ jobs:
           export GOPATH=$(go env GOPATH)/bin
           go mod download
       - name: Run Unit Tests
-        run: make coverage-backend
-      - name: Cleanup
-        run: make clean
-      - name: Upload Coverage
-        shell: bash
-        run: bash <(curl -s https://codecov.io/bash) -c -K || echo "Codecov upload failed"
+        run: make coverage
+      - uses: codecov/codecov-action@v2
+        with:
+          name: api-coverage
+          files: ./coverage.txt
+          fail_ci_if_error: true
