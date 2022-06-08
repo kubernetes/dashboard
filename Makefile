@@ -120,10 +120,6 @@ build:
 #	go mod tidy
 #	chmod +x $(CODEGEN_BIN)
 #
-#.PHONY: clean
-#clean:
-#	rm -rf .tmp
-#
 #.PHONY: build-cross
 #build-cross: clean ensure-go
 #	./aio/scripts/build.sh -c
@@ -147,17 +143,6 @@ build:
 #		--bind-address=${BIND_ADDRESS} \
 #		--port=${PORT}
 #
-#.PHONY: test-frontend
-#test-frontend:
-#	npx jest -c aio/jest.config.js
-#
-#.PHONY: test
-#test: test-backend test-frontend
-#
-#.PHONY: coverage-frontend
-#coverage-frontend:
-#	npx jest -c aio/jest.config.js --coverage -i
-#
 #.PHONY: check-i18n
 #check-i18n: fix-i18n
 #
@@ -180,48 +165,6 @@ build:
 #.PHONY: fix-go
 #fix-go: ensure-golangcilint
 #	golangci-lint run -c .golangci.yml --fix ./src/app/backend/...
-#
-#.PHONY: check-html
-#check-html:
-#	./aio/scripts/check-html.sh
-#
-#.PHONY: fix-html
-#fix-html:
-#	npx html-beautify -f=./src/**/*.html
-#
-#.PHONY: check-scss
-#check-scss:
-#	stylelint "src/**/*.scss"
-#
-#.PHONY: fix-scss
-#fix-scss:
-#	stylelint "src/**/*.scss" --fix
-#
-#.PHONY: check-ts
-#check-ts:
-#	gts lint
-#
-#.PHONY: fix-ts
-#fix-ts:
-#	gts fix
-#
-#.PHONY: check-backend
-#check-backend: check-license check-go check-codegen
-#
-#.PHONY: fix-backend
-#fix-backend: fix-license fix-go fix-codegen
-#
-#.PHONY: check-frontend
-#check-frontend: check-i18n check-license check-html check-scss check-ts
-#
-#.PHONY: fix-frontend
-#fix-frontend: fix-i18n fix-license fix-html fix-scss fix-ts
-#
-#.PHONY: check
-#check: check-i18n check-license check-go check-codegen check-html check-scss check-ts
-#
-#.PHONY: fix
-#fix: fix-i18n fix-license fix-go fix-codegen  fix-html fix-scss fix-ts
 #
 #.PHONY: start-cluster
 #start-cluster:

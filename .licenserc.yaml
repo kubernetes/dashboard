@@ -33,6 +33,7 @@ header:
   paths:
     - '**'
   paths-ignore:
+    - '**/*.conf'
     - '**/*.DS_Store'
     - '**/*.json'
     - '**/*.lock'
