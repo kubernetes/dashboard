@@ -105,6 +105,11 @@ jobs:
         uses: github/codeql-action/analyze@v2
 
   dependency-review:
+    permissions:
+      actions: read
+      contents: read
+      security-events: write
+    name: Dependency review
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
