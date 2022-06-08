@@ -1,0 +1,75 @@
+version: "1.0"
+
+name: kubernetes-dashboard
+
+services:
+  web:
+    build:
+      context: ..
+      dockerfile: modules/web/Dockerfile
+      args:
+        - BUILDPLATFORM=linux/amd64
+    command:
+      --locale-config=/public/locale_conf.json
+      --auto-generate-certificates
+      --system-banner="${WEB_SYSTEM_BANNER:?}"
+      --system-banner-severity=${WEB_SYSTEM_BANNER_SEVERITY:?}
+    volumes:
+      - ${KUBECONFIG:?}:${KUBECONFIG:?}
+    tmpfs:
+      - /tmp
+    ports:
+      - "8001:8001"
+  api:
+    build:
+      context: ..
+      dockerfile: modules/api/Dockerfile
+      args:
+        - BUILDPLATFORM=linux/amd64
+    command:
+      --kubeconfig=${KUBECONFIG:?}
+      --auto-generate-certificates
+      --enable-skip-login=${API_ENABLE_SKIP_LOGIN:?}
+      --sidecar-host=${API_SIDECAR_HOST:?}
+      --token-ttl=${API_TOKEN_TTL:?}
+    volumes:
+      - ${KUBECONFIG:?}:${KUBECONFIG:?}
+    tmpfs:
+      - /tmp
+    ports:
+      - "9000:9000"
+  metrics-scraper:
+    image: kubernetesui/metrics-scraper:v1.0.8
+    command:
+      --kubeconfig=${KUBECONFIG:?}
+      --metric-resolution=5s
+      --metric-duration=10m
+    volumes:
+      - ${KUBECONFIG:?}:${KUBECONFIG:?}
+    tmpfs:
+      - /tmp
+    ports:
+      - "8000:8000"
+#  metrics-server:
+#    image: k8s.gcr.io/metrics-server/metrics-server:v0.6.1
+#    command:
+#      - --kubeconfig=${KUBECONFIG:?}
+#      - --cert-dir=/tmp
+#      - --secure-port=5443
+#      - --metric-resolution=15s
+#    volumes:
+#      - ${KUBECONFIG:?}:${KUBECONFIG:?}
+#    tmpfs:
+#      - /tmp
+#    ports:
+#      - "5443:5443"
+  gateway:
+    build:
+      context: ../
+      dockerfile: hack/gateway/Dockerfile
+    ports:
+      - "4443:4443"
+
+networks:
+  kubernetes-dashboard:
+    name: kubernetes-dashboard

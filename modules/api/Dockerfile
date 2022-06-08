@@ -28,8 +28,7 @@ FROM --platform=$BUILDPLATFORM scratch as final
 
 # Add all files from current working directory to the root of the image, i.e., copy dist directory
 # layout to the root directory.
-# TODO: support multi-arch build
-ADD .dist/api/ /
+ADD .dist/api/$BUILDPLATFORM /
 
 # Copy nonroot user
 COPY --from=builder /etc/passwd /etc/passwd

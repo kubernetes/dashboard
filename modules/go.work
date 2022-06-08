@@ -2,7 +2,7 @@ go 1.18
 
 use (
 	./api // k8s.io/dashboard/api
-	./certificates // k8s.io/dashboard/certificates
-	./tools // k8s.io/dashboard/tools
+	./common/certificates // k8s.io/dashboard/certificates
+	./common/tools // k8s.io/dashboard/tools
 	./web // k8s.io/dashboard/web
 )

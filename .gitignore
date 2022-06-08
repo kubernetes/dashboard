@@ -12,20 +12,18 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
+
+# IDE
 .idea/
 .vscode/
 .DS_Store
-charts/helm-chart/kubernetes-dashboard/charts
 
-i18n/messages.new.xlf
-_tmp/
-.tmp/
-.dist/
-.cached_tools/
-dist/
-coverage/
-cypress/screenshots
-cypress/videos
+# Build, deps and cache
+.angular
+node_modules
+.dist
+.coverage
 *.swp
-**/*.crt
-**/*.key
+
+# Helm deps
+charts/helm-chart/kubernetes-dashboard/charts
