@@ -56,7 +56,7 @@ jobs:
         run: ct lint --config=aio/deploy/helm-chart/.helm-chart-testing.yaml
 
       - name: Create kind cluster
-        uses: helm/kind-action@v1.2.0
+        uses: helm/kind-action@v1.3.0
 
       - name: Install Prometheus Operator CRDs
         id: prom
