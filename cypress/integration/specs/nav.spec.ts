@@ -6,16 +6,6 @@ describe('Navbar', () => {
   });
 
   describe('Cluster Items', () => {
-    it('cluster', () => {
-      NavbarPage.clickItem(NavbarPage.clusterItemId);
-      NavbarPage.assertUrlContains('cluster');
-    });
-
-    it('clusterroles', () => {
-      NavbarPage.clickItem(NavbarPage.clusterroleItemId);
-      NavbarPage.assertUrlContains('clusterrole');
-    });
-
     it('namespaces', () => {
       NavbarPage.clickItem(NavbarPage.namespaceItemId);
       NavbarPage.assertUrlContains('namespace');

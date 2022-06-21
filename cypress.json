@@ -1,6 +1,7 @@
 {
   "baseUrl": "http://localhost:8080",
   "supportFile": "./cypress/support/index.ts",
+  "testFiles": "**/*.{feature, features, ts}",
   "video": false,
   "chromeWebSecurity": false,
   "screenshotOnRunFailure": true,
