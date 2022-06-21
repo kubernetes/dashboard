@@ -24,6 +24,18 @@ When('I click {string}', element => {
     case 'nav-cluster-role':
       element = '#nav-clusterrole';
       break;
+    case 'nav-namespace':
+      element = '#nav-namespace';
+      break;
+    case 'nav-node':
+      element = '#nav-node';
+      break;
+    case 'nav-persistentvolume':
+      element = '#nav-persistentvolume';
+      break;
+    case 'nav-storageclass':
+      element = '#nav-storageclass';
+      break;
   }
   cy.get(element).click();
 });

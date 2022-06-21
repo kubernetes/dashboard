@@ -5,27 +5,6 @@ describe('Navbar', () => {
     NavbarPage.visitHome();
   });
 
-  describe('Cluster Items', () => {
-    it('namespaces', () => {
-      NavbarPage.clickItem(NavbarPage.namespaceItemId);
-      NavbarPage.assertUrlContains('namespace');
-    });
-
-    it('nodes', () => {
-      NavbarPage.clickItem(NavbarPage.nodeItemId);
-      NavbarPage.assertUrlContains('node');
-    });
-
-    it('persistentvolume', () => {
-      NavbarPage.clickItem(NavbarPage.persistentvolumeItemId);
-      NavbarPage.assertUrlContains('persistentvolume');
-    });
-
-    it('storageclass', () => {
-      NavbarPage.clickItem(NavbarPage.storageclassItemId);
-      NavbarPage.assertUrlContains('storageclass');
-    });
-  });
   describe('Workload and Namespace Items', () => {
     it('workload', () => {
       NavbarPage.clickItem(NavbarPage.workloadsItemId);
