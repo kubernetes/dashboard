@@ -17,6 +17,8 @@ package errors_test
 import (
 	"reflect"
 	"testing"
+
+	"k8s.io/dashboard/api/pkg/errors"
 )
 
 func TestHandleHTTPError(t *testing.T) {
@@ -29,28 +31,28 @@ func TestHandleHTTPError(t *testing.T) {
 			500,
 		},
 		{
-			NewInvalid("some unknown error"),
+			errors.NewInvalid("some unknown error"),
 			500,
 		},
 		{
-			NewInvalid(MsgDeployNamespaceMismatchError),
+			errors.NewInvalid(errors.MsgDeployNamespaceMismatchError),
 			500,
 		},
 		{
-			NewInvalid(MsgLoginUnauthorizedError),
+			errors.NewInvalid(errors.MsgLoginUnauthorizedError),
 			401,
 		},
 		{
-			NewInvalid(MsgTokenExpiredError),
+			errors.NewInvalid(errors.MsgTokenExpiredError),
 			401,
 		},
 		{
-			NewInvalid(MsgEncryptionKeyChanged),
+			errors.NewInvalid(errors.MsgEncryptionKeyChanged),
 			401,
 		},
 	}
 	for _, c := range cases {
-		actual := HandleHTTPError(c.err)
+		actual := errors.HandleHTTPError(c.err)
 		if !reflect.DeepEqual(actual, c.expected) {
 			t.Errorf("HandleHTTPError(%+v) == %+v, expected %+v", c.err, actual, c.expected)
 		}

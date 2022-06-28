@@ -19,6 +19,8 @@ import (
 	"testing"
 
 	v1 "k8s.io/api/authorization/v1"
+
+	"k8s.io/dashboard/api/pkg/client/api"
 )
 
 func TestToSelfSubjectAccessReview(t *testing.T) {
@@ -37,7 +39,7 @@ func TestToSelfSubjectAccessReview(t *testing.T) {
 		},
 	}
 
-	got := ToSelfSubjectAccessReview(ns, name, resourceName, verb)
+	got := api.ToSelfSubjectAccessReview(ns, name, resourceName, verb)
 	if !reflect.DeepEqual(got, expected) {
 		t.Fatalf("Expected to get %+v but got %+v", expected, got)
 	}

@@ -20,9 +20,11 @@ import (
 
 	batch "k8s.io/api/batch/v1beta1"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+
 	"k8s.io/dashboard/api/pkg/api"
 	metricapi "k8s.io/dashboard/api/pkg/integration/metric/api"
 	"k8s.io/dashboard/api/pkg/resource/common"
+	"k8s.io/dashboard/api/pkg/resource/cronjob"
 	"k8s.io/dashboard/api/pkg/resource/dataselect"
 )
 
@@ -30,17 +32,17 @@ func TestGetCronJobListFromChannels(t *testing.T) {
 	cases := []struct {
 		raw           batch.CronJobList
 		rawError      error
-		expected      *CronJobList
+		expected      *cronjob.CronJobList
 		expectedError error
 	}{
 		{
 			batch.CronJobList{},
 			nil,
-			&CronJobList{
+			&cronjob.CronJobList{
 				ListMeta:          api.ListMeta{},
 				CumulativeMetrics: make([]metricapi.Metric, 0),
 				Status:            common.ResourceStatus{},
-				Items:             []CronJob{},
+				Items:             []cronjob.CronJob{},
 				Errors:            []error{},
 			},
 			nil,
@@ -71,11 +73,11 @@ func TestGetCronJobListFromChannels(t *testing.T) {
 				},
 			},
 			nil,
-			&CronJobList{
+			&cronjob.CronJobList{
 				ListMeta:          api.ListMeta{TotalItems: 2},
 				CumulativeMetrics: make([]metricapi.Metric, 0),
 				Status:            common.ResourceStatus{Failed: 2},
-				Items: []CronJob{{
+				Items: []cronjob.CronJob{{
 					ObjectMeta: api.ObjectMeta{
 						Name:      name,
 						Namespace: namespace,
@@ -109,7 +111,7 @@ func TestGetCronJobListFromChannels(t *testing.T) {
 		channels.CronJobList.Error <- c.rawError
 		channels.CronJobList.List <- &c.raw
 
-		actual, err := GetCronJobListFromChannels(channels, dataselect.NoDataSelect, nil)
+		actual, err := cronjob.GetCronJobListFromChannels(channels, dataselect.NoDataSelect, nil)
 		if !reflect.DeepEqual(actual, c.expected) {
 			t.Errorf("GetCronJobListFromChannels() ==\n %#v\nExpected: %#v", actual, c.expected)
 		}

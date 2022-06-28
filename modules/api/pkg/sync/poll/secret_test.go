@@ -22,10 +22,12 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/watch"
 	"k8s.io/client-go/kubernetes/fake"
+
+	"k8s.io/dashboard/api/pkg/sync/poll"
 )
 
 func TestNewSecretPoller(t *testing.T) {
-	poller := NewSecretPoller("test-secret", "test-ns", nil)
+	poller := poll.NewSecretPoller("test-secret", "test-ns", nil)
 
 	if poller == nil {
 		t.Fatal("Expected poller not to be nil.")
@@ -43,7 +45,7 @@ func TestNewSecretPoller_Poll(t *testing.T) {
 		},
 	}
 	client := fake.NewSimpleClientset(event)
-	poller := NewSecretPoller(sName, nsName, client)
+	poller := poll.NewSecretPoller(sName, nsName, client)
 
 	watcher := poller.Poll(1 * time.Second)
 	select {

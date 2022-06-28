@@ -56,7 +56,7 @@ endif
 install-client-gen:
 ifndef CLIENT_GEN_BINARY
 	@echo "[tools] downloading client-gen..."
-	@go install k8s.io/code-generator
+	@go install k8s.io/code-generator/cmd/client-gen
 else
 	@echo "[tools] client-gen already exists"
 endif

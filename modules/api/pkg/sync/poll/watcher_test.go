@@ -16,10 +16,12 @@ package poll_test
 
 import (
 	"testing"
+
+	"k8s.io/dashboard/api/pkg/sync/poll"
 )
 
 func TestNewPollWatcher(t *testing.T) {
-	watcher := NewPollWatcher()
+	watcher := poll.NewPollWatcher()
 
 	if watcher == nil {
 		t.Fatal("Expected watcher not to be nil.")

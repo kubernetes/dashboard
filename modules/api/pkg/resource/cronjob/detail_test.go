@@ -21,7 +21,9 @@ import (
 	batch "k8s.io/api/batch/v1beta1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/client-go/kubernetes/fake"
+
 	"k8s.io/dashboard/api/pkg/api"
+	"k8s.io/dashboard/api/pkg/resource/cronjob"
 	"k8s.io/dashboard/api/pkg/resource/dataselect"
 )
 
@@ -30,7 +32,7 @@ func TestGetCronJobDetail(t *testing.T) {
 		namespace, name string
 		expectedActions []string
 		raw             *batch.CronJob
-		expected        *CronJobDetail
+		expected        *cronjob.CronJobDetail
 	}{
 		{
 			namespace,
@@ -46,8 +48,8 @@ func TestGetCronJobDetail(t *testing.T) {
 					Suspend: &suspend,
 				},
 			},
-			&CronJobDetail{
-				CronJob: CronJob{
+			&cronjob.CronJobDetail{
+				CronJob: cronjob.CronJob{
 					ObjectMeta: api.ObjectMeta{
 						Name:      name,
 						Namespace: namespace,
@@ -64,7 +66,7 @@ func TestGetCronJobDetail(t *testing.T) {
 	for _, c := range cases {
 		fakeClient := fake.NewSimpleClientset(c.raw)
 		dataselect.DefaultDataSelectWithMetrics.MetricQuery = dataselect.NoMetrics
-		actual, _ := GetCronJobDetail(fakeClient, c.namespace, c.name)
+		actual, _ := cronjob.GetCronJobDetail(fakeClient, c.namespace, c.name)
 
 		actions := fakeClient.Actions()
 		if len(actions) != len(c.expectedActions) {

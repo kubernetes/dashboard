@@ -1,71 +1,50 @@
-# Unused
-SHELL = /bin/bash
-GOOS ?= $(shell go env GOOS)
-GOARCH ?= $(shell go env GOARCH)
-#GOPATH ?= $(shell go env GOPATH)
-CODEGEN_VERSION := v0.23.6
-CODEGEN_BIN := $(GOPATH)/pkg/mod/k8s.io/code-generator@$(CODEGEN_VERSION)/generate-groups.sh
-GO_COVERAGE_FILE = $(ROOT_DIRECTORY)/coverage/go.txt
-COVERAGE_DIRECTORY = $(ROOT_DIRECTORY)/coverage
-MAIN_PACKAGE = github.com/kubernetes/dashboard/src/app/backend
+ROOT_DIRECTORY := $(shell dirname $(realpath $(firstword $(MAKEFILE_LIST))))
 
-PROD_BINARY = .dist/amd64/web/dashboard
-SERVE_DIRECTORY = .dist/web
-SERVE_BINARY = .dist/web/dashboard
-RELEASE_IMAGE = kubernetesui/dashboard
-RELEASE_VERSION = v2.6.0
-RELEASE_IMAGE_NAMES += $(foreach arch, $(ARCHITECTURES), $(RELEASE_IMAGE)-$(arch):$(RELEASE_VERSION))
-RELEASE_IMAGE_NAMES_LATEST += $(foreach arch, $(ARCHITECTURES), $(RELEASE_IMAGE)-$(arch):latest)
-HEAD_IMAGE = kubernetesdashboarddev/dashboard
-HEAD_VERSION = latest
-HEAD_IMAGE_NAMES += $(foreach arch, $(ARCHITECTURES), $(HEAD_IMAGE)-$(arch):$(HEAD_VERSION))
-ARCHITECTURES = amd64 arm64 arm ppc64le s390x
+include $(ROOT_DIRECTORY)/hack/partials/config.mk
+include $(ROOT_DIRECTORY)/hack/partials/build.mk
+include $(ROOT_DIRECTORY)/hack/partials/api.mk
+include $(ROOT_DIRECTORY)/hack/partials/web.mk
+
+# Unused
+#SHELL = /bin/bash
+#GOOS ?= $(shell go env GOOS)
+#GOARCH ?= $(shell go env GOARCH)
+#GOPATH ?= $(shell go env GOPATH)
+#CODEGEN_VERSION := v0.23.6
+#CODEGEN_BIN := $(GOPATH)/pkg/mod/k8s.io/code-generator@$(CODEGEN_VERSION)/generate-groups.sh
+#GO_COVERAGE_FILE = $(ROOT_DIRECTORY)/coverage/go.txt
+#COVERAGE_DIRECTORY = $(ROOT_DIRECTORY)/coverage
+#MAIN_PACKAGE = github.com/kubernetes/dashboard/src/app/backend
+
+#PROD_BINARY = .dist/amd64/web/dashboard
+#SERVE_DIRECTORY = .dist/web
+#SERVE_BINARY = .dist/web/dashboard
+#RELEASE_IMAGE = kubernetesui/dashboard
+#RELEASE_VERSION = v2.6.0
+#RELEASE_IMAGE_NAMES += $(foreach arch, $(ARCHITECTURES), $(RELEASE_IMAGE)-$(arch):$(RELEASE_VERSION))
+#RELEASE_IMAGE_NAMES_LATEST += $(foreach arch, $(ARCHITECTURES), $(RELEASE_IMAGE)-$(arch):latest)
+#HEAD_IMAGE = kubernetesdashboarddev/dashboard
+#HEAD_VERSION = latest
+#HEAD_IMAGE_NAMES += $(foreach arch, $(ARCHITECTURES), $(HEAD_IMAGE)-$(arch):$(HEAD_VERSION))
+#ARCHITECTURES = amd64 arm64 arm ppc64le s390x
 
 # Dirs and paths
-ROOT_DIRECTORY := $(shell dirname $(realpath $(firstword $(MAKEFILE_LIST))))
-MODULES_DIRECTORY := $(ROOT_DIRECTORY)/modules
-TOOLS_DIRECTORY := $(MODULES_DIRECTORY)/common/tools
-GATEWAY_DIRECTORY := $(ROOT_DIRECTORY)/hack/gateway
-HACK_DIRECTORY := $(ROOT_DIRECTORY)/hack
-APP_NAME := kubernetes-dashboard
 
-DOCKER_COMPOSE_PATH := $(HACK_DIRECTORY)/docker.compose.yaml
+#MODULES_DIRECTORY := $(ROOT_DIRECTORY)/modules
+#TOOLS_DIRECTORY := $(MODULES_DIRECTORY)/common/tools
+#GATEWAY_DIRECTORY := $(ROOT_DIRECTORY)/hack/gateway
+#HACK_DIRECTORY := $(ROOT_DIRECTORY)/hack
+#APP_NAME := kubernetes-dashboard
 
-# BUILDARCH is the host machine architecture
-BUILDARCH ?= $(shell uname -m)
-
-# BUILDOS is the host machine OS
-BUILDOS ?= $(shell uname -s)
-
-ifeq ($(BUILDARCH),x86_64)
-	BUILDARCH=amd64
-endif
-ifeq ($(BUILDARCH),aarch64)
-	BUILDARCH=arm64
-endif
-ifeq ($(BUILDARCH),armv7l)
-	BUILDARCH=armv7
-endif
-
-ifeq ($(BUILDOS),Linux)
-	BUILDOS=linux
-endif
-ifeq ($(BUILOS),Darwin)
-	BUILDOS=darwin
-endif
-
-# ARCH is the target build architecture. Unless overridden during build, host architecture (BUILDARCH) will be used
-ARCH ?= $(BUILDARCH)
-# OS is the target build OS. Unless overridden during build, host OS (BUILDOS) will be used
-OS ?= $(BUILDOS)
+#DOCKER_COMPOSE_PATH := $(HACK_DIRECTORY)/docker.compose.yaml
 
 # Used by the run target to configure the application
-KUBECONFIG ?= $(HOME)/.kube/config
-WEB_SYSTEM_BANNER ?= "Local test environment"
-WEB_SYSTEM_BANNER_SEVERITY ?= INFO
-API_ENABLE_SKIP_LOGIN ?= true
-API_SIDECAR_HOST ?= http://sidecar:8000
-API_TOKEN_TTL ?= 0 # Never expire
+#KUBECONFIG ?= $(HOME)/.kube/config
+#WEB_SYSTEM_BANNER ?= "Local test environment"
+#WEB_SYSTEM_BANNER_SEVERITY ?= INFO
+#API_ENABLE_SKIP_LOGIN ?= true
+#API_SIDECAR_HOST ?= http://sidecar:8000
+#API_TOKEN_TTL ?= 0 # Never expire
 
 # List of targets that should be executed before other targets
 PRE = --ensure-tools
@@ -85,7 +64,7 @@ fix-license: $(PRE)
 # Note: Make sure that the port 8080 is free on your localhost
 .PHONY: serve
 serve: $(PRE)
-	@$(MAKE) --no-print-directory -C $(MODULES_DIRECTORY) serve
+	@$(MAKE) --no-print-directory -C $(MODULES_DIRECTORY) TARGET=serve
 
 # Starts development version of the application with HTTPS enabled.
 #
@@ -94,7 +73,7 @@ serve: $(PRE)
 # Note: Make sure that the port 8080 is free on your localhost
 .PHONY: serve-https
 serve-https: $(PRE)
-	@$(MAKE) --no-print-directory -C $(MODULES_DIRECTORY) serve-https
+	@$(MAKE) --no-print-directory -C $(MODULES_DIRECTORY) TARGET=serve-https
 
 # Starts a prod version of the application.
 #
@@ -102,32 +81,32 @@ serve-https: $(PRE)
 #
 # Note: Make sure that the port 4443 is free on your localhost
 .PHONY: run
-run: $(PRE) --ensure-compose-down compose
+run: $(PRE) --ensure-compose-down --compose
 	@KUBECONFIG=$(KUBECONFIG) \
-	WEB_SYSTEM_BANNER=$(WEB_SYSTEM_BANNER) \
-	WEB_SYSTEM_BANNER_SEVERITY=$(WEB_SYSTEM_BANNER_SEVERITY) \
-	API_ENABLE_SKIP_LOGIN=$(API_ENABLE_SKIP_LOGIN) \
-	API_SIDECAR_HOST=$(API_SIDECAR_HOST) \
-	API_TOKEN_TTL=$(API_TOKEN_TTL) \
+	SYSTEM_BANNER=$(SYSTEM_BANNER) \
+	SYSTEM_BANNER_SEVERITY=$(SYSTEM_BANNER_SEVERITY) \
+	ENABLE_SKIP_LOGIN=$(ENABLE_SKIP_LOGIN) \
+	SIDECAR_HOST=$(SIDECAR_HOST) \
+	TOKEN_TTL=$(TOKEN_TTL) \
 	ARCH=$(ARCH) \
 	OS=$(OS) \
-	docker compose -f $(DOCKER_COMPOSE_PATH) --project-name=$(APP_NAME) up
-
-.PHONY: compose
-compose: --ensure-certificates build
-	@KUBECONFIG=$(KUBECONFIG) \
-	WEB_SYSTEM_BANNER=$(WEB_SYSTEM_BANNER) \
-	WEB_SYSTEM_BANNER_SEVERITY=$(WEB_SYSTEM_BANNER_SEVERITY) \
-	API_ENABLE_SKIP_LOGIN=$(API_ENABLE_SKIP_LOGIN) \
-	API_SIDECAR_HOST=$(API_SIDECAR_HOST) \
-	API_TOKEN_TTL=$(API_TOKEN_TTL) \
-	ARCH=$(ARCH) \
-	OS=$(OS) \
-	docker compose -f $(DOCKER_COMPOSE_PATH) --project-name=$(APP_NAME) build
+	docker compose -f $(DOCKER_COMPOSE_PATH) --project-name=$(PROJECT_NAME) up
 
 .PHONY: build
 build:
-	@$(MAKE) --no-print-directory -C $(MODULES_DIRECTORY) build
+	@$(MAKE) --no-print-directory -C $(MODULES_DIRECTORY) TARGET=build
+
+.PHONY: --compose
+--compose: --ensure-certificates build
+	@KUBECONFIG=$(KUBECONFIG) \
+	SYSTEM_BANNER=$(SYSTEM_BANNER) \
+	SYSTEM_BANNER_SEVERITY=$(SYSTEM_BANNER_SEVERITY) \
+	ENABLE_SKIP_LOGIN=$(ENABLE_SKIP_LOGIN) \
+	SIDECAR_HOST=$(SIDECAR_HOST) \
+	TOKEN_TTL=$(TOKEN_TTL) \
+	ARCH=$(ARCH) \
+	OS=$(OS) \
+	docker compose -f $(DOCKER_COMPOSE_PATH) --project-name=$(PROJECT_NAME) build
 
 .PHONY: --ensure-tools
 --ensure-tools:
@@ -136,14 +115,14 @@ build:
 .PHONY: --ensure-compose-down
 --ensure-compose-down:
 	@KUBECONFIG=$(KUBECONFIG) \
-	WEB_SYSTEM_BANNER=$(WEB_SYSTEM_BANNER) \
-	WEB_SYSTEM_BANNER_SEVERITY=$(WEB_SYSTEM_BANNER_SEVERITY) \
-	API_ENABLE_SKIP_LOGIN=$(API_ENABLE_SKIP_LOGIN) \
-	API_SIDECAR_HOST=$(API_SIDECAR_HOST) \
-	API_TOKEN_TTL=$(API_TOKEN_TTL) \
+	SYSTEM_BANNER=$(SYSTEM_BANNER) \
+	SYSTEM_BANNER_SEVERITY=$(SYSTEM_BANNER_SEVERITY) \
+	ENABLE_SKIP_LOGIN=$(ENABLE_SKIP_LOGIN) \
+	SIDECAR_HOST=$(SIDECAR_HOST) \
+	TOKEN_TTL=$(TOKEN_TTL) \
 	ARCH=$(ARCH) \
 	OS=$(OS) \
-	docker compose -f $(DOCKER_COMPOSE_PATH) --project-name=$(APP_NAME) down
+	docker compose -f $(DOCKER_COMPOSE_PATH) --project-name=$(PROJECT_NAME) down
 
 .PHONY: --ensure-certificates
 --ensure-certificates:

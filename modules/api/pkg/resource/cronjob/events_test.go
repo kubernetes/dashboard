@@ -21,8 +21,10 @@ import (
 	v1 "k8s.io/api/core/v1"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/client-go/kubernetes/fake"
+
 	"k8s.io/dashboard/api/pkg/api"
 	"k8s.io/dashboard/api/pkg/resource/common"
+	"k8s.io/dashboard/api/pkg/resource/cronjob"
 	"k8s.io/dashboard/api/pkg/resource/dataselect"
 )
 
@@ -68,7 +70,7 @@ func TestGetJobEvents(t *testing.T) {
 	for _, c := range cases {
 		fakeClient := fake.NewSimpleClientset(c.eventList)
 
-		actual, _ := GetCronJobEvents(fakeClient, dataselect.NoDataSelect, c.namespace, c.name)
+		actual, _ := cronjob.GetCronJobEvents(fakeClient, dataselect.NoDataSelect, c.namespace, c.name)
 
 		actions := fakeClient.Actions()
 		if len(actions) != len(c.expectedActions) {

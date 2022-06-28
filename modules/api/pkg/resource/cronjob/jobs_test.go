@@ -23,12 +23,14 @@ import (
 	"k8s.io/apimachinery/pkg/api/errors"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/client-go/kubernetes/fake"
+
+	"k8s.io/dashboard/api/pkg/resource/cronjob"
 )
 
 func TestTriggerCronJobWithInvalidName(t *testing.T) {
 	client := fake.NewSimpleClientset()
 
-	err := TriggerCronJob(client, namespace, "invalidName")
+	err := cronjob.TriggerCronJob(client, namespace, "invalidName")
 	if !errors.IsNotFound(err) {
 		t.Error("TriggerCronJob should return error when invalid name is passed")
 	}
@@ -49,7 +51,7 @@ func TestTriggerCronJobWithLongName(t *testing.T) {
 		}}
 
 	client := fake.NewSimpleClientset(&cron)
-	err := TriggerCronJob(client, namespace, longName)
+	err := cronjob.TriggerCronJob(client, namespace, longName)
 	if err != nil {
 		t.Error(err)
 	}
@@ -77,7 +79,7 @@ func TestTriggerCronJob(t *testing.T) {
 
 	client := fake.NewSimpleClientset(&cron)
 
-	err := TriggerCronJob(client, namespace, name)
+	err := cronjob.TriggerCronJob(client, namespace, name)
 	if err != nil {
 		t.Error(err)
 	}
