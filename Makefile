@@ -16,36 +16,6 @@ include $(ROOT_DIRECTORY)/hack/partials/web.mk
 #COVERAGE_DIRECTORY = $(ROOT_DIRECTORY)/coverage
 #MAIN_PACKAGE = github.com/kubernetes/dashboard/src/app/backend
 
-#PROD_BINARY = .dist/amd64/web/dashboard
-#SERVE_DIRECTORY = .dist/web
-#SERVE_BINARY = .dist/web/dashboard
-#RELEASE_IMAGE = kubernetesui/dashboard
-#RELEASE_VERSION = v2.6.0
-#RELEASE_IMAGE_NAMES += $(foreach arch, $(ARCHITECTURES), $(RELEASE_IMAGE)-$(arch):$(RELEASE_VERSION))
-#RELEASE_IMAGE_NAMES_LATEST += $(foreach arch, $(ARCHITECTURES), $(RELEASE_IMAGE)-$(arch):latest)
-#HEAD_IMAGE = kubernetesdashboarddev/dashboard
-#HEAD_VERSION = latest
-#HEAD_IMAGE_NAMES += $(foreach arch, $(ARCHITECTURES), $(HEAD_IMAGE)-$(arch):$(HEAD_VERSION))
-#ARCHITECTURES = amd64 arm64 arm ppc64le s390x
-
-# Dirs and paths
-
-#MODULES_DIRECTORY := $(ROOT_DIRECTORY)/modules
-#TOOLS_DIRECTORY := $(MODULES_DIRECTORY)/common/tools
-#GATEWAY_DIRECTORY := $(ROOT_DIRECTORY)/hack/gateway
-#HACK_DIRECTORY := $(ROOT_DIRECTORY)/hack
-#APP_NAME := kubernetes-dashboard
-
-#DOCKER_COMPOSE_PATH := $(HACK_DIRECTORY)/docker.compose.yaml
-
-# Used by the run target to configure the application
-#KUBECONFIG ?= $(HOME)/.kube/config
-#WEB_SYSTEM_BANNER ?= "Local test environment"
-#WEB_SYSTEM_BANNER_SEVERITY ?= INFO
-#API_ENABLE_SKIP_LOGIN ?= true
-#API_SIDECAR_HOST ?= http://sidecar:8000
-#API_TOKEN_TTL ?= 0 # Never expire
-
 # List of targets that should be executed before other targets
 PRE = --ensure-tools
 
