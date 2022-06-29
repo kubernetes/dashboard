@@ -64,8 +64,12 @@ run: $(PRE) --ensure-compose-down --compose
 	docker compose -f $(DOCKER_COMPOSE_PATH) --project-name=$(PROJECT_NAME) up
 
 .PHONY: build
-build:
-	@$(MAKE) --no-print-directory -C $(MODULES_DIRECTORY) TARGET=build
+build: TARGET := build
+build: build-cross
+
+.PHONY: build-cross
+build-cross:
+	@$(MAKE) --no-print-directory -C $(MODULES_DIRECTORY) TARGET=$(or $(TARGET),build-cross)
 
 .PHONY: --compose
 --compose: --ensure-certificates build
