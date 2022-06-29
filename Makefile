@@ -1,9 +1,10 @@
 ROOT_DIRECTORY := $(shell dirname $(realpath $(firstword $(MAKEFILE_LIST))))
 
-include $(ROOT_DIRECTORY)/hack/partials/config.mk
-include $(ROOT_DIRECTORY)/hack/partials/build.mk
-include $(ROOT_DIRECTORY)/hack/partials/api.mk
-include $(ROOT_DIRECTORY)/hack/partials/web.mk
+include $(ROOT_DIRECTORY)/hack/include/config.mk
+include $(ROOT_DIRECTORY)/hack/include/build.mk
+
+include $(API_DIRECTORY)/hack/include/config.mk
+include $(WEB_DIRECTORY)/hack/include/config.mk
 
 # Unused
 #SHELL = /bin/bash

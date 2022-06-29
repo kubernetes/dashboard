@@ -1,10 +1,10 @@
-# Paths and directories
 ROOT_DIRECTORY = $(shell dirname $(realpath $(firstword $(MAKEFILE_LIST))))/../..
 
 include $(ROOT_DIRECTORY)/hack/partials/config.mk
 include $(ROOT_DIRECTORY)/hack/partials/build.mk
-include $(ROOT_DIRECTORY)/hack/partials/api.mk
 include $(ROOT_DIRECTORY)/hack/partials/deploy.mk
+
+include hack/include/config.mk
 
 # List of targets that should be executed before other targets
 PRE := --ensure-dist-exists
@@ -18,18 +18,18 @@ codegen-verify: --codegen-verify-pre --codegen-update-run --codegen-verify-post
 
 .PHONY: build
 build: ARCHITECTURES = $(ARCH)
-build: $(PRE) build-cross
+build: build-cross
 
 .PHONY: build-cross
-build-cross:
+build-cross: $(PRE)
 	@for ARCH in $(ARCHITECTURES) ; do \
   	echo "Building dashboard-api for $(OS)/$$ARCH" ; \
-  	CGO_ENABLED=0 GOOS=$(OS) GOARCH=$$ARCH go build -ldflags "-X $(PACKAGE_NAME)/client.Version=$(RELEASE_VERSION)" -gcflags="all=-N -l" -o $(DIST_DIRECTORY)/api/$$ARCH/dashboard-api $(PACKAGE_NAME) ; \
+  	CGO_ENABLED=0 GOOS=$(OS) GOARCH=$$ARCH go build -ldflags "-X $(PACKAGE_NAME)/client.Version=$(RELEASE_VERSION)" -gcflags="all=-N -l" -o $(API_DIST_DIRECTORY)/$$ARCH/$(APP_NAME) $(PACKAGE_NAME) ; \
   done
 
 .PHONY: run
 run: build
-	@$(SERVE_BINARY) --kubeconfig=$(KUBECONFIG) \
+	@$(API_DIST_BINARY) --kubeconfig=$(KUBECONFIG) \
 		--sidecar-host=$(SIDECAR_HOST) \
 		--token-ttl=$(TOKEN_TTL) \
 		--auto-generate-certificates=$(AUTO_GENERATE_CERTIFICATES) \
@@ -54,7 +54,7 @@ coverage:
 
 .PHONY: --ensure-dist-exists
 --ensure-dist-exists:
-	@mkdir -p $(SERVE_DIRECTORY)
+	@mkdir -p $(API_DIST_DIRECTORY)
 
 .PHONY: --codegen-update-run
 --codegen-update-run:

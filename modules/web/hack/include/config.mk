@@ -8,8 +8,13 @@ IMAGE_NAMES += $(foreach arch, $(ARCHITECTURES), $(IMAGE_REPOSITORY)/$(APP_NAME)
 IMAGE_NAMES_LATEST += $(foreach arch, $(ARCHITECTURES), $(IMAGE_REPOSITORY)/$(APP_NAME)-$(arch):latest)
 
 ### Dirs and paths
-SERVE_DIRECTORY = $(DIST_DIRECTORY)/web
-SERVE_BINARY = $(SERVE_DIRECTORY)/$(ARCH)/$(APP_NAME)
+WEB_DIST_DIRECTORY = $(DIST_DIRECTORY)/web
+WEB_DIST_ANGULAR_DIRECTORY = $(WEB_DIST_DIRECTORY)/angular
+WEB_DIST_BINARY = $(SERVE_DIRECTORY)/$(ARCH)/$(APP_NAME)
+
+# Angular Serve Arguments
+PROXY_CONFIG ?= proxy.conf.json
+SSL_ENABLED ?= false
 
 # Web UI Arguments (overridable)
 SYSTEM_BANNER ?= "Local test environment"

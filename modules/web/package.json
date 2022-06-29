@@ -26,7 +26,7 @@
     "fix:ts": "gts fix",
     "check": "npm run check:i18n && npm run check:html && npm run check:scss && npm run check:ts",
     "check:i18n": "npm run fix:i18n",
-    "check:html": "./scripts/check-html.sh",
+    "check:html": "./hack/check-html.sh",
     "check:scss": "stylelint src/**/*.scss --fix",
     "check:ts": "gts lint",
     "test": "npx jest -c jest.config.js",
@@ -43,9 +43,7 @@
     "src/**/*.scss": [
       "stylelint --fix"
     ],
-    "src/**/*.html": [
-      "./aio/scripts/pre-commit-i18n.sh"
-    ]
+    "src/**/*.html": []
   },
   "dependencies": {
     "@angular/animations": "13.3.10",

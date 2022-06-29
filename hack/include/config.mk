@@ -2,7 +2,7 @@
 PROJECT_NAME := dashboard
 # Supported architectures
 ARCHITECTURES := amd64 arm64 arm ppc64le s390x
-# Docker image details
+# Container registry details
 IMAGE_REPOSITORY := kubernetesui
 
 ### Dirs and paths
@@ -11,7 +11,9 @@ PARTIALS_DIRECTORY := $(shell dirname $(realpath $(firstword $(MAKEFILE_LIST))))
 # Modules
 MODULES_DIRECTORY := $(ROOT_DIRECTORY)/modules
 API_DIRECTORY := $(MODULES_DIRECTORY)/api
+WEB_DIRECTORY := $(MODULES_DIRECTORY)/web
 TOOLS_DIRECTORY := $(MODULES_DIRECTORY)/common/tools
+# Gateway
 GATEWAY_DIRECTORY := $(ROOT_DIRECTORY)/hack/gateway
 # Docker files
 DOCKER_DIRECTORY := $(ROOT_DIRECTORY)/hack/docker

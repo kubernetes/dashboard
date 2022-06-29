@@ -1,11 +1,9 @@
-# Web UI Arguments (overridable)
-SYSTEM_BANNER ?= "Local test environment"
-SYSTEM_BANNER_SEVERITY ?= INFO
-AUTO_GENERATE_CERTIFICATES ?= false
+ROOT_DIRECTORY = $(shell dirname $(realpath $(firstword $(MAKEFILE_LIST))))/../..
 
-# Angular Serve Arguments
-PROXY_CONFIG ?= proxy.conf.json
-SSL_ENABLED ?= false
+include $(ROOT_DIRECTORY)/hack/include/config.mk
+include $(ROOT_DIRECTORY)/hack/include/build.mk
+
+include hack/include/config.mk
 
 # List of targets that should be always executed before other targets
 PRE = --ensure-version
@@ -16,11 +14,17 @@ MAKEFLAGS += -j2
 serve: $(PRE) --serve-go --serve-angular
 
 .PHONY: serve-https
-serve-https: $(PRE) --serve-go-https --serve-angular-https
+serve-https: AUTO_GENERATE_CERTIFICATES = true
+serve-https: PROXY_CONFIG = proxy-https.conf.json
+serve-https: SSL_ENABLED = true
+serve-https: $(PRE) --serve-go --serve-angular
 
-.PHONY: build
-build: $(PRE)
-	@scripts/build.sh
+.PHONY .NOTPARALLEL: build
+build: ARCHITECTURES = $(ARCH)
+build: $(PRE) build-cross
+
+.PHONY .NOTPARALLEL: build-cross
+build-cross: --clean --build-go --build-angular
 
 .PHONY: --serve-go
 --serve-go:
@@ -29,22 +33,13 @@ build: $(PRE)
     --system-banner-severity=$(SYSTEM_BANNER_SEVERITY) \
     --auto-generate-certificates=$(AUTO_GENERATE_CERTIFICATES)
 
-.PHONY: --serve-go-https
---serve-go-https: AUTO_GENERATE_CERTIFICATES = true
---serve-go-https: --serve-go
-
 .PHONY: --serve-angular
 --serve-angular:
-	@npx ng serve --proxy-config $(PROXY_CONFIG) --ssl=$(SSL_ENABLED)
-
-.PHONY: serve-angular-https
---serve-angular-https: PROXY_CONFIG = proxy-https.conf.json
---serve-angular-https: SSL_ENABLED = true
---serve-angular-https: --serve-angular
+	@npx ng serve --proxy-config=$(PROXY_CONFIG) --ssl=$(SSL_ENABLED)
 
 .PHONY: --ensure-version
 --ensure-version: --npm-ci
-	@node ./scripts/version.mjs
+	@node ./hack/version.mjs
 
 .PHONY: --npm-ci
 --npm-ci:
@@ -52,3 +47,53 @@ ifeq ($(wildcard node_modules/.*),)
 	@echo "Installing dependencies"
 	@npm ci
 endif
+
+.PHONY: --build-go
+--build-go:
+	@for ARCH in $(ARCHITECTURES) ; do \
+  		echo "Building dashboard-web API for $(OS)/$$ARCH" ; \
+  		CGO_ENABLED=0 GOOS=$(OS) GOARCH=$$ARCH go build -ldflags "-X $(PACKAGE_NAME)/client.Version=$(RELEASE_VERSION)" -gcflags="all=-N -l" -o $(WEB_DIST_DIRECTORY)/$$ARCH/$(APP_NAME) $(PACKAGE_NAME) ; \
+	done ; \
+
+.PHONY .NOTPARALLEL: --build-angular
+--build-angular: --ng-build --fix-locale-caching --copy-angular
+
+.PHONY: --copy-angular
+--copy-angular: LANGUAGES = $(shell ls $(WEB_DIST_ANGULAR_DIRECTORY))
+--copy-angular:
+	@echo "Copying frontend to the dashboard-web API" ; \
+	for arch in $(ARCHITECTURES) ; do \
+		for language in $(LANGUAGES) ; do \
+			outDir=$(WEB_DIST_DIRECTORY)/$${arch}/public ; \
+      mkdir -p $${outDir} ; \
+      cp -r $(WEB_DIST_ANGULAR_DIRECTORY)/$${language} $${outDir} ; \
+    done ; \
+	done ; \
+	rm -rf $(WEB_DIST_ANGULAR_DIRECTORY)
+
+# Avoid locale caching due to the same output file naming
+# We'll add language code prefix to the generated main javascript file.
+.PHONY: --fix-locale-caching
+--fix-locale-caching: LANGUAGES = $(shell ls $(WEB_DIST_ANGULAR_DIRECTORY))
+--fix-locale-caching:
+	@echo "Patching locale caching" ; \
+	for language in $(LANGUAGES) ; do \
+  		localeDir=$(WEB_DIST_ANGULAR_DIRECTORY)/$${language} ; \
+  		filename=$$(find $${localeDir} -name 'main.*.js' -exec basename {} \;) ; \
+  		mv "$${localeDir}/$${filename}" "$${localeDir}/$${language}.$${filename}" ; \
+  		perl -i -pe"s/$${filename}/$${language}.$${filename}/" "$${localeDir}/index.html" ; \
+	done ; \
+	cp "$(WEB_DIRECTORY)/i18n/locale_conf.json" "$(WEB_DIST_ANGULAR_DIRECTORY)" ; \
+
+.PHONY: --ng-build
+--ng-build:
+	@echo "Building localized frontend" ; \
+	npx ng build \
+      --configuration production \
+      --localize \
+      --outputPath="$(WEB_DIST_ANGULAR_DIRECTORY)"
+
+.PHONY: --clean
+--clean:
+	@rm -rf $(WEB_DIST_DIRECTORY)
+	@mkdir -p $(WEB_DIST_ANGULAR_DIRECTORY)
