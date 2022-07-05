@@ -150,7 +150,7 @@
     "q": "1.5.1",
     "raw-loader": "4.0.2",
     "run-node": "2.0.0",
-    "sass": "1.52.1",
+    "sass": "1.53.0",
     "sass-loader": "13.0.0",
     "semver": "7.3.7",
     "source-map-explorer": "2.5.2",
