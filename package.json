@@ -146,7 +146,7 @@
     "minimatch": "5.1.0",
     "minimist": "1.2.6",
     "ngx-i18nsupport": "0.17.1",
-    "node-gyp": "9.0.0",
+    "node-gyp": "9.1.0",
     "q": "1.5.1",
     "raw-loader": "4.0.2",
     "run-node": "2.0.0",
