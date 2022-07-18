@@ -80,7 +80,7 @@
     "@angular/router": "13.3.10",
     "@swimlane/ngx-charts": "20.1.0",
     "ace-builds": "1.5.3",
-    "core-js": "3.22.7",
+    "core-js": "3.23.5",
     "crop-url": "4.0.1",
     "d3": "6.7.0",
     "file-saver": "2.0.5",
