@@ -111,7 +111,7 @@
     "@angular/language-service": "13.3.10",
     "@babel/core": "7.18.2",
     "@babel/preset-env": "7.18.2",
-    "@babel/register": "7.17.7",
+    "@babel/register": "7.18.9",
     "@cypress/webpack-preprocessor": "5.11.1",
     "@types/d3": "7.4.0",
     "@types/d3-scale": "4.0.2",
