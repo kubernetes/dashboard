@@ -38,6 +38,9 @@ spec:
 {{- if hasKey .Values.service "clusterIP" }}
   clusterIP: {{ .Values.service.clusterIP }}
 {{- end }}
+{{- if .Values.service.externalTrafficPolicy }}
+  externalTrafficPolicy: {{ .Values.service.externalTrafficPolicy }}
+{{- end }}
   ports:
   - port: {{ .Values.service.externalPort }}
 {{- if .Values.protocolHttp }}
