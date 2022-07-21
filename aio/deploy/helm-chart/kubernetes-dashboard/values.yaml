@@ -152,6 +152,9 @@ service:
   ## A user-specified IP address for load balancer to use as External IP (if supported)
   # loadBalancerIP:
 
+  ## Set the externalTrafficPolicy in the Service to either Cluster or Local
+  externalTrafficPolicy: Cluster
+
   ## Additional Kubernetes Dashboard Service annotations
   annotations: {}
 
