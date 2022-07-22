@@ -273,8 +273,5 @@
     "not last 2 and_uc versions",
     "not last 2 and_qq versions",
     "not last 2 edge versions"
-  ],
-  "overrides": {
-    "colors": "1.40.0"
-  }
+  ]
 }

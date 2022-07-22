@@ -20,7 +20,7 @@ ARG BUILDPLATFORM
 FROM --platform=$BUILDPLATFORM ubuntu:20.04 as builder
 
 # Create a nonroot user for final image
-RUN useradd -u 10001 nonroot
+RUN useradd -u 1001 nonroot
 
 # Scratch can be used as the base image because the backend is compiled to include all
 # its dependencies.
