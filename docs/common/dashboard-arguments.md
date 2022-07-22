@@ -29,7 +29,7 @@ Dashboard container accepts multiple arguments that can be used to customize it 
 | disable-settings-authorizer | false              | When enabled, Dashboard settings page will not require user to be logged in and authorized to access settings page.                                                                                                                                                                                       |
 | locale-config               | ./locale_conf.json | File containing the configuration of locales.                                                                                                                                                                                                                                                             |
 | system-banner               | -                  | When non-empty displays message to Dashboard users. Accepts simple HTML tags.                                                                                                                                                                                                                             |
-| system-banner-severity      | INFO               | Severity of system banner. Should be one of 'INFO\                                                                                                                                                                                                                                                        |WARNING\|ERROR'. |
+| system-banner-severity      | INFO               | Severity of system banner. Should be one of `INFO\|WARNING\|ERROR`. |
 
 ----
 _Copyright 2019 [The Kubernetes Dashboard Authors](https://github.com/kubernetes/dashboard/graphs/contributors)_
