@@ -17,7 +17,7 @@ package cronjob
 import (
 	"context"
 
-	batch2 "k8s.io/api/batch/v1beta1"
+	batch "k8s.io/api/batch/v1"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	k8sClient "k8s.io/client-go/kubernetes"
 )
@@ -37,7 +37,7 @@ type CronJobDetail struct {
 // GetCronJobDetail gets Cron Job details.
 func GetCronJobDetail(client k8sClient.Interface, namespace, name string) (*CronJobDetail, error) {
 
-	rawObject, err := client.BatchV1beta1().CronJobs(namespace).Get(context.TODO(), name, metaV1.GetOptions{})
+	rawObject, err := client.BatchV1().CronJobs(namespace).Get(context.TODO(), name, metaV1.GetOptions{})
 	if err != nil {
 		return nil, err
 	}
@@ -46,7 +46,7 @@ func GetCronJobDetail(client k8sClient.Interface, namespace, name string) (*Cron
 	return &cj, nil
 }
 
-func toCronJobDetail(cj *batch2.CronJob) CronJobDetail {
+func toCronJobDetail(cj *batch.CronJob) CronJobDetail {
 	return CronJobDetail{
 		CronJob:                 toCronJob(cj),
 		ConcurrencyPolicy:       string(cj.Spec.ConcurrencyPolicy),
