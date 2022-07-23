@@ -17,17 +17,23 @@ package cronjob
 import (
 	"context"
 
+	batch "k8s.io/api/batch/v1"
+	meta "k8s.io/apimachinery/pkg/apis/meta/v1"
+	"k8s.io/apimachinery/pkg/types"
+	"k8s.io/apimachinery/pkg/util/rand"
+	client "k8s.io/client-go/kubernetes"
+
 	"github.com/kubernetes/dashboard/src/app/backend/api"
 	"github.com/kubernetes/dashboard/src/app/backend/errors"
 	metricapi "github.com/kubernetes/dashboard/src/app/backend/integration/metric/api"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/job"
-	batch "k8s.io/api/batch/v1"
-	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
-	"k8s.io/apimachinery/pkg/types"
-	"k8s.io/apimachinery/pkg/util/rand"
-	client "k8s.io/client-go/kubernetes"
+)
+
+const (
+	CronJobAPIVersion = "v1"
+	CronJobKindName   = "cronjob"
 )
 
 var emptyJobList = &job.JobList{
@@ -42,7 +48,7 @@ var emptyJobList = &job.JobList{
 func GetCronJobJobs(client client.Interface, metricClient metricapi.MetricClient,
 	dsQuery *dataselect.DataSelectQuery, namespace, name string, active bool) (*job.JobList, error) {
 
-	cronJob, err := client.BatchV1beta1().CronJobs(namespace).Get(context.TODO(), name, metaV1.GetOptions{})
+	cronJob, err := client.BatchV1beta1().CronJobs(namespace).Get(context.TODO(), name, meta.GetOptions{})
 	if err != nil {
 		return emptyJobList, err
 	}
@@ -84,7 +90,7 @@ func GetCronJobJobs(client client.Interface, metricClient metricapi.MetricClient
 func TriggerCronJob(client client.Interface,
 	namespace, name string) error {
 
-	cronJob, err := client.BatchV1beta1().CronJobs(namespace).Get(context.TODO(), name, metaV1.GetOptions{})
+	cronJob, err := client.BatchV1().CronJobs(namespace).Get(context.TODO(), name, meta.GetOptions{})
 
 	if err != nil {
 		return err
@@ -107,16 +113,22 @@ func TriggerCronJob(client client.Interface,
 	}
 
 	jobToCreate := &batch.Job{
-		ObjectMeta: metaV1.ObjectMeta{
+		ObjectMeta: meta.ObjectMeta{
 			Name:        newJobName,
 			Namespace:   namespace,
 			Annotations: annotations,
 			Labels:      labels,
+			OwnerReferences: []meta.OwnerReference{{
+				APIVersion: CronJobAPIVersion,
+				Kind:       CronJobKindName,
+				Name:       cronJob.Name,
+				UID:        cronJob.UID,
+			}},
 		},
 		Spec: cronJob.Spec.JobTemplate.Spec,
 	}
 
-	_, err = client.BatchV1().Jobs(namespace).Create(context.TODO(), jobToCreate, metaV1.CreateOptions{})
+	_, err = client.BatchV1().Jobs(namespace).Create(context.TODO(), jobToCreate, meta.CreateOptions{})
 
 	if err != nil {
 		return err
