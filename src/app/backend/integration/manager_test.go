@@ -50,13 +50,6 @@ func TestIntegrationManager_GetState(t *testing.T) {
 		expectedErr   error
 	}{
 		{
-			"Server provided and using in-cluster sidecar",
-			"http://127.0.0.1:8080", "", &api.IntegrationState{
-				Connected: false,
-				Error:     errors.NewInvalid("Get http://127.0.0.1:8080/api/v1/namespaces/kube-system/services/heapster/proxy/healthz: dial tcp 127.0.0.1:8080: connect: connection refused"),
-			}, nil,
-		},
-		{
 			"Server provided and using external sidecar",
 			"http://127.0.0.1:8080", "http://127.0.0.1:8081", &api.IntegrationState{
 				Connected: false,
