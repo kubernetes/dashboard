@@ -20,7 +20,6 @@ import (
 	apps "k8s.io/api/apps/v1"
 	autoscaling "k8s.io/api/autoscaling/v1"
 	batch "k8s.io/api/batch/v1"
-	batch2 "k8s.io/api/batch/v1beta1"
 	v1 "k8s.io/api/core/v1"
 	networkingv1 "k8s.io/api/networking/v1"
 	rbac "k8s.io/api/rbac/v1"
@@ -559,20 +558,20 @@ func GetJobListChannel(client client.Interface,
 
 // CronJobListChannel is a list and error channels to Cron Jobs.
 type CronJobListChannel struct {
-	List  chan *batch2.CronJobList
+	List  chan *batch.CronJobList
 	Error chan error
 }
 
 // GetCronJobListChannel returns a pair of channels to a Cron Job list and errors that both must be read numReads times.
 func GetCronJobListChannel(client client.Interface, nsQuery *NamespaceQuery, numReads int) CronJobListChannel {
 	channel := CronJobListChannel{
-		List:  make(chan *batch2.CronJobList, numReads),
+		List:  make(chan *batch.CronJobList, numReads),
 		Error: make(chan error, numReads),
 	}
 
 	go func() {
-		list, err := client.BatchV1beta1().CronJobs(nsQuery.ToRequestParam()).List(context.TODO(), api.ListEverything)
-		var filteredItems []batch2.CronJob
+		list, err := client.BatchV1().CronJobs(nsQuery.ToRequestParam()).List(context.TODO(), api.ListEverything)
+		var filteredItems []batch.CronJob
 		for _, item := range list.Items {
 			if nsQuery.Matches(item.ObjectMeta.Namespace) {
 				filteredItems = append(filteredItems, item)
