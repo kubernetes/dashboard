@@ -136,7 +136,7 @@
     "git-describe": "4.1.1",
     "gts": "3.1.0",
     "husky": "8.0.1",
-    "jasmine-core": "4.1.1",
+    "jasmine-core": "4.3.0",
     "jasmine-spec-reporter": "7.0.0",
     "jest": "28.1.0",
     "jest-preset-angular": "12.0.1",
