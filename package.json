@@ -123,7 +123,7 @@
     "@types/lodash": "4.14.182",
     "@types/node": "17.0.36",
     "@typescript-eslint/eslint-plugin": "5.27.0",
-    "@typescript-eslint/parser": "5.27.0",
+    "@typescript-eslint/parser": "5.32.0",
     "codelyzer": "6.0.2",
     "concurrently": "7.2.1",
     "cypress": "9.7.0",
