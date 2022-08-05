@@ -16,9 +16,10 @@ package cronjob
 
 import (
 	client "k8s.io/client-go/kubernetes"
-	"k8s.io/dashboard/api/pkg/resource/common"
-	"k8s.io/dashboard/api/pkg/resource/dataselect"
-	"k8s.io/dashboard/api/pkg/resource/event"
+
+	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/event"
 )
 
 // GetCronJobEvents gets events associated to cron job.

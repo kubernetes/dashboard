@@ -18,13 +18,13 @@ import (
 	"reflect"
 	"testing"
 
-	batch "k8s.io/api/batch/v1beta1"
+	batch "k8s.io/api/batch/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/client-go/kubernetes/fake"
 
-	"k8s.io/dashboard/api/pkg/api"
-	"k8s.io/dashboard/api/pkg/resource/cronjob"
-	"k8s.io/dashboard/api/pkg/resource/dataselect"
+	"github.com/kubernetes/dashboard/src/app/backend/api"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/cronjob"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 )
 
 func TestGetCronJobDetail(t *testing.T) {

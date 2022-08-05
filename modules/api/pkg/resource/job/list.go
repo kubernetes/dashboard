@@ -17,15 +17,16 @@ package job
 import (
 	"log"
 
-	"k8s.io/dashboard/api/pkg/api"
-	"k8s.io/dashboard/api/pkg/errors"
-	metricapi "k8s.io/dashboard/api/pkg/integration/metric/api"
-	"k8s.io/dashboard/api/pkg/resource/common"
-	"k8s.io/dashboard/api/pkg/resource/dataselect"
-	"k8s.io/dashboard/api/pkg/resource/event"
 	batch "k8s.io/api/batch/v1"
 	v1 "k8s.io/api/core/v1"
 	client "k8s.io/client-go/kubernetes"
+
+	"github.com/kubernetes/dashboard/src/app/backend/api"
+	"github.com/kubernetes/dashboard/src/app/backend/errors"
+	metricapi "github.com/kubernetes/dashboard/src/app/backend/integration/metric/api"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/event"
 )
 
 // JobList contains a list of Jobs in the cluster.

@@ -18,10 +18,9 @@ import (
 	"reflect"
 	"testing"
 
-	"k8s.io/dashboard/api/pkg/client"
-	"k8s.io/dashboard/api/pkg/errors"
-	integrationapi "k8s.io/dashboard/api/pkg/integration/api"
-	"k8s.io/dashboard/api/pkg/integration/metric/api"
+	"github.com/kubernetes/dashboard/src/app/backend/errors"
+	integrationapi "github.com/kubernetes/dashboard/src/app/backend/integration/api"
+	"github.com/kubernetes/dashboard/src/app/backend/integration/metric/api"
 )
 
 const fakeMetricClientID integrationapi.IntegrationID = "test-id"
@@ -129,24 +128,6 @@ func TestMetricManager_List(t *testing.T) {
 		if len(list) != c.expectedClients {
 			t.Errorf("Expected number of clients to be %v, but got %v.",
 				c.expectedClients, len(list))
-		}
-	}
-}
-
-func TestMetricManager_ConfigureHeapster(t *testing.T) {
-	cases := []struct {
-		manager         MetricManager
-		expectedClients int
-	}{
-		{NewMetricManager(client.NewClientManager("", "http://localhost:8080")), 1},
-	}
-
-	for _, c := range cases {
-		c.manager.ConfigureHeapster("")
-
-		if len(c.manager.List()) != c.expectedClients {
-			t.Errorf("Failed to configure heapster. Expected number of clients to be "+
-				"%d, but got %d.", c.expectedClients, len(c.manager.List()))
 		}
 	}
 }

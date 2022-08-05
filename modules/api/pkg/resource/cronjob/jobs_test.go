@@ -19,12 +19,12 @@ import (
 	"strings"
 	"testing"
 
-	batch "k8s.io/api/batch/v1beta1"
+	batch "k8s.io/api/batch/v1"
 	"k8s.io/apimachinery/pkg/api/errors"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/client-go/kubernetes/fake"
 
-	"k8s.io/dashboard/api/pkg/resource/cronjob"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/cronjob"
 )
 
 func TestTriggerCronJobWithInvalidName(t *testing.T) {

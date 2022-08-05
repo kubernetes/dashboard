@@ -87,7 +87,10 @@ func (self *rsaKeyHolder) Refresh() {
 // Handler function executed by synchronizer used to store encryption key. It is called whenever watched object
 // is created or updated.
 func (self *rsaKeyHolder) update(obj runtime.Object) {
-	secret := obj.(*v1.Secret)
+	secret, ok := obj.(*v1.Secret)
+	if !ok {
+		return
+	}
 	priv, err := ParseRSAKey(string(secret.Data[holderMapKeyEntry]), string(secret.Data[holderMapCertEntry]))
 	if err != nil {
 		// Secret was probably tampered with. Update it based on local key.

@@ -15,16 +15,17 @@
 package cronjob
 
 import (
-	batchv1beta1 "k8s.io/api/batch/v1beta1"
-	"k8s.io/dashboard/api/pkg/api"
-	metricapi "k8s.io/dashboard/api/pkg/integration/metric/api"
-	"k8s.io/dashboard/api/pkg/resource/common"
-	"k8s.io/dashboard/api/pkg/resource/dataselect"
+	batch "k8s.io/api/batch/v1"
+
+	"github.com/kubernetes/dashboard/src/app/backend/api"
+	metricapi "github.com/kubernetes/dashboard/src/app/backend/integration/metric/api"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 )
 
 // The code below allows to perform complex data section on []batch.CronJob
 
-type CronJobCell batchv1beta1.CronJob
+type CronJobCell batch.CronJob
 
 func (self CronJobCell) GetProperty(name dataselect.PropertyName) dataselect.ComparableValue {
 	switch name {
@@ -49,7 +50,7 @@ func (self CronJobCell) GetResourceSelector() *metricapi.ResourceSelector {
 	}
 }
 
-func ToCells(std []batchv1beta1.CronJob) []dataselect.DataCell {
+func ToCells(std []batch.CronJob) []dataselect.DataCell {
 	cells := make([]dataselect.DataCell, len(std))
 	for i := range std {
 		cells[i] = CronJobCell(std[i])
@@ -57,15 +58,15 @@ func ToCells(std []batchv1beta1.CronJob) []dataselect.DataCell {
 	return cells
 }
 
-func FromCells(cells []dataselect.DataCell) []batchv1beta1.CronJob {
-	std := make([]batchv1beta1.CronJob, len(cells))
+func FromCells(cells []dataselect.DataCell) []batch.CronJob {
+	std := make([]batch.CronJob, len(cells))
 	for i := range std {
-		std[i] = batchv1beta1.CronJob(cells[i].(CronJobCell))
+		std[i] = batch.CronJob(cells[i].(CronJobCell))
 	}
 	return std
 }
 
-func getStatus(list *batchv1beta1.CronJobList) common.ResourceStatus {
+func getStatus(list *batch.CronJobList) common.ResourceStatus {
 	info := common.ResourceStatus{}
 	if list == nil {
 		return info
@@ -82,7 +83,7 @@ func getStatus(list *batchv1beta1.CronJobList) common.ResourceStatus {
 	return info
 }
 
-func getContainerImages(cronJob *batchv1beta1.CronJob) []string {
+func getContainerImages(cronJob *batch.CronJob) []string {
 	podSpec := cronJob.Spec.JobTemplate.Spec.Template.Spec
 	result := make([]string, 0)
 

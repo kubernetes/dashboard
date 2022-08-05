@@ -955,8 +955,6 @@ k8s.io/code-generator v0.24.1/go.mod h1:dpVhs00hTuTdTY6jvVxvTFCk6gSMrtfRydbhZwHI
 k8s.io/component-base v0.24.1/go.mod h1:DW5vQGYVCog8WYpNob3PMmmsY8A3L9QZNg4j/dV3s38=
 k8s.io/gengo v0.0.0-20210813121822-485abfe95c7c/go.mod h1:FiNAH4ZV3gBg2Kwh89tzAEV2be7d5xI0vBa/VySYy3E=
 k8s.io/gengo v0.0.0-20211129171323-c02415ce4185/go.mod h1:FiNAH4ZV3gBg2Kwh89tzAEV2be7d5xI0vBa/VySYy3E=
-k8s.io/heapster v1.5.4 h1:lH2GCZdqRmUKDoyqRgiXbRmIcevaPYTvkguOuYUl8gQ=
-k8s.io/heapster v1.5.4/go.mod h1:h1uhptVXMwC8xtZBYsPXKVi8fpdlYkTs6k949KozGrM=
 k8s.io/klog/v2 v2.0.0/go.mod h1:PBfzABfn139FHAV07az/IF9Wp1bkk3vpT2XSJ76fSDE=
 k8s.io/klog/v2 v2.2.0/go.mod h1:Od+F08eJP+W3HUb4pSrPpgp9DGU4GzlpG/TmITuYh/Y=
 k8s.io/klog/v2 v2.60.1 h1:VW25q3bZx9uE3vvdL6M8ezOX79vA2Aq1nEWLqNQclHc=

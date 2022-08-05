@@ -45,19 +45,12 @@ func TestIntegrationManager_GetState(t *testing.T) {
 	cases := []struct {
 		info          string
 		apiServerHost string
-		heapsterHost  string
+		sidecarHost   string
 		expected      *api.IntegrationState
 		expectedErr   error
 	}{
 		{
-			"Server provided and using in-cluster heapster",
-			"http://127.0.0.1:8080", "", &api.IntegrationState{
-				Connected: false,
-				Error:     errors.NewInvalid("Get http://127.0.0.1:8080/api/v1/namespaces/kube-system/services/heapster/proxy/healthz: dial tcp 127.0.0.1:8080: connect: connection refused"),
-			}, nil,
-		},
-		{
-			"Server provided and using external heapster",
+			"Server provided and using external sidecar",
 			"http://127.0.0.1:8080", "http://127.0.0.1:8081", &api.IntegrationState{
 				Connected: false,
 				Error:     errors.NewInvalid("Get http://127.0.0.1:8081/healthz: dial tcp 127.0.0.1:8081: connect: connection refused"),
@@ -68,9 +61,9 @@ func TestIntegrationManager_GetState(t *testing.T) {
 	for _, c := range cases {
 		cManager := client.NewClientManager("", c.apiServerHost)
 		iManager := NewIntegrationManager(cManager)
-		iManager.Metric().ConfigureHeapster(c.heapsterHost)
+		iManager.Metric().ConfigureSidecar(c.sidecarHost)
 
-		state, err := iManager.GetState(api.HeapsterIntegrationID)
+		state, err := iManager.GetState(api.SidecarIntegrationID)
 		if !areErrorsEqual(err, c.expectedErr) {
 			t.Errorf("Test Case: %s. Expected error to be: %v, but got %v.",
 				c.info, c.expectedErr, err)
