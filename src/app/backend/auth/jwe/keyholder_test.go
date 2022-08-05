@@ -47,3 +47,8 @@ func TestRsaKeyHolder_Key(t *testing.T) {
 		t.Fatalf("Key(): Expected key not to be nil")
 	}
 }
+
+func TestRsaKeyHolder_Refresh(t *testing.T) {
+	holder := getKeyHolder()
+	holder.Refresh()
+}
