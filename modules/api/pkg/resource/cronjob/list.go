@@ -21,11 +21,11 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	client "k8s.io/client-go/kubernetes"
 
-	"github.com/kubernetes/dashboard/src/app/backend/api"
-	"github.com/kubernetes/dashboard/src/app/backend/errors"
-	metricapi "github.com/kubernetes/dashboard/src/app/backend/integration/metric/api"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
+	"k8s.io/dashboard/api/pkg/api"
+	"k8s.io/dashboard/api/pkg/errors"
+	metricapi "k8s.io/dashboard/api/pkg/integration/metric/api"
+	"k8s.io/dashboard/api/pkg/resource/common"
+	"k8s.io/dashboard/api/pkg/resource/dataselect"
 )
 
 // CronJobList contains a list of CronJobs in the cluster.
