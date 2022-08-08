@@ -23,6 +23,7 @@ import (
 	"log"
 	"net/http"
 	"sync"
+	"time"
 
 	restful "github.com/emicklei/go-restful/v3"
 	"gopkg.in/igm/sockjs-go.v2/sockjs"
@@ -306,5 +307,11 @@ func WaitForTerminal(k8sClient kubernetes.Interface, cfg *rest.Config, request *
 		}
 
 		terminalSessions.Close(sessionId, 1, "Process exited")
+
+	case <-time.After(10 * time.Second):
+		// Close chan and delete session when sockjs connection was timeout
+		close(terminalSessions.Get(sessionId).bound)
+		delete(terminalSessions.Sessions, sessionId)
+		return
 	}
 }
