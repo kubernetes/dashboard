@@ -79,7 +79,7 @@
     "@angular/platform-browser-dynamic": "13.3.10",
     "@angular/router": "13.3.10",
     "@swimlane/ngx-charts": "20.1.0",
-    "ace-builds": "1.5.3",
+    "ace-builds": "1.9.3",
     "core-js": "3.22.7",
     "crop-url": "4.0.1",
     "d3": "6.7.0",
