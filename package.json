@@ -106,7 +106,7 @@
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "13.3.7",
-    "@angular/cli": "13.3.7",
+    "@angular/cli": "14.1.2",
     "@angular/compiler-cli": "13.3.10",
     "@angular/language-service": "13.3.10",
     "@babel/core": "7.18.2",
