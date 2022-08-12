@@ -74,7 +74,7 @@
     "@angular/flex-layout": "13.0.0-beta.38",
     "@angular/forms": "13.3.10",
     "@angular/localize": "13.3.10",
-    "@angular/material": "13.3.8",
+    "@angular/material": "14.1.2",
     "@angular/platform-browser": "13.3.10",
     "@angular/platform-browser-dynamic": "13.3.10",
     "@angular/router": "13.3.10",
