@@ -29,12 +29,21 @@ import (
 
 // NodeList contains a list of nodes in the cluster.
 type NodeList struct {
-	ListMeta          api.ListMeta       `json:"listMeta"`
-	Nodes             []Node             `json:"nodes"`
-	CumulativeMetrics []metricapi.Metric `json:"cumulativeMetrics"`
+	ListMeta           api.ListMeta           `json:"listMeta"`
+	Nodes              []Node                 `json:"nodes"`
+	Condition          NodeCondition          `json:"condition"`
+	CumulativeMetrics  []metricapi.Metric     `json:"cumulativeMetrics"`
+	AllocatedResources NodeAllocatedResources `json:"allocatedResources"`
 
 	// List of non-critical errors, that occurred during resource retrieval.
 	Errors []error `json:"errors"`
+}
+
+// NodeCondition contains information about statuses.
+type NodeCondition struct {
+	True    int `json:"true"`
+	False   int `json:"false"`
+	Unknown int `json:"unknown"`
 }
 
 // Node is a presentation layer view of Kubernetes nodes. This means it is node plus additional
@@ -79,6 +88,21 @@ func toNodeList(client client.Interface, nodes []v1.Node, nonCriticalErrors []er
 
 		nodeList.Nodes = append(nodeList.Nodes, toNode(node, pods))
 	}
+
+	condition := NodeCondition{}
+	resources := NodeAllocatedResources{}
+	for _, node := range nodeList.Nodes {
+		if node.Ready == v1.ConditionTrue {
+			condition.True++
+		} else if node.Ready == v1.ConditionFalse {
+			condition.False++
+		} else {
+			condition.Unknown++
+		}
+		resources = addNodeAllocatedResources(resources, node)
+	}
+	nodeList.Condition = condition
+	nodeList.AllocatedResources = setNodeAllocatedFractions(resources)
 
 	cumulativeMetrics, err := metricPromises.GetMetrics()
 	nodeList.CumulativeMetrics = cumulativeMetrics

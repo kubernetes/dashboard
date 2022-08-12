@@ -12,16 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {Component} from '@angular/core';
+@use '../../../variables' as *;
 
-import {GroupedResourceList} from '@common/resources/groupedlist';
+.kd-graph-container {
+  flex: auto;
+  text-align: center;
+}
 
-@Component({
-  selector: 'kd-cluster',
-  templateUrl: './template.html',
-})
-export class ClusterComponent extends GroupedResourceList {
-  showClusterStatuses(): boolean {
-    return true;
-  }
+.kd-graph-title {
+  font-size: $subhead-font-size-base;
+  padding-bottom: 2 * $baseline-grid;
 }

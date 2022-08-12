@@ -74,6 +74,8 @@ limitations under the License.
        [hidden]="!hasCluster()"
        i18n>Cluster</div>
   <div>
+    <kd-cluster-statuses *ngIf="showClusterStatuses()"
+                         [hideable]="true"></kd-cluster-statuses>
     <kd-cluster-role-binding-list (onchange)="onListUpdate($event)"
                                   [hideable]="true"></kd-cluster-role-binding-list>
     <kd-cluster-role-list (onchange)="onListUpdate($event)"

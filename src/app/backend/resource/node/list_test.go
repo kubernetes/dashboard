@@ -42,8 +42,10 @@ func TestGetNodeList(t *testing.T) {
 				ListMeta: api.ListMeta{
 					TotalItems: 1,
 				},
-				Errors:            []error{},
-				CumulativeMetrics: make([]metricapi.Metric, 0),
+				Errors:             []error{},
+				Condition:          NodeCondition{Unknown: 1},
+				CumulativeMetrics:  make([]metricapi.Metric, 0),
+				AllocatedResources: NodeAllocatedResources{},
 				Nodes: []Node{{
 					ObjectMeta: api.ObjectMeta{Name: "test-node"},
 					TypeMeta:   api.TypeMeta{Kind: api.ResourceKindNode},

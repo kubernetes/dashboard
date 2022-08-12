@@ -69,6 +69,7 @@ import {ProxyComponent} from './proxy/component';
 import {ResourceQuotaListComponent} from './quotas/component';
 import {ClusterRoleListComponent} from './resourcelist/clusterrole/component';
 import {ClusterRoleBindingListComponent} from './resourcelist/clusterrolebinding/component';
+import {ClusterStatusComponent} from './clusterstatus/component';
 import {ConfigMapListComponent} from './resourcelist/configmap/component';
 import {CRDListComponent} from './resourcelist/crd/component';
 import {CRDObjectListComponent} from './resourcelist/crdobject/component';
@@ -129,6 +130,7 @@ const components = [
   PluginListComponent,
   ColumnComponent,
   ChipDialog,
+  ClusterStatusComponent,
   ContainerCardComponent,
   ConditionListComponent,
   CreatorCardComponent,
