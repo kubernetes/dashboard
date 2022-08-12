@@ -155,7 +155,7 @@ func GetNonduplicateInitContainerNames(podList []v1.Pod) []string {
 	return initContainerNames
 }
 
-//noStringInSlice checks if string in array
+// noStringInSlice checks if string in array
 func noStringInSlice(str string, array []string) bool {
 	for _, alreadystr := range array {
 		if alreadystr == str {

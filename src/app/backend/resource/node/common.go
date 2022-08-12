@@ -22,7 +22,7 @@ import (
 	v1 "k8s.io/api/core/v1"
 )
 
-//getContainerImages returns container image strings from the given node.
+// getContainerImages returns container image strings from the given node.
 func getContainerImages(node v1.Node) []string {
 	var containerImages []string
 	for _, image := range node.Status.Images {
