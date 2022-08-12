@@ -41,8 +41,4 @@ export class OverviewComponent extends GroupedResourceList {
   showWorkloadStatuses(): boolean {
     return Object.values(this.resourcesRatio).reduce((sum, ratioItems) => sum + ratioItems.length, 0) !== 0;
   }
-
-  showClusterStatuses(): boolean {
-    return true;
-  }
 }

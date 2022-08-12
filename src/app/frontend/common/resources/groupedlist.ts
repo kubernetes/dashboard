@@ -18,24 +18,20 @@ import {
   DeploymentList,
   JobList,
   Metric,
-  NodeList,
   PodList,
   ReplicaSetList,
   ReplicationControllerList,
   ResourceList,
   StatefulSetList,
 } from '@api/root.api';
-import {OnListChangeEvent, ResourcesRatio, ResourcesAllocation} from '@api/root.ui';
+import {OnListChangeEvent, ResourcesRatio} from '@api/root.ui';
 
 import {Helper, ResourceRatioModes} from '../../overview/helper';
-import {FormattedValue} from '@common/components/graph/helper';
 import {ListGroupIdentifier, ListIdentifier} from '../components/resourcelist/groupids';
 import {emptyResourcesRatio} from '../components/workloadstatus/component';
-import {emptyResourcesAllocation} from '../components/clusterstatus/component';
 
 export class GroupedResourceList {
   resourcesRatio: ResourcesRatio = emptyResourcesRatio;
-  resourcesAllocation: ResourcesAllocation = emptyResourcesAllocation;
   cumulativeMetrics: Metric[] = [];
 
   private readonly items_: {[id: string]: number} = {};
@@ -102,49 +98,6 @@ export class GroupedResourceList {
           jobs.listMeta.totalItems,
           ResourceRatioModes.Completable
         );
-        break;
-      }
-      case ListIdentifier.node: {
-        const nodes = list as NodeList;
-        const ready = nodes.condition.true;
-        const notready = nodes.condition.false;
-        const unknown = nodes.condition.unknown;
-        this.resourcesAllocation.nodeResources = [
-          {name: 'Ready: ' + ready, value: ready},
-          {name: 'NotReady: ' + notready, value: notready},
-          {name: 'Unknown: ' + unknown, value: unknown},
-        ];
-        const cpuLimits = nodes.allocatedResources.cpuLimits;
-        const cpuRequests = nodes.allocatedResources.cpuRequests - cpuLimits;
-        const cpuCapacity = nodes.allocatedResources.cpuCapacity - cpuLimits - cpuRequests;
-        const memoryLimits = nodes.allocatedResources.memoryLimits;
-        const memoryRequests = nodes.allocatedResources.memoryRequests - memoryLimits;
-        const memoryCapacity = nodes.allocatedResources.memoryCapacity - memoryLimits - memoryRequests;
-        const podAllocation = nodes.allocatedResources.allocatedPods;
-        const podCapacity = nodes.allocatedResources.podCapacity - podAllocation;
-        const cpuLimitsValue = FormattedValue.NewFormattedCoreValue(nodes.allocatedResources.cpuLimits);
-        const cpuRequestsValue = FormattedValue.NewFormattedCoreValue(nodes.allocatedResources.cpuRequests);
-        const cpuCapacityValue = FormattedValue.NewFormattedCoreValue(nodes.allocatedResources.cpuCapacity);
-        const memoryLimitsValue = FormattedValue.NewFormattedMemoryValue(nodes.allocatedResources.memoryLimits);
-        const memoryRequestsValue = FormattedValue.NewFormattedMemoryValue(nodes.allocatedResources.memoryRequests);
-        const memoryCapacityValue = FormattedValue.NewFormattedMemoryValue(nodes.allocatedResources.memoryCapacity);
-        const podAllocationValue = FormattedValue.NewFormattedPodValue(nodes.allocatedResources.allocatedPods);
-        const podCapacityValue = FormattedValue.NewFormattedPodValue(nodes.allocatedResources.podCapacity);
-        this.resourcesAllocation.cpuResources = [
-          {name: 'Capacity: ' + cpuCapacityValue.value + cpuCapacityValue.suffix, value: cpuCapacity},
-          {name: 'Requests: ' + cpuRequestsValue.value + cpuRequestsValue.suffix, value: cpuRequests},
-          {name: 'Limits: ' + cpuLimitsValue.value + cpuLimitsValue.suffix, value: cpuLimits},
-        ];
-        this.resourcesAllocation.memoryResources = [
-          {name: 'Capacity: ' + memoryCapacityValue.value + memoryCapacityValue.suffix, value: memoryCapacity},
-          {name: 'Requests: ' + memoryRequestsValue.value + memoryRequestsValue.suffix, value: memoryRequests},
-          {name: 'Limits: ' + memoryLimitsValue.value + memoryLimitsValue.suffix, value: memoryLimits},
-        ];
-        this.resourcesAllocation.podResources = [
-          {name: 'Capacity: ' + podCapacityValue.value + podCapacityValue.suffix, value: podCapacity},
-          {name: 'Allocation: ' + podAllocationValue.value + podAllocationValue.suffix, value: podAllocation},
-        ];
-        this.cumulativeMetrics = nodes.cumulativeMetrics;
         break;
       }
       case ListIdentifier.pod: {

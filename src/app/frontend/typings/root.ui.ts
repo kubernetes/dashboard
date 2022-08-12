@@ -113,18 +113,6 @@ export interface ResourcesRatio {
   statefulSetRatio: RatioItem[];
 }
 
-export interface ResourceItem {
-  name: string;
-  value: number;
-}
-
-export interface ResourcesAllocation {
-  nodeResources: ResourceItem[];
-  cpuResources: ResourceItem[];
-  memoryResources: ResourceItem[];
-  podResources: ResourceItem[];
-}
-
 export interface StateError {
   error: KdError;
 }
