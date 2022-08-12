@@ -54,17 +54,14 @@ body:
     id: kubernetesVersion
     attributes:
       label: Kubernetes version
+      description: Provide output of 'kubectl version' command.
     validations:
       required: true
 
-  - type: input
-    id: goVersion
+  - type: textarea
+    id: devEnvironment
     attributes:
-      label: Go version
-      description: Please provide 'go version' output. For developers only.
-
-  - type: input
-    id: nodeVersion
-    attributes:
-      label: Node.js version
-      description: Please provide 'node --version' output. For developers only.
+      label: Dev environment
+      description: |
+        Provide outputs of 'go version' and 'node --version' commands.
+        It's needed only if using development version of Kubernetes Dashboard.
