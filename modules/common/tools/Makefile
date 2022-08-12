@@ -7,7 +7,7 @@ GO_BINARY := $(shell which go)
 GO_MAJOR_VERSION = $(shell go version | cut -c 14- | cut -d' ' -f1 | cut -d'.' -f1)
 GO_MINOR_VERSION = $(shell go version | cut -c 14- | cut -d' ' -f1 | cut -d'.' -f2)
 MIN_GO_MAJOR_VERSION = 1
-MIN_GO_MINOR_VERSION = 18
+MIN_GO_MINOR_VERSION = 19
 
 .PHONY: install
 install: ensure-go install-license-eye install-air install-golangci-lint install-client-gen

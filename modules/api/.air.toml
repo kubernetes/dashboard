@@ -13,7 +13,7 @@
 # limitations under the License.
 #
 root = "."
-tmp_dir = "../../.dist/api"
+tmp_dir = "../../.dist/"
 
 [build]
   cmd = "make build"
@@ -23,7 +23,7 @@ tmp_dir = "../../.dist/api"
   exclude_regex = []
   exclude_unchanged = false
   follow_symlink = false
-  full_bin = "make run"
+  full_bin = "make run-air"
   include_ext = ["go"]
   kill_delay = "1s"
   log = "build-errors.log"

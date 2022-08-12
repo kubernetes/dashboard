@@ -12,9 +12,22 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+# Angular
 .angular/
-.sass-cache/
+
+# Coverage
 coverage/
+
+# Dependencies
 node_modules/
+
+# Generated version file
 src/environments/version.ts
-npm-debug.log
+
+# Yarn
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/sdks
+!.yarn/versions

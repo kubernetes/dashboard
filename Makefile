@@ -17,6 +17,8 @@ include $(WEB_DIRECTORY)/hack/include/config.mk
 #COVERAGE_DIRECTORY = $(ROOT_DIRECTORY)/coverage
 #MAIN_PACKAGE = github.com/kubernetes/dashboard/src/app/backend
 
+MAKEFLAGS += -j2
+
 # List of targets that should be executed before other targets
 PRE = --ensure-tools
 
@@ -42,6 +44,7 @@ serve: $(PRE)
 # URL: https://localhost:8080
 #
 # Note: Make sure that the port 8080 is free on your localhost
+# Note #2: Does not work with "kind".
 .PHONY: serve-https
 serve-https: $(PRE)
 	@$(MAKE) --no-print-directory -C $(MODULES_DIRECTORY) TARGET=serve-https
@@ -51,6 +54,7 @@ serve-https: $(PRE)
 # URL: https://localhost:4443
 #
 # Note: Make sure that the port 4443 is free on your localhost
+# Note #2: Does not work with "kind".
 .PHONY: run
 run: $(PRE) --ensure-compose-down --compose
 	@KUBECONFIG=$(KUBECONFIG) \

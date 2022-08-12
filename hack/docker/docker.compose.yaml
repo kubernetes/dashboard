@@ -26,8 +26,6 @@ services:
       --auto-generate-certificates
       --system-banner="${SYSTEM_BANNER:?}"
       --system-banner-severity=${SYSTEM_BANNER_SEVERITY:?}
-    volumes:
-      - ${KUBECONFIG:?}:${KUBECONFIG:?}
     tmpfs:
       - /tmp
     ports:
@@ -50,7 +48,7 @@ services:
     tmpfs:
       - /tmp
     ports:
-      - "9000:9000"
+      - "9001:9001"
   metrics-scraper:
     image: kubernetesui/metrics-scraper:v1.0.8
     command:
@@ -62,7 +60,7 @@ services:
     tmpfs:
       - /tmp
     ports:
-      - "8000:8000"
+      - "7001:7001"
 #  metrics-server:
 #    image: k8s.gcr.io/metrics-server/metrics-server:v0.6.1
 #    command:
