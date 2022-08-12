@@ -82,12 +82,4 @@ export class FormattedValue {
 
     return new FormattedValue(memoryBase, value, memoryPowerSuffixes);
   }
-
-  static NewFormattedPodValue(value: number): FormattedValue {
-    const intBase = 1;
-
-    const intPowerSuffixes = [''];
-
-    return new FormattedValue(intBase, value, intPowerSuffixes);
-  }
 }

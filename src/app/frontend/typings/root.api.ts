@@ -157,14 +157,6 @@ export interface NamespaceList extends ResourceList {
 export interface NodeList extends ResourceList {
   cumulativeMetrics: Metric[] | null;
   nodes: Node[];
-  condition: NodeCondition;
-  allocatedResources: NodeAllocatedResources;
-}
-
-export interface NodeCondition {
-  true: number;
-  false: number;
-  unknown: number;
 }
 
 export interface PersistentVolumeClaimList extends ResourceList {
