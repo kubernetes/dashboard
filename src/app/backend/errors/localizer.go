@@ -36,8 +36,9 @@ const (
 // partialsToErrorsMap map structure:
 // Key - unique partial string that can be used to differentiate error messages
 // Value - unique error code string that frontend can use to localize error message created using
-// 		   pattern MSG_<VIEW>_<CAUSE_OF_ERROR>_ERROR
-//		   <VIEW> - optional
+//
+//	pattern MSG_<VIEW>_<CAUSE_OF_ERROR>_ERROR
+//	<VIEW> - optional
 var partialsToErrorsMap = map[string]string{
 	"does not match the namespace":                               MsgDeployNamespaceMismatchError,
 	"empty namespace may not be set":                             MsgDeployEmptyNamespaceError,

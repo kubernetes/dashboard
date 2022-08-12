@@ -36,7 +36,7 @@ func TestTriggerCronJobWithInvalidName(t *testing.T) {
 	}
 }
 
-//create a job from a cronjob which has a 52 character name (max length)
+// create a job from a cronjob which has a 52 character name (max length)
 func TestTriggerCronJobWithLongName(t *testing.T) {
 	longName := strings.Repeat("test", 13)
 
