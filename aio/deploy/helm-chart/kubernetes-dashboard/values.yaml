@@ -20,7 +20,7 @@
 image:
   ## Repository for container
   repository: kubernetesui/dashboard
-  tag: v2.5.1
+  tag: v2.6.1
   pullPolicy: IfNotPresent
   pullSecrets: []
 
@@ -348,3 +348,7 @@ podSecurityPolicy:
 serviceMonitor:
   # Whether or not to create a Prometheus Operator service monitor.
   enabled: false
+  ## Here labels can be added to the serviceMonitor
+  labels: {}
+  ## Here annotations can be added to the serviceMonitor
+  annotations: {}

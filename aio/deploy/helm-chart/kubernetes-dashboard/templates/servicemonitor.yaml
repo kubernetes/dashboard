@@ -23,9 +23,15 @@ metadata:
     {{- if .Values.commonLabels }}
     {{- include "common.tplvalues.render" ( dict "value" .Values.commonLabels "context" $ ) | nindent 4 }}
     {{- end }}
+    {{- if .Values.serviceMonitor.labels }}
+    {{- include "common.tplvalues.render" ( dict "value" .Values.serviceMonitor.labels "context" $ ) | nindent 4 }}
+    {{- end }}
   annotations:
     {{- if .Values.commonAnnotations }}
     {{- include "common.tplvalues.render" ( dict "value" .Values.commonAnnotations "context" $ ) | nindent 4 }}
+    {{- end }}
+    {{- if .Values.serviceMonitor.annotations }}
+    {{- include "common.tplvalues.render" ( dict "value" .Values.serviceMonitor.annotations "context" $ ) | nindent 4 }}
     {{- end }}
 spec:
   endpoints:

@@ -33,10 +33,10 @@ ARCH=$(uname | awk '{print tolower($0)}')
 # Local cluster configuration (check start-cluster.sh script for more details).
 HEAPSTER_VERSION="v1.5.4"
 HEAPSTER_PORT=8082
-KIND_VERSION="v0.11.1"
-K8S_VERSION="v1.21.1"
+KIND_VERSION="v0.14.0"
+K8S_VERSION="v1.24.3"
 KIND_BIN=${CACHE_DIR}/kind-${KIND_VERSION}
-CODEGEN_VERSION="v0.24.0"
+CODEGEN_VERSION="v0.24.1"
 CODEGEN_BIN=${GOPATH}/pkg/mod/k8s.io/code-generator@${CODEGEN_VERSION}/generate-groups.sh
 
 # Setup logger.

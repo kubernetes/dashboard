@@ -119,7 +119,7 @@ var (
 	}
 )
 
-//func GetHorizontalPodAutoscalerList(client k8sClient.Interface, nsQuery *api.NamespaceQuery) (*HorizontalPodAutoscalerList, error) {
+// func GetHorizontalPodAutoscalerList(client k8sClient.Interface, nsQuery *api.NamespaceQuery) (*HorizontalPodAutoscalerList, error) {
 func TestGetHorizontalPodAutoscalerList(t *testing.T) {
 	cases := []struct {
 		expectedActions []string
@@ -165,7 +165,7 @@ func TestGetHorizontalPodAutoscalerList(t *testing.T) {
 	}
 }
 
-//func GetHorizontalPodAutoscalerListForResource(client k8sClient.Interface, namespace, kind, name string) (*HorizontalPodAutoscalerList, error) {
+// func GetHorizontalPodAutoscalerListForResource(client k8sClient.Interface, namespace, kind, name string) (*HorizontalPodAutoscalerList, error) {
 func TestGetHorizontalPodAutoscalerListForResource(t *testing.T) {
 	cases := []struct {
 		kind, name      string

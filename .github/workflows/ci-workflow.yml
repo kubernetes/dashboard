@@ -56,7 +56,7 @@ jobs:
       - name: Setup Go
         uses: actions/setup-go@b22fbbc2921299758641fab08929b4ac52b32923 # v2
         with:
-          go-version: 1.17.0
+          go-version: 1.19.0
 
       - name: Setup NodeJS
         uses: actions/setup-node@17f8bd926464a1afa4c6a11669539e9c1ba77048 # v2.1.2
@@ -74,7 +74,7 @@ jobs:
       - name: Install Dependencies
         shell: bash
         run: |
-          [ ! -d "node_modules" ] && npm ci || node aio/scripts/version.mjs && command -v golangci-lint >/dev/null 2>&1 || { curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $(go env GOPATH)/bin v1.41.1; } && go mod download
+          [ ! -d "node_modules" ] && npm ci || node aio/scripts/version.mjs && command -v golangci-lint >/dev/null 2>&1 || { curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $(go env GOPATH)/bin v1.48.0; } && go mod download
 
       - name: Check Code
         shell: bash
@@ -101,7 +101,7 @@ jobs:
       - name: Setup Go
         uses: actions/setup-go@b22fbbc2921299758641fab08929b4ac52b32923 # v2
         with:
-          go-version: 1.17.0
+          go-version: 1.19.0
 
       - name: Setup NodeJS
         uses: actions/setup-node@17f8bd926464a1afa4c6a11669539e9c1ba77048 # v2.1.2
@@ -120,7 +120,7 @@ jobs:
         shell: bash
         run: |
           export GOPATH=$(go env GOPATH)/bin
-          [ ! -d "node_modules" ] && npm ci || node aio/scripts/version.mjs && command -v golangci-lint >/dev/null 2>&1 || { curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $(go env GOPATH)/bin v1.41.1; } && go mod download
+          [ ! -d "node_modules" ] && npm ci || node aio/scripts/version.mjs && command -v golangci-lint >/dev/null 2>&1 || { curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $(go env GOPATH)/bin v1.48.0; } && go mod download
 
       - name: Run Frontend Unit Tests
         run: make coverage-frontend
@@ -156,7 +156,7 @@ jobs:
       - name: Setup Go
         uses: actions/setup-go@b22fbbc2921299758641fab08929b4ac52b32923 # v2
         with:
-          go-version: 1.17.0
+          go-version: 1.19.0
 
       - name: Setup NodeJS
         uses: actions/setup-node@17f8bd926464a1afa4c6a11669539e9c1ba77048 # v2.1.2
@@ -176,7 +176,7 @@ jobs:
       - name: Install Dependencies
         shell: bash
         run: |
-          [ ! -d "node_modules" ] && npm ci && npm install cypress || node aio/scripts/version.mjs && command -v golangci-lint >/dev/null 2>&1 || { curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $(go env GOPATH)/bin v1.41.1; } && go mod download
+          [ ! -d "node_modules" ] && npm ci && npm install cypress || node aio/scripts/version.mjs && command -v golangci-lint >/dev/null 2>&1 || { curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $(go env GOPATH)/bin v1.48.0; } && go mod download
 
       - name: Run E2E Tests
         run: make e2e

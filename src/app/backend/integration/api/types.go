@@ -22,8 +22,7 @@ type IntegrationID string
 
 // Integration app IDs should be registered in this block.
 const (
-	HeapsterIntegrationID IntegrationID = "heapster"
-	SidecarIntegrationID  IntegrationID = "sidecar"
+	SidecarIntegrationID IntegrationID = "sidecar"
 )
 
 // Integration represents application integrated into the dashboard. Every application

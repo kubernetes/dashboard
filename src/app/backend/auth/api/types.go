@@ -106,10 +106,10 @@ type TokenManager interface {
 }
 
 // Authenticator represents authentication methods supported by Dashboard. Currently supported types are:
-//    - Token based - Any bearer token accepted by apiserver
-//	  - Basic - Username and password based authentication. Requires that apiserver has basic auth enabled also
-//    - Kubeconfig based - Authenticates user based on kubeconfig file. Only token/basic modes are supported within
-// 		the kubeconfig file.
+//   - Token based - Any bearer token accepted by apiserver
+//   - Basic - Username and password based authentication. Requires that apiserver has basic auth enabled also
+//   - Kubeconfig based - Authenticates user based on kubeconfig file. Only token/basic modes are supported within
+//     the kubeconfig file.
 type Authenticator interface {
 	// GetAuthInfo returns filled AuthInfo structure that can be used for K8S api client creation.
 	GetAuthInfo() (api.AuthInfo, error)

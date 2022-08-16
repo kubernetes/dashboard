@@ -20,17 +20,9 @@ import (
 	"strconv"
 	"strings"
 
-	v1 "k8s.io/api/core/v1"
-
-	"github.com/kubernetes/dashboard/src/app/backend/resource/networkpolicy"
-
-	"github.com/kubernetes/dashboard/src/app/backend/handler/parser"
-	"github.com/kubernetes/dashboard/src/app/backend/resource/customresourcedefinition/types"
-
-	"github.com/kubernetes/dashboard/src/app/backend/plugin"
-
 	"github.com/emicklei/go-restful/v3"
 	"golang.org/x/net/xsrftoken"
+	v1 "k8s.io/api/core/v1"
 	"k8s.io/apimachinery/pkg/runtime"
 	"k8s.io/client-go/tools/remotecommand"
 
@@ -39,7 +31,9 @@ import (
 	authApi "github.com/kubernetes/dashboard/src/app/backend/auth/api"
 	clientapi "github.com/kubernetes/dashboard/src/app/backend/client/api"
 	"github.com/kubernetes/dashboard/src/app/backend/errors"
+	"github.com/kubernetes/dashboard/src/app/backend/handler/parser"
 	"github.com/kubernetes/dashboard/src/app/backend/integration"
+	"github.com/kubernetes/dashboard/src/app/backend/plugin"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/clusterrole"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/clusterrolebinding"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/common"
@@ -48,6 +42,7 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/controller"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/cronjob"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/customresourcedefinition"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/customresourcedefinition/types"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/daemonset"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/dataselect"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/deployment"
@@ -58,6 +53,7 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/resource/job"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/logs"
 	ns "github.com/kubernetes/dashboard/src/app/backend/resource/namespace"
+	"github.com/kubernetes/dashboard/src/app/backend/resource/networkpolicy"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/node"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/persistentvolume"
 	"github.com/kubernetes/dashboard/src/app/backend/resource/persistentvolumeclaim"

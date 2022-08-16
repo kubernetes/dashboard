@@ -1,6 +1,6 @@
 module github.com/kubernetes/dashboard
 
-go 1.17
+go 1.19
 
 require (
 	github.com/docker/distribution v2.8.1+incompatible
@@ -18,7 +18,6 @@ require (
 	k8s.io/apiextensions-apiserver v0.24.1
 	k8s.io/apimachinery v0.24.1
 	k8s.io/client-go v0.24.1
-	k8s.io/heapster v1.5.4
 )
 
 require (

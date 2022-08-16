@@ -122,6 +122,21 @@ limitations under the License.
            i18n>Architecture</div>
       <div value>{{ node?.nodeInfo.architecture }}</div>
     </kd-property>
+    <kd-property *ngIf="node?.allocatedResources.cpuCapacity">
+      <div key
+           i18n>CPU capacity</div>
+      <div value>{{ node?.allocatedResources.cpuCapacity | kdCores }}</div>
+    </kd-property>
+    <kd-property *ngIf="node?.allocatedResources.memoryCapacity">
+      <div key
+           i18n>Memory capacity</div>
+      <div value>{{ node?.allocatedResources.memoryCapacity | kdMemory }}</div>
+    </kd-property>
+    <kd-property *ngIf="node?.allocatedResources.podCapacity">
+      <div key
+           i18n>Pods capacity</div>
+      <div value>{{ node?.allocatedResources.podCapacity }}</div>
+    </kd-property>
   </div>
 </kd-card>
 

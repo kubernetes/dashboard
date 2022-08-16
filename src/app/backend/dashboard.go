@@ -37,6 +37,7 @@ import (
 	"github.com/kubernetes/dashboard/src/app/backend/client"
 	clientapi "github.com/kubernetes/dashboard/src/app/backend/client/api"
 	"github.com/kubernetes/dashboard/src/app/backend/handler"
+	"github.com/kubernetes/dashboard/src/app/backend/health"
 	"github.com/kubernetes/dashboard/src/app/backend/integration"
 	integrationapi "github.com/kubernetes/dashboard/src/app/backend/integration/api"
 	"github.com/kubernetes/dashboard/src/app/backend/settings"
@@ -110,6 +111,9 @@ func main() {
 	systemBannerManager := systembanner.NewSystemBannerManager(args.Holder.GetSystemBanner(),
 		args.Holder.GetSystemBannerSeverity())
 
+	// Init health manager
+	healthManager := health.NewHealthManager(clientManager)
+
 	// Init integrations
 	integrationManager := integration.NewIntegrationManager(clientManager)
 
@@ -117,9 +121,6 @@ func main() {
 	case "sidecar":
 		integrationManager.Metric().ConfigureSidecar(args.Holder.GetSidecarHost()).
 			EnableWithRetry(integrationapi.SidecarIntegrationID, time.Duration(args.Holder.GetMetricClientCheckPeriod()))
-	case "heapster":
-		integrationManager.Metric().ConfigureHeapster(args.Holder.GetHeapsterHost()).
-			EnableWithRetry(integrationapi.HeapsterIntegrationID, time.Duration(args.Holder.GetMetricClientCheckPeriod()))
 	case "none":
 		log.Print("no metrics provider selected, will not check metrics.")
 	default:
@@ -138,6 +139,8 @@ func main() {
 	if err != nil {
 		handleFatalInitError(err)
 	}
+
+	healthHandler := health.NewHealthHandler(healthManager)
 
 	var servingCerts []tls.Certificate
 	if args.Holder.GetAutoGenerateCertificates() {
@@ -161,6 +164,7 @@ func main() {
 
 	// Run a HTTP server that serves static public files from './public' and handles API calls.
 	http.Handle("/", handler.MakeGzipHandler(handler.CreateLocaleHandler()))
+	http.Handle("/health", handler.AppHandler(healthHandler.Install))
 	http.Handle("/api/", apiHandler)
 	http.Handle("/config", handler.AppHandler(handler.ConfigHandler))
 	http.Handle("/api/sockjs/", handler.CreateAttachHandler("/api/sockjs"))

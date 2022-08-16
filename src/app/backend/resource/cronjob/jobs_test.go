@@ -19,11 +19,12 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/kubernetes/dashboard/src/app/backend/resource/cronjob"
-	batch "k8s.io/api/batch/v1beta1"
+	batch "k8s.io/api/batch/v1"
 	"k8s.io/apimachinery/pkg/api/errors"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/client-go/kubernetes/fake"
+
+	"github.com/kubernetes/dashboard/src/app/backend/resource/cronjob"
 )
 
 func TestTriggerCronJobWithInvalidName(t *testing.T) {
@@ -35,7 +36,7 @@ func TestTriggerCronJobWithInvalidName(t *testing.T) {
 	}
 }
 
-//create a job from a cronjob which has a 52 character name (max length)
+// create a job from a cronjob which has a 52 character name (max length)
 func TestTriggerCronJobWithLongName(t *testing.T) {
 	longName := strings.Repeat("test", 13)
 
