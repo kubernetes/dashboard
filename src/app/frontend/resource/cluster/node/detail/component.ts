@@ -40,6 +40,9 @@ export class NodeDetailComponent implements OnInit, OnDestroy {
   cpuLabel = 'Cores';
   cpuCapacity = 0;
   cpuAllocation: RatioItem[] = [];
+  ephemeralStorageLabel = 'B';
+  ephemeralStorageCapacity = 0;
+  ephemeralStorageAllocation: RatioItem[] = [];
   memoryLabel = 'B';
   memoryCapacity = 0;
   memoryAllocation: RatioItem[] = [];
@@ -86,6 +89,16 @@ export class NodeDetailComponent implements OnInit, OnDestroy {
     const cpuRequestsValue = FormattedValue.NewFormattedCoreValue(this.node.allocatedResources.cpuRequests);
     const cpuCapacityValue = FormattedValue.NewFormattedCoreValue(this.node.allocatedResources.cpuCapacity);
 
+    const ephemeralStorageLimitsValue = FormattedValue.NewFormattedStorageValue(
+      this.node.allocatedResources.ephemeralStorageLimits
+    );
+    const ephemeralStorageRequestsValue = FormattedValue.NewFormattedStorageValue(
+      this.node.allocatedResources.ephemeralStorageRequests
+    );
+    const ephemeralStorageCapacityValue = FormattedValue.NewFormattedStorageValue(
+      this.node.allocatedResources.ephemeralStorageCapacity
+    );
+
     const memoryLimitsValue = FormattedValue.NewFormattedMemoryValue(this.node.allocatedResources.memoryLimits);
     const memoryRequestsValue = FormattedValue.NewFormattedMemoryValue(this.node.allocatedResources.memoryRequests);
     const memoryCapacityValue = FormattedValue.NewFormattedMemoryValue(this.node.allocatedResources.memoryCapacity);
@@ -100,6 +113,20 @@ export class NodeDetailComponent implements OnInit, OnDestroy {
       cpuLimitsValue.normalize(suffix);
       cpuRequestsValue.normalize(suffix);
       cpuCapacityValue.normalize(suffix);
+    }
+
+    if (
+      ephemeralStorageLimitsValue.suffixPower !== ephemeralStorageRequestsValue.suffixPower ||
+      ephemeralStorageLimitsValue.suffixPower !== ephemeralStorageCapacityValue.suffixPower
+    ) {
+      const suffix =
+        ephemeralStorageLimitsValue.suffixPower < ephemeralStorageRequestsValue.suffixPower
+          ? ephemeralStorageLimitsValue.suffix
+          : ephemeralStorageRequestsValue.suffix;
+
+      ephemeralStorageLimitsValue.normalize(suffix);
+      ephemeralStorageRequestsValue.normalize(suffix);
+      ephemeralStorageCapacityValue.normalize(suffix);
     }
 
     if (
@@ -121,6 +148,14 @@ export class NodeDetailComponent implements OnInit, OnDestroy {
     this.cpuAllocation = [
       {name: 'Requests', value: cpuRequestsValue.value},
       {name: 'Limits', value: cpuLimitsValue.value},
+    ];
+
+    this.ephemeralStorageLabel =
+      ephemeralStorageRequestsValue.suffix.length > 0 ? `${ephemeralStorageRequestsValue.suffix}B` : 'B';
+    this.ephemeralStorageCapacity = ephemeralStorageCapacityValue.value;
+    this.ephemeralStorageAllocation = [
+      {name: 'Requests', value: ephemeralStorageRequestsValue.value},
+      {name: 'Limits', value: ephemeralStorageLimitsValue.value},
     ];
 
     this.memoryLabel = memoryRequestsValue.suffix.length > 0 ? `${memoryRequestsValue.suffix}B` : 'B';

@@ -137,6 +137,11 @@ limitations under the License.
            i18n>Pods capacity</div>
       <div value>{{ node?.allocatedResources.podCapacity }}</div>
     </kd-property>
+    <kd-property *ngIf="node?.allocatedResources.ephemeralStorageCapacity">
+      <div key
+           i18n>Ephemeral storage capacity</div>
+      <div value>{{ node?.allocatedResources.ephemeralStorageCapacity | kdMemory }}</div>
+    </kd-property>
   </div>
 </kd-card>
 
@@ -155,7 +160,7 @@ limitations under the License.
                              [designatedTotal]="cpuCapacity"
                              [customColors]="customColors"
                              [animations]="false"
-                             [view]="[500, 250]"
+                             [view]="[360, 180]"
                              [label]="cpuLabel">
         </ngx-charts-pie-grid>
       </div>
@@ -168,7 +173,7 @@ limitations under the License.
                              [designatedTotal]="memoryCapacity"
                              [customColors]="customColors"
                              [animations]="false"
-                             [view]="[500, 250]"
+                             [view]="[360, 180]"
                              [label]="memoryLabel">
         </ngx-charts-pie-grid>
       </div>
@@ -181,8 +186,21 @@ limitations under the License.
                              [designatedTotal]="node?.allocatedResources.podCapacity"
                              [customColors]="customColors"
                              [animations]="false"
-                             [view]="[250, 250]"
+                             [view]="[180, 180]"
                              label="Pods">
+        </ngx-charts-pie-grid>
+      </div>
+      <div fxLayoutAlign="center center"
+           fxLayout="column"
+           fxFlex>
+        <div class="kd-h1"
+             i18n>Ephemeral storage</div>
+        <ngx-charts-pie-grid [results]="ephemeralStorageAllocation"
+                             [designatedTotal]="ephemeralStorageCapacity"
+                             [customColors]="customColors"
+                             [animations]="false"
+                             [view]="[360, 180]"
+                             [label]="ephemeralStorageLabel">
         </ngx-charts-pie-grid>
       </div>
     </div>

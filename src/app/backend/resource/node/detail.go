@@ -51,6 +51,22 @@ type NodeAllocatedResources struct {
 	// CPUCapacity is specified node CPU capacity in milicores.
 	CPUCapacity int64 `json:"cpuCapacity"`
 
+	// EphemeralStorageRequests is ephemeral storage in bytes.
+	EphemeralStorageRequests int64 `json:"ephemeralStorageRequests"`
+
+	// EphemeralStorageRequestsFraction is a fraction of ephemeral storage, that is allocated.
+	EphemeralStorageRequestsFraction float64 `json:"ephemeralStorageRequestsFraction"`
+
+	// EphemeralStorageLimits is defined ephemeral storage limit.
+	EphemeralStorageLimits int64 `json:"ephemeralStorageLimits"`
+
+	// EphemeralStorageLimitsFraction is a fraction of defined ephemeral storage limit, can be over 100%, i.e.
+	// overcommitted.
+	EphemeralStorageLimitsFraction float64 `json:"ephemeralStorageLimitsFraction"`
+
+	// EphemeralStorageCapacity is specified node ephemeral storage capacity in bytes.
+	EphemeralStorageCapacity int64 `json:"ephemeralStorageCapacity"`
+
 	// MemoryRequests is a fraction of memory, that is allocated.
 	MemoryRequests int64 `json:"memoryRequests"`
 
@@ -203,6 +219,15 @@ func getNodeAllocatedResources(node v1.Node, podList *v1.PodList) (NodeAllocated
 		cpuLimitsFraction = float64(cpuLimits.MilliValue()) / capacity * 100
 	}
 
+	ephemeralStorageRequests, ephemeralStorageLimits :=
+		reqs[v1.ResourceEphemeralStorage], limits[v1.ResourceEphemeralStorage]
+
+	var ephemeralStorageRequestsFraction, ephemeralStorageLimitsFraction float64 = 0, 0
+	if capacity := float64(node.Status.Allocatable.StorageEphemeral().MilliValue()); capacity > 0 {
+		ephemeralStorageRequestsFraction = float64(ephemeralStorageRequests.MilliValue()) / capacity * 100
+		ephemeralStorageLimitsFraction = float64(ephemeralStorageLimits.MilliValue()) / capacity * 100
+	}
+
 	var memoryRequestsFraction, memoryLimitsFraction float64 = 0, 0
 	if capacity := float64(node.Status.Allocatable.Memory().MilliValue()); capacity > 0 {
 		memoryRequestsFraction = float64(memoryRequests.MilliValue()) / capacity * 100
@@ -216,19 +241,24 @@ func getNodeAllocatedResources(node v1.Node, podList *v1.PodList) (NodeAllocated
 	}
 
 	return NodeAllocatedResources{
-		CPURequests:            cpuRequests.MilliValue(),
-		CPURequestsFraction:    cpuRequestsFraction,
-		CPULimits:              cpuLimits.MilliValue(),
-		CPULimitsFraction:      cpuLimitsFraction,
-		CPUCapacity:            node.Status.Allocatable.Cpu().MilliValue(),
-		MemoryRequests:         memoryRequests.Value(),
-		MemoryRequestsFraction: memoryRequestsFraction,
-		MemoryLimits:           memoryLimits.Value(),
-		MemoryLimitsFraction:   memoryLimitsFraction,
-		MemoryCapacity:         node.Status.Allocatable.Memory().Value(),
-		AllocatedPods:          len(podList.Items),
-		PodCapacity:            podCapacity,
-		PodFraction:            podFraction,
+		CPURequests:                      cpuRequests.MilliValue(),
+		CPURequestsFraction:              cpuRequestsFraction,
+		CPULimits:                        cpuLimits.MilliValue(),
+		CPULimitsFraction:                cpuLimitsFraction,
+		CPUCapacity:                      node.Status.Allocatable.Cpu().MilliValue(),
+		EphemeralStorageRequests:         ephemeralStorageRequests.Value(),
+		EphemeralStorageRequestsFraction: ephemeralStorageRequestsFraction,
+		EphemeralStorageLimits:           ephemeralStorageLimits.Value(),
+		EphemeralStorageLimitsFraction:   ephemeralStorageLimitsFraction,
+		EphemeralStorageCapacity:         node.Status.Allocatable.StorageEphemeral().Value(),
+		MemoryRequests:                   memoryRequests.Value(),
+		MemoryRequestsFraction:           memoryRequestsFraction,
+		MemoryLimits:                     memoryLimits.Value(),
+		MemoryLimitsFraction:             memoryLimitsFraction,
+		MemoryCapacity:                   node.Status.Allocatable.Memory().Value(),
+		AllocatedPods:                    len(podList.Items),
+		PodCapacity:                      podCapacity,
+		PodFraction:                      podFraction,
 	}, nil
 }
 

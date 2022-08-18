@@ -1038,6 +1038,11 @@ export interface NodeAllocatedResources {
   cpuLimits: number;
   cpuLimitsFraction: number;
   cpuCapacity: number;
+  ephemeralStorageRequests: number;
+  ephemeralStorageRequestsFraction: number;
+  ephemeralStorageLimits: number;
+  ephemeralStorageLimitsFraction: number;
+  ephemeralStorageCapacity: number;
   memoryRequests: number;
   memoryRequestsFraction: number;
   memoryLimits: number;

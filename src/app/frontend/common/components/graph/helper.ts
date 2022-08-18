@@ -82,4 +82,14 @@ export class FormattedValue {
 
     return new FormattedValue(memoryBase, value, memoryPowerSuffixes);
   }
+
+  static NewFormattedStorageValue(value: number): FormattedValue {
+    /** Base for binary prefixes */
+    const storageBase = 1024;
+
+    /** Names of the suffixes where I-th name is for base^I suffix. */
+    const storagePowerSuffixes = ['', 'Ki', 'Mi', 'Gi', 'Ti', 'Pi'];
+
+    return new FormattedValue(storageBase, value, storagePowerSuffixes);
+  }
 }
