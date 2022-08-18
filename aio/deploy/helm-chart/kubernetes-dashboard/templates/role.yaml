@@ -46,4 +46,7 @@ rules:
     resources: ["services/proxy"]
     resourceNames: ["heapster", "http:heapster:", "https:heapster:", "dashboard-metrics-scraper", "http:dashboard-metrics-scraper"]
     verbs: ["get"]
+  {{- with .Values.rbac.roleAdditionalRules -}}
+  {{ toYaml . | nindent 2 }}
+  {{- end }}
 {{- end -}}
