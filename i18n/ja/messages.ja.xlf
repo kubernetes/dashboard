@@ -1925,10 +1925,6 @@
         <source>Pods</source>
         <target>ポッド</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/frontend/common/components/clusterstatus/template.html</context>
-          <context context-type="linenumber">89</context>
-        </context-group>
-        <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/creator/template.html</context>
           <context context-type="linenumber">62</context>
         </context-group>
@@ -2587,10 +2583,6 @@
         <source>Nodes</source>
         <target>ノード</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/frontend/common/components/clusterstatus/template.html</context>
-          <context context-type="linenumber">38</context>
-        </context-group>
-        <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/resourcelist/node/template.html</context>
           <context context-type="linenumber">24</context>
         </context-group>
@@ -3021,14 +3013,6 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/limits/template.html</context>
           <context context-type="linenumber">52</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="6920224523921471777" datatype="html">
-        <source>Cluster Status</source>
-        <target state="new">Cluster Status</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/frontend/common/components/clusterstatus/template.html</context>
-          <context context-type="linenumber">20</context>
         </context-group>
       </trans-unit>
       <trans-unit id="7585826646011739428" datatype="html">
@@ -5951,10 +5935,6 @@
         <source>CPU</source>
         <target state="new">CPU</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/frontend/common/components/clusterstatus/template.html</context>
-          <context context-type="linenumber">55</context>
-        </context-group>
-        <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/resource/cluster/node/detail/template.html</context>
           <context context-type="linenumber">153</context>
         </context-group>
@@ -5962,10 +5942,6 @@
       <trans-unit id="1548129644093494406" datatype="html">
         <source>Memory</source>
         <target state="new">Memory</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/frontend/common/components/clusterstatus/template.html</context>
-          <context context-type="linenumber">72</context>
-        </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/resource/cluster/node/detail/template.html</context>
           <context context-type="linenumber">166</context>
