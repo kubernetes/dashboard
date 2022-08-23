@@ -97,7 +97,7 @@
     "rxjs-compat": "6.6.7",
     "sockjs-client": "1.6.1",
     "strip-ansi": "6.0.1",
-    "systemjs": "6.12.1",
+    "systemjs": "6.12.3",
     "tslib": "2.4.0",
     "web-animations-js": "2.3.2",
     "xterm": "4.18.0",
