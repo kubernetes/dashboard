@@ -33,28 +33,15 @@ jobs:
       run:
         working-directory: modules/web
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
+      - uses: actions/checkout@v3
         with:
           fetch-depth: 0
-      - name: Setup Node.js
-        uses: actions/setup-node@v3
+      - uses: actions/setup-node@v3
         with:
           node-version: 16.15.0
-      - name: Cache Node.js modules
-        uses: actions/cache@v3
-        env:
-          cache-name: cache-node-modules
-        with:
-          path: node_modules
-          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
-      - name: Install Dependencies
-        shell: bash
-        run: |
-          [ ! -d "node_modules" ] && npm ci || node hack/version.mjs
-      - name: Check Code
-        shell: bash
-        run: npm run check
+      - run: yarn
+      - run: node hack/version.mjs
+      - run: npm run check
 
   unit:
     name: Unit tests with coverage
@@ -67,29 +54,16 @@ jobs:
       run:
         working-directory: modules/web
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
+      - uses: actions/checkout@v3
         with:
           fetch-depth: 0
-      - name: Setup Node.js
-        uses: actions/setup-node@v3
+      - uses: actions/setup-node@v3
         with:
           node-version: 16.15.0
-      - name: Cache Node.js modules
-        uses: actions/cache@v3
-        env:
-          cache-name: cache-node-modules
-        with:
-          path: node_modules
-          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
-      - name: Install dependencies
-        shell: bash
-        run: |
-          [ ! -d "node_modules" ] && npm ci && node hack/version.mjs
-      - name: Run unit tests with coverage
-        run: make coverage-frontend
-      - name: Upload coverage
-        uses: codecov/codecov-action@v2
+      - run: yarn
+      - run: node hack/version.mjs
+      - run: make coverage-frontend
+      - uses: codecov/codecov-action@v2
         with:
           name: api-coverage
           files: ./coverage
