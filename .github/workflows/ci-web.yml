@@ -62,9 +62,9 @@ jobs:
           node-version: 16.15.0
       - run: yarn
       - run: node hack/version.mjs
-      - run: make coverage-frontend
+      - run: yarn coverage
       - uses: codecov/codecov-action@v2
         with:
-          name: api-coverage
-          files: ./coverage
+          name: web-coverage
+          directory: ./modules/web/coverage/
           fail_ci_if_error: true

@@ -31,8 +31,7 @@ describe('AboutComponent', () => {
   let configService: ConfigService;
   let element: HTMLElement;
 
-  // set the predefined values
-  const copyrightYear = 2019;
+  const copyrightYear = 2022;
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
@@ -54,10 +53,8 @@ describe('AboutComponent', () => {
     const config: AppConfig = {serverTime: new Date().getTime()};
     configRequest.flush(config);
 
-    // set the fixed values
     component.latestCopyrightYear = copyrightYear;
 
-    // grab the HTML element
     element = fixture.debugElement.query(By.css('kd-card')).nativeElement;
   }));
 
