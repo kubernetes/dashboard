@@ -43,6 +43,9 @@ jobs:
         uses: actions/setup-go@v3
         with:
           go-version: 1.19
+      - name: Ensure tools
+        run: make install
+        working-directory: modules/common/tools
       - name: Verify codegen
         run: |
           export GOPATH=$(go env GOPATH)
@@ -89,5 +92,5 @@ jobs:
         uses: codecov/codecov-action@v2
         with:
           name: api-coverage
-          files: ./coverage.out
+          files: ./modules/api/coverage.out
           fail_ci_if_error: true
