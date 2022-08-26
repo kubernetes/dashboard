@@ -838,7 +838,7 @@
         </context-group>
       </trans-unit>
       <trans-unit id="6494596911805287915" datatype="html">
-        <source>Items: </source>
+        <source>Items: </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/condition/template.html</context>
           <context context-type="linenumber">26</context>
@@ -1163,7 +1163,7 @@
         </context-group>
       </trans-unit>
       <trans-unit id="1321877744367304738" datatype="html">
-        <source>Image: </source>
+        <source>Image: </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/container/template.html</context>
           <context context-type="linenumber">19</context>
@@ -1498,7 +1498,7 @@
         </context-group>
       </trans-unit>
       <trans-unit id="6915193719482636823" datatype="html">
-        <source>Name: </source>
+        <source>Name: </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/creator/template.html</context>
           <context context-type="linenumber">22</context>
@@ -1513,14 +1513,14 @@
         </context-group>
       </trans-unit>
       <trans-unit id="4588432762946433765" datatype="html">
-        <source>Kind: </source>
+        <source>Kind: </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/creator/template.html</context>
           <context context-type="linenumber">29</context>
         </context-group>
       </trans-unit>
       <trans-unit id="4482298116905997082" datatype="html">
-        <source>Age: </source>
+        <source>Age: </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/creator/template.html</context>
           <context context-type="linenumber">36</context>
@@ -2132,7 +2132,7 @@
         </context-group>
       </trans-unit>
       <trans-unit id="7546647490531252189" datatype="html">
-        <source>Namespace: </source>
+        <source>Namespace: </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/objectmeta/template.html</context>
           <context context-type="linenumber">29</context>
@@ -2279,35 +2279,35 @@
         </context-group>
       </trans-unit>
       <trans-unit id="3569677708978335155" datatype="html">
-        <source>Desired: </source>
+        <source>Desired: </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/podstatus/template.html</context>
           <context context-type="linenumber">53</context>
         </context-group>
       </trans-unit>
       <trans-unit id="5103064776441485656" datatype="html">
-        <source>Running: </source>
+        <source>Running: </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/podstatus/template.html</context>
           <context context-type="linenumber">26</context>
         </context-group>
       </trans-unit>
       <trans-unit id="858785118348238543" datatype="html">
-        <source>Succeeded: </source>
+        <source>Succeeded: </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/podstatus/template.html</context>
           <context context-type="linenumber">33</context>
         </context-group>
       </trans-unit>
       <trans-unit id="6239075439253810960" datatype="html">
-        <source>Pending: </source>
+        <source>Pending: </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/podstatus/template.html</context>
           <context context-type="linenumber">40</context>
         </context-group>
       </trans-unit>
       <trans-unit id="1828068287723658160" datatype="html">
-        <source>Failed: </source>
+        <source>Failed: </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/podstatus/template.html</context>
           <context context-type="linenumber">47</context>
@@ -3396,7 +3396,7 @@
         </context-group>
       </trans-unit>
       <trans-unit id="2320200316076079587" datatype="html">
-        <source><x id="START_TAG_SPAN" ctype="x-span" equiv-text="&quot;[\uFFFD#5\uFFFD|\uFFFD#8\uFFFD]&quot;"/>Are you sure you want to delete <x id="INTERPOLATION" equiv-text="&quot;\uFFFD0\uFFFD&quot;"/> <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&quot;[\uFFFD#6\uFFFD|\uFFFD#2:1\uFFFD]&quot;"/><x id="INTERPOLATION_1" equiv-text="&quot;\uFFFD1\uFFFD&quot;"/><x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&quot;[\uFFFD/#6\uFFFD|\uFFFD/#2:1\uFFFD]&quot;"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&quot;[\uFFFD/#5\uFFFD|\uFFFD/#1:1\uFFFD\uFFFD/*7:1\uFFFD|\uFFFD/#8\uFFFD]&quot;"/><x id="START_TAG_SPAN_1" ctype="x-span_1" equiv-text="&quot;\uFFFD*7:1\uFFFD\uFFFD#1:1\uFFFD&quot;"/>  in namespace <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&quot;[\uFFFD#6\uFFFD|\uFFFD#2:1\uFFFD]&quot;"/><x id="INTERPOLATION_2" equiv-text="&quot;\uFFFD0:1\uFFFD&quot;"/><x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&quot;[\uFFFD/#6\uFFFD|\uFFFD/#2:1\uFFFD]&quot;"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&quot;[\uFFFD/#5\uFFFD|\uFFFD/#1:1\uFFFD\uFFFD/*7:1\uFFFD|\uFFFD/#8\uFFFD]&quot;"/><x id="START_TAG_SPAN" ctype="x-span" equiv-text="&quot;[\uFFFD#5\uFFFD|\uFFFD#8\uFFFD]&quot;"/>?<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&quot;[\uFFFD/#5\uFFFD|\uFFFD/#1:1\uFFFD\uFFFD/*7:1\uFFFD|\uFFFD/#8\uFFFD]&quot;"/></source>
+        <source><x id="START_TAG_SPAN" ctype="x-span" equiv-text="&quot;[\uFFFD#5\uFFFD|\uFFFD#8\uFFFD]&quot;"/>Are you sure you want to delete <x id="INTERPOLATION" equiv-text="&quot;\uFFFD0\uFFFD&quot;"/> <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&quot;[\uFFFD#6\uFFFD|\uFFFD#2:1\uFFFD]&quot;"/><x id="INTERPOLATION_1" equiv-text="&quot;\uFFFD1\uFFFD&quot;"/><x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&quot;[\uFFFD/#6\uFFFD|\uFFFD/#2:1\uFFFD]&quot;"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&quot;[\uFFFD/#5\uFFFD|\uFFFD/#1:1\uFFFD\uFFFD/*7:1\uFFFD|\uFFFD/#8\uFFFD]&quot;"/><x id="START_TAG_SPAN_1" ctype="x-span_1" equiv-text="&quot;\uFFFD*7:1\uFFFD\uFFFD#1:1\uFFFD&quot;"/>  in namespace <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&quot;[\uFFFD#6\uFFFD|\uFFFD#2:1\uFFFD]&quot;"/><x id="INTERPOLATION_2" equiv-text="&quot;\uFFFD0:1\uFFFD&quot;"/><x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&quot;[\uFFFD/#6\uFFFD|\uFFFD/#2:1\uFFFD]&quot;"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&quot;[\uFFFD/#5\uFFFD|\uFFFD/#1:1\uFFFD\uFFFD/*7:1\uFFFD|\uFFFD/#8\uFFFD]&quot;"/><x id="START_TAG_SPAN" ctype="x-span" equiv-text="&quot;[\uFFFD#5\uFFFD|\uFFFD#8\uFFFD]&quot;"/>?<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&quot;[\uFFFD/#5\uFFFD|\uFFFD/#1:1\uFFFD\uFFFD/*7:1\uFFFD|\uFFFD/#8\uFFFD]&quot;"/></source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/dialogs/deleteresource/template.html</context>
           <context context-type="linenumber">21,23</context>
@@ -4398,7 +4398,7 @@
         </context-group>
       </trans-unit>
       <trans-unit id="761105739794565336" datatype="html">
-        <source>Pods: </source>
+        <source>Pods: </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/resource/workloads/deployment/detail/template.html</context>
           <context context-type="linenumber">214</context>
@@ -4409,14 +4409,14 @@
         </context-group>
       </trans-unit>
       <trans-unit id="8716879065476971568" datatype="html">
-        <source>Status: </source>
+        <source>Status: </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/resource/workloads/pod/detail/template.html</context>
           <context context-type="linenumber">30</context>
         </context-group>
       </trans-unit>
       <trans-unit id="5278726417886231851" datatype="html">
-        <source>IP: </source>
+        <source>IP: </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/resource/workloads/pod/detail/template.html</context>
           <context context-type="linenumber">37</context>
@@ -4462,14 +4462,14 @@
         </context-group>
       </trans-unit>
       <trans-unit id="43228639508046926" datatype="html">
-        <source>Completions: </source>
+        <source>Completions: </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/resource/workloads/job/detail/template.html</context>
           <context context-type="linenumber">28</context>
         </context-group>
       </trans-unit>
       <trans-unit id="4686783485484478974" datatype="html">
-        <source>Parallelism: </source>
+        <source>Parallelism: </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/resource/workloads/job/detail/template.html</context>
           <context context-type="linenumber">35</context>
@@ -4511,21 +4511,21 @@
         </context-group>
       </trans-unit>
       <trans-unit id="3094294427304814088" datatype="html">
-        <source>Strategy: </source>
+        <source>Strategy: </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/resource/workloads/deployment/detail/template.html</context>
           <context context-type="linenumber">28</context>
         </context-group>
       </trans-unit>
       <trans-unit id="642253290448532904" datatype="html">
-        <source>Min ready seconds: </source>
+        <source>Min ready seconds: </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/resource/workloads/deployment/detail/template.html</context>
           <context context-type="linenumber">35</context>
         </context-group>
       </trans-unit>
       <trans-unit id="1850293262697508820" datatype="html">
-        <source>Revision history limit: </source>
+        <source>Revision history limit: </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/resource/workloads/deployment/detail/template.html</context>
           <context context-type="linenumber">42</context>
@@ -4553,14 +4553,14 @@
         </context-group>
       </trans-unit>
       <trans-unit id="7194375808015467595" datatype="html">
-        <source>Max surge: </source>
+        <source>Max surge: </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/resource/workloads/deployment/detail/template.html</context>
           <context context-type="linenumber">88</context>
         </context-group>
       </trans-unit>
       <trans-unit id="3068261068429094032" datatype="html">
-        <source>Max unavailable: </source>
+        <source>Max unavailable: </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/resource/workloads/deployment/detail/template.html</context>
           <context context-type="linenumber">95</context>
@@ -4581,28 +4581,28 @@
         </context-group>
       </trans-unit>
       <trans-unit id="21860712120581731" datatype="html">
-        <source>Updated: </source>
+        <source>Updated: </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/resource/workloads/deployment/detail/template.html</context>
           <context context-type="linenumber">125</context>
         </context-group>
       </trans-unit>
       <trans-unit id="2987268586260348582" datatype="html">
-        <source>Total: </source>
+        <source>Total: </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/resource/workloads/deployment/detail/template.html</context>
           <context context-type="linenumber">132</context>
         </context-group>
       </trans-unit>
       <trans-unit id="1761780531172486555" datatype="html">
-        <source>Available: </source>
+        <source>Available: </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/resource/workloads/deployment/detail/template.html</context>
           <context context-type="linenumber">139</context>
         </context-group>
       </trans-unit>
       <trans-unit id="2862835290520488117" datatype="html">
-        <source>Unavailable: </source>
+        <source>Unavailable: </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/resource/workloads/deployment/detail/template.html</context>
           <context context-type="linenumber">146</context>
@@ -4662,21 +4662,21 @@
         </context-group>
       </trans-unit>
       <trans-unit id="400776614514525117" datatype="html">
-        <source>Schedule: </source>
+        <source>Schedule: </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/resource/workloads/cronjob/detail/template.html</context>
           <context context-type="linenumber">28</context>
         </context-group>
       </trans-unit>
       <trans-unit id="7409958205893937925" datatype="html">
-        <source>Active Jobs: </source>
+        <source>Active Jobs: </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/resource/workloads/cronjob/detail/template.html</context>
           <context context-type="linenumber">35</context>
         </context-group>
       </trans-unit>
       <trans-unit id="6284431271548714587" datatype="html">
-        <source>Suspend: </source>
+        <source>Suspend: </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/resource/workloads/cronjob/detail/template.html</context>
           <context context-type="linenumber">42</context>
