@@ -15,8 +15,8 @@
 package serviceaccount
 
 import (
-	"k8s.io/dashboard/api/pkg/resource/dataselect"
 	v1 "k8s.io/api/core/v1"
+	"k8s.io/dashboard/api/pkg/resource/dataselect"
 )
 
 type ServiceAccountCell v1.ServiceAccount

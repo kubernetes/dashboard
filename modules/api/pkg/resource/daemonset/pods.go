@@ -18,15 +18,15 @@ import (
 	"context"
 	"log"
 
+	api "k8s.io/api/core/v1"
+	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	k8sClient "k8s.io/client-go/kubernetes"
 	"k8s.io/dashboard/api/pkg/errors"
 	metricapi "k8s.io/dashboard/api/pkg/integration/metric/api"
 	"k8s.io/dashboard/api/pkg/resource/common"
 	"k8s.io/dashboard/api/pkg/resource/dataselect"
 	"k8s.io/dashboard/api/pkg/resource/event"
 	"k8s.io/dashboard/api/pkg/resource/pod"
-	api "k8s.io/api/core/v1"
-	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
-	k8sClient "k8s.io/client-go/kubernetes"
 )
 
 // GetDaemonSetPods return list of pods targeting daemon set.

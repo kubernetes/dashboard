@@ -18,10 +18,10 @@ import (
 	"reflect"
 	"testing"
 
-	"k8s.io/dashboard/api/pkg/api"
-	metricapi "k8s.io/dashboard/api/pkg/integration/metric/api"
 	v1 "k8s.io/api/core/v1"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	"k8s.io/dashboard/api/pkg/api"
+	metricapi "k8s.io/dashboard/api/pkg/integration/metric/api"
 )
 
 func TestGetSidecarSelector(t *testing.T) {

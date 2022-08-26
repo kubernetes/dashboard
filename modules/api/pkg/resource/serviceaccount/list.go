@@ -19,11 +19,11 @@ import (
 
 	v1 "k8s.io/api/core/v1"
 
+	client "k8s.io/client-go/kubernetes"
 	"k8s.io/dashboard/api/pkg/api"
 	"k8s.io/dashboard/api/pkg/errors"
 	"k8s.io/dashboard/api/pkg/resource/common"
 	"k8s.io/dashboard/api/pkg/resource/dataselect"
-	client "k8s.io/client-go/kubernetes"
 )
 
 // ServiceAccount contains an information about single service account in the list.

@@ -15,8 +15,8 @@
 package auth
 
 import (
-	authApi "k8s.io/dashboard/api/pkg/auth/api"
 	"k8s.io/client-go/tools/clientcmd/api"
+	authApi "k8s.io/dashboard/api/pkg/auth/api"
 )
 
 // Implements Authenticator interface

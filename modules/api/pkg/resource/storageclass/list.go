@@ -17,12 +17,12 @@ package storageclass
 import (
 	"log"
 
+	storage "k8s.io/api/storage/v1"
+	"k8s.io/client-go/kubernetes"
 	"k8s.io/dashboard/api/pkg/api"
 	"k8s.io/dashboard/api/pkg/errors"
 	"k8s.io/dashboard/api/pkg/resource/common"
 	"k8s.io/dashboard/api/pkg/resource/dataselect"
-	storage "k8s.io/api/storage/v1"
-	"k8s.io/client-go/kubernetes"
 )
 
 // StorageClassList holds a list of Storage Class objects in the cluster.

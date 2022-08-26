@@ -17,14 +17,14 @@ package deployment
 import (
 	"context"
 
+	apps "k8s.io/api/apps/v1"
+	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	client "k8s.io/client-go/kubernetes"
 	"k8s.io/dashboard/api/pkg/api"
 	"k8s.io/dashboard/api/pkg/errors"
 	"k8s.io/dashboard/api/pkg/resource/common"
 	"k8s.io/dashboard/api/pkg/resource/dataselect"
 	"k8s.io/dashboard/api/pkg/resource/replicaset"
-	apps "k8s.io/api/apps/v1"
-	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
-	client "k8s.io/client-go/kubernetes"
 )
 
 // GetDeploymentOldReplicaSets returns old replica sets targeting Deployment with given name

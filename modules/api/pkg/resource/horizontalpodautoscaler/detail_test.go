@@ -18,10 +18,10 @@ import (
 	"reflect"
 	"testing"
 
-	"k8s.io/dashboard/api/pkg/api"
 	autoscaling "k8s.io/api/autoscaling/v1"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/client-go/kubernetes/fake"
+	"k8s.io/dashboard/api/pkg/api"
 )
 
 // func GetHorizontalPodAutoscalerDetail(client *client.Client, namespace string, name string) (*HorizontalPodAutoscalerDetail, error)

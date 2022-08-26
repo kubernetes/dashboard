@@ -17,14 +17,14 @@ package deployment
 import (
 	"context"
 
+	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	client "k8s.io/client-go/kubernetes"
 	"k8s.io/dashboard/api/pkg/errors"
 	metricapi "k8s.io/dashboard/api/pkg/integration/metric/api"
 	"k8s.io/dashboard/api/pkg/resource/common"
 	"k8s.io/dashboard/api/pkg/resource/dataselect"
 	"k8s.io/dashboard/api/pkg/resource/event"
 	"k8s.io/dashboard/api/pkg/resource/pod"
-	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
-	client "k8s.io/client-go/kubernetes"
 )
 
 // GetDeploymentPods returns list of pods targeting deployment.

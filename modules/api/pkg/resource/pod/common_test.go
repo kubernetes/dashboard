@@ -18,10 +18,10 @@ import (
 	"reflect"
 	"testing"
 
-	"k8s.io/dashboard/api/pkg/api"
-	"k8s.io/dashboard/api/pkg/resource/common"
 	v1 "k8s.io/api/core/v1"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	"k8s.io/dashboard/api/pkg/api"
+	"k8s.io/dashboard/api/pkg/resource/common"
 )
 
 // TestToPodPodStatusFailed tests the returned status for pods that have completed unsuccessfully.

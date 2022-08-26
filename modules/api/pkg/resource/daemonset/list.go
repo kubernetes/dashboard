@@ -15,15 +15,15 @@
 package daemonset
 
 import (
+	apps "k8s.io/api/apps/v1"
+	v1 "k8s.io/api/core/v1"
+	"k8s.io/client-go/kubernetes"
 	"k8s.io/dashboard/api/pkg/api"
 	"k8s.io/dashboard/api/pkg/errors"
 	metricapi "k8s.io/dashboard/api/pkg/integration/metric/api"
 	"k8s.io/dashboard/api/pkg/resource/common"
 	"k8s.io/dashboard/api/pkg/resource/dataselect"
 	"k8s.io/dashboard/api/pkg/resource/event"
-	apps "k8s.io/api/apps/v1"
-	v1 "k8s.io/api/core/v1"
-	"k8s.io/client-go/kubernetes"
 )
 
 // DaemonSetList contains a list of Daemon Sets in the cluster.
