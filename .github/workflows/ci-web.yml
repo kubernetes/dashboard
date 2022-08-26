@@ -51,7 +51,7 @@ jobs:
       - name: Install Dependencies
         shell: bash
         run: |
-          [ ! -d "node_modules" ] && npm ci || node scripts/version.mjs
+          [ ! -d "node_modules" ] && npm ci || node hack/version.mjs
       - name: Check Code
         shell: bash
         run: npm run check
@@ -85,7 +85,7 @@ jobs:
       - name: Install dependencies
         shell: bash
         run: |
-          [ ! -d "node_modules" ] && npm ci && node scripts/version.mjs
+          [ ! -d "node_modules" ] && npm ci && node hack/version.mjs
       - name: Run unit tests with coverage
         run: make coverage-frontend
       - name: Upload coverage

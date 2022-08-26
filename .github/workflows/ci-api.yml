@@ -44,7 +44,10 @@ jobs:
         with:
           go-version: 1.19
       - name: Verify codegen
-        run: make codegen-verify
+        run: |
+          export GOPATH=$(go env GOPATH)
+          export PATH=$PATH:$GOPATH/bin
+          make codegen-verify
       - name: Lint Go
         uses: golangci/golangci-lint-action@v3
         with:
@@ -76,10 +79,10 @@ jobs:
           cache-dependency-path: modules/api/go.sum
       - name: Install dependencies
         shell: bash
-        run: go mod download
-      - run: echo $GOPATH
-      - run: echo $(go env GOPATH)
-      - run: export GOPATH=$(go env GOPATH)/bin
+        run: |
+          export GOPATH=$(go env GOPATH)
+          export PATH=$PATH:$GOPATH/bin
+          go mod download
       - name: Run unit tests with coverage
         run: make coverage
       - name: Upload coverage
