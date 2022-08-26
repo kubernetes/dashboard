@@ -30,7 +30,7 @@ coverage:
         informational: true
     # We use codecov for information described as above. So it is enough to check only `project` as of now.
     patch: off
-    changes: off
+    changes: false
 
 parsers:
   gcov:
@@ -43,4 +43,4 @@ parsers:
 comment:
   layout: "header, diff"
   behavior: default
-  require_changes: no
+  require_changes: false
