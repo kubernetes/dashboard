@@ -17,12 +17,12 @@ package horizontalpodautoscaler
 import (
 	"strings"
 
+	autoscaling "k8s.io/api/autoscaling/v1"
+	k8sClient "k8s.io/client-go/kubernetes"
 	"k8s.io/dashboard/api/pkg/api"
 	"k8s.io/dashboard/api/pkg/errors"
 	"k8s.io/dashboard/api/pkg/resource/common"
 	"k8s.io/dashboard/api/pkg/resource/dataselect"
-	autoscaling "k8s.io/api/autoscaling/v1"
-	k8sClient "k8s.io/client-go/kubernetes"
 )
 
 type HorizontalPodAutoscalerList struct {

@@ -9,6 +9,8 @@ GO_MINOR_VERSION = $(shell go version | cut -c 14- | cut -d' ' -f1 | cut -d'.' -
 MIN_GO_MAJOR_VERSION = 1
 MIN_GO_MINOR_VERSION = 19
 
+# TODO: It should check not only if binaries are installed but also their versions
+
 .PHONY: install
 install: ensure-go install-license-eye install-air install-golangci-lint install-client-gen
 

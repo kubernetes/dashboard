@@ -19,11 +19,9 @@ run:
 linters:
   disable-all: true
   enable:
-    - deadcode
     - gocyclo
     - goimports
     - govet
     - ineffassign
     - misspell
-    - structcheck
     - unused
