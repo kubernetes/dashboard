@@ -27,7 +27,7 @@ import (
 	client "k8s.io/client-go/kubernetes"
 )
 
-//GetDeploymentOldReplicaSets returns old replica sets targeting Deployment with given name
+// GetDeploymentOldReplicaSets returns old replica sets targeting Deployment with given name
 func GetDeploymentOldReplicaSets(client client.Interface, dsQuery *dataselect.DataSelectQuery,
 	namespace string, deploymentName string) (*replicaset.ReplicaSetList, error) {
 

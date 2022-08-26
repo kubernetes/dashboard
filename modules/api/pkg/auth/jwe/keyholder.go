@@ -59,8 +59,8 @@ type rsaKeyHolder struct {
 
 // Encrypter implements key holder interface. See KeyHolder for more information.
 // Used encryption algorithms:
-//    - Content encryption: AES-GCM (256)
-//    - Key management: RSA-OAEP-SHA256
+//   - Content encryption: AES-GCM (256)
+//   - Key management: RSA-OAEP-SHA256
 func (self *rsaKeyHolder) Encrypter() jose.Encrypter {
 	publicKey := &self.Key().PublicKey
 	encrypter, err := jose.NewEncrypter(jose.A256GCM, jose.Recipient{Algorithm: jose.RSA_OAEP_256, Key: publicKey}, nil)

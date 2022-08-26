@@ -20,7 +20,7 @@
 image:
   ## Repository for container
   repository: kubernetesui/dashboard
-  tag: v2.6.0
+  tag: v2.6.1
   pullPolicy: IfNotPresent
   pullSecrets: []
 
@@ -305,6 +305,12 @@ rbac:
   #
   # Independent from rbac.create parameter.
   clusterReadOnlyRole: false
+  # It is possible to add additional rules if read only role is enabled.
+  # This can be useful, for example, to show CRD resources.
+  # clusterReadOnlyRoleAdditionalRules: []
+
+  # If the default role permissions are not enough, it is possible to add additional permissions.
+  # roleAdditionalRules: []
 
 serviceAccount:
   # Specifies whether a service account should be created
