@@ -59,7 +59,7 @@ test:
 
 .PHONY: coverage
 coverage:
-	go test -coverprofile=$(GO_COVERAGE_FILE) -covermode=atomic $(PACKAGE_NAME)/...
+	go test -coverprofile=$(COVERAGE_FILE) -covermode=atomic $(PACKAGE_NAME)/...
 
 .PHONY: --ensure-dist-exists
 --ensure-dist-exists:
