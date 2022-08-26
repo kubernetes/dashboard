@@ -14,7 +14,7 @@
 # limitations under the License.
 
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE}")/../.." && pwd -P)"
-source "${ROOT_DIR}/aio/scripts/conf.sh"
+source "${ROOT_DIR}/hack/scripts/conf.sh"
 
 CODE=0
 FILES=($(find ${SRC_DIR} -type f -name '*.html'))
