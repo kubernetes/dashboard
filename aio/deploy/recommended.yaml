@@ -190,7 +190,7 @@ spec:
           type: RuntimeDefault
       containers:
         - name: kubernetes-dashboard
-          image: kubernetesui/dashboard:v2.6.1
+          image: kubernetesui/dashboard:v2.7.0
           imagePullPolicy: Always
           ports:
             - containerPort: 8443
