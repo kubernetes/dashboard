@@ -47,7 +47,6 @@ header:
     - '**/.browserslistrc'
     - '**/.editorconfig'
     - '**/.jsbeautifyrc'
-    - '**/.npmrc'
     - '**/config_repos'
     - '**/go.mod'
     - '**/go.sum'

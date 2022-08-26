@@ -18,12 +18,12 @@ ROOT_DIR="$(cd $(dirname "${BASH_SOURCE}")/../.. && pwd -P)"
 . "${ROOT_DIR}/aio/scripts/conf.sh"
 
 function start-ci-heapster {
-  say "\nRunning heapster in standalone mode"
+  echo "\nRunning heapster in standalone mode"
   docker run --net=host -d k8s.gcr.io/heapster-amd64:${HEAPSTER_VERSION} \
              --heapster-port ${HEAPSTER_PORT} \
              --source=kubernetes:http://127.0.0.1:8080?inClusterConfig=false&auth=""
 
-  say "\nWaiting for heapster to be started"
+  echo "\nWaiting for heapster to be started"
   for i in {1..150}
   do
     HEAPSTER_STATUS=$(curl -sb -H "Accept: application/json" "127.0.0.1:${HEAPSTER_PORT}/healthz")
@@ -32,7 +32,7 @@ function start-ci-heapster {
     fi
     sleep 2
   done
-  say "\nHeapster is up and running"
+  echo "\nHeapster is up and running"
 }
 
 function start-kind {
@@ -41,7 +41,7 @@ function start-kind {
   if [ "${CI}" = true ] ; then
     start-ci-heapster
   fi
-  say "\nKubernetes cluster is ready to use"
+  echo "\nKubernetes cluster is ready to use"
 }
 
 # Execute script.

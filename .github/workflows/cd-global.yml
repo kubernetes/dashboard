@@ -49,18 +49,10 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 16.15.0
-      - name: Cache Node Modules
-        uses: actions/cache@661fd3eb7f2f20d8c7c84bc2b0509efd7a826628 # v2
-        env:
-          cache-name: cache-node-modules
-        with:
-          path: node_modules
-          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
 
       - name: Install Dependencies
         shell: bash
-        run: |
-          [ ! -d "node_modules" ] && npm ci || node aio/scripts/version.mjs && go mod download
+        run: yarn || node aio/scripts/version.mjs && go mod download
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@8b122486cedac8393e77aa9734c3528886e4a1a8 # v1

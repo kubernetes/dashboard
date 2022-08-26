@@ -36,35 +36,20 @@ jobs:
       NODE_OPTIONS: "--max-old-space-size=8192"
       TERM: xterm
     steps:
-      - name: Start kind cluster
-        uses: helm/kind-action@v1.2.0
-      - name: Checkout repository
-        uses: actions/checkout@v3
+      - uses: helm/kind-action@v1.2.0
+      - uses: actions/checkout@v3
         with:
           fetch-depth: 0
-      - name: Setup Go
-        uses: actions/setup-go@v3
+      - uses: actions/setup-go@v3
         with:
           go-version: 1.19
-      - name: Setup Node.js
-        uses: actions/setup-node@v3
+      - uses: actions/setup-node@v3
         with:
           node-version: 16.15.0
-      - name: Cache
-        uses: actions/cache@v3
-        env:
-          cache-name: cache-node-modules
-        with:
-          path: |
-            ~/.cache/Cypress
-            node_modules
-          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
-      - name: Install dependencies
-        shell: bash
-        run: |
-          [ ! -d "node_modules" ] && npm ci && npm i cypress || node aio/scripts/version.mjs && go mod download
-      - name: Run end-to-end tests
-        run: make e2e
+      - run: yarn
+      - run: npm i cypress
+      - run: node aio/scripts/version.mjs
+      - run: make e2e
 
   license-check:
     name: License check
@@ -72,12 +57,10 @@ jobs:
     env:
       TERM: xterm
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
+      - uses: actions/checkout@v3
         with:
           fetch-depth: 0
-      - name: Check licenses
-        uses: apache/skywalking-eyes@main
+      - uses: apache/skywalking-eyes@main
 
   codeql:
     permissions:
@@ -91,18 +74,14 @@ jobs:
       matrix:
         language: [ 'go', 'typescript' ]
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
+      - uses: actions/checkout@v3
         with:
           fetch-depth: 0
-      - name: Initialize CodeQL
-        uses: github/codeql-action/init@v2
+      - uses: github/codeql-action/init@v2
         with:
           languages: ${{ matrix.language }}
-      - name: Autobuild CodeQL
-        uses: github/codeql-action/autobuild@v2
-      - name: Analyze CodeQL
-        uses: github/codeql-action/analyze@v2
+      - uses: github/codeql-action/autobuild@v2
+      - uses: github/codeql-action/analyze@v2
 
   dependency-review:
     permissions:
@@ -112,7 +91,5 @@ jobs:
     name: Dependency review
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
-      - name: Review dependencies
-        uses: actions/dependency-review-action@v1
+      - uses: actions/checkout@v3
+      - uses: actions/dependency-review-action@v1

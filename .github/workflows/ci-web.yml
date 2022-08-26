@@ -41,7 +41,7 @@ jobs:
           node-version: 16.15.0
       - run: yarn
       - run: node hack/version.mjs
-      - run: npm run check
+      - run: yarn check
 
   unit:
     name: Unit tests with coverage

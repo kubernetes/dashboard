@@ -24,9 +24,9 @@ for FILE in "${FILES[@]}"; do
   OK=$(diff <(echo "${FORMATTED_CONTENT}") <(echo "${CONTENT}"))
   if [[ ! -z "${OK}" ]]; then
     CODE=1
-    saye "$FILE - error"
+    echo "$FILE - error"
   else
-    say "$FILE - ok"
+    echo "$FILE - ok"
   fi
 done
 

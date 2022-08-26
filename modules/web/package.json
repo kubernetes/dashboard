@@ -8,31 +8,31 @@
     "url": "https://github.com/kubernetes/dashboard.git"
   },
   "engines": {
-    "node": ">=16.15.0",
-    "npm": ">=8.5.5"
+    "node": ">=16.15.0"
   },
   "engineStrict": true,
+  "packageManager": "yarn@3.2.2",
   "scripts": {
     "start": "make serve",
     "start:https": "make serve-https",
-    "start:prod": "npm run ensure:version && ng serve -c production-en --proxy-config proxy.conf.json",
-    "start:prod:https": "npm run ensure:version && ng serve -c production-en --ssl --proxy-config proxy-https.conf.json",
+    "start:prod": "yarn ensure:version && ng serve -c production-en --proxy-config proxy.conf.json",
+    "start:prod:https": "yarn ensure:version && ng serve -c production-en --ssl --proxy-config proxy-https.conf.json",
     "build:prod": "make build",
-    "start:e2e": "concurrently \"make serve-backend\" \"npm run start:frontend\"",
-    "fix": "npm run fix:i18n && npm run fix:html && npm run fix:scss && npm run fix:ts",
+    "start:e2e": "concurrently \"make serve-backend\" \"yarn start:frontend\"",
+    "fix": "yarn fix:i18n && yarn fix:html && yarn fix:scss && yarn fix:ts",
     "fix:i18n": "ng run kubernetes-dashboard:extract-i18n-merge",
     "fix:html": "npx html-beautify -f=./src/**/*.html",
     "fix:scss": "stylelint src/**/*.scss",
     "fix:ts": "gts fix",
-    "check": "npm run check:i18n && npm run check:html && npm run check:scss && npm run check:ts",
-    "check:i18n": "npm run fix:i18n",
+    "check": "yarn check:i18n && yarn check:html && yarn check:scss && yarn check:ts",
+    "check:i18n": "yarn fix:i18n",
     "check:html": "./hack/check-html.sh",
     "check:scss": "stylelint src/**/*.scss --fix",
     "check:ts": "gts lint",
     "test": "npx jest -c jest.config.js",
     "coverage": "npx jest -c jest.config.js --coverage -i",
-    "e2e": "concurrently -kill-others --success first \"npm run start:e2e\" \"wait-on http://localhost:8080 && npx cypress run\"",
-    "e2e:headed": "concurrently -kill-others --success first \"npm run start:e2e\" \"wait-on http://localhost:8080 && npx cypress run --headed\""
+    "e2e": "concurrently -kill-others --success first \"yarn start:e2e\" \"wait-on http://localhost:8080 && npx cypress run\"",
+    "e2e:headed": "concurrently -kill-others --success first \"yarn start:e2e\" \"wait-on http://localhost:8080 && npx cypress run --headed\""
   },
   "lint-staged": {
     "src/**/*.ts": [
@@ -147,6 +147,5 @@
   },
   "overrides": {
     "colors": "1.4.0"
-  },
-  "packageManager": "yarn@3.2.2"
+  }
 }

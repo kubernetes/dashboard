@@ -49,24 +49,21 @@ if test -t 1; then
   fi
 fi
 
-function say { echo "$@"; }
-function saye { echo -e "${RED_STYLE}$@${DEFAULT_STYLE}"; }
-
 function ensure-cache {
-  say "\nMaking sure that ${CACHE_DIR} directory exists"
+  echo "\nMaking sure that ${CACHE_DIR} directory exists"
   mkdir -p ${CACHE_DIR}
 }
 
 function download-kind {
   KIND_URL="https://github.com/kubernetes-sigs/kind/releases/download/${KIND_VERSION}/kind-${ARCH}-amd64"
-  say "\nDownloading kind ${KIND_URL} if it is not cached"
+  echo "\nDownloading kind ${KIND_URL} if it is not cached"
   wget -nc -O ${KIND_BIN} ${KIND_URL}
   chmod +x ${KIND_BIN}
   ${KIND_BIN} version
 }
 
 function ensure-kubeconfig {
-  say "\nMaking sure that kubeconfig file exists and will be used by Dashboard"
+  echo "\nMaking sure that kubeconfig file exists and will be used by Dashboard"
   mkdir -p ${HOME}/.kube
   touch ${HOME}/.kube/config
 
