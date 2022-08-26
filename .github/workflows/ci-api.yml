@@ -63,6 +63,9 @@ jobs:
       run:
         working-directory: modules/api
     steps:
+      - run: echo $GOPATH
+      - run: echo $(go env GOPATH)
+      - run: export GOPATH=$(go env GOPATH)/bin
       - name: Checkout repository
         uses: actions/checkout@v3
         with:
