@@ -42,7 +42,7 @@ jobs:
       - name: Setup Go
         uses: actions/setup-go@v3
         with:
-          go-version: 1.18
+          go-version: 1.19
       - name: Verify codegen
         run: make codegen-verify
       - name: Lint Go
@@ -69,7 +69,7 @@ jobs:
       - name: Setup Go
         uses: actions/setup-go@v3
         with:
-          go-version: 1.18
+          go-version: 1.19
           check-latest: true
           cache: true
           cache-dependency-path: modules/api/go.sum
