@@ -64,7 +64,7 @@ jobs:
           node-version: 16.14.2
 
       - name: Cache Node Modules
-        uses: actions/cache@661fd3eb7f2f20d8c7c84bc2b0509efd7a826628 # v2
+        uses: actions/cache@515d10b4fd9bb4858066bd5769f55bd498dcdd27 # v2
         env:
           cache-name: cache-node-modules
         with:
@@ -109,7 +109,7 @@ jobs:
           node-version: 16.14.2
 
       - name: Cache Node Modules
-        uses: actions/cache@661fd3eb7f2f20d8c7c84bc2b0509efd7a826628 # v2
+        uses: actions/cache@515d10b4fd9bb4858066bd5769f55bd498dcdd27 # v2
         env:
           cache-name: cache-node-modules
         with:
@@ -164,7 +164,7 @@ jobs:
           node-version: 16.14.2
 
       - name: Cache Node Modules
-        uses: actions/cache@661fd3eb7f2f20d8c7c84bc2b0509efd7a826628 # v2
+        uses: actions/cache@515d10b4fd9bb4858066bd5769f55bd498dcdd27 # v2
         env:
           cache-name: cache-node-modules
         with:
