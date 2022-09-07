@@ -1382,7 +1382,7 @@
       </trans-unit>
       <trans-unit id="1480519621633238451" datatype="html">
         <source>UID</source>
-        <target state="new">UID</target>
+        <target>UID</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/objectmeta/template.html</context>
           <context context-type="linenumber">71</context>
@@ -1478,7 +1478,7 @@
       </trans-unit>
       <trans-unit id="8286804311024638809" datatype="html">
         <source>Annotations</source>
-        <target state="new">Annotations</target>
+        <target>어노테이션</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/objectmeta/template.html</context>
           <context context-type="linenumber">88</context>
@@ -1486,7 +1486,7 @@
       </trans-unit>
       <trans-unit id="7785878041239516628" datatype="html">
         <source>Pods status</source>
-        <target state="new">Pods status</target>
+        <target>파드 상태</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/podstatus/template.html</context>
           <context context-type="linenumber">20</context>
