@@ -1538,7 +1538,7 @@
       </trans-unit>
       <trans-unit id="8137040815577930934" datatype="html">
         <source>Deployments</source>
-        <target state="new">Deployments</target>
+        <target>디플로이먼트</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/resourcelist/deployment/template.html</context>
           <context context-type="linenumber">24</context>
@@ -1554,7 +1554,7 @@
       </trans-unit>
       <trans-unit id="2803293796008679153" datatype="html">
         <source>Ingress Classes</source>
-        <target state="new">Ingress Classes</target>
+        <target>인그레스 클래스</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/resourcelist/ingressclass/template.html</context>
           <context context-type="linenumber">21</context>
@@ -1566,7 +1566,7 @@
       </trans-unit>
       <trans-unit id="8394382410283043922" datatype="html">
         <source>Controller</source>
-        <target state="new">Controller</target>
+        <target>컨트롤러</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/resourcelist/ingressclass/template.html</context>
           <context context-type="linenumber">55</context>
@@ -1578,7 +1578,7 @@
       </trans-unit>
       <trans-unit id="5729418620241283277" datatype="html">
         <source>Events</source>
-        <target state="new">Events</target>
+        <target>이벤트</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/resourcelist/event/template.html</context>
           <context context-type="linenumber">22</context>
@@ -1590,7 +1590,7 @@
       </trans-unit>
       <trans-unit id="2614607010577950577" datatype="html">
         <source>Overview</source>
-        <target state="new">Overview</target>
+        <target>개요</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/index.messages.ts</context>
           <context context-type="linenumber">37</context>
@@ -1722,7 +1722,7 @@
       </trans-unit>
       <trans-unit id="1130652265542107236" datatype="html">
         <source>Age</source>
-        <target state="new">Age</target>
+        <target>실행된 시간</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/creator/template.html</context>
           <context context-type="linenumber">68</context>
@@ -1738,7 +1738,7 @@
       </trans-unit>
       <trans-unit id="7198836215060144081" datatype="html">
         <source>Host </source>
-        <target state="new">Host </target>
+        <target>호스트 </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/ingressrulelist/template.html</context>
           <context context-type="linenumber">36</context>
@@ -1762,7 +1762,7 @@
       </trans-unit>
       <trans-unit id="3012906865384504293" datatype="html">
         <source>Image</source>
-        <target state="new">Image</target>
+        <target>이미지</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/container/template.html</context>
           <context context-type="linenumber">32</context>
@@ -1774,7 +1774,7 @@
       </trans-unit>
       <trans-unit id="5156388212535235462" datatype="html">
         <source> Environment Variables </source>
-        <target state="new"> Environment Variables </target>
+        <target> 환경 변수 </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/container/template.html</context>
           <context context-type="linenumber">106</context>
@@ -1798,7 +1798,7 @@
       </trans-unit>
       <trans-unit id="2275326697204049263" datatype="html">
         <source><x id="INTERPOLATION" equiv-text="&quot;\uFFFD0\uFFFD&quot;"/> bytes</source>
-        <target state="new"><x id="INTERPOLATION" equiv-text="&quot;\uFFFD0\uFFFD&quot;"/> bytes</target>
+        <target><x id="INTERPOLATION" equiv-text="&quot;\uFFFD0\uFFFD&quot;"/> bytes</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/container/template.html</context>
           <context context-type="linenumber">140</context>
@@ -1810,7 +1810,7 @@
       </trans-unit>
       <trans-unit id="21275452006765587" datatype="html">
         <source>Commands</source>
-        <target state="new">Commands</target>
+        <target>커맨드</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/container/template.html</context>
           <context context-type="linenumber">170</context>
@@ -1818,7 +1818,7 @@
       </trans-unit>
       <trans-unit id="4027897116563107017" datatype="html">
         <source>Arguments</source>
-        <target state="new">Arguments</target>
+        <target>인자</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/container/template.html</context>
           <context context-type="linenumber">184</context>
@@ -1826,7 +1826,7 @@
       </trans-unit>
       <trans-unit id="8680556590775728476" datatype="html">
         <source>Mounts</source>
-        <target state="new">Mounts</target>
+        <target>마운트</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/container/template.html</context>
           <context context-type="linenumber">199</context>
@@ -1834,7 +1834,7 @@
       </trans-unit>
       <trans-unit id="6350980688187906033" datatype="html">
         <source>Security Context</source>
-        <target state="new">Security Context</target>
+        <target>보안 컨텍스트</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/container/template.html</context>
           <context context-type="linenumber">214</context>
@@ -1846,7 +1846,7 @@
       </trans-unit>
       <trans-unit id="5951136243699703695" datatype="html">
         <source>Liveness Probe</source>
-        <target state="new">Liveness Probe</target>
+        <target>활성 프로브</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/container/template.html</context>
           <context context-type="linenumber">226</context>
@@ -1854,7 +1854,7 @@
       </trans-unit>
       <trans-unit id="4111811676793706889" datatype="html">
         <source>Readiness Probe</source>
-        <target state="new">Readiness Probe</target>
+        <target>준비성 프로브</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/container/template.html</context>
           <context context-type="linenumber">236</context>
@@ -1862,7 +1862,7 @@
       </trans-unit>
       <trans-unit id="8603225210556465773" datatype="html">
         <source>Startup Probe</source>
-        <target state="new">Startup Probe</target>
+        <target>스타트업 프로브</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/container/template.html</context>
           <context context-type="linenumber">246</context>
@@ -1870,7 +1870,7 @@
       </trans-unit>
       <trans-unit id="2122768143452494504" datatype="html">
         <source>Unsupported graph type <x id="PH" equiv-text="this.graphType"/>.</source>
-        <target state="new">Unsupported graph type <x id="PH" equiv-text="this.graphType"/>.</target>
+        <target>지원되지 않는 그래프 타입 <x id="PH" equiv-text="this.graphType"/>.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/graph/component.ts</context>
           <context context-type="linenumber">95</context>
@@ -1878,7 +1878,7 @@
       </trans-unit>
       <trans-unit id="3804893288209000257" datatype="html">
         <source>Waiting for more data to display chart...</source>
-        <target state="new">Waiting for more data to display chart...</target>
+        <target>차트를 표시하기 위해 추가 데이터를 기다리는 중...</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/graph/template.html</context>
           <context context-type="linenumber">22</context>
@@ -1966,7 +1966,7 @@
       </trans-unit>
       <trans-unit id="374277779600579508" datatype="html">
         <source>Resource Limits</source>
-        <target state="new">Resource Limits</target>
+        <target>리소스 제한</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/limits/template.html</context>
           <context context-type="linenumber">20</context>
