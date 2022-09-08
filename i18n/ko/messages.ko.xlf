@@ -4515,7 +4515,7 @@
       </trans-unit>
       <trans-unit id="2129795788862685212" datatype="html">
         <source>A Deployment will be created to maintain the desired number of pods across your cluster.</source>
-        <target>클러스터에 의도한 파드의 수를 유지하기 위해서 디플로이먼트가 생성될 것입니다.</target>
+        <target>클러스터에 의도한 파드의 수를 유지하기 위해서 디플로이먼트가 생성됩니다.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/create/from/form/template.html</context>
           <context context-type="linenumber">109</context>
@@ -4540,7 +4540,7 @@
       <trans-unit id="1946523853590147981" datatype="html">
         <source> The description will be added as an annotation to the Deployment and displayed in the application's details. </source>
         <target>
-        설명은 디플로이먼트에 어노테이션으로 추가될 것이며, 애플리케이션 상세 정보에 표시될 것입니다.
+        설명은 디플로이먼트에 어노테이션으로 추가되며, 애플리케이션 상세 정보에 표시됩니다.
       </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/create/from/form/template.html</context>
@@ -4549,7 +4549,7 @@
       </trans-unit>
       <trans-unit id="8712863007933324556" datatype="html">
         <source>The specified labels will be applied to the created Deployment, Service (if any) and Pods. Common labels include release, environment, tier, partition and track.</source>
-        <target>명시된 레이블은 생성된 디플로이먼트, 서비스(있다면), 파드에 적용될 것입니다. 공통 레이블은 릴리스, 환경, 티어(tier), 파티션, 트랙(track)을 포함합니다.</target>
+        <target>명시된 레이블은 생성된 디플로이먼트, 서비스(있다면), 파드에 적용됩니다. 공통 레이블은 릴리스, 환경, 티어(tier), 파티션, 트랙(track)을 포함합니다.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/create/from/form/template.html</context>
           <context context-type="linenumber">188</context>
@@ -4601,7 +4601,7 @@
       </trans-unit>
       <trans-unit id="2776781342795162475" datatype="html">
         <source>Namespaces let you partition resources into logically named groups.</source>
-        <target>네임스페이스는 리소스를 논리적으로 명칭된 그룹으로 분할할 수 있습니다.</target>
+        <target>네임스페이스는 리소스를 논리적으로 명칭된 그룹으로 분할합니다.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/create/from/form/template.html</context>
           <context context-type="linenumber">155</context>
@@ -4627,7 +4627,7 @@
       </trans-unit>
       <trans-unit id="2052571393783036025" datatype="html">
         <source>The specified image could require a pull secret credential if it is private. You may choose an existing secret or create a new one.</source>
-        <target>명시된 이미지가 프라이빗 이미지라면 풀(Pull) 시크릿 자격증명이 필요할 것입니다. 사용하고 있는 시크릿을 선택하거나 신규 시크릿을 생성할 수 있습니다.</target>
+        <target>명시된 이미지가 프라이빗 이미지라면 풀(Pull) 시크릿 자격증명이 필요합니다. 사용하고 있는 시크릿을 선택하거나 신규 시크릿을 생성할 수 있습니다.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/create/from/form/template.html</context>
           <context context-type="linenumber">213</context>
@@ -4715,7 +4715,7 @@
       </trans-unit>
       <trans-unit id="6588659171333501682" datatype="html">
         <source>By default, your containers run the selected image's default entrypoint command. You can use the command options to override the default.</source>
-        <target>기본적으로, 컨테이너는 선택된 이미지의 기본 엔트리포인트 커맨드를 실행합니다. 커맨드 옵션을 사용하여 기본을 변경할 수 있습니다.</target>
+        <target>기본적으로, 컨테이너는 선택된 이미지의 기본 엔트리포인트 커맨드를 실행합니다. 커맨드 옵션을 사용하여 기본 커맨드 대신 명시한 커맨드를 실행할 수 있습니다.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/create/from/form/template.html</context>
           <context context-type="linenumber">291</context>
@@ -4739,7 +4739,7 @@
       </trans-unit>
       <trans-unit id="2054443489193005989" datatype="html">
         <source>Environment variables available for use in the container. Values can reference other variables using $(VAR_NAME) syntax.</source>
-        <target>환경 변수는 컨테이너 안에서 사용 가능합니다. 값은 $(변수_이름) 구문을 사용하여 다른 변수를 참조할 수 있습니다.</target>
+        <target>환경 변수는 컨테이너 안에서 사용 가능합니다. 값에 $(변수_이름) 구문을 사용하여 변수들을 참조할 수 있습니다.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/create/from/form/template.html</context>
           <context context-type="linenumber">324</context>
@@ -4749,7 +4749,7 @@
         <source> Deploy
 </source>
         <target>
-  디플로이
+  배포
 </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/create/from/form/template.html</context>
@@ -4759,7 +4759,7 @@
       <trans-unit id="765635835361713756" datatype="html">
         <source> Preview
 </source>
-        <target state="new"> Preview
+        <target> 미리보기
 </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/create/from/form/template.html</context>
@@ -4768,7 +4768,7 @@
       </trans-unit>
       <trans-unit id="2986806881378584169" datatype="html">
         <source>{VAR_SELECT, select, true {Hide advanced options} other {Show advanced options}}</source>
-        <target state="new">{VAR_SELECT, select, true {고급 옵션 숨기기} other {고급 옵션 보기}}</target>
+        <target>{VAR_SELECT, select, true {고급 옵션 숨기기} other {고급 옵션 보기}}</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/create/from/form/template.html</context>
           <context context-type="linenumber">367</context>
@@ -4807,7 +4807,7 @@
       </trans-unit>
       <trans-unit id="8703572208950935791" datatype="html">
         <source>Global settings</source>
-        <target state="new">Global settings</target>
+        <target>전역 환경 설정</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/settings/global/template.html</context>
           <context context-type="linenumber">21</context>
@@ -4875,7 +4875,7 @@
       <trans-unit id="8360417359291444150" datatype="html">
         <source>Upload
 </source>
-        <target state="new">Upload
+        <target>업로드
 </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/create/from/file/template.html</context>
@@ -4885,7 +4885,7 @@
       <trans-unit id="7678167194170686460" datatype="html">
         <source>Cancel
 </source>
-        <target state="new">Cancel
+        <target>취소
 </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/create/from/file/template.html</context>
@@ -4904,7 +4904,7 @@
       </trans-unit>
       <trans-unit id="7873445996550708978" datatype="html">
         <source>Running: <x id="PH" equiv-text="status.running"/></source>
-        <target state="new">Running: <x id="PH" equiv-text="status.running"/></target>
+        <target>실행 중: <x id="PH" equiv-text="status.running"/></target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/overview/helper.ts</context>
           <context context-type="linenumber">32</context>
@@ -4912,7 +4912,7 @@
       </trans-unit>
       <trans-unit id="8337788905474874574" datatype="html">
         <source>Suspended: <x id="PH" equiv-text="status.failed"/></source>
-        <target state="new">Suspended: <x id="PH" equiv-text="status.failed"/></target>
+        <target>중지: <x id="PH" equiv-text="status.failed"/></target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/overview/helper.ts</context>
           <context context-type="linenumber">40</context>
@@ -4920,7 +4920,7 @@
       </trans-unit>
       <trans-unit id="9182918211699394982" datatype="html">
         <source>Failed: <x id="PH" equiv-text="status.failed"/></source>
-        <target state="new">Failed: <x id="PH" equiv-text="status.failed"/></target>
+        <target>실패: <x id="PH" equiv-text="status.failed"/></target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/overview/helper.ts</context>
           <context context-type="linenumber">47</context>
@@ -4932,7 +4932,7 @@
       </trans-unit>
       <trans-unit id="2782107425695587228" datatype="html">
         <source>Pending: <x id="PH" equiv-text="status.pending"/></source>
-        <target state="new">Pending: <x id="PH" equiv-text="status.pending"/></target>
+        <target>실행 대기: <x id="PH" equiv-text="status.pending"/></target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/overview/helper.ts</context>
           <context context-type="linenumber">51</context>
@@ -4944,7 +4944,7 @@
       </trans-unit>
       <trans-unit id="6142861985741036386" datatype="html">
         <source>Succeeded: <x id="PH" equiv-text="status.succeeded"/></source>
-        <target state="new">Succeeded: <x id="PH" equiv-text="status.succeeded"/></target>
+        <target>성공: <x id="PH" equiv-text="status.succeeded"/></target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/overview/helper.ts</context>
           <context context-type="linenumber">55</context>
@@ -4964,7 +4964,7 @@
       </trans-unit>
       <trans-unit id="4660958476520799637" datatype="html">
         <source>iSCSI Qualified Name</source>
-        <target state="new">iSCSI Qualified Name</target>
+        <target>iSCSI 식별자(IQN)</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/resource/cluster/persistentvolume/detail/source/template.html</context>
           <context context-type="linenumber">280</context>
@@ -4972,7 +4972,7 @@
       </trans-unit>
       <trans-unit id="2081098100751596052" datatype="html">
         <source>iSCSI target lun number</source>
-        <target state="new">iSCSI target lun number</target>
+        <target>iSCSI target의 LUN 번호</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/resource/cluster/persistentvolume/detail/source/template.html</context>
           <context context-type="linenumber">292</context>
@@ -4980,7 +4980,7 @@
       </trans-unit>
       <trans-unit id="5917358397505007628" datatype="html">
         <source>Target portal</source>
-        <target state="new">Target portal</target>
+        <target>대상 포탈</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/resource/cluster/persistentvolume/detail/source/template.html</context>
           <context context-type="linenumber">298</context>
@@ -4988,7 +4988,7 @@
       </trans-unit>
       <trans-unit id="2188854519574316630" datatype="html">
         <source>Server</source>
-        <target state="new">Server</target>
+        <target>서버</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/resource/cluster/persistentvolume/detail/source/template.html</context>
           <context context-type="linenumber">312</context>
@@ -4996,7 +4996,7 @@
       </trans-unit>
       <trans-unit id="5112388980413175570" datatype="html">
         <source>Keyring</source>
-        <target state="new">Keyring</target>
+        <target>키링</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/resource/cluster/persistentvolume/detail/source/template.html</context>
           <context context-type="linenumber">350</context>
