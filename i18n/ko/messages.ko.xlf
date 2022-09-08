@@ -4096,7 +4096,7 @@
       </trans-unit>
       <trans-unit id="1726363342938046830" datatype="html">
         <source>About</source>
-        <target state="new">About</target>
+        <target>소개</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/about/template.html</context>
           <context context-type="linenumber">19</context>
@@ -4108,7 +4108,7 @@
       </trans-unit>
       <trans-unit id="4814940703935231049" datatype="html">
         <source>General-purpose web UI for Kubernetes clusters</source>
-        <target state="new">General-purpose web UI for Kubernetes clusters</target>
+        <target>쿠버네티스 클러스터를 위한 범용 웹 UI</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/about/template.html</context>
           <context context-type="linenumber">30</context>
@@ -4170,7 +4170,7 @@
       </trans-unit>
       <trans-unit id="6024052576355726934" datatype="html">
         <source>Create a new image pull secret</source>
-        <target state="new">Create a new image pull secret</target>
+        <target>새로운 이미지 풀 시크릿 생성</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/create/from/form/createsecret/template.html</context>
           <context context-type="linenumber">18</context>
@@ -4178,7 +4178,7 @@
       </trans-unit>
       <trans-unit id="1119419133766787743" datatype="html">
         <source>Go to namespace</source>
-        <target state="new">Go to namespace</target>
+        <target>네임스페이스로 이동</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/resource/cluster/namespace/detail/actionbar/template.html</context>
           <context context-type="linenumber">23</context>
@@ -4186,7 +4186,7 @@
       </trans-unit>
       <trans-unit id="3000799346062046358" datatype="html">
         <source>Suffix '<x id="PH" equiv-text="suffix"/>' not recognized.</source>
-        <target state="new">Suffix '<x id="PH" equiv-text="suffix"/>' not recognized.</target>
+        <target>Suffix '<x id="PH" equiv-text="suffix"/>' 를 인식할 수 없습니다.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/graph/helper.ts</context>
           <context context-type="linenumber">58</context>
@@ -4194,7 +4194,7 @@
       </trans-unit>
       <trans-unit id="1779450799694188695" datatype="html">
         <source>Rolling update strategy</source>
-        <target state="new">Rolling update strategy</target>
+        <target>롤링 업데이트 정책</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/resource/workloads/deployment/detail/template.html</context>
           <context context-type="linenumber">82</context>
@@ -4352,7 +4352,7 @@
       </trans-unit>
       <trans-unit id="5674286808255988565" datatype="html">
         <source>Create</source>
-        <target state="new">Create</target>
+        <target>생성</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/create/from/form/createsecret/template.html</context>
           <context context-type="linenumber">92</context>
@@ -4364,7 +4364,7 @@
       </trans-unit>
       <trans-unit id="7941428823403788384" datatype="html">
         <source> Create </source>
-        <target state="new"> Create </target>
+        <target> 생성 </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/create/from/form/createnamespace/template.html</context>
           <context context-type="linenumber">67</context>
