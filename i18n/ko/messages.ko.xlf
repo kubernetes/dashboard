@@ -3629,7 +3629,7 @@
       </trans-unit>
       <trans-unit id="1861657886309326" datatype="html">
         <source>Events </source>
-        <target state="new">Events </target>
+        <target>이벤트 </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/chrome/nav/template.html</context>
           <context context-type="linenumber">130</context>
@@ -3637,7 +3637,7 @@
       </trans-unit>
       <trans-unit id="1813894172148248223" datatype="html">
         <source>Ingress Classes </source>
-        <target state="new">Ingress Classes </target>
+        <target>인그레스 클래스 </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/chrome/nav/template.html</context>
           <context context-type="linenumber">77</context>
@@ -3726,7 +3726,7 @@
       </trans-unit>
       <trans-unit id="4493030647783338212" datatype="html">
         <source>Edit a resource</source>
-        <target state="new">Edit a resource</target>
+        <target>리소스 편집</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/dialogs/editresource/template.html</context>
           <context context-type="linenumber">18</context>
@@ -3760,7 +3760,7 @@
       </trans-unit>
       <trans-unit id="5943454400955467108" datatype="html">
         <source><x id="START_TAG_KD_DATE" ctype="x-kd_date" equiv-text="&quot;\uFFFD#9\uFFFD&quot;"/><x id="CLOSE_TAG_KD_DATE" ctype="x-kd_date" equiv-text="&quot;\uFFFD/#9\uFFFD&quot;"/></source>
-        <target state="new"><x id="START_TAG_KD_DATE" ctype="x-kd_date" equiv-text="&quot;\uFFFD#9\uFFFD&quot;"/><x id="CLOSE_TAG_KD_DATE" ctype="x-kd_date" equiv-text="&quot;\uFFFD/#9\uFFFD&quot;"/></target>
+        <target><x id="START_TAG_KD_DATE" ctype="x-kd_date" equiv-text="&quot;\uFFFD#9\uFFFD&quot;"/><x id="CLOSE_TAG_KD_DATE" ctype="x-kd_date" equiv-text="&quot;\uFFFD/#9\uFFFD&quot;"/></target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/chrome/notifications/template.html</context>
           <context context-type="linenumber">47</context>
@@ -3768,7 +3768,7 @@
       </trans-unit>
       <trans-unit id="864882670483831190" datatype="html">
         <source> There are no notifications </source>
-        <target state="new"> There are no notifications </target>
+        <target> 알림 없음 </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/chrome/notifications/template.html</context>
           <context context-type="linenumber">63</context>
@@ -3784,7 +3784,7 @@
       </trans-unit>
       <trans-unit id="7542300534444838884" datatype="html">
         <source>Kubernetes Dashboard</source>
-        <target state="new">Kubernetes Dashboard</target>
+        <target>쿠버네티스 대시보드</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/login/template.html</context>
           <context context-type="linenumber">23</context>
@@ -3809,7 +3809,7 @@
       </trans-unit>
       <trans-unit id="2349251733948502520" datatype="html">
         <source>Delete a resource</source>
-        <target state="new">Delete a resource</target>
+        <target>리소스 삭제</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/dialogs/deleteresource/template.html</context>
           <context context-type="linenumber">18</context>
@@ -3817,7 +3817,7 @@
       </trans-unit>
       <trans-unit id="7022070615528435141" datatype="html">
         <source>Delete</source>
-        <target state="new">Delete</target>
+        <target>삭제</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/list/column/menu/template.html</context>
           <context context-type="linenumber">57</context>
@@ -3960,7 +3960,7 @@
       </trans-unit>
       <trans-unit id="7920227693577024356" datatype="html">
         <source>Workloads</source>
-        <target state="new">Workloads</target>
+        <target>워크로드</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/index.messages.ts</context>
           <context context-type="linenumber">38</context>
@@ -3992,7 +3992,7 @@
       </trans-unit>
       <trans-unit id="5483358376981519976" datatype="html">
         <source>Resource information</source>
-        <target state="new">Resource information</target>
+        <target>리소스 정보</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/resource/cluster/clusterrolebinding/detail/template.html</context>
           <context context-type="linenumber">22</context>
@@ -4096,7 +4096,7 @@
       </trans-unit>
       <trans-unit id="1726363342938046830" datatype="html">
         <source>About</source>
-        <target state="new">About</target>
+        <target>소개</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/about/template.html</context>
           <context context-type="linenumber">19</context>
