@@ -46,6 +46,7 @@ import {MatToolbarModule} from '@angular/material/toolbar';
 import {MAT_TOOLTIP_DEFAULT_OPTIONS, MatTooltipModule} from '@angular/material/tooltip';
 import {RouterModule} from '@angular/router';
 import {NgxChartsModule} from '@swimlane/ngx-charts';
+import {InViewportModule} from 'ng-in-viewport';
 import {NgPipesModule} from 'ngx-pipes';
 
 import {PipesModule} from '@common/pipes/module';
@@ -92,6 +93,7 @@ const SHARED_DEPENDENCIES = [
   RouterModule,
   NgPipesModule,
   NgxChartsModule,
+  InViewportModule,
 
   // Custom application modules
   PipesModule,
