@@ -13,11 +13,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE}")/../.." && pwd -P)"
-source "${ROOT_DIR}/hack/scripts/conf.sh"
-
 CODE=0
-FILES=($(find ${SRC_DIR} -type f -name '*.html'))
+FILES=($(find src -type f -name '*.html'))
 for FILE in "${FILES[@]}"; do
   CONTENT=$(cat ${FILE})
   FORMATTED_CONTENT=$(npx html-beautify -f "${FILE}")
