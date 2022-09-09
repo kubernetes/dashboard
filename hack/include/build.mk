@@ -17,7 +17,7 @@ endif
 ifeq ($(BUILDOS),Linux)
 	BUILDOS=linux
 endif
-ifeq ($(BUILOS),Darwin)
+ifeq ($(BUILDOS),Darwin)
 	BUILDOS=darwin
 endif
 
