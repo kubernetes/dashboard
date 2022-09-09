@@ -14,7 +14,7 @@
 
 import {Injectable} from '@angular/core';
 import {GlobalSettings} from '@api/root.api';
-import _ from 'lodash';
+import extend from 'lodash-es/extend';
 import {Subject} from 'rxjs';
 
 @Injectable({providedIn: 'root'})
@@ -28,7 +28,7 @@ export class SettingsHelperService {
   }
 
   set settings(settings: GlobalSettings) {
-    this.settings_ = _.extend(this.settings_, settings);
+    this.settings_ = extend(this.settings_, settings);
     this.onSettingsChange.next(this.settings_);
   }
 

@@ -933,6 +933,9 @@
       <trans-unit id="512712988274106243" datatype="html">
         <source>IP</source>
       </trans-unit>
+      <trans-unit id="5127747487569699534" datatype="html">
+        <source>Memory capacity</source>
+      </trans-unit>
       <trans-unit id="515094234886642041" datatype="html">
         <source>HTTP Healthcheck URI</source>
       </trans-unit>
@@ -962,6 +965,9 @@
       </trans-unit>
       <trans-unit id="528589796437229259" datatype="html">
         <source>Memory requirement must be given as a positive number.</source>
+      </trans-unit>
+      <trans-unit id="5298392270155336139" datatype="html">
+        <source>CPU capacity</source>
       </trans-unit>
       <trans-unit id="5322465913003356908" datatype="html">
         <source>Search for <x id="PH" equiv-text="this._activatedRoute.snapshot.queryParams[SEARCH_QUERY_STATE_PARAM]"/></source>
@@ -1194,6 +1200,9 @@
       <trans-unit id="6462224380417375328" datatype="html">
         <source>Service Accounts</source>
       </trans-unit>
+      <trans-unit id="6478267560860767436" datatype="html">
+        <source>Memory capacity (bytes)</source>
+      </trans-unit>
       <trans-unit id="6485157462956720691" datatype="html">
         <source>kubelet version</source>
       </trans-unit>
@@ -1340,6 +1349,9 @@
       </trans-unit>
       <trans-unit id="7143579180750436311" datatype="html">
         <source>Services</source>
+      </trans-unit>
+      <trans-unit id="7144145259185793657" datatype="html">
+        <source>Pods capacity</source>
       </trans-unit>
       <trans-unit id="7151380045834635500" datatype="html">
         <source>Max number of items that can be displayed on every list view.</source>
@@ -1502,6 +1514,9 @@
       </trans-unit>
       <trans-unit id="7873445996550708978" datatype="html">
         <source>Running: <x id="PH" equiv-text="status.running"/></source>
+      </trans-unit>
+      <trans-unit id="7875452846514729865" datatype="html">
+        <source>CPU capacity (cores)</source>
       </trans-unit>
       <trans-unit id="788903633413068121" datatype="html">
         <source>Service Accounts</source>

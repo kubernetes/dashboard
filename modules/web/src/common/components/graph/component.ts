@@ -15,7 +15,8 @@
 import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
 import {DataPoint, Metric} from '@api/root.api';
 import {ViewportMetadata} from '@api/root.ui';
-import * as d3 from 'd3';
+import {curveMonotoneX} from 'd3-shape';
+import {timeFormat} from 'd3-time-format';
 
 import {FormattedValue} from './helper';
 
@@ -37,7 +38,7 @@ export class GraphComponent implements OnInit, OnChanges {
   @Input() graphType: GraphType = GraphType.CPU;
 
   series: Array<{name: string; series: Array<{value: number; name: string}>}> = [];
-  curve = d3.curveMonotoneX;
+  curve = curveMonotoneX;
   customColors = {};
   yAxisLabel = '';
   yScaleMax = 0;
@@ -131,7 +132,7 @@ export class GraphComponent implements OnInit, OnChanges {
 
           return {
             value: Number(point.y.toPrecision(3)),
-            name: d3.timeFormat('%H:%M')(new Date(1000 * point.x)),
+            name: timeFormat('%H:%M')(new Date(1000 * point.x)),
           };
         }),
       },

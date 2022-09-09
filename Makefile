@@ -53,7 +53,7 @@ serve-https: $(PRE)
 #
 # URL: https://localhost:4443
 #
-# Note: Make sure that the port 4443 is free on your localhost
+# Note: Make sure that the ports 4443 (Gateway) and 9001 (API) are free on your localhost
 # Note #2: Does not work with "kind".
 .PHONY: run
 run: $(PRE) --ensure-compose-down --compose
@@ -76,7 +76,7 @@ build-cross:
 	@$(MAKE) --no-print-directory -C $(MODULES_DIRECTORY) TARGET=$(or $(TARGET),build-cross)
 
 .PHONY: --compose
---compose: --ensure-certificates build
+--compose: --ensure-certificates
 	@KUBECONFIG=$(KUBECONFIG) \
 	SYSTEM_BANNER=$(SYSTEM_BANNER) \
 	SYSTEM_BANNER_SEVERITY=$(SYSTEM_BANNER_SEVERITY) \

@@ -1270,6 +1270,10 @@
         <source>IP</source>
         <target state="new">IP</target>
       </trans-unit>
+      <trans-unit id="5127747487569699534" datatype="html">
+        <source>Memory capacity</source>
+        <target state="new">Memory capacity</target>
+      </trans-unit>
       <trans-unit id="515094234886642041" datatype="html">
         <source>HTTP Healthcheck URI</source>
         <target state="new">HTTP Healthcheck URI</target>
@@ -1309,6 +1313,10 @@
       <trans-unit id="528589796437229259" datatype="html">
         <source>Memory requirement must be given as a positive number.</source>
         <target>Speicheranforderung muss als postive Zahl angegeben werden.</target>
+      </trans-unit>
+      <trans-unit id="5298392270155336139" datatype="html">
+        <source>CPU capacity</source>
+        <target state="new">CPU capacity</target>
       </trans-unit>
       <trans-unit id="5322465913003356908" datatype="html">
         <source>Search for <x id="PH" equiv-text="this._activatedRoute.snapshot.queryParams[SEARCH_QUERY_STATE_PARAM]"/></source>
@@ -1624,6 +1632,10 @@
         <source>Service Accounts</source>
         <target>Service Accounts</target>
       </trans-unit>
+      <trans-unit id="6478267560860767436" datatype="html">
+        <source>Memory capacity (bytes)</source>
+        <target state="new">Memory capacity (bytes)</target>
+      </trans-unit>
       <trans-unit id="6485157462956720691" datatype="html">
         <source>kubelet version</source>
         <target>Kubelet-Version</target>
@@ -1819,6 +1831,10 @@
       <trans-unit id="7143579180750436311" datatype="html">
         <source>Services</source>
         <target>Services</target>
+      </trans-unit>
+      <trans-unit id="7144145259185793657" datatype="html">
+        <source>Pods capacity</source>
+        <target state="new">Pods capacity</target>
       </trans-unit>
       <trans-unit id="7151380045834635500" datatype="html">
         <source>Max number of items that can be displayed on every list view.</source>
@@ -2035,6 +2051,10 @@
       <trans-unit id="7873445996550708978" datatype="html">
         <source>Running: <x id="PH" equiv-text="status.running"/></source>
         <target state="new">Running: <x id="PH" equiv-text="status.running"/></target>
+      </trans-unit>
+      <trans-unit id="7875452846514729865" datatype="html">
+        <source>CPU capacity (cores)</source>
+        <target state="new">CPU capacity (cores)</target>
       </trans-unit>
       <trans-unit id="788903633413068121" datatype="html">
         <source>Service Accounts</source>
