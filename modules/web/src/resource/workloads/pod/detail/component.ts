@@ -20,7 +20,7 @@ import {NotificationsService} from '@common/services/global/notifications';
 import {KdStateService} from '@common/services/global/state';
 import {EndpointManager, Resource} from '@common/services/resource/endpoint';
 import {NamespacedResourceService} from '@common/services/resource/resource';
-import _ from 'lodash';
+import isEmpty from 'lodash-es/isEmpty';
 import {Subject} from 'rxjs';
 import {takeUntil} from 'rxjs/operators';
 
@@ -71,7 +71,7 @@ export class PodDetailComponent implements OnInit, OnDestroy {
   }
 
   hasSecurityContext(): boolean {
-    return this.pod && !_.isEmpty(this.pod.securityContext);
+    return this.pod && !isEmpty(this.pod.securityContext);
   }
 
   getNodeHref(name: string): string {

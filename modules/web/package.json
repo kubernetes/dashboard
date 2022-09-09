@@ -32,7 +32,8 @@
     "test": "npx jest -c jest.config.js",
     "coverage": "npx jest -c jest.config.js --coverage -i",
     "e2e": "concurrently -kill-others --success first \"yarn start:e2e\" \"wait-on http://localhost:8080 && npx cypress run\"",
-    "e2e:headed": "concurrently -kill-others --success first \"yarn start:e2e\" \"wait-on http://localhost:8080 && npx cypress run --headed\""
+    "e2e:headed": "concurrently -kill-others --success first \"yarn start:e2e\" \"wait-on http://localhost:8080 && npx cypress run --headed\"",
+    "analyze": "ng build --stats-json && webpack-bundle-analyzer dist/stats.json"
   },
   "lint-staged": {
     "src/**/*.ts": [
@@ -60,7 +61,6 @@
     "ace-builds": "1.5.3",
     "core-js": "3.22.7",
     "crop-url": "4.0.1",
-    "d3": "6.7.0",
     "file-saver": "2.0.5",
     "js-yaml": "4.1.0",
     "jwt-decode": "3.1.2",
@@ -97,7 +97,7 @@
     "@types/jasminewd2": "2.0.10",
     "@types/jest": "27.5.1",
     "@types/js-yaml": "4.0.5",
-    "@types/lodash": "4.14.182",
+    "@types/lodash-es": "4.17.6",
     "@types/node": "17.0.36",
     "@typescript-eslint/eslint-plugin": "5.27.0",
     "@typescript-eslint/parser": "5.27.0",
@@ -120,7 +120,7 @@
     "js-beautify": "1.14.3",
     "license-check-and-add": "4.0.5",
     "lint-staged": "12.4.3",
-    "lodash": "4.17.21",
+    "lodash-es": "4.17.21",
     "minimatch": "5.1.0",
     "minimist": "1.2.6",
     "ng-extract-i18n-merge": "1.4.0",
@@ -143,6 +143,7 @@
     "ts-node": "10.8.0",
     "typescript": "4.6.4",
     "wait-on": "6.0.1",
+    "webpack-bundle-analyzer": "4.6.1",
     "webpack-dev-server": "4.8.1"
   },
   "overrides": {

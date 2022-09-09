@@ -53,7 +53,7 @@
           "options": {
             "optimization": false,
             "progress": true,
-            "outputPath": ".tmp/dist",
+            "outputPath": "dist",
             "index": "src/index.html",
             "main": "src/index.ts",
             "tsConfig": "tsconfig.app.json",
@@ -76,7 +76,7 @@
               },
               {
                 "glob": "**/*",
-                "input": "node_modules/ace-builds/src-noconflict",
+                "input": "node_modules/ace-builds/src-min-noconflict",
                 "output": "/ace"
               }
             ],

@@ -17,7 +17,7 @@ import {ConfigMapKeyRef, Container, EnvVar, SecretKeyRef} from '@api/root.api';
 import {Status, StatusClass} from '@common/components/resourcelist/statuses';
 import {DecoderService} from '@common/services/global/decoder';
 import {KdStateService} from '@common/services/global/state';
-import _ from 'lodash';
+import isEmpty from 'lodash-es/isEmpty';
 
 @Component({
   selector: 'kd-container-card',
@@ -88,7 +88,7 @@ export class ContainerCardComponent implements OnChanges {
   }
 
   hasSecurityContext(): boolean {
-    return this.container && !_.isEmpty(this.container.securityContext);
+    return this.container && !isEmpty(this.container.securityContext);
   }
 
   private hasState_(): boolean {

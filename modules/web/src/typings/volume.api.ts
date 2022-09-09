@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import {SupportedResources, StringMap} from '@api/root.shared';
-import {isObject} from 'lodash';
+import isObject from 'lodash-es/isObject';
 
 export class PersistentVolumeSource {
   name: string;

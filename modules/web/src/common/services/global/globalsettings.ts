@@ -16,7 +16,7 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {EventEmitter, Injectable} from '@angular/core';
 import {GlobalSettings} from '@api/root.api';
 import {onSettingsFailCallback, onSettingsLoadCallback} from '@api/root.ui';
-import _ from 'lodash';
+import isArray from 'lodash-es/isArray';
 import {Observable, of, ReplaySubject, Subject} from 'rxjs';
 import {catchError, switchMap, takeUntil, tap} from 'rxjs/operators';
 
@@ -132,7 +132,7 @@ export class GlobalSettingsService {
   }
 
   getNamespaceFallbackList(): string[] {
-    return _.isArray(this.settings_.namespaceFallbackList)
+    return isArray(this.settings_.namespaceFallbackList)
       ? this.settings_.namespaceFallbackList
       : [this.settings_.defaultNamespace];
   }

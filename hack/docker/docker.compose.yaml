@@ -28,8 +28,6 @@ services:
       --system-banner-severity=${SYSTEM_BANNER_SEVERITY:?}
     tmpfs:
       - /tmp
-    ports:
-      - "8001:8001"
   api:
     build:
       context: ../..
@@ -49,7 +47,7 @@ services:
       - /tmp
     ports:
       - "9001:9001"
-  metrics-scraper:
+  scraper:
     image: kubernetesui/metrics-scraper:v1.0.8
     command:
       --kubeconfig=${KUBECONFIG:?}
@@ -59,21 +57,6 @@ services:
       - ${KUBECONFIG:?}:${KUBECONFIG:?}
     tmpfs:
       - /tmp
-    ports:
-      - "7001:7001"
-#  metrics-server:
-#    image: k8s.gcr.io/metrics-server/metrics-server:v0.6.1
-#    command:
-#      - --kubeconfig=${KUBECONFIG:?}
-#      - --cert-dir=/tmp
-#      - --secure-port=5443
-#      - --metric-resolution=15s
-#    volumes:
-#      - ${KUBECONFIG:?}:${KUBECONFIG:?}
-#    tmpfs:
-#      - /tmp
-#    ports:
-#      - "5443:5443"
   gateway:
     build:
       context: ../..

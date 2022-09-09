@@ -17,7 +17,7 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {MatDialog} from '@angular/material/dialog';
 import {GlobalSettings, NamespaceList} from '@api/root.api';
-import _ from 'lodash';
+import isEqual from 'lodash-es/isEqual';
 import {Observable, of, Subject} from 'rxjs';
 import {catchError, take, takeUntil, tap} from 'rxjs/operators';
 
@@ -110,7 +110,7 @@ export class GlobalSettingsComponent implements OnInit, OnDestroy {
   }
 
   canSave(): boolean {
-    return !_.isEqual(this.settings, this.externalSettings_);
+    return !isEqual(this.settings, this.externalSettings_);
   }
 
   save(): void {

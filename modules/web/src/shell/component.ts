@@ -16,7 +16,7 @@ import {AfterViewInit, ChangeDetectorRef, Component, ElementRef, OnDestroy, View
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {ActivatedRoute, Router} from '@angular/router';
 import {PodContainerList, ShellFrame, SJSCloseEvent, SJSMessageEvent, TerminalResponse} from '@api/root.api';
-import {debounce} from 'lodash';
+import debounce from 'lodash-es/debounce';
 import {ReplaySubject, Subject} from 'rxjs';
 import {takeUntil} from 'rxjs/operators';
 import {Terminal} from 'xterm';
