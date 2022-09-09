@@ -93,3 +93,5 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - uses: actions/dependency-review-action@v1
+        with:
+          fail-on-severity: critical
