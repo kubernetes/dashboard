@@ -17,7 +17,6 @@ import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {Metric} from '@api/root.api';
 import {CardComponent} from '@common/components/card/component';
 import {GraphComponent, GraphType} from '@common/components/graph/component';
-import {InViewportModule, InViewportService} from 'ng-in-viewport';
 import {SharedModule} from '../../../shared.module';
 
 import {GraphCardComponent} from './component';
@@ -37,8 +36,7 @@ describe('GraphCardComponent', () => {
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [GraphCardComponent, GraphComponent, CardComponent],
-      providers: [InViewportService],
-      imports: [SharedModule, NoopAnimationsModule, InViewportModule],
+      imports: [SharedModule, NoopAnimationsModule],
     }).compileComponents();
   }));
 
