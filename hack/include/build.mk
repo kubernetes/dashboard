@@ -7,7 +7,7 @@ BUILDOS ?= $(shell uname -s)
 ifeq ($(BUILDARCH),x86_64)
 	BUILDARCH=amd64
 endif
-ifeq ($(BUILDARCH),aarch64)
+ifeq ($(BUILDARCH),arch64)
 	BUILDARCH=arm64
 endif
 ifeq ($(BUILDARCH),armv7l)
@@ -17,7 +17,7 @@ endif
 ifeq ($(BUILDOS),Linux)
 	BUILDOS=linux
 endif
-ifeq ($(BUILOS),Darwin)
+ifeq ($(BUILDOS),Darwin)
 	BUILDOS=darwin
 endif
 

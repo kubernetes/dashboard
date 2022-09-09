@@ -16,17 +16,11 @@
 # Directories.
 ROOT_DIR="$(cd $(dirname "${BASH_SOURCE}")/../.. && pwd -P)"
 AIO_DIR="${ROOT_DIR}/hack"
-I18N_DIR="${FRONTEND_DIR}/i18n"
 DIST_DIR="${ROOT_DIR}/.dist"
 WEB_DIST_DIR="${DIST_DIR}/web"
-WEB_DIR="${ROOT_DIR}/modules/web"
 CACHE_DIR="${ROOT_DIR}/.cached_tools"
-DEFAULT_ARCHITECTURE=amd64
 ARCHITECTURES=(amd64 arm64 arm ppc64le s390x)
 RELEASE_VERSION=2.5.0
-
-# Binaries.
-NG_BIN="${FRONTEND_DIR}/node_modules/.bin/ng"
 
 # Global constants.
 ARCH=$(uname | awk '{print tolower($0)}')
@@ -37,17 +31,6 @@ HEAPSTER_PORT=8082
 KIND_VERSION="v0.14.0"
 K8S_VERSION="v1.24.3"
 KIND_BIN=${CACHE_DIR}/kind-${KIND_VERSION}
-CODEGEN_VERSION="v0.24.1"
-CODEGEN_BIN=${GOPATH}/pkg/mod/k8s.io/code-generator@${CODEGEN_VERSION}/generate-groups.sh
-
-# Setup logger.
-if test -t 1; then
-  COLORS=`tput colors`
-  if test -n "$COLORS" && test $COLORS -ge 8; then
-    DEFAULT_STYLE=`tput sgr0`
-    RED_STYLE=`tput setaf 1`
-  fi
-fi
 
 function ensure-cache {
   echo "\nMaking sure that ${CACHE_DIR} directory exists"

@@ -38,7 +38,7 @@ describe('GraphCardComponent', () => {
     TestBed.configureTestingModule({
       declarations: [GraphCardComponent, GraphComponent, CardComponent],
       providers: [InViewportService],
-      imports: [SharedModule, NoopAnimationsModule, InViewportModule],
+      imports: [SharedModule, NoopAnimationsModule],
     }).compileComponents();
   }));
 

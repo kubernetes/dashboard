@@ -107,12 +107,6 @@ build-cross:
 --ensure-certificates:
 	@$(MAKE) --no-print-directory -C $(GATEWAY_DIRECTORY) generate-certificates
 
-#.PHONY: ensure-codegen
-#ensure-codegen: ensure-go
-#	go get -d k8s.io/code-generator@$(CODEGEN_VERSION)
-#	go mod tidy
-#	chmod +x $(CODEGEN_BIN)
-#
 #.PHONY: build-cross
 #build-cross: clean ensure-go
 #	./aio/scripts/build.sh -c

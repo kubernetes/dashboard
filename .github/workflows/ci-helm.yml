@@ -20,7 +20,6 @@ on:
     - '.github/workflows/ci-helm.yml'
 permissions:
   contents: read
-
 jobs:
 
   helm-lint-test:

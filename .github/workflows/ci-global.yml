@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-name: CI / Global
+name: CI
 on:
   push:
     branches: [ master ]
@@ -27,29 +27,6 @@ on:
 permissions:
   contents: read
 jobs:
-  e2e-tests:
-    name: End-to-end tests
-    runs-on: ubuntu-latest
-    env:
-      NG_CLI_ANALYTICS: ci
-      GOPROXY: "https://proxy.golang.org"
-      NODE_OPTIONS: "--max-old-space-size=8192"
-      TERM: xterm
-    steps:
-      - uses: helm/kind-action@v1.2.0
-      - uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
-      - uses: actions/setup-go@v3
-        with:
-          go-version: 1.19
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 16.15.0
-      - run: yarn
-      - run: npm i cypress
-      - run: node aio/scripts/version.mjs
-      - run: make e2e
 
   license-check:
     name: License check
@@ -92,4 +69,34 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - uses: actions/dependency-review-action@v1
+        with:
+          fetch-depth: 0
+      - uses: actions/dependency-review-action@v2
+        with:
+          fail-on-severity: critical
+
+  e2e:
+    name: End-to-end tests
+    runs-on: ubuntu-latest
+    env:
+      NG_CLI_ANALYTICS: ci
+      GOPROXY: "https://proxy.golang.org"
+      NODE_OPTIONS: "--max-old-space-size=8192"
+      TERM: xterm
+    defaults:
+      run:
+        working-directory: modules/web
+    steps:
+      - uses: helm/kind-action@v1.3.0
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-go@v3
+        with:
+          go-version: 1.19
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 16.15.0
+      - run: yarn
+      - run: node hack/version.mjs
+      - run: make e2e
