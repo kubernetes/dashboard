@@ -25,6 +25,7 @@ on:
 permissions:
   contents: read
 jobs:
+
   static:
     name: Static check
     runs-on: ubuntu-latest
