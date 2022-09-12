@@ -526,7 +526,7 @@
       </trans-unit>
       <trans-unit id="1341665337915148247" datatype="html">
         <source>Cron Jobs</source>
-        <target state="new">Cron Jobs</target>
+        <target>크론 잡</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/resourcelist/cronjob/template.html</context>
           <context context-type="linenumber">24</context>
@@ -558,7 +558,7 @@
       </trans-unit>
       <trans-unit id="8019538712284963816" datatype="html">
         <source>Replication Controllers</source>
-        <target state="new">Replication Controllers</target>
+        <target>레플리케이션 컨트롤러</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/resourcelist/replicationcontroller/template.html</context>
           <context context-type="linenumber">21</context>
@@ -574,7 +574,7 @@
       </trans-unit>
       <trans-unit id="5014304060513019917" datatype="html">
         <source>Workload Status</source>
-        <target state="new">Workload Status</target>
+        <target>워크로드 상태</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/workloadstatus/template.html</context>
           <context context-type="linenumber">20</context>
@@ -582,7 +582,7 @@
       </trans-unit>
       <trans-unit id="8503490437651973860" datatype="html">
         <source>Stateful Sets</source>
-        <target state="new">Stateful Sets</target>
+        <target>스테이트풀 셋</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/resourcelist/statefulset/template.html</context>
           <context context-type="linenumber">24</context>
@@ -598,7 +598,7 @@
       </trans-unit>
       <trans-unit id="795890916060309463" datatype="html">
         <source>Roles</source>
-        <target state="new">Roles</target>
+        <target>롤</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/resourcelist/role/template.html</context>
           <context context-type="linenumber">21</context>
@@ -610,7 +610,7 @@
       </trans-unit>
       <trans-unit id="4230227443728227002" datatype="html">
         <source>Role Bindings</source>
-        <target state="new">Role Bindings</target>
+        <target>롤 바인딩</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/resourcelist/rolebinding/template.html</context>
           <context context-type="linenumber">21</context>
@@ -622,7 +622,7 @@
       </trans-unit>
       <trans-unit id="7143579180750436311" datatype="html">
         <source>Services</source>
-        <target state="new">Services</target>
+        <target>서비스</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/resourcelist/service/template.html</context>
           <context context-type="linenumber">21</context>
@@ -634,7 +634,7 @@
       </trans-unit>
       <trans-unit id="8146913170965682434" datatype="html">
         <source>Config And Storage</source>
-        <target state="new">Config And Storage</target>
+        <target>컨피그 및 스토리지</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/index.messages.ts</context>
           <context context-type="linenumber">51</context>
@@ -658,7 +658,7 @@
       </trans-unit>
       <trans-unit id="512712988274106243" datatype="html">
         <source>IP</source>
-        <target state="new">IP</target>
+        <target>IP</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/resource/workloads/pod/detail/template.html</context>
           <context context-type="linenumber">61</context>
@@ -666,7 +666,7 @@
       </trans-unit>
       <trans-unit id="2276464361654844703" datatype="html">
         <source>QoS Class</source>
-        <target state="new">QoS Class</target>
+        <target>QoS 클래스</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/resource/workloads/pod/detail/template.html</context>
           <context context-type="linenumber">67</context>
@@ -674,7 +674,7 @@
       </trans-unit>
       <trans-unit id="9092584317002115275" datatype="html">
         <source>Service Account</source>
-        <target state="new">Service Account</target>
+        <target>서비스 어카운트</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/resource/workloads/pod/detail/template.html</context>
           <context context-type="linenumber">79</context>
@@ -742,7 +742,7 @@
       </trans-unit>
       <trans-unit id="3326877877555410533" datatype="html">
         <source>Started</source>
-        <target state="new">Started</target>
+        <target>시작됨</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/container/template.html</context>
           <context context-type="linenumber">50</context>
@@ -750,7 +750,7 @@
       </trans-unit>
       <trans-unit id="2397234605876541174" datatype="html">
         <source>Image Pull Secrets</source>
-        <target state="new">Image Pull Secrets</target>
+        <target>이미지 풀 시크릿</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/resource/cluster/serviceaccount/detail/template.html</context>
           <context context-type="linenumber">25</context>
@@ -762,7 +762,7 @@
       </trans-unit>
       <trans-unit id="3787293861158300741" datatype="html">
         <source>Init containers</source>
-        <target state="new">Init containers</target>
+        <target>초기화 컨테이너</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/resource/workloads/pod/detail/template.html</context>
           <context context-type="linenumber">132</context>
@@ -770,7 +770,7 @@
       </trans-unit>
       <trans-unit id="1686914328067460503" datatype="html">
         <source>Reclaim policy</source>
-        <target state="new">Reclaim policy</target>
+        <target>반환 정책</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/resource/cluster/persistentvolume/detail/template.html</context>
           <context context-type="linenumber">46</context>
@@ -778,7 +778,7 @@
       </trans-unit>
       <trans-unit id="4222409682577085383" datatype="html">
         <source>Storage class</source>
-        <target state="new">Storage class</target>
+        <target>스토리지 클래스</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/resource/cluster/persistentvolume/detail/template.html</context>
           <context context-type="linenumber">52</context>
@@ -786,7 +786,7 @@
       </trans-unit>
       <trans-unit id="1328651869817330586" datatype="html">
         <source>Mount Option(s)</source>
-        <target state="new">Mount Option(s)</target>
+        <target>마운트 옵션</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/resource/cluster/persistentvolume/detail/template.html</context>
           <context context-type="linenumber">73</context>
@@ -794,7 +794,7 @@
       </trans-unit>
       <trans-unit id="4567232011016322094" datatype="html">
         <source>Access modes</source>
-        <target state="new">Access modes</target>
+        <target>접근 방식</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/resource/cluster/persistentvolume/detail/template.html</context>
           <context context-type="linenumber">83</context>
@@ -842,7 +842,7 @@
       </trans-unit>
       <trans-unit id="8443285784216066352" datatype="html">
         <source>Download logs file</source>
-        <target state="new">Download logs file</target>
+        <target>로그 파일 다운로드</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/dialogs/download/template.html</context>
           <context context-type="linenumber">19</context>
@@ -866,7 +866,7 @@
       </trans-unit>
       <trans-unit id="6991803345598959405" datatype="html">
         <source>There is nothing to display here</source>
-        <target state="new">There is nothing to display here</target>
+        <target>표시할 데이터가 없습니다.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/list/zerostate/template.html</context>
           <context context-type="linenumber">22</context>
@@ -878,7 +878,7 @@
       </trans-unit>
       <trans-unit id="8830410678905901214" datatype="html">
         <source>No resources found.</source>
-        <target state="new">No resources found.</target>
+        <target>리소스를 찾을 수 없습니다.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/list/zerostate/template.html</context>
           <context context-type="linenumber">27</context>
@@ -886,7 +886,7 @@
       </trans-unit>
       <trans-unit id="2079395509894825886" datatype="html">
         <source>Conditions</source>
-        <target state="new">Conditions</target>
+        <target>조건</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/condition/template.html</context>
           <context context-type="linenumber">20</context>
@@ -906,7 +906,7 @@
       </trans-unit>
       <trans-unit id="1519954996184640001" datatype="html">
         <source>Error</source>
-        <target state="new">Error</target>
+        <target>에러</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/index.messages.ts</context>
           <context context-type="linenumber">32</context>
@@ -938,7 +938,7 @@
       </trans-unit>
       <trans-unit id="218403386307979629" datatype="html">
         <source>Metadata</source>
-        <target state="new">Metadata</target>
+        <target>메타데이터</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/objectmeta/template.html</context>
           <context context-type="linenumber">19</context>
@@ -946,7 +946,7 @@
       </trans-unit>
       <trans-unit id="1236604279860679031" datatype="html">
         <source>Restart</source>
-        <target state="new">Restart</target>
+        <target>재시작</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/actionbar/detailactions/restart/template.html</context>
           <context context-type="linenumber">21</context>
