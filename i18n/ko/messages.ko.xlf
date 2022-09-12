@@ -3000,7 +3000,7 @@
       </trans-unit>
       <trans-unit id="322645671410395107" datatype="html">
         <source>Resource Quotas</source>
-        <target state="new">Resource Quotas</target>
+        <target>리소스 쿼터</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/quotas/template.html</context>
           <context context-type="linenumber">20</context>
@@ -3008,7 +3008,7 @@
       </trans-unit>
       <trans-unit id="8825668517883103754" datatype="html">
         <source>Cluster Roles</source>
-        <target state="new">Cluster Roles</target>
+        <target>클러스터 롤</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/resourcelist/clusterrole/template.html</context>
           <context context-type="linenumber">21</context>
@@ -3020,7 +3020,7 @@
       </trans-unit>
       <trans-unit id="3463375855672784957" datatype="html">
         <source>Cluster Role Bindings</source>
-        <target state="new">Cluster Role Bindings</target>
+        <target>클러스터 롤 바인딩</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/resourcelist/clusterrolebinding/template.html</context>
           <context context-type="linenumber">21</context>
@@ -3032,7 +3032,7 @@
       </trans-unit>
       <trans-unit id="3394717374488548686" datatype="html">
         <source>Config Maps</source>
-        <target state="new">Config Maps</target>
+        <target>컨피그 맵</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/resourcelist/configmap/template.html</context>
           <context context-type="linenumber">21</context>
@@ -3044,7 +3044,7 @@
       </trans-unit>
       <trans-unit id="1730144297199101193" datatype="html">
         <source>Custom Resource Definitions</source>
-        <target state="new">Custom Resource Definitions</target>
+        <target>커스텀 리소스 데피니션</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/resourcelist/crd/template.html</context>
           <context context-type="linenumber">21</context>
@@ -3056,7 +3056,7 @@
       </trans-unit>
       <trans-unit id="4930506384627295710" datatype="html">
         <source>Settings</source>
-        <target state="new">Settings</target>
+        <target>세팅</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/index.messages.ts</context>
           <context context-type="linenumber">67</context>
@@ -3100,7 +3100,7 @@
       </trans-unit>
       <trans-unit id="7585826646011739428" datatype="html">
         <source>Edit</source>
-        <target state="new">Edit</target>
+        <target>편집</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/list/column/menu/template.html</context>
           <context context-type="linenumber">49</context>
@@ -3176,7 +3176,7 @@
       </trans-unit>
       <trans-unit id="788903633413068121" datatype="html">
         <source>Service Accounts</source>
-        <target state="new">Service Accounts</target>
+        <target>서비스 어카운트</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/resourcelist/serviceaccount/template.html</context>
           <context context-type="linenumber">21</context>
@@ -3188,7 +3188,7 @@
       </trans-unit>
       <trans-unit id="960921869392057255" datatype="html">
         <source>Storage Classes</source>
-        <target state="new">Storage Classes</target>
+        <target>스토리지 클래스</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/resourcelist/storageclass/template.html</context>
           <context context-type="linenumber">21</context>
@@ -3200,7 +3200,7 @@
       </trans-unit>
       <trans-unit id="7806177791059234860" datatype="html">
         <source>Global settings are stored in config map, so all of them are applied for every instance of the app.</source>
-        <target state="new">Global settings are stored in config map, so all of them are applied for every instance of the app.</target>
+        <target>전역 설정은 컨피그 맵에 저장되며, 앱의 모든 인스턴스에 적용됩니다.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/settings/global/template.html</context>
           <context context-type="linenumber">23</context>
@@ -3208,7 +3208,7 @@
       </trans-unit>
       <trans-unit id="4588386421413885519" datatype="html">
         <source>Secrets</source>
-        <target state="new">Secrets</target>
+        <target>시크릿</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/index.messages.ts</context>
           <context context-type="linenumber">54</context>
@@ -3236,7 +3236,7 @@
       </trans-unit>
       <trans-unit id="2944102521023817891" datatype="html">
         <source>Cluster</source>
-        <target state="new">Cluster</target>
+        <target>클러스터</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/index.messages.ts</context>
           <context context-type="linenumber">56</context>
@@ -3273,7 +3273,7 @@
       </trans-unit>
       <trans-unit id="4972463622417704805" datatype="html">
         <source>SE Linux Role</source>
-        <target state="new">SE Linux Role</target>
+        <target>SE 리눅스 롤</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/securitycontext/template.html</context>
           <context context-type="linenumber">28</context>
@@ -3281,7 +3281,7 @@
       </trans-unit>
       <trans-unit id="7531425010556303342" datatype="html">
         <source>SE Linux Type</source>
-        <target state="new">SE Linux Type</target>
+        <target>SE 리눅스 타입</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/securitycontext/template.html</context>
           <context context-type="linenumber">33</context>
@@ -3289,7 +3289,7 @@
       </trans-unit>
       <trans-unit id="5087843362946222470" datatype="html">
         <source>SE Linux Level</source>
-        <target state="new">SE Linux Level</target>
+        <target>SE 리눅스 레벨</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/securitycontext/template.html</context>
           <context context-type="linenumber">38</context>
