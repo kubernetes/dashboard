@@ -5004,7 +5004,7 @@
       </trans-unit>
       <trans-unit id="5808753866335051996" datatype="html">
         <source>Monitors</source>
-        <target state="new">Monitors</target>
+        <target>모니터</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/resource/cluster/persistentvolume/detail/source/template.html</context>
           <context context-type="linenumber">356</context>
@@ -5012,7 +5012,7 @@
       </trans-unit>
       <trans-unit id="7101197021456818771" datatype="html">
         <source>Pool</source>
-        <target state="new">Pool</target>
+        <target>풀</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/resource/cluster/persistentvolume/detail/source/template.html</context>
           <context context-type="linenumber">365</context>
@@ -5020,7 +5020,7 @@
       </trans-unit>
       <trans-unit id="7737323664003098638" datatype="html">
         <source>Secret reference name</source>
-        <target state="new">Secret reference name</target>
+        <target>시크릿 참조 이름</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/resource/cluster/persistentvolume/detail/source/template.html</context>
           <context context-type="linenumber">377</context>
@@ -5028,7 +5028,7 @@
       </trans-unit>
       <trans-unit id="2392488717875840729" datatype="html">
         <source>User</source>
-        <target state="new">User</target>
+        <target>사용자</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/resource/cluster/persistentvolume/detail/source/template.html</context>
           <context context-type="linenumber">383</context>
@@ -5036,7 +5036,7 @@
       </trans-unit>
       <trans-unit id="1070281023803369713" datatype="html">
         <source>Ingress Class Name</source>
-        <target state="new">Ingress Class Name</target>
+        <target>인그레스 클래스 이름</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/resource/discovery/ingress/detail/template.html</context>
           <context context-type="linenumber">29</context>
@@ -5044,7 +5044,7 @@
       </trans-unit>
       <trans-unit id="7613204568422973266" datatype="html">
         <source>Default Backend</source>
-        <target state="new">Default Backend</target>
+        <target>기본 백엔드</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/resource/discovery/ingress/detail/template.html</context>
           <context context-type="linenumber">49</context>
@@ -5052,7 +5052,7 @@
       </trans-unit>
       <trans-unit id="8604852007710946848" datatype="html">
         <source>Service Name</source>
-        <target state="new">Service Name</target>
+        <target>서비스 이름</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/resource/discovery/ingress/detail/template.html</context>
           <context context-type="linenumber">55</context>
@@ -5060,7 +5060,7 @@
       </trans-unit>
       <trans-unit id="9054116104324393944" datatype="html">
         <source>Service Port Name</source>
-        <target state="new">Service Port Name</target>
+        <target>서비스 포트 이름</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/resource/discovery/ingress/detail/template.html</context>
           <context context-type="linenumber">61</context>
@@ -5068,7 +5068,7 @@
       </trans-unit>
       <trans-unit id="3611950223744571613" datatype="html">
         <source>Service Port Number</source>
-        <target state="new">Service Port Number</target>
+        <target>서비스 포트 번호</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/resource/discovery/ingress/detail/template.html</context>
           <context context-type="linenumber">67</context>
@@ -5084,7 +5084,7 @@
       </trans-unit>
       <trans-unit id="2796603716274587287" datatype="html">
         <source>Label Selector</source>
-        <target state="new">Label Selector</target>
+        <target>레이블 셀렉터</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/resource/workloads/replicationcontroller/detail/template.html</context>
           <context context-type="linenumber">30</context>
@@ -5096,7 +5096,7 @@
       </trans-unit>
       <trans-unit id="1341893810332676123" datatype="html">
         <source>Init images</source>
-        <target state="new">Init images</target>
+        <target>초기화 이미지</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/resource/workloads/daemonset/detail/template.html</context>
           <context context-type="linenumber">48</context>
@@ -5144,7 +5144,7 @@
       </trans-unit>
       <trans-unit id="4052582653153593975" datatype="html">
         <source>Config and Storage</source>
-        <target state="new">Config and Storage</target>
+        <target>컨피그 및 스토리지</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/overview/template.html</context>
           <context context-type="linenumber">58</context>
@@ -5280,7 +5280,7 @@
       </trans-unit>
       <trans-unit id="6099594451254122208" datatype="html">
         <source>Create a new namespace</source>
-        <target state="new">Create a new namespace</target>
+        <target>새로운 네임스페이스 만들기</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/create/from/form/createnamespace/template.html</context>
           <context context-type="linenumber">18</context>
@@ -5446,9 +5446,9 @@
       </trans-unit>
       <trans-unit id="7109976949603290892" datatype="html">
         <source> Logs from <x id="START_TAG_KD_DATE" ctype="x-kd_date" equiv-text="&quot;\uFFFD#2\uFFFD&quot;"/><x id="CLOSE_TAG_KD_DATE" ctype="x-kd_date" equiv-text="&quot;[\uFFFD/#2\uFFFD|\uFFFD/#3\uFFFD]&quot;"/> to <x id="START_TAG_KD_DATE_1" ctype="x-kd_date_1" equiv-text="&quot;\uFFFD#3\uFFFD&quot;"/><x id="CLOSE_TAG_KD_DATE" ctype="x-kd_date" equiv-text="&quot;[\uFFFD/#2\uFFFD|\uFFFD/#3\uFFFD]&quot;"/> UTC </source>
-        <target state="new"> Logs from <x id="START_TAG_KD_DATE" ctype="x-kd_date" equiv-text="&lt;kd-date [date]=&quot;podLogs?.info.fromDate&quot;
-               format=&quot;short&quot;>"/><x id="CLOSE_TAG_KD_DATE" ctype="x-kd_date" equiv-text="&lt;/kd-date>"/> to <x id="START_TAG_KD_DATE_1" ctype="x-kd_date_1" equiv-text="&lt;kd-date [date]=&quot;podLogs?.info.toDate&quot;
-               format=&quot;short&quot;>"/><x id="CLOSE_TAG_KD_DATE" ctype="x-kd_date" equiv-text="&lt;/kd-date>"/> UTC </target>
+        <target> <x id="START_TAG_KD_DATE" ctype="x-kd_date" equiv-text="&lt;kd-date [date]=&quot;podLogs?.info.fromDate&quot;
+               format=&quot;short&quot;>"/><x id="CLOSE_TAG_KD_DATE" ctype="x-kd_date" equiv-text="&lt;/kd-date>"/> 에서부터 <x id="START_TAG_KD_DATE_1" ctype="x-kd_date_1" equiv-text="&lt;kd-date [date]=&quot;podLogs?.info.toDate&quot;
+               format=&quot;short&quot;>"/><x id="CLOSE_TAG_KD_DATE" ctype="x-kd_date" equiv-text="&lt;/kd-date>"/> 까지의 로그 (UTC) </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/logs/template.html</context>
           <context context-type="linenumber">94</context>
@@ -5456,7 +5456,7 @@
       </trans-unit>
       <trans-unit id="607655052894272917" datatype="html">
         <source>Path </source>
-        <target state="new">Path </target>
+        <target>경로 </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/ingressrulelist/template.html</context>
           <context context-type="linenumber">47</context>
@@ -5464,7 +5464,7 @@
       </trans-unit>
       <trans-unit id="2176659033176029418" datatype="html">
         <source>Key</source>
-        <target state="new">Key</target>
+        <target>키</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/resource/cluster/persistentvolume/detail/source/template.html</context>
           <context context-type="linenumber">244</context>
@@ -5472,7 +5472,7 @@
       </trans-unit>
       <trans-unit id="2411065404041685586" datatype="html">
         <source>Path Type </source>
-        <target state="new">Path Type </target>
+        <target>경로 유형 </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/ingressrulelist/template.html</context>
           <context context-type="linenumber">54</context>
@@ -5480,7 +5480,7 @@
       </trans-unit>
       <trans-unit id="1134765132854526890" datatype="html">
         <source>Service Name </source>
-        <target state="new">Service Name </target>
+        <target>서비스 이름 </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/ingressrulelist/template.html</context>
           <context context-type="linenumber">61</context>
@@ -5488,7 +5488,7 @@
       </trans-unit>
       <trans-unit id="3426643717372750272" datatype="html">
         <source>Service Port </source>
-        <target state="new">Service Port </target>
+        <target>서비스 포트</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/ingressrulelist/template.html</context>
           <context context-type="linenumber">88</context>
@@ -5496,7 +5496,7 @@
       </trans-unit>
       <trans-unit id="1575304063225693008" datatype="html">
         <source>TLS Secret </source>
-        <target state="new">TLS Secret </target>
+        <target>TLS 시크릿</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/ingressrulelist/template.html</context>
           <context context-type="linenumber">97</context>
