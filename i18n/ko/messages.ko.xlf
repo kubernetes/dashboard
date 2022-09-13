@@ -2026,7 +2026,7 @@
       </trans-unit>
       <trans-unit id="5953390547834376376" datatype="html">
         <source>Exit Code</source>
-        <target state="new">Exit Code</target>
+        <target>코드 나가기</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/container/template.html</context>
           <context context-type="linenumber">84</context>
@@ -2034,7 +2034,7 @@
       </trans-unit>
       <trans-unit id="741892530496074339" datatype="html">
         <source>Signal</source>
-        <target state="new">Signal</target>
+        <target>시그널</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/container/template.html</context>
           <context context-type="linenumber">90</context>
@@ -2042,7 +2042,7 @@
       </trans-unit>
       <trans-unit id="8802433277842246383" datatype="html">
         <source>Started At</source>
-        <target state="new">Started At</target>
+        <target>시작됨</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/container/template.html</context>
           <context context-type="linenumber">98</context>
@@ -2198,7 +2198,7 @@
       </trans-unit>
       <trans-unit id="2369423116644077158" datatype="html">
         <source>Versions</source>
-        <target state="new">Versions</target>
+        <target>버전</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/resourcelist/crdversion/template.html</context>
           <context context-type="linenumber">20</context>
@@ -2222,7 +2222,7 @@
       </trans-unit>
       <trans-unit id="942673842903775268" datatype="html">
         <source>Daemon Sets</source>
-        <target state="new">Daemon Sets</target>
+        <target>데몬셋</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/resourcelist/daemonset/template.html</context>
           <context context-type="linenumber">24</context>
@@ -2290,7 +2290,7 @@
       </trans-unit>
       <trans-unit id="3381412717703555378" datatype="html">
         <source>Object</source>
-        <target state="new">Object</target>
+        <target>오브젝트</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/resourcelist/event/template.html</context>
           <context context-type="linenumber">95</context>
@@ -2298,7 +2298,7 @@
       </trans-unit>
       <trans-unit id="2914974644465021764" datatype="html">
         <source>Sub-object</source>
-        <target state="new">Sub-object</target>
+        <target>서브-오브젝트</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/resourcelist/event/template.html</context>
           <context context-type="linenumber">114</context>
@@ -2330,7 +2330,7 @@
       </trans-unit>
       <trans-unit id="6157826473930539567" datatype="html">
         <source>Horizontal Pod Autoscalers</source>
-        <target state="new">Horizontal Pod Autoscalers</target>
+        <target>호레잔틀 파드 오토스케일러</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/resourcelist/horizontalpodautoscaler/template.html</context>
           <context context-type="linenumber">22</context>
@@ -2370,7 +2370,7 @@
       </trans-unit>
       <trans-unit id="7705450268368320451" datatype="html">
         <source>Endpoint links are external links that will be open in a new tab.</source>
-        <target state="new">Endpoint links are external links that will be open in a new tab.</target>
+        <target>엔드포인트 링크는 새로운 탭에서 열리는 외부 링크입니다.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/resourcelist/ingress/template.html</context>
           <context context-type="linenumber">80</context>
@@ -2378,7 +2378,7 @@
       </trans-unit>
       <trans-unit id="8444287437490086299" datatype="html">
         <source> Endpoints <x id="START_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&quot;\uFFFD#2\uFFFD&quot;"/>open_in_new<x id="CLOSE_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&quot;\uFFFD/#2\uFFFD&quot;"/></source>
-        <target state="new"> Endpoints <x id="START_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;mat-icon class=&quot;external-link-icon kd-clickable&quot;
+        <target> 엔드포인트 <x id="START_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;mat-icon class=&quot;external-link-icon kd-clickable&quot;
                     i18n-matTooltip
                     matTooltip=&quot;Endpoint links are external links that will be open in a new tab.&quot;>"/>open_in_new<x id="CLOSE_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;/mat-icon>"/></target>
         <context-group purpose="location">
@@ -2388,7 +2388,7 @@
       </trans-unit>
       <trans-unit id="2671339909368348918" datatype="html">
         <source>Host links are external links that will be open in a new tab.</source>
-        <target state="new">Host links are external links that will be open in a new tab.</target>
+        <target>호스트 링크는 새로운 탭에서 열리는 외부 링크입니다.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/resourcelist/ingress/template.html</context>
           <context context-type="linenumber">97</context>
@@ -2396,7 +2396,7 @@
       </trans-unit>
       <trans-unit id="3283019513707383139" datatype="html">
         <source> Hosts <x id="START_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&quot;\uFFFD#2\uFFFD&quot;"/>open_in_new<x id="CLOSE_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&quot;\uFFFD/#2\uFFFD&quot;"/></source>
-        <target state="new"> Hosts <x id="START_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;mat-icon class=&quot;external-link-icon kd-clickable&quot;
+        <target> 호스트 <x id="START_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;mat-icon class=&quot;external-link-icon kd-clickable&quot;
                     i18n-matTooltip
                     matTooltip=&quot;Host links are external links that will be open in a new tab.&quot;>"/>open_in_new<x id="CLOSE_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;/mat-icon>"/></target>
         <context-group purpose="location">
@@ -2406,7 +2406,7 @@
       </trans-unit>
       <trans-unit id="4964247147355186491" datatype="html">
         <source>Controlled by</source>
-        <target state="new">Controlled by</target>
+        <target>제어됨</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/creator/template.html</context>
           <context context-type="linenumber">42</context>
@@ -2426,7 +2426,7 @@
       </trans-unit>
       <trans-unit id="6501135579599829770" datatype="html">
         <source>Network Policies</source>
-        <target state="new">Network Policies</target>
+        <target>네트워크폴리시</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/resourcelist/networkpolicy/template.html</context>
           <context context-type="linenumber">21</context>
@@ -2438,7 +2438,7 @@
       </trans-unit>
       <trans-unit id="1366161163946896063" datatype="html">
         <source>Ingresses</source>
-        <target state="new">Ingresses</target>
+        <target>인그레스</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/resourcelist/ingress/template.html</context>
           <context context-type="linenumber">21</context>
@@ -2466,7 +2466,7 @@
       </trans-unit>
       <trans-unit id="7875452846514729865" datatype="html">
         <source>CPU capacity (cores)</source>
-        <target state="new">CPU capacity (cores)</target>
+        <target>CPU 용량 (cores)</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/resourcelist/node/template.html</context>
           <context context-type="linenumber">110</context>
@@ -2490,7 +2490,7 @@
       </trans-unit>
       <trans-unit id="6478267560860767436" datatype="html">
         <source>Memory capacity (bytes)</source>
-        <target state="new">Memory capacity (bytes)</target>
+        <target>메모리 용량 (bytes)</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/components/resourcelist/node/template.html</context>
           <context context-type="linenumber">142</context>
