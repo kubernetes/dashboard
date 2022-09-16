@@ -110,6 +110,6 @@ jobs:
       - run: |
           export GOPATH=$(go env GOPATH)
           export PATH=$PATH:$GOPATH/bin
-          make serve
+          make serve &
       - run: yarn e2e
         working-directory: modules/web
