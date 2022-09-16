@@ -61,6 +61,8 @@
     "ace-builds": "1.5.3",
     "core-js": "3.22.7",
     "crop-url": "4.0.1",
+    "d3-shape": "3.1.0",
+    "d3-time-format": "4.1.0",
     "file-saver": "2.0.5",
     "js-yaml": "4.1.0",
     "jwt-decode": "3.1.2",
