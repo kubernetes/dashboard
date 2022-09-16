@@ -66,6 +66,9 @@ jobs:
       - uses: codecov/codecov-action@v2
         with:
           name: web-coverage
-          directory: ./modules/web/coverage/
-          working-directory: ./modules/web
+          directory: modules/web/coverage/
+          files: ./coverage-final.json
+          working-directory: modules/web
           fail_ci_if_error: true
+          move_coverage_to_trash: true
+          verbose: true
