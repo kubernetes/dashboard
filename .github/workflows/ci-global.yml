@@ -111,5 +111,7 @@ jobs:
           export GOPATH=$(go env GOPATH)
           export PATH=$PATH:$GOPATH/bin
           make serve &
-      - run: yarn e2e
+      - run: |
+          export GOPATH=$(go env GOPATH)
+          export PATH=$PATH:$GOPATH/binyarn e2e
         working-directory: modules/web
