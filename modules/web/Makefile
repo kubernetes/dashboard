@@ -28,7 +28,7 @@ build-cross: --clean --build-go --build-angular
 
 .PHONY: --serve-go
 --serve-go:
-	@GOOS=$(OS) go run k8s.io/dashboard/web \
+	go run k8s.io/dashboard/web \
 		--system-banner=$(SYSTEM_BANNER) \
     --system-banner-severity=$(SYSTEM_BANNER_SEVERITY) \
     --auto-generate-certificates=$(AUTO_GENERATE_CERTIFICATES)
