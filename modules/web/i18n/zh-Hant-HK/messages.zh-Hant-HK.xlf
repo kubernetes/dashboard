@@ -40,7 +40,7 @@
       </trans-unit>
       <trans-unit id="1106543845307638308" datatype="html">
         <source> <x id="INTERPOLATION" equiv-text="&quot;\uFFFD0\uFFFD&quot;"/> is not unique</source>
-        <target> <x id="INTERPOLATION" equiv-text="{{label.get(&apos;key&apos;).value}}"/> 不是唯一的</target>
+        <target state="new"> <x id="INTERPOLATION" equiv-text="{{label.get(&apos;key&apos;).value}}"/> 不是唯一的</target>
       </trans-unit>
       <trans-unit id="1119419133766787743" datatype="html">
         <source>Go to namespace</source>
@@ -100,7 +100,7 @@
       </trans-unit>
       <trans-unit id="1268395641466243700" datatype="html">
         <source>Every Service Account has a Secret with valid Bearer Token that can be used to log in to Dashboard. To find out more about how to configure and use Bearer Tokens, please refer to the <x id="START_LINK" ctype="x-a" equiv-text="&quot;\uFFFD#2\uFFFD&quot;"/>Authentication<x id="CLOSE_LINK" ctype="x-a" equiv-text="&quot;\uFFFD/#2\uFFFD&quot;"/> section.</source>
-        <target>每個 Service Account 都有一個 valid Bearer Token ，可用於登錄 Dashboard 。 要瞭解如何配置使用 Bearer Tokens 的更多信息，请參閲 <x id="START_LINK" ctype="x-a" equiv-text="&lt;a&gt;"/>Authentication<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/> 部分.</target>
+        <target state="new">每個 Service Account 都有一個 valid Bearer Token ，可用於登錄 Dashboard 。 要瞭解如何配置使用 Bearer Tokens 的更多信息，请參閲 <x id="START_LINK" ctype="x-a" equiv-text="&lt;a&gt;"/>Authentication<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/> 部分.</target>
       </trans-unit>
       <trans-unit id="1292699022746959928" datatype="html">
         <source>Non-resource URL</source>
@@ -108,7 +108,7 @@
       </trans-unit>
       <trans-unit id="1321877744367304738" datatype="html">
         <source>Image:</source>
-        <target>鏡像:</target>
+        <target state="new">鏡像:</target>
       </trans-unit>
       <trans-unit id="1328651869817330586" datatype="html">
         <source>Mount Option(s)</source>
@@ -212,7 +212,7 @@
       </trans-unit>
       <trans-unit id="1636259016604132537" datatype="html">
         <source>Select YAML or JSON file specifying the resources to deploy to the namespace specified in the file.</source>
-        <target>選擇 YAML 或 JSON 文件中指定的資源部署到該文件中指定的命名空間。</target>
+        <target state="new">選擇 YAML 或 JSON 文件中指定的資源部署到該文件中指定的命名空間。</target>
       </trans-unit>
       <trans-unit id="1649590266934618453" datatype="html">
         <source>Insecure access detected. Sign in will not be available. Access Dashboard securely over HTTPS or using localhost. Read more <x id="START_LINK" ctype="x-a" equiv-text="&quot;\uFFFD#2\uFFFD&quot;"/> here <x id="CLOSE_LINK" ctype="x-a" equiv-text="&quot;\uFFFD/#2\uFFFD&quot;"/>.</source>
@@ -252,7 +252,7 @@
       </trans-unit>
       <trans-unit id="1761780531172486555" datatype="html">
         <source>Available:</source>
-        <target>可用的:</target>
+        <target state="new">可用的:</target>
       </trans-unit>
       <trans-unit id="1763461605200938061" datatype="html">
         <source>Desired replicas</source>
@@ -268,7 +268,7 @@
       </trans-unit>
       <trans-unit id="1791198005341902530" datatype="html">
         <source>Deploy</source>
-        <target>Deploy</target>
+        <target state="new">Deploy</target>
       </trans-unit>
       <trans-unit id="1813894172148248223" datatype="html">
         <source>Ingress Classes</source>
@@ -276,7 +276,7 @@
       </trans-unit>
       <trans-unit id="1828068287723658160" datatype="html">
         <source>Failed:</source>
-        <target>失敗:</target>
+        <target state="new">失敗:</target>
       </trans-unit>
       <trans-unit id="1832995043073719610" datatype="html">
         <source>A secret with the specified name will be added to the cluster in the namespace.</source>
@@ -284,7 +284,7 @@
       </trans-unit>
       <trans-unit id="1850293262697508820" datatype="html">
         <source>Revision history limit:</source>
-        <target>調整 history 範圍:</target>
+        <target state="new">調整 history 範圍:</target>
       </trans-unit>
       <trans-unit id="1853314835104660335" datatype="html">
         <source>The new namespace will be added to the cluster.</source>
@@ -320,7 +320,7 @@
       </trans-unit>
       <trans-unit id="1946523853590147981" datatype="html">
         <source>The description will be added as an annotation to the Deployment and displayed in the application&apos;s details.</source>
-        <target>该描述将作为注释添加到 Deployment 中，并显示在应用程序的详细信息中。</target>
+        <target state="new">该描述将作为注释添加到 Deployment 中，并显示在应用程序的详细信息中。</target>
       </trans-unit>
       <trans-unit id="1970327103279087300" datatype="html">
         <source>Volume ID</source>
@@ -332,7 +332,7 @@
       </trans-unit>
       <trans-unit id="2004327614711496973" datatype="html">
         <source>Memory requirement must be given as a valid number.</source>
-        <target>Memory 最低需求必须是一个有效的数字。</target>
+        <target state="new">Memory 最低需求必须是一个有效的数字。</target>
       </trans-unit>
       <trans-unit id="2027381191177847167" datatype="html">
         <source>Exec Commands</source>
@@ -360,7 +360,7 @@
       </trans-unit>
       <trans-unit id="2083766050425503902" datatype="html">
         <source>Application name must start with a lowercase letter and contain only lowercase letters, numbers, and &apos;-&apos; between words.</source>
-        <target>应用程序名称必须以小写字母开头，且只包含小写字母，数字和单词之间的“-”。</target>
+        <target state="new">应用程序名称必须以小写字母开头，且只包含小写字母，数字和单词之间的“-”。</target>
       </trans-unit>
       <trans-unit id="2104548579314351919" datatype="html">
         <source>Secrets</source>
@@ -388,7 +388,7 @@
       </trans-unit>
       <trans-unit id="2135976822395163664" datatype="html">
         <source>Please select the kubeconfig file that you have created to configure access to the cluster. To find out more about how to configure and use kubeconfig file, please refer to the <x id="START_LINK" ctype="x-a" equiv-text="&quot;\uFFFD#2\uFFFD&quot;"/>Configure Access to Multiple Clusters<x id="CLOSE_LINK" ctype="x-a" equiv-text="&quot;\uFFFD/#2\uFFFD&quot;"/> section.</source>
-        <target>請選擇您創建的kubeconfig文件以配置對集群的訪問權限。 要瞭解有關如何配置和使用kubeconfig文件的更多信息， 請參閲<x id="START_LINK" ctype="x-a" equiv-text="&lt;a&gt;"/>Configure Access to Multiple Clusters<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/> 部分.</target>
+        <target state="new">請選擇您創建的kubeconfig文件以配置對集群的訪問權限。 要瞭解有關如何配置和使用kubeconfig文件的更多信息， 請參閲<x id="START_LINK" ctype="x-a" equiv-text="&lt;a&gt;"/>Configure Access to Multiple Clusters<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/> 部分.</target>
       </trans-unit>
       <trans-unit id="214884265476562782" datatype="html">
         <source>Seccomp Profile Type</source>
@@ -400,7 +400,7 @@
       </trans-unit>
       <trans-unit id="217048540478746172" datatype="html">
         <source>Target port must be an integer.</source>
-        <target>目標端口必須是整數。</target>
+        <target state="new">目標端口必須是整數。</target>
       </trans-unit>
       <trans-unit id="2176659033176029418" datatype="html">
         <source>Key</source>
@@ -412,7 +412,7 @@
       </trans-unit>
       <trans-unit id="21860712120581731" datatype="html">
         <source>Updated:</source>
-        <target>已更新:</target>
+        <target state="new">已更新:</target>
       </trans-unit>
       <trans-unit id="2188854519574316630" datatype="html">
         <source>Server</source>
@@ -464,7 +464,7 @@
       </trans-unit>
       <trans-unit id="2320200316076079587" datatype="html">
         <source><x id="START_TAG_SPAN" ctype="x-span" equiv-text="&quot;[\uFFFD#5\uFFFD|\uFFFD#8\uFFFD]&quot;"/>Are you sure you want to delete <x id="INTERPOLATION" equiv-text="&quot;\uFFFD0\uFFFD&quot;"/> <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&quot;[\uFFFD#6\uFFFD|\uFFFD#2:1\uFFFD]&quot;"/><x id="INTERPOLATION_1" equiv-text="&quot;\uFFFD1\uFFFD&quot;"/><x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&quot;[\uFFFD/#6\uFFFD|\uFFFD/#2:1\uFFFD]&quot;"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&quot;[\uFFFD/#5\uFFFD|\uFFFD/#1:1\uFFFD\uFFFD/*7:1\uFFFD|\uFFFD/#8\uFFFD]&quot;"/><x id="START_TAG_SPAN_1" ctype="x-span_1" equiv-text="&quot;\uFFFD*7:1\uFFFD\uFFFD#1:1\uFFFD&quot;"/> in namespace <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&quot;[\uFFFD#6\uFFFD|\uFFFD#2:1\uFFFD]&quot;"/><x id="INTERPOLATION_2" equiv-text="&quot;\uFFFD0:1\uFFFD&quot;"/><x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&quot;[\uFFFD/#6\uFFFD|\uFFFD/#2:1\uFFFD]&quot;"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&quot;[\uFFFD/#5\uFFFD|\uFFFD/#1:1\uFFFD\uFFFD/*7:1\uFFFD|\uFFFD/#8\uFFFD]&quot;"/><x id="START_TAG_SPAN" ctype="x-span" equiv-text="&quot;[\uFFFD#5\uFFFD|\uFFFD#8\uFFFD]&quot;"/>?<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&quot;[\uFFFD/#5\uFFFD|\uFFFD/#1:1\uFFFD\uFFFD/*7:1\uFFFD|\uFFFD/#8\uFFFD]&quot;"/></source>
-        <target state="new"> <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span&gt;"/>你確定要刪除 <x id="INTERPOLATION" equiv-text="{{data.displayName}}"/> <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/><x id="INTERPOLATION_1" equiv-text="{{data.objectMeta.name}}"/><x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i&gt;"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/> <x id="START_TAG_SPAN_1" ctype="x-span" equiv-text="&lt;span&gt;"/> in namespace <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/><x id="INTERPOLATION_2" equiv-text="{{data.objectMeta.namespace}}"/><x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i&gt;"/> <x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/> <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span&gt;"/>?<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/> </target>
+        <target> <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span&gt;"/>你確定要刪除 <x id="INTERPOLATION" equiv-text="{{data.displayName}}"/> <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/><x id="INTERPOLATION_1" equiv-text="{{data.objectMeta.name}}"/><x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i&gt;"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/> <x id="START_TAG_SPAN_1" ctype="x-span" equiv-text="&lt;span&gt;"/> in namespace <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/><x id="INTERPOLATION_2" equiv-text="{{data.objectMeta.namespace}}"/><x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i&gt;"/> <x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/> <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span&gt;"/>?<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/> </target>
       </trans-unit>
       <trans-unit id="2335697433764621013" datatype="html">
         <source>Memory limits (bytes)</source>
@@ -596,7 +596,7 @@
       </trans-unit>
       <trans-unit id="2833767909565048391" datatype="html">
         <source>Do you want to stay on current page and change namespace from <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&quot;[\uFFFD#7\uFFFD|\uFFFD#8\uFFFD]&quot;"/><x id="INTERPOLATION" equiv-text="&quot;\uFFFD0\uFFFD&quot;"/><x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&quot;[\uFFFD/#7\uFFFD|\uFFFD/#8\uFFFD]&quot;"/> to <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&quot;[\uFFFD#7\uFFFD|\uFFFD#8\uFFFD]&quot;"/><x id="INTERPOLATION_1" equiv-text="&quot;\uFFFD1\uFFFD&quot;"/><x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&quot;[\uFFFD/#7\uFFFD|\uFFFD/#8\uFFFD]&quot;"/>?</source>
-        <target>你是否希望保持當前頁面并從<x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/><x id="INTERPOLATION" equiv-text="{{namespace}}"/><x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i&gt;"/> to <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/><x id="INTERPOLATION_1" equiv-text="{{newNamespace}}"/><x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i&gt;"/>中更改命名空間?</target>
+        <target state="new">你是否希望保持當前頁面并從<x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/><x id="INTERPOLATION" equiv-text="{{namespace}}"/><x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i&gt;"/> to <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/><x id="INTERPOLATION_1" equiv-text="{{newNamespace}}"/><x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i&gt;"/>中更改命名空間?</target>
       </trans-unit>
       <trans-unit id="284876663522831141" datatype="html">
         <source>Source Type</source>
@@ -604,7 +604,7 @@
       </trans-unit>
       <trans-unit id="2862835290520488117" datatype="html">
         <source>Unavailable:</source>
-        <target>不可用的:</target>
+        <target state="new">不可用的:</target>
       </trans-unit>
       <trans-unit id="2885840307007437390" datatype="html">
         <source>CPU</source>
@@ -644,7 +644,7 @@
       </trans-unit>
       <trans-unit id="2987268586260348582" datatype="html">
         <source>Total:</source>
-        <target>總計:</target>
+        <target state="new">總計:</target>
       </trans-unit>
       <trans-unit id="3000799346062046358" datatype="html">
         <source>Suffix &apos;<x id="PH" equiv-text="suffix"/>&apos; not recognized.</source>
@@ -652,7 +652,7 @@
       </trans-unit>
       <trans-unit id="3012870639723698090" datatype="html">
         <source>Port must be greater than 0.</source>
-        <target>端口號必須大於0</target>
+        <target state="new">端口號必須大於0</target>
       </trans-unit>
       <trans-unit id="3012906865384504293" datatype="html">
         <source>Image</source>
@@ -664,7 +664,7 @@
       </trans-unit>
       <trans-unit id="3037001602563649018" datatype="html">
         <source>Name must be alphanumeric and may contain dashes.</source>
-        <target>名稱必須是字母或者數字，可以包含短化綫。</target>
+        <target state="new">名稱必須是字母或者數字，可以包含短化綫。</target>
       </trans-unit>
       <trans-unit id="3039940756451018621" datatype="html">
         <source>Token</source>
@@ -672,11 +672,11 @@
       </trans-unit>
       <trans-unit id="3068261068429094032" datatype="html">
         <source>Max unavailable:</source>
-        <target>最大不可用數:</target>
+        <target state="new">最大不可用數:</target>
       </trans-unit>
       <trans-unit id="3094294427304814088" datatype="html">
         <source>Strategy:</source>
-        <target>策略:</target>
+        <target state="new">策略:</target>
       </trans-unit>
       <trans-unit id="3117139905742018214" datatype="html">
         <source>Close notifications panel</source>
@@ -708,7 +708,7 @@
       </trans-unit>
       <trans-unit id="3175667526023915046" datatype="html">
         <source>Label Value must not exceed 253 characters.</source>
-        <target>標簽值不得超過253個字符。</target>
+        <target state="new">標簽值不得超過253個字符。</target>
       </trans-unit>
       <trans-unit id="3193976279273491157" datatype="html">
         <source>Actions</source>
@@ -756,7 +756,7 @@
       </trans-unit>
       <trans-unit id="3319732415078214507" datatype="html">
         <source>Kubernetes Dashboard is made possible by the Dashboard <x id="START_LINK" ctype="x-a" equiv-text="&quot;\uFFFD#16\uFFFD&quot;"/>community<x id="CLOSE_LINK" ctype="x-a" equiv-text="&quot;[\uFFFD/#16\uFFFD|\uFFFD/#17\uFFFD]&quot;"/> as an <x id="START_LINK_1" equiv-text="&quot;\uFFFD#17\uFFFD&quot;"/>open source project<x id="CLOSE_LINK" ctype="x-a" equiv-text="&quot;[\uFFFD/#16\uFFFD|\uFFFD/#17\uFFFD]&quot;"/>.</source>
-        <target>Dashboard 使 Kubernetes Dashboard 成爲可能 <x id="START_LINK" ctype="x-a" equiv-text="&lt;a&gt;"/>community<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/> as an <x id="START_LINK_1" ctype="x-a" equiv-text="&lt;a&gt;"/>open source project<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/>.</target>
+        <target state="new">Dashboard 使 Kubernetes Dashboard 成爲可能 <x id="START_LINK" ctype="x-a" equiv-text="&lt;a&gt;"/>community<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/> as an <x id="START_LINK_1" ctype="x-a" equiv-text="&lt;a&gt;"/>open source project<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/>.</target>
       </trans-unit>
       <trans-unit id="3321884531921673789" datatype="html">
         <source>Run as User</source>
@@ -764,7 +764,7 @@
       </trans-unit>
       <trans-unit id="3323415564519831786" datatype="html">
         <source>Name is required.</source>
-        <target>名稱是必填的。</target>
+        <target state="new">名稱是必填的。</target>
       </trans-unit>
       <trans-unit id="3326877877555410533" datatype="html">
         <source>Started</source>
@@ -776,11 +776,11 @@
       </trans-unit>
       <trans-unit id="3354985892672468892" datatype="html">
         <source>Label value must be alphanumeric separated by &apos;.&apos; , &apos;-&apos; or &apos;_&apos;.</source>
-        <target>標簽值必須由&apos;.&apos; , &apos;-&apos;或者&apos;_&apos;分割字母數字</target>
+        <target state="new">標簽值必須由&apos;.&apos; , &apos;-&apos;或者&apos;_&apos;分割字母數字</target>
       </trans-unit>
       <trans-unit id="3368378053177904137" datatype="html">
         <source>Learn more <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&quot;\uFFFD#5\uFFFD&quot;"/>open_in_new<x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&quot;\uFFFD/#5\uFFFD&quot;"/></source>
-        <target>學到更多 <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/>open_in_new<x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i&gt;"/> </target>
+        <target state="new">學到更多 <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/>open_in_new<x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i&gt;"/> </target>
       </trans-unit>
       <trans-unit id="3368378053177904137" datatype="html">
         <source>Learn more <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&quot;\uFFFD#15\uFFFD&quot;"/>open_in_new<x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&quot;\uFFFD/#15\uFFFD&quot;"/></source>
@@ -804,7 +804,7 @@
       </trans-unit>
       <trans-unit id="3370944056293075657" datatype="html">
         <source>Name must be up to <x id="INTERPOLATION" equiv-text="&quot;\uFFFD0\uFFFD&quot;"/> characters long.</source>
-        <target>Name必须大於 <x id="INTERPOLATION" equiv-text="{{namespaceMaxLength}}"/> 个字符.</target>
+        <target state="new">Name必须大於 <x id="INTERPOLATION" equiv-text="{{namespaceMaxLength}}"/> 个字符.</target>
       </trans-unit>
       <trans-unit id="3370944056293075657" datatype="html">
         <source>Name must be up to <x id="INTERPOLATION" equiv-text="&quot;\uFFFD0\uFFFD&quot;"/> characters long.</source>
@@ -876,7 +876,7 @@
       </trans-unit>
       <trans-unit id="3534088723520522114" datatype="html">
         <source>Variable name must be a valid C identifier.</source>
-        <target>變量名必須是有效的 C 標識符</target>
+        <target state="new">變量名必須是有效的 C 標識符</target>
       </trans-unit>
       <trans-unit id="3540108566782816830" datatype="html">
         <source>Selector</source>
@@ -892,11 +892,11 @@
       </trans-unit>
       <trans-unit id="3551329346991932579" datatype="html">
         <source>Protocol is required.</source>
-        <target>協議是必須的。</target>
+        <target state="new">協議是必須的。</target>
       </trans-unit>
       <trans-unit id="3569677708978335155" datatype="html">
         <source>Desired:</source>
-        <target>期望值:</target>
+        <target state="new">期望值:</target>
       </trans-unit>
       <trans-unit id="3583123851975839013" datatype="html">
         <source>Session Affinity</source>
@@ -904,11 +904,11 @@
       </trans-unit>
       <trans-unit id="3588315191655475025" datatype="html">
         <source>Container image is required</source>
-        <target>容器镜像是必须的</target>
+        <target state="new">容器镜像是必须的</target>
       </trans-unit>
       <trans-unit id="3609669829589519658" datatype="html">
         <source>CPU requirement must be given as a valid number.</source>
-        <target>CPU 最低需求必须是有效的数字。</target>
+        <target state="new">CPU 最低需求必须是有效的数字。</target>
       </trans-unit>
       <trans-unit id="3611950223744571613" datatype="html">
         <source>Service Port Number</source>
@@ -964,7 +964,7 @@
       </trans-unit>
       <trans-unit id="3844914972911579334" datatype="html">
         <source>Number of pods must be a positive integer</source>
-        <target>pod 的数量必须是整数</target>
+        <target state="new">pod 的数量必须是整数</target>
       </trans-unit>
       <trans-unit id="3847048283826460449" datatype="html">
         <source>Run command arguments</source>
@@ -980,7 +980,7 @@
       </trans-unit>
       <trans-unit id="3910914001392684259" datatype="html">
         <source>Port must be an integer.</source>
-        <target>端口號必須是數字</target>
+        <target state="new">端口號必須是數字</target>
       </trans-unit>
       <trans-unit id="3911411545389266400" datatype="html">
         <source>Choose YAML or JSON file</source>
@@ -996,7 +996,7 @@
       </trans-unit>
       <trans-unit id="400776614514525117" datatype="html">
         <source>Schedule:</source>
-        <target>時間表:</target>
+        <target state="new">時間表:</target>
       </trans-unit>
       <trans-unit id="4021752662928002901" datatype="html">
         <source>Update</source>
@@ -1028,7 +1028,7 @@
       </trans-unit>
       <trans-unit id="4105691782196566273" datatype="html">
         <source>Port must be less than 65536.</source>
-        <target>端口號必須小於65536</target>
+        <target state="new">端口號必須小於65536</target>
       </trans-unit>
       <trans-unit id="4111811676793706889" datatype="html">
         <source>Readiness Probe</source>
@@ -1044,7 +1044,7 @@
       </trans-unit>
       <trans-unit id="4170719254013309689" datatype="html">
         <source>Skip</source>
-        <target>跳過</target>
+        <target state="new">跳過</target>
       </trans-unit>
       <trans-unit id="4207916966377787111" datatype="html">
         <source>Created</source>
@@ -1056,7 +1056,7 @@
       </trans-unit>
       <trans-unit id="4216678889012737533" datatype="html">
         <source>Deployment or service with this name already exists within namespace.</source>
-        <target>具有此名称的 deployment 或 service 已存在于命名空间中。</target>
+        <target state="new">具有此名称的 deployment 或 service 已存在于命名空间中。</target>
       </trans-unit>
       <trans-unit id="4222409682577085383" datatype="html">
         <source>Storage class</source>
@@ -1076,15 +1076,15 @@
       </trans-unit>
       <trans-unit id="4288379540371209568" datatype="html">
         <source>Create a new namespace...</source>
-        <target>创建一个新的命名空间...</target>
+        <target state="new">创建一个新的命名空间...</target>
       </trans-unit>
       <trans-unit id="4296726543175330378" datatype="html">
         <source>Enter YAML or JSON content specifying the resources to create to the currently selected namespace.</source>
-        <target>輸入 YAML 或 JSON 内容，指定要爲當前選定的命名空間創建的資源。</target>
+        <target state="new">輸入 YAML 或 JSON 内容，指定要爲當前選定的命名空間創建的資源。</target>
       </trans-unit>
       <trans-unit id="43228639508046926" datatype="html">
         <source>Completions:</source>
-        <target>完成:</target>
+        <target state="new">完成:</target>
       </trans-unit>
       <trans-unit id="4342607865016428668" datatype="html">
         <source><x id="START_TAG_SPAN" ctype="x-span" equiv-text="&quot;[\uFFFD#5\uFFFD|\uFFFD#8\uFFFD]&quot;"/><x id="INTERPOLATION" equiv-text="&quot;\uFFFD0\uFFFD&quot;"/> <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&quot;[\uFFFD#6\uFFFD|\uFFFD#2:1\uFFFD]&quot;"/><x id="INTERPOLATION_1" equiv-text="&quot;\uFFFD1\uFFFD&quot;"/> <x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&quot;[\uFFFD/#6\uFFFD|\uFFFD/#2:1\uFFFD]&quot;"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&quot;[\uFFFD/#5\uFFFD|\uFFFD/#1:1\uFFFD\uFFFD/*7:1\uFFFD|\uFFFD/#8\uFFFD]&quot;"/><x id="START_TAG_SPAN_1" ctype="x-span_1" equiv-text="&quot;\uFFFD*7:1\uFFFD\uFFFD#1:1\uFFFD&quot;"/> in namespace <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&quot;[\uFFFD#6\uFFFD|\uFFFD#2:1\uFFFD]&quot;"/><x id="INTERPOLATION_2" equiv-text="&quot;\uFFFD0:1\uFFFD&quot;"/> <x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&quot;[\uFFFD/#6\uFFFD|\uFFFD/#2:1\uFFFD]&quot;"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&quot;[\uFFFD/#5\uFFFD|\uFFFD/#1:1\uFFFD\uFFFD/*7:1\uFFFD|\uFFFD/#8\uFFFD]&quot;"/><x id="START_TAG_SPAN" ctype="x-span" equiv-text="&quot;[\uFFFD#5\uFFFD|\uFFFD#8\uFFFD]&quot;"/>will be restarted.<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&quot;[\uFFFD/#5\uFFFD|\uFFFD/#1:1\uFFFD\uFFFD/*7:1\uFFFD|\uFFFD/#8\uFFFD]&quot;"/></source>
@@ -1124,7 +1124,7 @@
       </trans-unit>
       <trans-unit id="4482298116905997082" datatype="html">
         <source>Age:</source>
-        <target>經過時間:</target>
+        <target state="new">經過時間:</target>
       </trans-unit>
       <trans-unit id="4493030647783338212" datatype="html">
         <source>Edit a resource</source>
@@ -1160,7 +1160,7 @@
       </trans-unit>
       <trans-unit id="4588432762946433765" datatype="html">
         <source>Kind:</source>
-        <target>種類:</target>
+        <target state="new">種類:</target>
       </trans-unit>
       <trans-unit id="4613805182430195952" datatype="html">
         <source>Namespaces</source>
@@ -1180,7 +1180,7 @@
       </trans-unit>
       <trans-unit id="4686783485484478974" datatype="html">
         <source>Parallelism:</source>
-        <target>并行:</target>
+        <target state="new">并行:</target>
       </trans-unit>
       <trans-unit id="4708304467453184793" datatype="html">
         <source>Environment variables</source>
@@ -1204,7 +1204,7 @@
       </trans-unit>
       <trans-unit id="4773463022110715023" datatype="html">
         <source>Enter YAML or JSON content specifying the resources to create to the namespace specified in the file.</source>
-        <target>輸入 YAML 或 JSON 内容，指定要為文件中指定的命名空間創建的資源。</target>
+        <target state="new">輸入 YAML 或 JSON 内容，指定要為文件中指定的命名空間創建的資源。</target>
       </trans-unit>
       <trans-unit id="4775550080689015987" datatype="html">
         <source>Reason</source>
@@ -1260,7 +1260,7 @@
       </trans-unit>
       <trans-unit id="5103064776441485656" datatype="html">
         <source>Running:</source>
-        <target>運行中:</target>
+        <target state="new">運行中:</target>
       </trans-unit>
       <trans-unit id="5112388980413175570" datatype="html">
         <source>Keyring</source>
@@ -1300,11 +1300,11 @@
       </trans-unit>
       <trans-unit id="5257636795023365764" datatype="html">
         <source>Upload</source>
-        <target>上传</target>
+        <target state="new">上传</target>
       </trans-unit>
       <trans-unit id="5278726417886231851" datatype="html">
         <source>IP:</source>
-        <target>IP:</target>
+        <target state="new">IP:</target>
       </trans-unit>
       <trans-unit id="5279881970414324834" datatype="html">
         <source>Taints</source>
@@ -1312,7 +1312,7 @@
       </trans-unit>
       <trans-unit id="528589796437229259" datatype="html">
         <source>Memory requirement must be given as a positive number.</source>
-        <target>Memory 最低需求必须是正整数。</target>
+        <target state="new">Memory 最低需求必须是正整数。</target>
       </trans-unit>
       <trans-unit id="5298392270155336139" datatype="html">
         <source>CPU capacity</source>
@@ -1360,7 +1360,7 @@
       </trans-unit>
       <trans-unit id="5509177505397229412" datatype="html">
         <source>Target port must be less than 65536.</source>
-        <target>目標端口必須小於65536。</target>
+        <target state="new">目標端口必須小於65536。</target>
       </trans-unit>
       <trans-unit id="5519023941949331063" datatype="html">
         <source>Invert colors</source>
@@ -1376,7 +1376,7 @@
       </trans-unit>
       <trans-unit id="5596215605725734238" datatype="html">
         <source>Data is required.</source>
-        <target>Data 是必须的。</target>
+        <target state="new">Data 是必须的。</target>
       </trans-unit>
       <trans-unit id="5603542439272909460" datatype="html">
         <source>Processes in privileged containers are equivalent to processes running as root on the host.</source>
@@ -1416,7 +1416,7 @@
       </trans-unit>
       <trans-unit id="5693993471751761333" datatype="html">
         <source>Create a new secret...</source>
-        <target>创建一个新的 secret...</target>
+        <target state="new">创建一个新的 secret...</target>
       </trans-unit>
       <trans-unit id="5727797056634342023" datatype="html">
         <source>Provide feedback</source>
@@ -1570,7 +1570,7 @@
       </trans-unit>
       <trans-unit id="6163370502260387661" datatype="html">
         <source>Invalid protocol.</source>
-        <target>無效的協議。</target>
+        <target state="new">無效的協議。</target>
       </trans-unit>
       <trans-unit id="6185721657347844438" datatype="html">
         <source>Can&apos;t find dependency &quot;<x id="PH" equiv-text="dep"/>&quot; for plugin &quot;<x id="PH_1" equiv-text="pluginName"/>&quot;</source>
@@ -1582,7 +1582,7 @@
       </trans-unit>
       <trans-unit id="6239075439253810960" datatype="html">
         <source>Pending:</source>
-        <target>啓動中:</target>
+        <target state="new">啓動中:</target>
       </trans-unit>
       <trans-unit id="6283035888557195281" datatype="html">
         <source>Cluster</source>
@@ -1590,7 +1590,7 @@
       </trans-unit>
       <trans-unit id="6284431271548714587" datatype="html">
         <source>Suspend:</source>
-        <target>暫停中:</target>
+        <target state="new">暫停中:</target>
       </trans-unit>
       <trans-unit id="6350980688187906033" datatype="html">
         <source>Security Context</source>
@@ -1610,7 +1610,7 @@
       </trans-unit>
       <trans-unit id="642253290448532904" datatype="html">
         <source>Min ready seconds:</source>
-        <target>最小準備秒數:</target>
+        <target state="new">最小準備秒數:</target>
       </trans-unit>
       <trans-unit id="6423210280939340786" datatype="html">
         <source>Ready</source>
@@ -1638,7 +1638,7 @@
       </trans-unit>
       <trans-unit id="6494596911805287915" datatype="html">
         <source>Items:</source>
-        <target>項目:</target>
+        <target state="new">項目:</target>
       </trans-unit>
       <trans-unit id="6501135579599829770" datatype="html">
         <source>Network Policies</source>
@@ -1662,7 +1662,7 @@
       </trans-unit>
       <trans-unit id="6596586911518775971" datatype="html">
         <source>Target port cannot be empty.</source>
-        <target>目標端口不能爲空。</target>
+        <target state="new">目標端口不能爲空。</target>
       </trans-unit>
       <trans-unit id="6599752784987327249" datatype="html">
         <source>Kind</source>
@@ -1682,7 +1682,7 @@
       </trans-unit>
       <trans-unit id="6663783128602596673" datatype="html">
         <source>Sign in</source>
-        <target>登錄</target>
+        <target state="new">登錄</target>
       </trans-unit>
       <trans-unit id="6677684716540733511" datatype="html">
         <source>List Kind</source>
@@ -1694,7 +1694,7 @@
       </trans-unit>
       <trans-unit id="6753642863059953692" datatype="html">
         <source>Port cannot be empty.</source>
-        <target>端口號不能為空</target>
+        <target state="new">端口號不能為空</target>
       </trans-unit>
       <trans-unit id="6762504134540024018" datatype="html">
         <source>Quantity</source>
@@ -1754,7 +1754,7 @@
       </trans-unit>
       <trans-unit id="6915193719482636823" datatype="html">
         <source>Name:</source>
-        <target>名字:</target>
+        <target state="new">名字:</target>
       </trans-unit>
       <trans-unit id="6929072613146586031" datatype="html">
         <source>Scale a resource</source>
@@ -1766,7 +1766,7 @@
       </trans-unit>
       <trans-unit id="695074596983358387" datatype="html">
         <source>Application name is required.</source>
-        <target>应用名称是必需的。</target>
+        <target state="new">应用名称是必需的。</target>
       </trans-unit>
       <trans-unit id="6959497441009812685" datatype="html">
         <source>Full Name</source>
@@ -1806,7 +1806,7 @@
       </trans-unit>
       <trans-unit id="7076883018082745028" datatype="html">
         <source>Label key name must be alphanumeric separated by &apos;-&apos;, &apos;_&apos; or &apos;.&apos;, optionally prefixed by a DNS subdomain and &apos;/&apos;.</source>
-        <target>標簽密鑰名稱必須是由 “ - ”，“_” 或 “.” 分隔的字母數字，可選以DNS子域和“/”为前綴。</target>
+        <target state="new">標簽密鑰名稱必須是由 “ - ”，“_” 或 “.” 分隔的字母數字，可選以DNS子域和“/”为前綴。</target>
       </trans-unit>
       <trans-unit id="7101197021456818771" datatype="html">
         <source>Pool</source>
@@ -1842,7 +1842,7 @@
       </trans-unit>
       <trans-unit id="7194375808015467595" datatype="html">
         <source>Max surge:</source>
-        <target>最大替換數:</target>
+        <target state="new">最大替換數:</target>
       </trans-unit>
       <trans-unit id="7198245360163776718" datatype="html">
         <source>Success Threshold</source>
@@ -1874,7 +1874,7 @@
       </trans-unit>
       <trans-unit id="728108318392658678" datatype="html">
         <source>Shell in <x id="START_TAG_MAT_SELECT" ctype="x-mat_select" equiv-text="&quot;\uFFFD*3:1\uFFFD\uFFFD#1:1\uFFFD&quot;"/><x id="START_TAG_MAT_OPTION" ctype="x-mat_option" equiv-text="&quot;\uFFFD*2:2\uFFFD\uFFFD#1:2\uFFFD&quot;"/> <x id="INTERPOLATION" equiv-text="&quot;\uFFFD0:2\uFFFD&quot;"/> <x id="CLOSE_TAG_MAT_OPTION" ctype="x-mat_option" equiv-text="&quot;\uFFFD/#1:2\uFFFD\uFFFD/*2:2\uFFFD&quot;"/><x id="CLOSE_TAG_MAT_SELECT" ctype="x-mat_select" equiv-text="&quot;\uFFFD/#1:1\uFFFD\uFFFD/*3:1\uFFFD&quot;"/> in <x id="INTERPOLATION_1" equiv-text="&quot;\uFFFD0\uFFFD&quot;"/> </source>
-        <target>Shell in <x id="START_TAG_MAT-SELECT" ctype="x-mat-select" equiv-text="&lt;mat-select&gt;"/> <x id="START_TAG_MAT-OPTION" ctype="x-mat-option" equiv-text="&lt;mat-option&gt;"/> <x id="INTERPOLATION" equiv-text="{{ item }}"/> <x id="CLOSE_TAG_MAT-OPTION" ctype="x-mat-option" equiv-text="&lt;/mat-option&gt;"/> <x id="CLOSE_TAG_MAT-SELECT" ctype="x-mat-select" equiv-text="&lt;/mat-select&gt;"/> in <x id="INTERPOLATION_1" equiv-text="{{ podName }}"/> </target>
+        <target state="new">Shell in <x id="START_TAG_MAT-SELECT" ctype="x-mat-select" equiv-text="&lt;mat-select&gt;"/> <x id="START_TAG_MAT-OPTION" ctype="x-mat-option" equiv-text="&lt;mat-option&gt;"/> <x id="INTERPOLATION" equiv-text="{{ item }}"/> <x id="CLOSE_TAG_MAT-OPTION" ctype="x-mat-option" equiv-text="&lt;/mat-option&gt;"/> <x id="CLOSE_TAG_MAT-SELECT" ctype="x-mat-select" equiv-text="&lt;/mat-select&gt;"/> in <x id="INTERPOLATION_1" equiv-text="{{ podName }}"/> </target>
       </trans-unit>
       <trans-unit id="7281870845577621674" datatype="html">
         <source>Init Containers</source>
@@ -1906,7 +1906,7 @@
       </trans-unit>
       <trans-unit id="7409958205893937925" datatype="html">
         <source>Active Jobs:</source>
-        <target>運行中的 Jobs:</target>
+        <target state="new">運行中的 Jobs:</target>
       </trans-unit>
       <trans-unit id="741892530496074339" datatype="html">
         <source>Signal</source>
@@ -1946,7 +1946,7 @@
       </trans-unit>
       <trans-unit id="7541092997061001831" datatype="html">
         <source>Setting high number of pods may cause performance issues of the cluster and Dashboard UI.</source>
-        <target>设置大量 pod 可能会导致集群和 Dashboard UI 出现性能问题。</target>
+        <target state="new">设置大量 pod 可能会导致集群和 Dashboard UI 出现性能问题。</target>
       </trans-unit>
       <trans-unit id="7542300534444838884" datatype="html">
         <source>Kubernetes Dashboard</source>
@@ -1954,7 +1954,7 @@
       </trans-unit>
       <trans-unit id="7546647490531252189" datatype="html">
         <source>Namespace:</source>
-        <target>Namespace:</target>
+        <target state="new">Namespace:</target>
       </trans-unit>
       <trans-unit id="7571663901157580742" datatype="html">
         <source>NAMESPACES</source>
@@ -1966,7 +1966,7 @@
       </trans-unit>
       <trans-unit id="761105739794565336" datatype="html">
         <source>Pods:</source>
-        <target>Pods:</target>
+        <target state="new">Pods:</target>
       </trans-unit>
       <trans-unit id="7613204568422973266" datatype="html">
         <source>Default Backend</source>
@@ -2014,7 +2014,7 @@
       </trans-unit>
       <trans-unit id="7747200628816231618" datatype="html">
         <source>Label Key name should not exceed 63 characters.</source>
-        <target>Label Key 名稱不應超過63個字符</target>
+        <target state="new">Label Key 名稱不應超過63個字符</target>
       </trans-unit>
       <trans-unit id="7769329651019167020" datatype="html">
         <source>Run as Group</source>
@@ -2042,7 +2042,7 @@
       </trans-unit>
       <trans-unit id="7846239389723666576" datatype="html">
         <source>Data must be Base64 encoded.</source>
-        <target>Data 必须是 Base64 编码的。</target>
+        <target state="new">Data 必须是 Base64 编码的。</target>
       </trans-unit>
       <trans-unit id="7873445996550708978" datatype="html">
         <source>Running: <x id="PH" equiv-text="status.running"/></source>
@@ -2062,7 +2062,7 @@
       </trans-unit>
       <trans-unit id="7927427229271598667" datatype="html">
         <source>Make sure that support for basic authentication is enabled in the cluster. To find out more about how to configure basic authentication, please refer to the <x id="START_LINK" ctype="x-a" equiv-text="&quot;\uFFFD#2\uFFFD&quot;"/>Authenticating<x id="CLOSE_LINK" ctype="x-a" equiv-text="&quot;[\uFFFD/#2\uFFFD|\uFFFD/#3\uFFFD]&quot;"/> and <x id="START_LINK_1" equiv-text="&quot;\uFFFD#3\uFFFD&quot;"/>ABAC Mode<x id="CLOSE_LINK" ctype="x-a" equiv-text="&quot;[\uFFFD/#2\uFFFD|\uFFFD/#3\uFFFD]&quot;"/> sections.</source>
-        <target>確保在集群中啓用了對基本身份驗證的支持。 要了解有關如何配置基本身份驗證的詳情，请參閲 <x id="START_LINK" ctype="x-a" equiv-text="&lt;a&gt;"/>Authenticating<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/> 和 <x id="START_LINK_1" ctype="x-a" equiv-text="&lt;a&gt;"/>ABAC Mode<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/> 部分.</target>
+        <target state="new">確保在集群中啓用了對基本身份驗證的支持。 要了解有關如何配置基本身份驗證的詳情，请參閲 <x id="START_LINK" ctype="x-a" equiv-text="&lt;a&gt;"/>Authenticating<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/> 和 <x id="START_LINK_1" ctype="x-a" equiv-text="&lt;a&gt;"/>ABAC Mode<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/> 部分.</target>
       </trans-unit>
       <trans-unit id="7941428823403788384" datatype="html">
         <source>Create</source>
@@ -2134,7 +2134,7 @@
       </trans-unit>
       <trans-unit id="8175189185819474284" datatype="html">
         <source>Container image is invalid: <x id="INTERPOLATION" equiv-text="&quot;\uFFFD0\uFFFD&quot;"/> </source>
-        <target>Container image 无效: <x id="INTERPOLATION" equiv-text="{{containerImage.errors?.validImageReference}}"/> </target>
+        <target state="new">Container image 无效: <x id="INTERPOLATION" equiv-text="{{containerImage.errors?.validImageReference}}"/> </target>
       </trans-unit>
       <trans-unit id="8177873832400820695" datatype="html">
         <source>Count</source>
@@ -2238,7 +2238,7 @@
       </trans-unit>
       <trans-unit id="8542934565724912440" datatype="html">
         <source>Prefix is not a valid DNS subdomain prefix (eg. my-domain.com).</source>
-        <target>前綴不是有效的前缀DNS子域前缀（例如 my-domain.com ）。</target>
+        <target state="new">前綴不是有效的前缀DNS子域前缀（例如 my-domain.com ）。</target>
       </trans-unit>
       <trans-unit id="8548218669860642537" datatype="html">
         <source>File is ready to download!</source>
@@ -2246,7 +2246,7 @@
       </trans-unit>
       <trans-unit id="858785118348238543" datatype="html">
         <source>Succeeded:</source>
-        <target>成功:</target>
+        <target state="new">成功:</target>
       </trans-unit>
       <trans-unit id="8601511221316154701" datatype="html">
         <source>Download logs</source>
@@ -2306,15 +2306,15 @@
       </trans-unit>
       <trans-unit id="8713955401469120119" datatype="html">
         <source>Select YAML or JSON file specifying the resources to deploy to the currently selected namespace.</source>
-        <target>選擇 YAML 或 JSON 文件中指定的資源部署到當前選定的命名空間。</target>
+        <target state="new">選擇 YAML 或 JSON 文件中指定的資源部署到當前選定的命名空間。</target>
       </trans-unit>
       <trans-unit id="8716879065476971568" datatype="html">
         <source>Status:</source>
-        <target>狀態:</target>
+        <target state="new">狀態:</target>
       </trans-unit>
       <trans-unit id="8764790219135296178" datatype="html">
         <source>Target port must be greater than 0.</source>
-        <target>目標端口必須大於0。</target>
+        <target state="new">目標端口必須大於0。</target>
       </trans-unit>
       <trans-unit id="8773342478342887379" datatype="html">
         <source>Nodes</source>
@@ -2374,7 +2374,7 @@
       </trans-unit>
       <trans-unit id="8971403803665717398" datatype="html">
         <source>Number of pods is required</source>
-        <target>pod 的数量是必填项</target>
+        <target state="new">pod 的数量是必填项</target>
       </trans-unit>
       <trans-unit id="9014417675256704625" datatype="html">
         <source>Added Capabilities</source>
@@ -2386,7 +2386,7 @@
       </trans-unit>
       <trans-unit id="9044448882574381355" datatype="html">
         <source>CPU requirement must be given as a positive number.</source>
-        <target>CPU 最低需求必须是正整数。</target>
+        <target state="new">CPU 最低需求必须是正整数。</target>
       </trans-unit>
       <trans-unit id="9045596623183360040" datatype="html">
         <source>Enter the URL of a public image on any registry, or a private image hosted on Docker Hub or Google Container Registry.</source>
@@ -2402,7 +2402,7 @@
       </trans-unit>
       <trans-unit id="9077681768250049031" datatype="html">
         <source>Name must follow the DNS domain name syntax (e.g. new.image-pull.secret).</source>
-        <target>名称必须遵循 DNS 域名语法（例如 new.image-pull.secret）。</target>
+        <target state="new">名称必须遵循 DNS 域名语法（例如 new.image-pull.secret）。</target>
       </trans-unit>
       <trans-unit id="9092584317002115275" datatype="html">
         <source>Service Account</source>
@@ -2422,7 +2422,7 @@
       </trans-unit>
       <trans-unit id="9169828761871989299" datatype="html">
         <source>Prefix should not exceed 253 characters.</source>
-        <target>前綴不應超過253個字符。</target>
+        <target state="new">前綴不應超過253個字符。</target>
       </trans-unit>
       <trans-unit id="9182918211699394982" datatype="html">
         <source>Failed: <x id="PH" equiv-text="status.failed"/></source>
