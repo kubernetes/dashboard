@@ -24,7 +24,7 @@ CODEGEN_EXTRA_ARGS = ""
 
 ### API Arguments (overridable)
 KUBECONFIG ?= $(HOME)/.kube/config
-SIDECAR_HOST ?= http://scraper:8000
+SIDECAR_HOST ?= http://scraper:8001
 TOKEN_TTL ?= 0 # Never expire
 AUTO_GENERATE_CERTIFICATES ?= false
 BIND_ADDRESS ?= 127.0.0.1
