@@ -63,12 +63,10 @@ jobs:
       - run: yarn
       - run: node hack/version.mjs
       - run: yarn coverage
-      - uses: codecov/codecov-action@v2
+      - uses: codecov/codecov-action@v3
         with:
           name: web-coverage
-          directory: modules/web/coverage/
-          files: ./coverage-final.json
-          working-directory: modules/web
+          files: ./modules/web/coverage/clover.xml, ./modules/web/coverage/lcov.info
           fail_ci_if_error: true
           move_coverage_to_trash: true
           verbose: true

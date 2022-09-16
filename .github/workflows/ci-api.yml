@@ -90,7 +90,7 @@ jobs:
       - name: Run unit tests with coverage
         run: make coverage
       - name: Upload coverage
-        uses: codecov/codecov-action@v2
+        uses: codecov/codecov-action@v3
         with:
           name: api-coverage
           files: ./modules/api/coverage.out
