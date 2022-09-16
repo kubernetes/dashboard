@@ -134,7 +134,7 @@
     "eslint-plugin-prettier": "4.0.0",
     "eslint-plugin-rxjs": "5.0.2",
     "git-describe": "4.1.1",
-    "gts": "3.1.0",
+    "gts": "3.1.1",
     "husky": "8.0.1",
     "jasmine-core": "4.1.1",
     "jasmine-spec-reporter": "7.0.0",
