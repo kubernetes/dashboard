@@ -114,5 +114,5 @@ jobs:
       - run: |
           export GOPATH=$(go env GOPATH)
           export PATH=$PATH:$GOPATH/bin
-          yarn e2e
+          yarn cypress
         working-directory: modules/web
