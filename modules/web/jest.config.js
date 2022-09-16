@@ -27,7 +27,9 @@ const config = {
     "^@common/(.*)$": "<rootDir>/common/$1",
     "^@environments/(.*)$": "<rootDir>/environments/$1",
   },
-
+  transformIgnorePatterns: [
+    "<rootDir>/node_modules/(?!lodash-es/.*)"
+  ],
 };
 
 export default config;

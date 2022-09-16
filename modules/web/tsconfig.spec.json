@@ -3,8 +3,6 @@
   "compilerOptions": {
     "outDir": ".tmp/out-tsc/spec",
     "baseUrl": "./src",
-    "module": "CommonJS",
-    "target": "ES2015",
     "types": ["jest"],
   },
   "include": [
