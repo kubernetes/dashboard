@@ -1,0 +1,204 @@
+{
+  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+  "version": 1,
+  "newProjectRoot": "projects",
+  "projects": {
+    "kubernetes-dashboard": {
+      "root": "",
+      "sourceRoot": "src",
+      "projectType": "application",
+      "i18n": {
+        "sourceLocale": {
+          "code": "en",
+          "baseHref": ""
+        },
+        "locales": {
+          "de": {
+            "translation": "i18n/de/messages.de.xlf",
+            "baseHref": ""
+          },
+          "es": {
+            "translation": "i18n/es/messages.es.xlf",
+            "baseHref": ""
+          },
+          "fr": {
+            "translation": "i18n/fr/messages.fr.xlf",
+            "baseHref": ""
+          },
+          "ja": {
+            "translation": "i18n/ja/messages.ja.xlf",
+            "baseHref": ""
+          },
+          "ko": {
+            "translation": "i18n/ko/messages.ko.xlf",
+            "baseHref": ""
+          },
+          "zh-Hans": {
+            "translation": "i18n/zh-Hans/messages.zh-Hans.xlf",
+            "baseHref": ""
+          },
+          "zh-Hant": {
+            "translation": "i18n/zh-Hant/messages.zh-Hant.xlf",
+            "baseHref": ""
+          },
+          "zh-Hant-HK": {
+            "translation": "i18n/zh-Hant-HK/messages.zh-Hant-HK.xlf",
+            "baseHref": ""
+          }
+        }
+      },
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "optimization": false,
+            "progress": true,
+            "outputPath": "dist",
+            "index": "src/index.html",
+            "main": "src/index.ts",
+            "tsConfig": "tsconfig.app.json",
+            "polyfills": "src/polyfills.ts",
+            "i18nMissingTranslation": "error",
+            "allowedCommonJsDependencies": [
+              "truncate-url",
+              "strip-ansi"
+            ],
+            "assets": [
+              {
+                "glob": "**/*",
+                "input": "src/assets",
+                "output": "/assets"
+              },
+              {
+                "glob": "robots.txt",
+                "input": "src/assets",
+                "output": "/"
+              },
+              {
+                "glob": "**/*",
+                "input": "node_modules/ace-builds/src-min-noconflict",
+                "output": "/ace"
+              }
+            ],
+            "stylePreprocessorOptions": {
+              "includePaths": [
+                "src"
+              ]
+            },
+            "styles": [
+              "node_modules/material-design-icons/iconfont/material-icons.css",
+              "node_modules/roboto-fontface/css/roboto/roboto-fontface.css",
+              "node_modules/xterm/css/xterm.css",
+              "src/index.scss"
+            ],
+            "scripts": [
+              "node_modules/sockjs-client/dist/sockjs.min.js",
+              "node_modules/systemjs/dist/s.js",
+              "node_modules/systemjs/dist/extras/named-register.js",
+              "node_modules/systemjs/dist/extras/amd.js"
+            ]
+          },
+          "configurations": {
+            "production": {
+              "budgets": [
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb"
+                }
+              ],
+              "aot": true,
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "namedChunks": false,
+              "localize": true,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.prod.ts"
+                }
+              ]
+            },
+            "production-en": {
+              "budgets": [
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb"
+                }
+              ],
+              "aot": true,
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "namedChunks": false,
+              "localize": false,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.prod.ts"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "kubernetes-dashboard:build",
+            "port": 8080
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "kubernetes-dashboard:build:production"
+            },
+            "production-en": {
+              "browserTarget": "kubernetes-dashboard:build:production-en"
+            }
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "kubernetes-dashboard:build"
+          }
+        },
+        "extract-i18n-merge": {
+          "builder": "ng-extract-i18n-merge:ng-extract-i18n-merge",
+          "options": {
+            "format": "xlf",
+            "outputPath": "i18n",
+            "targetFiles": [
+              "de/messages.de.xlf",
+              "es/messages.es.xlf",
+              "fr/messages.fr.xlf",
+              "ja/messages.ja.xlf",
+              "ko/messages.ko.xlf",
+              "zh-Hans/messages.zh-Hans.xlf",
+              "zh-Hant/messages.zh-Hant.xlf",
+              "zh-Hant-HK/messages.zh-Hant-HK.xlf"
+            ]
+          }
+        }
+      }
+    }
+  },
+  "defaultProject": "kubernetes-dashboard",
+  "schematics": {
+    "@schematics/angular:component": {
+      "prefix": "kd",
+      "style": "scss"
+    },
+    "@schematics/angular:directive": {
+      "prefix": "kd"
+    }
+  },
+  "cli": {
+    "analytics": false
+  }
+}

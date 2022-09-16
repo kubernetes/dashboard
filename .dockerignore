@@ -1,6 +1,0 @@
-# Ignore all development artifacts so that the build is always clean.
-.git
-.tmp/
-.tools/
-dist/
-node_modules/

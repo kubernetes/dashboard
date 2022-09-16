@@ -1,0 +1,97 @@
+# Copyright 2017 The Kubernetes Authors.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+name: CI / API
+on:
+  push:
+    branches: [ master ]
+    paths-ignore:
+      - '**/*.md'
+  pull_request:
+    branches: [ master ]
+    paths-ignore:
+      - '**/*.md'
+permissions:
+  contents: read
+jobs:
+
+  static:
+    name: Static check
+    runs-on: ubuntu-latest
+    env:
+      GOPROXY: "https://proxy.golang.org"
+      TERM: xterm
+    defaults:
+      run:
+        working-directory: modules/api
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: Setup Go
+        uses: actions/setup-go@v3
+        with:
+          go-version: 1.19
+      - name: Ensure tools
+        run: make install
+        working-directory: modules/common/tools
+      - name: Verify codegen
+        run: |
+          export GOPATH=$(go env GOPATH)
+          export PATH=$PATH:$GOPATH/bin
+          make codegen-verify
+      - name: Lint Go
+        uses: golangci/golangci-lint-action@v3
+        with:
+          version: v1.49.0
+          working-directory: modules/api
+
+  unit:
+    name: Unit tests with coverage
+    runs-on: ubuntu-latest
+    env:
+      NG_CLI_ANALYTICS: ci
+      GOPATH: ${{ github.workspace }}
+      GOPROXY: "https://proxy.golang.org"
+      TERM: xterm
+    defaults:
+      run:
+        working-directory: modules/api
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: Setup Go
+        uses: actions/setup-go@v3
+        with:
+          go-version: 1.19
+          check-latest: true
+          cache: true
+          cache-dependency-path: modules/api/go.sum
+      - name: Install dependencies
+        shell: bash
+        run: |
+          export GOPATH=$(go env GOPATH)
+          export PATH=$PATH:$GOPATH/bin
+          go mod download
+      - name: Run unit tests with coverage
+        run: make coverage
+      - name: Upload coverage
+        uses: codecov/codecov-action@v3
+        with:
+          name: api-coverage
+          files: ./modules/api/coverage.out
+          fail_ci_if_error: true

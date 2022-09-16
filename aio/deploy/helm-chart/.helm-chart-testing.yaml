@@ -1,5 +1,0 @@
-chart-dirs:
-  - aio/deploy/helm-chart
-chart-repos:
-  - metrics-server=https://kubernetes-sigs.github.io/metrics-server/
-debug: true

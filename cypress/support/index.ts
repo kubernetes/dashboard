@@ -1,3 +1,0 @@
-before(() => {
-  cy.clearCookies();
-});

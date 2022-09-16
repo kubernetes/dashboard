@@ -1,0 +1,12 @@
+MODULES_DIRECTORY := $(shell dirname $(realpath $(firstword $(MAKEFILE_LIST))))
+API_DIRECTORY = $(MODULES_DIRECTORY)/api
+WEB_DIRECTORY = $(MODULES_DIRECTORY)/web
+MODULES := $(API_DIRECTORY) $(WEB_DIRECTORY)
+
+MAKEFLAGS += -j2
+
+.PHONY: --run $(MODULES)
+--run: $(MODULES)
+
+$(MODULES):
+	@$(MAKE) --directory=$@ $(TARGET)
