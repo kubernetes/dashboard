@@ -130,14 +130,6 @@ build-cross:
 #		--bind-address=${BIND_ADDRESS} \
 #		--port=${PORT}
 #
-#.PHONY: check-codegen
-#check-codegen: ensure-codegen
-#	./aio/scripts/verify-codegen.sh
-#
-#.PHONY: fix-codegen
-#fix-codegen: ensure-codegen
-#	./aio/scripts/update-codegen.sh
-#
 #.PHONY: check-go
 #check-go: ensure-golangcilint
 #	golangci-lint run -c .golangci.yml ./src/app/backend/...
