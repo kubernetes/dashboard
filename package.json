@@ -110,7 +110,7 @@
     "@angular/compiler-cli": "13.3.10",
     "@angular/language-service": "13.3.10",
     "@babel/core": "7.18.2",
-    "@babel/preset-env": "7.18.2",
+    "@babel/preset-env": "7.19.1",
     "@babel/register": "7.17.7",
     "@cypress/webpack-preprocessor": "5.11.1",
     "@types/d3": "7.4.0",
