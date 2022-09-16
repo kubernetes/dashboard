@@ -67,4 +67,5 @@ jobs:
         with:
           name: web-coverage
           directory: ./modules/web/coverage/
+          working-directory: ./modules/web
           fail_ci_if_error: true
