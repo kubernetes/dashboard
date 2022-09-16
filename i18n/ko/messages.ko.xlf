@@ -6000,7 +6000,7 @@
       </trans-unit>
       <trans-unit id="2885840307007437390" datatype="html">
         <source>CPU</source>
-        <target state="new">CPU</target>
+        <target>CPU</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/resource/cluster/node/detail/template.html</context>
           <context context-type="linenumber">153</context>
@@ -6008,7 +6008,7 @@
       </trans-unit>
       <trans-unit id="1548129644093494406" datatype="html">
         <source>Memory</source>
-        <target state="new">Memory</target>
+        <target>메모리</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/resource/cluster/node/detail/template.html</context>
           <context context-type="linenumber">166</context>
@@ -6016,7 +6016,7 @@
       </trans-unit>
       <trans-unit id="664932904697940475" datatype="html">
         <source>Pod Selector</source>
-        <target state="new">Pod Selector</target>
+        <target>파드 셀렉터</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/resource/cluster/networkpolicy/detail/template.html</context>
           <context context-type="linenumber">28</context>
@@ -6024,7 +6024,7 @@
       </trans-unit>
       <trans-unit id="602509887851402383" datatype="html">
         <source>Policy Types</source>
-        <target state="new">Policy Types</target>
+        <target>정책 유형</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/resource/cluster/networkpolicy/detail/template.html</context>
           <context context-type="linenumber">37</context>
@@ -6032,7 +6032,7 @@
       </trans-unit>
       <trans-unit id="8495323198420668903" datatype="html">
         <source>Ingress Rules</source>
-        <target state="new">Ingress Rules</target>
+        <target>인그레스(Ingress) 규칙</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/resource/cluster/networkpolicy/detail/template.html</context>
           <context context-type="linenumber">49</context>
@@ -6040,7 +6040,7 @@
       </trans-unit>
       <trans-unit id="5635791387483695444" datatype="html">
         <source>Egress Rules</source>
-        <target state="new">Egress Rules</target>
+        <target>이그레스(Egress) 규칙</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/resource/cluster/networkpolicy/detail/template.html</context>
           <context context-type="linenumber">61</context>
@@ -6060,7 +6060,7 @@
       </trans-unit>
       <trans-unit id="2397234605876541174" datatype="html">
         <source>Image Pull Secrets</source>
-        <target state="new">Image Pull Secrets</target>
+        <target>이미지 풀(Pull) 시크릿</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/resource/cluster/serviceaccount/detail/component.ts</context>
           <context context-type="linenumber">57</context>
@@ -6092,7 +6092,7 @@
       </trans-unit>
       <trans-unit id="1850293262697508820" datatype="html">
         <source>Revision history limit: </source>
-        <target>개정 내역 한도: </target>
+        <target>리비전 내역 한도: </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/resource/workloads/deployment/detail/template.html</context>
           <context context-type="linenumber">42</context>
@@ -6100,7 +6100,7 @@
       </trans-unit>
       <trans-unit id="1617785425462022303" datatype="html">
         <source>Strategy</source>
-        <target state="new">Strategy</target>
+        <target>전략</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/resource/workloads/deployment/detail/template.html</context>
           <context context-type="linenumber">52</context>
@@ -6108,7 +6108,7 @@
       </trans-unit>
       <trans-unit id="1882001885389765012" datatype="html">
         <source>Min ready seconds</source>
-        <target state="new">Min ready seconds</target>
+        <target>최소 준비 시간(초)</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/resource/workloads/deployment/detail/template.html</context>
           <context context-type="linenumber">58</context>
@@ -6116,7 +6116,7 @@
       </trans-unit>
       <trans-unit id="1429641498515055959" datatype="html">
         <source>Revision history limit</source>
-        <target state="new">Revision history limit</target>
+        <target>리비전 내역 한도(revision history limit)</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/resource/workloads/deployment/detail/template.html</context>
           <context context-type="linenumber">64</context>
@@ -6140,7 +6140,7 @@
       </trans-unit>
       <trans-unit id="8286248772794782745" datatype="html">
         <source>Max surge</source>
-        <target state="new">Max surge</target>
+        <target>최대 증가율(surge)</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/resource/workloads/deployment/detail/template.html</context>
           <context context-type="linenumber">105</context>
@@ -6148,7 +6148,7 @@
       </trans-unit>
       <trans-unit id="3252882636701023997" datatype="html">
         <source>Max unavailable</source>
-        <target state="new">Max unavailable</target>
+        <target>최대 비가용</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/resource/workloads/deployment/detail/template.html</context>
           <context context-type="linenumber">111</context>
@@ -6172,7 +6172,7 @@
       </trans-unit>
       <trans-unit id="1761780531172486555" datatype="html">
         <source>Available: </source>
-        <target>가용한: </target>
+        <target>가용 </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/resource/workloads/deployment/detail/template.html</context>
           <context context-type="linenumber">139</context>
@@ -6180,7 +6180,7 @@
       </trans-unit>
       <trans-unit id="2862835290520488117" datatype="html">
         <source>Unavailable: </source>
-        <target>가용하지 않은: </target>
+        <target>비가용: </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/resource/workloads/deployment/detail/template.html</context>
           <context context-type="linenumber">146</context>
@@ -6188,7 +6188,7 @@
       </trans-unit>
       <trans-unit id="7239750919884229270" datatype="html">
         <source>Updated</source>
-        <target state="new">Updated</target>
+        <target>업데이트된</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/resource/workloads/deployment/detail/template.html</context>
           <context context-type="linenumber">156</context>
@@ -6196,7 +6196,7 @@
       </trans-unit>
       <trans-unit id="3448462145758383019" datatype="html">
         <source>Total</source>
-        <target state="new">Total</target>
+        <target>Total</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/resource/workloads/deployment/detail/template.html</context>
           <context context-type="linenumber">162</context>
@@ -6204,7 +6204,7 @@
       </trans-unit>
       <trans-unit id="3955868613858648955" datatype="html">
         <source>Available</source>
-        <target state="new">Available</target>
+        <target>가용</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/resource/workloads/deployment/detail/template.html</context>
           <context context-type="linenumber">168</context>
@@ -6212,7 +6212,7 @@
       </trans-unit>
       <trans-unit id="5643561794785412000" datatype="html">
         <source>Unavailable</source>
-        <target state="new">Unavailable</target>
+        <target>비가용</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/resource/workloads/deployment/detail/template.html</context>
           <context context-type="linenumber">174</context>
@@ -6220,7 +6220,7 @@
       </trans-unit>
       <trans-unit id="1257046302587502112" datatype="html">
         <source>New Replica Set</source>
-        <target state="new">New Replica Set</target>
+        <target>새 레플리카 셋</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/resource/workloads/deployment/detail/template.html</context>
           <context context-type="linenumber">186</context>
@@ -6228,7 +6228,7 @@
       </trans-unit>
       <trans-unit id="4708304467453184793" datatype="html">
         <source>Environment variables</source>
-        <target state="new">Environment variables</target>
+        <target>환경 변수들</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/create/from/form/environmentvariables/template.html</context>
           <context context-type="linenumber">19</context>
@@ -6272,7 +6272,7 @@
       </trans-unit>
       <trans-unit id="6781815540337494856" datatype="html">
         <source>Completions</source>
-        <target state="new">Completions</target>
+        <target>완료</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/resource/workloads/job/detail/template.html</context>
           <context context-type="linenumber">45</context>
@@ -6280,7 +6280,7 @@
       </trans-unit>
       <trans-unit id="2820019882540866093" datatype="html">
         <source>Parallelism</source>
-        <target state="new">Parallelism</target>
+        <target>병렬성</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/resource/workloads/job/detail/template.html</context>
           <context context-type="linenumber">51</context>
@@ -6288,7 +6288,7 @@
       </trans-unit>
       <trans-unit id="4558539712487554281" datatype="html">
         <source>Do you want to save them anyways?</source>
-        <target>어쨌든 저장하고 싶습니까?</target>
+        <target>저장하시겠습니까?</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/settings/global/saveanywaysdialog/template.html</context>
           <context context-type="linenumber">19</context>
@@ -6296,7 +6296,7 @@
       </trans-unit>
       <trans-unit id="1102717806459547726" datatype="html">
         <source>Refresh</source>
-        <target state="new">Refresh</target>
+        <target>새로고침</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/settings/global/saveanywaysdialog/template.html</context>
           <context context-type="linenumber">28</context>
@@ -6304,7 +6304,7 @@
       </trans-unit>
       <trans-unit id="1046894941566596460" datatype="html">
         <source>Resource Information</source>
-        <target state="new">Resource Information</target>
+        <target>리소스 정보</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/crd/detail/template.html</context>
           <context context-type="linenumber">22</context>
@@ -6312,7 +6312,7 @@
       </trans-unit>
       <trans-unit id="3318801106745932223" datatype="html">
         <source>Accepted Names</source>
-        <target state="new">Accepted Names</target>
+        <target>승인된 이름</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/crd/detail/template.html</context>
           <context context-type="linenumber">55</context>
@@ -6320,7 +6320,7 @@
       </trans-unit>
       <trans-unit id="5590086849807274701" datatype="html">
         <source>Scope</source>
-        <target state="new">Scope</target>
+        <target>범위</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/crd/detail/template.html</context>
           <context context-type="linenumber">35</context>
@@ -6328,7 +6328,7 @@
       </trans-unit>
       <trans-unit id="2724055831234181057" datatype="html">
         <source>Version</source>
-        <target state="new">Version</target>
+        <target>버전</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/crd/detail/template.html</context>
           <context context-type="linenumber">29</context>
@@ -6336,7 +6336,7 @@
       </trans-unit>
       <trans-unit id="6140249581799344433" datatype="html">
         <source>Subresources</source>
-        <target state="new">Subresources</target>
+        <target>하위 리소스</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/crd/detail/template.html</context>
           <context context-type="linenumber">47</context>
@@ -6344,7 +6344,7 @@
       </trans-unit>
       <trans-unit id="3151383268286254555" datatype="html">
         <source>Plural</source>
-        <target state="new">Plural</target>
+        <target>복수형</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/crd/detail/template.html</context>
           <context context-type="linenumber">62</context>
@@ -6352,7 +6352,7 @@
       </trans-unit>
       <trans-unit id="6677684716540733511" datatype="html">
         <source>List Kind</source>
-        <target state="new">List Kind</target>
+        <target>목록 종류</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/crd/detail/template.html</context>
           <context context-type="linenumber">77</context>
@@ -6360,7 +6360,7 @@
       </trans-unit>
       <trans-unit id="5053012141806552327" datatype="html">
         <source>Singular</source>
-        <target state="new">Singular</target>
+        <target>단수형</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/crd/detail/template.html</context>
           <context context-type="linenumber">67</context>
@@ -6368,7 +6368,7 @@
       </trans-unit>
       <trans-unit id="7010971699308736203" datatype="html">
         <source>Short Names</source>
-        <target state="new">Short Names</target>
+        <target>짧은 이름</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/crd/detail/template.html</context>
           <context context-type="linenumber">82</context>
@@ -6376,7 +6376,7 @@
       </trans-unit>
       <trans-unit id="1902100407096396858" datatype="html">
         <source>Categories</source>
-        <target state="new">Categories</target>
+        <target>카테고리들</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/crd/detail/template.html</context>
           <context context-type="linenumber">87</context>
@@ -6384,7 +6384,7 @@
       </trans-unit>
       <trans-unit id="1014173530798491135" datatype="html">
         <source>Default namespace</source>
-        <target state="new">Default namespace</target>
+        <target>기본 네임스페이스</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/settings/global/namespace/template.html</context>
           <context context-type="linenumber">18</context>
@@ -6392,7 +6392,7 @@
       </trans-unit>
       <trans-unit id="4216509171965074904" datatype="html">
         <source>Namespace that should be selected by default after logging in.</source>
-        <target state="new">Namespace that should be selected by default after logging in.</target>
+        <target>로그인 후 기본적으로 선택해야 하는 네임스페이스입니다.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/settings/global/namespace/template.html</context>
           <context context-type="linenumber">20</context>
@@ -6400,7 +6400,7 @@
       </trans-unit>
       <trans-unit id="1027767960138955738" datatype="html">
         <source>Namespace fallback list</source>
-        <target state="new">Namespace fallback list</target>
+        <target>네임스페이스 예비 목록</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/settings/global/namespace/template.html</context>
           <context context-type="linenumber">40</context>
@@ -6408,7 +6408,7 @@
       </trans-unit>
       <trans-unit id="3208716248295885865" datatype="html">
         <source>List of namespaces that should be presented to user without namespace list privileges.</source>
-        <target state="new">List of namespaces that should be presented to user without namespace list privileges.</target>
+        <target>네임스페이스 목록 권한이 없는 사용자에게 표시되어야 하는 네임스페이스 목록입니다.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/settings/global/namespace/template.html</context>
           <context context-type="linenumber">42</context>
@@ -6416,7 +6416,7 @@
       </trans-unit>
       <trans-unit id="2046668453758144264" datatype="html">
         <source>Add namespaces...</source>
-        <target state="new">Add namespaces...</target>
+        <target>네임스페이스 추가...</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/settings/global/namespace/template.html</context>
           <context context-type="linenumber">60</context>
@@ -6424,7 +6424,7 @@
       </trans-unit>
       <trans-unit id="3848712021572607026" datatype="html">
         <source>Can't find plugin "<x id="PH" equiv-text="pluginName"/>"</source>
-        <target state="new">Can't find plugin "<x id="PH" equiv-text="pluginName"/>"</target>
+        <target>"<x id="PH" equiv-text="pluginName"/>" 플러그인을 찾을 수 없습니다</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/services/pluginloader/clientloader.service.ts</context>
           <context context-type="linenumber">42</context>
@@ -6432,7 +6432,7 @@
       </trans-unit>
       <trans-unit id="6185721657347844438" datatype="html">
         <source>Can't find dependency "<x id="PH" equiv-text="dep"/>" for plugin "<x id="PH_1" equiv-text="pluginName"/>"</source>
-        <target state="new">Can't find dependency "<x id="PH" equiv-text="dep"/>" for plugin "<x id="PH_1" equiv-text="pluginName"/>"</target>
+        <target>"<x id="PH_1" equiv-text="pluginName"/>" 플러그인에 대한 "<x id="PH" equiv-text="dep"/>" 종속성을 찾을 수 없습니다.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/common/services/pluginloader/clientloader.service.ts</context>
           <context context-type="linenumber">48</context>
@@ -6440,7 +6440,7 @@
       </trans-unit>
       <trans-unit id="8030904345187828957" datatype="html">
         <source>Remove namespaces from the list and confirm to save the changes.</source>
-        <target state="new">Remove namespaces from the list and confirm to save the changes.</target>
+        <target>목록에서 네임스페이스를 제거하고 변경 내용을 저장할지 확인합니다.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/settings/global/namespace/editdialog/template.html</context>
           <context context-type="linenumber">23</context>
@@ -6448,7 +6448,7 @@
       </trans-unit>
       <trans-unit id="5793766132158032827" datatype="html">
         <source>No namespaces selected</source>
-        <target state="new">No namespaces selected</target>
+        <target>네임스페이스가 선택되지 않았습니다</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/settings/global/namespace/editdialog/template.html</context>
           <context context-type="linenumber">36</context>
@@ -6456,7 +6456,7 @@
       </trans-unit>
       <trans-unit id="8000125105974293495" datatype="html">
         <source>Provide a namespace name that should be added to the namespace fallback list</source>
-        <target state="new">Provide a namespace name that should be added to the namespace fallback list</target>
+        <target>네임스페이스 예비 목록에 추가해야 하는 네임스페이스 이름을 입력</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/settings/global/namespace/adddialog/template.html</context>
           <context context-type="linenumber">23</context>
@@ -6464,7 +6464,7 @@
       </trans-unit>
       <trans-unit id="577038887888857351" datatype="html">
         <source> Add </source>
-        <target state="new"> Add </target>
+        <target> 추가 </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/settings/global/namespace/adddialog/template.html</context>
           <context context-type="linenumber">47</context>
@@ -6472,7 +6472,7 @@
       </trans-unit>
       <trans-unit id="1244504753529533521" datatype="html">
         <source>Edit Namespace List</source>
-        <target state="new">Edit Namespace List</target>
+        <target>네임스페이스 목록 편집</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/settings/global/namespace/editdialog/template.html</context>
           <context context-type="linenumber">20</context>
@@ -6580,7 +6580,7 @@
       </trans-unit>
       <trans-unit id="7967484035994732534" datatype="html">
         <source>Reload</source>
-        <target state="new">Reload</target>
+        <target>리로드</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/settings/global/template.html</context>
           <context context-type="linenumber">132</context>
@@ -6588,7 +6588,7 @@
       </trans-unit>
       <trans-unit id="3544585085434493541" datatype="html">
         <source>Local settings</source>
-        <target state="new">Local settings</target>
+        <target>로컬 설정</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/settings/local/template.html</context>
           <context context-type="linenumber">19</context>
@@ -6596,7 +6596,7 @@
       </trans-unit>
       <trans-unit id="1622528103709985950" datatype="html">
         <source> Local settings are stored in the browser cookies, so they are not synchronized between multiple devices. Changes are applied automatically on every change. </source>
-        <target state="new"> Local settings are stored in the browser cookies, so they are not synchronized between multiple devices. Changes are applied automatically on every change. </target>
+        <target> 로컬 설정은 브라우저 쿠키에 저장되므로 여러 장치 간에 동기화되지 않습니다. 변경사항은 모든 변경사항에 자동으로 적용됩니다. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/settings/local/template.html</context>
           <context context-type="linenumber">21</context>
@@ -6604,7 +6604,7 @@
       </trans-unit>
       <trans-unit id="7103588127254721505" datatype="html">
         <source>Theme</source>
-        <target state="new">Theme</target>
+        <target>테마</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/settings/local/template.html</context>
           <context context-type="linenumber">26</context>
@@ -6612,7 +6612,7 @@
       </trans-unit>
       <trans-unit id="5371126920581174501" datatype="html">
         <source>Choose color theme of the dashboard</source>
-        <target state="new">Choose color theme of the dashboard</target>
+        <target>대시보드의 색상 테마 선택</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/settings/local/template.html</context>
           <context context-type="linenumber">28</context>
@@ -6620,7 +6620,7 @@
       </trans-unit>
       <trans-unit id="2826581353496868063" datatype="html">
         <source>Language</source>
-        <target state="new">언어</target>
+        <target>언어</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/settings/local/template.html</context>
           <context context-type="linenumber">41</context>
@@ -6628,7 +6628,7 @@
       </trans-unit>
       <trans-unit id="376256424703415146" datatype="html">
         <source>Change the language of the dashboard</source>
-        <target state="new">대시 보드의 언어 변경</target>
+        <target>대시보드의 언어 변경</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/settings/local/template.html</context>
           <context context-type="linenumber">43</context>
@@ -6636,7 +6636,7 @@
       </trans-unit>
       <trans-unit id="2634769168106360285" datatype="html">
         <source>Add Namespace</source>
-        <target state="new">Add Namespace</target>
+        <target>네임스페이스 추가</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/frontend/settings/global/namespace/adddialog/template.html</context>
           <context context-type="linenumber">20</context>
