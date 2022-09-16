@@ -99,6 +99,4 @@ jobs:
           node-version: 16.15.0
       - run: yarn
       - run: node hack/version.mjs
-      - run: |
-          export GOPATH=$(go env GOPATH)/bin
-          make e2e
+      - run: yarn e2e
