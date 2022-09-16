@@ -85,6 +85,15 @@ jobs:
       TERM: xterm
     steps:
       - uses: helm/kind-action@v1.3.0
+        with:
+          version: v0.15.0
+          kubectl_version: v1.25.1
+          cluster_name: k8s-cluster-ci
+      - run: |
+          docker run --net=host -d k8s.gcr.io/heapster-amd64:v1.5.4 \
+             --heapster-port=8082 \
+             --source=kubernetes:http://127.0.0.1:8080?inClusterConfig=false&auth=""
+      - run: kind get kubeconfig --name="k8s-cluster-ci" > ${HOME}/.kube/config
       - uses: actions/checkout@v3
         with:
           fetch-depth: 0
