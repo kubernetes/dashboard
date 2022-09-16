@@ -24,7 +24,7 @@ const webpackOptions = {
         use: [
           {
             loader: 'ts-loader',
-            options: {configFile: 'aio/tsconfig.e2e.json'},
+            options: {configFile: 'cypress/tsconfig.e2e.json'},
           },
         ],
       },

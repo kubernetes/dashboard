@@ -98,6 +98,9 @@ jobs:
         working-directory: modules/web
       - run: node hack/version.mjs
         working-directory: modules/web
-      - run: make serve
+      - run: |
+          export GOPATH=$(go env GOPATH)
+          export PATH=$PATH:$GOPATH/bin
+          make serve
       - run: yarn e2e
         working-directory: modules/web
