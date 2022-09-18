@@ -41,9 +41,6 @@ RUN curl -sL https://deb.nodesource.com/setup_16.x | bash - \
 	&& rm -rf /var/lib/apt/lists/* \
 	&& apt-get clean
 
-# Install yarn
-RUN npm install -g yarn
-
 ENV GIT_EDITOR=nano
 
 # Install firefox from Mozilla binaries
@@ -117,4 +114,4 @@ WORKDIR /go/src/github.com/kubernetes/dashboard
 EXPOSE 8080 8443 9090 2345
 
 # Run gosu command in container.
-CMD ./hack/develop/gosu-command.sh
+CMD ./aio/develop/gosu-command.sh

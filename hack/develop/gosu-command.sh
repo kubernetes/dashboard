@@ -38,5 +38,5 @@ if [[ -n "${K8S_DASHBOARD_CMD}" ]] ; then
   ${GOSU} ${K8S_DASHBOARD_CMD}
 else
   # Run npm command
-  ${GOSU} aio/develop/npm-command.sh
+  ${GOSU} hack/develop/npm-command.sh
 fi
