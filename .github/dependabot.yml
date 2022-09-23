@@ -4,14 +4,14 @@ updates:
     directory: "modules/web/"
     schedule:
       interval: "daily"
-    open-pull-requests-limit: 3
+    open-pull-requests-limit: 0 # FIXME: https://github.com/kubernetes/dashboard/issues/7470
   - package-ecosystem: "gomod"
     directory: "/"
     schedule:
       interval: "daily"
-    open-pull-requests-limit: 3
+    open-pull-requests-limit: 5
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
       interval: "daily"
-    open-pull-requests-limit: 3
+    open-pull-requests-limit: 5
