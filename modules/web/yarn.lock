@@ -170,7 +170,26 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@angular-devkit/core@npm:14.2.3, @angular-devkit/core@npm:^13.0.0 || ^14.0.0":
+"@angular-devkit/core@npm:13.3.9, @angular-devkit/core@npm:^13.0.0":
+  version: 13.3.9
+  resolution: "@angular-devkit/core@npm:13.3.9"
+  dependencies:
+    ajv: 8.9.0
+    ajv-formats: 2.1.1
+    fast-json-stable-stringify: 2.1.0
+    magic-string: 0.25.7
+    rxjs: 6.6.7
+    source-map: 0.7.3
+  peerDependencies:
+    chokidar: ^3.5.2
+  peerDependenciesMeta:
+    chokidar:
+      optional: true
+  checksum: 0e9e208e043ec635474bab94312f464686e46fe94dc44ce6a88adaa32c0b523da29f7726aa968e772c5f68e33ec8660df1c65487181b7de6934f47d1ae838dd4
+  languageName: node
+  linkType: hard
+
+"@angular-devkit/core@npm:14.2.3":
   version: 14.2.3
   resolution: "@angular-devkit/core@npm:14.2.3"
   dependencies:
@@ -188,7 +207,20 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@angular-devkit/schematics@npm:14.2.3, @angular-devkit/schematics@npm:^13.0.0 || ^14.0.0":
+"@angular-devkit/schematics@npm:13.3.9, @angular-devkit/schematics@npm:^13.0.0":
+  version: 13.3.9
+  resolution: "@angular-devkit/schematics@npm:13.3.9"
+  dependencies:
+    "@angular-devkit/core": 13.3.9
+    jsonc-parser: 3.0.0
+    magic-string: 0.25.7
+    ora: 5.4.1
+    rxjs: 6.6.7
+  checksum: 838c792b878a8436b9a672eeca0e8e68bc5856eb743f2a3b2a9adfe224b299f2abeda1b3794ac5f0a60b0a499de71c93d162970b607b305e900f81762e1025a4
+  languageName: node
+  linkType: hard
+
+"@angular-devkit/schematics@npm:14.2.3":
   version: 14.2.3
   resolution: "@angular-devkit/schematics@npm:14.2.3"
   dependencies:
@@ -2796,7 +2828,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@schematics/angular@npm:14.2.3, @schematics/angular@npm:^13.0.0 || ^14.0.0":
+"@schematics/angular@npm:14.2.3":
   version: 14.2.3
   resolution: "@schematics/angular@npm:14.2.3"
   dependencies:
@@ -2804,6 +2836,17 @@ __metadata:
     "@angular-devkit/schematics": 14.2.3
     jsonc-parser: 3.1.0
   checksum: 6e7911800bb186e28421cd22255e30b82fa5188d041ef1831bba562c6eefade799d89fc49fcee3d9f5d2dbd7703ed1ee21d145a58ecae051c03ff4a8e87cb8cc
+  languageName: node
+  linkType: hard
+
+"@schematics/angular@npm:^13.0.0":
+  version: 13.3.9
+  resolution: "@schematics/angular@npm:13.3.9"
+  dependencies:
+    "@angular-devkit/core": 13.3.9
+    "@angular-devkit/schematics": 13.3.9
+    jsonc-parser: 3.0.0
+  checksum: f11eac9c3d82d98b53de0d0e66dc7ba557b8d5c8419f3e8ef756c88d45bb5afbf7ee4f61d699801a968787f16ce3a415c192c95e8e25458f0db6d63859cc9d1d
   languageName: node
   linkType: hard
 
@@ -4262,6 +4305,18 @@ __metadata:
     require-from-string: ^2.0.2
     uri-js: ^4.2.2
   checksum: 90849ef03c4f4f7051d15f655120137b89e3205537d683beebd39d95f40c0ca00ea8476cd999602d2f433863e7e4bf1b81d1869d1e07f4dcf56d71b6430a605c
+  languageName: node
+  linkType: hard
+
+"ajv@npm:8.9.0":
+  version: 8.9.0
+  resolution: "ajv@npm:8.9.0"
+  dependencies:
+    fast-deep-equal: ^3.1.1
+    json-schema-traverse: ^1.0.0
+    require-from-string: ^2.0.2
+    uri-js: ^4.2.2
+  checksum: 756c048bfa917b43bb84c8a0a53e6a489123203bc4bdec8cbeb8ec2d715674f5e61d49560a1a6ec83268af4f33bed324f5cb6d9c76d96849fd58ed7089b8e7f3
   languageName: node
   linkType: hard
 
@@ -10021,6 +10076,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"jsonc-parser@npm:3.0.0":
+  version: 3.0.0
+  resolution: "jsonc-parser@npm:3.0.0"
+  checksum: 1df2326f1f9688de30c70ff19c5b2a83ba3b89a1036160da79821d1361090775e9db502dc57a67c11b56e1186fc1ed70b887f25c5febf9a3ec4f91435836c99d
+  languageName: node
+  linkType: hard
+
 "jsonc-parser@npm:3.1.0":
   version: 3.1.0
   resolution: "jsonc-parser@npm:3.1.0"
@@ -10184,7 +10246,7 @@ __metadata:
     material-design-icons: 3.0.1
     minimatch: 5.1.0
     minimist: 1.2.6
-    ng-extract-i18n-merge: 2.2.0
+    ng-extract-i18n-merge: 1.4.0
     ng-in-viewport: 6.1.5
     ngx-cookie-service: 14.0.1
     ngx-pipes: 3.1.0
@@ -11073,18 +11135,18 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ng-extract-i18n-merge@npm:2.2.0":
-  version: 2.2.0
-  resolution: "ng-extract-i18n-merge@npm:2.2.0"
+"ng-extract-i18n-merge@npm:1.4.0":
+  version: 1.4.0
+  resolution: "ng-extract-i18n-merge@npm:1.4.0"
   dependencies:
     "@angular-devkit/architect": ^0.1301.0
-    "@angular-devkit/core": ^13.0.0 || ^14.0.0
-    "@angular-devkit/schematics": ^13.0.0 || ^14.0.0
-    "@schematics/angular": ^13.0.0 || ^14.0.0
-    xliff-simple-merge: ~0.12.4
-    xml_normalize: ~0.8.4
+    "@angular-devkit/core": ^13.0.0
+    "@angular-devkit/schematics": ^13.0.0
+    "@schematics/angular": ^13.0.0
+    xliff-simple-merge: ~0.12.0
+    xml_normalize: ~0.8.3
     xmldoc: ~1.1.2
-  checksum: d1aa7cbb9259aaef2ae9f1953d33bf9a834af30410a0fe873325f3d8753987f05853a659929627ae99ea111d7b626b56980de1a702769c17ced3bf9ffc3a785d
+  checksum: 4dcb53762791579dc4a23356c421e30236864b96aeda8d6758688294dab6240415f19ad400da0ed57c23fbb4a6e59287d1b076206f1ce77c55e28892a5924b43
   languageName: node
   linkType: hard
 
@@ -15433,7 +15495,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"xliff-simple-merge@npm:~0.12.4":
+"xliff-simple-merge@npm:~0.12.0":
   version: 0.12.4
   resolution: "xliff-simple-merge@npm:0.12.4"
   dependencies:
@@ -15453,7 +15515,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"xml_normalize@npm:~0.8.4":
+"xml_normalize@npm:~0.8.3":
   version: 0.8.4
   resolution: "xml_normalize@npm:0.8.4"
   dependencies:
