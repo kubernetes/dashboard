@@ -10138,6 +10138,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"js-base64@npm:3.7.2":
+  version: 3.7.2
+  resolution: "js-base64@npm:3.7.2"
+  checksum: 573f28e9a27c3df60096d4d3f551bcb4fcb6d49161cf83396e9bad9b76f94736a70bb70b8808fe834dff2a388f76604ba09d6e153bbf181646e407720139fa5b
+  languageName: node
+  linkType: hard
+
 "js-beautify@npm:1.14.3":
   version: 1.14.3
   resolution: "js-beautify@npm:1.14.3"
@@ -10483,6 +10490,7 @@ __metadata:
     jasmine-spec-reporter: 7.0.0
     jest: 28.1.0
     jest-preset-angular: 12.0.1
+    js-base64: 3.7.2
     js-beautify: 1.14.3
     js-yaml: 4.1.0
     jwt-decode: 3.1.2

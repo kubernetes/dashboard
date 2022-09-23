@@ -19,6 +19,7 @@ import {RawResource} from 'common/resources/rawresource';
 import {HttpClient, HttpErrorResponse, HttpHeaders} from '@angular/common/http';
 import {AlertDialogConfig, AlertDialog} from 'common/dialogs/alert/dialog';
 import {MatDialogConfig, MatDialog} from '@angular/material/dialog';
+import {encode} from 'js-base64';
 
 @Component({
   selector: 'kd-secret-detail-edit',
@@ -69,7 +70,7 @@ export class SecretDetailEditComponent implements OnInit {
       .toPromise()
       .then((resource: any) => {
         const dataValue = this.encode_(this.text);
-        resource.data[this.key] = this.encode_(this.text);
+        resource.data[this.key] = dataValue;
         const url = RawResource.getUrl(this.secret.typeMeta, this.secret.objectMeta);
         this.http_.put(url, resource, {headers: this.getHttpHeaders_(), responseType: 'text'}).subscribe(() => {
           // Update current data value for secret, so refresh isn't needed.
@@ -88,7 +89,9 @@ export class SecretDetailEditComponent implements OnInit {
   }
 
   private encode_(s: string): string {
-    return btoa(s);
+    // Use js-base64 library instead of `btoa`, since we need to encode a UTF-8 string,
+    // however `btoa` only supports binary input (latin1 range).
+    return encode(s, false);
   }
 
   private getHttpHeaders_(): HttpHeaders {
