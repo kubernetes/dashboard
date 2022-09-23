@@ -20,7 +20,7 @@
     "build:prod": "make build",
     "fix": "yarn fix:i18n && yarn fix:html && yarn fix:scss && yarn fix:ts",
     "fix:i18n": "ng run kubernetes-dashboard:extract-i18n-merge",
-    "fix:html": "npx html-beautify -f=src/**/*.html",
+    "fix:html": "npx html-beautify -f=./src/**/*.html",
     "fix:scss": "stylelint src/**/*.scss",
     "fix:ts": "gts fix",
     "check": "yarn check:i18n && yarn check:html && yarn check:scss && yarn check:ts",
