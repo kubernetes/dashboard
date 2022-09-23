@@ -374,18 +374,18 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@angular/flex-layout@npm:13.0.0-beta.38":
-  version: 13.0.0-beta.38
-  resolution: "@angular/flex-layout@npm:13.0.0-beta.38"
+"@angular/flex-layout@npm:14.0.0-beta.40":
+  version: 14.0.0-beta.40
+  resolution: "@angular/flex-layout@npm:14.0.0-beta.40"
   dependencies:
     tslib: ^2.3.0
   peerDependencies:
-    "@angular/cdk": ^13.0.0
-    "@angular/common": ^13.0.0
-    "@angular/core": ^13.0.0
-    "@angular/platform-browser": ^13.0.0
+    "@angular/cdk": ^14.0.0
+    "@angular/common": ^14.0.0
+    "@angular/core": ^14.0.0
+    "@angular/platform-browser": ^14.0.0
     rxjs: ^6.5.3 || ^7.4.0
-  checksum: c5f22d6748ad8dc2ebc9fa57c82d80cb9f9942d66dfb0246315d351872a2c9df5fa95d849fb0d2750ca99812d5e27d073b7842e07e6f21e541cbe337d9f4e7ed
+  checksum: e04b0e8c96c158475a7379b3ba5c41b571ddae4142d265987815c066ed6dae8fb1aee85b60431c68ffb38f4d32ffbb420d25998155af53e68bb3135f31a22c00
   languageName: node
   linkType: hard
 
@@ -10493,7 +10493,7 @@ __metadata:
     "@angular/compiler": 14.2.3
     "@angular/compiler-cli": 14.2.3
     "@angular/core": 14.2.3
-    "@angular/flex-layout": 13.0.0-beta.38
+    "@angular/flex-layout": 14.0.0-beta.40
     "@angular/forms": 14.2.3
     "@angular/language-service": 14.2.3
     "@angular/localize": 14.2.3
