@@ -56,6 +56,7 @@ export class NavItemComponent implements OnInit, OnDestroy {
   @Input() state: string;
   @Input() exact = false;
   @Input() namespaced = false;
+  @Input() animated = true;
 
   animationState = NamespacedIndicatorState.Leave;
 
@@ -64,10 +65,14 @@ export class NavItemComponent implements OnInit, OnDestroy {
   private unsubscribe_ = new Subject<void>();
 
   get indicator(): string {
-    return this.animationState === NamespacedIndicatorState.Leave ? 'N' : 'Namespaced';
+    return this.animationState === NamespacedIndicatorState.Leave || !this.animated ? 'N' : 'Namespaced';
   }
 
   ngOnInit(): void {
+    if (!this.animated) {
+      return;
+    }
+
     this.mouseStateChanges_
       // Trigger leave animation immediately, but delay enter animation
       .pipe(

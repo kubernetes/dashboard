@@ -16,8 +16,9 @@ import {NgModule} from '@angular/core';
 
 import {SharedModule} from '../../shared.module';
 import {AutofocusDirective} from './autofocus/directive';
+import {IsVisibleDirective} from './isvisible/directive';
 
-const directives = [AutofocusDirective];
+const directives = [AutofocusDirective, IsVisibleDirective];
 
 @NgModule({
   imports: [SharedModule],

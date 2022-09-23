@@ -17,7 +17,7 @@
 .kd-nav-container {
   background-color: transparent;
   height: 100%;
-  width: $nav-width + 8px;
+  width: $nav-width;
 
   &.visible {
     transition: width 0.3s;
@@ -31,14 +31,17 @@
   .kd-nav {
     background-color: transparent;
     font-size: $body-font-size-base;
-    overflow-y: auto;
+    margin: $content-padding 0 $content-padding $content-padding;
     white-space: nowrap;
+    width: $nav-width - $content-padding;
 
     .kd-nav-items {
-      padding: $content-padding 3px $content-padding $content-padding;
+      display: flex;
+      flex-direction: column;
+      gap: 0.25 * $baseline-grid;
 
       .mat-divider {
-        margin: $baseline-grid $baseline-grid (2 * $baseline-grid) (-1 * $content-padding);
+        margin: $baseline-grid (1.5 * $baseline-grid) $baseline-grid (-1 * $content-padding);
       }
     }
 
@@ -50,5 +53,9 @@
 }
 
 .kd-nav-item {
-  margin-left: 1.5 * $baseline-grid;
+  margin: 0 (1.5 * $baseline-grid);
+}
+
+.kd-nav-group-item {
+  margin-right: 1.5 * $baseline-grid;
 }

@@ -9177,13 +9177,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"intersection-observer@npm:>=0.11.0":
-  version: 0.12.2
-  resolution: "intersection-observer@npm:0.12.2"
-  checksum: d1fa9ebbb1e0baafe88ad95545bbb93f92bdcb8789912a2bd11b2463ab177ef185052c9c79c26187833d633f404acb077d4b1249353c5f6e2ca5cd64f50e216b
-  languageName: node
-  linkType: hard
-
 "ip@npm:^1.1.0":
   version: 1.1.8
   resolution: "ip@npm:1.1.8"
@@ -10501,7 +10494,6 @@ __metadata:
     minimatch: 5.1.0
     minimist: 1.2.6
     ng-extract-i18n-merge: 1.4.0
-    ng-in-viewport: 6.1.5
     ngx-cookie-service: 13.2.1
     ngx-pipes: 3.0.0
     node-gyp: 9.0.0
@@ -11474,20 +11466,6 @@ __metadata:
     xml_normalize: ~0.8.3
     xmldoc: ~1.1.2
   checksum: 4dcb53762791579dc4a23356c421e30236864b96aeda8d6758688294dab6240415f19ad400da0ed57c23fbb4a6e59287d1b076206f1ce77c55e28892a5924b43
-  languageName: node
-  linkType: hard
-
-"ng-in-viewport@npm:6.1.5":
-  version: 6.1.5
-  resolution: "ng-in-viewport@npm:6.1.5"
-  dependencies:
-    intersection-observer: ">=0.11.0"
-    tslib: ">=1.9.0"
-  peerDependencies:
-    "@angular/common": ">=6.0.0"
-    "@angular/core": ">=6.0.0"
-    rxjs: ">=6.0.0"
-  checksum: b2247340828df8abff2a09cf4f58357bd55fcd6d30163ff80825615cbbc9cc1c218252602fed1da0cd429c9c923e47dee0212aab74e1c7f3cd286d7ee23436de
   languageName: node
   linkType: hard
 
@@ -15128,7 +15106,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tslib@npm:2.4.0, tslib@npm:>=1.9.0, tslib@npm:^2.0.0, tslib@npm:^2.1.0, tslib@npm:^2.3.0":
+"tslib@npm:2.4.0, tslib@npm:^2.0.0, tslib@npm:^2.1.0, tslib@npm:^2.3.0":
   version: 2.4.0
   resolution: "tslib@npm:2.4.0"
   checksum: 8c4aa6a3c5a754bf76aefc38026134180c053b7bd2f81338cb5e5ebf96fefa0f417bff221592bf801077f5bf990562f6264fecbc42cd3309b33872cb6fc3b113

@@ -42,9 +42,12 @@ code {
 
 * {
   &::-webkit-scrollbar {
-    background: transparent;
-    height: $baseline-grid;
-    width: $baseline-grid;
+    height: 0.5 * $baseline-grid;
+    width: 0.5 * $baseline-grid;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    border-radius: $baseline-grid;
   }
 }
 
