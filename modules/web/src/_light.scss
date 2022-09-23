@@ -13,7 +13,7 @@
 // limitations under the License.
 
 @use 'sass:map';
-@use '~@angular/material/theming' as mat-theming;
+@use '@angular/material/theming' as mat-theming;
 @use './theming';
 
 $colors-light: (
