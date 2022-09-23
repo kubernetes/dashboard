@@ -14,7 +14,13 @@
 
 import {BreakpointObserver, Breakpoints} from '@angular/cdk/layout';
 import {Component, forwardRef, OnDestroy, OnInit} from '@angular/core';
-import {ControlValueAccessor, UntypedFormArray, UntypedFormBuilder, UntypedFormGroup, NG_VALUE_ACCESSOR} from '@angular/forms';
+import {
+  ControlValueAccessor,
+  UntypedFormArray,
+  UntypedFormBuilder,
+  UntypedFormGroup,
+  NG_VALUE_ACCESSOR,
+} from '@angular/forms';
 import {MatDialog, MatDialogConfig} from '@angular/material/dialog';
 import {GlobalSettings, NamespaceList} from '@api/root.api';
 import {Subject} from 'rxjs';
@@ -183,7 +189,9 @@ export class NamespaceSettingsComponent implements OnInit, OnDestroy, ControlVal
   }
 
   private containsNamespace_(ns: string): boolean {
-    return !ns || (this.form.get(Controls.FallbackList) as UntypedFormArray).controls.map(c => c.value).indexOf(ns) > -1;
+    return (
+      !ns || (this.form.get(Controls.FallbackList) as UntypedFormArray).controls.map(c => c.value).indexOf(ns) > -1
+    );
   }
 
   private onFormChange_(): void {
