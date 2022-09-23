@@ -16,10 +16,10 @@ import {Component, forwardRef} from '@angular/core';
 import {
   AbstractControl,
   ControlValueAccessor,
-  FormArray,
-  FormBuilder,
-  FormControl,
-  FormGroup,
+  UntypedFormArray,
+  UntypedFormBuilder,
+  UntypedFormControl,
+  UntypedFormGroup,
   NG_VALIDATORS,
   NG_VALUE_ACCESSOR,
   Validators,
@@ -43,11 +43,11 @@ import {EnvironmentVariable} from '@api/root.api';
   ],
 })
 export class EnvironmentVariablesComponent implements ControlValueAccessor {
-  form: FormGroup;
+  form: UntypedFormGroup;
 
   namePattern = new RegExp('^[A-Za-z_][A-Za-z0-9_]*$');
 
-  constructor(private readonly fb_: FormBuilder) {}
+  constructor(private readonly fb_: UntypedFormBuilder) {}
 
   ngOnInit(): void {
     this.form = this.fb_.group({
@@ -58,12 +58,12 @@ export class EnvironmentVariablesComponent implements ControlValueAccessor {
     });
   }
 
-  validate(_: FormControl): {[key: string]: object} {
+  validate(_: UntypedFormControl): {[key: string]: object} {
     return this.form.valid ? null : {labelValid: {value: this.form.errors}};
   }
 
-  get variables(): FormArray {
-    return this.form.get('variables') as FormArray;
+  get variables(): UntypedFormArray {
+    return this.form.get('variables') as UntypedFormArray;
   }
 
   addVariableIfNeeed(): void {
@@ -77,7 +77,7 @@ export class EnvironmentVariablesComponent implements ControlValueAccessor {
     return !!variable.get('name').value;
   }
 
-  private newVariable(): FormGroup {
+  private newVariable(): UntypedFormGroup {
     return this.fb_.group({
       name: ['', Validators.pattern(this.namePattern)],
       value: '',

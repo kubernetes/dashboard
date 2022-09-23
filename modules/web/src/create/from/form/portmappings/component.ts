@@ -17,10 +17,10 @@ import {Component, EventEmitter, forwardRef, Input, OnInit, Output} from '@angul
 import {
   AbstractControl,
   ControlValueAccessor,
-  FormArray,
-  FormBuilder,
-  FormControl,
-  FormGroup,
+  UntypedFormArray,
+  UntypedFormBuilder,
+  UntypedFormControl,
+  UntypedFormGroup,
   NG_ASYNC_VALIDATORS,
   NG_VALUE_ACCESSOR,
   Validators,
@@ -80,9 +80,9 @@ export class PortMappingsComponent implements OnInit, ControlValueAccessor {
   @Output() changeExternal: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   serviceTypes: ServiceType[];
-  portMappingForm: FormGroup;
+  portMappingForm: UntypedFormGroup;
 
-  constructor(private readonly fb_: FormBuilder, private readonly http_: HttpClient) {}
+  constructor(private readonly fb_: UntypedFormBuilder, private readonly http_: HttpClient) {}
 
   ngOnInit(): void {
     this.serviceTypes = [NO_SERVICE, INT_SERVICE, EXT_SERVICE];
@@ -99,7 +99,7 @@ export class PortMappingsComponent implements OnInit, ControlValueAccessor {
     });
   }
 
-  validate(_: FormControl): Observable<{[key: string]: boolean} | null> {
+  validate(_: UntypedFormControl): Observable<{[key: string]: boolean} | null> {
     return this.portMappingForm.statusChanges.pipe(
       startWith(this.portMappingForm.status),
       filter(() => !this.portMappingForm.pending),
@@ -133,15 +133,15 @@ export class PortMappingsComponent implements OnInit, ControlValueAccessor {
     }
   }
 
-  get portMappings(): FormArray {
-    return this.portMappingForm.get('portMappings') as FormArray;
+  get portMappings(): UntypedFormArray {
+    return this.portMappingForm.get('portMappings') as UntypedFormArray;
   }
 
   get serviceType(): AbstractControl {
     return this.portMappingForm.get('serviceType') as AbstractControl;
   }
 
-  private newEmptyPortMapping(defaultProtocol: string): FormGroup {
+  private newEmptyPortMapping(defaultProtocol: string): UntypedFormGroup {
     return this.fb_.group({
       port: ['', Validators.compose([FormValidators.isInteger, Validators.min(1), Validators.max(65535)])],
       targetPort: ['', Validators.compose([FormValidators.isInteger, Validators.min(1), Validators.max(65535)])],

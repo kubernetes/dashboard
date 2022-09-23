@@ -188,7 +188,6 @@
       }
     }
   },
-  "defaultProject": "kubernetes-dashboard",
   "schematics": {
     "@schematics/angular:component": {
       "prefix": "kd",

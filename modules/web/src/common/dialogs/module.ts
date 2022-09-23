@@ -28,37 +28,27 @@ import {TriggerResourceDialog} from './triggerresource/dialog';
 import {PreviewDeploymentDialog} from './previewdeployment/dialog';
 
 @NgModule({
-  imports: [SharedModule, ComponentsModule],
-  declarations: [
-    AlertDialog,
-    EditResourceDialog,
-    DeleteResourceDialog,
-    LogsDownloadDialog,
-    RestartResourceDialog,
-    ScaleResourceDialog,
-    TriggerResourceDialog,
-    ConfirmDialog,
-    PreviewDeploymentDialog,
-  ],
-  exports: [
-    AlertDialog,
-    EditResourceDialog,
-    DeleteResourceDialog,
-    LogsDownloadDialog,
-    RestartResourceDialog,
-    ScaleResourceDialog,
-    TriggerResourceDialog,
-    PreviewDeploymentDialog,
-  ],
-  entryComponents: [
-    AlertDialog,
-    EditResourceDialog,
-    DeleteResourceDialog,
-    LogsDownloadDialog,
-    RestartResourceDialog,
-    ScaleResourceDialog,
-    TriggerResourceDialog,
-    PreviewDeploymentDialog,
-  ],
+    imports: [SharedModule, ComponentsModule],
+    declarations: [
+        AlertDialog,
+        EditResourceDialog,
+        DeleteResourceDialog,
+        LogsDownloadDialog,
+        RestartResourceDialog,
+        ScaleResourceDialog,
+        TriggerResourceDialog,
+        ConfirmDialog,
+        PreviewDeploymentDialog,
+    ],
+    exports: [
+        AlertDialog,
+        EditResourceDialog,
+        DeleteResourceDialog,
+        LogsDownloadDialog,
+        RestartResourceDialog,
+        ScaleResourceDialog,
+        TriggerResourceDialog,
+        PreviewDeploymentDialog,
+    ]
 })
 export class DialogsModule {}

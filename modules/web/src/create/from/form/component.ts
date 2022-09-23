@@ -14,7 +14,7 @@
 
 import {HttpClient} from '@angular/common/http';
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {AbstractControl, FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {AbstractControl, UntypedFormArray, UntypedFormBuilder, UntypedFormGroup, Validators} from '@angular/forms';
 import {MatDialog} from '@angular/material/dialog';
 import {ActivatedRoute, Router} from '@angular/router';
 import {
@@ -57,7 +57,7 @@ export class CreateFromFormComponent extends ICanDeactivate implements OnInit, O
   secrets: string[];
   isExternal = false;
   labelArr: DeployLabel[] = [];
-  form: FormGroup;
+  form: UntypedFormGroup;
   readonly nameMaxLength = 24;
   private created_ = false;
   private unsubscribe_ = new Subject<void>();
@@ -68,7 +68,7 @@ export class CreateFromFormComponent extends ICanDeactivate implements OnInit, O
     private readonly history_: HistoryService,
     private readonly http_: HttpClient,
     private readonly route_: ActivatedRoute,
-    private readonly fb_: FormBuilder,
+    private readonly fb_: UntypedFormBuilder,
     private readonly dialog_: MatDialog,
     private readonly router_: Router
   ) {
@@ -119,16 +119,16 @@ export class CreateFromFormComponent extends ICanDeactivate implements OnInit, O
     return this.form.get('runAsPrivileged');
   }
 
-  get portMappings(): FormArray {
-    return this.form.get('portMappings') as FormArray;
+  get portMappings(): UntypedFormArray {
+    return this.form.get('portMappings') as UntypedFormArray;
   }
 
-  get variables(): FormArray {
-    return this.form.get('variables') as FormArray;
+  get variables(): UntypedFormArray {
+    return this.form.get('variables') as UntypedFormArray;
   }
 
-  get labels(): FormArray {
-    return this.form.get('labels') as FormArray;
+  get labels(): UntypedFormArray {
+    return this.form.get('labels') as UntypedFormArray;
   }
 
   ngOnInit(): void {

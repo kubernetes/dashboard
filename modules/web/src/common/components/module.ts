@@ -199,9 +199,8 @@ const components = [
 ];
 
 @NgModule({
-  imports: [SharedModule, DirectivesModule, MatTableModule, MatTableModule],
-  declarations: [...components],
-  exports: [...components],
-  entryComponents: [ChipDialog, RowDetailComponent, MenuComponent, NamespaceChangeDialog],
+    imports: [SharedModule, DirectivesModule, MatTableModule, MatTableModule],
+    declarations: [...components],
+    exports: [...components]
 })
 export class ComponentsModule {}
