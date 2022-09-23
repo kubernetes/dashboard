@@ -28,7 +28,7 @@ const config = {
     "^@environments/(.*)$": "<rootDir>/environments/$1",
   },
   transformIgnorePatterns: [
-    "<rootDir>/node_modules/(?!lodash-es/.*)"
+    "/node_modules/(?!(.*))"
   ],
 };
 
