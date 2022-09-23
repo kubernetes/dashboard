@@ -16,6 +16,9 @@ serve-https: PROXY_CONFIG = proxy-https.conf.json
 serve-https: SSL_ENABLED = true
 serve-https: $(PRE) --serve-go --serve-angular
 
+.PHONY: serve-frontend
+serve-frontend: $(PRE) --serve-angular
+
 .PHONY: build
 build: ARCHITECTURES = $(ARCH)
 build: build-cross

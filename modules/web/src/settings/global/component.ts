@@ -14,7 +14,7 @@
 
 import {HttpErrorResponse} from '@angular/common/http';
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {FormBuilder, FormGroup} from '@angular/forms';
+import {UntypedFormBuilder, UntypedFormGroup} from '@angular/forms';
 import {MatDialog} from '@angular/material/dialog';
 import {GlobalSettings, NamespaceList} from '@api/root.api';
 import isEqual from 'lodash-es/isEqual';
@@ -48,7 +48,7 @@ export class GlobalSettingsComponent implements OnInit, OnDestroy {
 
   settings: GlobalSettings = {} as GlobalSettings;
   hasLoadError = false;
-  form: FormGroup;
+  form: UntypedFormGroup;
 
   // Keep it in sync with ConcurrentSettingsChangeError constant from the backend.
   private readonly concurrentChangeErr_ = 'settings changed since last reload';
@@ -60,7 +60,7 @@ export class GlobalSettingsComponent implements OnInit, OnDestroy {
     private readonly namespaceService_: ResourceService<NamespaceList>,
     private readonly dialog_: MatDialog,
     private readonly title_: TitleService,
-    private readonly builder_: FormBuilder
+    private readonly builder_: UntypedFormBuilder
   ) {}
 
   private get externalSettings_(): GlobalSettings {

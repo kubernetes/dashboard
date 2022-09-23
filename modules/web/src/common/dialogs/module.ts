@@ -50,15 +50,5 @@ import {PreviewDeploymentDialog} from './previewdeployment/dialog';
     TriggerResourceDialog,
     PreviewDeploymentDialog,
   ],
-  entryComponents: [
-    AlertDialog,
-    EditResourceDialog,
-    DeleteResourceDialog,
-    LogsDownloadDialog,
-    RestartResourceDialog,
-    ScaleResourceDialog,
-    TriggerResourceDialog,
-    PreviewDeploymentDialog,
-  ],
 })
 export class DialogsModule {}

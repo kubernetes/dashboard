@@ -4,6 +4,7 @@
     "outDir": ".tmp/out-tsc/spec",
     "baseUrl": "./src",
     "types": ["jest"],
+    "emitDecoratorMetadata": false
   },
   "include": [
     "src/**/*.spec.ts",

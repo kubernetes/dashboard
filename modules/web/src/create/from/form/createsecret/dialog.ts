@@ -14,7 +14,7 @@
 
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Component, Inject, OnInit} from '@angular/core';
-import {AbstractControl, FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {AbstractControl, UntypedFormBuilder, UntypedFormGroup, Validators} from '@angular/forms';
 import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material/dialog';
 import {IConfig} from '@api/root.ui';
 import {switchMap} from 'rxjs/operators';
@@ -31,7 +31,7 @@ export interface CreateSecretDialogMeta {
   templateUrl: 'template.html',
 })
 export class CreateSecretDialog implements OnInit {
-  form: FormGroup;
+  form: UntypedFormGroup;
 
   /**
    * Max-length validation rule for secretName.
@@ -54,7 +54,7 @@ export class CreateSecretDialog implements OnInit {
     private readonly http_: HttpClient,
     private readonly csrfToken_: CsrfTokenService,
     private readonly matDialog_: MatDialog,
-    private readonly fb_: FormBuilder,
+    private readonly fb_: UntypedFormBuilder,
     @Inject(CONFIG_DI_TOKEN) private readonly appConfig_: IConfig
   ) {}
 
