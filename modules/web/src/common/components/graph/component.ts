@@ -70,8 +70,6 @@ export class GraphComponent implements OnInit, OnChanges {
   }
 
   changeState(isVisible: boolean): void {
-    if (isVisible) console.log('I see graph');
-    else console.log('No graph :(');
     this.visible_ = isVisible;
   }
 
