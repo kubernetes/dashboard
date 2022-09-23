@@ -21,6 +21,11 @@ on:
     - 'charts/helm-chart/**'
     - 'aio/scripts/helm-release-chart.sh'
     - '.github/workflows/cd-helm-workflow.yml'
+
+permissions:
+  contents: write
+  pull-requests: write
+
 jobs:
 
   release:

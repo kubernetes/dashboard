@@ -48,7 +48,7 @@ var emptyJobList = &job.JobList{
 func GetCronJobJobs(client client.Interface, metricClient metricapi.MetricClient,
 	dsQuery *dataselect.DataSelectQuery, namespace, name string, active bool) (*job.JobList, error) {
 
-	cronJob, err := client.BatchV1beta1().CronJobs(namespace).Get(context.TODO(), name, meta.GetOptions{})
+	cronJob, err := client.BatchV1().CronJobs(namespace).Get(context.TODO(), name, meta.GetOptions{})
 	if err != nil {
 		return emptyJobList, err
 	}
