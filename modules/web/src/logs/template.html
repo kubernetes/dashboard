@@ -69,10 +69,7 @@ limitations under the License.
        #logViewContainer
        class="kd-log-line-container"
        (scroll)="onLogsScroll()"
-       [ngClass]="{
-      'kd-logs-text-color-invert': logService?.getInverted(),
-      'kd-logs-text-color': !logService?.getInverted()
-    }">
+       [ngClass]="{'kd-logs-text-color-invert': logService?.getInverted()}">
     <div kdLoadingSpinner
          [isLoading]="isLoading"></div>
     <div fxFlex

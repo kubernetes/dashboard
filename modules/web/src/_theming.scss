@@ -48,7 +48,7 @@
 
   * {
     &::-webkit-scrollbar-thumb {
-      background-color: $border;
+      background-color: map.get($colors, scrollbar);
     }
 
     // Only show the scrollbar on hover, but always enable scrolling.
@@ -333,7 +333,7 @@
       }
 
       &.kd-logs-text-color-invert {
-        filter: color.invert(map.get($colors, log-viewer-text), 100%);
+        filter: invert(100%);
       }
     }
   }

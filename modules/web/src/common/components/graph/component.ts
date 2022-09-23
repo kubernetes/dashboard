@@ -14,7 +14,6 @@
 
 import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
 import {DataPoint, Metric} from '@api/root.api';
-import {ViewportMetadata} from '@api/root.ui';
 import {curveMonotoneX} from 'd3-shape';
 import {timeFormat} from 'd3-time-format';
 
@@ -70,8 +69,8 @@ export class GraphComponent implements OnInit, OnChanges {
     }
   }
 
-  changeState(isInViewPort: ViewportMetadata): void {
-    this.visible_ = isInViewPort.visible;
+  changeState(isVisible: boolean): void {
+    this.visible_ = isVisible;
   }
 
   getTooltipValue(value: number): string {

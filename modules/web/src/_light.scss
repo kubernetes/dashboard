@@ -29,6 +29,7 @@ $colors-light: (
   log-viewer-bg: #000,
   log-viewer-text: #fff,
   log-viewer-scrollbar: rgb(200 200 200 / 0.66),
+  scrollbar: rgb(100 100 100 / 0.33),
 );
 $kd-blue: map_merge(mat-theming.$mat-blue, (500: #326de6));
 $theme-light: mat-theming.mat-light-theme(
