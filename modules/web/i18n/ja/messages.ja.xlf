@@ -954,10 +954,6 @@
         <source>Replica Sets</source>
         <target>レプリカセット</target>
       </trans-unit>
-      <trans-unit id="3804893288209000257" datatype="html">
-        <source>Waiting for more data to display chart...</source>
-        <target>チャートのデータが完全に表示されるまでもうしばらくお待ちください...</target>
-      </trans-unit>
       <trans-unit id="3840571521050129557" datatype="html">
         <source>An &apos;app&apos; label with this value will be added to the Deployment and Service that get deployed.</source>
         <target>この値の &apos;app&apos; ラベルがデプロイメントおよびサービスに追加されます。</target>
@@ -1293,6 +1289,10 @@
       <trans-unit id="5207635742003539443" datatype="html">
         <source>Sign in</source>
         <target>サインイン</target>
+      </trans-unit>
+      <trans-unit id="5231922476273855748" datatype="html">
+        <source>Waiting for more data to display chart...</source>
+        <target state="new">チャートのデータが完全に表示されるまでもうしばらくお待ちください...</target>
       </trans-unit>
       <trans-unit id="5248717555542428023" datatype="html">
         <source>Username</source>

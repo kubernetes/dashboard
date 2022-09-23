@@ -954,10 +954,6 @@
         <source>Replica Sets</source>
         <target>레플리카 셋</target>
       </trans-unit>
-      <trans-unit id="3804893288209000257" datatype="html">
-        <source>Waiting for more data to display chart...</source>
-        <target>차트를 표시하기 위해 추가 데이터를 기다리는 중...</target>
-      </trans-unit>
       <trans-unit id="3840571521050129557" datatype="html">
         <source>An &apos;app&apos; label with this value will be added to the Deployment and Service that get deployed.</source>
         <target>이 값을 가진 &apos;앱&apos; 레이블은 디플로이먼트와 디플로이되는 서비스에 추가될 것입니다.</target>
@@ -1293,6 +1289,10 @@
       <trans-unit id="5207635742003539443" datatype="html">
         <source>Sign in</source>
         <target state="new">로그인</target>
+      </trans-unit>
+      <trans-unit id="5231922476273855748" datatype="html">
+        <source>Waiting for more data to display chart...</source>
+        <target state="new">차트를 표시하기 위해 추가 데이터를 기다리는 중...</target>
       </trans-unit>
       <trans-unit id="5248717555542428023" datatype="html">
         <source>Username</source>
