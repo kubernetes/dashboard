@@ -3541,17 +3541,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/jasmine@npm:*":
+"@types/jasmine@npm:*, @types/jasmine@npm:4.3.0":
   version: 4.3.0
   resolution: "@types/jasmine@npm:4.3.0"
   checksum: 8a4c8716d80ee6fd9e8976ce5d929fde9d34daa012ecd57e598149ecebf3e8acf42b4ebaf746e13b40a0564f9f3ca7a10a9c8eb2c95a047412ae3f37168bac01
-  languageName: node
-  linkType: hard
-
-"@types/jasmine@npm:4.0.3":
-  version: 4.0.3
-  resolution: "@types/jasmine@npm:4.0.3"
-  checksum: 9d2af9ddb5750667bc9a3b439542fc9457c6eac2ab2c74801f598b03b9bc5cee1338fa8e75e6804dff1856e64539e8b0e3962ed8664a702f362d3db62eb9cd3a
   languageName: node
   linkType: hard
 
@@ -3659,10 +3652,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:17.0.36":
-  version: 17.0.36
-  resolution: "@types/node@npm:17.0.36"
-  checksum: 11055fde0a1e1421113849b5e32c7022911efc0be670729947bf0162970e79962d804b1eb8a9afb291380cac97cf0e684511415d586ae5fe1560322c940fe188
+"@types/node@npm:18.7.18":
+  version: 18.7.18
+  resolution: "@types/node@npm:18.7.18"
+  checksum: 8aec61f0f96e2a69ce51f1f40f949ca578bbb4fe05d7c0b8ce3aeeb848e90f755837f17f6ac132ca404d974fe9b2974150ad3b4984fc9dc7c3ceddb10bae0167
   languageName: node
   linkType: hard
 
@@ -10553,12 +10546,12 @@ __metadata:
     "@types/d3": 7.4.0
     "@types/d3-scale": 4.0.2
     "@types/file-saver": 2.0.5
-    "@types/jasmine": 4.0.3
+    "@types/jasmine": 4.3.0
     "@types/jasminewd2": 2.0.10
     "@types/jest": 29.0.3
     "@types/js-yaml": 4.0.5
     "@types/lodash-es": 4.17.6
-    "@types/node": 17.0.36
+    "@types/node": 18.7.18
     "@typescript-eslint/eslint-plugin": 5.27.0
     "@typescript-eslint/parser": 5.27.0
     ace-builds: 1.5.3
