@@ -12,7 +12,11 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License
+
 . "$(dirname "$0")/_/husky.sh"
 
-#npm run check
-#npm run test
+# Restore proper directory since husky is not installed in git root
+cd modules/web/.husky
+
+yarn check
+yarn test

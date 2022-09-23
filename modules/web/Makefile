@@ -5,9 +5,6 @@ include $(ROOT_DIRECTORY)/hack/include/build.mk
 
 include hack/include/config.mk
 
-# List of targets that should be always executed before other targets
-PRE = --ensure-version --ensure-ngcc
-
 MAKEFLAGS += -j2
 
 .PHONY: serve
@@ -19,9 +16,12 @@ serve-https: PROXY_CONFIG = proxy-https.conf.json
 serve-https: SSL_ENABLED = true
 serve-https: $(PRE) --serve-go --serve-angular
 
+.PHONY: serve-frontend
+serve-frontend: $(PRE) --serve-angular
+
 .PHONY: build
 build: ARCHITECTURES = $(ARCH)
-build: $(PRE) build-cross
+build: build-cross
 
 .PHONY: build-cross
 build-cross: --clean --build-go --build-angular
@@ -34,28 +34,8 @@ build-cross: --clean --build-go --build-angular
     --auto-generate-certificates=$(AUTO_GENERATE_CERTIFICATES)
 
 .PHONY: --serve-angular
---serve-angular:
+--serve-angular: --ensure-dependencies
 	@npx ng serve --proxy-config=$(PROXY_CONFIG) --ssl=$(SSL_ENABLED)
-
-.PHONY: --ensure-version
---ensure-version:
-	@node ./hack/version.mjs
-
-.PHONY: --ensure-ngcc
---ensure-ngcc: --ensure-dependencies
-	@npx ngcc
-
-# TODO: Enable this in the PRE hooks
-.PHONY: --ensure-husky
---ensure-husky:
-	npx husky install modules/web/.husky
-
-.PHONY: --ensure-dependencies
---ensure-dependencies:
-ifeq ($(wildcard node_modules/.*),)
-	@echo "Installing dependencies"
-	@yarn install --immutable
-endif
 
 .PHONY: --build-go
 --build-go:
@@ -95,7 +75,7 @@ endif
 	cp "$(WEB_DIRECTORY)/i18n/locale_conf.json" "$(WEB_DIST_ANGULAR_DIRECTORY)" ; \
 
 .PHONY: --ng-build
---ng-build:
+--ng-build: --ensure-dependencies
 	@echo "Building localized frontend" ; \
 	npx ng build \
       --configuration production \
@@ -106,3 +86,10 @@ endif
 --clean:
 	@rm -rf $(WEB_DIST_DIRECTORY)
 	@mkdir -p $(WEB_DIST_ANGULAR_DIRECTORY)
+
+.PHONY: --ensure-dependencies
+--ensure-dependencies:
+ifeq ($(wildcard node_modules/.*),)
+	@echo "Installing dependencies"
+	@yarn install --immutable
+endif

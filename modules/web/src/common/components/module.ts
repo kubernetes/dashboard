@@ -202,6 +202,5 @@ const components = [
   imports: [SharedModule, DirectivesModule, MatTableModule, MatTableModule],
   declarations: [...components],
   exports: [...components],
-  entryComponents: [ChipDialog, RowDetailComponent, MenuComponent, NamespaceChangeDialog],
 })
 export class ComponentsModule {}

@@ -14,7 +14,13 @@
 
 import {BreakpointObserver, Breakpoints} from '@angular/cdk/layout';
 import {Component, forwardRef, OnDestroy, OnInit} from '@angular/core';
-import {ControlValueAccessor, FormArray, FormBuilder, FormGroup, NG_VALUE_ACCESSOR} from '@angular/forms';
+import {
+  ControlValueAccessor,
+  UntypedFormArray,
+  UntypedFormBuilder,
+  UntypedFormGroup,
+  NG_VALUE_ACCESSOR,
+} from '@angular/forms';
 import {MatDialog, MatDialogConfig} from '@angular/material/dialog';
 import {GlobalSettings, NamespaceList} from '@api/root.api';
 import {Subject} from 'rxjs';
@@ -59,7 +65,7 @@ export class NamespaceSettingsComponent implements OnInit, OnDestroy, ControlVal
 
   namespaces: string[] = [];
   visibleNamespaces = 0;
-  form: FormGroup;
+  form: UntypedFormGroup;
 
   private settings_: GlobalSettings;
   private readonly endpoint_ = EndpointManager.resource(Resource.namespace).list();
@@ -85,7 +91,7 @@ export class NamespaceSettingsComponent implements OnInit, OnDestroy, ControlVal
     private readonly settingsHelperService_: SettingsHelperService,
     private readonly dialog_: MatDialog,
     private readonly breakpointObserver_: BreakpointObserver,
-    private readonly builder_: FormBuilder
+    private readonly builder_: UntypedFormBuilder
   ) {}
 
   get invisibleCount(): number {
@@ -179,11 +185,13 @@ export class NamespaceSettingsComponent implements OnInit, OnDestroy, ControlVal
   }
 
   private addNamespace_(ns: string): void {
-    (this.form.get(Controls.FallbackList) as FormArray).push(this.builder_.control(ns));
+    (this.form.get(Controls.FallbackList) as UntypedFormArray).push(this.builder_.control(ns));
   }
 
   private containsNamespace_(ns: string): boolean {
-    return !ns || (this.form.get(Controls.FallbackList) as FormArray).controls.map(c => c.value).indexOf(ns) > -1;
+    return (
+      !ns || (this.form.get(Controls.FallbackList) as UntypedFormArray).controls.map(c => c.value).indexOf(ns) > -1
+    );
   }
 
   private onFormChange_(): void {
@@ -198,9 +206,9 @@ export class NamespaceSettingsComponent implements OnInit, OnDestroy, ControlVal
 
     this.form.get(Controls.DefaultNamespace).setValue(this.settings_.defaultNamespace, {emitEvent: false});
 
-    (this.form.get(Controls.FallbackList) as FormArray).controls = this.namespaceFallbackList_.map(_ =>
+    (this.form.get(Controls.FallbackList) as UntypedFormArray).controls = this.namespaceFallbackList_.map(_ =>
       this.builder_.control('')
     );
-    (this.form.get(Controls.FallbackList) as FormArray).reset(this.namespaceFallbackList_, {emitEvent: false});
+    (this.form.get(Controls.FallbackList) as UntypedFormArray).reset(this.namespaceFallbackList_, {emitEvent: false});
   }
 }

@@ -15,4 +15,5 @@
 
 . "$(dirname "$0")/_/husky.sh"
 
-#npx --no-install lint-staged
+# Restore proper directory since husky is not installed in git root
+cd modules/web/.husky

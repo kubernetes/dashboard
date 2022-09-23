@@ -16,10 +16,10 @@ import {Component, forwardRef, Input} from '@angular/core';
 import {
   AbstractControl,
   ControlValueAccessor,
-  FormArray,
-  FormBuilder,
-  FormControl,
-  FormGroup,
+  UntypedFormArray,
+  UntypedFormBuilder,
+  UntypedFormControl,
+  UntypedFormGroup,
   NG_VALIDATORS,
   NG_VALUE_ACCESSOR,
   Validators,
@@ -51,9 +51,9 @@ interface DeployLabelI {
 export class DeployLabelComponent implements ControlValueAccessor {
   @Input() labelArr: DeployLabel[];
 
-  labelForm: FormGroup;
+  labelForm: UntypedFormGroup;
 
-  constructor(private readonly fb_: FormBuilder) {}
+  constructor(private readonly fb_: UntypedFormBuilder) {}
 
   ngOnInit(): void {
     this.labelForm = this.fb_.group({labels: this.fb_.array([])});
@@ -65,12 +65,12 @@ export class DeployLabelComponent implements ControlValueAccessor {
     }
   }
 
-  validate(_: FormControl): {[key: string]: object} {
+  validate(_: UntypedFormControl): {[key: string]: object} {
     return this.labelForm.valid ? null : {labelValid: {value: this.labels.at(0).errors}};
   }
 
-  get labels(): FormArray {
-    return this.labelForm.get('labels') as FormArray;
+  get labels(): UntypedFormArray {
+    return this.labelForm.get('labels') as UntypedFormArray;
   }
 
   /**

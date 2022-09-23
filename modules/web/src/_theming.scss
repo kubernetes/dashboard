@@ -14,7 +14,7 @@
 
 @use 'sass:map';
 @use 'sass:color';
-@use '~@angular/material/theming';
+@use '@angular/material/theming';
 @use 'variables' as *;
 
 @mixin kd-theme($theme, $colors) {
