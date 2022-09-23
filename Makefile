@@ -76,7 +76,7 @@ build-cross:
 	@$(MAKE) --no-print-directory -C $(MODULES_DIRECTORY) TARGET=$(or $(TARGET),build-cross)
 
 .PHONY: --compose
---compose: --ensure-certificates
+--compose: --ensure-certificates build
 	@KUBECONFIG=$(KUBECONFIG) \
 	SYSTEM_BANNER=$(SYSTEM_BANNER) \
 	SYSTEM_BANNER_SEVERITY=$(SYSTEM_BANNER_SEVERITY) \
