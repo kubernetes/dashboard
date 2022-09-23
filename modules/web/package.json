@@ -64,6 +64,7 @@
     "d3-shape": "3.1.0",
     "d3-time-format": "4.1.0",
     "file-saver": "2.0.5",
+    "js-base64": "3.7.2",
     "js-yaml": "4.1.0",
     "jwt-decode": "3.1.2",
     "material-design-icons": "3.0.1",
