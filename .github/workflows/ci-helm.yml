@@ -40,7 +40,7 @@ jobs:
         with:
           python-version: 3.7
       - name: Set up chart-testing
-        uses: helm/chart-testing-action@v2.2.1
+        uses: helm/chart-testing-action@v2.3.1
       - name: Cleanup charts directory
         id: cleanup
         run: sudo rm -rf charts/helm-chart/kubernetes-dashboard/charts
