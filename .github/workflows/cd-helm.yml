@@ -19,7 +19,7 @@ on:
     branches: [ master ]
     paths:
     - 'charts/helm-chart/**'
-    - 'aio/scripts/helm-release-chart.sh'
+    - 'hack/scripts/helm-release-chart.sh'
     - '.github/workflows/cd-helm-workflow.yml'
 
 permissions:
