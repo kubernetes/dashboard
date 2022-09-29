@@ -20,7 +20,7 @@ set -e
 
 # Import config.
 ROOT_DIR="$(cd $(dirname "${BASH_SOURCE}")/../.. && pwd -P)"
-. "${ROOT_DIR}/aio/scripts/conf.sh"
+. "${ROOT_DIR}/hack/scripts/conf.sh"
 
 # Declare variables.
 HELM_CHART_DIR="$AIO_DIR/deploy/helm-chart/kubernetes-dashboard"
