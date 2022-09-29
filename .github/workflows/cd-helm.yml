@@ -42,7 +42,7 @@ jobs:
           git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
       - name: Package
         shell: bash
-        run: aio/scripts/helm-release-chart.sh
+        run: hack/scripts/helm-release-chart.sh
         env:
           TERM: xterm-256color
       - name: Create Pull Request branch
