@@ -20,7 +20,7 @@ on:
     paths:
     - 'charts/helm-chart/**'
     - 'hack/scripts/helm-release-chart.sh'
-    - '.github/workflows/cd-helm-workflow.yml'
+    - '.github/workflows/cd-helm.yml'
 
 permissions:
   contents: write
