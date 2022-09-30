@@ -177,11 +177,6 @@ const routes: Routes = [
         loadChildren: () => import('settings/module').then(m => m.SettingsModule),
       },
       {
-        path: 'about',
-        loadChildren: () => import('about/module').then(m => m.AboutModule),
-      },
-
-      {
         path: 'create',
         loadChildren: () => import('create/module').then(m => m.CreateModule),
       },

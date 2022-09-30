@@ -266,6 +266,10 @@
         <source>Rolling update strategy</source>
         <target>Stratégie de Rolling update</target>
       </trans-unit>
+      <trans-unit id="1781490455950079869" datatype="html">
+        <source><x id="START_LINK" ctype="x-a" equiv-text="&quot;\uFFFD#12\uFFFD&quot;"/>Community<x id="CLOSE_LINK" ctype="x-a" equiv-text="&quot;\uFFFD/#12\uFFFD&quot;"/></source>
+        <target state="new"><x id="START_LINK" ctype="x-a" equiv-text="&quot;\uFFFD#12\uFFFD&quot;"/>Community<x id="CLOSE_LINK" ctype="x-a" equiv-text="&quot;\uFFFD/#12\uFFFD&quot;"/></target>
+      </trans-unit>
       <trans-unit id="1791198005341902530" datatype="html">
         <source>Deploy</source>
         <target state="new">Déployer</target>
@@ -474,6 +478,10 @@
         <source>Delete a resource</source>
         <target>Supprimer une ressource</target>
       </trans-unit>
+      <trans-unit id="2354260153438339517" datatype="html">
+        <source>Resource Requests</source>
+        <target state="new">Resource Requests</target>
+      </trans-unit>
       <trans-unit id="2369423116644077158" datatype="html">
         <source>Versions</source>
         <target>Versions</target>
@@ -505,6 +513,10 @@
       <trans-unit id="2417328504220076358" datatype="html">
         <source>Settings have changed since last reload</source>
         <target>Les paramètres ont été modifiés depuis le dernier chargement</target>
+      </trans-unit>
+      <trans-unit id="2433322219896080404" datatype="html">
+        <source>Kubernetes Dashboard v<x id="INTERPOLATION" equiv-text="&quot;\uFFFD0\uFFFD&quot;"/></source>
+        <target state="new">Kubernetes Dashboard v<x id="INTERPOLATION" equiv-text="&quot;\uFFFD0\uFFFD&quot;"/></target>
       </trans-unit>
       <trans-unit id="2446117790692479672" datatype="html">
         <source>Resources</source>
@@ -618,6 +630,10 @@
         <source>Sub-object</source>
         <target state="new">Sub-object</target>
       </trans-unit>
+      <trans-unit id="2933331719200534418" datatype="html">
+        <source><x id="START_LINK" ctype="x-a" equiv-text="&quot;\uFFFD#9\uFFFD&quot;"/>Documentation<x id="CLOSE_LINK" ctype="x-a" equiv-text="&quot;\uFFFD/#9\uFFFD&quot;"/></source>
+        <target state="new"><x id="START_LINK" ctype="x-a" equiv-text="&quot;\uFFFD#9\uFFFD&quot;"/>Documentation<x id="CLOSE_LINK" ctype="x-a" equiv-text="&quot;\uFFFD/#9\uFFFD&quot;"/></target>
+      </trans-unit>
       <trans-unit id="2944102521023817891" datatype="html">
         <source>Cluster</source>
         <target>Cluster</target>
@@ -718,10 +734,6 @@
         <source>Proc Mount</source>
         <target state="new">Proc Mount</target>
       </trans-unit>
-      <trans-unit id="3207734347890377749" datatype="html">
-        <source>Read documentation</source>
-        <target>Lire la documentation</target>
-      </trans-unit>
       <trans-unit id="3208716248295885865" datatype="html">
         <source>List of namespaces that should be presented to user without namespace list privileges.</source>
         <target state="new">List of namespaces that should be presented to user without namespace list privileges.</target>
@@ -753,10 +765,6 @@
       <trans-unit id="3318801106745932223" datatype="html">
         <source>Accepted Names</source>
         <target>Noms acceptés</target>
-      </trans-unit>
-      <trans-unit id="3319732415078214507" datatype="html">
-        <source>Kubernetes Dashboard is made possible by the Dashboard <x id="START_LINK" ctype="x-a" equiv-text="&quot;\uFFFD#16\uFFFD&quot;"/>community<x id="CLOSE_LINK" ctype="x-a" equiv-text="&quot;[\uFFFD/#16\uFFFD|\uFFFD/#17\uFFFD]&quot;"/> as an <x id="START_LINK_1" equiv-text="&quot;\uFFFD#17\uFFFD&quot;"/>open source project<x id="CLOSE_LINK" ctype="x-a" equiv-text="&quot;[\uFFFD/#16\uFFFD|\uFFFD/#17\uFFFD]&quot;"/>.</source>
-        <target state="new">Kubernetes Dashboard est rendu possible par la <x id="START_LINK" ctype="x-a" equiv-text="&lt;a&gt;"/>communauté<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/> Dashboard comme un <x id="START_LINK_1" ctype="x-a" equiv-text="&lt;a&gt;"/>projet open source<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/>.</target>
       </trans-unit>
       <trans-unit id="3321884531921673789" datatype="html">
         <source>Run as User</source>
@@ -1210,14 +1218,6 @@
         <source>Logs</source>
         <target>Journaux</target>
       </trans-unit>
-      <trans-unit id="4814940703935231049" datatype="html">
-        <source>General-purpose web UI for Kubernetes clusters</source>
-        <target>Inferface utilisateur web générique pour clusters Kubernetes</target>
-      </trans-unit>
-      <trans-unit id="4894366697856944217" datatype="html">
-        <source>About</source>
-        <target state="new">About</target>
-      </trans-unit>
       <trans-unit id="4902817035128594900" datatype="html">
         <source>Description</source>
         <target>Description</target>
@@ -1417,10 +1417,6 @@
       <trans-unit id="5693993471751761333" datatype="html">
         <source>Create a new secret...</source>
         <target state="new">Créer un nouveau secret...</target>
-      </trans-unit>
-      <trans-unit id="5727797056634342023" datatype="html">
-        <source>Provide feedback</source>
-        <target>Faire un commentaire</target>
       </trans-unit>
       <trans-unit id="5729418620241283277" datatype="html">
         <source>Events</source>
@@ -1648,6 +1644,10 @@
         <source>Value</source>
         <target>Valeur</target>
       </trans-unit>
+      <trans-unit id="6555605208018184102" datatype="html">
+        <source>© <x id="INTERPOLATION" equiv-text="&quot;\uFFFD0\uFFFD&quot;"/> The Kubernetes Authors</source>
+        <target state="new">© <x id="INTERPOLATION" equiv-text="&quot;\uFFFD0\uFFFD&quot;"/> The Kubernetes Authors</target>
+      </trans-unit>
       <trans-unit id="656108017672590950" datatype="html">
         <source>API Group</source>
         <target state="new">API Group</target>
@@ -1843,6 +1843,10 @@
       <trans-unit id="7194375808015467595" datatype="html">
         <source>Max surge:</source>
         <target state="new">Augmentation max :</target>
+      </trans-unit>
+      <trans-unit id="7194477224906924674" datatype="html">
+        <source><x id="START_LINK" ctype="x-a" equiv-text="&quot;\uFFFD#15\uFFFD&quot;"/>Feedback<x id="CLOSE_LINK" ctype="x-a" equiv-text="&quot;\uFFFD/#15\uFFFD&quot;"/></source>
+        <target state="new"><x id="START_LINK" ctype="x-a" equiv-text="&quot;\uFFFD#15\uFFFD&quot;"/>Feedback<x id="CLOSE_LINK" ctype="x-a" equiv-text="&quot;\uFFFD/#15\uFFFD&quot;"/></target>
       </trans-unit>
       <trans-unit id="7198245360163776718" datatype="html">
         <source>Success Threshold</source>

@@ -12,11 +12,16 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-@use '../variables' as *;
-@use '../mixins' as *;
+@use '../../variables' as *;
 
-.kd-about-logo-icon {
-  @include kd-icon-size(8 * $baseline-grid);
+:host {
+  font-size: $caption-font-size-base;
+  padding: 0 $content-padding;
 
-  margin: 0 (2 * $baseline-grid) 0 0;
+  div.footer-list > span:not(:last-child) {
+    &::after {
+      content: '·';
+      margin: 5px;
+    }
+  }
 }

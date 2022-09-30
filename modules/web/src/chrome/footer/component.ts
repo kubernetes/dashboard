@@ -14,15 +14,16 @@
 
 import {Component, Inject} from '@angular/core';
 import {VersionInfo} from '@api/root.ui';
+
 import {AssetsService} from '@common/services/global/assets';
 import {ConfigService} from '@common/services/global/config';
 
 @Component({
-  selector: 'kd-about',
+  selector: 'kd-footer',
   templateUrl: './template.html',
   styleUrls: ['./style.scss'],
 })
-export class AboutComponent {
+export class FooterComponent {
   latestCopyrightYear: number;
   versionInfo: VersionInfo;
 

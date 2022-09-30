@@ -200,6 +200,9 @@
       <trans-unit id="1779450799694188695" datatype="html">
         <source>Rolling update strategy</source>
       </trans-unit>
+      <trans-unit id="1781490455950079869" datatype="html">
+        <source><x id="START_LINK" ctype="x-a" equiv-text="&quot;\uFFFD#12\uFFFD&quot;"/>Community<x id="CLOSE_LINK" ctype="x-a" equiv-text="&quot;\uFFFD/#12\uFFFD&quot;"/></source>
+      </trans-unit>
       <trans-unit id="1791198005341902530" datatype="html">
         <source>Deploy</source>
       </trans-unit>
@@ -355,6 +358,9 @@
       <trans-unit id="2349251733948502520" datatype="html">
         <source>Delete a resource</source>
       </trans-unit>
+      <trans-unit id="2354260153438339517" datatype="html">
+        <source>Resource Requests</source>
+      </trans-unit>
       <trans-unit id="2369423116644077158" datatype="html">
         <source>Versions</source>
       </trans-unit>
@@ -374,6 +380,9 @@
       </trans-unit>
       <trans-unit id="2417328504220076358" datatype="html">
         <source>Settings have changed since last reload</source>
+      </trans-unit>
+      <trans-unit id="2433322219896080404" datatype="html">
+        <source>Kubernetes Dashboard v<x id="INTERPOLATION" equiv-text="&quot;\uFFFD0\uFFFD&quot;"/></source>
       </trans-unit>
       <trans-unit id="2446117790692479672" datatype="html">
         <source>Resources</source>
@@ -459,6 +468,9 @@
       <trans-unit id="2914974644465021764" datatype="html">
         <source>Sub-object</source>
       </trans-unit>
+      <trans-unit id="2933331719200534418" datatype="html">
+        <source><x id="START_LINK" ctype="x-a" equiv-text="&quot;\uFFFD#9\uFFFD&quot;"/>Documentation<x id="CLOSE_LINK" ctype="x-a" equiv-text="&quot;\uFFFD/#9\uFFFD&quot;"/></source>
+      </trans-unit>
       <trans-unit id="2944102521023817891" datatype="html">
         <source>Cluster</source>
       </trans-unit>
@@ -534,9 +546,6 @@
       <trans-unit id="3196566694433397077" datatype="html">
         <source>Proc Mount</source>
       </trans-unit>
-      <trans-unit id="3207734347890377749" datatype="html">
-        <source>Read documentation</source>
-      </trans-unit>
       <trans-unit id="3208716248295885865" datatype="html">
         <source>List of namespaces that should be presented to user without namespace list privileges.</source>
       </trans-unit>
@@ -560,9 +569,6 @@
       </trans-unit>
       <trans-unit id="3318801106745932223" datatype="html">
         <source>Accepted Names</source>
-      </trans-unit>
-      <trans-unit id="3319732415078214507" datatype="html">
-        <source>Kubernetes Dashboard is made possible by the Dashboard <x id="START_LINK" ctype="x-a" equiv-text="&quot;\uFFFD#16\uFFFD&quot;"/>community<x id="CLOSE_LINK" ctype="x-a" equiv-text="&quot;[\uFFFD/#16\uFFFD|\uFFFD/#17\uFFFD]&quot;"/> as an <x id="START_LINK_1" equiv-text="&quot;\uFFFD#17\uFFFD&quot;"/>open source project<x id="CLOSE_LINK" ctype="x-a" equiv-text="&quot;[\uFFFD/#16\uFFFD|\uFFFD/#17\uFFFD]&quot;"/>.</source>
       </trans-unit>
       <trans-unit id="3321884531921673789" datatype="html">
         <source>Run as User</source>
@@ -888,12 +894,6 @@
       <trans-unit id="4804785061014590286" datatype="html">
         <source>Logs</source>
       </trans-unit>
-      <trans-unit id="4814940703935231049" datatype="html">
-        <source>General-purpose web UI for Kubernetes clusters</source>
-      </trans-unit>
-      <trans-unit id="4894366697856944217" datatype="html">
-        <source>About</source>
-      </trans-unit>
       <trans-unit id="4902817035128594900" datatype="html">
         <source>Description</source>
       </trans-unit>
@@ -1043,9 +1043,6 @@
       </trans-unit>
       <trans-unit id="5693993471751761333" datatype="html">
         <source>Create a new secret...</source>
-      </trans-unit>
-      <trans-unit id="5727797056634342023" datatype="html">
-        <source>Provide feedback</source>
       </trans-unit>
       <trans-unit id="5729418620241283277" datatype="html">
         <source>Events</source>
@@ -1215,6 +1212,9 @@
       <trans-unit id="6555318547274416232" datatype="html">
         <source>Value</source>
       </trans-unit>
+      <trans-unit id="6555605208018184102" datatype="html">
+        <source>© <x id="INTERPOLATION" equiv-text="&quot;\uFFFD0\uFFFD&quot;"/> The Kubernetes Authors</source>
+      </trans-unit>
       <trans-unit id="656108017672590950" datatype="html">
         <source>API Group</source>
       </trans-unit>
@@ -1361,6 +1361,9 @@
       </trans-unit>
       <trans-unit id="7194375808015467595" datatype="html">
         <source>Max surge:</source>
+      </trans-unit>
+      <trans-unit id="7194477224906924674" datatype="html">
+        <source><x id="START_LINK" ctype="x-a" equiv-text="&quot;\uFFFD#15\uFFFD&quot;"/>Feedback<x id="CLOSE_LINK" ctype="x-a" equiv-text="&quot;\uFFFD/#15\uFFFD&quot;"/></source>
       </trans-unit>
       <trans-unit id="7198245360163776718" datatype="html">
         <source>Success Threshold</source>
