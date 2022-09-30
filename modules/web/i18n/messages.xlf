@@ -355,6 +355,9 @@
       <trans-unit id="2349251733948502520" datatype="html">
         <source>Delete a resource</source>
       </trans-unit>
+      <trans-unit id="2354260153438339517" datatype="html">
+        <source>Resource Requests</source>
+      </trans-unit>
       <trans-unit id="2369423116644077158" datatype="html">
         <source>Versions</source>
       </trans-unit>

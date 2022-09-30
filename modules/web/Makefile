@@ -5,6 +5,8 @@ include $(ROOT_DIRECTORY)/hack/include/build.mk
 
 include hack/include/config.mk
 
+include $(ROOT_DIRECTORY)/hack/include/deploy.mk
+
 MAKEFLAGS += -j2
 
 .PHONY: serve
@@ -25,6 +27,14 @@ build: build-cross
 
 .PHONY: build-cross
 build-cross: --clean --build-go --build-angular
+
+.PHONY: deploy
+deploy: DOCKERFILE = $(WEB_DIRECTORY)/Dockerfile
+deploy: --deploy
+
+.PHONY: deploy-dev
+deploy-dev: DOCKERFILE = $(WEB_DIRECTORY)/Dockerfile
+deploy-dev: --deploy-dev
 
 .PHONY: --serve-go
 --serve-go:
@@ -80,7 +90,7 @@ build-cross: --clean --build-go --build-angular
 	npx ng build \
       --configuration production \
       --localize \
-      --outputPath="$(WEB_DIST_ANGULAR_DIRECTORY)"
+      --output-path="$(WEB_DIST_ANGULAR_DIRECTORY)"
 
 .PHONY: --clean
 --clean:

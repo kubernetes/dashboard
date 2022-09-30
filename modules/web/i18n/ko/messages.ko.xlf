@@ -474,6 +474,10 @@
         <source>Delete a resource</source>
         <target>리소스 삭제</target>
       </trans-unit>
+      <trans-unit id="2354260153438339517" datatype="html">
+        <source>Resource Requests</source>
+        <target state="new">Resource Requests</target>
+      </trans-unit>
       <trans-unit id="2369423116644077158" datatype="html">
         <source>Versions</source>
         <target>버전</target>

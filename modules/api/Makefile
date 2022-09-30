@@ -2,7 +2,6 @@ ROOT_DIRECTORY = $(shell dirname $(realpath $(firstword $(MAKEFILE_LIST))))/../.
 
 include $(ROOT_DIRECTORY)/hack/include/config.mk
 include $(ROOT_DIRECTORY)/hack/include/build.mk
-include $(ROOT_DIRECTORY)/hack/include/deploy.mk
 
 include hack/include/config.mk
 
@@ -60,6 +59,12 @@ test:
 .PHONY: coverage
 coverage:
 	go test -coverprofile=$(COVERAGE_FILE) -covermode=atomic $(PACKAGE_NAME)/...
+
+.PHONY: deploy
+deploy:
+
+.PHONY: deploy-dev
+deploy-dev:
 
 .PHONY: --ensure-dist-exists
 --ensure-dist-exists:

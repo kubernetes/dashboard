@@ -12,19 +12,14 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# Main Dockerfile of the project. It creates an image that serves the application. This image should
-# be built from the dist directory.
-
-ARG TARGETPLATFORM
-
-FROM --platform=$TARGETPLATFORM ubuntu:20.04 as builder
+FROM --platform=$BUILDPLATFORM ubuntu:20.04 as builder
 
 # Create a nonroot user for final image
 RUN useradd -u 10001 nonroot
 
 # Scratch can be used as the base image because the backend is compiled to include all
 # its dependencies.
-FROM --platform=$TARGETPLATFORM scratch as final
+FROM --platform=$BUILDPLATFORM scratch as final
 ARG TARGETARCH
 
 # Add all files from current working directory to the root of the image, i.e., copy dist directory

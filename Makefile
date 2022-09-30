@@ -75,6 +75,14 @@ build: build-cross
 build-cross:
 	@$(MAKE) --no-print-directory -C $(MODULES_DIRECTORY) TARGET=$(or $(TARGET),build-cross)
 
+.PHONY: deploy
+deploy:
+	@$(MAKE) --no-print-directory -C $(MODULES_DIRECTORY) TARGET=deploy
+
+.PHONY: deploy-dev
+deploy-dev:
+	@$(MAKE) --no-print-directory -C $(MODULES_DIRECTORY) TARGET=deploy-dev
+
 .PHONY: --compose
 --compose: --ensure-certificates build
 	@KUBECONFIG=$(KUBECONFIG) \

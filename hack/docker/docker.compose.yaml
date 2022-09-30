@@ -19,8 +19,8 @@ services:
       context: ../..
       dockerfile: modules/web/Dockerfile
       args:
-        - TARGETPLATFORM=${OS:?}/${ARCH:?}
-        - TARGETARCH=${ARCH:?}
+        - BUILDPLATFORM=${OS:?}/${ARCH:?}
+        - BUILDARCH=${ARCH:?}
     command:
       --locale-config=/public/locale_conf.json
       --auto-generate-certificates
@@ -33,8 +33,8 @@ services:
       context: ../..
       dockerfile: modules/api/Dockerfile
       args:
-        - TARGETPLATFORM=${OS:?}/${ARCH:?}
-        - TARGETARCH=${ARCH:?}
+        - BUILDPLATFORM=${OS:?}/${ARCH:?}
+        - BUILDARCH=${ARCH:?}
     command:
       --kubeconfig=${KUBECONFIG:?}
       --auto-generate-certificates
