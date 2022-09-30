@@ -16,7 +16,8 @@
 
 :host {
   font-size: $caption-font-size-base;
-  padding: 0 $content-padding;
+  padding: 0 $content-padding $content-padding;
+  flex: 1 1 auto;
 
   div.footer-list > span:not(:last-child) {
     &::after {
