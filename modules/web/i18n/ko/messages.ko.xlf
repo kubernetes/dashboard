@@ -354,6 +354,10 @@
         <source>Environment variables available for use in the container. Values can reference other variables using $(VAR_NAME) syntax.</source>
         <target>환경 변수는 컨테이너 안에서 사용 가능합니다. 값에 $(변수_이름) 구문을 사용하여 변수들을 참조할 수 있습니다.</target>
       </trans-unit>
+      <trans-unit id="2079136285643456368" datatype="html">
+        <source><x id="START_LINK" ctype="x-a" equiv-text="&quot;\uFFFD#18\uFFFD&quot;"/>Slack<x id="CLOSE_LINK" ctype="x-a" equiv-text="&quot;\uFFFD/#18\uFFFD&quot;"/></source>
+        <target state="new"><x id="START_LINK" ctype="x-a" equiv-text="&quot;\uFFFD#18\uFFFD&quot;"/>Slack<x id="CLOSE_LINK" ctype="x-a" equiv-text="&quot;\uFFFD/#18\uFFFD&quot;"/></target>
+      </trans-unit>
       <trans-unit id="2079395509894825886" datatype="html">
         <source>Conditions</source>
         <target>조건</target>

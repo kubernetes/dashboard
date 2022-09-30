@@ -354,6 +354,10 @@
         <source>Environment variables available for use in the container. Values can reference other variables using $(VAR_NAME) syntax.</source>
         <target>可在容器中使用的環境變數。值可以使用 $(VAR_NAME) 語法引用其他變數</target>
       </trans-unit>
+      <trans-unit id="2079136285643456368" datatype="html">
+        <source><x id="START_LINK" ctype="x-a" equiv-text="&quot;\uFFFD#18\uFFFD&quot;"/>Slack<x id="CLOSE_LINK" ctype="x-a" equiv-text="&quot;\uFFFD/#18\uFFFD&quot;"/></source>
+        <target state="new"><x id="START_LINK" ctype="x-a" equiv-text="&quot;\uFFFD#18\uFFFD&quot;"/>Slack<x id="CLOSE_LINK" ctype="x-a" equiv-text="&quot;\uFFFD/#18\uFFFD&quot;"/></target>
+      </trans-unit>
       <trans-unit id="2079395509894825886" datatype="html">
         <source>Conditions</source>
         <target state="new">Conditions</target>
