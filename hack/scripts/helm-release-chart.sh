@@ -20,10 +20,10 @@ set -e
 
 # Import config.
 ROOT_DIR="$(cd $(dirname "${BASH_SOURCE}")/../.. && pwd -P)"
-. "${ROOT_DIR}/aio/scripts/conf.sh"
+. "${ROOT_DIR}/hack/scripts/conf.sh"
 
 # Declare variables.
-HELM_CHART_DIR="$AIO_DIR/deploy/helm-chart/kubernetes-dashboard"
+HELM_CHART_DIR="$ROOT_DIR/charts/helm-chart/kubernetes-dashboard"
 
 function release-helm-chart {
   if [ -n "$(git status --porcelain)" ]; then
