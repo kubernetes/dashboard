@@ -5,6 +5,8 @@ include $(ROOT_DIRECTORY)/hack/include/build.mk
 
 include hack/include/config.mk
 
+include $(ROOT_DIRECTORY)/hack/include/deploy.mk
+
 MAKEFLAGS += -j2
 
 .PHONY: serve
@@ -20,11 +22,19 @@ serve-https: $(PRE) --serve-go --serve-angular
 serve-frontend: $(PRE) --serve-angular
 
 .PHONY: build
-build: ARCHITECTURES = $(ARCH)
+build: ARCHITECTURES = $(OS)/$(ARCH)
 build: build-cross
 
 .PHONY: build-cross
 build-cross: --clean --build-go --build-angular
+
+.PHONY: deploy
+deploy: DOCKERFILE = $(WEB_DIRECTORY)/Dockerfile
+deploy: --deploy
+
+.PHONY: deploy-dev
+deploy-dev: DOCKERFILE = $(WEB_DIRECTORY)/Dockerfile
+deploy-dev: --deploy-dev
 
 .PHONY: --serve-go
 --serve-go:
@@ -40,8 +50,10 @@ build-cross: --clean --build-go --build-angular
 .PHONY: --build-go
 --build-go:
 	@for ARCH in $(ARCHITECTURES) ; do \
-  		echo "Building dashboard-web API for $(OS)/$$ARCH" ; \
-  		CGO_ENABLED=0 GOOS=$(OS) GOARCH=$$ARCH go build -ldflags "-X $(PACKAGE_NAME)/client.Version=$(RELEASE_VERSION)" -gcflags="all=-N -l" -o $(WEB_DIST_DIRECTORY)/$$ARCH/$(APP_NAME) $(PACKAGE_NAME) ; \
+  	os=$${ARCH%/*} ; \
+  	arch=$${ARCH#*/} ; \
+  	echo "Building dashboard-web for $$os/$$arch" ; \
+  	CGO_ENABLED=0 GOOS=$$os GOARCH=$$arch go build -ldflags "-X $(PACKAGE_NAME)/client.Version=$(RELEASE_VERSION)" -gcflags="all=-N -l" -o $(WEB_DIST_DIRECTORY)/$$ARCH/$(APP_NAME) $(PACKAGE_NAME) ; \
 	done ; \
 
 .PHONY: --build-angular
@@ -80,11 +92,11 @@ build-cross: --clean --build-go --build-angular
 	npx ng build \
       --configuration production \
       --localize \
-      --outputPath="$(WEB_DIST_ANGULAR_DIRECTORY)"
+      --output-path="$(WEB_DIST_ANGULAR_DIRECTORY)"
 
 .PHONY: --clean
 --clean:
-	@rm -rf $(WEB_DIST_DIRECTORY)
+	@rm $(WEB_DIST_DIRECTORY) -rf
 	@mkdir -p $(WEB_DIST_ANGULAR_DIRECTORY)
 
 .PHONY: --ensure-dependencies
