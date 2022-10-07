@@ -41,8 +41,6 @@ export class NavbarPage extends AbstractPage {
   static readonly configmapItemId = '#nav-configmap';
   static readonly persistentvolumeclaimItemId = '#nav-persistentvolumeclaim';
   static readonly secretItemId = '#nav-secret';
-  // static readonly pluginItemId = '#nav-plugin';
   static readonly customresourcedefinitionItemId = '#nav-customresourcedefinition';
   static readonly settingsItemId = '#nav-settings';
-  static readonly aboutItemId = '#nav-about';
 }

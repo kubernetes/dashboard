@@ -79,8 +79,10 @@ limitations under the License.
       </div>
       <div *ngSwitchCase="false"
            fxFlex
+           fxLayout="column"
            class="kd-scroll-container">
         <router-outlet></router-outlet>
+        <kd-footer></kd-footer>
       </div>
     </div>
   </div>
