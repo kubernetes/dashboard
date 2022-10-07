@@ -155,12 +155,6 @@ describe('Navbar', () => {
   });
 
   describe('Misc Items', () => {
-    // TODO: Add a conditional check for plugin item here
-    // it('plugin', () => {
-    //   NavbarPage.clickNavItemById(NavbarPage.pluginItemId);
-    //   NavbarPage.assertUrlContains('plugin');
-    // });
-
     it('customresourcedefinition', () => {
       NavbarPage.clickItem(NavbarPage.customresourcedefinitionItemId);
       NavbarPage.assertUrlContains('customresourcedefinition');
@@ -169,11 +163,6 @@ describe('Navbar', () => {
     it('settings', () => {
       NavbarPage.clickItem(NavbarPage.settingsItemId);
       NavbarPage.assertUrlContains('settings');
-    });
-
-    it('about', () => {
-      NavbarPage.clickItem(NavbarPage.aboutItemId);
-      NavbarPage.assertUrlContains('about');
     });
   });
 });
