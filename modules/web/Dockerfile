@@ -21,10 +21,11 @@ RUN useradd -u 10001 nonroot
 # its dependencies.
 FROM --platform=$BUILDPLATFORM scratch as final
 ARG TARGETARCH
+ARG TARGETOS
 
 # Add all files from current working directory to the root of the image, i.e., copy dist directory
 # layout to the root directory.
-ADD .dist/web/$TARGETARCH /
+ADD .dist/web/$TARGETOS/$TARGETARCH /
 
 # Copy nonroot user
 COPY --from=builder /etc/passwd /etc/passwd

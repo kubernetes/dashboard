@@ -22,7 +22,7 @@ serve-https: $(PRE) --serve-go --serve-angular
 serve-frontend: $(PRE) --serve-angular
 
 .PHONY: build
-build: ARCHITECTURES = $(ARCH)
+build: ARCHITECTURES = $(OS)/$(ARCH)
 build: build-cross
 
 .PHONY: build-cross
@@ -50,8 +50,10 @@ deploy-dev: --deploy-dev
 .PHONY: --build-go
 --build-go:
 	@for ARCH in $(ARCHITECTURES) ; do \
-  		echo "Building dashboard-web API for $(OS)/$$ARCH" ; \
-  		CGO_ENABLED=0 GOOS=$(OS) GOARCH=$$ARCH go build -ldflags "-X $(PACKAGE_NAME)/client.Version=$(RELEASE_VERSION)" -gcflags="all=-N -l" -o $(WEB_DIST_DIRECTORY)/$$ARCH/$(APP_NAME) $(PACKAGE_NAME) ; \
+  	os=$${ARCH%/*} ; \
+  	arch=$${ARCH#*/} ; \
+  	echo "Building dashboard-web for $$os/$$arch" ; \
+  	CGO_ENABLED=0 GOOS=$$os GOARCH=$$arch go build -ldflags "-X $(PACKAGE_NAME)/client.Version=$(RELEASE_VERSION)" -gcflags="all=-N -l" -o $(WEB_DIST_DIRECTORY)/$$ARCH/$(APP_NAME) $(PACKAGE_NAME) ; \
 	done ; \
 
 .PHONY: --build-angular
@@ -94,7 +96,7 @@ deploy-dev: --deploy-dev
 
 .PHONY: --clean
 --clean:
-	@rm -rf $(WEB_DIST_DIRECTORY)
+	@rm $(WEB_DIST_DIRECTORY) -rf
 	@mkdir -p $(WEB_DIST_ANGULAR_DIRECTORY)
 
 .PHONY: --ensure-dependencies

@@ -51,6 +51,7 @@ services:
     image: kubernetesui/metrics-scraper:v1.0.8
     command:
       --kubeconfig=${KUBECONFIG:?}
+      # TODO: move this to some overridable env variables
       --metric-resolution=5s
       --metric-duration=10m
     volumes:

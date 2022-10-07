@@ -1,6 +1,3 @@
-# TODO:
-# 	- Adjust cross build to build for linux and darwin supported architectures accordingly
-
 # Deployment target for the official version
 # Usage:
 # 	- `make deploy` - deploys both latest and tagged version

@@ -5,6 +5,8 @@ include $(ROOT_DIRECTORY)/hack/include/build.mk
 
 include hack/include/config.mk
 
+include $(ROOT_DIRECTORY)/hack/include/deploy.mk
+
 # List of targets that should be executed before other targets
 PRE := --ensure-dist-exists
 
@@ -16,14 +18,16 @@ codegen-verify: VERIFY_ONLY = true
 codegen-verify: --codegen-verify-pre --codegen-update-run --codegen-verify-post
 
 .PHONY: build
-build: ARCHITECTURES = $(ARCH)
+build: ARCHITECTURES = $(OS)/$(ARCH)
 build: build-cross
 
 .PHONY: build-cross
 build-cross: $(PRE)
 	@for ARCH in $(ARCHITECTURES) ; do \
-  	echo "Building dashboard-api for $(OS)/$$ARCH" ; \
-  	CGO_ENABLED=0 GOOS=$(OS) GOARCH=$$ARCH go build -ldflags "-X $(PACKAGE_NAME)/client.Version=$(RELEASE_VERSION)" -gcflags="all=-N -l" -o $(API_DIST_DIRECTORY)/$$ARCH/$(APP_NAME) $(PACKAGE_NAME) ; \
+  	os=$${ARCH%/*} ; \
+  	arch=$${ARCH#*/} ; \
+  	echo "Building dashboard-api for $$os/$$arch" ; \
+  	CGO_ENABLED=0 GOOS=$$os GOARCH=$$arch go build -ldflags "-X $(PACKAGE_NAME)/client.Version=$(RELEASE_VERSION)" -gcflags="all=-N -l" -o $(API_DIST_DIRECTORY)/$$ARCH/$(APP_NAME) $(PACKAGE_NAME) ; \
   done
 
 .PHONY: run
@@ -61,10 +65,12 @@ coverage:
 	go test -coverprofile=$(COVERAGE_FILE) -covermode=atomic $(PACKAGE_NAME)/...
 
 .PHONY: deploy
-deploy:
+deploy: DOCKERFILE = $(API_DIRECTORY)/Dockerfile
+deploy: --deploy
 
 .PHONY: deploy-dev
-deploy-dev:
+deploy-dev: DOCKERFILE = $(API_DIRECTORY)/Dockerfile
+deploy-dev: --deploy-dev
 
 .PHONY: --ensure-dist-exists
 --ensure-dist-exists:
