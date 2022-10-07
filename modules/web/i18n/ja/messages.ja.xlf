@@ -266,6 +266,10 @@
         <source>Rolling update strategy</source>
         <target>ローリングアップデートストラテジー</target>
       </trans-unit>
+      <trans-unit id="1781490455950079869" datatype="html">
+        <source><x id="START_LINK" ctype="x-a" equiv-text="&quot;\uFFFD#10\uFFFD&quot;"/>Community<x id="CLOSE_LINK" ctype="x-a" equiv-text="&quot;\uFFFD/#10\uFFFD&quot;"/></source>
+        <target state="new"><x id="START_LINK" ctype="x-a" equiv-text="&quot;\uFFFD#10\uFFFD&quot;"/>Community<x id="CLOSE_LINK" ctype="x-a" equiv-text="&quot;\uFFFD/#10\uFFFD&quot;"/></target>
+      </trans-unit>
       <trans-unit id="1791198005341902530" datatype="html">
         <source>Deploy</source>
         <target state="new">デプロイ</target>
@@ -350,6 +354,10 @@
         <source>Environment variables available for use in the container. Values can reference other variables using $(VAR_NAME) syntax.</source>
         <target>コンテナーで使用できる環境変数です。値は、$(VAR_NAME) 構文を使用して、他の変数を参照できます。</target>
       </trans-unit>
+      <trans-unit id="2079136285643456368" datatype="html">
+        <source><x id="START_LINK" ctype="x-a" equiv-text="&quot;\uFFFD#16\uFFFD&quot;"/>Slack<x id="CLOSE_LINK" ctype="x-a" equiv-text="&quot;\uFFFD/#16\uFFFD&quot;"/></source>
+        <target state="new"><x id="START_LINK" ctype="x-a" equiv-text="&quot;\uFFFD#16\uFFFD&quot;"/>Slack<x id="CLOSE_LINK" ctype="x-a" equiv-text="&quot;\uFFFD/#16\uFFFD&quot;"/></target>
+      </trans-unit>
       <trans-unit id="2079395509894825886" datatype="html">
         <source>Conditions</source>
         <target>条件</target>
@@ -422,6 +430,10 @@
         <source>Service</source>
         <target>サービス</target>
       </trans-unit>
+      <trans-unit id="222595489358095649" datatype="html">
+        <source>Kubernetes Dashboard v<x id="INTERPOLATION" equiv-text="&quot;\uFFFD0\uFFFD&quot;"/> © <x id="INTERPOLATION_1" equiv-text="&quot;\uFFFD1\uFFFD&quot;"/> The Kubernetes Authors</source>
+        <target state="new">Kubernetes Dashboard v<x id="INTERPOLATION" equiv-text="&quot;\uFFFD0\uFFFD&quot;"/> © <x id="INTERPOLATION_1" equiv-text="&quot;\uFFFD1\uFFFD&quot;"/> The Kubernetes Authors</target>
+      </trans-unit>
       <trans-unit id="2235593604907350097" datatype="html">
         <source>Resource Names</source>
         <target>リソース名</target>
@@ -473,6 +485,10 @@
       <trans-unit id="2349251733948502520" datatype="html">
         <source>Delete a resource</source>
         <target>リソースを削除する</target>
+      </trans-unit>
+      <trans-unit id="2354260153438339517" datatype="html">
+        <source>Resource Requests</source>
+        <target state="new">Resource Requests</target>
       </trans-unit>
       <trans-unit id="2369423116644077158" datatype="html">
         <source>Versions</source>
@@ -618,6 +634,10 @@
         <source>Sub-object</source>
         <target>サブオブジェクト</target>
       </trans-unit>
+      <trans-unit id="2933331719200534418" datatype="html">
+        <source><x id="START_LINK" ctype="x-a" equiv-text="&quot;\uFFFD#7\uFFFD&quot;"/>Documentation<x id="CLOSE_LINK" ctype="x-a" equiv-text="&quot;\uFFFD/#7\uFFFD&quot;"/></source>
+        <target state="new"><x id="START_LINK" ctype="x-a" equiv-text="&quot;\uFFFD#7\uFFFD&quot;"/>Documentation<x id="CLOSE_LINK" ctype="x-a" equiv-text="&quot;\uFFFD/#7\uFFFD&quot;"/></target>
+      </trans-unit>
       <trans-unit id="2944102521023817891" datatype="html">
         <source>Cluster</source>
         <target>クラスター</target>
@@ -718,10 +738,6 @@
         <source>Proc Mount</source>
         <target>Proc マウント</target>
       </trans-unit>
-      <trans-unit id="3207734347890377749" datatype="html">
-        <source>Read documentation</source>
-        <target>ドキュメントを読む</target>
-      </trans-unit>
       <trans-unit id="3208716248295885865" datatype="html">
         <source>List of namespaces that should be presented to user without namespace list privileges.</source>
         <target>ネームスペース一覧表示権限がないユーザーに表示されるべきネームスペースの一覧です。</target>
@@ -753,10 +769,6 @@
       <trans-unit id="3318801106745932223" datatype="html">
         <source>Accepted Names</source>
         <target>受理された名称</target>
-      </trans-unit>
-      <trans-unit id="3319732415078214507" datatype="html">
-        <source>Kubernetes Dashboard is made possible by the Dashboard <x id="START_LINK" ctype="x-a" equiv-text="&quot;\uFFFD#16\uFFFD&quot;"/>community<x id="CLOSE_LINK" ctype="x-a" equiv-text="&quot;[\uFFFD/#16\uFFFD|\uFFFD/#17\uFFFD]&quot;"/> as an <x id="START_LINK_1" equiv-text="&quot;\uFFFD#17\uFFFD&quot;"/>open source project<x id="CLOSE_LINK" ctype="x-a" equiv-text="&quot;[\uFFFD/#16\uFFFD|\uFFFD/#17\uFFFD]&quot;"/>.</source>
-        <target state="new">Kubernetes Dashboard は、ダッシュボード <x id="START_LINK" ctype="x-a" equiv-text="&lt;a&gt;"/>コミュニティー<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/> によって、 <x id="START_LINK_1" ctype="x-a" equiv-text="&lt;a&gt;"/>オープンソースプロジェクト<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/>として実現されています。</target>
       </trans-unit>
       <trans-unit id="3321884531921673789" datatype="html">
         <source>Run as User</source>
@@ -1210,14 +1222,6 @@
         <source>Logs</source>
         <target>ログ</target>
       </trans-unit>
-      <trans-unit id="4814940703935231049" datatype="html">
-        <source>General-purpose web UI for Kubernetes clusters</source>
-        <target>Kubernetes クラスター用の汎用 Web ベース UI</target>
-      </trans-unit>
-      <trans-unit id="4894366697856944217" datatype="html">
-        <source>About</source>
-        <target state="new">Kubernetes Dashboard について</target>
-      </trans-unit>
       <trans-unit id="4902817035128594900" datatype="html">
         <source>Description</source>
         <target>説明</target>
@@ -1417,10 +1421,6 @@
       <trans-unit id="5693993471751761333" datatype="html">
         <source>Create a new secret...</source>
         <target state="new">新しいシークレットの作成...</target>
-      </trans-unit>
-      <trans-unit id="5727797056634342023" datatype="html">
-        <source>Provide feedback</source>
-        <target>フィードバックを提供する</target>
       </trans-unit>
       <trans-unit id="5729418620241283277" datatype="html">
         <source>Events</source>
@@ -1843,6 +1843,10 @@
       <trans-unit id="7194375808015467595" datatype="html">
         <source>Max surge:</source>
         <target state="new">最大サージ:</target>
+      </trans-unit>
+      <trans-unit id="7194477224906924674" datatype="html">
+        <source><x id="START_LINK" ctype="x-a" equiv-text="&quot;\uFFFD#13\uFFFD&quot;"/>Feedback<x id="CLOSE_LINK" ctype="x-a" equiv-text="&quot;\uFFFD/#13\uFFFD&quot;"/></source>
+        <target state="new"><x id="START_LINK" ctype="x-a" equiv-text="&quot;\uFFFD#13\uFFFD&quot;"/>Feedback<x id="CLOSE_LINK" ctype="x-a" equiv-text="&quot;\uFFFD/#13\uFFFD&quot;"/></target>
       </trans-unit>
       <trans-unit id="7198245360163776718" datatype="html">
         <source>Success Threshold</source>
