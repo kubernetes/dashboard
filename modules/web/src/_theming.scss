@@ -25,6 +25,7 @@
   $card-background-dark: color.adjust($card-background, $lightness: -5%);
   $muted: theming.mat-color($foreground-palette, secondary-text);
   $muted-light: theming.mat-color($foreground-palette, disabled);
+  $muted-xlight: theming.mat-color($foreground-palette, disabled-button);
   $border: theming.mat-color($foreground-palette, divider);
   $box-shadow-1: rgb(0 0 0 / 0.2);
   $box-shadow-2: rgb(0 0 0 / 0.14);
@@ -121,6 +122,10 @@
 
   .kd-muted-light {
     color: $muted-light;
+  }
+
+  .kd-muted-xlight {
+    color: $muted-xlight;
   }
 
   .kd-chart-green {

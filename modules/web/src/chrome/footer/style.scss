@@ -22,7 +22,7 @@
   div.footer-list > span:not(:last-child) {
     &::after {
       content: '·';
-      margin: 5px;
+      margin: 9px;
     }
   }
 }
