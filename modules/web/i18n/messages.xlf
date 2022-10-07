@@ -201,7 +201,7 @@
         <source>Rolling update strategy</source>
       </trans-unit>
       <trans-unit id="1781490455950079869" datatype="html">
-        <source><x id="START_LINK" ctype="x-a" equiv-text="&quot;\uFFFD#12\uFFFD&quot;"/>Community<x id="CLOSE_LINK" ctype="x-a" equiv-text="&quot;\uFFFD/#12\uFFFD&quot;"/></source>
+        <source><x id="START_LINK" ctype="x-a" equiv-text="&quot;\uFFFD#10\uFFFD&quot;"/>Community<x id="CLOSE_LINK" ctype="x-a" equiv-text="&quot;\uFFFD/#10\uFFFD&quot;"/></source>
       </trans-unit>
       <trans-unit id="1791198005341902530" datatype="html">
         <source>Deploy</source>
@@ -266,7 +266,7 @@
         <source>Environment variables available for use in the container. Values can reference other variables using $(VAR_NAME) syntax.</source>
       </trans-unit>
       <trans-unit id="2079136285643456368" datatype="html">
-        <source><x id="START_LINK" ctype="x-a" equiv-text="&quot;\uFFFD#18\uFFFD&quot;"/>Slack<x id="CLOSE_LINK" ctype="x-a" equiv-text="&quot;\uFFFD/#18\uFFFD&quot;"/></source>
+        <source><x id="START_LINK" ctype="x-a" equiv-text="&quot;\uFFFD#16\uFFFD&quot;"/>Slack<x id="CLOSE_LINK" ctype="x-a" equiv-text="&quot;\uFFFD/#16\uFFFD&quot;"/></source>
       </trans-unit>
       <trans-unit id="2079395509894825886" datatype="html">
         <source>Conditions</source>
@@ -321,6 +321,9 @@
       </trans-unit>
       <trans-unit id="2218082343053095278" datatype="html">
         <source>Service</source>
+      </trans-unit>
+      <trans-unit id="222595489358095649" datatype="html">
+        <source>Kubernetes Dashboard v<x id="INTERPOLATION" equiv-text="&quot;\uFFFD0\uFFFD&quot;"/> © <x id="INTERPOLATION_1" equiv-text="&quot;\uFFFD1\uFFFD&quot;"/> The Kubernetes Authors</source>
       </trans-unit>
       <trans-unit id="2235593604907350097" datatype="html">
         <source>Resource Names</source>
@@ -383,9 +386,6 @@
       </trans-unit>
       <trans-unit id="2417328504220076358" datatype="html">
         <source>Settings have changed since last reload</source>
-      </trans-unit>
-      <trans-unit id="2433322219896080404" datatype="html">
-        <source>Kubernetes Dashboard v<x id="INTERPOLATION" equiv-text="&quot;\uFFFD0\uFFFD&quot;"/></source>
       </trans-unit>
       <trans-unit id="2446117790692479672" datatype="html">
         <source>Resources</source>
@@ -472,7 +472,7 @@
         <source>Sub-object</source>
       </trans-unit>
       <trans-unit id="2933331719200534418" datatype="html">
-        <source><x id="START_LINK" ctype="x-a" equiv-text="&quot;\uFFFD#9\uFFFD&quot;"/>Documentation<x id="CLOSE_LINK" ctype="x-a" equiv-text="&quot;\uFFFD/#9\uFFFD&quot;"/></source>
+        <source><x id="START_LINK" ctype="x-a" equiv-text="&quot;\uFFFD#7\uFFFD&quot;"/>Documentation<x id="CLOSE_LINK" ctype="x-a" equiv-text="&quot;\uFFFD/#7\uFFFD&quot;"/></source>
       </trans-unit>
       <trans-unit id="2944102521023817891" datatype="html">
         <source>Cluster</source>
@@ -1215,9 +1215,6 @@
       <trans-unit id="6555318547274416232" datatype="html">
         <source>Value</source>
       </trans-unit>
-      <trans-unit id="6555605208018184102" datatype="html">
-        <source>© <x id="INTERPOLATION" equiv-text="&quot;\uFFFD0\uFFFD&quot;"/> The Kubernetes Authors</source>
-      </trans-unit>
       <trans-unit id="656108017672590950" datatype="html">
         <source>API Group</source>
       </trans-unit>
@@ -1366,7 +1363,7 @@
         <source>Max surge:</source>
       </trans-unit>
       <trans-unit id="7194477224906924674" datatype="html">
-        <source><x id="START_LINK" ctype="x-a" equiv-text="&quot;\uFFFD#15\uFFFD&quot;"/>Feedback<x id="CLOSE_LINK" ctype="x-a" equiv-text="&quot;\uFFFD/#15\uFFFD&quot;"/></source>
+        <source><x id="START_LINK" ctype="x-a" equiv-text="&quot;\uFFFD#13\uFFFD&quot;"/>Feedback<x id="CLOSE_LINK" ctype="x-a" equiv-text="&quot;\uFFFD/#13\uFFFD&quot;"/></source>
       </trans-unit>
       <trans-unit id="7198245360163776718" datatype="html">
         <source>Success Threshold</source>
