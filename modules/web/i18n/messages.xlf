@@ -678,6 +678,9 @@
       <trans-unit id="3663367271392398931" datatype="html">
         <source>unset</source>
       </trans-unit>
+      <trans-unit id="3715596725146409911" datatype="html">
+        <source>Owner</source>
+      </trans-unit>
       <trans-unit id="374277779600579508" datatype="html">
         <source>Resource Limits</source>
       </trans-unit>

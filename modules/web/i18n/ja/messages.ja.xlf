@@ -930,6 +930,10 @@
         <source>unset</source>
         <target>なし</target>
       </trans-unit>
+      <trans-unit id="3715596725146409911" datatype="html">
+        <source>Owner</source>
+        <target state="new">Owner</target>
+      </trans-unit>
       <trans-unit id="374277779600579508" datatype="html">
         <source>Resource Limits</source>
         <target>リソース上限</target>
