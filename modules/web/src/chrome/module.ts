@@ -19,6 +19,7 @@ import {GuardsModule} from '@common/services/guard/module';
 import {SharedModule} from '../shared.module';
 
 import {ChromeComponent} from './component';
+import {FooterComponent} from './footer/component';
 import {NavModule} from './nav/module';
 import {NotificationsComponent} from './notifications/component';
 import {ChromeRoutingModule} from './routing';
@@ -27,6 +28,6 @@ import {UserPanelComponent} from './userpanel/component';
 
 @NgModule({
   imports: [SharedModule, ComponentsModule, NavModule, ChromeRoutingModule, GuardsModule],
-  declarations: [ChromeComponent, SearchComponent, NotificationsComponent, UserPanelComponent],
+  declarations: [FooterComponent, ChromeComponent, SearchComponent, NotificationsComponent, UserPanelComponent],
 })
 export class ChromeModule {}

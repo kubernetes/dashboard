@@ -11,12 +11,16 @@ MAKEFLAGS += -j2
 # List of targets that should be executed before other targets
 PRE = --ensure-tools
 
+.PHONY: help
+help:
+	@perl -nle'print $& if m{^[a-zA-Z_-]+:.*?## .*$$}' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
+
 .PHONY: check-license
-check-license: $(PRE)
+check-license: $(PRE) ## Checks if repo files contain valid license header
 	@${GOPATH}/bin/license-eye header check
 
 .PHONY: fix-license
-fix-license: $(PRE)
+fix-license: $(PRE) ## Adds missing license header to repo files
 	@${GOPATH}/bin/license-eye header fix
 
 # Starts development version of the application.
@@ -25,7 +29,7 @@ fix-license: $(PRE)
 #
 # Note: Make sure that the port 8080 is free on your localhost
 .PHONY: serve
-serve: $(PRE)
+serve: $(PRE) ## Starts development version of the application on: http://localhost:8080
 	@$(MAKE) --no-print-directory -C $(MODULES_DIRECTORY) TARGET=serve
 
 # Starts development version of the application with HTTPS enabled.
@@ -35,17 +39,17 @@ serve: $(PRE)
 # Note: Make sure that the port 8080 is free on your localhost
 # Note #2: Does not work with "kind".
 .PHONY: serve-https
-serve-https: $(PRE)
+serve-https: $(PRE) ## Starts development version of the application with HTTPS enabled on: https://localhost:8080
 	@$(MAKE) --no-print-directory -C $(MODULES_DIRECTORY) TARGET=serve-https
 
-# Starts a prod version of the application.
+# Starts production version of the application.
 #
 # URL: https://localhost:4443
 #
 # Note: Make sure that the ports 4443 (Gateway) and 9001 (API) are free on your localhost
 # Note #2: Does not work with "kind".
 .PHONY: run
-run: $(PRE) --ensure-compose-down --compose
+run: $(PRE) --ensure-compose-down --compose ## Starts production version of the application on https://localhost:4443
 	@KUBECONFIG=$(KUBECONFIG) \
 	SYSTEM_BANNER=$(SYSTEM_BANNER) \
 	SYSTEM_BANNER_SEVERITY=$(SYSTEM_BANNER_SEVERITY) \
@@ -58,11 +62,19 @@ run: $(PRE) --ensure-compose-down --compose
 
 .PHONY: build
 build: TARGET := build
-build: build-cross
+build: build-cross ## Builds the application for the architecture of the host machine
 
 .PHONY: build-cross
-build-cross:
+build-cross: ## Builds the application for all supported architectures
 	@$(MAKE) --no-print-directory -C $(MODULES_DIRECTORY) TARGET=$(or $(TARGET),build-cross)
+
+.PHONY: deploy
+deploy: build-cross ## Builds and deploys all module containers to the configured registries
+	@$(MAKE) --no-print-directory -C $(MODULES_DIRECTORY) TARGET=deploy
+
+.PHONY: deploy-dev
+deploy-dev: build-cross ## Builds and deploys all module containers to the configured dev registries
+	@$(MAKE) --no-print-directory -C $(MODULES_DIRECTORY) TARGET=deploy-dev
 
 .PHONY: --compose
 --compose: --ensure-certificates build

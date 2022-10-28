@@ -1,15 +1,11 @@
 ### Application details
-APP_NAME := dashboard-api
+APP_NAME := $(PROJECT_NAME)-api
 APP_VERSION := v1.0.0
-PACKAGE_NAME := k8s.io/dashboard/api
-# Docker image details
-IMAGE_NAMES += $(foreach arch, $(ARCHITECTURES), $(IMAGE_REPOSITORY)/$(APP_NAME)-$(arch):$(APP_VERSION))
-# Images versioned as latest are build based on the master branch
-IMAGE_NAMES_LATEST += $(foreach arch, $(ARCHITECTURES), $(IMAGE_REPOSITORY)/$(APP_NAME)-$(arch):latest)
+PACKAGE_NAME := k8s.io/$(PROJECT_NAME)/api
 
 ### Dirs and paths
 API_DIST_DIRECTORY = $(DIST_DIRECTORY)/api
-API_DIST_BINARY = $(API_DIST_DIRECTORY)/$(ARCH)/$(APP_NAME)
+API_DIST_BINARY = $(API_DIST_DIRECTORY)/$(OS)/$(ARCH)/$(APP_NAME)
 COVERAGE_FILE = $(API_DIRECTORY)/coverage.out
 
 ### Codegen configuration
