@@ -19,7 +19,7 @@ ROOT_DIR="$(cd $(dirname "${BASH_SOURCE}")/../.. && pwd -P)"
 
 function start-ci-heapster {
   echo "\nRunning heapster in standalone mode"
-  docker run --net=host -d k8s.gcr.io/heapster-amd64:${HEAPSTER_VERSION} \
+  docker run --net=host -d registry.k8s.io/heapster-amd64:${HEAPSTER_VERSION} \
              --heapster-port ${HEAPSTER_PORT} \
              --source=kubernetes:http://127.0.0.1:8080?inClusterConfig=false&auth=""
 
