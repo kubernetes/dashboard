@@ -1554,7 +1554,7 @@
       </trans-unit>
       <trans-unit id="6119876613180878188" datatype="html">
         <source>Dropped Capabilities</source>
-        <target state="new">Dropped Capabilities</target>
+        <target state="new">제거된 기능(Dropped Capabilities)</target>
       </trans-unit>
       <trans-unit id="6140249581799344433" datatype="html">
         <source>Subresources</source>
@@ -2382,7 +2382,7 @@
       </trans-unit>
       <trans-unit id="9014417675256704625" datatype="html">
         <source>Added Capabilities</source>
-        <target state="new">Added Capabilities</target>
+        <target state="new">추가된 기능(Added Capabilities)</target>
       </trans-unit>
       <trans-unit id="9034287169969953424" datatype="html">
         <source>Trigger a <x id="INTERPOLATION" equiv-text="&quot;\uFFFD0\uFFFD&quot;"/></source>
