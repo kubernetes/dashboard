@@ -6,7 +6,7 @@ require (
 	github.com/docker/distribution v2.8.1+incompatible
 	github.com/emicklei/go-restful/v3 v3.9.0
 	github.com/opencontainers/go-digest v1.0.0 // indirect
-	github.com/prometheus/client_golang v1.13.0
+	github.com/prometheus/client_golang v1.13.1
 	github.com/spf13/pflag v1.0.5
 	golang.org/x/net v0.0.0-20220921203646-d300de134e69
 	golang.org/x/text v0.3.7 // indirect
