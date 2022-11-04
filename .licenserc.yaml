@@ -64,6 +64,7 @@ header:
     - '.husky/**'
     - 'modules/web/.angular/**'
     - 'modules/web/.yarn/**'
+    - 'modules/web/src/coverage/**'
     - 'LICENSE'
     - 'OWNERS_ALIASES'
     - 'SECURITY_CONTACTS'
