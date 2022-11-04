@@ -62,6 +62,7 @@ header:
     - '.vscode/**'
     - '.dist/**'
     - '.husky/**'
+    - 'modules/api/pkg/plugin/client/clientset/**'
     - 'modules/web/.angular/**'
     - 'modules/web/.yarn/**'
     - 'modules/web/src/coverage/**'
