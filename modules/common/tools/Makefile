@@ -9,10 +9,16 @@ GO_MINOR_VERSION = $(shell go version | cut -c 14- | cut -d' ' -f1 | cut -d'.' -
 MIN_GO_MAJOR_VERSION = 1
 MIN_GO_MINOR_VERSION = 19
 
+NPM_BINARY := $(shell which npm)
+NPM_MAJOR_VERSION = $(shell npm --version | cut -d'.' -f1)
+NPM_MINOR_VERSION = $(shell npm --version | cut -d'.' -f2)
+MIN_NPM_MAJOR_VERSION = 8
+MIN_NPM_MINOR_VERSION = 5
+
 # TODO: It should check not only if binaries are installed but also their versions
 
 .PHONY: install
-install: ensure-go install-license-eye install-air install-golangci-lint install-client-gen
+install: ensure-go ensure-npm install-license-eye install-air install-golangci-lint install-client-gen
 
 .PHONY: ensure-go
 ensure-go:
@@ -21,11 +27,29 @@ ifndef GO_BINARY
 endif
 	@if [ $(GO_MAJOR_VERSION) -gt $(MIN_GO_MAJOR_VERSION) ]; then \
 		exit 0 ;\
-  elif [ $(GO_MAJOR_VERSION) -lt $(MIN_GO_MAJOR_VERSION) ]; then \
+	elif [ $(GO_MAJOR_VERSION) -lt $(MIN_GO_MAJOR_VERSION) ]; then \
 		exit 1; \
-  elif [ $(GO_MINOR_VERSION) -lt $(MIN_GO_MINOR_VERSION) ] ; then \
+	elif [ $(GO_MINOR_VERSION) -lt $(MIN_GO_MINOR_VERSION) ] ; then \
 		exit 1; \
-  fi
+	fi
+
+.PHONY: ensure-npm
+ensure-npm:
+ifndef NPM_BINARY
+	$(error "Cannot find npm binary")
+endif
+	@if [ $(NPM_MAJOR_VERSION) -gt $(MIN_NPM_MAJOR_VERSION) ]; then \
+		echo "[tools] npm version requirements met"; \
+		exit 0 ;\
+	elif [ $(NPM_MAJOR_VERSION) -lt $(MIN_NPM_MAJOR_VERSION) ]; then \
+		echo "[tools] npm version older than required $(MIN_NPM_MAJOR_VERSION).$(MIN_NPM_MINOR_VERSION).0+"; \
+		exit 1; \
+	elif [ $(NPM_MINOR_VERSION) -lt $(NPM_MINOR_VERSION) ] ; then \
+		echo "[tools] npm version older than required $(MIN_NPM_MAJOR_VERSION).$(MIN_NPM_MINOR_VERSION).0+"; \
+		exit 1; \
+	else \
+		echo "[tools] npm version requirements met"; \
+	fi
 
 .PHONY: install-license-eye
 install-license-eye:
