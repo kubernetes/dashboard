@@ -6,16 +6,17 @@ This document describes how to setup your development environment.
 
 Make sure the following software is installed and added to the `$PATH` variable:
 
-* Curl 7+ ([installation manual](https://curl.se/docs/install.html))
-* Git 2.13.2+ ([installation manual](https://git-scm.com/downloads))
-* Docker 1.13.1+ ([installation manual](https://docs.docker.com/engine/installation/linux/docker-ce/ubuntu/))
-* Golang 1.19+ ([installation manual](https://golang.org/dl/))
-    * Dashboard uses `go mod` for go dependency management.
-* Node.js 16.14.2+ and yarn ([installation with nvm](https://github.com/creationix/nvm#usage))
+- Curl 7+ ([installation manual](https://curl.se/docs/install.html))
+- Git 2.13.2+ ([installation manual](https://git-scm.com/downloads))
+- Docker 1.13.1+ ([installation manual](https://docs.docker.com/engine/installation/linux/docker-ce/ubuntu/))
+- Golang 1.19+ ([installation manual](https://golang.org/dl/))
+  - Dashboard uses `go mod` for go dependency management.
+- Node.js 16.14.2+ and yarn ([installation with nvm](https://github.com/creationix/nvm#usage))
 
 Clone the repository and install the dependencies:
 
 ```shell
+make --directory modules/common/tools install
 yarn
 ```
 
@@ -51,8 +52,7 @@ In the background, `npm start` makes a [concurrently](https://github.com/open-cl
 
 Once the angular server starts, it takes some time to pre-compile all assets before serving them. By default, the angular development server watches for file changes and will update accordingly.
 
-
-As stated in the [Angular documentation](https://angular.io/guide/i18n#generate-app-versions-for-each-locale), i18n does not work in the development mode. 
+As stated in the [Angular documentation](https://angular.io/guide/i18n#generate-app-versions-for-each-locale), i18n does not work in the development mode.
 Follow [Building Dashboard for Production](#building-dashboard-for-production) section to test this feature.
 
 > Due to the deployment complexities of i18n and the need to minimize rebuild time, the development server only supports localizing a single locale at a time. Setting the "localize" option to true will cause an error when using ng serve if more than one locale is defined. Setting the option to a specific locale, such as "localize": ["fr"], can work if you want to develop against a specific locale (such as fr).
@@ -147,8 +147,8 @@ but Kubernetes Dashboard is not exposed to outside the container with insecure c
 To allow accessing dashboard from outside the development container,
 pass value for `--insecure-bind-address` option to dashboard as follows:
 
-* Set `K8S_DASHBOARD_BIND_ADDRESS` environment variable as `"0.0.0.0"` before using `aio/develop/run-npm-on-container.sh`.
-* Run like `npm run [command] --bind_address="0.0.0.0"`, when you run dashboard from inside the container.
+- Set `K8S_DASHBOARD_BIND_ADDRESS` environment variable as `"0.0.0.0"` before using `aio/develop/run-npm-on-container.sh`.
+- Run like `npm run [command] --bind_address="0.0.0.0"`, when you run dashboard from inside the container.
 
 ### Change port number for dashboard
 
@@ -176,6 +176,7 @@ These manipulations will build container, and run dashboard as default.
 Also, you can run npm commands described in package.json as you want
 
 e.g.
+
 1. To test dashboard, run `aio/develop/run-npm-on-container.sh run test`.
 2. To check your code changes, run `aio/develop/run-npm-on-container.sh run check`.
 
@@ -193,5 +194,6 @@ This runs container with `bash` command.
 
 1. Run `docker exec -it k8s-dashboard-dev gosu user bash`.
 
-----
+---
+
 _Copyright 2019 [The Kubernetes Dashboard Authors](https://github.com/kubernetes/dashboard/graphs/contributors)_
