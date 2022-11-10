@@ -32,6 +32,8 @@ endif
 		exit 1; \
 	elif [ $(GO_MINOR_VERSION) -lt $(MIN_GO_MINOR_VERSION) ] ; then \
 		exit 1; \
+	else \
+		echo "[tools] golang version requirements met"; \
 	fi
 
 .PHONY: ensure-node
