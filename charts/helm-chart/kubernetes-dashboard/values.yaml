@@ -20,7 +20,7 @@
 image:
   ## Repository for container
   repository: kubernetesui/dashboard
-  tag: v2.7.0
+  tag: ""  # If not defined, uses appVersion of Chart.yaml
   pullPolicy: IfNotPresent
   pullSecrets: []
 
