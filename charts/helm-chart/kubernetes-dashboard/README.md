@@ -70,6 +70,10 @@ helm install kubernetes-dashboard/kubernetes-dashboard --name kubernetes-dashboa
 A major chart version change (like v1.2.3 -> v2.0.0) indicates that there is an
 incompatible breaking change needing manual actions.
 
+### Upgrade from 5.x.x to 6.x.x
+
+- Switch `PodDisruptionBudget` from `policy/v1beta1` to `policy/v1`. Requires kubernetes >= 1.21.0 if `podDisruptionBudget.enabled` is set to true (false by default).
+
 ### Upgrade from 4.x.x to 5.x.x
 
 - Switch Ingress from networking.k8s.io/v1beta1 to networking.k8s.io/v1. Requires kubernetes >= 1.19.0.
