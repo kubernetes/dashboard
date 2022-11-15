@@ -1,0 +1,8 @@
+go 1.19
+
+use (
+	./api // k8s.io/dashboard/api
+	./common/certificates // k8s.io/dashboard/certificates
+	./common/tools // k8s.io/dashboard/tools
+	./web // k8s.io/dashboard/web
+)

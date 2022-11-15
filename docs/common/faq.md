@@ -12,10 +12,10 @@ Make sure, that `metrics-server` and `dashboard-metrics-scraper` are up and runn
 
 ### During development I receive a lot of strange errors in the browser's console. What may be wrong?
 
-You probably need to update your npm dependencies. Run following commands from Dashboard's root directory:
+You may need to reinstall dependencies. Run following commands from web module directory:
 
 ```shell
-npm ci
+yarn --immutable
 ```
 
 ### Why my `Go is not in the path`?

@@ -1,7 +1,0 @@
-extraManifests:
-- apiVersion: v1
-  kind: ConfigMap
-  metadata:
-    name: additional-configmap
-  data:
-    mykey: myvalue

@@ -9,20 +9,14 @@ Make sure the following software is installed and added to the `$PATH` variable:
 * Curl 7+ ([installation manual](https://curl.se/docs/install.html))
 * Git 2.13.2+ ([installation manual](https://git-scm.com/downloads))
 * Docker 1.13.1+ ([installation manual](https://docs.docker.com/engine/installation/linux/docker-ce/ubuntu/))
-* Golang 1.17+ ([installation manual](https://golang.org/dl/))
+* Golang 1.19+ ([installation manual](https://golang.org/dl/))
     * Dashboard uses `go mod` for go dependency management.
-* Node.js 16.14.2+ and npm 8.5.0+ ([installation with nvm](https://github.com/creationix/nvm#usage))
+* Node.js 16.14.2+ and yarn ([installation with nvm](https://github.com/creationix/nvm#usage))
 
 Clone the repository and install the dependencies:
 
 ```shell
-npm ci
-```
-
-If you are running commands with root privileges set `--unsafe-perm flag`:
-
-```shell
-npm ci --unsafe-perm
+yarn
 ```
 
 ## Running the cluster
