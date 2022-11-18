@@ -17,6 +17,7 @@
 .idea/
 .vscode/
 .DS_Store
+.fleet/
 
 # Build, deps and cache
 .angular

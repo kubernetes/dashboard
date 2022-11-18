@@ -50,8 +50,8 @@ services:
   scraper:
     image: kubernetesui/metrics-scraper:v1.0.8
     command:
+      # TODO: move metrics args to some overridable env variables
       --kubeconfig=${KUBECONFIG:?}
-      # TODO: move this to some overridable env variables
       --metric-resolution=5s
       --metric-duration=10m
     volumes:
