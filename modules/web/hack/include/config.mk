@@ -6,7 +6,6 @@ PACKAGE_NAME := k8s.io/$(PROJECT_NAME)/web
 ### Dirs and paths
 WEB_DIST_DIRECTORY = $(DIST_DIRECTORY)/web
 WEB_DIST_ANGULAR_DIRECTORY = $(WEB_DIST_DIRECTORY)/angular
-WEB_DIST_BINARY = $(SERVE_DIRECTORY)/$(OS)/$(ARCH)/$(APP_NAME)
 
 # Angular Serve Arguments
 PROXY_CONFIG ?= proxy.conf.json

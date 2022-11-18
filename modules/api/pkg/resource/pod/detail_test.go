@@ -161,7 +161,7 @@ func TestEvalEnvFrom(t *testing.T) {
 		{
 			container: v1.Container{
 				Name:  "echoserver",
-				Image: "k8s.gcr.io/echoserver",
+				Image: "registry.k8s.io/echoserver",
 				EnvFrom: []v1.EnvFromSource{
 					{
 						SecretRef: &v1.SecretEnvSource{
