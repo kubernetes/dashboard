@@ -40,7 +40,7 @@ endif
 .PHONY: ensure-node
 ensure-node:
 ifndef NODE_BINARY
-	$(error "Cannot find npm binary")
+	$(error "Cannot find node binary")
 endif
 	@if [ $(NODE_MAJOR_VERSION) -gt $(MIN_NODE_MAJOR_VERSION) ]; then \
 		echo "[tools] node version requirements met"; \
@@ -95,7 +95,8 @@ endif
 install-yarn:
 ifndef YARN_BINARY
 	@echo "[tools] downloading yarn..."
-	@npm install yarn
+	@corepack enable
+  @corepack prepare yarn@$(YARN_VERSION) --activate
 else
 	@echo "[tools] yarn already exists"
 endif
