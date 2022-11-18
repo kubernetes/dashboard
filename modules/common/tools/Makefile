@@ -11,10 +11,11 @@ MIN_GO_MINOR_VERSION = 19
 
 NODE_BINARY := $(shell which node)
 NODE_MAJOR_VERSION = $(shell node --version | cut -d'.' -f1 | cut -d'v' -f2 )
-NODE_MINOR_VERSION = $(shell npm --version | cut -d'.' -f2)
+NODE_MINOR_VERSION = $(shell node --version | cut -d'.' -f2)
 MIN_NODE_MAJOR_VERSION = 16
 MIN_NODE_MINOR_VERSION = 14
 YARN_BINARY := $(shell which yarn)
+
 
 # TODO: It should check not only if binaries are installed but also their versions
 
