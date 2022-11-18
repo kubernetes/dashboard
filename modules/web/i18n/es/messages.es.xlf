@@ -1614,7 +1614,7 @@
       </trans-unit>
       <trans-unit id="6427347442015551672" datatype="html">
         <source>HTTP Headers</source>
-        <target state="new">Encabezados HTTP </target>
+        <target state="new">Encabezados HTTP</target>
       </trans-unit>
       <trans-unit id="6448155059518842389" datatype="html">
         <source>Sub Path</source>
