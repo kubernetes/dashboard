@@ -15,13 +15,12 @@
 version: "3.8"
 services:
   web:
-    platform: ${OS:?}/${ARCH:?}
     build:
       context: ../..
       dockerfile: modules/web/Dockerfile
       args:
-        - BUILDPLATFORM=${OS:?}/${ARCH:?}
-        - BUILDARCH=${ARCH:?}
+        - TARGETOS=${OS:?}
+        - TARGETARCH=${ARCH:?}
     command:
       --locale-config=/public/locale_conf.json
       --auto-generate-certificates
@@ -30,13 +29,12 @@ services:
     tmpfs:
       - /tmp
   api:
-    platform: ${OS:?}/${ARCH:?}
     build:
       context: ../..
       dockerfile: modules/api/Dockerfile
       args:
-        - BUILDPLATFORM=${OS:?}/${ARCH:?}
-        - BUILDARCH=${ARCH:?}
+        - TARGETOS=${OS:?}
+        - TARGETARCH=${ARCH:?}
     command:
       --kubeconfig=${KUBECONFIG:?}
       --auto-generate-certificates
