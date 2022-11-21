@@ -4,7 +4,7 @@ go 1.19
 
 require (
 	github.com/docker/distribution v2.8.1+incompatible
-	github.com/emicklei/go-restful/v3 v3.10.0
+	github.com/emicklei/go-restful/v3 v3.10.1
 	github.com/prometheus/client_golang v1.14.0
 	github.com/spf13/pflag v1.0.5
 	golang.org/x/net v0.1.0
