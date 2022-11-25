@@ -142,7 +142,7 @@ require (
 	github.com/prometheus/common v0.37.0 // indirect
 	github.com/prometheus/procfs v0.8.0 // indirect
 	github.com/quasilyte/go-ruleguard v0.3.17 // indirect
-	github.com/quasilyte/gogrep v0.0.0-20221002170852-631b4cfd0c04 // indirect
+	github.com/quasilyte/gogrep v0.0.0-20220120141003-628d8b3623b5 // indirect
 	github.com/quasilyte/regex/syntax v0.0.0-20210819130434-b3f0c404a727 // indirect
 	github.com/quasilyte/stdinfo v0.0.0-20220114132959-f7386bf02567 // indirect
 	github.com/rivo/uniseg v0.4.3 // indirect
