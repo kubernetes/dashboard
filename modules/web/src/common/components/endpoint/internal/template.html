@@ -18,7 +18,8 @@ limitations under the License.
   <div *ngFor="let endpoint of endpoints">
     <div *ngFor="let port of endpoint.ports">
       <div class="kd-internal-endpoint">{{ endpoint.host }}:{{ port.port }} {{ port.protocol }}</div>
-      <div *ngIf="port.nodePort !== 0" class="kd-internal-endpoint">{{ endpoint.host }}:{{ port.nodePort }} {{ port.protocol }}</div>
+      <div *ngIf="port.nodePort !== 0"
+           class="kd-internal-endpoint">{{ endpoint.host }}:{{ port.nodePort }} {{ port.protocol }}</div>
     </div>
   </div>
   <div *ngIf="endpoints.length === 0">-</div>
