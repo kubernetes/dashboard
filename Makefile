@@ -48,8 +48,9 @@ serve-https: $(PRE) ## Starts development version of the application with HTTPS 
 #
 # Note: Make sure that the ports 4443 (Gateway) and 9001 (API) are free on your localhost
 # Note #2: Does not work with "kind".
+# Note #3: Darwin doesn't work at the moment, so we are using Linux by default.
 .PHONY: run
-run: $(PRE) --ensure-compose-down --compose ## Starts production version of the application on https://localhost:4443
+run: $(PRE) --ensure-linux --ensure-compose-down --compose ## Starts production version of the application on https://localhost:4443
 	@KUBECONFIG=$(KUBECONFIG) \
 	SYSTEM_BANNER=$(SYSTEM_BANNER) \
 	SYSTEM_BANNER_SEVERITY=$(SYSTEM_BANNER_SEVERITY) \
@@ -87,6 +88,9 @@ deploy-dev: build-cross ## Builds and deploys all module containers to the confi
 	ARCH=$(ARCH) \
 	OS=$(OS) \
 	docker compose -f $(DOCKER_COMPOSE_PATH) --project-name=$(PROJECT_NAME) build
+
+.PHONY: --ensure-linux
+  export OS=linux
 
 .PHONY: --ensure-tools
 --ensure-tools:
