@@ -5,7 +5,7 @@ go 1.19
 require (
 	github.com/apache/skywalking-eyes v0.4.0
 	github.com/cosmtrek/air v1.40.4
-	github.com/golangci/golangci-lint v1.50.1
+	github.com/golangci/golangci-lint v1.49.0
 	k8s.io/code-generator v0.25.4
 )
 
@@ -49,7 +49,7 @@ require (
 	github.com/firefart/nonamedreturns v1.0.4 // indirect
 	github.com/fsnotify/fsnotify v1.6.0 // indirect
 	github.com/fzipp/gocyclo v0.6.0 // indirect
-	github.com/go-critic/go-critic v0.6.5 // indirect
+	github.com/go-critic/go-critic v0.6.4 // indirect
 	github.com/go-logr/logr v1.2.3 // indirect
 	github.com/go-openapi/jsonpointer v0.19.5 // indirect
 	github.com/go-openapi/jsonreference v0.20.0 // indirect
@@ -141,9 +141,7 @@ require (
 	github.com/prometheus/client_model v0.3.0 // indirect
 	github.com/prometheus/common v0.37.0 // indirect
 	github.com/prometheus/procfs v0.8.0 // indirect
-	github.com/quasilyte/go-ruleguard v0.3.18 // indirect
-	github.com/quasilyte/go-ruleguard/dsl v0.3.21 // indirect
-	github.com/quasilyte/go-ruleguard/rules v0.0.0-20211022131956-028d6511ab71 // indirect
+	github.com/quasilyte/go-ruleguard v0.3.17 // indirect
 	github.com/quasilyte/gogrep v0.0.0-20221002170852-631b4cfd0c04 // indirect
 	github.com/quasilyte/regex/syntax v0.0.0-20210819130434-b3f0c404a727 // indirect
 	github.com/quasilyte/stdinfo v0.0.0-20220114132959-f7386bf02567 // indirect
