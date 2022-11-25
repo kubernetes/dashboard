@@ -54,7 +54,7 @@ serve: $(PRE)
 
 .PHONY: serve-https
 serve-https:
-	AUTO_GENERATE_CERTS=true $(MAKE) serve
+	AUTO_GENERATE_CERTIFICATES=true $(MAKE) serve
 
 .PHONY: test
 test:
