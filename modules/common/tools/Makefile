@@ -30,8 +30,10 @@ endif
 	@if [ $(GO_MAJOR_VERSION) -gt $(MIN_GO_MAJOR_VERSION) ]; then \
 		exit 0 ;\
 	elif [ $(GO_MAJOR_VERSION) -lt $(MIN_GO_MAJOR_VERSION) ]; then \
+		echo "[tools] go version older than required v$(MIN_GO_MAJOR_VERSION).$(MIN_GO_MINOR_VERSION).0+"; \
 		exit 1; \
 	elif [ $(GO_MINOR_VERSION) -lt $(MIN_GO_MINOR_VERSION) ] ; then \
+		echo "[tools] go version older than required v$(MIN_GO_MAJOR_VERSION).$(MIN_GO_MINOR_VERSION).0+"; \
 		exit 1; \
 	else \
 		echo "[tools] golang version requirements met"; \
@@ -94,9 +96,8 @@ endif
 .PHONY: install-yarn
 install-yarn:
 ifndef YARN_BINARY
-	@echo "[tools] downloading yarn..."
-	@corepack enable
-  @corepack prepare yarn@$(YARN_VERSION) --activate
+	@echo "[tools] yarn required to build front-end"
+	@echo "[tools] install yarn via: corepack prepare yarn --activate"
 else
 	@echo "[tools] yarn already exists"
 endif
