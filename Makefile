@@ -23,6 +23,16 @@ check-license: $(PRE) ## Checks if repo files contain valid license header
 fix-license: $(PRE) ## Adds missing license header to repo files
 	@${GOPATH}/bin/license-eye header fix
 
+  .PHONY: check-go
+check-go: $(PRE)
+	cd modules/api && golangci-lint run -c ../../.golangci.yml ./... && cd -
+	cd modules/web && golangci-lint run -c ../../.golangci.yml ./... && cd -
+
+.PHONY: fix-go
+fix-go: $(PRE)
+	cd modules/api && golangci-lint run -c ../../.golangci.yml --fix ./... && cd -
+	cd modules/web && golangci-lint run -c ../../.golangci.yml --fix ./... && cd -
+
 # Starts development version of the application.
 #
 # URL: http://localhost:8080
@@ -112,28 +122,4 @@ deploy-dev: build-cross ## Builds and deploys all module containers to the confi
 --ensure-certificates:
 	@$(MAKE) --no-print-directory -C $(GATEWAY_DIRECTORY) generate-certificates
 
-#.PHONY: check-go
-#check-go: ensure-golangcilint
-#	golangci-lint run -c .golangci.yml ./src/app/backend/...
-#
-#.PHONY: fix-go
-#fix-go: ensure-golangcilint
-#	golangci-lint run -c .golangci.yml --fix ./src/app/backend/...
-#
-#.PHONY: start-cluster
-#start-cluster:
-#	./aio/scripts/start-cluster.sh
-#
-#.PHONY: stop-cluster
-#stop-cluster:
-#	./aio/scripts/stop-cluster.sh
-#
-#.PHONY: e2e
-#e2e: start-cluster
-#	npm run e2e
-#	make stop-cluster
-#
-#.PHONY: e2e-headed
-#e2e-headed: start-cluster
-#	npm run e2e:headed
-#	make stop-cluster
+
