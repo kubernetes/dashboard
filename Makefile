@@ -98,6 +98,7 @@ deploy-dev: build-cross ## Builds and deploys all module containers to the confi
 	docker compose -f $(DOCKER_COMPOSE_PATH) --project-name=$(PROJECT_NAME) build
 
 .PHONY: --ensure-linux
+--ensure-linux:
   export OS=linux
 
 .PHONY: --ensure-tools
