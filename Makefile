@@ -15,6 +15,14 @@ PRE = --ensure-tools
 help:
 	@perl -nle'print $& if m{^[a-zA-Z_-]+:.*?## .*$$}' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
 
+.PHONY: check
+check: $(PRE) check-license ## Runs all available checks
+	@$(MAKE) --no-print-directory -C $(MODULES_DIRECTORY) TARGET=check
+
+.PHONY: fix
+fix: $(PRE) fix-license ## Runs all available fix scripts
+	@$(MAKE) --no-print-directory -C $(MODULES_DIRECTORY) TARGET=fix
+
 .PHONY: check-license
 check-license: $(PRE) ## Checks if repo files contain valid license header
 	@${GOPATH}/bin/license-eye header check
@@ -90,7 +98,8 @@ deploy-dev: build-cross ## Builds and deploys all module containers to the confi
 	docker compose -f $(DOCKER_COMPOSE_PATH) --project-name=$(PROJECT_NAME) build
 
 .PHONY: --ensure-linux
-  export OS=linux
+--ensure-linux:
+	export OS=linux
 
 .PHONY: --ensure-tools
 --ensure-tools:
@@ -112,28 +121,4 @@ deploy-dev: build-cross ## Builds and deploys all module containers to the confi
 --ensure-certificates:
 	@$(MAKE) --no-print-directory -C $(GATEWAY_DIRECTORY) generate-certificates
 
-#.PHONY: check-go
-#check-go: ensure-golangcilint
-#	golangci-lint run -c .golangci.yml ./src/app/backend/...
-#
-#.PHONY: fix-go
-#fix-go: ensure-golangcilint
-#	golangci-lint run -c .golangci.yml --fix ./src/app/backend/...
-#
-#.PHONY: start-cluster
-#start-cluster:
-#	./aio/scripts/start-cluster.sh
-#
-#.PHONY: stop-cluster
-#stop-cluster:
-#	./aio/scripts/stop-cluster.sh
-#
-#.PHONY: e2e
-#e2e: start-cluster
-#	npm run e2e
-#	make stop-cluster
-#
-#.PHONY: e2e-headed
-#e2e-headed: start-cluster
-#	npm run e2e:headed
-#	make stop-cluster
+

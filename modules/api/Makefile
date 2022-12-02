@@ -17,6 +17,20 @@ codegen-update: --codegen-update-run --codegen-update-post
 codegen-verify: VERIFY_ONLY = true
 codegen-verify: --codegen-verify-pre --codegen-update-run --codegen-verify-post
 
+.PHONY: check
+check: check-go
+
+.PHONY: check-go
+check-go: $(PRE)
+	golangci-lint run -c ../../.golangci.yml ./...
+
+.PHONY: fix
+fix: fix-go
+
+.PHONY: fix-go
+fix-go: $(PRE)
+	golangci-lint run -c ../../.golangci.yml --fix ./...
+
 .PHONY: build
 build: ARCHITECTURES = $(OS)/$(ARCH)
 build: build-cross
