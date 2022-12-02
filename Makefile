@@ -99,7 +99,7 @@ deploy-dev: build-cross ## Builds and deploys all module containers to the confi
 
 .PHONY: --ensure-linux
 --ensure-linux:
-  export OS=linux
+	export OS=linux
 
 .PHONY: --ensure-tools
 --ensure-tools:
