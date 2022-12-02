@@ -13,18 +13,4 @@
 # limitations under the License.
 #
 
-# IDE
-.idea/
-.vscode/
-.DS_Store
-.fleet/
-
-# Build, deps and cache
-.angular
-node_modules
-.dist
-.coverage
-*.swp
-
-# Helm deps
-charts/helm-chart/kubernetes-dashboard/charts
+go.work.sum

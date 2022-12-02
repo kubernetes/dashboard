@@ -96,7 +96,7 @@ deploy-dev: --deploy-dev
 
 .PHONY: --clean
 --clean:
-	@rm $(WEB_DIST_DIRECTORY) -rf
+	@rm -rf $(WEB_DIST_DIRECTORY) || true
 	@mkdir -p $(WEB_DIST_ANGULAR_DIRECTORY)
 
 .PHONY: --ensure-dependencies

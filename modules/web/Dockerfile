@@ -12,14 +12,14 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-FROM --platform=$BUILDPLATFORM ubuntu:20.04 as builder
+FROM ubuntu:20.04 as builder
 
 # Create a nonroot user for final image
 RUN useradd -u 10001 nonroot
 
 # Scratch can be used as the base image because the backend is compiled to include all
 # its dependencies.
-FROM --platform=$BUILDPLATFORM scratch as final
+FROM scratch as final
 ARG TARGETARCH
 ARG TARGETOS
 

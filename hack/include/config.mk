@@ -1,8 +1,8 @@
 ### Common application/container details
 PROJECT_NAME := dashboard
 # Supported architectures
-ARCHITECTURES := linux/amd64 linux/arm64 linux/arm linux/ppc64le linux/s390x darwin/amd64 darwin/arm64
-BUILDX_ARCHITECTURES := linux/amd64,linux/arm64,linux/arm,linux/ppc64le,linux/s390x,darwin/amd64,darwin/arm64
+ARCHITECTURES := linux/amd64 linux/arm64 linux/arm linux/ppc64le linux/s390x # darwin/amd64 darwin/arm64 <- TODO: enable once it is natively supported by docker
+BUILDX_ARCHITECTURES := linux/amd64,linux/arm64,linux/arm,linux/ppc64le,linux/s390x # ,darwin/amd64,darwin/arm64
 # Container registry details
 IMAGE_REGISTRIES := docker.io
 IMAGE_REPOSITORY := kubernetesui

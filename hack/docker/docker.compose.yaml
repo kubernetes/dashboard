@@ -19,8 +19,8 @@ services:
       context: ../..
       dockerfile: modules/web/Dockerfile
       args:
-        - BUILDPLATFORM=${OS:?}/${ARCH:?}
-        - BUILDARCH=${ARCH:?}
+        - TARGETOS=${OS:?}
+        - TARGETARCH=${ARCH:?}
     command:
       --locale-config=/public/locale_conf.json
       --auto-generate-certificates
@@ -33,8 +33,8 @@ services:
       context: ../..
       dockerfile: modules/api/Dockerfile
       args:
-        - BUILDPLATFORM=${OS:?}/${ARCH:?}
-        - BUILDARCH=${ARCH:?}
+        - TARGETOS=${OS:?}
+        - TARGETARCH=${ARCH:?}
     command:
       --kubeconfig=${KUBECONFIG:?}
       --auto-generate-certificates
@@ -50,8 +50,8 @@ services:
   scraper:
     image: kubernetesui/metrics-scraper:v1.0.8
     command:
+      # TODO: move metrics args to some overridable env variables
       --kubeconfig=${KUBECONFIG:?}
-      # TODO: move this to some overridable env variables
       --metric-resolution=5s
       --metric-duration=10m
     volumes:
