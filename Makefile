@@ -15,6 +15,14 @@ PRE = --ensure-tools
 help:
 	@perl -nle'print $& if m{^[a-zA-Z_-]+:.*?## .*$$}' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
 
+.PHONY: check
+check: $(PRE) check-license ## Runs all available checks
+	@$(MAKE) --no-print-directory -C $(MODULES_DIRECTORY) TARGET=check
+
+.PHONY: fix
+fix: $(PRE) fix-license ## Runs all available fix scripts
+	@$(MAKE) --no-print-directory -C $(MODULES_DIRECTORY) TARGET=fix
+
 .PHONY: check-license
 check-license: $(PRE) ## Checks if repo files contain valid license header
 	@${GOPATH}/bin/license-eye header check
@@ -22,16 +30,6 @@ check-license: $(PRE) ## Checks if repo files contain valid license header
 .PHONY: fix-license
 fix-license: $(PRE) ## Adds missing license header to repo files
 	@${GOPATH}/bin/license-eye header fix
-
-  .PHONY: check-go
-check-go: $(PRE)
-	cd modules/api && golangci-lint run -c ../../.golangci.yml ./... && cd -
-	cd modules/web && golangci-lint run -c ../../.golangci.yml ./... && cd -
-
-.PHONY: fix-go
-fix-go: $(PRE)
-	cd modules/api && golangci-lint run -c ../../.golangci.yml --fix ./... && cd -
-	cd modules/web && golangci-lint run -c ../../.golangci.yml --fix ./... && cd -
 
 # Starts development version of the application.
 #
