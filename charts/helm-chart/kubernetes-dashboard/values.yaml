@@ -355,3 +355,30 @@ serviceMonitor:
   labels: {}
   ## Here annotations can be added to the serviceMonitor
   annotations: {}
+
+## Optional containers for auth addons such as keycloak-gatekeeper
+optionalContainers:
+  ## Wether to enable dashboard-metrics-scraper
+  enabled: false
+  containers: 
+    []
+  # - name: keycloak-gatekeeper
+  #   image: 12345678.amazonaws.com/software-platforms/keycloak-gatekeeper:6.0.1-patch-9
+  #   imagePullPolicy: IfNotPresent
+  #   args:
+  #     - --config=/etc/secrets/gatekeeper.yaml
+  #     - --enable-logging=true
+  #     - --enable-json-logging=true
+  #     - --enable-authorization-header=false
+  #   resources:
+  #     limits:
+  #       cpu: 50m
+  #       memory: 50Mi
+  #     requests:
+  #       cpu: 50m
+  #       memory: 50Mi
+  #   terminationMessagePath: /dev/termination-log
+  #   terminationMessagePolicy: File
+  #   volumeMounts:
+  #     - name: keycloak-gatekeeper-secret
+  #       mountPath: /etc/secrets
