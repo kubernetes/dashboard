@@ -48,7 +48,7 @@ jobs:
         id: lint
         run: ct lint --config=charts/helm-chart/.helm-chart-testing.yaml
       - name: Start kind cluster
-        uses: helm/kind-action@v1.4.0
+        uses: helm/kind-action@v1.5.0
       - name: Install Prometheus Operator CRDs
         id: prom
         run: kubectl apply --server-side -f https://raw.githubusercontent.com/prometheus-operator/prometheus-operator/v0.54.0/example/prometheus-operator-crd/monitoring.coreos.com_servicemonitors.yaml
