@@ -43,7 +43,7 @@ else
     sed -e "s/127.0.0.1:[0-9]\+/${KIND_ADDR}:6443/g" /tmp/kind.kubeconfig > ~/.kube/config
     # Deploy recommended.yaml to deploy dashboard-metrics-scraper sidecar
     echo "Deploy dashboard-metrics-scraper into kind cluster"
-    kubectl apply -f aio/deploy/recommended.yaml
+    kubectl apply -f hack/deploy/recommended.yaml
     # Kill and run `kubectl proxy`
     KUBECTL_PID=$(ps -A|grep 'kubectl'|tr -s ' '|cut -d ' ' -f 2)
     echo "Kill kubectl ${KUBECTL_PID}"
