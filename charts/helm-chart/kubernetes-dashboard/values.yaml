@@ -356,7 +356,7 @@ serviceMonitor:
   ## Here annotations can be added to the serviceMonitor
   annotations: {}
 
-## Optional containers for auth addons
+## Optional containers, i.e. for auth addons.
 optionalContainers:
   enabled: false
   containers: 
