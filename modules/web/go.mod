@@ -5,7 +5,11 @@ go 1.19
 require (
 	github.com/golang/glog v1.0.0
 	github.com/spf13/pflag v1.0.5
+<<<<<<< HEAD
 	golang.org/x/text v0.6.0
+=======
+	golang.org/x/text v0.5.0
+>>>>>>> 8daa96c0c (Bump k8s modules to 0.26.0)
 	k8s.io/dashboard/certificates v0.0.0-00010101000000-000000000000
 )
 
@@ -16,11 +20,11 @@ require (
 	github.com/json-iterator/go v1.1.12 // indirect
 	github.com/modern-go/concurrent v0.0.0-20180306012644-bacd9c7ef1dd // indirect
 	github.com/modern-go/reflect2 v1.0.2 // indirect
-	golang.org/x/net v0.2.0 // indirect
+	golang.org/x/net v0.3.1-0.20221206200815-1e63c2f08a10 // indirect
 	gopkg.in/inf.v0 v0.9.1 // indirect
 	gopkg.in/yaml.v2 v2.4.0 // indirect
-	k8s.io/api v0.25.4 // indirect
-	k8s.io/apimachinery v0.25.4 // indirect
+	k8s.io/api v0.26.0 // indirect
+	k8s.io/apimachinery v0.26.0 // indirect
 	k8s.io/klog/v2 v2.80.1 // indirect
 	k8s.io/utils v0.0.0-20221108210102-8e77b1f39fe2 // indirect
 	sigs.k8s.io/json v0.0.0-20221116044647-bc3834ca7abd // indirect
