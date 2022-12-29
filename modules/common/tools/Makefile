@@ -59,6 +59,7 @@ install-client-gen:
 ifndef CLIENT_GEN_BINARY
 	@echo "[tools] downloading client-gen..."
 	@go install k8s.io/code-generator/cmd/client-gen
+	@git clone https://github.com/kubernetes/gengo ${GOPATH}/src/k8s.io/gengo
 else
 	@echo "[tools] client-gen already exists"
 endif
