@@ -41,6 +41,9 @@ RUN curl -sL https://deb.nodesource.com/setup_16.x | bash - \
 	&& rm -rf /var/lib/apt/lists/* \
 	&& apt-get clean
 
+# Install yarn
+RUN npm install -g yarn
+
 ENV GIT_EDITOR=nano
 
 # Install firefox from Mozilla binaries
@@ -66,13 +69,18 @@ ENV NG_CLI_ANALYTICS=false
 
 # Download a statically linked docker client,
 # so the container is able to build images on the host.
-RUN curl -sSL https://download.docker.com/linux/static/stable/x86_64/docker-20.10.17.tgz > /tmp/docker.tgz && \
+RUN curl -sSL https://download.docker.com/linux/static/stable/x86_64/docker-20.10.22.tgz > /tmp/docker.tgz && \
 	cd /tmp/ && \
 	tar xzvf docker.tgz && \
 	rm docker.tgz && \
 	mv /tmp/docker/docker /usr/bin/docker && \
 	rm -rf /tmp/docker/ && \
 	chmod +x /usr/bin/docker
+
+# Install docker compose plugin
+RUN mkdir -p /usr/local/lib/docker/cli-plugins
+RUN curl -SL https://github.com/docker/compose/releases/download/v2.14.0/docker-compose-linux-x86_64 -o /usr/local/lib/docker/cli-plugins/docker-compose
+RUN chmod +x /usr/local/lib/docker/cli-plugins/docker-compose
 
 # Install kubectl
 RUN curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl
@@ -82,7 +90,7 @@ RUN mv ./kubectl /usr/local/bin/kubectl
 # Install golangci for ckecking or fixing go format.
 # `npm ci` installs golangci, but this installation is needed
 # for running `npm run check` singlely, like
-# `aio/develop/run-npm-on-container.sh run check`.
+# `hack/develop/run-dev-container.sh run check`.
 RUN curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $(go env GOPATH)/bin v1.49.0
 
 # Enable go mod.
@@ -114,4 +122,4 @@ WORKDIR /go/src/github.com/kubernetes/dashboard
 EXPOSE 8080 8443 9090 2345
 
 # Run gosu command in container.
-CMD ./aio/develop/gosu-command.sh
+CMD ./hack/develop/gosu-command.sh

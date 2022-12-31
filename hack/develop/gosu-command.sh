@@ -23,6 +23,12 @@ fi
 useradd -u ${LOCAL_UID} -g ${LOCAL_GID} -d /home/user user
 chown -R ${LOCAL_UID}:${LOCAL_GID} /home/user
 
+# Create docker group and add user to docker group, if group its ID provided
+if [ -v DOCKER_GID ]; then
+  groupadd -g ${DOCKER_GID} docker
+  usermod -aG docker user
+fi
+
 # Add user as sudoer without password
 echo "user ALL=(ALL:ALL) NOPASSWD:ALL" > /etc/sudoers.d/user
 
@@ -38,5 +44,5 @@ if [[ -n "${K8S_DASHBOARD_CMD}" ]] ; then
   ${GOSU} ${K8S_DASHBOARD_CMD}
 else
   # Run npm command
-  ${GOSU} aio/develop/npm-command.sh
+  ${GOSU} hack/develop/npm-command.sh
 fi
