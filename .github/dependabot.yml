@@ -14,4 +14,4 @@ updates:
     directory: "modules/web/"
     schedule:
       interval: "daily"
-    open-pull-requests-limit: 0 # FIXME: https://github.com/kubernetes/dashboard/issues/7470
+    open-pull-requests-limit: 10
