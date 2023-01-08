@@ -153,7 +153,7 @@ func NewResourceVerber(client, appsClient, batchClient, betaBatchClient, autosca
 }
 
 // Delete deletes the resource of the given kind in the given namespace with the given name.
-func (verber *resourceVerber) Delete(kind string, namespaceSet bool, namespace string, name string) error {
+func (verber *resourceVerber) Delete(kind string, namespaceSet bool, namespace string, name string, deleteNow bool) error {
 	client, resourceSpec, err := verber.getResourceSpecFromKind(kind, namespaceSet)
 	if err != nil {
 		return err
@@ -163,6 +163,11 @@ func (verber *resourceVerber) Delete(kind string, namespaceSet bool, namespace s
 	defaultPropagationPolicy := v1.DeletePropagationForeground
 	defaultDeleteOptions := &v1.DeleteOptions{
 		PropagationPolicy: &defaultPropagationPolicy,
+	}
+
+	if deleteNow {
+		gracePeriodSeconds := int64(1)
+		defaultDeleteOptions.GracePeriodSeconds = &gracePeriodSeconds
 	}
 
 	req := client.Delete().Resource(resourceSpec.Resource).Name(name).Body(defaultDeleteOptions)

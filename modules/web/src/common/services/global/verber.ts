@@ -43,11 +43,11 @@ export class VerberService {
     this.dialog_
       .open(DeleteResourceDialog, dialogConfig)
       .afterClosed()
-      .pipe(filter(doDelete => doDelete))
+      .pipe(filter(doDelete => doDelete !== 'cancelDelete'))
       .pipe(
-        switchMap(_ => {
+        switchMap(result => {
           const url = RawResource.getUrl(typeMeta, objectMeta);
-          return this.http_.delete(url, {responseType: 'text'});
+          return this.http_.delete(url, {params: {deleteNow: result}, responseType: 'text'});
         })
       )
       .subscribe(_ => this.onDelete.emit(true), this.handleErrorResponse_.bind(this));

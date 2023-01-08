@@ -21,6 +21,9 @@ import {ResourceMeta} from '../../services/global/actionbar';
   templateUrl: 'template.html',
 })
 export class DeleteResourceDialog {
+  isDeleteNowChecked = false;
+  cancelDelete = 'cancelDelete';
+
   constructor(
     public dialogRef: MatDialogRef<DeleteResourceDialog>,
     @Inject(MAT_DIALOG_DATA) public data: ResourceMeta

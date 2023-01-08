@@ -22,14 +22,24 @@ limitations under the License.
     <span *ngIf="data.objectMeta.namespace"> &nbsp;in namespace <i>{{ data.objectMeta.namespace }}</i> </span>
     <span>?</span>
   </ng-container>
+  <ng-container>
+    <div class="kd-equivalent-block">
+      <mat-checkbox color="primary"
+                    [(ngModel)]="isDeleteNowChecked"
+                    name="isDeleteNowChecked"
+                    matInput
+                    i18n>Delete now (sets delete grace period to 1 second instead of the default, which is usually 30 seconds)</mat-checkbox>
+    </div>
+  </ng-container>
   <div class="kd-equivalent-block kd-muted kd-bg-card-dark"
        fxLayoutAlign=" center">
     <mat-icon>info</mat-icon>
     <div>
-      <span i18n>This action is equivalent to:</span>
+      <div i18n>This action is equivalent to:</div>
       <code>
         <ng-container>kubectl delete </ng-container>
         <ng-container *ngIf="data.objectMeta.namespace">-n {{ data.objectMeta.namespace }} </ng-container>
+        <ng-container *ngIf="isDeleteNowChecked">--now </ng-container>
         <ng-container>{{ data.typeMeta.kind }} {{ data.objectMeta.name }}</ng-container>
       </code>
     </div>
@@ -39,10 +49,10 @@ limitations under the License.
   <button mat-button
           color="primary"
           id="confirm-delete"
-          [mat-dialog-close]="true"
+          [mat-dialog-close]="isDeleteNowChecked"
           i18n>Delete</button>
   <button mat-button
           color="primary"
-          [mat-dialog-close]="false"
+          [mat-dialog-close]="cancelDelete"
           i18n>Cancel</button>
 </mat-dialog-actions>
