@@ -15,7 +15,7 @@
 
 # Import config.
 ROOT_DIR="$(cd $(dirname "${BASH_SOURCE}")/../.. && pwd -P)"
-. "${ROOT_DIR}/aio/scripts/conf.sh"
+. "${ROOT_DIR}/hack/scripts/conf.sh"
 
 function start-ci-heapster {
   echo "\nRunning heapster in standalone mode"
@@ -36,6 +36,7 @@ function start-ci-heapster {
 }
 
 function start-kind {
+  echo "DOCKER NETWORK: ${KIND_EXPERIMENTAL_DOCKER_NETWORK}"
   ${KIND_BIN} create cluster --name="k8s-cluster-ci" --image="kindest/node:${K8S_VERSION}"
   ensure-kubeconfig
   if [ "${CI}" = true ] ; then

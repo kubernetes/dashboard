@@ -27,13 +27,6 @@ LOCAL_UID=$(id -u)
 LOCAL_GID=$(id -g)
 DOCKER_GID=$(getent group docker|cut -d ":" -f 3)
 
-# K8S_DASHBOARD_NPM_CMD will be passed into container and will be used
-# by run-npm-command.sh on container. Then the shell sciprt will run `npm`
-# command with K8S_DASHBOAD_NPM_CMD.
-# But if K8S_DASHBOARD_CMD is set, the command in K8S_DASHBOARD_CMD will be
-# executed instead of `npm ${K8S_DASHBOARD_NPM_CMD}`.
-K8S_DASHBOARD_NPM_CMD=${K8S_DASHBOARD_NPM_CMD:-$*}
-
 # kubeconfig for dashboard.
 # This will be mounted and certain npm command can modify it,
 # so this should not be set for original kubeconfig.
@@ -45,12 +38,10 @@ else
   # Set defult as kubeconfig made by `make start-cluster`.
   touch /tmp/kind.kubeconfig
   K8S_DASHBOARD_KUBECONFIG=/tmp/kind.kubeconfig
-  # Set docker network to "kind" that will be created by `kind`.
-  K8S_DASHBOARD_NETWORK="kind"
 fi
 
 # Create docker network to work with kind cluster
-K8S_DASHBOARD_NETWORK=${K8S_DASHBOARD_NETWORK:-"k8s-dashboard"}
+K8S_DASHBOARD_NETWORK=${K8S_DASHBOARD_NETWORK:-"kubernetes-dashboard"}
 docker network create ${K8S_DASHBOARD_NETWORK} \
   -d=bridge \
   -o com.docker.network.bridge.enable_ip_masquerade=true \
@@ -92,7 +83,6 @@ docker run \
   -v /var/run/docker.sock:/var/run/docker.sock \
   -v ${K8S_DASHBOARD_SRC}:${K8S_DASHBOARD_SRC_ON_CONTAINER} \
   -v ${K8S_DASHBOARD_KUBECONFIG}:/home/user/.kube/config \
-  -e K8S_DASHBOARD_NPM_CMD="${K8S_DASHBOARD_NPM_CMD}" \
   -e K8S_DASHBOARD_CMD="${K8S_DASHBOARD_CMD}" \
   -e K8S_OWN_CLUSTER=${K8S_OWN_CLUSTER} \
   -e K8S_DASHBOARD_BIND_ADDRESS=${K8S_DASHBOARD_BIND_ADDRESS} \
