@@ -21,6 +21,7 @@ import {DirectivesModule} from '../directives/module';
 import {ActionbarComponent} from './actionbar/component';
 import {ActionbarDetailActionsComponent} from './actionbar/detailactions/component';
 import {ActionbarDetailDeleteComponent} from './actionbar/detailactions/delete/component';
+import {ActionbarDetailSetImageComponent} from './actionbar/detailactions/setimage/component';
 import {ActionbarDetailEditComponent} from './actionbar/detailactions/edit/component';
 import {ActionbarDetailExecComponent} from './actionbar/detailactions/exec/component';
 import {ActionbarDetailLogsComponent} from './actionbar/detailactions/logs/component';
@@ -110,6 +111,7 @@ import {ZeroStateComponent} from './zerostate/component';
 const components = [
   ActionbarDetailActionsComponent,
   ActionbarDetailDeleteComponent,
+  ActionbarDetailSetImageComponent,
   ActionbarDetailEditComponent,
   ActionbarDetailScaleComponent,
   ActionbarDetailLogsComponent,

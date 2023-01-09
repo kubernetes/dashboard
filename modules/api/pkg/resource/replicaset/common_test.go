@@ -34,9 +34,11 @@ func TestToReplicaSet(t *testing.T) {
 			&apps.ReplicaSet{ObjectMeta: metaV1.ObjectMeta{Name: "replica-set"}},
 			&common.PodInfo{Running: 1, Warnings: []common.Event{}},
 			ReplicaSet{
-				ObjectMeta: api.ObjectMeta{Name: "replica-set"},
-				TypeMeta:   api.TypeMeta{Kind: api.ResourceKindReplicaSet, Scalable: true},
-				Pods:       common.PodInfo{Running: 1, Warnings: []common.Event{}},
+				ObjectMeta:             api.ObjectMeta{Name: "replica-set"},
+				TypeMeta:               api.TypeMeta{Kind: api.ResourceKindReplicaSet, Scalable: true},
+				Pods:                   common.PodInfo{Running: 1, Warnings: []common.Event{}},
+				ContainerImagesMap:     map[string]string{},
+				InitContainerImagesMap: map[string]string{},
 			},
 		},
 	}

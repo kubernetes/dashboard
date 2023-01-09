@@ -81,6 +81,9 @@ type TypeMeta struct {
 
 	// Restartable represents whether or not an object is restartable.
 	Restartable bool `json:"restartable,omitempty"`
+
+	// CanSetImage represents whether or not a container image can be set to the object.
+	CanSetImage bool `json:"canSetImage,omitempty"`
 }
 
 // ListMeta describes list of objects, i.e. holds information about pagination options set for the list.
@@ -108,6 +111,7 @@ func NewTypeMeta(kind ResourceKind) TypeMeta {
 		Kind:        kind,
 		Scalable:    kind.Scalable(),
 		Restartable: kind.Restartable(),
+		CanSetImage: kind.CanSetImage(),
 	}
 }
 
@@ -161,6 +165,27 @@ func (k ResourceKind) Scalable() bool {
 	}
 
 	for _, kind := range scalable {
+		if k == kind {
+			return true
+		}
+	}
+
+	return false
+}
+
+// CanSetImage returns whether or not a container image can be set to the object.
+func (k ResourceKind) CanSetImage() bool {
+	canSetImage := []ResourceKind{
+		ResourceKindDeployment,
+
+		// for now, it's only implemented on deployments
+		// ResourceKindDaemonSet,
+		// ResourceKindReplicaSet,
+		// ResourceKindReplicationController,
+		// ResourceKindPod,
+	}
+
+	for _, kind := range canSetImage {
 		if k == kind {
 			return true
 		}

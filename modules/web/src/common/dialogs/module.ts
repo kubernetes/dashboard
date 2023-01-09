@@ -23,6 +23,7 @@ import {DeleteResourceDialog} from './deleteresource/dialog';
 import {LogsDownloadDialog} from './download/dialog';
 import {EditResourceDialog} from './editresource/dialog';
 import {RestartResourceDialog} from './restartresource/dialog';
+import {SetImageDialog} from './setimage/dialog';
 import {ScaleResourceDialog} from './scaleresource/dialog';
 import {TriggerResourceDialog} from './triggerresource/dialog';
 import {PreviewDeploymentDialog} from './previewdeployment/dialog';
@@ -35,6 +36,7 @@ import {PreviewDeploymentDialog} from './previewdeployment/dialog';
     DeleteResourceDialog,
     LogsDownloadDialog,
     RestartResourceDialog,
+    SetImageDialog,
     ScaleResourceDialog,
     TriggerResourceDialog,
     ConfirmDialog,
@@ -46,6 +48,7 @@ import {PreviewDeploymentDialog} from './previewdeployment/dialog';
     DeleteResourceDialog,
     LogsDownloadDialog,
     RestartResourceDialog,
+    SetImageDialog,
     ScaleResourceDialog,
     TriggerResourceDialog,
     PreviewDeploymentDialog,

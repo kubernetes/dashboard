@@ -118,6 +118,7 @@ func TestGetDeploymentListFromChannels(t *testing.T) {
 						Kind:        api.ResourceKindDeployment,
 						Scalable:    true,
 						Restartable: true,
+						CanSetImage: true,
 					},
 					Pods: common.PodInfo{
 						Current:  7,

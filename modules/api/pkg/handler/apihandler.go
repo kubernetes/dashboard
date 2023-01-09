@@ -72,6 +72,7 @@ import (
 	"k8s.io/dashboard/api/pkg/resource/statefulset"
 	"k8s.io/dashboard/api/pkg/resource/storageclass"
 	"k8s.io/dashboard/api/pkg/scaling"
+	"k8s.io/dashboard/api/pkg/setimage"
 	"k8s.io/dashboard/api/pkg/settings"
 	settingsApi "k8s.io/dashboard/api/pkg/settings/api"
 	"k8s.io/dashboard/api/pkg/validation"
@@ -262,6 +263,10 @@ func CreateHTTPAPIHandler(iManager integration.IntegrationManager, cManager clie
 			To(apiHandler.handleGetDeploymentEvents).
 			Writes(common.EventList{}))
 	apiV1Ws.Route(
+		apiV1Ws.GET("/deployment/{namespace}/{deployment}/allreplicasets").
+			To(apiHandler.handleGetDeploymentAllReplicaSets).
+			Writes(replicaset.ReplicaSetList{}))
+	apiV1Ws.Route(
 		apiV1Ws.GET("/deployment/{namespace}/{deployment}/oldreplicaset").
 			To(apiHandler.handleGetDeploymentOldReplicaSets).
 			Writes(replicaset.ReplicaSetList{}))
@@ -286,6 +291,11 @@ func CreateHTTPAPIHandler(iManager integration.IntegrationManager, cManager clie
 		apiV1Ws.PUT("/{kind}/{namespace}/{deployment}/resume").
 			To(apiHandler.handleDeploymentResume).
 			Writes(deployment.DeploymentDetail{}))
+
+	apiV1Ws.Route(
+		apiV1Ws.PUT("/setimage/deployment/{namespace}/{name}").
+			To(apiHandler.handleDeploymentSetImage).
+			Writes(setimage.SetImageData{}))
 
 	apiV1Ws.Route(
 		apiV1Ws.PUT("/scale/{kind}/{namespace}/{name}/").
@@ -1264,6 +1274,32 @@ func (apiHandler *APIHandler) handleDeploy(request *restful.Request, response *r
 	response.WriteHeaderAndEntity(http.StatusCreated, appDeploymentSpec)
 }
 
+func (apiHandler *APIHandler) handleDeploymentSetImage(request *restful.Request, response *restful.Response) {
+	k8sClient, err := apiHandler.cManager.Client(request)
+	if err != nil {
+		errors.HandleInternalError(response, err)
+		return
+	}
+
+	namespace := request.PathParameter("namespace")
+	kind := "deployment" // hardcoded, for now. Soon it will be request.PathParameter("kind")
+	name := request.PathParameter("name")
+
+	setImageData := new(setimage.SetImageData)
+
+	if err := request.ReadEntity(setImageData); err != nil {
+		errors.HandleInternalError(response, err)
+		return
+	}
+
+	patchedDeployment, err := setimage.SetImage(k8sClient, kind, namespace, name, setImageData)
+	if err != nil {
+		errors.HandleInternalError(response, err)
+		return
+	}
+	response.WriteHeaderAndEntity(http.StatusOK, patchedDeployment)
+}
+
 func (apiHandler *APIHandler) handleScaleResource(request *restful.Request, response *restful.Response) {
 	cfg, err := apiHandler.cManager.Config(request)
 	if err != nil {
@@ -1666,6 +1702,25 @@ func (apiHandler *APIHandler) handleGetDeploymentEvents(request *restful.Request
 	name := request.PathParameter("deployment")
 	dataSelect := parser.ParseDataSelectPathParameter(request)
 	result, err := event.GetResourceEvents(k8sClient, dataSelect, namespace, name)
+	if err != nil {
+		errors.HandleInternalError(response, err)
+		return
+	}
+	response.WriteHeaderAndEntity(http.StatusOK, result)
+}
+
+func (apiHandler *APIHandler) handleGetDeploymentAllReplicaSets(request *restful.Request, response *restful.Response) {
+	k8sClient, err := apiHandler.cManager.Client(request)
+	if err != nil {
+		errors.HandleInternalError(response, err)
+		return
+	}
+
+	namespace := request.PathParameter("namespace")
+	name := request.PathParameter("deployment")
+	dataSelect := parser.ParseDataSelectPathParameter(request)
+	dataSelect.MetricQuery = dataselect.StandardMetrics
+	result, err := deployment.GetDeploymentAllReplicaSets(k8sClient, dataSelect, namespace, name)
 	if err != nil {
 		errors.HandleInternalError(response, err)
 		return

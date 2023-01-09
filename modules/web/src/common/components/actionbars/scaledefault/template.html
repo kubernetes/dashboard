@@ -26,6 +26,11 @@ limitations under the License.
                                [typeMeta]="resourceMeta?.typeMeta"
                                [displayName]="resourceMeta?.displayName"></kd-actionbar-detail-restart>
 
+  <kd-actionbar-detail-setimage *ngIf="isInitialized && canSetImage()"
+                                [objectMeta]="resourceMeta?.objectMeta"
+                                [typeMeta]="resourceMeta?.typeMeta"
+                                [displayName]="resourceMeta?.displayName"></kd-actionbar-detail-setimage>
+
   <kd-actionbar-detail-actions *ngIf="isInitialized"
                                [objectMeta]="resourceMeta.objectMeta"
                                [typeMeta]="resourceMeta.typeMeta"

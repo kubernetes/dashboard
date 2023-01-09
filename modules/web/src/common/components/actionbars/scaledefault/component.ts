@@ -45,6 +45,10 @@ export class ScaleDefaultActionbar implements OnInit, OnDestroy {
     this.unsubscribe_.complete();
   }
 
+  canSetImage(): boolean {
+    return this.resourceMeta.typeMeta.canSetImage;
+  }
+
   scalable(): boolean {
     return this.resourceMeta.typeMeta.scalable;
   }

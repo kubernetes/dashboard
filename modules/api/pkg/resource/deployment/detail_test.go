@@ -115,6 +115,7 @@ func TestGetDeploymentDetail(t *testing.T) {
 						Kind:        api.ResourceKindDeployment,
 						Scalable:    true,
 						Restartable: true,
+						CanSetImage: true,
 					},
 					Pods: common.PodInfo{
 						Desired:  &desired,

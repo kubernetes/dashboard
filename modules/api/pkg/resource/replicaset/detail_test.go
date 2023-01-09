@@ -59,6 +59,8 @@ func TestGetReplicaSetDetail(t *testing.T) {
 						Warnings: []common.Event{},
 						Desired:  &replicas,
 					},
+					ContainerImagesMap:     map[string]string{},
+					InitContainerImagesMap: map[string]string{},
 				},
 				Selector: &metaV1.LabelSelector{
 					MatchLabels: map[string]string{"app": "test"},
@@ -118,7 +120,9 @@ func TestToReplicaSetDetail(t *testing.T) {
 			horizontalpodautoscaler.HorizontalPodAutoscalerList{},
 			ReplicaSetDetail{
 				ReplicaSet: ReplicaSet{
-					TypeMeta: api.TypeMeta{Kind: api.ResourceKindReplicaSet, Scalable: true},
+					TypeMeta:               api.TypeMeta{Kind: api.ResourceKindReplicaSet, Scalable: true},
+					ContainerImagesMap:     map[string]string{},
+					InitContainerImagesMap: map[string]string{},
 				},
 				Errors: []error{},
 			},
@@ -135,8 +139,10 @@ func TestToReplicaSetDetail(t *testing.T) {
 			},
 			ReplicaSetDetail{
 				ReplicaSet: ReplicaSet{
-					ObjectMeta: api.ObjectMeta{Name: "replica-set"},
-					TypeMeta:   api.TypeMeta{Kind: api.ResourceKindReplicaSet, Scalable: true},
+					ObjectMeta:             api.ObjectMeta{Name: "replica-set"},
+					TypeMeta:               api.TypeMeta{Kind: api.ResourceKindReplicaSet, Scalable: true},
+					ContainerImagesMap:     map[string]string{},
+					InitContainerImagesMap: map[string]string{},
 				},
 				HorizontalPodAutoscalerList: horizontalpodautoscaler.HorizontalPodAutoscalerList{
 					HorizontalPodAutoscalers: []horizontalpodautoscaler.HorizontalPodAutoscaler{{

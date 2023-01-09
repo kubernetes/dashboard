@@ -15,13 +15,14 @@
 import {HttpClient, HttpErrorResponse, HttpHeaders} from '@angular/common/http';
 import {EventEmitter, Injectable} from '@angular/core';
 import {MatDialog, MatDialogConfig} from '@angular/material/dialog';
-import {ObjectMeta, TypeMeta} from '@api/root.api';
+import {ObjectMeta, TypeMeta, SetImageData} from '@api/root.api';
 import {filter, switchMap} from 'rxjs/operators';
 
 import {AlertDialog, AlertDialogConfig} from '../../dialogs/alert/dialog';
 import {DeleteResourceDialog} from '../../dialogs/deleteresource/dialog';
 import {EditResourceDialog} from '../../dialogs/editresource/dialog';
 import {RestartResourceDialog} from '../../dialogs/restartresource/dialog';
+import {SetImageDialog} from '../../dialogs/setimage/dialog';
 import {ScaleResourceDialog} from '../../dialogs/scaleresource/dialog';
 import {TriggerResourceDialog} from '../../dialogs/triggerresource/dialog';
 import {RawResource} from '../../resources/rawresource';
@@ -81,6 +82,26 @@ export class VerberService {
         })
       )
       .subscribe(_ => this.onTrigger.emit(true), this.handleErrorResponse_.bind(this));
+  }
+
+  showSetImageDialog(displayName: string, typeMeta: TypeMeta, objectMeta: ObjectMeta): void {
+    const dialogConfig = this.getDialogConfig_(displayName, typeMeta, objectMeta);
+    this.dialog_
+      .open(SetImageDialog, dialogConfig)
+      .afterClosed()
+      .pipe(filter(result => result))
+      .pipe(
+        switchMap(result => {
+          const deploymentData = result as SetImageData;
+
+          const url = `api/v1/setimage/${typeMeta.kind}${objectMeta.namespace ? `/${objectMeta.namespace}` : ''}/${
+            objectMeta.name
+          }`;
+
+          return this.http_.put(url, deploymentData);
+        })
+      )
+      .subscribe(_ => this.onScale.emit(true), this.handleErrorResponse_.bind(this));
   }
 
   showScaleDialog(displayName: string, typeMeta: TypeMeta, objectMeta: ObjectMeta): void {

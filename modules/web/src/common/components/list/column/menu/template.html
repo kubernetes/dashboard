@@ -34,6 +34,14 @@ limitations under the License.
           (click)="onScale()"
           i18n>Scale</button>
   <button mat-menu-item
+          *ngIf="isRestartEnabled()"
+          (click)="onRestart()"
+          i18n>Restart</button>
+  <button mat-menu-item
+          *ngIf="canSetImage()"
+          (click)="onSetImage()"
+          i18n>Set Image</button>
+  <button mat-menu-item
           *ngIf="isPinEnabled()"
           (click)="isPinned() ? onUnpin() : onPin()">
     <ng-container [ngSwitch]="isPinned()">
@@ -47,10 +55,6 @@ limitations under the License.
           id="edit"
           (click)="onEdit()"
           i18n>Edit</button>
-  <button mat-menu-item
-          *ngIf="isRestartEnabled()"
-          (click)="onRestart()"
-          i18n>Restart</button>
   <button mat-menu-item
           id="delete"
           (click)="onDelete()"

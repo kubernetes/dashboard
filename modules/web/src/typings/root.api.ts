@@ -17,6 +17,7 @@ import {PersistentVolumeSource} from '@api/volume.api';
 
 export interface TypeMeta {
   kind: string;
+  canSetImage?: boolean;
   scalable?: boolean;
   restartable?: boolean;
 }
@@ -263,6 +264,8 @@ export interface Deployment extends Resource {
   pods: PodInfo;
   containerImages: string[];
   initContainerImages: string[];
+  containerNames: string[];
+  initContainerNames: string[];
 }
 
 export interface EndpointResourceList extends ResourceList {
@@ -378,6 +381,8 @@ export interface ReplicaSet extends Resource {
   podInfo: PodInfo;
   containerImages: string[];
   initContainerImages: string[];
+  containerImagesMap: StringMap;
+  initContainerImagesMap: StringMap;
 }
 
 export interface ReplicationController extends Resource {
@@ -542,6 +547,11 @@ export interface IngressSpecTLS {
 export interface IngressBackend {
   service?: IngressBackendService;
   resource?: ResourceRef;
+}
+
+export interface SetImageData {
+  name: string;
+  image: string;
 }
 
 export interface IngressBackendService {

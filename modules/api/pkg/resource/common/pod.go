@@ -76,6 +76,15 @@ func GetContainerImages(podTemplate *v1.PodSpec) []string {
 	return containerImages
 }
 
+// GetContainerImagesMap returns a map with the container name as a key, the image as the value.
+func GetContainerImagesMap(podTemplate *v1.PodSpec) map[string]string {
+	containerImageMap := map[string]string{}
+	for _, container := range podTemplate.Containers {
+		containerImageMap[container.Name] = container.Image
+	}
+	return containerImageMap
+}
+
 // GetInitContainerImages returns init container image strings from the given pod spec.
 func GetInitContainerImages(podTemplate *v1.PodSpec) []string {
 	var initContainerImages []string
@@ -84,6 +93,16 @@ func GetInitContainerImages(podTemplate *v1.PodSpec) []string {
 	}
 	return initContainerImages
 }
+
+// GetInitContainerImages returns init container image strings from the given pod spec.
+func GetInitContainerImagesMap(podTemplate *v1.PodSpec) map[string]string {
+	initContainerImageMap := map[string]string{}
+	for _, initContainer := range podTemplate.InitContainers {
+		initContainerImageMap[initContainer.Name] = initContainer.Image
+	}
+	return initContainerImageMap
+}
+
 
 // GetContainerNames returns the container image name without the version number from the given pod spec.
 func GetContainerNames(podTemplate *v1.PodSpec) []string {

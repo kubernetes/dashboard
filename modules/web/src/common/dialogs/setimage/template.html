@@ -1,0 +1,98 @@
+<!--
+Copyright 2017 The Kubernetes Authors.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<h2 mat-dialog-title
+    i18n>Set a new container image</h2>
+<mat-dialog-content class="kd-dialog-text">
+  <p i18n>A container image will be replaced on {{ data.displayName }} {{ data.objectMeta.name }}.</p>
+
+  <mat-form-field style="width: 200px;">
+    <mat-select [(ngModel)]="result.name"
+                id="selectContainerInput"
+                name="selectContainerInput"
+                i18n-placeholder
+                placeholder="Select container..."
+                class="kd-namespace-select-input"
+                required
+                autocomplete="off"
+                matInput>
+      <mat-option *ngFor="let option of containerNameList"
+                  [value]="option">{{option}}</mat-option>
+    </mat-select>
+  </mat-form-field>
+  <mat-form-field style="margin-left: 30px; width: 600px;">
+    <input [(ngModel)]="result.image"
+           id="new_container"
+           name="new_container"
+           i18n-placeholder
+           placeholder="container image"
+           required
+           matInput />
+  </mat-form-field>
+  <div class="kd-equivalent-block kd-muted kd-bg-card-dark"
+       fxLayoutAlign=" center">
+    <mat-icon>info</mat-icon>
+    <div>
+      <span i18n>This action is equivalent to: </span>
+      <code>
+        <ng-container>kubectl set image </ng-container>
+        <ng-container *ngIf="data.objectMeta.namespace">-n {{ data.objectMeta.namespace }} </ng-container>
+        <ng-container>{{ data.typeMeta.kind }}/{{ data.objectMeta.name }} {{ result.name }}={{ result.image }}</ng-container>
+      </code>
+    </div>
+  </div>
+
+
+  <div content
+       *ngIf="isInitialized">
+    <mat-table [dataSource]="getLastDeploymentsDataSource()"
+               [trackBy]="trackLastDeploymentsTimestamp">
+      <ng-container [matColumnDef]="getLastDeploymentsColumns()[0]">
+        <mat-header-cell *matHeaderCellDef
+                         i18n>Previous Deployment Date</mat-header-cell>
+        <mat-cell *matCellDef="let deploymentData">
+          <ng-container *ngIf="deploymentData.timestamp">{{ deploymentData.timestamp }}</ng-container>
+          <ng-container *ngIf="!deploymentData.timestamp">-</ng-container>
+        </mat-cell>
+      </ng-container>
+
+      <ng-container [matColumnDef]="getLastDeploymentsColumns()[1]">
+        <mat-header-cell *matHeaderCellDef
+                         i18n>Previous Image Name (click to use)</mat-header-cell>
+        <mat-cell *matCellDef="let deploymentData">
+          <ng-container *ngIf="deploymentData.container_image">
+            <button (click)="setContainerImage(deploymentData.container_image)">{{ deploymentData.container_image }}</button>
+          </ng-container>
+          <ng-container *ngIf="!deploymentData.container_image">-</ng-container>
+        </mat-cell>
+      </ng-container>
+
+      <mat-header-row *matHeaderRowDef="getLastDeploymentsColumns()"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: getLastDeploymentsColumns()"></mat-row>
+    </mat-table>
+  </div>
+
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-button
+          color="primary"
+          [mat-dialog-close]="result"
+          i18n>Set Image</button>
+  <button mat-button
+          color="primary"
+          [mat-dialog-close]="no_result"
+          i18n>Cancel</button>
+</mat-dialog-actions>

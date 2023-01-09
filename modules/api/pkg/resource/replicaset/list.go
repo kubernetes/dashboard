@@ -52,20 +52,24 @@ type ReplicaSet struct {
 	Pods common.PodInfo `json:"podInfo"`
 
 	// Container images of the Replica Set.
-	ContainerImages []string `json:"containerImages"`
+	ContainerImages    []string          `json:"containerImages"`
+	ContainerImagesMap map[string]string `json:"containerImagesMap"`
 
 	// Init Container images of the Replica Set.
-	InitContainerImages []string `json:"initContainerImages"`
+	InitContainerImages    []string          `json:"initContainerImages"`
+	InitContainerImagesMap map[string]string `json:"initContainerImagesMap"`
 }
 
 // ToReplicaSet converts replica set api object to replica set model object.
 func ToReplicaSet(replicaSet *apps.ReplicaSet, podInfo *common.PodInfo) ReplicaSet {
 	return ReplicaSet{
-		ObjectMeta:          api.NewObjectMeta(replicaSet.ObjectMeta),
-		TypeMeta:            api.NewTypeMeta(api.ResourceKindReplicaSet),
-		ContainerImages:     common.GetContainerImages(&replicaSet.Spec.Template.Spec),
-		InitContainerImages: common.GetInitContainerImages(&replicaSet.Spec.Template.Spec),
-		Pods:                *podInfo,
+		ObjectMeta:             api.NewObjectMeta(replicaSet.ObjectMeta),
+		TypeMeta:               api.NewTypeMeta(api.ResourceKindReplicaSet),
+		ContainerImages:        common.GetContainerImages(&replicaSet.Spec.Template.Spec),
+		InitContainerImages:    common.GetInitContainerImages(&replicaSet.Spec.Template.Spec),
+		ContainerImagesMap:     common.GetContainerImagesMap(&replicaSet.Spec.Template.Spec),
+		InitContainerImagesMap: common.GetInitContainerImagesMap(&replicaSet.Spec.Template.Spec),
+		Pods:                   *podInfo,
 	}
 }
 

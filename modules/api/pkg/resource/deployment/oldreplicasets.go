@@ -31,6 +31,19 @@ import (
 func GetDeploymentOldReplicaSets(client client.Interface, dsQuery *dataselect.DataSelectQuery,
 	namespace string, deploymentName string) (*replicaset.ReplicaSetList, error) {
 
+	return getDeploymentReplicaSetsHelper(client, dsQuery, namespace, deploymentName, true)
+}
+
+// GetDeploymentAllReplicaSets returns all replica sets targeting Deployment with given name
+func GetDeploymentAllReplicaSets(client client.Interface, dsQuery *dataselect.DataSelectQuery,
+	namespace string, deploymentName string) (*replicaset.ReplicaSetList, error) {
+
+	return getDeploymentReplicaSetsHelper(client, dsQuery, namespace, deploymentName, false)
+}
+
+func getDeploymentReplicaSetsHelper(client client.Interface, dsQuery *dataselect.DataSelectQuery,
+	namespace string, deploymentName string, onlyOldReplicaSets bool) (*replicaset.ReplicaSetList, error) {
+
 	oldReplicaSetList := &replicaset.ReplicaSetList{
 		ReplicaSets: make([]replicaset.ReplicaSet, 0),
 		ListMeta:    api.ListMeta{TotalItems: 0},
@@ -77,6 +90,17 @@ func GetDeploymentOldReplicaSets(client client.Interface, dsQuery *dataselect.Da
 	for i := range rawRs.Items {
 		rawRepSets = append(rawRepSets, &rawRs.Items[i])
 	}
+
+	if !onlyOldReplicaSets {
+		var allReplicaSets []apps.ReplicaSet
+		for _, rs := range rawRepSets {
+			allReplicaSets = append(allReplicaSets, *rs)
+		}
+		allReplicaSetList := replicaset.ToReplicaSetList(allReplicaSets, rawPods.Items, rawEvents.Items,
+			nonCriticalErrors, dsQuery, nil)
+		return allReplicaSetList, nil
+	}
+
 	oldRs, _, err := FindOldReplicaSets(deployment, rawRepSets)
 	if err != nil {
 		return oldReplicaSetList, err

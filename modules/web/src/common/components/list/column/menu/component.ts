@@ -91,6 +91,14 @@ export class MenuComponent implements ActionColumn {
     this.verber_.showTriggerDialog(this.typeMeta.kind, this.typeMeta, this.objectMeta);
   }
 
+  canSetImage(): boolean {
+    return this.typeMeta.canSetImage;
+  }
+
+  onSetImage(): void {
+    this.verber_.showSetImageDialog(this.typeMeta.kind, this.typeMeta, this.objectMeta);
+  }
+
   isScaleEnabled(): boolean {
     return this.typeMeta.scalable;
   }
