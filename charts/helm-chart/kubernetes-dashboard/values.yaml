@@ -355,3 +355,8 @@ serviceMonitor:
   labels: {}
   ## Here annotations can be added to the serviceMonitor
   annotations: {}
+
+## Optional containers, i.e. for auth addons.
+optionalContainers:
+  enabled: false
+  containers: []
