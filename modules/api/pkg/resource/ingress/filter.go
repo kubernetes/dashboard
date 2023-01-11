@@ -36,6 +36,9 @@ func ingressMatchesServiceName(ingress networkingv1.Ingress, serviceName string)
 	}
 
 	for _, rule := range spec.Rules {
+		if rule.IngressRuleValue == nil {
+			continue
+		}
 		if rule.IngressRuleValue.HTTP == nil {
 			continue
 		}
