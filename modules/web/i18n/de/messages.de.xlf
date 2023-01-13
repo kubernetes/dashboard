@@ -102,6 +102,10 @@
         <source>Every Service Account has a Secret with valid Bearer Token that can be used to log in to Dashboard. To find out more about how to configure and use Bearer Tokens, please refer to the <x id="START_LINK" ctype="x-a" equiv-text="&quot;\uFFFD#2\uFFFD&quot;"/>Authentication<x id="CLOSE_LINK" ctype="x-a" equiv-text="&quot;\uFFFD/#2\uFFFD&quot;"/> section.</source>
         <target state="new">Jeder Service Account verfügt über ein Secret mit einem gültigen Bearer Token, welches verwendet werden kann, um sich am Dashboard anzumelden. Um mehr über die Konfiguration und Nutzung von Bearer Tokens zu erfahren, konsultieren Sie den Abschnitt <x id="START_LINK" ctype="x-a" equiv-text="&lt;a&gt;"/>Authentifizierung<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/>.</target>
       </trans-unit>
+      <trans-unit id="1274528669625762639" datatype="html">
+        <source>Set a new container image</source>
+        <target state="new">Set a new container image</target>
+      </trans-unit>
       <trans-unit id="1292699022746959928" datatype="html">
         <source>Non-resource URL</source>
         <target>Nicht-Ressource URL</target>
@@ -986,6 +990,10 @@
         <source>Last Seen</source>
         <target>Zuletzt gesehen</target>
       </trans-unit>
+      <trans-unit id="3902185219890107813" datatype="html">
+        <source>Select container...</source>
+        <target state="new">Select container...</target>
+      </trans-unit>
       <trans-unit id="3910914001392684259" datatype="html">
         <source>Port must be an integer.</source>
         <target state="new">Post muss ein ganzzahliger Wert sein.</target>
@@ -1149,6 +1157,10 @@
       <trans-unit id="4567232011016322094" datatype="html">
         <source>Access modes</source>
         <target>Zugriffsarten</target>
+      </trans-unit>
+      <trans-unit id="4572206383883804416" datatype="html">
+        <source>Set Image</source>
+        <target state="new">Set Image</target>
       </trans-unit>
       <trans-unit id="4575431999029130927" datatype="html">
         <source>Default request</source>
@@ -1402,6 +1414,10 @@
         <source>Egress Rules</source>
         <target>Egress-Regeln</target>
       </trans-unit>
+      <trans-unit id="5643209019947694032" datatype="html">
+        <source>container image</source>
+        <target state="new">container image</target>
+      </trans-unit>
       <trans-unit id="5643561794785412000" datatype="html">
         <source>Unavailable</source>
         <target>Nicht verfügbar</target>
@@ -1508,6 +1524,10 @@
         <source>Exit Code</source>
         <target>Exit Code</target>
       </trans-unit>
+      <trans-unit id="5966254721262198145" datatype="html">
+        <source>Previous Image Name (click to use)</source>
+        <target state="new">Previous Image Name (click to use)</target>
+      </trans-unit>
       <trans-unit id="5967356460483211809" datatype="html">
         <source>Supplemental Groups</source>
         <target>Supplemental Groups</target>
@@ -1603,6 +1623,10 @@
       <trans-unit id="6393773098525856112" datatype="html">
         <source>TCP Socket</source>
         <target>TCP Socket</target>
+      </trans-unit>
+      <trans-unit id="6406804063343897494" datatype="html">
+        <source>A container image will be replaced on <x id="INTERPOLATION" equiv-text="&quot;\uFFFD0\uFFFD&quot;"/> <x id="INTERPOLATION_1" equiv-text="&quot;\uFFFD1\uFFFD&quot;"/>.</source>
+        <target state="new">A container image will be replaced on <x id="INTERPOLATION" equiv-text="&quot;\uFFFD0\uFFFD&quot;"/> <x id="INTERPOLATION_1" equiv-text="&quot;\uFFFD1\uFFFD&quot;"/>.</target>
       </trans-unit>
       <trans-unit id="6407858727320871864" datatype="html">
         <source>Persistent Volumes</source>
@@ -1888,6 +1912,10 @@
         <source>Init Containers</source>
         <target>Init-Container</target>
       </trans-unit>
+      <trans-unit id="7286769344436324609" datatype="html">
+        <source>Set Container Image</source>
+        <target state="new">Set Container Image</target>
+      </trans-unit>
       <trans-unit id="7293190222859783293" datatype="html">
         <source>Plugins</source>
         <target state="new">Plugins</target>
@@ -1967,6 +1995,10 @@
       <trans-unit id="7571663901157580742" datatype="html">
         <source>NAMESPACES</source>
         <target>NAMESPACES</target>
+      </trans-unit>
+      <trans-unit id="7574968363077451152" datatype="html">
+        <source>Previous Deployment Date</source>
+        <target state="new">Previous Deployment Date</target>
       </trans-unit>
       <trans-unit id="7585826646011739428" datatype="html">
         <source>Edit</source>
