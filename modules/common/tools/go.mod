@@ -4,7 +4,7 @@ go 1.19
 
 require (
 	github.com/apache/skywalking-eyes v0.4.0
-	github.com/cosmtrek/air v1.40.4
+	github.com/cosmtrek/air v1.41.0
 	github.com/golangci/golangci-lint v1.50.1
 	k8s.io/code-generator v0.25.4
 )
