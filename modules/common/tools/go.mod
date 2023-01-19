@@ -6,7 +6,7 @@ require (
 	github.com/apache/skywalking-eyes v0.4.0
 	github.com/cosmtrek/air v1.41.0
 	github.com/golangci/golangci-lint v1.50.1
-	k8s.io/code-generator v0.25.4
+	k8s.io/code-generator v0.26.1
 )
 
 require (
@@ -193,11 +193,11 @@ require (
 	golang.org/x/exp v0.0.0-20221114191408-850992195362 // indirect
 	golang.org/x/exp/typeparams v0.0.0-20221114191408-850992195362 // indirect
 	golang.org/x/mod v0.7.0 // indirect
-	golang.org/x/net v0.2.0 // indirect
+	golang.org/x/net v0.3.1-0.20221206200815-1e63c2f08a10 // indirect
 	golang.org/x/oauth2 v0.2.0 // indirect
 	golang.org/x/sync v0.1.0 // indirect
-	golang.org/x/sys v0.2.0 // indirect
-	golang.org/x/text v0.4.0 // indirect
+	golang.org/x/sys v0.3.0 // indirect
+	golang.org/x/text v0.5.0 // indirect
 	golang.org/x/tools v0.3.0 // indirect
 	google.golang.org/appengine v1.6.7 // indirect
 	google.golang.org/protobuf v1.28.1 // indirect
