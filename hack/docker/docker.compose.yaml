@@ -67,4 +67,8 @@ services:
 
 networks:
   default:
+<<<<<<< HEAD
     name: kubernetes-dashboard
+=======
+    name: kind
+>>>>>>> 93b5c7e1f (Use `kind` docker network)
