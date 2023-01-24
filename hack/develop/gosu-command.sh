@@ -42,6 +42,6 @@ if [[ -n "${K8S_DASHBOARD_CMD}" ]] ; then
   echo "Run '${K8S_DASHBOARD_CMD}'"
   ${GOSU} ${K8S_DASHBOARD_CMD}
 else
-  # Run dashboard with kis cluster
+  # Run dashboard with k8s cluster
   ${GOSU} hack/develop/run-command.sh
 fi

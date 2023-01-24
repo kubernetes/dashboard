@@ -35,9 +35,11 @@ if [[ -n "${K8S_DASHBOARD_KUBECONFIG}" ]] ; then
   K8S_OWN_CLUSTER=true
 else
   # Use the kind cluster that will be created later by the script.
-  # Set defult as kubeconfig made by `make start-cluster`.
+  # Set defult as kubeconfig made by `hack/scripts/start-cluster.sh`.
   touch /tmp/kind.kubeconfig
   K8S_DASHBOARD_KUBECONFIG=/tmp/kind.kubeconfig
+  # Set docker network to "kind" that will be created by `kind`.
+  K8S_DASHBOARD_NETWORK="kind"
 fi
 
 # Create docker network to work with kind cluster

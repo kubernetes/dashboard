@@ -22,16 +22,18 @@ if [[ "${K8S_OWN_CLUSTER}" != true ]] ; then
   hack/scripts/stop-cluster.sh
   # Start cluster with docker network name which `kind` container will join.
   echo "Start cluster"
-  KIND_EXPERIMENTAL_DOCKER_NETWORK=${K8S_DASHBOARD_NETWORK} hack/scripts/start-cluster.sh
+  hack/scripts/start-cluster.sh
   # Copy kubeconfig from /home/user/.kube/config
   cat /home/user/.kube/config > /tmp/kind.kubeconfig
   # Edit kubeconfig for kind
   KIND_CONTAINER_NAME="k8s-cluster-ci-control-plane"
   KIND_ADDR=$(sudo docker inspect -f='{{.NetworkSettings.Networks.kind.IPAddress}}' ${KIND_CONTAINER_NAME})
-  sed -e "s/127.0.0.1:[0-9]\+/${KIND_ADDR}:6443/g" /tmp/kind.kubeconfig > /home/user/.kube/config
+  sed -e "s/0.0.0.0:[0-9]\+/${KIND_ADDR}:6443/g" /tmp/kind.kubeconfig > /home/user/.kube/config
+  # Copy kubeconfig from /home/user/.kube/config again.
+  cat /home/user/.kube/config > /tmp/kind.kubeconfig
   # Deploy recommended.yaml to deploy dashboard-metrics-scraper sidecar
   echo "Deploy dashboard-metrics-scraper into kind cluster"
-  kubectl apply -f hack/deploy/recommended.yaml
+  kubectl apply -f charts/recommended.yaml
   # Kill and run `kubectl proxy`
   KUBECTL_PID=$(ps -A|grep 'kubectl'|tr -s ' '|cut -d ' ' -f 2)
   echo "Kill kubectl ${KUBECTL_PID}"

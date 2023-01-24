@@ -36,8 +36,7 @@ function start-ci-heapster {
 }
 
 function start-kind {
-  echo "DOCKER NETWORK: ${KIND_EXPERIMENTAL_DOCKER_NETWORK}"
-  ${KIND_BIN} create cluster --name="k8s-cluster-ci" --image="kindest/node:${K8S_VERSION}"
+  ${KIND_BIN} create cluster --name="k8s-cluster-ci" --image="kindest/node:${K8S_VERSION}" --config="${ROOT_DIR}/hack/scripts/kind-config"
   ensure-kubeconfig
   if [ "${CI}" = true ] ; then
     start-ci-heapster
