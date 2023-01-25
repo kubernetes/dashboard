@@ -184,6 +184,6 @@ export class AuthService {
    * protocol is HTTPS, false otherwise.
    */
   isLoginEnabled(): boolean {
-    return this.isCurrentDomainSecure_() || this.isCurrentProtocolSecure_();
+    return true;
   }
 }
