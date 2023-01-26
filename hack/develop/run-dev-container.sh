@@ -38,12 +38,10 @@ else
   # Set defult as kubeconfig made by `hack/scripts/start-cluster.sh`.
   touch /tmp/kind.kubeconfig
   K8S_DASHBOARD_KUBECONFIG=/tmp/kind.kubeconfig
-  # Set docker network to "kind" that will be created by `kind`.
-  K8S_DASHBOARD_NETWORK="kind"
 fi
 
 # Create docker network to work with kind cluster
-K8S_DASHBOARD_NETWORK=${K8S_DASHBOARD_NETWORK:-"kubernetes-dashboard"}
+K8S_DASHBOARD_NETWORK="kubernetes-dashboard"
 docker network create ${K8S_DASHBOARD_NETWORK} \
   -d=bridge \
   -o com.docker.network.bridge.enable_ip_masquerade=true \
@@ -91,6 +89,7 @@ docker run \
   -e K8S_DASHBOARD_PORT=${K8S_DASHBOARD_PORT} \
   -e K8S_DASHBOARD_DEBUG=${K8S_DASHBOARD_DEBUG} \
   -e KUBECONFIG=${K8S_DASHBOARD_KUBECONFIG} \
+  -e KIND_EXPERIMENTAL_DOCKER_NETWORK=${K8S_DASHBOARD_NETWORK} \
   -e SIDECAR_HOST=${K8S_DASHBOARD_SIDECAR_HOST} \
   -e LOCAL_UID="${LOCAL_UID}" \
   -e LOCAL_GID="${LOCAL_GID}" \

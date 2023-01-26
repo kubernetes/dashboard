@@ -67,4 +67,4 @@ services:
 
 networks:
   default:
-    name: kind
+    name: kubernetes-dashboard
