@@ -18,7 +18,7 @@ import (
 	"fmt"
 	"sort"
 
-	auth "k8s.io/api/authorization/v1beta1"
+	auth "k8s.io/api/authorization/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/client-go/kubernetes"
 )
