@@ -194,7 +194,6 @@ const (
 	ClientTypeDefault             = "restclient"
 	ClientTypeAppsClient          = "appsclient"
 	ClientTypeBatchClient         = "batchclient"
-	ClientTypeBetaBatchClient     = "betabatchclient"
 	ClientTypeAutoscalingClient   = "autoscalingclient"
 	ClientTypeStorageClient       = "storageclient"
 	ClientTypeRbacClient          = "rbacclient"
@@ -226,7 +225,7 @@ var KindToAPIMapping = map[string]APIMapping{
 	ResourceKindIngress:                  {"ingresses", ClientTypeNetworkingClient, true},
 	ResourceKindIngressClass:             {"ingressclasses", ClientTypeNetworkingClient, false},
 	ResourceKindJob:                      {"jobs", ClientTypeBatchClient, true},
-	ResourceKindCronJob:                  {"cronjobs", ClientTypeBetaBatchClient, true},
+	ResourceKindCronJob:                  {"cronjobs", ClientTypeBatchClient, true},
 	ResourceKindLimitRange:               {"limitrange", ClientTypeDefault, true},
 	ResourceKindNamespace:                {"namespaces", ClientTypeDefault, false},
 	ResourceKindNode:                     {"nodes", ClientTypeDefault, false},
