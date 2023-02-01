@@ -18,7 +18,7 @@ import (
 	"fmt"
 	"sort"
 
-	auth "k8s.io/api/authorization/v1beta1"
+	auth "k8s.io/api/authorization/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/client-go/kubernetes"
 )
@@ -30,7 +30,7 @@ type RbacStatus struct {
 }
 
 // ValidateRbacStatus validates if RBAC is enabled in the cluster.
-// Supported version of RBAC api is: 'rbac.authorization.k8s.io/v1beta1'
+// Supported version of RBAC api is: 'rbac.authorization.k8s.io/v1'
 func ValidateRbacStatus(client kubernetes.Interface) (*RbacStatus, error) {
 	groupList, err := client.Discovery().ServerGroups()
 	if err != nil {
