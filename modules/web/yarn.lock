@@ -237,20 +237,20 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@angular/cdk@npm:14.2.2":
-  version: 14.2.2
-  resolution: "@angular/cdk@npm:14.2.2"
+"@angular/cdk@npm:15.1.4":
+  version: 15.1.4
+  resolution: "@angular/cdk@npm:15.1.4"
   dependencies:
-    parse5: ^5.0.0
+    parse5: ^7.1.2
     tslib: ^2.3.0
   peerDependencies:
-    "@angular/common": ^14.0.0 || ^15.0.0
-    "@angular/core": ^14.0.0 || ^15.0.0
+    "@angular/common": ^15.0.0 || ^16.0.0
+    "@angular/core": ^15.0.0 || ^16.0.0
     rxjs: ^6.5.3 || ^7.4.0
   dependenciesMeta:
     parse5:
       optional: true
-  checksum: 3a97d2b7d94bb4c7a30560534c8daeeebcb0b3c32790dab8d4430c785c5201ffa4885138e17b628329830e1c87e0549be0a0b33720bbc55487f7b44c0e260065
+  checksum: f65d7579850719dc7f36a090bef89f9938fe073f63172d3eab1b4a23ae908dbafc22d0e6fcf0f7e846ce468e95453d06a7be70014e59dd02e23a7f6d2bd1fc2f
   languageName: node
   linkType: hard
 
@@ -365,18 +365,18 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@angular/flex-layout@npm:14.0.0-beta.40":
-  version: 14.0.0-beta.40
-  resolution: "@angular/flex-layout@npm:14.0.0-beta.40"
+"@angular/flex-layout@npm:15.0.0-beta.42":
+  version: 15.0.0-beta.42
+  resolution: "@angular/flex-layout@npm:15.0.0-beta.42"
   dependencies:
     tslib: ^2.3.0
   peerDependencies:
-    "@angular/cdk": ^14.0.0
-    "@angular/common": ^14.0.0
-    "@angular/core": ^14.0.0
-    "@angular/platform-browser": ^14.0.0
+    "@angular/cdk": ">=15.0.0"
+    "@angular/common": ">=15.0.2"
+    "@angular/core": ">=15.0.2"
+    "@angular/platform-browser": ">=15.0.2"
     rxjs: ^6.5.3 || ^7.4.0
-  checksum: e04b0e8c96c158475a7379b3ba5c41b571ddae4142d265987815c066ed6dae8fb1aee85b60431c68ffb38f4d32ffbb420d25998155af53e68bb3135f31a22c00
+  checksum: e8aa73a442f44f8f48028bc1d5e04ddae147ff5f627678ed76faf1ba8a6303ceeea51ec7aa45fc37e38ff26d62af67b08d3ff2de04972688fed7c585b86b57f0
   languageName: node
   linkType: hard
 
@@ -3937,10 +3937,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:*, @types/node@npm:18.7.18":
+"@types/node@npm:*":
   version: 18.7.18
   resolution: "@types/node@npm:18.7.18"
   checksum: 8aec61f0f96e2a69ce51f1f40f949ca578bbb4fe05d7c0b8ce3aeeb848e90f755837f17f6ac132ca404d974fe9b2974150ad3b4984fc9dc7c3ceddb10bae0167
+  languageName: node
+  linkType: hard
+
+"@types/node@npm:18.13.0":
+  version: 18.13.0
+  resolution: "@types/node@npm:18.13.0"
+  checksum: 4ea10f8802848b01672bce938f678b6774ca2cee0c9774f12275ab064ae07818419c3e2e41d6257ce7ba846d1ea26c63214aa1dfa4166fa3746291752b8c6416
   languageName: node
   linkType: hard
 
@@ -7036,6 +7043,13 @@ __metadata:
   version: 2.2.0
   resolution: "entities@npm:2.2.0"
   checksum: 19010dacaf0912c895ea262b4f6128574f9ccf8d4b3b65c7e8334ad0079b3706376360e28d8843ff50a78aabcb8f08f0a32dbfacdc77e47ed77ca08b713669b3
+  languageName: node
+  linkType: hard
+
+"entities@npm:^4.4.0":
+  version: 4.4.0
+  resolution: "entities@npm:4.4.0"
+  checksum: 84d250329f4b56b40fa93ed067b194db21e8815e4eb9b59f43a086f0ecd342814f6bc483de8a77da5d64e0f626033192b1b4f1792232a7ea6b970ebe0f3187c2
   languageName: node
   linkType: hard
 
@@ -10491,13 +10505,13 @@ __metadata:
   dependencies:
     "@angular-devkit/build-angular": 15.1.5
     "@angular/animations": 15.1.4
-    "@angular/cdk": 14.2.2
+    "@angular/cdk": 15.1.4
     "@angular/cli": 15.1.5
     "@angular/common": 15.1.4
     "@angular/compiler": 15.1.4
     "@angular/compiler-cli": 15.1.4
     "@angular/core": 15.1.4
-    "@angular/flex-layout": 14.0.0-beta.40
+    "@angular/flex-layout": 15.0.0-beta.42
     "@angular/forms": 15.1.4
     "@angular/language-service": 15.1.4
     "@angular/localize": 15.1.4
@@ -10518,7 +10532,7 @@ __metadata:
     "@types/jest": 29.0.3
     "@types/js-yaml": 4.0.5
     "@types/lodash-es": 4.17.6
-    "@types/node": 18.7.18
+    "@types/node": 18.13.0
     "@typescript-eslint/eslint-plugin": 5.38.0
     "@typescript-eslint/parser": 5.38.0
     ace-builds: 1.15.0
@@ -12181,10 +12195,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"parse5@npm:^5.0.0":
-  version: 5.1.1
-  resolution: "parse5@npm:5.1.1"
-  checksum: 613a714af4c1101d1cb9f7cece2558e35b9ae8a0c03518223a4a1e35494624d9a9ad5fad4c13eab66a0e0adccd9aa3d522fc8f5f9cc19789e0579f3fa0bdfc65
+"parse5@npm:^7.1.2":
+  version: 7.1.2
+  resolution: "parse5@npm:7.1.2"
+  dependencies:
+    entities: ^4.4.0
+  checksum: 59465dd05eb4c5ec87b76173d1c596e152a10e290b7abcda1aecf0f33be49646ea74840c69af975d7887543ea45564801736356c568d6b5e71792fd0f4055713
   languageName: node
   linkType: hard
 
