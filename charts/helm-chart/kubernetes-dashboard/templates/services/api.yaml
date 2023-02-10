@@ -3,11 +3,10 @@ apiVersion: v1
 metadata:
   labels:
     {{- include "kubernetes-dashboard.labels" . | nindent 4 }}
-    app.kubernetes.io/name: dashboard-api
+    app.kubernetes.io/name: {{ template "kubernetes-dashboard.name" . }}-{{ .Values.api.role }}
     app.kubernetes.io/version: {{ .Values.api.image.tag }}
     app.kubernetes.io/component: {{ .Values.api.role }}
-    role: {{ .Values.api.role }}
-  name: dashboard-api
+  name: {{ template "kubernetes-dashboard.fullname" . }}-{{ .Values.api.role }}
 spec:
   ports:
   - name: api
@@ -15,5 +14,5 @@ spec:
     targetPort: 9000
   selector:
     {{- include "kubernetes-dashboard.matchLabels" . | nindent 4 }}
-    app.kubernetes.io/name: dashboard-api
+    app.kubernetes.io/name: {{ template "kubernetes-dashboard.name" . }}-{{ .Values.api.role }}
     role: {{ .Values.api.role }}

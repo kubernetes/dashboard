@@ -53,6 +53,7 @@ app:
   manifests: [ ]
   settings:
     ## Global dashboard settings
+    ## Note: Use all or none. Dashboard does not support default value merging currently.
     global:
     #  # Cluster name that appears in the browser window title if it is set
     #  clusterName: ""
@@ -73,6 +74,14 @@ app:
     #  displayName: Prometheus
     #  #  Is this CRD namespaced?
     #  namespaced: true
+  ingress:
+    host: localhost
+    ingressClassName: nginx
+    issuer: selfsigned
+  # Use the following toleration if Dashboard can be deployed on a tainted control-plane nodes
+  # - key: node-role.kubernetes.io/control-plane
+  #   effect: NoSchedule
+  tolerations: []
 
 # API deployment configuration
 api:
@@ -81,7 +90,11 @@ api:
     repository: dashboard-api
     tag: latest
   containers:
+    ports:
+    - containerPort: 9000
+      protocol: TCP
     # Additional container arguments
+    # TODO: Update link to arguments to distinguish between api/web
     # Full list of arguments: https://github.com/kubernetes/dashboard/blob/master/docs/common/dashboard-arguments.md
     # args:
     # - --system-banner="Welcome to the Kubernetes Dashboard"
@@ -91,25 +104,33 @@ api:
     # - name: SOME_VAR
     #   value: 'some value'
     env: [ ]
-    # Additional volumes
-    # - name: dashboard-kubeconfig
-    #   secret:
-    #     defaultMode: 420
-    #     secretName: dashboard-kubeconfig
-    volumes: [ ]
     # Additional volume mounts
     # - mountPath: /kubeconfig
     #   name: dashboard-kubeconfig
     #   readOnly: true
-    volumeMounts: [ ]
+    volumeMounts:
+    # Create volume mount to store exec logs (required)
+    - mountPath: /tmp
+      name: tmp-volume
     # TODO: Validate configuration
     resources:
       requests:
         cpu: 100m
         memory: 200Mi
       limits:
-        cpu: 2
-        memory: 200Mi
+        cpu: 250m
+        memory: 400Mi
+  # Additional volumes
+  # - name: dashboard-kubeconfig
+  #   secret:
+  #     defaultMode: 420
+  #     secretName: dashboard-kubeconfig
+  volumes:
+  # Create on-disk volume to store exec logs (required)
+  - name: tmp-volume
+    emptyDir: { }
+  nodeSelector:
+    kubernetes.io/os: linux
   # Labels & annotations shared between API related resources
   labels: { }
   annotations: { }
@@ -122,6 +143,7 @@ web:
     tag: latest
   containers:
     # Additional container arguments
+    # TODO: Update link to arguments to distinguish between api/web
     # Full list of arguments: https://github.com/kubernetes/dashboard/blob/master/docs/common/dashboard-arguments.md
     # args:
     # - --system-banner="Welcome to the Kubernetes Dashboard"
@@ -153,6 +175,13 @@ web:
   # Labels & annotations shared between WEB UI related resources
   labels: { }
   annotations: { }
+
+metricsScraper:
+  enabled: true
+  role: metrics-scraper
+  image:
+    repository: kubernetesui/metrics-scraper
+    tag: v1.0.8
 
 ## Optional Metrics Server sub-chart configuration
 ## Enable this if you don't already have metrics-server enabled on your cluster and

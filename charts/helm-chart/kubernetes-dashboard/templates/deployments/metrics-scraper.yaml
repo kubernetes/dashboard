@@ -2,25 +2,33 @@ kind: Deployment
 apiVersion: apps/v1
 metadata:
   labels:
-    k8s-app: metrics-scraper
-  name: metrics-scraper
+    {{- include "kubernetes-dashboard.labels" . | nindent 4 }}
+    app.kubernetes.io/name: {{ template "kubernetes-dashboard.name" . }}-{{ .Values.metricsScraper.role }}
+    app.kubernetes.io/version: {{ .Values.metricsScraper.image.tag }}
+    app.kubernetes.io/component: {{ .Values.metricsScraper.role }}
+  name: {{ template "kubernetes-dashboard.fullname" . }}-{{ .Values.metricsScraper.role }}
 spec:
   replicas: 1
   revisionHistoryLimit: 10
   selector:
     matchLabels:
-      k8s-app: metrics-scraper
+      {{- include "kubernetes-dashboard.matchLabels" . | nindent 6 }}
+      app.kubernetes.io/name: {{ template "kubernetes-dashboard.name" . }}-{{ .Values.metricsScraper.role }}
   template:
     metadata:
       labels:
-        k8s-app: metrics-scraper
+        {{- include "kubernetes-dashboard.labels" . | nindent 8 }}
+        app.kubernetes.io/name: {{ template "kubernetes-dashboard.name" . }}-{{ .Values.metricsScraper.role }}
+        app.kubernetes.io/version: {{ .Values.metricsScraper.image.tag }}
+        app.kubernetes.io/component: {{ .Values.metricsScraper.role }}
     spec:
+      {{- with .Values.app.security.securityContext }}
       securityContext:
-        seccompProfile:
-          type: RuntimeDefault
+      {{ toYaml . | nindent 8 }}
+      {{- end }}
       containers:
-      - name: metrics-scraper
-        image: kubernetesui/metrics-scraper:v1.0.8
+      - name: {{ template "kubernetes-dashboard.name" . }}-{{ .Values.metricsScraper.role }}
+        image: "{{ .Values.metricsScraper.image.repository }}:{{ .Values.metricsScraper.image.tag }}"
         ports:
         - containerPort: 8000
           protocol: TCP
@@ -39,6 +47,9 @@ spec:
           readOnlyRootFilesystem: true
           runAsUser: 1001
           runAsGroup: 2001
+      volumes:
+      - name: tmp-volume
+        emptyDir: { }
       serviceAccountName: kubernetes-dashboard
       nodeSelector:
         "kubernetes.io/os": linux
@@ -46,6 +57,3 @@ spec:
       tolerations:
       - key: node-role.kubernetes.io/control-plane
         effect: NoSchedule
-      volumes:
-      - name: tmp-volume
-        emptyDir: {}

@@ -3,10 +3,9 @@ apiVersion: apps/v1
 metadata:
   labels:
     {{- include "kubernetes-dashboard.labels" . | nindent 4 }}
-    app.kubernetes.io/name: dashboard-web
+    app.kubernetes.io/name: {{ template "kubernetes-dashboard.name" . }}-{{ .Values.web.role }}
     app.kubernetes.io/version: {{ .Values.web.image.tag }}
     app.kubernetes.io/component: {{ .Values.web.role }}
-    role: {{ .Values.web.role }}
   name: {{ template "kubernetes-dashboard.fullname" . }}-{{ .Values.web.role }}
 spec:
   replicas: 1
@@ -14,16 +13,14 @@ spec:
   selector:
     matchLabels:
       {{- include "kubernetes-dashboard.matchLabels" . | nindent 6 }}
-      app.kubernetes.io/name: dashboard-web
-      role: {{ .Values.web.role }}
+      app.kubernetes.io/name: {{ template "kubernetes-dashboard.name" . }}-{{ .Values.web.role }}
   template:
     metadata:
       labels:
         {{- include "kubernetes-dashboard.labels" . | nindent 8 }}
-        app.kubernetes.io/name: dashboard-web
+        app.kubernetes.io/name: {{ template "kubernetes-dashboard.name" . }}-{{ .Values.web.role }}
         app.kubernetes.io/version: {{ .Values.web.image.tag }}
         app.kubernetes.io/component: {{ .Values.web.role }}
-        role: {{ .Values.web.role }}
     spec:
       {{- with .Values.app.security.securityContext }}
       securityContext:

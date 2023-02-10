@@ -2,32 +2,32 @@ kind: Ingress
 apiVersion: networking.k8s.io/v1
 metadata:
   labels:
-    k8s-app: kubernetes-dashboard
+    {{- include "kubernetes-dashboard.labels" . | nindent 4 }}
   annotations:
     nginx.ingress.kubernetes.io/ssl-redirect: "true"
-    cert-manager.io/issuer: selfsigned
-  name: kubernetes-dashboard
+    cert-manager.io/issuer: {{ .Values.app.ingress.issuer }}
+  name: {{ template "kubernetes-dashboard.name" . }}
 spec:
-  ingressClassName: nginx
+  ingressClassName: {{ .Values.app.ingress.ingressClassName }}
   tls:
   - hosts:
-    - localhost
+    - {{ .Values.app.ingress.host }}
     secretName: kubernetes-dashboard-certs
   rules:
-  - host: localhost
+  - host: {{ .Values.app.ingress.host }}
     http:
       paths:
       - path: /
         pathType: Prefix
         backend:
           service:
-            name: dashboard-web
+            name: {{ template "kubernetes-dashboard.name" . }}-{{ .Values.web.role }}
             port:
               name: http
       - path: /api
         pathType: Prefix
         backend:
           service:
-            name: dashboard-api
+            name: {{ template "kubernetes-dashboard.name" . }}-{{ .Values.api.role }}
             port:
               name: api

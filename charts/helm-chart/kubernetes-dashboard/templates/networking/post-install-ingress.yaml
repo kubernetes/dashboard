@@ -1,3 +1,4 @@
+{{- if eq .Values.app.ingress.issuer "selfsigned" -}}
 apiVersion: cert-manager.io/v1
 kind: Issuer
 metadata:
@@ -10,4 +11,5 @@ metadata:
     "helm.sh/hook": post-install,post-upgrade
     "helm.sh/hook-weight": "0"
 spec:
-  selfSigned: {}
+  selfSigned: { }
+{{- end -}}
