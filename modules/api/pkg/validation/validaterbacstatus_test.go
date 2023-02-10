@@ -86,13 +86,28 @@ func TestValidateRbacStatus(t *testing.T) {
 			nil,
 		},
 		{
-			"should enable rbac when supported api version is enabled on the server",
+			"should disable rbacs when supported api version not enabled on the server",
 			func() (*metav1.APIGroupList, error) {
 				return &metav1.APIGroupList{Groups: []metav1.APIGroup{
 					{Name: "rbac", Versions: []metav1.GroupVersionForDiscovery{
 						{
 							GroupVersion: "authorization.k8s.io/v1beta1",
 							Version:      "v1beta1",
+						},
+					}},
+				}}, nil
+			},
+			&RbacStatus{false},
+			nil,
+		},
+		{
+			"should enable rbac when supported api version is enabled on the server",
+			func() (*metav1.APIGroupList, error) {
+				return &metav1.APIGroupList{Groups: []metav1.APIGroup{
+					{Name: "rbac", Versions: []metav1.GroupVersionForDiscovery{
+						{
+							GroupVersion: "authorization.k8s.io/v1",
+							Version:      "v1",
 						},
 					}},
 				}}, nil

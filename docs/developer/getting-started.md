@@ -138,56 +138,36 @@ git push -f origin my-feature
 ## Easy way to build your development environment with Docker
 
 At first, change directory to kubernetes dashboard repository of your fork.
+This development container has all of dependencies to develop dashboard.
 
-### Allow accessing dashboard from outside the container
+### Miscellaneous
 
-Development container builds Kubernetes Dashboard and runs it with self-certificates by default,
-but Kubernetes Dashboard is not exposed to outside the container with insecure certificates by default.
+* Development container builds Kubernetes Dashboard and runs it with self-certificates by default.
+* This container create `user` with `UID` and `GID` same as local user, switch user to `user` with `gosu` and run commands. So created or updated files like results of `make fix` would have same ownership as your host. You can commit them immediately from your host.
+* Built Kubernetes Dashboard will run by `docker compose`, so other few containers will be created in your docker.
 
-To allow accessing dashboard from outside the development container,
-pass value for `--insecure-bind-address` option to dashboard as follows:
-
-* Set `K8S_DASHBOARD_BIND_ADDRESS` environment variable as `"0.0.0.0"` before using `aio/develop/run-npm-on-container.sh`.
-* Run like `npm run [command] --bind_address="0.0.0.0"`, when you run dashboard from inside the container.
-
-### Change port number for dashboard
-
-As default, development container uses `8080` port to expose dashboard. If you need to change the port number, set `K8S_DASHBOARD_PORT` environment variable before using `aio/develop/run-npm-on-container.sh`. The variable would be passed to `--port` option for docker and `npm run start` command inside container, then container exports the port and dashboard starts at the port.
-
-### To run dashboard using Docker at ease
-
-1. Run `aio/develop/run-npm-on-container.sh`.
-
-That's all. It will build dashboard container from your local repository, will create also kubernetes cluster container for your dashboard using [`kind`](https://github.com/kubernetes-sigs/kind), and will run dashboard.
-Then you can see dashboard `http://localhost:8080` with your browser. Since dashboard uses self-certificates, so you need ignore warning or error about it in your browser.
-
-### To run with your another Kubernetes cluster
+### To run with your Kubernetes cluster
 
 1. Copy kubeconfig from your cluster, and confirm the URL for API server in it, and modify it if necessary.
 2. Set filepath for kubeconfig into `K8S_DASHBOARD_KUBECONFIG` environment variable.
 3. If you deployed `dashboard-metrics-scraper` in your cluster, set its endpoint to `K8S_DASHBOARD_SIDECAR_HOST` environment variable.
 4. Change directory into your dashboard source directory.
-5. Run `aio/develop/run-npm-on-container.sh`.
+5. Run `hack/develop/run-dev-container.sh`.
 
-These manipulations will build container, and run dashboard as default.
+These manipulations will build container and run dashboard with `make run` as default.
 
-### To run npm commands as you want
+To accessing Kubernetes Dashboard, open https://localhost:4443 from your browser.
 
-Also, you can run npm commands described in package.json as you want
-
-e.g.
-1. To test dashboard, run `aio/develop/run-npm-on-container.sh run test`.
-2. To check your code changes, run `aio/develop/run-npm-on-container.sh run check`.
-
-This container create `user` with `UID` and `GID` same as local user, switch user to `user` with `gosu` and run commands. So created or updated files like results of `npm run fix` or `npm run check` would have same ownership as your host. You can commit them immediately from your host.
-
-### To run container without creating cluster and running dashboard
+### Just to run development container without building and running dashboard
 
 1. Set `K8S_DASHBOARD_CMD` environment variable as `bash`.
-2. Run `aio/develop/run-npm-on-container.sh`.
+2. Run `hack/develop/run-dev-container.sh`.
 3. Run commands as you like in the container.
 
 This runs container with `bash` command.
+
+To run dashboard, execute `make run`. This will build dashboard for production and run three containers for the dashboard.
+Then, access https://localhost:4443 from your browser.
 
 ### To access console inside of running development container
 

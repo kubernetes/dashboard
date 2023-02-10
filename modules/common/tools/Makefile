@@ -2,6 +2,7 @@ LICENSE_EYE_BINARY := $(shell which license-eye)
 AIR_BINARY := $(shell which air)
 GOLANGCI_LINT_BINARY := $(shell which golangci-lint)
 CLIENT_GEN_BINARY := $(shell which client-gen)
+GENGO_DIR := "${GOPATH}/src/k8s.io/gengo"
 
 GO_BINARY := $(shell which go)
 GO_MAJOR_VERSION = $(shell go version | cut -c 14- | cut -d' ' -f1 | cut -d'.' -f1)
@@ -12,7 +13,7 @@ MIN_GO_MINOR_VERSION = 19
 # TODO: It should check not only if binaries are installed but also their versions
 
 .PHONY: install
-install: ensure-go install-license-eye install-air install-golangci-lint install-client-gen
+install: ensure-go install-license-eye install-air install-golangci-lint install-client-gen ensure-gengo
 
 .PHONY: ensure-go
 ensure-go:
@@ -62,3 +63,9 @@ ifndef CLIENT_GEN_BINARY
 else
 	@echo "[tools] client-gen already exists"
 endif
+
+.PHONY: ensure-gengo
+ensure-gengo:
+	@echo "[tools] ensure k8s.io/gengo..."
+	@rm -fr ${GENGO_DIR}
+	@git clone https://github.com/kubernetes/gengo ${GENGO_DIR}

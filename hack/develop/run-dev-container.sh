@@ -25,6 +25,7 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 # User and group ID to execute commands.
 LOCAL_UID=$(id -u)
 LOCAL_GID=$(id -g)
+DOCKER_GID=$(getent group docker|cut -d ":" -f 3)
 
 # K8S_DASHBOARD_NPM_CMD will be passed into container and will be used
 # by run-npm-command.sh on container. Then the shell sciprt will run `npm`
@@ -95,11 +96,13 @@ docker run \
   -e K8S_DASHBOARD_CMD="${K8S_DASHBOARD_CMD}" \
   -e K8S_OWN_CLUSTER=${K8S_OWN_CLUSTER} \
   -e K8S_DASHBOARD_BIND_ADDRESS=${K8S_DASHBOARD_BIND_ADDRESS} \
-  -e K8S_DASHBOARD_SIDECAR_HOST=${K8S_DASHBOARD_SIDECAR_HOST} \
   -e K8S_DASHBOARD_PORT=${K8S_DASHBOARD_PORT} \
   -e K8S_DASHBOARD_DEBUG=${K8S_DASHBOARD_DEBUG} \
+  -e KUBECONFIG=${K8S_DASHBOARD_KUBECONFIG} \
+  -e SIDECAR_HOST=${K8S_DASHBOARD_SIDECAR_HOST} \
   -e LOCAL_UID="${LOCAL_UID}" \
   -e LOCAL_GID="${LOCAL_GID}" \
+  -e DOCKER_GID="${DOCKER_GID}" \
   -p ${K8S_DASHBOARD_PORT}:${K8S_DASHBOARD_PORT} \
   -p ${K8S_DASHBOARD_DEBUG_PORT}:${K8S_DASHBOARD_DEBUG_PORT} \
   ${DOCKER_RUN_OPTS} \

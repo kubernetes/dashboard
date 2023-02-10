@@ -69,7 +69,7 @@ limitations under the License.
         <div value>
           <div class="kd-code-block kd-no-whitespace">
             <div *ngFor="let httpHeader of probe.httpGet.httpHeaders"
-                 class="kd-code-block-font">{{ httpHeader }}</div>
+                 class="kd-code-block-font">{{ httpHeader | json }}</div>
           </div>
         </div>
       </kd-property>
