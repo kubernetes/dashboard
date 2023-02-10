@@ -1,0 +1,19 @@
+kind: Service
+apiVersion: v1
+metadata:
+  labels:
+    {{- include "kubernetes-dashboard.labels" . | nindent 4 }}
+    app.kubernetes.io/name: dashboard-web
+    app.kubernetes.io/version: {{ .Values.web.image.tag }}
+    app.kubernetes.io/component: {{ .Values.web.role }}
+    role: {{ .Values.web.role }}
+  name: dashboard-web
+spec:
+  ports:
+  - name: http
+    port: 80
+    targetPort: 8000
+  selector:
+    {{- include "kubernetes-dashboard.matchLabels" . | nindent 4 }}
+    app.kubernetes.io/name: dashboard-web
+    role: {{ .Values.web.role }}

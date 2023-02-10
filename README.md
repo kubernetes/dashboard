@@ -29,23 +29,13 @@ Alternatively, you can install Dashboard using Helm as described at [`https://ar
 
 ### Access
 
-To access Dashboard from your local workstation you must create a secure channel to your Kubernetes cluster. Run the following command:
-
-[//]: # (To access Dashboard from your local workstation you forward port to your Kubernetes cluster. Run the following command:)
+To access Dashboard from your local workstation you must forward port to your Kubernetes cluster. Run the following command:
 
 ```shell
-kubectl proxy
+kubectl -n kubernetes-dashboard port-forward svc/kubernetes-dashboard-nginx-ingress 8443:443
 ```
 
-[//]: # (```shell)
-[//]: # (kubectl port-forward -n ingress-nginx svc/ingress-nginx-controller 8443:443)
-[//]: # (```)
-
-Now access Dashboard at:
-[`http://localhost:8001/api/v1/namespaces/kubernetes-dashboard/services/https:kubernetes-dashboard:/proxy/`](
-http://localhost:8001/api/v1/namespaces/kubernetes-dashboard/services/https:kubernetes-dashboard:/proxy/).
-
-[//]: # (Now access Dashboard at: [https://kubernetes.docker.internal:8443]&#40;https://kubernetes.docker.internal:8443&#41;.)
+Now access Dashboard at: [https://localhost:8443](https://localhost:8443).
 
 ## Create An Authentication Token (RBAC)
 To find out how to create sample user and log in follow [Creating sample user](docs/user/access-control/creating-sample-user.md) guide.

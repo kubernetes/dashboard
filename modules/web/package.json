@@ -11,7 +11,7 @@
     "node": ">=16.15.0"
   },
   "engineStrict": true,
-  "packageManager": "yarn@3.2.2",
+  "packageManager": "yarn@3.3.0",
   "scripts": {
     "start": "make serve",
     "start:https": "make serve-https",

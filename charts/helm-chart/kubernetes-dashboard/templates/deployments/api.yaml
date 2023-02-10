@@ -1,0 +1,59 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  labels:
+    {{- include "kubernetes-dashboard.labels" . | nindent 4 }}
+    app.kubernetes.io/name: dashboard-api
+    app.kubernetes.io/version: {{ .Values.api.image.tag }}
+    app.kubernetes.io/component: {{ .Values.api.role }}
+    role: {{ .Values.api.role }}
+  name: {{ template "kubernetes-dashboard.fullname" . }}-{{ .Values.api.role }}
+spec:
+  replicas: {{ .Values.app.scaling.replicas }}
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      {{- include "kubernetes-dashboard.matchLabels" . | nindent 6 }}
+      app.kubernetes.io/name: dashboard-api
+      role: {{ .Values.api.role }}
+  template:
+    metadata:
+      labels:
+        {{- include "kubernetes-dashboard.labels" . | nindent 8 }}
+        app.kubernetes.io/name: dashboard-api
+        app.kubernetes.io/version: {{ .Values.api.image.tag }}
+        app.kubernetes.io/component: {{ .Values.api.role }}
+        role: {{ .Values.api.role }}
+    spec:
+      {{- with .Values.app.security.securityContext }}
+      securityContext:
+      {{ toYaml . | nindent 8 }}
+      {{- end }}
+      containers:
+      - name: {{ template "kubernetes-dashboard.name" . }}-{{ .Values.api.role }}
+        image: "{{ .Values.api.image.repository }}:{{ .Values.api.image.tag }}"
+        imagePullPolicy: {{ .Values.app.image.pullPolicy }}
+        ports:
+        - containerPort: 9000
+          protocol: TCP
+        args:
+        - --enable-insecure-login
+        - --namespace={{ .Release.Namespace }}
+        volumeMounts:
+        # Create on-disk volume to store exec logs
+        - mountPath: /tmp
+          name: tmp-volume
+          {{- with .Values.app.security.containerSecurityContext }}
+        securityContext:
+          {{ toYaml . | nindent 12 }}
+          {{- end }}
+      volumes:
+      - name: tmp-volume
+        emptyDir: { }
+      serviceAccountName: kubernetes-dashboard
+      nodeSelector:
+        kubernetes.io/os: linux
+      # Comment the following tolerations if Dashboard must not be deployed on master
+      tolerations:
+      - key: node-role.kubernetes.io/control-plane
+        effect: NoSchedule

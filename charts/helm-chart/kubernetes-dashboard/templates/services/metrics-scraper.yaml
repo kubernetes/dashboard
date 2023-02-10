@@ -1,0 +1,12 @@
+kind: Service
+apiVersion: v1
+metadata:
+  labels:
+    k8s-app: metrics-scraper
+  name: metrics-scraper
+spec:
+  ports:
+  - port: 8001
+    targetPort: 8001
+  selector:
+    k8s-app: metrics-scraper

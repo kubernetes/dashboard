@@ -22,10 +22,10 @@ To install the [Chart](https://helm.sh/docs/intro/using_helm/#three-big-concepts
 
 ```console
 helm repo add kubernetes-dashboard https://kubernetes.github.io/dashboard/
-helm install kubernetes-dashboard kubernetes-dashboard/kubernetes-dashboard
+helm upgrade --install kubernetes-dashboard kubernetes-dashboard/kubernetes-dashboard --wait --namespace kubernetes-dashboard --create-namespace
 ```
 
-The command deploys kubernetes-dashboard on the Kubernetes cluster in the default configuration.
+The command deploys kubernetes-dashboard on the Kubernetes cluster in the `kubernetes-dashboard` namespace with default configuration.
 The [configuration](#configuration) section lists the parameters that can be configured during installation.
 
 ## Uninstalling the Chart
@@ -33,7 +33,7 @@ The [configuration](#configuration) section lists the parameters that can be con
 To uninstall/delete the `kubernetes-dashboard` deployment:
 
 ```console
-helm delete kubernetes-dashboard
+helm delete kubernetes-dashboard --namespace kubernetes-dashboard
 ```
 
 The command removes all the Kubernetes components associated with the chart and deletes the release.

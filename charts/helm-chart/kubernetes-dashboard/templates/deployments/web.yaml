@@ -1,0 +1,64 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  labels:
+    {{- include "kubernetes-dashboard.labels" . | nindent 4 }}
+    app.kubernetes.io/name: dashboard-web
+    app.kubernetes.io/version: {{ .Values.web.image.tag }}
+    app.kubernetes.io/component: {{ .Values.web.role }}
+    role: {{ .Values.web.role }}
+  name: {{ template "kubernetes-dashboard.fullname" . }}-{{ .Values.web.role }}
+spec:
+  replicas: 1
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      {{- include "kubernetes-dashboard.matchLabels" . | nindent 6 }}
+      app.kubernetes.io/name: dashboard-web
+      role: {{ .Values.web.role }}
+  template:
+    metadata:
+      labels:
+        {{- include "kubernetes-dashboard.labels" . | nindent 8 }}
+        app.kubernetes.io/name: dashboard-web
+        app.kubernetes.io/version: {{ .Values.web.image.tag }}
+        app.kubernetes.io/component: {{ .Values.web.role }}
+        role: {{ .Values.web.role }}
+    spec:
+      {{- with .Values.app.security.securityContext }}
+      securityContext:
+      {{ toYaml . | nindent 8 }}
+      {{- end }}
+      containers:
+        - name: {{ template "kubernetes-dashboard.name" . }}-{{ .Values.web.role }}
+          image: "{{ .Values.web.image.repository }}:{{ .Values.web.image.tag }}"
+          imagePullPolicy: {{ .Values.app.image.pullPolicy }}
+          ports:
+            - containerPort: 8000
+              protocol: TCP
+          volumeMounts:
+          - mountPath: /tmp
+            name: tmp-volume
+          {{- with .Values.web.containers.volumeMounts }}
+          {{ toYaml . | nindent 10 }}
+          {{- end }}
+          {{- with .Values.app.security.containerSecurityContext }}
+          securityContext:
+          {{ toYaml . | nindent 12 }}
+          {{- end }}
+      volumes:
+      - name: tmp-volume
+        emptyDir: { }
+      {{- with .Values.web.containers.volumes }}
+      {{ toYaml . | nindent 6 }}
+      {{- end }}
+      serviceAccountName: kubernetes-dashboard
+      nodeSelector:
+        kubernetes.io/os: linux
+        {{- with .Values.app.scheduling.nodeSelector }}
+        {{ toYaml . | nindent 8 }}
+        {{- end }}
+      # Comment the following tolerations if Dashboard must not be deployed on master
+      tolerations:
+        - key: node-role.kubernetes.io/control-plane
+          effect: NoSchedule

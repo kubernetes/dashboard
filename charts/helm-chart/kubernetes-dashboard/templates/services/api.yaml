@@ -1,0 +1,19 @@
+kind: Service
+apiVersion: v1
+metadata:
+  labels:
+    {{- include "kubernetes-dashboard.labels" . | nindent 4 }}
+    app.kubernetes.io/name: dashboard-api
+    app.kubernetes.io/version: {{ .Values.api.image.tag }}
+    app.kubernetes.io/component: {{ .Values.api.role }}
+    role: {{ .Values.api.role }}
+  name: dashboard-api
+spec:
+  ports:
+  - name: api
+    port: 9000
+    targetPort: 9000
+  selector:
+    {{- include "kubernetes-dashboard.matchLabels" . | nindent 4 }}
+    app.kubernetes.io/name: dashboard-api
+    role: {{ .Values.api.role }}
