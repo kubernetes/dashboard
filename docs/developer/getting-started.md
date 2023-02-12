@@ -79,7 +79,7 @@ Open a browser and access the UI under `localhost:9090`. The following processes
 
 `Dashboard backend (9090) ---> Kubernetes API server (8080)`
 
-To build the docker image on darwin OS you will need to set environment variable for go to build as linux:
+To build the Docker image on darwin OS you will need to set environment variable for go to build as linux:
 
 ```shell
 export GOOS=linux
@@ -145,6 +145,14 @@ This development container has all of dependencies to develop dashboard.
 * Development container builds Kubernetes Dashboard and runs it with self-certificates by default.
 * This container create `user` with `UID` and `GID` same as local user, switch user to `user` with `gosu` and run commands. So created or updated files like results of `make fix` would have same ownership as your host. You can commit them immediately from your host.
 * Built Kubernetes Dashboard will run by `docker compose`, so other few containers will be created in your docker.
+* A Docker network called `kubernetes-dashboard` will be created by our script and all these containers will be assigned to it.
+
+### To run dashboard using Docker at ease
+
+1. Run `hack/develop/run-dev-container.sh`.
+
+That's all. It will build dashboard container from your local repository, will create also kubernetes cluster container for your dashboard using [`kind`](https://github.com/kubernetes-sigs/kind), and will run dashboard.
+Then you can see dashboard http://localhost:4443 with your browser. Since dashboard uses self-certificates, so you need ignore warning or error about it in your browser.
 
 ### To run with your Kubernetes cluster
 
