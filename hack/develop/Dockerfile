@@ -69,7 +69,7 @@ ENV NG_CLI_ANALYTICS=false
 
 # Download a statically linked docker client,
 # so the container is able to build images on the host.
-RUN curl -sSL https://download.docker.com/linux/static/stable/x86_64/docker-20.10.22.tgz > /tmp/docker.tgz && \
+RUN curl -sSL https://download.docker.com/linux/static/stable/x86_64/docker-23.0.1.tgz > /tmp/docker.tgz && \
 	cd /tmp/ && \
 	tar xzvf docker.tgz && \
 	rm docker.tgz && \
