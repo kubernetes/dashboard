@@ -15,7 +15,7 @@
 
 ROOT_DIR="$(cd $(dirname "${BASH_SOURCE}")/../.. && pwd -P)"
 
-# Create `kind`` cluster if kubeconfig for own cluster is not set.
+# Create `kind` cluster if kubeconfig for own cluster is not set.
 if [[ "${K8S_OWN_CLUSTER}" != true ]] ; then
   # Stop `kind` cluster.
   echo "Stop kind cluster"
