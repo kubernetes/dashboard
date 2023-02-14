@@ -11,7 +11,7 @@ Make sure the following software is installed and added to the `$PATH` variable:
 * Docker 23.0.1+ ([installation manual](https://docs.docker.com/engine/installation/linux/docker-ce/ubuntu/))
 * Golang 1.19+ ([installation manual](https://golang.org/dl/))
     * Dashboard uses `go mod` for go dependency management.
-* Node.js 16.14.2+ and yarn ([installation with nvm](https://github.com/creationix/nvm#usage))
+* Node.js 18.14.0+ and yarn ([installation with nvm](https://github.com/creationix/nvm#usage))
 
 Clone the repository and install the dependencies:
 

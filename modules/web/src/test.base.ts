@@ -22,5 +22,10 @@ import './test.base.mocks';
 import {jest} from '@jest/globals';
 
 // Async operations timeout
-// eslint-disable-next-line @typescript-eslint/no-magic-numbers
-jest.setTimeout(15000);
+const timeout = 15000;
+jest.setTimeout(timeout);
+
+// Polyfill text encoder and decoder ot fix tests
+import {TextEncoder, TextDecoder} from 'util';
+global.TextEncoder = TextEncoder;
+global.TextDecoder = TextDecoder;

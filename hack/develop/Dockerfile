@@ -23,7 +23,7 @@ FROM golang:1.19.0-bullseye
 # Install Node.js. Go is already installed.
 # A small tweak, apt-get update is already run by the nodejs setup script,
 # so there's no need to run it again.
-RUN curl -sL https://deb.nodesource.com/setup_16.x | bash - \
+RUN curl -sL https://deb.nodesource.com/setup_18.x | bash - \
 	&& apt-get install -y --no-install-recommends \
 	nodejs \
 	patch \
