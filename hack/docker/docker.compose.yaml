@@ -66,4 +66,5 @@ services:
       - "4443:4443"
 
 networks:
-  kubernetes-dashboard:
+  default:
+    name: kubernetes-dashboard

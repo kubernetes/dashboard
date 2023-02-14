@@ -36,13 +36,12 @@ echo "user ALL=(ALL:ALL) NOPASSWD:ALL" > /etc/sudoers.d/user
 GOSU="exec /usr/sbin/gosu user"
 
 # Run command if K8S_DASHBOARD_CMD is set,
-# otherwise run `npm ${K8S_DASHBOARD_NPM_CMD}`.
+# otherwise run dashboard with `make run` with k8s cluster.
 if [[ -n "${K8S_DASHBOARD_CMD}" ]] ; then
   # Run specified command
   echo "Run '${K8S_DASHBOARD_CMD}'"
-  echo "Dependencies are not installed. Run 'npm ci' before running other commands."
   ${GOSU} ${K8S_DASHBOARD_CMD}
 else
-  # Run npm command
-  ${GOSU} hack/develop/npm-command.sh
+  # Run dashboard with k8s cluster
+  ${GOSU} hack/develop/run-command.sh
 fi
