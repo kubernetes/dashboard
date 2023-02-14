@@ -45,7 +45,7 @@ jobs:
           go-version: 1.19
       - uses: actions/setup-node@v3
         with:
-          node-version: 16.15.0
+          node-version: 18.14.0
       - run: yarn
       - run: node hack/version.mjs
       - run: go mod download
@@ -84,7 +84,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: 16.15.0
+          node-version: 18.14.0
       - run: yarn
       - run: node hack/version.mjs
       - run: go mod download

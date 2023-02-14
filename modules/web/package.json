@@ -8,7 +8,7 @@
     "url": "https://github.com/kubernetes/dashboard.git"
   },
   "engines": {
-    "node": ">=16.15.0"
+    "node": ">=18.14.0"
   },
   "engineStrict": true,
   "packageManager": "yarn@3.2.2",
