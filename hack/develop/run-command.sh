@@ -63,8 +63,9 @@ if [[ "${K8S_OWN_CLUSTER}" != true ]] ; then
   echo "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
 fi
 
-# Install dependencies
+# Clean install dependencies
 cd modules/web
+rm -fr node_modules
 yarn
 cd ${ROOT_DIR}
 
