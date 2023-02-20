@@ -112,11 +112,9 @@ Kubernetes Dashboard の和訳を実施するにあたって、下記の配慮�
 * **[和訳ファイル](./messages.ja.xlf)の `<target>` タグの中身を和訳／修正します。
   原文は `<source>` タグで、これにあたる和訳／修正を実施します。
   その際、翻訳済みである印として、`<target>` タグ内に `state="new"` の属性があれば、この属性を削除します。**
-* `make run` を実行して Kubernetes Dashboard をビルド、実行して、和訳／修正した結果をブラウザから確認します。
-  + Dashboard の開発環境コンテナを利用して Dashboard をビルドし、ご自身の Kubernetes クラスタに接続する Dashboard を起動するには、下記を実行します。
-    > :warning: **`K8S_DASHBOARD_BIND_ADDRESS=0.0.0.0`を付けることで、Dashboard はコンテナ外部からのアクセスを許可しています。信頼できるネットワーク上にある環境で実行してください。**
-
-    `K8S_DASHBOARD_KUBECONFIG=<path to kubeconfig file> K8S_DASHBOARD_BIND_ADDRESS=0.0.0.0 hack/develop/run-dev-container.sh`
+* Dashboard の開発環境コンテナを利用して、`kind` を利用した Kubernetes クラスタの構築、Dashboard のビルドと起動を行います。
+    `hack/develop/run-dev-container.sh`
+* ブラウザから、`https://localhost:6443` にアクセスして、翻訳結果を確認します。
 * Pull Request を `kubernetes/dashboard` リポジトリに提出します。
 * 新たに翻訳すべき原文の追加や修正が発生しているかは、[`kubernetes/dashboard` リポジトリの`language/ja` ラベルが付いた Pull Request](https://github.com/kubernetes/dashboard/pulls?utf8=%E2%9C%93&q=is%3Apr+label%3Alanguage%2Fja) を監視することで行います。
 
@@ -132,7 +130,7 @@ Kubernetes Dashboard の和訳を実施するにあたって、下記の配慮�
 
 * [開発者ドキュメント](../../docs/developer/)を参照して、開発環境をセットアップします。
 * 修正したい原文は、[和訳ファイル](./messages.ja.xlf)の `<context context-type="sourcefile">` タグの内容から見つけられます。
-  [フロントエンド](../../src/app/frontend/)の html テンプレートファイルが修正対象です。
+  [フロントエンド](../../modules/web/)の html テンプレートファイルが修正対象です。
 * 原文を修正した場合は、Kubernetes Dashboard のビルドと起動を行いブラウザで表示、和訳表示だけでなく、原文表示でも画面のレイアウトが崩れないことを必ず確認します。
 * [開発者ドキュメント](../../docs/developer/)通りにセットアップした環境で原文修正していれば、`git commit` 時に[原文辞書ファイル](../messages.xlf)や[和訳ファイル](./messages.ja.xlf)などの各言語ファイル (`/i18n/fr/messages.fr.xlf` など) も更新されます。
   あるいは、`npm run fix` を実行して、明示的に[原文辞書ファイル](../messages.xlf)や各言語ファイルを更新します。
