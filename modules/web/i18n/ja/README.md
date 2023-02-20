@@ -114,7 +114,7 @@ Kubernetes Dashboard の和訳を実施するにあたって、下記の配慮�
   その際、翻訳済みである印として、`<target>` タグ内に `state="new"` の属性があれば、この属性を削除します。**
 * Dashboard の開発環境コンテナを利用して、`kind` を利用した Kubernetes クラスタの構築、Dashboard のビルドと起動を行います。
     `hack/develop/run-dev-container.sh`
-* ブラウザから、`https://localhost:6443` にアクセスして、翻訳結果を確認します。
+* ブラウザから、`https://localhost:4443` にアクセスして、翻訳結果を確認します。
 * Pull Request を `kubernetes/dashboard` リポジトリに提出します。
 * 新たに翻訳すべき原文の追加や修正が発生しているかは、[`kubernetes/dashboard` リポジトリの`language/ja` ラベルが付いた Pull Request](https://github.com/kubernetes/dashboard/pulls?utf8=%E2%9C%93&q=is%3Apr+label%3Alanguage%2Fja) を監視することで行います。
 
