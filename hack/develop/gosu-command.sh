@@ -35,12 +35,12 @@ echo "user ALL=(ALL:ALL) NOPASSWD:ALL" > /etc/sudoers.d/user
 # Execute command with gosu as user
 GOSU="exec /usr/sbin/gosu user"
 
-# Run command if K8S_DASHBOARD_CMD is set,
+# Run command if KD_DEV_CMD is set,
 # otherwise run dashboard with `make run` with k8s cluster.
-if [[ -n "${K8S_DASHBOARD_CMD}" ]] ; then
+if [[ -n "${KD_DEV_CMD}" ]] ; then
   # Run specified command
-  echo "Run '${K8S_DASHBOARD_CMD}'"
-  ${GOSU} ${K8S_DASHBOARD_CMD}
+  echo "Run '${KD_DEV_CMD}'"
+  ${GOSU} ${KD_DEV_CMD}
 else
   # Run dashboard with k8s cluster
   ${GOSU} hack/develop/run-command.sh
