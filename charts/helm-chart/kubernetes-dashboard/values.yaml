@@ -344,6 +344,8 @@ networkPolicy:
   enabled: false
 
 ## podSecurityPolicy for fine-grained authorization of pod creation and updates
+## Note that PSP is deprecated and has been removed from kubernetes 1.25 onwards.
+## For 1.25+ consider enabling PodSecurityAdmission, refer to chart README.md.
 podSecurityPolicy:
   # Specifies whether a pod security policy should be created
   enabled: false
