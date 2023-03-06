@@ -65,6 +65,16 @@ helm install kubernetes-dashboard/kubernetes-dashboard --name kubernetes-dashboa
 
 > **Tip**: You can use the default [values.yaml](values.yaml), which is used by default, as reference
 
+### Pod security policy and admission
+
+The chart supports enabling ``PodSecurityPolicy`` for kubernetes 1.24 and prior via a flag in `values.yaml`.
+
+Please be aware `PodSecurityPolicy` is now deprecated and removed from kubernetes 1.25+ onwards. An alternative is to enable ``PodSecurityAdmission`` for the namespace that kubernetes dashboard will be deployed in. To do this add [labels to the namespace](https://kubernetes.io/docs/tasks/configure-pod-container/enforce-standards-namespace-labels). Example below:
+
+```console
+kubectl label --overwrite ns kubernetes-dashboard pod-security.kubernetes.io/enforce=baseline
+```
+
 ## Upgrading an existing Release to a new major version
 
 A major chart version change (like v1.2.3 -> v2.0.0) indicates that there is an
