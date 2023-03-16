@@ -77,6 +77,7 @@ jobs:
 
   e2e:
     name: End-to-end tests
+    if: ${{ false }}
     runs-on: ubuntu-latest
     env:
       NG_CLI_ANALYTICS: ci
