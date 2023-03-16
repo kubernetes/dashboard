@@ -14,7 +14,7 @@
  * limitations under the License.
  *
  */
-import {NavbarPage} from '../../pages/navbarPage';
+import {NavbarPage} from '../pages/navbarPage';
 
 describe('Navbar', () => {
   before(() => {
