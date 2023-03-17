@@ -12,10 +12,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-chart-dirs:
-  - charts/helm-chart
-chart-repos:
-  - metrics-server=https://kubernetes-sigs.github.io/metrics-server/
-debug: false
-additional-commands:
-  - helm kubeconform {{ .Path }} --config charts/helm-chart/.kubeconform
+schema-location:
+  - default
+  - https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/{{.Group}}/{{.ResourceKind}}_{{.ResourceAPIVersion}}.json

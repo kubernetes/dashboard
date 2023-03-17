@@ -13,7 +13,6 @@
 # limitations under the License.
 
 name: CD / Helm
-
 on:
   push:
     branches: [ master ]
@@ -21,42 +20,30 @@ on:
     - 'charts/helm-chart/**'
     - 'hack/scripts/helm-release-chart.sh'
     - '.github/workflows/cd-helm.yml'
-
 permissions:
   contents: write
   pull-requests: write
-
 jobs:
-
   release:
-    name: Helm Chart Release
+    name: Helm chart release
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
+      - uses: actions/checkout@v3
         with:
           fetch-depth: 0
-      - name: Configure Git
-        run: |
+      - run: |
           git config user.name "$GITHUB_ACTOR"
           git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
-      - name: Package
-        shell: bash
+      - shell: bash
         run: hack/scripts/helm-release-chart.sh
         env:
           TERM: xterm-256color
-      - name: Create Pull Request branch
-        run: |
-          git checkout -b gh-pages-pull-request
-      # Note that will fail if branch already exists.
-      - name: Push Git Branch
-        uses: ad-m/github-push-action@v0.6.0
+      - run: git checkout -b gh-pages-pull-request # It will fail if branch already exists
+      - uses: ad-m/github-push-action@v0.6.0 # It will silently fail if PR already exists
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           branch: gh-pages-pull-request
-      # Note that will silently fail if PR already exists.
-      - name: Create Pull Request
-        uses: repo-sync/pull-request@v2
+      - uses: repo-sync/pull-request@v2
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           source_branch: gh-pages-pull-request

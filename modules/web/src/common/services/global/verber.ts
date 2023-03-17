@@ -93,7 +93,7 @@ export class VerberService {
         switchMap(result => {
           const url = `api/v1/scale/${typeMeta.kind}${objectMeta.namespace ? `/${objectMeta.namespace}` : ''}/${
             objectMeta.name
-          }/`;
+          }`;
 
           return this.http_.put(url, {scaleBy: result}, {params: {scaleBy: result}});
         })

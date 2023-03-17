@@ -15,4 +15,3 @@ spec:
   selector:
     {{- include "kubernetes-dashboard.matchLabels" . | nindent 4 }}
     app.kubernetes.io/name: {{ template "kubernetes-dashboard.name" . }}-{{ .Values.api.role }}
-    role: {{ .Values.api.role }}
