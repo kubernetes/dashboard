@@ -3,14 +3,14 @@ entries:
   kubernetes-dashboard:
   - apiVersion: v2
     appVersion: v2.7.0
-    created: "2023-03-16T08:29:01.000228013Z"
+    created: "2023-03-17T09:29:53.63612421Z"
     dependencies:
     - condition: metrics-server.enabled
       name: metrics-server
       repository: https://kubernetes-sigs.github.io/metrics-server/
       version: 3.8.3
     description: General-purpose web UI for Kubernetes clusters
-    digest: 719f6f09a690c0a81268551f2f7f3b3f3a8b35893463d37fa784af94de85309f
+    digest: b071d262caa61ac1d955a25f44b0fbac4123cccd8bb970ccfd44a3901bf8ffc8
     home: https://github.com/kubernetes/dashboard
     icon: https://raw.githubusercontent.com/kubernetes/kubernetes/master/logo/logo.svg
     keywords:
@@ -1226,4 +1226,4 @@ entries:
     urls:
     - kubernetes-dashboard-2.0.1.tgz
     version: 2.0.1
-generated: "2023-03-16T08:29:00.996968585Z"
+generated: "2023-03-17T09:29:53.633810793Z"
