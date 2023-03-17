@@ -48,7 +48,7 @@ services:
     ports:
       - "9001:9001"
   scraper:
-    image: kubernetesui/metrics-scraper:v1.0.8
+    image: kubernetesui/metrics-scraper:v1.0.9
     command:
       # TODO: move metrics args to some overridable env variables
       --kubeconfig=${KUBECONFIG:?}
