@@ -12,7 +12,7 @@ metadata:
   name: {{ template "kubernetes-dashboard.fullname" . }}-{{ .Values.api.role }}
 spec:
   replicas: {{ .Values.app.scaling.replicas }}
-  revisionHistoryLimit: 10
+  revisionHistoryLimit: {{ .Values.app.scaling.revisionHistoryLimit }}
   selector:
     matchLabels:
       {{- include "kubernetes-dashboard.matchLabels" . | nindent 6 }}
@@ -29,40 +29,40 @@ spec:
         app.kubernetes.io/component: {{ .Values.api.role }}
     spec:
       containers:
-      - name: {{ template "kubernetes-dashboard.name" . }}-{{ .Values.api.role }}
-        image: "{{ .Values.api.image.repository }}:{{ .Values.api.image.tag }}"
-        imagePullPolicy: {{ .Values.app.image.pullPolicy }}
-        args:
-        - --enable-insecure-login
-        - --namespace={{ .Release.Namespace }}
-        {{- with .Values.api.containers.args }}
-        {{ toYaml . | nindent 10 }}
-        {{- end }}
+        - name: {{ template "kubernetes-dashboard.name" . }}-{{ .Values.api.role }}
+          image: "{{ .Values.api.image.repository }}:{{ .Values.api.image.tag }}"
+          imagePullPolicy: {{ .Values.app.image.pullPolicy }}
+          args:
+            - --enable-insecure-login
+            - --namespace={{ .Release.Namespace }}
+          {{- with .Values.api.containers.args }}
+          {{ toYaml . | nindent 10 }}
+          {{- end }}
 
-        {{- with .Values.api.containers.env }}
-        env:
-        {{ toYaml . | nindent 10 }}
-        {{- end }}
+          {{- with .Values.api.containers.env }}
+          env:
+          {{ toYaml . | nindent 10 }}
+          {{- end }}
 
-        {{- with .Values.api.containers.ports }}
-        ports:
-        {{ toYaml . | nindent 10 }}
-        {{- end }}
+          {{- with .Values.api.containers.ports }}
+          ports:
+          {{ toYaml . | nindent 10 }}
+          {{- end }}
 
-        {{- with .Values.api.containers.volumeMounts }}
-        volumeMounts:
-        {{ toYaml . | nindent 10 }}
-        {{- end }}
+          {{- with .Values.api.containers.volumeMounts }}
+          volumeMounts:
+          {{ toYaml . | nindent 10 }}
+          {{- end }}
 
-        {{- with .Values.app.security.containerSecurityContext }}
-        securityContext:
-        {{ toYaml . | nindent 10 }}
-        {{- end }}
+          {{- with .Values.app.security.containerSecurityContext }}
+          securityContext:
+          {{ toYaml . | nindent 10 }}
+          {{- end }}
 
-        {{- with .Values.api.containers.resources }}
-        resources:
-        {{ toYaml . | nindent 10 }}
-        {{- end }}
+          {{- with .Values.api.containers.resources }}
+          resources:
+          {{ toYaml . | nindent 10 }}
+          {{- end }}
       {{- with .Values.app.security.securityContext }}
       securityContext:
       {{ toYaml . | nindent 8 }}

@@ -60,6 +60,7 @@ Common label selectors
 */}}
 {{- define "kubernetes-dashboard.matchLabels" -}}
 app.kubernetes.io/instance: {{ .Release.Name }}
+app.kubernetes.io/part-of: {{ include "kubernetes-dashboard.name" . }}
 {{- end -}}
 
 {{/*

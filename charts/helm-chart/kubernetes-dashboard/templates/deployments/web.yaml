@@ -8,8 +8,8 @@ metadata:
     app.kubernetes.io/component: {{ .Values.web.role }}
   name: {{ template "kubernetes-dashboard.fullname" . }}-{{ .Values.web.role }}
 spec:
-  replicas: 1
-  revisionHistoryLimit: 10
+  replicas: {{ .Values.app.scaling.replicas }}
+  revisionHistoryLimit: {{ .Values.app.scaling.revisionHistoryLimit }}
   selector:
     matchLabels:
       {{- include "kubernetes-dashboard.matchLabels" . | nindent 6 }}
@@ -30,22 +30,27 @@ spec:
         - name: {{ template "kubernetes-dashboard.name" . }}-{{ .Values.web.role }}
           image: "{{ .Values.web.image.repository }}:{{ .Values.web.image.tag }}"
           imagePullPolicy: {{ .Values.app.image.pullPolicy }}
+
+          {{- with .Values.web.containers.ports }}
           ports:
-            - containerPort: 8000
-              protocol: TCP
+          {{ toYaml . | nindent  }}
+          {{- end }}
+
           volumeMounts:
-          - mountPath: /tmp
-            name: tmp-volume
+            - mountPath: /tmp
+              name: tmp-volume
+
           {{- with .Values.web.containers.volumeMounts }}
           {{ toYaml . | nindent 10 }}
           {{- end }}
+
           {{- with .Values.app.security.containerSecurityContext }}
           securityContext:
           {{ toYaml . | nindent 12 }}
           {{- end }}
       volumes:
-      - name: tmp-volume
-        emptyDir: { }
+        - name: tmp-volume
+          emptyDir: { }
       {{- with .Values.web.containers.volumes }}
       {{ toYaml . | nindent 6 }}
       {{- end }}

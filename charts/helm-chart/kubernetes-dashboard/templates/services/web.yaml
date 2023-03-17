@@ -9,7 +9,7 @@ metadata:
   name: {{ template "kubernetes-dashboard.fullname" . }}-{{ .Values.web.role }}
 spec:
   ports:
-  - name: http
+  - name: {{ .Values.web.role }}
     port: 80
     targetPort: 8000
   selector:

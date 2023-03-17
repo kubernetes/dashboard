@@ -8,8 +8,8 @@ metadata:
     app.kubernetes.io/component: {{ .Values.metricsScraper.role }}
   name: {{ template "kubernetes-dashboard.fullname" . }}-{{ .Values.metricsScraper.role }}
 spec:
-  replicas: 1
-  revisionHistoryLimit: 10
+  replicas: {{ .Values.app.scaling.replicas }}
+  revisionHistoryLimit: {{ .Values.app.scaling.revisionHistoryLimit }}
   selector:
     matchLabels:
       {{- include "kubernetes-dashboard.matchLabels" . | nindent 6 }}
@@ -22,16 +22,20 @@ spec:
         app.kubernetes.io/version: {{ .Values.metricsScraper.image.tag }}
         app.kubernetes.io/component: {{ .Values.metricsScraper.role }}
     spec:
-      {{- with .Values.app.security.securityContext }}
-      securityContext:
-      {{ toYaml . | nindent 8 }}
-      {{- end }}
       containers:
       - name: {{ template "kubernetes-dashboard.name" . }}-{{ .Values.metricsScraper.role }}
         image: "{{ .Values.metricsScraper.image.repository }}:{{ .Values.metricsScraper.image.tag }}"
+
+        {{- with .Values.metricsScraper.containers.ports }}
         ports:
-        - containerPort: 8000
-          protocol: TCP
+        {{ toYaml . | nindent 10 }}
+        {{- end }}
+
+        {{- with .Values.metricsScraper.volumeMounts }}
+        volumeMounts:
+        {{ toYaml . | nindent 10 }}
+        {{- end }}
+
         livenessProbe:
           httpGet:
             scheme: HTTP
@@ -39,14 +43,17 @@ spec:
             port: 8000
           initialDelaySeconds: 30
           timeoutSeconds: 30
-        volumeMounts:
-        - mountPath: /tmp
-          name: tmp-volume
+
+        {{- with .Values.app.security.containerSecurityContext }}
         securityContext:
-          allowPrivilegeEscalation: false
-          readOnlyRootFilesystem: true
-          runAsUser: 1001
-          runAsGroup: 2001
+        {{ toYaml . | nindent 10 }}
+        {{- end }}
+
+      {{- with .Values.app.security.securityContext }}
+      securityContext:
+      {{ toYaml . | nindent 8 }}
+      {{- end }}
+
       volumes:
       - name: tmp-volume
         emptyDir: { }

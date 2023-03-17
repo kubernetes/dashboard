@@ -17,17 +17,17 @@ spec:
   - host: {{ .Values.app.ingress.host }}
     http:
       paths:
-      - path: /
+      - path: {{ .Values.app.ingress.paths.web }}
         pathType: Prefix
         backend:
           service:
             name: {{ template "kubernetes-dashboard.name" . }}-{{ .Values.web.role }}
             port:
-              name: http
-      - path: /api
+              name: {{ .Values.web.role }}
+      - path: {{ .Values.app.ingress.paths.api }}
         pathType: Prefix
         backend:
           service:
             name: {{ template "kubernetes-dashboard.name" . }}-{{ .Values.api.role }}
             port:
-              name: api
+              name: {{ .Values.api.role }}

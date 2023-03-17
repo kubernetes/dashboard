@@ -9,9 +9,11 @@ metadata:
   name: {{ template "kubernetes-dashboard.fullname" . }}-{{ .Values.api.role }}
 spec:
   ports:
-  - name: api
-    port: 9000
-    targetPort: 9000
+  - name: {{ .Values.api.role }}
+    {{- with (index .Values.api.containers.ports 0) }}
+    port: {{ .containerPort }}
+    targetPort: {{ .containerPort }}
+    {{- end }}
   selector:
     {{- include "kubernetes-dashboard.matchLabels" . | nindent 4 }}
     app.kubernetes.io/name: {{ template "kubernetes-dashboard.name" . }}-{{ .Values.api.role }}
