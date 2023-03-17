@@ -27,7 +27,6 @@ on:
 permissions:
   contents: read
 jobs:
-
   license-check:
     name: License check
     runs-on: ubuntu-latest
@@ -38,7 +37,6 @@ jobs:
         with:
           fetch-depth: 0
       - uses: apache/skywalking-eyes@main
-
   codeql:
     permissions:
       actions: read
@@ -59,7 +57,6 @@ jobs:
           languages: ${{ matrix.language }}
       - uses: github/codeql-action/autobuild@v2
       - uses: github/codeql-action/analyze@v2
-
   dependency-review:
     permissions:
       actions: read
@@ -74,7 +71,6 @@ jobs:
       - uses: actions/dependency-review-action@v3
         with:
           fail-on-severity: critical
-
   e2e:
     name: End-to-end tests
     if: ${{ false }}

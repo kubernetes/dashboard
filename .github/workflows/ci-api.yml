@@ -25,8 +25,7 @@ on:
 permissions:
   contents: read
 jobs:
-
-  static:
+  check:
     name: Static check
     runs-on: ubuntu-latest
     env:
@@ -36,31 +35,25 @@ jobs:
       run:
         working-directory: modules/api
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
+      - uses: actions/checkout@v3
         with:
           fetch-depth: 0
-      - name: Setup Go
-        uses: actions/setup-go@v4
+      - uses: actions/setup-go@v4
         with:
           go-version: 1.19
-      - name: Ensure tools
-        run: |
+      - run: |
           export GOPATH=$(go env GOPATH)
           export PATH=$PATH:$GOPATH/bin
           make install
         working-directory: modules/common/tools
-      - name: Verify codegen
-        run: |
+      - run: |
           export GOPATH=$(go env GOPATH)
           export PATH=$PATH:$GOPATH/bin
           make codegen-verify
-      - name: Lint Go
-        uses: golangci/golangci-lint-action@v3
+      - uses: golangci/golangci-lint-action@v3
         with:
           version: v1.49.0
           working-directory: modules/api
-
   unit:
     name: Unit tests with coverage
     runs-on: ubuntu-latest
@@ -73,27 +66,22 @@ jobs:
       run:
         working-directory: modules/api
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
+      - uses: actions/checkout@v3
         with:
           fetch-depth: 0
-      - name: Setup Go
-        uses: actions/setup-go@v4
+      - uses: actions/setup-go@v4
         with:
           go-version: 1.19
           check-latest: true
           cache: true
           cache-dependency-path: modules/api/go.sum
-      - name: Install dependencies
-        shell: bash
+      - shell: bash
         run: |
           export GOPATH=$(go env GOPATH)
           export PATH=$PATH:$GOPATH/bin
           go mod download
-      - name: Run unit tests with coverage
-        run: make coverage
-      - name: Upload coverage
-        uses: codecov/codecov-action@v3
+      - run: make coverage
+      - uses: codecov/codecov-action@v3
         with:
           name: api-coverage
           files: ./modules/api/coverage.out
