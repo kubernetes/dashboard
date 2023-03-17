@@ -343,6 +343,9 @@ networkPolicy:
   # Whether to create a network policy that allows/restricts access to the service
   enabled: false
 
+  # Whether to set network policy to deny all ingress traffic for the kubernetes-dashboard
+  ingressDenyAll: false
+
 ## podSecurityPolicy for fine-grained authorization of pod creation and updates
 ## Note that PSP is deprecated and has been removed from kubernetes 1.25 onwards.
 ## For 1.25+ consider enabling PodSecurityAdmission, refer to chart README.md.

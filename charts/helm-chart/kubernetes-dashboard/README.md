@@ -45,6 +45,12 @@ See this [guide](https://github.com/kubernetes/dashboard/blob/master/docs/user/a
 
 It is highly recommended to use RBAC with minimal privileges needed for Dashboard to run.
 
+### NetworkPolicy
+
+You can enable a networkPolicy for this application via the `networkPolicy.enabled` boolean. By default it permits ingress only to the HTTP or HTTPS port (see `protocolHttp` from values.yaml).
+
+If you wish to disable all ingress to this application you may set the `networkPolicy.ingressDenyAll` boolean to `true`. If ingress is disabled you must use direct port-forwarding to access this application.
+
 ## Configuration
 
 Please refer to [values.yaml](https://github.com/kubernetes/dashboard/blob/master/charts/helm-chart/kubernetes-dashboard/values.yaml)
