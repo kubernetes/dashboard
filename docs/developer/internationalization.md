@@ -19,11 +19,13 @@ Based on current browser locale the Dashboard can be displayed in one of the sup
 To show localized dashboard, you need to build dashboard binary before.
 To build dashboard binary, run `npm run build`. Or to build and run localized dashboard immediately, run `npm run start:prod`.
 
+To build and run Kubernetes Dashboard easily and kubernetes cluster created with `kind`, see [Getting started](./getting-started.md#to-run-dashboard-using-docker-at-ease)
+
 Note: Building localized dashboard takes time, so development environment, e.g. `npm start`, does not compile localized versions.
 
 ## Translation management
 
-All translation data is stored in `i18n/` directory in project's root. It includes `locale_conf.json` configuration file, translation source file `messages.xlf` and translation files for each language, e.g. `i18n/fr/messages.fr.xlf` or `i18n/ja/messages.ja.xlf`.
+All translation data is stored in `modules/web/i18n/` directory in project's root. It includes `locale_conf.json` configuration file, translation source file `messages.xlf` and translation files for each language, e.g. `i18n/fr/messages.fr.xlf` or `i18n/ja/messages.ja.xlf`.
 
 ## Introducing new localizable text
 
@@ -32,7 +34,8 @@ Add `i18n` attribute into tag surrounding new text in Angular template html file
 
 ### To update translation source file and translation files
 
-Run `npm run fix:i18n`. It will execute `xliffmerge` and update `i18n/messages.xlf` and `i18n/[locale]/messages.[locale].xlf` files.
+1. Move current directory to `modules/web/`.
+2. Run `yarn fix:i18n`. It will execute `xliffmerge` and update `i18n/messages.xlf` and `i18n/[locale]/messages.[locale].xlf` files.
 
 ### To translate new localizable text
 
@@ -44,10 +47,10 @@ Find new localizable texts in `i18n/[locale]/messages.[locale].xlf` file and tra
 Since dashboard team can not review translation files in your language, so dashboard team transfers authority to review and approve for updating your translation file. At first, you need to organize translation team for your language that manages dashboard translation file.
 
 1. Create your locale directory under `i18n` directory, e.g. `i18n/fr` or `i18n/ja`.
-2. Add your locale, e.g. `fr` or `ja`, into `"languages"` array of `"xliffmergeOptions"` in `package.json` file. If you want to add only locale using an existing translation file, i.e. add `zh` but use existing `i18n/zh-Hans/messages.zh-Hans.xlf` file for it, skip this step and go step 5.
-3. Run `npm run fix:i18n`. Then translation file for your language, e.g. `i18n/fr/messages.fr.xlf`, would be generated in your locale directory.
+2. Add your locale file, e.g. `fr/messages.fr.xlf` or `ja/messages.ja.xlf`, into `"targetFiles"` array of `"extract-i18n-merge"."options"` in `package.json` file.
+3. Run `yarn fix:i18n`. Then translation file for your language, e.g. `i18n/fr/messages.fr.xlf`, would be generated in your locale directory.
 4. Open your translation file and translate texts in `<target>` element into your language, and remove `state="new"` to mark it as translated.
-5. Extend the `index.config.ts` in the `dashboard/src/app/frontend/` folder with the new language. 
+5. Extend the `modules/web/src/index.config.ts` with the new language.
 ```typescript
 const supportedLanguages: LanguageConfig[] = [ 
    { 
@@ -60,7 +63,7 @@ const supportedLanguages: LanguageConfig[] = [
   }
 ];
 ```
-6. To build dashboard for your language, add your locale into `locales` in `angular.json` like follow:
+6. To build dashboard for your language, add your locale into `locales` in `modules/web/angular.json` like follow:
   ```json
           "ja": {
             "translation": "i18n/ja/messages.ja.xlf",
@@ -81,7 +84,7 @@ To add Japanese translation file, add `"ja"` into `"translations"` array in alph
 {"translations": [ "en", "fr", "ja", "ko", "zh" ]}
 ```
 
-Then you can build your localized dashboard with `npm run build`.
+Then you can build your localized dashboard with `make build`.
 
 Before submit Pull Request, add `i18n/[locale]/OWNERS` file for your translation team like below:
 

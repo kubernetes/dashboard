@@ -11,11 +11,10 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-#
-chart-dirs:
-  - charts/helm-chart
-chart-repos:
-  - metrics-server=https://kubernetes-sigs.github.io/metrics-server/
-debug: false
-additional-commands:
-  - helm kubeconform {{ .Path }} --config charts/helm-chart/.kubeconform
+
+kind: Cluster
+apiVersion: kind.x-k8s.io/v1alpha4
+name: kd-kind
+networking:
+  apiServerAddress: "0.0.0.0"
+  apiServerPort: 6443

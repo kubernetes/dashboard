@@ -21,7 +21,6 @@ on:
 permissions:
   contents: read
 jobs:
-
   check:
     name: Static Check
     runs-on: ubuntu-latest
@@ -38,11 +37,10 @@ jobs:
           fetch-depth: 0
       - uses: actions/setup-node@v3
         with:
-          node-version: 16.15.0
+          node-version: 18.14.0
       - run: yarn
       - run: node hack/version.mjs
       - run: yarn check
-
   unit:
     name: Unit tests with coverage
     runs-on: ubuntu-latest
@@ -59,7 +57,7 @@ jobs:
           fetch-depth: 0
       - uses: actions/setup-node@v3
         with:
-          node-version: 16.15.0
+          node-version: 18.14.0
       - run: yarn
       - run: node hack/version.mjs
       - run: yarn coverage

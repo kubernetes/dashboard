@@ -23,7 +23,7 @@ FROM golang:1.19.0-bullseye
 # Install Node.js. Go is already installed.
 # A small tweak, apt-get update is already run by the nodejs setup script,
 # so there's no need to run it again.
-RUN curl -sL https://deb.nodesource.com/setup_16.x | bash - \
+RUN curl -sL https://deb.nodesource.com/setup_18.x | bash - \
 	&& apt-get install -y --no-install-recommends \
 	nodejs \
 	patch \
@@ -69,7 +69,7 @@ ENV NG_CLI_ANALYTICS=false
 
 # Download a statically linked docker client,
 # so the container is able to build images on the host.
-RUN curl -sSL https://download.docker.com/linux/static/stable/x86_64/docker-20.10.22.tgz > /tmp/docker.tgz && \
+RUN curl -sSL https://download.docker.com/linux/static/stable/x86_64/docker-23.0.1.tgz > /tmp/docker.tgz && \
 	cd /tmp/ && \
 	tar xzvf docker.tgz && \
 	rm docker.tgz && \
