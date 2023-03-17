@@ -12,11 +12,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-{{ if .Values.podSecurityPolicy.enabled -}}
+  { { if .Values.podSecurityPolicy.enabled - } }
 apiVersion: policy/v1beta1
 kind: PodSecurityPolicy
 metadata:
-  name: {{ template "kubernetes-dashboard.fullname" . }}-psp
+  name: { { template "kubernetes-dashboard.fullname" . } }-psp
   labels:
     {{- include "kubernetes-dashboard.labels" . | nindent 4 }}
     {{- if .Values.commonLabels }}
@@ -24,9 +24,9 @@ metadata:
     {{- end }}
   annotations:
     seccomp.security.alpha.kubernetes.io/allowedProfileNames: '*'
-    {{- if .Values.commonAnnotations }}
-    {{- include "common.tplvalues.render" ( dict "value" .Values.commonAnnotations "context" $ ) | nindent 4 }}
-    {{- end }}
+    { { - if .Values.commonAnnotations } }
+    { { - include "common.tplvalues.render" ( dict "value" .Values.commonAnnotations "context" $ ) | nindent 4 } }
+    { { - end } }
 spec:
   privileged: false
   fsGroup:
@@ -51,32 +51,32 @@ spec:
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
-  name: {{ template "kubernetes-dashboard.fullname" . }}-psp
+  name: { { template "kubernetes-dashboard.fullname" . } }-psp
   labels:
-{{ include "kubernetes-dashboard.labels" . | nindent 4 }}
+  { { include "kubernetes-dashboard.labels" . | nindent 4 } }
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: Role
-  name: {{ template "kubernetes-dashboard.fullname" . }}-psp
+  name: { { template "kubernetes-dashboard.fullname" . } }-psp
 subjects:
-- kind: ServiceAccount
-  name: {{ template "kubernetes-dashboard.serviceAccountName" . }}
-  namespace: {{ .Release.Namespace }}
+  - kind: ServiceAccount
+    name: { { template "kubernetes-dashboard.serviceAccountName" . } }
+    namespace: { { .Release.Namespace } }
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
-  name: {{ template "kubernetes-dashboard.fullname" . }}-psp
+  name: { { template "kubernetes-dashboard.fullname" . } }-psp
   labels:
-{{ include "kubernetes-dashboard.labels" . | nindent 4 }}
+  { { include "kubernetes-dashboard.labels" . | nindent 4 } }
 rules:
-- apiGroups:
-  - extensions
-  - policy/v1beta1
-  resources:
-  - podsecuritypolicies
-  verbs:
-  - use
-  resourceNames:
-  - {{ template "kubernetes-dashboard.fullname" . }}-psp
-{{- end -}}
+  - apiGroups:
+      - extensions
+      - policy/v1beta1
+    resources:
+      - podsecuritypolicies
+    verbs:
+      - use
+    resourceNames:
+      - { { template "kubernetes-dashboard.fullname" . } }-psp
+  { { - end - } }

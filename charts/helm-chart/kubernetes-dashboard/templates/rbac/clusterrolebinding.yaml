@@ -7,6 +7,6 @@ roleRef:
   kind: ClusterRole
   name: kubernetes-dashboard
 subjects:
-- kind: ServiceAccount
-  name: kubernetes-dashboard
-  namespace: kubernetes-dashboard
+  - kind: ServiceAccount
+    name: kubernetes-dashboard
+    namespace: kubernetes-dashboard

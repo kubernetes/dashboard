@@ -5,7 +5,7 @@ metadata:
     k8s-app: kubernetes-dashboard
   name: kubernetes-dashboard
 rules:
-# Allow Metrics Scraper to get metrics from the Metrics server
-- apiGroups: [ "metrics.k8s.io" ]
-  resources: [ "pods", "nodes" ]
-  verbs: [ "get", "list", "watch" ]
+  # Allow Metrics Scraper to get metrics from the Metrics server
+  - apiGroups: [ "metrics.k8s.io" ]
+    resources: [ "pods", "nodes" ]
+    verbs: [ "get", "list", "watch" ]

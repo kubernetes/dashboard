@@ -10,24 +10,24 @@ metadata:
 spec:
   ingressClassName: {{ .Values.app.ingress.ingressClassName }}
   tls:
-  - hosts:
-    - {{ .Values.app.ingress.host }}
-    secretName: kubernetes-dashboard-certs
+    - hosts:
+        - {{ .Values.app.ingress.host }}
+      secretName: kubernetes-dashboard-certs
   rules:
-  - host: {{ .Values.app.ingress.host }}
-    http:
-      paths:
-      - path: {{ .Values.app.ingress.paths.web }}
-        pathType: Prefix
-        backend:
-          service:
-            name: {{ template "kubernetes-dashboard.name" . }}-{{ .Values.web.role }}
-            port:
-              name: {{ .Values.web.role }}
-      - path: {{ .Values.app.ingress.paths.api }}
-        pathType: Prefix
-        backend:
-          service:
-            name: {{ template "kubernetes-dashboard.name" . }}-{{ .Values.api.role }}
-            port:
-              name: {{ .Values.api.role }}
+    - host: {{ .Values.app.ingress.host }}
+      http:
+        paths:
+          - path: {{ .Values.app.ingress.paths.web }}
+            pathType: Prefix
+            backend:
+              service:
+                name: {{ template "kubernetes-dashboard.name" . }}-{{ .Values.web.role }}
+                port:
+                  name: {{ .Values.web.role }}
+          - path: {{ .Values.app.ingress.paths.api }}
+            pathType: Prefix
+            backend:
+              service:
+                name: {{ template "kubernetes-dashboard.name" . }}-{{ .Values.api.role }}
+                port:
+                  name: {{ .Values.api.role }}

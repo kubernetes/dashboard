@@ -12,41 +12,41 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-{{ if .Values.rbac.create -}}
+  { { if .Values.rbac.create - } }
 apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
-  name: {{ template "kubernetes-dashboard.fullname" . }}
+  name: { { template "kubernetes-dashboard.fullname" . } }
   labels:
-    {{- include "kubernetes-dashboard.labels" . | nindent 4 }}
-    {{- if .Values.commonLabels }}
-    {{- include "common.tplvalues.render" ( dict "value" .Values.commonLabels "context" $ ) | nindent 4 }}
-    {{- end }}
+    { { - include "kubernetes-dashboard.labels" . | nindent 4 } }
+      { { - if .Values.commonLabels } }
+      { { - include "common.tplvalues.render" ( dict "value" .Values.commonLabels "context" $ ) | nindent 4 } }
+      { { - end } }
   annotations:
-    {{- if .Values.commonAnnotations }}
-    {{- include "common.tplvalues.render" ( dict "value" .Values.commonAnnotations "context" $ ) | nindent 4 }}
-    {{- end }}
+    { { - if .Values.commonAnnotations } }
+      { { - include "common.tplvalues.render" ( dict "value" .Values.commonAnnotations "context" $ ) | nindent 4 } }
+      { { - end } }
 rules:
-    # Allow Dashboard to get, update and delete Dashboard exclusive secrets.
-  - apiGroups: [""]
-    resources: ["secrets"]
-    resourceNames: ["kubernetes-dashboard-key-holder", "kubernetes-dashboard-certs", "kubernetes-dashboard-csrf"]
-    verbs: ["get", "update", "delete"]
+  # Allow Dashboard to get, update and delete Dashboard exclusive secrets.
+  - apiGroups: [ "" ]
+    resources: [ "secrets" ]
+    resourceNames: [ "kubernetes-dashboard-key-holder", "kubernetes-dashboard-certs", "kubernetes-dashboard-csrf" ]
+    verbs: [ "get", "update", "delete" ]
     # Allow Dashboard to get and update 'kubernetes-dashboard-settings' config map.
-  - apiGroups: [""]
-    resources: ["configmaps"]
-    resourceNames: ["kubernetes-dashboard-settings"]
-    verbs: ["get", "update"]
+  - apiGroups: [ "" ]
+    resources: [ "configmaps" ]
+    resourceNames: [ "kubernetes-dashboard-settings" ]
+    verbs: [ "get", "update" ]
     # Allow Dashboard to get metrics.
-  - apiGroups: [""]
-    resources: ["services"]
-    resourceNames: ["heapster", "dashboard-metrics-scraper"]
-    verbs: ["proxy"]
-  - apiGroups: [""]
-    resources: ["services/proxy"]
-    resourceNames: ["heapster", "http:heapster:", "https:heapster:", "dashboard-metrics-scraper", "http:dashboard-metrics-scraper"]
-    verbs: ["get"]
-  {{- with .Values.rbac.roleAdditionalRules -}}
-  {{ toYaml . | nindent 2 }}
-  {{- end }}
-{{- end -}}
+  - apiGroups: [ "" ]
+    resources: [ "services" ]
+    resourceNames: [ "heapster", "dashboard-metrics-scraper" ]
+    verbs: [ "proxy" ]
+  - apiGroups: [ "" ]
+    resources: [ "services/proxy" ]
+    resourceNames: [ "heapster", "http:heapster:", "https:heapster:", "dashboard-metrics-scraper", "http:dashboard-metrics-scraper" ]
+    verbs: [ "get" ]
+  { { - with .Values.rbac.roleAdditionalRules - } }
+  { { toYaml . | nindent 2 } }
+  { { - end } }
+  { { - end - } }

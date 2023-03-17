@@ -13,9 +13,9 @@
 # limitations under the License.
 #
 extraManifests:
-- apiVersion: v1
-  kind: ConfigMap
-  metadata:
-    name: additional-configmap
-  data:
-    mykey: myvalue
+  - apiVersion: v1
+    kind: ConfigMap
+    metadata:
+      name: additional-configmap
+    data:
+      mykey: myvalue

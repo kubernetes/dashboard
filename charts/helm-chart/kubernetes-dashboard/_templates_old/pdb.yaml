@@ -12,28 +12,28 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-{{ if .Values.podDisruptionBudget.enabled -}}
+  { { if .Values.podDisruptionBudget.enabled - } }
 apiVersion: policy/v1
 kind: PodDisruptionBudget
 metadata:
   labels:
-    {{- include "kubernetes-dashboard.labels" . | nindent 4 }}
-    {{- if .Values.commonLabels }}
-    {{- include "common.tplvalues.render" ( dict "value" .Values.commonLabels "context" $ ) | nindent 4 }}
-    {{- end }}
+    { { - include "kubernetes-dashboard.labels" . | nindent 4 } }
+      { { - if .Values.commonLabels } }
+      { { - include "common.tplvalues.render" ( dict "value" .Values.commonLabels "context" $ ) | nindent 4 } }
+      { { - end } }
   annotations:
-    {{- if .Values.commonAnnotations }}
-    {{- include "common.tplvalues.render" ( dict "value" .Values.commonAnnotations "context" $ ) | nindent 4 }}
-    {{- end }}
-  name: {{ template "kubernetes-dashboard.fullname" . }}
+    { { - if .Values.commonAnnotations } }
+      { { - include "common.tplvalues.render" ( dict "value" .Values.commonAnnotations "context" $ ) | nindent 4 } }
+      { { - end } }
+  name: { { template "kubernetes-dashboard.fullname" . } }
 spec:
-  {{- if .Values.podDisruptionBudget.minAvailable }}
-  minAvailable: {{ .Values.podDisruptionBudget.minAvailable }}
-  {{- end  }}
-  {{- if .Values.podDisruptionBudget.maxUnavailable }}
-  maxUnavailable: {{ .Values.podDisruptionBudget.maxUnavailable }}
-  {{- end  }}
+  { { - if .Values.podDisruptionBudget.minAvailable } }
+  minAvailable: { { .Values.podDisruptionBudget.minAvailable } }
+  { { - end } }
+  { { - if .Values.podDisruptionBudget.maxUnavailable } }
+  maxUnavailable: { { .Values.podDisruptionBudget.maxUnavailable } }
+  { { - end } }
   selector:
     matchLabels:
-{{ include "kubernetes-dashboard.matchLabels" . | nindent 6 }}
-{{- end -}}
+  { { include "kubernetes-dashboard.matchLabels" . | nindent 6 } }
+  { { - end - } }

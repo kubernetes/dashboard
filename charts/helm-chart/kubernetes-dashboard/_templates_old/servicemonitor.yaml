@@ -12,39 +12,39 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-{{- if .Values.serviceMonitor.enabled }}
+  { { - if .Values.serviceMonitor.enabled } }
 apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
 metadata:
-  name: {{ template "kubernetes-dashboard.fullname" . }}
+  name: { { template "kubernetes-dashboard.fullname" . } }
   labels:
-    {{ include "kubernetes-dashboard.labels" . | nindent 4 }}
+    { { include "kubernetes-dashboard.labels" . | nindent 4 } }
     app.kubernetes.io/component: kubernetes-dashboard
-    {{- if .Values.commonLabels }}
-    {{- include "common.tplvalues.render" ( dict "value" .Values.commonLabels "context" $ ) | nindent 4 }}
-    {{- end }}
-    {{- if .Values.serviceMonitor.labels }}
-    {{- include "common.tplvalues.render" ( dict "value" .Values.serviceMonitor.labels "context" $ ) | nindent 4 }}
-    {{- end }}
+    { { - if .Values.commonLabels } }
+    { { - include "common.tplvalues.render" ( dict "value" .Values.commonLabels "context" $ ) | nindent 4 } }
+    { { - end } }
+    { { - if .Values.serviceMonitor.labels } }
+    { { - include "common.tplvalues.render" ( dict "value" .Values.serviceMonitor.labels "context" $ ) | nindent 4 } }
+    { { - end } }
   annotations:
-    {{- if .Values.commonAnnotations }}
-    {{- include "common.tplvalues.render" ( dict "value" .Values.commonAnnotations "context" $ ) | nindent 4 }}
-    {{- end }}
-    {{- if .Values.serviceMonitor.annotations }}
-    {{- include "common.tplvalues.render" ( dict "value" .Values.serviceMonitor.annotations "context" $ ) | nindent 4 }}
-    {{- end }}
+    { { - if .Values.commonAnnotations } }
+      { { - include "common.tplvalues.render" ( dict "value" .Values.commonAnnotations "context" $ ) | nindent 4 } }
+      { { - end } }
+      { { - if .Values.serviceMonitor.annotations } }
+      { { - include "common.tplvalues.render" ( dict "value" .Values.serviceMonitor.annotations "context" $ ) | nindent 4 } }
+      { { - end } }
 spec:
   endpoints:
-    {{- if .Values.protocolHttp }}
+    { { - if .Values.protocolHttp } }
     - port: http
-    {{- else }}
+    { { - else } }
     - port: https
       scheme: https
       tlsConfig:
         insecureSkipVerify: true
-    {{- end }}
-      path: /metrics
+    { { - end } }
+    path: /metrics
   selector:
     matchLabels:
-      {{ include "kubernetes-dashboard.labels" . | nindent 6 }}
-{{- end }}
+      { { include "kubernetes-dashboard.labels" . | nindent 6 } }
+  { { - end } }

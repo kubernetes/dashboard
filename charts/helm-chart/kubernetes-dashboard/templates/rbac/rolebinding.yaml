@@ -9,6 +9,6 @@ roleRef:
   kind: Role
   name: kubernetes-dashboard
 subjects:
-- kind: ServiceAccount
-  name: kubernetes-dashboard
-  namespace: {{ .Release.Namespace }}
+  - kind: ServiceAccount
+    name: kubernetes-dashboard
+    namespace: {{ .Release.Namespace }}

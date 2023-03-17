@@ -12,38 +12,38 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-{{ if .Values.networkPolicy.enabled -}}
+  { { if .Values.networkPolicy.enabled - } }
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
-  name: {{ template "kubernetes-dashboard.fullname" . }}
+  name: { { template "kubernetes-dashboard.fullname" . } }
   labels:
-    app: {{ template "kubernetes-dashboard.name" . }}
-    chart: {{ template "kubernetes-dashboard.chart" . }}
-    release: {{ .Release.Name }}
-    heritage: {{ .Release.Service }}
-    {{- if .Values.commonLabels }}
-    {{- include "common.tplvalues.render" ( dict "value" .Values.commonLabels "context" $ ) | nindent 4 }}
-    {{- end }}
+    app: { { template "kubernetes-dashboard.name" . } }
+    chart: { { template "kubernetes-dashboard.chart" . } }
+    release: { { .Release.Name } }
+    heritage: { { .Release.Service } }
+    { { - if .Values.commonLabels } }
+    { { - include "common.tplvalues.render" ( dict "value" .Values.commonLabels "context" $ ) | nindent 4 } }
+    { { - end } }
   annotations:
-    {{- if .Values.commonAnnotations }}
-    {{- include "common.tplvalues.render" ( dict "value" .Values.commonAnnotations "context" $ ) | nindent 4 }}
-    {{- end }}
+    { { - if .Values.commonAnnotations } }
+      { { - include "common.tplvalues.render" ( dict "value" .Values.commonAnnotations "context" $ ) | nindent 4 } }
+      { { - end } }
 spec:
   podSelector:
     matchLabels:
-{{ include "kubernetes-dashboard.matchLabels" . | nindent 6 }}
-{{- if .Values.networkPolicy.ingressDenyAll }}
-  ingress: []
-{{- else }}
-  ingress:
+  { { include "kubernetes-dashboard.matchLabels" . | nindent 6 } }
+  { { - if .Values.networkPolicy.ingressDenyAll } }
+ingress: [ ]
+  { { - else } }
+ingress:
   - ports:
-{{- if .Values.protocolHttp }}
-    - port: http
-      protocol: TCP
-{{- else }}
-    - port: https
-      protocol: TCP
-{{- end -}}
-{{- end -}}
-{{- end -}}
+  { { - if .Values.protocolHttp } }
+- port: http
+  protocol: TCP
+  { { - else } }
+- port: https
+  protocol: TCP
+  { { - end - } }
+  { { - end - } }
+  { { - end - } }

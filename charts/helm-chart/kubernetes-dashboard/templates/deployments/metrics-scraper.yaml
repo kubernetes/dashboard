@@ -23,29 +23,29 @@ spec:
         app.kubernetes.io/component: {{ .Values.metricsScraper.role }}
     spec:
       containers:
-      - name: {{ template "kubernetes-dashboard.name" . }}-{{ .Values.metricsScraper.role }}
-        image: "{{ .Values.metricsScraper.image.repository }}:{{ .Values.metricsScraper.image.tag }}"
+        - name: {{ template "kubernetes-dashboard.name" . }}-{{ .Values.metricsScraper.role }}
+          image: "{{ .Values.metricsScraper.image.repository }}:{{ .Values.metricsScraper.image.tag }}"
 
         {{- with .Values.metricsScraper.containers.ports }}
-        ports:
+          ports:
         {{ toYaml . | nindent 10 }}
         {{- end }}
 
         {{- with .Values.metricsScraper.volumeMounts }}
-        volumeMounts:
+          volumeMounts:
         {{ toYaml . | nindent 10 }}
         {{- end }}
 
-        livenessProbe:
-          httpGet:
-            scheme: HTTP
-            path: /
-            port: 8000
-          initialDelaySeconds: 30
-          timeoutSeconds: 30
+          livenessProbe:
+            httpGet:
+              scheme: HTTP
+              path: /
+              port: 8000
+            initialDelaySeconds: 30
+            timeoutSeconds: 30
 
         {{- with .Values.app.security.containerSecurityContext }}
-        securityContext:
+          securityContext:
         {{ toYaml . | nindent 10 }}
         {{- end }}
 
@@ -55,12 +55,12 @@ spec:
       {{- end }}
 
       volumes:
-      - name: tmp-volume
-        emptyDir: { }
+        - name: tmp-volume
+          emptyDir: { }
       serviceAccountName: kubernetes-dashboard
       nodeSelector:
         "kubernetes.io/os": linux
       # Comment the following tolerations if Dashboard must not be deployed on master
       tolerations:
-      - key: node-role.kubernetes.io/control-plane
-        effect: NoSchedule
+        - key: node-role.kubernetes.io/control-plane
+          effect: NoSchedule
