@@ -20,7 +20,7 @@ import {MatButtonModule} from '@angular/material/button';
 import {MatRadioModule} from '@angular/material/radio';
 import {By} from '@angular/platform-browser';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
-import {ActivatedRoute, Router} from '@angular/router';
+import {ActivatedRoute, Router, convertToParamMap} from '@angular/router';
 import {RouterTestingModule} from '@angular/router/testing';
 import {EnabledAuthenticationModes, LoginSkippableResponse, LoginSpec} from '@api/root.api';
 import {IConfig, PluginMetadata} from '@api/root.ui';
@@ -127,8 +127,12 @@ describe('LoginComponent', () => {
         },
         {
           provide: ActivatedRoute,
+          // useClass: MockActivatedRoute,
           useValue: {
             paramMap: from([]),
+            snapshot: {
+              queryParamMap: convertToParamMap({}),
+            },
           },
         },
         {
