@@ -20,7 +20,7 @@ import {MatButtonModule} from '@angular/material/button';
 import {MatRadioModule} from '@angular/material/radio';
 import {By} from '@angular/platform-browser';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
-import {ActivatedRoute, ParamMap, Router, convertToParamMap} from '@angular/router';
+import {ActivatedRoute, Router, convertToParamMap} from '@angular/router';
 import {RouterTestingModule} from '@angular/router/testing';
 import {EnabledAuthenticationModes, LoginSkippableResponse, LoginSpec} from '@api/root.api';
 import {IConfig, PluginMetadata} from '@api/root.ui';
@@ -28,7 +28,7 @@ import {K8SError, KdError} from '@common/errors/errors';
 import {AuthService} from '@common/services/global/authentication';
 import {HistoryService} from '@common/services/global/history';
 import {PluginsConfigService} from '@common/services/global/plugin';
-import {from, Observable, of, pairs, throwError} from 'rxjs';
+import {from, Observable, of, throwError} from 'rxjs';
 import {CONFIG_DI_TOKEN} from '../index.config';
 import {LoginComponent} from './component';
 
