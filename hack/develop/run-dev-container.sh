@@ -13,11 +13,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# This runs npm commands for dashboard in container.
-#
-# To run dashboard on container, simply run `run-npm-command.sh`.
-# To run npm command in container, set K8S_DASHBOARD_NPM_CMD variable
-# like "run check" or run like `run-npm-command.sh run check`.
+# This prepares development environment for Kubernetes Dashboard in Docker.
+# See `docs/developer/getting-started.md`.
 
 CD="$(pwd)"
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
@@ -30,71 +27,62 @@ DOCKER_GID=$(getent group docker|cut -d ":" -f 3)
 # kubeconfig for dashboard.
 # This will be mounted and certain npm command can modify it,
 # so this should not be set for original kubeconfig.
-if [[ -n "${K8S_DASHBOARD_KUBECONFIG}" ]] ; then
+if [[ -n "${KD_DEV_KUBECONFIG}" ]] ; then
   # Use your own kubernetes cluster.
   K8S_OWN_CLUSTER=true
 else
   # Use the kind cluster that will be created later by the script.
   # Set defult as kubeconfig made by `hack/scripts/start-cluster.sh`.
   touch /tmp/kind.kubeconfig
-  K8S_DASHBOARD_KUBECONFIG=/tmp/kind.kubeconfig
+  KD_DEV_KUBECONFIG=/tmp/kind.kubeconfig
 fi
 
 # Create docker network to work with kind cluster
-K8S_DASHBOARD_NETWORK="kubernetes-dashboard"
-docker network create ${K8S_DASHBOARD_NETWORK} \
+KD_DEV_NETWORK="kubernetes-dashboard"
+docker network create ${KD_DEV_NETWORK} \
   -d=bridge \
   -o com.docker.network.bridge.enable_ip_masquerade=true \
   -o com.docker.network.driver.mtu=1500
 
 # Bind addres for dashboard
-K8S_DASHBOARD_BIND_ADDRESS=${K8S_DASHBOARD_BIND_ADDRESS:-"127.0.0.1"}
+KD_DEV_BIND_ADDRESS=${KD_DEV_BIND_ADDRESS:-"127.0.0.1"}
 
 # Metrics Scraper sidecar host for dashboard
-K8S_DASHBOARD_SIDECAR_HOST=${K8S_DASHBOARD_SIDECAR_HOST:-"http://localhost:8000"}
-
-# Port for dashboard (frontend)
-K8S_DASHBOARD_PORT=${K8S_DASHBOARD_PORT:-"8080"}
-
-# Debugging port for dashboard (backend)
-K8S_DASHBOARD_DEBUG_PORT=${K8S_DASHBOARD_DEBUG_PORT:-"2345"}
+KD_DEV_SIDECAR_HOST=${KD_DEV_SIDECAR_HOST:-"http://localhost:8000"}
 
 # Build and run container for dashboard
-DASHBOARD_IMAGE_NAME=${K8S_DASHBOARD_CONTAINER_NAME:-"k8s-dashboard-dev-image"}
-K8S_DASHBOARD_SRC=${K8S_DASHBOARD_SRC:-"${CD}"}
-K8S_DASHBOARD_CONTAINER_NAME=${K8S_DASHBOARD_CONTAINER_NAME:-"k8s-dashboard-dev"}
-K8S_DASHBOARD_SRC_ON_CONTAINER=/go/src/github.com/kubernetes/dashboard
+KD_DEV_IMAGE_NAME=${KD_DEV_CONTAINER_NAME:-"k8s-dashboard-dev-image"}
+KD_DEV_SRC=${KD_DEV_SRC:-"${CD}"}
+KD_DEV_CONTAINER_NAME=${KD_DEV_CONTAINER_NAME:-"k8s-dashboard-dev"}
+KD_DEV_SRC_ON_CONTAINER=/go/src/github.com/kubernetes/dashboard
 
-echo "Remove existing container ${K8S_DASHBOARD_CONTAINER_NAME}"
-docker rm -f ${K8S_DASHBOARD_CONTAINER_NAME}
+echo "Remove existing container ${KD_DEV_CONTAINER_NAME}"
+docker rm -f ${KD_DEV_CONTAINER_NAME}
 
 # Always test if the image is up-to-date. If nothing has changed since last build,
 # it'll just use the already-built image
 echo "Start building container image for development"
-docker build -t ${DASHBOARD_IMAGE_NAME} -f ${DIR}/Dockerfile ${DIR}/../../
+docker build -t ${KD_DEV_IMAGE_NAME} -f ${DIR}/Dockerfile ${DIR}/../../
 
 # Run dashboard container for development and expose necessary ports automatically.
 echo "Run container for development"
 docker run \
   -it \
-  --name=${K8S_DASHBOARD_CONTAINER_NAME} \
+  --name=${KD_DEV_CONTAINER_NAME} \
   --cap-add=SYS_PTRACE \
-  --network=${K8S_DASHBOARD_NETWORK} \
+  --network=${KD_DEV_NETWORK} \
   -v /var/run/docker.sock:/var/run/docker.sock \
-  -v ${K8S_DASHBOARD_SRC}:${K8S_DASHBOARD_SRC_ON_CONTAINER} \
-  -v ${K8S_DASHBOARD_KUBECONFIG}:/home/user/.kube/config \
-  -e K8S_DASHBOARD_CMD="${K8S_DASHBOARD_CMD}" \
+  -v ${KD_DEV_SRC}:${KD_DEV_SRC_ON_CONTAINER} \
+  -v ${KD_DEV_KUBECONFIG}:/home/user/.kube/config \
+  -e KD_DEV_CMD="${KD_DEV_CMD}" \
   -e K8S_OWN_CLUSTER=${K8S_OWN_CLUSTER} \
-  -e K8S_DASHBOARD_BIND_ADDRESS=${K8S_DASHBOARD_BIND_ADDRESS} \
-  -e K8S_DASHBOARD_PORT=${K8S_DASHBOARD_PORT} \
-  -e K8S_DASHBOARD_DEBUG=${K8S_DASHBOARD_DEBUG} \
-  -e KUBECONFIG=${K8S_DASHBOARD_KUBECONFIG} \
-  -e KIND_EXPERIMENTAL_DOCKER_NETWORK=${K8S_DASHBOARD_NETWORK} \
-  -e SIDECAR_HOST=${K8S_DASHBOARD_SIDECAR_HOST} \
+  -e BIND_ADDRESS=${KD_DEV_BIND_ADDRESS} \
+  -e KUBECONFIG=${KD_DEV_KUBECONFIG} \
+  -e KIND_EXPERIMENTAL_DOCKER_NETWORK=${KD_DEV_NETWORK} \
+  -e SIDECAR_HOST=${KD_DEV_SIDECAR_HOST} \
   -e LOCAL_UID="${LOCAL_UID}" \
   -e LOCAL_GID="${LOCAL_GID}" \
   -e DOCKER_GID="${DOCKER_GID}" \
-  -p ${K8S_DASHBOARD_PORT}:${K8S_DASHBOARD_PORT} \
-  -p ${K8S_DASHBOARD_DEBUG_PORT}:${K8S_DASHBOARD_DEBUG_PORT} \
+  -p 8080:8080 \
   ${DOCKER_RUN_OPTS} \
-  ${DASHBOARD_IMAGE_NAME}
+  ${KD_DEV_IMAGE_NAME}

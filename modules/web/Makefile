@@ -59,7 +59,7 @@ deploy-dev: --deploy-dev
 
 .PHONY: --serve-angular
 --serve-angular: --ensure-dependencies
-	@npx ng serve --proxy-config=$(PROXY_CONFIG) --ssl=$(SSL_ENABLED)
+	@npx ng serve --proxy-config=$(PROXY_CONFIG) --ssl=$(SSL_ENABLED) --host=$(BIND_ADDRESS)
 
 .PHONY: --build-go
 --build-go:

@@ -157,8 +157,8 @@ Then you can see dashboard http://localhost:4443 with your browser. Since dashbo
 ### To run with your Kubernetes cluster
 
 1. Copy kubeconfig from your cluster, and confirm the URL for API server in it, and modify it if necessary.
-2. Set filepath for kubeconfig into `K8S_DASHBOARD_KUBECONFIG` environment variable.
-3. If you deployed `dashboard-metrics-scraper` in your cluster, set its endpoint to `K8S_DASHBOARD_SIDECAR_HOST` environment variable.
+2. Set filepath for kubeconfig into `KD_DEV_KUBECONFIG` environment variable.
+3. If you deployed `dashboard-metrics-scraper` in your cluster, set its endpoint to `KD_DEV_SIDECAR_HOST` environment variable.
 4. Change directory into your dashboard source directory.
 5. Run `hack/develop/run-dev-container.sh`.
 
@@ -168,14 +168,16 @@ To accessing Kubernetes Dashboard, open https://localhost:4443 from your browser
 
 ### Just to run development container without building and running dashboard
 
-1. Set `K8S_DASHBOARD_CMD` environment variable as `bash`.
+1. Set `KD_DEV_CMD` environment variable as `bash`.
 2. Run `hack/develop/run-dev-container.sh`.
 3. Run commands as you like in the container.
 
-This runs container with `bash` command.
+This runs container and execute `bash` command interactively. Then, develop Kubernetes Dashboard!
 
-To run dashboard, execute `make run`. This will build dashboard for production and run three containers for the dashboard.
-Then, access https://localhost:4443 from your browser.
+* To run dashboard, execute `make run`. This will build dashboard for production and run three containers for the dashboard.
+  Then, access https://localhost:4443 from your browser.
+* To run dashboard with Angular Live Development Server, execute `KUBECONFIG=/home/user/.kube/config make serve`.
+  Then, access http://localhost:8080 from your browser.
 
 ### To access console inside of running development container
 
