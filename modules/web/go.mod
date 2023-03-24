@@ -3,7 +3,7 @@ module k8s.io/dashboard/web
 go 1.19
 
 require (
-	github.com/golang/glog v1.1.0
+	github.com/golang/glog v1.1.1
 	github.com/spf13/pflag v1.0.5
 	golang.org/x/text v0.8.0
 	k8s.io/dashboard/certificates v0.0.0-00010101000000-000000000000
@@ -19,8 +19,8 @@ require (
 	golang.org/x/net v0.7.0 // indirect
 	gopkg.in/inf.v0 v0.9.1 // indirect
 	gopkg.in/yaml.v2 v2.4.0 // indirect
-	k8s.io/api v0.26.1 // indirect
-	k8s.io/apimachinery v0.26.1 // indirect
+	k8s.io/api v0.26.2 // indirect
+	k8s.io/apimachinery v0.26.2 // indirect
 	k8s.io/klog/v2 v2.80.1 // indirect
 	k8s.io/utils v0.0.0-20221108210102-8e77b1f39fe2 // indirect
 	sigs.k8s.io/json v0.0.0-20221116044647-bc3834ca7abd // indirect
