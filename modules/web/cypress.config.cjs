@@ -25,5 +25,6 @@ module.exports = defineConfig({
     "pageLoadTimeout": 10000,
     "viewportHeight": 1080,
     "viewportWidth": 1920,
+    "testIsolation": false,
   },
 });
