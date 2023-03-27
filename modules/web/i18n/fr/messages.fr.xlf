@@ -328,7 +328,7 @@
       </trans-unit>
       <trans-unit id="1970327103279087300" datatype="html">
         <source>Volume ID</source>
-        <target>Volume ID</target>
+        <target>ID Volume</target>
       </trans-unit>
       <trans-unit id="198653559890341013" datatype="html">
         <source>Machine ID</source>
