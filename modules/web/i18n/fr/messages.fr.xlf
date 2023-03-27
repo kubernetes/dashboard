@@ -380,7 +380,7 @@
       </trans-unit>
       <trans-unit id="2127150478980536520" datatype="html">
         <source>Max Replicas</source>
-        <target>Nombre de répliques mixumum</target>
+        <target>Nombre de répliques maximum</target>
       </trans-unit>
       <trans-unit id="21275452006765587" datatype="html">
         <source>Commands</source>
@@ -1316,7 +1316,7 @@
       </trans-unit>
       <trans-unit id="5298392270155336139" datatype="html">
         <source>CPU capacity</source>
-        <target>Capacité du processeur</target>
+        <target>Capacité processeur</target>
       </trans-unit>
       <trans-unit id="5322465913003356908" datatype="html">
         <source>Search for <x id="PH" equiv-text="this._activatedRoute.snapshot.queryParams[SEARCH_QUERY_STATE_PARAM]"/></source>
@@ -1412,7 +1412,7 @@
       </trans-unit>
       <trans-unit id="5680114016457280827" datatype="html">
         <source>You can <x id="START_LINK" ctype="x-a" equiv-text="&quot;\uFFFD#6\uFFFD&quot;"/>deploy a containerized app<x id="CLOSE_LINK" ctype="x-a" equiv-text="&quot;[\uFFFD/#6\uFFFD|\uFFFD/#7\uFFFD]&quot;"/>, select other namespace or <x id="START_LINK_1" equiv-text="&quot;\uFFFD#7\uFFFD&quot;"/>take the Dashboard Tour <x id="START_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&quot;\uFFFD#8\uFFFD&quot;"/>open_in_new<x id="CLOSE_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&quot;\uFFFD/#8\uFFFD&quot;"/><x id="CLOSE_LINK" ctype="x-a" equiv-text="&quot;[\uFFFD/#6\uFFFD|\uFFFD/#7\uFFFD]&quot;"/> to learn more.</source>
-        <target>Vous pouvez <x id="START_LINK" ctype="x-a" equiv-text="&lt;a&gt;"/>déployer une application conteneurisée<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/>, sélectionner un autre espace de nomss ou <x id="START_LINK_1" ctype="x-a" equiv-text="&lt;a&gt;"/>suivre le tour du tableau de bord <x id="START_TAG_MAT-ICON" ctype="x-mat-icon" equiv-text="&lt;mat-icon&gt;"/>open_in_new<x id="CLOSE_TAG_MAT-ICON" ctype="x-mat-icon" equiv-text="&lt;/mat-icon&gt;"/> <x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/> pour en savoir plus.</target>
+        <target>Vous pouvez <x id="START_LINK" ctype="x-a" equiv-text="&lt;a&gt;"/>déployer une application conteneurisée<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/>, sélectionner un autre espace de noms ou <x id="START_LINK_1" ctype="x-a" equiv-text="&lt;a&gt;"/>suivre le tour du tableau de bord <x id="START_TAG_MAT-ICON" ctype="x-mat-icon" equiv-text="&lt;mat-icon&gt;"/>open_in_new<x id="CLOSE_TAG_MAT-ICON" ctype="x-mat-icon" equiv-text="&lt;/mat-icon&gt;"/> <x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/> pour en savoir plus.</target>
       </trans-unit>
       <trans-unit id="5693993471751761333" datatype="html">
         <source>Create a new secret...</source>
@@ -1722,7 +1722,7 @@
       </trans-unit>
       <trans-unit id="6852503341223458730" datatype="html">
         <source>Persistent Volumes</source>
-        <target>Volumes persistents</target>
+        <target>Volumes persistants</target>
       </trans-unit>
       <trans-unit id="6869304038391725752" datatype="html">
         <source>Containers</source>
@@ -1838,7 +1838,7 @@
       </trans-unit>
       <trans-unit id="7194375808015467595" datatype="html">
         <source>Max surge:</source>
-        <target>Augmentation maxixum:</target>
+        <target>Augmentation maximum:</target>
       </trans-unit>
       <trans-unit id="7194477224906924674" datatype="html">
         <source><x id="START_LINK" ctype="x-a" equiv-text="&quot;\uFFFD#13\uFFFD&quot;"/>Feedback<x id="CLOSE_LINK" ctype="x-a" equiv-text="&quot;\uFFFD/#13\uFFFD&quot;"/></source>
@@ -2050,7 +2050,7 @@
       </trans-unit>
       <trans-unit id="7875452846514729865" datatype="html">
         <source>CPU capacity (cores)</source>
-        <target>Capacité du processeur (cœurs)</target>
+        <target>Capacité processeur (cœurs)</target>
       </trans-unit>
       <trans-unit id="788903633413068121" datatype="html">
         <source>Service Accounts</source>
@@ -2202,7 +2202,7 @@
       </trans-unit>
       <trans-unit id="8394382410283043922" datatype="html">
         <source>Controller</source>
-        <target>Controlleur</target>
+        <target>Contrôleur</target>
       </trans-unit>
       <trans-unit id="8433565378732329468" datatype="html">
         <source><x id="INTERPOLATION" equiv-text="&quot;\uFFFD0\uFFFD&quot;"/> <x id="INTERPOLATION_1" equiv-text="&quot;\uFFFD1\uFFFD&quot;"/> will be updated to reflect the desired replicas count.</source>
@@ -2218,7 +2218,7 @@
       </trans-unit>
       <trans-unit id="8444287437490086299" datatype="html">
         <source>Endpoints <x id="START_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&quot;\uFFFD#2\uFFFD&quot;"/>open_in_new<x id="CLOSE_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&quot;\uFFFD/#2\uFFFD&quot;"/></source>
-        <target>Points de terminaison <x id="START_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;mat-icon class=&quot;external-link-icon kd-clickable&quot; i18n-matTooltip matTooltip=&quot;Les liens de point de terminaison sont des liens externes qui seront ouvert dans un nouvel onglet.&quot;&gt;"/>open_in_new<x id="CLOSE_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;/mat-icon&gt;"/></target>
+        <target>Points de terminaison <x id="START_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;mat-icon class=&quot;external-link-icon kd-clickable&quot; i18n-matTooltip matTooltip=&quot;Les liens de point de terminaison sont des liens externes qui seront ouverts dans un nouvel onglet.&quot;&gt;"/>open_in_new<x id="CLOSE_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;/mat-icon&gt;"/></target>
       </trans-unit>
       <trans-unit id="8451232601628619325" datatype="html">
         <source>Create from form</source>
@@ -2330,7 +2330,7 @@
       </trans-unit>
       <trans-unit id="8825668517883103754" datatype="html">
         <source>Cluster Roles</source>
-        <target>Rôles du cluster</target>
+        <target>Rôles de cluster</target>
       </trans-unit>
       <trans-unit id="8829497237648100098" datatype="html">
         <source>Filter</source>
