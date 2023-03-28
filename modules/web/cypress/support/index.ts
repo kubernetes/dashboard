@@ -17,3 +17,7 @@
 before(() => {
   cy.clearCookies();
 });
+
+afterEach(() => {
+  cy.screenshot();
+});

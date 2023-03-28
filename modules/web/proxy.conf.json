@@ -1,14 +1,14 @@
 {
   "/api": {
-    "target": "http://localhost:9000",
+    "target": "http://127.0.0.1:9000",
     "secure": false
   },
   "/config": {
-    "target": "http://localhost:8000",
+    "target": "http://127.0.0.1:8000",
     "secure": false
   },
   "/systembanner": {
-    "target": "http://localhost:8000",
+    "target": "http://127.0.0.1:8000",
     "secure": false
   }
 }
