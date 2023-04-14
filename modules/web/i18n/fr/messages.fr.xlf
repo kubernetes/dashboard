@@ -216,7 +216,7 @@
       </trans-unit>
       <trans-unit id="1649590266934618453" datatype="html">
         <source>Insecure access detected. Sign in will not be available. Access Dashboard securely over HTTPS or using localhost. Read more <x id="START_LINK" ctype="x-a" equiv-text="&quot;\uFFFD#2\uFFFD&quot;"/> here <x id="CLOSE_LINK" ctype="x-a" equiv-text="&quot;\uFFFD/#2\uFFFD&quot;"/>.</source>
-        <target>Accès non sécurisé détecté. La connexion ne sera pas disponible. Accédez au tableau de bord en toute sécurité via HTTPS ou en utilisant localhost. En savoir plus <x id="START_LINK" ctype="x-a" equiv-text="&lt;a&gt;"/> ici <x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;" />.</target>
+        <target>Accès non sécurisé détecté. La connexion ne sera pas disponible. Accédez au tableau de bord en toute sécurité via HTTPS ou en utilisant localhost. En savoir plus <x id="START_LINK" ctype="x-a" equiv-text="&lt;a&gt;"/> ici <x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/>.</target>
       </trans-unit>
       <trans-unit id="1678478837387802521" datatype="html">
         <source>You do not have required permissions to access this resource.</source>
@@ -440,7 +440,7 @@
       </trans-unit>
       <trans-unit id="2244223685971816410" datatype="html">
         <source>Logged in with auth header</source>
-        <target>Connecté avec l'en-tête d'authentification</target>
+        <target>Connecté avec l&apos;en-tête d&apos;authentification</target>
       </trans-unit>
       <trans-unit id="2250922476634643797" datatype="html">
         <source>Parameters</source>
@@ -468,7 +468,7 @@
       </trans-unit>
       <trans-unit id="2306073262722397834" datatype="html">
         <source>Seccomp Localhost Profile</source>
-        <target>Profil d'hôte local de Seccomp</target>
+        <target>Profil d&apos;hôte local de Seccomp</target>
       </trans-unit>
       <trans-unit id="2317196056953748991" datatype="html">
         <source>Old Replica Sets</source>
@@ -736,7 +736,7 @@
       </trans-unit>
       <trans-unit id="3208716248295885865" datatype="html">
         <source>List of namespaces that should be presented to user without namespace list privileges.</source>
-        <target>Liste des espaces de noms qui doivent être présentés à l'utilisateur qui n'a pas les privilèges de la liste des espaces de noms.</target>
+        <target>Liste des espaces de noms qui doivent être présentés à l&apos;utilisateur qui n&apos;a pas les privilèges de la liste des espaces de noms.</target>
       </trans-unit>
       <trans-unit id="322645671410395107" datatype="html">
         <source>Resource Quotas</source>
@@ -752,7 +752,7 @@
       </trans-unit>
       <trans-unit id="3283019513707383139" datatype="html">
         <source>Hosts <x id="START_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&quot;\uFFFD#2\uFFFD&quot;"/>open_in_new<x id="CLOSE_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&quot;\uFFFD/#2\uFFFD&quot;"/></source>
-        <target>Hôtes <x id="START_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;mat-icon class=&quot;external-link-icon kd-clickable&quot; i18n-matTooltip matTooltip=&quot;Les liens hôtes sont des liens externes qui s'ouvrent dans un nouvel onglet.&quot;&gt;"/>open_in_new<x id="CLOSE_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;/mat-icon&gt;"/></target>
+        <target>Hôtes <x id="START_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;mat-icon class=&quot;external-link-icon kd-clickable&quot; i18n-matTooltip matTooltip=&quot;Les liens hôtes sont des liens externes qui s&apos;ouvrent dans un nouvel onglet.&quot;&gt;"/>open_in_new<x id="CLOSE_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;/mat-icon&gt;"/></target>
       </trans-unit>
       <trans-unit id="3294686077659093992" datatype="html">
         <source>Namespace</source>
@@ -872,7 +872,7 @@
       </trans-unit>
       <trans-unit id="3513903697113537912" datatype="html">
         <source>Windows GMSA Credential Spec Name</source>
-        <target>Nom de spécification des informations d'identification Windows GMSA</target>
+        <target>Nom de spécification des informations d&apos;identification Windows GMSA</target>
       </trans-unit>
       <trans-unit id="3517550046701184661" datatype="html">
         <source>Show less</source>
@@ -1830,7 +1830,7 @@
       </trans-unit>
       <trans-unit id="7151380045834635500" datatype="html">
         <source>Max number of items that can be displayed on every list view.</source>
-        <target>Nombre maximal d'éléments pouvant être affichés dans chaque vue de liste.</target>
+        <target>Nombre maximal d&apos;éléments pouvant être affichés dans chaque vue de liste.</target>
       </trans-unit>
       <trans-unit id="7162896756299241101" datatype="html">
         <source>Unschedulable</source>
@@ -1994,7 +1994,7 @@
       </trans-unit>
       <trans-unit id="7696069555285576911" datatype="html">
         <source>Windows GMSA Credential Spec</source>
-        <target>Spécification des informations d'identification Windows GMSA</target>
+        <target>Spécification des informations d&apos;identification Windows GMSA</target>
       </trans-unit>
       <trans-unit id="7705450268368320451" datatype="html">
         <source>Endpoint links are external links that will be open in a new tab.</source>
@@ -2242,7 +2242,7 @@
       </trans-unit>
       <trans-unit id="8548218669860642537" datatype="html">
         <source>File is ready to download!</source>
-        <target>Le fichier est prêt à être téléchargé !</target>
+        <target>Le fichier est prêt à être téléchargé !</target>
       </trans-unit>
       <trans-unit id="858785118348238543" datatype="html">
         <source>Succeeded:</source>
