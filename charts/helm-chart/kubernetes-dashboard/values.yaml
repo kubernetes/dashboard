@@ -163,12 +163,6 @@ web:
     # - name: SOME_VAR
     #   value: 'some value'
     env: [ ]
-    # Additional volumes
-    # - name: dashboard-kubeconfig
-    #   secret:
-    #     defaultMode: 420
-    #     secretName: dashboard-kubeconfig
-    volumes: [ ]
     # Additional volume mounts
     # - mountPath: /kubeconfig
     #   name: dashboard-kubeconfig
@@ -185,6 +179,18 @@ web:
       limits:
         cpu: 250m
         memory: 400Mi
+  # Additional volumes
+  # - name: dashboard-kubeconfig
+  #   secret:
+  #     defaultMode: 420
+  #     secretName: dashboard-kubeconfig
+  volumes:
+    # Create on-disk volume to store exec logs (required)
+    - name: tmp-volume
+      emptyDir: { }
+  nodeSelector:
+    # TODO: check if it's really needed since we offer cross platform images for darwin/windows/linux
+    kubernetes.io/os: linux
   # Labels & annotations shared between WEB UI related resources
   labels: { }
   annotations: { }
@@ -197,20 +203,53 @@ metricsScraper:
     tag: v1.0.9
   containers:
     ports:
-      - name: scraper
+      - name: metrics-scraper
         containerPort: 8000
         protocol: TCP
-  volumeMounts:
-    # Create volume mount to store exec logs (required)
-    - mountPath: /tmp
-      name: tmp-volume
-  livenessProbe:
-    httpGet:
-      scheme: HTTP
-      path: /
-      port: 8000
-    initialDelaySeconds: 30
-    timeoutSeconds: 30
+    args: [ ]
+    # Additional container environment variables
+    # env:
+    # - name: SOME_VAR
+    #   value: 'some value'
+    env: [ ]
+    # Additional volume mounts
+    # - mountPath: /kubeconfig
+    #   name: dashboard-kubeconfig
+    #   readOnly: true
+    volumeMounts:
+      # Create volume mount to store logs (required)
+      - mountPath: /tmp
+        name: tmp-volume
+    # TODO: Validate configuration
+    resources:
+      requests:
+        cpu: 100m
+        memory: 200Mi
+      limits:
+        cpu: 250m
+        memory: 400Mi
+    livenessProbe:
+      httpGet:
+        scheme: HTTP
+        path: /
+        port: 8000
+      initialDelaySeconds: 30
+      timeoutSeconds: 30
+  # Additional volumes
+  # - name: dashboard-kubeconfig
+  #   secret:
+  #     defaultMode: 420
+  #     secretName: dashboard-kubeconfig
+  volumes:
+    # Create on-disk volume to store exec logs (required)
+    - name: tmp-volume
+      emptyDir: { }
+  nodeSelector:
+    # TODO: check if it's really needed since we offer cross platform images for darwin/windows/linux
+    kubernetes.io/os: linux
+  # Labels & annotations shared between WEB UI related resources
+  labels: { }
+  annotations: { }
 
 
 ## Optional Metrics Server sub-chart configuration

@@ -9,8 +9,10 @@ metadata:
   name: {{ template "kubernetes-dashboard.fullname" . }}-{{ .Values.metricsScraper.role }}
 spec:
   ports:
-    - port: 8001
-      targetPort: 8001
+    - name: {{ .Values.metricsScraper.role }}
+    {{- with (index .Values.metricsScraper.containers.ports 0) }}
+      port: {{ .containerPort }}
+    {{- end }}
   selector:
     {{- include "kubernetes-dashboard.matchLabels" . | nindent 4 }}
     app.kubernetes.io/name: {{ template "kubernetes-dashboard.name" . }}-{{ .Values.metricsScraper.role }}
