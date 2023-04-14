@@ -1,8 +1,10 @@
-LICENSE_EYE_BINARY := $(shell which license-eye)
-AIR_BINARY := $(shell which air)
-GOLANGCI_LINT_BINARY := $(shell which golangci-lint)
-CLIENT_GEN_BINARY := $(shell which client-gen)
-GENGO_DIR := "${GOPATH}/src/k8s.io/gengo"
+NODE_BINARY := $(shell which node)
+NODE_MAJOR_VERSION = $(shell node --version | cut -d'.' -f1 | cut -d'v' -f2 )
+NODE_MINOR_VERSION = $(shell node --version | cut -d'.' -f2)
+MIN_NODE_MAJOR_VERSION = 16
+MIN_NODE_MINOR_VERSION = 14
+
+YARN_BINARY := $(shell which yarn)
 
 GO_BINARY := $(shell which go)
 GO_MAJOR_VERSION = $(shell go version | cut -c 14- | cut -d' ' -f1 | cut -d'.' -f1)
@@ -10,35 +12,16 @@ GO_MINOR_VERSION = $(shell go version | cut -c 14- | cut -d' ' -f1 | cut -d'.' -
 MIN_GO_MAJOR_VERSION = 1
 MIN_GO_MINOR_VERSION = 19
 
-NODE_BINARY := $(shell which node)
-NODE_MAJOR_VERSION = $(shell node --version | cut -d'.' -f1 | cut -d'v' -f2 )
-NODE_MINOR_VERSION = $(shell node --version | cut -d'.' -f2)
-MIN_NODE_MAJOR_VERSION = 16
-MIN_NODE_MINOR_VERSION = 14
-YARN_BINARY := $(shell which yarn)
-
+GENGO_DIR := "${GOPATH}/src/k8s.io/gengo"
+LICENSE_EYE_BINARY := $(shell which license-eye)
+AIR_BINARY := $(shell which air)
+GOLANGCI_LINT_BINARY := $(shell which golangci-lint)
+CLIENT_GEN_BINARY := $(shell which client-gen)
 
 # TODO: It should check not only if binaries are installed but also their versions
 
 .PHONY: install
-install: ensure-go ensure-node install-license-eye install-air install-golangci-lint install-client-gen install-yarn ensure-gengo
-
-.PHONY: ensure-go
-ensure-go:
-ifndef GO_BINARY
-	$(error "Cannot find go binary")
-endif
-	@if [ $(GO_MAJOR_VERSION) -gt $(MIN_GO_MAJOR_VERSION) ]; then \
-		exit 0 ;\
-	elif [ $(GO_MAJOR_VERSION) -lt $(MIN_GO_MAJOR_VERSION) ]; then \
-		echo "[tools] go version older than required v$(MIN_GO_MAJOR_VERSION).$(MIN_GO_MINOR_VERSION).0+"; \
-		exit 1; \
-	elif [ $(GO_MINOR_VERSION) -lt $(MIN_GO_MINOR_VERSION) ] ; then \
-		echo "[tools] go version older than required v$(MIN_GO_MAJOR_VERSION).$(MIN_GO_MINOR_VERSION).0+"; \
-		exit 1; \
-	else \
-		echo "[tools] golang version requirements met"; \
-	fi
+install: ensure-node ensure-yarn ensure-go ensure-gengo install-license-eye install-air install-golangci-lint install-client-gen
 
 .PHONY: ensure-node
 ensure-node:
@@ -57,6 +40,38 @@ endif
 	else \
 		echo "[tools] node version requirements met"; \
 	fi
+
+.PHONY: ensure-yarn
+ensure-yarn:
+ifndef YARN_BINARY
+	@echo "[tools] yarn required to build front-end"
+	@echo "[tools] see how to install yarn at: https://yarnpkg.com/getting-started/install"
+else
+	@echo "[tools] yarn already exists"
+endif
+
+.PHONY: ensure-go
+ensure-go:
+ifndef GO_BINARY
+	$(error "Cannot find go binary")
+endif
+	@if [ $(GO_MAJOR_VERSION) -gt $(MIN_GO_MAJOR_VERSION) ]; then \
+		exit 0 ;\
+	elif [ $(GO_MAJOR_VERSION) -lt $(MIN_GO_MAJOR_VERSION) ]; then \
+		echo "[tools] go version older than required v$(MIN_GO_MAJOR_VERSION).$(MIN_GO_MINOR_VERSION).0+"; \
+		exit 1; \
+	elif [ $(GO_MINOR_VERSION) -lt $(MIN_GO_MINOR_VERSION) ] ; then \
+		echo "[tools] go version older than required v$(MIN_GO_MAJOR_VERSION).$(MIN_GO_MINOR_VERSION).0+"; \
+		exit 1; \
+	else \
+		echo "[tools] golang version requirements met"; \
+	fi
+
+.PHONY: ensure-gengo
+ensure-gengo:
+	@echo "[tools] ensure k8s.io/gengo..."
+	@rm -fr ${GENGO_DIR}
+	@git clone https://github.com/kubernetes/gengo ${GENGO_DIR}
 
 .PHONY: install-license-eye
 install-license-eye:
@@ -92,13 +107,4 @@ ifndef CLIENT_GEN_BINARY
 	@go install k8s.io/code-generator/cmd/client-gen
 else
 	@echo "[tools] client-gen already exists"
-endif
-
-.PHONY: install-yarn
-install-yarn:
-ifndef YARN_BINARY
-	@echo "[tools] yarn required to build front-end"
-	@echo "[tools] install yarn via: corepack prepare yarn --activate"
-else
-	@echo "[tools] yarn already exists"
 endif
