@@ -1,7 +1,7 @@
 NODE_BINARY := $(shell which node)
 NODE_MAJOR_VERSION = $(shell node --version | cut -d'.' -f1 | cut -d'v' -f2 )
 NODE_MINOR_VERSION = $(shell node --version | cut -d'.' -f2)
-MIN_NODE_MAJOR_VERSION = 16
+MIN_NODE_MAJOR_VERSION = 18
 MIN_NODE_MINOR_VERSION = 14
 
 YARN_BINARY := $(shell which yarn)
@@ -17,8 +17,6 @@ LICENSE_EYE_BINARY := $(shell which license-eye)
 AIR_BINARY := $(shell which air)
 GOLANGCI_LINT_BINARY := $(shell which golangci-lint)
 CLIENT_GEN_BINARY := $(shell which client-gen)
-
-# TODO: It should check not only if binaries are installed but also their versions
 
 .PHONY: install
 install: ensure-node ensure-yarn ensure-go ensure-gengo install-license-eye install-air install-golangci-lint install-client-gen
