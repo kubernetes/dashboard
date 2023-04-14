@@ -30,9 +30,9 @@
     "check:ts": "gts lint",
     "test": "npx jest -c jest.config.js",
     "coverage": "npx jest -c jest.config.js --coverage",
-    "cypress": "wait-on -v http-get://localhost:9000/api/v1/node http://localhost:8000/config http://localhost:8080 && npx cypress run",
+    "cypress": "wait-on -v -i 10000 http-get://127.0.0.1:9000/api/v1/node http://127.0.0.1:8000/config http://127.0.0.1:8080 && npx cypress run",
     "e2e": "concurrently -kill-others --success first \"yarn start\" \"yarn cypress\"",
-    "e2e:headed": "concurrently -kill-others --success first \"yarn start:e2e\" \"wait-on http://localhost:8080 && npx cypress run --headed\"",
+    "e2e:headed": "concurrently -kill-others --success first \"yarn start:e2e\" \"wait-on -i 10000 http://127.0.0.1:8080 && npx cypress run --headed\"",
     "analyze": "ng build --stats-json && webpack-bundle-analyzer dist/stats.json"
   },
   "lint-staged": {
@@ -88,10 +88,10 @@
     "@angular/cli": "15.1.5",
     "@angular/compiler-cli": "15.1.4",
     "@angular/language-service": "15.1.4",
-    "@babel/core": "7.19.1",
-    "@babel/preset-env": "7.19.1",
-    "@babel/register": "7.18.9",
-    "@cypress/webpack-preprocessor": "5.12.2",
+    "@babel/core": "7.21.3",
+    "@babel/preset-env": "7.20.2",
+    "@babel/register": "7.21.0",
+    "@cypress/webpack-preprocessor": "5.17.0",
     "@types/d3": "7.4.0",
     "@types/d3-scale": "4.0.2",
     "@types/file-saver": "2.0.5",
@@ -105,7 +105,7 @@
     "@typescript-eslint/parser": "5.38.0",
     "codelyzer": "6.0.2",
     "concurrently": "7.6.0",
-    "cypress": "9.7.0",
+    "cypress": "12.8.1",
     "cypress-fail-fast": "5.0.1",
     "del": "6.1.1",
     "eslint": "8.33.0",
@@ -145,8 +145,8 @@
     "ts-node": "10.9.1",
     "typescript": "4.9.5",
     "wait-on": "6.0.1",
-    "webpack-bundle-analyzer": "4.7.0",
-    "webpack-dev-server": "4.11.1"
+    "webpack-bundle-analyzer": "4.8.0",
+    "webpack-dev-server": "4.13.1"
   },
   "overrides": {
     "colors": "1.4.0"

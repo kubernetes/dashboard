@@ -61,9 +61,6 @@ ENV TERM=xterm
 # Add ${GOPATH}/bin into ${PATH}
 ENV PATH=${GOPATH}/bin:${PATH}
 
-# For testing, etc., to know if this environment is on container.
-ENV K8S_DASHBOARD_CONTAINER=TRUE
-
 # Suppress angular analytics dialog
 ENV NG_CLI_ANALYTICS=false
 
@@ -117,9 +114,6 @@ RUN mkdir -p /home/user/.kube
 
 # Current directory is always dashboard source directory.
 WORKDIR /go/src/github.com/kubernetes/dashboard
-
-# Expose port for frontend, backend and remote debuging
-EXPOSE 8080 8443 9090 2345
 
 # Run gosu command in container.
 CMD ./hack/develop/gosu-command.sh

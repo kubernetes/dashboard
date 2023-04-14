@@ -13,12 +13,13 @@
 // limitations under the License.
 
 import {Injectable} from '@angular/core';
-import {CanActivate, Router, UrlTree} from '@angular/router';
+import {ActivatedRouteSnapshot, CanActivate, Router, UrlTree} from '@angular/router';
 import {LoginStatus} from '@api/root.api';
 import {Observable, of} from 'rxjs';
 import {catchError, switchMap, take} from 'rxjs/operators';
 import {AuthService} from '../global/authentication';
 import {HistoryService} from '../global/history';
+import {SKIP_LOGIN_PAGE_QUERY_STATE_PARAM} from '@common/params/params';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
@@ -28,7 +29,8 @@ export class AuthGuard implements CanActivate {
     private readonly historyService_: HistoryService
   ) {}
 
-  canActivate(): Observable<boolean | UrlTree> {
+  canActivate(root: ActivatedRouteSnapshot): Observable<boolean | UrlTree> {
+    const isAutoSkipLoginPage = root.queryParamMap.get(SKIP_LOGIN_PAGE_QUERY_STATE_PARAM);
     return this.authService_
       .getLoginStatus()
       .pipe(take(1))
@@ -39,7 +41,11 @@ export class AuthGuard implements CanActivate {
             !this.authService_.isAuthenticated(loginStatus)
           ) {
             this.historyService_.pushState(this.router_.getCurrentNavigation());
-            return this.router_.navigate(['login']);
+            return this.router_.navigate(['login'], {
+              queryParams: {
+                [SKIP_LOGIN_PAGE_QUERY_STATE_PARAM]: isAutoSkipLoginPage,
+              },
+            });
           }
 
           return of(true);

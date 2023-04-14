@@ -17,8 +17,8 @@
       ]
     },
     "outDir": ".tmp/out-tsc",
-    "moduleResolution": "Node",
-    "target": "ES2022",
+    "moduleResolution": "node",
+    "target": "ES2021",
     "module": "ES2020",
     "sourceMap": true,
     "emitDecoratorMetadata": true,

@@ -1,18 +1,18 @@
 {
   "/api": {
-    "target": "https://localhost:9001",
+    "target": "https://127.0.0.1:9001",
     "secure": false,
     "ws": true,
     "changeOrigin": true
   },
   "/config": {
-    "target": "https://localhost:8001",
+    "target": "https://127.0.0.1:8001",
     "secure": false,
     "ws": true,
     "changeOrigin": true
   },
   "/systembanner": {
-    "target": "https://localhost:8001",
+    "target": "https://127.0.0.1:8001",
     "secure": false,
     "ws": true,
     "changeOrigin": true

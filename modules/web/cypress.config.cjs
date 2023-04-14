@@ -12,17 +12,19 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-/**
- * Parameter name of the namespace selection param. Mostly for internal use.
- */
-export const NAMESPACE_STATE_PARAM = 'namespace';
+const { defineConfig } = require('cypress');
 
-/**
- * Parameter name of the search query.
- */
-export const SEARCH_QUERY_STATE_PARAM = 'q';
-
-/**
- * Parameter name of auto skipping login page.
- */
-export const SKIP_LOGIN_PAGE_QUERY_STATE_PARAM = 'skipLoginPage';
+module.exports = defineConfig({
+  "e2e": {
+    "baseUrl": "http://localhost:8080",
+    "supportFile": "./cypress/support/index.ts",
+    "video": false,
+    "chromeWebSecurity": false,
+    "screenshotOnRunFailure": true,
+    "videoCompression": false,
+    "pageLoadTimeout": 10000,
+    "viewportHeight": 1080,
+    "viewportWidth": 1920,
+    "testIsolation": false,
+  },
+});
