@@ -17,11 +17,6 @@ const config = {
   coverageDirectory: './coverage',
   preset: "jest-preset-angular/presets/defaults",
   setupFilesAfterEnv: ["<rootDir>/test.base.ts"],
-  globals: {
-    'ts-jest': {
-      tsconfig: './tsconfig.spec.json',
-    },
-  },
   moduleNameMapper: {
     "^@api/(.*)$": "<rootDir>/typings/$1",
     "^@common/(.*)$": "<rootDir>/common/$1",

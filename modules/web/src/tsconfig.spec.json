@@ -1,0 +1,15 @@
+{
+  "extends": "../tsconfig.json",
+  "compilerOptions": {
+    "outDir": "../tmp/out-tsc/spec",
+    "baseUrl": "./",
+    "types": ["jest"],
+    "emitDecoratorMetadata": false
+  },
+  "include": [
+    "./**/*.spec.ts",
+    "./**/test.*.ts",
+    "./typings/**/.*.ts",
+    "./index.messages.ts",
+  ]
+}
