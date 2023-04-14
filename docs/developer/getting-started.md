@@ -6,12 +6,13 @@ This document describes how to setup your development environment.
 
 Make sure the following software is installed and added to the `$PATH` variable:
 
-* Curl 7+ ([installation manual](https://curl.se/docs/install.html))
-* Git 2.13.2+ ([installation manual](https://git-scm.com/downloads))
-* Docker 23.0.1+ ([installation manual](https://docs.docker.com/engine/installation/linux/docker-ce/ubuntu/))
-* Golang 1.19+ ([installation manual](https://golang.org/dl/))
-  * Dashboard uses `go mod` for go dependency management.
-* Node.js 18.14.0+ and yarn ([installation with nvm](https://github.com/creationix/nvm#usage))
+* Curl 7+ ([installation](https://curl.se/docs/install.html))
+* Git 2.13.2+ ([installation](https://git-scm.com/downloads))
+* Docker 23.0.1+ ([installation](https://docs.docker.com/engine/installation/linux/docker-ce/ubuntu/))
+* Golang 1.19+ ([installation](https://golang.org/dl/))
+  * We use `go mod` for go dependency management
+* Node.js 18.14.0+ ([installation](https://nodejs.org/en/download))
+* Yarn 2+ ([installation](https://yarnpkg.com/getting-started/install))
 
 Clone the repository and install the dependencies:
 
