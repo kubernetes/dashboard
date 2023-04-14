@@ -33,20 +33,17 @@ spec:
 
           {{- with .Values.web.containers.ports }}
           ports:
-          {{ toYaml . | nindent  }}
+          {{ toYaml . | nindent 10 }}
           {{- end }}
 
-          volumeMounts:
-            - mountPath: /tmp
-              name: tmp-volume
-
           {{- with .Values.web.containers.volumeMounts }}
+          volumeMounts:
           {{ toYaml . | nindent 10 }}
           {{- end }}
 
           {{- with .Values.app.security.containerSecurityContext }}
           securityContext:
-          {{ toYaml . | nindent 12 }}
+          {{ toYaml . | nindent 10 }}
           {{- end }}
       volumes:
         - name: tmp-volume

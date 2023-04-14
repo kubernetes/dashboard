@@ -10,8 +10,9 @@ metadata:
 spec:
   ports:
     - name: {{ .Values.web.role }}
-      port: 80
-      targetPort: 8000
+    {{- with (index .Values.web.containers.ports 0) }}
+      port: {{ .containerPort }}
+    {{- end }}
   selector:
     {{- include "kubernetes-dashboard.matchLabels" . | nindent 4 }}
     app.kubernetes.io/name: {{ template "kubernetes-dashboard.name" . }}-{{ .Values.web.role }}

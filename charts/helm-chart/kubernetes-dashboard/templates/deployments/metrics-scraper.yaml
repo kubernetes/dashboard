@@ -26,28 +26,25 @@ spec:
         - name: {{ template "kubernetes-dashboard.name" . }}-{{ .Values.metricsScraper.role }}
           image: "{{ .Values.metricsScraper.image.repository }}:{{ .Values.metricsScraper.image.tag }}"
 
-        {{- with .Values.metricsScraper.containers.ports }}
+          {{- with .Values.metricsScraper.containers.ports }}
           ports:
-        {{ toYaml . | nindent 10 }}
-        {{- end }}
+          {{ toYaml . | nindent 10 }}
+          {{- end }}
 
-        {{- with .Values.metricsScraper.volumeMounts }}
+          {{- with .Values.metricsScraper.volumeMounts }}
           volumeMounts:
-        {{ toYaml . | nindent 10 }}
-        {{- end }}
+          {{ toYaml . | nindent 10 }}
+          {{- end }}
 
+          {{- with .Values.metricsScraper.livenessProbe }}
           livenessProbe:
-            httpGet:
-              scheme: HTTP
-              path: /
-              port: 8000
-            initialDelaySeconds: 30
-            timeoutSeconds: 30
+          {{ toYaml . | nindent 10 }}
+          {{- end }}
 
-        {{- with .Values.app.security.containerSecurityContext }}
+          {{- with .Values.app.security.containerSecurityContext }}
           securityContext:
-        {{ toYaml . | nindent 10 }}
-        {{- end }}
+          {{ toYaml . | nindent 10 }}
+          {{- end }}
 
       {{- with .Values.app.security.securityContext }}
       securityContext:

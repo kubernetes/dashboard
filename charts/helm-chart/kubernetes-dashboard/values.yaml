@@ -95,7 +95,8 @@ api:
     tag: latest
   containers:
     ports:
-      - containerPort: 9000
+      - name: api
+        containerPort: 9000
         protocol: TCP
     # Additional container arguments
     # TODO: Update link to arguments to distinguish between api/web
@@ -148,7 +149,8 @@ web:
     tag: latest
   containers:
     ports:
-      - containerPort: 8000
+      - name: web
+        containerPort: 8000
         protocol: TCP
     # Additional container arguments
     # TODO: Update link to arguments to distinguish between api/web
@@ -171,7 +173,10 @@ web:
     # - mountPath: /kubeconfig
     #   name: dashboard-kubeconfig
     #   readOnly: true
-    volumeMounts: [ ]
+    volumeMounts:
+      # Create volume mount to store logs (required)
+      - mountPath: /tmp
+        name: tmp-volume
     # TODO: Validate configuration
     resources:
       requests:
@@ -192,12 +197,21 @@ metricsScraper:
     tag: v1.0.9
   containers:
     ports:
-      - containerPort: 8000
+      - name: scraper
+        containerPort: 8000
         protocol: TCP
   volumeMounts:
     # Create volume mount to store exec logs (required)
     - mountPath: /tmp
       name: tmp-volume
+  livenessProbe:
+    httpGet:
+      scheme: HTTP
+      path: /
+      port: 8000
+    initialDelaySeconds: 30
+    timeoutSeconds: 30
+
 
 ## Optional Metrics Server sub-chart configuration
 ## Enable this if you don't already have metrics-server enabled on your cluster and

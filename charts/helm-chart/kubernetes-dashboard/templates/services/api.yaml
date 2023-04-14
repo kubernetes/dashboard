@@ -12,7 +12,6 @@ spec:
     - name: {{ .Values.api.role }}
     {{- with (index .Values.api.containers.ports 0) }}
       port: {{ .containerPort }}
-      targetPort: {{ .containerPort }}
     {{- end }}
   selector:
     {{- include "kubernetes-dashboard.matchLabels" . | nindent 4 }}
