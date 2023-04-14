@@ -15,7 +15,7 @@
 root: true
 parser: "@typescript-eslint/parser"
 parserOptions:
-  ecmaVersion: '2020'
+  ecmaVersion: 2020
   project:
     - tsconfig.app.json
     - tsconfig.spec.json

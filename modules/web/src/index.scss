@@ -318,13 +318,10 @@ router-outlet::after {
 
 .kd-loading-shade {
   align-items: center;
-  bottom: 0;
   display: flex;
+  inset: 0;
   justify-content: center;
-  left: 0;
   position: absolute;
-  right: 0;
-  top: 0;
   z-index: 1;
 }
 
