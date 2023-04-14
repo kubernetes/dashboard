@@ -33,6 +33,9 @@ spec:
   podSelector:
     matchLabels:
 {{ include "kubernetes-dashboard.matchLabels" . | nindent 6 }}
+{{- if .Values.networkPolicy.ingressDenyAll }}
+  ingress: []
+{{- else }}
   ingress:
   - ports:
 {{- if .Values.protocolHttp }}
@@ -41,5 +44,6 @@ spec:
 {{- else }}
     - port: https
       protocol: TCP
+{{- end -}}
 {{- end -}}
 {{- end -}}

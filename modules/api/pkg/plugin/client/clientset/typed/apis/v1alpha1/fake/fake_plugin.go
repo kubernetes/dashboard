@@ -23,7 +23,6 @@ import (
 
 	v1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	labels "k8s.io/apimachinery/pkg/labels"
-	schema "k8s.io/apimachinery/pkg/runtime/schema"
 	types "k8s.io/apimachinery/pkg/types"
 	watch "k8s.io/apimachinery/pkg/watch"
 	testing "k8s.io/client-go/testing"
@@ -36,9 +35,9 @@ type FakePlugins struct {
 	ns   string
 }
 
-var pluginsResource = schema.GroupVersionResource{Group: "dashboard.k8s.io", Version: "v1alpha1", Resource: "plugins"}
+var pluginsResource = v1alpha1.SchemeGroupVersion.WithResource("plugins")
 
-var pluginsKind = schema.GroupVersionKind{Group: "dashboard.k8s.io", Version: "v1alpha1", Kind: "Plugin"}
+var pluginsKind = v1alpha1.SchemeGroupVersion.WithKind("Plugin")
 
 // Get takes name of the plugin, and returns the corresponding plugin object, and an error if there is any.
 func (c *FakePlugins) Get(ctx context.Context, name string, options v1.GetOptions) (result *v1alpha1.Plugin, err error) {

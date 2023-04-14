@@ -10,8 +10,23 @@ updates:
     schedule:
       interval: "daily"
     open-pull-requests-limit: 5
+  - package-ecosystem: "gomod"
+    directory: "modules/common/certificates/"
+    schedule:
+      interval: "daily"
+    open-pull-requests-limit: 5
+  - package-ecosystem: "gomod"
+    directory: "modules/common/tools/"
+    schedule:
+      interval: "daily"
+    open-pull-requests-limit: 5
+  - package-ecosystem: "gomod"
+    directory: "modules/web/"
+    schedule:
+      interval: "daily"
+    open-pull-requests-limit: 5
   - package-ecosystem: "npm"
     directory: "modules/web/"
     schedule:
       interval: "daily"
-    open-pull-requests-limit: 0 # FIXME: https://github.com/kubernetes/dashboard/issues/7470
+    open-pull-requests-limit: 10

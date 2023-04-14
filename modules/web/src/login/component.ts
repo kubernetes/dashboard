@@ -25,6 +25,7 @@ import {PluginsConfigService} from '@common/services/global/plugin';
 import {CookieService} from 'ngx-cookie-service';
 import {map} from 'rxjs/operators';
 import {CONFIG_DI_TOKEN} from '../index.config';
+import {SKIP_LOGIN_PAGE_QUERY_STATE_PARAM} from '@common/params/params';
 
 enum LoginModes {
   Kubeconfig = 'kubeconfig',
@@ -79,6 +80,11 @@ export class LoginComponent implements OnInit {
       .get<LoginSkippableResponse>('api/v1/login/skippable')
       .subscribe((loginSkippableResponse: LoginSkippableResponse) => {
         this.isLoginSkippable_ = loginSkippableResponse.skippable;
+
+        const autoSkipLoginPage = this.route_.snapshot.queryParamMap.get(SKIP_LOGIN_PAGE_QUERY_STATE_PARAM) === 'true';
+        if (this.isLoginSkippable_ && autoSkipLoginPage) {
+          this.skip();
+        }
       });
 
     this.route_.paramMap.pipe(map(() => window.history.state)).subscribe((state: StateError) => {

@@ -37,7 +37,7 @@ export class ScaleResourceDialog implements OnInit {
     const url =
       `api/v1/scale/${this.data.typeMeta.kind}` +
       (this.data.objectMeta.namespace ? `/${this.data.objectMeta.namespace}` : '') +
-      `/${this.data.objectMeta.name}/`;
+      `/${this.data.objectMeta.name}`;
 
     this.http_
       .get<ReplicaCounts>(url)

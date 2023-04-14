@@ -40,13 +40,13 @@ export class WorkloadStatusComponent {
   size = [350, 250];
 
   getCustomColor(label: string): string {
-    if (label.includes('Running')) {
+    if (label.includes($localize`Running`)) {
       return '#00c752';
-    } else if (label.includes('Succeeded')) {
+    } else if (label.includes($localize`Succeeded`)) {
       return '#006028';
-    } else if (label.includes('Pending')) {
+    } else if (label.includes($localize`Pending`)) {
       return '#ffad20';
-    } else if (label.includes('Failed')) {
+    } else if (label.includes($localize`Failed`)) {
       return '#f00';
     }
     return '';

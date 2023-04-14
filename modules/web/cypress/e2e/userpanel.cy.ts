@@ -14,7 +14,7 @@
  * limitations under the License.
  *
  */
-import {UserpanelPage} from '../../pages/userpanelPage';
+import {UserpanelPage} from '../pages/userpanelPage';
 
 describe('Userpanel', () => {
   before(() => {

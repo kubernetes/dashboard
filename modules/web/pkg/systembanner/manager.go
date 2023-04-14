@@ -23,7 +23,7 @@ type SystemBannerManager struct {
 	systemBanner api.SystemBanner
 }
 
-// NewSystemBannerManager creates new settings manager.
+// NewSystemBannerManager creates new system banner manager.
 func NewSystemBannerManager(message, severity string) SystemBannerManager {
 	return SystemBannerManager{
 		systemBanner: api.SystemBanner{

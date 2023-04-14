@@ -15,7 +15,7 @@
 
 # Import config.
 ROOT_DIR="$(cd $(dirname "${BASH_SOURCE}")/../.. && pwd -P)"
-. "${ROOT_DIR}/aio/scripts/conf.sh"
+. "${ROOT_DIR}/hack/scripts/conf.sh"
 
 function start-ci-heapster {
   echo "\nRunning heapster in standalone mode"
@@ -36,7 +36,7 @@ function start-ci-heapster {
 }
 
 function start-kind {
-  ${KIND_BIN} create cluster --name="k8s-cluster-ci" --image="kindest/node:${K8S_VERSION}"
+  ${KIND_BIN} create cluster --name="k8s-cluster-ci" --image="kindest/node:${K8S_VERSION}" --config="${ROOT_DIR}/hack/scripts/kind-config"
   ensure-kubeconfig
   if [ "${CI}" = true ] ; then
     start-ci-heapster

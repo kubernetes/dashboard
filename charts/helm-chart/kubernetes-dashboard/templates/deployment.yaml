@@ -143,6 +143,9 @@ spec:
         volumeMounts:
         - mountPath: /tmp
           name: tmp-volume
+{{- if .Values.optionalContainers.enabled }}
+{{ toYaml .Values.optionalContainers.containers | nindent 6 }}
+{{- end }}
 
 {{- if .Values.metricsScraper.containerSecurityContext }}
         securityContext:

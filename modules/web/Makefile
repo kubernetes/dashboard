@@ -9,6 +9,20 @@ include $(ROOT_DIRECTORY)/hack/include/deploy.mk
 
 MAKEFLAGS += -j2
 
+.PHONY: check
+check: check-go
+
+.PHONY: check-go
+check-go: $(PRE)
+	golangci-lint run -c ../../.golangci.yml ./...
+
+.PHONY: fix
+fix: fix-go
+
+.PHONY: fix-go
+fix-go: $(PRE)
+	golangci-lint run -c ../../.golangci.yml --fix ./...
+
 .PHONY: serve
 serve: $(PRE) --serve-go --serve-angular
 
@@ -45,7 +59,7 @@ deploy-dev: --deploy-dev
 
 .PHONY: --serve-angular
 --serve-angular: --ensure-dependencies
-	@npx ng serve --proxy-config=$(PROXY_CONFIG) --ssl=$(SSL_ENABLED)
+	@npx ng serve --proxy-config=$(PROXY_CONFIG) --ssl=$(SSL_ENABLED) --host=$(BIND_ADDRESS)
 
 .PHONY: --build-go
 --build-go:

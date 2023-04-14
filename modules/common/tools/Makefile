@@ -2,6 +2,7 @@ LICENSE_EYE_BINARY := $(shell which license-eye)
 AIR_BINARY := $(shell which air)
 GOLANGCI_LINT_BINARY := $(shell which golangci-lint)
 CLIENT_GEN_BINARY := $(shell which client-gen)
+GENGO_DIR := "${GOPATH}/src/k8s.io/gengo"
 
 GO_BINARY := $(shell which go)
 GO_MAJOR_VERSION = $(shell go version | cut -c 14- | cut -d' ' -f1 | cut -d'.' -f1)
@@ -20,7 +21,7 @@ YARN_BINARY := $(shell which yarn)
 # TODO: It should check not only if binaries are installed but also their versions
 
 .PHONY: install
-install: ensure-go ensure-node install-license-eye install-air install-golangci-lint install-client-gen install-yarn
+install: ensure-go ensure-node install-license-eye install-air install-golangci-lint install-client-gen install-yarn ensure-gengo
 
 .PHONY: ensure-go
 ensure-go:

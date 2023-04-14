@@ -15,7 +15,7 @@
 
 # Import config.
 ROOT_DIR="$(cd $(dirname "${BASH_SOURCE}")/../.. && pwd -P)"
-. "${ROOT_DIR}/aio/scripts/conf.sh"
+. "${ROOT_DIR}/hack/scripts/conf.sh"
 
 ensure-cache
 download-kind
