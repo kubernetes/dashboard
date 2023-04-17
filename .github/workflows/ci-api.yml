@@ -52,7 +52,7 @@ jobs:
           make codegen-verify
       - uses: golangci/golangci-lint-action@v3
         with:
-          version: v1.49.0
+          version: v1.52.2
           working-directory: modules/api
   unit:
     name: Unit tests with coverage
