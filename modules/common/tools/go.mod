@@ -1,6 +1,6 @@
 module k8s.io/dashboard/tools
 
-go 1.19
+go 1.20
 
 require (
 	github.com/apache/skywalking-eyes v0.4.0
