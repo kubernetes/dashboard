@@ -1,6 +1,6 @@
 module k8s.io/dashboard/api
 
-go 1.19
+go 1.20
 
 require (
 	github.com/docker/distribution v2.8.1+incompatible
@@ -11,10 +11,10 @@ require (
 	gopkg.in/igm/sockjs-go.v2 v2.1.0
 	gopkg.in/square/go-jose.v2 v2.6.0
 	gopkg.in/yaml.v2 v2.4.0
-	k8s.io/api v0.27.0
-	k8s.io/apiextensions-apiserver v0.27.0
-	k8s.io/apimachinery v0.27.0
-	k8s.io/client-go v0.27.0
+	k8s.io/api v0.27.1
+	k8s.io/apiextensions-apiserver v0.27.1
+	k8s.io/apimachinery v0.27.1
+	k8s.io/client-go v0.27.1
 	k8s.io/dashboard/certificates v0.0.0-00010101000000-000000000000
 )
 

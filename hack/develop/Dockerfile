@@ -18,7 +18,7 @@
 
 # golang is based on debian:jessie
 # Specify version to clarify which version we use.
-FROM golang:1.19.0-bullseye
+FROM golang:1.20-bullseye
 
 # Install Node.js. Go is already installed.
 # A small tweak, apt-get update is already run by the nodejs setup script,
@@ -88,7 +88,7 @@ RUN mv ./kubectl /usr/local/bin/kubectl
 # `npm ci` installs golangci, but this installation is needed
 # for running `npm run check` singlely, like
 # `hack/develop/run-dev-container.sh run check`.
-RUN curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $(go env GOPATH)/bin v1.49.0
+RUN curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $(go env GOPATH)/bin v1.52.2
 
 # Enable go mod.
 ENV GO111MODULE=on

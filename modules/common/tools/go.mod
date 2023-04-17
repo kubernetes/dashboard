@@ -1,12 +1,12 @@
 module k8s.io/dashboard/tools
 
-go 1.19
+go 1.20
 
 require (
 	github.com/apache/skywalking-eyes v0.4.0
-	github.com/cosmtrek/air v1.42.0
+	github.com/cosmtrek/air v1.43.0
 	github.com/golangci/golangci-lint v1.52.2
-	k8s.io/code-generator v0.27.0
+	k8s.io/code-generator v0.27.1
 )
 
 require (
@@ -28,6 +28,8 @@ require (
 	github.com/ashanbrown/forbidigo v1.5.1 // indirect
 	github.com/ashanbrown/makezero v1.1.1 // indirect
 	github.com/beorn7/perks v1.0.1 // indirect
+	github.com/bep/godartsass v0.16.0 // indirect
+	github.com/bep/golibsass v1.1.0 // indirect
 	github.com/bkielbasa/cyclop v1.2.0 // indirect
 	github.com/blizzy78/varnamelen v0.8.0 // indirect
 	github.com/bmatcuk/doublestar/v2 v2.0.4 // indirect
@@ -38,6 +40,7 @@ require (
 	github.com/cespare/xxhash/v2 v2.2.0 // indirect
 	github.com/charithe/durationcheck v0.0.10 // indirect
 	github.com/chavacava/garif v0.0.0-20230227094218-b8c73b2037b8 // indirect
+	github.com/cli/safeexec v1.0.0 // indirect
 	github.com/creack/pty v1.1.18 // indirect
 	github.com/curioswitch/go-reassign v0.2.0 // indirect
 	github.com/daixiang0/gci v0.10.1 // indirect
@@ -67,6 +70,7 @@ require (
 	github.com/go-xmlfmt/xmlfmt v1.1.2 // indirect
 	github.com/gobwas/glob v0.2.3 // indirect
 	github.com/gofrs/flock v0.8.1 // indirect
+	github.com/gohugoio/hugo v0.111.3 // indirect
 	github.com/golang/protobuf v1.5.3 // indirect
 	github.com/golangci/check v0.0.0-20180506172741-cfe4005ccda2 // indirect
 	github.com/golangci/dupl v0.0.0-20180902072040-3e9179ac440a // indirect
@@ -178,6 +182,7 @@ require (
 	github.com/subosito/gotenv v1.4.2 // indirect
 	github.com/t-yuki/gocover-cobertura v0.0.0-20180217150009-aaee18c8195c // indirect
 	github.com/tdakkota/asciicheck v0.2.0 // indirect
+	github.com/tdewolff/parse/v2 v2.6.5 // indirect
 	github.com/tetafro/godot v1.4.11 // indirect
 	github.com/timakin/bodyclose v0.0.0-20221125081123-e39cf3fc478e // indirect
 	github.com/timonwong/loggercheck v0.9.4 // indirect

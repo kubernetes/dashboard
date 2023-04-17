@@ -1,10 +1,10 @@
 module k8s.io/dashboard/certificates
 
-go 1.19
+go 1.20
 
 require (
-	k8s.io/api v0.27.0
-	k8s.io/apimachinery v0.27.0
+	k8s.io/api v0.27.1
+	k8s.io/apimachinery v0.27.1
 )
 
 require (

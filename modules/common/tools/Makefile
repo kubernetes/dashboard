@@ -10,7 +10,7 @@ GO_BINARY := $(shell which go)
 GO_MAJOR_VERSION = $(shell go version | cut -c 14- | cut -d' ' -f1 | cut -d'.' -f1)
 GO_MINOR_VERSION = $(shell go version | cut -c 14- | cut -d' ' -f1 | cut -d'.' -f2)
 MIN_GO_MAJOR_VERSION = 1
-MIN_GO_MINOR_VERSION = 19
+MIN_GO_MINOR_VERSION = 20
 
 GENGO_DIR := "${GOPATH}/src/k8s.io/gengo"
 LICENSE_EYE_BINARY := $(shell which license-eye)
