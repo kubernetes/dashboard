@@ -68,7 +68,7 @@ app:
     #  disableAccessDeniedNotifications: false
     ## Pinned CRDs that will be displayed in dashboard's menu
     pinnedCRDs: []
-    #- kind: customresourcedefinition
+    # - kind: customresourcedefinition
     #  #  Fully qualified name of a CRD
     #  name: prometheus.monitoring.coreos.com
     #  #  Display name
@@ -318,7 +318,7 @@ extras:
     annotations: {}
 
 
-#rbac:
+# rbac:
 #  # Specifies whether namespaced RBAC resources (Role, Rolebinding) should be created
 #  create: true
 #
