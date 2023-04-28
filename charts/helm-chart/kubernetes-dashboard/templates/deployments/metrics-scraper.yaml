@@ -51,37 +51,37 @@ spec:
           imagePullPolicy: {{ .Values.app.image.pullPolicy }}
           {{- with .Values.metricsScraper.containers.args }}
           args:
-          {{ toYaml . | nindent 10 }}
+          {{ toYaml . | nindent 12 }}
           {{- end }}
 
           {{- with .Values.web.containers.env }}
           env:
-          {{ toYaml . | nindent 10 }}
+          {{ toYaml . | nindent 12 }}
           {{- end }}
 
           {{- with .Values.metricsScraper.containers.ports }}
           ports:
-          {{ toYaml . | nindent 10 }}
+          {{ toYaml . | nindent 12 }}
           {{- end }}
 
           {{- with .Values.metricsScraper.containers.volumeMounts }}
           volumeMounts:
-          {{ toYaml . | nindent 10 }}
+          {{ toYaml . | nindent 12 }}
           {{- end }}
 
           {{- with .Values.app.security.containerSecurityContext }}
           securityContext:
-          {{ toYaml . | nindent 10 }}
+          {{ toYaml . | nindent 12 }}
           {{- end }}
 
           {{- with .Values.metricsScraper.containers.resources }}
           resources:
-          {{ toYaml . | nindent 10 }}
+          {{ toYaml . | nindent 12 }}
           {{- end }}
 
           {{- with .Values.metricsScraper.containers.livenessProbe }}
           livenessProbe:
-          {{ toYaml . | nindent 10 }}
+          {{ toYaml . | nindent 12 }}
           {{- end }}
       {{- with .Values.app.security.securityContext }}
       securityContext:

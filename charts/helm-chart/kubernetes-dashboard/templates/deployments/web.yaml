@@ -48,32 +48,32 @@ spec:
           imagePullPolicy: {{ .Values.app.image.pullPolicy }}
           {{- with .Values.web.containers.args }}
           args:
-          {{ toYaml . | nindent 10 }}
+          {{ toYaml . | nindent 12 }}
           {{- end }}
 
           {{- with .Values.web.containers.env }}
           env:
-          {{ toYaml . | nindent 10 }}
+          {{ toYaml . | nindent 12 }}
           {{- end }}
 
           {{- with .Values.web.containers.ports }}
           ports:
-          {{ toYaml . | nindent 10 }}
+          {{ toYaml . | nindent 12 }}
           {{- end }}
 
           {{- with .Values.web.containers.volumeMounts }}
           volumeMounts:
-          {{ toYaml . | nindent 10 }}
+          {{ toYaml . | nindent 12 }}
           {{- end }}
 
           {{- with .Values.app.security.containerSecurityContext }}
           securityContext:
-          {{ toYaml . | nindent 10 }}
+          {{ toYaml . | nindent 12 }}
           {{- end }}
 
           {{- with .Values.web.containers.resources }}
           resources:
-          {{ toYaml . | nindent 10 }}
+          {{ toYaml . | nindent 12 }}
           {{- end }}
       {{- with .Values.app.security.securityContext }}
       securityContext:

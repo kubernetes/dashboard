@@ -50,32 +50,32 @@ spec:
             - --enable-insecure-login
             - --namespace={{ .Release.Namespace }}
           {{- with .Values.api.containers.args }}
-          {{ toYaml . | nindent 10 }}
+          {{ toYaml . | nindent 12 }}
           {{- end }}
 
           {{- with .Values.api.containers.env }}
           env:
-          {{ toYaml . | nindent 10 }}
+          {{ toYaml . | nindent 12 }}
           {{- end }}
 
           {{- with .Values.api.containers.ports }}
           ports:
-          {{ toYaml . | nindent 10 }}
+          {{ toYaml . | nindent 12 }}
           {{- end }}
 
           {{- with .Values.api.containers.volumeMounts }}
           volumeMounts:
-          {{ toYaml . | nindent 10 }}
+          {{ toYaml . | nindent 12 }}
           {{- end }}
 
           {{- with .Values.app.security.containerSecurityContext }}
           securityContext:
-          {{ toYaml . | nindent 10 }}
+          {{ toYaml . | nindent 12 }}
           {{- end }}
 
           {{- with .Values.api.containers.resources }}
           resources:
-          {{ toYaml . | nindent 10 }}
+          {{ toYaml . | nindent 12 }}
           {{- end }}
       {{- with .Values.app.security.securityContext }}
       securityContext:
