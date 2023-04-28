@@ -277,7 +277,7 @@ cert-manager:
 
 ## Optional Nginx Ingress sub-chart configuration
 ## Enable this if you don't already have nginx-ingress enabled on your cluster.
-nginx-ingress:
+nginx:
   enabled: true
 
 ### List of node taints to tolerate (requires Kubernetes >= 1.6)

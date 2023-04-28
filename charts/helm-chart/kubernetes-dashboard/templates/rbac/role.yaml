@@ -16,8 +16,8 @@ kind: Role
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
   labels:
-    k8s-app: kubernetes-dashboard
-  name: kubernetes-dashboard
+    {{- include "kubernetes-dashboard.labels" . | nindent 4 }}
+  name: {{ template "kubernetes-dashboard.fullname" . }}
 rules:
   # Allow Dashboard to get, update and delete Dashboard exclusive secrets.
   - apiGroups: [ "" ]

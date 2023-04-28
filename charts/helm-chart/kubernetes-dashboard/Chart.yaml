@@ -32,6 +32,7 @@ icon: https://raw.githubusercontent.com/kubernetes/kubernetes/master/logo/logo.s
 kubeVersion: ">=1.21.0-0"
 dependencies:
   - name: nginx-ingress
+    alias: nginx
     version: 0.17.0
     repository: https://helm.nginx.com/stable
     condition: nginx-ingress.enabled

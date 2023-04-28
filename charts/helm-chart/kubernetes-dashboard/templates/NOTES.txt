@@ -2,14 +2,14 @@
 *** PLEASE BE PATIENT: kubernetes-dashboard may take a few minutes to install ***
 *********************************************************************************
 
-{{/*{{- if .Values.ingress.enabled }}*/}}
-{{/*From outside the cluster, the server URL(s) are:*/}}
-{{/*{{- range .Values.ingress.hosts }}*/}}
-{{/*{{- if $.Values.protocolHttp }}*/}}
-{{/*     http://{{ . }}*/}}
-{{/*{{- else }}*/}}
-{{/*     https://{{ . }}*/}}
-{{/*{{- end }}*/}}
+{{/* Describe how to access depending on config */}}
+{{/* 1. Local K8S i.e. Docker (selfsigned + localhost domain) - direct access */}}
+{{/* 2. Local K8S other than Docker (selfsigned + localhost domain) - via kubectl port-forward */}}
+{{/* 2. External K8S (selfsigned/custom + custom domain) - access directly via domain */}}
+
+{{/*{{- if .Values.nginx.enabled }}*/}}
+{{/*  From outside the cluster, the server URL(s) are:*/}}
+{{/*  https://{{ .Values.app.ingress.host }}*/}}
 {{/*{{- end }}*/}}
 
 {{/*{{- else if contains "NodePort" .Values.service.type }}*/}}
