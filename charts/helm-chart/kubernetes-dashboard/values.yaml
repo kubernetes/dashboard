@@ -40,6 +40,12 @@ app:
       readOnlyRootFilesystem: true
       runAsUser: 1001
       runAsGroup: 2001
+    # Pod Disruption Budget configuration
+    # Ref: https://kubernetes.io/docs/tasks/run-application/configure-pdb/
+    podDisruptionBudget:
+      enabled: false
+      minAvailable: 0
+      maxUnavailable: 0
   # Common labels & annotations shared across all deployed resources
   labels: { }
   annotations: { }
@@ -361,15 +367,6 @@ nginx:
 #  # The name of the service account to use.
 #  # If not set and create is true, a name is generated using the fullname template
 #  name:
-#
-### podDisruptionBudget
-### ref: https://kubernetes.io/docs/tasks/run-application/configure-pdb/
-#podDisruptionBudget:
-#  enabled: false
-#  ## Minimum available instances; ignored if there is no PodDisruptionBudget
-#  minAvailable:
-#  ## Maximum unavailable instances; ignored if there is no PodDisruptionBudget
-#  maxUnavailable:
 #
 #networkPolicy:
 #  # Whether to create a network policy that allows/restricts access to the service
