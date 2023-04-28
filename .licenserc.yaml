@@ -69,5 +69,6 @@ header:
     - 'LICENSE'
     - 'OWNERS_ALIASES'
     - 'SECURITY_CONTACTS'
+    - 'charts/helm-chart/kubernetes-dashboard/templates/networking/post-install-ingress.yaml'
   comment: on-failure
   license-location-threshold: 80
