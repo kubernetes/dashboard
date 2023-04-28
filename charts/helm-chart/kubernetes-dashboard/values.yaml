@@ -278,6 +278,11 @@ cert-manager:
 nginx:
   enabled: true
 
+## Extra configurations:
+## - manifests
+## - predefined roles
+## - prometheus
+## - etc...
 extras:
   # Extra Kubernetes manifests to be deployed
   # manifests:
