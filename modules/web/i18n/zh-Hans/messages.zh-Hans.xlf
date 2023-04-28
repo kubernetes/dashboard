@@ -1878,7 +1878,7 @@
       </trans-unit>
       <trans-unit id="728108318392658678" datatype="html">
         <source>Shell in <x id="START_TAG_MAT_SELECT" ctype="x-mat_select" equiv-text="&quot;\uFFFD*3:1\uFFFD\uFFFD#1:1\uFFFD&quot;"/><x id="START_TAG_MAT_OPTION" ctype="x-mat_option" equiv-text="&quot;\uFFFD*2:2\uFFFD\uFFFD#1:2\uFFFD&quot;"/> <x id="INTERPOLATION" equiv-text="&quot;\uFFFD0:2\uFFFD&quot;"/> <x id="CLOSE_TAG_MAT_OPTION" ctype="x-mat_option" equiv-text="&quot;\uFFFD/#1:2\uFFFD\uFFFD/*2:2\uFFFD&quot;"/><x id="CLOSE_TAG_MAT_SELECT" ctype="x-mat_select" equiv-text="&quot;\uFFFD/#1:1\uFFFD\uFFFD/*3:1\uFFFD&quot;"/> in <x id="INTERPOLATION_1" equiv-text="&quot;\uFFFD0\uFFFD&quot;"/> </source>
-        <target><x id="INTERPOLATION_1" equiv-text="{{ podName }}"/> 中 <x id="START_TAG_MAT-SELECT" ctype="x-mat-select" equiv-text="&lt;mat-select&gt;"/> <x id="START_TAG_MAT-OPTION" ctype="x-mat-option" equiv-text="&lt;mat-option&gt;"/> <x id="INTERPOLATION" equiv-text="{{ item }}"/> <x id="CLOSE_TAG_MAT-OPTION" ctype="x-mat-option" equiv-text="&lt;/mat-option&gt;"/> <x id="CLOSE_TAG_MAT-SELECT" ctype="x-mat-select" equiv-text="&lt;/mat-select&gt;"/> 中的 Shell </target>
+        <target><x id="INTERPOLATION_1" equiv-text="{{ podName }}"/> 中 <x id="START_TAG_MAT-SELECT" ctype="x-mat-select" equiv-text="&lt;mat-select&gt;"/> <x id="START_TAG_MAT-OPTION" ctype="x-mat-option" equiv-text="&lt;mat-option&gt;"/> <x id="INTERPOLATION" equiv-text="{{ item }}"/> <x id="CLOSE_TAG_MAT-OPTION" ctype="x-mat-option" equiv-text="&lt;/mat-option&gt;"/> <x id="CLOSE_TAG_MAT-SELECT" ctype="x-mat-select" equiv-text="&lt;/mat-select&gt;"/> 中的 Shell</target>
       </trans-unit>
       <trans-unit id="7281870845577621674" datatype="html">
         <source>Init Containers</source>

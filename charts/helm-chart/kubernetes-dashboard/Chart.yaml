@@ -40,6 +40,6 @@ dependencies:
     repository: https://charts.jetstack.io
     condition: cert-manager.enabled
   - name: metrics-server
-    version: 3.8.3
+    version: 3.8.4
     repository: https://kubernetes-sigs.github.io/metrics-server/
     condition: metrics-server.enabled
