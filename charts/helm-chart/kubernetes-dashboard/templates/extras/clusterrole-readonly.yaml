@@ -12,20 +12,13 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-  { { if .Values.rbac.clusterReadOnlyRole - } }
+{{ if .Values.rbac.clusterReadOnlyRole -}}
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
   name: "{{ template "kubernetes-dashboard.fullname" . }}-readonly"
   labels:
-    { { - include "kubernetes-dashboard.labels" . | nindent 4 } }
-      { { - if .Values.commonLabels } }
-      { { - include "common.tplvalues.render" ( dict "value" .Values.commonLabels "context" $ ) | nindent 4 } }
-      { { - end } }
-  annotations:
-    { { - if .Values.commonAnnotations } }
-      { { - include "common.tplvalues.render" ( dict "value" .Values.commonAnnotations "context" $ ) | nindent 4 } }
-      { { - end } }
+    {{- include "kubernetes-dashboard.labels" . | nindent 4 }}
 rules:
   - apiGroups:
       - ""
@@ -151,7 +144,7 @@ rules:
       - get
       - list
       - watch
-  { { - with .Values.rbac.clusterReadOnlyRoleAdditionalRules - } }
-  { { toYaml . | nindent 2 } }
-  { { - end } }
-  { { - end - } }
+  {{- with .Values.rbac.clusterReadOnlyRoleAdditionalRules -}}
+  {{ toYaml . | nindent 2 }}
+  {{- end }}
+{{- end -}}
