@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-{{ if .Values.rbac.clusterReadOnlyRole -}}
+{{ if .Values.extras.clusterReadOnlyRole -}}
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
@@ -144,7 +144,7 @@ rules:
       - get
       - list
       - watch
-  {{- with .Values.rbac.clusterReadOnlyRoleAdditionalRules -}}
+  {{- with .Values.extras.clusterReadOnlyRoleAdditionalRules -}}
   {{ toYaml . | nindent 2 }}
   {{- end }}
 {{- end -}}

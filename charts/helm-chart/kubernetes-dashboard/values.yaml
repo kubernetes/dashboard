@@ -296,6 +296,21 @@ extras:
   #   data:
   #     mykey: myvalue
   manifests: []
+  # Start in ReadOnly mode.
+  # Specifies whether cluster-wide RBAC resources (ClusterRole, ClusterRolebinding) with read only permissions to all resources listed inside the cluster should be created
+  # Only dashboard-related Secrets and ConfigMaps will still be available for writing.
+  #
+  # The basic idea of the clusterReadOnlyRole
+  # is not to hide all the secrets and sensitive data but more
+  # to avoid accidental changes in the cluster outside the standard CI/CD.
+  #
+  # It is NOT RECOMMENDED to use this version in production.
+  # Instead you should review the role and remove all potentially sensitive parts such as
+  # access to persistentvolumes, pods/log etc.
+  clusterReadOnlyRole: false
+  # It is possible to add additional rules if read only role is enabled.
+  # This can be useful, for example, to show CRD resources.
+  clusterReadOnlyRoleAdditionalRules: []
   serviceMonitor:
     # Whether to create a Prometheus Operator service monitor.
     enabled: false
@@ -312,24 +327,6 @@ extras:
 #  # Specifies whether cluster-wide RBAC resources (ClusterRole, ClusterRolebinding) to access metrics should be created
 #  # Independent from rbac.create parameter.
 #  clusterRoleMetrics: true
-#
-#  # Start in ReadOnly mode.
-#  # Specifies whether cluster-wide RBAC resources (ClusterRole, ClusterRolebinding) with read only permissions to all resources listed inside the cluster should be created
-#  # Only dashboard-related Secrets and ConfigMaps will still be available for writing.
-#  #
-#  # The basic idea of the clusterReadOnlyRole
-#  # is not to hide all the secrets and sensitive data but more
-#  # to avoid accidental changes in the cluster outside the standard CI/CD.
-#  #
-#  # It is NOT RECOMMENDED to use this version in production.
-#  # Instead you should review the role and remove all potentially sensitive parts such as
-#  # access to persistentvolumes, pods/log etc.
-#  #
-#  # Independent from rbac.create parameter.
-#  clusterReadOnlyRole: false
-#  # It is possible to add additional rules if read only role is enabled.
-#  # This can be useful, for example, to show CRD resources.
-#  # clusterReadOnlyRoleAdditionalRules: []
 #
 #  # If the default role permissions are not enough, it is possible to add additional permissions.
 #  # roleAdditionalRules: []
