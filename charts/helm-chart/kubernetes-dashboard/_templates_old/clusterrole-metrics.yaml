@@ -12,23 +12,23 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-  { { if .Values.rbac.clusterRoleMetrics - } }
+  {{ if .Values.rbac.clusterRoleMetrics }}
 kind: ClusterRole
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
   name: "{{ template "kubernetes-dashboard.fullname" . }}-metrics"
   labels:
-    { { - include "kubernetes-dashboard.labels" . | nindent 4 } }
-      { { - if .Values.commonLabels } }
-      { { - include "common.tplvalues.render" ( dict "value" .Values.commonLabels "context" $ ) | nindent 4 } }
-      { { - end } }
+    {{ include "kubernetes-dashboard.labels" . | nindent 4 }}
+      {{ if .Values.commonLabels }}
+      {{ include "common.tplvalues.render" ( dict "value" .Values.commonLabels "context" $ ) | nindent 4 }}
+      {{ end }}
   annotations:
-    { { - if .Values.commonAnnotations } }
-      { { - include "common.tplvalues.render" ( dict "value" .Values.commonAnnotations "context" $ ) | nindent 4 } }
-      { { - end } }
+    {{ if .Values.commonAnnotations }}
+      {{ include "common.tplvalues.render" ( dict "value" .Values.commonAnnotations "context" $ ) | nindent 4 }}
+      {{ end }}
 rules:
   # Allow Metrics Scraper to get metrics from the Metrics server
   - apiGroups: [ "metrics.k8s.io" ]
     resources: [ "pods", "nodes" ]
     verbs: [ "get", "list", "watch" ]
-  { { - end } }
+  {{ end }}
