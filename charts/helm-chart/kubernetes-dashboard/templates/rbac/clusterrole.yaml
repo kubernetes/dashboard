@@ -12,6 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+{{ if .Values.metricsScraper.enabled }}
 kind: ClusterRole
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
@@ -23,3 +24,4 @@ rules:
   - apiGroups: [ "metrics.k8s.io" ]
     resources: [ "pods", "nodes" ]
     verbs: [ "get", "list", "watch" ]
+{{ end }}

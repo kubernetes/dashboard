@@ -12,6 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+{{ if .Values.metricsScraper.enabled }}
 kind: Deployment
 apiVersion: apps/v1
 metadata:
@@ -106,3 +107,4 @@ spec:
       {{- end }}
 
       serviceAccountName: {{ template "kubernetes-dashboard.fullname" . }}
+{{ end }}
