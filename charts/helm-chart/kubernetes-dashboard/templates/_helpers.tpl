@@ -62,14 +62,3 @@ Common label selectors
 app.kubernetes.io/instance: {{ .Release.Name }}
 app.kubernetes.io/part-of: {{ include "kubernetes-dashboard.name" . }}
 {{- end -}}
-
-{{/*
-Name of the service account to use
-*/}}
-{{/*{{- define "kubernetes-dashboard.serviceAccountName" -}}*/}}
-{{/*{{- if .Values.serviceAccount.create -}}*/}}
-{{/*    {{ default (include "kubernetes-dashboard.fullname" .) .Values.serviceAccount.name }}*/}}
-{{/*{{- else -}}*/}}
-{{/*    {{ default "default" .Values.serviceAccount.name }}*/}}
-{{/*{{- end -}}*/}}
-{{/*{{- end -}}*/}}
