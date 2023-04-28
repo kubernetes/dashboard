@@ -16,7 +16,7 @@
 app:
   image:
     pullPolicy: Never
-    pullSecrets: [ ]
+    pullSecrets: []
   scaling:
     # Default number of replicas
     replicas: 1
@@ -24,7 +24,7 @@ app:
   scheduling:
     # Node labels for pod assignment
     # Ref: https://kubernetes.io/docs/user-guide/node-selection/
-    nodeSelector: { }
+    nodeSelector: {}
   security:
     # SecurityContext to be added to pods
     # To disable set the following configuration to null:
@@ -50,8 +50,8 @@ app:
       enabled: false
       ingressDenyAll: false
   # Common labels & annotations shared across all deployed resources
-  labels: { }
-  annotations: { }
+  labels: {}
+  annotations: {}
   settings:
     ## Global dashboard settings
     ## Note: Use all or none. Dashboard does not support default value merging currently.
@@ -67,7 +67,7 @@ app:
     #  # Hide all access denied warnings in the notification panel
     #  disableAccessDeniedNotifications: false
     ## Pinned CRDs that will be displayed in dashboard's menu
-    pinnedCRDs: [ ]
+    pinnedCRDs: []
     #- kind: customresourcedefinition
     #  #  Fully qualified name of a CRD
     #  name: prometheus.monitoring.coreos.com
@@ -86,7 +86,7 @@ app:
   # Use the following toleration if Dashboard can be deployed on a tainted control-plane nodes
   # - key: node-role.kubernetes.io/control-plane
   #   effect: NoSchedule
-  tolerations: [ ]
+  tolerations: []
 
 # API deployment configuration
 api:
@@ -105,12 +105,12 @@ api:
     # Full list of arguments: https://github.com/kubernetes/dashboard/blob/master/docs/common/dashboard-arguments.md
     # args:
     # - --system-banner="Welcome to the Kubernetes Dashboard"
-    args: [ ]
+    args: []
     # Additional container environment variables
     # env:
     # - name: SOME_VAR
     #   value: 'some value'
-    env: [ ]
+    env: []
     # Additional volume mounts
     # - mountPath: /kubeconfig
     #   name: dashboard-kubeconfig
@@ -135,11 +135,11 @@ api:
   volumes:
     # Create on-disk volume to store exec logs (required)
     - name: tmp-volume
-      emptyDir: { }
-  nodeSelector: { }
+      emptyDir: {}
+  nodeSelector: {}
   # Labels & annotations shared between API related resources
-  labels: { }
-  annotations: { }
+  labels: {}
+  annotations: {}
 
 # WEB UI deployment configuration
 web:
@@ -158,12 +158,12 @@ web:
     # Full list of arguments: https://github.com/kubernetes/dashboard/blob/master/docs/common/dashboard-arguments.md
     # args:
     # - --system-banner="Welcome to the Kubernetes Dashboard"
-    args: [ ]
+    args: []
     # Additional container environment variables
     # env:
     # - name: SOME_VAR
     #   value: 'some value'
-    env: [ ]
+    env: []
     # Additional volume mounts
     # - mountPath: /kubeconfig
     #   name: dashboard-kubeconfig
@@ -188,13 +188,13 @@ web:
   volumes:
     # Create on-disk volume to store exec logs (required)
     - name: tmp-volume
-      emptyDir: { }
+      emptyDir: {}
   nodeSelector:
     # TODO: check if it's really needed since we offer cross platform images for darwin/windows/linux
     kubernetes.io/os: linux
   # Labels & annotations shared between WEB UI related resources
-  labels: { }
-  annotations: { }
+  labels: {}
+  annotations: {}
 
 ### Metrics Scraper
 ### Container to scrape, store, and retrieve a window of time from the Metrics Server.
@@ -210,12 +210,12 @@ metricsScraper:
       - name: metrics-scraper
         containerPort: 8000
         protocol: TCP
-    args: [ ]
+    args: []
     # Additional container environment variables
     # env:
     # - name: SOME_VAR
     #   value: 'some value'
-    env: [ ]
+    env: []
     # Additional volume mounts
     # - mountPath: /kubeconfig
     #   name: dashboard-kubeconfig
@@ -247,13 +247,13 @@ metricsScraper:
   volumes:
     # Create on-disk volume to store exec logs (required)
     - name: tmp-volume
-      emptyDir: { }
+      emptyDir: {}
   nodeSelector:
     # TODO: check if it's really needed since we offer cross platform images for darwin/windows/linux
     kubernetes.io/os: linux
   # Labels & annotations shared between WEB UI related resources
-  labels: { }
-  annotations: { }
+  labels: {}
+  annotations: {}
 
 
 ## Optional Metrics Server sub-chart configuration
