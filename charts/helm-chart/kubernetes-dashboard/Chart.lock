@@ -1,12 +1,12 @@
 dependencies:
 - name: nginx-ingress
   repository: https://helm.nginx.com/stable
-  version: 0.15.2
+  version: 0.17.0
 - name: cert-manager
   repository: https://charts.jetstack.io
-  version: v1.10.1
+  version: v1.11.1
 - name: metrics-server
   repository: https://kubernetes-sigs.github.io/metrics-server/
   version: 3.8.4
-digest: sha256:a1d1c43676057ed97dd3b88d3ecac8440e7fdfc57b0befdac7a069dd450bec8e
-generated: "2023-04-13T15:38:14.174214045+01:00"
+digest: sha256:b0e97bb9e5954c560255b4006f6b299bb54bc1b1b21b4834c0510efeba9548a5
+generated: "2023-04-28T11:42:28.038669782+02:00"

@@ -32,11 +32,11 @@ icon: https://raw.githubusercontent.com/kubernetes/kubernetes/master/logo/logo.s
 kubeVersion: ">=1.21.0-0"
 dependencies:
   - name: nginx-ingress
-    version: 0.15.2
+    version: 0.17.0
     repository: https://helm.nginx.com/stable
     condition: nginx-ingress.enabled
   - name: cert-manager
-    version: v1.10.1
+    version: v1.11.1
     repository: https://charts.jetstack.io
     condition: cert-manager.enabled
   - name: metrics-server
