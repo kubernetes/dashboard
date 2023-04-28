@@ -32,6 +32,15 @@ spec:
         - name: {{ template "kubernetes-dashboard.name" . }}-{{ .Values.web.role }}
           image: "{{ .Values.web.image.repository }}:{{ .Values.web.image.tag }}"
           imagePullPolicy: {{ .Values.app.image.pullPolicy }}
+          {{- with .Values.web.containers.args }}
+          args:
+          {{ toYaml . | nindent 10 }}
+          {{- end }}
+
+          {{- with .Values.web.containers.env }}
+          env:
+          {{ toYaml . | nindent 10 }}
+          {{- end }}
 
           {{- with .Values.web.containers.ports }}
           ports:

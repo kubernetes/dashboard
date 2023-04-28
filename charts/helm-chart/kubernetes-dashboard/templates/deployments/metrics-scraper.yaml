@@ -9,7 +9,9 @@ metadata:
     app.kubernetes.io/name: {{ template "kubernetes-dashboard.name" . }}-{{ .Values.metricsScraper.role }}
     app.kubernetes.io/version: {{ .Values.metricsScraper.image.tag }}
     app.kubernetes.io/component: {{ .Values.metricsScraper.role }}
-  name: {{ template "kubernetes-dashboard.fullname" . }}-{{ .Values.metricsScraper.role }}
+  # TODO: dashboard-metrics-scraper name is currently hardcoded into the API.
+  # Use same name pattern as for other deployments when this will be configurable via the API.
+  name: dashboard-{{ .Values.metricsScraper.role }}
 spec:
   replicas: {{ .Values.app.scaling.replicas }}
   revisionHistoryLimit: {{ .Values.app.scaling.revisionHistoryLimit }}
@@ -31,6 +33,16 @@ spec:
       containers:
         - name: {{ template "kubernetes-dashboard.name" . }}-{{ .Values.metricsScraper.role }}
           image: "{{ .Values.metricsScraper.image.repository }}:{{ .Values.metricsScraper.image.tag }}"
+          imagePullPolicy: {{ .Values.app.image.pullPolicy }}
+          {{- with .Values.metricsScraper.containers.args }}
+          args:
+          {{ toYaml . | nindent 10 }}
+          {{- end }}
+
+          {{- with .Values.web.containers.env }}
+          env:
+          {{ toYaml . | nindent 10 }}
+          {{- end }}
 
           {{- with .Values.metricsScraper.containers.ports }}
           ports:

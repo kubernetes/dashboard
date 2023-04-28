@@ -18,5 +18,7 @@ rules:
     # Allow Dashboard to get metrics.
   - apiGroups: [ "" ]
     resources: [ "services/proxy" ]
-    resourceNames: [ "metrics-scraper", "http:metrics-scraper" ]
+    # TODO: dashboard-metrics-scraper name is currently hardcoded into the API.
+    # Use same name pattern as for other deployments when this will be configurable via the API.
+    resourceNames: [ "dashboard-metrics-scraper", "http:dashboard-metrics-scraper" ]
     verbs: [ "get" ]
