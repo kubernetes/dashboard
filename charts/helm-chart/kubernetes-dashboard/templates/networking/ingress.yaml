@@ -26,7 +26,7 @@ spec:
   tls:
     - hosts:
         - {{ .Values.app.ingress.host }}
-      secretName: kubernetes-dashboard-certs
+      secretName: {{ .Values.app.ingress.secretName }}
   rules:
     - host: {{ .Values.app.ingress.host }}
       http:

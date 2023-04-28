@@ -78,6 +78,7 @@ app:
   ingress:
     host: localhost
     ingressClassName: nginx
+    secretName: kubernetes-dashboard-certs
     issuer: selfsigned
     paths:
       web: /
@@ -280,51 +281,6 @@ cert-manager:
 nginx:
   enabled: true
 
-### List of node taints to tolerate (requires Kubernetes >= 1.6)
-#tolerations: []
-##  - key: "key"
-##    operator: "Equal|Exists"
-##    value: "value"
-##    effect: "NoSchedule|PreferNoSchedule|NoExecute"
-#
-### Affinity for pod assignment
-### ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity
-#affinity: {}
-#
-### Name of Priority Class of pods
-## priorityClassName: ""
-#
-### Serve application over HTTP without TLS
-###
-### Note: If set to true, you may want to add --enable-insecure-login to extraArgs
-#protocolHttp: false
-#
-#service:
-#  type: ClusterIP
-#  # Dashboard service port
-#  externalPort: 443
-#
-#  ## LoadBalancerSourcesRange is a list of allowed CIDR values, which are combined with ServicePort to
-#  ## set allowed inbound rules on the security group assigned to the master load balancer
-#  # loadBalancerSourceRanges: []
-#
-#  # clusterIP: ""
-#
-#  ## A user-specified IP address for load balancer to use as External IP (if supported)
-#  # loadBalancerIP:
-#
-#  ## Additional Kubernetes Dashboard Service annotations
-#  annotations: {}
-#
-#  ## Here labels can be added to the Kubernetes Dashboard service
-#  labels: {}
-#
-#  ## Enable or disable the kubernetes.io/cluster-service label. Should be disabled for GKE clusters >=1.15.
-#  ## Otherwise, the addon manager will presume ownership of the service and try to delete it.
-#  clusterServiceLabel:
-#    enabled: true
-#    key: "kubernetes.io/cluster-service"
-#
 #ingress:
 #  ## If true, Kubernetes Dashboard Ingress will be created.
 #  ##
@@ -345,9 +301,6 @@ nginx:
 #  #   nginx.ingress.kubernetes.io/secure-backends: "true"
 #  ## if you use ingress-nginx >= 0.21.0
 #  #   nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
-#
-#  ## Kubernetes Dashboard Ingress Class
-#  # className: "example-lb"
 #
 #  ## Kubernetes Dashboard Ingress paths
 #  ## Both `/` and `/*` are required to work on gce ingress.
@@ -372,51 +325,7 @@ nginx:
 #  #        port:
 #  #          # Don't use string here, use only integer value!
 #  #          number: 443
-#  ## Kubernetes Dashboard Ingress hostnames
-#  ## Must be provided if Ingress is enabled
-#  ##
-#  # hosts:
-#  #   - kubernetes-dashboard.domain.com
-#  ## Kubernetes Dashboard Ingress TLS configuration
-#  ## Secrets must be manually created in the namespace
-#  ##
-#  # tls:
-#  #   - secretName: kubernetes-dashboard-tls
-#  #     hosts:
-#  #       - kubernetes-dashboard.domain.com
-#
 
-#metricsScraper:
-#  ## Wether to enable dashboard-metrics-scraper
-#  enabled: false
-#  image:
-#    repository: kubernetesui/metrics-scraper
-#    tag: v1.0.8
-#  resources: {}
-#  ## SecurityContext especially for the kubernetes dashboard metrics scraper container
-#  ## If not set, the global containterSecurityContext values will define these values
-#  # containerSecurityContext:
-#  #   allowPrivilegeEscalation: false
-#  #   readOnlyRootFilesystem: true
-#  #   runAsUser: 1001
-#  #   runAsGroup: 2001
-##  args:
-##    - --log-level=info
-##    - --logtostderr=true
-#
-### Optional Metrics Server sub-chart
-### Enable this if you don't already have metrics-server enabled on your cluster and
-### want to use it with dashboard metrics-scraper
-### refs:
-###  - https://github.com/kubernetes-sigs/metrics-server
-###  - https://github.com/kubernetes-sigs/metrics-server/tree/master/charts/metrics-server
-#metrics-server:
-#  enabled: false
-#  ## Example for additional args
-#  # args:
-#  #  - --kubelet-preferred-address-types=InternalIP
-#  #  - --kubelet-insecure-tls
-#
 #rbac:
 #  # Specifies whether namespaced RBAC resources (Role, Rolebinding) should be created
 #  create: true
@@ -453,12 +362,6 @@ nginx:
 #  # If not set and create is true, a name is generated using the fullname template
 #  name:
 #
-#livenessProbe:
-#  # Number of seconds to wait before sending first probe
-#  initialDelaySeconds: 30
-#  # Number of seconds to wait for probe response
-#  timeoutSeconds: 30
-#
 ### podDisruptionBudget
 ### ref: https://kubernetes.io/docs/tasks/run-application/configure-pdb/
 #podDisruptionBudget:
@@ -468,18 +371,8 @@ nginx:
 #  ## Maximum unavailable instances; ignored if there is no PodDisruptionBudget
 #  maxUnavailable:
 #
-### PodSecurityContext for pod level securityContext
-## securityContext:
-##   runAsUser: 1001
-##   runAsGroup: 2001
-#
 #networkPolicy:
 #  # Whether to create a network policy that allows/restricts access to the service
-#  enabled: false
-#
-### podSecurityPolicy for fine-grained authorization of pod creation and updates
-#podSecurityPolicy:
-#  # Specifies whether a pod security policy should be created
 #  enabled: false
 #
 #serviceMonitor:
