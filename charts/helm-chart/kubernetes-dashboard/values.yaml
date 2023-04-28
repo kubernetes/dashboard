@@ -296,6 +296,14 @@ extras:
   #   data:
   #     mykey: myvalue
   manifests: []
+  serviceMonitor:
+    # Whether to create a Prometheus Operator service monitor.
+    enabled: false
+    # Here labels can be added to the serviceMonitor
+    labels: {}
+    # Here annotations can be added to the serviceMonitor
+    annotations: {}
+
 
 #rbac:
 #  # Specifies whether namespaced RBAC resources (Role, Rolebinding) should be created
@@ -325,10 +333,3 @@ extras:
 #
 #  # If the default role permissions are not enough, it is possible to add additional permissions.
 #  # roleAdditionalRules: []
-#serviceMonitor:
-#  # Whether or not to create a Prometheus Operator service monitor.
-#  enabled: false
-#  ## Here labels can be added to the serviceMonitor
-#  labels: {}
-#  ## Here annotations can be added to the serviceMonitor
-#  annotations: {}
