@@ -49,15 +49,6 @@ app:
   # Common labels & annotations shared across all deployed resources
   labels: { }
   annotations: { }
-  # Extra Kubernetes manifests to be deployed
-  # manifests:
-  # - apiVersion: v1
-  #   kind: ConfigMap
-  #   metadata:
-  #     name: additional-configmap
-  #   data:
-  #     mykey: myvalue
-  manifests: [ ]
   settings:
     ## Global dashboard settings
     ## Note: Use all or none. Dashboard does not support default value merging currently.
@@ -286,6 +277,17 @@ cert-manager:
 ## Enable this if you don't already have nginx-ingress enabled on your cluster.
 nginx:
   enabled: true
+
+extras:
+  # Extra Kubernetes manifests to be deployed
+  # manifests:
+  # - apiVersion: v1
+  #   kind: ConfigMap
+  #   metadata:
+  #     name: additional-configmap
+  #   data:
+  #     mykey: myvalue
+  manifests: []
 
 #ingress:
 #  ## If true, Kubernetes Dashboard Ingress will be created.
