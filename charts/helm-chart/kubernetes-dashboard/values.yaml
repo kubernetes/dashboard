@@ -46,6 +46,9 @@ app:
       enabled: false
       minAvailable: 0
       maxUnavailable: 0
+    networkPolicy:
+      enabled: false
+      ingressDenyAll: false
   # Common labels & annotations shared across all deployed resources
   labels: { }
   annotations: { }
@@ -309,38 +312,6 @@ extras:
   # This can be useful, for example, to show CRD resources.
   clusterReadOnlyRoleAdditionalRules: []
 
-#ingress:
-#  ## If you plan to use TLS backend with enableInsecureLogin set to false
-#  ## (default), you need to uncomment the below.
-#  ## If you use ingress-nginx < 0.21.0
-#  #   nginx.ingress.kubernetes.io/secure-backends: "true"
-#  ## if you use ingress-nginx >= 0.21.0
-#  #   nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
-#
-#  ## Kubernetes Dashboard Ingress paths
-#  ## Both `/` and `/*` are required to work on gce ingress.
-#  paths:
-#    - /
-#  #  - /*
-#
-#  ## Custom Kubernetes Dashboard Ingress paths. Will override default paths.
-#  ##
-#  customPaths: []
-#  #  - pathType: ImplementationSpecific
-#  #    backend:
-#  #      service:
-#  #        name: ssl-redirect
-#  #        port:
-#  #          name: use-annotation
-#  #  - pathType: ImplementationSpecific
-#  #    backend:
-#  #      service:
-#  #        name: >-
-#  #          {{ include "kubernetes-dashboard.fullname" . }}
-#  #        port:
-#  #          # Don't use string here, use only integer value!
-#  #          number: 443
-
 #rbac:
 #  # Specifies whether namespaced RBAC resources (Role, Rolebinding) should be created
 #  create: true
@@ -351,11 +322,6 @@ extras:
 #
 #  # If the default role permissions are not enough, it is possible to add additional permissions.
 #  # roleAdditionalRules: []
-#
-#networkPolicy:
-#  # Whether to create a network policy that allows/restricts access to the service
-#  enabled: false
-#
 #serviceMonitor:
 #  # Whether or not to create a Prometheus Operator service monitor.
 #  enabled: false
