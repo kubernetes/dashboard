@@ -136,9 +136,7 @@ api:
     # Create on-disk volume to store exec logs (required)
     - name: tmp-volume
       emptyDir: { }
-  nodeSelector:
-    # TODO: check if it's really needed since we offer cross platform images for darwin/windows/linux
-    kubernetes.io/os: linux
+  nodeSelector: { }
   # Labels & annotations shared between API related resources
   labels: { }
   annotations: { }
