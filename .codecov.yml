@@ -15,12 +15,10 @@
 codecov:
   notify:
     require_ci_to_pass: yes
-
 coverage:
   precision: 2
   round: down
   range: "70...90"
-
   status:
     project:
       default:
@@ -31,7 +29,6 @@ coverage:
     # We use codecov for information described as above. So it is enough to check only `project` as of now.
     patch: off
     changes: false
-
 parsers:
   gcov:
     branch_detection:
