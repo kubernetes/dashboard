@@ -3,7 +3,7 @@ module k8s.io/dashboard/api
 go 1.20
 
 require (
-	github.com/docker/distribution v2.8.1+incompatible
+	github.com/docker/distribution v2.8.2+incompatible
 	github.com/emicklei/go-restful/v3 v3.10.2
 	github.com/prometheus/client_golang v1.15.1
 	github.com/spf13/pflag v1.0.5
