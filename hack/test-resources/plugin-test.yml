@@ -14,7 +14,7 @@
 
 # A manifest that creates test plugin resources.
 
-apiVersion: dashboard.k8s.io/v1alpha1
+apiVersion: dashboard.k8s.io/v1
 kind: Plugin
 metadata:
   name: k8s-plugin
@@ -26,7 +26,7 @@ spec:
 
 ---
 
-apiVersion: dashboard.k8s.io/v1alpha1
+apiVersion: dashboard.k8s.io/v1
 kind: Plugin
 metadata:
   name: plugin1
