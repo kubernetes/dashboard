@@ -92,9 +92,8 @@ app:
 api:
   role: api
   image:
-    # TODO: Update repository and tag to official registry
-    repository: dashboard-api
-    tag: latest
+    repository: docker.io/kubernetesui/dashboard-api
+    tag: v1.0.0
   containers:
     ports:
       - name: api
@@ -145,9 +144,8 @@ api:
 web:
   role: web
   image:
-    # TODO: Update repository and tag to official registry
-    repository: dashboard-web
-    tag: latest
+    repository: docker.io/kubernetesui/dashboard-web
+    tag: v1.0.0
   containers:
     ports:
       - name: web
@@ -303,7 +301,7 @@ extras:
   # to avoid accidental changes in the cluster outside the standard CI/CD.
   #
   # It is NOT RECOMMENDED to use this version in production.
-  # Instead you should review the role and remove all potentially sensitive parts such as
+  # Instead, you should review the role and remove all potentially sensitive parts such as
   # access to persistentvolumes, pods/log etc.
   clusterReadOnlyRole: false
   # It is possible to add additional rules if read only role is enabled.
