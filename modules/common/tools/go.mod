@@ -6,7 +6,7 @@ require (
 	github.com/apache/skywalking-eyes v0.4.0
 	github.com/cosmtrek/air v1.43.0
 	github.com/golangci/golangci-lint v1.52.2
-	k8s.io/code-generator v0.27.1
+	k8s.io/code-generator v0.27.2
 )
 
 require (
@@ -215,7 +215,7 @@ require (
 	honnef.co/go/tools v0.4.3 // indirect
 	k8s.io/gengo v0.0.0-20230306165830-ab3349d207d4 // indirect
 	k8s.io/klog/v2 v2.90.1 // indirect
-	k8s.io/kube-openapi v0.0.0-20230327201221-f5883ff37f0c // indirect
+	k8s.io/kube-openapi v0.0.0-20230501164219-8b0f38b5fd1f // indirect
 	mvdan.cc/gofumpt v0.5.0 // indirect
 	mvdan.cc/interfacer v0.0.0-20180901003855-c20040233aed // indirect
 	mvdan.cc/lint v0.0.0-20170908181259-adc824a0674b // indirect
