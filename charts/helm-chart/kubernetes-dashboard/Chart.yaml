@@ -33,11 +33,11 @@ kubeVersion: ">=1.21.0-0"
 dependencies:
   - name: nginx-ingress
     alias: nginx
-    version: 0.17.0
+    version: 0.17.1
     repository: https://helm.nginx.com/stable
     condition: nginx-ingress.enabled
   - name: cert-manager
-    version: v1.11.1
+    version: v1.11.2
     repository: https://charts.jetstack.io
     condition: cert-manager.enabled
   - name: metrics-server

@@ -13,7 +13,7 @@ If you have modified the default configuration in any way, it might not work.
 Use `kubectl port-forward` and access dashboard with a simple URL.
 
 ```shell
-kubectl -n kubernetes-dashboard port-forward svc/kubernetes-dashboard-nginx-ingress 8443:443
+kubectl -n kubernetes-dashboard port-forward svc/kubernetes-dashboard-nginx-controller 8443:443
 ```
 
 Now access Dashboard at: [https://localhost:8443](https://localhost:8443).

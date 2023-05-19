@@ -18,7 +18,7 @@ Kubernetes Dashboard is a general purpose, web-based UI for Kubernetes clusters.
 ## Installation
 
 Kubernetes Dashboard supports both Helm and Manifest-based installation. Since release `v3.0.0` using Helm Chart should be faster and simpler in general as it will install
-dependencies such as `cert-manager` and `nginx-ingress-controller` for you.
+dependencies such as `cert-manager`, `nginx-ingress-controller` and `metrics-server` for you.
 
 ### Helm
 
@@ -26,7 +26,13 @@ You can install Dashboard using Helm as described [here](https://artifacthub.io/
 
 ### Manifest
 
-[//]: # (Kubernetes Dashboard requires both [cert-manager]&#40;https://cert-manager.io/docs/installation/&#41; and [nginx-ingress-controller]&#40;https://docs.nginx.com/nginx-ingress-controller/installation/installation-with-manifests/#3-deploy-the-ingress-controller&#41; to be installed in your cluster in order to run. )
+[//]: # (Kubernetes Dashboard requires both [cert-manager]&#40;https://cert-manager.io/docs/installation/&#41; and)
+
+[//]: # ([nginx-ingress-controller]&#40;https://docs.nginx.com/nginx-ingress-controller/installation/installation-with-manifests/#3-deploy-the-ingress-controller&#41;)
+
+[//]: # ([metrics-server]&#40;&#41; to be installed in your cluster in order to run. Additionally, if you want metrics and graphs to be available, you need to install)
+
+[//]: # ([metrics-server]&#40;https://github.com/kubernetes-sigs/metrics-server#installation&#41;.)
 
 [//]: # (Please, make sure that they are up and running before installing Kubernetes Dashboard.)
 
@@ -65,7 +71,7 @@ You can reach the maintainers of this project at:
 
 ### Contribution
 
-Learn how to start contribution on the [Contributing Guideline](CONTRIBUTING.md).
+Learn how to start contributing to the [Contributing Guideline](CONTRIBUTING.md).
 
 ### Code of conduct
 

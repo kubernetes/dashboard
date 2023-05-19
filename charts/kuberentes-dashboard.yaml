@@ -76,6 +76,7 @@ data:
 apiVersion: v1
 kind: Secret
 metadata:
+  name: kubernetes-dashboard-key-holder
   namespace: kubernetes-dashboard
   labels:
     app.kubernetes.io/part-of: kubernetes-dashboard
@@ -191,8 +192,8 @@ spec:
     - name: web
       port: 8000
   selector:
-    k8s-app: kubernetes-dashboard
-    role: web
+    app.kubernetes.io/name: kubernetes-dashboard-web
+    app.kubernetes.io/part-of: kubernetes-dashboard
 
 ---
 
@@ -211,8 +212,8 @@ spec:
     - name: api
       port: 9000
   selector:
-    k8s-app: kubernetes-dashboard
-    role: api
+    app.kubernetes.io/name: kubernetes-dashboard-api
+    app.kubernetes.io/part-of: kubernetes-dashboard
 
 ---
 
@@ -231,8 +232,8 @@ spec:
     - name: scraper
       port: 8000
   selector:
-    app.kubernetes.io/part-of: kubernetes-dashboard
     app.kubernetes.io/name: kubernetes-dashboard-metrics-scraper
+    app.kubernetes.io/part-of: kubernetes-dashboard
 
 ---
 
@@ -242,6 +243,7 @@ metadata:
   name: kubernetes-dashboard
   namespace: kubernetes-dashboard
   labels:
+    app.kubernetes.io/name: nginx-ingress
     app.kubernetes.io/part-of: kubernetes-dashboard
   annotations:
     nginx.ingress.kubernetes.io/ssl-redirect: "true"
@@ -250,10 +252,10 @@ spec:
   ingressClassName: nginx
   tls:
     - hosts:
-        - kubernetes.docker.internal
+        - localhost
       secretName: kubernetes-dashboard-certs
   rules:
-    - host: kubernetes.docker.internal
+    - host: localhost
       http:
         paths:
           - path: /
@@ -262,7 +264,7 @@ spec:
               service:
                 name: kubernetes-dashboard-web
                 port:
-                  name: http
+                  name: web
           - path: /api
             pathType: Prefix
             backend:
@@ -307,7 +309,7 @@ spec:
           type: RuntimeDefault
       containers:
         - name: kubernetes-dashboard-api
-          image: docker.io/kubernetesui/dashboard-api:v1.0.0
+          image: dashboard-api:latest
           imagePullPolicy: Never
           ports:
             - containerPort: 9000
@@ -362,7 +364,7 @@ spec:
           type: RuntimeDefault
       containers:
         - name: kubernetes-dashboard-web
-          image: docker.io/kubernetesui/dashboard-web:v1.0.0
+          image: dashboard-web:latest
           imagePullPolicy: Never
           ports:
             - containerPort: 8000
