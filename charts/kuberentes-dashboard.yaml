@@ -20,6 +20,8 @@ apiVersion: v1
 kind: Namespace
 metadata:
   name: kubernetes-dashboard
+  labels:
+    app.kubernetes.io/part-of: kubernetes-dashboard
 
 ---
 
@@ -32,6 +34,9 @@ kind: Issuer
 metadata:
   name: selfsigned
   namespace: kubernetes-dashboard
+  labels:
+    app.kubernetes.io/name: certmanager
+    app.kubernetes.io/part-of: kubernetes-dashboard
 spec:
   selfSigned: {}
 
@@ -44,10 +49,10 @@ spec:
 apiVersion: v1
 kind: ServiceAccount
 metadata:
-  labels:
-    k8s-app: kubernetes-dashboard
   name: kubernetes-dashboard
   namespace: kubernetes-dashboard
+  labels:
+    app.kubernetes.io/part-of: kubernetes-dashboard
 
 ---
 
@@ -58,10 +63,10 @@ metadata:
 apiVersion: v1
 kind: Secret
 metadata:
-  labels:
-    k8s-app: kubernetes-dashboard
   name: kubernetes-dashboard-csrf
   namespace: kubernetes-dashboard
+  labels:
+    app.kubernetes.io/part-of: kubernetes-dashboard
 type: Opaque
 data:
   csrf: ""
@@ -71,10 +76,9 @@ data:
 apiVersion: v1
 kind: Secret
 metadata:
-  labels:
-    k8s-app: kubernetes-dashboard
-  name: kubernetes-dashboard-key-holder
   namespace: kubernetes-dashboard
+  labels:
+    app.kubernetes.io/part-of: kubernetes-dashboard
 type: Opaque
 
 ---
@@ -82,10 +86,10 @@ type: Opaque
 kind: ConfigMap
 apiVersion: v1
 metadata:
-  labels:
-    k8s-app: kubernetes-dashboard
   name: kubernetes-dashboard-settings
   namespace: kubernetes-dashboard
+  labels:
+    app.kubernetes.io/part-of: kubernetes-dashboard
 
 ---
 
@@ -96,10 +100,10 @@ metadata:
 kind: Role
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
-  labels:
-    k8s-app: kubernetes-dashboard
   name: kubernetes-dashboard
   namespace: kubernetes-dashboard
+  labels:
+    app.kubernetes.io/part-of: kubernetes-dashboard
 rules:
   # Allow Dashboard to get, update and delete Dashboard exclusive secrets.
   - apiGroups: [ "" ]
@@ -122,9 +126,9 @@ rules:
 kind: ClusterRole
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
-  labels:
-    k8s-app: kubernetes-dashboard
   name: kubernetes-dashboard
+  labels:
+    app.kubernetes.io/part-of: kubernetes-dashboard
 rules:
   # Allow Metrics Scraper to get metrics from the Metrics server
   - apiGroups: [ "metrics.k8s.io" ]
@@ -136,10 +140,10 @@ rules:
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
-  labels:
-    k8s-app: kubernetes-dashboard
   name: kubernetes-dashboard
   namespace: kubernetes-dashboard
+  labels:
+    app.kubernetes.io/part-of: kubernetes-dashboard
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: Role
@@ -155,6 +159,8 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
   name: kubernetes-dashboard
+  labels:
+    app.kubernetes.io/part-of: kubernetes-dashboard
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
@@ -173,16 +179,17 @@ subjects:
 kind: Service
 apiVersion: v1
 metadata:
-  labels:
-    k8s-app: kubernetes-dashboard
-    role: web
-  name: dashboard-web
+  name: kubernetes-dashboard-web
   namespace: kubernetes-dashboard
+  labels:
+    app.kubernetes.io/name: kubernetes-dashboard-web
+    app.kubernetes.io/part-of: kubernetes-dashboard
+    app.kubernetes.io/component: web
+    app.kubernetes.io/version: "v1.0.0"
 spec:
   ports:
-    - name: http
-      port: 80
-      targetPort: 8000
+    - name: web
+      port: 8000
   selector:
     k8s-app: kubernetes-dashboard
     role: web
@@ -192,16 +199,17 @@ spec:
 kind: Service
 apiVersion: v1
 metadata:
-  labels:
-    k8s-app: kubernetes-dashboard
-    role: api
-  name: dashboard-api
+  name: kubernetes-dashboard-api
   namespace: kubernetes-dashboard
+  labels:
+    app.kubernetes.io/name: kubernetes-dashboard-api
+    app.kubernetes.io/part-of: kubernetes-dashboard
+    app.kubernetes.io/component: api
+    app.kubernetes.io/version: "v1.0.0"
 spec:
   ports:
     - name: api
       port: 9000
-      targetPort: 9000
   selector:
     k8s-app: kubernetes-dashboard
     role: api
@@ -211,29 +219,33 @@ spec:
 kind: Service
 apiVersion: v1
 metadata:
-  labels:
-    k8s-app: metrics-scraper
-  name: metrics-scraper
+  name: kubernetes-dashboard-metrics-scraper
   namespace: kubernetes-dashboard
+  labels:
+    app.kubernetes.io/name: kubernetes-dashboard-metrics-scraper
+    app.kubernetes.io/part-of: kubernetes-dashboard
+    app.kubernetes.io/component: metrics
+    app.kubernetes.io/version: "v1.0.9"
 spec:
   ports:
-    - port: 8001
-      targetPort: 8001
+    - name: scraper
+      port: 8000
   selector:
-    k8s-app: metrics-scraper
+    app.kubernetes.io/part-of: kubernetes-dashboard
+    app.kubernetes.io/name: kubernetes-dashboard-metrics-scraper
 
 ---
 
 kind: Ingress
 apiVersion: networking.k8s.io/v1
 metadata:
+  name: kubernetes-dashboard
+  namespace: kubernetes-dashboard
   labels:
-    k8s-app: kubernetes-dashboard
+    app.kubernetes.io/part-of: kubernetes-dashboard
   annotations:
     nginx.ingress.kubernetes.io/ssl-redirect: "true"
     cert-manager.io/issuer: selfsigned
-  name: kubernetes-dashboard
-  namespace: kubernetes-dashboard
 spec:
   ingressClassName: nginx
   tls:
@@ -248,14 +260,14 @@ spec:
             pathType: Prefix
             backend:
               service:
-                name: dashboard-web
+                name: kubernetes-dashboard-web
                 port:
                   name: http
           - path: /api/v1
             pathType: Prefix
             backend:
               service:
-                name: dashboard-api
+                name: kubernetes-dashboard-api
                 port:
                   name: api
 
@@ -268,33 +280,38 @@ spec:
 kind: Deployment
 apiVersion: apps/v1
 metadata:
-  labels:
-    k8s-app: kubernetes-dashboard
-    role: api
-  name: dashboard-api
+  name: kubernetes-dashboard-api
   namespace: kubernetes-dashboard
+  labels:
+    app.kubernetes.io/name: kubernetes-dashboard-api
+    app.kubernetes.io/part-of: kubernetes-dashboard
+    app.kubernetes.io/component: api
+    app.kubernetes.io/version: "v1.0.0"
 spec:
   replicas: 1
   revisionHistoryLimit: 10
   selector:
     matchLabels:
-      k8s-app: kubernetes-dashboard
-      role: api
+      app.kubernetes.io/name: kubernetes-dashboard-api
+      app.kubernetes.io/part-of: kubernetes-dashboard
   template:
     metadata:
       labels:
-        k8s-app: kubernetes-dashboard
-        role: api
+        app.kubernetes.io/name: kubernetes-dashboard-api
+        app.kubernetes.io/part-of: kubernetes-dashboard
+        app.kubernetes.io/component: api
+        app.kubernetes.io/version: "v1.0.0"
     spec:
       securityContext:
         seccompProfile:
           type: RuntimeDefault
       containers:
-        - name: dashboard-api
-          image: dashboard-api:latest
+        - name: kubernetes-dashboard-api
+          image: docker.io/kubernetesui/dashboard-api:v1.0.0
           imagePullPolicy: Never
           ports:
             - containerPort: 9000
+              name: api
               protocol: TCP
           args:
             - --enable-insecure-login
@@ -312,45 +329,44 @@ spec:
         - name: tmp-volume
           emptyDir: {}
       serviceAccountName: kubernetes-dashboard
-      nodeSelector:
-        "kubernetes.io/os": linux
-      # Comment the following tolerations if Dashboard must not be deployed on master
-      tolerations:
-        - key: node-role.kubernetes.io/control-plane
-          effect: NoSchedule
 
 ---
 
 kind: Deployment
 apiVersion: apps/v1
 metadata:
-  labels:
-    k8s-app: kubernetes-dashboard
-    role: web
-  name: dashboard-web
+  name: kubernetes-dashboard-web
   namespace: kubernetes-dashboard
+  labels:
+    app.kubernetes.io/name: kubernetes-dashboard-web
+    app.kubernetes.io/part-of: kubernetes-dashboard
+    app.kubernetes.io/component: web
+    app.kubernetes.io/version: "v1.0.0"
 spec:
   replicas: 1
   revisionHistoryLimit: 10
   selector:
     matchLabels:
-      k8s-app: kubernetes-dashboard
-      role: web
+      app.kubernetes.io/name: kubernetes-dashboard-web
+      app.kubernetes.io/part-of: kubernetes-dashboard
   template:
     metadata:
       labels:
-        k8s-app: kubernetes-dashboard
-        role: web
+        app.kubernetes.io/name: kubernetes-dashboard-web
+        app.kubernetes.io/part-of: kubernetes-dashboard
+        app.kubernetes.io/component: web
+        app.kubernetes.io/version: "v1.0.0"
     spec:
       securityContext:
         seccompProfile:
           type: RuntimeDefault
       containers:
-        - name: dashboard-web
-          image: dashboard-web:latest
+        - name: kubernetes-dashboard-web
+          image: docker.io/kubernetesui/dashboard-web:v1.0.0
           imagePullPolicy: Never
           ports:
             - containerPort: 8000
+              name: web
               protocol: TCP
           volumeMounts:
               # Create on-disk volume to store exec logs
@@ -365,41 +381,43 @@ spec:
         - name: tmp-volume
           emptyDir: {}
       serviceAccountName: kubernetes-dashboard
-      nodeSelector:
-        "kubernetes.io/os": linux
-      # Comment the following tolerations if Dashboard must not be deployed on master
-      tolerations:
-        - key: node-role.kubernetes.io/control-plane
-          effect: NoSchedule
 
 ---
 
 kind: Deployment
 apiVersion: apps/v1
 metadata:
-  labels:
-    k8s-app: metrics-scraper
-  name: metrics-scraper
+  name: kubernetes-dashboard-metrics-scraper
   namespace: kubernetes-dashboard
+  labels:
+    app.kubernetes.io/name: kubernetes-dashboard-metrics-scraper
+    app.kubernetes.io/part-of: kubernetes-dashboard
+    app.kubernetes.io/component: metrics
+    app.kubernetes.io/version: "v1.0.9"
 spec:
   replicas: 1
   revisionHistoryLimit: 10
   selector:
     matchLabels:
-      k8s-app: metrics-scraper
+      app.kubernetes.io/name: kubernetes-dashboard-metrics-scraper
+      app.kubernetes.io/part-of: kubernetes-dashboard
   template:
     metadata:
       labels:
-        k8s-app: metrics-scraper
+        app.kubernetes.io/name: kubernetes-dashboard-metrics-scraper
+        app.kubernetes.io/part-of: kubernetes-dashboard
+        app.kubernetes.io/component: metrics
+        app.kubernetes.io/version: "v1.0.9"
     spec:
       securityContext:
         seccompProfile:
           type: RuntimeDefault
       containers:
-        - name: metrics-scraper
+        - name: kubernetes-dashboard-metrics-scraper
           image: kubernetesui/metrics-scraper:v1.0.9
           ports:
             - containerPort: 8000
+              name: scraper
               protocol: TCP
           livenessProbe:
             httpGet:
@@ -416,13 +434,7 @@ spec:
             readOnlyRootFilesystem: true
             runAsUser: 1001
             runAsGroup: 2001
-      serviceAccountName: kubernetes-dashboard
-      nodeSelector:
-        "kubernetes.io/os": linux
-      # Comment the following tolerations if Dashboard must not be deployed on master
-      tolerations:
-        - key: node-role.kubernetes.io/control-plane
-          effect: NoSchedule
       volumes:
         - name: tmp-volume
           emptyDir: {}
+      serviceAccountName: kubernetes-dashboard
