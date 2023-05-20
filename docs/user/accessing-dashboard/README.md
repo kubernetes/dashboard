@@ -22,7 +22,7 @@ kubectl cluster-info
 The output is similar to this:
 
 ```
-Kubernetes master is running at https://192.168.30.148:6443
+Kubernetes control plane is running at https://192.168.30.148:6443
 KubeDNS is running at https://192.168.30.148:6443/api/v1/namespaces/kube-system/services/kube-dns/proxy
 
 To further debug and diagnose cluster problems, use 'kubectl cluster-info dump'.
@@ -112,13 +112,13 @@ NAME                   TYPE       CLUSTER-IP       EXTERNAL-IP   PORT(S)        
 kubernetes-dashboard   NodePort   10.100.124.90   <nodes>       443:31707/TCP   21h
 ```
 
-Dashboard has been exposed on port `31707 (HTTPS)`. Now you can access it from your browser at: `https://<master-ip>:31707`. `master-ip` can be found by executing `kubectl cluster-info`. Usually it is either `127.0.0.1` or IP of your machine, assuming that your cluster is running directly on the machine, on which these commands are executed.
+Dashboard has been exposed on port `31707 (HTTPS)`. Now you can access it from your browser at: `https://<control-plane-ip>:31707`. `control-plane-ip` can be found by executing `kubectl cluster-info`. Usually it is either `127.0.0.1` or IP of your machine, assuming that your cluster is running directly on the machine, on which these commands are executed.
 
-In case you are trying to expose Dashboard using `NodePort` on a multi-node cluster, then you have to find out IP of the node on which Dashboard is running to access it. Instead of accessing `https://<master-ip>:<nodePort>` you should access `https://<node-ip>:<nodePort>`.
+In case you are trying to expose Dashboard using `NodePort` on a multi-node cluster, then you have to find out IP of the node on which Dashboard is running to access it. Instead of accessing `https://<control-plane-ip>:<nodePort>` you should access `https://<node-ip>:<nodePort>`.
 
 ## API Server
 
-In case Kubernetes API server is exposed and accessible from outside you can directly access dashboard at: `https://<master-ip>:<apiserver-port>/api/v1/namespaces/kubernetes-dashboard/services/https:kubernetes-dashboard:/proxy/`
+In case Kubernetes API server is exposed and accessible from outside you can directly access dashboard at: `https://<control-plane-ip>:<apiserver-port>/api/v1/namespaces/kubernetes-dashboard/services/https:kubernetes-dashboard:/proxy/`
 
 **Note:** This way of accessing Dashboard is only possible if you choose to install your user certificates in the browser. In example, certificates used by the kubeconfig file to contact API Server can be used.
 
