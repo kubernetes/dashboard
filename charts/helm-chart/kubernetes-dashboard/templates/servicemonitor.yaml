@@ -44,15 +44,15 @@ spec:
         insecureSkipVerify: true
     {{- end }}
       path: /metrics
-      {{- with .Values.prometheus.serviceMonitor.endpoints.relabelings }}
+      {{- with .Values.serviceMonitor.endpoints.relabelings }}
       relabelings:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      {{- with .Values.prometheus.serviceMonitor.endpoints.metricRelabelings }}
+      {{- with .Values.serviceMonitor.endpoints.metricRelabelings }}
       metricRelabelings:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-  {{- with .Values.prometheus.serviceMonitor.targetLabels }}
+  {{- with .Values.serviceMonitor.targetLabels }}
   targetLabels:
     {{- toYaml . | nindent 6 }}
   {{- end }}
