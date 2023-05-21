@@ -10,7 +10,7 @@
 To enable plugin support in the dashboard you must register a custom [CRD](../../aio/test-resources/plugin-crd.yml) in your cluster.
 
 ```shell
-kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/master/aio/test-resources/plugin-crd.yml
+kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/master/hack/test-resources/plugin-crd.yml
 ```
 
 ### Compiling Plugins
@@ -32,7 +32,7 @@ The key thing here is that we specify the `custom-plugin` project in the `angula
 Once the custom CRD is registered we can now create [instances](../../aio/test-resources/plugin-test.yml) of the CRD which will hold the spec for plugin.
 
 ```shell
-kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/master/aio/test-resources/plugin-test.yml
+kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/master/hack/test-resources/plugin-test.yml
 ```
 
 > Note: The backend reads the compiled plugin source from a ConfigMap and we need to create that also.

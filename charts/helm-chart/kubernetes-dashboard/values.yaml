@@ -84,6 +84,7 @@ extraManifests: []
 ## To disable set the following configuration to null:
 # securityContext: null
 securityContext:
+  runAsNonRoot: true
   seccompProfile:
     type: RuntimeDefault
 
@@ -95,6 +96,8 @@ containerSecurityContext:
   readOnlyRootFilesystem: true
   runAsUser: 1001
   runAsGroup: 2001
+  capabilities:
+    drop: ["ALL"]
 
 ## @param podLabels Extra labels for OAuth2 Proxy pods
 ## ref: https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/
