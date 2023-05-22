@@ -44,6 +44,18 @@ spec:
         insecureSkipVerify: true
     {{- end }}
       path: /metrics
+      {{- with .Values.serviceMonitor.endpoints.relabelings }}
+      relabelings:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.serviceMonitor.endpoints.metricRelabelings }}
+      metricRelabelings:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+  {{- with .Values.serviceMonitor.targetLabels }}
+  targetLabels:
+    {{- toYaml . | nindent 6 }}
+  {{- end }}
   selector:
     matchLabels:
       {{ include "kubernetes-dashboard.labels" . | nindent 6 }}

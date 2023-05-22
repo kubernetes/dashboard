@@ -363,6 +363,16 @@ serviceMonitor:
   labels: {}
   ## Here annotations can be added to the serviceMonitor
   annotations: {}
+  endpoints:
+    # -- ServiceMonitor relabel configs to apply to samples before scraping
+    ## Ref: https://github.com/prometheus-operator/prometheus-operator/blob/master/Documentation/api.md#relabelconfig
+    relabelings: []
+    # -- ServiceMonitor metric relabel configs to apply to samples before ingestion
+    ## Ref: https://github.com/prometheus-operator/prometheus-operator/blob/main/Documentation/api.md#endpoint
+    metricRelabelings: []
+  # -- ServiceMonitor will add labels from the service to the Prometheus metric
+  ## Ref: https://github.com/prometheus-operator/prometheus-operator/blob/main/Documentation/api.md#servicemonitorspec
+  targetLabels: []
 
 ## Optional containers, i.e. for auth addons.
 optionalContainers:
