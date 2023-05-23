@@ -147,7 +147,7 @@ service:
   externalPort: 443
 
   ## LoadBalancerSourcesRange is a list of allowed CIDR values, which are combined with ServicePort to
-  ## set allowed inbound rules on the security group assigned to the master load balancer
+  ## set allowed inbound rules on the security group assigned to the control plane load balancer
   # loadBalancerSourceRanges: []
 
   # clusterIP: ""
