@@ -31,12 +31,6 @@ jobs:
     env:
       NG_CLI_ANALYTICS: ci
       GOPROXY: "https://proxy.golang.org"
-#      NODE_OPTIONS: "--max-old-space-size=8192"
-#      DOCKER_CLI_EXPERIMENTAL: enabled
-#      TERM: xterm
-#    defaults:
-#      run:
-#        shell: bash
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -48,17 +42,18 @@ jobs:
         with:
           go-version: "1.20"
 
-      - name: Set up Node
+      - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
           node-version: 18.14.0
 
-      - name: Prepare web
+      - name: Prepare web module
+        working-directory: modules/web
         run: |
           yarn
           node hack/version.mjs
 
-      - name: Prepare api
+      - name: Prepare API module
         run: go mod download
 
       - name: Set up QEMU

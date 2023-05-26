@@ -35,12 +35,16 @@ jobs:
       run:
         working-directory: modules/api
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout
+        uses: actions/checkout@v3
         with:
           fetch-depth: 0
-      - uses: actions/setup-go@v4
+
+      - name: Set up Go
+        uses: actions/setup-go@v4
         with:
           go-version: "1.20"
+
       - run: |
           export GOPATH=$(go env GOPATH)
           export PATH=$PATH:$GOPATH/bin
@@ -66,15 +70,19 @@ jobs:
       run:
         working-directory: modules/api
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout
+        uses: actions/checkout@v3
         with:
           fetch-depth: 0
-      - uses: actions/setup-go@v4
+
+      - name: Set up Go
+        uses: actions/setup-go@v4
         with:
           go-version: "1.20"
           check-latest: true
           cache: true
           cache-dependency-path: modules/api/go.sum
+
       - shell: bash
         run: |
           export GOPATH=$(go env GOPATH)

@@ -15,9 +15,9 @@
 name: CI / Web
 on:
   push:
-    branches: [ master ]
+    branches: [master]
   pull_request:
-    branches: [ master ]
+    branches: [master]
 permissions:
   contents: read
 jobs:
@@ -32,15 +32,25 @@ jobs:
       run:
         working-directory: modules/web
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout
+        uses: actions/checkout@v3
         with:
           fetch-depth: 0
-      - uses: actions/setup-node@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
         with:
           node-version: 18.14.0
-      - run: yarn
-      - run: node hack/version.mjs
-      - run: yarn check
+
+      - name: Install dependencies
+        run: yarn
+
+      - name: Run version script
+        run: node hack/version.mjs
+
+      - name: Run static checks
+        run: yarn check
+
   unit:
     name: Unit tests with coverage
     runs-on: ubuntu-latest
@@ -52,16 +62,27 @@ jobs:
       run:
         working-directory: modules/web
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout
+        uses: actions/checkout@v3
         with:
           fetch-depth: 0
-      - uses: actions/setup-node@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
         with:
           node-version: 18.14.0
-      - run: yarn
-      - run: node hack/version.mjs
-      - run: yarn coverage
-      - uses: codecov/codecov-action@v3
+
+      - name: Install dependencies
+        run: yarn
+
+      - name: Run version script
+        run: node hack/version.mjs
+
+      - name: Test with coverage
+        run: yarn coverage
+
+      - name: Upload coverage report
+        uses: codecov/codecov-action@v3
         with:
           name: web-coverage
           fail_ci_if_error: true

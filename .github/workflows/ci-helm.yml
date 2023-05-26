@@ -25,9 +25,11 @@ jobs:
     name: Lint and test
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout
+        uses: actions/checkout@v3
         with:
           fetch-depth: 0
+
       - uses: azure/setup-helm@v3
         with:
           version: v3.11.0
