@@ -100,8 +100,7 @@ api:
         containerPort: 9000
         protocol: TCP
     # Additional container arguments
-    # TODO: Update link to arguments to distinguish between api/web
-    # Full list of arguments: https://github.com/kubernetes/dashboard/blob/master/docs/common/dashboard-arguments.md
+    # Full list of arguments: https://github.com/kubernetes/dashboard/blob/master/docs/common/arguments.md
     # args:
     # - --system-banner="Welcome to the Kubernetes Dashboard"
     args: []
@@ -152,8 +151,7 @@ web:
         containerPort: 8000
         protocol: TCP
     # Additional container arguments
-    # TODO: Update link to arguments to distinguish between api/web
-    # Full list of arguments: https://github.com/kubernetes/dashboard/blob/master/docs/common/dashboard-arguments.md
+    # Full list of arguments: https://github.com/kubernetes/dashboard/blob/master/docs/common/arguments.md
     # args:
     # - --system-banner="Welcome to the Kubernetes Dashboard"
     args: []
