@@ -38,23 +38,8 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Set up Go
-        uses: actions/setup-go@v4
-        with:
-          go-version: "1.20"
-
-      - name: Set up Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: 18.14.0
-
-      - name: Install web dependencies
-        working-directory: modules/web
-        run: yarn
-
-      - name: Install API dependencies
-        working-directory: modules/api
-        run: go mod download
+      - name: Setup
+        uses: ./.github/actions/setup
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v2.1.0

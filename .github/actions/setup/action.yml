@@ -1,30 +1,39 @@
 name: Setup
 description: "Kubernetes Dashboard CI/CD setup"
 inputs:
-  skip-api:
-    description: "Skip API module setup"
+  api:
+    description: "Setup API module"
     required: false
-    default: false
-  skip-web:
-    description: "Skip web module setup"
+    default: "true"
+  web:
+    description: "Setup web module"
     required: false
-    default: false
+    default: "true"
 runs:
   using: "composite"
   steps:
     - name: Set up Go
-      if: inputs.skip-api == false
+      if: inputs.api == true
+      shell: bash
       uses: actions/setup-go@v4
       with:
         go-version: "1.20"
 
+    - name: Install API dependencies
+      if: inputs.api == true
+      shell: bash
+      working-directory: modules/api
+      run: go mod download
+
     - name: Set up Node.js
-      if: inputs.skip-web == false
+      if: inputs.web == true
+      shell: bash
       uses: actions/setup-node@v3
       with:
         node-version: 18.14.0
 
     - name: Install web dependencies
-      if: inputs.skip-web == false
+      if: inputs.web == true
+      shell: bash
       working-directory: modules/web
       run: yarn
