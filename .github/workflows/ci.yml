@@ -15,28 +15,30 @@
 name: CI
 on:
   push:
-    branches: [ master ]
+    branches: [master]
     paths-ignore:
-      - '**/*.md'
+      - "**/*.md"
   pull_request:
-    branches: [ master ]
+    branches: [master]
     paths-ignore:
-      - '**/*.md'
+      - "**/*.md"
   schedule:
-    - cron: '0 0 * * 1'
+    - cron: "0 0 * * 1"
 permissions:
   contents: read
 jobs:
   license-check:
     name: License check
     runs-on: ubuntu-latest
-    env:
-      TERM: xterm
     steps:
-      - uses: actions/checkout@v3
+      - name: Check out repository
+        uses: actions/checkout@v3
         with:
           fetch-depth: 0
-      - uses: apache/skywalking-eyes@main
+
+      - name: Check license headers
+        uses: apache/skywalking-eyes@main
+
   codeql:
     permissions:
       actions: read
@@ -47,16 +49,24 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        language: [ 'go', 'typescript' ]
+        language: ["go", "typescript"]
     steps:
-      - uses: actions/checkout@v3
+      - name: Check out repository
+        uses: actions/checkout@v3
         with:
           fetch-depth: 0
-      - uses: github/codeql-action/init@v2
+
+      - name: Init CodeQL
+        uses: github/codeql-action/init@v2
         with:
           languages: ${{ matrix.language }}
-      - uses: github/codeql-action/autobuild@v2
-      - uses: github/codeql-action/analyze@v2
+
+      - name: Autobuild CodeQL
+        uses: github/codeql-action/autobuild@v2
+
+      - name: Run CodeQL analysis
+        uses: github/codeql-action/analyze@v2
+
   dependency-review:
     permissions:
       actions: read
@@ -65,10 +75,13 @@ jobs:
     name: Dependency review
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - name: Check out repository
+        uses: actions/checkout@v3
         with:
           fetch-depth: 0
-      - uses: actions/dependency-review-action@v3
+
+      - name: Review dependencies
+        uses: actions/dependency-review-action@v3
         with:
           fail-on-severity: critical
   e2e:
@@ -78,36 +91,26 @@ jobs:
       NG_CLI_ANALYTICS: ci
       GOPROXY: "https://proxy.golang.org"
       NODE_OPTIONS: "--max-old-space-size=8192"
-      TERM: xterm
     steps:
-      - uses: helm/kind-action@v1.7.0
-        with:
-          version: v0.15.0
-          kubectl_version: v1.25.1
-          cluster_name: k8s-cluster-ci
-      - run: |
-          docker run --net=host -d registry.k8s.io/heapster-amd64:v1.5.4 \
-             --heapster-port=8082 \
-             --source=kubernetes:http://127.0.0.1:8080?inClusterConfig=false&auth=""
-      - run: kind get kubeconfig --name="k8s-cluster-ci" > ${HOME}/.kube/config
-      - uses: actions/checkout@v3
+      - name: Check out repository
+        uses: actions/checkout@v3
         with:
           fetch-depth: 0
-      - uses: actions/setup-go@v4
-        with:
-          go-version: "1.20"
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 18.14.0
-      - run: yarn
-        working-directory: modules/web
-      - run: node hack/version.mjs
-        working-directory: modules/web
-      - run: |
+
+      - name: Start kind cluster
+        uses: helm/kind-action@v1.7.0
+
+      - name: Setup
+        uses: ./.github/actions/setup
+
+      - name: Serve app
+        run: |
           export GOPATH=$(go env GOPATH)
           export PATH=$PATH:$GOPATH/bin
           make serve &
-      - run: |
+
+      - name: Test
+        run: |
           export GOPATH=$(go env GOPATH)
           export PATH=$PATH:$GOPATH/bin
           yarn cypress
