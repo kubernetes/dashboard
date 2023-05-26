@@ -32,7 +32,7 @@ jobs:
       run:
         working-directory: modules/web
     steps:
-      - name: Checkout
+      - name: Check out repository
         uses: actions/checkout@v3
         with:
           fetch-depth: 0
@@ -44,9 +44,6 @@ jobs:
 
       - name: Install dependencies
         run: yarn
-
-      - name: Run version script
-        run: node hack/version.mjs
 
       - name: Run static checks
         run: yarn check
@@ -62,7 +59,7 @@ jobs:
       run:
         working-directory: modules/web
     steps:
-      - name: Checkout
+      - name: Check out repository
         uses: actions/checkout@v3
         with:
           fetch-depth: 0
@@ -74,9 +71,6 @@ jobs:
 
       - name: Install dependencies
         run: yarn
-
-      - name: Run version script
-        run: node hack/version.mjs
 
       - name: Test with coverage
         run: yarn coverage

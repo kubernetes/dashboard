@@ -33,7 +33,7 @@ jobs:
     env:
       TERM: xterm
     steps:
-      - name: Checkout
+      - name: Check out repository
         uses: actions/checkout@v3
         with:
           fetch-depth: 0
@@ -53,7 +53,7 @@ jobs:
       matrix:
         language: ["go", "typescript"]
     steps:
-      - name: Checkout
+      - name: Check out repository
         uses: actions/checkout@v3
         with:
           fetch-depth: 0
@@ -77,7 +77,7 @@ jobs:
     name: Dependency review
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
+      - name: Check out repository
         uses: actions/checkout@v3
         with:
           fetch-depth: 0
@@ -105,7 +105,7 @@ jobs:
              --heapster-port=8082 \
              --source=kubernetes:http://127.0.0.1:8080?inClusterConfig=false&auth=""
       - run: kind get kubeconfig --name="k8s-cluster-ci" > ${HOME}/.kube/config
-      - name: Checkout
+      - name: Check out repository
         uses: actions/checkout@v3
         with:
           fetch-depth: 0
@@ -120,11 +120,9 @@ jobs:
         with:
           node-version: 18.14.0
 
-      - name: Prepare web module
+      - name: Install web dependencies
         working-directory: modules/web
-        run: |
-          yarn
-          node hack/version.mjs
+        run: yarn
 
       - run: |
           export GOPATH=$(go env GOPATH)

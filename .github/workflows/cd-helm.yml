@@ -28,7 +28,7 @@ jobs:
     name: Helm chart release
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
+      - name: Check out repository
         uses: actions/checkout@v3
         with:
           fetch-depth: 0
@@ -44,7 +44,7 @@ jobs:
         env:
           TERM: xterm-256color
 
-      - name: Checkout gh-pages-pull-request branch # It will fail if branch already exists
+      - name: Check out gh-pages-pull-request branch # It will fail if branch already exists
         run: git checkout -b gh-pages-pull-request
 
       - name: Push changes to gh-pages-pull-request branch # It will silently fail if pull request already exists

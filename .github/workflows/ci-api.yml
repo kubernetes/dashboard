@@ -15,13 +15,13 @@
 name: CI / API
 on:
   push:
-    branches: [ master ]
+    branches: [master]
     paths-ignore:
-      - '**/*.md'
+      - "**/*.md"
   pull_request:
-    branches: [ master ]
+    branches: [master]
     paths-ignore:
-      - '**/*.md'
+      - "**/*.md"
 permissions:
   contents: read
 jobs:
@@ -35,7 +35,7 @@ jobs:
       run:
         working-directory: modules/api
     steps:
-      - name: Checkout
+      - name: Check out repository
         uses: actions/checkout@v3
         with:
           fetch-depth: 0
@@ -70,7 +70,7 @@ jobs:
       run:
         working-directory: modules/api
     steps:
-      - name: Checkout
+      - name: Check out repository
         uses: actions/checkout@v3
         with:
           fetch-depth: 0
