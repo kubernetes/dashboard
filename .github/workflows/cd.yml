@@ -32,6 +32,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       NG_CLI_ANALYTICS: ci
+      GOPATH: ${{ github.workspace }}
       GOPROXY: "https://proxy.golang.org"
     steps:
       - name: Check out repository
