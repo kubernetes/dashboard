@@ -92,6 +92,11 @@ jobs:
       GOPROXY: "https://proxy.golang.org"
       NODE_OPTIONS: "--max-old-space-size=8192"
     steps:
+      - name: Check out repository
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
       - name: Start kind cluster
         uses: helm/kind-action@v1.7.0
 
