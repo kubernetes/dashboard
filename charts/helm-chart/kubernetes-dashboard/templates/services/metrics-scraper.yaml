@@ -25,9 +25,9 @@ metadata:
   name: dashboard-{{ .Values.metricsScraper.role }}
 spec:
   ports:
-    - name: {{ .Values.metricsScraper.role }}
     {{- with (index .Values.metricsScraper.containers.ports 0) }}
-      port: {{ .containerPort }}
+    - port: {{ .containerPort }}
+      targetPort: {{ .containerPort }}
     {{- end }}
   selector:
     {{- include "kubernetes-dashboard.matchLabels" . | nindent 4 }}

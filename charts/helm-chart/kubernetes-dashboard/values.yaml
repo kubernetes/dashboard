@@ -203,8 +203,7 @@ metricsScraper:
     tag: v1.0.9
   containers:
     ports:
-      - name: metrics-scraper
-        containerPort: 8000
+      - containerPort: 8000
         protocol: TCP
     args: []
     # Additional container environment variables

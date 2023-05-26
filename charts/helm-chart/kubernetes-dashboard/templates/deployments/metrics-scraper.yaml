@@ -26,7 +26,7 @@ metadata:
     app.kubernetes.io/component: {{ .Values.metricsScraper.role }}
   # TODO: dashboard-metrics-scraper name is currently hardcoded into the API.
   # Use same name pattern as for other deployments when this will be configurable via the API.
-  name: dashboard-{{ .Values.metricsScraper.role }}
+  name: kubernetes-dashboard-{{ .Values.metricsScraper.role }}
 spec:
   replicas: {{ .Values.app.scaling.replicas }}
   revisionHistoryLimit: {{ .Values.app.scaling.revisionHistoryLimit }}

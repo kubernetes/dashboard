@@ -119,7 +119,7 @@ rules:
     # Allow Dashboard to get metrics.
   - apiGroups: [ "" ]
     resources: [ "services/proxy" ]
-    resourceNames: [ "metrics-scraper", "http:metrics-scraper" ]
+    resourceNames: [ "kubernetes-dashboard-metrics-scraper", "http:kubernetes-dashboard-metrics-scraper" ]
     verbs: [ "get" ]
 
 ---
@@ -229,8 +229,8 @@ metadata:
     app.kubernetes.io/version: "v1.0.9"
 spec:
   ports:
-    - name: scraper
-      port: 8000
+    - port: 8000
+      targetPort: 8000
   selector:
     app.kubernetes.io/name: kubernetes-dashboard-metrics-scraper
     app.kubernetes.io/part-of: kubernetes-dashboard
@@ -309,6 +309,7 @@ spec:
           type: RuntimeDefault
       containers:
         - name: kubernetes-dashboard-api
+          # TODO: Use official images
           image: dashboard-api:latest
           imagePullPolicy: Never
           ports:
@@ -364,6 +365,7 @@ spec:
           type: RuntimeDefault
       containers:
         - name: kubernetes-dashboard-web
+          # TODO: Use official images
           image: dashboard-web:latest
           imagePullPolicy: Never
           ports:
@@ -419,7 +421,6 @@ spec:
           image: docker.io/kubernetesui/metrics-scraper:v1.0.9
           ports:
             - containerPort: 8000
-              name: scraper
               protocol: TCP
           livenessProbe:
             httpGet:
