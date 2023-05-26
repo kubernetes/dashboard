@@ -27,7 +27,6 @@ jobs:
     env:
       NG_CLI_ANALYTICS: ci
       NODE_OPTIONS: "--max-old-space-size=8192"
-      TERM: xterm
     defaults:
       run:
         working-directory: modules/web
@@ -45,7 +44,7 @@ jobs:
       - name: Install dependencies
         run: yarn
 
-      - name: Run static checks
+      - name: Run checks
         run: yarn check
 
   unit:
@@ -72,7 +71,7 @@ jobs:
       - name: Install dependencies
         run: yarn
 
-      - name: Test with coverage
+      - name: Test
         run: yarn coverage
 
       - name: Upload coverage report
