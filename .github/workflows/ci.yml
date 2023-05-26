@@ -101,7 +101,7 @@ jobs:
         uses: helm/kind-action@v1.7.0
 
       - name: Setup
-        uses: ./.github/actions/setup.yml
+        uses: ./.github/actions/setup
 
       - name: Serve app
         run: |
