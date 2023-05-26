@@ -44,7 +44,7 @@ type Service struct {
 	// Type determines how the service will be exposed.  Valid options: ClusterIP, NodePort, LoadBalancer, ExternalName
 	Type v1.ServiceType `json:"type"`
 
-	// ClusterIP is usually assigned by the master. Valid values are None, empty string (""), or
+	// ClusterIP is usually assigned by the control plane. Valid values are None, empty string (""), or
 	// a valid IP address. None can be specified for headless services when proxying is not required
 	ClusterIP string `json:"clusterIP"`
 }
