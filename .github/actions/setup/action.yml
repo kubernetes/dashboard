@@ -14,26 +14,24 @@ runs:
   steps:
     - name: Set up Go
       if: inputs.api == true
-      shell: bash
       uses: actions/setup-go@v4
       with:
         go-version: "1.20"
 
     - name: Install API dependencies
       if: inputs.api == true
+      run: go mod download
       shell: bash
       working-directory: modules/api
-      run: go mod download
 
     - name: Set up Node.js
       if: inputs.web == true
-      shell: bash
       uses: actions/setup-node@v3
       with:
         node-version: 18.14.0
 
     - name: Install web dependencies
       if: inputs.web == true
+      run: yarn
       shell: bash
       working-directory: modules/web
-      run: yarn
