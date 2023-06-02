@@ -45,8 +45,18 @@ jobs:
         with:
           api: true
 
+      - name: Install tools
+        working-directory: modules/common/tools
+        run: |
+          export GOPATH=$(go env GOPATH)
+          export PATH=$PATH:$GOPATH/bin
+          make install
+
       - name: Verify codegen
-        run: make codegen-verify
+        run: |
+          export GOPATH=$(go env GOPATH)
+          export PATH=$PATH:$GOPATH/bin
+          make codegen-verify
 
       - name: Lint
         uses: golangci/golangci-lint-action@v3
