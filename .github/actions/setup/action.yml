@@ -19,6 +19,13 @@ runs:
         cache: true
         cache-dependency-path: modules/api/go.sum
 
+    - name: Configure Go path
+      if: ${{ inputs.api }}
+      shell: bash
+      run: |
+        export GOPATH=$(go env GOPATH)
+        export PATH=$PATH:$GOPATH/bin
+
     - name: Install tools
       if: ${{ inputs.api }}
       working-directory: modules/common/tools
