@@ -4,11 +4,9 @@ inputs:
   api:
     description: "Setup API module"
     required: false
-    default: "true"
   web:
     description: "Setup web module"
     required: false
-    default: "true"
 runs:
   using: "composite"
   steps:

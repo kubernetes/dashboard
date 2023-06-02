@@ -40,6 +40,9 @@ jobs:
 
       - name: Setup
         uses: ./.github/actions/setup
+        with:
+          api: true
+          web: true
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v2.1.0

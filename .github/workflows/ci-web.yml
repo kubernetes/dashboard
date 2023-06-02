@@ -36,13 +36,10 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v3
+      - name: Setup
+        uses: ./.github/actions/setup
         with:
-          node-version: 18.14.0
-
-      - name: Install dependencies
-        run: yarn
+          web: true
 
       - name: Run checks
         run: yarn check
@@ -63,13 +60,10 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v3
+      - name: Setup
+        uses: ./.github/actions/setup
         with:
-          node-version: 18.14.0
-
-      - name: Install dependencies
-        run: yarn
+          web: true
 
       - name: Test
         run: yarn coverage

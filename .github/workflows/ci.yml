@@ -102,6 +102,9 @@ jobs:
 
       - name: Setup
         uses: ./.github/actions/setup
+        with:
+          api: true
+          web: true
 
       - name: Serve app
         run: |
