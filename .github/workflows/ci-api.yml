@@ -40,23 +40,13 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Set up Go
-        uses: actions/setup-go@v4
+      - name: Setup
+        uses: ./.github/actions/setup
         with:
-          go-version: "1.20"
-
-      - name: Install tools
-        working-directory: modules/common/tools
-        run: |
-          export GOPATH=$(go env GOPATH)
-          export PATH=$PATH:$GOPATH/bin
-          make install
+          api: true
 
       - name: Verify codegen
-        run: |
-          export GOPATH=$(go env GOPATH)
-          export PATH=$PATH:$GOPATH/bin
-          make codegen-verify
+        run: make codegen-verify
 
       - name: Lint
         uses: golangci/golangci-lint-action@v3
@@ -79,19 +69,11 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Set up Go
-        uses: actions/setup-go@v4
+      - name: Setup
+        uses: ./.github/actions/setup
         with:
-          go-version: "1.20"
-          check-latest: true
-          cache: true
-          cache-dependency-path: modules/api/go.sum
+          web: true
 
-      - shell: bash
-        run: |
-          export GOPATH=$(go env GOPATH)
-          export PATH=$PATH:$GOPATH/bin
-          go mod download
       - run: make coverage
       - uses: codecov/codecov-action@v3
         with:
