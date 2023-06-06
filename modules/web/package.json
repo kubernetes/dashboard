@@ -77,7 +77,7 @@
     "sockjs-client": "1.6.1",
     "strip-ansi": "7.1.0",
     "systemjs": "6.14.1",
-    "tslib": "2.5.0",
+    "tslib": "2.5.3",
     "web-animations-js": "2.3.2",
     "xterm": "4.18.0",
     "xterm-addon-fit": "0.6.0",
