@@ -9344,7 +9344,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"glob@npm:8.0.3, glob@npm:^8.0.1, glob@npm:^8.0.3":
+"glob@npm:8.0.3, glob@npm:^8.0.1":
   version: 8.0.3
   resolution: "glob@npm:8.0.3"
   dependencies:
@@ -9357,7 +9357,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"glob@npm:8.1.0":
+"glob@npm:8.1.0, glob@npm:^8.1.0":
   version: 8.1.0
   resolution: "glob@npm:8.1.0"
   dependencies:
@@ -10994,19 +10994,19 @@ __metadata:
   languageName: node
   linkType: hard
 
-"js-beautify@npm:1.14.7":
-  version: 1.14.7
-  resolution: "js-beautify@npm:1.14.7"
+"js-beautify@npm:1.14.8":
+  version: 1.14.8
+  resolution: "js-beautify@npm:1.14.8"
   dependencies:
     config-chain: ^1.1.13
     editorconfig: ^0.15.3
-    glob: ^8.0.3
+    glob: ^8.1.0
     nopt: ^6.0.0
   bin:
     css-beautify: js/bin/css-beautify.js
     html-beautify: js/bin/html-beautify.js
     js-beautify: js/bin/js-beautify.js
-  checksum: 1950d0d3f05f8ad06b73eb77b9aac602d00b24eab7d8a6d8ea0b1841ab9c730acecd5a6f3926e360dce7a2583481bc77caf6d024490a58fa9897cbbbdfc35984
+  checksum: e1c2532ebf7fe70023408e16129671e928d7f3bb2ccd6fe0a75a2035cdb522d5450ff60865e893a158d8f0df0b677999adbdbdef61ae057a8c8b05e0603b27b2
   languageName: node
   linkType: hard
 
@@ -11344,7 +11344,7 @@ __metadata:
     jest: 29.5.0
     jest-preset-angular: 13.0.1
     js-base64: 3.7.5
-    js-beautify: 1.14.7
+    js-beautify: 1.14.8
     js-yaml: 4.1.0
     jwt-decode: 3.1.2
     license-check-and-add: 4.0.5
