@@ -95,7 +95,7 @@
     "@types/d3": "7.4.0",
     "@types/d3-scale": "4.0.3",
     "@types/file-saver": "2.0.5",
-    "@types/jasmine": "4.3.1",
+    "@types/jasmine": "4.3.2",
     "@types/jasminewd2": "2.0.10",
     "@types/jest": "29.5.2",
     "@types/js-yaml": "4.0.5",
