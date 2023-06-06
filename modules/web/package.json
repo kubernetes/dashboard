@@ -123,7 +123,7 @@
     "license-check-and-add": "4.0.5",
     "lint-staged": "13.2.2",
     "lodash-es": "4.17.21",
-    "minimatch": "5.1.0",
+    "minimatch": "9.0.1",
     "minimist": "1.2.8",
     "ng-extract-i18n-merge": "1.4.0",
     "node-gyp": "9.3.1",
