@@ -11370,7 +11370,7 @@ __metadata:
     minimist: 1.2.8
     ng-extract-i18n-merge: 1.4.0
     ngx-cookie-service: 16.0.0
-    ngx-pipes: 3.2.0
+    ngx-pipes: 3.2.2
     node-gyp: 9.3.1
     normalize.css: 8.0.1
     q: 1.5.1
@@ -12427,16 +12427,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ngx-pipes@npm:3.2.0":
-  version: 3.2.0
-  resolution: "ngx-pipes@npm:3.2.0"
+"ngx-pipes@npm:3.2.2":
+  version: 3.2.2
+  resolution: "ngx-pipes@npm:3.2.2"
   dependencies:
     postcss: ^8.4.19
     tslib: ^2.3.0
     webpack: ^5.75.0
   peerDependencies:
-    "@angular/core": 14 - 15
-  checksum: df5af691469573051163648a817e62abc485890103395cc237d95e1cf1c6ac2e1bceb2bbb98ec49628f435f74cf276d9757d1fcb628693675d2f7b35cba92e6c
+    "@angular/core": ">=14"
+  checksum: 0556af3a60132e403ab913141a8298fbf9ba7d8c4ee575a70cf68b8eb198947f334700d6de2aa8b5409b20b05dd4eb84eb398a89fc787cc36178a57323e919d3
   languageName: node
   linkType: hard
 
