@@ -3905,9 +3905,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@swimlane/ngx-charts@npm:20.1.2":
-  version: 20.1.2
-  resolution: "@swimlane/ngx-charts@npm:20.1.2"
+"@swimlane/ngx-charts@npm:20.3.1":
+  version: 20.3.1
+  resolution: "@swimlane/ngx-charts@npm:20.3.1"
   dependencies:
     d3-array: ^2.9.1
     d3-brush: ^2.1.0
@@ -3931,7 +3931,7 @@ __metadata:
     "@angular/platform-browser": ">=12.0.0"
     "@angular/platform-browser-dynamic": ">=12.0.0"
     rxjs: ^6.5.3 || ^7.4.0
-  checksum: c03c12c70b99118a5cd2f67e02a1e802e6151e0629b5822017af36931a573d823396de918218d7a8c20abf18b1844c436709f01d3a878c5931e06151a540caf3
+  checksum: bc5d0b89aca9c42acf050ff6f34b60fa227d76f2cc985fb5be58184f00c2a3fbd7de60f3c43ba4824b72909f257cb6cf70baa485abb6435c2658c9ef4a189a51
   languageName: node
   linkType: hard
 
@@ -11309,7 +11309,7 @@ __metadata:
     "@babel/preset-env": 7.22.4
     "@babel/register": 7.21.0
     "@cypress/webpack-preprocessor": 5.17.0
-    "@swimlane/ngx-charts": 20.1.2
+    "@swimlane/ngx-charts": 20.3.1
     "@types/d3": 7.4.0
     "@types/d3-scale": 4.0.3
     "@types/file-saver": 2.0.5
