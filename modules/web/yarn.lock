@@ -370,15 +370,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@angular/core@npm:15.2.7":
-  version: 15.2.7
-  resolution: "@angular/core@npm:15.2.7"
+"@angular/core@npm:16.0.4":
+  version: 16.0.4
+  resolution: "@angular/core@npm:16.0.4"
   dependencies:
     tslib: ^2.3.0
   peerDependencies:
     rxjs: ^6.5.3 || ^7.4.0
-    zone.js: ~0.11.4 || ~0.12.0 || ~0.13.0
-  checksum: f98459a67a20e64255f6829182d1609650ebca3754bdad21cb72689580a2c385f5f4f804411bcece760b6efe08f62127197fd7abd8e8d9f057a5ce6b8e509e94
+    zone.js: ~0.13.0
+  checksum: c1fc7ee466df8c5ed40b861167e510e266482170452290e383803e9648f7b3da88e4f4b5aaab6c47a24303d209824ca84b03da6d9db84af496013e1a95350f1d
   languageName: node
   linkType: hard
 
@@ -11311,7 +11311,7 @@ __metadata:
     "@angular/common": 15.2.7
     "@angular/compiler": 15.2.7
     "@angular/compiler-cli": 15.2.7
-    "@angular/core": 15.2.7
+    "@angular/core": 16.0.4
     "@angular/flex-layout": 15.0.0-beta.42
     "@angular/forms": 15.2.7
     "@angular/language-service": 15.2.7
