@@ -24,7 +24,7 @@ spec:
   group: dashboard.k8s.io
   scope: Namespaced
   versions:
-    - name: v1
+    - name: v1alpha1
       served: true
       storage: true
       schema:
