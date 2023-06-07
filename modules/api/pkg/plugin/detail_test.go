@@ -24,7 +24,6 @@ import (
 	"github.com/emicklei/go-restful/v3"
 	coreV1 "k8s.io/api/core/v1"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
-	v1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	fakeK8sClient "k8s.io/client-go/kubernetes/fake"
 
 	"k8s.io/dashboard/api/pkg/plugin/apis/v1alpha1"
@@ -48,7 +47,7 @@ func TestGetPluginSource(t *testing.T) {
 	}
 
 	_, _ = pcs.DashboardV1alpha1().Plugins(ns).Create(context.TODO(), &v1alpha1.Plugin{
-		ObjectMeta: v1.ObjectMeta{Name: pluginName, Namespace: ns},
+		ObjectMeta: metaV1.ObjectMeta{Name: pluginName, Namespace: ns},
 		Spec: v1alpha1.PluginSpec{
 			Source: v1alpha1.Source{
 				ConfigMapRef: &coreV1.ConfigMapEnvSource{
@@ -63,10 +62,10 @@ func TestGetPluginSource(t *testing.T) {
 	}
 
 	_, _ = cs.CoreV1().ConfigMaps(ns).Create(context.TODO(), &coreV1.ConfigMap{
-		ObjectMeta: v1.ObjectMeta{
+		ObjectMeta: metaV1.ObjectMeta{
 			Name: cfgMapName, Namespace: ns},
 		Data: map[string]string{filename: srcData},
-	}, v1.CreateOptions{})
+	}, metaV1.CreateOptions{})
 
 	data, err := GetPluginSource(pcs, cs, ns, pluginName)
 	if err != nil {
@@ -87,7 +86,7 @@ func Test_servePluginSource(t *testing.T) {
 
 	pcs, _ := h.cManager.PluginClient(nil)
 	_, _ = pcs.DashboardV1alpha1().Plugins(ns).Create(context.TODO(), &v1alpha1.Plugin{
-		ObjectMeta: v1.ObjectMeta{Name: pluginName, Namespace: ns},
+		ObjectMeta: metaV1.ObjectMeta{Name: pluginName, Namespace: ns},
 		Spec: v1alpha1.PluginSpec{
 			Source: v1alpha1.Source{
 				ConfigMapRef: &coreV1.ConfigMapEnvSource{

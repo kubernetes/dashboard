@@ -18,7 +18,6 @@ import (
 	"fmt"
 
 	apiextensionsv1 "k8s.io/apiextensions-apiserver/pkg/apis/apiextensions/v1"
-	"k8s.io/apiextensions-apiserver/pkg/client/clientset/clientset"
 	apiextensionsclientset "k8s.io/apiextensions-apiserver/pkg/client/clientset/clientset"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime"
@@ -38,7 +37,7 @@ var (
 	v1        = apiextensionsv1.SchemeGroupVersion.Version
 )
 
-func GetExtensionsAPIVersion(client clientset.Interface) (string, error) {
+func GetExtensionsAPIVersion(client apiextensionsclientset.Interface) (string, error) {
 	list, err := client.Discovery().ServerGroups()
 	if err != nil {
 		return "", err
@@ -53,7 +52,7 @@ func GetExtensionsAPIVersion(client clientset.Interface) (string, error) {
 	return "", errors.NewNotFound("supported version for extensions api not found")
 }
 
-func GetExtensionsAPIRestClient(client clientset.Interface) (rest.Interface, error) {
+func GetExtensionsAPIRestClient(client apiextensionsclientset.Interface) (rest.Interface, error) {
 	version, err := GetExtensionsAPIVersion(client)
 	if err != nil {
 		return nil, err
