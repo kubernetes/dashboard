@@ -11400,7 +11400,7 @@ __metadata:
     web-animations-js: 2.3.2
     webpack-bundle-analyzer: 4.9.0
     webpack-dev-server: 4.15.0
-    xterm: 4.18.0
+    xterm: 5.1.0
     xterm-addon-fit: 0.7.0
     zone.js: 0.13.0
   languageName: unknown
@@ -16670,10 +16670,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"xterm@npm:4.18.0":
-  version: 4.18.0
-  resolution: "xterm@npm:4.18.0"
-  checksum: c1f391b0894928e048f8b6334943470b9e8fe91987222716a6c82840757475b87196383f6ce872250fe3dff3d984f45411fdf3841436c22d9301e50bf6043d2e
+"xterm@npm:5.1.0":
+  version: 5.1.0
+  resolution: "xterm@npm:5.1.0"
+  checksum: cbacbc9dc1bbcf21dabecff46856b43f2d5854b42c1bec4ea03a5720000f2a88d79b0da45b6c38213d6607474a1fbe66d5ff25fa120b7e9e60eeed964dd840a1
   languageName: node
   linkType: hard
 
