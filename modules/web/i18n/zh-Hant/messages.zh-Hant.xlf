@@ -39,7 +39,7 @@
         <target state="new">Refresh</target>
       </trans-unit>
       <trans-unit id="1106543845307638308" datatype="html">
-        <source> <x id="INTERPOLATION" equiv-text="&quot;\uFFFD0\uFFFD&quot;"/> is not unique</source>
+        <source> <x id="INTERPOLATION" equiv-text="&quot;\uFFFD0\uFFFD&quot;"/> is not unique </source>
         <target state="new"> <x id="INTERPOLATION" equiv-text="{{label.get(&apos;key&apos;).value}}"/> 不是唯一的</target>
       </trans-unit>
       <trans-unit id="1119419133766787743" datatype="html">
@@ -55,8 +55,8 @@
         <target state="new">Age</target>
       </trans-unit>
       <trans-unit id="1134765132854526890" datatype="html">
-        <source>Service Name</source>
-        <target state="new">Service Name</target>
+        <source>Service Name </source>
+        <target state="new">Service Name </target>
       </trans-unit>
       <trans-unit id="1138159535667068803" datatype="html">
         <source>Memory requirement (MiB)</source>
@@ -87,8 +87,8 @@
         <target state="new">Restart</target>
       </trans-unit>
       <trans-unit id="1243984730371237241" datatype="html">
-        <source>Cluster Role Bindings</source>
-        <target state="new">Cluster Role Bindings</target>
+        <source>Cluster Role Bindings </source>
+        <target state="new">Cluster Role Bindings </target>
       </trans-unit>
       <trans-unit id="1244504753529533521" datatype="html">
         <source>Edit Namespace List</source>
@@ -99,7 +99,7 @@
         <target state="new">New Replica Set</target>
       </trans-unit>
       <trans-unit id="1268395641466243700" datatype="html">
-        <source>Every Service Account has a Secret with valid Bearer Token that can be used to log in to Dashboard. To find out more about how to configure and use Bearer Tokens, please refer to the <x id="START_LINK" ctype="x-a" equiv-text="&quot;\uFFFD#2\uFFFD&quot;"/>Authentication<x id="CLOSE_LINK" ctype="x-a" equiv-text="&quot;\uFFFD/#2\uFFFD&quot;"/> section.</source>
+        <source> Every Service Account has a Secret with valid Bearer Token that can be used to log in to Dashboard. To find out more about how to configure and use Bearer Tokens, please refer to the <x id="START_LINK" ctype="x-a" equiv-text="&quot;\uFFFD#2\uFFFD&quot;"/>Authentication<x id="CLOSE_LINK" ctype="x-a" equiv-text="&quot;\uFFFD/#2\uFFFD&quot;"/> section. </source>
         <target state="new">每個 Service Account 都有一個合法的 Bearer Token ，可用於登入 Dashboard。要瞭解更多如何配置並使用 Bearer Tokens 的資訊，請參閲 <x id="START_LINK" ctype="x-a" equiv-text="&lt;a&gt;"/>Authentication<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/> 部分.</target>
       </trans-unit>
       <trans-unit id="1292699022746959928" datatype="html">
@@ -107,7 +107,7 @@
         <target>非資源 URL</target>
       </trans-unit>
       <trans-unit id="1321877744367304738" datatype="html">
-        <source>Image:</source>
+        <source>Image: </source>
         <target state="new">鏡像:</target>
       </trans-unit>
       <trans-unit id="1328651869817330586" datatype="html">
@@ -131,8 +131,8 @@
         <target state="new">Scale</target>
       </trans-unit>
       <trans-unit id="1421956494366769351" datatype="html">
-        <source>Daemon Sets</source>
-        <target state="new">Daemon Sets</target>
+        <source>Daemon Sets </source>
+        <target state="new">Daemon Sets </target>
       </trans-unit>
       <trans-unit id="1429641498515055959" datatype="html">
         <source>Revision history limit</source>
@@ -151,8 +151,8 @@
         <target state="new">Data</target>
       </trans-unit>
       <trans-unit id="1473017346308176259" datatype="html">
-        <source>Services</source>
-        <target state="new">Services</target>
+        <source>Services </source>
+        <target state="new">Services </target>
       </trans-unit>
       <trans-unit id="1480519621633238451" datatype="html">
         <source>UID</source>
@@ -191,8 +191,8 @@
         <target>CPU 下限 (cores)</target>
       </trans-unit>
       <trans-unit id="1575304063225693008" datatype="html">
-        <source>TLS Secret</source>
-        <target state="new">TLS Secret</target>
+        <source>TLS Secret </source>
+        <target state="new">TLS Secret </target>
       </trans-unit>
       <trans-unit id="1607777136670400298" datatype="html">
         <source>Image Pull Secret</source>
@@ -203,7 +203,7 @@
         <target state="new">Strategy</target>
       </trans-unit>
       <trans-unit id="1622528103709985950" datatype="html">
-        <source>Local settings are stored in the browser cookies, so they are not synchronized between multiple devices. Changes are applied automatically on every change.</source>
+        <source> Local settings are stored in the browser cookies, so they are not synchronized between multiple devices. Changes are applied automatically on every change. </source>
         <target state="new">本地設置存儲在瀏覽器 cookie 中，因此它們不會在多個設備之間同步。每次更改都會自動應用改變。</target>
       </trans-unit>
       <trans-unit id="1631799239961659924" datatype="html">
@@ -211,11 +211,11 @@
         <target state="new">Volume Attributes</target>
       </trans-unit>
       <trans-unit id="1636259016604132537" datatype="html">
-        <source>Select YAML or JSON file specifying the resources to deploy to the namespace specified in the file.</source>
+        <source> Select YAML or JSON file specifying the resources to deploy to the namespace specified in the file. </source>
         <target state="new">選擇 YAML 或 JSON 文件中指定的資源部署到該文件中指定的命名空間。</target>
       </trans-unit>
       <trans-unit id="1649590266934618453" datatype="html">
-        <source>Insecure access detected. Sign in will not be available. Access Dashboard securely over HTTPS or using localhost. Read more <x id="START_LINK" ctype="x-a" equiv-text="&quot;\uFFFD#2\uFFFD&quot;"/> here <x id="CLOSE_LINK" ctype="x-a" equiv-text="&quot;\uFFFD/#2\uFFFD&quot;"/>.</source>
+        <source> Insecure access detected. Sign in will not be available. Access Dashboard securely over HTTPS or using localhost. Read more <x id="START_LINK" ctype="x-a" equiv-text="&quot;\uFFFD#2\uFFFD&quot;"/> here <x id="CLOSE_LINK" ctype="x-a" equiv-text="&quot;\uFFFD/#2\uFFFD&quot;"/>. </source>
         <target state="new">檢測到不安全的訪問。無法登陸。通過 HTTPS 或使用 localhost 安全訪問 Dashboard。更多資訊 <x id="START_LINK" ctype="x-a" equiv-text="&lt;a&gt;"/> 這裡 <x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/>閱讀。</target>
       </trans-unit>
       <trans-unit id="1678478837387802521" datatype="html">
@@ -231,8 +231,8 @@
         <target>如果已設置，則叢集名字將顯示在瀏覽器標題中。</target>
       </trans-unit>
       <trans-unit id="1707219526222951180" datatype="html">
-        <source>Stateful Sets</source>
-        <target state="new">Stateful Sets</target>
+        <source>Stateful Sets </source>
+        <target state="new">Stateful Sets </target>
       </trans-unit>
       <trans-unit id="1726363342938046830" datatype="html">
         <source>About</source>
@@ -251,7 +251,7 @@
         <target>存儲類</target>
       </trans-unit>
       <trans-unit id="1761780531172486555" datatype="html">
-        <source>Available:</source>
+        <source>Available: </source>
         <target state="new">可用的:</target>
       </trans-unit>
       <trans-unit id="1763461605200938061" datatype="html">
@@ -271,15 +271,15 @@
         <target state="new"><x id="START_LINK" ctype="x-a" equiv-text="&quot;\uFFFD#10\uFFFD&quot;"/>Community<x id="CLOSE_LINK" ctype="x-a" equiv-text="&quot;\uFFFD/#10\uFFFD&quot;"/></target>
       </trans-unit>
       <trans-unit id="1791198005341902530" datatype="html">
-        <source>Deploy</source>
+        <source> Deploy </source>
         <target state="new">部署</target>
       </trans-unit>
       <trans-unit id="1813894172148248223" datatype="html">
-        <source>Ingress Classes</source>
-        <target state="new">Ingress Classes</target>
+        <source>Ingress Classes </source>
+        <target state="new">Ingress Classes </target>
       </trans-unit>
       <trans-unit id="1828068287723658160" datatype="html">
-        <source>Failed:</source>
+        <source>Failed: </source>
         <target state="new">失敗:</target>
       </trans-unit>
       <trans-unit id="1832995043073719610" datatype="html">
@@ -287,7 +287,7 @@
         <target>具有指定名稱的 secret 將添加到命名空間中的叢集中。</target>
       </trans-unit>
       <trans-unit id="1850293262697508820" datatype="html">
-        <source>Revision history limit:</source>
+        <source>Revision history limit: </source>
         <target state="new">調整 history 範圍:</target>
       </trans-unit>
       <trans-unit id="1853314835104660335" datatype="html">
@@ -295,8 +295,8 @@
         <target>新的命名空間將添加到叢集中。</target>
       </trans-unit>
       <trans-unit id="1861657886309326" datatype="html">
-        <source>Events</source>
-        <target state="new">Events</target>
+        <source>Events </source>
+        <target state="new">Events </target>
       </trans-unit>
       <trans-unit id="187187500641108332" datatype="html">
         <source>
@@ -323,7 +323,7 @@
         <target>API 組</target>
       </trans-unit>
       <trans-unit id="1946523853590147981" datatype="html">
-        <source>The description will be added as an annotation to the Deployment and displayed in the application&apos;s details.</source>
+        <source> The description will be added as an annotation to the Deployment and displayed in the application&apos;s details. </source>
         <target state="new">該描述將作為注視添加到 Deployment 中，並顯示在應用程式的詳細資訊中。</target>
       </trans-unit>
       <trans-unit id="1970327103279087300" datatype="html">
@@ -335,7 +335,7 @@
         <target state="new">Machine ID</target>
       </trans-unit>
       <trans-unit id="2004327614711496973" datatype="html">
-        <source>Memory requirement must be given as a valid number.</source>
+        <source> Memory requirement must be given as a valid number. </source>
         <target state="new">Memory 下限必須是一個有效的數字。</target>
       </trans-unit>
       <trans-unit id="2027381191177847167" datatype="html">
@@ -367,12 +367,12 @@
         <target state="new">iSCSI target lun number</target>
       </trans-unit>
       <trans-unit id="2083766050425503902" datatype="html">
-        <source>Application name must start with a lowercase letter and contain only lowercase letters, numbers, and &apos;-&apos; between words.</source>
+        <source> Application name must start with a lowercase letter and contain only lowercase letters, numbers, and &apos;-&apos; between words. </source>
         <target state="new">應用名稱必須以小寫字母開頭，只包含小寫字母與數字，並且之間可以包含 &apos;-&apos; 符號。</target>
       </trans-unit>
       <trans-unit id="2104548579314351919" datatype="html">
-        <source>Secrets</source>
-        <target state="new">Secrets</target>
+        <source>Secrets </source>
+        <target state="new">Secrets </target>
       </trans-unit>
       <trans-unit id="2122768143452494504" datatype="html">
         <source>Unsupported graph type <x id="PH" equiv-text="this.graphType"/>.</source>
@@ -395,7 +395,7 @@
         <target>資源類別</target>
       </trans-unit>
       <trans-unit id="2135976822395163664" datatype="html">
-        <source>Please select the kubeconfig file that you have created to configure access to the cluster. To find out more about how to configure and use kubeconfig file, please refer to the <x id="START_LINK" ctype="x-a" equiv-text="&quot;\uFFFD#2\uFFFD&quot;"/>Configure Access to Multiple Clusters<x id="CLOSE_LINK" ctype="x-a" equiv-text="&quot;\uFFFD/#2\uFFFD&quot;"/> section.</source>
+        <source> Please select the kubeconfig file that you have created to configure access to the cluster. To find out more about how to configure and use kubeconfig file, please refer to the <x id="START_LINK" ctype="x-a" equiv-text="&quot;\uFFFD#2\uFFFD&quot;"/>Configure Access to Multiple Clusters<x id="CLOSE_LINK" ctype="x-a" equiv-text="&quot;\uFFFD/#2\uFFFD&quot;"/> section. </source>
         <target state="new">請選擇您設定的 kubeconfig 文件以配置對叢集的訪問權限。要瞭解有關如何配置和使用 kubeconfig 文件的更多訊息，請參閲<x id="START_LINK" ctype="x-a" equiv-text="&lt;a&gt;"/>Configure Access to Multiple Clusters<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/> 部分.</target>
       </trans-unit>
       <trans-unit id="214884265476562782" datatype="html">
@@ -407,7 +407,7 @@
         <target state="new">Cancel</target>
       </trans-unit>
       <trans-unit id="217048540478746172" datatype="html">
-        <source>Target port must be an integer.</source>
+        <source> Target port must be an integer. </source>
         <target state="new">目標端口必須是整數。</target>
       </trans-unit>
       <trans-unit id="2176659033176029418" datatype="html">
@@ -419,7 +419,7 @@
         <target state="new">Metadata</target>
       </trans-unit>
       <trans-unit id="21860712120581731" datatype="html">
-        <source>Updated:</source>
+        <source>Updated: </source>
         <target state="new">已更新:</target>
       </trans-unit>
       <trans-unit id="2188854519574316630" datatype="html">
@@ -431,16 +431,16 @@
         <target>Service</target>
       </trans-unit>
       <trans-unit id="222595489358095649" datatype="html">
-        <source>Kubernetes Dashboard v<x id="INTERPOLATION" equiv-text="&quot;\uFFFD0\uFFFD&quot;"/> © <x id="INTERPOLATION_1" equiv-text="&quot;\uFFFD1\uFFFD&quot;"/> The Kubernetes Authors</source>
-        <target state="new">Kubernetes Dashboard v<x id="INTERPOLATION" equiv-text="&quot;\uFFFD0\uFFFD&quot;"/> © <x id="INTERPOLATION_1" equiv-text="&quot;\uFFFD1\uFFFD&quot;"/> The Kubernetes Authors</target>
+        <source> Kubernetes Dashboard v<x id="INTERPOLATION" equiv-text="&quot;\uFFFD0\uFFFD&quot;"/> © <x id="INTERPOLATION_1" equiv-text="&quot;\uFFFD1\uFFFD&quot;"/> The Kubernetes Authors </source>
+        <target state="new"> Kubernetes Dashboard v<x id="INTERPOLATION" equiv-text="&quot;\uFFFD0\uFFFD&quot;"/> © <x id="INTERPOLATION_1" equiv-text="&quot;\uFFFD1\uFFFD&quot;"/> The Kubernetes Authors </target>
       </trans-unit>
       <trans-unit id="2235593604907350097" datatype="html">
         <source>Resource Names</source>
         <target>資源名</target>
       </trans-unit>
       <trans-unit id="2244223685971816410" datatype="html">
-        <source>Logged in with auth header</source>
-        <target state="new">Logged in with auth header</target>
+        <source>Logged in with auth header </source>
+        <target state="new">Logged in with auth header </target>
       </trans-unit>
       <trans-unit id="2250922476634643797" datatype="html">
         <source>Parameters</source>
@@ -463,8 +463,8 @@
         <target state="new">QoS Class</target>
       </trans-unit>
       <trans-unit id="2304348476142864790" datatype="html">
-        <source>Persistent Volume Claims</source>
-        <target state="new">Persistent Volume Claims</target>
+        <source>Persistent Volume Claims </source>
+        <target state="new">Persistent Volume Claims </target>
       </trans-unit>
       <trans-unit id="2306073262722397834" datatype="html">
         <source>Seccomp Localhost Profile</source>
@@ -515,8 +515,8 @@
         <target state="new">Image Pull Secrets</target>
       </trans-unit>
       <trans-unit id="2411065404041685586" datatype="html">
-        <source>Path Type</source>
-        <target state="new">Path Type</target>
+        <source>Path Type </source>
+        <target state="new">Path Type </target>
       </trans-unit>
       <trans-unit id="2417328504220076358" datatype="html">
         <source>Settings have changed since last reload</source>
@@ -563,8 +563,8 @@
         <target state="new">Version</target>
       </trans-unit>
       <trans-unit id="2733722431826186016" datatype="html">
-        <source>Storage Classes</source>
-        <target state="new">Storage Classes</target>
+        <source>Storage Classes </source>
+        <target state="new">Storage Classes </target>
       </trans-unit>
       <trans-unit id="2743739387881549417" datatype="html">
         <source>Selected namespace is different than namespace of currently selected resource.</source>
@@ -611,7 +611,7 @@
         <target state="new">語言</target>
       </trans-unit>
       <trans-unit id="2833767909565048391" datatype="html">
-        <source>Do you want to stay on current page and change namespace from <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&quot;[\uFFFD#7\uFFFD|\uFFFD#8\uFFFD]&quot;"/><x id="INTERPOLATION" equiv-text="&quot;\uFFFD0\uFFFD&quot;"/><x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&quot;[\uFFFD/#7\uFFFD|\uFFFD/#8\uFFFD]&quot;"/> to <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&quot;[\uFFFD#7\uFFFD|\uFFFD#8\uFFFD]&quot;"/><x id="INTERPOLATION_1" equiv-text="&quot;\uFFFD1\uFFFD&quot;"/><x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&quot;[\uFFFD/#7\uFFFD|\uFFFD/#8\uFFFD]&quot;"/>?</source>
+        <source> Do you want to stay on current page and change namespace from <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&quot;[\uFFFD#7\uFFFD|\uFFFD#8\uFFFD]&quot;"/><x id="INTERPOLATION" equiv-text="&quot;\uFFFD0\uFFFD&quot;"/><x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&quot;[\uFFFD/#7\uFFFD|\uFFFD/#8\uFFFD]&quot;"/> to <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&quot;[\uFFFD#7\uFFFD|\uFFFD#8\uFFFD]&quot;"/><x id="INTERPOLATION_1" equiv-text="&quot;\uFFFD1\uFFFD&quot;"/><x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&quot;[\uFFFD/#7\uFFFD|\uFFFD/#8\uFFFD]&quot;"/>? </source>
         <target state="new">您是否希望保持當前頁面並從<x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/><x id="INTERPOLATION" equiv-text="{{namespace}}"/><x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i&gt;"/> to <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/><x id="INTERPOLATION_1" equiv-text="{{newNamespace}}"/><x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i&gt;"/>中更改命名空間?</target>
       </trans-unit>
       <trans-unit id="284876663522831141" datatype="html">
@@ -619,7 +619,7 @@
         <target state="new">Source Type</target>
       </trans-unit>
       <trans-unit id="2862835290520488117" datatype="html">
-        <source>Unavailable:</source>
+        <source>Unavailable: </source>
         <target state="new">不可用的:</target>
       </trans-unit>
       <trans-unit id="2885840307007437390" datatype="html">
@@ -663,7 +663,7 @@
         <target state="new">{VAR_SELECT, select, true {隱藏高級設置} other {顯示高級選項}}</target>
       </trans-unit>
       <trans-unit id="2987268586260348582" datatype="html">
-        <source>Total:</source>
+        <source>Total: </source>
         <target state="new">總計:</target>
       </trans-unit>
       <trans-unit id="3000799346062046358" datatype="html">
@@ -671,7 +671,7 @@
         <target state="new">Suffix &apos;<x id="PH" equiv-text="suffix"/>&apos; not recognized.</target>
       </trans-unit>
       <trans-unit id="3012870639723698090" datatype="html">
-        <source>Port must be greater than 0.</source>
+        <source> Port must be greater than 0. </source>
         <target state="new">端口號必須大於 0</target>
       </trans-unit>
       <trans-unit id="3012906865384504293" datatype="html">
@@ -683,7 +683,7 @@
         <target>回收策略</target>
       </trans-unit>
       <trans-unit id="3037001602563649018" datatype="html">
-        <source>Name must be alphanumeric and may contain dashes.</source>
+        <source> Name must be alphanumeric and may contain dashes. </source>
         <target state="new">名稱必須是字母或者數字，可以包含連接號 &quot;-&quot;。</target>
       </trans-unit>
       <trans-unit id="3039940756451018621" datatype="html">
@@ -691,11 +691,11 @@
         <target>Token</target>
       </trans-unit>
       <trans-unit id="3068261068429094032" datatype="html">
-        <source>Max unavailable:</source>
+        <source>Max unavailable: </source>
         <target state="new">最大不可用數:</target>
       </trans-unit>
       <trans-unit id="3094294427304814088" datatype="html">
-        <source>Strategy:</source>
+        <source>Strategy: </source>
         <target state="new">策略:</target>
       </trans-unit>
       <trans-unit id="3117139905742018214" datatype="html">
@@ -727,7 +727,7 @@
         <target>在 pod 中運行</target>
       </trans-unit>
       <trans-unit id="3175667526023915046" datatype="html">
-        <source>Label Value must not exceed 253 characters.</source>
+        <source> Label Value must not exceed 253 characters. </source>
         <target state="new">標籤值不得超過 253 個字符。</target>
       </trans-unit>
       <trans-unit id="3193976279273491157" datatype="html">
@@ -755,7 +755,7 @@
         <target state="new">Max unavailable</target>
       </trans-unit>
       <trans-unit id="3283019513707383139" datatype="html">
-        <source>Hosts <x id="START_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&quot;\uFFFD#2\uFFFD&quot;"/>open_in_new<x id="CLOSE_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&quot;\uFFFD/#2\uFFFD&quot;"/></source>
+        <source> Hosts <x id="START_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&quot;\uFFFD#2\uFFFD&quot;"/>open_in_new<x id="CLOSE_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&quot;\uFFFD/#2\uFFFD&quot;"/></source>
         <target state="new">Hosts <x id="START_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;mat-icon class=&quot;external-link-icon kd-clickable&quot; i18n-matTooltip matTooltip=&quot;Host links are external links that will be open in a new tab.&quot;&gt;"/>open_in_new<x id="CLOSE_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;/mat-icon&gt;"/></target>
       </trans-unit>
       <trans-unit id="3294686077659093992" datatype="html">
@@ -775,7 +775,7 @@
         <target state="new">Run as User</target>
       </trans-unit>
       <trans-unit id="3323415564519831786" datatype="html">
-        <source>Name is required.</source>
+        <source> Name is required. </source>
         <target state="new">名稱是必填的。</target>
       </trans-unit>
       <trans-unit id="3326877877555410533" datatype="html">
@@ -787,7 +787,7 @@
         <target state="new">Source Name</target>
       </trans-unit>
       <trans-unit id="3354985892672468892" datatype="html">
-        <source>Label value must be alphanumeric separated by &apos;.&apos; , &apos;-&apos; or &apos;_&apos;.</source>
+        <source> Label value must be alphanumeric separated by &apos;.&apos; , &apos;-&apos; or &apos;_&apos;. </source>
         <target state="new">標籤值必須由 &apos;.&apos; , &apos;-&apos; 或者 &apos;_&apos; 分割字母數字</target>
       </trans-unit>
       <trans-unit id="3368378053177904137" datatype="html">
@@ -807,8 +807,8 @@
         <target>學到更多 <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/>open_in_new<x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i&gt;"/> </target>
       </trans-unit>
       <trans-unit id="3368378053177904137" datatype="html">
-        <source>Learn more <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&quot;\uFFFD#5\uFFFD&quot;"/>open_in_new<x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&quot;\uFFFD/#5\uFFFD&quot;"/></source>
-        <target>學到更多 <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/>open_in_new<x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i&gt;"/> </target>
+        <source> Learn more <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&quot;\uFFFD#5\uFFFD&quot;"/>open_in_new<x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&quot;\uFFFD/#5\uFFFD&quot;"/></source>
+        <target state="new">學到更多 <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/>open_in_new<x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i&gt;"/> </target>
       </trans-unit>
       <trans-unit id="3368417786821334758" datatype="html">
         <source>Abort</source>
@@ -819,8 +819,8 @@
         <target state="new">名稱必須大於 <x id="INTERPOLATION" equiv-text="{{namespaceMaxLength}}"/> 個字符</target>
       </trans-unit>
       <trans-unit id="3370944056293075657" datatype="html">
-        <source>Name must be up to <x id="INTERPOLATION" equiv-text="&quot;\uFFFD0\uFFFD&quot;"/> characters long.</source>
-        <target>名称必須大於 <x id="INTERPOLATION" equiv-text="{{secretNameMaxLength}}"/> 字符.</target>
+        <source> Name must be up to <x id="INTERPOLATION" equiv-text="&quot;\uFFFD0\uFFFD&quot;"/> characters long. </source>
+        <target state="new">名称必須大於 <x id="INTERPOLATION" equiv-text="{{secretNameMaxLength}}"/> 字符.</target>
       </trans-unit>
       <trans-unit id="3375720161310377589" datatype="html">
         <source>value</source>
@@ -847,8 +847,8 @@
         <target state="new">Container runtime version</target>
       </trans-unit>
       <trans-unit id="3426643717372750272" datatype="html">
-        <source>Service Port</source>
-        <target state="new">Service Port</target>
+        <source>Service Port </source>
+        <target state="new">Service Port </target>
       </trans-unit>
       <trans-unit id="3448462145758383019" datatype="html">
         <source>Total</source>
@@ -887,7 +887,7 @@
         <target>以特權身份運行</target>
       </trans-unit>
       <trans-unit id="3534088723520522114" datatype="html">
-        <source>Variable name must be a valid C identifier.</source>
+        <source> Variable name must be a valid C identifier. </source>
         <target state="new">變數名必須是有效的 C 標識符</target>
       </trans-unit>
       <trans-unit id="3540108566782816830" datatype="html">
@@ -903,11 +903,11 @@
         <target state="new">Local settings</target>
       </trans-unit>
       <trans-unit id="3551329346991932579" datatype="html">
-        <source>Protocol is required.</source>
+        <source> Protocol is required. </source>
         <target state="new">協議是必須的。</target>
       </trans-unit>
       <trans-unit id="3569677708978335155" datatype="html">
-        <source>Desired:</source>
+        <source>Desired: </source>
         <target state="new">期望值:</target>
       </trans-unit>
       <trans-unit id="3583123851975839013" datatype="html">
@@ -915,11 +915,11 @@
         <target state="new">Session Affinity</target>
       </trans-unit>
       <trans-unit id="3588315191655475025" datatype="html">
-        <source>Container image is required</source>
+        <source> Container image is required </source>
         <target state="new">容器鏡像是必須的</target>
       </trans-unit>
       <trans-unit id="3609669829589519658" datatype="html">
-        <source>CPU requirement must be given as a valid number.</source>
+        <source> CPU requirement must be given as a valid number. </source>
         <target state="new">CPU 下限必須是有效的數字。</target>
       </trans-unit>
       <trans-unit id="3611950223744571613" datatype="html">
@@ -935,8 +935,8 @@
         <target state="new">Resource Limits</target>
       </trans-unit>
       <trans-unit id="3758898250164236993" datatype="html">
-        <source>This action is equivalent to:</source>
-        <target state="new">This action is equivalent to:</target>
+        <source>This action is equivalent to: </source>
+        <target state="new">This action is equivalent to: </target>
       </trans-unit>
       <trans-unit id="376256424703415146" datatype="html">
         <source>Change the language of the dashboard</source>
@@ -971,7 +971,7 @@
         <target>具有此值的 &apos;app&apos; 標籤將添加到已部署的 Deployment 和 Service 中。</target>
       </trans-unit>
       <trans-unit id="3844914972911579334" datatype="html">
-        <source>Number of pods must be a positive integer</source>
+        <source> Number of pods must be a positive integer </source>
         <target state="new">pod 的數量必須是正整數</target>
       </trans-unit>
       <trans-unit id="3847048283826460449" datatype="html">
@@ -987,7 +987,7 @@
         <target>最後一次</target>
       </trans-unit>
       <trans-unit id="3910914001392684259" datatype="html">
-        <source>Port must be an integer.</source>
+        <source> Port must be an integer. </source>
         <target state="new">端口號必須是數字</target>
       </trans-unit>
       <trans-unit id="3911411545389266400" datatype="html">
@@ -1003,7 +1003,7 @@
         <target>節點</target>
       </trans-unit>
       <trans-unit id="400776614514525117" datatype="html">
-        <source>Schedule:</source>
+        <source>Schedule: </source>
         <target state="new">時間表:</target>
       </trans-unit>
       <trans-unit id="4021752662928002901" datatype="html">
@@ -1019,8 +1019,8 @@
         <target>依賴</target>
       </trans-unit>
       <trans-unit id="4052052481087794292" datatype="html">
-        <source>Role Bindings</source>
-        <target state="new">Role Bindings</target>
+        <source>Role Bindings </source>
+        <target state="new">Role Bindings </target>
       </trans-unit>
       <trans-unit id="4052582653153593975" datatype="html">
         <source>Config and Storage</source>
@@ -1035,7 +1035,7 @@
         <target>縮放資源</target>
       </trans-unit>
       <trans-unit id="4105691782196566273" datatype="html">
-        <source>Port must be less than 65536.</source>
+        <source> Port must be less than 65536. </source>
         <target state="new">端口號必須小於 65536</target>
       </trans-unit>
       <trans-unit id="4111811676793706889" datatype="html">
@@ -1051,7 +1051,7 @@
         <target>鏡像</target>
       </trans-unit>
       <trans-unit id="4170719254013309689" datatype="html">
-        <source>Skip</source>
+        <source> Skip </source>
         <target state="new">跳過</target>
       </trans-unit>
       <trans-unit id="4207916966377787111" datatype="html">
@@ -1063,7 +1063,7 @@
         <target state="new">Namespace that should be selected by default after logging in.</target>
       </trans-unit>
       <trans-unit id="4216678889012737533" datatype="html">
-        <source>Deployment or service with this name already exists within namespace.</source>
+        <source> Deployment or service with this name already exists within namespace. </source>
         <target state="new">具有同名稱的 deployment 或 service 已存在於命名空間中</target>
       </trans-unit>
       <trans-unit id="4222409682577085383" datatype="html">
@@ -1079,19 +1079,19 @@
         <target state="new">Pin resource</target>
       </trans-unit>
       <trans-unit id="4287392502726135197" datatype="html">
-        <source>Config Maps</source>
-        <target state="new">Config Maps</target>
+        <source>Config Maps </source>
+        <target state="new">Config Maps </target>
       </trans-unit>
       <trans-unit id="4288379540371209568" datatype="html">
-        <source>Create a new namespace...</source>
+        <source> Create a new namespace... </source>
         <target state="new">創建一个新的命名空間...</target>
       </trans-unit>
       <trans-unit id="4296726543175330378" datatype="html">
-        <source>Enter YAML or JSON content specifying the resources to create to the currently selected namespace.</source>
+        <source> Enter YAML or JSON content specifying the resources to create to the currently selected namespace. </source>
         <target state="new">輸入 YAML 或 JSON 内容，指定要爲當前選定的命名空間創建的資源。</target>
       </trans-unit>
       <trans-unit id="43228639508046926" datatype="html">
-        <source>Completions:</source>
+        <source>Completions: </source>
         <target state="new">完成:</target>
       </trans-unit>
       <trans-unit id="4342607865016428668" datatype="html">
@@ -1131,7 +1131,7 @@
         <target>此操作相當於：</target>
       </trans-unit>
       <trans-unit id="4482298116905997082" datatype="html">
-        <source>Age:</source>
+        <source>Age: </source>
         <target state="new">經過時間:</target>
       </trans-unit>
       <trans-unit id="4493030647783338212" datatype="html">
@@ -1139,8 +1139,8 @@
         <target state="new">Edit a resource</target>
       </trans-unit>
       <trans-unit id="4499651527836994743" datatype="html">
-        <source>Roles</source>
-        <target state="new">Roles</target>
+        <source>Roles </source>
+        <target state="new">Roles </target>
       </trans-unit>
       <trans-unit id="4558539712487554281" datatype="html">
         <source>Do you want to save them anyways?</source>
@@ -1167,12 +1167,12 @@
         <target state="new">Secrets</target>
       </trans-unit>
       <trans-unit id="4588432762946433765" datatype="html">
-        <source>Kind:</source>
-        <target state="new">Kind:</target>
+        <source>Kind: </source>
+        <target state="new">Kind: </target>
       </trans-unit>
       <trans-unit id="4613805182430195952" datatype="html">
-        <source>Namespaces</source>
-        <target state="new">Namespaces</target>
+        <source>Namespaces </source>
+        <target state="new">Namespaces </target>
       </trans-unit>
       <trans-unit id="4645345687322304891" datatype="html">
         <source>Rules</source>
@@ -1187,7 +1187,7 @@
         <target state="new">iSCSI Qualified Name</target>
       </trans-unit>
       <trans-unit id="4686783485484478974" datatype="html">
-        <source>Parallelism:</source>
+        <source>Parallelism: </source>
         <target state="new">並行:</target>
       </trans-unit>
       <trans-unit id="4708304467453184793" datatype="html">
@@ -1199,8 +1199,8 @@
         <target state="new">Desired</target>
       </trans-unit>
       <trans-unit id="4740026766388750543" datatype="html">
-        <source>Cluster Roles</source>
-        <target state="new">Cluster Roles</target>
+        <source>Cluster Roles </source>
+        <target state="new">Cluster Roles </target>
       </trans-unit>
       <trans-unit id="4749936818577754995" datatype="html">
         <source>Delete resource</source>
@@ -1211,7 +1211,7 @@
         <target state="new">Architecture</target>
       </trans-unit>
       <trans-unit id="4773463022110715023" datatype="html">
-        <source>Enter YAML or JSON content specifying the resources to create to the namespace specified in the file.</source>
+        <source> Enter YAML or JSON content specifying the resources to create to the namespace specified in the file. </source>
         <target state="new">輸入 YAML 或 JSON 内容，指定要為文件中指定的命名空間創建的資源。</target>
       </trans-unit>
       <trans-unit id="4775550080689015987" datatype="html">
@@ -1259,7 +1259,7 @@
         <target state="new">SE Linux Level</target>
       </trans-unit>
       <trans-unit id="5103064776441485656" datatype="html">
-        <source>Running:</source>
+        <source>Running: </source>
         <target state="new">運行中:</target>
       </trans-unit>
       <trans-unit id="5112388980413175570" datatype="html">
@@ -1279,43 +1279,43 @@
         <target state="new">HTTP Healthcheck URI</target>
       </trans-unit>
       <trans-unit id="5156388212535235462" datatype="html">
-        <source>Environment Variables</source>
-        <target state="new">Environment Variables</target>
+        <source> Environment Variables </source>
+        <target state="new"> Environment Variables </target>
       </trans-unit>
       <trans-unit id="5159814115056353668" datatype="html">
         <source>Addresses</source>
         <target state="new">Addresses</target>
       </trans-unit>
       <trans-unit id="5175014003399520919" datatype="html">
-        <source>Pods</source>
-        <target state="new">Pods</target>
+        <source>Pods </source>
+        <target state="new">Pods </target>
       </trans-unit>
       <trans-unit id="5207635742003539443" datatype="html">
         <source>Sign in</source>
         <target state="new">Sign in</target>
       </trans-unit>
       <trans-unit id="5231922476273855748" datatype="html">
-        <source>Waiting for more data to display chart...</source>
-        <target state="new">Waiting for more data to display chart...</target>
+        <source>Waiting for more data to display chart... </source>
+        <target state="new">Waiting for more data to display chart... </target>
       </trans-unit>
       <trans-unit id="5248717555542428023" datatype="html">
         <source>Username</source>
         <target>用戶名</target>
       </trans-unit>
       <trans-unit id="5257636795023365764" datatype="html">
-        <source>Upload</source>
+        <source> Upload </source>
         <target state="new">上傳</target>
       </trans-unit>
       <trans-unit id="5278726417886231851" datatype="html">
-        <source>IP:</source>
-        <target state="new">IP:</target>
+        <source>IP: </source>
+        <target state="new">IP: </target>
       </trans-unit>
       <trans-unit id="5279881970414324834" datatype="html">
         <source>Taints</source>
         <target state="new">Taints</target>
       </trans-unit>
       <trans-unit id="528589796437229259" datatype="html">
-        <source>Memory requirement must be given as a positive number.</source>
+        <source> Memory requirement must be given as a positive number. </source>
         <target state="new">Memory 下限必須是正整數。</target>
       </trans-unit>
       <trans-unit id="5298392270155336139" datatype="html">
@@ -1327,8 +1327,8 @@
         <target state="new">Search for <x id="PH" equiv-text="this._activatedRoute.snapshot.queryParams[SEARCH_QUERY_STATE_PARAM]"/></target>
       </trans-unit>
       <trans-unit id="5333782621798086225" datatype="html">
-        <source>Cron Jobs</source>
-        <target state="new">Cron Jobs</target>
+        <source>Cron Jobs </source>
+        <target state="new">Cron Jobs </target>
       </trans-unit>
       <trans-unit id="5352570882809799670" datatype="html">
         <source>Size: <x id="INTERPOLATION" equiv-text="&quot;\uFFFD0\uFFFD&quot;"/> B</source>
@@ -1363,7 +1363,7 @@
         <target state="new">Resource information</target>
       </trans-unit>
       <trans-unit id="5509177505397229412" datatype="html">
-        <source>Target port must be less than 65536.</source>
+        <source> Target port must be less than 65536. </source>
         <target state="new">目標端口必須小於 65536。</target>
       </trans-unit>
       <trans-unit id="5519023941949331063" datatype="html">
@@ -1379,7 +1379,7 @@
         <target state="new">Scope</target>
       </trans-unit>
       <trans-unit id="5596215605725734238" datatype="html">
-        <source>Data is required.</source>
+        <source> Data is required. </source>
         <target state="new">Data 是必須的。</target>
       </trans-unit>
       <trans-unit id="5603542439272909460" datatype="html">
@@ -1391,8 +1391,8 @@
         <target>默認</target>
       </trans-unit>
       <trans-unit id="5608319401828876510" datatype="html">
-        <source>Deployments</source>
-        <target state="new">Deployments</target>
+        <source>Deployments </source>
+        <target state="new">Deployments </target>
       </trans-unit>
       <trans-unit id="5611592591303869712" datatype="html">
         <source>Status</source>
@@ -1415,11 +1415,11 @@
         <target state="new">Create</target>
       </trans-unit>
       <trans-unit id="2131524838680811873" datatype="html">
-        <source>You can <x id="START_LINK" ctype="x-a" equiv-text="&quot;\uFFFD#6\uFFFD&quot;"/>deploy a containerized app<x id="CLOSE_LINK" ctype="x-a" equiv-text="&quot;[\uFFFD/#6\uFFFD|\uFFFD/#7\uFFFD]&quot;"/>, select other namespace or <x id="START_LINK_1" equiv-text="&quot;\uFFFD#7\uFFFD&quot;"/>take the Dashboard Tour <x id="START_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&quot;\uFFFD#8\uFFFD&quot;"/>open_in_new<x id="CLOSE_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&quot;\uFFFD/#8\uFFFD&quot;"/><x id="CLOSE_LINK" ctype="x-a" equiv-text="&quot;[\uFFFD/#6\uFFFD|\uFFFD/#7\uFFFD]&quot;"/> to learn more.</source>
+        <source> You can <x id="START_LINK" ctype="x-a" equiv-text="&quot;\uFFFD#6\uFFFD&quot;"/>deploy a containerized app<x id="CLOSE_LINK" ctype="x-a" equiv-text="&quot;[\uFFFD/#6\uFFFD|\uFFFD/#7\uFFFD]&quot;"/>, select other namespace or <x id="START_LINK_1" equiv-text="&quot;\uFFFD#7\uFFFD&quot;"/>check the Dashboard Docs <x id="START_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&quot;\uFFFD#8\uFFFD&quot;"/>open_in_new<x id="CLOSE_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&quot;\uFFFD/#8\uFFFD&quot;"/><x id="CLOSE_LINK" ctype="x-a" equiv-text="&quot;[\uFFFD/#6\uFFFD|\uFFFD/#7\uFFFD]&quot;"/> to learn more. </source>
         <target state="new">您可以 <x id="START_LINK" ctype="x-a" equiv-text="&lt;a&gt;"/> 部署一個容器化應用 <x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/>, select other namespace or <x id="START_LINK_1" ctype="x-a" equiv-text="&lt;a&gt;"/> 閱讀 Dashboard 說明 <x id="START_TAG_MAT-ICON" ctype="x-mat-icon" equiv-text="&lt;mat-icon&gt;"/>open_in_new<x id="CLOSE_TAG_MAT-ICON" ctype="x-mat-icon" equiv-text="&lt;/mat-icon&gt;"/> <x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/> 瞭解更多。</target>
       </trans-unit>
       <trans-unit id="5693993471751761333" datatype="html">
-        <source>Create a new secret...</source>
+        <source> Create a new secret... </source>
         <target state="new">創建一個新的 secret...</target>
       </trans-unit>
       <trans-unit id="5729418620241283277" datatype="html">
@@ -1435,8 +1435,8 @@
         <target>暫停</target>
       </trans-unit>
       <trans-unit id="577038887888857351" datatype="html">
-        <source>Add</source>
-        <target state="new">Add</target>
+        <source> Add </source>
+        <target state="new"> Add </target>
       </trans-unit>
       <trans-unit id="5793766132158032827" datatype="html">
         <source>No namespaces selected</source>
@@ -1451,8 +1451,8 @@
         <target state="new">Monitors</target>
       </trans-unit>
       <trans-unit id="5813540454109761631" datatype="html">
-        <source>Ingresses</source>
-        <target state="new">Ingresses</target>
+        <source>Ingresses </source>
+        <target state="new">Ingresses </target>
       </trans-unit>
       <trans-unit id="5818955156850908956" datatype="html">
         <source>Secret name</source>
@@ -1479,12 +1479,12 @@
         <target state="new">Filesystem Group Change Policy</target>
       </trans-unit>
       <trans-unit id="5925034162028212293" datatype="html">
-        <source>Jobs</source>
-        <target state="new">Jobs</target>
+        <source>Jobs </source>
+        <target state="new">Jobs </target>
       </trans-unit>
       <trans-unit id="5937630659228234115" datatype="html">
-        <source>Service</source>
-        <target state="new">Service</target>
+        <source>Service </source>
+        <target state="new">Service </target>
       </trans-unit>
       <trans-unit id="5943454400955467108" datatype="html">
         <source>
@@ -1537,8 +1537,8 @@
         <target>命名空間的名字</target>
       </trans-unit>
       <trans-unit id="607655052894272917" datatype="html">
-        <source>Path</source>
-        <target state="new">Path</target>
+        <source>Path </source>
+        <target state="new">Path </target>
       </trans-unit>
       <trans-unit id="6099594451254122208" datatype="html">
         <source>Create a new namespace</source>
@@ -1569,7 +1569,7 @@
         <target state="new">Horizontal Pod Autoscalers</target>
       </trans-unit>
       <trans-unit id="6163370502260387661" datatype="html">
-        <source>Invalid protocol.</source>
+        <source> Invalid protocol. </source>
         <target state="new">無效的協議。</target>
       </trans-unit>
       <trans-unit id="6185721657347844438" datatype="html">
@@ -1581,15 +1581,15 @@
         <target>新的 secret 將添加到叢集中</target>
       </trans-unit>
       <trans-unit id="6239075439253810960" datatype="html">
-        <source>Pending:</source>
+        <source>Pending: </source>
         <target state="new">啓動中:</target>
       </trans-unit>
       <trans-unit id="6283035888557195281" datatype="html">
-        <source>Cluster</source>
-        <target state="new">Cluster</target>
+        <source>Cluster </source>
+        <target state="new">Cluster </target>
       </trans-unit>
       <trans-unit id="6284431271548714587" datatype="html">
-        <source>Suspend:</source>
+        <source>Suspend: </source>
         <target state="new">暫停中:</target>
       </trans-unit>
       <trans-unit id="6350980688187906033" datatype="html">
@@ -1609,7 +1609,7 @@
         <target state="new">System information</target>
       </trans-unit>
       <trans-unit id="642253290448532904" datatype="html">
-        <source>Min ready seconds:</source>
+        <source>Min ready seconds: </source>
         <target state="new">最小準備秒數:</target>
       </trans-unit>
       <trans-unit id="6423210280939340786" datatype="html">
@@ -1625,8 +1625,8 @@
         <target state="new">Sub Path</target>
       </trans-unit>
       <trans-unit id="6462224380417375328" datatype="html">
-        <source>Service Accounts</source>
-        <target state="new">Service Accounts</target>
+        <source>Service Accounts </source>
+        <target state="new">Service Accounts </target>
       </trans-unit>
       <trans-unit id="6478267560860767436" datatype="html">
         <source>Memory capacity (bytes)</source>
@@ -1637,7 +1637,7 @@
         <target state="new">kubelet version</target>
       </trans-unit>
       <trans-unit id="6494596911805287915" datatype="html">
-        <source>Items:</source>
+        <source>Items: </source>
         <target state="new">項目:</target>
       </trans-unit>
       <trans-unit id="6501135579599829770" datatype="html">
@@ -1661,7 +1661,7 @@
         <target>端口 (名字, 端口, 協議)</target>
       </trans-unit>
       <trans-unit id="6596586911518775971" datatype="html">
-        <source>Target port cannot be empty.</source>
+        <source> Target port cannot be empty. </source>
         <target state="new">目標端口不能爲空。</target>
       </trans-unit>
       <trans-unit id="6599752784987327249" datatype="html">
@@ -1681,7 +1681,7 @@
         <target state="new">Pod Selector</target>
       </trans-unit>
       <trans-unit id="6663783128602596673" datatype="html">
-        <source>Sign in</source>
+        <source> Sign in </source>
         <target state="new">登入</target>
       </trans-unit>
       <trans-unit id="6677684716540733511" datatype="html">
@@ -1693,7 +1693,7 @@
         <target>執行命令</target>
       </trans-unit>
       <trans-unit id="6753642863059953692" datatype="html">
-        <source>Port cannot be empty.</source>
+        <source> Port cannot be empty. </source>
         <target state="new">端口號不能為空</target>
       </trans-unit>
       <trans-unit id="6762504134540024018" datatype="html">
@@ -1701,8 +1701,8 @@
         <target>數量</target>
       </trans-unit>
       <trans-unit id="677624622393809855" datatype="html">
-        <source>Logged in with token</source>
-        <target state="new">Logged in with token</target>
+        <source>Logged in with token </source>
+        <target state="new">Logged in with token </target>
       </trans-unit>
       <trans-unit id="6781815540337494856" datatype="html">
         <source>Completions</source>
@@ -1725,15 +1725,15 @@
         <target state="new">Kernel version</target>
       </trans-unit>
       <trans-unit id="6852503341223458730" datatype="html">
-        <source>Persistent Volumes</source>
-        <target state="new">Persistent Volumes</target>
+        <source>Persistent Volumes </source>
+        <target state="new">Persistent Volumes </target>
       </trans-unit>
       <trans-unit id="6869304038391725752" datatype="html">
         <source>Containers</source>
         <target>容器</target>
       </trans-unit>
       <trans-unit id="686980668228952182" datatype="html">
-        <source>Workloads</source>
+        <source>Workloads </source>
         <target state="new">工作負載</target>
       </trans-unit>
       <trans-unit id="6870709634537724397" datatype="html">
@@ -1753,7 +1753,7 @@
         <target state="new">Plugins</target>
       </trans-unit>
       <trans-unit id="6915193719482636823" datatype="html">
-        <source>Name:</source>
+        <source>Name: </source>
         <target state="new">名字:</target>
       </trans-unit>
       <trans-unit id="6929072613146586031" datatype="html">
@@ -1765,7 +1765,7 @@
         <target>資源名</target>
       </trans-unit>
       <trans-unit id="695074596983358387" datatype="html">
-        <source>Application name is required.</source>
+        <source> Application name is required. </source>
         <target state="new">應用名稱是必需的。</target>
       </trans-unit>
       <trans-unit id="6959497441009812685" datatype="html">
@@ -1805,7 +1805,7 @@
         <target>内部 Endpoints</target>
       </trans-unit>
       <trans-unit id="7076883018082745028" datatype="html">
-        <source>Label key name must be alphanumeric separated by &apos;-&apos;, &apos;_&apos; or &apos;.&apos;, optionally prefixed by a DNS subdomain and &apos;/&apos;.</source>
+        <source> Label key name must be alphanumeric separated by &apos;-&apos;, &apos;_&apos; or &apos;.&apos;, optionally prefixed by a DNS subdomain and &apos;/&apos;. </source>
         <target state="new">標籤密鑰名稱必須是由 &apos;-&apos;，&apos;_&apos; 或 &apos;.&apos; 分隔的字母數字，可選以 DNS 子域和 &apos;/&apos; 為前綴。</target>
       </trans-unit>
       <trans-unit id="7101197021456818771" datatype="html">
@@ -1817,7 +1817,7 @@
         <target state="new">Theme</target>
       </trans-unit>
       <trans-unit id="7109976949603290892" datatype="html">
-        <source>Logs from <x id="START_TAG_KD_DATE" ctype="x-kd_date" equiv-text="&quot;\uFFFD#2\uFFFD&quot;"/><x id="CLOSE_TAG_KD_DATE" ctype="x-kd_date" equiv-text="&quot;[\uFFFD/#2\uFFFD|\uFFFD/#3\uFFFD]&quot;"/> to <x id="START_TAG_KD_DATE_1" ctype="x-kd_date_1" equiv-text="&quot;\uFFFD#3\uFFFD&quot;"/><x id="CLOSE_TAG_KD_DATE" ctype="x-kd_date" equiv-text="&quot;[\uFFFD/#2\uFFFD|\uFFFD/#3\uFFFD]&quot;"/> UTC</source>
+        <source> Logs from <x id="START_TAG_KD_DATE" ctype="x-kd_date" equiv-text="&quot;\uFFFD#2\uFFFD&quot;"/><x id="CLOSE_TAG_KD_DATE" ctype="x-kd_date" equiv-text="&quot;[\uFFFD/#2\uFFFD|\uFFFD/#3\uFFFD]&quot;"/> to <x id="START_TAG_KD_DATE_1" ctype="x-kd_date_1" equiv-text="&quot;\uFFFD#3\uFFFD&quot;"/><x id="CLOSE_TAG_KD_DATE" ctype="x-kd_date" equiv-text="&quot;[\uFFFD/#2\uFFFD|\uFFFD/#3\uFFFD]&quot;"/> UTC </source>
         <target state="new">Logs from <x id="START_TAG_KD_DATE" ctype="x-kd_date" equiv-text="&lt;kd-date [date]=&quot;podLogs?.info.fromDate&quot; format=&quot;short&quot;&gt;"/><x id="CLOSE_TAG_KD_DATE" ctype="x-kd_date" equiv-text="&lt;/kd-date&gt;"/> to <x id="START_TAG_KD_DATE_1" ctype="x-kd_date_1" equiv-text="&lt;kd-date [date]=&quot;podLogs?.info.toDate&quot; format=&quot;short&quot;&gt;"/><x id="CLOSE_TAG_KD_DATE" ctype="x-kd_date" equiv-text="&lt;/kd-date&gt;"/> UTC</target>
       </trans-unit>
       <trans-unit id="7136018875175606726" datatype="html">
@@ -1841,7 +1841,7 @@
         <target state="new">Unschedulable</target>
       </trans-unit>
       <trans-unit id="7194375808015467595" datatype="html">
-        <source>Max surge:</source>
+        <source>Max surge: </source>
         <target state="new">最大替換數:</target>
       </trans-unit>
       <trans-unit id="7194477224906924674" datatype="html">
@@ -1853,20 +1853,20 @@
         <target state="new">Success Threshold</target>
       </trans-unit>
       <trans-unit id="7198836215060144081" datatype="html">
-        <source>Host</source>
-        <target state="new">Host</target>
+        <source>Host </source>
+        <target state="new">Host </target>
       </trans-unit>
       <trans-unit id="7204408227432067199" datatype="html">
         <source>Restarts</source>
         <target>重啓</target>
       </trans-unit>
       <trans-unit id="7206849842963127297" datatype="html">
-        <source>Custom Resource Definitions</source>
-        <target state="new">Custom Resource Definitions</target>
+        <source>Custom Resource Definitions </source>
+        <target state="new">Custom Resource Definitions </target>
       </trans-unit>
       <trans-unit id="7207867066492367466" datatype="html">
-        <source>Settings</source>
-        <target state="new">Settings</target>
+        <source>Settings </source>
+        <target state="new">Settings </target>
       </trans-unit>
       <trans-unit id="7239750919884229270" datatype="html">
         <source>Updated</source>
@@ -1877,7 +1877,7 @@
         <target state="new">Failed</target>
       </trans-unit>
       <trans-unit id="728108318392658678" datatype="html">
-        <source>Shell in <x id="START_TAG_MAT_SELECT" ctype="x-mat_select" equiv-text="&quot;\uFFFD*3:1\uFFFD\uFFFD#1:1\uFFFD&quot;"/><x id="START_TAG_MAT_OPTION" ctype="x-mat_option" equiv-text="&quot;\uFFFD*2:2\uFFFD\uFFFD#1:2\uFFFD&quot;"/> <x id="INTERPOLATION" equiv-text="&quot;\uFFFD0:2\uFFFD&quot;"/> <x id="CLOSE_TAG_MAT_OPTION" ctype="x-mat_option" equiv-text="&quot;\uFFFD/#1:2\uFFFD\uFFFD/*2:2\uFFFD&quot;"/><x id="CLOSE_TAG_MAT_SELECT" ctype="x-mat_select" equiv-text="&quot;\uFFFD/#1:1\uFFFD\uFFFD/*3:1\uFFFD&quot;"/> in <x id="INTERPOLATION_1" equiv-text="&quot;\uFFFD0\uFFFD&quot;"/> </source>
+        <source> Shell in <x id="START_TAG_MAT_SELECT" ctype="x-mat_select" equiv-text="&quot;\uFFFD*3:1\uFFFD\uFFFD#1:1\uFFFD&quot;"/><x id="START_TAG_MAT_OPTION" ctype="x-mat_option" equiv-text="&quot;\uFFFD*2:2\uFFFD\uFFFD#1:2\uFFFD&quot;"/> <x id="INTERPOLATION" equiv-text="&quot;\uFFFD0:2\uFFFD&quot;"/> <x id="CLOSE_TAG_MAT_OPTION" ctype="x-mat_option" equiv-text="&quot;\uFFFD/#1:2\uFFFD\uFFFD/*2:2\uFFFD&quot;"/><x id="CLOSE_TAG_MAT_SELECT" ctype="x-mat_select" equiv-text="&quot;\uFFFD/#1:1\uFFFD\uFFFD/*3:1\uFFFD&quot;"/> in <x id="INTERPOLATION_1" equiv-text="&quot;\uFFFD0\uFFFD&quot;"/> </source>
         <target state="new">Shell in <x id="START_TAG_MAT-SELECT" ctype="x-mat-select" equiv-text="&lt;mat-select&gt;"/> <x id="START_TAG_MAT-OPTION" ctype="x-mat-option" equiv-text="&lt;mat-option&gt;"/> <x id="INTERPOLATION" equiv-text="{{ item }}"/> <x id="CLOSE_TAG_MAT-OPTION" ctype="x-mat-option" equiv-text="&lt;/mat-option&gt;"/> <x id="CLOSE_TAG_MAT-SELECT" ctype="x-mat-select" equiv-text="&lt;/mat-select&gt;"/> in <x id="INTERPOLATION_1" equiv-text="{{ podName }}"/> </target>
       </trans-unit>
       <trans-unit id="7281870845577621674" datatype="html">
@@ -1885,20 +1885,20 @@
         <target>初始化容器</target>
       </trans-unit>
       <trans-unit id="7293190222859783293" datatype="html">
-        <source>Plugins</source>
-        <target state="new">Plugins</target>
+        <source>Plugins </source>
+        <target state="new">Plugins </target>
       </trans-unit>
       <trans-unit id="7298863100332850221" datatype="html">
         <source>There is no data to display.</source>
         <target>沒有要顯示的數據。</target>
       </trans-unit>
       <trans-unit id="7327432642990246284" datatype="html">
-        <source>Default service account</source>
-        <target state="new">Default service account</target>
+        <source>Default service account </source>
+        <target state="new">Default service account </target>
       </trans-unit>
       <trans-unit id="7330483736355831593" datatype="html">
-        <source>Config and Storage</source>
-        <target state="new">Config and Storage</target>
+        <source>Config and Storage </source>
+        <target state="new">Config and Storage </target>
       </trans-unit>
       <trans-unit id="7335089825053673252" datatype="html">
         <source>Privileged</source>
@@ -1909,7 +1909,7 @@
         <target state="new">Trigger</target>
       </trans-unit>
       <trans-unit id="7409958205893937925" datatype="html">
-        <source>Active Jobs:</source>
+        <source>Active Jobs: </source>
         <target state="new">運行中的 Jobs:</target>
       </trans-unit>
       <trans-unit id="741892530496074339" datatype="html">
@@ -1921,8 +1921,8 @@
         <target>取消固定</target>
       </trans-unit>
       <trans-unit id="7446822750532518350" datatype="html">
-        <source>Network Policies</source>
-        <target state="new">Network Policies</target>
+        <source>Network Policies </source>
+        <target state="new">Network Policies </target>
       </trans-unit>
       <trans-unit id="7472460087344828807" datatype="html">
         <source>Filesystem type</source>
@@ -1949,7 +1949,7 @@
         <target state="new">Objects</target>
       </trans-unit>
       <trans-unit id="7541092997061001831" datatype="html">
-        <source>Setting high number of pods may cause performance issues of the cluster and Dashboard UI.</source>
+        <source> Setting high number of pods may cause performance issues of the cluster and Dashboard UI. </source>
         <target state="new">設定大量 pod 可能會導致叢集和 Dashboard UI 出現效能問題。</target>
       </trans-unit>
       <trans-unit id="7542300534444838884" datatype="html">
@@ -1957,7 +1957,7 @@
         <target state="new">Kubernetes Dashboard</target>
       </trans-unit>
       <trans-unit id="7546647490531252189" datatype="html">
-        <source>Namespace:</source>
+        <source>Namespace: </source>
         <target state="new">命名空間:</target>
       </trans-unit>
       <trans-unit id="7571663901157580742" datatype="html">
@@ -1969,8 +1969,8 @@
         <target state="new">Edit</target>
       </trans-unit>
       <trans-unit id="761105739794565336" datatype="html">
-        <source>Pods:</source>
-        <target state="new">Pods:</target>
+        <source>Pods: </source>
+        <target state="new">Pods: </target>
       </trans-unit>
       <trans-unit id="7613204568422973266" datatype="html">
         <source>Default Backend</source>
@@ -1981,20 +1981,20 @@
         <target>指定要保留的 secret 的 data。該值是 .dockercfg 文件中的 Base64 編碼内容</target>
       </trans-unit>
       <trans-unit id="765635835361713756" datatype="html">
-        <source>Preview</source>
-        <target state="new">Preview</target>
+        <source> Preview </source>
+        <target state="new"> Preview </target>
       </trans-unit>
       <trans-unit id="7678167194170686460" datatype="html">
-        <source>Cancel</source>
-        <target state="new">Cancel</target>
+        <source>Cancel </source>
+        <target state="new">Cancel </target>
       </trans-unit>
       <trans-unit id="7680153547364305148" datatype="html">
         <source>Disable access denied notification</source>
         <target>禁止拒絕訪問的通知</target>
       </trans-unit>
       <trans-unit id="7682253854615514679" datatype="html">
-        <source>Nodes</source>
-        <target state="new">Nodes</target>
+        <source>Nodes </source>
+        <target state="new">Nodes </target>
       </trans-unit>
       <trans-unit id="7696069555285576911" datatype="html">
         <source>Windows GMSA Credential Spec</source>
@@ -2017,7 +2017,7 @@
         <target state="new">Dataset name</target>
       </trans-unit>
       <trans-unit id="7747200628816231618" datatype="html">
-        <source>Label Key name should not exceed 63 characters.</source>
+        <source> Label Key name should not exceed 63 characters. </source>
         <target state="new">Label Key 名稱不應超過 63 個字符</target>
       </trans-unit>
       <trans-unit id="7769329651019167020" datatype="html">
@@ -2045,7 +2045,7 @@
         <target>容量</target>
       </trans-unit>
       <trans-unit id="7846239389723666576" datatype="html">
-        <source>Data must be Base64 encoded.</source>
+        <source> Data must be Base64 encoded. </source>
         <target state="new">Data 必須是 Base64 編碼的格式。</target>
       </trans-unit>
       <trans-unit id="7873445996550708978" datatype="html">
@@ -2065,12 +2065,12 @@
         <target state="new">Workloads</target>
       </trans-unit>
       <trans-unit id="7927427229271598667" datatype="html">
-        <source>Make sure that support for basic authentication is enabled in the cluster. To find out more about how to configure basic authentication, please refer to the <x id="START_LINK" ctype="x-a" equiv-text="&quot;\uFFFD#2\uFFFD&quot;"/>Authenticating<x id="CLOSE_LINK" ctype="x-a" equiv-text="&quot;[\uFFFD/#2\uFFFD|\uFFFD/#3\uFFFD]&quot;"/> and <x id="START_LINK_1" equiv-text="&quot;\uFFFD#3\uFFFD&quot;"/>ABAC Mode<x id="CLOSE_LINK" ctype="x-a" equiv-text="&quot;[\uFFFD/#2\uFFFD|\uFFFD/#3\uFFFD]&quot;"/> sections.</source>
+        <source> Make sure that support for basic authentication is enabled in the cluster. To find out more about how to configure basic authentication, please refer to the <x id="START_LINK" ctype="x-a" equiv-text="&quot;\uFFFD#2\uFFFD&quot;"/>Authenticating<x id="CLOSE_LINK" ctype="x-a" equiv-text="&quot;[\uFFFD/#2\uFFFD|\uFFFD/#3\uFFFD]&quot;"/> and <x id="START_LINK_1" equiv-text="&quot;\uFFFD#3\uFFFD&quot;"/>ABAC Mode<x id="CLOSE_LINK" ctype="x-a" equiv-text="&quot;[\uFFFD/#2\uFFFD|\uFFFD/#3\uFFFD]&quot;"/> sections. </source>
         <target state="new">確保在集群中啓用了對基本身份驗證的支持。要了解有關如何配置基本身份驗證的詳情，請參閲<x id="START_LINK" ctype="x-a" equiv-text="&lt;a&gt;"/>Authenticating<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/> 和 <x id="START_LINK_1" ctype="x-a" equiv-text="&lt;a&gt;"/>ABAC Mode<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/> 部分.</target>
       </trans-unit>
       <trans-unit id="7941428823403788384" datatype="html">
-        <source>Create</source>
-        <target state="new">Create</target>
+        <source> Create </source>
+        <target state="new"> Create </target>
       </trans-unit>
       <trans-unit id="795890916060309463" datatype="html">
         <source>Roles</source>
@@ -2137,7 +2137,7 @@
         <target state="new">Config And Storage</target>
       </trans-unit>
       <trans-unit id="8175189185819474284" datatype="html">
-        <source>Container image is invalid: <x id="INTERPOLATION" equiv-text="&quot;\uFFFD0\uFFFD&quot;"/> </source>
+        <source> Container image is invalid: <x id="INTERPOLATION" equiv-text="&quot;\uFFFD0\uFFFD&quot;"/> </source>
         <target state="new">容器映像檔無效: <x id="INTERPOLATION" equiv-text="{{containerImage.errors?.validImageReference}}"/> </target>
       </trans-unit>
       <trans-unit id="8177873832400820695" datatype="html">
@@ -2145,8 +2145,8 @@
         <target>次數</target>
       </trans-unit>
       <trans-unit id="8193431940379462508" datatype="html">
-        <source>Replication Controllers</source>
-        <target state="new">Replication Controllers</target>
+        <source>Replication Controllers </source>
+        <target state="new">Replication Controllers </target>
       </trans-unit>
       <trans-unit id="8204176479746810612" datatype="html">
         <source>Active</source>
@@ -2193,8 +2193,8 @@
         <target state="new">Suspended: <x id="PH" equiv-text="status.failed"/></target>
       </trans-unit>
       <trans-unit id="8360417359291444150" datatype="html">
-        <source>Upload</source>
-        <target state="new">Upload</target>
+        <source>Upload </source>
+        <target state="new">Upload </target>
       </trans-unit>
       <trans-unit id="8384742917026482252" datatype="html">
         <source>Phase</source>
@@ -2221,7 +2221,7 @@
         <target state="new">Download logs file</target>
       </trans-unit>
       <trans-unit id="8444287437490086299" datatype="html">
-        <source>Endpoints <x id="START_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&quot;\uFFFD#2\uFFFD&quot;"/>open_in_new<x id="CLOSE_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&quot;\uFFFD/#2\uFFFD&quot;"/></source>
+        <source> Endpoints <x id="START_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&quot;\uFFFD#2\uFFFD&quot;"/>open_in_new<x id="CLOSE_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&quot;\uFFFD/#2\uFFFD&quot;"/></source>
         <target state="new">Endpoints <x id="START_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;mat-icon class=&quot;external-link-icon kd-clickable&quot; i18n-matTooltip matTooltip=&quot;Endpoint links are external links that will be open in a new tab.&quot;&gt;"/>open_in_new<x id="CLOSE_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;/mat-icon&gt;"/></target>
       </trans-unit>
       <trans-unit id="8451232601628619325" datatype="html">
@@ -2241,7 +2241,7 @@
         <target state="new">Stateful Sets</target>
       </trans-unit>
       <trans-unit id="8542934565724912440" datatype="html">
-        <source>Prefix is not a valid DNS subdomain prefix (eg. my-domain.com).</source>
+        <source> Prefix is not a valid DNS subdomain prefix (eg. my-domain.com). </source>
         <target state="new">前綴不是有效的前缀 DNS 子域前缀（例如 my-domain.com ）。</target>
       </trans-unit>
       <trans-unit id="8548218669860642537" datatype="html">
@@ -2249,7 +2249,7 @@
         <target state="new">File is ready to download!</target>
       </trans-unit>
       <trans-unit id="858785118348238543" datatype="html">
-        <source>Succeeded:</source>
+        <source>Succeeded: </source>
         <target state="new">成功:</target>
       </trans-unit>
       <trans-unit id="8601511221316154701" datatype="html">
@@ -2281,8 +2281,8 @@
         <target>基本</target>
       </trans-unit>
       <trans-unit id="864882670483831190" datatype="html">
-        <source>There are no notifications</source>
-        <target state="new">There are no notifications</target>
+        <source> There are no notifications </source>
+        <target state="new"> There are no notifications </target>
       </trans-unit>
       <trans-unit id="8650499415827640724" datatype="html">
         <source>Type</source>
@@ -2309,15 +2309,15 @@
         <target>指定的標籤將用於創建的 Deployment，Service（如果有）和 Pod。 常見標籤包括 release，environment，tier，partition 和 track。</target>
       </trans-unit>
       <trans-unit id="8713955401469120119" datatype="html">
-        <source>Select YAML or JSON file specifying the resources to deploy to the currently selected namespace.</source>
+        <source> Select YAML or JSON file specifying the resources to deploy to the currently selected namespace. </source>
         <target state="new">選擇 YAML 或 JSON 文件中指定的資源部署到當前選定的命名空間。</target>
       </trans-unit>
       <trans-unit id="8716879065476971568" datatype="html">
-        <source>Status:</source>
+        <source>Status: </source>
         <target state="new">狀態:</target>
       </trans-unit>
       <trans-unit id="8764790219135296178" datatype="html">
-        <source>Target port must be greater than 0.</source>
+        <source> Target port must be greater than 0. </source>
         <target state="new">目標端口必須大於 0。</target>
       </trans-unit>
       <trans-unit id="8773342478342887379" datatype="html">
@@ -2345,8 +2345,8 @@
         <target state="new">No resources found.</target>
       </trans-unit>
       <trans-unit id="8859359379943639539" datatype="html">
-        <source>Replica Sets</source>
-        <target state="new">Replica Sets</target>
+        <source>Replica Sets </source>
+        <target state="new">Replica Sets </target>
       </trans-unit>
       <trans-unit id="8881985514674911381" datatype="html">
         <source>Verbs</source>
@@ -2377,7 +2377,7 @@
         <target>名字</target>
       </trans-unit>
       <trans-unit id="8971403803665717398" datatype="html">
-        <source>Number of pods is required</source>
+        <source> Number of pods is required </source>
         <target state="new">pod 的數量是必填項</target>
       </trans-unit>
       <trans-unit id="9014417675256704625" datatype="html">
@@ -2389,7 +2389,7 @@
         <target state="new">Trigger a <x id="INTERPOLATION" equiv-text="&quot;\uFFFD0\uFFFD&quot;"/></target>
       </trans-unit>
       <trans-unit id="9044448882574381355" datatype="html">
-        <source>CPU requirement must be given as a positive number.</source>
+        <source> CPU requirement must be given as a positive number. </source>
         <target state="new">CPU 下限必須是正整數。</target>
       </trans-unit>
       <trans-unit id="9045596623183360040" datatype="html">
@@ -2405,7 +2405,7 @@
         <target>每次自動刷新日誌的間隔秒數。</target>
       </trans-unit>
       <trans-unit id="9077681768250049031" datatype="html">
-        <source>Name must follow the DNS domain name syntax (e.g. new.image-pull.secret).</source>
+        <source> Name must follow the DNS domain name syntax (e.g. new.image-pull.secret). </source>
         <target state="new">名稱必須遵循 DNS 域名語法（例如 new.image-pull.secret）。</target>
       </trans-unit>
       <trans-unit id="9092584317002115275" datatype="html">
@@ -2425,7 +2425,7 @@
         <target>事件源</target>
       </trans-unit>
       <trans-unit id="9169828761871989299" datatype="html">
-        <source>Prefix should not exceed 253 characters.</source>
+        <source> Prefix should not exceed 253 characters. </source>
         <target state="new">前綴不應超過 253 個字符。</target>
       </trans-unit>
       <trans-unit id="9182918211699394982" datatype="html">
