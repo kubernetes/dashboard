@@ -39,7 +39,7 @@
         <target>새로고침</target>
       </trans-unit>
       <trans-unit id="1106543845307638308" datatype="html">
-        <source> <x id="INTERPOLATION" equiv-text="&quot;\uFFFD0\uFFFD&quot;"/> is not unique</source>
+        <source> <x id="INTERPOLATION" equiv-text="&quot;\uFFFD0\uFFFD&quot;"/> is not unique </source>
         <target state="new"> <x id="INTERPOLATION" equiv-text="{{label.get(&apos;key&apos;).value}}"/>는 고유하지 않습니다.</target>
       </trans-unit>
       <trans-unit id="1119419133766787743" datatype="html">
@@ -55,7 +55,7 @@
         <target>실행된 시간</target>
       </trans-unit>
       <trans-unit id="1134765132854526890" datatype="html">
-        <source>Service Name</source>
+        <source>Service Name </source>
         <target state="new">서비스 이름</target>
       </trans-unit>
       <trans-unit id="1138159535667068803" datatype="html">
@@ -87,7 +87,7 @@
         <target>재시작</target>
       </trans-unit>
       <trans-unit id="1243984730371237241" datatype="html">
-        <source>Cluster Role Bindings</source>
+        <source>Cluster Role Bindings </source>
         <target state="new">클러스터 롤 바인딩</target>
       </trans-unit>
       <trans-unit id="1244504753529533521" datatype="html">
@@ -99,7 +99,7 @@
         <target>새 레플리카 셋</target>
       </trans-unit>
       <trans-unit id="1268395641466243700" datatype="html">
-        <source>Every Service Account has a Secret with valid Bearer Token that can be used to log in to Dashboard. To find out more about how to configure and use Bearer Tokens, please refer to the <x id="START_LINK" ctype="x-a" equiv-text="&quot;\uFFFD#2\uFFFD&quot;"/>Authentication<x id="CLOSE_LINK" ctype="x-a" equiv-text="&quot;\uFFFD/#2\uFFFD&quot;"/> section.</source>
+        <source> Every Service Account has a Secret with valid Bearer Token that can be used to log in to Dashboard. To find out more about how to configure and use Bearer Tokens, please refer to the <x id="START_LINK" ctype="x-a" equiv-text="&quot;\uFFFD#2\uFFFD&quot;"/>Authentication<x id="CLOSE_LINK" ctype="x-a" equiv-text="&quot;\uFFFD/#2\uFFFD&quot;"/> section. </source>
         <target state="new">모든 서비스 어카운트는 시크릿을 가지고 있고, 시크릿에는 대시보드에 로그인할 때 사용할 수 있는 유효한 베어러(Bearer) 토큰이 있습니다. 베어러(Bearer) 토큰을 설정 및 사용하는 방법은 <x id="START_LINK" ctype="x-a" equiv-text="&lt;a&gt;"/>인증<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/> 섹션에서 알 수 있습니다.</target>
       </trans-unit>
       <trans-unit id="1292699022746959928" datatype="html">
@@ -107,7 +107,7 @@
         <target>비-리소스 URL</target>
       </trans-unit>
       <trans-unit id="1321877744367304738" datatype="html">
-        <source>Image:</source>
+        <source>Image: </source>
         <target state="new">이미지:</target>
       </trans-unit>
       <trans-unit id="1328651869817330586" datatype="html">
@@ -131,7 +131,7 @@
         <target state="new">스케일</target>
       </trans-unit>
       <trans-unit id="1421956494366769351" datatype="html">
-        <source>Daemon Sets</source>
+        <source>Daemon Sets </source>
         <target state="new">데몬 셋</target>
       </trans-unit>
       <trans-unit id="1429641498515055959" datatype="html">
@@ -151,7 +151,7 @@
         <target>데이터</target>
       </trans-unit>
       <trans-unit id="1473017346308176259" datatype="html">
-        <source>Services</source>
+        <source>Services </source>
         <target state="new">서비스</target>
       </trans-unit>
       <trans-unit id="1480519621633238451" datatype="html">
@@ -191,7 +191,7 @@
         <target>CPU 요구 사항(cores)</target>
       </trans-unit>
       <trans-unit id="1575304063225693008" datatype="html">
-        <source>TLS Secret</source>
+        <source>TLS Secret </source>
         <target state="new">TLS 시크릿</target>
       </trans-unit>
       <trans-unit id="1607777136670400298" datatype="html">
@@ -203,7 +203,7 @@
         <target>전략</target>
       </trans-unit>
       <trans-unit id="1622528103709985950" datatype="html">
-        <source>Local settings are stored in the browser cookies, so they are not synchronized between multiple devices. Changes are applied automatically on every change.</source>
+        <source> Local settings are stored in the browser cookies, so they are not synchronized between multiple devices. Changes are applied automatically on every change. </source>
         <target state="new">로컬 설정은 브라우저 쿠키에 저장되므로 여러 장치 간에 동기화되지 않습니다. 변경사항은 모든 변경사항에 자동으로 적용됩니다.</target>
       </trans-unit>
       <trans-unit id="1631799239961659924" datatype="html">
@@ -211,11 +211,11 @@
         <target>볼륨 속성</target>
       </trans-unit>
       <trans-unit id="1636259016604132537" datatype="html">
-        <source>Select YAML or JSON file specifying the resources to deploy to the namespace specified in the file.</source>
+        <source> Select YAML or JSON file specifying the resources to deploy to the namespace specified in the file. </source>
         <target state="new">파일에 명시된 네임스페이스에 디플로이할 리소스를 명시하는 YAML 또는 JSON 파일을 선택하세요.</target>
       </trans-unit>
       <trans-unit id="1649590266934618453" datatype="html">
-        <source>Insecure access detected. Sign in will not be available. Access Dashboard securely over HTTPS or using localhost. Read more <x id="START_LINK" ctype="x-a" equiv-text="&quot;\uFFFD#2\uFFFD&quot;"/> here <x id="CLOSE_LINK" ctype="x-a" equiv-text="&quot;\uFFFD/#2\uFFFD&quot;"/>.</source>
+        <source> Insecure access detected. Sign in will not be available. Access Dashboard securely over HTTPS or using localhost. Read more <x id="START_LINK" ctype="x-a" equiv-text="&quot;\uFFFD#2\uFFFD&quot;"/> here <x id="CLOSE_LINK" ctype="x-a" equiv-text="&quot;\uFFFD/#2\uFFFD&quot;"/>. </source>
         <target state="new">안전하지 않은 접근이 탐지되었습니다. 로그인하실 수 없습니다. HTTPS 프로토콜을 통해 또는 localhost를 사용하여 대시보드에 안전하게 접근하세요. 자세한 내용은 <x id="START_LINK" ctype="x-a" equiv-text="&lt;a&gt;"/> 여기 <x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/>에서 확인하세요.</target>
       </trans-unit>
       <trans-unit id="1678478837387802521" datatype="html">
@@ -231,7 +231,7 @@
         <target>설정한 경우, 클러스터 이름이 브라우저 윈도우에 나타납니다.</target>
       </trans-unit>
       <trans-unit id="1707219526222951180" datatype="html">
-        <source>Stateful Sets</source>
+        <source>Stateful Sets </source>
         <target state="new">스테이트풀 셋</target>
       </trans-unit>
       <trans-unit id="1726363342938046830" datatype="html">
@@ -251,7 +251,7 @@
         <target>스토리지 클래스</target>
       </trans-unit>
       <trans-unit id="1761780531172486555" datatype="html">
-        <source>Available:</source>
+        <source>Available: </source>
         <target state="new">가용</target>
       </trans-unit>
       <trans-unit id="1763461605200938061" datatype="html">
@@ -271,15 +271,15 @@
         <target state="new"><x id="START_LINK" ctype="x-a" equiv-text="&quot;\uFFFD#10\uFFFD&quot;"/>Community<x id="CLOSE_LINK" ctype="x-a" equiv-text="&quot;\uFFFD/#10\uFFFD&quot;"/></target>
       </trans-unit>
       <trans-unit id="1791198005341902530" datatype="html">
-        <source>Deploy</source>
+        <source> Deploy </source>
         <target state="new">배포</target>
       </trans-unit>
       <trans-unit id="1813894172148248223" datatype="html">
-        <source>Ingress Classes</source>
+        <source>Ingress Classes </source>
         <target state="new">인그레스 클래스</target>
       </trans-unit>
       <trans-unit id="1828068287723658160" datatype="html">
-        <source>Failed:</source>
+        <source>Failed: </source>
         <target state="new">실패:</target>
       </trans-unit>
       <trans-unit id="1832995043073719610" datatype="html">
@@ -287,7 +287,7 @@
         <target>명시된 이름의 시크릿은 클러스터의 해당 네임스페이스 안에 추가될 것입니다.</target>
       </trans-unit>
       <trans-unit id="1850293262697508820" datatype="html">
-        <source>Revision history limit:</source>
+        <source>Revision history limit: </source>
         <target state="new">리비전 내역 한도:</target>
       </trans-unit>
       <trans-unit id="1853314835104660335" datatype="html">
@@ -295,7 +295,7 @@
         <target>해당 신규 네임스페이스는 클러스터에 추가될 것입니다.</target>
       </trans-unit>
       <trans-unit id="1861657886309326" datatype="html">
-        <source>Events</source>
+        <source>Events </source>
         <target state="new">이벤트</target>
       </trans-unit>
       <trans-unit id="187187500641108332" datatype="html">
@@ -323,7 +323,7 @@
         <target>API 그룹</target>
       </trans-unit>
       <trans-unit id="1946523853590147981" datatype="html">
-        <source>The description will be added as an annotation to the Deployment and displayed in the application&apos;s details.</source>
+        <source> The description will be added as an annotation to the Deployment and displayed in the application&apos;s details. </source>
         <target state="new">설명은 디플로이먼트에 어노테이션으로 추가되며, 애플리케이션 상세 정보에 표시됩니다.</target>
       </trans-unit>
       <trans-unit id="1970327103279087300" datatype="html">
@@ -335,7 +335,7 @@
         <target>머신 ID</target>
       </trans-unit>
       <trans-unit id="2004327614711496973" datatype="html">
-        <source>Memory requirement must be given as a valid number.</source>
+        <source> Memory requirement must be given as a valid number. </source>
         <target state="new">메모리 요구 사항은 유효한 숫자로 주어져야 합니다.</target>
       </trans-unit>
       <trans-unit id="2027381191177847167" datatype="html">
@@ -367,11 +367,11 @@
         <target>iSCSI target의 LUN 번호</target>
       </trans-unit>
       <trans-unit id="2083766050425503902" datatype="html">
-        <source>Application name must start with a lowercase letter and contain only lowercase letters, numbers, and &apos;-&apos; between words.</source>
+        <source> Application name must start with a lowercase letter and contain only lowercase letters, numbers, and &apos;-&apos; between words. </source>
         <target state="new">애플리케이션 이름은 소문자로 시작해야 하고 소문자, 숫자, 단어 사이의 &apos;-&apos;만 포함할 수 있습니다.</target>
       </trans-unit>
       <trans-unit id="2104548579314351919" datatype="html">
-        <source>Secrets</source>
+        <source>Secrets </source>
         <target state="new">시크릿</target>
       </trans-unit>
       <trans-unit id="2122768143452494504" datatype="html">
@@ -395,7 +395,7 @@
         <target>리소스 타입</target>
       </trans-unit>
       <trans-unit id="2135976822395163664" datatype="html">
-        <source>Please select the kubeconfig file that you have created to configure access to the cluster. To find out more about how to configure and use kubeconfig file, please refer to the <x id="START_LINK" ctype="x-a" equiv-text="&quot;\uFFFD#2\uFFFD&quot;"/>Configure Access to Multiple Clusters<x id="CLOSE_LINK" ctype="x-a" equiv-text="&quot;\uFFFD/#2\uFFFD&quot;"/> section.</source>
+        <source> Please select the kubeconfig file that you have created to configure access to the cluster. To find out more about how to configure and use kubeconfig file, please refer to the <x id="START_LINK" ctype="x-a" equiv-text="&quot;\uFFFD#2\uFFFD&quot;"/>Configure Access to Multiple Clusters<x id="CLOSE_LINK" ctype="x-a" equiv-text="&quot;\uFFFD/#2\uFFFD&quot;"/> section. </source>
         <target state="new">클러스터에 접근을 설정하기 위해 생성한 kubeconfig 파일을 선택하세요. kubeconfig 파일을 설정 및 사용하기 위한 방법은 <x id="START_LINK" ctype="x-a" equiv-text="&lt;a&gt;"/>멀티 클러스터에 접근 설정하기<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/> 섹션에서 확인할 수 있습니다.</target>
       </trans-unit>
       <trans-unit id="214884265476562782" datatype="html">
@@ -407,7 +407,7 @@
         <target state="new">취소</target>
       </trans-unit>
       <trans-unit id="217048540478746172" datatype="html">
-        <source>Target port must be an integer.</source>
+        <source> Target port must be an integer. </source>
         <target state="new">대상 포트는 정수이어야 합니다.</target>
       </trans-unit>
       <trans-unit id="2176659033176029418" datatype="html">
@@ -419,7 +419,7 @@
         <target>메타데이터</target>
       </trans-unit>
       <trans-unit id="21860712120581731" datatype="html">
-        <source>Updated:</source>
+        <source>Updated: </source>
         <target state="new">업데이트된:</target>
       </trans-unit>
       <trans-unit id="2188854519574316630" datatype="html">
@@ -431,15 +431,15 @@
         <target>서비스</target>
       </trans-unit>
       <trans-unit id="222595489358095649" datatype="html">
-        <source>Kubernetes Dashboard v<x id="INTERPOLATION" equiv-text="&quot;\uFFFD0\uFFFD&quot;"/> © <x id="INTERPOLATION_1" equiv-text="&quot;\uFFFD1\uFFFD&quot;"/> The Kubernetes Authors</source>
-        <target state="new">Kubernetes Dashboard v<x id="INTERPOLATION" equiv-text="&quot;\uFFFD0\uFFFD&quot;"/> © <x id="INTERPOLATION_1" equiv-text="&quot;\uFFFD1\uFFFD&quot;"/> The Kubernetes Authors</target>
+        <source> Kubernetes Dashboard v<x id="INTERPOLATION" equiv-text="&quot;\uFFFD0\uFFFD&quot;"/> © <x id="INTERPOLATION_1" equiv-text="&quot;\uFFFD1\uFFFD&quot;"/> The Kubernetes Authors </source>
+        <target state="new"> Kubernetes Dashboard v<x id="INTERPOLATION" equiv-text="&quot;\uFFFD0\uFFFD&quot;"/> © <x id="INTERPOLATION_1" equiv-text="&quot;\uFFFD1\uFFFD&quot;"/> The Kubernetes Authors </target>
       </trans-unit>
       <trans-unit id="2235593604907350097" datatype="html">
         <source>Resource Names</source>
         <target>리소스 이름</target>
       </trans-unit>
       <trans-unit id="2244223685971816410" datatype="html">
-        <source>Logged in with auth header</source>
+        <source>Logged in with auth header </source>
         <target state="new">인증 헤더를 사용하여 로그인:</target>
       </trans-unit>
       <trans-unit id="2250922476634643797" datatype="html">
@@ -463,7 +463,7 @@
         <target>QoS 클래스</target>
       </trans-unit>
       <trans-unit id="2304348476142864790" datatype="html">
-        <source>Persistent Volume Claims</source>
+        <source>Persistent Volume Claims </source>
         <target state="new">퍼시스턴트 볼륨 클레임</target>
       </trans-unit>
       <trans-unit id="2306073262722397834" datatype="html">
@@ -515,7 +515,7 @@
         <target>이미지 풀(Pull) 시크릿</target>
       </trans-unit>
       <trans-unit id="2411065404041685586" datatype="html">
-        <source>Path Type</source>
+        <source>Path Type </source>
         <target state="new">경로 유형</target>
       </trans-unit>
       <trans-unit id="2417328504220076358" datatype="html">
@@ -563,7 +563,7 @@
         <target>버전</target>
       </trans-unit>
       <trans-unit id="2733722431826186016" datatype="html">
-        <source>Storage Classes</source>
+        <source>Storage Classes </source>
         <target state="new">스토리지 클래스</target>
       </trans-unit>
       <trans-unit id="2743739387881549417" datatype="html">
@@ -611,7 +611,7 @@
         <target>언어</target>
       </trans-unit>
       <trans-unit id="2833767909565048391" datatype="html">
-        <source>Do you want to stay on current page and change namespace from <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&quot;[\uFFFD#7\uFFFD|\uFFFD#8\uFFFD]&quot;"/><x id="INTERPOLATION" equiv-text="&quot;\uFFFD0\uFFFD&quot;"/><x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&quot;[\uFFFD/#7\uFFFD|\uFFFD/#8\uFFFD]&quot;"/> to <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&quot;[\uFFFD#7\uFFFD|\uFFFD#8\uFFFD]&quot;"/><x id="INTERPOLATION_1" equiv-text="&quot;\uFFFD1\uFFFD&quot;"/><x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&quot;[\uFFFD/#7\uFFFD|\uFFFD/#8\uFFFD]&quot;"/>?</source>
+        <source> Do you want to stay on current page and change namespace from <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&quot;[\uFFFD#7\uFFFD|\uFFFD#8\uFFFD]&quot;"/><x id="INTERPOLATION" equiv-text="&quot;\uFFFD0\uFFFD&quot;"/><x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&quot;[\uFFFD/#7\uFFFD|\uFFFD/#8\uFFFD]&quot;"/> to <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&quot;[\uFFFD#7\uFFFD|\uFFFD#8\uFFFD]&quot;"/><x id="INTERPOLATION_1" equiv-text="&quot;\uFFFD1\uFFFD&quot;"/><x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&quot;[\uFFFD/#7\uFFFD|\uFFFD/#8\uFFFD]&quot;"/>? </source>
         <target state="new">네임스페이스를 <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/><x id="INTERPOLATION" equiv-text="{{namespace}}"/><x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i&gt;"/>에서 <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/><x id="INTERPOLATION_1" equiv-text="{{newNamespace}}"/><x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i&gt;"/>로 변경하고 현재 페이지를 유지하시겠습니까?</target>
       </trans-unit>
       <trans-unit id="284876663522831141" datatype="html">
@@ -619,7 +619,7 @@
         <target>소스 유형</target>
       </trans-unit>
       <trans-unit id="2862835290520488117" datatype="html">
-        <source>Unavailable:</source>
+        <source>Unavailable: </source>
         <target state="new">비가용:</target>
       </trans-unit>
       <trans-unit id="2885840307007437390" datatype="html">
@@ -663,7 +663,7 @@
         <target>{VAR_SELECT, select, true {고급 옵션 숨기기} other {고급 옵션 보기}}</target>
       </trans-unit>
       <trans-unit id="2987268586260348582" datatype="html">
-        <source>Total:</source>
+        <source>Total: </source>
         <target state="new">전체:</target>
       </trans-unit>
       <trans-unit id="3000799346062046358" datatype="html">
@@ -671,7 +671,7 @@
         <target>Suffix &apos;<x id="PH" equiv-text="suffix"/>&apos; 를 인식할 수 없습니다.</target>
       </trans-unit>
       <trans-unit id="3012870639723698090" datatype="html">
-        <source>Port must be greater than 0.</source>
+        <source> Port must be greater than 0. </source>
         <target state="new">포트는 0 보다 높아야 합니다.</target>
       </trans-unit>
       <trans-unit id="3012906865384504293" datatype="html">
@@ -683,7 +683,7 @@
         <target>반환 정책</target>
       </trans-unit>
       <trans-unit id="3037001602563649018" datatype="html">
-        <source>Name must be alphanumeric and may contain dashes.</source>
+        <source> Name must be alphanumeric and may contain dashes. </source>
         <target state="new">이름은 영숫자이며 대시(dashes) 기호를 포함할 수 있습니다.</target>
       </trans-unit>
       <trans-unit id="3039940756451018621" datatype="html">
@@ -691,11 +691,11 @@
         <target>토큰</target>
       </trans-unit>
       <trans-unit id="3068261068429094032" datatype="html">
-        <source>Max unavailable:</source>
+        <source>Max unavailable: </source>
         <target state="new">최대 비가용(Max unavailable):</target>
       </trans-unit>
       <trans-unit id="3094294427304814088" datatype="html">
-        <source>Strategy:</source>
+        <source>Strategy: </source>
         <target state="new">전략:</target>
       </trans-unit>
       <trans-unit id="3117139905742018214" datatype="html">
@@ -727,7 +727,7 @@
         <target>파드 접속</target>
       </trans-unit>
       <trans-unit id="3175667526023915046" datatype="html">
-        <source>Label Value must not exceed 253 characters.</source>
+        <source> Label Value must not exceed 253 characters. </source>
         <target state="new">레이블 값은 253개의 문자를 초과할 수 없습니다.</target>
       </trans-unit>
       <trans-unit id="3193976279273491157" datatype="html">
@@ -755,7 +755,7 @@
         <target>최대 비가용</target>
       </trans-unit>
       <trans-unit id="3283019513707383139" datatype="html">
-        <source>Hosts <x id="START_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&quot;\uFFFD#2\uFFFD&quot;"/>open_in_new<x id="CLOSE_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&quot;\uFFFD/#2\uFFFD&quot;"/></source>
+        <source> Hosts <x id="START_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&quot;\uFFFD#2\uFFFD&quot;"/>open_in_new<x id="CLOSE_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&quot;\uFFFD/#2\uFFFD&quot;"/></source>
         <target state="new">호스트 <x id="START_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;mat-icon class=&quot;external-link-icon kd-clickable&quot; i18n-matTooltip matTooltip=&quot;Host links are external links that will be open in a new tab.&quot;&gt;"/>open_in_new<x id="CLOSE_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;/mat-icon&gt;"/></target>
       </trans-unit>
       <trans-unit id="3294686077659093992" datatype="html">
@@ -775,7 +775,7 @@
         <target state="new">Run as User</target>
       </trans-unit>
       <trans-unit id="3323415564519831786" datatype="html">
-        <source>Name is required.</source>
+        <source> Name is required. </source>
         <target state="new">이름은 필수 항목입니다.</target>
       </trans-unit>
       <trans-unit id="3326877877555410533" datatype="html">
@@ -787,7 +787,7 @@
         <target>소스 이름</target>
       </trans-unit>
       <trans-unit id="3354985892672468892" datatype="html">
-        <source>Label value must be alphanumeric separated by &apos;.&apos; , &apos;-&apos; or &apos;_&apos;.</source>
+        <source> Label value must be alphanumeric separated by &apos;.&apos; , &apos;-&apos; or &apos;_&apos;. </source>
         <target state="new">레이블 값은 &apos;-&apos;, &apos;_&apos;, 또는 &apos;.&apos;로 분리되는 영숫자이어야 합니다.</target>
       </trans-unit>
       <trans-unit id="3368378053177904137" datatype="html">
@@ -807,8 +807,8 @@
         <target> <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/>open_in_new<x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i&gt;"/> 더 배우기</target>
       </trans-unit>
       <trans-unit id="3368378053177904137" datatype="html">
-        <source>Learn more <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&quot;\uFFFD#5\uFFFD&quot;"/>open_in_new<x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&quot;\uFFFD/#5\uFFFD&quot;"/></source>
-        <target> <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/>open_in_new<x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i&gt;"/> 더 배우기</target>
+        <source> Learn more <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&quot;\uFFFD#5\uFFFD&quot;"/>open_in_new<x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&quot;\uFFFD/#5\uFFFD&quot;"/></source>
+        <target state="new"> <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/>open_in_new<x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i&gt;"/> 더 배우기</target>
       </trans-unit>
       <trans-unit id="3368417786821334758" datatype="html">
         <source>Abort</source>
@@ -819,8 +819,8 @@
         <target state="new">이름의 문자 길이는 최대 <x id="INTERPOLATION" equiv-text="{{namespaceMaxLength}}"/> 입니다.</target>
       </trans-unit>
       <trans-unit id="3370944056293075657" datatype="html">
-        <source>Name must be up to <x id="INTERPOLATION" equiv-text="&quot;\uFFFD0\uFFFD&quot;"/> characters long.</source>
-        <target>이름의 문자 길이는 최대 <x id="INTERPOLATION" equiv-text="{{secretNameMaxLength}}"/> 입니다.</target>
+        <source> Name must be up to <x id="INTERPOLATION" equiv-text="&quot;\uFFFD0\uFFFD&quot;"/> characters long. </source>
+        <target state="new">이름의 문자 길이는 최대 <x id="INTERPOLATION" equiv-text="{{secretNameMaxLength}}"/> 입니다.</target>
       </trans-unit>
       <trans-unit id="3375720161310377589" datatype="html">
         <source>value</source>
@@ -847,7 +847,7 @@
         <target>컨테이너 런타임 버전</target>
       </trans-unit>
       <trans-unit id="3426643717372750272" datatype="html">
-        <source>Service Port</source>
+        <source>Service Port </source>
         <target state="new">서비스 포트</target>
       </trans-unit>
       <trans-unit id="3448462145758383019" datatype="html">
@@ -887,7 +887,7 @@
         <target>특권을 가진(privileged) 상태로 실행</target>
       </trans-unit>
       <trans-unit id="3534088723520522114" datatype="html">
-        <source>Variable name must be a valid C identifier.</source>
+        <source> Variable name must be a valid C identifier. </source>
         <target state="new">변수 이름은 유효한 C 식별자이어야 합니다.</target>
       </trans-unit>
       <trans-unit id="3540108566782816830" datatype="html">
@@ -903,11 +903,11 @@
         <target>로컬 설정</target>
       </trans-unit>
       <trans-unit id="3551329346991932579" datatype="html">
-        <source>Protocol is required.</source>
+        <source> Protocol is required. </source>
         <target state="new">프로토콜은 필수 사항입니다.</target>
       </trans-unit>
       <trans-unit id="3569677708978335155" datatype="html">
-        <source>Desired:</source>
+        <source>Desired: </source>
         <target state="new">원하는 상태:</target>
       </trans-unit>
       <trans-unit id="3583123851975839013" datatype="html">
@@ -915,11 +915,11 @@
         <target>세션 어피니티</target>
       </trans-unit>
       <trans-unit id="3588315191655475025" datatype="html">
-        <source>Container image is required</source>
+        <source> Container image is required </source>
         <target state="new">컨테이너 이미지는 필수 항목입니다.</target>
       </trans-unit>
       <trans-unit id="3609669829589519658" datatype="html">
-        <source>CPU requirement must be given as a valid number.</source>
+        <source> CPU requirement must be given as a valid number. </source>
         <target state="new">CPU 요구 사항은 유효한 숫자로 주어져야 합니다.</target>
       </trans-unit>
       <trans-unit id="3611950223744571613" datatype="html">
@@ -935,7 +935,7 @@
         <target>리소스 제한</target>
       </trans-unit>
       <trans-unit id="3758898250164236993" datatype="html">
-        <source>This action is equivalent to:</source>
+        <source>This action is equivalent to: </source>
         <target state="new">이 액션은 다음 커맨드와 동일합니다.</target>
       </trans-unit>
       <trans-unit id="376256424703415146" datatype="html">
@@ -971,7 +971,7 @@
         <target>이 값을 가진 &apos;앱&apos; 레이블은 디플로이먼트와 디플로이되는 서비스에 추가될 것입니다.</target>
       </trans-unit>
       <trans-unit id="3844914972911579334" datatype="html">
-        <source>Number of pods must be a positive integer</source>
+        <source> Number of pods must be a positive integer </source>
         <target state="new">파드의 수는 양의 정수만 허용됩니다.</target>
       </trans-unit>
       <trans-unit id="3847048283826460449" datatype="html">
@@ -987,7 +987,7 @@
         <target>마지막에 표시된</target>
       </trans-unit>
       <trans-unit id="3910914001392684259" datatype="html">
-        <source>Port must be an integer.</source>
+        <source> Port must be an integer. </source>
         <target state="new">포트는 정수이어야 합니다.</target>
       </trans-unit>
       <trans-unit id="3911411545389266400" datatype="html">
@@ -1003,7 +1003,7 @@
         <target>노드</target>
       </trans-unit>
       <trans-unit id="400776614514525117" datatype="html">
-        <source>Schedule:</source>
+        <source>Schedule: </source>
         <target state="new">스케줄:</target>
       </trans-unit>
       <trans-unit id="4021752662928002901" datatype="html">
@@ -1019,7 +1019,7 @@
         <target>의존성</target>
       </trans-unit>
       <trans-unit id="4052052481087794292" datatype="html">
-        <source>Role Bindings</source>
+        <source>Role Bindings </source>
         <target state="new">롤 바인딩</target>
       </trans-unit>
       <trans-unit id="4052582653153593975" datatype="html">
@@ -1035,7 +1035,7 @@
         <target>리소스 스케일</target>
       </trans-unit>
       <trans-unit id="4105691782196566273" datatype="html">
-        <source>Port must be less than 65536.</source>
+        <source> Port must be less than 65536. </source>
         <target state="new">포트는 65536 보다 낮아야 합니다.</target>
       </trans-unit>
       <trans-unit id="4111811676793706889" datatype="html">
@@ -1051,7 +1051,7 @@
         <target>이미지</target>
       </trans-unit>
       <trans-unit id="4170719254013309689" datatype="html">
-        <source>Skip</source>
+        <source> Skip </source>
         <target state="new">생략</target>
       </trans-unit>
       <trans-unit id="4207916966377787111" datatype="html">
@@ -1063,7 +1063,7 @@
         <target>로그인 후 기본적으로 선택해야 하는 네임스페이스입니다.</target>
       </trans-unit>
       <trans-unit id="4216678889012737533" datatype="html">
-        <source>Deployment or service with this name already exists within namespace.</source>
+        <source> Deployment or service with this name already exists within namespace. </source>
         <target state="new">이 이름은 네임스페이스 내의 디플로이먼트 또는 서비스에서 이미 사용되고 있습니다.</target>
       </trans-unit>
       <trans-unit id="4222409682577085383" datatype="html">
@@ -1079,19 +1079,19 @@
         <target state="new">리소스 고정</target>
       </trans-unit>
       <trans-unit id="4287392502726135197" datatype="html">
-        <source>Config Maps</source>
+        <source>Config Maps </source>
         <target state="new">컨피그 맵</target>
       </trans-unit>
       <trans-unit id="4288379540371209568" datatype="html">
-        <source>Create a new namespace...</source>
+        <source> Create a new namespace... </source>
         <target state="new">신규 네임스페이스 생성...</target>
       </trans-unit>
       <trans-unit id="4296726543175330378" datatype="html">
-        <source>Enter YAML or JSON content specifying the resources to create to the currently selected namespace.</source>
+        <source> Enter YAML or JSON content specifying the resources to create to the currently selected namespace. </source>
         <target state="new">현재 선택된 네임스페이스에 생성할 리소스를 명시하는 YAML 또는 JSON 내용을 입력하세요.</target>
       </trans-unit>
       <trans-unit id="43228639508046926" datatype="html">
-        <source>Completions:</source>
+        <source>Completions: </source>
         <target state="new">완료:</target>
       </trans-unit>
       <trans-unit id="4342607865016428668" datatype="html">
@@ -1131,7 +1131,7 @@
         <target>이 액션은 다음 커맨드와 동일합니다.</target>
       </trans-unit>
       <trans-unit id="4482298116905997082" datatype="html">
-        <source>Age:</source>
+        <source>Age: </source>
         <target state="new">나이:</target>
       </trans-unit>
       <trans-unit id="4493030647783338212" datatype="html">
@@ -1139,7 +1139,7 @@
         <target>리소스 편집</target>
       </trans-unit>
       <trans-unit id="4499651527836994743" datatype="html">
-        <source>Roles</source>
+        <source>Roles </source>
         <target state="new">롤</target>
       </trans-unit>
       <trans-unit id="4558539712487554281" datatype="html">
@@ -1167,11 +1167,11 @@
         <target>시크릿</target>
       </trans-unit>
       <trans-unit id="4588432762946433765" datatype="html">
-        <source>Kind:</source>
+        <source>Kind: </source>
         <target state="new">종류:</target>
       </trans-unit>
       <trans-unit id="4613805182430195952" datatype="html">
-        <source>Namespaces</source>
+        <source>Namespaces </source>
         <target state="new">네임스페이스</target>
       </trans-unit>
       <trans-unit id="4645345687322304891" datatype="html">
@@ -1187,7 +1187,7 @@
         <target>iSCSI 식별자(IQN)</target>
       </trans-unit>
       <trans-unit id="4686783485484478974" datatype="html">
-        <source>Parallelism:</source>
+        <source>Parallelism: </source>
         <target state="new">병렬성:</target>
       </trans-unit>
       <trans-unit id="4708304467453184793" datatype="html">
@@ -1199,7 +1199,7 @@
         <target>원하는 상태</target>
       </trans-unit>
       <trans-unit id="4740026766388750543" datatype="html">
-        <source>Cluster Roles</source>
+        <source>Cluster Roles </source>
         <target state="new">클러스터 롤</target>
       </trans-unit>
       <trans-unit id="4749936818577754995" datatype="html">
@@ -1211,7 +1211,7 @@
         <target>아키텍처</target>
       </trans-unit>
       <trans-unit id="4773463022110715023" datatype="html">
-        <source>Enter YAML or JSON content specifying the resources to create to the namespace specified in the file.</source>
+        <source> Enter YAML or JSON content specifying the resources to create to the namespace specified in the file. </source>
         <target state="new">파일에 명시된 네임스페이스에 생성할 리소스를 명시하는 YAML 또는 JSON 내용을 입력하세요.</target>
       </trans-unit>
       <trans-unit id="4775550080689015987" datatype="html">
@@ -1259,7 +1259,7 @@
         <target>SE 리눅스 레벨</target>
       </trans-unit>
       <trans-unit id="5103064776441485656" datatype="html">
-        <source>Running:</source>
+        <source>Running: </source>
         <target state="new">실행 중:</target>
       </trans-unit>
       <trans-unit id="5112388980413175570" datatype="html">
@@ -1279,7 +1279,7 @@
         <target>HTTP 헬스체크 URI</target>
       </trans-unit>
       <trans-unit id="5156388212535235462" datatype="html">
-        <source>Environment Variables</source>
+        <source> Environment Variables </source>
         <target state="new">환경 변수</target>
       </trans-unit>
       <trans-unit id="5159814115056353668" datatype="html">
@@ -1287,7 +1287,7 @@
         <target>주소</target>
       </trans-unit>
       <trans-unit id="5175014003399520919" datatype="html">
-        <source>Pods</source>
+        <source>Pods </source>
         <target state="new">파드</target>
       </trans-unit>
       <trans-unit id="5207635742003539443" datatype="html">
@@ -1295,7 +1295,7 @@
         <target state="new">로그인</target>
       </trans-unit>
       <trans-unit id="5231922476273855748" datatype="html">
-        <source>Waiting for more data to display chart...</source>
+        <source>Waiting for more data to display chart... </source>
         <target state="new">차트를 표시하기 위해 추가 데이터를 기다리는 중...</target>
       </trans-unit>
       <trans-unit id="5248717555542428023" datatype="html">
@@ -1303,19 +1303,19 @@
         <target>사용자 이름</target>
       </trans-unit>
       <trans-unit id="5257636795023365764" datatype="html">
-        <source>Upload</source>
+        <source> Upload </source>
         <target state="new">업로드</target>
       </trans-unit>
       <trans-unit id="5278726417886231851" datatype="html">
-        <source>IP:</source>
-        <target state="new">IP:</target>
+        <source>IP: </source>
+        <target state="new">IP: </target>
       </trans-unit>
       <trans-unit id="5279881970414324834" datatype="html">
         <source>Taints</source>
         <target>테인트</target>
       </trans-unit>
       <trans-unit id="528589796437229259" datatype="html">
-        <source>Memory requirement must be given as a positive number.</source>
+        <source> Memory requirement must be given as a positive number. </source>
         <target state="new">메모리 요구 사항은 양의 정수이어야 합니다.</target>
       </trans-unit>
       <trans-unit id="5298392270155336139" datatype="html">
@@ -1327,7 +1327,7 @@
         <target><x id="PH" equiv-text="this._activatedRoute.snapshot.queryParams[SEARCH_QUERY_STATE_PARAM]"/>를 검색합니다.</target>
       </trans-unit>
       <trans-unit id="5333782621798086225" datatype="html">
-        <source>Cron Jobs</source>
+        <source>Cron Jobs </source>
         <target state="new">크론 잡</target>
       </trans-unit>
       <trans-unit id="5352570882809799670" datatype="html">
@@ -1363,7 +1363,7 @@
         <target>리소스 정보</target>
       </trans-unit>
       <trans-unit id="5509177505397229412" datatype="html">
-        <source>Target port must be less than 65536.</source>
+        <source> Target port must be less than 65536. </source>
         <target state="new">대상 포트는 65536 보다 낮아야 합니다.</target>
       </trans-unit>
       <trans-unit id="5519023941949331063" datatype="html">
@@ -1379,7 +1379,7 @@
         <target>범위</target>
       </trans-unit>
       <trans-unit id="5596215605725734238" datatype="html">
-        <source>Data is required.</source>
+        <source> Data is required. </source>
         <target state="new">데이터는 필수 항목입니다.</target>
       </trans-unit>
       <trans-unit id="5603542439272909460" datatype="html">
@@ -1391,7 +1391,7 @@
         <target>기본</target>
       </trans-unit>
       <trans-unit id="5608319401828876510" datatype="html">
-        <source>Deployments</source>
+        <source>Deployments </source>
         <target state="new">디플로이먼트</target>
       </trans-unit>
       <trans-unit id="5611592591303869712" datatype="html">
@@ -1415,11 +1415,11 @@
         <target>생성</target>
       </trans-unit>
       <trans-unit id="2131524838680811873" datatype="html">
-        <source>You can <x id="START_LINK" ctype="x-a" equiv-text="&quot;\uFFFD#6\uFFFD&quot;"/>deploy a containerized app<x id="CLOSE_LINK" ctype="x-a" equiv-text="&quot;[\uFFFD/#6\uFFFD|\uFFFD/#7\uFFFD]&quot;"/>, select other namespace or <x id="START_LINK_1" equiv-text="&quot;\uFFFD#7\uFFFD&quot;"/>take the Dashboard Tour <x id="START_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&quot;\uFFFD#8\uFFFD&quot;"/>open_in_new<x id="CLOSE_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&quot;\uFFFD/#8\uFFFD&quot;"/><x id="CLOSE_LINK" ctype="x-a" equiv-text="&quot;[\uFFFD/#6\uFFFD|\uFFFD/#7\uFFFD]&quot;"/> to learn more.</source>
+        <source> You can <x id="START_LINK" ctype="x-a" equiv-text="&quot;\uFFFD#6\uFFFD&quot;"/>deploy a containerized app<x id="CLOSE_LINK" ctype="x-a" equiv-text="&quot;[\uFFFD/#6\uFFFD|\uFFFD/#7\uFFFD]&quot;"/>, select other namespace or <x id="START_LINK_1" equiv-text="&quot;\uFFFD#7\uFFFD&quot;"/>check the Dashboard Docs <x id="START_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&quot;\uFFFD#8\uFFFD&quot;"/>open_in_new<x id="CLOSE_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&quot;\uFFFD/#8\uFFFD&quot;"/><x id="CLOSE_LINK" ctype="x-a" equiv-text="&quot;[\uFFFD/#6\uFFFD|\uFFFD/#7\uFFFD]&quot;"/> to learn more. </source>
         <target state="new"> <x id="START_LINK" ctype="x-a" equiv-text="&lt;a&gt;"/>컨테이너화된 앱을 배포하거나<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/>, 다른 네임스페이스를 선택하거나 <x id="START_LINK_1" ctype="x-a" equiv-text="&lt;a&gt;"/>대시보드 투어(Dashboard Tour)를 통해 <x id="START_TAG_MAT-ICON" ctype="x-mat-icon" equiv-text="&lt;mat-icon&gt;"/>open_in_new<x id="CLOSE_TAG_MAT-ICON" ctype="x-mat-icon" equiv-text="&lt;/mat-icon&gt;"/> <x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/> 자세한 내용을 확인할 수 있습니다.</target>
       </trans-unit>
       <trans-unit id="5693993471751761333" datatype="html">
-        <source>Create a new secret...</source>
+        <source> Create a new secret... </source>
         <target state="new">신규 시크릿 생성...</target>
       </trans-unit>
       <trans-unit id="5729418620241283277" datatype="html">
@@ -1435,7 +1435,7 @@
         <target>일시 중지</target>
       </trans-unit>
       <trans-unit id="577038887888857351" datatype="html">
-        <source>Add</source>
+        <source> Add </source>
         <target state="new">추가</target>
       </trans-unit>
       <trans-unit id="5793766132158032827" datatype="html">
@@ -1451,7 +1451,7 @@
         <target>모니터</target>
       </trans-unit>
       <trans-unit id="5813540454109761631" datatype="html">
-        <source>Ingresses</source>
+        <source>Ingresses </source>
         <target state="new">인그레스</target>
       </trans-unit>
       <trans-unit id="5818955156850908956" datatype="html">
@@ -1479,11 +1479,11 @@
         <target state="new">Filesystem Group Change Policy</target>
       </trans-unit>
       <trans-unit id="5925034162028212293" datatype="html">
-        <source>Jobs</source>
+        <source>Jobs </source>
         <target state="new">잡</target>
       </trans-unit>
       <trans-unit id="5937630659228234115" datatype="html">
-        <source>Service</source>
+        <source>Service </source>
         <target state="new">서비스</target>
       </trans-unit>
       <trans-unit id="5943454400955467108" datatype="html">
@@ -1537,7 +1537,7 @@
         <target>네임스페이스 명칭</target>
       </trans-unit>
       <trans-unit id="607655052894272917" datatype="html">
-        <source>Path</source>
+        <source>Path </source>
         <target state="new">경로</target>
       </trans-unit>
       <trans-unit id="6099594451254122208" datatype="html">
@@ -1569,7 +1569,7 @@
         <target>호레잔틀 파드 오토스케일러</target>
       </trans-unit>
       <trans-unit id="6163370502260387661" datatype="html">
-        <source>Invalid protocol.</source>
+        <source> Invalid protocol. </source>
         <target state="new">유효하지 않은 프로토콜.</target>
       </trans-unit>
       <trans-unit id="6185721657347844438" datatype="html">
@@ -1581,15 +1581,15 @@
         <target>해당 신규 시크릿은 클러스터에 추가될 것입니다.</target>
       </trans-unit>
       <trans-unit id="6239075439253810960" datatype="html">
-        <source>Pending:</source>
+        <source>Pending: </source>
         <target state="new">실행 대기:</target>
       </trans-unit>
       <trans-unit id="6283035888557195281" datatype="html">
-        <source>Cluster</source>
+        <source>Cluster </source>
         <target state="new">클러스터</target>
       </trans-unit>
       <trans-unit id="6284431271548714587" datatype="html">
-        <source>Suspend:</source>
+        <source>Suspend: </source>
         <target state="new">일시 중지(Suspend):</target>
       </trans-unit>
       <trans-unit id="6350980688187906033" datatype="html">
@@ -1609,7 +1609,7 @@
         <target>시스템 정보</target>
       </trans-unit>
       <trans-unit id="642253290448532904" datatype="html">
-        <source>Min ready seconds:</source>
+        <source>Min ready seconds: </source>
         <target state="new">최소 준비 초(Min ready seconds):</target>
       </trans-unit>
       <trans-unit id="6423210280939340786" datatype="html">
@@ -1625,7 +1625,7 @@
         <target>하위 경로</target>
       </trans-unit>
       <trans-unit id="6462224380417375328" datatype="html">
-        <source>Service Accounts</source>
+        <source>Service Accounts </source>
         <target state="new">서비스 어카운트</target>
       </trans-unit>
       <trans-unit id="6478267560860767436" datatype="html">
@@ -1637,7 +1637,7 @@
         <target>kubelet 버전</target>
       </trans-unit>
       <trans-unit id="6494596911805287915" datatype="html">
-        <source>Items:</source>
+        <source>Items: </source>
         <target state="new">아이템:</target>
       </trans-unit>
       <trans-unit id="6501135579599829770" datatype="html">
@@ -1661,7 +1661,7 @@
         <target>포트 (이름, 포트, 프로토콜)</target>
       </trans-unit>
       <trans-unit id="6596586911518775971" datatype="html">
-        <source>Target port cannot be empty.</source>
+        <source> Target port cannot be empty. </source>
         <target state="new">대상 포트는 비울 수 없습니다.</target>
       </trans-unit>
       <trans-unit id="6599752784987327249" datatype="html">
@@ -1681,7 +1681,7 @@
         <target>파드 셀렉터</target>
       </trans-unit>
       <trans-unit id="6663783128602596673" datatype="html">
-        <source>Sign in</source>
+        <source> Sign in </source>
         <target state="new">로그인</target>
       </trans-unit>
       <trans-unit id="6677684716540733511" datatype="html">
@@ -1693,7 +1693,7 @@
         <target>커맨드 실행</target>
       </trans-unit>
       <trans-unit id="6753642863059953692" datatype="html">
-        <source>Port cannot be empty.</source>
+        <source> Port cannot be empty. </source>
         <target state="new">포트는 비울 수 없습니다.</target>
       </trans-unit>
       <trans-unit id="6762504134540024018" datatype="html">
@@ -1701,7 +1701,7 @@
         <target>수량</target>
       </trans-unit>
       <trans-unit id="677624622393809855" datatype="html">
-        <source>Logged in with token</source>
+        <source>Logged in with token </source>
         <target state="new">토큰을 사용하여 로그인:</target>
       </trans-unit>
       <trans-unit id="6781815540337494856" datatype="html">
@@ -1725,7 +1725,7 @@
         <target>커널 버전</target>
       </trans-unit>
       <trans-unit id="6852503341223458730" datatype="html">
-        <source>Persistent Volumes</source>
+        <source>Persistent Volumes </source>
         <target state="new">퍼시스턴트 볼륨</target>
       </trans-unit>
       <trans-unit id="6869304038391725752" datatype="html">
@@ -1733,7 +1733,7 @@
         <target>컨테이너</target>
       </trans-unit>
       <trans-unit id="686980668228952182" datatype="html">
-        <source>Workloads</source>
+        <source>Workloads </source>
         <target state="new">워크로드</target>
       </trans-unit>
       <trans-unit id="6870709634537724397" datatype="html">
@@ -1753,7 +1753,7 @@
         <target>플러그인</target>
       </trans-unit>
       <trans-unit id="6915193719482636823" datatype="html">
-        <source>Name:</source>
+        <source>Name: </source>
         <target state="new">이름:</target>
       </trans-unit>
       <trans-unit id="6929072613146586031" datatype="html">
@@ -1765,7 +1765,7 @@
         <target>리소스 이름</target>
       </trans-unit>
       <trans-unit id="695074596983358387" datatype="html">
-        <source>Application name is required.</source>
+        <source> Application name is required. </source>
         <target state="new">애플리케이션 이름은 필수 항목입니다.</target>
       </trans-unit>
       <trans-unit id="6959497441009812685" datatype="html">
@@ -1805,7 +1805,7 @@
         <target>내부 엔드포인트</target>
       </trans-unit>
       <trans-unit id="7076883018082745028" datatype="html">
-        <source>Label key name must be alphanumeric separated by &apos;-&apos;, &apos;_&apos; or &apos;.&apos;, optionally prefixed by a DNS subdomain and &apos;/&apos;.</source>
+        <source> Label key name must be alphanumeric separated by &apos;-&apos;, &apos;_&apos; or &apos;.&apos;, optionally prefixed by a DNS subdomain and &apos;/&apos;. </source>
         <target state="new">레이블 키 이름은 &apos;-&apos;, &apos;_&apos;, 또는 &apos;.&apos;로 분리되는 영숫자이어야 하며, 접두사로 DNS 서브토메인과 &apos;/&apos;가 선택적으로 사용될 수 있습니다.</target>
       </trans-unit>
       <trans-unit id="7101197021456818771" datatype="html">
@@ -1817,7 +1817,7 @@
         <target>테마</target>
       </trans-unit>
       <trans-unit id="7109976949603290892" datatype="html">
-        <source>Logs from <x id="START_TAG_KD_DATE" ctype="x-kd_date" equiv-text="&quot;\uFFFD#2\uFFFD&quot;"/><x id="CLOSE_TAG_KD_DATE" ctype="x-kd_date" equiv-text="&quot;[\uFFFD/#2\uFFFD|\uFFFD/#3\uFFFD]&quot;"/> to <x id="START_TAG_KD_DATE_1" ctype="x-kd_date_1" equiv-text="&quot;\uFFFD#3\uFFFD&quot;"/><x id="CLOSE_TAG_KD_DATE" ctype="x-kd_date" equiv-text="&quot;[\uFFFD/#2\uFFFD|\uFFFD/#3\uFFFD]&quot;"/> UTC</source>
+        <source> Logs from <x id="START_TAG_KD_DATE" ctype="x-kd_date" equiv-text="&quot;\uFFFD#2\uFFFD&quot;"/><x id="CLOSE_TAG_KD_DATE" ctype="x-kd_date" equiv-text="&quot;[\uFFFD/#2\uFFFD|\uFFFD/#3\uFFFD]&quot;"/> to <x id="START_TAG_KD_DATE_1" ctype="x-kd_date_1" equiv-text="&quot;\uFFFD#3\uFFFD&quot;"/><x id="CLOSE_TAG_KD_DATE" ctype="x-kd_date" equiv-text="&quot;[\uFFFD/#2\uFFFD|\uFFFD/#3\uFFFD]&quot;"/> UTC </source>
         <target state="new"> <x id="START_TAG_KD_DATE" ctype="x-kd_date" equiv-text="&lt;kd-date [date]=&quot;podLogs?.info.fromDate&quot; format=&quot;short&quot;&gt;"/><x id="CLOSE_TAG_KD_DATE" ctype="x-kd_date" equiv-text="&lt;/kd-date&gt;"/> 에서부터 <x id="START_TAG_KD_DATE_1" ctype="x-kd_date_1" equiv-text="&lt;kd-date [date]=&quot;podLogs?.info.toDate&quot; format=&quot;short&quot;&gt;"/><x id="CLOSE_TAG_KD_DATE" ctype="x-kd_date" equiv-text="&lt;/kd-date&gt;"/> 까지의 로그 (UTC)</target>
       </trans-unit>
       <trans-unit id="7136018875175606726" datatype="html">
@@ -1841,7 +1841,7 @@
         <target>스케줄 불가</target>
       </trans-unit>
       <trans-unit id="7194375808015467595" datatype="html">
-        <source>Max surge:</source>
+        <source>Max surge: </source>
         <target state="new">최대 증가율(surge):</target>
       </trans-unit>
       <trans-unit id="7194477224906924674" datatype="html">
@@ -1853,7 +1853,7 @@
         <target>성공 임계값</target>
       </trans-unit>
       <trans-unit id="7198836215060144081" datatype="html">
-        <source>Host</source>
+        <source>Host </source>
         <target state="new">호스트</target>
       </trans-unit>
       <trans-unit id="7204408227432067199" datatype="html">
@@ -1861,11 +1861,11 @@
         <target>재시작</target>
       </trans-unit>
       <trans-unit id="7206849842963127297" datatype="html">
-        <source>Custom Resource Definitions</source>
+        <source>Custom Resource Definitions </source>
         <target state="new">커스텀 리소스 데피니션</target>
       </trans-unit>
       <trans-unit id="7207867066492367466" datatype="html">
-        <source>Settings</source>
+        <source>Settings </source>
         <target state="new">설정</target>
       </trans-unit>
       <trans-unit id="7239750919884229270" datatype="html">
@@ -1877,7 +1877,7 @@
         <target>실패</target>
       </trans-unit>
       <trans-unit id="728108318392658678" datatype="html">
-        <source>Shell in <x id="START_TAG_MAT_SELECT" ctype="x-mat_select" equiv-text="&quot;\uFFFD*3:1\uFFFD\uFFFD#1:1\uFFFD&quot;"/><x id="START_TAG_MAT_OPTION" ctype="x-mat_option" equiv-text="&quot;\uFFFD*2:2\uFFFD\uFFFD#1:2\uFFFD&quot;"/> <x id="INTERPOLATION" equiv-text="&quot;\uFFFD0:2\uFFFD&quot;"/> <x id="CLOSE_TAG_MAT_OPTION" ctype="x-mat_option" equiv-text="&quot;\uFFFD/#1:2\uFFFD\uFFFD/*2:2\uFFFD&quot;"/><x id="CLOSE_TAG_MAT_SELECT" ctype="x-mat_select" equiv-text="&quot;\uFFFD/#1:1\uFFFD\uFFFD/*3:1\uFFFD&quot;"/> in <x id="INTERPOLATION_1" equiv-text="&quot;\uFFFD0\uFFFD&quot;"/> </source>
+        <source> Shell in <x id="START_TAG_MAT_SELECT" ctype="x-mat_select" equiv-text="&quot;\uFFFD*3:1\uFFFD\uFFFD#1:1\uFFFD&quot;"/><x id="START_TAG_MAT_OPTION" ctype="x-mat_option" equiv-text="&quot;\uFFFD*2:2\uFFFD\uFFFD#1:2\uFFFD&quot;"/> <x id="INTERPOLATION" equiv-text="&quot;\uFFFD0:2\uFFFD&quot;"/> <x id="CLOSE_TAG_MAT_OPTION" ctype="x-mat_option" equiv-text="&quot;\uFFFD/#1:2\uFFFD\uFFFD/*2:2\uFFFD&quot;"/><x id="CLOSE_TAG_MAT_SELECT" ctype="x-mat_select" equiv-text="&quot;\uFFFD/#1:1\uFFFD\uFFFD/*3:1\uFFFD&quot;"/> in <x id="INTERPOLATION_1" equiv-text="&quot;\uFFFD0\uFFFD&quot;"/> </source>
         <target state="new"> <x id="INTERPOLATION_1" equiv-text="{{ podName }}"/>의 <x id="START_TAG_MAT-SELECT" ctype="x-mat-select" equiv-text="&lt;mat-select&gt;"/> <x id="START_TAG_MAT-OPTION" ctype="x-mat-option" equiv-text="&lt;mat-option&gt;"/> <x id="INTERPOLATION" equiv-text="{{ item }}"/> <x id="CLOSE_TAG_MAT-OPTION" ctype="x-mat-option" equiv-text="&lt;/mat-option&gt;"/> <x id="CLOSE_TAG_MAT-SELECT" ctype="x-mat-select" equiv-text="&lt;/mat-select&gt;"/>에 셸 인</target>
       </trans-unit>
       <trans-unit id="7281870845577621674" datatype="html">
@@ -1885,7 +1885,7 @@
         <target>초기화 컨테이너</target>
       </trans-unit>
       <trans-unit id="7293190222859783293" datatype="html">
-        <source>Plugins</source>
+        <source>Plugins </source>
         <target state="new">플러그인</target>
       </trans-unit>
       <trans-unit id="7298863100332850221" datatype="html">
@@ -1893,11 +1893,11 @@
         <target>표시할 데이터가 없습니다.</target>
       </trans-unit>
       <trans-unit id="7327432642990246284" datatype="html">
-        <source>Default service account</source>
+        <source>Default service account </source>
         <target state="new">디폴트 서비스 어카운트</target>
       </trans-unit>
       <trans-unit id="7330483736355831593" datatype="html">
-        <source>Config and Storage</source>
+        <source>Config and Storage </source>
         <target state="new">컨피그 및 스토리지</target>
       </trans-unit>
       <trans-unit id="7335089825053673252" datatype="html">
@@ -1909,7 +1909,7 @@
         <target state="new">트리거</target>
       </trans-unit>
       <trans-unit id="7409958205893937925" datatype="html">
-        <source>Active Jobs:</source>
+        <source>Active Jobs: </source>
         <target state="new">액티브 잡:</target>
       </trans-unit>
       <trans-unit id="741892530496074339" datatype="html">
@@ -1921,7 +1921,7 @@
         <target>고정 해제</target>
       </trans-unit>
       <trans-unit id="7446822750532518350" datatype="html">
-        <source>Network Policies</source>
+        <source>Network Policies </source>
         <target state="new">네트워크 폴리시</target>
       </trans-unit>
       <trans-unit id="7472460087344828807" datatype="html">
@@ -1949,7 +1949,7 @@
         <target>오브젝트</target>
       </trans-unit>
       <trans-unit id="7541092997061001831" datatype="html">
-        <source>Setting high number of pods may cause performance issues of the cluster and Dashboard UI.</source>
+        <source> Setting high number of pods may cause performance issues of the cluster and Dashboard UI. </source>
         <target state="new">파드의 수를 높게 설정하면 클러스터와 대시보드 UI에 성능 이슈를 일으킬 수 있습니다.</target>
       </trans-unit>
       <trans-unit id="7542300534444838884" datatype="html">
@@ -1957,7 +1957,7 @@
         <target>쿠버네티스 대시보드</target>
       </trans-unit>
       <trans-unit id="7546647490531252189" datatype="html">
-        <source>Namespace:</source>
+        <source>Namespace: </source>
         <target state="new">네임스페이스:</target>
       </trans-unit>
       <trans-unit id="7571663901157580742" datatype="html">
@@ -1969,7 +1969,7 @@
         <target>편집</target>
       </trans-unit>
       <trans-unit id="761105739794565336" datatype="html">
-        <source>Pods:</source>
+        <source>Pods: </source>
         <target state="new">파드:</target>
       </trans-unit>
       <trans-unit id="7613204568422973266" datatype="html">
@@ -1981,11 +1981,11 @@
         <target>시크릿에 보관할 데이터를 명시하세요. 값은 .dockercfg 파일 내용을 Base64로 인코딩한 형태입니다.</target>
       </trans-unit>
       <trans-unit id="765635835361713756" datatype="html">
-        <source>Preview</source>
+        <source> Preview </source>
         <target state="new">미리보기</target>
       </trans-unit>
       <trans-unit id="7678167194170686460" datatype="html">
-        <source>Cancel</source>
+        <source>Cancel </source>
         <target state="new">취소</target>
       </trans-unit>
       <trans-unit id="7680153547364305148" datatype="html">
@@ -1993,7 +1993,7 @@
         <target>접근 거부 알림 해제</target>
       </trans-unit>
       <trans-unit id="7682253854615514679" datatype="html">
-        <source>Nodes</source>
+        <source>Nodes </source>
         <target state="new">노드</target>
       </trans-unit>
       <trans-unit id="7696069555285576911" datatype="html">
@@ -2017,7 +2017,7 @@
         <target>데이터셋 이름</target>
       </trans-unit>
       <trans-unit id="7747200628816231618" datatype="html">
-        <source>Label Key name should not exceed 63 characters.</source>
+        <source> Label Key name should not exceed 63 characters. </source>
         <target state="new">레이블 키 이름은 63개의 문자를 초과할 수 없습니다.</target>
       </trans-unit>
       <trans-unit id="7769329651019167020" datatype="html">
@@ -2045,7 +2045,7 @@
         <target>용량</target>
       </trans-unit>
       <trans-unit id="7846239389723666576" datatype="html">
-        <source>Data must be Base64 encoded.</source>
+        <source> Data must be Base64 encoded. </source>
         <target state="new">데이터는 Base64로 인코딩되어야 합니다.</target>
       </trans-unit>
       <trans-unit id="7873445996550708978" datatype="html">
@@ -2065,11 +2065,11 @@
         <target>워크로드</target>
       </trans-unit>
       <trans-unit id="7927427229271598667" datatype="html">
-        <source>Make sure that support for basic authentication is enabled in the cluster. To find out more about how to configure basic authentication, please refer to the <x id="START_LINK" ctype="x-a" equiv-text="&quot;\uFFFD#2\uFFFD&quot;"/>Authenticating<x id="CLOSE_LINK" ctype="x-a" equiv-text="&quot;[\uFFFD/#2\uFFFD|\uFFFD/#3\uFFFD]&quot;"/> and <x id="START_LINK_1" equiv-text="&quot;\uFFFD#3\uFFFD&quot;"/>ABAC Mode<x id="CLOSE_LINK" ctype="x-a" equiv-text="&quot;[\uFFFD/#2\uFFFD|\uFFFD/#3\uFFFD]&quot;"/> sections.</source>
+        <source> Make sure that support for basic authentication is enabled in the cluster. To find out more about how to configure basic authentication, please refer to the <x id="START_LINK" ctype="x-a" equiv-text="&quot;\uFFFD#2\uFFFD&quot;"/>Authenticating<x id="CLOSE_LINK" ctype="x-a" equiv-text="&quot;[\uFFFD/#2\uFFFD|\uFFFD/#3\uFFFD]&quot;"/> and <x id="START_LINK_1" equiv-text="&quot;\uFFFD#3\uFFFD&quot;"/>ABAC Mode<x id="CLOSE_LINK" ctype="x-a" equiv-text="&quot;[\uFFFD/#2\uFFFD|\uFFFD/#3\uFFFD]&quot;"/> sections. </source>
         <target state="new">클러스터에 기본 인증에 대한 지원을 활성화해야 합니다. 기본 인증을 설정하는 방법은 <x id="START_LINK" ctype="x-a" equiv-text="&lt;a&gt;"/>인증하기<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/>와 <x id="START_LINK_1" ctype="x-a" equiv-text="&lt;a&gt;"/>ABAC 모드<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/> 섹션에서 알 수 있습니다.</target>
       </trans-unit>
       <trans-unit id="7941428823403788384" datatype="html">
-        <source>Create</source>
+        <source> Create </source>
         <target state="new">생성</target>
       </trans-unit>
       <trans-unit id="795890916060309463" datatype="html">
@@ -2137,7 +2137,7 @@
         <target>컨피그 및 스토리지</target>
       </trans-unit>
       <trans-unit id="8175189185819474284" datatype="html">
-        <source>Container image is invalid: <x id="INTERPOLATION" equiv-text="&quot;\uFFFD0\uFFFD&quot;"/> </source>
+        <source> Container image is invalid: <x id="INTERPOLATION" equiv-text="&quot;\uFFFD0\uFFFD&quot;"/> </source>
         <target state="new">유효한 컨테이너 이미지가 아님: <x id="INTERPOLATION" equiv-text="{{containerImage.errors?.validImageReference}}"/> </target>
       </trans-unit>
       <trans-unit id="8177873832400820695" datatype="html">
@@ -2145,7 +2145,7 @@
         <target>카운트</target>
       </trans-unit>
       <trans-unit id="8193431940379462508" datatype="html">
-        <source>Replication Controllers</source>
+        <source>Replication Controllers </source>
         <target state="new">레플리케이션 컨트롤러</target>
       </trans-unit>
       <trans-unit id="8204176479746810612" datatype="html">
@@ -2193,7 +2193,7 @@
         <target>중지: <x id="PH" equiv-text="status.failed"/></target>
       </trans-unit>
       <trans-unit id="8360417359291444150" datatype="html">
-        <source>Upload</source>
+        <source>Upload </source>
         <target state="new">업로드</target>
       </trans-unit>
       <trans-unit id="8384742917026482252" datatype="html">
@@ -2221,7 +2221,7 @@
         <target>로그 파일 다운로드</target>
       </trans-unit>
       <trans-unit id="8444287437490086299" datatype="html">
-        <source>Endpoints <x id="START_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&quot;\uFFFD#2\uFFFD&quot;"/>open_in_new<x id="CLOSE_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&quot;\uFFFD/#2\uFFFD&quot;"/></source>
+        <source> Endpoints <x id="START_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&quot;\uFFFD#2\uFFFD&quot;"/>open_in_new<x id="CLOSE_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&quot;\uFFFD/#2\uFFFD&quot;"/></source>
         <target state="new">엔드포인트 <x id="START_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;mat-icon class=&quot;external-link-icon kd-clickable&quot; i18n-matTooltip matTooltip=&quot;Endpoint links are external links that will be open in a new tab.&quot;&gt;"/>open_in_new<x id="CLOSE_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;/mat-icon&gt;"/></target>
       </trans-unit>
       <trans-unit id="8451232601628619325" datatype="html">
@@ -2241,7 +2241,7 @@
         <target>스테이트풀 셋</target>
       </trans-unit>
       <trans-unit id="8542934565724912440" datatype="html">
-        <source>Prefix is not a valid DNS subdomain prefix (eg. my-domain.com).</source>
+        <source> Prefix is not a valid DNS subdomain prefix (eg. my-domain.com). </source>
         <target state="new">해당 접두사는 유효한 DNS 서브도메인 접두사가 아닙니다(예: my-domain.com).</target>
       </trans-unit>
       <trans-unit id="8548218669860642537" datatype="html">
@@ -2249,7 +2249,7 @@
         <target state="new">다운로드 준비 완료!</target>
       </trans-unit>
       <trans-unit id="858785118348238543" datatype="html">
-        <source>Succeeded:</source>
+        <source>Succeeded: </source>
         <target state="new">성공:</target>
       </trans-unit>
       <trans-unit id="8601511221316154701" datatype="html">
@@ -2281,7 +2281,7 @@
         <target>기본</target>
       </trans-unit>
       <trans-unit id="864882670483831190" datatype="html">
-        <source>There are no notifications</source>
+        <source> There are no notifications </source>
         <target state="new">알림 없음</target>
       </trans-unit>
       <trans-unit id="8650499415827640724" datatype="html">
@@ -2309,15 +2309,15 @@
         <target>명시된 레이블은 생성된 디플로이먼트, 서비스(있다면), 파드에 적용됩니다. 공통 레이블은 릴리스, 환경, 티어(tier), 파티션, 트랙(track)을 포함합니다.</target>
       </trans-unit>
       <trans-unit id="8713955401469120119" datatype="html">
-        <source>Select YAML or JSON file specifying the resources to deploy to the currently selected namespace.</source>
+        <source> Select YAML or JSON file specifying the resources to deploy to the currently selected namespace. </source>
         <target state="new">현재 선택된 네임스페이스에 디플로이할 리소스를 명시하는 YAML 또는 JSON 파일을 선택하세요.</target>
       </trans-unit>
       <trans-unit id="8716879065476971568" datatype="html">
-        <source>Status:</source>
+        <source>Status: </source>
         <target state="new">상태:</target>
       </trans-unit>
       <trans-unit id="8764790219135296178" datatype="html">
-        <source>Target port must be greater than 0.</source>
+        <source> Target port must be greater than 0. </source>
         <target state="new">대상 포트는 0 보다 높아야 합니다.</target>
       </trans-unit>
       <trans-unit id="8773342478342887379" datatype="html">
@@ -2345,7 +2345,7 @@
         <target>리소스를 찾을 수 없습니다.</target>
       </trans-unit>
       <trans-unit id="8859359379943639539" datatype="html">
-        <source>Replica Sets</source>
+        <source>Replica Sets </source>
         <target state="new">레플리카 셋</target>
       </trans-unit>
       <trans-unit id="8881985514674911381" datatype="html">
@@ -2377,7 +2377,7 @@
         <target>이름</target>
       </trans-unit>
       <trans-unit id="8971403803665717398" datatype="html">
-        <source>Number of pods is required</source>
+        <source> Number of pods is required </source>
         <target state="new">파드의 수는 필수 항목입니다.</target>
       </trans-unit>
       <trans-unit id="9014417675256704625" datatype="html">
@@ -2389,7 +2389,7 @@
         <target state="new"><x id="INTERPOLATION" equiv-text="&quot;\uFFFD0\uFFFD&quot;"/> 작동시키기</target>
       </trans-unit>
       <trans-unit id="9044448882574381355" datatype="html">
-        <source>CPU requirement must be given as a positive number.</source>
+        <source> CPU requirement must be given as a positive number. </source>
         <target state="new">CPU 요구 사항은 양의 정수이어야 합니다.</target>
       </trans-unit>
       <trans-unit id="9045596623183360040" datatype="html">
@@ -2405,7 +2405,7 @@
         <target>로그가 자동 갱신되는데 걸리는 초.</target>
       </trans-unit>
       <trans-unit id="9077681768250049031" datatype="html">
-        <source>Name must follow the DNS domain name syntax (e.g. new.image-pull.secret).</source>
+        <source> Name must follow the DNS domain name syntax (e.g. new.image-pull.secret). </source>
         <target state="new">이름은 DNS 도매인 이름의 문법을 따라야 합니다(예를 들면, new.image-pull.secret).</target>
       </trans-unit>
       <trans-unit id="9092584317002115275" datatype="html">
@@ -2425,7 +2425,7 @@
         <target>소스</target>
       </trans-unit>
       <trans-unit id="9169828761871989299" datatype="html">
-        <source>Prefix should not exceed 253 characters.</source>
+        <source> Prefix should not exceed 253 characters. </source>
         <target state="new">접두사는 253개의 문자를 초과할 수 없습니다.</target>
       </trans-unit>
       <trans-unit id="9182918211699394982" datatype="html">
