@@ -85,7 +85,7 @@
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "15.1.5",
-    "@angular/cli": "15.2.6",
+    "@angular/cli": "16.1.0",
     "@angular/compiler-cli": "15.2.7",
     "@angular/language-service": "15.2.7",
     "@babel/core": "7.22.5",
