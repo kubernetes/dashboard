@@ -126,7 +126,7 @@
     "minimatch": "9.0.1",
     "minimist": "1.2.8",
     "ng-extract-i18n-merge": "2.7.0",
-    "node-gyp": "9.3.1",
+    "node-gyp": "9.4.0",
     "q": "1.5.1",
     "raw-loader": "4.0.2",
     "run-node": "2.0.0",
