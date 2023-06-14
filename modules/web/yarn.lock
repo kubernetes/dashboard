@@ -484,17 +484,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@angular/router@npm:15.2.7":
-  version: 15.2.7
-  resolution: "@angular/router@npm:15.2.7"
+"@angular/router@npm:16.1.0":
+  version: 16.1.0
+  resolution: "@angular/router@npm:16.1.0"
   dependencies:
     tslib: ^2.3.0
   peerDependencies:
-    "@angular/common": 15.2.7
-    "@angular/core": 15.2.7
-    "@angular/platform-browser": 15.2.7
+    "@angular/common": 16.1.0
+    "@angular/core": 16.1.0
+    "@angular/platform-browser": 16.1.0
     rxjs: ^6.5.3 || ^7.4.0
-  checksum: 9c9f5870e37ba46515a74a2db1da1de880a237c4c35db339d11fb6a7abb9062dd932b137c8f100708109a0684122d3a676451a69214373e481ce15aff99967b1
+  checksum: 3d68dbac71db224efd0e33d1ac92f74fa0e8d41eb121e01aeea12676878363168ebb52706969ee80038a50753dedd39a62d04da72303b5509249e785614dc2eb
   languageName: node
   linkType: hard
 
@@ -10657,7 +10657,7 @@ __metadata:
     "@angular/material": 14.2.2
     "@angular/platform-browser": 15.2.7
     "@angular/platform-browser-dynamic": 15.2.7
-    "@angular/router": 15.2.7
+    "@angular/router": 16.1.0
     "@babel/core": 7.22.5
     "@babel/preset-env": 7.22.5
     "@babel/register": 7.22.5
