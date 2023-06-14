@@ -454,17 +454,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@angular/platform-browser-dynamic@npm:15.2.7":
-  version: 15.2.7
-  resolution: "@angular/platform-browser-dynamic@npm:15.2.7"
+"@angular/platform-browser-dynamic@npm:16.1.0":
+  version: 16.1.0
+  resolution: "@angular/platform-browser-dynamic@npm:16.1.0"
   dependencies:
     tslib: ^2.3.0
   peerDependencies:
-    "@angular/common": 15.2.7
-    "@angular/compiler": 15.2.7
-    "@angular/core": 15.2.7
-    "@angular/platform-browser": 15.2.7
-  checksum: c6aa8c592f3cd145b9f2c4c2d7f5f327090c273743946a6e352f8ea76dc6a8e674f0b86e57fa8e705bdc569874cc9662f17a92e7a2a99ee0079bf05825557726
+    "@angular/common": 16.1.0
+    "@angular/compiler": 16.1.0
+    "@angular/core": 16.1.0
+    "@angular/platform-browser": 16.1.0
+  checksum: c83897cb2b455975f7b3852e5c3ac6eae047b4b8c37d6e6287f5d99af9264030ae20bed3cbe0a81b0c15eb9b039bd312770d925c9499ef3cffc0346751e9abe5
   languageName: node
   linkType: hard
 
@@ -10656,7 +10656,7 @@ __metadata:
     "@angular/localize": 15.2.7
     "@angular/material": 14.2.2
     "@angular/platform-browser": 15.2.7
-    "@angular/platform-browser-dynamic": 15.2.7
+    "@angular/platform-browser-dynamic": 16.1.0
     "@angular/router": 15.2.7
     "@babel/core": 7.22.5
     "@babel/preset-env": 7.22.5
