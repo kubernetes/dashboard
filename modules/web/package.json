@@ -52,7 +52,7 @@
     "@angular/core": "15.2.7",
     "@angular/flex-layout": "15.0.0-beta.42",
     "@angular/forms": "15.2.7",
-    "@angular/localize": "15.2.7",
+    "@angular/localize": "16.1.2",
     "@angular/material": "14.2.2",
     "@angular/platform-browser": "15.2.7",
     "@angular/platform-browser-dynamic": "15.2.7",
