@@ -20,7 +20,7 @@ runs:
 
     - name: Set up GOPATH
       shell: bash
-      run: export GOPATH=$(go env GOPATH)
+      run: go env GOPATH
 
     - name: Install API dependencies
       if: ${{ inputs.api }}
