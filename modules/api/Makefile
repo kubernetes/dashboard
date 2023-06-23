@@ -86,6 +86,10 @@ deploy: --deploy
 deploy-dev: DOCKERFILE = $(API_DIRECTORY)/Dockerfile
 deploy-dev: --deploy-dev
 
+.PHONY: image
+image: DOCKERFILE = $(API_DIRECTORY)/Dockerfile
+image: --image
+
 .PHONY: --ensure-dist-exists
 --ensure-dist-exists:
 	@mkdir -p $(API_DIST_DIRECTORY)

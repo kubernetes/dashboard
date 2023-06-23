@@ -309,8 +309,7 @@ spec:
           type: RuntimeDefault
       containers:
         - name: kubernetes-dashboard-api
-          # TODO: Use official images
-          image: dashboard-api:latest
+          image: docker.io/kubernetesui/dashboard-api:v1.0.0
           imagePullPolicy: Never
           ports:
             - containerPort: 9000
@@ -365,8 +364,7 @@ spec:
           type: RuntimeDefault
       containers:
         - name: kubernetes-dashboard-web
-          # TODO: Use official images
-          image: dashboard-web:latest
+          image: docker.io/kubernetesui/dashboard-web:v1.0.0
           imagePullPolicy: Never
           ports:
             - containerPort: 8000

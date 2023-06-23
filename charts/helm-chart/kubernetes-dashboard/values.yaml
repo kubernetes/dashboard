@@ -199,7 +199,7 @@ metricsScraper:
   enabled: true
   role: metrics-scraper
   image:
-    repository: kubernetesui/metrics-scraper
+    repository: docker.io/kubernetesui/metrics-scraper
     tag: v1.0.9
   containers:
     ports:

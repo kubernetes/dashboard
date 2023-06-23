@@ -38,7 +38,7 @@ fix-license: $(PRE) ## Adds missing license header to repo files
 #
 # Note: Make sure that the port 8080 is free on your localhost
 .PHONY: serve
-serve: $(PRE) ## Starts development version of the application on: http://localhost:8080
+serve: $(PRE) ## Starts development version of the application on http://localhost:8080
 	@$(MAKE) --no-print-directory -C $(MODULES_DIRECTORY) TARGET=serve
 
 # Starts development version of the application with HTTPS enabled.
@@ -48,7 +48,7 @@ serve: $(PRE) ## Starts development version of the application on: http://localh
 # Note: Make sure that the port 8080 is free on your localhost
 # Note #2: Does not work with "kind".
 .PHONY: serve-https
-serve-https: $(PRE) ## Starts development version of the application with HTTPS enabled on: https://localhost:8080
+serve-https: $(PRE) ## Starts development version of the application with HTTPS enabled on https://localhost:8080
 	@$(MAKE) --no-print-directory -C $(MODULES_DIRECTORY) TARGET=serve-https
 
 # Starts production version of the application.
@@ -85,6 +85,10 @@ deploy: build-cross ## Builds and deploys all module containers to the configure
 .PHONY: deploy-dev
 deploy-dev: build-cross ## Builds and deploys all module containers to the configured dev registries
 	@$(MAKE) --no-print-directory -C $(MODULES_DIRECTORY) TARGET=deploy-dev
+
+.PHONY: image
+image: build ## Builds containers targeting host architecture
+	@$(MAKE) --no-print-directory -C $(MODULES_DIRECTORY) TARGET=image
 
 .PHONY: --compose
 --compose: --ensure-certificates build
