@@ -102,11 +102,25 @@ jobs:
       - name: Start kind cluster
         uses: helm/kind-action@v1.7.0
 
-      - name: Set up
-        uses: ./.github/actions/setup
+      - name: Set up Go
+        uses: actions/setup-go@v4
         with:
-          api: true
-          web: true
+          go-version-file: modules/api/go.mod
+          check-latest: true
+          cache-dependency-path: modules/api/go.sum
+
+      - name: Install API dependencies
+        working-directory: modules/api
+        run: go mod download
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18.14.0
+
+      - name: Install web dependencies
+        working-directory: modules/web
+        run: yarn
 
       - name: Serve app
         run: make serve &
