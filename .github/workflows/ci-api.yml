@@ -25,6 +25,7 @@ on:
 permissions:
   contents: read
 env:
+  GOPATH: /home/runner/go/
   GOPROXY: "https://proxy.golang.org"
   TERM: xterm
 jobs:
@@ -47,10 +48,8 @@ jobs:
           check-latest: true
           cache-dependency-path: modules/api/go.sum
 
-      - name: Setup Go environment variables
-        run: |
-          export GOPATH=$(go env GOPATH)
-          export PATH=$PATH:$GOPATH/bin
+      - name: Add Go to PATH
+        run: export PATH=$PATH:$GOPATH/bin
 
       - name: Install API dependencies
         working-directory: modules/api
@@ -87,10 +86,8 @@ jobs:
           check-latest: true
           cache-dependency-path: modules/api/go.sum
 
-      - name: Setup Go environment variables
-        run: |
-          export GOPATH=$(go env GOPATH)
-          export PATH=$PATH:$GOPATH/bin
+      - name: Add Go to PATH
+        run: export PATH=$PATH:$GOPATH/bin
 
       - name: Install API dependencies
         working-directory: modules/api
