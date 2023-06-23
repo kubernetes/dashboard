@@ -40,7 +40,7 @@ jobs:
       - run: ct lint --config=charts/helm-chart/.helm-chart-testing.yaml
       - uses: helm/kind-action@v1.7.0
         with:
-          node_image: kindest/node:v1.27.2
+          node_image: kindest/node:v1.27.3
       - run: kubectl apply --server-side -f https://raw.githubusercontent.com/prometheus-operator/prometheus-operator/v0.54.0/example/prometheus-operator-crd/monitoring.coreos.com_servicemonitors.yaml
       - name: Run chart-testing (install)
         run: ct install --config=charts/helm-chart/.helm-chart-testing.yaml
