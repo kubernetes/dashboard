@@ -390,6 +390,10 @@
         <source>A Deployment will be created to maintain the desired number of pods across your cluster.</source>
         <target>클러스터에 의도한 파드의 수를 유지하기 위해서 디플로이먼트가 생성됩니다.</target>
       </trans-unit>
+      <trans-unit id="2131524838680811873" datatype="html">
+        <source>You can <x id="START_LINK" ctype="x-a" equiv-text="&quot;\uFFFD#6\uFFFD&quot;"/>deploy a containerized app<x id="CLOSE_LINK" ctype="x-a" equiv-text="&quot;[\uFFFD/#6\uFFFD|\uFFFD/#7\uFFFD]&quot;"/>, select other namespace or <x id="START_LINK_1" equiv-text="&quot;\uFFFD#7\uFFFD&quot;"/>check the Dashboard Docs <x id="START_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&quot;\uFFFD#8\uFFFD&quot;"/>open_in_new<x id="CLOSE_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&quot;\uFFFD/#8\uFFFD&quot;"/><x id="CLOSE_LINK" ctype="x-a" equiv-text="&quot;[\uFFFD/#6\uFFFD|\uFFFD/#7\uFFFD]&quot;"/> to learn more.</source>
+        <target state="new"> <x id="START_LINK" ctype="x-a" equiv-text="&lt;a&gt;"/>컨테이너화된 앱을 배포하거나<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/>, 다른 네임스페이스를 선택하거나 <x id="START_LINK_1" ctype="x-a" equiv-text="&lt;a&gt;"/>대시보드 투어(Dashboard Tour)를 통해 <x id="START_TAG_MAT-ICON" ctype="x-mat-icon" equiv-text="&lt;mat-icon&gt;"/>open_in_new<x id="CLOSE_TAG_MAT-ICON" ctype="x-mat-icon" equiv-text="&lt;/mat-icon&gt;"/> <x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/> 자세한 내용을 확인할 수 있습니다.</target>
+      </trans-unit>
       <trans-unit id="2132886845235480834" datatype="html">
         <source>Resource type</source>
         <target>리소스 타입</target>

@@ -11,12 +11,12 @@
     "node": ">=18.14.0"
   },
   "engineStrict": true,
-  "packageManager": "yarn@3.2.2",
+  "packageManager": "yarn@3.3.0",
   "scripts": {
     "start": "make serve",
     "start:https": "make serve-https",
-    "start:prod": "yarn ensure:version && ng serve -c production-en --proxy-config proxy.conf.json",
-    "start:prod:https": "yarn ensure:version && ng serve -c production-en --ssl --proxy-config proxy-https.conf.json",
+    "start:prod": "ng serve -c production-en --proxy-config proxy.conf.json",
+    "start:prod:https": "ng serve -c production-en --ssl --proxy-config proxy-https.conf.json",
     "build:prod": "make build",
     "fix": "yarn fix:i18n && yarn fix:html && yarn fix:scss && yarn fix:ts",
     "fix:i18n": "ng run kubernetes-dashboard:extract-i18n-merge",

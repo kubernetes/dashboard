@@ -1,7 +1,9 @@
 # kubernetes-dashboard
 
-[Kubernetes Dashboard](https://github.com/kubernetes/dashboard) is a general purpose, web-based UI for Kubernetes clusters.
-It allows users to manage applications running in the cluster and troubleshoot them, as well as manage the cluster itself.
+[Kubernetes Dashboard](https://github.com/kubernetes/dashboard) is a general purpose, web-based UI for Kubernetes
+clusters.
+It allows users to manage applications running in the cluster and troubleshoot them, as well as manage the cluster
+itself.
 
 ## TL;DR
 
@@ -14,18 +16,21 @@ helm install kubernetes-dashboard kubernetes-dashboard/kubernetes-dashboard
 
 ## Introduction
 
-This chart bootstraps a [Kubernetes Dashboard](https://github.com/kubernetes/dashboard) deployment on a [Kubernetes](https://kubernetes.io) cluster using the [Helm](https://helm.sh) package manager.
+This chart bootstraps a [Kubernetes Dashboard](https://github.com/kubernetes/dashboard) deployment on
+a [Kubernetes](https://kubernetes.io) cluster using the [Helm](https://helm.sh) package manager.
 
 ## Installing the Chart
 
-To install the [Chart](https://helm.sh/docs/intro/using_helm/#three-big-concepts) with the [Release](https://helm.sh/docs/intro/using_helm/#three-big-concepts) name `kubernetes-dashboard`:
+To install the [Chart](https://helm.sh/docs/intro/using_helm/#three-big-concepts) with
+the [Release](https://helm.sh/docs/intro/using_helm/#three-big-concepts) name `kubernetes-dashboard`:
 
 ```console
 helm repo add kubernetes-dashboard https://kubernetes.github.io/dashboard/
-helm install kubernetes-dashboard kubernetes-dashboard/kubernetes-dashboard
+helm upgrade --install kubernetes-dashboard kubernetes-dashboard/kubernetes-dashboard --wait --namespace kubernetes-dashboard --create-namespace
 ```
 
-The command deploys kubernetes-dashboard on the Kubernetes cluster in the default configuration.
+The command deploys kubernetes-dashboard on the Kubernetes cluster in the `kubernetes-dashboard` namespace with default
+configuration.
 The [configuration](#configuration) section lists the parameters that can be configured during installation.
 
 ## Uninstalling the Chart
@@ -33,7 +38,7 @@ The [configuration](#configuration) section lists the parameters that can be con
 To uninstall/delete the `kubernetes-dashboard` deployment:
 
 ```console
-helm delete kubernetes-dashboard
+helm delete kubernetes-dashboard --namespace kubernetes-dashboard
 ```
 
 The command removes all the Kubernetes components associated with the chart and deletes the release.
@@ -47,13 +52,16 @@ It is highly recommended to use RBAC with minimal privileges needed for Dashboar
 
 ### NetworkPolicy
 
-You can enable a networkPolicy for this application via the `networkPolicy.enabled` boolean. By default it permits ingress only to the HTTP or HTTPS port (see `protocolHttp` from values.yaml).
+You can enable a networkPolicy for this application via the `networkPolicy.enabled` boolean. By default it permits
+ingress only to the HTTP or HTTPS port (see `protocolHttp` from values.yaml).
 
-If you wish to disable all ingress to this application you may set the `networkPolicy.ingressDenyAll` boolean to `true`. If ingress is disabled you must use direct port-forwarding to access this application.
+If you wish to disable all ingress to this application you may set the `networkPolicy.ingressDenyAll` boolean to `true`.
+If ingress is disabled you must use direct port-forwarding to access this application.
 
 ## Configuration
 
-Please refer to [values.yaml](https://github.com/kubernetes/dashboard/blob/master/charts/helm-chart/kubernetes-dashboard/values.yaml)
+Please refer
+to [values.yaml](https://github.com/kubernetes/dashboard/blob/master/charts/helm-chart/kubernetes-dashboard/values.yaml)
 for valid values and their defaults.
 
 Specify each parameter using the `--set key=value[,key=value]` argument to `helm install`. For example,
@@ -63,7 +71,8 @@ helm install kubernetes-dashboard/kubernetes-dashboard --name kubernetes-dashboa
   --set=service.externalPort=8080,resources.limits.cpu=200m
 ```
 
-Alternatively, a YAML file that specifies the values for the above parameters can be provided while installing the chart. For example,
+Alternatively, a YAML file that specifies the values for the above parameters can be provided while installing the
+chart. For example,
 
 ```console
 helm install kubernetes-dashboard/kubernetes-dashboard --name kubernetes-dashboard -f values.yaml
@@ -75,7 +84,10 @@ helm install kubernetes-dashboard/kubernetes-dashboard --name kubernetes-dashboa
 
 The chart supports enabling ``PodSecurityPolicy`` for kubernetes 1.24 and prior via a flag in `values.yaml`.
 
-Please be aware `PodSecurityPolicy` is now deprecated and removed from kubernetes 1.25+ onwards. An alternative is to enable ``PodSecurityAdmission`` for the namespace that kubernetes dashboard will be deployed in. To do this add [labels to the namespace](https://kubernetes.io/docs/tasks/configure-pod-container/enforce-standards-namespace-labels). Example below:
+Please be aware `PodSecurityPolicy` is now deprecated and removed from kubernetes 1.25+ onwards. An alternative is to
+enable ``PodSecurityAdmission`` for the namespace that kubernetes dashboard will be deployed in. To do this
+add [labels to the namespace](https://kubernetes.io/docs/tasks/configure-pod-container/enforce-standards-namespace-labels).
+Example below:
 
 ```console
 kubectl label --overwrite ns kubernetes-dashboard pod-security.kubernetes.io/enforce=baseline
@@ -88,7 +100,8 @@ incompatible breaking change needing manual actions.
 
 ### Upgrade from 5.x.x to 6.x.x
 
-- Switch `PodDisruptionBudget` from `policy/v1beta1` to `policy/v1`. Requires kubernetes >= 1.21.0 if `podDisruptionBudget.enabled` is set to true (false by default).
+- Switch `PodDisruptionBudget` from `policy/v1beta1` to `policy/v1`. Requires kubernetes >= 1.21.0
+  if `podDisruptionBudget.enabled` is set to true (false by default).
 
 ### Upgrade from 4.x.x to 5.x.x
 
@@ -100,17 +113,27 @@ incompatible breaking change needing manual actions.
 
 ### Upgrade from 1.x.x to 2.x.x
 
-Version 2.0.0 of this chart is the first version hosted in the kubernetes/dashboard.git repository. v1.x.x until 1.10.1 is hosted on https://github.com/helm/charts.
+Version 2.0.0 of this chart is the first version hosted in the kubernetes/dashboard.git repository. v1.x.x until 1.10.1
+is hosted on https://github.com/helm/charts.
 
-- This version upgrades to kubernetes-dashboard v2.0.0 along with changes in RBAC management: all secrets are explicitely created and ServiceAccount do not have permission to create any secret. On top of that, it completely removes the `clusterAdminRole` parameter, being too dangerous. In order to upgrade, please update your configuration to remove `clusterAdminRole` parameter and uninstall/reinstall the chart.
+- This version upgrades to kubernetes-dashboard v2.0.0 along with changes in RBAC management: all secrets are
+  explicitely created and ServiceAccount do not have permission to create any secret. On top of that, it completely
+  removes the `clusterAdminRole` parameter, being too dangerous. In order to upgrade, please update your configuration
+  to remove `clusterAdminRole` parameter and uninstall/reinstall the chart.
 - It enables by default values for `podAnnotations` and `securityContext`, please disable them if you don't supoprt them
 - It removes `enableSkipLogin` and `enableInsecureLogin` parameters. Please use `extraArgs` instead.
-- It adds a `ProtocolHttp` parameter, allowing you to switch the backend to plain HTTP and replaces the old `enableSkipLogin` for the network part.
-- If `protocolHttp` is not set, it will automatically add to the `Ingress`, if enabled, annotations to support HTTPS backends for nginx-ingress and GKE Ingresses.
-- It updates all the labels to the new [recommended labels](https://github.com/helm/charts/blob/master/REVIEW_GUIDELINES.md#names-and-labels), most of them being immutable.
+- It adds a `ProtocolHttp` parameter, allowing you to switch the backend to plain HTTP and replaces the
+  old `enableSkipLogin` for the network part.
+- If `protocolHttp` is not set, it will automatically add to the `Ingress`, if enabled, annotations to support HTTPS
+  backends for nginx-ingress and GKE Ingresses.
+- It updates all the labels to the
+  new [recommended labels](https://github.com/helm/charts/blob/master/REVIEW_GUIDELINES.md#names-and-labels), most of
+  them being immutable.
 - dashboardContainerSecurityContext has been renamed to containerSecurityContext.
 
-In order to upgrade, please update your configuration to remove `clusterAdminRole` parameter and adapt `enableSkipLogin`, `enableInsecureLogin`, `podAnnotations` and `securityContext` parameters, and uninstall/reinstall the chart.
+In order to upgrade, please update your configuration to remove `clusterAdminRole` parameter and
+adapt `enableSkipLogin`, `enableInsecureLogin`, `podAnnotations` and `securityContext` parameters, and
+uninstall/reinstall the chart.
 
 ### Version 4.x.x
 
@@ -121,7 +144,8 @@ To do that you can follow the [guide](https://helm.sh/blog/migrate-from-helm-v2-
 
 ## Access
 
-For information about how to access, please read the [kubernetes-dashboard manual](https://github.com/kubernetes/dashboard)
+For information about how to access, please read
+the [kubernetes-dashboard manual](https://github.com/kubernetes/dashboard)
 
 ### Using the dashboard with 'kubectl proxy'
 
@@ -129,7 +153,8 @@ When running 'kubectl proxy', the address `localhost:8001/ui` automatically expa
 
 - `http://localhost:8001/api/v1/namespaces/my-namespace/services/https:kubernetes-dashboard:https/proxy/`
 
-For this to reach the dashboard, the name of the service must be 'kubernetes-dashboard', not any other value as set by Helm.
+For this to reach the dashboard, the name of the service must be 'kubernetes-dashboard', not any other value as set by
+Helm.
 You can manually specify this using the value 'fullnameOverride':
 
 ```yaml

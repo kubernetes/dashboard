@@ -50,6 +50,10 @@ deploy: --deploy
 deploy-dev: DOCKERFILE = $(WEB_DIRECTORY)/Dockerfile
 deploy-dev: --deploy-dev
 
+.PHONY: image
+image: DOCKERFILE = $(WEB_DIRECTORY)/Dockerfile
+image: --image
+
 .PHONY: --serve-go
 --serve-go:
 	go run k8s.io/dashboard/web \

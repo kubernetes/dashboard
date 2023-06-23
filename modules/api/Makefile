@@ -68,7 +68,7 @@ serve: $(PRE)
 
 .PHONY: serve-https
 serve-https:
-	AUTO_GENERATE_CERTS=true $(MAKE) serve
+	AUTO_GENERATE_CERTIFICATES=true $(MAKE) serve
 
 .PHONY: test
 test:
@@ -86,6 +86,10 @@ deploy: --deploy
 deploy-dev: DOCKERFILE = $(API_DIRECTORY)/Dockerfile
 deploy-dev: --deploy-dev
 
+.PHONY: image
+image: DOCKERFILE = $(API_DIRECTORY)/Dockerfile
+image: --image
+
 .PHONY: --ensure-dist-exists
 --ensure-dist-exists:
 	@mkdir -p $(API_DIST_DIRECTORY)
@@ -93,6 +97,7 @@ deploy-dev: --deploy-dev
 .PHONY: --codegen-update-run
 --codegen-update-run:
 	@${GOPATH}/bin/client-gen \
+		--go-header-file=$(TOOLS_DIRECTORY)/boilerplate.go.txt \
   	--input-base=$(INPUT_BASE) \
   	--input=$(INPUT) \
   	--clientset-name=$(CLIENTSET_NAME) \

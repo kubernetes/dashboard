@@ -22,6 +22,10 @@
   word-wrap: break-word;
 }
 
+:host {
+  height: calc(100% - 40px);
+}
+
 .kd-logs-element {
   @extend %kd-logs-element-base;
 
@@ -54,5 +58,5 @@ kd-card {
 
 .footer {
   font-size: $body-font-size-base;
-  padding: 0 (2 * $baseline-grid);
+  padding: (.5 * $baseline-grid) (2 * $baseline-grid);
 }

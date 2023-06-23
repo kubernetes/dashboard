@@ -15,27 +15,32 @@ Kubernetes Dashboard is a general purpose, web-based UI for Kubernetes clusters.
 
 **IMPORTANT:** Read the [Access Control](docs/user/access-control/README.md) guide before performing any further steps. The default Dashboard deployment contains a minimal set of RBAC privileges needed to run.
 
-### Install
+## Installation
 
-To deploy Dashboard, execute following command:
+Kubernetes Dashboard supports both Helm and Manifest-based installation. Since release `v3.0.0` using Helm Chart should be faster and simpler in general as it will install
+dependencies such as `cert-manager`, `nginx-ingress-controller` and `metrics-server` for you.
 
-```shell
-kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v2.7.0/aio/deploy/recommended.yaml
-```
+### Helm
 
-Alternatively, you can install Dashboard using Helm as described at [`https://artifacthub.io/packages/helm/k8s-dashboard/kubernetes-dashboard`](https://artifacthub.io/packages/helm/k8s-dashboard/kubernetes-dashboard).
+You can install Dashboard using Helm as described [here](https://artifacthub.io/packages/helm/k8s-dashboard/kubernetes-dashboard).
 
-### Access
+### Manifest
 
-To access Dashboard from your local workstation you must create a secure channel to your Kubernetes cluster. Run the following command:
+[//]: # (Kubernetes Dashboard requires both [cert-manager]&#40;https://cert-manager.io/docs/installation/&#41; and)
 
-```shell
-kubectl proxy
-```
-Now access Dashboard at:
+[//]: # ([nginx-ingress-controller]&#40;https://docs.nginx.com/nginx-ingress-controller/installation/installation-with-manifests/#3-deploy-the-ingress-controller&#41;)
 
-[`http://localhost:8001/api/v1/namespaces/kubernetes-dashboard/services/https:kubernetes-dashboard:/proxy/`](
-http://localhost:8001/api/v1/namespaces/kubernetes-dashboard/services/https:kubernetes-dashboard:/proxy/).
+[//]: # ([metrics-server]&#40;&#41; to be installed in your cluster in order to run. Additionally, if you want metrics and graphs to be available, you need to install)
+
+[//]: # ([metrics-server]&#40;https://github.com/kubernetes-sigs/metrics-server#installation&#41;.)
+
+[//]: # (Please, make sure that they are up and running before installing Kubernetes Dashboard.)
+
+You can install Dashboard using `kubectl` as described in the installation instructions that can be found in the [latest release](https://github.com/kubernetes/dashboard/releases/latest).
+
+## Access
+
+You can access Dashboard as described in the instructions that can be found in the [access guide](docs/user/accessing-dashboard/README.md).
 
 ## Create An Authentication Token (RBAC)
 To find out how to create sample user and log in follow [Creating sample user](docs/user/access-control/creating-sample-user.md) guide.
@@ -66,7 +71,7 @@ You can reach the maintainers of this project at:
 
 ### Contribution
 
-Learn how to start contribution on the [Contributing Guideline](CONTRIBUTING.md).
+Learn how to start contributing to the [Contributing Guideline](CONTRIBUTING.md).
 
 ### Code of conduct
 

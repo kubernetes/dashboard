@@ -12,288 +12,283 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# Default values for kubernetes-dashboard
-# This is a YAML-formatted file.
-# Declare name/value pairs to be passed into your templates.
-# name: value
+# General configuration shared across resources
+app:
+  image:
+    pullPolicy: IfNotPresent
+    pullSecrets: []
+  scaling:
+    # Default number of replicas
+    replicas: 1
+    revisionHistoryLimit: 10
+  scheduling:
+    # Node labels for pod assignment
+    # Ref: https://kubernetes.io/docs/user-guide/node-selection/
+    nodeSelector: {}
+  security:
+    # SecurityContext to be added to pods
+    # To disable set the following configuration to null:
+    # securityContext: null
+    securityContext:
+      seccompProfile:
+        type: RuntimeDefault
+    # ContainerSecurityContext to be added to containers
+    # To disable set the following configuration to null:
+    # containerSecurityContext: null
+    containerSecurityContext:
+      allowPrivilegeEscalation: false
+      readOnlyRootFilesystem: true
+      runAsUser: 1001
+      runAsGroup: 2001
+    # Pod Disruption Budget configuration
+    # Ref: https://kubernetes.io/docs/tasks/run-application/configure-pdb/
+    podDisruptionBudget:
+      enabled: false
+      minAvailable: 0
+      maxUnavailable: 0
+    networkPolicy:
+      enabled: false
+      ingressDenyAll: false
+  # Common labels & annotations shared across all deployed resources
+  labels: {}
+  annotations: {}
+  settings:
+    ## Global dashboard settings
+    ## Note: Use all or none. Dashboard does not support default value merging currently.
+    global:
+    #  # Cluster name that appears in the browser window title if it is set
+    #  clusterName: ""
+    #  # Max number of items that can be displayed on each list page
+    #  itemsPerPage: 10
+    #  # Number of seconds between every auto-refresh of logs
+    #  logsAutoRefreshTimeInterval: 5
+    #  # Number of seconds between every auto-refresh of every resource. Set 0 to disable
+    #  resourceAutoRefreshTimeInterval: 5
+    #  # Hide all access denied warnings in the notification panel
+    #  disableAccessDeniedNotifications: false
+    ## Pinned CRDs that will be displayed in dashboard's menu
+    pinnedCRDs: []
+    # - kind: customresourcedefinition
+    #  #  Fully qualified name of a CRD
+    #  name: prometheus.monitoring.coreos.com
+    #  #  Display name
+    #  displayName: Prometheus
+    #  #  Is this CRD namespaced?
+    #  namespaced: true
+  ingress:
+    host: localhost
+    ingressClassName: nginx
+    secretName: kubernetes-dashboard-certs
+    issuer: selfsigned
+    paths:
+      web: /
+      api: /api
+  # Use the following toleration if Dashboard can be deployed on a tainted control-plane nodes
+  # - key: node-role.kubernetes.io/control-plane
+  #   effect: NoSchedule
+  tolerations: []
 
-image:
-  ## Repository for container
-  repository: kubernetesui/dashboard
-  tag: ""  # If not defined, uses appVersion of Chart.yaml
-  pullPolicy: IfNotPresent
-  pullSecrets: []
-
-## Number of replicas
-replicaCount: 1
-
-## @param commonLabels Labels to add to all deployed objects
-##
-commonLabels: {}
-## @param commonAnnotations Annotations to add to all deployed objects
-##
-commonAnnotations: {}
-
-## Here annotations can be added to the kubernetes dashboard deployment
-annotations: {}
-## Here labels can be added to the kubernetes dashboard deployment
-labels: {}
-
-## Additional container arguments
-##
-# extraArgs:
-#   - --enable-skip-login
-#   - --enable-insecure-login
-#   - --system-banner="Welcome to Kubernetes"
-
-## Additional container environment variables
-##
-extraEnv: []
-# - name: SOME_VAR
-#   value: 'some value'
-
-## Additional volumes to be added to kubernetes dashboard pods
-##
-extraVolumes: []
-# - name: dashboard-kubeconfig
-#   secret:
-#     defaultMode: 420
-#     secretName: dashboard-kubeconfig
-
-## Additional volumeMounts to be added to kubernetes dashboard container
-##
-extraVolumeMounts: []
-# - mountPath: /kubeconfig
-#   name: dashboard-kubeconfig
-#   readOnly: true
-
-## Array of extra K8s manifests to deploy
-##
-extraManifests: []
-# - apiVersion: v1
-#   kind: ConfigMap
-#   metadata:
-#     name: additional-configmap
-#   data:
-#     mykey: myvalue
-
-## Annotations to be added to kubernetes dashboard pods
-# podAnnotations:
-
-## SecurityContext to be added to kubernetes dashboard pods
-## To disable set the following configuration to null:
-# securityContext: null
-securityContext:
-  runAsNonRoot: true
-  seccompProfile:
-    type: RuntimeDefault
-
-## SecurityContext defaults for the kubernetes dashboard container and metrics scraper container
-## To disable set the following configuration to null:
-# containerSecurityContext: null
-containerSecurityContext:
-  allowPrivilegeEscalation: false
-  readOnlyRootFilesystem: true
-  runAsUser: 1001
-  runAsGroup: 2001
-  capabilities:
-    drop: ["ALL"]
-
-## @param podLabels Extra labels for OAuth2 Proxy pods
-## ref: https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/
-##
-podLabels: {}
-## @param podAnnotations Annotations for OAuth2 Proxy pods
-## ref: https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/
-##
-podAnnotations: {}
-
-## Node labels for pod assignment
-## Ref: https://kubernetes.io/docs/user-guide/node-selection/
-##
-nodeSelector: {}
-
-## List of node taints to tolerate (requires Kubernetes >= 1.6)
-tolerations: []
-#  - key: "key"
-#    operator: "Equal|Exists"
-#    value: "value"
-#    effect: "NoSchedule|PreferNoSchedule|NoExecute"
-
-## Affinity for pod assignment
-## ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity
-affinity: {}
-
-## Name of Priority Class of pods
-# priorityClassName: ""
-
-## Pod resource requests & limits
-resources:
-  requests:
-    cpu: 100m
-    memory: 200Mi
-  limits:
-    cpu: 2
-    memory: 200Mi
-
-## Serve application over HTTP without TLS
-##
-## Note: If set to true, you may want to add --enable-insecure-login to extraArgs
-protocolHttp: false
-
-service:
-  type: ClusterIP
-  # Dashboard service port
-  externalPort: 443
-
-  ## LoadBalancerSourcesRange is a list of allowed CIDR values, which are combined with ServicePort to
-  ## set allowed inbound rules on the security group assigned to the control plane load balancer
-  # loadBalancerSourceRanges: []
-
-  # clusterIP: ""
-
-  ## A user-specified IP address for load balancer to use as External IP (if supported)
-  # loadBalancerIP:
-
-  ## Additional Kubernetes Dashboard Service annotations
+# API deployment configuration
+api:
+  role: api
+  image:
+    repository: docker.io/kubernetesui/dashboard-api
+    tag: v1.0.0
+  containers:
+    ports:
+      - name: api
+        containerPort: 9000
+        protocol: TCP
+    # Additional container arguments
+    # Full list of arguments: https://github.com/kubernetes/dashboard/blob/master/docs/common/arguments.md
+    # args:
+    # - --system-banner="Welcome to the Kubernetes Dashboard"
+    args: []
+    # Additional container environment variables
+    # env:
+    # - name: SOME_VAR
+    #   value: 'some value'
+    env: []
+    # Additional volume mounts
+    # - mountPath: /kubeconfig
+    #   name: dashboard-kubeconfig
+    #   readOnly: true
+    volumeMounts:
+      # Create volume mount to store exec logs (required)
+      - mountPath: /tmp
+        name: tmp-volume
+    # TODO: Validate configuration
+    resources:
+      requests:
+        cpu: 100m
+        memory: 200Mi
+      limits:
+        cpu: 250m
+        memory: 400Mi
+  # Additional volumes
+  # - name: dashboard-kubeconfig
+  #   secret:
+  #     defaultMode: 420
+  #     secretName: dashboard-kubeconfig
+  volumes:
+    # Create on-disk volume to store exec logs (required)
+    - name: tmp-volume
+      emptyDir: {}
+  nodeSelector: {}
+  # Labels & annotations shared between API related resources
+  labels: {}
   annotations: {}
 
-  ## Here labels can be added to the Kubernetes Dashboard service
-  labels: {}
-
-  ## Enable or disable the kubernetes.io/cluster-service label. Should be disabled for GKE clusters >=1.15.
-  ## Otherwise, the addon manager will presume ownership of the service and try to delete it.
-  clusterServiceLabel:
-    enabled: true
-    key: "kubernetes.io/cluster-service"
-
-ingress:
-  ## If true, Kubernetes Dashboard Ingress will be created.
-  ##
-  enabled: false
-
-  ## Kubernetes Dashboard Ingress labels
-  # labels:
-  #   key: value
-
-  ## Kubernetes Dashboard Ingress annotations
-  # annotations:
-  #   kubernetes.io/ingress.class: nginx
-  #   kubernetes.io/tls-acme: 'true'
-
-  ## If you plan to use TLS backend with enableInsecureLogin set to false
-  ## (default), you need to uncomment the below.
-  ## If you use ingress-nginx < 0.21.0
-  #   nginx.ingress.kubernetes.io/secure-backends: "true"
-  ## if you use ingress-nginx >= 0.21.0
-  #   nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
-
-  ## Kubernetes Dashboard Ingress Class
-  # className: "example-lb"
-
-  ## Kubernetes Dashboard Ingress paths
-  ## Both `/` and `/*` are required to work on gce ingress.
-  paths:
-    - /
-  #  - /*
-
-  ## Custom Kubernetes Dashboard Ingress paths. Will override default paths.
-  ##
-  customPaths: []
-  #  - pathType: ImplementationSpecific
-  #    backend:
-  #      service:
-  #        name: ssl-redirect
-  #        port:
-  #          name: use-annotation
-  #  - pathType: ImplementationSpecific
-  #    backend:
-  #      service:
-  #        name: >-
-  #          {{ include "kubernetes-dashboard.fullname" . }}
-  #        port:
-  #          # Don't use string here, use only integer value!
-  #          number: 443
-  ## Kubernetes Dashboard Ingress hostnames
-  ## Must be provided if Ingress is enabled
-  ##
-  # hosts:
-  #   - kubernetes-dashboard.domain.com
-  ## Kubernetes Dashboard Ingress TLS configuration
-  ## Secrets must be manually created in the namespace
-  ##
-  # tls:
-  #   - secretName: kubernetes-dashboard-tls
-  #     hosts:
-  #       - kubernetes-dashboard.domain.com
-
-# Global dashboard settings
-settings:
-  {}
-  ## Cluster name that appears in the browser window title if it is set
-  # clusterName: ""
-  ## Max number of items that can be displayed on each list page
-  # itemsPerPage: 10
-  ## Number of seconds between every auto-refresh of logs
-  # logsAutoRefreshTimeInterval: 5
-  ## Number of seconds between every auto-refresh of every resource. Set 0 to disable
-  # resourceAutoRefreshTimeInterval: 5
-  ## Hide all access denied warnings in the notification panel
-  # disableAccessDeniedNotifications: false
-
-## Pinned CRDs that will be displayed in dashboard's menu
-pinnedCRDs:
-  []
-  # - kind: customresourcedefinition
-  ##  Fully qualified name of a CRD
-  #   name: prometheuses.monitoring.coreos.com
-  ##  Display name
-  #   displayName: Prometheus
-  ##  Is this CRD namespaced?
-  #   namespaced: true
-
-## Metrics Scraper
-## Container to scrape, store, and retrieve a window of time from the Metrics Server.
-## refs: https://github.com/kubernetes-sigs/dashboard-metrics-scraper
-metricsScraper:
-  ## Wether to enable dashboard-metrics-scraper
-  enabled: false
+# WEB UI deployment configuration
+web:
+  role: web
   image:
-    repository: kubernetesui/metrics-scraper
-    tag: v1.0.9
-  resources: {}
-  ## SecurityContext especially for the kubernetes dashboard metrics scraper container
-  ## If not set, the global containterSecurityContext values will define these values
-  # containerSecurityContext:
-  #   allowPrivilegeEscalation: false
-  #   readOnlyRootFilesystem: true
-  #   runAsUser: 1001
-  #   runAsGroup: 2001
-#  args:
-#    - --log-level=info
-#    - --logtostderr=true
+    repository: docker.io/kubernetesui/dashboard-web
+    tag: v1.0.0
+  containers:
+    ports:
+      - name: web
+        containerPort: 8000
+        protocol: TCP
+    # Additional container arguments
+    # Full list of arguments: https://github.com/kubernetes/dashboard/blob/master/docs/common/arguments.md
+    # args:
+    # - --system-banner="Welcome to the Kubernetes Dashboard"
+    args: []
+    # Additional container environment variables
+    # env:
+    # - name: SOME_VAR
+    #   value: 'some value'
+    env: []
+    # Additional volume mounts
+    # - mountPath: /kubeconfig
+    #   name: dashboard-kubeconfig
+    #   readOnly: true
+    volumeMounts:
+      # Create volume mount to store logs (required)
+      - mountPath: /tmp
+        name: tmp-volume
+    # TODO: Validate configuration
+    resources:
+      requests:
+        cpu: 100m
+        memory: 200Mi
+      limits:
+        cpu: 250m
+        memory: 400Mi
+  # Additional volumes
+  # - name: dashboard-kubeconfig
+  #   secret:
+  #     defaultMode: 420
+  #     secretName: dashboard-kubeconfig
+  volumes:
+    # Create on-disk volume to store exec logs (required)
+    - name: tmp-volume
+      emptyDir: {}
+  nodeSelector:
+    # TODO: check if it's really needed since we offer cross platform images for darwin/windows/linux
+    kubernetes.io/os: linux
+  # Labels & annotations shared between WEB UI related resources
+  labels: {}
+  annotations: {}
 
-## Optional Metrics Server sub-chart
+### Metrics Scraper
+### Container to scrape, store, and retrieve a window of time from the Metrics Server.
+### refs: https://github.com/kubernetes-sigs/dashboard-metrics-scraper
+metricsScraper:
+  enabled: true
+  role: metrics-scraper
+  image:
+    repository: docker.io/kubernetesui/metrics-scraper
+    tag: v1.0.9
+  containers:
+    ports:
+      - containerPort: 8000
+        protocol: TCP
+    args: []
+    # Additional container environment variables
+    # env:
+    # - name: SOME_VAR
+    #   value: 'some value'
+    env: []
+    # Additional volume mounts
+    # - mountPath: /kubeconfig
+    #   name: dashboard-kubeconfig
+    #   readOnly: true
+    volumeMounts:
+      # Create volume mount to store logs (required)
+      - mountPath: /tmp
+        name: tmp-volume
+    # TODO: Validate configuration
+    resources:
+      requests:
+        cpu: 100m
+        memory: 200Mi
+      limits:
+        cpu: 250m
+        memory: 400Mi
+    livenessProbe:
+      httpGet:
+        scheme: HTTP
+        path: /
+        port: 8000
+      initialDelaySeconds: 30
+      timeoutSeconds: 30
+  # Additional volumes
+  # - name: dashboard-kubeconfig
+  #   secret:
+  #     defaultMode: 420
+  #     secretName: dashboard-kubeconfig
+  volumes:
+    # Create on-disk volume to store exec logs (required)
+    - name: tmp-volume
+      emptyDir: {}
+  nodeSelector:
+    # TODO: check if it's really needed since we offer cross platform images for darwin/windows/linux
+    kubernetes.io/os: linux
+  # Labels & annotations shared between WEB UI related resources
+  labels: {}
+  annotations: {}
+
+
+## Optional Metrics Server sub-chart configuration
 ## Enable this if you don't already have metrics-server enabled on your cluster and
 ## want to use it with dashboard metrics-scraper
 ## refs:
 ##  - https://github.com/kubernetes-sigs/metrics-server
 ##  - https://github.com/kubernetes-sigs/metrics-server/tree/master/charts/metrics-server
 metrics-server:
-  enabled: false
-  ## Example for additional args
-  # args:
-  #  - --kubelet-preferred-address-types=InternalIP
-  #  - --kubelet-insecure-tls
+  enabled: true
+  args:
+    - --kubelet-preferred-address-types=InternalIP
+    - --kubelet-insecure-tls
 
-rbac:
-  # Specifies whether namespaced RBAC resources (Role, Rolebinding) should be created
-  create: true
+## Optional Cert Manager sub-chart configuration
+## Enable this if you don't already have cert-manager enabled on your cluster.
+cert-manager:
+  enabled: true
+  installCRDs: true
 
-  # Specifies whether cluster-wide RBAC resources (ClusterRole, ClusterRolebinding) to access metrics should be created
-  # Independent from rbac.create parameter.
-  clusterRoleMetrics: true
+## Optional Nginx Ingress sub-chart configuration
+## Enable this if you don't already have nginx-ingress enabled on your cluster.
+nginx:
+  enabled: true
 
+## Extra configurations:
+## - manifests
+## - predefined roles
+## - prometheus
+## - etc...
+extras:
+  # Extra Kubernetes manifests to be deployed
+  # manifests:
+  # - apiVersion: v1
+  #   kind: ConfigMap
+  #   metadata:
+  #     name: additional-configmap
+  #   data:
+  #     mykey: myvalue
+  manifests: []
   # Start in ReadOnly mode.
   # Specifies whether cluster-wide RBAC resources (ClusterRole, ClusterRolebinding) with read only permissions to all resources listed inside the cluster should be created
   # Only dashboard-related Secrets and ConfigMaps will still be available for writing.
@@ -303,85 +298,16 @@ rbac:
   # to avoid accidental changes in the cluster outside the standard CI/CD.
   #
   # It is NOT RECOMMENDED to use this version in production.
-  # Instead you should review the role and remove all potentially sensitive parts such as
+  # Instead, you should review the role and remove all potentially sensitive parts such as
   # access to persistentvolumes, pods/log etc.
-  #
-  # Independent from rbac.create parameter.
   clusterReadOnlyRole: false
   # It is possible to add additional rules if read only role is enabled.
   # This can be useful, for example, to show CRD resources.
-  # clusterReadOnlyRoleAdditionalRules: []
-
-  # If the default role permissions are not enough, it is possible to add additional permissions.
-  # roleAdditionalRules: []
-
-serviceAccount:
-  # Specifies whether a service account should be created
-  create: true
-  # The name of the service account to use.
-  # If not set and create is true, a name is generated using the fullname template
-  name:
-
-livenessProbe:
-  # Number of seconds to wait before sending first probe
-  initialDelaySeconds: 30
-  # Number of seconds to wait for probe response
-  timeoutSeconds: 30
-
-readinessProbe:
-  enabled: true
-  # Number of seconds to wait before sending first probe
-  initialDelaySeconds: 30
-  # Number of seconds to wait for probe response
-  timeoutSeconds: 30
-
-## podDisruptionBudget
-## ref: https://kubernetes.io/docs/tasks/run-application/configure-pdb/
-podDisruptionBudget:
-  enabled: false
-  ## Minimum available instances; ignored if there is no PodDisruptionBudget
-  minAvailable:
-  ## Maximum unavailable instances; ignored if there is no PodDisruptionBudget
-  maxUnavailable:
-
-## PodSecurityContext for pod level securityContext
-# securityContext:
-#   runAsUser: 1001
-#   runAsGroup: 2001
-
-networkPolicy:
-  # Whether to create a network policy that allows/restricts access to the service
-  enabled: false
-
-  # Whether to set network policy to deny all ingress traffic for the kubernetes-dashboard
-  ingressDenyAll: false
-
-## podSecurityPolicy for fine-grained authorization of pod creation and updates
-## Note that PSP is deprecated and has been removed from kubernetes 1.25 onwards.
-## For 1.25+ consider enabling PodSecurityAdmission, refer to chart README.md.
-podSecurityPolicy:
-  # Specifies whether a pod security policy should be created
-  enabled: false
-
-serviceMonitor:
-  # Whether or not to create a Prometheus Operator service monitor.
-  enabled: false
-  ## Here labels can be added to the serviceMonitor
-  labels: {}
-  ## Here annotations can be added to the serviceMonitor
-  annotations: {}
-  endpoints:
-    # -- ServiceMonitor relabel configs to apply to samples before scraping
-    ## Ref: https://github.com/prometheus-operator/prometheus-operator/blob/master/Documentation/api.md#relabelconfig
-    relabelings: []
-    # -- ServiceMonitor metric relabel configs to apply to samples before ingestion
-    ## Ref: https://github.com/prometheus-operator/prometheus-operator/blob/main/Documentation/api.md#endpoint
-    metricRelabelings: []
-  # -- ServiceMonitor will add labels from the service to the Prometheus metric
-  ## Ref: https://github.com/prometheus-operator/prometheus-operator/blob/main/Documentation/api.md#servicemonitorspec
-  targetLabels: []
-
-## Optional containers, i.e. for auth addons.
-optionalContainers:
-  enabled: false
-  containers: []
+  clusterReadOnlyRoleAdditionalRules: []
+  serviceMonitor:
+    # Whether to create a Prometheus Operator service monitor.
+    enabled: false
+    # Here labels can be added to the serviceMonitor
+    labels: {}
+    # Here annotations can be added to the serviceMonitor
+    annotations: {}

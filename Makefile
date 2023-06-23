@@ -38,7 +38,7 @@ fix-license: $(PRE) ## Adds missing license header to repo files
 #
 # Note: Make sure that the port 8080 is free on your localhost
 .PHONY: serve
-serve: $(PRE) ## Starts development version of the application on: http://localhost:8080
+serve: $(PRE) ## Starts development version of the application on http://localhost:8080
 	@$(MAKE) --no-print-directory -C $(MODULES_DIRECTORY) TARGET=serve
 
 # Starts development version of the application with HTTPS enabled.
@@ -48,7 +48,7 @@ serve: $(PRE) ## Starts development version of the application on: http://localh
 # Note: Make sure that the port 8080 is free on your localhost
 # Note #2: Does not work with "kind".
 .PHONY: serve-https
-serve-https: $(PRE) ## Starts development version of the application with HTTPS enabled on: https://localhost:8080
+serve-https: $(PRE) ## Starts development version of the application with HTTPS enabled on https://localhost:8080
 	@$(MAKE) --no-print-directory -C $(MODULES_DIRECTORY) TARGET=serve-https
 
 # Starts production version of the application.
@@ -59,7 +59,7 @@ serve-https: $(PRE) ## Starts development version of the application with HTTPS 
 # Note #2: Does not work with "kind".
 # Note #3: Darwin doesn't work at the moment, so we are using Linux by default.
 .PHONY: run
-run: $(PRE) --ensure-linux --ensure-compose-down --compose ## Starts production version of the application on https://localhost:4443
+run: $(PRE) --ensure-compose-down --compose ## Starts production version of the application on https://localhost:4443
 	@KUBECONFIG=$(KUBECONFIG) \
 	SYSTEM_BANNER=$(SYSTEM_BANNER) \
 	SYSTEM_BANNER_SEVERITY=$(SYSTEM_BANNER_SEVERITY) \
@@ -86,6 +86,10 @@ deploy: build-cross ## Builds and deploys all module containers to the configure
 deploy-dev: build-cross ## Builds and deploys all module containers to the configured dev registries
 	@$(MAKE) --no-print-directory -C $(MODULES_DIRECTORY) TARGET=deploy-dev
 
+.PHONY: image
+image: build ## Builds containers targeting host architecture
+	@$(MAKE) --no-print-directory -C $(MODULES_DIRECTORY) TARGET=image
+
 .PHONY: --compose
 --compose: --ensure-certificates build
 	@KUBECONFIG=$(KUBECONFIG) \
@@ -97,10 +101,6 @@ deploy-dev: build-cross ## Builds and deploys all module containers to the confi
 	ARCH=$(ARCH) \
 	OS=$(OS) \
 	docker compose -f $(DOCKER_COMPOSE_PATH) --project-name=$(PROJECT_NAME) build
-
-.PHONY: --ensure-linux
---ensure-linux:
-	export OS=linux
 
 .PHONY: --ensure-tools
 --ensure-tools:
@@ -121,5 +121,3 @@ deploy-dev: build-cross ## Builds and deploys all module containers to the confi
 .PHONY: --ensure-certificates
 --ensure-certificates:
 	@$(MAKE) --no-print-directory -C $(GATEWAY_DIRECTORY) generate-certificates
-
-

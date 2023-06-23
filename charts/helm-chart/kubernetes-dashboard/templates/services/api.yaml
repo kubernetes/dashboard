@@ -1,0 +1,32 @@
+# Copyright 2017 The Kubernetes Authors.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+kind: Service
+apiVersion: v1
+metadata:
+  labels:
+    {{- include "kubernetes-dashboard.labels" . | nindent 4 }}
+    app.kubernetes.io/name: {{ template "kubernetes-dashboard.name" . }}-{{ .Values.api.role }}
+    app.kubernetes.io/version: {{ .Values.api.image.tag }}
+    app.kubernetes.io/component: {{ .Values.api.role }}
+  name: {{ template "kubernetes-dashboard.fullname" . }}-{{ .Values.api.role }}
+spec:
+  ports:
+    - name: {{ .Values.api.role }}
+    {{- with (index .Values.api.containers.ports 0) }}
+      port: {{ .containerPort }}
+    {{- end }}
+  selector:
+    {{- include "kubernetes-dashboard.matchLabels" . | nindent 4 }}
+    app.kubernetes.io/name: {{ template "kubernetes-dashboard.name" . }}-{{ .Values.api.role }}

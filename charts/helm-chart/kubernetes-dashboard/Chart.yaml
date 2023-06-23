@@ -14,8 +14,8 @@
 
 apiVersion: v2
 name: kubernetes-dashboard
-version: 6.2.0
-appVersion: "v2.7.0"
+version: 7.0.0
+appVersion: "v3.0.0"
 description: General-purpose web UI for Kubernetes clusters
 keywords:
   - kubernetes
@@ -26,9 +26,20 @@ sources:
 maintainers:
   - name: desaintmartin
     email: cdesaintmartin@wiremind.fr
+  - name: floreks
+    email: s.florek91@gmail.com
 icon: https://raw.githubusercontent.com/kubernetes/kubernetes/master/logo/logo.svg
-kubeVersion: ">=1.19.0-0"
+kubeVersion: ">=1.21.0-0"
 dependencies:
+  - name: nginx-ingress
+    alias: nginx
+    version: 0.17.1
+    repository: https://helm.nginx.com/stable
+    condition: nginx-ingress.enabled
+  - name: cert-manager
+    version: v1.11.2
+    repository: https://charts.jetstack.io
+    condition: cert-manager.enabled
   - name: metrics-server
     version: 3.8.4
     repository: https://kubernetes-sigs.github.io/metrics-server/
