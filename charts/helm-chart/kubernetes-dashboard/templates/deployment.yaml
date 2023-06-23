@@ -114,6 +114,22 @@ spec:
 {{- end }}
           initialDelaySeconds: {{ .Values.livenessProbe.initialDelaySeconds }}
           timeoutSeconds: {{ .Values.livenessProbe.timeoutSeconds }}
+{{- if .Values.readinessProbe.enabled }}
+        readinessProbe:
+          httpGet:
+{{- if .Values.protocolHttp }}
+            scheme: HTTP
+            path: /
+            port: 9090
+{{- else }}
+            scheme: HTTPS
+            path: /
+            port: 8443
+{{- end }}
+          initialDelaySeconds: {{ .Values.readinessProbe.initialDelaySeconds }}
+          timeoutSeconds: {{ .Values.readinessProbe.timeoutSeconds }}
+{{- end }}
+
 {{- with .Values.resources }}
         resources:
 {{ toYaml . | nindent 10 }}
@@ -140,6 +156,16 @@ spec:
             port: 8000
           initialDelaySeconds: {{ .Values.livenessProbe.initialDelaySeconds }}
           timeoutSeconds: {{ .Values.livenessProbe.timeoutSeconds }}
+{{- if .Values.readinessProbe.enabled }}
+        readinessProbe:
+          httpGet:
+            scheme: HTTP
+            path: /
+            port: 8000
+          initialDelaySeconds: {{ .Values.readinessProbe.initialDelaySeconds }}
+          timeoutSeconds: {{ .Values.readinessProbe.timeoutSeconds }}
+{{- end }}
+
         volumeMounts:
         - mountPath: /tmp
           name: tmp-volume
