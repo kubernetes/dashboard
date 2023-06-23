@@ -18,6 +18,10 @@ runs:
         check-latest: true
         cache-dependency-path: modules/api/go.sum
 
+    - name: Set up GOPATH
+      shell: bash
+      run: export GOPATH=$(go env GOPATH)
+
     - name: Install API dependencies
       if: ${{ inputs.api }}
       working-directory: modules/api

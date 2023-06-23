@@ -53,10 +53,7 @@ jobs:
           make install
 
       - name: Verify codegen
-        run: |
-          export GOPATH=$(go env GOPATH)
-          export PATH=$PATH:$GOPATH/bin
-          make codegen-verify
+        run: make codegen-verify
 
       - name: Lint
         uses: golangci/golangci-lint-action@v3
