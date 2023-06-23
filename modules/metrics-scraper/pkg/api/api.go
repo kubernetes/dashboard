@@ -20,9 +20,9 @@ import (
 	"net/http"
 
 	"github.com/gorilla/mux"
-	dashboardProvider "github.com/kubernetes-sigs/dashboard-metrics-scraper/pkg/api/dashboard"
 	_ "github.com/mattn/go-sqlite3"
 	log "github.com/sirupsen/logrus"
+	dashboardProvider "k8s.io/dashboard/metrics-scraper/pkg/api/dashboard"
 )
 
 // Manager provides a handler for all api calls

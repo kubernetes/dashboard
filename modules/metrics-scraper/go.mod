@@ -5,7 +5,6 @@ go 1.20
 require (
 	github.com/gorilla/handlers v1.5.1
 	github.com/gorilla/mux v1.8.0
-	github.com/kubernetes-sigs/dashboard-metrics-scraper v1.0.9
 	github.com/mattn/go-sqlite3 v1.14.17
 	github.com/onsi/ginkgo v1.14.0
 	github.com/onsi/gomega v1.27.4
