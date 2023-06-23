@@ -16,8 +16,8 @@ name: CI / Helm
 on:
   pull_request:
     paths:
-      - "charts/helm-chart/**"
-      - ".github/workflows/ci-helm.yml"
+    - 'charts/helm-chart/**'
+    - '.github/workflows/ci-helm.yml'
 permissions:
   contents: read
 jobs:
@@ -50,7 +50,7 @@ jobs:
 
       - uses: helm/kind-action@v1.7.0
         with:
-          node_image: kindest/node:v1.27.2
+          node_image: kindest/node:v1.27.3
 
       - run: kubectl apply --server-side -f https://raw.githubusercontent.com/prometheus-operator/prometheus-operator/v0.54.0/example/prometheus-operator-crd/monitoring.coreos.com_servicemonitors.yaml
 

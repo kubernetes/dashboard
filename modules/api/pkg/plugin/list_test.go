@@ -23,7 +23,6 @@ import (
 	"github.com/emicklei/go-restful/v3"
 	coreV1 "k8s.io/api/core/v1"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
-	v1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 
 	"k8s.io/dashboard/api/pkg/plugin/apis/v1alpha1"
 	fakePluginClientset "k8s.io/dashboard/api/pkg/plugin/client/clientset/fake"
@@ -39,7 +38,7 @@ func TestGetPluginList(t *testing.T) {
 	pcs := fakePluginClientset.NewSimpleClientset()
 
 	_, _ = pcs.DashboardV1alpha1().Plugins(ns).Create(context.TODO(), &v1alpha1.Plugin{
-		ObjectMeta: v1.ObjectMeta{Name: pluginName, Namespace: ns},
+		ObjectMeta: metaV1.ObjectMeta{Name: pluginName, Namespace: ns},
 		Spec: v1alpha1.PluginSpec{
 			Source: v1alpha1.Source{
 				ConfigMapRef: &coreV1.ConfigMapEnvSource{
@@ -76,7 +75,7 @@ func Test_handlePluginList(t *testing.T) {
 
 	pcs, _ := h.cManager.PluginClient(nil)
 	_, _ = pcs.DashboardV1alpha1().Plugins(ns).Create(context.TODO(), &v1alpha1.Plugin{
-		ObjectMeta: v1.ObjectMeta{Name: pluginName, Namespace: ns},
+		ObjectMeta: metaV1.ObjectMeta{Name: pluginName, Namespace: ns},
 		Spec: v1alpha1.PluginSpec{
 			Source: v1alpha1.Source{
 				ConfigMapRef: &coreV1.ConfigMapEnvSource{

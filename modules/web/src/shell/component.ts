@@ -147,7 +147,6 @@ export class ShellComponent implements AfterViewInit, OnDestroy {
     this.term = new Terminal({
       fontSize: 14,
       fontFamily: 'Consolas, "Courier New", monospace',
-      bellStyle: 'sound',
       cursorBlink: true,
     });
 

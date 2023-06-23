@@ -1,10 +1,11 @@
+#!/usr/bin/env bash
 # Copyright 2017 The Kubernetes Authors.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
 # You may obtain a copy of the License at
 #
-# http://www.apache.org/licenses/LICENSE-2.0
+#     http://www.apache.org/licenses/LICENSE-2.0
 #
 # Unless required by applicable law or agreed to in writing, software
 # distributed under the License is distributed on an "AS IS" BASIS,
@@ -12,28 +13,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# A manifest that creates test plugin resources.
+if [ -z "${DEPENDABOT_HOME}" ]; then
+  # TODO: if dependabot will support yarn postinstall properly,
+  #       move following line into .yarnrc.yml.
+  npx ngcc && node ./hack/version.mjs && cd ../../ && npx husky install modules/web/.husky
+  exit $?
+fi
 
-apiVersion: dashboard.k8s.io/v1alpha1
-kind: Plugin
-metadata:
-  name: k8s-plugin
-spec:
-  source:
-    configMapRef:
-      name: k8s-plugin-src
-    filename: k8s-plugin.js
-
----
-
-apiVersion: dashboard.k8s.io/v1alpha1
-kind: Plugin
-metadata:
-  name: plugin1
-spec:
-  source:
-    configMapRef:
-      name: plugin1-src
-    filename: plugin1.js
-  dependencies:
-    - "k8s-plugin"
+exit 0
