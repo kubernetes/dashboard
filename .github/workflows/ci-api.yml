@@ -48,6 +48,9 @@ jobs:
           check-latest: true
           cache-dependency-path: modules/api/go.sum
 
+      - name: Add Go to PATH
+        run: export PATH=$PATH:$GOPATH/bin
+
       - name: Install API dependencies
         working-directory: modules/api
         run: go mod download
@@ -82,6 +85,9 @@ jobs:
           go-version-file: modules/api/go.mod
           check-latest: true
           cache-dependency-path: modules/api/go.sum
+
+      - name: Add Go to PATH
+        run: export PATH=$PATH:$GOPATH/bin
 
       - name: Install API dependencies
         working-directory: modules/api

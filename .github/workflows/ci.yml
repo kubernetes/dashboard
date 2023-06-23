@@ -27,8 +27,6 @@ on:
 permissions:
   contents: read
 env:
-  GOPATH: /home/runner/go/
-  GOPROXY: https://proxy.golang.org
   NG_CLI_ANALYTICS: ci
   NODE_OPTIONS: "--max-old-space-size=8192"
   TERM: xterm
@@ -108,6 +106,9 @@ jobs:
           go-version-file: modules/api/go.mod
           check-latest: true
           cache-dependency-path: modules/api/go.sum
+
+      - name: Add Go to PATH
+        run: export PATH=$PATH:$GOPATH/bin
 
       - name: Install API dependencies
         working-directory: modules/api
