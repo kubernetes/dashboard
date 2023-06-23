@@ -20,13 +20,14 @@ on:
     branches: [master]
 permissions:
   contents: read
+env:
+  NG_CLI_ANALYTICS: ci
+  NODE_OPTIONS: "--max-old-space-size=8192"
+  TERM: xterm
 jobs:
   check:
-    name: Static Check
+    name: Static check
     runs-on: ubuntu-latest
-    env:
-      NG_CLI_ANALYTICS: ci
-      NODE_OPTIONS: "--max-old-space-size=8192"
     defaults:
       run:
         working-directory: modules/web
@@ -36,21 +37,21 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Setup
-        uses: ./.github/actions/setup
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
         with:
-          web: true
+          node-version: 18.14.0
 
-      - name: Run checks
+      - name: Install web dependencies
+        working-directory: modules/web
+        run: yarn
+
+      - name: Check
         run: yarn check
 
   unit:
     name: Unit tests with coverage
     runs-on: ubuntu-latest
-    env:
-      NG_CLI_ANALYTICS: ci
-      NODE_OPTIONS: "--max-old-space-size=8192"
-      TERM: xterm
     defaults:
       run:
         working-directory: modules/web
@@ -60,10 +61,14 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Setup
-        uses: ./.github/actions/setup
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
         with:
-          web: true
+          node-version: 18.14.0
+
+      - name: Install web dependencies
+        working-directory: modules/web
+        run: yarn
 
       - name: Test
         run: yarn coverage

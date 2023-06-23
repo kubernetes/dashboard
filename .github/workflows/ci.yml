@@ -26,6 +26,10 @@ on:
     - cron: "0 0 * * 1"
 permissions:
   contents: read
+env:
+  NG_CLI_ANALYTICS: ci
+  NODE_OPTIONS: "--max-old-space-size=8192"
+  TERM: xterm
 jobs:
   license-check:
     name: License check
@@ -87,10 +91,6 @@ jobs:
   e2e:
     name: End-to-end tests
     runs-on: ubuntu-latest
-    env:
-      NG_CLI_ANALYTICS: ci
-      GOPROXY: "https://proxy.golang.org"
-      NODE_OPTIONS: "--max-old-space-size=8192"
     steps:
       - name: Check out repository
         uses: actions/checkout@v3
@@ -100,21 +100,32 @@ jobs:
       - name: Start kind cluster
         uses: helm/kind-action@v1.7.0
 
-      - name: Setup
-        uses: ./.github/actions/setup
+      - name: Set up Go
+        uses: actions/setup-go@v4
         with:
-          api: true
-          web: true
+          go-version-file: modules/api/go.mod
+          check-latest: true
+          cache-dependency-path: modules/api/go.sum
+
+      - name: Add Go to PATH
+        run: export PATH=$PATH:$GOPATH/bin
+
+      - name: Install API dependencies
+        working-directory: modules/api
+        run: go mod download
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18.14.0
+
+      - name: Install web dependencies
+        working-directory: modules/web
+        run: yarn
 
       - name: Serve app
-        run: |
-          export GOPATH=$(go env GOPATH)
-          export PATH=$PATH:$GOPATH/bin
-          make serve &
+        run: make serve &
 
       - name: Test
-        run: |
-          export GOPATH=$(go env GOPATH)
-          export PATH=$PATH:$GOPATH/bin
-          yarn cypress
+        run: yarn cypress
         working-directory: modules/web

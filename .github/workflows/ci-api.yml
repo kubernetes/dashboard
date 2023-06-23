@@ -24,13 +24,12 @@ on:
       - "**/*.md"
 permissions:
   contents: read
+env:
+  TERM: xterm
 jobs:
   check:
     name: Static check
     runs-on: ubuntu-latest
-    env:
-      GOPROXY: "https://proxy.golang.org"
-      TERM: xterm
     defaults:
       run:
         working-directory: modules/api
@@ -40,23 +39,26 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Setup
-        uses: ./.github/actions/setup
+      - name: Set up Go
+        uses: actions/setup-go@v4
         with:
-          api: true
+          go-version-file: modules/api/go.mod
+          check-latest: true
+          cache-dependency-path: modules/api/go.sum
+
+      - name: Add Go to PATH
+        run: export PATH=$PATH:$GOPATH/bin
+
+      - name: Install API dependencies
+        working-directory: modules/api
+        run: go mod download
 
       - name: Install tools
         working-directory: modules/common/tools
-        run: |
-          export GOPATH=$(go env GOPATH)
-          export PATH=$PATH:$GOPATH/bin
-          make install
+        run: make install
 
       - name: Verify codegen
-        run: |
-          export GOPATH=$(go env GOPATH)
-          export PATH=$PATH:$GOPATH/bin
-          make codegen-verify
+        run: make codegen-verify
 
       - name: Lint
         uses: golangci/golangci-lint-action@v3
@@ -66,9 +68,6 @@ jobs:
   unit:
     name: Run unit tests with coverage
     runs-on: ubuntu-latest
-    env:
-      GOPROXY: "https://proxy.golang.org"
-      TERM: xterm
     defaults:
       run:
         working-directory: modules/api
@@ -78,10 +77,19 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Setup
-        uses: ./.github/actions/setup
+      - name: Set up Go
+        uses: actions/setup-go@v4
         with:
-          api: true
+          go-version-file: modules/api/go.mod
+          check-latest: true
+          cache-dependency-path: modules/api/go.sum
+
+      - name: Add Go to PATH
+        run: export PATH=$PATH:$GOPATH/bin
+
+      - name: Install API dependencies
+        working-directory: modules/api
+        run: go mod download
 
       - name: Test
         run: make coverage
