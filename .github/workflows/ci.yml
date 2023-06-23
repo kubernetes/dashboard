@@ -109,9 +109,6 @@ jobs:
           check-latest: true
           cache-dependency-path: modules/api/go.sum
 
-      - name: Add Go to PATH
-        run: export PATH=$PATH:$GOPATH/bin
-
       - name: Install API dependencies
         working-directory: modules/api
         run: go mod download
@@ -126,7 +123,7 @@ jobs:
         run: yarn
 
       - name: Serve app
-        run: make serve &
+        run: PATH=$PATH:$GOPATH/bin make serve &
 
       - name: Test
         run: yarn cypress

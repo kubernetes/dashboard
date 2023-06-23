@@ -48,19 +48,16 @@ jobs:
           check-latest: true
           cache-dependency-path: modules/api/go.sum
 
-      - name: Add Go to PATH
-        run: export PATH=$PATH:$GOPATH/bin
-
       - name: Install API dependencies
         working-directory: modules/api
         run: go mod download
 
       - name: Install tools
         working-directory: modules/common/tools
-        run: make install
+        run: PATH=$PATH:$GOPATH/bin make install
 
       - name: Verify codegen
-        run: make codegen-verify
+        run: PATH=$PATH:$GOPATH/bin make codegen-verify
 
       - name: Lint
         uses: golangci/golangci-lint-action@v3
@@ -86,15 +83,12 @@ jobs:
           check-latest: true
           cache-dependency-path: modules/api/go.sum
 
-      - name: Add Go to PATH
-        run: export PATH=$PATH:$GOPATH/bin
-
       - name: Install API dependencies
         working-directory: modules/api
         run: go mod download
 
       - name: Test
-        run: make coverage
+        run: PATH=$PATH:$GOPATH/bin make coverage
 
       - name: Upload coverage report
         uses: codecov/codecov-action@v3
