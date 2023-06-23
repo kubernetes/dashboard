@@ -12,14 +12,13 @@ GO_MINOR_VERSION = $(shell go version | cut -c 14- | cut -d' ' -f1 | cut -d'.' -
 MIN_GO_MAJOR_VERSION = 1
 MIN_GO_MINOR_VERSION = 20
 
-GENGO_DIR := "${GOPATH}/src/k8s.io/gengo"
 LICENSE_EYE_BINARY := $(shell which license-eye)
 AIR_BINARY := $(shell which air)
 GOLANGCI_LINT_BINARY := $(shell which golangci-lint)
 CLIENT_GEN_BINARY := $(shell which client-gen)
 
 .PHONY: install
-install: ensure-node ensure-yarn ensure-go ensure-gengo install-license-eye install-air install-golangci-lint install-client-gen
+install: ensure-node ensure-yarn ensure-go install-license-eye install-air install-golangci-lint install-client-gen
 
 .PHONY: ensure-node
 ensure-node:
@@ -64,12 +63,6 @@ endif
 	else \
 		echo "[tools] golang version requirements met"; \
 	fi
-
-.PHONY: ensure-gengo
-ensure-gengo:
-	@echo "[tools] ensure k8s.io/gengo..."
-	@rm -fr ${GENGO_DIR}
-	@git clone https://github.com/kubernetes/gengo ${GENGO_DIR}
 
 .PHONY: install-license-eye
 install-license-eye:
