@@ -49,7 +49,6 @@ jobs:
           cache-dependency-path: modules/metrics-scraper/go.sum
 
       - name: Install metrics scraper dependencies
-        working-directory: modules/metrics-scraper
         run: go mod download
 
       - name: Install tools
@@ -81,7 +80,6 @@ jobs:
           cache-dependency-path: modules/metrics-scraper/go.sum
 
       - name: Install metrics scraper dependencies
-        working-directory: modules/metrics-scraper
         run: go mod download
 
       - name: Test
