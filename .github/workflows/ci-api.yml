@@ -81,10 +81,13 @@ jobs:
       - name: Setup
         uses: ./.github/actions/setup
         with:
-          web: true
+          api: true
 
-      - run: make coverage
-      - uses: codecov/codecov-action@v3
+      - name: Test
+        run: make coverage
+
+      - name: Upload coverage report
+        uses: codecov/codecov-action@v3
         with:
           name: api-coverage
           files: ./modules/api/coverage.out
