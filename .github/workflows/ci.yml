@@ -27,6 +27,7 @@ on:
 permissions:
   contents: read
 env:
+  GOPROXY: "https://proxy.golang.org"
   NG_CLI_ANALYTICS: ci
   NODE_OPTIONS: "--max-old-space-size=8192"
   TERM: xterm

@@ -25,6 +25,7 @@ on:
 permissions:
   contents: read
 env:
+  GOPROXY: "https://proxy.golang.org"
   TERM: xterm
 jobs:
   check:
