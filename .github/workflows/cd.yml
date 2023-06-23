@@ -19,26 +19,26 @@ on:
   create:
     tags:
       - "v*.*.*"
-
 permissions:
   contents: read
   packages: write
-
+env:
+  GOPATH: /home/runner/go/
+  GOPROXY: https://proxy.golang.org
+  NG_CLI_ANALYTICS: ci
+  NODE_OPTIONS: "--max-old-space-size=8192"
+  TERM: xterm
 jobs:
   release:
     name: Release
     runs-on: ubuntu-latest
-    env:
-      NG_CLI_ANALYTICS: ci
-      GOPATH: ${{ github.workspace }}
-      GOPROXY: "https://proxy.golang.org"
     steps:
       - name: Check out repository
         uses: actions/checkout@v3
         with:
           fetch-depth: 0
 
-      - name: Setup
+      - name: Set up
         uses: ./.github/actions/setup
         with:
           api: true

@@ -26,6 +26,12 @@ on:
     - cron: "0 0 * * 1"
 permissions:
   contents: read
+env:
+  GOPATH: /home/runner/go/
+  GOPROXY: https://proxy.golang.org
+  NG_CLI_ANALYTICS: ci
+  NODE_OPTIONS: "--max-old-space-size=8192"
+  TERM: xterm
 jobs:
   license-check:
     name: License check
@@ -87,10 +93,6 @@ jobs:
   e2e:
     name: End-to-end tests
     runs-on: ubuntu-latest
-    env:
-      NG_CLI_ANALYTICS: ci
-      GOPROXY: "https://proxy.golang.org"
-      NODE_OPTIONS: "--max-old-space-size=8192"
     steps:
       - name: Check out repository
         uses: actions/checkout@v3
@@ -100,21 +102,15 @@ jobs:
       - name: Start kind cluster
         uses: helm/kind-action@v1.7.0
 
-      - name: Setup
+      - name: Set up
         uses: ./.github/actions/setup
         with:
           api: true
           web: true
 
       - name: Serve app
-        run: |
-          export GOPATH=$(go env GOPATH)
-          export PATH=$PATH:$GOPATH/bin
-          make serve &
+        run: make serve &
 
       - name: Test
-        run: |
-          export GOPATH=$(go env GOPATH)
-          export PATH=$PATH:$GOPATH/bin
-          yarn cypress
+        run: yarn cypress
         working-directory: modules/web

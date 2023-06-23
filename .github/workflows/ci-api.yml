@@ -24,13 +24,14 @@ on:
       - "**/*.md"
 permissions:
   contents: read
+env:
+  GOPATH: /home/runner/go/
+  GOPROXY: https://proxy.golang.org
+  TERM: xterm
 jobs:
   check:
     name: Static check
     runs-on: ubuntu-latest
-    env:
-      GOPROXY: "https://proxy.golang.org"
-      TERM: xterm
     defaults:
       run:
         working-directory: modules/api
@@ -40,17 +41,14 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Setup
+      - name: Set up
         uses: ./.github/actions/setup
         with:
           api: true
 
       - name: Install tools
         working-directory: modules/common/tools
-        run: |
-          export GOPATH=$(go env GOPATH)
-          export PATH=$PATH:$GOPATH/bin
-          make install
+        run: make install
 
       - name: Verify codegen
         run: make codegen-verify
@@ -63,9 +61,6 @@ jobs:
   unit:
     name: Run unit tests with coverage
     runs-on: ubuntu-latest
-    env:
-      GOPROXY: "https://proxy.golang.org"
-      TERM: xterm
     defaults:
       run:
         working-directory: modules/api

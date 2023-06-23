@@ -44,15 +44,19 @@ jobs:
       - name: Install kubeconform-helm
         run: helm plugin install https://github.com/jtyr/kubeconform-helm
 
-      - uses: helm/chart-testing-action@v2.4.0
+      - name: Install chart-testing
+        uses: helm/chart-testing-action@v2.4.0
 
-      - run: ct lint --config=charts/helm-chart/.helm-chart-testing.yaml
+      - name: Run chart-testing lint
+        run: ct lint --config=charts/helm-chart/.helm-chart-testing.yaml
 
-      - uses: helm/kind-action@v1.7.0
+      - name: Start kind cluster
+        uses: helm/kind-action@v1.7.0
         with:
           node_image: kindest/node:v1.27.3
 
-      - run: kubectl apply --server-side -f https://raw.githubusercontent.com/prometheus-operator/prometheus-operator/v0.54.0/example/prometheus-operator-crd/monitoring.coreos.com_servicemonitors.yaml
+      - name: Deploy prometheus-operator
+        run: kubectl apply --server-side -f https://raw.githubusercontent.com/prometheus-operator/prometheus-operator/v0.54.0/example/prometheus-operator-crd/monitoring.coreos.com_servicemonitors.yaml
 
-      - name: Run chart-testing (install)
+      - name: Run chart-testing install
         run: ct install --config=charts/helm-chart/.helm-chart-testing.yaml
