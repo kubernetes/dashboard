@@ -310,7 +310,7 @@ spec:
       containers:
         - name: kubernetes-dashboard-api
           image: docker.io/kubernetesui/dashboard-api:v1.0.0
-          imagePullPolicy: Never
+          imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 9000
               name: api
@@ -365,7 +365,7 @@ spec:
       containers:
         - name: kubernetes-dashboard-web
           image: docker.io/kubernetesui/dashboard-web:v1.0.0
-          imagePullPolicy: Never
+          imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 8000
               name: web
@@ -417,6 +417,7 @@ spec:
       containers:
         - name: kubernetes-dashboard-metrics-scraper
           image: docker.io/kubernetesui/metrics-scraper:v1.0.9
+          imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 8000
               protocol: TCP

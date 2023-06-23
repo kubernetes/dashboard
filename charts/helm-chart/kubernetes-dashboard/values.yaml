@@ -15,7 +15,7 @@
 # General configuration shared across resources
 app:
   image:
-    pullPolicy: Never
+    pullPolicy: IfNotPresent
     pullSecrets: []
   scaling:
     # Default number of replicas
