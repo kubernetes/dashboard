@@ -97,6 +97,7 @@ image: --image
 .PHONY: --codegen-update-run
 --codegen-update-run:
 	@${GOPATH}/bin/client-gen \
+		--go-header-file=$(TOOLS_DIRECTORY)/boilerplate.go.txt \
   	--input-base=$(INPUT_BASE) \
   	--input=$(INPUT) \
   	--clientset-name=$(CLIENTSET_NAME) \
