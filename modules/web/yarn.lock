@@ -255,20 +255,20 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@angular/cdk@npm:15.2.7":
-  version: 15.2.7
-  resolution: "@angular/cdk@npm:15.2.7"
+"@angular/cdk@npm:16.1.3":
+  version: 16.1.3
+  resolution: "@angular/cdk@npm:16.1.3"
   dependencies:
     parse5: ^7.1.2
     tslib: ^2.3.0
   peerDependencies:
-    "@angular/common": ^15.0.0 || ^16.0.0
-    "@angular/core": ^15.0.0 || ^16.0.0
+    "@angular/common": ^16.0.0 || ^17.0.0
+    "@angular/core": ^16.0.0 || ^17.0.0
     rxjs: ^6.5.3 || ^7.4.0
   dependenciesMeta:
     parse5:
       optional: true
-  checksum: f4c802334b4d74031ed8d7a7e268f3fecca672b8a33628f6c2ce94826eecbf2ed5b95d1b5b8669d08cdf4a039669be2352ffe207e7735033c71d745075038661
+  checksum: 24eafe2e7b11b22687e4843e8ce3eea6e7e029905a9f216e8e975f9804bd49afde916da29ef256b000b59a49601ef62c81584914a777bb2b9bcf9de3fe93065e
   languageName: node
   linkType: hard
 
@@ -10629,7 +10629,7 @@ __metadata:
   dependencies:
     "@angular-devkit/build-angular": 15.1.5
     "@angular/animations": 15.2.7
-    "@angular/cdk": 15.2.7
+    "@angular/cdk": 16.1.3
     "@angular/cli": 15.2.6
     "@angular/common": 15.2.7
     "@angular/compiler": 15.2.7
