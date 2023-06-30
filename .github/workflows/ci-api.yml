@@ -64,6 +64,8 @@ jobs:
         with:
           version: v1.52.2
           working-directory: modules/api
+          skip-cache: true
+
   unit:
     name: Run unit tests with coverage
     runs-on: ubuntu-latest
