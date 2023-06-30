@@ -76,10 +76,17 @@ app:
     #  #  Is this CRD namespaced?
     #  namespaced: true
   ingress:
-    host: localhost
+    hosts:
+    # Keep 'localhost' host only if you want to access Dashboard using 'kubectl port-forward ...' on:
+    # https://localhost:8443
+    - localhost
+    # - kubernetes.dashboard.domain.com
     ingressClassName: nginx
+    pathType: ImplementationSpecific
     secretName: kubernetes-dashboard-certs
     issuer: selfsigned
+    labels: {}
+    annotations: {}
     paths:
       web: /
       api: /api
