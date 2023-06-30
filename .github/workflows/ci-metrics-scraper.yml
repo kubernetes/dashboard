@@ -46,7 +46,7 @@ jobs:
         with:
           go-version-file: modules/metrics-scraper/go.mod
           check-latest: true
-          cache: false
+          cache-dependency-path: modules/metrics-scraper/go.sum
 
       - name: Install metrics scraper dependencies
         run: go mod download
@@ -60,6 +60,8 @@ jobs:
         with:
           version: v1.52.2
           working-directory: modules/metrics-scraper
+          skip-cache: true
+
   unit:
     name: Run unit tests with coverage
     runs-on: ubuntu-latest
@@ -77,7 +79,7 @@ jobs:
         with:
           go-version-file: modules/metrics-scraper/go.mod
           check-latest: true
-          cache: false
+          cache-dependency-path: modules/metrics-scraper/go.sum
 
       - name: Install metrics scraper dependencies
         run: go mod download
