@@ -46,7 +46,7 @@ jobs:
         with:
           go-version-file: modules/metrics-scraper/go.mod
           check-latest: true
-          cache-dependency-path: modules/metrics-scraper/go.sum
+          cache: false
 
       - name: Install metrics scraper dependencies
         run: go mod download
@@ -77,7 +77,7 @@ jobs:
         with:
           go-version-file: modules/metrics-scraper/go.mod
           check-latest: true
-          cache-dependency-path: modules/metrics-scraper/go.sum
+          cache: false
 
       - name: Install metrics scraper dependencies
         run: go mod download
