@@ -59,7 +59,7 @@
     "@angular/router": "15.2.7",
     "@swimlane/ngx-charts": "20.4.1",
     "ace-builds": "1.23.1",
-    "core-js": "3.31.0",
+    "core-js": "3.31.1",
     "crop-url": "4.0.1",
     "d3-shape": "3.2.0",
     "d3-time-format": "4.1.0",
