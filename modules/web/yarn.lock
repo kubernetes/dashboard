@@ -475,19 +475,19 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@angular/platform-browser@npm:15.2.7":
-  version: 15.2.7
-  resolution: "@angular/platform-browser@npm:15.2.7"
+"@angular/platform-browser@npm:16.1.4":
+  version: 16.1.4
+  resolution: "@angular/platform-browser@npm:16.1.4"
   dependencies:
     tslib: ^2.3.0
   peerDependencies:
-    "@angular/animations": 15.2.7
-    "@angular/common": 15.2.7
-    "@angular/core": 15.2.7
+    "@angular/animations": 16.1.4
+    "@angular/common": 16.1.4
+    "@angular/core": 16.1.4
   peerDependenciesMeta:
     "@angular/animations":
       optional: true
-  checksum: 2a89953d9925079eccfc6648d8dcc1a0b7971dbfea4d287388cbf281c53d03589a5c635728cf202c7d4454de795dcbad360b56e855ef2ec8c2c4d04884c5c648
+  checksum: 494adcea4095ff0840747fe9daee17a63d05c32fd91b5ac79f7179d2a3150d3faa136afe7278f87227cd67937e7f3ff2edc184784cd0b9d2c72e8c9e30544e16
   languageName: node
   linkType: hard
 
@@ -10978,7 +10978,7 @@ __metadata:
     "@angular/language-service": 15.2.7
     "@angular/localize": 15.2.7
     "@angular/material": 14.2.2
-    "@angular/platform-browser": 15.2.7
+    "@angular/platform-browser": 16.1.4
     "@angular/platform-browser-dynamic": 15.2.7
     "@angular/router": 15.2.7
     "@babel/core": 7.22.6
