@@ -5,12 +5,14 @@
 [![GitHub release](https://img.shields.io/github/release/kubernetes/dashboard.svg)](https://github.com/kubernetes/dashboard/releases/latest)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://github.com/kubernetes/dashboard/blob/master/LICENSE)
 
+# ! Breaking change !
+Starting from the release `v7` for the Helm chart and `v3` for the Kubernetes Dashboard, underlying architecture has changed, and it requires a clean installation. Please remove previous installation first.
+
+Kubernetes Dashboard now requires `cert-manager` and `nginx-ingress-controller` to work properly. They will be automatically installed with the Helm chart. In case you already have them installed, simply set `--set=nginx.enabled=false` and `--set=cert-manager.enabled=false` when installing the chart to disable installation of those dependencies.
+
 ## Introduction
 
 [Kubernetes Dashboard](https://github.com/kubernetes/dashboard) is a general purpose, web-based UI for Kubernetes clusters. It allows users to manage applications running in the cluster and troubleshoot them, as well as manage the cluster itself.
-
-## ! Breaking change !
-Starting from the release `v7` for the Helm chart and `v3` for the Kubernetes Dashboard, underlying architecture has changed, and it requires a clean installation. Please remove previous installation first.
 
 ## TL;DR
 
@@ -75,7 +77,7 @@ Specify each parameter using the `--set key=value[,key=value]` argument to `helm
 
 ```console
 helm install kubernetes-dashboard/kubernetes-dashboard --name kubernetes-dashboard \
-  --set=service.externalPort=8080,resources.limits.cpu=200m
+  --set=api.containers.resources.limits.cpu=200m
 ```
 
 Alternatively, a YAML file that specifies the values for the above parameters can be provided while installing the
@@ -104,6 +106,10 @@ kubectl label --overwrite ns kubernetes-dashboard pod-security.kubernetes.io/enf
 
 A major chart version change (like v1.2.3 -> v2.0.0) indicates that there is an
 incompatible breaking change needing manual actions.
+
+### Upgrade from 6.x.x to 7.x.x
+
+We recommend doing a clean installation. Kubernetes Dashboard `v3` introduced a big architecture changes and now requires `cert-manager`, and `nginx-ingress-controller` to work properly. In case those are already installed in your cluster, simply set `--set=nginx.enabled=false` and `--set=cert-manager.enabled=false` when upgrading.
 
 ### Upgrade from 5.x.x to 6.x.x
 
