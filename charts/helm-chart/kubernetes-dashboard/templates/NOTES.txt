@@ -17,13 +17,20 @@ It looks like you already have nginx installed in your cluster. First find the n
 To access Dashboard run (replace placeholders with actual names):
   kubectl -n <nginx-namespace> port-forward svc/<nginx-service> 8443:443
 
-Dashboard is now available at:
+Dashboard will be available at:
   https://localhost:8443
 {{- end }}
 
 {{- if or (not (has "localhost" .Values.app.ingress.hosts)) (gt (len .Values.app.ingress.hosts) 1) }}
 
-Looks like you are deploying Kubernetes Dashboard on a custom domain(s). Please make sure that the ingress configuration is valid. Dashboard should be accessible on your configured domain(s) soon.
+Looks like you are deploying Kubernetes Dashboard on a custom domain(s).
+Please make sure that the ingress configuration is valid.
+Dashboard should be accessible on your configured domain(s) soon:
+{{- range .Values.app.ingress.hosts }}
+{{- if not (eq . "localhost") }}
+  - https://{{ . }}
+{{- end }}
+{{- end }}
 {{- end }}
 
 NOTE: It may take a few minutes for the Ingress IP/Domain to be available.
