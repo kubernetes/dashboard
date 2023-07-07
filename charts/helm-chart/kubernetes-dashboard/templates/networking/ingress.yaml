@@ -24,7 +24,6 @@ metadata:
     cert-manager.io/issuer: {{ .Values.app.ingress.issuer }}
     kubernetes.io/ingress.class: {{ .Values.app.ingress.ingressClassName }}
     {{- if eq .Values.app.ingress.ingressClassName "nginx" }}
-    nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
     nginx.ingress.kubernetes.io/ssl-redirect: "true"
     {{- end }}
     {{- with .Values.app.ingress.annotations }}
