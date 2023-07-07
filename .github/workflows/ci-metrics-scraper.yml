@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-name: CI / API
+name: CI / Metrics scraper
 on:
   push:
     branches: [master]
@@ -34,7 +34,7 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: modules/api
+        working-directory: modules/metrics-scraper
     steps:
       - name: Check out repository
         uses: actions/checkout@v3
@@ -44,26 +44,22 @@ jobs:
       - name: Set up Go
         uses: actions/setup-go@v4
         with:
-          go-version-file: modules/api/go.mod
+          go-version-file: modules/metrics-scraper/go.mod
           check-latest: true
-          cache-dependency-path: modules/api/go.sum
+          cache-dependency-path: modules/metrics-scraper/go.sum
 
-      - name: Install API dependencies
-        working-directory: modules/api
+      - name: Install metrics scraper dependencies
         run: go mod download
 
       - name: Install tools
         working-directory: modules/common/tools
         run: PATH=$PATH:$GOPATH/bin make install
 
-      - name: Verify codegen
-        run: PATH=$PATH:$GOPATH/bin make codegen-verify
-
       - name: Lint
         uses: golangci/golangci-lint-action@v3
         with:
           version: v1.52.2
-          working-directory: modules/api
+          working-directory: modules/metrics-scraper
           skip-cache: true
 
   build:
@@ -71,7 +67,7 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: modules/api
+        working-directory: modules/metrics-scraper
     steps:
       - name: Check out repository
         uses: actions/checkout@v3
@@ -81,12 +77,12 @@ jobs:
       - name: Set up Go
         uses: actions/setup-go@v4
         with:
-          go-version-file: modules/api/go.mod
+          go-version-file: modules/metrics-scraper/go.mod
           check-latest: true
-          cache-dependency-path: modules/api/go.sum
+          cache-dependency-path: modules/metrics-scraper/go.sum
 
-      - name: Install API dependencies
-        working-directory: modules/api
+      - name: Install metrics scraper dependencies
+        working-directory: modules/metrics-scraper
         run: go mod download
 
       - name: Build
@@ -97,7 +93,7 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: modules/api
+        working-directory: modules/metrics-scraper
     steps:
       - name: Check out repository
         uses: actions/checkout@v3
@@ -107,12 +103,11 @@ jobs:
       - name: Set up Go
         uses: actions/setup-go@v4
         with:
-          go-version-file: modules/api/go.mod
+          go-version-file: modules/metrics-scraper/go.mod
           check-latest: true
-          cache-dependency-path: modules/api/go.sum
+          cache-dependency-path: modules/metrics-scraper/go.sum
 
-      - name: Install API dependencies
-        working-directory: modules/api
+      - name: Install metrics scraper dependencies
         run: go mod download
 
       - name: Test
@@ -121,6 +116,6 @@ jobs:
       - name: Upload coverage report
         uses: codecov/codecov-action@v3
         with:
-          name: api-coverage
-          files: ./modules/api/coverage.out
+          name: metrics-scraper-coverage
+          files: ./modules/metrics-scraper/coverage.out
           fail_ci_if_error: true
