@@ -48,3 +48,15 @@ build-cross: $(PRE)
   	echo "Building metrics-scraper for $$os/$$arch" ; \
   	CGO_ENABLED=0 GOOS=$$os GOARCH=$$arch go build -gcflags="all=-N -l" -o $(METRICS_SCRAPER_DIST_DIRECTORY)/$$ARCH/$(APP_NAME) $(PACKAGE_NAME) ; \
   done
+
+.PHONY: deploy
+deploy: DOCKERFILE = $(METRICS_SCRAPER_DIRECTORY)/Dockerfile
+deploy: --deploy
+
+.PHONY: deploy-dev
+deploy-dev: DOCKERFILE = $(METRICS_SCRAPER_DIRECTORY)/Dockerfile
+deploy-dev: --deploy-dev
+
+.PHONY: image
+image: DOCKERFILE = $(METRICS_SCRAPER_DIRECTORY)/Dockerfile
+image: --image
