@@ -31,10 +31,10 @@ maintainers:
 icon: https://raw.githubusercontent.com/kubernetes/kubernetes/master/logo/logo.svg
 kubeVersion: ">=1.21.0-0"
 dependencies:
-  - name: nginx-ingress
+  - name: ingress-nginx
     alias: nginx
-    version: 0.17.1
-    repository: https://helm.nginx.com/stable
+    version: 4.7.1
+    repository: https://kubernetes.github.io/ingress-nginx
     condition: nginx-ingress.enabled
   - name: cert-manager
     version: v1.11.2

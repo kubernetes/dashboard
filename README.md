@@ -26,16 +26,6 @@ You can install Dashboard using Helm as described [here](https://artifacthub.io/
 
 ### Manifest
 
-[//]: # (Kubernetes Dashboard requires both [cert-manager]&#40;https://cert-manager.io/docs/installation/&#41; and)
-
-[//]: # ([nginx-ingress-controller]&#40;https://docs.nginx.com/nginx-ingress-controller/installation/installation-with-manifests/#3-deploy-the-ingress-controller&#41;)
-
-[//]: # ([metrics-server]&#40;&#41; to be installed in your cluster in order to run. Additionally, if you want metrics and graphs to be available, you need to install)
-
-[//]: # ([metrics-server]&#40;https://github.com/kubernetes-sigs/metrics-server#installation&#41;.)
-
-[//]: # (Please, make sure that they are up and running before installing Kubernetes Dashboard.)
-
 You can install Dashboard using `kubectl` as described in the installation instructions that can be found in the [latest release](https://github.com/kubernetes/dashboard/releases/latest).
 
 ## Access
@@ -54,7 +44,7 @@ To find out how to create sample user and log in follow [Creating sample user](d
 Dashboard documentation can be found on [docs](docs/README.md) directory which contains:
 
 * [Common](docs/common/README.md): Entry-level overview.
-* [User Guide](docs/user/README.md): [Installation](docs/user/installation.md), [Accessing Dashboard](docs/user/accessing-dashboard/README.md) and more for users.
+* [User Guide](docs/user/README.md): [Accessing Dashboard](docs/user/accessing-dashboard/README.md) and more for users.
 * [Developer Guide](docs/developer/README.md): [Getting Started](docs/developer/getting-started.md), [Dependency Management](docs/developer/dependency-management.md) and more for anyone interested in contributing.
 
 ## Community, discussion, contribution, and support

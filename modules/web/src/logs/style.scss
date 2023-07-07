@@ -19,7 +19,7 @@
 %kd-logs-element-base {
   font-family: $font-family-monospace;
   padding: 0 (2 * $baseline-grid);
-  word-wrap: break-word;
+  word-break: break-word;
 }
 
 :host {

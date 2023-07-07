@@ -1,49 +1,43 @@
-*********************************************************************************
-*** PLEASE BE PATIENT: kubernetes-dashboard may take a few minutes to install ***
-*********************************************************************************
+*************************************************************************************************
+*** PLEASE BE PATIENT: Kubernetes Dashboard may need a few minutes to get up and become ready ***
+*************************************************************************************************
 
-{{/* Describe how to access depending on config */}}
-{{/* 1. Local K8S i.e. Docker (selfsigned + localhost domain) - direct access */}}
-{{/* 2. Local K8S other than Docker (selfsigned + localhost domain) - via kubectl port-forward */}}
-{{/* 2. External K8S (selfsigned/custom + custom domain) - access directly via domain */}}
+Congratulations! You have just installed Kubernetes Dashboard in your cluster.
+{{ if and (has "localhost" .Values.app.ingress.hosts) (eq .Values.app.ingress.ingressClassName "nginx") (.Values.nginx.enabled) }}
+To access Dashboard run:
+  kubectl -n kubernetes-dashboard port-forward svc/kubernetes-dashboard-nginx-controller 8443:443
 
-{{/*{{- if .Values.nginx.enabled }}*/}}
-{{/*  From outside the cluster, the server URL(s) are:*/}}
-{{/*  https://{{ .Values.app.ingress.host }}*/}}
-{{/*{{- end }}*/}}
+NOTE: In case port-forward command does not work, make sure that nginx service name is correct.
+      Check the services in Kubernetes Dashboard namespace using:
+        kubectl -n {{ .Release.Namespace }} get svc
 
-{{/*{{- else if contains "NodePort" .Values.service.type }}*/}}
+Dashboard will be available at:
+  https://localhost:8443
+{{- end }}
 
-{{/*Get the Kubernetes Dashboard URL by running:*/}}
-{{/*  export NODE_PORT=$(kubectl get -n {{ .Release.Namespace }} -o jsonpath="{.spec.ports[0].nodePort}" services {{ template "kubernetes-dashboard.fullname" . }})*/}}
-{{/*  export NODE_IP=$(kubectl get nodes -o jsonpath="{.items[0].status.addresses[0].address}")*/}}
-{{/*{{- if .Values.protocolHttp }}*/}}
-{{/*  echo http://$NODE_IP:$NODE_PORT/*/}}
-{{/*{{- else }}*/}}
-{{/*  echo https://$NODE_IP:$NODE_PORT/*/}}
-{{/*{{- end }}*/}}
+{{- if and (has "localhost" .Values.app.ingress.hosts) (eq .Values.app.ingress.ingressClassName "nginx") (not .Values.nginx.enabled) }}
+It looks like you already have nginx installed in your cluster. First find the namespace where it is installed and then find its main service name. By default, it should be located in namespace called nginx or nginx-ingress and service name should be nginx-controller.
 
-{{/*{{- else if contains "LoadBalancer" .Values.service.type }}*/}}
+To access Dashboard run (replace placeholders with actual names):
+  kubectl -n <nginx-namespace> port-forward svc/<nginx-service> 8443:443
 
-{{/*  NOTE: It may take a few minutes for the LoadBalancer IP to be available.*/}}
-{{/*        Watch the status with: 'kubectl get svc -n {{ .Release.Namespace }} -w {{ template "kubernetes-dashboard.fullname" . }}'*/}}
+Dashboard will be available at:
+  https://localhost:8443
+{{- end }}
 
-{{/*Get the Kubernetes Dashboard URL by running:*/}}
-{{/*  export SERVICE_IP=$(kubectl get svc -n {{ .Release.Namespace }} {{ template "kubernetes-dashboard.fullname" . }} -o jsonpath='{.status.loadBalancer.ingress[0].ip}')*/}}
-{{/*{{- if .Values.protocolHttp }}*/}}
-{{/*  echo http://$SERVICE_IP/*/}}
-{{/*{{- else }}*/}}
-{{/*  echo https://$SERVICE_IP/*/}}
-{{/*{{- end }}*/}}
-{{/*{{- else if contains "ClusterIP"  .Values.service.type }}*/}}
+{{- if or (not (has "localhost" .Values.app.ingress.hosts)) (gt (len .Values.app.ingress.hosts) 1) }}
 
-{{/*Get the Kubernetes Dashboard URL by running:*/}}
-{{/*  export POD_NAME=$(kubectl get pods -n {{ .Release.Namespace }} -l "app.kubernetes.io/name={{ template "kubernetes-dashboard.name" . }},app.kubernetes.io/instance={{ .Release.Name }}" -o jsonpath="{.items[0].metadata.name}")*/}}
-{{/*{{- if .Values.protocolHttp }}*/}}
-{{/*  echo http://127.0.0.1:9090/*/}}
-{{/*  kubectl -n {{ .Release.Namespace }} port-forward $POD_NAME 9090:9090*/}}
-{{/*{{- else }}*/}}
-{{/*  echo https://127.0.0.1:8443/*/}}
-{{/*  kubectl -n {{ .Release.Namespace }} port-forward $POD_NAME 8443:8443*/}}
-{{/*{{- end }}*/}}
-{{/*{{- end }}*/}}
+Looks like you are deploying Kubernetes Dashboard on a custom domain(s).
+Please make sure that the ingress configuration is valid.
+Dashboard should be accessible on your configured domain(s) soon:
+{{- range .Values.app.ingress.hosts }}
+{{- if not (eq . "localhost") }}
+  - https://{{ . }}
+{{- end }}
+{{- end }}
+{{- end }}
+
+NOTE: It may take a few minutes for the Ingress IP/Domain to be available.
+      It does not apply to local dev Kubernetes installations such as kind, etc.
+      You can watch the status using:
+        kubectl -n {{ .Release.Namespace }} get ing {{ template "kubernetes-dashboard.fullname" . }} -w

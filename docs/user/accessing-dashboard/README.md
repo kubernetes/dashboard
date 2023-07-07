@@ -5,7 +5,7 @@ In case of any error while trying to access Dashboard, please first read our [FA
 In most cases errors are caused by cluster configuration issues.
 
 ## Introduction
-This document only describes the basic ways of accessing Kubernetes Dashboard [Quick Setup](../installation.md#quick-setup) or [Official Release](../installation.md#official-release) deployments.
+This document only describes the basic ways of accessing Kubernetes Dashboard.
 If you have modified the default configuration in any way, it might not work.
 
 ## `kubectl port-forward`

@@ -337,6 +337,12 @@
         background-color: map.get($colors, log-viewer-scrollbar);
       }
 
+      .kd-logs-element, .kd-logs-element-compact {
+        &:hover {
+          background: color.adjust(map.get($colors, log-viewer-bg), $lightness: 20%);
+        }
+      }
+
       &.kd-logs-text-color-invert {
         filter: invert(100%);
       }
