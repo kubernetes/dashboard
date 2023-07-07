@@ -62,6 +62,32 @@ jobs:
           working-directory: modules/metrics-scraper
           skip-cache: true
 
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: modules/metrics-scraper
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Set up Go
+        uses: actions/setup-go@v4
+        with:
+          go-version-file: modules/metrics-scraper/go.mod
+          check-latest: true
+          cache-dependency-path: modules/metrics-scraper/go.sum
+
+      - name: Install metrics scraper dependencies
+        working-directory: modules/metrics-scraper
+        run: go mod download
+
+      - name: Test
+        run: PATH=$PATH:$GOPATH/bin make build-cross
+
   unit:
     name: Run unit tests with coverage
     runs-on: ubuntu-latest
