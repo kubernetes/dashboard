@@ -319,28 +319,26 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@angular/compiler-cli@npm:15.2.7":
-  version: 15.2.7
-  resolution: "@angular/compiler-cli@npm:15.2.7"
+"@angular/compiler-cli@npm:16.1.4":
+  version: 16.1.4
+  resolution: "@angular/compiler-cli@npm:16.1.4"
   dependencies:
-    "@babel/core": 7.19.3
+    "@babel/core": 7.22.5
     "@jridgewell/sourcemap-codec": ^1.4.14
     chokidar: ^3.0.0
     convert-source-map: ^1.5.1
-    dependency-graph: ^0.11.0
-    magic-string: ^0.27.0
     reflect-metadata: ^0.1.2
     semver: ^7.0.0
     tslib: ^2.3.0
     yargs: ^17.2.1
   peerDependencies:
-    "@angular/compiler": 15.2.7
-    typescript: ">=4.8.2 <5.0"
+    "@angular/compiler": 16.1.4
+    typescript: ">=4.9.3 <5.2"
   bin:
     ng-xi18n: bundles/src/bin/ng_xi18n.js
     ngc: bundles/src/bin/ngc.js
-    ngcc: bundles/ngcc/main-ngcc.js
-  checksum: 610cc0bed7f108548db5ea2084585d58b4cb50cbdcb0861771a22df5805a2f497c59ec03802936b4eac5f72f5b40c3c28df80714a594bc2355556804dc1fd61d
+    ngcc: bundles/ngcc/index.js
+  checksum: e6e86b8366980e1a8a1a9ad57003ea73bd2bfddac79fbe2406b79c3afdb74641a94eb5a5c823c94a07635d6529386728422bac4e6358b1dc9f73e17d759888c7
   languageName: node
   linkType: hard
 
@@ -590,6 +588,29 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@babel/core@npm:7.22.5, @babel/core@npm:^7.11.6, @babel/core@npm:^7.12.3":
+  version: 7.22.5
+  resolution: "@babel/core@npm:7.22.5"
+  dependencies:
+    "@ampproject/remapping": ^2.2.0
+    "@babel/code-frame": ^7.22.5
+    "@babel/generator": ^7.22.5
+    "@babel/helper-compilation-targets": ^7.22.5
+    "@babel/helper-module-transforms": ^7.22.5
+    "@babel/helpers": ^7.22.5
+    "@babel/parser": ^7.22.5
+    "@babel/template": ^7.22.5
+    "@babel/traverse": ^7.22.5
+    "@babel/types": ^7.22.5
+    convert-source-map: ^1.7.0
+    debug: ^4.1.0
+    gensync: ^1.0.0-beta.2
+    json5: ^2.2.2
+    semver: ^6.3.0
+  checksum: 173ae426958c90c7bbd7de622c6f13fcab8aef0fac3f138e2d47bc466d1cd1f86f71ca82ae0acb9032fd8794abed8efb56fea55c031396337eaec0d673b69d56
+  languageName: node
+  linkType: hard
+
 "@babel/core@npm:7.22.6":
   version: 7.22.6
   resolution: "@babel/core@npm:7.22.6"
@@ -610,29 +631,6 @@ __metadata:
     gensync: ^1.0.0-beta.2
     json5: ^2.2.2
   checksum: 6113ff87c0b707f9c2216285cd3e0a02088ecee427a75a6f3f865da7db25a4863ceb34950248df6ad86f6dd5c608b0f7220f972533f1cc27ff6a9b4380d6ef2c
-  languageName: node
-  linkType: hard
-
-"@babel/core@npm:^7.11.6, @babel/core@npm:^7.12.3":
-  version: 7.22.5
-  resolution: "@babel/core@npm:7.22.5"
-  dependencies:
-    "@ampproject/remapping": ^2.2.0
-    "@babel/code-frame": ^7.22.5
-    "@babel/generator": ^7.22.5
-    "@babel/helper-compilation-targets": ^7.22.5
-    "@babel/helper-module-transforms": ^7.22.5
-    "@babel/helpers": ^7.22.5
-    "@babel/parser": ^7.22.5
-    "@babel/template": ^7.22.5
-    "@babel/traverse": ^7.22.5
-    "@babel/types": ^7.22.5
-    convert-source-map: ^1.7.0
-    debug: ^4.1.0
-    gensync: ^1.0.0-beta.2
-    json5: ^2.2.2
-    semver: ^6.3.0
-  checksum: 173ae426958c90c7bbd7de622c6f13fcab8aef0fac3f138e2d47bc466d1cd1f86f71ca82ae0acb9032fd8794abed8efb56fea55c031396337eaec0d673b69d56
   languageName: node
   linkType: hard
 
@@ -7335,13 +7333,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"dependency-graph@npm:^0.11.0":
-  version: 0.11.0
-  resolution: "dependency-graph@npm:0.11.0"
-  checksum: 477204beaa9be69e642bc31ffe7a8c383d0cf48fa27acbc91c5df01431ab913e65c154213d2ef83d034c98d77280743ec85e5da018a97a18dd43d3c0b78b28cd
-  languageName: node
-  linkType: hard
-
 "destroy@npm:1.2.0":
   version: 1.2.0
   resolution: "destroy@npm:1.2.0"
@@ -10971,7 +10962,7 @@ __metadata:
     "@angular/cli": 15.2.6
     "@angular/common": 15.2.7
     "@angular/compiler": 15.2.7
-    "@angular/compiler-cli": 15.2.7
+    "@angular/compiler-cli": 16.1.4
     "@angular/core": 15.2.7
     "@angular/flex-layout": 15.0.0-beta.42
     "@angular/forms": 15.2.7
@@ -11443,7 +11434,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"magic-string@npm:0.27.0, magic-string@npm:^0.27.0":
+"magic-string@npm:0.27.0":
   version: 0.27.0
   resolution: "magic-string@npm:0.27.0"
   dependencies:
