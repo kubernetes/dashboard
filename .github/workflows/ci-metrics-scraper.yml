@@ -85,7 +85,7 @@ jobs:
         working-directory: modules/metrics-scraper
         run: go mod download
 
-      - name: Test
+      - name: Build
         run: PATH=$PATH:$GOPATH/bin make build-cross
 
   unit:
