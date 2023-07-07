@@ -1,13 +1,17 @@
-*********************************************************************************
-*** PLEASE BE PATIENT: kubernetes-dashboard may take a few minutes to install ***
-*********************************************************************************
+*************************************************************************************************
+*** PLEASE BE PATIENT: Kubernetes Dashboard may need a few minutes to get up and become ready ***
+*************************************************************************************************
 
 Congratulations! You have just installed Kubernetes Dashboard in your cluster.
 {{ if and (has "localhost" .Values.app.ingress.hosts) (eq .Values.app.ingress.ingressClassName "nginx") (.Values.nginx.enabled) }}
 To access Dashboard run:
   kubectl -n kubernetes-dashboard port-forward svc/kubernetes-dashboard-nginx-controller 8443:443
 
-Dashboard is now available at:
+NOTE: In case port-forward command does not work, make sure that nginx service name is correct.
+      Check the services in Kubernetes Dashboard namespace using:
+        kubectl -n {{ .Release.Namespace }} get svc
+
+Dashboard will be available at:
   https://localhost:8443
 {{- end }}
 
@@ -34,4 +38,6 @@ Dashboard should be accessible on your configured domain(s) soon:
 {{- end }}
 
 NOTE: It may take a few minutes for the Ingress IP/Domain to be available.
-      Watch the status with: kubectl -n {{ .Release.Namespace }} get ing {{ template "kubernetes-dashboard.fullname" . }} -w
+      It does not apply to local dev Kubernetes installations such as kind, etc.
+      You can watch the status using:
+        kubectl -n {{ .Release.Namespace }} get ing {{ template "kubernetes-dashboard.fullname" . }} -w
