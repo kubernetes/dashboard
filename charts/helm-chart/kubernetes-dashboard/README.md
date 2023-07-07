@@ -1,9 +1,16 @@
-# kubernetes-dashboard
+# Kubernetes Dashboard
 
-[Kubernetes Dashboard](https://github.com/kubernetes/dashboard) is a general purpose, web-based UI for Kubernetes
-clusters.
-It allows users to manage applications running in the cluster and troubleshoot them, as well as manage the cluster
-itself.
+[![Go Report Card](https://goreportcard.com/badge/github.com/kubernetes/dashboard)](https://goreportcard.com/report/github.com/kubernetes/dashboard)
+[![Coverage Status](https://codecov.io/github/kubernetes/dashboard/coverage.svg?branch=master)](https://codecov.io/github/kubernetes/dashboard?branch=master)
+[![GitHub release](https://img.shields.io/github/release/kubernetes/dashboard.svg)](https://github.com/kubernetes/dashboard/releases/latest)
+[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://github.com/kubernetes/dashboard/blob/master/LICENSE)
+
+## Introduction
+
+[Kubernetes Dashboard](https://github.com/kubernetes/dashboard) is a general purpose, web-based UI for Kubernetes clusters. It allows users to manage applications running in the cluster and troubleshoot them, as well as manage the cluster itself.
+
+## ! Breaking change !
+Starting from the release `v7` for the Helm chart and `v3` for the Kubernetes Dashboard, underlying architecture has changed, and it requires a clean installation. Please remove previous installation first.
 
 ## TL;DR
 
@@ -11,7 +18,7 @@ itself.
 # Add kubernetes-dashboard repository
 helm repo add kubernetes-dashboard https://kubernetes.github.io/dashboard/
 # Deploy a Helm Release named "kubernetes-dashboard" using the kubernetes-dashboard chart
-helm install kubernetes-dashboard kubernetes-dashboard/kubernetes-dashboard
+helm upgrade --install kubernetes-dashboard kubernetes-dashboard/kubernetes-dashboard --create-namespace --namespace kubernetes-dashboard
 ```
 
 ## Introduction
@@ -26,7 +33,7 @@ the [Release](https://helm.sh/docs/intro/using_helm/#three-big-concepts) name `k
 
 ```console
 helm repo add kubernetes-dashboard https://kubernetes.github.io/dashboard/
-helm upgrade --install kubernetes-dashboard kubernetes-dashboard/kubernetes-dashboard --wait --namespace kubernetes-dashboard --create-namespace
+helm upgrade --install kubernetes-dashboard kubernetes-dashboard/kubernetes-dashboard --create-namespace --namespace kubernetes-dashboard
 ```
 
 The command deploys kubernetes-dashboard on the Kubernetes cluster in the `kubernetes-dashboard` namespace with default
@@ -64,7 +71,7 @@ Please refer
 to [values.yaml](https://github.com/kubernetes/dashboard/blob/master/charts/helm-chart/kubernetes-dashboard/values.yaml)
 for valid values and their defaults.
 
-Specify each parameter using the `--set key=value[,key=value]` argument to `helm install`. For example,
+Specify each parameter using the `--set key=value[,key=value]` argument to `helm install/upgrade`. For example,
 
 ```console
 helm install kubernetes-dashboard/kubernetes-dashboard --name kubernetes-dashboard \
