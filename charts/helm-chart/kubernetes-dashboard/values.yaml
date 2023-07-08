@@ -84,7 +84,12 @@ app:
     ingressClassName: nginx
     pathType: ImplementationSpecific
     secretName: kubernetes-dashboard-certs
-    issuer: selfsigned
+    issuer:
+      name: selfsigned
+      # Scope determines what kind of issuer annotation will be used on ingress resource
+      # - default - adds 'cert-manager.io/issuer'
+      # - cluster - adds 'cert-manager.io/cluster-issuer'
+      scope: default
     labels: {}
     annotations: {}
     paths:

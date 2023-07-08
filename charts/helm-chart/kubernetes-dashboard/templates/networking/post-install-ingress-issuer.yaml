@@ -1,4 +1,4 @@
-{{- if eq .Values.app.ingress.issuer "selfsigned" -}}
+{{- if eq .Values.app.ingress.issuer.name "selfsigned" -}}
 apiVersion: cert-manager.io/v1
 kind: Issuer
 metadata:

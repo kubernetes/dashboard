@@ -12,6 +12,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+{{- if not (or (eq .Values.app.ingress.issuer.scope "default") (eq .Values.app.ingress.issuer.scope "cluster")) }}
+{{- fail "value of .Values.app.ingress.issuer.scope must be one of [default, cluster]"}}
+{{- end }}
+
 kind: Ingress
 apiVersion: networking.k8s.io/v1
 metadata:
@@ -21,8 +25,12 @@ metadata:
     {{- toYaml . | nindent 4 }}
     {{- end }}
   annotations:
-    cert-manager.io/issuer: {{ .Values.app.ingress.issuer }}
-    kubernetes.io/ingress.class: {{ .Values.app.ingress.ingressClassName }}
+    {{- if eq .Values.app.ingress.issuer.scope "default" }}
+    cert-manager.io/issuer: {{ .Values.app.ingress.issuer.name }}
+    {{- end }}
+    {{- if eq .Values.app.ingress.issuer.scope "cluster" }}
+    cert-manager.io/cluster-issuer: {{ .Values.app.ingress.issuer.name }}
+    {{- end }}
     {{- if eq .Values.app.ingress.ingressClassName "nginx" }}
     nginx.ingress.kubernetes.io/ssl-redirect: "true"
     {{- end }}
@@ -31,6 +39,7 @@ metadata:
     {{- end }}
   name: {{ template "kubernetes-dashboard.name" . }}
 spec:
+  ingressClassName: {{ .Values.app.ingress.ingressClassName }}
   {{- if .Values.app.ingress.hosts }}
   tls:
     - hosts:
@@ -47,14 +56,14 @@ spec:
             pathType: {{ $.Values.app.ingress.pathType }}
             backend:
               service:
-                name: {{ template "kubernetes-dashboard.name" $ }}-{{ $.Values.web.role }}
+                name: {{ template "kubernetes-dashboard.fullname" $ }}-{{ $.Values.web.role }}
                 port:
                   name: {{ $.Values.web.role }}
           - path: {{ $.Values.app.ingress.paths.api }}
             pathType: {{ $.Values.app.ingress.pathType }}
             backend:
               service:
-                name: {{ template "kubernetes-dashboard.name" $ }}-{{ $.Values.api.role }}
+                name: {{ template "kubernetes-dashboard.fullname" $ }}-{{ $.Values.api.role }}
                 port:
                   name: {{ $.Values.api.role }}
     {{- end }}
@@ -65,14 +74,14 @@ spec:
             pathType: {{ .Values.app.ingress.pathType }}
             backend:
               service:
-                name: {{ template "kubernetes-dashboard.name" . }}-{{ .Values.web.role }}
+                name: {{ template "kubernetes-dashboard.fullname" $ }}-{{ .Values.web.role }}
                 port:
                   name: {{ .Values.web.role }}
           - path: {{ .Values.app.ingress.paths.api }}
             pathType: {{ .Values.app.ingress.pathType }}
             backend:
               service:
-                name: {{ template "kubernetes-dashboard.name" . }}-{{ .Values.api.role }}
+                name: {{ template "kubernetes-dashboard.fullname" $ }}-{{ .Values.api.role }}
                 port:
                   name: {{ .Values.api.role }}
     {{- end }}
