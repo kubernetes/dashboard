@@ -258,13 +258,6 @@ spec:
     - host: localhost
       http:
         paths:
-          - path: /
-            pathType: Prefix
-            backend:
-              service:
-                name: kubernetes-dashboard-web
-                port:
-                  name: web
           - path: /api
             pathType: Prefix
             backend:
@@ -272,6 +265,13 @@ spec:
                 name: kubernetes-dashboard-api
                 port:
                   name: api
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: kubernetes-dashboard-web
+                port:
+                  name: web
 
 ---
 

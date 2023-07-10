@@ -52,13 +52,6 @@ spec:
     - host: {{ $host }}
       http:
         paths:
-          - path: {{ $.Values.app.ingress.paths.web }}
-            pathType: {{ $.Values.app.ingress.pathType }}
-            backend:
-              service:
-                name: {{ template "kubernetes-dashboard.fullname" $ }}-{{ $.Values.web.role }}
-                port:
-                  name: {{ $.Values.web.role }}
           - path: {{ $.Values.app.ingress.paths.api }}
             pathType: {{ $.Values.app.ingress.pathType }}
             backend:
@@ -66,17 +59,17 @@ spec:
                 name: {{ template "kubernetes-dashboard.fullname" $ }}-{{ $.Values.api.role }}
                 port:
                   name: {{ $.Values.api.role }}
+          - path: {{ $.Values.app.ingress.paths.web }}
+            pathType: {{ $.Values.app.ingress.pathType }}
+            backend:
+              service:
+                name: {{ template "kubernetes-dashboard.fullname" $ }}-{{ $.Values.web.role }}
+                port:
+                  name: {{ $.Values.web.role }}
     {{- end }}
     {{- else }}
     - http:
         paths:
-          - path: {{ .Values.app.ingress.paths.web }}
-            pathType: {{ .Values.app.ingress.pathType }}
-            backend:
-              service:
-                name: {{ template "kubernetes-dashboard.fullname" $ }}-{{ .Values.web.role }}
-                port:
-                  name: {{ .Values.web.role }}
           - path: {{ .Values.app.ingress.paths.api }}
             pathType: {{ .Values.app.ingress.pathType }}
             backend:
@@ -84,4 +77,11 @@ spec:
                 name: {{ template "kubernetes-dashboard.fullname" $ }}-{{ .Values.api.role }}
                 port:
                   name: {{ .Values.api.role }}
+          - path: {{ .Values.app.ingress.paths.web }}
+            pathType: {{ .Values.app.ingress.pathType }}
+            backend:
+              service:
+                name: {{ template "kubernetes-dashboard.fullname" $ }}-{{ .Values.web.role }}
+                port:
+                  name: {{ .Values.web.role }}
     {{- end }}
