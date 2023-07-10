@@ -136,7 +136,7 @@
     "source-map-explorer": "2.5.3",
     "stylelint": "15.10.1",
     "stylelint-config-standard-scss": "10.0.0",
-    "stylelint-no-unsupported-browser-features": "6.1.0",
+    "stylelint-no-unsupported-browser-features": "7.0.0",
     "stylelint-order": "6.0.3",
     "tar": "6.1.15",
     "through2": "4.0.2",
