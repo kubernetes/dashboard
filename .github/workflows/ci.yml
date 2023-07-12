@@ -100,7 +100,7 @@ jobs:
           fetch-depth: 0
 
       - name: Start kind cluster
-        uses: helm/kind-action@v1.7.0
+        uses: helm/kind-action@v1.8.0
 
       - name: Set up Go
         uses: actions/setup-go@v4
