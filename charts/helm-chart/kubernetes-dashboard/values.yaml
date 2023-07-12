@@ -76,6 +76,7 @@ app:
     #  #  Is this CRD namespaced?
     #  namespaced: true
   ingress:
+    enabled: true
     hosts:
     # Keep 'localhost' host only if you want to access Dashboard using 'kubectl port-forward ...' on:
     # https://localhost:8443
