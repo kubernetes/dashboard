@@ -49,7 +49,7 @@
     "@angular/cdk": "15.2.7",
     "@angular/common": "15.2.7",
     "@angular/compiler": "15.2.7",
-    "@angular/core": "15.2.7",
+    "@angular/core": "16.1.5",
     "@angular/flex-layout": "15.0.0-beta.42",
     "@angular/forms": "15.2.7",
     "@angular/localize": "15.2.7",
