@@ -251,14 +251,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@angular/animations@npm:15.2.7":
-  version: 15.2.7
-  resolution: "@angular/animations@npm:15.2.7"
+"@angular/animations@npm:16.1.5":
+  version: 16.1.5
+  resolution: "@angular/animations@npm:16.1.5"
   dependencies:
     tslib: ^2.3.0
   peerDependencies:
-    "@angular/core": 15.2.7
-  checksum: 89b71779033c889e20f785bf6395bd798808792c541014937774b25c2ed2fa294031763bfb239b14e18f85e571365af3422359c699c7492b0a4575526381f285
+    "@angular/core": 16.1.5
+  checksum: ec40da2688f32d4fc125d9c76bad78a1883a1bc07eefc9a460f59d4cbadfd1d345a7bc5f462f15bf75a4b7990d6efd9b5084a264fcf47fb0bc64c32385e3a8af
   languageName: node
   linkType: hard
 
@@ -11094,7 +11094,7 @@ __metadata:
   resolution: "kubernetes-dashboard@workspace:."
   dependencies:
     "@angular-devkit/build-angular": 15.1.5
-    "@angular/animations": 15.2.7
+    "@angular/animations": 16.1.5
     "@angular/cdk": 15.2.7
     "@angular/cli": 15.2.6
     "@angular/common": 15.2.7
