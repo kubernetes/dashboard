@@ -305,6 +305,7 @@ spec:
         app.kubernetes.io/version: "v1.0.0"
     spec:
       securityContext:
+        runAsNonRoot: true
         seccompProfile:
           type: RuntimeDefault
       containers:
@@ -327,6 +328,8 @@ spec:
             readOnlyRootFilesystem: true
             runAsUser: 1001
             runAsGroup: 2001
+            capabilities:
+              drop: ["ALL"]
       volumes:
         - name: tmp-volume
           emptyDir: {}
@@ -360,6 +363,7 @@ spec:
         app.kubernetes.io/version: "v1.0.0"
     spec:
       securityContext:
+        runAsNonRoot: true
         seccompProfile:
           type: RuntimeDefault
       containers:
@@ -379,6 +383,8 @@ spec:
             readOnlyRootFilesystem: true
             runAsUser: 1001
             runAsGroup: 2001
+            capabilities:
+              drop: ["ALL"]
       volumes:
         - name: tmp-volume
           emptyDir: {}
@@ -412,6 +418,7 @@ spec:
         app.kubernetes.io/version: "v1.0.9"
     spec:
       securityContext:
+        runAsNonRoot: true
         seccompProfile:
           type: RuntimeDefault
       containers:
@@ -436,6 +443,8 @@ spec:
             readOnlyRootFilesystem: true
             runAsUser: 1001
             runAsGroup: 2001
+            capabilities:
+              drop: ["ALL"]
       volumes:
         - name: tmp-volume
           emptyDir: {}
