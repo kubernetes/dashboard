@@ -344,17 +344,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@angular/compiler@npm:15.2.7":
-  version: 15.2.7
-  resolution: "@angular/compiler@npm:15.2.7"
+"@angular/compiler@npm:16.1.6":
+  version: 16.1.6
+  resolution: "@angular/compiler@npm:16.1.6"
   dependencies:
     tslib: ^2.3.0
   peerDependencies:
-    "@angular/core": 15.2.7
+    "@angular/core": 16.1.6
   peerDependenciesMeta:
     "@angular/core":
       optional: true
-  checksum: 3e41ddd76475ddfce5af37a90ee4e5294a73df97891fed360072cc79b3fbde4be324e8b35384c66422e58443f3ab3c2390f61d3d1f5f852d3ddf812452847e8d
+  checksum: 8f66be4d9f8d774c0ec775160d7cde6e1ceb2eb4236d69803c53222bb7e2f19bc7bd2fcf6e8658f63c3ee3792ea02993fabaf1ea4376d78bc1ca625cbd7b2a5b
   languageName: node
   linkType: hard
 
@@ -11096,7 +11096,7 @@ __metadata:
     "@angular/cdk": 15.2.7
     "@angular/cli": 15.2.6
     "@angular/common": 15.2.7
-    "@angular/compiler": 15.2.7
+    "@angular/compiler": 16.1.6
     "@angular/compiler-cli": 15.2.7
     "@angular/core": 15.2.7
     "@angular/flex-layout": 15.0.0-beta.42
