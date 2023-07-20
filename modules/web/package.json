@@ -45,7 +45,7 @@
     "src/**/*.html": []
   },
   "dependencies": {
-    "@angular/animations": "15.2.7",
+    "@angular/animations": "16.1.6",
     "@angular/cdk": "15.2.7",
     "@angular/common": "15.2.7",
     "@angular/compiler": "15.2.7",
