@@ -294,7 +294,6 @@ nginx:
     electionID: ingress-controller-leader
     ingressClassResource:
       name: internal-nginx
-      enable: true
       default: false
       controllerValue: k8s.io/internal-ingress-nginx
     service:
