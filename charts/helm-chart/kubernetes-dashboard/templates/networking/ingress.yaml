@@ -12,6 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+{{- if .Values.app.ingress.enabled }}
 {{- if not (or (eq .Values.app.ingress.issuer.scope "default") (eq .Values.app.ingress.issuer.scope "cluster")) }}
 {{- fail "value of .Values.app.ingress.issuer.scope must be one of [default, cluster]"}}
 {{- end }}
@@ -85,3 +86,4 @@ spec:
                 port:
                   name: {{ .Values.api.role }}
     {{- end }}
+{{- end }}
