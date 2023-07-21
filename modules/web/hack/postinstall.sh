@@ -14,9 +14,8 @@
 # limitations under the License.
 
 if [ -z "${DEPENDABOT}" ]; then
-  # TODO: if dependabot will support yarn postinstall properly,
-  #       move following line into .yarnrc.yml.
-  npx ngcc && node ./hack/version.mjs && cd ../../ && npx husky install modules/web/.husky
+  # TODO: When dependabot will support yarn postinstall properly, move following line into .yarnrc.yml.
+  node ./hack/version.mjs && cd ../../ && npx husky install modules/web/.husky
   exit $?
 fi
 
