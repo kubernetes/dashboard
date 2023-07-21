@@ -28,10 +28,6 @@ kubectl -n <nginx-namespace> port-forward svc/<nginx-service-name> 8443:443
 
 Now access Dashboard at: [https://localhost:8443](https://localhost:8443).
 
-## Ingress
-
-Dashboard can be also exposed using Ingress resource. For more information check: https://kubernetes.io/docs/concepts/services-networking/ingress.
-
 ## Login not available
 If your login view displays below error, this means that you are trying to log in over HTTP, and it has been disabled for the security reasons.
 
