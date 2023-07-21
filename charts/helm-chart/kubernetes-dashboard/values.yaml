@@ -30,6 +30,7 @@ app:
     # To disable set the following configuration to null:
     # securityContext: null
     securityContext:
+      runAsNonRoot: true
       seccompProfile:
         type: RuntimeDefault
     # ContainerSecurityContext to be added to containers
@@ -40,6 +41,8 @@ app:
       readOnlyRootFilesystem: true
       runAsUser: 1001
       runAsGroup: 2001
+      capabilities:
+        drop: ["ALL"]
     # Pod Disruption Budget configuration
     # Ref: https://kubernetes.io/docs/tasks/run-application/configure-pdb/
     podDisruptionBudget:
