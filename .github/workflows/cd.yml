@@ -15,7 +15,7 @@
 name: CD
 on:
   push:
-    branches: [master, hadock]
+    branches: [hadock]
   create:
     tags:
       - "v*.*.*"
