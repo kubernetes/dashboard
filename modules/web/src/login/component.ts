@@ -40,7 +40,7 @@ enum LoginModes {
 })
 export class LoginComponent implements OnInit {
   loginModes = LoginModes;
-  selectedAuthenticationMode = '';
+  selectedAuthenticationMode = 'token';
   errors: KdError[] = [];
 
   private enabledAuthenticationModes_: AuthenticationMode[] = [];
@@ -49,6 +49,7 @@ export class LoginComponent implements OnInit {
   private token_: string;
   private username_: string;
   private password_: string;
+  private localStorageToken: string;
 
   constructor(
     private readonly authService_: AuthService,
@@ -63,6 +64,11 @@ export class LoginComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    // FORK ADDITION
+    this.localStorageToken = localStorage.getItem('token');
+    this.token_ = this.localStorageToken;
+    localStorage.clear();
+
     this.selectedAuthenticationMode =
       this.selectedAuthenticationMode || this.cookies_.get(this.CONFIG.authModeCookieName) || '';
 
@@ -92,6 +98,10 @@ export class LoginComponent implements OnInit {
         this.errors = [state.error];
       }
     });
+    // FORK ADDITION
+    if (this.token_ !== null) {
+      this.login();
+    }
   }
 
   getEnabledAuthenticationModes(): AuthenticationMode[] {
