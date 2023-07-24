@@ -5,7 +5,7 @@ ARCHITECTURES := linux/amd64 linux/arm64 linux/arm linux/ppc64le linux/s390x # d
 BUILDX_ARCHITECTURES := linux/amd64,linux/arm64,linux/arm,linux/ppc64le,linux/s390x # ,darwin/amd64,darwin/arm64
 # Container registry details
 IMAGE_REGISTRIES := docker.io # ghcr.io <- TODO: uncomment when ghcr will be supported
-IMAGE_REPOSITORY := kubernetesui
+IMAGE_REPOSITORY := wearehadock
 
 ### Dirs and paths
 # Base paths
