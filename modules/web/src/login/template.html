@@ -40,7 +40,7 @@ limitations under the License.
             </mat-radio-button>
             <div class="kd-login-mode-description"
                  [ngSwitch]="mode">
-              <ng-container *ngSwitchCase="loginModes.Kubeconfig"
+              <!-- <ng-container *ngSwitchCase="loginModes.Kubeconfig"
                             i18n>
                 Please select the kubeconfig file that you have created to configure access to the cluster. To find out
                 more about how to configure and use kubeconfig file, please refer to the
@@ -53,10 +53,10 @@ limitations under the License.
                 configure basic authentication, please refer to the
                 <a href="https://kubernetes.io/docs/reference/access-authn-authz/authentication/">Authenticating</a> and
                 <a href="https://kubernetes.io/docs/reference/access-authn-authz/abac/">ABAC Mode</a> sections.
-              </ng-container>
+              </ng-container> -->
               <ng-container *ngSwitchCase="loginModes.Token"
                             >
-                Pour récupérer votre token, veuillez cliquer sur le lien  suivant : <a href="oidc">ICI</a> section.
+                Pour récupérer votre token, veuillez cliquer sur le lien  suivant : <a href="oidc/">Connexion via Gardian-Sesame</a>.
               </ng-container>
             </div>
           </div>
