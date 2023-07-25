@@ -1,6 +1,6 @@
 ### Application details
 APP_NAME := $(PROJECT_NAME)-web
-APP_VERSION := v1.0.0
+APP_VERSION := v3.0.0-hadock+1
 PACKAGE_NAME := k8s.io/$(PROJECT_NAME)/web
 
 ### Dirs and paths
