@@ -67,7 +67,11 @@ export class K8SError implements K8SApiError {
  * Frontend specific errors or errors transformed based on server response.
  */
 export class KdError implements KdApiError {
-  constructor(public status: string, public code: number, public message: string) {}
+  constructor(
+    public status: string,
+    public code: number,
+    public message: string
+  ) {}
 
   static isError(error: HttpErrorResponse, ...apiErrors: string[]): boolean {
     // API errors will set 'error' as a string.

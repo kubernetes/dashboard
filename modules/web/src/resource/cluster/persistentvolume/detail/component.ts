@@ -82,7 +82,7 @@ export class PersistentVolumeDetailComponent implements OnInit, OnDestroy {
         ({
           resourceName: key,
           quantity: this.persistentVolume.capacity[key],
-        } as CapacityItem)
+        }) as CapacityItem
     );
 
     return tableData;
