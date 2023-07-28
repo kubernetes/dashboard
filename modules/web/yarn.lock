@@ -437,10 +437,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@angular/language-service@npm:15.2.7":
-  version: 15.2.7
-  resolution: "@angular/language-service@npm:15.2.7"
-  checksum: 4bea599911dc37e14b35e91edcb0554495f06f8f2420ffe0db84c74ff9282a66a78329ba868ba67ef94e0aab288ef6e8802439ba10ecd5fb6144563944264727
+"@angular/language-service@npm:16.1.7":
+  version: 16.1.7
+  resolution: "@angular/language-service@npm:16.1.7"
+  checksum: 7fd553a31f89aafb37d47917e32eac8a00aaf3550d454db6e82786b434265590e426f3aca26d10a07467c958cfddd0855f440b17a70a711b7053db6f5a5f5501
   languageName: node
   linkType: hard
 
@@ -10604,7 +10604,7 @@ __metadata:
     "@angular/core": 15.2.7
     "@angular/flex-layout": 15.0.0-beta.42
     "@angular/forms": 15.2.7
-    "@angular/language-service": 15.2.7
+    "@angular/language-service": 16.1.7
     "@angular/localize": 15.2.7
     "@angular/material": 14.2.2
     "@angular/platform-browser": 15.2.7
