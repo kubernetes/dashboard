@@ -30,3 +30,6 @@ updates:
     schedule:
       interval: "daily"
     open-pull-requests-limit: 10
+    ignore:
+      # Angular staffs should be manually updated at once.
+      - dependency-name: "@angular*"
