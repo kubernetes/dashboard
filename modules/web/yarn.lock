@@ -6462,10 +6462,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"core-js@npm:3.31.1":
-  version: 3.31.1
-  resolution: "core-js@npm:3.31.1"
-  checksum: 14519213a63c55cf188bdd2f4dece54583feaf6b90e75d6c65e07f509cd487055bf64898aeda7c97c36029ac1ea2f2ed8e4b02281553f6a257e7143a32a14015
+"core-js@npm:3.32.0":
+  version: 3.32.0
+  resolution: "core-js@npm:3.32.0"
+  checksum: 52921395028550e4c9d21d47b9836439bb5b6b9eefc34d45a3948a68d81fdd093acc0fadf69f9cf632b82f01f95f22f484408a93dd9e940b19119ac204cd2925
   languageName: node
   linkType: hard
 
@@ -10741,7 +10741,7 @@ __metadata:
     ace-builds: 1.23.4
     codelyzer: 6.0.2
     concurrently: 8.2.0
-    core-js: 3.31.1
+    core-js: 3.32.0
     crop-url: 4.0.1
     cypress: 12.17.2
     cypress-fail-fast: 7.0.1
