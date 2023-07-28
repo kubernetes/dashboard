@@ -56,7 +56,10 @@ export enum Utility {
 }
 
 class ResourceEndpoint {
-  constructor(private readonly resource_: Resource, private readonly namespaced_ = false) {}
+  constructor(
+    private readonly resource_: Resource,
+    private readonly namespaced_ = false
+  ) {}
 
   list(): string {
     return `${baseHref}/${this.resource_}${this.namespaced_ ? '/:namespace' : ''}`;

@@ -36,7 +36,10 @@ export class VerberService {
   onTrigger = new EventEmitter<boolean>();
   onRestart = new EventEmitter<boolean>();
 
-  constructor(private readonly dialog_: MatDialog, private readonly http_: HttpClient) {}
+  constructor(
+    private readonly dialog_: MatDialog,
+    private readonly http_: HttpClient
+  ) {}
 
   showDeleteDialog(displayName: string, typeMeta: TypeMeta, objectMeta: ObjectMeta): void {
     const dialogConfig = this.getDialogConfig_(displayName, typeMeta, objectMeta);
