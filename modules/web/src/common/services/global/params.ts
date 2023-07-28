@@ -24,7 +24,10 @@ export class ParamsService {
   private params_: Params = {};
   private queryParamMap_: Params = {};
 
-  constructor(private router_: Router, private route_: ActivatedRoute) {
+  constructor(
+    private router_: Router,
+    private route_: ActivatedRoute
+  ) {
     this.router_.events
       .pipe(filter(event => event instanceof NavigationEnd))
       .pipe(

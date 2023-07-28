@@ -21,7 +21,10 @@ import {AuthService} from '../global/authentication';
 
 @Injectable()
 export class LoginGuard implements CanActivate {
-  constructor(private readonly authService_: AuthService, private readonly router_: Router) {}
+  constructor(
+    private readonly authService_: AuthService,
+    private readonly router_: Router
+  ) {}
 
   canActivate(): Observable<boolean | UrlTree> {
     return this.authService_

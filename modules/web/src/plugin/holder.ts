@@ -32,7 +32,10 @@ export class PluginHolderComponent implements OnInit {
   @Input('pluginName') private pluginName: string;
   entryError = false;
 
-  constructor(private injector: Injector, private pluginLoader: PluginLoaderService) {}
+  constructor(
+    private injector: Injector,
+    private pluginLoader: PluginLoaderService
+  ) {}
 
   ngOnInit() {
     try {

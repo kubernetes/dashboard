@@ -29,7 +29,10 @@ export class ContainerCardComponent implements OnChanges {
   @Input() namespace: string;
   @Input() initialized: boolean;
 
-  constructor(private readonly state_: KdStateService, readonly decoder: DecoderService) {}
+  constructor(
+    private readonly state_: KdStateService,
+    readonly decoder: DecoderService
+  ) {}
 
   get containerStatusClass(): string {
     if (this.isTerminated_() && this.container.status.state.terminated.reason !== Status.Completed) {
