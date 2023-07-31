@@ -1224,6 +1224,7 @@ export interface GlobalSettings {
   disableAccessDeniedNotifications: boolean;
   defaultNamespace: string;
   namespaceFallbackList: string[];
+  primaryColor: string;
 }
 
 export interface PinnedResource {
