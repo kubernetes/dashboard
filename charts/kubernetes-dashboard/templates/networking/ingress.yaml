@@ -33,7 +33,7 @@ metadata:
     cert-manager.io/cluster-issuer: {{ .Values.app.ingress.issuer.name }}
     {{- end }}
     {{- if eq .Values.app.ingress.ingressClassName "internal-nginx" }}
-    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/ssl-redirect: {{ default "true" .Values.app.ingress.sslRedirect }}
     {{- end }}
     {{- with .Values.app.ingress.annotations }}
     {{- toYaml . | nindent 4 }}

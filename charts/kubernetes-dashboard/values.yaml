@@ -97,6 +97,8 @@ app:
       scope: default
     labels: {}
     annotations: {}
+    # Disable the nginx.ingress.kubernetes.io/ssl-redirect annotation if you want to use http for accessing dashboard
+    # sslRedirect: "false"
     paths:
       web: /
       api: /api
