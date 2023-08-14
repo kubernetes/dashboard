@@ -35,7 +35,7 @@ spec:
       scheme: https
       tlsConfig:
         insecureSkipVerify: true
-  path: /metrics
+      path: /metrics
   selector:
     matchLabels:
     {{ include "kubernetes-dashboard.labels" . | nindent 6 }}
