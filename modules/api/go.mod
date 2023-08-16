@@ -13,7 +13,7 @@ require (
 	gopkg.in/yaml.v2 v2.4.0
 	k8s.io/api v0.27.4
 	k8s.io/apiextensions-apiserver v0.27.4
-	k8s.io/apimachinery v0.27.4
+	k8s.io/apimachinery v0.28.0
 	k8s.io/client-go v0.27.4
 	k8s.io/dashboard/certificates v0.0.0-00010101000000-000000000000
 )
@@ -22,7 +22,7 @@ require (
 	github.com/beorn7/perks v1.0.1 // indirect
 	github.com/cespare/xxhash/v2 v2.2.0 // indirect
 	github.com/davecgh/go-spew v1.1.1 // indirect
-	github.com/evanphx/json-patch v4.12.0+incompatible // indirect
+	github.com/evanphx/json-patch v5.6.0+incompatible // indirect
 	github.com/go-logr/logr v1.2.4 // indirect
 	github.com/go-openapi/jsonpointer v0.20.0 // indirect
 	github.com/go-openapi/jsonreference v0.20.2 // indirect
@@ -43,7 +43,6 @@ require (
 	github.com/modern-go/concurrent v0.0.0-20180306012644-bacd9c7ef1dd // indirect
 	github.com/modern-go/reflect2 v1.0.2 // indirect
 	github.com/munnerz/goautoneg v0.0.0-20191010083416-a7dc8b61c822 // indirect
-	github.com/onsi/ginkgo/v2 v2.9.4 // indirect
 	github.com/onsi/gomega v1.27.6 // indirect
 	github.com/opencontainers/go-digest v1.0.0 // indirect
 	github.com/pkg/errors v0.9.1 // indirect
