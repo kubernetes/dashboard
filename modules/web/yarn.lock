@@ -2525,9 +2525,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@cypress/request@npm:^2.88.11":
-  version: 2.88.11
-  resolution: "@cypress/request@npm:2.88.11"
+"@cypress/request@npm:2.88.12":
+  version: 2.88.12
+  resolution: "@cypress/request@npm:2.88.12"
   dependencies:
     aws-sign2: ~0.7.0
     aws4: ^1.8.0
@@ -2544,10 +2544,10 @@ __metadata:
     performance-now: ^2.1.0
     qs: ~6.10.3
     safe-buffer: ^5.1.2
-    tough-cookie: ~2.5.0
+    tough-cookie: ^4.1.3
     tunnel-agent: ^0.6.0
     uuid: ^8.3.2
-  checksum: e4b3f62e0c41c4ccca6c942828461d8ea717e752fd918d685e9f74e2ebcfa8b7942427f7ce971e502635c3bf3d40011476db84dc753d3dc360c6d08350da6f93
+  checksum: 2c6fbf7f3127d41bffca8374beaa8cf95450495a8a077b00309ea9d94dd2a4da450a77fe038e8ad26c97cdd7c39b65c53c850f8338ce9bc2dbe23ce2e2b48329
   languageName: node
   linkType: hard
 
@@ -6869,11 +6869,11 @@ __metadata:
   languageName: node
   linkType: hard
 
-"cypress@npm:12.17.3":
-  version: 12.17.3
-  resolution: "cypress@npm:12.17.3"
+"cypress@npm:12.17.4":
+  version: 12.17.4
+  resolution: "cypress@npm:12.17.4"
   dependencies:
-    "@cypress/request": ^2.88.11
+    "@cypress/request": 2.88.12
     "@cypress/xvfb": ^1.2.4
     "@types/node": ^16.18.39
     "@types/sinonjs__fake-timers": 8.1.1
@@ -6908,6 +6908,7 @@ __metadata:
     minimist: ^1.2.8
     ospath: ^1.2.2
     pretty-bytes: ^5.6.0
+    process: ^0.11.10
     proxy-from-env: 1.0.0
     request-progress: ^3.0.0
     semver: ^7.5.3
@@ -6917,7 +6918,7 @@ __metadata:
     yauzl: ^2.10.0
   bin:
     cypress: bin/cypress
-  checksum: 1da3922cac45c35ee282116fe2af2278e92cc08bd2d8586e0f2346cbe5c9f62129cec567bc9274c585e8c2e887341fa4e5c8623cfaa41dba87331cfb5a023721
+  checksum: c9c79f5493b23e9c8cfb92d45d50ea9d0fae54210dde203bfa794a79436faf60108d826fe9007a7d67fddf7919802ad8f006b7ae56c5c198c75d5bc85bbc851b
   languageName: node
   linkType: hard
 
@@ -10954,7 +10955,7 @@ __metadata:
     concurrently: 8.2.0
     core-js: 3.32.0
     crop-url: 4.0.1
-    cypress: 12.17.3
+    cypress: 12.17.4
     cypress-fail-fast: 7.0.1
     d3-shape: 3.2.0
     d3-time-format: 4.1.0
@@ -12980,6 +12981,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"process@npm:^0.11.10":
+  version: 0.11.10
+  resolution: "process@npm:0.11.10"
+  checksum: bfcce49814f7d172a6e6a14d5fa3ac92cc3d0c3b9feb1279774708a719e19acd673995226351a082a9ae99978254e320ccda4240ddc474ba31a76c79491ca7c3
+  languageName: node
+  linkType: hard
+
 "promise-inflight@npm:^1.0.1":
   version: 1.0.1
   resolution: "promise-inflight@npm:1.0.1"
@@ -13038,7 +13046,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"psl@npm:^1.1.28, psl@npm:^1.1.33":
+"psl@npm:^1.1.33":
   version: 1.9.0
   resolution: "psl@npm:1.9.0"
   checksum: 20c4277f640c93d393130673f392618e9a8044c6c7bf61c53917a0fddb4952790f5f362c6c730a9c32b124813e173733f9895add8d26f566ed0ea0654b2e711d
@@ -14988,7 +14996,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tough-cookie@npm:^4.1.2":
+"tough-cookie@npm:^4.1.2, tough-cookie@npm:^4.1.3":
   version: 4.1.3
   resolution: "tough-cookie@npm:4.1.3"
   dependencies:
@@ -14997,16 +15005,6 @@ __metadata:
     universalify: ^0.2.0
     url-parse: ^1.5.3
   checksum: c9226afff36492a52118432611af083d1d8493a53ff41ec4ea48e5b583aec744b989e4280bcf476c910ec1525a89a4a0f1cae81c08b18fb2ec3a9b3a72b91dcc
-  languageName: node
-  linkType: hard
-
-"tough-cookie@npm:~2.5.0":
-  version: 2.5.0
-  resolution: "tough-cookie@npm:2.5.0"
-  dependencies:
-    psl: ^1.1.28
-    punycode: ^2.1.1
-  checksum: 16a8cd090224dd176eee23837cbe7573ca0fa297d7e468ab5e1c02d49a4e9a97bb05fef11320605eac516f91d54c57838a25864e8680e27b069a5231d8264977
   languageName: node
   linkType: hard
 
