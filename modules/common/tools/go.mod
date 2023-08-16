@@ -6,7 +6,7 @@ require (
 	github.com/apache/skywalking-eyes v0.5.0
 	github.com/cosmtrek/air v1.44.0
 	github.com/golangci/golangci-lint v1.54.1
-	k8s.io/code-generator v0.27.4
+	k8s.io/code-generator v0.28.0
 )
 
 require (
@@ -92,7 +92,6 @@ require (
 	github.com/golangci/misspell v0.4.1 // indirect
 	github.com/golangci/revgrep v0.0.0-20220804021717-745bb2f7c2e6 // indirect
 	github.com/golangci/unconvert v0.0.0-20180507085042-28b1c447d1f4 // indirect
-	github.com/google/gnostic v0.6.9 // indirect
 	github.com/google/gnostic-models v0.6.8 // indirect
 	github.com/google/go-cmp v0.5.9 // indirect
 	github.com/google/go-github/v33 v33.0.0 // indirect
