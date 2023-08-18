@@ -15,7 +15,7 @@
  *
  */
 
-import 'cypress-fail-fast'
+import 'cypress-fail-fast';
 
 before(() => {
   cy.clearCookies();
