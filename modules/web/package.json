@@ -28,7 +28,7 @@
     "check:ts": "gts lint",
     "test": "npx jest -c jest.config.js",
     "coverage": "npx jest -c jest.config.js --coverage",
-    "cypress": "wait-on -v -i 10000 http-get://127.0.0.1:9000/api/v1/node http://127.0.0.1:8000/config http://127.0.0.1:8080 && npx cypress run",
+    "cypress": "wait-on -v -i 10000 http-get://127.0.0.1:8080/api/v1/node http://127.0.0.1:8080/config http://127.0.0.1:8080 && npx cypress run",
     "e2e": "concurrently -kill-others --success first \"yarn start\" \"yarn cypress\"",
     "e2e:headed": "concurrently -kill-others --success first \"yarn start:e2e\" \"wait-on -i 10000 http://127.0.0.1:8080 && npx cypress run --headed\"",
     "analyze": "ng build --stats-json && webpack-bundle-analyzer dist/stats.json"
