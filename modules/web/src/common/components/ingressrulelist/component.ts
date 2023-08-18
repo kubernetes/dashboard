@@ -58,7 +58,7 @@ export class IngressRuleFlatListComponent implements OnInit, OnChanges {
               host: rule.host || '',
               path: specPath,
               tlsSecretName: this.tlsHostMap_.get(rule.host) || '',
-            } as IngressRuleFlat)
+            }) as IngressRuleFlat
         );
       })
     );
@@ -84,7 +84,7 @@ export class IngressRuleFlatListComponent implements OnInit, OnChanges {
                 ({
                   host: host,
                   tlsSecretName: spec.secretName,
-                } as IngressSpecTLSFlat)
+                }) as IngressSpecTLSFlat
             );
           })
         )

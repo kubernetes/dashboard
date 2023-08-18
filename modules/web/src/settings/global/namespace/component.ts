@@ -35,7 +35,6 @@ enum BreakpointElementCount {
   XLarge = 5,
   Large = 3,
   Medium = 2,
-  Small = 2,
 }
 
 enum Controls {
@@ -74,7 +73,6 @@ export class NamespaceSettingsComponent implements OnInit, OnDestroy, ControlVal
     [Breakpoints.XLarge, BreakpointElementCount.XLarge],
     [Breakpoints.Large, BreakpointElementCount.Large],
     [Breakpoints.Medium, BreakpointElementCount.Medium],
-    [Breakpoints.Small, BreakpointElementCount.Small],
   ];
 
   private get namespaceFallbackList_(): string[] {
@@ -115,11 +113,11 @@ export class NamespaceSettingsComponent implements OnInit, OnDestroy, ControlVal
       .subscribe(namespaces => (this.namespaces = namespaces));
 
     this.breakpointObserver_
-      .observe([Breakpoints.Small, Breakpoints.Medium, Breakpoints.Large, Breakpoints.XLarge])
+      .observe([Breakpoints.Medium, Breakpoints.Large, Breakpoints.XLarge])
       .pipe(takeUntil(this.unsubscribe_))
       .subscribe(result => {
         const breakpoint = this.visibleNamespacesMap.find(breakpoint => result.breakpoints[breakpoint[0]]);
-        this.visibleNamespaces = breakpoint ? breakpoint[1] : BreakpointElementCount.Small;
+        this.visibleNamespaces = breakpoint ? breakpoint[1] : BreakpointElementCount.Medium;
       });
 
     this.form.valueChanges.pipe(takeUntil(this.unsubscribe_)).subscribe(this.onFormChange_.bind(this));
