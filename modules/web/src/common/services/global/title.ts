@@ -21,7 +21,10 @@ import {GlobalSettingsService} from './globalsettings';
 export class TitleService {
   clusterName = '';
 
-  constructor(private readonly title_: Title, private readonly settings_: GlobalSettingsService) {}
+  constructor(
+    private readonly title_: Title,
+    private readonly settings_: GlobalSettingsService
+  ) {}
 
   update(): void {
     this.settings_.load(
