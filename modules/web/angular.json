@@ -57,7 +57,7 @@
             "index": "src/index.html",
             "main": "src/index.ts",
             "tsConfig": "tsconfig.app.json",
-            "polyfills": "src/polyfills.ts",
+            "polyfills": "polyfills.ts",
             "i18nMissingTranslation": "error",
             "allowedCommonJsDependencies": [
               "truncate-url",
