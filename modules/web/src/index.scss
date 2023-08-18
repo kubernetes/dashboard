@@ -15,7 +15,7 @@
 @use 'sass:map';
 @use './variables' as *;
 @use './mixins' as *;
-@import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
+@import '@angular/material/prebuilt-themes/deeppurple-amber.css';
 @import './dark';
 @import './light';
 
