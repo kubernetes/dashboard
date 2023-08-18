@@ -36,7 +36,7 @@
   // Global style overrides.
 
   a {
-    color: map.get($colors, primary);
+    color: map.get($colors, primary-link);
 
     &:hover {
       color: map.get($colors, primary-hover);
@@ -197,7 +197,7 @@
 
   .kd-nav-item-button-active {
     background-color: theming.mat-color($background-palette, selected-button);
-    color: map.get($colors, primary);
+    color: map.get($colors, primary-link);
   }
 
   .kd-search-input {
@@ -218,7 +218,7 @@
 
   .mat-active,
   .mat-selected {
-    color: map.get($colors, primary) !important;
+    color: map.get($colors, primary-link) !important;
   }
 
   kd-namespace-selector {

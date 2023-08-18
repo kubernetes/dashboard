@@ -54,6 +54,10 @@ export class ChromeComponent implements OnInit {
     this.registerVisibilityChangeHandler_();
   }
 
+  ngAfterViewInit(): void {
+    document.documentElement.style.setProperty('--primary-color', this.globalSettings_.getPrimaryColor());
+  }
+
   getWorkloadsStateName(): string {
     return '/workloads';
   }

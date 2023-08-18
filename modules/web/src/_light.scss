@@ -17,7 +17,8 @@
 @use './theming';
 
 $colors-light: (
-  primary: #326de6,
+  primary: var(--primary-color),
+  primary-link: #326de6,
   primary-hover: #0048ff,
   accent: #fff,
   indicator-success: #008000,

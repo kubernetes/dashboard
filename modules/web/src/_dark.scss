@@ -17,7 +17,8 @@
 @use './theming';
 
 $colors-dark: (
-  primary: #327df4,
+  primary: var(--primary-color),
+  primary-link: #327df4,
   primary-hover: #3e94ee,
   accent: #fff,
   indicator-success: #008000,

@@ -140,4 +140,8 @@ export class GlobalSettingsService {
       ? this.settings_.namespaceFallbackList
       : [this.settings_.defaultNamespace];
   }
+
+  getPrimaryColor(): string {
+    return this.settings_.primaryColor;
+  }
 }

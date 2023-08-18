@@ -74,6 +74,7 @@ export class GlobalSettingsComponent implements OnInit, OnDestroy {
     settings.disableAccessDeniedNotifications = this.settingsService_.getDisableAccessDeniedNotifications();
     settings.defaultNamespace = this.settingsService_.getDefaultNamespace();
     settings.namespaceFallbackList = this.settingsService_.getNamespaceFallbackList();
+    settings.primaryColor = this.settingsService_.getPrimaryColor();
 
     return settings;
   }
