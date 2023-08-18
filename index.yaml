@@ -3,7 +3,7 @@ entries:
   kubernetes-dashboard:
   - apiVersion: v2
     appVersion: v3.0.0-alpha0
-    created: "2023-07-21T09:46:02.953891245Z"
+    created: "2023-08-18T10:40:57.575638302Z"
     dependencies:
     - alias: nginx
       condition: nginx.enabled
@@ -19,7 +19,7 @@ entries:
       repository: https://kubernetes-sigs.github.io/metrics-server/
       version: 3.8.4
     description: General-purpose web UI for Kubernetes clusters
-    digest: 8f32f02b060b1e4d575cdf2ae120595b7a9397c6f90272ce444beff0b6bf9c1f
+    digest: 655637c31a49634f6d76738cf38ff6381fc270677b0c5da16089227c05ebf1e7
     home: https://github.com/kubernetes/dashboard
     icon: https://raw.githubusercontent.com/kubernetes/kubernetes/master/logo/logo.svg
     keywords:
@@ -35,116 +35,8 @@ entries:
     sources:
     - https://github.com/kubernetes/dashboard
     urls:
-    - kubernetes-dashboard-7.0.3.tgz
-    version: 7.0.3
-  - apiVersion: v2
-    appVersion: v3.0.0-alpha0
-    created: "2023-07-08T17:52:53.023141606Z"
-    dependencies:
-    - alias: nginx
-      condition: nginx.enabled
-      name: ingress-nginx
-      repository: https://kubernetes.github.io/ingress-nginx
-      version: 4.7.1
-    - condition: cert-manager.enabled
-      name: cert-manager
-      repository: https://charts.jetstack.io
-      version: v1.11.2
-    - condition: metrics-server.enabled
-      name: metrics-server
-      repository: https://kubernetes-sigs.github.io/metrics-server/
-      version: 3.8.4
-    description: General-purpose web UI for Kubernetes clusters
-    digest: 9e3a175ac62a47b0022eb52781ea921b24cc82aac77852acec1b46b62a91e669
-    home: https://github.com/kubernetes/dashboard
-    icon: https://raw.githubusercontent.com/kubernetes/kubernetes/master/logo/logo.svg
-    keywords:
-    - kubernetes
-    - dashboard
-    kubeVersion: '>=1.21.0-0'
-    maintainers:
-    - email: cdesaintmartin@wiremind.fr
-      name: desaintmartin
-    - email: s.florek91@gmail.com
-      name: floreks
-    name: kubernetes-dashboard
-    sources:
-    - https://github.com/kubernetes/dashboard
-    urls:
-    - kubernetes-dashboard-7.0.2.tgz
-    version: 7.0.2
-  - apiVersion: v2
-    appVersion: v3.0.0-alpha0
-    created: "2023-07-08T17:24:24.653752141Z"
-    dependencies:
-    - alias: nginx
-      condition: nginx.enabled
-      name: ingress-nginx
-      repository: https://kubernetes.github.io/ingress-nginx
-      version: 4.7.1
-    - condition: cert-manager.enabled
-      name: cert-manager
-      repository: https://charts.jetstack.io
-      version: v1.11.2
-    - condition: metrics-server.enabled
-      name: metrics-server
-      repository: https://kubernetes-sigs.github.io/metrics-server/
-      version: 3.8.4
-    description: General-purpose web UI for Kubernetes clusters
-    digest: b9e7e033453aa5965452f892b5c93dd00a1e9f15be6ee47cc9b89d7639bade73
-    home: https://github.com/kubernetes/dashboard
-    icon: https://raw.githubusercontent.com/kubernetes/kubernetes/master/logo/logo.svg
-    keywords:
-    - kubernetes
-    - dashboard
-    kubeVersion: '>=1.21.0-0'
-    maintainers:
-    - email: cdesaintmartin@wiremind.fr
-      name: desaintmartin
-    - email: s.florek91@gmail.com
-      name: floreks
-    name: kubernetes-dashboard
-    sources:
-    - https://github.com/kubernetes/dashboard
-    urls:
-    - kubernetes-dashboard-7.0.1.tgz
-    version: 7.0.1
-  - apiVersion: v2
-    appVersion: v3.0.0-alpha0
-    created: "2023-07-07T15:26:08.94210227Z"
-    dependencies:
-    - alias: nginx
-      condition: nginx-ingress.enabled
-      name: ingress-nginx
-      repository: https://kubernetes.github.io/ingress-nginx
-      version: 4.7.1
-    - condition: cert-manager.enabled
-      name: cert-manager
-      repository: https://charts.jetstack.io
-      version: v1.11.2
-    - condition: metrics-server.enabled
-      name: metrics-server
-      repository: https://kubernetes-sigs.github.io/metrics-server/
-      version: 3.8.4
-    description: General-purpose web UI for Kubernetes clusters
-    digest: 6579bafef939350afba6b5657b51724dd38aa04bc9dc4470b8d35a1d1f6ce851
-    home: https://github.com/kubernetes/dashboard
-    icon: https://raw.githubusercontent.com/kubernetes/kubernetes/master/logo/logo.svg
-    keywords:
-    - kubernetes
-    - dashboard
-    kubeVersion: '>=1.21.0-0'
-    maintainers:
-    - email: cdesaintmartin@wiremind.fr
-      name: desaintmartin
-    - email: s.florek91@gmail.com
-      name: floreks
-    name: kubernetes-dashboard
-    sources:
-    - https://github.com/kubernetes/dashboard
-    urls:
-    - kubernetes-dashboard-7.0.0.tgz
-    version: 7.0.0
+    - kubernetes-dashboard-7.0.0-alpha0.tgz
+    version: 7.0.0-alpha0
   - apiVersion: v2
     appVersion: v2.7.0
     created: "2023-05-19T13:49:12.656659861Z"
@@ -1445,4 +1337,4 @@ entries:
     urls:
     - kubernetes-dashboard-2.0.1.tgz
     version: 2.0.1
-generated: "2023-07-21T09:46:02.937420742Z"
+generated: "2023-08-18T10:40:57.564770006Z"
