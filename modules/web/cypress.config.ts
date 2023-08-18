@@ -12,19 +12,25 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-const { defineConfig } = require('cypress');
+import {defineConfig} from 'cypress'
+import failFast from 'cypress-fail-fast/plugin';
 
-module.exports = defineConfig({
-  "e2e": {
-    "baseUrl": "http://localhost:8080",
-    "supportFile": "./cypress/support/index.ts",
-    "video": false,
-    "chromeWebSecurity": false,
-    "screenshotOnRunFailure": true,
-    "videoCompression": false,
-    "pageLoadTimeout": 10000,
-    "viewportHeight": 1080,
-    "viewportWidth": 1920,
-    "testIsolation": false,
+export default defineConfig({
+  e2e: {
+    baseUrl: "http://localhost:8080",
+    supportFile: "cypress/support/index.ts",
+    specPattern: "cypress/e2e/**/*.ts",
+    video: false,
+    chromeWebSecurity: false,
+    screenshotOnRunFailure: true,
+    videoCompression: false,
+    pageLoadTimeout: 10000,
+    viewportHeight: 1080,
+    viewportWidth: 1920,
+    testIsolation: false,
+    setupNodeEvents: (on, config) => {
+      failFast(on, config);
+      return config;
+    },
   },
 });
