@@ -59,6 +59,7 @@ serve-https: $(PRE) ## Starts development version of the application with HTTPS 
 # Note #2: Does not work with "kind".
 # Note #3: Darwin doesn't work at the moment, so we are using Linux by default.
 .PHONY: run
+run: export OS := linux
 run: $(PRE) --ensure-compose-down --compose ## Starts production version of the application on https://localhost:4443
 	@KUBECONFIG=$(KUBECONFIG) \
 	SYSTEM_BANNER=$(SYSTEM_BANNER) \
@@ -87,6 +88,7 @@ deploy-dev: build-cross ## Builds and deploys all module containers to the confi
 	@$(MAKE) --no-print-directory -C $(MODULES_DIRECTORY) TARGET=deploy-dev
 
 .PHONY: image
+image: export OS := linux
 image: build ## Builds containers targeting host architecture
 	@$(MAKE) --no-print-directory -C $(MODULES_DIRECTORY) TARGET=image
 
