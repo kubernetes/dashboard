@@ -3,7 +3,7 @@
 *************************************************************************************************
 
 Congratulations! You have just installed Kubernetes Dashboard in your cluster.
-{{ if and (has "localhost" .Values.app.ingress.hosts) (eq .Values.app.ingress.ingressClassName "nginx") (.Values.nginx.enabled) }}
+{{ if and (has "localhost" .Values.app.ingress.hosts) (eq .Values.app.ingress.ingressClassName "internal-nginx") (.Values.nginx.enabled) }}
 To access Dashboard run:
   kubectl -n kubernetes-dashboard port-forward svc/kubernetes-dashboard-nginx-controller 8443:443
 
@@ -15,7 +15,7 @@ Dashboard will be available at:
   https://localhost:8443
 {{- end }}
 
-{{- if and (has "localhost" .Values.app.ingress.hosts) (eq .Values.app.ingress.ingressClassName "nginx") (not .Values.nginx.enabled) }}
+{{- if and (has "localhost" .Values.app.ingress.hosts) (eq .Values.app.ingress.ingressClassName "internal-nginx") (not .Values.nginx.enabled) }}
 It looks like you already have nginx installed in your cluster. First find the namespace where it is installed and then find its main service name. By default, it should be located in namespace called nginx or nginx-ingress and service name should be nginx-controller.
 
 To access Dashboard run (replace placeholders with actual names):

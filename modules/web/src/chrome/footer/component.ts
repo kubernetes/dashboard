@@ -27,7 +27,10 @@ export class FooterComponent {
   latestCopyrightYear: number;
   versionInfo: VersionInfo;
 
-  constructor(@Inject(AssetsService) public assets: AssetsService, config: ConfigService) {
+  constructor(
+    @Inject(AssetsService) public assets: AssetsService,
+    config: ConfigService
+  ) {
     this.versionInfo = config.getVersionInfo();
     this.latestCopyrightYear = new Date().getFullYear();
   }

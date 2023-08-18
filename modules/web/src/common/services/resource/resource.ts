@@ -28,7 +28,10 @@ export class ResourceService<T> extends ResourceBase {
    * We need to provide HttpClient here since the base is not annotated with
    * @Injectable
    */
-  constructor(readonly http: HttpClient, private readonly settings_: GlobalSettingsService) {
+  constructor(
+    readonly http: HttpClient,
+    private readonly settings_: GlobalSettingsService
+  ) {
     super(http);
   }
 

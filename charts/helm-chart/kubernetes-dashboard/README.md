@@ -8,7 +8,9 @@
 # ! Breaking change !
 Starting from the release `v7` for the Helm chart and `v3` for the Kubernetes Dashboard, underlying architecture has changed, and it requires a clean installation. Please remove previous installation first.
 
-Kubernetes Dashboard now requires `cert-manager` and `nginx-ingress-controller` to work properly. They will be automatically installed with the Helm chart. In case you already have them installed, simply set `--set=nginx.enabled=false` and `--set=cert-manager.enabled=false` when installing the chart to disable installation of those dependencies.
+Kubernetes Dashboard now uses `cert-manager` and `nginx-ingress-controller` by default to work properly. They will be automatically installed with the Helm chart. 
+In case you already have them installed, simply set `--set=nginx.enabled=false` and `--set=cert-manager.enabled=false` when installing the chart to disable installation of those dependencies.
+If you want to use different software in addition to disabling `nginx` and `cert-manager` you also need to set `--set=app.ingress.enabled=false` to make sure our default `Ingress` resource will not be installed.
 
 ## Introduction
 
@@ -109,7 +111,10 @@ incompatible breaking change needing manual actions.
 
 ### Upgrade from 6.x.x to 7.x.x
 
-We recommend doing a clean installation. Kubernetes Dashboard `v3` introduced a big architecture changes and now requires `cert-manager`, and `nginx-ingress-controller` to work properly. In case those are already installed in your cluster, simply set `--set=nginx.enabled=false` and `--set=cert-manager.enabled=false` when upgrading.
+We recommend doing a clean installation. Kubernetes Dashboard `v3` introduced a big architecture changes and now uses `cert-manager`, 
+and `nginx-ingress-controller` by default to work properly. In case those are already installed in your cluster, simply set `--set=nginx.enabled=false` 
+and `--set=cert-manager.enabled=false` when upgrading. If you want to use different software in addition to disabling `nginx` and `cert-manager` you also 
+need to set `--set=app.ingress.enabled=false` to make sure our default `Ingress` resource will not be installed.
 
 ### Upgrade from 5.x.x to 6.x.x
 

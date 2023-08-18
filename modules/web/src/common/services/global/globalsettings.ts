@@ -44,7 +44,10 @@ export class GlobalSettingsService {
   private isInitialized_ = false;
   private isPageVisible_ = true;
 
-  constructor(private readonly http_: HttpClient, private readonly authorizer_: AuthorizerService) {}
+  constructor(
+    private readonly http_: HttpClient,
+    private readonly authorizer_: AuthorizerService
+  ) {}
 
   init(): Promise<GlobalSettings> {
     this.onPageVisibilityChange.pipe(takeUntil(this.unsubscribe_)).subscribe(visible => {
