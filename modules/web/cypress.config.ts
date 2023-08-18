@@ -12,14 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {defineConfig} from 'cypress'
+import {defineConfig} from 'cypress';
 import failFast from 'cypress-fail-fast/plugin';
 
 export default defineConfig({
   e2e: {
-    baseUrl: "http://localhost:8080",
-    supportFile: "cypress/support/index.ts",
-    specPattern: "cypress/e2e/**/*.ts",
+    baseUrl: 'http://localhost:8080',
+    supportFile: 'cypress/support/index.ts',
+    specPattern: 'cypress/e2e/**/*.ts',
     video: false,
     chromeWebSecurity: false,
     screenshotOnRunFailure: true,
