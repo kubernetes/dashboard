@@ -18,7 +18,8 @@ Kubernetes Dashboard is a general purpose, web-based UI for Kubernetes clusters.
 ## Installation
 
 Kubernetes Dashboard supports both Helm and Manifest-based installation. Since release `v3.0.0` using Helm Chart should be faster and simpler in general as it will install
-dependencies such as `cert-manager`, `nginx-ingress-controller` and `metrics-server` for you.
+dependencies such as `cert-manager`, `nginx-ingress-controller` and `metrics-server` for you. In case you are using different software to handle certificates, ingress/egress traffic, etc.
+it is possible to disable those dependencies by overriding [helm chart values](charts/helm-chart/kubernetes-dashboard/values.yaml).
 
 ### Helm
 
