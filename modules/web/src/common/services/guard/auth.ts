@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import {Injectable} from '@angular/core';
-import { ActivatedRouteSnapshot, Router, UrlTree } from '@angular/router';
+import {ActivatedRouteSnapshot, Router, UrlTree} from '@angular/router';
 import {LoginStatus} from '@api/root.api';
 import {Observable, of} from 'rxjs';
 import {catchError, switchMap, take} from 'rxjs/operators';
