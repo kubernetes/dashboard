@@ -323,6 +323,12 @@ extras:
   # to avoid accidental changes in the cluster outside the standard CI/CD.
   #
   # It is NOT RECOMMENDED to use this version in production.
+  # With additionalClusterRoles, you can grant additional permissions to the dashboard, e.g to CRDs.
+  additionalClusterRoles: []
+  # - view
+
+  #
+  # It is NOT RECOMMENDED to use this version in production.
   # Instead, you should review the role and remove all potentially sensitive parts such as
   # access to persistentvolumes, pods/log etc.
   clusterReadOnlyRole: false
