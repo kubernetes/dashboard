@@ -23,6 +23,7 @@ export default defineConfig({
     video: false,
     chromeWebSecurity: false,
     screenshotOnRunFailure: true,
+    screenshotsFolder: '../../screenshots',
     videoCompression: false,
     pageLoadTimeout: 10000,
     requestTimeout: 10000,

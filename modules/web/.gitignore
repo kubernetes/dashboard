@@ -34,7 +34,3 @@ dist/
 !.yarn/releases
 !.yarn/sdks
 !.yarn/versions
-
-# Cypress
-
-cypress/screenshots
