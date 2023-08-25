@@ -19,7 +19,6 @@ ifeq ($(BUILDOS),Linux)
 endif
 ifeq ($(BUILDOS),Darwin)
 	BUILDOS=darwin
-	export OS := linux
 endif
 
 # ARCH is the target build architecture. Unless overridden during build, host architecture (BUILDARCH) will be used

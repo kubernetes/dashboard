@@ -29,3 +29,6 @@ node_modules
 
 # Helm deps
 charts/helm-chart/kubernetes-dashboard/charts
+
+# Cypress
+screenshots

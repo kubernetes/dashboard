@@ -19,7 +19,7 @@ parserOptions:
   project:
     - tsconfig.app.json
     - tsconfig.spec.json
-    - cypress/tsconfig.e2e.json
+    - cypress/tsconfig.json
   sourceType: module
 extends:
   - "./node_modules/gts"

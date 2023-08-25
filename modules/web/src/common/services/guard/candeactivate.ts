@@ -14,13 +14,13 @@
 
 import {Injectable} from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
-import {CanDeactivate} from '@angular/router';
+
 import {ConfirmDialog, ConfirmDialogConfig} from '@common/dialogs/config/dialog';
 import {ICanDeactivate} from '@common/interfaces/candeactivate';
 import {Observable, of} from 'rxjs';
 
 @Injectable()
-export class CanDeactivateGuard implements CanDeactivate<ICanDeactivate> {
+export class CanDeactivateGuard {
   constructor(private readonly dialog_: MatDialog) {}
 
   canDeactivate(component: ICanDeactivate): Observable<boolean> {
