@@ -104,7 +104,7 @@
     "codelyzer": "6.0.2",
     "concurrently": "8.2.0",
     "cypress": "12.17.4",
-    "cypress-fail-fast": "7.0.2",
+    "cypress-fail-fast": "7.0.3",
     "del": "7.0.0",
     "eslint": "8.47.0",
     "eslint-plugin-node": "11.1.0",

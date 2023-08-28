@@ -6364,14 +6364,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"cypress-fail-fast@npm:7.0.2":
-  version: 7.0.2
-  resolution: "cypress-fail-fast@npm:7.0.2"
+"cypress-fail-fast@npm:7.0.3":
+  version: 7.0.3
+  resolution: "cypress-fail-fast@npm:7.0.3"
   dependencies:
     chalk: 4.1.2
   peerDependencies:
     cypress: ">=8.0.0"
-  checksum: 840161f124bf28d03657e1223ee9ce69f7ab834ff6e83df90f48c2bdfcea760db287fa7a787e200e926683a0231e4d189da53758d5b0099b781fc899d30fb441
+  checksum: 06d25b65ad850ed0f79c79f6029a779709c2279885be9b5ab95e8d78f73606a0ead8efeaf152e9b0867bd54a192451f157b7bb1be12d001e813ce9c88c7b2616
   languageName: node
   linkType: hard
 
@@ -10614,7 +10614,7 @@ __metadata:
     core-js: 3.32.1
     crop-url: 4.0.1
     cypress: 12.17.4
-    cypress-fail-fast: 7.0.2
+    cypress-fail-fast: 7.0.3
     d3-shape: 3.2.0
     d3-time-format: 4.1.0
     del: 7.0.0
