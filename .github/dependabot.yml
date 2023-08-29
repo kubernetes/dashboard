@@ -33,3 +33,5 @@ updates:
     ignore:
       # Angular staffs should be manually updated at once.
       - dependency-name: "@angular*"
+      # K8s modules should be manually updated at once.
+      - dependency-name: "k8s.io/*"

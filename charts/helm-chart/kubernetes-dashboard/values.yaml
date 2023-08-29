@@ -85,7 +85,7 @@ app:
     # https://localhost:8443
     - localhost
     # - kubernetes.dashboard.domain.com
-    ingressClassName: nginx
+    ingressClassName: internal-nginx
     pathType: ImplementationSpecific
     secretName: kubernetes-dashboard-certs
     issuer:
@@ -93,6 +93,7 @@ app:
       # Scope determines what kind of issuer annotation will be used on ingress resource
       # - default - adds 'cert-manager.io/issuer'
       # - cluster - adds 'cert-manager.io/cluster-issuer'
+      # - disabled - disables cert-manager annotations
       scope: default
     labels: {}
     annotations: {}
@@ -289,6 +290,14 @@ cert-manager:
 ## Enable this if you don't already have nginx-ingress enabled on your cluster.
 nginx:
   enabled: true
+  controller:
+    electionID: ingress-controller-leader
+    ingressClassResource:
+      name: internal-nginx
+      default: false
+      controllerValue: k8s.io/internal-ingress-nginx
+    service:
+      type: ClusterIP
 
 ## Extra configurations:
 ## - manifests

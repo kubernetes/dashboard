@@ -121,51 +121,65 @@
                   "with": "src/environments/environment.prod.ts"
                 }
               ]
-            },
-            "production-en": {
-              "budgets": [
-                {
-                  "type": "anyComponentStyle",
-                  "maximumWarning": "6kb"
-                }
-              ],
-              "aot": true,
-              "optimization": true,
-              "outputHashing": "all",
-              "sourceMap": false,
-              "namedChunks": false,
-              "localize": false,
-              "extractLicenses": true,
-              "vendorChunk": false,
-              "buildOptimizer": true,
-              "fileReplacements": [
-                {
-                  "replace": "src/environments/environment.ts",
-                  "with": "src/environments/environment.prod.ts"
-                }
-              ]
             }
+          }
+        },
+        "esbuild": {
+          "builder": "@angular-devkit/build-angular:browser-esbuild",
+          "options": {
+            "optimization": false,
+            "progress": true,
+            "outputPath": "dist",
+            "index": "src/index.html",
+            "main": "src/index.ts",
+            "tsConfig": "tsconfig.app.json",
+            "polyfills": "polyfills.ts",
+            "i18nMissingTranslation": "error",
+            "allowedCommonJsDependencies": [
+              "truncate-url",
+              "strip-ansi"
+            ],
+            "assets": [
+              {
+                "glob": "**/*",
+                "input": "src/assets",
+                "output": "/assets"
+              },
+              {
+                "glob": "robots.txt",
+                "input": "src/assets",
+                "output": "/"
+              },
+              {
+                "glob": "**/*",
+                "input": "node_modules/ace-builds/src-min-noconflict",
+                "output": "/ace"
+              }
+            ],
+            "stylePreprocessorOptions": {
+              "includePaths": [
+                "src"
+              ]
+            },
+            "styles": [
+              "node_modules/material-design-icons/iconfont/material-icons.css",
+              "node_modules/roboto-fontface/css/roboto/roboto-fontface.css",
+              "node_modules/xterm/css/xterm.css",
+              "src/index.scss"
+            ],
+            "scripts": [
+              "node_modules/sockjs-client/dist/sockjs.min.js",
+              "node_modules/systemjs/dist/s.js",
+              "node_modules/systemjs/dist/extras/named-register.js",
+              "node_modules/systemjs/dist/extras/amd.js"
+            ]
           }
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "kubernetes-dashboard:build",
+            "browserTarget": "kubernetes-dashboard:esbuild",
             "port": 8080
-          },
-          "configurations": {
-            "production": {
-              "browserTarget": "kubernetes-dashboard:build:production"
-            },
-            "production-en": {
-              "browserTarget": "kubernetes-dashboard:build:production-en"
-            }
-          }
-        },
-        "extract-i18n": {
-          "builder": "@angular-devkit/build-angular:extract-i18n",
-          "options": {
-            "browserTarget": "kubernetes-dashboard:build"
           }
         },
         "extract-i18n-merge": {

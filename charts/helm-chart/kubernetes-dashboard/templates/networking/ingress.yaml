@@ -13,7 +13,7 @@
 # limitations under the License.
 
 {{- if .Values.app.ingress.enabled }}
-{{- if not (or (eq .Values.app.ingress.issuer.scope "default") (eq .Values.app.ingress.issuer.scope "cluster")) }}
+{{- if not (or (eq .Values.app.ingress.issuer.scope "disabled") (eq .Values.app.ingress.issuer.scope "default") (eq .Values.app.ingress.issuer.scope "cluster")) }}
 {{- fail "value of .Values.app.ingress.issuer.scope must be one of [default, cluster]"}}
 {{- end }}
 
@@ -32,7 +32,7 @@ metadata:
     {{- if eq .Values.app.ingress.issuer.scope "cluster" }}
     cert-manager.io/cluster-issuer: {{ .Values.app.ingress.issuer.name }}
     {{- end }}
-    {{- if eq .Values.app.ingress.ingressClassName "nginx" }}
+    {{- if eq .Values.app.ingress.ingressClassName "internal-nginx" }}
     nginx.ingress.kubernetes.io/ssl-redirect: "true"
     {{- end }}
     {{- with .Values.app.ingress.annotations }}

@@ -3,9 +3,11 @@
   "compilerOptions": {
     "strict": true,
     "baseUrl": "../",
-    "types": ["cypress", "node"]
+    "types": ["cypress", "node"],
+    "sourceMap": false,
   },
   "include": [
     "**/*.ts",
+    "../cypress.config.ts"
   ]
 }

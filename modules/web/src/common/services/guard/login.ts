@@ -13,14 +13,14 @@
 // limitations under the License.
 
 import {Injectable} from '@angular/core';
-import {CanActivate, Router, UrlTree} from '@angular/router';
+import {Router, UrlTree} from '@angular/router';
 import {LoginStatus} from '@api/root.api';
 import {Observable, of} from 'rxjs';
 import {catchError, switchMap, take} from 'rxjs/operators';
 import {AuthService} from '../global/authentication';
 
 @Injectable()
-export class LoginGuard implements CanActivate {
+export class LoginGuard {
   constructor(
     private readonly authService_: AuthService,
     private readonly router_: Router
