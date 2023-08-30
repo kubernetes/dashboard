@@ -2180,9 +2180,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@cypress/webpack-preprocessor@npm:5.17.1":
-  version: 5.17.1
-  resolution: "@cypress/webpack-preprocessor@npm:5.17.1"
+"@cypress/webpack-preprocessor@npm:6.0.0":
+  version: 6.0.0
+  resolution: "@cypress/webpack-preprocessor@npm:6.0.0"
   dependencies:
     bluebird: 3.7.1
     debug: ^4.3.4
@@ -2190,9 +2190,9 @@ __metadata:
   peerDependencies:
     "@babel/core": ^7.0.1
     "@babel/preset-env": ^7.0.0
-    babel-loader: ^8.0.2 || ^9
+    babel-loader: ^8.3 || ^9
     webpack: ^4 || ^5
-  checksum: 4dc2babc77df5fad7eb16629ca716f73df930739563be6bff4e336f9a8f08cf80915a7eed2ea582294ed67336313b62cc30d04ebe3fc2a9b1e48e1445be3c297
+  checksum: 257c470e5a3bf9795fd7d388bdc0e91b3da87dbb94ec4aa70966e63b8d0640efedf3ad9258b84e83b99a112fa5dbdbbc83b4aaeeeb5511a91e2ee2c8a659df43
   languageName: node
   linkType: hard
 
@@ -10730,7 +10730,7 @@ __metadata:
     "@babel/core": 7.22.11
     "@babel/preset-env": 7.22.10
     "@babel/register": 7.22.5
-    "@cypress/webpack-preprocessor": 5.17.1
+    "@cypress/webpack-preprocessor": 6.0.0
     "@swimlane/ngx-charts": 20.4.1
     "@types/d3": 7.4.0
     "@types/d3-scale": 4.0.4
