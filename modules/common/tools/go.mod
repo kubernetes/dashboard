@@ -4,7 +4,7 @@ go 1.20
 
 require (
 	github.com/apache/skywalking-eyes v0.5.0
-	github.com/cosmtrek/air v1.44.0
+	github.com/cosmtrek/air v1.45.0
 	github.com/golangci/golangci-lint v1.54.2
 	k8s.io/code-generator v0.28.1
 )
@@ -12,6 +12,7 @@ require (
 require (
 	4d63.com/gocheckcompilerdirectives v1.2.1 // indirect
 	4d63.com/gochecknoglobals v0.2.1 // indirect
+	dario.cat/mergo v1.0.0 // indirect
 	github.com/4meepo/tagalign v1.3.2 // indirect
 	github.com/Abirdcfly/dupword v0.0.12 // indirect
 	github.com/Antonboom/errname v0.1.12 // indirect
