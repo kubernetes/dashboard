@@ -105,7 +105,7 @@
     "concurrently": "8.2.1",
     "cypress": "13.0.0",
     "cypress-fail-fast": "7.0.3",
-    "del": "7.0.0",
+    "del": "7.1.0",
     "eslint": "8.48.0",
     "eslint-plugin-node": "11.1.0",
     "eslint-plugin-prettier": "5.0.0",
