@@ -23,4 +23,12 @@ export class RawResource {
     resourceUrl += `/name/${objectMeta.name}`;
     return resourceUrl;
   }
+
+  static getIngressRouteUrl(namespace: string, name?: string): string {
+    let resourceUrl = `api/v1/_raw/ingressroutes.traefik.io/namespace/${namespace}`;
+    if (name !== undefined) {
+      resourceUrl += `/name/${name}`;
+    }
+    return resourceUrl;
+  }
 }

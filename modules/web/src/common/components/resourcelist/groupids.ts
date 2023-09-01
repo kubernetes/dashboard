@@ -32,6 +32,7 @@ export enum ListIdentifier {
   horizontalpodautoscaler = 'horizontalPodAutoscalerList',
   replicaSet = 'replicaSetList',
   ingress = 'ingressList',
+  ingressRoute = 'ingressRouteList',
   service = 'serviceList',
   serviceAccount = 'serviceAccountList',
   networkPolicy = 'networkPolicyList',

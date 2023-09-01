@@ -76,6 +76,16 @@ limitations under the License.
                    id="nav-ingressclass"
                    i18n>Ingress Classes </kd-nav-item> -->
       <kd-nav-item class="kd-nav-item"
+                   state="/ingressroute"
+                   id="nav-ingressroute"
+                   [namespaced]="true"
+                   i18n>Ingresses Route</kd-nav-item>
+      <kd-nav-item class="kd-nav-item"
+                   state="/ingressroutetcp"
+                   id="nav-ingressroutetcp"
+                   i18n>Ingress Route TCP </kd-nav-item>
+
+      <kd-nav-item class="kd-nav-item"
                    state="/service"
                    id="nav-service"
                    [namespaced]="true"

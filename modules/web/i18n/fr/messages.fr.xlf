@@ -98,10 +98,6 @@
         <source>New Replica Set</source>
         <target>Nouveau Replica Set</target>
       </trans-unit>
-      <trans-unit id="1268395641466243700" datatype="html">
-        <source> Every Service Account has a Secret with valid Bearer Token that can be used to log in to Dashboard. To find out more about how to configure and use Bearer Tokens, please refer to the <x id="START_LINK" ctype="x-a" equiv-text="&quot;\uFFFD#2\uFFFD&quot;"/>Authentication<x id="CLOSE_LINK" ctype="x-a" equiv-text="&quot;\uFFFD/#2\uFFFD&quot;"/> section. </source>
-        <target>Chaque compte de service a un Secret associé avec un jeton porteur (Bearer Token) valide qui peut être utilisé pour se connecter au Dashboard. Pour en savoir plus sur la façon de configurer et utiliser des jetons porteurs, veuillez vous référer à la section <x id="START_LINK" ctype="x-a" equiv-text="&quot;\uFFFD/#2\uFFFD&quot;"/>Authentification<x id="CLOSE_LINK" ctype="x-a" equiv-text="&quot;\uFFFD/#2\uFFFD&quot;"/>. </target>
-      </trans-unit>
       <trans-unit id="1292699022746959928" datatype="html">
         <source>Non-resource URL</source>
         <target>URL non-ressource</target>
@@ -274,10 +270,6 @@
         <source> Deploy </source>
         <target>Déployer </target>
       </trans-unit>
-      <trans-unit id="1813894172148248223" datatype="html">
-        <source>Ingress Classes </source>
-        <target>Classes Ingress </target>
-      </trans-unit>
       <trans-unit id="1828068287723658160" datatype="html">
         <source>Failed: </source>
         <target>Échoués: </target>
@@ -397,10 +389,6 @@
       <trans-unit id="2132886845235480834" datatype="html">
         <source>Resource type</source>
         <target>Type de la ressource</target>
-      </trans-unit>
-      <trans-unit id="2135976822395163664" datatype="html">
-        <source> Please select the kubeconfig file that you have created to configure access to the cluster. To find out more about how to configure and use kubeconfig file, please refer to the <x id="START_LINK" ctype="x-a" equiv-text="&quot;\uFFFD#2\uFFFD&quot;"/>Configure Access to Multiple Clusters<x id="CLOSE_LINK" ctype="x-a" equiv-text="&quot;\uFFFD/#2\uFFFD&quot;"/> section. </source>
-        <target>Veuillez sélectionner le fichier kubeconfig que vous avez créé pour accéder au cluster. Pour en savoir plus sur la façon de configurer et utiliser un fichier kubeconfig, veuillez vous référer à la section <x id="START_LINK" ctype="x-a" equiv-text="&quot;\uFFFD#2\uFFFD&quot;"/>Configurer l&apos;accès à plusieurs clusters<x id="CLOSE_LINK" ctype="x-a" equiv-text="&quot;\uFFFD#2\uFFFD&quot;"/>. </target>
       </trans-unit>
       <trans-unit id="214884265476562782" datatype="html">
         <source>Seccomp Profile Type</source>
@@ -1450,9 +1438,9 @@
         <source>Monitors</source>
         <target>Moniteurs</target>
       </trans-unit>
-      <trans-unit id="5813540454109761631" datatype="html">
-        <source>Ingresses </source>
-        <target>Ingresses </target>
+      <trans-unit id="4448312914724696881" datatype="html">
+        <source>Ingresses Route</source>
+        <target state="new">Ingresses Route</target>
       </trans-unit>
       <trans-unit id="5818955156850908956" datatype="html">
         <source>Secret name</source>
@@ -2064,10 +2052,6 @@
         <source>Workloads</source>
         <target>Charges de travail</target>
       </trans-unit>
-      <trans-unit id="7927427229271598667" datatype="html">
-        <source> Make sure that support for basic authentication is enabled in the cluster. To find out more about how to configure basic authentication, please refer to the <x id="START_LINK" ctype="x-a" equiv-text="&quot;\uFFFD#2\uFFFD&quot;"/>Authenticating<x id="CLOSE_LINK" ctype="x-a" equiv-text="&quot;[\uFFFD/#2\uFFFD|\uFFFD/#3\uFFFD]&quot;"/> and <x id="START_LINK_1" equiv-text="&quot;\uFFFD#3\uFFFD&quot;"/>ABAC Mode<x id="CLOSE_LINK" ctype="x-a" equiv-text="&quot;[\uFFFD/#2\uFFFD|\uFFFD/#3\uFFFD]&quot;"/> sections. </source>
-        <target>Assurez-vous que le support pour l&apos;authentification Basic est activéde pour le cluster. Pour en savoir plus sur la façon de configurer l&apos;authentification Basic, veuillez vous référer aux sections <x id="START_LINK" ctype="x-a" equiv-text="&lt;a&gt;"/>S&apos;authentifier<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/> et <x id="START_LINK_1" ctype="x-a" equiv-text="&lt;a&gt;"/>Mode ABAC<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/>. </target>
-      </trans-unit>
       <trans-unit id="7941428823403788384" datatype="html">
         <source> Create </source>
         <target>Créer </target>
@@ -2447,6 +2431,18 @@
       <trans-unit id="97066167691656299" datatype="html">
         <source>Provisioner</source>
         <target>Approvisionneur</target>
+      </trans-unit>
+      <trans-unit id="7634552167815937542" datatype="html">
+        <source>Ingress Route TCP </source>
+        <target state="new">Ingress Route TCP </target>
+      </trans-unit>
+      <trans-unit id="6060619257650890968" datatype="html">
+        <source>IngressRoutes</source>
+        <target state="new">IngressRoutes</target>
+      </trans-unit>
+      <trans-unit id="2632454463313076265" datatype="html">
+        <source>IngressRoutesTCP</source>
+        <target state="new">IngressRoutesTCP</target>
       </trans-unit>
     </body>
   </file>

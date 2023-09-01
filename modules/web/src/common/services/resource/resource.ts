@@ -55,7 +55,8 @@ export class ResourceService<T> extends ResourceBase {
 }
 
 @Injectable()
-export class NamespacedResourceService<T> extends ResourceBase {
+export class
+NamespacedResourceService<T> extends ResourceBase {
   constructor(
     readonly http: HttpClient,
     private readonly namespace_: NamespaceService,

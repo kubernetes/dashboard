@@ -190,6 +190,8 @@ export enum IBreadcrumbMessageKey {
   Service = 'Service',
   Ingresses = 'Ingresses',
   IngressClasses = 'IngressClasses',
+  IngressRoutes = 'IngressRoutes',
+  IngressRoutesTCP = 'IngressRoutesTCP',
   Services = 'Services',
   ConfigAndStorage = 'ConfigAndStorage',
   ConfigMaps = 'ConfigMaps',
