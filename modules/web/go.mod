@@ -5,7 +5,7 @@ go 1.20
 require (
 	github.com/golang/glog v1.1.2
 	github.com/spf13/pflag v1.0.5
-	golang.org/x/text v0.12.0
+	golang.org/x/text v0.13.0
 	k8s.io/dashboard/certificates v0.0.0-00010101000000-000000000000
 )
 
