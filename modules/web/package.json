@@ -133,7 +133,7 @@
     "semver": "7.5.4",
     "source-map-explorer": "2.5.3",
     "stylelint": "15.10.3",
-    "stylelint-config-standard-scss": "10.0.0",
+    "stylelint-config-standard-scss": "11.0.0",
     "stylelint-no-unsupported-browser-features": "7.0.0",
     "stylelint-order": "6.0.3",
     "tar": "6.1.15",
