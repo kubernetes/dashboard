@@ -10974,7 +10974,7 @@ __metadata:
     material-design-icons: 3.0.1
     minimatch: 9.0.3
     minimist: 1.2.8
-    ng-extract-i18n-merge: 2.7.0
+    ng-extract-i18n-merge: 2.7.1
     ngx-cookie-service: 16.0.1
     ngx-pipes: 3.2.2
     node-gyp: 9.4.0
@@ -11967,20 +11967,20 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ng-extract-i18n-merge@npm:2.7.0":
-  version: 2.7.0
-  resolution: "ng-extract-i18n-merge@npm:2.7.0"
+"ng-extract-i18n-merge@npm:2.7.1":
+  version: 2.7.1
+  resolution: "ng-extract-i18n-merge@npm:2.7.1"
   dependencies:
     "@angular-devkit/architect": ^0.1600.0-next.6
     "@angular-devkit/core": ^16.0.0-next.6
     "@angular-devkit/schematics": ^16.0.0-next.6
     "@schematics/angular": ^16.0.0-next.6
-    xliff-simple-merge: ~1.0.1
+    xliff-simple-merge: ~1.1.2
     xml_normalize: ^1.0.0
     xmldoc: ~1.1.2
   peerDependencies:
     "@angular-devkit/build-angular": ^13.0.0 || ^14.0.0 || ^15.0.0 || ^16.0.0
-  checksum: 03661e2ca9ebbaf390d376cff3f823d4acd69912a3bbe2b2f2394c71a953779496866bcfcf57e9337aff52e2c293cf2d58833aef389c205e70eace061a52885e
+  checksum: 1db2181fc58e612da18ad3bce306fb6bac044d50b0d106185512ed66db2ba18c57f216e0f7e576ec26d6939b6698dd5e36001952369c36223379af1beadb266e
   languageName: node
   linkType: hard
 
@@ -16066,16 +16066,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"xliff-simple-merge@npm:~1.0.1":
-  version: 1.0.2
-  resolution: "xliff-simple-merge@npm:1.0.2"
+"xliff-simple-merge@npm:~1.1.2":
+  version: 1.1.2
+  resolution: "xliff-simple-merge@npm:1.1.2"
   dependencies:
     commander: ~8.3.0
     js-levenshtein: ~1.1.6
     xmldoc: ~1.1.2
   bin:
     xliff-simple-merge: dist/src/index.js
-  checksum: ad16eb8ae49102d12108d6aa3ffa4d3c0a6f8d2944d1e7e2c3159dd18cc901a8350acb48bccf4eb901f02fdd0b5fee044cb3fe92379ba5c949174f4ed5fef167
+  checksum: c2414c8f9a69b9271ca2b7296684b1bca0aa5f2220aae966dcca5390f7ba93b95a88d4f503943f36b877a480cdb2618a5d14b55dea4ba7f3a493009d86975252
   languageName: node
   linkType: hard
 
