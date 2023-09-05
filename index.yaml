@@ -3,7 +3,7 @@ entries:
   kubernetes-dashboard:
   - apiVersion: v2
     appVersion: v3.0.0-alpha0
-    created: "2023-08-18T12:16:56.238826153Z"
+    created: "2023-09-05T09:18:29.251880165Z"
     dependencies:
     - alias: nginx
       condition: nginx.enabled
@@ -19,7 +19,7 @@ entries:
       repository: https://kubernetes-sigs.github.io/metrics-server/
       version: 3.8.4
     description: General-purpose web UI for Kubernetes clusters
-    digest: 3a42426ac54a74fadf06de34888f91359216b4b12c5f8e05f53966fe45b28c6a
+    digest: e353882556184f3afe6492c30df96700ba90f798a93c8b83fc60d4cd2d7c81d4
     home: https://github.com/kubernetes/dashboard
     icon: https://raw.githubusercontent.com/kubernetes/kubernetes/master/logo/logo.svg
     keywords:
@@ -1373,4 +1373,4 @@ entries:
     urls:
     - kubernetes-dashboard-2.0.1.tgz
     version: 2.0.1
-generated: "2023-08-18T12:16:56.221578656Z"
+generated: "2023-09-05T09:18:29.240315602Z"
