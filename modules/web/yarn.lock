@@ -2186,9 +2186,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/register@npm:7.22.5":
-  version: 7.22.5
-  resolution: "@babel/register@npm:7.22.5"
+"@babel/register@npm:7.22.15":
+  version: 7.22.15
+  resolution: "@babel/register@npm:7.22.15"
   dependencies:
     clone-deep: ^4.0.1
     find-cache-dir: ^2.0.0
@@ -2197,7 +2197,7 @@ __metadata:
     source-map-support: ^0.5.16
   peerDependencies:
     "@babel/core": ^7.0.0-0
-  checksum: 723ce27fdad6faee5b3f51ef4f5154f7f285d61da665367de14de85abbe1c81ccbac11f699671cd0ed6b755dd430f28a62364fed5d49f2527625a9ea3bf40056
+  checksum: 5497be6773608cd2d874210edd14499fce464ddbea170219da55955afe4c9173adb591164193458fd639e43b7d1314088a6186f4abf241476c59b3f0da6afd6f
   languageName: node
   linkType: hard
 
@@ -10928,7 +10928,7 @@ __metadata:
     "@angular/router": 16.2.1
     "@babel/core": 7.22.11
     "@babel/preset-env": 7.22.14
-    "@babel/register": 7.22.5
+    "@babel/register": 7.22.15
     "@cypress/webpack-preprocessor": 6.0.0
     "@swimlane/ngx-charts": 20.4.1
     "@types/d3": 7.4.0
