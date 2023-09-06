@@ -18,44 +18,49 @@ import (
 	"context"
 	"log"
 
-	v1 "k8s.io/api/networking/v1"
+	traefik "github.com/traefik/traefik/v2/pkg/provider/kubernetes/crd/generated/clientset/versioned"
+	traefikv1 "github.com/traefik/traefik/v2/pkg/provider/kubernetes/crd/traefikio/v1alpha1"
+
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	client "k8s.io/client-go/kubernetes"
+	"k8s.io/client-go/rest"
 )
 
 // IngressDetail API resource provides mechanisms to inject containers with configuration data while keeping
 // containers agnostic of Kubernetes
-type IngressDetail struct {
+type IngressRouteDetail struct {
 	// Extends list item structure.
-	Ingress `json:",inline"`
+	IngressRoute `json:",inline"`
 
 	// Spec is the desired state of the Ingress.
-	Spec v1.IngressSpec `json:"spec"`
-
-	// Status is the current state of the Ingress.
-	Status v1.IngressStatus `json:"status"`
+	Spec traefikv1.IngressRouteSpec `json:"spec"`
 
 	// List of non-critical errors, that occurred during resource retrieval.
 	Errors []error `json:"errors"`
 }
 
+
 // GetIngressDetail returns detailed information about an ingress
-func GetIngressDetail(client client.Interface, namespace, name string) (*IngressDetail, error) {
+func GetIngressRouteDetail(client client.Interface, namespace, name string, config *rest.Config) (*IngressRouteDetail, error) {
 	log.Printf("Getting details of %s ingress in %s namespace", name, namespace)
 
-	rawIngress, err := client.NetworkingV1().Ingresses(namespace).Get(context.TODO(), name, metaV1.GetOptions{})
+	traefikclient, err := traefik.NewForConfig(config)
+	if err != nil {
+		panic(err.Error())
+	}
+	rawIngressRoute, err := traefikclient.TraefikV1alpha1().IngressRoutes(namespace).Get(context.TODO(), name, metaV1.GetOptions{})
+
 
 	if err != nil {
 		return nil, err
 	}
 
-	return getIngressDetail(rawIngress), nil
+	return getIngressRouteDetail(rawIngressRoute), nil
 }
 
-func getIngressDetail(i *v1.Ingress) *IngressDetail {
-	return &IngressDetail{
-		Ingress: toIngress(i),
+func getIngressRouteDetail(i *traefikv1.IngressRoute) *IngressRouteDetail {
+	return &IngressRouteDetail{
+		IngressRoute: toIngressRoute(i),
 		Spec:    i.Spec,
-		Status:  i.Status,
 	}
 }

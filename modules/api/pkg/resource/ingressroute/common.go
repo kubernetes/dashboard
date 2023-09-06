@@ -15,15 +15,15 @@
 package ingressroute
 
 import (
-	v1 "k8s.io/api/networking/v1"
+	traefikv1 "github.com/traefik/traefik/v2/pkg/provider/kubernetes/crd/traefikio/v1alpha1"
 	"k8s.io/dashboard/api/pkg/resource/dataselect"
 )
 
 // The code below allows to perform complex data section on []extensions.Ingress
 
-type IngressCell v1.Ingress
+type IngressRouteCell traefikv1.IngressRoute
 
-func (self IngressCell) GetProperty(name dataselect.PropertyName) dataselect.ComparableValue {
+func (self IngressRouteCell) GetProperty(name dataselect.PropertyName) dataselect.ComparableValue {
 	switch name {
 	case dataselect.NameProperty:
 		return dataselect.StdComparableString(self.ObjectMeta.Name)
@@ -37,18 +37,18 @@ func (self IngressCell) GetProperty(name dataselect.PropertyName) dataselect.Com
 	}
 }
 
-func toCells(std []v1.Ingress) []dataselect.DataCell {
+func toCells(std []traefikv1.IngressRoute) []dataselect.DataCell {
 	cells := make([]dataselect.DataCell, len(std))
 	for i := range std {
-		cells[i] = IngressCell(std[i])
+		cells[i] = IngressRouteCell(std[i])
 	}
 	return cells
 }
 
-func fromCells(cells []dataselect.DataCell) []v1.Ingress {
-	std := make([]v1.Ingress, len(cells))
+func fromCells(cells []dataselect.DataCell) []traefikv1.IngressRoute {
+	std := make([]traefikv1.IngressRoute, len(cells))
 	for i := range std {
-		std[i] = v1.Ingress(cells[i].(IngressCell))
+		std[i] = traefikv1.IngressRoute(cells[i].(IngressRouteCell))
 	}
 	return std
 }

@@ -517,6 +517,11 @@ func CreateHTTPAPIHandler(iManager integration.IntegrationManager, cManager clie
 		apiV1Ws.GET("/ingressroute/{namespace}").
 			To(apiHandler.handleGetIngressRouteList).
 			Writes(ingressroute.IngressRouteList{}))
+	apiV1Ws.Route(
+		apiV1Ws.GET("/ingressroute/{namespace}/{name}").
+			To(apiHandler.handleGetIngressRouteDetail).
+			Writes(ingressroute.IngressRouteDetail{}))
+
 
 	apiV1Ws.Route(
 		apiV1Ws.GET("/networkpolicy").
@@ -1071,6 +1076,24 @@ func (apiHandler *APIHandler) handleGetIngressDetail(request *restful.Request, r
 	}
 	response.WriteHeaderAndEntity(http.StatusOK, result)
 }
+
+func (apiHandler *APIHandler) handleGetIngressRouteDetail(request *restful.Request, response *restful.Response) {
+	k8sClient, err := apiHandler.cManager.Client(request)
+	if err != nil {
+		errors.HandleInternalError(response, err)
+		return
+	}
+	config, err := apiHandler.cManager.Config(request)
+	namespace := request.PathParameter("namespace")
+	name := request.PathParameter("name")
+	result, err := ingressroute.GetIngressRouteDetail(k8sClient, namespace, name, config)
+	if err != nil {
+		errors.HandleInternalError(response, err)
+		return
+	}
+	response.WriteHeaderAndEntity(http.StatusOK, result)
+}
+
 
 func (apiHandler *APIHandler) handleGetIngressEvent(request *restful.Request, response *restful.Response) {
 	k8sClient, err := apiHandler.cManager.Client(request)
