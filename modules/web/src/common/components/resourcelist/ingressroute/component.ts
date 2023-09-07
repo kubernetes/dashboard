@@ -12,12 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {HttpClient, HttpParams} from '@angular/common/http';
+import {HttpParams} from '@angular/common/http';
 import {ChangeDetectionStrategy, ChangeDetectorRef, Component, Input} from '@angular/core';
 import {Observable} from 'rxjs';
 import {IngressRoute, IngressRouteList} from 'typings/root.api';
-import {ActivatedRoute} from '@angular/router';
-import {CRDObjectDetail} from '@api/root.api';
 
 import {ResourceListBase} from '@common/resources/list';
 import {NotificationsService} from '@common/services/global/notifications';
@@ -25,7 +23,6 @@ import {EndpointManager, Resource} from '@common/services/resource/endpoint';
 import {NamespacedResourceService} from '@common/services/resource/resource';
 import {MenuComponent} from '../../list/column/menu/component';
 import {ListGroupIdentifier, ListIdentifier} from '../groupids';
-import { RawResource } from '@common/resources/rawresource';
 
 @Component({
   selector: 'kd-ingressroute-list',
@@ -34,7 +31,7 @@ import { RawResource } from '@common/resources/rawresource';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class IngressRouteListComponent extends ResourceListBase<IngressRouteList, IngressRoute> {
-  @Input() endpoint = 'api/v1/_raw/ingressroutes.traefik.io/namespace/:namespace';
+  @Input() endpoint = EndpointManager.resource(Resource.ingressroute, true).list();
 
   constructor(
     private readonly ingressroute_: NamespacedResourceService<IngressRouteList>,
@@ -61,7 +58,7 @@ export class IngressRouteListComponent extends ResourceListBase<IngressRouteList
   }
 
   getDisplayColumns(): string[] {
-    return ['name', 'created']; //'entryPoints', 'hosts',
+    return ['name', 'hosts', 'labels', 'entrypoints', 'created']; //'entryPoints', 'hosts',
   }
 
   private shouldShowNamespaceColumn_(): boolean {

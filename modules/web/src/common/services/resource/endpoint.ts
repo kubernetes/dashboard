@@ -43,6 +43,7 @@ export enum Resource {
   secret = 'secret',
   imagePullSecret = 'imagepullsecret',
   ingress = 'ingress',
+  ingressroute = 'ingressroute',
   service = 'service',
   serviceAccount = 'serviceaccount',
   networkPolicy = 'networkpolicy',

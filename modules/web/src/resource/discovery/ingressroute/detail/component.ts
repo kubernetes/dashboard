@@ -31,7 +31,7 @@ export class IngressRouteDetailComponent implements OnInit, OnDestroy {
   ingressroute: IngressRouteDetail;
   isInitialized = false;
   eventListEndpoint: string;
-  private readonly endpoint_ = EndpointManager.resource(Resource.ingress, true);
+  private readonly endpoint_ = EndpointManager.resource(Resource.ingressroute, true);
   private readonly unsubscribe_ = new Subject<void>();
 
   constructor(
@@ -48,7 +48,7 @@ export class IngressRouteDetailComponent implements OnInit, OnDestroy {
     //this.eventListEndpoint = this.endpoint_.child(resourceName, Resource.event, resourceNamespace);
 
     this.ingressroute_
-      .get('api/v1/_raw/ingressroute.traefik.io/namespace/:namespace/name/:name', resourceName, resourceNamespace)
+      .get(this.endpoint_.detail(), resourceName, resourceNamespace)
       .pipe(takeUntil(this.unsubscribe_))
       .subscribe((d: IngressRouteDetail) => {
         console.log(d);

@@ -92,19 +92,27 @@ limitations under the License.
                          class="col-stretch-xl"
                          i18n>
           Hosts
-          <mat-icon class="external-link-icon kd-clickable"
-                    i18n-matTooltip
-                    matTooltip="Host links are external links that will be open in a new tab.">open_in_new</mat-icon>
         </mat-header-cell>
         <mat-cell *matCellDef="let ingressRoute"
                   class="col-stretch-xl">
           <div *ngFor="let host of ingressRoute?.hosts"
                class="kd-ellipsised">
-            <a href="https://{{ host }}"
-               target="_blank"> {{ host }} </a>
+            <p> {{ host }} </p>
           </div>
 
           <div *ngIf="ingressRoute?.hosts?.length === 0">-</div>
+        </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="entrypoints">
+        <mat-header-cell *matHeaderCellDef
+                         mat-sort-header
+                         disableClear="true"
+                         class="col-stretch-m"
+                         i18n>Entrypoints</mat-header-cell>
+        <mat-cell *matCellDef="let ingressRoute"
+                  class="col-stretch-m">
+            <kd-chips [map]="ingressRoute?.entrypoints"></kd-chips>
         </mat-cell>
       </ng-container>
 

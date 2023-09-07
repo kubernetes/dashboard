@@ -14,6 +14,7 @@
 
 import {KdError, StringMap} from '@api/root.shared';
 import {PersistentVolumeSource} from '@api/volume.api';
+import { namespace } from 'd3';
 
 export interface TypeMeta {
   kind: string;
@@ -330,9 +331,16 @@ export interface Ingress extends Resource {
   hosts: string[];
 }
 
+export interface TraefikService {
+  name: string;
+  namespace: string;
+  port: number;
+}
+
 export interface IngressRoute extends Resource {
-  endpoints: Endpoint[];
+  endpoints: string[];
   hosts: string[];
+  service: TraefikService[];
 }
 
 export interface Job extends Resource {
