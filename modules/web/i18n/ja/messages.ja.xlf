@@ -2448,6 +2448,14 @@
         <source>IngressRoutesTCP</source>
         <target state="new">IngressRoutesTCP</target>
       </trans-unit>
+      <trans-unit id="4134277968711566299" datatype="html">
+        <source> Hosts </source>
+        <target state="new"> Hosts </target>
+      </trans-unit>
+      <trans-unit id="8890401224023450705" datatype="html">
+        <source>Entrypoints</source>
+        <target state="new">Entrypoints</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

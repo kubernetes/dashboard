@@ -1811,6 +1811,12 @@
       <trans-unit id="2632454463313076265" datatype="html">
         <source>IngressRoutesTCP</source>
       </trans-unit>
+      <trans-unit id="4134277968711566299" datatype="html">
+        <source> Hosts </source>
+      </trans-unit>
+      <trans-unit id="8890401224023450705" datatype="html">
+        <source>Entrypoints</source>
+      </trans-unit>
     </body>
   </file>
 </xliff>
