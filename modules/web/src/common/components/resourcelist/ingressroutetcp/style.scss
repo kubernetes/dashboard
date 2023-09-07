@@ -12,15 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {ObjectMeta, TypeMeta} from '@api/root.api';
+@use '../../../../variables' as *;
+@use '../../../../mixins' as *;
 
-export class RawResource {
-  static getUrl(typeMeta: TypeMeta, objectMeta: ObjectMeta): string {
-    let resourceUrl = `api/v1/_raw/${typeMeta.kind}`;
-    if (objectMeta.namespace !== undefined) {
-      resourceUrl += `/namespace/${objectMeta.namespace}`;
-    }
-    resourceUrl += `/name/${objectMeta.name}`;
-    return resourceUrl;
-  }
+.external-link-icon {
+  @include kd-icon-size($body-font-size-base);
+
+  margin-bottom: 0.75 * $baseline-grid;
+  margin-left: 0.5 * $baseline-grid;
 }

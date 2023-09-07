@@ -12,15 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {ObjectMeta, TypeMeta} from '@api/root.api';
+import {Component} from '@angular/core';
 
-export class RawResource {
-  static getUrl(typeMeta: TypeMeta, objectMeta: ObjectMeta): string {
-    let resourceUrl = `api/v1/_raw/${typeMeta.kind}`;
-    if (objectMeta.namespace !== undefined) {
-      resourceUrl += `/namespace/${objectMeta.namespace}`;
-    }
-    resourceUrl += `/name/${objectMeta.name}`;
-    return resourceUrl;
-  }
-}
+@Component({
+  selector: 'kd-ingressroutetcp-list-state',
+  template: '<kd-ingressroutetcp-list></kd-ingressroutetcp-list>',
+})
+export class IngressRouteTCPListComponent {}

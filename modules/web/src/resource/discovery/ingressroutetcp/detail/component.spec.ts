@@ -32,6 +32,7 @@ import {PipesModule} from '@common/pipes/module';
 import {ConfigService} from '@common/services/global/config';
 import {MESSAGES, MESSAGES_DI_TOKEN} from '../../../../index.messages';
 
+import {IngressRouteDetailComponent} from './component';
 
 const miniName = 'my-mini-ingress';
 const maxiName = 'my-maxi-ingress';

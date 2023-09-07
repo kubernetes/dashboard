@@ -12,15 +12,17 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {ObjectMeta, TypeMeta} from '@api/root.api';
+import {NgModule} from '@angular/core';
 
-export class RawResource {
-  static getUrl(typeMeta: TypeMeta, objectMeta: ObjectMeta): string {
-    let resourceUrl = `api/v1/_raw/${typeMeta.kind}`;
-    if (objectMeta.namespace !== undefined) {
-      resourceUrl += `/namespace/${objectMeta.namespace}`;
-    }
-    resourceUrl += `/name/${objectMeta.name}`;
-    return resourceUrl;
-  }
-}
+import {ComponentsModule} from '@common/components/module';
+import {SharedModule} from '../../../shared.module';
+
+import {IngressRouteTCPDetailComponent} from './detail/component';
+import {IngressRouteTCPListComponent} from './list/component';
+import {IngressRouteTCPRoutingModule} from './routing';
+
+@NgModule({
+  imports: [SharedModule, ComponentsModule, IngressRouteTCPRoutingModule],
+  declarations: [IngressRouteTCPListComponent, IngressRouteTCPDetailComponent],
+})
+export class IngressRouteTCPModule {}

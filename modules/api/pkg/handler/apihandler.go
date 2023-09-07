@@ -56,6 +56,7 @@ import (
 	"k8s.io/dashboard/api/pkg/resource/ingress"
 	"k8s.io/dashboard/api/pkg/resource/ingressclass"
   "k8s.io/dashboard/api/pkg/resource/ingressroute"
+	"k8s.io/dashboard/api/pkg/resource/ingressroutetcp"
 	"k8s.io/dashboard/api/pkg/resource/job"
 	"k8s.io/dashboard/api/pkg/resource/logs"
 	ns "k8s.io/dashboard/api/pkg/resource/namespace"
@@ -522,6 +523,14 @@ func CreateHTTPAPIHandler(iManager integration.IntegrationManager, cManager clie
 			To(apiHandler.handleGetIngressRouteDetail).
 			Writes(ingressroute.IngressRouteDetail{}))
 
+	apiV1Ws.Route(
+		apiV1Ws.GET("/ingressroutetcp/{namespace}").
+			To(apiHandler.handleGetIngressRouteTCPList).
+			Writes(ingressroutetcp.IngressRouteTCPList{}))
+	apiV1Ws.Route(
+		apiV1Ws.GET("/ingressroutetcp/{namespace}/{name}").
+			To(apiHandler.handleGetIngressRouteTCPDetail).
+			Writes(ingressroutetcp.IngressRouteTCPDetail{}))
 
 	apiV1Ws.Route(
 		apiV1Ws.GET("/networkpolicy").
@@ -1094,6 +1103,22 @@ func (apiHandler *APIHandler) handleGetIngressRouteDetail(request *restful.Reque
 	response.WriteHeaderAndEntity(http.StatusOK, result)
 }
 
+func (apiHandler *APIHandler) handleGetIngressRouteTCPDetail(request *restful.Request, response *restful.Response) {
+	k8sClient, err := apiHandler.cManager.Client(request)
+	if err != nil {
+		errors.HandleInternalError(response, err)
+		return
+	}
+	config, err := apiHandler.cManager.Config(request)
+	namespace := request.PathParameter("namespace")
+	name := request.PathParameter("name")
+	result, err := ingressroutetcp.GetIngressRouteTCPDetail(k8sClient, namespace, name, config)
+	if err != nil {
+		errors.HandleInternalError(response, err)
+		return
+	}
+	response.WriteHeaderAndEntity(http.StatusOK, result)
+}
 
 func (apiHandler *APIHandler) handleGetIngressEvent(request *restful.Request, response *restful.Response) {
 	k8sClient, err := apiHandler.cManager.Client(request)
@@ -1146,6 +1171,28 @@ func (apiHandler *APIHandler) handleGetIngressRouteList(request *restful.Request
 		return
 	}
 	result, err := ingressroute.GetIngressRouteList(k8sClient, namespace, dataSelect, config)
+	if err != nil {
+		errors.HandleInternalError(response,err)
+		return
+	}
+	response.WriteHeaderAndEntity(http.StatusOK, result)
+}
+
+func (apiHandler *APIHandler) handleGetIngressRouteTCPList(request *restful.Request, response *restful.Response) {
+	k8sClient, err := apiHandler.cManager.Client(request)
+	if err != nil {
+		errors.HandleInternalError(response,err)
+		return
+	}
+
+	dataSelect := parser.ParseDataSelectPathParameter(request)
+	namespace := parseNamespacePathParameter(request)
+	config, err := apiHandler.cManager.Config(request)
+	if err != nil {
+		errors.HandleInternalError(response,err)
+		return
+	}
+	result, err := ingressroutetcp.GetIngressRouteTCPList(k8sClient, namespace, dataSelect, config)
 	if err != nil {
 		errors.HandleInternalError(response,err)
 		return

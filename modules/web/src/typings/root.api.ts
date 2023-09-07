@@ -14,7 +14,6 @@
 
 import {KdError, StringMap} from '@api/root.shared';
 import {PersistentVolumeSource} from '@api/volume.api';
-import { namespace } from 'd3';
 
 export interface TypeMeta {
   kind: string;
@@ -139,6 +138,10 @@ export interface IngressList extends ResourceList {
 
 export interface IngressRouteList extends ResourceList {
   items: IngressRoute[];
+}
+
+export interface IngressRouteTCPList extends ResourceList {
+  items: IngressRouteTCP[];
 }
 
 export interface ServiceAccountList extends ResourceList {
@@ -343,6 +346,12 @@ export interface IngressRoute extends Resource {
   service: TraefikService[];
 }
 
+export interface IngressRouteTCP extends Resource {
+  endpoints: string[];
+  hosts: string[];
+  service: TraefikService[];
+}
+
 export interface Job extends Resource {
   podInfo: PodInfo;
   containerImages: string[];
@@ -539,8 +548,6 @@ export interface SecretDetail extends ResourceDetail {
 
 export type ServiceAccountDetail = ResourceDetail;
 
-
-
 export interface IngressRouteDetail extends ResourceDetail {
   endpoints: Endpoint[];
   spec: IngressRouteSpec;
@@ -559,6 +566,29 @@ export interface IngressRouteSpecRoute {
 }
 
 export interface IngressRouteSpecRouteService {
+  name: string;
+  port: number;
+  kind: string;
+}
+
+export interface IngressRouteTCPDetail extends ResourceDetail {
+  endpoints: Endpoint[];
+  spec: IngressRouteTCPSpec;
+}
+
+export interface IngressRouteTCPSpec {
+  entryPoints: string[];
+  routes: IngressRouteTCPSpecRoute[];
+}
+
+export interface IngressRouteTCPSpecRoute {
+  kind: string;
+  match: string;
+  priority: number;
+  services: IngressRouteTCPSpecRouteService[];
+}
+
+export interface IngressRouteTCPSpecRouteService {
   name: string;
   port: number;
   kind: string;

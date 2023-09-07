@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package ingressroute
+package ingressroutetcp
 
 import (
 	"context"
@@ -28,45 +28,46 @@ import (
 	"k8s.io/dashboard/api/pkg/resource/dataselect"
 )
 
-type IngressRoute struct {
+
+type IngressRouteTCP struct {
 	api.ObjectMeta `json:"objectMeta"`
 	api.TypeMeta   `json:"typeMeta"`
 
 	// Host of this ingress route.
 	Entrypoints []string `json:"entrypoints"`
 	Hosts       []string `json:"hosts"`
-	Service     []traefikv1.Service `json:"service"`
+	Service     []traefikv1.ServiceTCP `json:"service"`
 }
 
-
-type IngressRouteList struct {
+type IngressRouteTCPList struct {
 	api.ListMeta `json:"listMeta"`
 
-	// Unordered list of Ingressroutes.
-	Items []IngressRoute `json:"items"`
+	// Unordered list of IngressRouteTCPs.
+	Items []IngressRouteTCP `json:"items"`
 
 	// List of non-critical errors, that occurred during resource retrieval.
 	Errors []error `json:"errors"`
 }
 
 // GetIngressList returns all ingresses in the given namespace.
-func GetIngressRouteList(client client.Interface, namespace *common.NamespaceQuery,
-	dsQuery *dataselect.DataSelectQuery, config *rest.Config) (*IngressRouteList, error) {
+func GetIngressRouteTCPList(client client.Interface, namespace *common.NamespaceQuery,
+	dsQuery *dataselect.DataSelectQuery, config *rest.Config) (*IngressRouteTCPList, error) {
 	// creates the clientset
 	traefikclient, err := traefik.NewForConfig(config)
 	if err != nil {
 		panic(err.Error())
 	}
-	ingressList, err := traefikclient.TraefikV1alpha1().IngressRoutes("").List(context.TODO(), metav1.ListOptions{})
+	ingressList, err := traefikclient.TraefikV1alpha1().IngressRouteTCPs("").List(context.TODO(), metav1.ListOptions{})
 	nonCriticalErrors, criticalError := errors.HandleError(err)
 	if criticalError != nil {
 		return nil, criticalError
 	}
 
-	return ToIngressRouteList(ingressList.Items, nonCriticalErrors, dsQuery), nil
+	return ToIngressRouteTCPList(ingressList.Items, nonCriticalErrors, dsQuery), nil
 }
 
-func getHosts(ingress *traefikv1.IngressRoute) []string {
+
+func getHosts(ingress *traefikv1.IngressRouteTCP) []string {
 	hosts := make([]string, 0)
 	set := make(map[string]struct{})
 
@@ -81,7 +82,7 @@ func getHosts(ingress *traefikv1.IngressRoute) []string {
 	return hosts
 }
 
-func getEntrypoints(ingress *traefikv1.IngressRoute) []string {
+func getEntrypoints(ingress *traefikv1.IngressRouteTCP) []string {
 	entrypoints := make([]string, 0)
 	set := make(map[string]struct{})
 
@@ -96,8 +97,8 @@ func getEntrypoints(ingress *traefikv1.IngressRoute) []string {
 	return entrypoints
 }
 
-func getService(ingress *traefikv1.IngressRoute) []traefikv1.Service {
-	service := make([]traefikv1.Service, 0)
+func getService(ingress *traefikv1.IngressRouteTCP) []traefikv1.ServiceTCP {
+	service := make([]traefikv1.ServiceTCP, 0)
 
 	for _, route := range ingress.Spec.Routes {
 		service = append(service, route.Services...)
@@ -107,8 +108,8 @@ func getService(ingress *traefikv1.IngressRoute) []traefikv1.Service {
 	return service
 }
 
-func toIngressRoute(ingress *traefikv1.IngressRoute) IngressRoute {
-	return IngressRoute{
+func toIngressRouteTCP(ingress *traefikv1.IngressRouteTCP) IngressRouteTCP {
+	return IngressRouteTCP{
 		ObjectMeta: api.NewObjectMeta(ingress.ObjectMeta),
 		TypeMeta:   api.NewTypeMeta(api.ResourceKindIngress),
 		Entrypoints:  getEntrypoints(ingress),
@@ -126,38 +127,20 @@ func toIngressRoute(ingress *traefikv1.IngressRoute) IngressRoute {
 // 	}
 // }
 
-func ToIngressRouteList(ingressroutes []traefikv1.IngressRoute, nonCriticalErrors []error, dsQuery *dataselect.DataSelectQuery) *IngressRouteList {
-	newIngressList := &IngressRouteList{
-		ListMeta: api.ListMeta{TotalItems: len(ingressroutes)},
-		Items:    make([]IngressRoute, 0),
+func ToIngressRouteTCPList(IngressRouteTCPs []traefikv1.IngressRouteTCP, nonCriticalErrors []error, dsQuery *dataselect.DataSelectQuery) *IngressRouteTCPList {
+	newIngressList := &IngressRouteTCPList{
+		ListMeta: api.ListMeta{TotalItems: len(IngressRouteTCPs)},
+		Items:    make([]IngressRouteTCP, 0),
 		Errors:   nonCriticalErrors,
 	}
 
-	ingresCells, filteredTotal := dataselect.GenericDataSelectWithFilter(toCells(ingressroutes), dsQuery)
-	ingressroutes = fromCells(ingresCells)
+	ingresCells, filteredTotal := dataselect.GenericDataSelectWithFilter(toCells(IngressRouteTCPs), dsQuery)
+	IngressRouteTCPs = fromCells(ingresCells)
 	newIngressList.ListMeta = api.ListMeta{TotalItems: filteredTotal}
 
-	for _, ingressRoute := range ingressroutes {
-		newIngressList.Items = append(newIngressList.Items, toIngressRoute(&ingressRoute))
+	for _, IngressRouteTCP := range IngressRouteTCPs {
+		newIngressList.Items = append(newIngressList.Items, toIngressRouteTCP(&IngressRouteTCP))
 	}
 
 	return newIngressList
 }
-
-// func ToIngressList(ingresses []traefikv1.IngressRoute, nonCriticalErrors []error, dsQuery *dataselect.DataSelectQuery) *IngressList {
-// 	newIngressList := &IngressRouteList{
-// 		ListMeta: api.ListMeta{TotalItems: len(ingresses)},
-// 		Items:    make([]IngressRoute, 0),
-// 		Errors:   nonCriticalErrors,
-// 	}
-
-// 	ingresCells, filteredTotal := dataselect.GenericDataSelectWithFilter(toCells(ingresses), dsQuery)
-// 	ingresses = fromCells(ingresCells)
-// 	newIngressList.ListMeta = api.ListMeta{TotalItems: filteredTotal}
-
-// 	for _, ingress := range ingresses {
-// 		newIngressList.Items = append(newIngressList.Items, toIngress(&ingress))
-// 	}
-
-// 	return newIngressList
-// }

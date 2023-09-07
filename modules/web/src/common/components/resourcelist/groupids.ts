@@ -33,6 +33,7 @@ export enum ListIdentifier {
   replicaSet = 'replicaSetList',
   ingress = 'ingressList',
   ingressRoute = 'ingressRouteList',
+  IngressRouteTCP = 'ingressRouteTCPList',
   service = 'serviceList',
   serviceAccount = 'serviceAccountList',
   networkPolicy = 'networkPolicyList',
