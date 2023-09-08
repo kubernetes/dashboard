@@ -78,7 +78,7 @@
     "tslib": "2.6.2",
     "web-animations-js": "2.3.2",
     "xterm": "5.2.1",
-    "xterm-addon-fit": "0.7.0",
+    "xterm-addon-fit": "0.8.0",
     "zone.js": "0.13.1"
   },
   "devDependencies": {

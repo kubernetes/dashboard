@@ -11190,7 +11190,7 @@ __metadata:
     webpack-bundle-analyzer: 4.9.1
     webpack-dev-server: 4.15.1
     xterm: 5.2.1
-    xterm-addon-fit: 0.7.0
+    xterm-addon-fit: 0.8.0
     zone.js: 0.13.1
   languageName: unknown
   linkType: soft
@@ -16324,12 +16324,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"xterm-addon-fit@npm:0.7.0":
-  version: 0.7.0
-  resolution: "xterm-addon-fit@npm:0.7.0"
+"xterm-addon-fit@npm:0.8.0":
+  version: 0.8.0
+  resolution: "xterm-addon-fit@npm:0.8.0"
   peerDependencies:
     xterm: ^5.0.0
-  checksum: 512d41f80d6f9427ba02dab4e6fd642e94775a9cf7ef72ae4b55eab2a36856b5c67069bfc66b4af412fdce29a0842f9c6382af3672f0b514c4352dfd47defe8f
+  checksum: 5af2041b442f7c804eda2e6f62e3b68b5159b0ae6bd96e2aa8d85b26441df57291cbfed653d1196d4af5d9b94bfc39993df8b409a25c35e0d36bdaf6f5cdfe5f
   languageName: node
   linkType: hard
 
