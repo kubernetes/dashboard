@@ -99,7 +99,7 @@
     "@types/js-yaml": "4.0.5",
     "@types/lodash-es": "4.17.9",
     "@types/node": "20.6.0",
-    "@typescript-eslint/eslint-plugin": "6.6.0",
+    "@typescript-eslint/eslint-plugin": "6.7.0",
     "@typescript-eslint/parser": "6.6.0",
     "codelyzer": "6.0.2",
     "concurrently": "8.2.1",
