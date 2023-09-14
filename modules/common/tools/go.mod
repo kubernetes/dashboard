@@ -6,7 +6,7 @@ require (
 	github.com/apache/skywalking-eyes v0.5.0
 	github.com/cosmtrek/air v1.45.0
 	github.com/golangci/golangci-lint v1.54.2
-	k8s.io/code-generator v0.28.1
+	k8s.io/code-generator v0.28.2
 )
 
 require (
