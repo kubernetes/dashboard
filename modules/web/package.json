@@ -87,7 +87,7 @@
     "@angular/compiler-cli": "16.2.1",
     "@angular/language-service": "16.2.1",
     "@babel/core": "7.22.19",
-    "@babel/preset-env": "7.22.15",
+    "@babel/preset-env": "7.22.20",
     "@babel/register": "7.22.15",
     "@cypress/webpack-preprocessor": "6.0.0",
     "@types/d3": "7.4.0",
