@@ -4418,10 +4418,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/jasmine@npm:*, @types/jasmine@npm:4.3.5":
+"@types/jasmine@npm:*":
   version: 4.3.5
   resolution: "@types/jasmine@npm:4.3.5"
   checksum: 33839af6efd42bed948cb49de117821649de952228b3bf4743af09ef9d1736a6e9e9500750f04ffa74e308f00781f697092dadde4e038e2f041e741b087ceb9b
+  languageName: node
+  linkType: hard
+
+"@types/jasmine@npm:4.3.6":
+  version: 4.3.6
+  resolution: "@types/jasmine@npm:4.3.6"
+  checksum: 1dd9cc3633db98a0fc7149184cc3916c5158cfdfd65d437b81502d55e5e147305aac3bbce65ed144253b2406e47821629a18d1111b102fdc4f0c6867735a2c91
   languageName: node
   linkType: hard
 
@@ -11203,7 +11210,7 @@ __metadata:
     "@types/d3": 7.4.0
     "@types/d3-scale": 4.0.4
     "@types/file-saver": 2.0.5
-    "@types/jasmine": 4.3.5
+    "@types/jasmine": 4.3.6
     "@types/jasminewd2": 2.0.10
     "@types/jest": 29.5.4
     "@types/js-yaml": 4.0.5
