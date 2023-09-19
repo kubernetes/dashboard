@@ -95,7 +95,7 @@
     "@types/file-saver": "2.0.5",
     "@types/jasmine": "4.3.6",
     "@types/jasminewd2": "2.0.11",
-    "@types/jest": "29.5.4",
+    "@types/jest": "29.5.5",
     "@types/js-yaml": "4.0.6",
     "@types/lodash-es": "4.17.9",
     "@types/node": "20.6.2",
