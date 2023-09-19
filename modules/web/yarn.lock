@@ -4453,12 +4453,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/jasminewd2@npm:2.0.10":
-  version: 2.0.10
-  resolution: "@types/jasminewd2@npm:2.0.10"
+"@types/jasminewd2@npm:2.0.11":
+  version: 2.0.11
+  resolution: "@types/jasminewd2@npm:2.0.11"
   dependencies:
     "@types/jasmine": "*"
-  checksum: ba1615c07301fde9ba72a1201f26609abd2e03bb4199145d4b2cc0cb707d222ef32bf02eba66047482aaacf434b502b238e15289d55f59b1f18f9562cfbae368
+  checksum: 85d24579d9f89a0d8e4ef082648bec568a3ec352d0799ee6073f9a0e667ef87e31702fb7f2b07a321462cb235802c4f1b472b166b609ca78cf4798c1305c0298
   languageName: node
   linkType: hard
 
@@ -11232,7 +11232,7 @@ __metadata:
     "@types/d3-scale": 4.0.4
     "@types/file-saver": 2.0.5
     "@types/jasmine": 4.3.6
-    "@types/jasminewd2": 2.0.10
+    "@types/jasminewd2": 2.0.11
     "@types/jest": 29.5.4
     "@types/js-yaml": 4.0.5
     "@types/lodash-es": 4.17.9
