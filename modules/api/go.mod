@@ -7,7 +7,7 @@ require (
 	github.com/emicklei/go-restful/v3 v3.11.0
 	github.com/prometheus/client_golang v1.16.0
 	github.com/spf13/pflag v1.0.5
-	github.com/traefik/traefik/v2 v2.10.4
+	github.com/traefik/traefik/v2 v2.9.10
 	golang.org/x/net v0.14.0
 	gopkg.in/igm/sockjs-go.v2 v2.1.0
 	gopkg.in/square/go-jose.v2 v2.6.0
