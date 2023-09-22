@@ -57,7 +57,7 @@ func GetIngressRouteList(client client.Interface, namespace *common.NamespaceQue
 	if err != nil {
 		panic(err.Error())
 	}
-	ingressList, err := traefikclient.TraefikV1alpha1().IngressRoutes("").List(context.TODO(), metav1.ListOptions{})
+	ingressList, err := traefikclient.TraefikV1alpha1().IngressRoutes(namespace.ToRequestParam()).List(context.TODO(), metav1.ListOptions{})
 	nonCriticalErrors, criticalError := errors.HandleError(err)
 	if criticalError != nil {
 		return nil, criticalError
