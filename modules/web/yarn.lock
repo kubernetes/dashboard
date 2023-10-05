@@ -9240,9 +9240,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"gts@npm:5.1.0":
-  version: 5.1.0
-  resolution: "gts@npm:5.1.0"
+"gts@npm:5.1.1":
+  version: 5.1.1
+  resolution: "gts@npm:5.1.1"
   dependencies:
     "@typescript-eslint/eslint-plugin": 5.62.0
     "@typescript-eslint/parser": 5.62.0
@@ -9263,7 +9263,7 @@ __metadata:
     typescript: ">=3"
   bin:
     gts: build/src/cli.js
-  checksum: ce9ccc4e72da1f528ef2bce065a1963946a014be965d2a84ccdb80ccd9a36d7f1a2c723deda7c67e1c2d42c90554927635661d7033abf5339cc8e3133055f239
+  checksum: e280b0527a84c70f9af80a3ca2335ea514dad526d7cd841b204b9858ed5e8f8b021e7cfab2660972822cd1356c8b7c4b2921c9ff444d223e4aa9c042531c1042
   languageName: node
   linkType: hard
 
@@ -11193,7 +11193,7 @@ __metadata:
     eslint-plugin-rxjs: 5.0.3
     file-saver: 2.0.5
     git-describe: 4.1.1
-    gts: 5.1.0
+    gts: 5.1.1
     husky: 8.0.3
     jasmine-core: 5.1.1
     jasmine-spec-reporter: 7.0.0
