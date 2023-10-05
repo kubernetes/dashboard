@@ -21,7 +21,7 @@ import {PluginLoaderService} from '@common/services/pluginloader/pluginloader.se
   template: `
     <div>
       <div class="plugin">
-        <mat-card *ngIf="entryError">This plugin has no entry component</mat-card>
+        <mat-card appearance="outlined" *ngIf="entryError">This plugin has no entry component</mat-card>
         <ng-template #pluginViewRef #elseBlock></ng-template>
       </div>
     </div>

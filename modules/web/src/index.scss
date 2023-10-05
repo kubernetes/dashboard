@@ -52,8 +52,8 @@ code {
   }
 }
 
-.mat-cell,
-.mat-header-cell {
+.mat-mdc-cell,
+.mat-mdc-header-cell {
   @for $i from 30 through 150 {
     &.col-min-#{$i} {
       min-width: #{$i}#{'px'};
@@ -77,23 +77,23 @@ code {
   }
 }
 
-.mat-progress-spinner {
+.mat-mdc-progress-spinner {
   margin: 0 auto;
 }
 
-.mat-card {
+.mat-mdc-card {
   margin: $content-padding;
 
-  .mat-card-title {
+  .mat-mdc-card-title {
     margin-bottom: $baseline-grid;
   }
 
-  .mat-card-content {
+  .mat-mdc-card-content {
     padding-top: 2 * $baseline-grid;
   }
 }
 
-.mat-chip.mat-standard-chip {
+.mat-mdc-chip.mat-mdc-standard-chip {
   box-shadow: none !important;
   font-size: $body-font-size-base;
   font-weight: $regular-font-weight;
@@ -113,8 +113,8 @@ code {
   }
 }
 
-.mat-header-row,
-.mat-row {
+.mat-mdc-header-row,
+.mat-mdc-row {
   min-height: (5 * $baseline-grid) !important;
   padding: 0 (2 * $baseline-grid) !important;
 
@@ -123,13 +123,13 @@ code {
     min-height: 0 !important;
     padding: 0 !important;
 
-    .mat-cell {
+    .mat-mdc-cell {
       margin: 0 !important;
     }
   }
 }
 
-.mat-header-cell {
+.mat-mdc-header-cell {
   font-size: $body-font-size-base;
   padding: 0 ($baseline-grid * 0.5);
 
@@ -139,7 +139,7 @@ code {
   }
 }
 
-.mat-cell {
+.mat-mdc-cell {
   margin: (0.5 * $baseline-grid) 0 !important;
 
   &:not(:first-child) {
@@ -176,16 +176,17 @@ code {
   align-self: center;
 }
 
-.mat-paginator-container,
-.mat-paginator-range-actions {
+.mat-mdc-paginator-container,
+.mat-mdc-paginator-range-actions {
   font-size: $body-font-size-base;
   min-height: 5 * $baseline-grid !important;
 }
 
-.mat-paginator-container {
+.mat-mdc-paginator-container {
   padding-right: 3 * $baseline-grid !important;
 }
 
+/* TODO(mdc-migration): The following rule targets internal classes of button that may no longer apply for the MDC version.*/
 .mat-button-toggle-group {
   border-bottom: 0 !important;
   box-shadow: none !important;
@@ -240,7 +241,7 @@ router-outlet::after {
   margin: 0 (2.5 * $baseline-grid);
   outline: none;
 
-  &.mat-card {
+  &.mat-mdc-card {
     border-radius: 0;
   }
 }
@@ -295,7 +296,7 @@ router-outlet::after {
   width: 2 * $baseline-grid;
 }
 
-.mat-slider {
+.mat-mdc-slider {
   margin-left: -$baseline-grid;
 }
 
@@ -372,7 +373,7 @@ router-outlet::after {
   display: none !important;
 }
 
-.mat-row:last-of-type {
+.mat-mdc-row:last-of-type {
   border-bottom: 0;
 }
 
@@ -382,10 +383,11 @@ router-outlet::after {
 }
 
 .kd-secret-detail-text {
+  /* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version.*/
   .mat-form-field-wrapper {
     padding-bottom: $baseline-grid;
   }
-
+  /* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version.*/
   .mat-form-field-infix {
     padding-top: 2px;
   }
@@ -401,46 +403,46 @@ router-outlet::after {
   &:focus {
     outline: none;
   }
-
+  /* TODO(mdc-migration): The following rule targets internal classes of chips that may no longer apply for the MDC version.*/
   .mat-chip-list-wrapper {
     flex-wrap: nowrap;
     overflow-x: hidden;
   }
 }
 
-.mat-list {
+.mat-mdc-list {
   margin-top: $baseline-grid;
 
-  &.mat-list-base {
+  &.mat-mdc-list-base {
     padding-top: 0;
   }
 }
 
 kd-logs {
-  .mat-form-field {
+  .mat-mdc-form-field {
     max-width: 22 * $baseline-grid;
     width: auto;
-
+    /* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version.*/
     .mat-form-field-underline {
       margin-top: 0.25 * $baseline-grid;
       position: initial;
     }
-
+    /* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version.*/
     .mat-form-field-wrapper {
       padding-bottom: 0;
     }
-
+    /* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version.*/
     .mat-form-field-infix {
       border-top: 0;
       padding: 0;
       width: auto;
     }
-
+    /* TODO(mdc-migration): The following rule targets internal classes of select that may no longer apply for the MDC version.*/
     .mat-select-trigger {
       align-items: center;
       display: flex;
     }
-
+    /* TODO(mdc-migration): The following rule targets internal classes of select that may no longer apply for the MDC version.*/
     .mat-select-value {
       display: inline-flex;
       max-width: 100%;
@@ -449,7 +451,7 @@ kd-logs {
   }
 }
 
-.mat-menu-panel {
+.mat-mdc-menu-panel {
   &.kd-user-panel {
     min-width: 15 * $baseline-grid;
   }

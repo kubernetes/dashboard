@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import {InjectionToken} from '@angular/core';
-import {MatLegacyTooltipDefaultOptions as MatTooltipDefaultOptions} from '@angular/material/legacy-tooltip';
+import {MatTooltipDefaultOptions} from '@angular/material/tooltip';
 import {IConfig, LanguageConfig} from '@api/root.ui';
 
 const supportedLanguages: LanguageConfig[] = [

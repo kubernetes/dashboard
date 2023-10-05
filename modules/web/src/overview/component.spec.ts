@@ -16,10 +16,10 @@ import {HttpClientTestingModule, HttpTestingController} from '@angular/common/ht
 import {Component, CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
 import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
 import {FlexLayoutModule} from '@angular/flex-layout';
-import {MatLegacyCardModule as MatCardModule} from '@angular/material/legacy-card';
+import {MatCardModule} from '@angular/material/card';
 import {MatDividerModule} from '@angular/material/divider';
 import {MatIconModule} from '@angular/material/icon';
-import {MatLegacyTooltipModule as MatTooltipModule} from '@angular/material/legacy-tooltip';
+import {MatTooltipModule} from '@angular/material/tooltip';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {AppConfig, CronJobList, DaemonSetList, PodList} from '@api/root.api';
 

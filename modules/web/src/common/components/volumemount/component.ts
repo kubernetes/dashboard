@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import {Component, Input} from '@angular/core';
-import {MatLegacyTableDataSource as MatTableDataSource} from '@angular/material/legacy-table';
+import {MatTableDataSource} from '@angular/material/table';
 import {VolumeMounts} from '@api/root.api';
 import {SupportedResources} from '@api/root.shared';
 import {PersistentVolumeSource} from '@api/volume.api';

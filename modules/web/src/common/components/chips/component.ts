@@ -21,7 +21,7 @@ import {
   OnInit,
   SimpleChanges,
 } from '@angular/core';
-import {MatLegacyDialog as MatDialog, MatLegacyDialogConfig as MatDialogConfig} from '@angular/material/legacy-dialog';
+import {MatDialog, MatDialogConfig} from '@angular/material/dialog';
 import {StringMap} from '@api/root.shared';
 // @ts-ignore
 import cropUrl from 'crop-url';

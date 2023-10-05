@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import {Injectable} from '@angular/core';
-import {MatLegacyDialog as MatDialog} from '@angular/material/legacy-dialog';
+import {MatDialog} from '@angular/material/dialog';
 
 import {ConfirmDialogComponent, ConfirmDialogConfig} from '@common/dialogs/config/dialog';
 import {ICanDeactivate} from '@common/interfaces/candeactivate';

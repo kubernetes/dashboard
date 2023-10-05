@@ -13,8 +13,8 @@
 // limitations under the License.
 
 import {Component, ElementRef, Inject, OnDestroy, OnInit, ViewChild} from '@angular/core';
-import {MatLegacyDialog as MatDialog} from '@angular/material/legacy-dialog';
-import {MatLegacySelect as MatSelect} from '@angular/material/legacy-select';
+import {MatDialog} from '@angular/material/dialog';
+import {MatSelect} from '@angular/material/select';
 import {ActivatedRoute, NavigationEnd, Router} from '@angular/router';
 import {NamespaceList} from '@api/root.api';
 import {IConfig} from '@api/root.ui';

@@ -14,7 +14,7 @@
 
 import {DOCUMENT} from '@angular/common';
 import {Component, Inject, OnInit, ViewChild} from '@angular/core';
-import {MatLegacySelect as MatSelect} from '@angular/material/legacy-select';
+import {MatSelect} from '@angular/material/select';
 import {LocalSettings, Theme} from '@api/root.api';
 import {IConfig, LanguageConfig} from '@api/root.ui';
 import {LocalSettingsService} from '@common/services/global/localsettings';

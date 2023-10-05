@@ -212,12 +212,12 @@
     }
   }
 
-  .mat-chip.mat-standard-chip {
+  .mat-mdc-chip.mat-mdc-standard-chip {
     background: $card-background-dark;
   }
 
   .mat-active,
-  .mat-selected {
+  .mat-mdc-selected {
     color: map.get($colors, primary) !important;
   }
 
@@ -229,10 +229,11 @@
     }
 
     .kd-namespace-select-input-container {
+      /* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version.*/
       .mat-form-field-underline {
         display: none;
       }
-
+      /* TODO(mdc-migration): The following rule targets internal classes of select that may no longer apply for the MDC version.*/
       .mat-select-arrow {
         color: $muted-light !important;
       }
@@ -261,11 +262,11 @@
   .kd-cross-outline {
     stroke: $background;
   }
-
+  /* TODO(mdc-migration): The following rule targets internal classes of button that may no longer apply for the MDC version.*/
   .mat-button-toggle-group {
     border: 1px solid $border;
   }
-
+  /* TODO(mdc-migration): The following rule targets internal classes of button that may no longer apply for the MDC version.*/
   .mat-button-toggle-checked {
     background-color: $card-background-dark;
   }
@@ -282,7 +283,7 @@
     border-right: 0;
   }
 
-  .mat-icon-button:hover:not([disabled]) {
+  .mat-mdc-icon-button:hover:not([disabled]) {
     background-color: $border !important;
   }
 
@@ -293,13 +294,15 @@
   }
 
   .kd-secret-detail-text {
+    /* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version.*/
     .mat-form-field-infix {
       border-top: 0;
     }
-
+    /* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version.*/
+    /* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version.*/
     .mat-form-field-underline {
       background: none;
-
+      /* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version.*/
       .mat-form-field-ripple {
         background: none;
       }
@@ -319,7 +322,7 @@
     border: 1px solid $border;
   }
 
-  .mat-list {
+  .mat-mdc-list {
     border: 1px solid $border;
   }
 

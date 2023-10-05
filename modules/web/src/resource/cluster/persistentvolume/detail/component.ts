@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import {Component, DestroyRef, inject, OnDestroy, OnInit} from '@angular/core';
-import {MatLegacyTableDataSource as MatTableDataSource} from '@angular/material/legacy-table';
+import {MatTableDataSource} from '@angular/material/table';
 import {ActivatedRoute} from '@angular/router';
 import {CapacityItem, PersistentVolumeDetail} from '@api/root.api';
 

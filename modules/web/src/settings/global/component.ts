@@ -15,7 +15,7 @@
 import {HttpErrorResponse} from '@angular/common/http';
 import {Component, DestroyRef, inject, OnInit} from '@angular/core';
 import {UntypedFormBuilder, UntypedFormGroup} from '@angular/forms';
-import {MatLegacyDialog as MatDialog} from '@angular/material/legacy-dialog';
+import {MatDialog} from '@angular/material/dialog';
 import {GlobalSettings, NamespaceList} from '@api/root.api';
 import isEqual from 'lodash-es/isEqual';
 import {Observable, of} from 'rxjs';

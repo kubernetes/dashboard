@@ -14,7 +14,7 @@
 
 import {HttpClient, HttpErrorResponse} from '@angular/common/http';
 import {Inject, Injectable} from '@angular/core';
-import {MatLegacyDialog as MatDialog} from '@angular/material/legacy-dialog';
+import {MatDialog} from '@angular/material/dialog';
 import {Router} from '@angular/router';
 import {AppDeploymentContentResponse, AppDeploymentContentSpec, AppDeploymentSpec} from '@api/root.api';
 import {IConfig} from '@api/root.ui';

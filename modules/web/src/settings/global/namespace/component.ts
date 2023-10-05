@@ -21,7 +21,7 @@ import {
   UntypedFormGroup,
   NG_VALUE_ACCESSOR,
 } from '@angular/forms';
-import {MatLegacyDialog as MatDialog, MatLegacyDialogConfig as MatDialogConfig} from '@angular/material/legacy-dialog';
+import {MatDialog, MatDialogConfig} from '@angular/material/dialog';
 import {GlobalSettings, NamespaceList} from '@api/root.api';
 import {map, take} from 'rxjs/operators';
 import {EndpointManager, Resource} from '@common/services/resource/endpoint';

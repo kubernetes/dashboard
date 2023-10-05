@@ -22,12 +22,13 @@
   padding-right: 3.5 * $baseline-grid;
 
   ::ng-deep {
+    /* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version.*/
     .mat-form-field-infix {
       border: 0;
       padding: 0;
       width: 18 * $baseline-grid;
     }
-
+    /* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version.*/
     .mat-form-field-wrapper {
       padding: 0;
     }
