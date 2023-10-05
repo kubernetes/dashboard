@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import {Component, Inject, OnInit, ViewChild} from '@angular/core';
-import {MatMenuTrigger} from '@angular/material/menu';
+import {MatLegacyMenuTrigger as MatMenuTrigger} from '@angular/material/legacy-menu';
 import {LoginStatus} from '@api/root.api';
 import {IConfig} from '@api/root.ui';
 import {AuthService} from '@common/services/global/authentication';

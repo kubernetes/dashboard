@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import {Component, Input, OnInit} from '@angular/core';
-import {MatTableDataSource} from '@angular/material/table';
+import {MatLegacyTableDataSource as MatTableDataSource} from '@angular/material/legacy-table';
 import {Condition} from 'typings/root.api';
 
 @Component({

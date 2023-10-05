@@ -16,8 +16,8 @@ import {HttpClientTestingModule, HttpTestingController} from '@angular/common/ht
 import {CUSTOM_ELEMENTS_SCHEMA, InjectionToken} from '@angular/core';
 import {ComponentFixture, TestBed, waitForAsync} from '@angular/core/testing';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {MatButtonModule} from '@angular/material/button';
-import {MatRadioModule} from '@angular/material/radio';
+import {MatLegacyButtonModule as MatButtonModule} from '@angular/material/legacy-button';
+import {MatLegacyRadioModule as MatRadioModule} from '@angular/material/legacy-radio';
 import {By} from '@angular/platform-browser';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {ActivatedRoute, Router, convertToParamMap} from '@angular/router';

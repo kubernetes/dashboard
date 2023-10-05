@@ -14,7 +14,7 @@
 
 import {Component, DestroyRef, inject, Inject, OnInit, ViewChild} from '@angular/core';
 import {MatButtonToggleGroup} from '@angular/material/button-toggle';
-import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
+import {MAT_LEGACY_DIALOG_DATA as MAT_DIALOG_DATA, MatLegacyDialogRef as MatDialogRef} from '@angular/material/legacy-dialog';
 import {dump as toYaml, load as fromYaml} from 'js-yaml';
 import {EditorMode} from '@common/components/textinput/component';
 import {AppDeploymentSpec} from '@api/root.api';

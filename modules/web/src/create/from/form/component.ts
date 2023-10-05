@@ -15,7 +15,7 @@
 import {HttpClient} from '@angular/common/http';
 import {Component, DestroyRef, inject, OnInit} from '@angular/core';
 import {AbstractControl, UntypedFormArray, UntypedFormBuilder, UntypedFormGroup, Validators} from '@angular/forms';
-import {MatDialog} from '@angular/material/dialog';
+import {MatLegacyDialog as MatDialog} from '@angular/material/legacy-dialog';
 import {ActivatedRoute, Router} from '@angular/router';
 import {
   AppDeploymentSpec,
