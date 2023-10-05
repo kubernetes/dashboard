@@ -34,22 +34,18 @@ $shell-background-color: #000;
   height: 100%;
   width: 100%;
 
-  .kd-shell-content-card-title {
-    display: inline;
-  }
-
   // Some hacks are required to make the terminal takes full page
   ::ng-deep {
-    mat-card {
+    .mat-mdc-card {
       display: flex;
       flex-flow: column;
       height: 100%;
 
-      > mat-card-title + div {
+      > .mat-mdc-card-title + div {
         @include flex-full-height;
       }
 
-      mat-card-content {
+      .mat-mdc-card-content {
         @include flex-full-height;
 
         background: $shell-background-color;
@@ -64,11 +60,6 @@ $shell-background-color: #000;
   }
 }
 
-.kd-shell-toolbar-select {
-  width: 180px;
-
-  .md-select-value {
-    font-size: $title-font-size-base;
-    min-width: 20 * $baseline-grid;
-  }
+mat-form-field {
+  width: fit-content;
 }

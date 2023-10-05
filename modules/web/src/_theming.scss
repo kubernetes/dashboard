@@ -14,6 +14,7 @@
 
 @use 'sass:map';
 @use 'sass:color';
+@use '@angular/material' as mat;
 @use '@angular/material/theming';
 @use 'variables' as *;
 
@@ -37,6 +38,10 @@
   $white: #fff;
 
   // Global style overrides.
+
+  // Angular Material 15/16 Density
+  @include mat.form-field-density(-4);
+  @include mat.icon-button-density(-3);
 
   a {
     color: map.get($colors, primary);
@@ -174,24 +179,24 @@
     background-color: $border;
   }
 
-  .kd-chips-show-button {
-    color: map.get($colors, primary);
-
-    &:hover {
-      color: map.get($colors, primary-hover);
-    }
-  }
-
   .kd-minimized-card-header:hover {
     background: $border;
   }
 
   .kd-search {
-    background-color: color.adjust($background, $lightness: -2.5%);
+      mat-form-field {
+        .mdc-text-field__input {
+          font-size: $subhead-font-size-base;
+        }
 
-    input {
-      color: theming.mat-color($foreground-palette, base);
-    }
+        .mdc-text-field {
+          background-color: color.adjust($background, $lightness: -2.5%);
+        }
+
+        .mdc-notched-outline__trailing {
+          display: none;
+        }
+      }
   }
 
   .kd-nav-item-button {
@@ -215,31 +220,29 @@
     }
   }
 
-  .mat-chip.mat-standard-chip {
+  /* MAT chips Theming */
+
+  .mat-mdc-chip.mat-mdc-standard-chip {
     background: $card-background-dark;
   }
 
-  .mat-active,
-  .mat-selected {
-    color: map.get($colors, primary) !important;
+  .kd-chips-show-button {
+    color: map.get($colors, primary);
+
+    &:hover {
+      color: map.get($colors, primary-hover);
+    }
   }
 
-  kd-namespace-selector {
-    border: 1px solid $border;
+  /* MAT chips Theming End */
 
-    .kd-namespace-select {
-      color: theming.mat-color($foreground-palette, secondary-text);
-    }
+  button.mat-mdc-icon-button {
+    color: theming.mat-color($foreground-palette, text);
+  }
 
-    .kd-namespace-select-input-container {
-      .mat-form-field-underline {
-        display: none;
-      }
-
-      .mat-select-arrow {
-        color: $muted-light !important;
-      }
-    }
+  .mat-active,
+  .mat-mdc-selected {
+    color: map.get($colors, primary) !important;
   }
 
   .kd-namespace-select-input {
@@ -252,9 +255,9 @@
     color: theming.mat-color($foreground-palette, secondary-text);
   }
 
-  .kd-namespace-select-input-border,
   .kd-shell-toolbar-select,
-  .kd-dialog-propagation-select {
+  .kd-dialog-propagation-select,
+  .kd-namespace-select-input-border {
     border-bottom: 1px solid $border !important;
   }
 
@@ -264,14 +267,6 @@
 
   .kd-cross-outline {
     stroke: $background;
-  }
-
-  .mat-button-toggle-group {
-    border: 1px solid $border;
-  }
-
-  .mat-button-toggle-checked {
-    background-color: $card-background-dark;
   }
 
   .kd-user-help {
@@ -286,7 +281,7 @@
     border-right: 0;
   }
 
-  .mat-icon-button:hover:not([disabled]) {
+  .mat-mdc-icon-button:hover:not([disabled]) {
     background-color: $border !important;
   }
 
@@ -297,21 +292,12 @@
   }
 
   .kd-secret-detail-text {
-    .mat-form-field-infix {
-      border-top: 0;
-    }
+    mat-form-field {
+      width: 100%;
 
-    .mat-form-field-underline {
-      background: none;
-
-      .mat-form-field-ripple {
-        background: none;
+      .mdc-text-field {
+        background-color: $border;
       }
-    }
-
-    textarea {
-      background-color: $border;
-      border: 0;
     }
   }
 
@@ -323,7 +309,7 @@
     border: 1px solid $border;
   }
 
-  .mat-list {
+  .mat-mdc-list {
     border: 1px solid $border;
   }
 
@@ -352,5 +338,33 @@
         filter: invert(100%);
       }
     }
+  }
+
+  .kd-namespace-select-form-field {
+    mat-form-field {
+      width: 100%;
+    }
+
+    .mdc-notched-outline {
+      .mdc-notched-outline__leading {
+        display: none;
+      }
+
+      .mdc-notched-outline__trailing {
+        border: 1px solid $border !important;
+        border-radius: 2px;
+      }
+    }
+  }
+
+  .mat-mdc-card-title,
+  .mat-mdc-card-content,
+  .mat-mdc-card-footer {
+    color: map.get($foreground-palette, text);
+  }
+
+  .kd-create-from-file-info,
+  .kd-create-from-input-info {
+    color: map.get($foreground-palette, text);
   }
 }

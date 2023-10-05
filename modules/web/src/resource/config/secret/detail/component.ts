@@ -27,6 +27,7 @@ import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 @Component({
   selector: 'kd-secret-detail',
   templateUrl: './template.html',
+  styleUrls: ['./edit/style.scss'],
 })
 export class SecretDetailComponent implements OnInit, OnDestroy {
   private readonly endpoint_ = EndpointManager.resource(Resource.secret, true);

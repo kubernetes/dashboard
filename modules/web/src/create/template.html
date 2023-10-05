@@ -14,13 +14,11 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<mat-card class="kd-create-container">
-  <!-- [@.disabled] will disable tab switching animations -->
-  <mat-tab-group [@.disabled]="true">
-    <mat-tab
-      label="Create from input"
-      i18n-label
-    >
+<mat-card appearance="outlined"
+          class="kd-create-container">
+  <mat-tab-group>
+    <mat-tab label="Create from input"
+             i18n-label>
       <kd-create-from-input></kd-create-from-input>
     </mat-tab>
     <mat-tab

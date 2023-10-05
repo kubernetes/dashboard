@@ -20,11 +20,21 @@ import {HttpClient, HttpErrorResponse, HttpHeaders} from '@angular/common/http';
 import {AlertDialogConfig, AlertDialogComponent} from 'common/dialogs/alert/dialog';
 import {MatDialogConfig, MatDialog} from '@angular/material/dialog';
 import {encode} from 'js-base64';
+import {MAT_FORM_FIELD_DEFAULT_OPTIONS} from '@angular/material/form-field';
 
 @Component({
   selector: 'kd-secret-detail-edit',
   templateUrl: './template.html',
   styleUrls: ['./style.scss'],
+  providers: [
+    {
+      provide: MAT_FORM_FIELD_DEFAULT_OPTIONS,
+      useValue: {
+        appearance: 'outline',
+        subscriptSizing: 'dynamic',
+      },
+    },
+  ],
 })
 export class SecretDetailEditComponent implements OnInit {
   @Output() closeEvent = new EventEmitter<boolean>();
