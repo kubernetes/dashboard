@@ -46,15 +46,13 @@ limitations under the License.
            fxLayout="row">
         <mat-chip-grid #nsListGrid [formArrayName]="Controls.FallbackList"
                        fxFlex="80"
-                       fxLayoutAlign=" center"
-                       class="kd-namespace-chip-list">
-          <mat-chip-option *ngFor="let namespace of form.get(Controls.FallbackList).value | slice: 0:visibleNamespaces"
+                       fxLayoutAlign=" center">
+          <mat-chip-row *ngFor="let namespace of form.get(Controls.FallbackList).value | slice: 0:visibleNamespaces"
                            style="max-width: 100px; text-overflow: ellipsis; white-space: nowrap; overflow: hidden; display: block"
-                           [matTooltip]="namespace"
-                           [selectable]="false"
-                           [removable]="false">
+                           disableRipple
+                           [matTooltip]="namespace">
             {{ namespace }}
-          </mat-chip-option>
+          </mat-chip-row>
           <mat-chip *ngIf="form.get(Controls.FallbackList).value.length === 0"
                     [disabled]="true"
                     i18n>Add namespaces...</mat-chip>
@@ -62,7 +60,7 @@ limitations under the License.
                     [disabled]="true"
                     fxFlex
                     fxLayoutAlign=" center">+ {{ invisibleCount }}</mat-chip>
-          <input [matChipInputFor]="nsListGrid"/>
+          <input readonly [matChipInputFor]="nsListGrid"/>
         </mat-chip-grid>
         <div fxFlex="20"
              fxLayoutAlign="end">

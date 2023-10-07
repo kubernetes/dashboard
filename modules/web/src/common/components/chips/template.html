@@ -16,7 +16,7 @@ limitations under the License.
 
 <mat-chip-listbox>
   <ng-container *ngFor="let key of keys; let i = index">
-    <mat-chip-option *ngIf="isVisible(i)"
+    <mat-chip *ngIf="isVisible(i)"
               [disableRipple]="true">
       <ng-container *ngIf="isSerializedRef(map[key])">
         <span>{{ key }}:&nbsp;</span>
@@ -46,7 +46,7 @@ limitations under the License.
         </ng-container>
       </ng-container>
       <!-- beautify ignore:end -->
-    </mat-chip-option>
+    </mat-chip>
   </ng-container>
   <div *ngIf="isAnythingHidden()"
        (click)="toggleView()"

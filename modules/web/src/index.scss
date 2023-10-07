@@ -326,6 +326,23 @@ router-outlet::after {
   z-index: 1;
 }
 
+// #################################################
+//    MAT chips
+// #################################################
+.mat-mdc-chip.mat-mdc-standard-chip {
+  padding-left: unset;
+  padding-right: unset;
+
+  .mdc-evolution-chip__text-label {
+    white-space: normal;
+    line-height: normal;
+  }
+}
+
+.mat-mdc-chip-focus-overlay {
+  background: none !important;
+}
+
 .kd-chips-show-button {
   cursor: pointer;
   font-size: $body-font-size-base;
@@ -334,6 +351,9 @@ router-outlet::after {
   line-height: $body-font-size-base;
   padding: ($baseline-grid * 0.75) ($baseline-grid * 1.75);
 }
+// #################################################
+//       MAT chips end
+// #################################################
 
 .kd-on-top {
   z-index: 100;
@@ -397,18 +417,6 @@ router-outlet::after {
   }
 }
 
-.kd-namespace-chip-list {
-  overflow-x: hidden;
-
-  &:focus {
-    outline: none;
-  }
-  /* TODO(mdc-migration): The following rule targets internal classes of chips that may no longer apply for the MDC version.*/
-  .mat-chip-list-wrapper {
-    flex-wrap: nowrap;
-    overflow-x: hidden;
-  }
-}
 
 .mat-mdc-list {
   margin-top: $baseline-grid;
