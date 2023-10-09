@@ -48,7 +48,6 @@ limitations under the License.
                        fxFlex="80"
                        fxLayoutAlign=" center">
           <mat-chip-row *ngFor="let namespace of form.get(Controls.FallbackList).value | slice: 0:visibleNamespaces"
-                           style="max-width: 100px; text-overflow: ellipsis; white-space: nowrap; overflow: hidden; display: block"
                            disableRipple
                            [matTooltip]="namespace">
             {{ namespace }}
@@ -65,9 +64,8 @@ limitations under the License.
         <div fxFlex="20"
              fxLayoutAlign="end">
           <button mat-icon-button
-                  style="margin-right: 0"
                   (click)="edit()">
-            <mat-icon style="font-size: 20px">edit</mat-icon>
+            <mat-icon>edit</mat-icon>
           </button>
           <button mat-icon-button
                   (click)="add()">

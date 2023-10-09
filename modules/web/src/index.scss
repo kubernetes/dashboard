@@ -93,26 +93,6 @@ code {
   }
 }
 
-.mat-mdc-chip.mat-mdc-standard-chip {
-  box-shadow: none !important;
-  font-size: $body-font-size-base;
-  font-weight: $regular-font-weight;
-  height: fit-content;
-  line-height: $body-font-size-base;
-  min-height: unset;
-  padding: ($baseline-grid * 0.75) ($baseline-grid * 1.25);
-  transition: none !important;
-  word-break: break-all !important;
-
-  &:hover::after {
-    opacity: 0 !important;
-  }
-
-  &:focus::after {
-    opacity: 0 !important;
-  }
-}
-
 .mat-mdc-header-row,
 .mat-mdc-row {
   min-height: (5 * $baseline-grid) !important;
@@ -330,12 +310,29 @@ router-outlet::after {
 //    MAT chips
 // #################################################
 .mat-mdc-chip.mat-mdc-standard-chip {
+  box-shadow: none !important;
+  font-size: $body-font-size-base;
+  font-weight: $regular-font-weight;
+  height: fit-content;
+  line-height: $body-font-size-base;
+  min-height: unset;
+  padding: ($baseline-grid * 0.75) ($baseline-grid * 1.25);
+  transition: none !important;
+  word-break: break-all !important;
   padding-left: unset;
   padding-right: unset;
 
   .mdc-evolution-chip__text-label {
     white-space: normal;
     line-height: normal;
+  }
+
+  &:hover::after {
+    opacity: 0 !important;
+  }
+
+  &:focus::after {
+    opacity: 0 !important;
   }
 }
 
@@ -351,6 +348,7 @@ router-outlet::after {
   line-height: $body-font-size-base;
   padding: ($baseline-grid * 0.75) ($baseline-grid * 1.75);
 }
+
 // #################################################
 //       MAT chips end
 // #################################################
@@ -403,12 +401,10 @@ router-outlet::after {
 }
 
 .kd-secret-detail-text {
-  /* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version.*/
-  .mat-form-field-wrapper {
+  .mat-mdc-text-field-wrapper {
     padding-bottom: $baseline-grid;
   }
-  /* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version.*/
-  .mat-form-field-infix {
+  .mat-mdc-form-field-flex {
     padding-top: 2px;
   }
 
@@ -416,7 +412,6 @@ router-outlet::after {
     padding: (2 * $baseline-grid) (2 * $baseline-grid) 0 !important;
   }
 }
-
 
 .mat-mdc-list {
   margin-top: $baseline-grid;
