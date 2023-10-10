@@ -48,7 +48,7 @@ jobs:
         run: git checkout -b gh-pages-pull-request
 
       - name: Push changes to gh-pages-pull-request branch # It will silently fail if pull request already exists
-        uses: ad-m/github-push-action@v0.6.0
+        uses: ad-m/github-push-action@v0.8.0
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           branch: gh-pages-pull-request
