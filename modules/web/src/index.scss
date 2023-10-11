@@ -306,9 +306,7 @@ router-outlet::after {
   z-index: 1;
 }
 
-// #################################################
-//    MAT chips
-// #################################################
+/*MAT chips*/
 .mat-mdc-chip.mat-mdc-standard-chip {
   box-shadow: none !important;
   font-size: $body-font-size-base;
@@ -349,9 +347,7 @@ router-outlet::after {
   padding: ($baseline-grid * 0.75) ($baseline-grid * 1.75);
 }
 
-// #################################################
-//       MAT chips end
-// #################################################
+/*MAT chips end*/
 
 .kd-on-top {
   z-index: 100;

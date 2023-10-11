@@ -42,14 +42,9 @@ limitations under the License.
                      desc="List of namespaces that should be presented to user without namespace list privileges."
                      i18n-desc>
     <mat-form-field fxFlex>
-      <div fxFlex="100"
-           fxLayout="row">
-        <mat-chip-grid #nsListGrid [formArrayName]="Controls.FallbackList"
-                       fxFlex="80"
-                       fxLayoutAlign=" center">
+        <mat-chip-grid #nsListGrid [formArrayName]="Controls.FallbackList">
           <mat-chip-row *ngFor="let namespace of form.get(Controls.FallbackList).value | slice: 0:visibleNamespaces"
-                           disableRipple
-                           [matTooltip]="namespace">
+                           disableRipple [matTooltip]="namespace">
             {{ namespace }}
           </mat-chip-row>
           <mat-chip *ngIf="form.get(Controls.FallbackList).value.length === 0"
@@ -57,22 +52,18 @@ limitations under the License.
                     i18n>Add namespaces...</mat-chip>
           <mat-chip *ngIf="invisibleCount > 0"
                     [disabled]="true"
-                    fxFlex
-                    fxLayoutAlign=" center">+ {{ invisibleCount }}</mat-chip>
-          <input readonly [matChipInputFor]="nsListGrid"/>
+          >+ {{ invisibleCount }}</mat-chip>
+          <input hidden readonly [matChipInputFor]="nsListGrid"/>
         </mat-chip-grid>
-        <div fxFlex="20"
-             fxLayoutAlign="end">
-          <button mat-icon-button
-                  (click)="edit()">
+        <button mat-icon-button matSuffix
+                style="margin-right: 0"
+                (click)="edit()">
             <mat-icon>edit</mat-icon>
-          </button>
-          <button mat-icon-button
-                  (click)="add()">
-            <mat-icon>add</mat-icon>
-          </button>
-        </div>
-      </div>
+        </button>
+        <button mat-icon-button matSuffix
+                (click)="add()">
+          <mat-icon>add</mat-icon>
+        </button>
     </mat-form-field>
   </kd-settings-entry>
 </form>

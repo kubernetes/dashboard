@@ -32,11 +32,15 @@ import {EndpointManager, Resource} from '../../services/resource/endpoint';
 import {ResourceService} from '../../services/resource/resource';
 import {NamespaceChangeDialogComponent} from './changedialog/dialog';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
+import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
 
 @Component({
   selector: 'kd-namespace-selector',
   templateUrl: './template.html',
   styleUrls: ['style.scss'],
+  providers: [
+    { provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { subscriptSizing: 'dynamic' } }
+  ],
 })
 export class NamespaceSelectorComponent implements OnInit {
   namespaces: string[] = [];

@@ -14,6 +14,7 @@
 
 @use 'sass:map';
 @use 'sass:color';
+@use '@angular/material' as mat;
 @use '@angular/material/theming';
 @use 'variables' as *;
 
@@ -32,8 +33,13 @@
   $box-shadow-3: rgb(0 0 0 / 0.12);
   $box-shadow: 0 3px 1px -2px $box-shadow-1, 0 2px 2px 0 $box-shadow-2, 0 1px 5px 0 $box-shadow-3;
   $white: #fff;
-
   // Global style overrides.
+
+  .kd-form {
+    @include mat.form-field-density(-4);
+    font-family: $font-family-sans;
+    font-size: $subhead-font-size-base;
+  }
 
   a {
     color: map.get($colors, primary);
@@ -204,9 +210,8 @@
     }
   }
 
-  // #################################################
-  //    MAT chips Theming
-  // #################################################
+  /*MAT chips Theming*/
+
   .mat-mdc-chip.mat-mdc-standard-chip {
     background: $card-background-dark;
   }
@@ -217,32 +222,16 @@
       color: map.get($colors, primary-hover);
     }
   }
-  // #################################################
-  //    MAT chips Theming End
-  // #################################################
+
+  /*MAT chips Theming End*/
+
+  button.mat-mdc-icon-button {
+    color: theming.mat-color($foreground-palette, text);
+  }
 
   .mat-active,
   .mat-mdc-selected {
     color: map.get($colors, primary) !important;
-  }
-
-  kd-namespace-selector {
-    border: 1px solid $border;
-
-    .kd-namespace-select {
-      color: theming.mat-color($foreground-palette, secondary-text);
-    }
-
-    .kd-namespace-select-input-container {
-      /* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version.*/
-      .mat-form-field-underline {
-        display: none;
-      }
-      /* TODO(mdc-migration): The following rule targets internal classes of select that may no longer apply for the MDC version.*/
-      .mat-select-arrow {
-        color: $muted-light !important;
-      }
-    }
   }
 
   .kd-namespace-select-input {
@@ -298,27 +287,25 @@
     }
   }
 
-  // #################################################
-  //    MAT Form Filed
-  // #################################################
+  /*MAT Form Filed*/
 
   .mat-mdc-text-field-wrapper {
     background-color: transparent !important;
   }
-  // initial background color
+
+  /*initial background color*/
   .mdc-text-field--filled:not(.mdc-text-field--disabled) {
     background-color: transparent !important;
     padding: unset;
     color: theming.mat-color($foreground-palette, text) !important;// #fff;
   }
-  // background color on hover and focus
+
+   /*background color on hover and focus*/
   .mat-mdc-form-field-focus-overlay {
     background-color: transparent !important;
   }
 
-  // #################################################
-  //    MAT Form Filed End
-  // #################################################
+  /*MAT Form Filed End*/
 
   .kd-secret-detail-text {
     /* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version.*/
