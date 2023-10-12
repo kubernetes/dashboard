@@ -306,7 +306,7 @@ router-outlet::after {
   z-index: 1;
 }
 
-/*MAT chips*/
+/*MDC MAT chips*/
 .mat-mdc-chip.mat-mdc-standard-chip {
   box-shadow: none !important;
   font-size: $body-font-size-base;
@@ -337,6 +337,7 @@ router-outlet::after {
 .mat-mdc-chip-focus-overlay {
   background: none !important;
 }
+/* MDC MAT chips end*/
 
 .kd-chips-show-button {
   cursor: pointer;
@@ -347,7 +348,13 @@ router-outlet::after {
   padding: ($baseline-grid * 0.75) ($baseline-grid * 1.75);
 }
 
-/*MAT chips end*/
+/* MDC MAT select OPTION provider panel class*/
+.kd-namespace-selection {
+  .mat-mdc-option {
+    overflow: auto !important;
+    text-overflow: unset !important;
+  }
+}
 
 .kd-on-top {
   z-index: 100;

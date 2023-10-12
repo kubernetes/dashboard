@@ -14,7 +14,7 @@
 
 import {Component, ElementRef, Inject, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
-import {MatSelect} from '@angular/material/select';
+import {MAT_SELECT_CONFIG, MatSelect} from '@angular/material/select';
 import {ActivatedRoute, NavigationEnd, Router} from '@angular/router';
 import {NamespaceList} from '@api/root.api';
 import {IConfig} from '@api/root.ui';
@@ -32,15 +32,27 @@ import {EndpointManager, Resource} from '../../services/resource/endpoint';
 import {ResourceService} from '../../services/resource/resource';
 import {NamespaceChangeDialogComponent} from './changedialog/dialog';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
-import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
+import {MAT_FORM_FIELD_DEFAULT_OPTIONS} from '@angular/material/form-field';
 
 @Component({
   selector: 'kd-namespace-selector',
   templateUrl: './template.html',
   styleUrls: ['style.scss'],
   providers: [
-    { provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { subscriptSizing: 'dynamic' } }
-  ],
+    { provide: MAT_FORM_FIELD_DEFAULT_OPTIONS,
+      useValue:
+        {
+          appearance: 'outline',
+          subscriptSizing: 'dynamic'
+        }
+    },
+    { provide: MAT_SELECT_CONFIG,
+      useValue:
+        {
+          overlayPanelClass: "kd-namespace-selection",
+        }
+    },
+ ]
 })
 export class NamespaceSelectorComponent implements OnInit {
   namespaces: string[] = [];
@@ -270,4 +282,5 @@ export class NamespaceSelectorComponent implements OnInit {
       this.namespaceInputEl_.nativeElement.focus();
     }, 150);
   }
+
 }
