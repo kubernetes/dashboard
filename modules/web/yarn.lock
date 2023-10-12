@@ -550,26 +550,26 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/core@npm:7.23.0":
-  version: 7.23.0
-  resolution: "@babel/core@npm:7.23.0"
+"@babel/core@npm:7.23.2":
+  version: 7.23.2
+  resolution: "@babel/core@npm:7.23.2"
   dependencies:
     "@ampproject/remapping": ^2.2.0
     "@babel/code-frame": ^7.22.13
     "@babel/generator": ^7.23.0
     "@babel/helper-compilation-targets": ^7.22.15
     "@babel/helper-module-transforms": ^7.23.0
-    "@babel/helpers": ^7.23.0
+    "@babel/helpers": ^7.23.2
     "@babel/parser": ^7.23.0
     "@babel/template": ^7.22.15
-    "@babel/traverse": ^7.23.0
+    "@babel/traverse": ^7.23.2
     "@babel/types": ^7.23.0
     convert-source-map: ^2.0.0
     debug: ^4.1.0
     gensync: ^1.0.0-beta.2
     json5: ^2.2.3
     semver: ^6.3.1
-  checksum: cebd9b48dbc970a7548522f207f245c69567e5ea17ebb1a4e4de563823cf20a01177fe8d2fe19b6e1461361f92fa169fd0b29f8ee9d44eeec84842be1feee5f2
+  checksum: 003897718ded16f3b75632d63cd49486bf67ff206cc7ebd1a10d49e2456f8d45740910d5ec7e42e3faf0deec7a2e96b1a02e766d19a67a8309053f0d4e57c0fe
   languageName: node
   linkType: hard
 
@@ -1021,14 +1021,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/helpers@npm:^7.23.0":
-  version: 7.23.0
-  resolution: "@babel/helpers@npm:7.23.0"
+"@babel/helpers@npm:^7.23.2":
+  version: 7.23.2
+  resolution: "@babel/helpers@npm:7.23.2"
   dependencies:
     "@babel/template": ^7.22.15
-    "@babel/traverse": ^7.23.0
+    "@babel/traverse": ^7.23.2
     "@babel/types": ^7.23.0
-  checksum: ad8509f9507757600f216a6d37eb7e4450727895ec01ba6a2ebc0bf675bb86ffd54f83b1d36094246ebc9e7c41e5609c4a2ac41a325a296ef77ecfab3be7d4cf
+  checksum: aaf4828df75ec460eaa70e5c9f66e6dadc28dae3728ddb7f6c13187dbf38030e142194b83d81aa8a31bbc35a5529a5d7d3f3cf59d5d0b595f5dd7f9d8f1ced8e
   languageName: node
   linkType: hard
 
@@ -2548,9 +2548,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/traverse@npm:^7.23.0":
-  version: 7.23.0
-  resolution: "@babel/traverse@npm:7.23.0"
+"@babel/traverse@npm:^7.23.2":
+  version: 7.23.2
+  resolution: "@babel/traverse@npm:7.23.2"
   dependencies:
     "@babel/code-frame": ^7.22.13
     "@babel/generator": ^7.23.0
@@ -2562,7 +2562,7 @@ __metadata:
     "@babel/types": ^7.23.0
     debug: ^4.1.0
     globals: ^11.1.0
-  checksum: 0b17fae53269e1af2cd3edba00892bc2975ad5df9eea7b84815dab07dfec2928c451066d51bc65b4be61d8499e77db7e547ce69ef2a7b0eca3f96269cb43a0b0
+  checksum: 26a1eea0dde41ab99dde8b9773a013a0dc50324e5110a049f5d634e721ff08afffd54940b3974a20308d7952085ac769689369e9127dea655f868c0f6e1ab35d
   languageName: node
   linkType: hard
 
@@ -11358,7 +11358,7 @@ __metadata:
     "@angular/platform-browser": 16.2.1
     "@angular/platform-browser-dynamic": 16.2.1
     "@angular/router": 16.2.1
-    "@babel/core": 7.23.0
+    "@babel/core": 7.23.2
     "@babel/preset-env": 7.23.2
     "@babel/register": 7.22.15
     "@cypress/webpack-preprocessor": 6.0.0
