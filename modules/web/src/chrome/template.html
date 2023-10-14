@@ -31,21 +31,19 @@ limitations under the License.
                     class="kd-toolbar-logo-text"> </mat-icon>
         </a>
       </div>
-      <kd-namespace-selector class="kd-namespace-select-form" id="nav-namespace-selector"> </kd-namespace-selector>
-
-      <kd-search fxFlex> </kd-search>
-      <div fxLayout="row">
-        <button mat-icon-button
-                color="primary"
-                class="kd-toolbar-action"
-                i18n-matTooltip
-                matTooltip="Create new resource"
-                (click)="goToCreateState()">
-          <mat-icon class="kd-primary-toolbar-icon">add</mat-icon>
-        </button>
-        <kd-notifications class="kd-toolbar-action"></kd-notifications>
-        <kd-user-panel class="kd-toolbar-action"></kd-user-panel>
-      </div>
+      <kd-namespace-selector id="nav-namespace-selector"> </kd-namespace-selector>
+      <kd-search fxFlex="35"> </kd-search>
+      <span fxFlex></span>
+      <button mat-icon-button
+              color="primary"
+              class="kd-toolbar-action"
+              i18n-matTooltip
+              matTooltip="Create new resource"
+              (click)="goToCreateState()">
+        <mat-icon class="kd-primary-toolbar-icon">add</mat-icon>
+      </button>
+      <kd-notifications class="kd-toolbar-action"></kd-notifications>
+      <kd-user-panel class="kd-toolbar-action"></kd-user-panel>
     </div>
   </mat-toolbar>
 

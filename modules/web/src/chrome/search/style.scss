@@ -14,16 +14,13 @@
 
 @use '../../variables' as *;
 
-.kd-search {
+form {
   border-radius: $baseline-grid * 0.25;
   padding-left: $baseline-grid;
 
   input {
     background-color: transparent;
-    border: 0;
     font-size: $subhead-font-size-base;
-    outline: none;
-    padding: $baseline-grid * 1.25;
   }
 
   .kd-search-icon {

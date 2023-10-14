@@ -36,10 +36,15 @@
   // Global style overrides.
 
   @include mat.slide-toggle-density(-1);
-  .kd-namespace-select-form {
+
+  .kd-form-field {
     @include mat.form-field-density(-4);
     font-family: $font-family-sans;
     font-size: $subhead-font-size-base;
+
+    mat-form-field {
+      width: 100%;
+    }
   }
 
   a {
