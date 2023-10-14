@@ -17,3 +17,10 @@ kd-settings-entry:first-child,
 kd-settings-entry:nth-child(n)~ kd-settings-entry  {
   padding: $baseline-grid 0;
 }
+
+mat-slider {
+  margin-left: 20px;
+  --mdc-slider-handle-height: 16px;
+  --mdc-slider-handle-width: 16px;
+  --mdc-slider-active-track-height: 2px;
+}
