@@ -22,7 +22,7 @@ limitations under the License.
   <div content>
     <p i18n>Global settings are stored in config map, so all of them are applied for every instance of the app.</p>
     <br />
-    <form [formGroup]="form">
+    <form [formGroup]="form" class="kd-form-field">
       <kd-settings-entry key="Cluster name"
                          i18n-key
                          desc="Cluster name appears in the browser window title if it is set."
@@ -43,8 +43,8 @@ limitations under the License.
                          i18n-key
                          desc="Max number of items that can be displayed on every list view."
                          i18n-desc>
-        <div fxFlex>
           <mat-slider color="primary"
+                      showTickMarks
                       min="5"
                       max="50"
                       step="5"
@@ -53,14 +53,13 @@ limitations under the License.
           </mat-slider>
           <div class="kd-slider-value kd-muted"
                fxFlexAlign=" center">{{ settings.itemsPerPage }}</div>
-        </div>
       </kd-settings-entry>
       <kd-settings-entry key="Labels limit"
                          i18n-key
                          desc="Max number of labels that are displayed by default on most views."
                          i18n-desc>
-        <div fxFlex>
           <mat-slider color="primary"
+                      showTickMarks
                       min="1"
                       max="10"
                       step="1"
@@ -69,14 +68,13 @@ limitations under the License.
           </mat-slider>
           <div class="kd-slider-value kd-muted"
                fxFlexAlign=" center">{{ settings.labelsLimit }}</div>
-        </div>
       </kd-settings-entry>
       <kd-settings-entry key="Logs auto-refresh time interval"
                          i18n-key
                          desc="Number of seconds between every auto-refresh of logs."
                          i18n-desc>
-        <div fxFlex>
           <mat-slider color="primary"
+                      showTickMarks
                       min="1"
                       max="10"
                       step="1"
@@ -87,14 +85,13 @@ limitations under the License.
                 fxFlexAlign=" center">
             {{ settings.logsAutoRefreshTimeInterval }}
           </span>
-        </div>
       </kd-settings-entry>
       <kd-settings-entry key="Resource auto-refresh time interval"
                          i18n-key
                          desc="Number of seconds between every auto-refresh of every resource. Set 0 to disable."
                          i18n-desc>
-        <div fxFlex>
           <mat-slider color="primary"
+                      showTickMarks
                       min="0"
                       max="60"
                       step="5"
@@ -105,7 +102,6 @@ limitations under the License.
                 fxFlexAlign=" center">
             {{ settings.resourceAutoRefreshTimeInterval }}
           </span>
-        </div>
       </kd-settings-entry>
       <kd-settings-entry key="Disable access denied notification"
                          i18n-key

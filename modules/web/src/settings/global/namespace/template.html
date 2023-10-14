@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<form [formGroup]="form">
+<form [formGroup]="form" class="kd-form-field">
   <kd-settings-entry key="Default namespace"
                      i18n-key
                      desc="Namespace that should be selected by default after logging in."
@@ -55,14 +55,14 @@ limitations under the License.
           >+ {{ invisibleCount }}</mat-chip>
           <input hidden readonly [matChipInputFor]="nsListGrid"/>
         </mat-chip-grid>
-        <button mat-icon-button matSuffix
+        <button mat-icon-button matIconSuffix
                 style="margin-right: 0"
                 (click)="edit()">
-            <mat-icon>edit</mat-icon>
+            <mat-icon >edit</mat-icon>
         </button>
-        <button mat-icon-button matSuffix
+        <button mat-icon-button matIconSuffix
                 (click)="add()">
-          <mat-icon>add</mat-icon>
+          <mat-icon >add</mat-icon>
         </button>
     </mat-form-field>
   </kd-settings-entry>
