@@ -46,7 +46,8 @@
     }
   }
 
-  mat-card-title {
+  mat-card-title,
+  mat-card-footer {
     color: map.get($foreground-palette, text);
   }
 
