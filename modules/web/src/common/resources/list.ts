@@ -15,11 +15,10 @@
 import {DataSource} from '@angular/cdk/collections';
 import {HttpParams} from '@angular/common/http';
 import {
-  ChangeDetectorRef,
+  ChangeDetectorRef, DestroyRef,
   Directive,
-  EventEmitter,
+  EventEmitter, inject,
   Input,
-  OnDestroy,
   OnInit,
   Output,
   Type,
@@ -32,7 +31,7 @@ import {Router} from '@angular/router';
 import {Event as KdEvent, Resource, ResourceList} from '@api/root.api';
 import {ActionColumn, ActionColumnDef, ColumnWhenCallback, ColumnWhenCondition, OnListChangeEvent} from '@api/root.ui';
 import {isObservable, merge, Observable, Subject} from 'rxjs';
-import {startWith, switchMap, takeUntil, tap} from 'rxjs/operators';
+import {startWith, switchMap, tap} from 'rxjs/operators';
 
 import {CardListFilterComponent} from '../components/list/filter/component';
 import {SEARCH_QUERY_STATE_PARAM} from '../params/params';
@@ -42,6 +41,7 @@ import {NamespaceService} from '../services/global/namespace';
 import {NotificationsService} from '../services/global/notifications';
 import {ParamsService} from '../services/global/params';
 import {KdStateService} from '../services/global/state';
+import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 
 enum SortableColumn {
   Name = 'name',
@@ -53,14 +53,13 @@ enum SortableColumn {
 }
 
 @Directive()
-export abstract class ResourceListBase<T extends ResourceList, R extends Resource> implements OnInit, OnDestroy {
+export abstract class ResourceListBase<T extends ResourceList, R extends Resource> implements OnInit {
   isLoading = false;
   totalItems = 0;
   @Output('onchange') onChange: EventEmitter<OnListChangeEvent> = new EventEmitter();
   @Input() groupId: string;
   @Input() hideable = false;
   @Input() id: string;
-  protected readonly unsubscribe_ = new Subject<void>();
   protected readonly kdState_: KdStateService;
   protected readonly settingsService_: GlobalSettingsService;
   protected readonly namespaceService_: NamespaceService;
@@ -79,6 +78,7 @@ export abstract class ResourceListBase<T extends ResourceList, R extends Resourc
   @ViewChild(CardListFilterComponent, {static: true})
   private readonly cardFilter_: CardListFilterComponent;
 
+  protected destroyRef = inject(DestroyRef);
   protected constructor(
     stateName: string | Observable<string>,
     private readonly notifications_: NotificationsService,
@@ -119,7 +119,7 @@ export abstract class ResourceListBase<T extends ResourceList, R extends Resourc
       .pipe(startWith({}))
       .pipe(tap(_ => (this.isLoading = true)))
       .pipe(switchMap(() => this.getResourceObservable(this.getDataSelectParams_())))
-      .pipe(takeUntil(this.unsubscribe_))
+      .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((data: T) => {
         this.notifications_.pushErrors(data.errors);
         this.totalItems = data.listMeta.totalItems;
@@ -132,11 +132,6 @@ export abstract class ResourceListBase<T extends ResourceList, R extends Resourc
           this.cdr_.markForCheck();
         }
       });
-  }
-
-  ngOnDestroy(): void {
-    this.unsubscribe_.next();
-    this.unsubscribe_.complete();
   }
 
   getDetailsHref(resourceName: string, namespace?: string): string {
@@ -219,7 +214,7 @@ export abstract class ResourceListBase<T extends ResourceList, R extends Resourc
 
   private initStateName_(stateName: string | Observable<string>): void {
     if (isObservable(stateName)) {
-      stateName.pipe(takeUntil(this.unsubscribe_)).subscribe(name => (this.stateName_ = name));
+      stateName.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(name => (this.stateName_ = name));
     } else {
       this.stateName_ = stateName;
     }

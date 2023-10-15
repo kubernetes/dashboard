@@ -12,28 +12,29 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {Component, EventEmitter, OnDestroy, OnInit} from '@angular/core';
+import {Component, DestroyRef, EventEmitter, inject, OnInit} from '@angular/core';
 import {ReplaySubject, Subject} from 'rxjs';
-import {debounceTime, distinctUntilChanged, takeUntil} from 'rxjs/operators';
+import {debounceTime, distinctUntilChanged} from 'rxjs/operators';
+import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'kd-card-list-filter',
   templateUrl: './template.html',
   styleUrls: ['style.scss'],
 })
-export class CardListFilterComponent implements OnInit, OnDestroy {
+export class CardListFilterComponent implements OnInit {
   query = '';
   keyUpEvent = new Subject<string>();
   filterEvent = new EventEmitter<boolean>();
   openedChange = new ReplaySubject<boolean>();
 
   private hidden_ = true;
+  private destroyRef = inject(DestroyRef);
   private readonly debounceTime_ = 500;
-  private readonly unsubscribe_ = new Subject<void>();
 
   ngOnInit(): void {
     this.keyUpEvent
-      .pipe(debounceTime(this.debounceTime_), distinctUntilChanged(), takeUntil(this.unsubscribe_))
+      .pipe(debounceTime(this.debounceTime_), distinctUntilChanged(), takeUntilDestroyed(this.destroyRef))
       .subscribe(this.onFilterTriggered_.bind(this));
   }
 
@@ -61,8 +62,4 @@ export class CardListFilterComponent implements OnInit, OnDestroy {
     }
   }
 
-  ngOnDestroy(): void {
-    this.unsubscribe_.next();
-    this.unsubscribe_.complete();
-  }
 }

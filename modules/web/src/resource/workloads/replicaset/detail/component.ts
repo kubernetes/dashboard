@@ -12,16 +12,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, DestroyRef, inject, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {ReplicaSetDetail} from '@api/root.api';
-import {Subject} from 'rxjs';
-import {takeUntil} from 'rxjs/operators';
 
 import {ActionbarService, ResourceMeta} from '@common/services/global/actionbar';
 import {NotificationsService} from '@common/services/global/notifications';
 import {EndpointManager, Resource} from '@common/services/resource/endpoint';
 import {NamespacedResourceService} from '@common/services/resource/resource';
+import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'kd-replica-set-detail',
@@ -29,7 +28,6 @@ import {NamespacedResourceService} from '@common/services/resource/resource';
 })
 export class ReplicaSetDetailComponent implements OnInit, OnDestroy {
   private readonly endpoint_ = EndpointManager.resource(Resource.replicaSet, true);
-  private readonly unsubscribe_ = new Subject<void>();
 
   replicaSet: ReplicaSetDetail;
   isInitialized = false;
@@ -37,6 +35,7 @@ export class ReplicaSetDetailComponent implements OnInit, OnDestroy {
   podListEndpoint: string;
   serviceListEndpoint: string;
 
+  private destroyRef = inject(DestroyRef);
   constructor(
     private readonly replicaSet_: NamespacedResourceService<ReplicaSetDetail>,
     private readonly actionbar_: ActionbarService,
@@ -54,7 +53,7 @@ export class ReplicaSetDetailComponent implements OnInit, OnDestroy {
 
     this.replicaSet_
       .get(this.endpoint_.detail(), resourceName, resourceNamespace)
-      .pipe(takeUntil(this.unsubscribe_))
+      .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((d: ReplicaSetDetail) => {
         this.replicaSet = d;
         this.notifications_.pushErrors(d.errors);
@@ -64,8 +63,6 @@ export class ReplicaSetDetailComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.unsubscribe_.next();
-    this.unsubscribe_.complete();
     this.actionbar_.onDetailsLeave.emit();
   }
 }

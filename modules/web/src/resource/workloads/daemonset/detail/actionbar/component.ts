@@ -12,31 +12,26 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {Component, OnInit} from '@angular/core';
-import {Subject} from 'rxjs';
+import {Component, DestroyRef, inject, OnInit} from '@angular/core';
 import {ActionbarService, ResourceMeta} from '@common/services/global/actionbar';
+import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 
 @Component({
   selector: '',
   templateUrl: './template.html',
 })
 export class ActionbarComponent implements OnInit {
-  private readonly unsubscribe_ = new Subject<void>();
 
   isInitialized = false;
   resourceMeta: ResourceMeta;
 
+  private destroyRef = inject(DestroyRef);
   constructor(private readonly actionbar_: ActionbarService) {}
 
   ngOnInit(): void {
-    this.actionbar_.onInit.subscribe((resourceMeta: ResourceMeta) => {
+    this.actionbar_.onInit.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((resourceMeta: ResourceMeta) => {
       this.resourceMeta = resourceMeta;
       this.isInitialized = true;
     });
-  }
-
-  ngOnDestroy(): void {
-    this.unsubscribe_.next();
-    this.unsubscribe_.complete();
   }
 }

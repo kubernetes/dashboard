@@ -12,7 +12,16 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {AfterViewInit, ChangeDetectorRef, Component, ElementRef, OnDestroy, ViewChild} from '@angular/core';
+import {
+  AfterViewInit,
+  ChangeDetectorRef,
+  Component,
+  DestroyRef,
+  ElementRef,
+  inject,
+  OnDestroy,
+  ViewChild
+} from '@angular/core';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {ActivatedRoute, Router} from '@angular/router';
 import {PodContainerList, ShellFrame, SJSCloseEvent, SJSMessageEvent, TerminalResponse} from '@api/root.api';
@@ -25,6 +34,7 @@ import {FitAddon} from 'xterm-addon-fit';
 import {EndpointManager, Resource, Utility} from '@common/services/resource/endpoint';
 import {NamespacedResourceService} from '@common/services/resource/resource';
 import {UtilityService} from '@common/services/resource/utility';
+import {takeUntilDestroyed} from "@angular/core/rxjs-interop";
 
 declare let SockJS: any;
 
@@ -49,9 +59,9 @@ export class ShellComponent implements AfterViewInit, OnDestroy {
   private connSubject_ = new ReplaySubject<ShellFrame>(100);
   private incommingMessage$_ = new Subject<ShellFrame>();
   private readonly endpoint_ = EndpointManager.resource(Resource.pod, true);
-  private readonly unsubscribe_ = new Subject<void>();
   private readonly keyEvent$_ = new ReplaySubject<KeyboardEvent>(2);
 
+  private destroyRef = inject(DestroyRef);
   constructor(
     private readonly containers_: NamespacedResourceService<PodContainerList>,
     private readonly utility_: UtilityService<TerminalResponse>,
@@ -66,7 +76,7 @@ export class ShellComponent implements AfterViewInit, OnDestroy {
     const containersEndpoint = this.endpoint_.child(this.podName, Resource.container, this.namespace_);
     this.containers_
       .get(containersEndpoint)
-      .pipe(takeUntil(this.unsubscribe_))
+      .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe(containerList => {
         this.containers = containerList.containers;
         if (this.containers.length > 0 && !this.selectedContainer) {
@@ -76,7 +86,7 @@ export class ShellComponent implements AfterViewInit, OnDestroy {
   }
 
   ngAfterViewInit(): void {
-    this.activatedRoute_.paramMap.pipe(takeUntil(this.unsubscribe_)).subscribe(paramMap => {
+    this.activatedRoute_.paramMap.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(paramMap => {
       const container = paramMap.get('containerName');
 
       if (this.conn_ && this.connected_) {
@@ -92,9 +102,6 @@ export class ShellComponent implements AfterViewInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.unsubscribe_.next();
-    this.unsubscribe_.complete();
-
     if (this.conn_) {
       this.conn_.close();
     }
@@ -160,7 +167,7 @@ export class ShellComponent implements AfterViewInit, OnDestroy {
     this.debouncedFit_();
     window.addEventListener('resize', () => this.debouncedFit_());
 
-    this.connSubject_.pipe(takeUntil(this.unsubscribe_)).subscribe(frame => {
+    this.connSubject_.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(frame => {
       this.handleConnectionMessage(frame);
     });
 

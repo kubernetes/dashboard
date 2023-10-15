@@ -12,14 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {Component, Inject, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {Component, DestroyRef, inject, Inject, OnInit, ViewChild} from '@angular/core';
 import {MatButtonToggleGroup} from '@angular/material/button-toggle';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {dump as toYaml, load as fromYaml} from 'js-yaml';
 import {EditorMode} from '@common/components/textinput/component';
 import {AppDeploymentSpec} from '@api/root.api';
-import {Subject} from 'rxjs';
-import {takeUntil} from 'rxjs/operators';
+import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 
 export interface PreviewDeploymentDialogData {
   spec: AppDeploymentSpec;
@@ -29,13 +28,13 @@ export interface PreviewDeploymentDialogData {
   selector: 'kd-preview-deploy-dialog',
   templateUrl: 'template.html',
 })
-export class PreviewDeploymentDialog implements OnInit, OnDestroy {
+export class PreviewDeploymentDialog implements OnInit {
   @ViewChild('group', {static: true}) buttonToggleGroup: MatButtonToggleGroup;
   text = '';
   selectedMode = EditorMode.YAML;
   readonly modes = EditorMode;
-  private unsubscribe_ = new Subject<void>();
 
+  private destroyRef = inject(DestroyRef);
   constructor(
     public dialogRef: MatDialogRef<PreviewDeploymentDialog>,
     @Inject(MAT_DIALOG_DATA) public data: PreviewDeploymentDialogData
@@ -45,17 +44,12 @@ export class PreviewDeploymentDialog implements OnInit, OnDestroy {
     const configuration = this.toDeploymentConfiguration(this.data.spec);
     this.text = JSON.stringify(this.removeEmptyField(configuration));
 
-    this.buttonToggleGroup.valueChange.pipe(takeUntil(this.unsubscribe_)).subscribe((selectedMode: EditorMode) => {
+    this.buttonToggleGroup.valueChange.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((selectedMode: EditorMode) => {
       this.selectedMode = selectedMode;
       if (this.text) {
         this.updateText();
       }
     });
-  }
-
-  ngOnDestroy(): void {
-    this.unsubscribe_.next();
-    this.unsubscribe_.complete();
   }
 
   getSelectedMode(): EditorMode {
