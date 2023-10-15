@@ -16,6 +16,7 @@
 @use 'sass:color';
 @use '@angular/material' as mat;
 @use '@angular/material/theming';
+@use "@material/tab/mixins" as tab-mixins;
 @use 'variables' as *;
 
 @mixin kd-theme($theme, $colors) {
@@ -51,6 +52,15 @@
 
   .kd-card-content {
     color: map.get($foreground-palette, text);
+  }
+
+  .kd-create-from-file-info,
+  .kd-create-from-input-info {
+    color: map.get($foreground-palette, text);
+  }
+
+  .mdc-tab.mdc-tab--active{
+    @include tab-mixins.active-text-label-color(map.get($foreground-palette, text));
   }
 
   a {

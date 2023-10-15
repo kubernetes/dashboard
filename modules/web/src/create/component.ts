@@ -17,11 +17,21 @@ import {ICanDeactivate} from '@common/interfaces/candeactivate';
 import {CreateFromFileComponent} from './from/file/component';
 import {CreateFromFormComponent} from './from/form/component';
 import {CreateFromInputComponent} from './from/input/component';
+import {MAT_TABS_CONFIG} from "@angular/material/tabs";
 
 @Component({
   selector: 'kd-create',
   templateUrl: './template.html',
   styleUrls: ['./style.scss'],
+  providers: [{
+      provide: MAT_TABS_CONFIG,
+      useValue:
+        {
+          animationDuration: '0ms',
+          stretchTabs: false,
+        }
+      }
+  ]
 })
 export class CreateComponent extends ICanDeactivate {
   @ViewChild(CreateFromInputComponent) fromInput: CreateFromInputComponent;
