@@ -16,12 +16,13 @@ limitations under the License.
 
 <form [formGroup]="form"
       novalidate>
-  <kd-help-section>
+  <kd-help-section class="kd-form-field">
     <mat-form-field>
+      <mat-label
+        label="App name"
+        i18n-label>App name</mat-label>
       <input matInput
              formControlName="name"
-             placeholder="App name"
-             i18n-placeholder
              [maxlength]="nameMaxLength"
              [namespace]="namespace.value"
              kdUniqueName
@@ -56,12 +57,13 @@ limitations under the License.
     </kd-user-help>
   </kd-help-section>
 
-  <kd-help-section>
+  <kd-help-section class="kd-form-field">
     <mat-form-field>
+      <mat-label
+        label="Container image"
+        i18n-label>Container image</mat-label>
       <input matInput
              formControlName="containerImage"
-             placeholder="Container image"
-             i18n-placeholder
              kdValidImageReference
              required />
       <mat-error *ngIf="containerImage.errors?.required"
@@ -85,13 +87,14 @@ limitations under the License.
     </kd-user-help>
   </kd-help-section>
 
-  <kd-help-section>
+  <kd-help-section class="kd-form-field">
     <mat-form-field>
+      <mat-label
+        label="Number of pods"
+        i18n-label>Number of pods</mat-label>
       <input matInput
              type="number"
              formControlName="replicas"
-             placeholder="Number of pods"
-             i18n-placeholder
              min="1"
              kdWarnThreshold="100"
              required />
@@ -138,12 +141,13 @@ limitations under the License.
     </kd-user-help>
   </kd-help-section>
 
-  <kd-help-section>
+  <kd-help-section class="kd-form-field">
     <mat-form-field>
+      <mat-label
+        label="Namespace"
+        i18n-label>Namespace</mat-label>
       <mat-select formControlName="namespace"
                   (click)="resetImagePullSecret()"
-                  placeholder="Namespace"
-                  i18n-placeholder
                   required>
         <mat-option *ngFor="let namespace of namespaces"
                     [value]="namespace"> {{ namespace }} </mat-option>

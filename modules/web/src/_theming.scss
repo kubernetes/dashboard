@@ -279,14 +279,6 @@
   .kd-cross-outline {
     stroke: $background;
   }
-  /* TODO(mdc-migration): The following rule targets internal classes of button that may no longer apply for the MDC version.*/
-  .mat-button-toggle-group {
-    border: 1px solid $border;
-  }
-  /* TODO(mdc-migration): The following rule targets internal classes of button that may no longer apply for the MDC version.*/
-  .mat-button-toggle-checked {
-    background-color: $card-background-dark;
-  }
 
   .kd-user-help {
     color: $muted;
@@ -312,16 +304,16 @@
 
   /* MDC MAT Form Field -- utility */
 
-  //.mat-mdc-text-field-wrapper {
+  // .mat-mdc-text-field-wrapper {
   //  background-color: transparent !important;
-  //}
+  // }
 
   /*initial background color*/
-  //.mdc-text-field--filled:not(.mdc-text-field--disabled) {
+  // .mdc-text-field--filled:not(.mdc-text-field--disabled) {
   //  background-color: transparent !important;
   //  padding: unset;
   //  color: theming.mat-color($foreground-palette, text) !important;// #fff;
-  //}
+  // }
 
    /*background color on hover and focus*/
   //.mat-mdc-form-field-focus-overlay {

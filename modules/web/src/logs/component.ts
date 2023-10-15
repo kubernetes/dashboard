@@ -37,8 +37,7 @@ const i18n = {
   styleUrls: ['./style.scss'],
   providers: [
     { provide: MAT_FORM_FIELD_DEFAULT_OPTIONS,
-      useValue:
-        { appearance: 'fill', subscriptSizing: 'dynamic'}
+      useValue: { appearance: 'fill', subscriptSizing: 'dynamic'}
     }
  ]
 })

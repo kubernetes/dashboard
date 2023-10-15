@@ -46,11 +46,8 @@ enum Controls {
   styleUrls: ['style.scss'],
   providers: [
     { provide: MAT_FORM_FIELD_DEFAULT_OPTIONS,
-      useValue:
-        {
-          appearance: 'fill',
-          subscriptSizing: 'dynamic'
-        }
+      useValue: { appearance: 'outline', subscriptSizing: 'dynamic', floatLabel: 'always'}
+      //useValue: {appearance: 'fill', subscriptSizing: 'dynamic'}
     }
   ]
 })

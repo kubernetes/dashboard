@@ -28,6 +28,9 @@ limitations under the License.
                          desc="Cluster name appears in the browser window title if it is set."
                          i18n-desc>
         <mat-form-field fxFlex>
+          <mat-label
+            label="Cluster name"
+            i18n-label>Cluster name</mat-label>
           <input [formControlName]="Controls.ClusterName"
                  name="clusterName"
                  i18n-placeholder
@@ -44,7 +47,6 @@ limitations under the License.
                          desc="Max number of items that can be displayed on every list view."
                          i18n-desc>
           <mat-slider color="primary"
-                      showTickMarks
                       min="5"
                       max="50"
                       step="5"
@@ -59,7 +61,6 @@ limitations under the License.
                          desc="Max number of labels that are displayed by default on most views."
                          i18n-desc>
           <mat-slider color="primary"
-                      showTickMarks
                       min="1"
                       max="10"
                       step="1"
@@ -74,7 +75,6 @@ limitations under the License.
                          desc="Number of seconds between every auto-refresh of logs."
                          i18n-desc>
           <mat-slider color="primary"
-                      showTickMarks
                       min="1"
                       max="10"
                       step="1"
@@ -91,7 +91,6 @@ limitations under the License.
                          desc="Number of seconds between every auto-refresh of every resource. Set 0 to disable."
                          i18n-desc>
           <mat-slider color="primary"
-                      showTickMarks
                       min="0"
                       max="60"
                       step="5"

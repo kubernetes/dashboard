@@ -30,6 +30,7 @@ import {Observable} from 'rxjs';
 import {filter, map, startWith, take} from 'rxjs/operators';
 import {FormValidators} from '../validator/validators';
 import {validateProtocol} from '../validator/validprotocol.validator';
+import {MAT_FORM_FIELD_DEFAULT_OPTIONS} from "@angular/material/form-field";
 
 const i18n = {
   MSG_PORT_MAPPINGS_SERVICE_TYPE_NONE_LABEL: 'None',
@@ -71,6 +72,9 @@ const EXT_SERVICE: ServiceType = {
       provide: NG_ASYNC_VALIDATORS,
       useExisting: forwardRef(() => PortMappingsComponent),
       multi: true,
+    },
+    { provide: MAT_FORM_FIELD_DEFAULT_OPTIONS,
+      useValue: { appearance: 'outline', subscriptSizing: 'fixed', floatLabel: 'always'}
     },
   ],
 })

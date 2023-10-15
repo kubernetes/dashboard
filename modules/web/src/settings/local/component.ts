@@ -25,8 +25,7 @@ import {CONFIG_DI_TOKEN} from '../../index.config';
 
 @Component({
   selector: 'kd-local-settings',
-  templateUrl: './template.html',
-  styleUrls: ['./style.scss'],
+  templateUrl: './template.html'
 })
 export class LocalSettingsComponent implements OnInit {
   settings: LocalSettings = {} as LocalSettings;

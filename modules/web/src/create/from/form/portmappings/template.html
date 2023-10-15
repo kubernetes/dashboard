@@ -16,13 +16,13 @@ limitations under the License.
 
 <div fxLayout="column"
      [formGroup]="portMappingForm">
-  <div fxLayout="row">
-    <mat-form-field class="mat-block kd-deploy-input-row"
-                    style="width: 100%">
+  <div fxLayout="row" class="kd-form-field">
+    <mat-form-field class="mat-block kd-deploy-input-row">
+      <mat-label
+        label="Service"
+        i18n-label>Service</mat-label>
       <mat-select namespace="serviceType"
                   formControlName="serviceType"
-                  i18n-placeholder
-                  placeholder="Service"
                   required>
         <mat-option *ngFor="let serviceType of serviceTypes"
                     [value]="serviceType">
@@ -36,16 +36,16 @@ limitations under the License.
     <ng-container formArrayName="portMappings">
       <div fxLayout="row"
            *ngFor="let portMapping of portMappings.controls; let i = index"
-           [formGroupName]="i">
-        <mat-form-field md-no-float
-                        class="kd-deploy-input-row kd-port-form-field"
+           [formGroupName]="i" class="kd-form-field">
+        <mat-form-field class="kd-deploy-input-row kd-port-form-field"
                         fxFlex="30">
+          <mat-label
+            label="Port"
+            i18n-label>Port</mat-label>
           <input matInput
                  type="number"
                  name="port"
                  formControlName="port"
-                 i18n-placeholder
-                 placeholder="Port"
                  (change)="checkPortMapping(i)"
                  [required]="isFirst(i)" />
           <mat-error *ngIf="portMapping.get('port').errors?.kdValidInteger"
@@ -60,15 +60,15 @@ limitations under the License.
 
         <p fxFlex="5"></p>
 
-        <mat-form-field md-no-float
-                        class="kd-deploy-input-row kd-port-form-field"
+        <mat-form-field class="kd-deploy-input-row kd-port-form-field"
                         fxFlex="30">
+          <mat-label
+            label="Target port"
+            i18n-label>Target port</mat-label>
           <input matInput
                  type="number"
                  name="targetPort"
                  formControlName="targetPort"
-                 i18n-placeholder
-                 placeholder="Target port"
                  min="1"
                  max="65535"
                  (change)="checkPortMapping(i)"
@@ -93,13 +93,13 @@ limitations under the License.
 
         <p fxFlex="5"></p>
 
-        <mat-form-field md-no-float
-                        class="kd-deploy-input-row kd-port-form-field"
+        <mat-form-field class="kd-deploy-input-row kd-port-form-field"
                         fxFlex="20">
+          <mat-label
+            label="Protocol"
+            i18n-label>Protocol</mat-label>
           <mat-select name="protocol"
                       formControlName="protocol"
-                      i18n-placeholder
-                      placeholder="Protocol"
                       kdValidProtocol
                       [isExternal]="isExternal"
                       required>
