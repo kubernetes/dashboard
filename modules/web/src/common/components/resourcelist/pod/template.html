@@ -40,7 +40,7 @@ limitations under the License.
                matSortDisableClear
                matSortDirection="asc"
                multiTemplateDataRows>
-      <ng-container matColumnDef="statusicon">
+      <ng-container matColumnDef="statusicon" sticky>
         <mat-header-cell *matHeaderCellDef></mat-header-cell>
         <mat-cell *matCellDef="let pod; let index = index">
           <mat-icon [ngClass]="getStatus(pod).iconClass"
@@ -166,7 +166,7 @@ limitations under the License.
       </ng-container>
 
       <ng-container *ngFor="let col of getActionColumns()"
-                    [matColumnDef]="col.name">
+                    [matColumnDef]="col.name" stickyEnd>
         <mat-header-cell *matHeaderCellDef></mat-header-cell>
         <mat-cell *matCellDef="let pod">
           <kd-dynamic-cell [component]="col.component"
