@@ -12,28 +12,27 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, DestroyRef, inject, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {ClusterRoleDetail} from '@api/root.api';
-import {Subject} from 'rxjs';
-import {takeUntil} from 'rxjs/operators';
 
 import {ActionbarService, ResourceMeta} from '@common/services/global/actionbar';
 import {NotificationsService} from '@common/services/global/notifications';
 import {EndpointManager, Resource} from '@common/services/resource/endpoint';
 import {ResourceService} from '@common/services/resource/resource';
+import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'kd-cluster-role-detail',
   templateUrl: './template.html',
 })
-export class ClusterRoleDetailComponent implements OnInit, OnDestroy {
-  private readonly unsubscribe_ = new Subject<void>();
+export class ClusterRoleDetailComponent implements OnInit {
   private readonly endpoint_ = EndpointManager.resource(Resource.clusterRole);
 
   clusterRole: ClusterRoleDetail;
   isInitialized = false;
 
+  private destroyRef = inject(DestroyRef);
   constructor(
     private readonly clusterRole_: ResourceService<ClusterRoleDetail>,
     private readonly actionbar_: ActionbarService,
@@ -46,7 +45,7 @@ export class ClusterRoleDetailComponent implements OnInit, OnDestroy {
 
     this.clusterRole_
       .get(this.endpoint_.detail(), resourceName)
-      .pipe(takeUntil(this.unsubscribe_))
+      .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((d: ClusterRoleDetail) => {
         this.clusterRole = d;
         this.notifications_.pushErrors(d.errors);
@@ -56,8 +55,6 @@ export class ClusterRoleDetailComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.unsubscribe_.next();
-    this.unsubscribe_.complete();
     this.actionbar_.onDetailsLeave.emit();
   }
 }

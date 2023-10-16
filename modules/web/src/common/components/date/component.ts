@@ -12,9 +12,18 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnChanges, OnDestroy} from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component, DestroyRef,
+  inject,
+  Input,
+  OnChanges,
+  OnDestroy
+} from '@angular/core';
 import {Subject, timer} from 'rxjs';
-import {switchMap, takeUntil} from 'rxjs/operators';
+import {switchMap} from 'rxjs/operators';
+import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 
 /**
  * Display a date
@@ -40,7 +49,7 @@ import {switchMap, takeUntil} from 'rxjs/operators';
   styleUrls: ['./style.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class DateComponent implements OnChanges, OnDestroy {
+export class DateComponent implements OnChanges {
   @Input() date: string;
   @Input() format = 'medium';
 
@@ -48,6 +57,8 @@ export class DateComponent implements OnChanges, OnDestroy {
   set relative(v: boolean) {
     this.relative_ = v !== undefined && v !== false;
   }
+
+  private destroyRef = inject(DestroyRef);
 
   get relative(): boolean {
     return this.relative_;
@@ -63,7 +74,6 @@ export class DateComponent implements OnChanges, OnDestroy {
     60, // Minutes in a hour
     24, // Hours in a day
   ];
-  private unsubscribe_ = new Subject<void>();
 
   constructor(private readonly cdr_: ChangeDetectorRef) {}
 
@@ -71,7 +81,7 @@ export class DateComponent implements OnChanges, OnDestroy {
     if (this.relative_) {
       this.intervalChanged_
         .pipe(switchMap(_ => timer(0, this.refreshInterval_)))
-        .pipe(takeUntil(this.unsubscribe_))
+        .pipe(takeUntilDestroyed(this.destroyRef))
         .subscribe(_ => {
           this.cdr_.markForCheck();
           this.iteration++;
@@ -86,11 +96,6 @@ export class DateComponent implements OnChanges, OnDestroy {
       // Kick off the check interval
       this.setRefreshInterval_(1);
     }
-  }
-
-  ngOnDestroy(): void {
-    this.unsubscribe_.next();
-    this.unsubscribe_.complete();
   }
 
   // Calculates timer refresh interval that should be used based on time that has passed.

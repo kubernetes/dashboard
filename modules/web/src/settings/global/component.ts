@@ -13,13 +13,13 @@
 // limitations under the License.
 
 import {HttpErrorResponse} from '@angular/common/http';
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, DestroyRef, inject, OnInit} from '@angular/core';
 import {UntypedFormBuilder, UntypedFormGroup} from '@angular/forms';
 import {MatDialog} from '@angular/material/dialog';
 import {GlobalSettings, NamespaceList} from '@api/root.api';
 import isEqual from 'lodash-es/isEqual';
-import {Observable, of, Subject} from 'rxjs';
-import {catchError, take, takeUntil, tap} from 'rxjs/operators';
+import {Observable, of} from 'rxjs';
+import {catchError, take, tap} from 'rxjs/operators';
 
 import {GlobalSettingsService} from '@common/services/global/globalsettings';
 import {TitleService} from '@common/services/global/title';
@@ -27,6 +27,7 @@ import {ResourceService} from '@common/services/resource/resource';
 
 import {SaveAnywayDialog} from './saveanywaysdialog/dialog';
 import {SettingsHelperService} from './service';
+import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 
 enum Controls {
   ClusterName = 'clusterName',
@@ -43,7 +44,7 @@ enum Controls {
   templateUrl: './template.html',
   styleUrls: ['style.scss'],
 })
-export class GlobalSettingsComponent implements OnInit, OnDestroy {
+export class GlobalSettingsComponent implements OnInit {
   readonly Controls = Controls;
 
   settings: GlobalSettings = {} as GlobalSettings;
@@ -52,8 +53,8 @@ export class GlobalSettingsComponent implements OnInit, OnDestroy {
 
   // Keep it in sync with ConcurrentSettingsChangeError constant from the backend.
   private readonly concurrentChangeErr_ = 'settings changed since last reload';
-  private readonly unsubscribe_ = new Subject<void>();
 
+  private destroyRef = inject(DestroyRef);
   constructor(
     private readonly settingsService_: GlobalSettingsService,
     private readonly settingsHelperService_: SettingsHelperService,
@@ -90,13 +91,8 @@ export class GlobalSettingsComponent implements OnInit, OnDestroy {
     });
 
     this.load_();
-    this.form.valueChanges.pipe(takeUntil(this.unsubscribe_)).subscribe(this.onFormChange_.bind(this));
-    this.settingsHelperService_.onSettingsChange.pipe(takeUntil(this.unsubscribe_)).subscribe(s => (this.settings = s));
-  }
-
-  ngOnDestroy(): void {
-    this.unsubscribe_.next();
-    this.unsubscribe_.complete();
+    this.form.valueChanges.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(this.onFormChange_.bind(this));
+    this.settingsHelperService_.onSettingsChange.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(s => (this.settings = s));
   }
 
   isInitialized(): boolean {

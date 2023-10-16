@@ -11,18 +11,17 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-import {AfterViewInit, Directive, ElementRef, Input, OnDestroy} from '@angular/core';
-import {Observable, Subject} from 'rxjs';
-import {takeUntil} from 'rxjs/operators';
+import {AfterViewInit, DestroyRef, Directive, ElementRef, inject, Input} from '@angular/core';
+import {Observable} from 'rxjs';
+import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 
 @Directive({
   selector: '[kdAutofocus]',
 })
-export class AutofocusDirective implements AfterViewInit, OnDestroy {
+export class AutofocusDirective implements AfterViewInit {
   @Input() opened: Observable<boolean>;
 
-  private readonly unsubscribe_ = new Subject<void>();
-
+  private destroyRef = inject(DestroyRef);
   constructor(private readonly _el: ElementRef) {}
 
   ngAfterViewInit(): void {
@@ -31,12 +30,8 @@ export class AutofocusDirective implements AfterViewInit, OnDestroy {
     }
 
     this.opened
-      .pipe(takeUntil(this.unsubscribe_))
+      .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe(opened => (opened ? setTimeout(() => this._el.nativeElement.focus()) : null));
   }
 
-  ngOnDestroy(): void {
-    this.unsubscribe_.next();
-    this.unsubscribe_.complete();
-  }
 }

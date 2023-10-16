@@ -13,17 +13,18 @@
 // limitations under the License.
 
 import {HttpParams} from '@angular/common/http';
-import {ChangeDetectionStrategy, ChangeDetectorRef, Component, Input} from '@angular/core';
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component, DestroyRef, inject, Input} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {CRDObject, CRDObjectList} from '@api/root.api';
 import {Observable} from 'rxjs';
-import {map, takeUntil} from 'rxjs/operators';
+import {map} from 'rxjs/operators';
 import {ResourceListBase} from '@common/resources/list';
 import {NotificationsService} from '@common/services/global/notifications';
 import {EndpointManager, Resource} from '@common/services/resource/endpoint';
 import {NamespacedResourceService} from '@common/services/resource/resource';
 import {MenuComponent} from '../../list/column/menu/component';
 import {ListGroupIdentifier, ListIdentifier} from '../groupids';
+import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'kd-crd-object-list',
@@ -47,7 +48,7 @@ export class CRDObjectListComponent extends ResourceListBase<CRDObjectList, CRDO
     // Register action columns.
     this.registerActionColumn<MenuComponent>('menu', MenuComponent);
 
-    this.activatedRoute_.params.pipe(takeUntil(this.unsubscribe_)).subscribe(params => {
+    this.activatedRoute_.params.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(params => {
       this.endpoint = EndpointManager.resource(Resource.crd, true).child(params.crdName, Resource.crdObject);
     });
   }

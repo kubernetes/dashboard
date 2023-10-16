@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import {HttpClient} from '@angular/common/http';
-import {Component, Inject, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {Component, DestroyRef, inject, Inject, OnInit, ViewChild} from '@angular/core';
 import {MatButtonToggleGroup} from '@angular/material/button-toggle';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {dump as toYaml, load as fromYaml} from 'js-yaml';
@@ -21,21 +21,20 @@ import {EditorMode} from '../../components/textinput/component';
 
 import {RawResource} from '../../resources/rawresource';
 import {ResourceMeta} from '../../services/global/actionbar';
-import {Subject} from 'rxjs';
-import {takeUntil} from 'rxjs/operators';
+import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'kd-delete-resource-dialog',
   templateUrl: 'template.html',
 })
-export class EditResourceDialog implements OnInit, OnDestroy {
+export class EditResourceDialog implements OnInit {
   selectedMode = EditorMode.YAML;
-  private unsubscribe_ = new Subject<void>();
 
   @ViewChild('group', {static: true}) buttonToggleGroup: MatButtonToggleGroup;
   text = '';
   modes = EditorMode;
 
+  private destroyRef = inject(DestroyRef);
   constructor(
     public dialogRef: MatDialogRef<EditResourceDialog>,
     @Inject(MAT_DIALOG_DATA) public data: ResourceMeta,
@@ -51,18 +50,13 @@ export class EditResourceDialog implements OnInit, OnDestroy {
         this.text = toYaml(response);
       });
 
-    this.buttonToggleGroup.valueChange.pipe(takeUntil(this.unsubscribe_)).subscribe((selectedMode: EditorMode) => {
+    this.buttonToggleGroup.valueChange.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((selectedMode: EditorMode) => {
       this.selectedMode = selectedMode;
 
       if (this.text) {
         this.updateText();
       }
     });
-  }
-
-  ngOnDestroy(): void {
-    this.unsubscribe_.next();
-    this.unsubscribe_.complete();
   }
 
   onNoClick(): void {

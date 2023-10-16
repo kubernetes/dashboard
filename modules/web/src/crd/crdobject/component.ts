@@ -12,12 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {Component, DestroyRef, ElementRef, inject, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {MatButtonToggleGroup} from '@angular/material/button-toggle';
 import {HttpClient} from '@angular/common/http';
 import {dump as toYaml, load as fromYaml} from 'js-yaml';
-import {Subject} from 'rxjs';
 import {CRDObjectDetail} from '@api/root.api';
 import {EditorMode} from '@common/components/textinput/component';
 import {ActionbarService, ResourceMeta} from '@common/services/global/actionbar';
@@ -25,7 +24,7 @@ import {NamespacedResourceService} from '@common/services/resource/resource';
 import {EndpointManager, Resource} from '@common/services/resource/endpoint';
 import {NotificationsService} from '@common/services/global/notifications';
 import {RawResource} from '@common/resources/rawresource';
-import {takeUntil} from 'rxjs/operators';
+import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 
 @Component({selector: 'kd-crd-object-detail', templateUrl: './template.html'})
 export class CRDObjectDetailComponent implements OnInit, OnDestroy {
@@ -39,8 +38,8 @@ export class CRDObjectDetailComponent implements OnInit, OnDestroy {
   selectedMode = EditorMode.YAML;
   text = '';
   eventListEndpoint: string;
-  private unsubscribe_ = new Subject<void>();
 
+  private destroyRef = inject(DestroyRef);
   constructor(
     private readonly object_: NamespacedResourceService<CRDObjectDetail>,
     private readonly actionbar_: ActionbarService,
@@ -55,7 +54,7 @@ export class CRDObjectDetailComponent implements OnInit, OnDestroy {
 
     this.object_
       .get(this.endpoint_.child(crdName, objectName, namespace))
-      .pipe(takeUntil(this.unsubscribe_))
+      .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((d: CRDObjectDetail) => {
         this.object = d;
         this.notifications_.pushErrors(d.errors);
@@ -76,7 +75,7 @@ export class CRDObjectDetailComponent implements OnInit, OnDestroy {
           });
       });
 
-    this.buttonToggleGroup.valueChange.pipe(takeUntil(this.unsubscribe_)).subscribe((selectedMode: EditorMode) => {
+    this.buttonToggleGroup.valueChange.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((selectedMode: EditorMode) => {
       this.selectedMode = selectedMode;
 
       if (this.text) {
@@ -91,9 +90,6 @@ export class CRDObjectDetailComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.actionbar_.onDetailsLeave.emit();
-
-    this.unsubscribe_.next();
-    this.unsubscribe_.complete();
   }
 
   private updateText_(): void {

@@ -12,26 +12,28 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, DestroyRef, inject, OnInit} from '@angular/core';
 import {Subject} from 'rxjs';
 import {takeUntil} from 'rxjs/operators';
 import {ActionbarService, ResourceMeta} from '@common/services/global/actionbar';
+import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 
 @Component({
   selector: '',
   templateUrl: './template.html',
 })
-export class PinDefaultActionbar implements OnInit, OnDestroy {
+export class PinDefaultActionbar implements OnInit {
   isInitialized = false;
   isVisible = false;
   resourceMeta: ResourceMeta;
+  private destroyRef = inject(DestroyRef);
 
   private unsubscribe_ = new Subject<void>();
 
   constructor(private readonly actionbar_: ActionbarService) {}
 
   ngOnInit(): void {
-    this.actionbar_.onInit.pipe(takeUntil(this.unsubscribe_)).subscribe((resourceMeta: ResourceMeta) => {
+    this.actionbar_.onInit.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((resourceMeta: ResourceMeta) => {
       this.resourceMeta = resourceMeta;
       this.isInitialized = true;
       this.isVisible = true;
@@ -40,8 +42,4 @@ export class PinDefaultActionbar implements OnInit, OnDestroy {
     this.actionbar_.onDetailsLeave.pipe(takeUntil(this.unsubscribe_)).subscribe(() => (this.isVisible = false));
   }
 
-  ngOnDestroy(): void {
-    this.unsubscribe_.next();
-    this.unsubscribe_.complete();
-  }
 }
