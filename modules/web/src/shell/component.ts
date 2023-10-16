@@ -20,21 +20,20 @@ import {
   ElementRef,
   inject,
   OnDestroy,
-  ViewChild
+  ViewChild,
 } from '@angular/core';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {ActivatedRoute, Router} from '@angular/router';
 import {PodContainerList, ShellFrame, SJSCloseEvent, SJSMessageEvent, TerminalResponse} from '@api/root.api';
 import debounce from 'lodash-es/debounce';
 import {ReplaySubject, Subject} from 'rxjs';
-import {takeUntil} from 'rxjs/operators';
 import {Terminal} from 'xterm';
 import {FitAddon} from 'xterm-addon-fit';
 
 import {EndpointManager, Resource, Utility} from '@common/services/resource/endpoint';
 import {NamespacedResourceService} from '@common/services/resource/resource';
 import {UtilityService} from '@common/services/resource/utility';
-import {takeUntilDestroyed} from "@angular/core/rxjs-interop";
+import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 
 declare let SockJS: any;
 

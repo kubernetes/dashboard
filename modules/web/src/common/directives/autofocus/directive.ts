@@ -33,5 +33,4 @@ export class AutofocusDirective implements AfterViewInit {
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe(opened => (opened ? setTimeout(() => this._el.nativeElement.focus()) : null));
   }
-
 }

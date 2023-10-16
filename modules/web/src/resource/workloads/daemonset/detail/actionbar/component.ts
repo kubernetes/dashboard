@@ -21,7 +21,6 @@ import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
   templateUrl: './template.html',
 })
 export class ActionbarComponent implements OnInit {
-
   isInitialized = false;
   resourceMeta: ResourceMeta;
 

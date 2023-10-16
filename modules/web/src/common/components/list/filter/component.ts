@@ -61,5 +61,4 @@ export class CardListFilterComponent implements OnInit {
       this.filterEvent.emit(true);
     }
   }
-
 }

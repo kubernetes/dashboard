@@ -37,5 +37,4 @@ export class TriggerDefaultActionbar implements OnInit {
 
     this.actionbar_.onDetailsLeave.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(() => (this.isVisible = false));
   }
-
 }

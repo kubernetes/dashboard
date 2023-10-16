@@ -50,13 +50,15 @@ export class EditResourceDialog implements OnInit {
         this.text = toYaml(response);
       });
 
-    this.buttonToggleGroup.valueChange.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((selectedMode: EditorMode) => {
-      this.selectedMode = selectedMode;
+    this.buttonToggleGroup.valueChange
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((selectedMode: EditorMode) => {
+        this.selectedMode = selectedMode;
 
-      if (this.text) {
-        this.updateText();
-      }
-    });
+        if (this.text) {
+          this.updateText();
+        }
+      });
   }
 
   onNoClick(): void {

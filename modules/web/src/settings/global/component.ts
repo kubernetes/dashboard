@@ -92,7 +92,9 @@ export class GlobalSettingsComponent implements OnInit {
 
     this.load_();
     this.form.valueChanges.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(this.onFormChange_.bind(this));
-    this.settingsHelperService_.onSettingsChange.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(s => (this.settings = s));
+    this.settingsHelperService_.onSettingsChange
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe(s => (this.settings = s));
   }
 
   isInitialized(): boolean {

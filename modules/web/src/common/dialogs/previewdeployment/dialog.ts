@@ -44,12 +44,14 @@ export class PreviewDeploymentDialog implements OnInit {
     const configuration = this.toDeploymentConfiguration(this.data.spec);
     this.text = JSON.stringify(this.removeEmptyField(configuration));
 
-    this.buttonToggleGroup.valueChange.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((selectedMode: EditorMode) => {
-      this.selectedMode = selectedMode;
-      if (this.text) {
-        this.updateText();
-      }
-    });
+    this.buttonToggleGroup.valueChange
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((selectedMode: EditorMode) => {
+        this.selectedMode = selectedMode;
+        if (this.text) {
+          this.updateText();
+        }
+      });
   }
 
   getSelectedMode(): EditorMode {

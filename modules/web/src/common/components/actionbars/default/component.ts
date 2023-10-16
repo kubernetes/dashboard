@@ -29,7 +29,7 @@ export class DefaultActionbar implements OnInit {
   constructor(private readonly actionbar_: ActionbarService) {}
 
   ngOnInit(): void {
-      this.actionbar_.onInit.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((resourceMeta: ResourceMeta) => {
+    this.actionbar_.onInit.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((resourceMeta: ResourceMeta) => {
       this.resourceMeta = resourceMeta;
       this.isInitialized = true;
       this.isVisible = true;
@@ -37,5 +37,4 @@ export class DefaultActionbar implements OnInit {
 
     this.actionbar_.onDetailsLeave.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(() => (this.isVisible = false));
   }
-
 }
