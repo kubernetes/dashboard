@@ -75,13 +75,15 @@ export class CRDObjectDetailComponent implements OnInit, OnDestroy {
           });
       });
 
-    this.buttonToggleGroup.valueChange.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((selectedMode: EditorMode) => {
-      this.selectedMode = selectedMode;
+    this.buttonToggleGroup.valueChange
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((selectedMode: EditorMode) => {
+        this.selectedMode = selectedMode;
 
-      if (this.text) {
-        this.updateText_();
-      }
-    });
+        if (this.text) {
+          this.updateText_();
+        }
+      });
   }
 
   getSelectedMode(): EditorMode {

@@ -41,5 +41,4 @@ export class PinDefaultActionbar implements OnInit {
 
     this.actionbar_.onDetailsLeave.pipe(takeUntil(this.unsubscribe_)).subscribe(() => (this.isVisible = false));
   }
-
 }

@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import {HttpParams} from '@angular/common/http';
-import {ChangeDetectionStrategy, ChangeDetectorRef, Component, DestroyRef, inject, Input} from '@angular/core';
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component, Input} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {CRDObject, CRDObjectList} from '@api/root.api';
 import {Observable} from 'rxjs';

@@ -15,11 +15,11 @@
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
-  Component, DestroyRef,
+  Component,
+  DestroyRef,
   inject,
   Input,
   OnChanges,
-  OnDestroy
 } from '@angular/core';
 import {Subject, timer} from 'rxjs';
 import {switchMap} from 'rxjs/operators';

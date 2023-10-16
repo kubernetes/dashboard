@@ -15,9 +15,11 @@
 import {DataSource} from '@angular/cdk/collections';
 import {HttpParams} from '@angular/common/http';
 import {
-  ChangeDetectorRef, DestroyRef,
+  ChangeDetectorRef,
+  DestroyRef,
   Directive,
-  EventEmitter, inject,
+  EventEmitter,
+  inject,
   Input,
   OnInit,
   Output,
