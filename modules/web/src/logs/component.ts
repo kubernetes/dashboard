@@ -15,7 +15,7 @@
 import {HttpParams} from '@angular/common/http';
 import {Component, ElementRef, OnDestroy, ViewChild} from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
-import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
+import {MAT_FORM_FIELD_DEFAULT_OPTIONS} from '@angular/material/form-field';
 import {ActivatedRoute, Router} from '@angular/router';
 import {LogControl, LogDetails, LogLine, LogSelection, LogSources} from '@api/root.api';
 
@@ -35,11 +35,7 @@ const i18n = {
   selector: 'kd-logs',
   templateUrl: './template.html',
   styleUrls: ['./style.scss'],
-  providers: [
-    { provide: MAT_FORM_FIELD_DEFAULT_OPTIONS,
-      useValue: { appearance: 'fill', subscriptSizing: 'dynamic'}
-    }
- ]
+  providers: [{provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: {appearance: 'fill', subscriptSizing: 'dynamic'}}],
 })
 export class LogsComponent implements OnDestroy {
   @ViewChild('logViewContainer', {static: true}) logViewContainer_: ElementRef;

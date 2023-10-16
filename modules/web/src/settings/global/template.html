@@ -22,7 +22,7 @@ limitations under the License.
   <div content>
     <p i18n>Global settings are stored in config map, so all of them are applied for every instance of the app.</p>
     <br />
-    <form [formGroup]="form" class="kd-form-field">
+    <form [formGroup]="form" class="kd-standard-form-field">
       <kd-settings-entry key="Cluster name"
                          i18n-key
                          desc="Cluster name appears in the browser window title if it is set."
@@ -33,8 +33,6 @@ limitations under the License.
             i18n-label>Cluster name</mat-label>
           <input [formControlName]="Controls.ClusterName"
                  name="clusterName"
-                 i18n-placeholder
-                 placeholder="Cluster name"
                  type="text"
                  matInput />
         </mat-form-field>

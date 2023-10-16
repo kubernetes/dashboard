@@ -26,6 +26,7 @@ import {
 } from '@angular/forms';
 import {FormValidators} from '../validator/validators';
 import {DeployLabel} from './deploylabel';
+import {MAT_FORM_FIELD_DEFAULT_OPTIONS} from '@angular/material/form-field';
 
 interface DeployLabelI {
   value: string;
@@ -46,6 +47,7 @@ interface DeployLabelI {
       useExisting: forwardRef(() => DeployLabelComponent),
       multi: true,
     },
+    {provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: {appearance: 'outline', subscriptSizing: 'fixed'}},
   ],
 })
 export class DeployLabelComponent implements OnInit, ControlValueAccessor {

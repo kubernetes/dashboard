@@ -19,7 +19,7 @@ import {
   Input,
   OnChanges,
   OnInit,
-  SimpleChanges
+  SimpleChanges,
 } from '@angular/core';
 import {MatDialog, MatDialogConfig} from '@angular/material/dialog';
 import {StringMap} from '@api/root.shared';
@@ -54,7 +54,7 @@ const MAX_CHIP_VALUE_LENGTH = 63;
 @Component({
   selector: 'kd-chips',
   templateUrl: './template.html',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ChipsComponent implements OnInit, OnChanges {
   @Input() map: StringMap | string[] | number[];

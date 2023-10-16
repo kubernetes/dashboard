@@ -46,6 +46,43 @@
     }
   }
 
+  .kd-standard-form-field {
+    @include mat.form-field-density(-4);
+    font-family: $font-family-sans;
+    font-size: $subhead-font-size-base;
+
+    mat-form-field {
+      width: 100%;
+
+      .mdc-text-field {
+        padding: unset !important;
+      }
+
+      .mdc-notched-outline {
+        .mdc-notched-outline__leading {
+          display: none !important;
+        }
+        .mdc-notched-outline__notch {
+          border-radius: 0 !important;
+          border-top: none !important;
+          .mdc-floating-label {
+            left: 0 !important;
+          }
+        }
+        .mdc-notched-outline__trailing {
+          border-radius: 0 !important;
+          border-right: none !important;
+          border-top: none !important;
+        }
+      }
+
+      .mat-mdc-form-field-hint-wrapper,
+      .mat-mdc-form-field-error-wrapper {
+        padding: unset !important;
+      }
+    }
+  }
+
   mat-card-title,
   mat-card-footer {
     color: map.get($foreground-palette, text);

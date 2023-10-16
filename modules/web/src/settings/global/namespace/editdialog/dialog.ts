@@ -14,7 +14,7 @@
 
 import {Component, Inject} from '@angular/core';
 import {MAT_DIALOG_DATA} from '@angular/material/dialog';
-import {MAT_FORM_FIELD_DEFAULT_OPTIONS} from "@angular/material/form-field";
+import {MAT_FORM_FIELD_DEFAULT_OPTIONS} from '@angular/material/form-field';
 
 export interface EditFallbackNamespaceDialogData {
   namespaces: string[];
@@ -24,14 +24,14 @@ export interface EditFallbackNamespaceDialogData {
   selector: 'kd-namespace-settings-edit-dialog',
   templateUrl: 'template.html',
   providers: [
-    { provide: MAT_FORM_FIELD_DEFAULT_OPTIONS,
-      useValue:
-        {
-          appearance: 'outline',
-          subscriptSizing: 'dynamic'
-        }
-    }
-  ]
+    {
+      provide: MAT_FORM_FIELD_DEFAULT_OPTIONS,
+      useValue: {
+        appearance: 'outline',
+        subscriptSizing: 'dynamic',
+      },
+    },
+  ],
 })
 export class EditFallbackNamespaceDialogComponent {
   namespaces: string[] = [];

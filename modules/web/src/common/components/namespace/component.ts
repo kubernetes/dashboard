@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {Component, ElementRef, Inject, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {Component, DestroyRef, ElementRef, inject, Inject, OnInit, ViewChild} from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
 import {MAT_SELECT_CONFIG, MatSelect} from '@angular/material/select';
 import {ActivatedRoute, NavigationEnd, Router} from '@angular/router';
@@ -33,20 +33,16 @@ import {ResourceService} from '../../services/resource/resource';
 import {NamespaceChangeDialogComponent} from './changedialog/dialog';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 import {MAT_FORM_FIELD_DEFAULT_OPTIONS} from '@angular/material/form-field';
-import {FormControl} from "@angular/forms";
+import {FormControl} from '@angular/forms';
 
 @Component({
   selector: 'kd-namespace-selector',
   templateUrl: './template.html',
   styleUrls: ['style.scss'],
   providers: [
-    { provide: MAT_FORM_FIELD_DEFAULT_OPTIONS,
-      useValue: { appearance: 'outline', subscriptSizing: 'dynamic'}
-    },
-    { provide: MAT_SELECT_CONFIG,
-      useValue: {overlayPanelClass: "kd-namespace-selection"}
-    }
- ]
+    {provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: {appearance: 'outline', subscriptSizing: 'dynamic'}},
+    {provide: MAT_SELECT_CONFIG, useValue: {overlayPanelClass: 'kd-namespace-selection'}},
+  ],
 })
 export class NamespaceSelectorComponent implements OnInit {
   namespaces: string[] = [];
@@ -90,7 +86,7 @@ export class NamespaceSelectorComponent implements OnInit {
 
       this.namespaceService_.setCurrent(namespace);
       this.namespaceService_.onNamespaceChangeEvent.emit(namespace);
-      this.selectedNamespace.setValue(namespace)
+      this.selectedNamespace.setValue(namespace);
     });
 
     this.resourceNamespaceParam = this._getCurrentResourceNamespaceParam();
@@ -203,7 +199,7 @@ export class NamespaceSelectorComponent implements OnInit {
     this.dialog_
       .open(NamespaceChangeDialogComponent, {
         data: {
-          namespace:  this.selectedNamespace.value,
+          namespace: this.selectedNamespace.value,
           newNamespace: this._getCurrentResourceNamespaceParam(),
         },
       })
@@ -276,5 +272,4 @@ export class NamespaceSelectorComponent implements OnInit {
       this.namespaceInputEl_.nativeElement.focus();
     }, 150);
   }
-
 }

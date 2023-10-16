@@ -16,8 +16,8 @@ limitations under the License.
 
 <div fxLayout="column"
      [formGroup]="portMappingForm">
-  <div fxLayout="row" class="kd-form-field">
-    <mat-form-field class="mat-block kd-deploy-input-row">
+  <div fxLayout="row" class="kd-standard-form-field">
+    <mat-form-field class="kd-deploy-input-row">
       <mat-label
         label="Service"
         i18n-label>Service</mat-label>
@@ -36,8 +36,8 @@ limitations under the License.
     <ng-container formArrayName="portMappings">
       <div fxLayout="row"
            *ngFor="let portMapping of portMappings.controls; let i = index"
-           [formGroupName]="i" class="kd-form-field">
-        <mat-form-field class="kd-deploy-input-row kd-port-form-field"
+           [formGroupName]="i" class="kd-standard-form-field">
+        <mat-form-field class="kd-deploy-input-row"
                         fxFlex="30">
           <mat-label
             label="Port"
@@ -60,7 +60,7 @@ limitations under the License.
 
         <p fxFlex="5"></p>
 
-        <mat-form-field class="kd-deploy-input-row kd-port-form-field"
+        <mat-form-field class="kd-deploy-input-row kd-standard-form-field"
                         fxFlex="30">
           <mat-label
             label="Target port"
@@ -93,7 +93,7 @@ limitations under the License.
 
         <p fxFlex="5"></p>
 
-        <mat-form-field class="kd-deploy-input-row kd-port-form-field"
+        <mat-form-field class="kd-deploy-input-row kd-standard-form-field"
                         fxFlex="20">
           <mat-label
             label="Protocol"

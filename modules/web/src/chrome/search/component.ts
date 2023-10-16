@@ -18,16 +18,13 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {SEARCH_QUERY_STATE_PARAM} from '@common/params/params';
 import {ParamsService} from '@common/services/global/params';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
-import {MAT_FORM_FIELD_DEFAULT_OPTIONS} from "@angular/material/form-field";
+import {MAT_FORM_FIELD_DEFAULT_OPTIONS} from '@angular/material/form-field';
 
 @Component({
   selector: 'kd-search',
   templateUrl: './template.html',
   styleUrls: ['./style.scss'],
-  providers: [
-    { provide: MAT_FORM_FIELD_DEFAULT_OPTIONS,
-      useValue: { appearance: 'outline', subscriptSizing: 'dynamic'}}
-  ]
+  providers: [{provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: {appearance: 'outline', subscriptSizing: 'dynamic'}}],
 })
 export class SearchComponent implements OnInit {
   query: string;

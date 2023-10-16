@@ -41,7 +41,7 @@ import {validateUniqueName} from './validator/uniquename.validator';
 import {FormValidators} from './validator/validators';
 import {CreateSecretDialogComponent} from './createsecret/dialog';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
-import {MAT_FORM_FIELD_DEFAULT_OPTIONS} from "@angular/material/form-field";
+import {MAT_FORM_FIELD_DEFAULT_OPTIONS} from '@angular/material/form-field';
 
 // Label keys for predefined labels
 const APP_LABEL_KEY = 'k8s-app';
@@ -50,11 +50,7 @@ const APP_LABEL_KEY = 'k8s-app';
   selector: 'kd-create-from-form',
   templateUrl: './template.html',
   styleUrls: ['./style.scss'],
-  providers: [
-    { provide: MAT_FORM_FIELD_DEFAULT_OPTIONS,
-      useValue: { appearance: 'outline', subscriptSizing: 'fixed', floatLabel: 'always'}
-    }
-  ]
+  providers: [{provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: {appearance: 'outline', subscriptSizing: 'fixed'}}],
 })
 export class CreateFromFormComponent extends ICanDeactivate implements OnInit {
   showMoreOptions_ = false;

@@ -28,7 +28,7 @@ import {ResourceService} from '@common/services/resource/resource';
 import {SaveAnywayDialogComponent} from './saveanywaysdialog/dialog';
 import {SettingsHelperService} from './service';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
-import {MAT_FORM_FIELD_DEFAULT_OPTIONS} from "@angular/material/form-field";
+import {MAT_FORM_FIELD_DEFAULT_OPTIONS} from '@angular/material/form-field';
 
 enum Controls {
   ClusterName = 'clusterName',
@@ -44,12 +44,7 @@ enum Controls {
   selector: 'kd-global-settings',
   templateUrl: './template.html',
   styleUrls: ['style.scss'],
-  providers: [
-    { provide: MAT_FORM_FIELD_DEFAULT_OPTIONS,
-      useValue: { appearance: 'outline', subscriptSizing: 'dynamic', floatLabel: 'always'}
-      //useValue: {appearance: 'fill', subscriptSizing: 'dynamic'}
-    }
-  ]
+  providers: [{provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: {appearance: 'outline', subscriptSizing: 'dynamic'}}],
 })
 export class GlobalSettingsComponent implements OnInit {
   readonly Controls = Controls;
