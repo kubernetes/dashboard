@@ -33,6 +33,7 @@
   $box-shadow-3: rgb(0 0 0 / 0.12);
   $box-shadow: 0 3px 1px -2px $box-shadow-1, 0 2px 2px 0 $box-shadow-2, 0 1px 5px 0 $box-shadow-3;
   $white: #fff;
+
   // Global style overrides.
 
   @include mat.form-field-density(-4);
@@ -42,10 +43,12 @@
     mat-form-field {
       width: 100%;
     }
+
     .mdc-notched-outline {
       .mdc-notched-outline__leading {
         display: none !important;
       }
+
       .mdc-notched-outline__trailing {
         border: 1px solid $border !important;
         border-radius: 2px !important;
@@ -212,9 +215,11 @@
         .mdc-text-field__input {
           font-size: $subhead-font-size-base;
         }
+
         .mdc-text-field {
           background-color: color.adjust($background, $lightness: -2.5%);
         }
+
         .mdc-notched-outline__trailing {
           display: none;
         }
@@ -242,11 +247,12 @@
     }
   }
 
-  /*MAT chips Theming*/
+  /* MAT chips Theming */
 
   .mat-mdc-chip.mat-mdc-standard-chip {
     background: $card-background-dark;
   }
+
   .kd-chips-show-button {
     color: map.get($colors, primary);
 
@@ -255,7 +261,7 @@
     }
   }
 
-  /*MAT chips Theming End*/
+  /* MAT chips Theming End */
 
   button.mat-mdc-icon-button {
     color: theming.mat-color($foreground-palette, text);
@@ -313,6 +319,7 @@
   .kd-secret-detail-text {
     mat-form-field {
       width: 100%;
+
       .mdc-text-field {
         background-color: $border;
       }

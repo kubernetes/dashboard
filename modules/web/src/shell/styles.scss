@@ -44,6 +44,7 @@ $shell-background-color: #000;
       > .mat-mdc-card-title + div {
         @include flex-full-height;
       }
+
       .mat-mdc-card-content {
         @include flex-full-height;
 

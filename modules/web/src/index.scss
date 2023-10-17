@@ -283,7 +283,7 @@ router-outlet::after {
   z-index: 1;
 }
 
-/*MDC MAT chips*/
+/* MDC MAT chips */
 .mat-mdc-chip.mat-mdc-standard-chip {
   box-shadow: none !important;
   font-size: $body-font-size-base;
@@ -292,14 +292,14 @@ router-outlet::after {
   line-height: $body-font-size-base;
   min-height: unset;
   padding: ($baseline-grid * 0.75) ($baseline-grid * 1.25);
-  transition: none !important;
-  word-break: break-all !important;
   padding-left: unset;
   padding-right: unset;
+  transition: none !important;
+  word-break: break-all !important;
 
   .mdc-evolution-chip__text-label {
-    white-space: normal;
     line-height: normal;
+    white-space: normal;
   }
 
   &:hover::after {
@@ -314,7 +314,8 @@ router-outlet::after {
 .mat-mdc-chip-focus-overlay {
   background: none !important;
 }
-/* MDC MAT chips end*/
+
+/* MDC MAT chips end */
 
 .kd-chips-show-button {
   cursor: pointer;
@@ -394,7 +395,6 @@ kd-logs {
 }
 
 .kd-standard-form-field {
-
   mat-form-field {
     width: 100%;
 
@@ -406,13 +406,16 @@ kd-logs {
       .mdc-notched-outline__leading {
         display: none;
       }
+
       .mdc-notched-outline__notch {
         border-radius: 0;
         border-top: none;
+
         .mdc-floating-label {
           left: 0;
         }
       }
+
       .mdc-notched-outline__trailing {
         border-radius: 0;
         border-right: none;
