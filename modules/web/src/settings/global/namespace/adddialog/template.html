@@ -39,9 +39,7 @@ limitations under the License.
       </mat-autocomplete>
     </mat-form-field>
   </mat-dialog-content>
-
-  <mat-dialog-actions style="padding: 0 24px"
-                      fxLayoutAlign="space-between center">
+  <mat-dialog-actions>
     <button mat-raised-button
             color="primary"
             [disabled]="namespaceInput?.value?.length === 0"
@@ -51,7 +49,7 @@ limitations under the License.
     </button>
     <button mat-button
             color="primary"
-            [mat-dialog-close]=""
+            mat-dialog-close
             i18n>Close</button>
   </mat-dialog-actions>
 </div>

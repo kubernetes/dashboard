@@ -16,7 +16,6 @@
 @use 'sass:color';
 @use '@angular/material' as mat;
 @use '@angular/material/theming';
-@use "@material/tab/mixins" as tab-mixins;
 @use 'variables' as *;
 
 @mixin kd-theme($theme, $colors) {
@@ -66,10 +65,6 @@
   .kd-create-from-file-info,
   .kd-create-from-input-info {
     color: map.get($foreground-palette, text);
-  }
-
-  .mdc-tab.mdc-tab--active{
-    @include tab-mixins.active-text-label-color(map.get($foreground-palette, text));
   }
 
   a {
@@ -316,44 +311,12 @@
     }
   }
 
-  /* MDC MAT Form Field -- utility */
-
-  // .mat-mdc-text-field-wrapper {
-  //  background-color: transparent !important;
-  // }
-
-  /*initial background color*/
-  // .mdc-text-field--filled:not(.mdc-text-field--disabled) {
-  //  background-color: transparent !important;
-  //  padding: unset;
-  //  color: theming.mat-color($foreground-palette, text) !important;// #fff;
-  // }
-
-   /*background color on hover and focus*/
-  //.mat-mdc-form-field-focus-overlay {
-  //  background-color: transparent !important;
-  //}
-
-  /*MDC MAT Form Field End*/
-
   .kd-secret-detail-text {
-    /* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version.*/
-    .mat-form-field-infix {
-      border-top: 0;
-    }
-    /* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version.*/
-    /* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version.*/
-    .mat-form-field-underline {
-      background: none;
-      /* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version.*/
-      .mat-form-field-ripple {
-        background: none;
+    mat-form-field {
+      width: 100%;
+      .mdc-text-field {
+        background-color: $border;
       }
-    }
-
-    textarea {
-      background-color: $border;
-      border: 0;
     }
   }
 

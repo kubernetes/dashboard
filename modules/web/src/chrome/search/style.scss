@@ -18,8 +18,15 @@
   border-radius: $baseline-grid * 0.25;
   padding-left: $baseline-grid;
 
+  input {
+    background-color: transparent;
+    border: 0;
+    font-size: $subhead-font-size-base;
+    outline: none;
+    padding: 0 $baseline-grid * 1.25;
+  }
+
   .kd-search-icon {
     margin-left: $baseline-grid * 2;
-    padding-right: $baseline-grid * 2;
   }
 }

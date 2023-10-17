@@ -132,7 +132,6 @@ code {
   &:first-child,
   &:last-child {
     padding: 0;
-    justify-content: center;
   }
 }
 
@@ -193,16 +192,6 @@ router-outlet::after {
 
 .kd-toolbar-action {
   margin: 0 (0.75 * $baseline-grid) !important;
-}
-
-.kd-code-block {
-  border-radius: $baseline-grid * 0.25;
-  display: block;
-  font-family: $font-family-monospace;
-  font-size: $body-font-size-base;
-  padding: $baseline-grid * 2;
-  white-space: pre-wrap;
-  width: 100%;
 }
 
 .kd-code-block-font {
@@ -383,19 +372,6 @@ router-outlet::after {
   font-family: Roboto, sans-serif;
 }
 
-.kd-secret-detail-text {
-  .mat-mdc-text-field-wrapper {
-    padding-bottom: $baseline-grid;
-  }
-  .mat-mdc-form-field-flex {
-    padding-top: 2px;
-  }
-
-  textarea {
-    padding: (2 * $baseline-grid) (2 * $baseline-grid) 0 !important;
-  }
-}
-
 .mat-mdc-list {
   margin-top: $baseline-grid;
 
@@ -443,19 +419,6 @@ kd-logs {
   }
 }
 
-.kd-form-field {
-  font-family: $font-family-sans;
-  font-size: $subhead-font-size-base;
-
-  mat-form-field {
-    width: 100%;
-    .mdc-text-field {
-      border: 1px solid red !important;
-    }
-  }
-}
-
-
 .kd-standard-form-field {
   font-family: $font-family-sans;
   font-size:  $subhead-font-size-base;
@@ -488,16 +451,6 @@ kd-logs {
     .mat-mdc-form-field-hint-wrapper,
     .mat-mdc-form-field-error-wrapper {
       padding: unset;
-    }
-  }
-}
-
-.kd-standard-form-field-full {
-  mat-form-field {
-    .mdc-notched-outline {
-      .mdc-notched-outline__trailing {
-        display: none;
-      }
     }
   }
 }
