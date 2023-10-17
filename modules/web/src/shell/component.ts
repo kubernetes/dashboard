@@ -34,7 +34,7 @@ import {EndpointManager, Resource, Utility} from '@common/services/resource/endp
 import {NamespacedResourceService} from '@common/services/resource/resource';
 import {UtilityService} from '@common/services/resource/utility';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
-import {MAT_FORM_FIELD_DEFAULT_OPTIONS} from "@angular/material/form-field";
+import {MAT_FORM_FIELD_DEFAULT_OPTIONS} from '@angular/material/form-field';
 
 declare let SockJS: any;
 

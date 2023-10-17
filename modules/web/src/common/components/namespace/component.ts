@@ -14,7 +14,7 @@
 
 import {Component, DestroyRef, ElementRef, inject, Inject, OnInit, ViewChild} from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
-import {MAT_SELECT_CONFIG, MatSelect} from '@angular/material/select';
+import {MatSelect} from '@angular/material/select';
 import {ActivatedRoute, NavigationEnd, Router} from '@angular/router';
 import {NamespaceList} from '@api/root.api';
 import {IConfig} from '@api/root.ui';
