@@ -20,3 +20,8 @@
   outline: none;
   padding: (2 * $baseline-grid) 0 (2 * $baseline-grid) (2 * $baseline-grid);
 }
+
+.mat-mdc-option {
+  overflow: auto !important;
+  text-overflow: unset !important;
+}

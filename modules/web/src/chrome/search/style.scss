@@ -14,14 +14,9 @@
 
 @use '../../variables' as *;
 
-form {
+.kd-search {
   border-radius: $baseline-grid * 0.25;
   padding-left: $baseline-grid;
-
-  input {
-    background-color: transparent;
-    font-size: $subhead-font-size-base;
-  }
 
   .kd-search-icon {
     margin-left: $baseline-grid * 2;

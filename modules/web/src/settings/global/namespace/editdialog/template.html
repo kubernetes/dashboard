@@ -23,14 +23,16 @@ limitations under the License.
     <div i18n>Remove namespaces from the list and confirm to save the changes.</div>
 
     <mat-list>
-      <mat-list-item *ngFor="let namespace of namespaces" class="kd-form-field">
+      <mat-list-item *ngFor="let namespace of namespaces"
+                     class="kd-standard-form-field kd-standard-form-field-full">
         <mat-form-field matListItemTitle>
-          <input matInput readonly disabled [value]="namespace">
+          <input matInput readonly [value]="namespace">
           <button mat-icon-button matIconSuffix
                   (click)="remove(namespace)"
                   (focus)="$event.stopPropagation()">
             <mat-icon>close</mat-icon>
           </button>
+          <mat-divider></mat-divider>
         </mat-form-field>
       </mat-list-item>
         <mat-list-item *ngIf="namespaces.length === 0"

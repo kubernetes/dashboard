@@ -41,7 +41,6 @@ import {FormControl} from '@angular/forms';
   styleUrls: ['style.scss'],
   providers: [
     {provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: {appearance: 'outline', subscriptSizing: 'dynamic'}},
-    {provide: MAT_SELECT_CONFIG, useValue: {overlayPanelClass: 'kd-namespace-selection'}},
   ],
 })
 export class NamespaceSelectorComponent implements OnInit {

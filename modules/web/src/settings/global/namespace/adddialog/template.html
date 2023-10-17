@@ -19,14 +19,15 @@ limitations under the License.
   <h2 mat-dialog-title
       i18n>Add Namespace</h2>
   <mat-dialog-content fxLayout="column"
-                      class="kd-form-field kd-dialog-text">
+                      class="kd-standard-form-field kd-dialog-text">
     <div i18n>Provide a namespace name that should be added to the namespace fallback list</div>
 
     <mat-form-field fxFlex>
+      <mat-label
+        label="Namespace"
+        i18n-label>Namespace</mat-label>
       <input #namespaceInput
              name="defaultNamespace"
-             i18n-placeholder
-             placeholder="Namespace"
              type="text"
              [matAutocomplete]="auto"
              matInput />

@@ -129,27 +129,15 @@ code {
     }
   }
 
-  &:first-child {
-    padding: 0;
-  }
+  &:first-child,
   &:last-child {
     padding: 0;
-    align-items: center;
     justify-content: center;
-    button[mat-icon-button] {
-      transform: scale(0.8);
-    }
   }
 }
 
 .mat-column-statusicon {
   flex: 0 0 ($baseline-grid * 5);
-
-  .mat-icon {
-    cursor: default;
-    font-size: 2.5 * $baseline-grid;
-    margin-top: 0.66 * $baseline-grid;
-  }
 }
 
 [class^='mat-column-action'],
@@ -171,7 +159,7 @@ code {
   padding-right: 3 * $baseline-grid !important;
 }
 
-.mat-button-toggle-group { 
+.mat-button-toggle-group {
   border-bottom: 0 !important;
   box-shadow: none !important;
 }
@@ -348,14 +336,6 @@ router-outlet::after {
   padding: ($baseline-grid * 0.75) ($baseline-grid * 1.75);
 }
 
-/* MDC MAT select OPTION provider panel class*/
-.kd-namespace-selection {
-  .mat-mdc-option {
-    overflow: auto !important;
-    text-overflow: unset !important;
-  }
-}
-
 .kd-on-top {
   z-index: 100;
 }
@@ -460,5 +440,64 @@ kd-logs {
 .mat-mdc-menu-panel {
   &.kd-user-panel {
     min-width: 15 * $baseline-grid;
+  }
+}
+
+.kd-form-field {
+  font-family: $font-family-sans;
+  font-size: $subhead-font-size-base;
+
+  mat-form-field {
+    width: 100%;
+    .mdc-text-field {
+      border: 1px solid red !important;
+    }
+  }
+}
+
+
+.kd-standard-form-field {
+  font-family: $font-family-sans;
+  font-size:  $subhead-font-size-base;
+
+  mat-form-field {
+    width: 100%;
+
+    .mdc-text-field {
+      padding: unset;
+    }
+
+    .mdc-notched-outline {
+      .mdc-notched-outline__leading {
+        display: none;
+      }
+      .mdc-notched-outline__notch {
+        border-radius: 0;
+        border-top: none;
+        .mdc-floating-label {
+          left: 0;
+        }
+      }
+      .mdc-notched-outline__trailing {
+        border-radius: 0;
+        border-right: none;
+        border-top: none;
+      }
+    }
+
+    .mat-mdc-form-field-hint-wrapper,
+    .mat-mdc-form-field-error-wrapper {
+      padding: unset;
+    }
+  }
+}
+
+.kd-standard-form-field-full {
+  mat-form-field {
+    .mdc-notched-outline {
+      .mdc-notched-outline__trailing {
+        display: none;
+      }
+    }
   }
 }

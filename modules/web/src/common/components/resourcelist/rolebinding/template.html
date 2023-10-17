@@ -66,7 +66,7 @@ limitations under the License.
       </ng-container>
 
       <ng-container *ngFor="let col of getActionColumns()"
-                    [matColumnDef]="col.name" stickyEnd>
+                    [matColumnDef]="col.name">
         <mat-header-cell *matHeaderCellDef></mat-header-cell>
         <mat-cell *matCellDef="let cr">
           <kd-dynamic-cell [component]="col.component"
