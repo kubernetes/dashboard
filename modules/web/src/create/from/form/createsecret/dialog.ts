@@ -30,7 +30,15 @@ export interface CreateSecretDialogMeta {
 @Component({
   selector: 'kd-create-secret-dialog',
   templateUrl: 'template.html',
-  providers: [{provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: {appearance: 'outline', subscriptSizing: 'fixed'}}],
+  providers: [
+    {
+      provide: MAT_FORM_FIELD_DEFAULT_OPTIONS,
+      useValue: {
+        appearance: 'outline',
+        subscriptSizing: 'fixed',
+      },
+    },
+  ],
 })
 export class CreateSecretDialogComponent implements OnInit {
   form: UntypedFormGroup;

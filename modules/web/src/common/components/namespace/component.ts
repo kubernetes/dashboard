@@ -40,7 +40,13 @@ import {FormControl} from '@angular/forms';
   templateUrl: './template.html',
   styleUrls: ['style.scss'],
   providers: [
-    {provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: {appearance: 'outline', subscriptSizing: 'dynamic'}},
+    {
+      provide: MAT_FORM_FIELD_DEFAULT_OPTIONS,
+      useValue: {
+        appearance: 'outline',
+        subscriptSizing: 'dynamic',
+      },
+    },
   ],
 })
 export class NamespaceSelectorComponent implements OnInit {

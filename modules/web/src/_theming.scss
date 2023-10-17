@@ -276,8 +276,7 @@
     color: theming.mat-color($foreground-palette, secondary-text);
   }
 
-  .kd-namespace-select-input-border,
-  .kd-shell-toolbar-select {
+  .kd-namespace-select-input-border {
     border-bottom: 1px solid $border !important;
   }
 

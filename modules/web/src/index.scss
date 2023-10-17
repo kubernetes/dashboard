@@ -384,32 +384,6 @@ kd-logs {
   .mat-mdc-form-field {
     max-width: 22 * $baseline-grid;
     width: auto;
-    /* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version.*/
-    .mat-form-field-underline {
-      margin-top: 0.25 * $baseline-grid;
-      position: initial;
-    }
-    /* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version.*/
-    .mat-form-field-wrapper {
-      padding-bottom: 0;
-    }
-    /* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version.*/
-    .mat-form-field-infix {
-      border-top: 0;
-      padding: 0;
-      width: auto;
-    }
-    /* TODO(mdc-migration): The following rule targets internal classes of select that may no longer apply for the MDC version.*/
-    .mat-select-trigger {
-      align-items: center;
-      display: flex;
-    }
-    /* TODO(mdc-migration): The following rule targets internal classes of select that may no longer apply for the MDC version.*/
-    .mat-select-value {
-      display: inline-flex;
-      max-width: 100%;
-      padding-right: $baseline-grid;
-    }
   }
 }
 
@@ -420,8 +394,6 @@ kd-logs {
 }
 
 .kd-standard-form-field {
-  font-family: $font-family-sans;
-  font-size:  $subhead-font-size-base;
 
   mat-form-field {
     width: 100%;

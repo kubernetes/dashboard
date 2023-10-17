@@ -73,7 +73,13 @@ const EXT_SERVICE: ServiceType = {
       useExisting: forwardRef(() => PortMappingsComponent),
       multi: true,
     },
-    {provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: {appearance: 'outline', subscriptSizing: 'fixed'}},
+    {
+      provide: MAT_FORM_FIELD_DEFAULT_OPTIONS,
+      useValue: {
+        appearance: 'outline',
+        subscriptSizing: 'fixed',
+      },
+    },
   ],
 })
 export class PortMappingsComponent implements OnInit, ControlValueAccessor {

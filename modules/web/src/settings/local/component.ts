@@ -28,7 +28,13 @@ import {MAT_FORM_FIELD_DEFAULT_OPTIONS} from "@angular/material/form-field";
   selector: 'kd-local-settings',
   templateUrl: './template.html',
   providers: [
-    {provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: {appearance: 'outline', subscriptSizing: 'fixed'}},
+    {
+      provide: MAT_FORM_FIELD_DEFAULT_OPTIONS,
+      useValue: {
+        appearance: 'outline',
+        subscriptSizing: 'fixed',
+      },
+    },
   ]
 })
 export class LocalSettingsComponent implements OnInit {

@@ -47,7 +47,13 @@ interface DeployLabelI {
       useExisting: forwardRef(() => DeployLabelComponent),
       multi: true,
     },
-    {provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: {appearance: 'outline', subscriptSizing: 'fixed'}},
+    {
+      provide: MAT_FORM_FIELD_DEFAULT_OPTIONS,
+      useValue: {
+        appearance: 'outline',
+        subscriptSizing: 'fixed',
+      },
+    },
   ],
 })
 export class DeployLabelComponent implements OnInit, ControlValueAccessor {

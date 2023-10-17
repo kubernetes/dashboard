@@ -44,7 +44,15 @@ enum Controls {
   selector: 'kd-global-settings',
   templateUrl: './template.html',
   styleUrls: ['style.scss'],
-  providers: [{provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: {appearance: 'outline', subscriptSizing: 'dynamic'}}],
+  providers: [
+    {
+      provide: MAT_FORM_FIELD_DEFAULT_OPTIONS,
+      useValue: {
+        appearance: 'outline',
+        subscriptSizing: 'dynamic',
+      },
+    },
+  ],
 })
 export class GlobalSettingsComponent implements OnInit {
   readonly Controls = Controls;

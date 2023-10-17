@@ -24,7 +24,15 @@ import {MAT_FORM_FIELD_DEFAULT_OPTIONS} from '@angular/material/form-field';
   selector: 'kd-search',
   templateUrl: './template.html',
   styleUrls: ['./style.scss'],
-  providers: [{provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: {appearance: 'outline', subscriptSizing: 'dynamic'}}],
+  providers: [
+    {
+      provide: MAT_FORM_FIELD_DEFAULT_OPTIONS,
+      useValue: {
+        appearance: 'outline',
+        subscriptSizing: 'dynamic',
+      },
+    },
+  ],
 })
 export class SearchComponent implements OnInit {
   query: string;
