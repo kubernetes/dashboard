@@ -22,10 +22,14 @@ import {ThemeService} from '@common/services/global/theme';
 import {environment} from '@environments/environment';
 import {CookieService} from 'ngx-cookie-service';
 import {CONFIG_DI_TOKEN} from '../../index.config';
+import {MAT_FORM_FIELD_DEFAULT_OPTIONS} from "@angular/material/form-field";
 
 @Component({
   selector: 'kd-local-settings',
   templateUrl: './template.html',
+  providers: [
+    {provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: {appearance: 'outline', subscriptSizing: 'fixed'}},
+  ]
 })
 export class LocalSettingsComponent implements OnInit {
   settings: LocalSettings = {} as LocalSettings;
