@@ -18,9 +18,8 @@ limitations under the License.
       novalidate>
   <kd-help-section class="kd-standard-form-field">
     <mat-form-field>
-      <mat-label
-        label="App name"
-        i18n-label>App name</mat-label>
+      <mat-label label="App name"
+                 i18n-label>App name</mat-label>
       <input matInput
              formControlName="name"
              [maxlength]="nameMaxLength"
@@ -59,9 +58,8 @@ limitations under the License.
 
   <kd-help-section class="kd-standard-form-field">
     <mat-form-field>
-      <mat-label
-        label="Container image"
-        i18n-label>Container image</mat-label>
+      <mat-label label="Container image"
+                 i18n-label>Container image</mat-label>
       <input matInput
              formControlName="containerImage"
              kdValidImageReference
@@ -89,9 +87,8 @@ limitations under the License.
 
   <kd-help-section class="kd-standard-form-field">
     <mat-form-field>
-      <mat-label
-        label="Number of pods"
-        i18n-label>Number of pods</mat-label>
+      <mat-label label="Number of pods"
+                 i18n-label>Number of pods</mat-label>
       <input matInput
              type="number"
              formControlName="replicas"
@@ -143,9 +140,8 @@ limitations under the License.
 
   <kd-help-section class="kd-standard-form-field">
     <mat-form-field>
-      <mat-label
-        label="Namespace"
-        i18n-label>Namespace</mat-label>
+      <mat-label label="Namespace"
+                 i18n-label>Namespace</mat-label>
       <mat-select formControlName="namespace"
                   (click)="resetImagePullSecret()"
                   required>
@@ -171,9 +167,8 @@ limitations under the License.
   <div [hidden]="!isMoreOptionsEnabled()">
     <kd-help-section class="kd-standard-form-field">
       <mat-form-field>
-        <mat-label
-          label="Description"
-          i18n-label>Description</mat-label>
+        <mat-label label="Description"
+                   i18n-label>Description</mat-label>
         <textarea formControlName="description"
                   matInput></textarea>
       </mat-form-field>
@@ -204,9 +199,8 @@ limitations under the License.
 
     <kd-help-section class="kd-standard-form-field">
       <mat-form-field>
-        <mat-label
-          label="Image Pull Secret"
-          i18n-label>Image Pull Secret</mat-label>
+        <mat-label label="Image Pull Secret"
+                   i18n-label>Image Pull Secret</mat-label>
         <mat-select formControlName="imagePullSecret"
                     (click)="getSecrets()">
           <mat-option *ngFor="let secret of secrets"
@@ -229,11 +223,11 @@ limitations under the License.
     </kd-help-section>
 
     <kd-help-section>
-      <div fxLayout="row" class="kd-standard-form-field">
+      <div fxLayout="row"
+           class="kd-standard-form-field">
         <mat-form-field fxFlex="auto">
-          <mat-label
-            label="CPU requirement (cores)"
-            i18n-label>CPU requirement (cores)</mat-label>
+          <mat-label label="CPU requirement (cores)"
+                     i18n-label>CPU requirement (cores)</mat-label>
           <input matInput
                  type="number"
                  name="cpuRequirement"
@@ -250,9 +244,8 @@ limitations under the License.
         </mat-form-field>
         <div fxFlex="5"></div>
         <mat-form-field fxFlex="auto">
-          <mat-label
-            label="Memory requirement (MiB)"
-            i18n-label>Memory requirement (MiB)</mat-label>
+          <mat-label label="Memory requirement (MiB)"
+                     i18n-label>Memory requirement (MiB)</mat-label>
           <input matInput
                  type="number"
                  name="memoryRequirement"
@@ -283,16 +276,14 @@ limitations under the License.
     <kd-help-section>
       <div class="kd-standard-form-field">
         <mat-form-field class="kd-block">
-          <mat-label
-            label="Run command"
-            i18n-label>Run command</mat-label>
+          <mat-label label="Run command"
+                     i18n-label>Run command</mat-label>
           <input matInput
                  formControlName="containerCommand" />
         </mat-form-field>
         <mat-form-field class="kd-block">
-          <mat-label
-            label="Run command arguments"
-            i18n-label>Run command arguments</mat-label>
+          <mat-label label="Run command arguments"
+                     i18n-label>Run command arguments</mat-label>
           <input matInput
                  formControlName="containerCommandArgs" />
         </mat-form-field>

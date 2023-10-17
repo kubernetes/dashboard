@@ -20,11 +20,11 @@ limitations under the License.
   <ng-container [formGroup]="form">
     <ng-container formArrayName="variables">
       <div *ngFor="let variable of variables.controls; let i = index"
-           [formGroupName]="i" class="kd-standard-form-field">
+           [formGroupName]="i"
+           class="kd-standard-form-field">
         <mat-form-field fxFlex="auto">
-          <mat-label
-            label="Name"
-            i18n-label>Name</mat-label>
+          <mat-label label="Name"
+                     i18n-label>Name</mat-label>
           <input matInput
                  name="name"
                  formControlName="name"
@@ -38,12 +38,11 @@ limitations under the License.
         <div fxFlex="5"></div>
 
         <mat-form-field fxFlex="auto">
-          <mat-label
-            label="Value"
-            i18n-label>Value</mat-label>
+          <mat-label label="Value"
+                     i18n-label>Value</mat-label>
           <input matInput
                  name="value"
-                 formControlName="value"/>
+                 formControlName="value" />
         </mat-form-field>
 
         <div fxFlex="10">

@@ -17,17 +17,17 @@ limitations under the License.
 <ng-container [formGroup]="labelForm">
   <div formArrayName="labels">
     <div *ngFor="let label of labels.controls; let i = index"
-         [formGroupName]="i" class="kd-standard-form-field">
+         [formGroupName]="i"
+         class="kd-standard-form-field">
       <mat-form-field class="kd-deploy-input-row"
                       fxFlex="45">
-        <mat-label
-          label="key"
-          i18n-label>key</mat-label>
+        <mat-label label="key"
+                   i18n-label>key</mat-label>
         <input matInput
                name="key"
                formControlName="key"
                (keyup)="check(i)"
-               [readonly]="!label.get('editable').value"/>
+               [readonly]="!label.get('editable').value" />
         <mat-error *ngIf="label.get('key').errors?.unique"
                    i18n> {{ label.get('key').value }} is not unique </mat-error>
         <mat-error *ngIf="label.get('key').errors?.kdValidLabelKeyPrefixPattern"
@@ -51,14 +51,13 @@ limitations under the License.
       <p fxFlex="5"></p>
       <mat-form-field class="kd-deploy-input-row"
                       fxFlex="40">
-        <mat-label
-          label="value"
-          i18n-label>value</mat-label>
+        <mat-label label="value"
+                   i18n-label>value</mat-label>
         <input matInput
                name="value"
                formControlName="value"
                (keyup)="check(i)"
-               [readonly]="!label.get('editable').value"/>
+               [readonly]="!label.get('editable').value" />
         <mat-hint align="end">{{ label.get('value').value?.length }} / 253</mat-hint>
         <mat-error *ngIf="label.get('value').errors?.kdValidLabelValuePattern"
                    i18n>

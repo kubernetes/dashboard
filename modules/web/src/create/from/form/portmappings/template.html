@@ -16,11 +16,11 @@ limitations under the License.
 
 <div fxLayout="column"
      [formGroup]="portMappingForm">
-  <div fxLayout="row" class="kd-standard-form-field">
+  <div fxLayout="row"
+       class="kd-standard-form-field">
     <mat-form-field class="kd-deploy-input-row">
-      <mat-label
-        label="Service"
-        i18n-label>Service</mat-label>
+      <mat-label label="Service"
+                 i18n-label>Service</mat-label>
       <mat-select namespace="serviceType"
                   formControlName="serviceType"
                   required>
@@ -36,12 +36,12 @@ limitations under the License.
     <ng-container formArrayName="portMappings">
       <div fxLayout="row"
            *ngFor="let portMapping of portMappings.controls; let i = index"
-           [formGroupName]="i" class="kd-standard-form-field">
+           [formGroupName]="i"
+           class="kd-standard-form-field">
         <mat-form-field class="kd-deploy-input-row"
                         fxFlex="30">
-          <mat-label
-            label="Port"
-            i18n-label>Port</mat-label>
+          <mat-label label="Port"
+                     i18n-label>Port</mat-label>
           <input matInput
                  type="number"
                  name="port"
@@ -62,9 +62,8 @@ limitations under the License.
 
         <mat-form-field class="kd-deploy-input-row kd-standard-form-field"
                         fxFlex="30">
-          <mat-label
-            label="Target port"
-            i18n-label>Target port</mat-label>
+          <mat-label label="Target port"
+                     i18n-label>Target port</mat-label>
           <input matInput
                  type="number"
                  name="targetPort"
@@ -95,9 +94,8 @@ limitations under the License.
 
         <mat-form-field class="kd-deploy-input-row kd-standard-form-field"
                         fxFlex="20">
-          <mat-label
-            label="Protocol"
-            i18n-label>Protocol</mat-label>
+          <mat-label label="Protocol"
+                     i18n-label>Protocol</mat-label>
           <mat-select name="protocol"
                       formControlName="protocol"
                       kdValidProtocol
