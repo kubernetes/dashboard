@@ -4485,13 +4485,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/jest@npm:29.5.5":
-  version: 29.5.5
-  resolution: "@types/jest@npm:29.5.5"
+"@types/jest@npm:29.5.6":
+  version: 29.5.6
+  resolution: "@types/jest@npm:29.5.6"
   dependencies:
     expect: ^29.0.0
     pretty-format: ^29.0.0
-  checksum: 56e55cde9949bcc0ee2fa34ce5b7c32c2bfb20e53424aa4ff3a210859eeaaa3fdf6f42f81a3f655238039cdaaaf108b054b7a8602f394e6c52b903659338d8c6
+  checksum: fa13a27bd1c8efd0381a419478769d0d6d3a8e93e1952d7ac3a16274e8440af6f73ed6f96ac1ff00761198badf2ee226b5ab5583a5d87a78d609ea78da5c5a24
   languageName: node
   linkType: hard
 
@@ -11424,7 +11424,7 @@ __metadata:
     "@types/file-saver": 2.0.6
     "@types/jasmine": 5.1.0
     "@types/jasminewd2": 2.0.11
-    "@types/jest": 29.5.5
+    "@types/jest": 29.5.6
     "@types/js-yaml": 4.0.8
     "@types/lodash-es": 4.17.10
     "@types/node": 20.8.6
