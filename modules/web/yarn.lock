@@ -4495,10 +4495,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/js-yaml@npm:4.0.7":
-  version: 4.0.7
-  resolution: "@types/js-yaml@npm:4.0.7"
-  checksum: e02eca876f3f19dbba62a26a18e59ec5df4e29300b99808fb0b4ca980cbfbb60e4a2c7d75d521728f5b2a3b92a0da5b9343497b2acf621b8ea019d48b40bbd78
+"@types/js-yaml@npm:4.0.8":
+  version: 4.0.8
+  resolution: "@types/js-yaml@npm:4.0.8"
+  checksum: a5a77a5a1eac7e7fb667156c251c2b947ca4ddfdda570726369dd50bd5b2b1d0da2d0fb4273d1b10aa1782406d7b3da8923d957df4fb89dbfa1db06f43297de2
   languageName: node
   linkType: hard
 
@@ -11425,7 +11425,7 @@ __metadata:
     "@types/jasmine": 5.1.0
     "@types/jasminewd2": 2.0.11
     "@types/jest": 29.5.5
-    "@types/js-yaml": 4.0.7
+    "@types/js-yaml": 4.0.8
     "@types/lodash-es": 4.17.9
     "@types/node": 20.8.6
     "@typescript-eslint/eslint-plugin": 6.8.0

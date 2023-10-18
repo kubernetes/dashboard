@@ -96,7 +96,7 @@
     "@types/jasmine": "5.1.0",
     "@types/jasminewd2": "2.0.11",
     "@types/jest": "29.5.5",
-    "@types/js-yaml": "4.0.7",
+    "@types/js-yaml": "4.0.8",
     "@types/lodash-es": "4.17.9",
     "@types/node": "20.8.6",
     "@typescript-eslint/eslint-plugin": "6.8.0",
