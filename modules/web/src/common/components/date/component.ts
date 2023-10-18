@@ -53,7 +53,7 @@ export class DateComponent implements OnChanges {
   @Input() date: string;
   @Input() format = 'medium';
 
-  @Input('relative')
+  @Input()
   set relative(v: boolean) {
     this.relative_ = v !== undefined && v !== false;
   }
