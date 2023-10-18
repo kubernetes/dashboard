@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {Pipe} from '@angular/core';
+import {Pipe, PipeTransform} from '@angular/core';
 import {SafeHtml} from '@angular/platform-browser';
 import stripAnsi from 'strip-ansi';
 
@@ -20,7 +20,7 @@ import stripAnsi from 'strip-ansi';
  * Strips ANSI codes from string.
  */
 @Pipe({name: 'kdStripAnsi'})
-export class StripAnsiPipe {
+export class StripAnsiPipe implements PipeTransform {
   transform(value: string): SafeHtml {
     return stripAnsi(value);
   }

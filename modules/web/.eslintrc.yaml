@@ -23,6 +23,7 @@ parserOptions:
   sourceType: module
 extends:
   - "./node_modules/gts"
+  - plugin:@angular-eslint/recommended
 plugins:
   - rxjs
 rules:
