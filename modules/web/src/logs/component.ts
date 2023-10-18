@@ -35,7 +35,15 @@ const i18n = {
   selector: 'kd-logs',
   templateUrl: './template.html',
   styleUrls: ['./style.scss'],
-  providers: [{provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: {appearance: 'fill', subscriptSizing: 'dynamic'}}],
+  providers: [
+    {
+      provide: MAT_FORM_FIELD_DEFAULT_OPTIONS,
+      useValue: {
+        appearance: 'outline',
+        subscriptSizing: 'dynamic',
+      },
+    },
+  ],
 })
 export class LogsComponent implements OnDestroy {
   @ViewChild('logViewContainer', {static: true}) logViewContainer_: ElementRef;

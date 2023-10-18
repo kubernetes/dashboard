@@ -36,39 +36,9 @@
 
   // Global style overrides.
 
+  // Angular Material 15/16 Density
   @include mat.form-field-density(-4);
   @include mat.icon-button-density(-3);
-
-  .kd-namespace-select-form-field {
-    mat-form-field {
-      width: 100%;
-    }
-
-    .mdc-notched-outline {
-      .mdc-notched-outline__leading {
-        display: none !important;
-      }
-
-      .mdc-notched-outline__trailing {
-        border: 1px solid $border !important;
-        border-radius: 2px !important;
-      }
-    }
-  }
-
-  mat-card-title,
-  mat-card-footer {
-    color: map.get($foreground-palette, text);
-  }
-
-  .kd-card-content {
-    color: map.get($foreground-palette, text);
-  }
-
-  .kd-create-from-file-info,
-  .kd-create-from-input-info {
-    color: map.get($foreground-palette, text);
-  }
 
   a {
     color: map.get($colors, primary);
@@ -362,5 +332,33 @@
         filter: invert(100%);
       }
     }
+  }
+
+  .kd-namespace-select-form-field {
+    mat-form-field {
+      width: 100%;
+    }
+
+    .mdc-notched-outline {
+      .mdc-notched-outline__leading {
+        display: none;
+      }
+
+      .mdc-notched-outline__trailing {
+        border: 1px solid $border !important;
+        border-radius: 2px;
+      }
+    }
+  }
+
+  .mat-mdc-card-title,
+  .mat-mdc-card-content,
+  .mat-mdc-card-footer {
+    color: map.get($foreground-palette, text);
+  }
+
+  .kd-create-from-file-info,
+  .kd-create-from-input-info {
+    color: map.get($foreground-palette, text);
   }
 }

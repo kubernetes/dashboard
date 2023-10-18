@@ -283,7 +283,7 @@ router-outlet::after {
   z-index: 1;
 }
 
-/* MDC MAT chips */
+/* Angular Material 15/16 chips */
 .mat-mdc-chip.mat-mdc-standard-chip {
   box-shadow: none !important;
   font-size: $body-font-size-base;
@@ -312,10 +312,9 @@ router-outlet::after {
 }
 
 .mat-mdc-chip-focus-overlay {
-  background: none !important;
+  display: none !important;
 }
 
-/* MDC MAT chips end */
 
 .kd-chips-show-button {
   cursor: pointer;
@@ -394,6 +393,7 @@ kd-logs {
   }
 }
 
+// Angular Material 15/16 standard appearance in form field
 .kd-standard-form-field {
   mat-form-field {
     width: 100%;
