@@ -32,7 +32,7 @@ export interface LogsDownloadDialogMeta {
   templateUrl: 'template.html',
   styleUrls: ['style.scss'],
 })
-export class LogsDownloadDialog {
+export class LogsDownloadDialogComponent {
   loaded = 0;
   finished = false;
 
@@ -49,7 +49,7 @@ export class LogsDownloadDialog {
   private destroyRef = inject(DestroyRef);
 
   constructor(
-    private readonly _dialogRef: MatDialogRef<LogsDownloadDialog>,
+    private readonly _dialogRef: MatDialogRef<LogsDownloadDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: LogsDownloadDialogMeta,
     private readonly logService: LogService,
     private readonly http_: HttpClient

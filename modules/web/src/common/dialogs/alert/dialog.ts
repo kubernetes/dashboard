@@ -25,9 +25,9 @@ export interface AlertDialogConfig {
   selector: 'kd-alert-dialog',
   templateUrl: 'template.html',
 })
-export class AlertDialog {
+export class AlertDialogComponent {
   constructor(
-    public dialogRef: MatDialogRef<AlertDialog>,
+    public dialogRef: MatDialogRef<AlertDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: AlertDialogConfig
   ) {}
 

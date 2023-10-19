@@ -28,16 +28,16 @@ import {ActionbarDetailPinComponent} from './actionbar/detailactions/pin/compone
 import {ActionbarDetailRestartComponent} from './actionbar/detailactions/restart/component';
 import {ActionbarDetailScaleComponent} from './actionbar/detailactions/scale/component';
 import {ActionbarDetailTriggerComponent} from './actionbar/detailactions/trigger/component';
-import {DefaultActionbar} from './actionbars/default/component';
-import {LogsDefaultActionbar} from './actionbars/logsdefault/component';
-import {LogsExecDefaultActionbar} from './actionbars/logsexecdefault/component';
-import {LogsScaleDefaultActionbar} from './actionbars/logsscaledefault/component';
-import {PinDefaultActionbar} from './actionbars/pindefault/component';
-import {ScaleDefaultActionbar} from './actionbars/scaledefault/component';
-import {TriggerDefaultActionbar} from './actionbars/triggerdefault/component';
+import {DefaultActionbarComponent} from './actionbars/default/component';
+import {LogsDefaultActionbarComponent} from './actionbars/logsdefault/component';
+import {LogsExecDefaultActionbarComponent} from './actionbars/logsexecdefault/component';
+import {LogsScaleDefaultActionbarComponent} from './actionbars/logsscaledefault/component';
+import {PinDefaultActionbarComponent} from './actionbars/pindefault/component';
+import {ScaleDefaultActionbarComponent} from './actionbars/scaledefault/component';
+import {TriggerDefaultActionbarComponent} from './actionbars/triggerdefault/component';
 import {BreadcrumbsComponent} from './breadcrumbs/component';
 import {CardComponent} from './card/component';
-import {ChipDialog} from './chips/chipdialog/dialog';
+import {ChipDialogComponent} from './chips/chipdialog/dialog';
 import {ChipsComponent} from './chips/component';
 import {ConditionListComponent} from './condition/component';
 import {ContainerCardComponent} from './container/component';
@@ -56,9 +56,9 @@ import {ColumnComponent} from './list/column/component';
 import {MenuComponent} from './list/column/menu/component';
 import {CardListFilterComponent} from './list/filter/component';
 import {RowDetailComponent} from './list/rowdetail/component';
-import {LoadingSpinner} from './list/spinner/component';
+import {LoadingSpinnerComponent} from './list/spinner/component';
 import {ListZeroStateComponent} from './list/zerostate/component';
-import {NamespaceChangeDialog} from './namespace/changedialog/dialog';
+import {NamespaceChangeDialogComponent} from './namespace/changedialog/dialog';
 import {NamespaceSelectorComponent} from './namespace/component';
 import {ObjectMetaComponent} from './objectmeta/component';
 import {PodStatusCardComponent} from './podstatus/component';
@@ -128,7 +128,7 @@ const components = [
   ConfigMapListComponent,
   PluginListComponent,
   ColumnComponent,
-  ChipDialog,
+  ChipDialogComponent,
   ContainerCardComponent,
   ConditionListComponent,
   CreatorCardComponent,
@@ -138,7 +138,7 @@ const components = [
   DaemonSetListComponent,
   DateComponent,
   DeploymentListComponent,
-  DefaultActionbar,
+  DefaultActionbarComponent,
   EndpointListComponent,
   ExternalEndpointComponent,
   EventListComponent,
@@ -152,16 +152,16 @@ const components = [
   IngressRuleFlatListComponent,
   InternalEndpointComponent,
   JobListComponent,
-  LoadingSpinner,
+  LoadingSpinnerComponent,
   ListZeroStateComponent,
-  LogsScaleDefaultActionbar,
-  LogsExecDefaultActionbar,
-  LogsDefaultActionbar,
+  LogsScaleDefaultActionbarComponent,
+  LogsExecDefaultActionbarComponent,
+  LogsDefaultActionbarComponent,
   MenuComponent,
   NamespaceListComponent,
   NodeListComponent,
   NamespaceSelectorComponent,
-  NamespaceChangeDialog,
+  NamespaceChangeDialogComponent,
   ObjectMetaComponent,
   PodStatusCardComponent,
   ProbeComponent,
@@ -172,7 +172,7 @@ const components = [
   PersistentVolumeListComponent,
   PersistentVolumeClaimListComponent,
   PolicyRuleListComponent,
-  PinDefaultActionbar,
+  PinDefaultActionbarComponent,
   ResourceQuotaListComponent,
   ResourceLimitListComponent,
   ReplicaSetListComponent,
@@ -185,9 +185,9 @@ const components = [
   ServiceAccountListComponent,
   CpuSparklineComponent,
   MemorySparklineComponent,
-  ScaleDefaultActionbar,
+  ScaleDefaultActionbarComponent,
   TextInputComponent,
-  TriggerDefaultActionbar,
+  TriggerDefaultActionbarComponent,
   UploadFileComponent,
   ZeroStateComponent,
   WorkloadStatusComponent,

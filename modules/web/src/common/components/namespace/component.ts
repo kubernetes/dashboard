@@ -30,7 +30,7 @@ import {NotificationsService} from '../../services/global/notifications';
 import {KdStateService} from '../../services/global/state';
 import {EndpointManager, Resource} from '../../services/resource/endpoint';
 import {ResourceService} from '../../services/resource/resource';
-import {NamespaceChangeDialog} from './changedialog/dialog';
+import {NamespaceChangeDialogComponent} from './changedialog/dialog';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 
 @Component({
@@ -191,7 +191,7 @@ export class NamespaceSelectorComponent implements OnInit {
 
   private handleNamespaceChangeDialog_(): void {
     this.dialog_
-      .open(NamespaceChangeDialog, {
+      .open(NamespaceChangeDialogComponent, {
         data: {
           namespace: this.selectedNamespace,
           newNamespace: this._getCurrentResourceNamespaceParam(),

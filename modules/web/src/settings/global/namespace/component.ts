@@ -27,8 +27,8 @@ import {map, take} from 'rxjs/operators';
 import {EndpointManager, Resource} from '@common/services/resource/endpoint';
 import {ResourceService} from '@common/services/resource/resource';
 import {SettingsHelperService} from '../service';
-import {AddFallbackNamespaceDialog, AddFallbackNamespaceDialogData} from './adddialog/dialog';
-import {EditFallbackNamespaceDialog, EditFallbackNamespaceDialogData} from './editdialog/dialog';
+import {AddFallbackNamespaceDialogComponent, AddFallbackNamespaceDialogData} from './adddialog/dialog';
+import {EditFallbackNamespaceDialogComponent, EditFallbackNamespaceDialogData} from './editdialog/dialog';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 
 enum BreakpointElementCount {
@@ -136,7 +136,7 @@ export class NamespaceSettingsComponent implements OnInit, ControlValueAccessor 
     };
 
     this.dialog_
-      .open(AddFallbackNamespaceDialog, dialogConfig)
+      .open(AddFallbackNamespaceDialogComponent, dialogConfig)
       .afterClosed()
       .pipe(take(1))
       .subscribe(s => (!this.containsNamespace_(s) ? this.addNamespace_(s) : null));
@@ -150,7 +150,7 @@ export class NamespaceSettingsComponent implements OnInit, ControlValueAccessor 
     };
 
     this.dialog_
-      .open(EditFallbackNamespaceDialog, dialogConfig)
+      .open(EditFallbackNamespaceDialogComponent, dialogConfig)
       .afterClosed()
       .pipe(take(1))
       .subscribe((namespaces: string[] | undefined) => {

@@ -17,7 +17,7 @@ import {SecretDetail} from '@api/root.api';
 import {DecoderService} from '@common/services/global/decoder';
 import {RawResource} from 'common/resources/rawresource';
 import {HttpClient, HttpErrorResponse, HttpHeaders} from '@angular/common/http';
-import {AlertDialogConfig, AlertDialog} from 'common/dialogs/alert/dialog';
+import {AlertDialogConfig, AlertDialogComponent} from 'common/dialogs/alert/dialog';
 import {MatDialogConfig, MatDialog} from '@angular/material/dialog';
 import {encode} from 'js-base64';
 
@@ -111,7 +111,7 @@ export class SecretDetailEditComponent implements OnInit {
           confirmLabel: 'OK',
         },
       };
-      this.dialog_.open(AlertDialog, alertDialogConfig);
+      this.dialog_.open(AlertDialogComponent, alertDialogConfig);
     }
   }
 }

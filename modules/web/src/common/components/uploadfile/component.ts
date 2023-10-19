@@ -15,7 +15,7 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
 import {HTMLInputEvent, KdFile} from '@api/root.ui';
-import {AlertDialog, AlertDialogConfig} from 'common/dialogs/alert/dialog';
+import {AlertDialogComponent, AlertDialogConfig} from 'common/dialogs/alert/dialog';
 
 @Component({
   selector: 'kd-upload-file',
@@ -60,6 +60,6 @@ export class UploadFileComponent {
       message,
       confirmLabel: 'OK',
     };
-    this.matDialog_.open(AlertDialog, {data: configData});
+    this.matDialog_.open(AlertDialogComponent, {data: configData});
   }
 }

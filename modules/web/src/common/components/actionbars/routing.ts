@@ -12,52 +12,52 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {DefaultActionbar} from './default/component';
-import {LogsDefaultActionbar} from './logsdefault/component';
-import {LogsExecDefaultActionbar} from './logsexecdefault/component';
-import {LogsScaleDefaultActionbar} from './logsscaledefault/component';
-import {ScaleDefaultActionbar} from './scaledefault/component';
-import {TriggerDefaultActionbar} from './triggerdefault/component';
-import {PinDefaultActionbar} from './pindefault/component';
+import {DefaultActionbarComponent} from './default/component';
+import {LogsDefaultActionbarComponent} from './logsdefault/component';
+import {LogsExecDefaultActionbarComponent} from './logsexecdefault/component';
+import {LogsScaleDefaultActionbarComponent} from './logsscaledefault/component';
+import {ScaleDefaultActionbarComponent} from './scaledefault/component';
+import {TriggerDefaultActionbarComponent} from './triggerdefault/component';
+import {PinDefaultActionbarComponent} from './pindefault/component';
 
 export const DEFAULT_ACTIONBAR = {
   path: '',
-  component: DefaultActionbar,
+  component: DefaultActionbarComponent,
   outlet: 'actionbar',
 };
 
 export const LOGS_DEFAULT_ACTIONBAR = {
   path: '',
-  component: LogsDefaultActionbar,
+  component: LogsDefaultActionbarComponent,
   outlet: 'actionbar',
 };
 
 export const LOGS_EXEC_DEFAULT_ACTIONBAR = {
   path: '',
-  component: LogsExecDefaultActionbar,
+  component: LogsExecDefaultActionbarComponent,
   outlet: 'actionbar',
 };
 
 export const LOGS_SCALE_DEFAULT_ACTIONBAR = {
   path: '',
-  component: LogsScaleDefaultActionbar,
+  component: LogsScaleDefaultActionbarComponent,
   outlet: 'actionbar',
 };
 
 export const PIN_DEFAULT_ACTIONBAR = {
   path: '',
-  component: PinDefaultActionbar,
+  component: PinDefaultActionbarComponent,
   outlet: 'actionbar',
 };
 
 export const SCALE_DEFAULT_ACTIONBAR = {
   path: '',
-  component: ScaleDefaultActionbar,
+  component: ScaleDefaultActionbarComponent,
   outlet: 'actionbar',
 };
 
 export const TRIGGER_DEFAULT_ACTIONBAR = {
   path: '',
-  component: TriggerDefaultActionbar,
+  component: TriggerDefaultActionbarComponent,
   outlet: 'actionbar',
 };

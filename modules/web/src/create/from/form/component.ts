@@ -27,7 +27,7 @@ import {
   SecretList,
 } from '@api/root.api';
 import {ICanDeactivate} from '@common/interfaces/candeactivate';
-import {PreviewDeploymentDialog} from '@common/dialogs/previewdeployment/dialog';
+import {PreviewDeploymentDialogComponent} from '@common/dialogs/previewdeployment/dialog';
 import {NAMESPACE_STATE_PARAM} from '@common/params/params';
 
 import {CreateService} from '@common/services/create/service';
@@ -35,11 +35,11 @@ import {HistoryService} from '@common/services/global/history';
 import {NamespaceService} from '@common/services/global/namespace';
 import {take} from 'rxjs/operators';
 
-import {CreateNamespaceDialog} from './createnamespace/dialog';
+import {CreateNamespaceDialogComponent} from './createnamespace/dialog';
 import {DeployLabel} from './deploylabel/deploylabel';
 import {validateUniqueName} from './validator/uniquename.validator';
 import {FormValidators} from './validator/validators';
-import {CreateSecretDialog} from './createsecret/dialog';
+import {CreateSecretDialogComponent} from './createsecret/dialog';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 
 // Label keys for predefined labels
@@ -212,7 +212,7 @@ export class CreateFromFormComponent extends ICanDeactivate implements OnInit {
 
   handleNamespaceDialog(): void {
     const dialogData = {data: {namespaces: this.namespaces}};
-    const dialogDef = this.dialog_.open(CreateNamespaceDialog, dialogData);
+    const dialogDef = this.dialog_.open(CreateNamespaceDialogComponent, dialogData);
     dialogDef
       .afterClosed()
       .pipe(take(1))
@@ -232,7 +232,7 @@ export class CreateFromFormComponent extends ICanDeactivate implements OnInit {
 
   handleCreateSecretDialog(): void {
     const dialogData = {data: {namespace: this.namespace.value}};
-    const dialogDef = this.dialog_.open(CreateSecretDialog, dialogData);
+    const dialogDef = this.dialog_.open(CreateSecretDialogComponent, dialogData);
     dialogDef
       .afterClosed()
       .pipe(take(1))
@@ -278,7 +278,7 @@ export class CreateFromFormComponent extends ICanDeactivate implements OnInit {
   }
 
   preview(): void {
-    this.dialog_.open(PreviewDeploymentDialog, {
+    this.dialog_.open(PreviewDeploymentDialogComponent, {
       width: '900px',
       data: {
         spec: this.getSpec(),

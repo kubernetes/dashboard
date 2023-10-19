@@ -20,7 +20,7 @@ import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
   selector: '',
   templateUrl: './template.html',
 })
-export class DefaultActionbar implements OnInit {
+export class DefaultActionbarComponent implements OnInit {
   isInitialized = false;
   isVisible = false;
   resourceMeta: ResourceMeta;
