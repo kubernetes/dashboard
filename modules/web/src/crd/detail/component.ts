@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {Component, DestroyRef, inject, OnInit} from '@angular/core';
+import {Component, DestroyRef, inject, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {CRDDetail} from '@api/root.api';
 import {switchMap, tap} from 'rxjs/operators';
@@ -24,7 +24,7 @@ import {EndpointManager, Resource} from '@common/services/resource/endpoint';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 
 @Component({selector: 'kd-crd-detail', templateUrl: './template.html'})
-export class CRDDetailComponent implements OnInit {
+export class CRDDetailComponent implements OnInit, OnDestroy {
   crd: CRDDetail;
   crdName: string;
   isInitialized = false;
