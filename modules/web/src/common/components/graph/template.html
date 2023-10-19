@@ -27,7 +27,7 @@ limitations under the License.
 <ng-container *ngIf="shouldShowGraph; else noData">
   <ngx-charts-area-chart fxFlex
                          kdIsVisible
-                         (onVisibilityChange)="changeState($event)"
+                         (visibilityChange)="onChangeState($event)"
                          [xAxis]="true"
                          [yAxis]="true"
                          [showYAxisLabel]="true"

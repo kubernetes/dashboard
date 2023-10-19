@@ -24,7 +24,7 @@ import {AlertDialogComponent, AlertDialogConfig} from 'common/dialogs/alert/dial
 })
 export class UploadFileComponent {
   @Input() label: string;
-  @Output() onLoad = new EventEmitter<KdFile>();
+  @Output() fileLoad = new EventEmitter<KdFile>();
   filename: string;
 
   constructor(private readonly matDialog_: MatDialog) {}
@@ -41,7 +41,7 @@ export class UploadFileComponent {
     const reader = new FileReader();
     reader.onload = (event: ProgressEvent) => {
       const content = (event.target as FileReader).result;
-      this.onLoad.emit({
+      this.fileLoad.emit({
         name: this.filename,
         content,
       } as KdFile);

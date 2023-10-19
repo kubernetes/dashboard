@@ -106,7 +106,7 @@ limitations under the License.
                class="kd-login-input">
             <kd-upload-file label="Choose kubeconfig file"
                             i18n-label
-                            (onLoad)="onChange($event)"></kd-upload-file>
+                            (fileLoad)="onChange($event)"></kd-upload-file>
           </div>
           <mat-error *ngFor="let error of errors"
                      class="kd-login-input kd-error kd-error-text">

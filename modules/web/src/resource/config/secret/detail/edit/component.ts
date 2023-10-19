@@ -27,7 +27,7 @@ import {encode} from 'js-base64';
   styleUrls: ['./style.scss'],
 })
 export class SecretDetailEditComponent implements OnInit {
-  @Output() onClose = new EventEmitter<boolean>();
+  @Output() closeEvent = new EventEmitter<boolean>();
   @Input() key: string;
 
   text = '';
@@ -75,13 +75,13 @@ export class SecretDetailEditComponent implements OnInit {
         this.http_.put(url, resource, {headers: this.getHttpHeaders_(), responseType: 'text'}).subscribe(() => {
           // Update current data value for secret, so refresh isn't needed.
           this.secret_.data[this.key] = dataValue;
-          this.onClose.emit(true);
+          this.closeEvent.emit(true);
         }, this.handleErrorResponse_.bind(this));
       });
   }
 
   cancel(): void {
-    this.onClose.emit(true);
+    this.closeEvent.emit(true);
   }
 
   private updateText_(): void {

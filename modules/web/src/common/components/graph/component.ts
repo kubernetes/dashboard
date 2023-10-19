@@ -69,7 +69,7 @@ export class GraphComponent implements OnInit, OnChanges {
     }
   }
 
-  changeState(isVisible: boolean): void {
+  onChangeState(isVisible: boolean): void {
     this.visible_ = isVisible;
   }
 
