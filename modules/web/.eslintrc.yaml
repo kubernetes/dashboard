@@ -54,5 +54,6 @@ rules:
   rxjs/no-unbound-methods: error
   rxjs/no-unsafe-takeuntil: error
   rxjs/no-nested-subscribe: error
+  "@angular-eslint/no-host-metadata-property": off
 ignorePatterns:
   - "**/*.js"
