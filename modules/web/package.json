@@ -102,7 +102,7 @@
     "@typescript-eslint/eslint-plugin": "6.8.0",
     "@typescript-eslint/parser": "6.8.0",
     "codelyzer": "6.0.2",
-    "concurrently": "8.2.1",
+    "concurrently": "8.2.2",
     "cypress": "13.3.1",
     "cypress-fail-fast": "7.0.3",
     "del": "7.1.0",
