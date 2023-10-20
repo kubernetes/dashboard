@@ -119,7 +119,7 @@
     "jest-preset-angular": "13.1.2",
     "js-beautify": "1.14.9",
     "license-check-and-add": "4.0.5",
-    "lint-staged": "15.0.1",
+    "lint-staged": "15.0.2",
     "lodash-es": "4.17.21",
     "minimatch": "9.0.3",
     "minimist": "1.2.8",
