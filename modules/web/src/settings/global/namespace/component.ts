@@ -14,16 +14,10 @@
 
 import {BreakpointObserver, Breakpoints} from '@angular/cdk/layout';
 import {Component, DestroyRef, forwardRef, inject, OnInit} from '@angular/core';
-import {
-  ControlValueAccessor,
-  UntypedFormArray,
-  UntypedFormBuilder,
-  UntypedFormGroup,
-  NG_VALUE_ACCESSOR,
-} from '@angular/forms';
+import {ControlValueAccessor, NG_VALUE_ACCESSOR, FormBuilder, FormGroup, FormControl, FormArray} from '@angular/forms';
 import {MatDialog, MatDialogConfig} from '@angular/material/dialog';
 import {GlobalSettings, NamespaceList} from '@api/root.api';
-import {map, take} from 'rxjs/operators';
+import {map, take, tap} from 'rxjs/operators';
 import {EndpointManager, Resource} from '@common/services/resource/endpoint';
 import {ResourceService} from '@common/services/resource/resource';
 import {SettingsHelperService} from '../service';
@@ -37,12 +31,12 @@ enum BreakpointElementCount {
   Medium = 2,
 }
 
-enum Controls {
+export enum Controls {
   DefaultNamespace = 'defaultNamespace',
   FallbackList = 'fallbackList',
 }
 
-interface NamespaceSettings {
+export interface NamespaceSettings {
   defaultNamespace: string;
   fallbackList: string[];
 }
@@ -64,7 +58,10 @@ export class NamespaceSettingsComponent implements OnInit, ControlValueAccessor 
 
   namespaces: string[] = [];
   visibleNamespaces = 0;
-  form: UntypedFormGroup;
+  readonly form: FormGroup = new FormGroup({
+    [Controls.DefaultNamespace]: new FormControl(''),
+    [Controls.FallbackList]: new FormArray([]),
+  });
 
   private settings_: GlobalSettings;
   private readonly endpoint_ = EndpointManager.resource(Resource.namespace).list();
@@ -78,18 +75,13 @@ export class NamespaceSettingsComponent implements OnInit, ControlValueAccessor 
     return this.settings_.namespaceFallbackList ? this.settings_.namespaceFallbackList.filter(ns => ns) : [];
   }
 
-  private get formArrayNamespaceFallbackList_(): string[] {
-    const arr = this.form.get(Controls.FallbackList).value as string[];
-    return arr ? arr.filter(ns => ns) : [];
-  }
-
-  private destroyRef = inject(DestroyRef);
+  public readonly destroyRef: DestroyRef = inject(DestroyRef);
   constructor(
     private readonly namespaceService_: ResourceService<NamespaceList>,
     private readonly settingsHelperService_: SettingsHelperService,
     private readonly dialog_: MatDialog,
     private readonly breakpointObserver_: BreakpointObserver,
-    private readonly builder_: UntypedFormBuilder
+    private readonly builder_: FormBuilder
   ) {}
 
   get invisibleCount(): number {
@@ -100,11 +92,6 @@ export class NamespaceSettingsComponent implements OnInit, ControlValueAccessor 
 
   ngOnInit(): void {
     this.settings_ = this.settingsHelperService_.settings;
-
-    this.form = this.builder_.group({
-      [Controls.DefaultNamespace]: this.builder_.control(''),
-      [Controls.FallbackList]: this.builder_.array([]),
-    });
 
     this.namespaceService_
       .get(this.endpoint_)
@@ -120,10 +107,18 @@ export class NamespaceSettingsComponent implements OnInit, ControlValueAccessor 
         this.visibleNamespaces = breakpoint ? breakpoint[1] : BreakpointElementCount.Medium;
       });
 
-    this.form.valueChanges.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(this.onFormChange_.bind(this));
-    this.settingsHelperService_.onSettingsChange
-      .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe(this.onSettingsChange_.bind(this));
+    this.form.valueChanges
+      .pipe(
+        tap((next: NamespaceSettings) => {
+          this.settingsHelperService_.settings = {
+            ...this.settingsHelperService_.settings,
+            defaultNamespace: next.defaultNamespace,
+            namespaceFallbackList: next.fallbackList,
+          };
+        }),
+        takeUntilDestroyed(this.destroyRef)
+      )
+      .subscribe();
   }
 
   add(): void {
@@ -155,53 +150,49 @@ export class NamespaceSettingsComponent implements OnInit, ControlValueAccessor 
       .pipe(take(1))
       .subscribe((namespaces: string[] | undefined) => {
         if (namespaces) {
-          this.settingsHelperService_.settings = {namespaceFallbackList: namespaces} as GlobalSettings;
+          this.removeNamespace_(namespaces);
         }
       });
   }
 
-  // ControlValueAccessor interface implementation
-  writeValue(obj: NamespaceSettings): void {
-    if (!obj) {
-      return;
-    }
-
-    this.form.setValue(obj);
-  }
-
-  registerOnChange(fn: any): void {
-    this.form.valueChanges.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(fn);
-  }
-
-  registerOnTouched(fn: any): void {
-    this.form.statusChanges.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(fn);
-  }
-
   private addNamespace_(ns: string): void {
-    (this.form.get(Controls.FallbackList) as UntypedFormArray).push(this.builder_.control(ns));
+    (<FormArray>this.form.get(Controls.FallbackList)).push(this.builder_.control(ns), {emitEvent: true});
+  }
+
+  private removeNamespace_(namespaces: string[]): void {
+    const fallbackList = <FormArray>this.form.get(Controls.FallbackList);
+    fallbackList.controls = namespaces.map(_ => this.builder_.control(''));
+    fallbackList.patchValue(
+      namespaces.map(ns => ns),
+      {emitEvent: true}
+    );
   }
 
   private containsNamespace_(ns: string): boolean {
-    return (
-      !ns || (this.form.get(Controls.FallbackList) as UntypedFormArray).controls.map(c => c.value).indexOf(ns) > -1
+    return !ns || (<FormArray>this.form.get(Controls.FallbackList)).controls.map(c => c.value).indexOf(ns) > -1;
+  }
+
+  writeValue(obj: any): void {
+    if (!obj || !this.isSetting(obj)) {
+      return;
+    }
+    this.form.get(Controls.DefaultNamespace).patchValue(obj.defaultNamespace, {emitEvent: false});
+    obj.fallbackList.map((namespace: any) =>
+      (<FormArray>this.form.get(Controls.FallbackList)).push(this.builder_.control(namespace), {emitEvent: false})
     );
+    this.form.updateValueAndValidity({emitEvent: true});
   }
 
-  private onFormChange_(): void {
-    this.settingsHelperService_.settings = {
-      defaultNamespace: this.form.get(Controls.DefaultNamespace).value,
-      namespaceFallbackList: this.formArrayNamespaceFallbackList_,
-    } as GlobalSettings;
+  registerOnChange(fn: (_: any) => void): void {
+    this.onChange(fn);
   }
 
-  private onSettingsChange_(settings: GlobalSettings): void {
-    this.settings_ = settings;
-
-    this.form.get(Controls.DefaultNamespace).setValue(this.settings_.defaultNamespace, {emitEvent: false});
-
-    (this.form.get(Controls.FallbackList) as UntypedFormArray).controls = this.namespaceFallbackList_.map(_ =>
-      this.builder_.control('')
-    );
-    (this.form.get(Controls.FallbackList) as UntypedFormArray).reset(this.namespaceFallbackList_, {emitEvent: false});
+  registerOnTouched(fn: () => void): void {
+    this.onTouched(fn);
   }
+
+  onChange = (_: any) => {};
+  onTouched = (_: any) => {};
+
+  private isSetting = (value: any): value is NamespaceSettings => !!value.defaultNamespace && !!value.fallbackList;
 }

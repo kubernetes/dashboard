@@ -28,6 +28,7 @@ import {ResourceService} from '@common/services/resource/resource';
 import {SaveAnywayDialog} from './saveanywaysdialog/dialog';
 import {SettingsHelperService} from './service';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
+import {Controls as NamespaceControls} from './namespace/component';
 
 enum Controls {
   ClusterName = 'clusterName',
@@ -65,18 +66,16 @@ export class GlobalSettingsComponent implements OnInit {
   ) {}
 
   private get externalSettings_(): GlobalSettings {
-    const settings = {} as GlobalSettings;
-
-    settings.itemsPerPage = this.settingsService_.getItemsPerPage();
-    settings.labelsLimit = this.settingsService_.getLabelsLimit();
-    settings.clusterName = this.settingsService_.getClusterName();
-    settings.logsAutoRefreshTimeInterval = this.settingsService_.getLogsAutoRefreshTimeInterval();
-    settings.resourceAutoRefreshTimeInterval = this.settingsService_.getResourceAutoRefreshTimeInterval();
-    settings.disableAccessDeniedNotifications = this.settingsService_.getDisableAccessDeniedNotifications();
-    settings.defaultNamespace = this.settingsService_.getDefaultNamespace();
-    settings.namespaceFallbackList = this.settingsService_.getNamespaceFallbackList();
-
-    return settings;
+    return {
+      itemsPerPage: this.settingsService_.getItemsPerPage(),
+      labelsLimit: this.settingsService_.getLabelsLimit(),
+      clusterName: this.settingsService_.getClusterName(),
+      logsAutoRefreshTimeInterval: this.settingsService_.getLogsAutoRefreshTimeInterval(),
+      resourceAutoRefreshTimeInterval: this.settingsService_.getResourceAutoRefreshTimeInterval(),
+      disableAccessDeniedNotifications: this.settingsService_.getDisableAccessDeniedNotifications(),
+      defaultNamespace: this.settingsService_.getDefaultNamespace(),
+      namespaceFallbackList: this.settingsService_.getNamespaceFallbackList(),
+    };
   }
 
   ngOnInit(): void {
@@ -87,7 +86,10 @@ export class GlobalSettingsComponent implements OnInit {
       [Controls.LogsAutorefreshInterval]: this.builder_.control(0),
       [Controls.ResourceAutorefreshInterval]: this.builder_.control(0),
       [Controls.DisableAccessDeniedNotification]: this.builder_.control(false),
-      [Controls.NamespaceSettings]: this.builder_.control(''),
+      [Controls.NamespaceSettings]: this.builder_.control({
+        [NamespaceControls.DefaultNamespace]: this.externalSettings_.defaultNamespace,
+        [NamespaceControls.FallbackList]: this.externalSettings_.namespaceFallbackList,
+      }),
     });
 
     this.load_();
