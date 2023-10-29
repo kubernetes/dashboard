@@ -82,7 +82,10 @@ export class PortMappingsComponent implements OnInit, ControlValueAccessor {
   serviceTypes: ServiceType[];
   portMappingForm: UntypedFormGroup;
 
-  constructor(private readonly fb_: UntypedFormBuilder, private readonly http_: HttpClient) {}
+  constructor(
+    private readonly fb_: UntypedFormBuilder,
+    private readonly http_: HttpClient
+  ) {}
 
   ngOnInit(): void {
     this.serviceTypes = [NO_SERVICE, INT_SERVICE, EXT_SERVICE];

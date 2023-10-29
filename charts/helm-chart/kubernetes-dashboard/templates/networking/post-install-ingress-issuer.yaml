@@ -1,0 +1,16 @@
+{{- if and (.Values.app.ingress.enabled) (eq .Values.app.ingress.issuer.name "selfsigned") -}}
+apiVersion: cert-manager.io/v1
+kind: Issuer
+metadata:
+  labels:
+    {{- include "kubernetes-dashboard.labels" . | nindent 4 }}
+  name: selfsigned
+  annotations:
+    # This is what defines this resource as a hook. Without this line, the
+    # job is considered part of the release.
+    "helm.sh/hook": post-install,post-upgrade
+    "helm.sh/hook-delete-policy": before-hook-creation,hook-failed
+    "helm.sh/hook-weight": "0"
+spec:
+  selfSigned: { }
+{{- end -}}

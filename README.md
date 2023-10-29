@@ -15,27 +15,23 @@ Kubernetes Dashboard is a general purpose, web-based UI for Kubernetes clusters.
 
 **IMPORTANT:** Read the [Access Control](docs/user/access-control/README.md) guide before performing any further steps. The default Dashboard deployment contains a minimal set of RBAC privileges needed to run.
 
-### Install
+## Installation
 
-To deploy Dashboard, execute following command:
+Kubernetes Dashboard supports both Helm and Manifest-based installation. Since release `v3.0.0` using Helm Chart should be faster and simpler in general as it will install
+dependencies such as `cert-manager`, `nginx-ingress-controller` and `metrics-server` for you. In case you are using different software to handle certificates, ingress/egress traffic, etc.
+it is possible to disable those dependencies by overriding [helm chart values](charts/helm-chart/kubernetes-dashboard/values.yaml).
 
-```shell
-kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v2.7.0/aio/deploy/recommended.yaml
-```
+### Helm
 
-Alternatively, you can install Dashboard using Helm as described at [`https://artifacthub.io/packages/helm/k8s-dashboard/kubernetes-dashboard`](https://artifacthub.io/packages/helm/k8s-dashboard/kubernetes-dashboard).
+You can install Dashboard using Helm as described [here](https://artifacthub.io/packages/helm/k8s-dashboard/kubernetes-dashboard).
 
-### Access
+### Manifest
 
-To access Dashboard from your local workstation you must create a secure channel to your Kubernetes cluster. Run the following command:
+You can install Dashboard using `kubectl` as described in the installation instructions that can be found in the [latest release](https://github.com/kubernetes/dashboard/releases/latest).
 
-```shell
-kubectl proxy
-```
-Now access Dashboard at:
+## Access
 
-[`http://localhost:8001/api/v1/namespaces/kubernetes-dashboard/services/https:kubernetes-dashboard:/proxy/`](
-http://localhost:8001/api/v1/namespaces/kubernetes-dashboard/services/https:kubernetes-dashboard:/proxy/).
+You can access Dashboard as described in the instructions that can be found in the [access guide](docs/user/accessing-dashboard/README.md).
 
 ## Create An Authentication Token (RBAC)
 To find out how to create sample user and log in follow [Creating sample user](docs/user/access-control/creating-sample-user.md) guide.
@@ -49,7 +45,7 @@ To find out how to create sample user and log in follow [Creating sample user](d
 Dashboard documentation can be found on [docs](docs/README.md) directory which contains:
 
 * [Common](docs/common/README.md): Entry-level overview.
-* [User Guide](docs/user/README.md): [Installation](docs/user/installation.md), [Accessing Dashboard](docs/user/accessing-dashboard/README.md) and more for users.
+* [User Guide](docs/user/README.md): [Accessing Dashboard](docs/user/accessing-dashboard/README.md) and more for users.
 * [Developer Guide](docs/developer/README.md): [Getting Started](docs/developer/getting-started.md), [Dependency Management](docs/developer/dependency-management.md) and more for anyone interested in contributing.
 
 ## Community, discussion, contribution, and support
@@ -66,7 +62,7 @@ You can reach the maintainers of this project at:
 
 ### Contribution
 
-Learn how to start contribution on the [Contributing Guideline](CONTRIBUTING.md).
+Learn how to start contributing to the [Contributing Guideline](CONTRIBUTING.md).
 
 ### Code of conduct
 

@@ -12,14 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {Component, ElementRef, Inject, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {Component, DestroyRef, ElementRef, inject, Inject, OnInit, ViewChild} from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
 import {MatSelect} from '@angular/material/select';
 import {ActivatedRoute, NavigationEnd, Router} from '@angular/router';
 import {NamespaceList} from '@api/root.api';
 import {IConfig} from '@api/root.ui';
 import {Subject} from 'rxjs';
-import {distinctUntilChanged, filter, startWith, switchMap, takeUntil} from 'rxjs/operators';
+import {distinctUntilChanged, filter, startWith, switchMap} from 'rxjs/operators';
 import {CONFIG_DI_TOKEN} from '../../../index.config';
 
 import {NAMESPACE_STATE_PARAM} from '../../params/params';
@@ -31,13 +31,14 @@ import {KdStateService} from '../../services/global/state';
 import {EndpointManager, Resource} from '../../services/resource/endpoint';
 import {ResourceService} from '../../services/resource/resource';
 import {NamespaceChangeDialog} from './changedialog/dialog';
+import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'kd-namespace-selector',
   templateUrl: './template.html',
   styleUrls: ['style.scss'],
 })
-export class NamespaceSelectorComponent implements OnInit, OnDestroy {
+export class NamespaceSelectorComponent implements OnInit {
   namespaces: string[] = [];
   selectNamespaceInput = '';
   allNamespacesKey: string;
@@ -46,12 +47,12 @@ export class NamespaceSelectorComponent implements OnInit, OnDestroy {
   usingFallbackNamespaces = false;
 
   private readonly namespaceUpdate_ = new Subject<void>();
-  private readonly unsubscribe_ = new Subject<void>();
   private readonly endpoint_ = EndpointManager.resource(Resource.namespace);
 
   @ViewChild(MatSelect, {static: true}) private readonly select_: MatSelect;
   @ViewChild('namespaceInput', {static: true}) private readonly namespaceInputEl_: ElementRef;
 
+  private destroyRef = inject(DestroyRef);
   constructor(
     private readonly router_: Router,
     private readonly namespaceService_: NamespaceService,
@@ -66,7 +67,7 @@ export class NamespaceSelectorComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.activatedRoute_.queryParams.pipe(takeUntil(this.unsubscribe_)).subscribe(params => {
+    this.activatedRoute_.queryParams.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(params => {
       const namespace = params.namespace;
       if (!namespace) {
         this.setDefaultQueryParams_();
@@ -99,11 +100,6 @@ export class NamespaceSelectorComponent implements OnInit, OnDestroy {
     this.selectedNamespace = this.namespaceService_.current();
     this.select_.value = this.selectedNamespace;
     this.loadNamespaces_();
-  }
-
-  ngOnDestroy(): void {
-    this.unsubscribe_.next();
-    this.unsubscribe_.complete();
   }
 
   selectNamespace(): void {
@@ -167,7 +163,7 @@ export class NamespaceSelectorComponent implements OnInit, OnDestroy {
     this.namespaceUpdate_
       .pipe(startWith({}))
       .pipe(switchMap(() => this.namespace_.get(this.endpoint_.list())))
-      .pipe(takeUntil(this.unsubscribe_))
+      .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe(
         namespaceList => {
           this.usingFallbackNamespaces = false;

@@ -16,7 +16,6 @@ package api
 
 import (
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
-	v1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/fields"
 	"k8s.io/apimachinery/pkg/labels"
 	"k8s.io/apimachinery/pkg/types"
@@ -59,7 +58,7 @@ type ObjectMeta struct {
 	// CreationTimestamp is a timestamp representing the server time when this object was
 	// created. It is not guaranteed to be set in happens-before order across separate operations.
 	// Clients may not set this value. It is represented in RFC3339 form and is in UTC.
-	CreationTimestamp v1.Time `json:"creationTimestamp,omitempty"`
+	CreationTimestamp metaV1.Time `json:"creationTimestamp,omitempty"`
 
 	// UID is a type that holds unique ID values, including UUIDs.  Because we
 	// don't ONLY use UUIDs, this is an alias to string.  Being a type captures
@@ -267,7 +266,7 @@ func IsSelectorMatching(srcSelector map[string]string, targetObjectLabels map[st
 
 // IsLabelSelectorMatching returns true when a resource with the given selector targets the same
 // Resources(or subset) that a target object selector with the given selector.
-func IsLabelSelectorMatching(srcSelector map[string]string, targetLabelSelector *v1.LabelSelector) bool {
+func IsLabelSelectorMatching(srcSelector map[string]string, targetLabelSelector *metaV1.LabelSelector) bool {
 	// Check to see if targetLabelSelector pointer is not nil.
 	if targetLabelSelector != nil {
 		targetObjectLabels := targetLabelSelector.MatchLabels

@@ -1,0 +1,103 @@
+# Copyright 2017 The Kubernetes Authors.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  labels:
+    {{- include "kubernetes-dashboard.labels" . | nindent 4 }}
+    {{- with .Values.api.labels }}
+    {{ toYaml . | nindent 4 }}
+    {{- end }}
+    app.kubernetes.io/name: {{ template "kubernetes-dashboard.name" . }}-{{ .Values.api.role }}
+    app.kubernetes.io/version: {{ .Values.api.image.tag }}
+    app.kubernetes.io/component: {{ .Values.api.role }}
+  name: {{ template "kubernetes-dashboard.fullname" . }}-{{ .Values.api.role }}
+spec:
+  replicas: {{ .Values.app.scaling.replicas }}
+  revisionHistoryLimit: {{ .Values.app.scaling.revisionHistoryLimit }}
+  selector:
+    matchLabels:
+      {{- include "kubernetes-dashboard.matchLabels" . | nindent 6 }}
+      app.kubernetes.io/name: {{ template "kubernetes-dashboard.name" . }}-{{ .Values.api.role }}
+  template:
+    metadata:
+      labels:
+        {{- include "kubernetes-dashboard.labels" . | nindent 8 }}
+        {{- with .Values.api.labels }}
+        {{ toYaml . | nindent 8 }}
+        {{- end }}
+        app.kubernetes.io/name: {{ template "kubernetes-dashboard.name" . }}-{{ .Values.api.role }}
+        app.kubernetes.io/version: {{ .Values.api.image.tag }}
+        app.kubernetes.io/component: {{ .Values.api.role }}
+    spec:
+      containers:
+        - name: {{ template "kubernetes-dashboard.name" . }}-{{ .Values.api.role }}
+          image: "{{ .Values.api.image.repository }}:{{ .Values.api.image.tag }}"
+          imagePullPolicy: {{ .Values.app.image.pullPolicy }}
+          args:
+            - --enable-insecure-login
+            - --namespace={{ .Release.Namespace }}
+          {{- with .Values.api.containers.args }}
+          {{ toYaml . | nindent 12 }}
+          {{- end }}
+
+          {{- with .Values.api.containers.env }}
+          env:
+          {{ toYaml . | nindent 12 }}
+          {{- end }}
+
+          {{- with .Values.api.containers.ports }}
+          ports:
+          {{ toYaml . | nindent 12 }}
+          {{- end }}
+
+          {{- with .Values.api.containers.volumeMounts }}
+          volumeMounts:
+          {{ toYaml . | nindent 12 }}
+          {{- end }}
+
+          {{- with .Values.app.security.containerSecurityContext }}
+          securityContext:
+          {{ toYaml . | nindent 12 }}
+          {{- end }}
+
+          {{- with .Values.api.containers.resources }}
+          resources:
+          {{ toYaml . | nindent 12 }}
+          {{- end }}
+      {{- with .Values.app.security.securityContext }}
+      securityContext:
+      {{ toYaml . | nindent 8 }}
+      {{- end }}
+
+      {{- with .Values.api.volumes }}
+      volumes:
+      {{ toYaml . | nindent 8 }}
+      {{- end }}
+
+      {{- with .Values.api.nodeSelector }}
+      nodeSelector:
+      {{ toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.app.scheduling.nodeSelector }}
+      {{ toYaml . | nindent 8 }}
+      {{- end }}
+
+      {{- with .Values.app.tolerations }}
+      tolerations:
+      {{ toYaml . | nindent 8 }}
+      {{- end }}
+
+      serviceAccountName: {{ template "kubernetes-dashboard.fullname" . }}
