@@ -11371,10 +11371,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"jwt-decode@npm:3.1.2":
-  version: 3.1.2
-  resolution: "jwt-decode@npm:3.1.2"
-  checksum: 20a4b072d44ce3479f42d0d2c8d3dabeb353081ba4982e40b83a779f2459a70be26441be6c160bfc8c3c6eadf9f6380a036fbb06ac5406b5674e35d8c4205eeb
+"jwt-decode@npm:4.0.0":
+  version: 4.0.0
+  resolution: "jwt-decode@npm:4.0.0"
+  checksum: 390e2edcb31a92e86c8cbdd1edeea4c0d62acd371f8a8f0a8878e499390c0ecf4c658b365c4e941e4ef37d0170e4ca650aaa49f99a45c0b9695a235b210154b0
   languageName: node
   linkType: hard
 
@@ -11485,7 +11485,7 @@ __metadata:
     js-base64: 3.7.5
     js-beautify: 1.14.9
     js-yaml: 4.1.0
-    jwt-decode: 3.1.2
+    jwt-decode: 4.0.0
     license-check-and-add: 4.0.5
     lint-staged: 15.0.2
     lodash-es: 4.17.21
