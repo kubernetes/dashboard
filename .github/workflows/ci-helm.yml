@@ -45,7 +45,7 @@ jobs:
         run: helm plugin install https://github.com/jtyr/kubeconform-helm
 
       - name: Install chart-testing
-        uses: helm/chart-testing-action@v2.6.0
+        uses: helm/chart-testing-action@v2.6.1
 
       - name: Run chart-testing lint
         run: ct lint --config=charts/helm-chart/.helm-chart-testing.yaml
