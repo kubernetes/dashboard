@@ -106,7 +106,7 @@
     "cypress": "13.4.0",
     "cypress-fail-fast": "7.0.3",
     "del": "7.1.0",
-    "eslint": "8.52.0",
+    "eslint": "8.53.0",
     "eslint-plugin-node": "11.1.0",
     "eslint-plugin-prettier": "5.0.1",
     "eslint-plugin-rxjs": "5.0.3",
