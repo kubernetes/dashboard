@@ -92,7 +92,7 @@
     "@cypress/webpack-preprocessor": "6.0.0",
     "@types/d3": "7.4.2",
     "@types/d3-scale": "4.0.7",
-    "@types/file-saver": "2.0.6",
+    "@types/file-saver": "2.0.7",
     "@types/jasmine": "5.1.1",
     "@types/jasminewd2": "2.0.12",
     "@types/jest": "29.5.7",

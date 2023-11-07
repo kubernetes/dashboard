@@ -4461,10 +4461,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/file-saver@npm:2.0.6":
-  version: 2.0.6
-  resolution: "@types/file-saver@npm:2.0.6"
-  checksum: 4be4bc301bfbd8a173c7ed760594d73120c71ec9a0a74a6e7b4a2c8295397826a976cda3ee490fa1adf97f6a072d01bc9409343e07af3c9ffad218aad1746896
+"@types/file-saver@npm:2.0.7":
+  version: 2.0.7
+  resolution: "@types/file-saver@npm:2.0.7"
+  checksum: c3d1cd80eab1214767922cabac97681f3fb688e82b74890450d70deaca49537949bbc96d80d363d91e8f0a4752c7164909cc8902d9721c5c4809baafc42a3801
   languageName: node
   linkType: hard
 
@@ -11624,7 +11624,7 @@ __metadata:
     "@swimlane/ngx-charts": 20.4.1
     "@types/d3": 7.4.2
     "@types/d3-scale": 4.0.7
-    "@types/file-saver": 2.0.6
+    "@types/file-saver": 2.0.7
     "@types/jasmine": 5.1.1
     "@types/jasminewd2": 2.0.12
     "@types/jest": 29.5.7
