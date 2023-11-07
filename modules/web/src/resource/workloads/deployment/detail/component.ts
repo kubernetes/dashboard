@@ -12,24 +12,22 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, DestroyRef, inject, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {DeploymentDetail, ReplicaSet} from '@api/root.api';
-import {Subject} from 'rxjs';
-import {takeUntil} from 'rxjs/operators';
 
 import {ActionbarService, ResourceMeta} from '@common/services/global/actionbar';
 import {NotificationsService} from '@common/services/global/notifications';
 import {KdStateService} from '@common/services/global/state';
 import {EndpointManager, Resource} from '@common/services/resource/endpoint';
 import {NamespacedResourceService} from '@common/services/resource/resource';
+import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'kd-deployment-detail',
   templateUrl: './template.html',
 })
 export class DeploymentDetailComponent implements OnInit, OnDestroy {
-  private unsubscribe_ = new Subject<void>();
   private readonly endpoint_ = EndpointManager.resource(Resource.deployment, true);
   deployment: DeploymentDetail;
   newReplicaSet: ReplicaSet;
@@ -39,6 +37,7 @@ export class DeploymentDetailComponent implements OnInit, OnDestroy {
   newReplicaSetEndpoint: string;
   horizontalPodAutoscalerEndpoint: string;
 
+  private destroyRef = inject(DestroyRef);
   constructor(
     private readonly deployment_: NamespacedResourceService<DeploymentDetail>,
     private readonly replicaSet_: NamespacedResourceService<ReplicaSet>,
@@ -63,7 +62,7 @@ export class DeploymentDetailComponent implements OnInit, OnDestroy {
 
     this.deployment_
       .get(this.endpoint_.detail(), resourceName, resourceNamespace)
-      .pipe(takeUntil(this.unsubscribe_))
+      .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((d: DeploymentDetail) => {
         this.deployment = d;
         this.notifications_.pushErrors(d.errors);
@@ -73,7 +72,7 @@ export class DeploymentDetailComponent implements OnInit, OnDestroy {
 
     this.replicaSet_
       .get(this.newReplicaSetEndpoint)
-      .pipe(takeUntil(this.unsubscribe_))
+      .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((rs: ReplicaSet) => {
         this.newReplicaSet = rs;
       });
@@ -88,8 +87,6 @@ export class DeploymentDetailComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.unsubscribe_.next();
-    this.unsubscribe_.complete();
     this.actionbar_.onDetailsLeave.emit();
   }
 }

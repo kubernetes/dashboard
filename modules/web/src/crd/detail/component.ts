@@ -12,26 +12,26 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, DestroyRef, inject, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {CRDDetail} from '@api/root.api';
-import {Subject} from 'rxjs';
-import {switchMap, takeUntil, tap} from 'rxjs/operators';
+import {switchMap, tap} from 'rxjs/operators';
 
 import {ActionbarService, ResourceMeta} from '@common/services/global/actionbar';
 import {NotificationsService} from '@common/services/global/notifications';
 import {ResourceService} from '@common/services/resource/resource';
 import {EndpointManager, Resource} from '@common/services/resource/endpoint';
+import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 
 @Component({selector: 'kd-crd-detail', templateUrl: './template.html'})
-export class CRDDetailComponent implements OnInit, OnDestroy {
+export class CRDDetailComponent implements OnInit {
   crd: CRDDetail;
   crdName: string;
   isInitialized = false;
 
-  private readonly unsubscribe_ = new Subject<void>();
   private readonly endpoint_ = EndpointManager.resource(Resource.crd);
 
+  private destroyRef = inject(DestroyRef);
   constructor(
     private readonly crd_: ResourceService<CRDDetail>,
     private readonly actionbar_: ActionbarService,
@@ -43,7 +43,7 @@ export class CRDDetailComponent implements OnInit, OnDestroy {
     this.activatedRoute_.params
       .pipe(tap(params => (this.crdName = params.crdName)))
       .pipe(switchMap(_ => this.crd_.get(this.endpoint_.detail(), this.crdName)))
-      .pipe(takeUntil(this.unsubscribe_))
+      .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((d: CRDDetail) => {
         this.crd = d;
         this.notifications_.pushErrors(d.errors);
@@ -53,8 +53,6 @@ export class CRDDetailComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.unsubscribe_.next();
-    this.unsubscribe_.complete();
     this.actionbar_.onDetailsLeave.emit();
   }
 

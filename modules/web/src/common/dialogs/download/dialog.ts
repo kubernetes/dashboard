@@ -13,14 +13,13 @@
 // limitations under the License.
 
 import {HttpClient, HttpEventType, HttpParams, HttpRequest, HttpResponse} from '@angular/common/http';
-import {Component, Inject, OnDestroy} from '@angular/core';
+import {Component, DestroyRef, inject, Inject} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {LogOptions} from '@api/root.api';
 import {saveAs} from 'file-saver';
-import {Subject} from 'rxjs';
-import {takeUntil} from 'rxjs/operators';
 
 import {LogService} from '../../services/global/logs';
+import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 
 export interface LogsDownloadDialogMeta {
   pod: string;
@@ -33,13 +32,12 @@ export interface LogsDownloadDialogMeta {
   templateUrl: 'template.html',
   styleUrls: ['style.scss'],
 })
-export class LogsDownloadDialog implements OnDestroy {
+export class LogsDownloadDialog {
   loaded = 0;
   finished = false;
 
   private _result: Blob;
   private _error: number;
-  private _unsubscribe = new Subject<void>();
 
   private get _logOptions(): LogOptions {
     return {
@@ -47,6 +45,8 @@ export class LogsDownloadDialog implements OnDestroy {
       timestamps: this.logService.getShowTimestamp(),
     };
   }
+
+  private destroyRef = inject(DestroyRef);
 
   constructor(
     private readonly _dialogRef: MatDialogRef<LogsDownloadDialog>,
@@ -65,7 +65,7 @@ export class LogsDownloadDialog implements OnDestroy {
           {reportProgress: true, responseType: 'blob', params: new HttpParams({fromObject: this._logOptions})}
         )
       )
-      .pipe(takeUntil(this._unsubscribe))
+      .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe(
         event => {
           if (event.type === HttpEventType.DownloadProgress) {
@@ -77,11 +77,6 @@ export class LogsDownloadDialog implements OnDestroy {
         },
         error => (this._error = error.status)
       );
-  }
-
-  ngOnDestroy(): void {
-    this._unsubscribe.next();
-    this._unsubscribe.complete();
   }
 
   hasForbiddenError(): boolean {
