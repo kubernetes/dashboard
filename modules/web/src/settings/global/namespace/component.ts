@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import {BreakpointObserver, Breakpoints} from '@angular/cdk/layout';
-import {Component, forwardRef, OnDestroy, OnInit} from '@angular/core';
+import {Component, DestroyRef, forwardRef, inject, OnInit} from '@angular/core';
 import {
   ControlValueAccessor,
   UntypedFormArray,
@@ -23,13 +23,13 @@ import {
 } from '@angular/forms';
 import {MatDialog, MatDialogConfig} from '@angular/material/dialog';
 import {GlobalSettings, NamespaceList} from '@api/root.api';
-import {Subject} from 'rxjs';
-import {map, take, takeUntil} from 'rxjs/operators';
+import {map, take} from 'rxjs/operators';
 import {EndpointManager, Resource} from '@common/services/resource/endpoint';
 import {ResourceService} from '@common/services/resource/resource';
 import {SettingsHelperService} from '../service';
 import {AddFallbackNamespaceDialog, AddFallbackNamespaceDialogData} from './adddialog/dialog';
 import {EditFallbackNamespaceDialog, EditFallbackNamespaceDialogData} from './editdialog/dialog';
+import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 
 enum BreakpointElementCount {
   XLarge = 5,
@@ -59,7 +59,7 @@ interface NamespaceSettings {
     },
   ],
 })
-export class NamespaceSettingsComponent implements OnInit, OnDestroy, ControlValueAccessor {
+export class NamespaceSettingsComponent implements OnInit, ControlValueAccessor {
   readonly Controls = Controls;
 
   namespaces: string[] = [];
@@ -68,7 +68,6 @@ export class NamespaceSettingsComponent implements OnInit, OnDestroy, ControlVal
 
   private settings_: GlobalSettings;
   private readonly endpoint_ = EndpointManager.resource(Resource.namespace).list();
-  private readonly unsubscribe_ = new Subject<void>();
   private readonly visibleNamespacesMap: [string, number][] = [
     [Breakpoints.XLarge, BreakpointElementCount.XLarge],
     [Breakpoints.Large, BreakpointElementCount.Large],
@@ -84,6 +83,7 @@ export class NamespaceSettingsComponent implements OnInit, OnDestroy, ControlVal
     return arr ? arr.filter(ns => ns) : [];
   }
 
+  private destroyRef = inject(DestroyRef);
   constructor(
     private readonly namespaceService_: ResourceService<NamespaceList>,
     private readonly settingsHelperService_: SettingsHelperService,
@@ -109,26 +109,21 @@ export class NamespaceSettingsComponent implements OnInit, OnDestroy, ControlVal
     this.namespaceService_
       .get(this.endpoint_)
       .pipe(map(list => list.namespaces.map(ns => ns.objectMeta.name)))
-      .pipe(takeUntil(this.unsubscribe_))
+      .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe(namespaces => (this.namespaces = namespaces));
 
     this.breakpointObserver_
       .observe([Breakpoints.Medium, Breakpoints.Large, Breakpoints.XLarge])
-      .pipe(takeUntil(this.unsubscribe_))
+      .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe(result => {
         const breakpoint = this.visibleNamespacesMap.find(breakpoint => result.breakpoints[breakpoint[0]]);
         this.visibleNamespaces = breakpoint ? breakpoint[1] : BreakpointElementCount.Medium;
       });
 
-    this.form.valueChanges.pipe(takeUntil(this.unsubscribe_)).subscribe(this.onFormChange_.bind(this));
+    this.form.valueChanges.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(this.onFormChange_.bind(this));
     this.settingsHelperService_.onSettingsChange
-      .pipe(takeUntil(this.unsubscribe_))
+      .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe(this.onSettingsChange_.bind(this));
-  }
-
-  ngOnDestroy(): void {
-    this.unsubscribe_.next();
-    this.unsubscribe_.complete();
   }
 
   add(): void {
@@ -175,11 +170,11 @@ export class NamespaceSettingsComponent implements OnInit, OnDestroy, ControlVal
   }
 
   registerOnChange(fn: any): void {
-    this.form.valueChanges.pipe(takeUntil(this.unsubscribe_)).subscribe(fn);
+    this.form.valueChanges.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(fn);
   }
 
   registerOnTouched(fn: any): void {
-    this.form.statusChanges.pipe(takeUntil(this.unsubscribe_)).subscribe(fn);
+    this.form.statusChanges.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(fn);
   }
 
   private addNamespace_(ns: string): void {

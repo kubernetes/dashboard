@@ -12,11 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, DestroyRef, inject, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {PersistentVolumeClaimDetail} from '@api/root.api';
-import {Subject} from 'rxjs';
-import {takeUntil} from 'rxjs/operators';
 
 import {ActionbarService, ResourceMeta} from '@common/services/global/actionbar';
 import {NotificationsService} from '@common/services/global/notifications';
@@ -24,6 +22,7 @@ import {EndpointManager, Resource} from '@common/services/resource/endpoint';
 import {NamespacedResourceService} from '@common/services/resource/resource';
 import {KdStateService} from '@common/services/global/state';
 import {GlobalServicesModule} from '@common/services/global/module';
+import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'kd-persistent-volume-claim-detail',
@@ -31,13 +30,13 @@ import {GlobalServicesModule} from '@common/services/global/module';
 })
 export class PersistentVolumeClaimDetailComponent implements OnInit, OnDestroy {
   private readonly endpoint_ = EndpointManager.resource(Resource.persistentVolumeClaim, true);
-  private readonly unsubscribe_ = new Subject<void>();
 
   private readonly kdState_: KdStateService = GlobalServicesModule.injector.get(KdStateService);
 
   persistentVolumeClaim: PersistentVolumeClaimDetail;
   isInitialized = false;
 
+  private destroyRef = inject(DestroyRef);
   constructor(
     private readonly persistentVolumeClaim_: NamespacedResourceService<PersistentVolumeClaimDetail>,
     private readonly actionbar_: ActionbarService,
@@ -51,7 +50,7 @@ export class PersistentVolumeClaimDetailComponent implements OnInit, OnDestroy {
 
     this.persistentVolumeClaim_
       .get(this.endpoint_.detail(), resourceName, resourceNamespace)
-      .pipe(takeUntil(this.unsubscribe_))
+      .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((d: PersistentVolumeClaimDetail) => {
         this.persistentVolumeClaim = d;
         this.notifications_.pushErrors(d.errors);
@@ -61,8 +60,6 @@ export class PersistentVolumeClaimDetailComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.unsubscribe_.next();
-    this.unsubscribe_.complete();
     this.actionbar_.onDetailsLeave.emit();
   }
 

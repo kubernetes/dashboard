@@ -12,18 +12,17 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, DestroyRef, inject, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {NodeAddress, NodeDetail, NodeTaint} from '@api/root.api';
 import {RatioItem} from '@api/root.ui';
-import {Subject} from 'rxjs';
-import {takeUntil} from 'rxjs/operators';
 import {FormattedValue} from '@common/components/graph/helper';
 
 import {ActionbarService, ResourceMeta} from '@common/services/global/actionbar';
 import {NotificationsService} from '@common/services/global/notifications';
 import {EndpointManager, Resource} from '@common/services/resource/endpoint';
 import {ResourceService} from '@common/services/resource/resource';
+import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'kd-node-detail',
@@ -31,7 +30,6 @@ import {ResourceService} from '@common/services/resource/resource';
 })
 export class NodeDetailComponent implements OnInit, OnDestroy {
   private readonly endpoint_ = EndpointManager.resource(Resource.node);
-  private readonly unsubscribe_ = new Subject<void>();
 
   node: NodeDetail;
   isInitialized = false;
@@ -50,6 +48,7 @@ export class NodeDetailComponent implements OnInit, OnDestroy {
     {name: 'Allocation', value: '#00c752'},
   ];
 
+  private destroyRef = inject(DestroyRef);
   constructor(
     private readonly node_: ResourceService<NodeDetail>,
     private readonly actionbar_: ActionbarService,
@@ -65,7 +64,7 @@ export class NodeDetailComponent implements OnInit, OnDestroy {
 
     this.node_
       .get(this.endpoint_.detail(), resourceName)
-      .pipe(takeUntil(this.unsubscribe_))
+      .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((d: NodeDetail) => {
         this.node = d;
         this._getAllocation();
@@ -76,8 +75,6 @@ export class NodeDetailComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.unsubscribe_.next();
-    this.unsubscribe_.complete();
     this.actionbar_.onDetailsLeave.emit();
   }
 

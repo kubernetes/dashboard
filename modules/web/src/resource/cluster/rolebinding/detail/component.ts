@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, DestroyRef, inject, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {RoleBindingDetail} from '@api/root.api';
 
@@ -21,19 +21,18 @@ import {NotificationsService} from '@common/services/global/notifications';
 import {EndpointManager, Resource} from '@common/services/resource/endpoint';
 import {NamespacedResourceService} from '@common/services/resource/resource';
 import {KdStateService} from '@common/services/global/state';
-import {Subject} from 'rxjs';
-import {takeUntil} from 'rxjs/operators';
+import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'kd-role-detail',
   templateUrl: './template.html',
 })
 export class RoleBingingDetailComponent implements OnInit, OnDestroy {
-  private _unsubscribe = new Subject<void>();
   private readonly endpoint_ = EndpointManager.resource(Resource.roleBinding, true);
   roleBinding: RoleBindingDetail;
   isInitialized = false;
 
+  private destroyRef = inject(DestroyRef);
   constructor(
     private readonly roleBinding_: NamespacedResourceService<RoleBindingDetail>,
     private readonly actionbar_: ActionbarService,
@@ -48,7 +47,7 @@ export class RoleBingingDetailComponent implements OnInit, OnDestroy {
 
     this.roleBinding_
       .get(this.endpoint_.detail(), resourceName, resourceNamespace)
-      .pipe(takeUntil(this._unsubscribe))
+      .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((d: RoleBindingDetail) => {
         this.roleBinding = d;
         this.notifications_.pushErrors(d.errors);
@@ -58,8 +57,6 @@ export class RoleBingingDetailComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this._unsubscribe.next();
-    this._unsubscribe.complete();
     this.actionbar_.onDetailsLeave.emit();
   }
 

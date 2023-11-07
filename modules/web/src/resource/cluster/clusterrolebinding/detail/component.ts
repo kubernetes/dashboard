@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, DestroyRef, inject, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {ClusterRoleBindingDetail} from '@api/root.api';
 
@@ -21,20 +21,20 @@ import {NotificationsService} from '@common/services/global/notifications';
 import {EndpointManager, Resource} from '@common/services/resource/endpoint';
 import {ResourceService} from '@common/services/resource/resource';
 import {KdStateService} from '@common/services/global/state';
-import {takeUntil} from 'rxjs/operators';
-import {Subject, Subscription} from 'rxjs';
+import {Subscription} from 'rxjs';
+import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'kd-cluster-role-binding-detail',
   templateUrl: './template.html',
 })
 export class ClusterRoleBindingDetailComponent implements OnInit, OnDestroy {
-  private _unsubscribe = new Subject<void>();
   private clusterRoleSubscription_: Subscription;
   private readonly endpoint_ = EndpointManager.resource(Resource.clusterRoleBinding);
   clusterRoleBinding: ClusterRoleBindingDetail;
   isInitialized = false;
 
+  private destroyRef = inject(DestroyRef);
   constructor(
     private readonly clusterRoleBinding_: ResourceService<ClusterRoleBindingDetail>,
     private readonly actionbar_: ActionbarService,
@@ -48,7 +48,7 @@ export class ClusterRoleBindingDetailComponent implements OnInit, OnDestroy {
 
     this.clusterRoleSubscription_ = this.clusterRoleBinding_
       .get(this.endpoint_.detail(), resourceName)
-      .pipe(takeUntil(this._unsubscribe))
+      .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((d: ClusterRoleBindingDetail) => {
         this.clusterRoleBinding = d;
         this.notifications_.pushErrors(d.errors);
@@ -58,8 +58,6 @@ export class ClusterRoleBindingDetailComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this._unsubscribe.next();
-    this._unsubscribe.complete();
     this.actionbar_.onDetailsLeave.emit();
   }
 
