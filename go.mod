@@ -3,14 +3,14 @@ module github.com/kubernetes/dashboard
 go 1.19
 
 require (
-	github.com/docker/distribution v2.8.1+incompatible
+	github.com/docker/distribution v2.8.2-beta.1+incompatible
 	github.com/emicklei/go-restful/v3 v3.8.0
 	github.com/golang/glog v1.0.0
 	github.com/opencontainers/go-digest v1.0.0 // indirect
 	github.com/prometheus/client_golang v1.12.2
 	github.com/spf13/pflag v1.0.5
-	golang.org/x/net v0.0.0-20220722155237-a158d28d115b
-	golang.org/x/text v0.3.7
+	golang.org/x/net v0.17.0
+	golang.org/x/text v0.13.0
 	gopkg.in/igm/sockjs-go.v2 v2.1.0
 	gopkg.in/square/go-jose.v2 v2.6.0
 	gopkg.in/yaml.v2 v2.4.0
@@ -48,10 +48,10 @@ require (
 	github.com/prometheus/client_model v0.2.0 // indirect
 	github.com/prometheus/common v0.34.0 // indirect
 	github.com/prometheus/procfs v0.7.3 // indirect
-	golang.org/x/crypto v0.0.0-20220525230936-793ad666bf5e // indirect
+	golang.org/x/crypto v0.14.0 // indirect
 	golang.org/x/oauth2 v0.0.0-20220524215830-622c5d57e401 // indirect
-	golang.org/x/sys v0.0.0-20220722155257-8c9f86f7a55f // indirect
-	golang.org/x/term v0.0.0-20220526004731-065cf7ba2467 // indirect
+	golang.org/x/sys v0.13.0 // indirect
+	golang.org/x/term v0.13.0 // indirect
 	golang.org/x/time v0.0.0-20220411224347-583f2d630306 // indirect
 	google.golang.org/appengine v1.6.7 // indirect
 	google.golang.org/protobuf v1.28.0 // indirect
