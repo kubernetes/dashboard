@@ -217,7 +217,7 @@ metricsScraper:
   role: metrics-scraper
   image:
     repository: docker.io/kubernetesui/metrics-scraper
-    tag: v1.0.9
+    tag: v1.0.10
   containers:
     ports:
       - containerPort: 8000

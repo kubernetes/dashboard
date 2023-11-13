@@ -226,7 +226,7 @@ metadata:
     app.kubernetes.io/name: kubernetes-dashboard-metrics-scraper
     app.kubernetes.io/part-of: kubernetes-dashboard
     app.kubernetes.io/component: metrics
-    app.kubernetes.io/version: "v1.0.9"
+    app.kubernetes.io/version: "v1.0.10"
 spec:
   ports:
     - port: 8000
@@ -401,7 +401,7 @@ metadata:
     app.kubernetes.io/name: kubernetes-dashboard-metrics-scraper
     app.kubernetes.io/part-of: kubernetes-dashboard
     app.kubernetes.io/component: metrics
-    app.kubernetes.io/version: "v1.0.9"
+    app.kubernetes.io/version: "v1.0.10"
 spec:
   replicas: 1
   revisionHistoryLimit: 10
@@ -415,7 +415,7 @@ spec:
         app.kubernetes.io/name: kubernetes-dashboard-metrics-scraper
         app.kubernetes.io/part-of: kubernetes-dashboard
         app.kubernetes.io/component: metrics
-        app.kubernetes.io/version: "v1.0.9"
+        app.kubernetes.io/version: "v1.0.10"
     spec:
       securityContext:
         runAsNonRoot: true
@@ -423,7 +423,7 @@ spec:
           type: RuntimeDefault
       containers:
         - name: kubernetes-dashboard-metrics-scraper
-          image: docker.io/kubernetesui/metrics-scraper:v1.0.9
+          image: docker.io/kubernetesui/metrics-scraper:v1.0.10
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 8000
