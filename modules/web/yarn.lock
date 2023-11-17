@@ -4735,12 +4735,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/d3-scale@npm:4.0.7":
-  version: 4.0.7
-  resolution: "@types/d3-scale@npm:4.0.7"
+"@types/d3-scale@npm:4.0.8":
+  version: 4.0.8
+  resolution: "@types/d3-scale@npm:4.0.8"
   dependencies:
     "@types/d3-time": "*"
-  checksum: 5cc1f57e04dd34f6597cb785c9ef528833016b2dfd269d7b7f51aca8bb3191032c8ebbb0f45294423a517f6f4a3638aee630ab5f6832b746989ca80aa0bb6cac
+  checksum: 3b1906da895564f73bb3d0415033d9a8aefe7c4f516f970176d5b2ff7a417bd27ae98486e9a9aa0472001dc9885a9204279a1973a985553bdb3ee9bbc1b94018
   languageName: node
   linkType: hard
 
@@ -11993,7 +11993,7 @@ __metadata:
     "@cypress/webpack-preprocessor": 6.0.0
     "@swimlane/ngx-charts": 20.4.1
     "@types/d3": 7.4.3
-    "@types/d3-scale": 4.0.7
+    "@types/d3-scale": 4.0.8
     "@types/file-saver": 2.0.7
     "@types/jasmine": 5.1.1
     "@types/jasminewd2": 2.0.13
