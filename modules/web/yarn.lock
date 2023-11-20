@@ -32,13 +32,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@angular-devkit/architect@npm:^0.1301.0 || ^0.1401.0 || ^0.1501.0 || ^0.1601.0 || ^0.1700.0-next.6":
-  version: 0.1700.0-rc.1
-  resolution: "@angular-devkit/architect@npm:0.1700.0-rc.1"
+"@angular-devkit/architect@npm:^0.1301.0 || ^0.1401.0 || ^0.1501.0 || ^0.1601.0 || ^0.1700.0":
+  version: 0.1700.1
+  resolution: "@angular-devkit/architect@npm:0.1700.1"
   dependencies:
-    "@angular-devkit/core": 17.0.0-rc.1
+    "@angular-devkit/core": 17.0.1
     rxjs: 7.8.1
-  checksum: 998889af1f64c199d165e42a645c97fe4c11aeeed05f5d227326d0157693bb260c665e68cdcbf88e98fd73711b71cd82ed4b5f64c318b10e2b9ec08727a635f0
+  checksum: 09ab67c6a266895fa29f8ecec38459eed1b07999d30e059582d76ecb3d46176991ae8c9f7356e83d10b287b06b58efbea07a2a5be091789b6add0050c76f2463
   languageName: node
   linkType: hard
 
@@ -180,14 +180,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@angular-devkit/core@npm:17.0.0-rc.1, @angular-devkit/core@npm:^13.0.0 || ^14.0.0 || ^15.0.0 || ^16.0.0 || ^17.0.0-next.6":
-  version: 17.0.0-rc.1
-  resolution: "@angular-devkit/core@npm:17.0.0-rc.1"
+"@angular-devkit/core@npm:17.0.1, @angular-devkit/core@npm:^13.0.0 || ^14.0.0 || ^15.0.0 || ^16.0.0 || ^17.0.0":
+  version: 17.0.1
+  resolution: "@angular-devkit/core@npm:17.0.1"
   dependencies:
     ajv: 8.12.0
     ajv-formats: 2.1.1
     jsonc-parser: 3.2.0
-    picomatch: 2.3.1
+    picomatch: 3.0.1
     rxjs: 7.8.1
     source-map: 0.7.4
   peerDependencies:
@@ -195,7 +195,7 @@ __metadata:
   peerDependenciesMeta:
     chokidar:
       optional: true
-  checksum: e36f2f2cb2fc14339c64b20bbfe960f7e31af7e4ec6087dd996451ee7849a906216dce36eff323d247e8954f0853cb9d3ac6938ebf64264266c4c7428dc7b446
+  checksum: e9832de3c2520f6a049331567386b4824a05fbcf6aa0b62a48bd2ba3aee8af080d7e988e3fc4d1157037e1ce4ee4c43fd1c0cc6941cc4a8996ed912779007510
   languageName: node
   linkType: hard
 
@@ -212,16 +212,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@angular-devkit/schematics@npm:17.0.0-rc.1, @angular-devkit/schematics@npm:^13.0.0 || ^14.0.0 || ^15.0.0 || ^16.0.0 || ^17.0.0-next.6":
-  version: 17.0.0-rc.1
-  resolution: "@angular-devkit/schematics@npm:17.0.0-rc.1"
+"@angular-devkit/schematics@npm:17.0.1, @angular-devkit/schematics@npm:^13.0.0 || ^14.0.0 || ^15.0.0 || ^16.0.0 || ^17.0.0":
+  version: 17.0.1
+  resolution: "@angular-devkit/schematics@npm:17.0.1"
   dependencies:
-    "@angular-devkit/core": 17.0.0-rc.1
+    "@angular-devkit/core": 17.0.1
     jsonc-parser: 3.2.0
     magic-string: 0.30.5
     ora: 5.4.1
     rxjs: 7.8.1
-  checksum: 3e8d517bceba08b7394d32a73c19ebd7d1d615658838fcc83b4d90bb4dfe158f0a3f94b37617189410c4382ca4b91c7e5f24d1b8c681541a2c8fc01fdc26cfb4
+  checksum: 6d630fb23f5958fb785f05cd514d4a8030061e8800410de9bee58d2ebf298d355d9f28e049acbaf2b16f61a6ff1b8dccd769cfbb7e2370750efbdb2ce3c4f364
   languageName: node
   linkType: hard
 
@@ -4292,14 +4292,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@schematics/angular@npm:^13.0.0 || ^14.0.0 || ^15.0.0 || ^16.0.0 || ^17.0.0-next.6":
-  version: 17.0.0-rc.1
-  resolution: "@schematics/angular@npm:17.0.0-rc.1"
+"@schematics/angular@npm:^13.0.0 || ^14.0.0 || ^15.0.0 || ^16.0.0 || ^17.0.0":
+  version: 17.0.1
+  resolution: "@schematics/angular@npm:17.0.1"
   dependencies:
-    "@angular-devkit/core": 17.0.0-rc.1
-    "@angular-devkit/schematics": 17.0.0-rc.1
+    "@angular-devkit/core": 17.0.1
+    "@angular-devkit/schematics": 17.0.1
     jsonc-parser: 3.2.0
-  checksum: d70ede23254a669a4f72606d2ddb5ed48d624ce84c98d86f80cca65a57dbd3201f2ec53cfdedcaa80d10a028d27a6687fb8045da57ce607ecc9119fbc61309ca
+  checksum: 7f006cad03409d78dabf13cba91bc46f3ec770b030160ad89fa662d5c1d95f22b006e2829cb2347c53e2bcb72f0cd2dc0c911f79fae8d5359c20b3b15e256053
   languageName: node
   linkType: hard
 
@@ -12035,7 +12035,7 @@ __metadata:
     material-design-icons: 3.0.1
     minimatch: 9.0.3
     minimist: 1.2.8
-    ng-extract-i18n-merge: 2.8.2
+    ng-extract-i18n-merge: 2.9.0
     ngx-cookie-service: 16.1.0
     ngx-pipes: 3.2.2
     node-gyp: 10.0.1
@@ -13058,18 +13058,18 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ng-extract-i18n-merge@npm:2.8.2":
-  version: 2.8.2
-  resolution: "ng-extract-i18n-merge@npm:2.8.2"
+"ng-extract-i18n-merge@npm:2.9.0":
+  version: 2.9.0
+  resolution: "ng-extract-i18n-merge@npm:2.9.0"
   dependencies:
-    "@angular-devkit/architect": ^0.1301.0 || ^0.1401.0 || ^0.1501.0 || ^0.1601.0 || ^0.1700.0-next.6
-    "@angular-devkit/core": ^13.0.0 || ^14.0.0 || ^15.0.0 || ^16.0.0 || ^17.0.0-next.6
-    "@angular-devkit/schematics": ^13.0.0 || ^14.0.0 || ^15.0.0 || ^16.0.0 || ^17.0.0-next.6
-    "@schematics/angular": ^13.0.0 || ^14.0.0 || ^15.0.0 || ^16.0.0 || ^17.0.0-next.6
+    "@angular-devkit/architect": ^0.1301.0 || ^0.1401.0 || ^0.1501.0 || ^0.1601.0 || ^0.1700.0
+    "@angular-devkit/core": ^13.0.0 || ^14.0.0 || ^15.0.0 || ^16.0.0 || ^17.0.0
+    "@angular-devkit/schematics": ^13.0.0 || ^14.0.0 || ^15.0.0 || ^16.0.0 || ^17.0.0
+    "@schematics/angular": ^13.0.0 || ^14.0.0 || ^15.0.0 || ^16.0.0 || ^17.0.0
     xmldoc: ^1.1.2
   peerDependencies:
-    "@angular-devkit/build-angular": ^13.0.0 || ^14.0.0 || ^15.0.0 || ^16.0.0 || ^17.0.0-next.6
-  checksum: 5b1bb78b104e44c91c5dda4ca9bb35c0eeaef975f8aafea9946b4c807de6260ee8e3e1abed43561e98dcc7bdabfedf8c7136f9684da0386252f1cbf5e535f2eb
+    "@angular-devkit/build-angular": ^13.0.0 || ^14.0.0 || ^15.0.0 || ^16.0.0 || ^17.0.0
+  checksum: 085f1e7f866cae92ed91d6a39f30bb985d12fe56294ee3066fb4a078c9f9277b0b4d6770a56f78d8e2e0ffb826be17b18fb39a71461664a3350857edb5d88572
   languageName: node
   linkType: hard
 
@@ -13854,6 +13854,13 @@ __metadata:
   version: 2.3.1
   resolution: "picomatch@npm:2.3.1"
   checksum: 050c865ce81119c4822c45d3c84f1ced46f93a0126febae20737bd05ca20589c564d6e9226977df859ed5e03dc73f02584a2b0faad36e896936238238b0446cf
+  languageName: node
+  linkType: hard
+
+"picomatch@npm:3.0.1":
+  version: 3.0.1
+  resolution: "picomatch@npm:3.0.1"
+  checksum: b7fe18174bcc05bbf0ea09cc85623ae395676b3e6bc25636d4c20db79a948586237e429905453bf1ba385bc7a7aa5b56f1b351680e650d2b5c305ceb98dfc914
   languageName: node
   linkType: hard
 
