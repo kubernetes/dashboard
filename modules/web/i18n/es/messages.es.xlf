@@ -380,7 +380,7 @@
       </trans-unit>
       <trans-unit id="2127150478980536520" datatype="html">
         <source>Max Replicas</source>
-        <target>Máx. de réplicas</target>
+        <target>Máx. número de réplicas</target>
       </trans-unit>
       <trans-unit id="21275452006765587" datatype="html">
         <source>Commands</source>
@@ -672,7 +672,7 @@
       </trans-unit>
       <trans-unit id="3012870639723698090" datatype="html">
         <source> Port must be greater than 0. </source>
-        <target state="new"> El puerto debe ser superior a 0. </target>
+        <target state="new"> El puerto debe ser mayor a 0. </target>
       </trans-unit>
       <trans-unit id="3012906865384504293" datatype="html">
         <source>Image</source>
@@ -728,7 +728,7 @@
       </trans-unit>
       <trans-unit id="3175667526023915046" datatype="html">
         <source> Label Value must not exceed 253 characters. </source>
-        <target state="new"> El valor de la etiqueta no dee exceder 253 caracteres. </target>
+        <target state="new"> El valor de la etiqueta no debe exceder 253 caracteres. </target>
       </trans-unit>
       <trans-unit id="3193976279273491157" datatype="html">
         <source>Actions</source>
@@ -836,7 +836,7 @@
       </trans-unit>
       <trans-unit id="3413133151717525161" datatype="html">
         <source>Min Replicas</source>
-        <target>Mín. réplicas</target>
+        <target>Mín. número de réplicas</target>
       </trans-unit>
       <trans-unit id="3415340061451880090" datatype="html">
         <source>Remove all notifications</source>
@@ -920,7 +920,7 @@
       </trans-unit>
       <trans-unit id="3609669829589519658" datatype="html">
         <source> CPU requirement must be given as a valid number. </source>
-        <target state="new"> el requisito de CPU debe ser un número válido. </target>
+        <target state="new"> El requisito de CPU debe ser un número válido. </target>
       </trans-unit>
       <trans-unit id="3611950223744571613" datatype="html">
         <source>Service Port Number</source>
@@ -1578,7 +1578,7 @@
       </trans-unit>
       <trans-unit id="6194056995548896650" datatype="html">
         <source>The new secret will be added to the cluster</source>
-        <target>El nuevo Secret será añadido al clúster</target>
+        <target>El Secret nuevo será añadido al clúster</target>
       </trans-unit>
       <trans-unit id="6239075439253810960" datatype="html">
         <source>Pending: </source>
@@ -1654,7 +1654,7 @@
       </trans-unit>
       <trans-unit id="6588659171333501682" datatype="html">
         <source>By default, your containers run the selected image&apos;s default entrypoint command. You can use the command options to override the default.</source>
-        <target>Por defecto, tus contenedores ejecutan el comando entrypoint defecto de la imagen seleccionada. Puedes usar las opciones de comando para sobreescribirlas.</target>
+        <target>De forma predeterminada, tus contenedores ejecutan el comando entrypoint por defecto de la imagen seleccionada. Puedes usar las opciones de comando para sobreescribirlas.</target>
       </trans-unit>
       <trans-unit id="6595420178679632820" datatype="html">
         <source>Ports (Name, Port, Protocol)</source>
@@ -1854,7 +1854,7 @@
       </trans-unit>
       <trans-unit id="7198836215060144081" datatype="html">
         <source>Host </source>
-        <target state="new">Anfitrión </target>
+        <target state="new">Host </target>
       </trans-unit>
       <trans-unit id="7204408227432067199" datatype="html">
         <source>Restarts</source>
@@ -1950,7 +1950,7 @@
       </trans-unit>
       <trans-unit id="7541092997061001831" datatype="html">
         <source> Setting high number of pods may cause performance issues of the cluster and Dashboard UI. </source>
-        <target state="new"> Establecer un número alto de pods puede causar problemas de desempeño del clúster y la interfaz gráfica del Dashboard. </target>
+        <target state="new"> Establecer un número elevado de Pods puede causar problemas de desempeño del clúster y la interfaz gráfica del Dashboard. </target>
       </trans-unit>
       <trans-unit id="7542300534444838884" datatype="html">
         <source>Kubernetes Dashboard</source>
