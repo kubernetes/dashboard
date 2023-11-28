@@ -1376,7 +1376,7 @@
       </trans-unit>
       <trans-unit id="5582481471184188809" datatype="html">
         <source>Horizontal Pod Autoscaler</source>
-        <target>Horizontal Pod Autoscaler</target>
+        <target>Horizontal 파드 오토스케일러</target>
       </trans-unit>
       <trans-unit id="5590086849807274701" datatype="html">
         <source>Scope</source>
@@ -1570,7 +1570,7 @@
       </trans-unit>
       <trans-unit id="6157826473930539567" datatype="html">
         <source>Horizontal Pod Autoscalers</source>
-        <target>호레잔틀 파드 오토스케일러</target>
+        <target>Horizontal 파드 오토스케일러</target>
       </trans-unit>
       <trans-unit id="6163370502260387661" datatype="html">
         <source> Invalid protocol. </source>
