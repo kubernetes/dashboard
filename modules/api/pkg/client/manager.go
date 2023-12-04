@@ -56,6 +56,10 @@ const (
 	JWETokenHeader = "jweToken"
 	// Default http header for user-agent
 	DefaultUserAgent = "dashboard"
+	//Impersonation header
+	ImpersonateUserHeader = "Impersonate-User"
+	//Impersonation Group header
+	ImpersonateGroupHeader = "Impersonate-Group"
 	//Impersonation Extra header
 	ImpersonateUserExtraHeader = "Impersonate-Extra-"
 )
@@ -358,25 +362,32 @@ func (self *clientManager) buildCmdConfig(authInfo *api.AuthInfo, cfg *rest.Conf
 // Extracts authorization information from the request header
 func (self *clientManager) extractAuthInfo(req *restful.Request) (*api.AuthInfo, error) {
 	authHeader := req.HeaderParameter("Authorization")
-	impersonationHeader := req.HeaderParameter("Impersonate-User")
-	jweToken := req.HeaderParameter(JWETokenHeader)
+	impersonationHeader := req.HeaderParameter(ImpersonateUserHeader)
 
 	// Authorization header will be more important than our token
 	token := self.extractTokenFromHeader(authHeader)
-	if len(token) > 0 {
-
+	if len(token) > 0 || len(impersonationHeader) > 0 {
 		authInfo := &api.AuthInfo{Token: token}
 
 		if len(impersonationHeader) > 0 {
-			//there's an impersonation header, lets make sure to add it
+			// Request includes an impersonation header, let's make sure to add it
 			authInfo.Impersonate = impersonationHeader
 
-			//Check for impersonated groups
-			if groupsImpersonationHeader := req.Request.Header["Impersonate-Group"]; len(groupsImpersonationHeader) > 0 {
-				authInfo.ImpersonateGroups = groupsImpersonationHeader
+			// Check for impersonated groups
+			var impersonateGroups []string
+			impersonateGroupHeader := req.Request.Header.Values(ImpersonateGroupHeader)
+			for _, values := range impersonateGroupHeader {
+				// Split values into comma-separated []string
+				commaSeparated := strings.Split(values, ",")
+				for _, value := range commaSeparated {
+					impersonateGroups = append(impersonateGroups, value)
+				}
+			}
+			if len(impersonateGroups) > 0 {
+				authInfo.ImpersonateGroups = impersonateGroups
 			}
 
-			//check for extra fields
+			// Check for extra impersonate fields
 			for headerName, headerValues := range req.Request.Header {
 				if strings.HasPrefix(headerName, ImpersonateUserExtraHeader) {
 					extraName := headerName[len(ImpersonateUserExtraHeader):]
@@ -391,6 +402,7 @@ func (self *clientManager) extractAuthInfo(req *restful.Request) (*api.AuthInfo,
 		return authInfo, nil
 	}
 
+	jweToken := req.HeaderParameter(JWETokenHeader)
 	if self.tokenManager != nil && len(jweToken) > 0 {
 		return self.tokenManager.Decrypt(jweToken)
 	}
@@ -401,9 +413,10 @@ func (self *clientManager) extractAuthInfo(req *restful.Request) (*api.AuthInfo,
 // Checks if request headers contain any auth information without parsing.
 func (self *clientManager) containsAuthInfo(req *restful.Request) bool {
 	authHeader := req.HeaderParameter("Authorization")
+	impersonation := req.HeaderParameter(ImpersonateUserHeader)
 	jweToken := req.HeaderParameter(JWETokenHeader)
 
-	return len(authHeader) > 0 || len(jweToken) > 0
+	return len(authHeader) > 0 || len(impersonation) > 0 || len(jweToken) > 0
 }
 
 func (self *clientManager) extractTokenFromHeader(authHeader string) string {

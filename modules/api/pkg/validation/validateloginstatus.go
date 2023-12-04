@@ -41,7 +41,7 @@ type LoginStatus struct {
 func ValidateLoginStatus(request *restful.Request) *LoginStatus {
 	authHeader := request.HeaderParameter("Authorization")
 	tokenHeader := request.HeaderParameter(client.JWETokenHeader)
-	impersonationHeader := request.HeaderParameter("Impersonate-User")
+	impersonationHeader := request.HeaderParameter(client.ImpersonateUserHeader)
 
 	httpsMode := request.Request.TLS != nil
 	if args.Holder.GetEnableInsecureLogin() {
