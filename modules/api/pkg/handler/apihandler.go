@@ -84,7 +84,7 @@ const (
 	RequestLogString = "[%s] Incoming %s %s %s request from %s: %s"
 
 	// ResponseLogString is a template for response log message.
-	ResponseLogString = "[%s] Outcoming response to %s with %d status code"
+	ResponseLogString = "[%s] Outgoing response to %s with %d status code"
 )
 
 // APIHandler is a representation of API handler. Structure contains clientapi, Heapster clientapi and clientapi configuration.

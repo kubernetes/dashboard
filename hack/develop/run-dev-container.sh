@@ -32,7 +32,7 @@ if [[ -n "${KD_DEV_KUBECONFIG}" ]] ; then
   K8S_OWN_CLUSTER=true
 else
   # Use the kind cluster that will be created later by the script.
-  # Set defult as kubeconfig made by `hack/scripts/start-cluster.sh`.
+  # Set default as kubeconfig made by `hack/scripts/start-cluster.sh`.
   touch /tmp/kind.kubeconfig
   KD_DEV_KUBECONFIG=/tmp/kind.kubeconfig
 fi
@@ -44,7 +44,7 @@ docker network create ${KD_DEV_NETWORK} \
   -o com.docker.network.bridge.enable_ip_masquerade=true \
   -o com.docker.network.driver.mtu=1500
 
-# Bind addres for dashboard
+# Bind address for dashboard
 KD_DEV_BIND_ADDRESS=${KD_DEV_BIND_ADDRESS:-"127.0.0.1"}
 
 # Metrics Scraper sidecar host for dashboard
