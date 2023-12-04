@@ -52,6 +52,8 @@ var (
 	argCertFile                  = pflag.String("tls-cert-file", "", "file containing the default x509 certificate for HTTPS")
 	argKeyFile                   = pflag.String("tls-key-file", "", "file containing the default x509 private key matching --tls-cert-file")
 	argApiserverHost             = pflag.String("apiserver-host", "", "address of the Kubernetes API server to connect to in the format of protocol://address:port, leave it empty if the binary runs inside cluster for local discovery attempt")
+	argNamespaceHeader           = pflag.String("namespace-header", "", "name of the request header that contains authorized namespaces, used in multi-tenant clusters with namespace-per-tenant isolation that lack cluster-scoped RBAC to list namespaces in the cluster")
+	argNamespacePattern          = pflag.String("namespace-pattern", "", "regular expression applied to the header data contained by `--namespace-header`, used to extract the authorized namespace(s) from the header data")
 	argMetricsProvider           = pflag.String("metrics-provider", "sidecar", "select provider type for metrics, 'none' will not check metrics")
 	argHeapsterHost              = pflag.String("heapster-host", "", "address of the Heapster API server to connect to in the format of protocol://address:port, leave it empty if the binary runs inside cluster for service proxy usage")
 	argSidecarHost               = pflag.String("sidecar-host", "", "address of the Sidecar API server to connect to in the format of protocol://address:port, leave it empty if the binary runs inside cluster for service proxy usage")
@@ -75,11 +77,11 @@ func main() {
 	pflag.Parse()
 	_ = flag.CommandLine.Parse(make([]string, 0)) // Init for glog calls in kubernetes packages
 
-	// Initializes dashboard arguments holder so we can read them in other packages
+	// Initializes dashboard arguments holder so that we can read them in other packages
 	initArgHolder()
 
-	if args.Holder.GetApiServerHost() != "" {
-		log.Printf("Using apiserver-host location: %s", args.Holder.GetApiServerHost())
+	if args.Holder.GetApiserverHost() != "" {
+		log.Printf("Using apiserver-host location: %s", args.Holder.GetApiserverHost())
 	}
 	if args.Holder.GetKubeConfigFile() != "" {
 		log.Printf("Using kubeconfig file: %s", args.Holder.GetKubeConfigFile())
@@ -88,7 +90,18 @@ func main() {
 		log.Printf("Using namespace: %s", args.Holder.GetNamespace())
 	}
 
-	clientManager := client.NewClientManager(args.Holder.GetKubeConfigFile(), args.Holder.GetApiServerHost())
+	if args.Holder.GetNamespaceHeader() != "" {
+		log.Printf("Using auth proxy request header for authorized namespaces: %s", args.Holder.GetNamespaceHeader())
+	}
+
+	if args.Holder.GetNamespacePattern() != "" {
+		if args.Holder.GetNamespaceHeader() == "" {
+			panic("Dashboard argument --namespace-pattern requires value to be provided for --namespace-header")
+		}
+		log.Printf("Applying regex pattern to namespaces header: %s", args.Holder.GetNamespacePattern())
+	}
+
+	clientManager := client.NewClientManager(args.Holder.GetKubeConfigFile(), args.Holder.GetApiserverHost())
 	versionInfo, err := clientManager.InsecureClient().Discovery().ServerVersion()
 	if err != nil {
 		handleFatalInitError(err)
@@ -209,7 +222,9 @@ func initArgHolder() {
 	builder.SetDefaultCertDir(*argDefaultCertDir)
 	builder.SetCertFile(*argCertFile)
 	builder.SetKeyFile(*argKeyFile)
-	builder.SetApiServerHost(*argApiserverHost)
+	builder.SetApiserverHost(*argApiserverHost)
+	builder.SetNamespaceHeader(*argNamespaceHeader)
+	builder.SetNamespacePattern(*argNamespacePattern)
 	builder.SetMetricsProvider(*argMetricsProvider)
 	builder.SetHeapsterHost(*argHeapsterHost)
 	builder.SetSidecarHost(*argSidecarHost)

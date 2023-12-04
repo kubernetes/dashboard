@@ -33,16 +33,18 @@ type holder struct {
 	insecureBindAddress net.IP
 	bindAddress         net.IP
 
-	defaultCertDir  string
-	certFile        string
-	keyFile         string
-	apiServerHost   string
-	metricsProvider string
-	heapsterHost    string
-	sidecarHost     string
-	kubeConfigFile  string
-	apiLogLevel     string
-	namespace       string
+	defaultCertDir   string
+	certFile         string
+	keyFile          string
+	apiserverHost    string
+	namespaceHeader  string
+	namespacePattern string
+	metricsProvider  string
+	heapsterHost     string
+	sidecarHost      string
+	kubeConfigFile   string
+	apiLogLevel      string
+	namespace        string
 
 	authenticationMode []string
 
@@ -106,9 +108,19 @@ func (self *holder) GetKeyFile() string {
 	return self.keyFile
 }
 
-// GetApiServerHost 'apiserver-host' argument of Dashboard binary.
-func (self *holder) GetApiServerHost() string {
-	return self.apiServerHost
+// GetApiserverHost 'apiserver-host' argument of Dashboard binary.
+func (self *holder) GetApiserverHost() string {
+	return self.apiserverHost
+}
+
+// GetNamespaceHeader 'namespace-header' argument of Dashboard binary.
+func (self *holder) GetNamespaceHeader() string {
+	return self.namespaceHeader
+}
+
+// GetNamespacePattern 'namespace-pattern' argument of Dashboard binary.
+func (self *holder) GetNamespacePattern() string {
+	return self.namespacePattern
 }
 
 // GetMetricsProvider 'metrics-provider' argument of Dashboard binary.

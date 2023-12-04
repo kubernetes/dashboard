@@ -15,8 +15,10 @@
 package handler
 
 import (
+	"k8s.io/dashboard/api/pkg/args"
 	"log"
 	"net/http"
+	"regexp"
 	"strconv"
 	"strings"
 
@@ -1931,13 +1933,52 @@ func (apiHandler *APIHandler) handleGetNamespaces(request *restful.Request, resp
 		return
 	}
 
-	dataSelect := parser.ParseDataSelectPathParameter(request)
-	result, err := ns.GetNamespaceList(k8sClient, dataSelect)
-	if err != nil {
-		errors.HandleInternalError(response, err)
-		return
+	// When dashboard has been configured to trust namespace data from a request header,
+	// extract the header data and apply the configured namespace pattern (if set).
+	// This data becomes the source of truth to answer what namespaces the request
+	// is authorized to access.
+	var namespaceList *ns.NamespaceList
+	if namespaceHeader := args.Holder.GetNamespaceHeader(); namespaceHeader != "" {
+		authorizedNamespaces := make([]ns.Namespace, 0)
+		namespaceHeaderData := request.Request.Header.Values(namespaceHeader)
+		if namespacePattern := args.Holder.GetNamespacePattern(); namespacePattern != "" {
+			r, err := regexp.Compile(namespacePattern)
+			// TODO move this error handling to args.Holder/app initialization
+			if err != nil {
+				log.Panicf("unable to compile regular expression: %v", err)
+				return
+			}
+			if len(namespaceHeaderData) > 0 {
+				for _, n := range namespaceHeaderData {
+					// Check if the namespace matches the regex
+					rns := r.FindStringSubmatch(n)
+					if rns == nil || len(rns) < 2 {
+						continue
+					}
+					nsMeta := api.ObjectMeta{Name: rns[1]}
+					namespace := ns.Namespace{
+						ObjectMeta: nsMeta,
+						TypeMeta:   api.NewTypeMeta(api.ResourceKindNamespace),
+					}
+					authorizedNamespaces = append(authorizedNamespaces, namespace)
+				}
+				namespaceList = &ns.NamespaceList{
+					Namespaces: authorizedNamespaces,
+					ListMeta:   api.ListMeta{TotalItems: len(authorizedNamespaces)},
+					Errors:     make([]error, 0),
+				}
+			}
+		}
+	} else {
+		dataSelect := parser.ParseDataSelectPathParameter(request)
+		namespaceList, err = ns.GetNamespaceList(k8sClient, dataSelect)
+		log.Printf("ns.GetNamespaceList namespaceList: %v (%T)", namespaceList, namespaceList)
+		if err != nil {
+			errors.HandleInternalError(response, err)
+			return
+		}
 	}
-	response.WriteHeaderAndEntity(http.StatusOK, result)
+	response.WriteHeaderAndEntity(http.StatusOK, namespaceList)
 }
 
 func (apiHandler *APIHandler) handleGetNamespaceDetail(request *restful.Request, response *restful.Response) {

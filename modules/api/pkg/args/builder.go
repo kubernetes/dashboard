@@ -78,9 +78,21 @@ func (self *holderBuilder) SetKeyFile(keyFile string) *holderBuilder {
 	return self
 }
 
-// SetApiServerHost 'api-server-host' argument of Dashboard binary.
-func (self *holderBuilder) SetApiServerHost(apiServerHost string) *holderBuilder {
-	self.holder.apiServerHost = apiServerHost
+// SetApiserverHost 'apiserver-host' argument of Dashboard binary.
+func (self *holderBuilder) SetApiserverHost(apiServerHost string) *holderBuilder {
+	self.holder.apiserverHost = apiServerHost
+	return self
+}
+
+// SetNamespaceHeader 'namespace-header' argument of Dashboard binary.
+func (self *holderBuilder) SetNamespaceHeader(namespaceHeader string) *holderBuilder {
+	self.holder.namespaceHeader = namespaceHeader
+	return self
+}
+
+// SetNamespacePattern 'namespace-pattern' argument of Dashboard binary.
+func (self *holderBuilder) SetNamespacePattern(namespacePattern string) *holderBuilder {
+	self.holder.namespacePattern = namespacePattern
 	return self
 }
 
