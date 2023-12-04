@@ -44,7 +44,7 @@ func TestNewIntegrationManager(t *testing.T) {
 func TestIntegrationManager_GetState(t *testing.T) {
 	cases := []struct {
 		info          string
-		apiServerHost string
+		apiserverHost string
 		sidecarHost   string
 		expected      *api.IntegrationState
 		expectedErr   error
@@ -59,7 +59,7 @@ func TestIntegrationManager_GetState(t *testing.T) {
 	}
 
 	for _, c := range cases {
-		cManager := client.NewClientManager("", c.apiServerHost)
+		cManager := client.NewClientManager("", c.apiserverHost)
 		iManager := NewIntegrationManager(cManager)
 		iManager.Metric().ConfigureSidecar(c.sidecarHost)
 

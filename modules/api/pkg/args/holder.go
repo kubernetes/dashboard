@@ -42,7 +42,7 @@ type holder struct {
 	metricsProvider  string
 	heapsterHost     string
 	sidecarHost      string
-	kubeConfigFile   string
+	kubeconfigFile   string
 	apiLogLevel      string
 	namespace        string
 
@@ -138,9 +138,9 @@ func (self *holder) GetSidecarHost() string {
 	return self.sidecarHost
 }
 
-// GetKubeConfigFile 'kubeconfig' argument of Dashboard binary.
-func (self *holder) GetKubeConfigFile() string {
-	return self.kubeConfigFile
+// GetKubeconfigFile 'kubeconfig' argument of Dashboard binary.
+func (self *holder) GetKubeconfigFile() string {
+	return self.kubeconfigFile
 }
 
 // GetAPILogLevel 'api-log-level' argument of Dashboard binary.

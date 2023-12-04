@@ -1949,18 +1949,22 @@ func (apiHandler *APIHandler) handleGetNamespaces(request *restful.Request, resp
 				return
 			}
 			if len(namespaceHeaderData) > 0 {
-				for _, n := range namespaceHeaderData {
-					// Check if the namespace matches the regex
-					rns := r.FindStringSubmatch(n)
-					if rns == nil || len(rns) < 2 {
-						continue
+				for _, values := range namespaceHeaderData {
+					// Split comma-separated values into []string
+					commaSeparated := strings.Split(values, ",")
+					for _, n := range commaSeparated {
+						// Check if the namespace matches the regex
+						rns := r.FindStringSubmatch(n)
+						if rns == nil || len(rns) < 2 {
+							continue
+						}
+						nsMeta := api.ObjectMeta{Name: rns[1]}
+						namespace := ns.Namespace{
+							ObjectMeta: nsMeta,
+							TypeMeta:   api.NewTypeMeta(api.ResourceKindNamespace),
+						}
+						authorizedNamespaces = append(authorizedNamespaces, namespace)
 					}
-					nsMeta := api.ObjectMeta{Name: rns[1]}
-					namespace := ns.Namespace{
-						ObjectMeta: nsMeta,
-						TypeMeta:   api.NewTypeMeta(api.ResourceKindNamespace),
-					}
-					authorizedNamespaces = append(authorizedNamespaces, namespace)
 				}
 				namespaceList = &ns.NamespaceList{
 					Namespaces: authorizedNamespaces,
