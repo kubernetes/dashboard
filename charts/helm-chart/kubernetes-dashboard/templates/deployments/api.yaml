@@ -42,6 +42,10 @@ spec:
         app.kubernetes.io/version: {{ .Values.api.image.tag }}
         app.kubernetes.io/component: {{ .Values.api.role }}
     spec:
+      {{- with .Values.app.image.pullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
       containers:
         - name: {{ template "kubernetes-dashboard.name" . }}-{{ .Values.api.role }}
           image: "{{ .Values.api.image.repository }}:{{ .Values.api.image.tag }}"
