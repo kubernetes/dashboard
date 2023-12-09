@@ -225,6 +225,39 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@angular-eslint/bundled-angular-compiler@npm:16.2.0":
+  version: 16.2.0
+  resolution: "@angular-eslint/bundled-angular-compiler@npm:16.2.0"
+  checksum: fc243407ab55f1545e9d5e4871ddc571e21b6e90a5407311f6cfb234fdb1fab77e3ce254443b78d4eb7095b63cc2caec474e13373ad24b7774179c0778e085a1
+  languageName: node
+  linkType: hard
+
+"@angular-eslint/eslint-plugin@npm:16.2.0":
+  version: 16.2.0
+  resolution: "@angular-eslint/eslint-plugin@npm:16.2.0"
+  dependencies:
+    "@angular-eslint/utils": 16.2.0
+    "@typescript-eslint/utils": 5.62.0
+  peerDependencies:
+    eslint: ^7.20.0 || ^8.0.0
+    typescript: "*"
+  checksum: 34f0871efa64cac2031a7ef1532309e48f721ca251fa7812af2c5af4ecf67cf61b4c91fd366359ab274620a0cb182b1bf1228b68fd51c8a986e488622f00d7f6
+  languageName: node
+  linkType: hard
+
+"@angular-eslint/utils@npm:16.2.0":
+  version: 16.2.0
+  resolution: "@angular-eslint/utils@npm:16.2.0"
+  dependencies:
+    "@angular-eslint/bundled-angular-compiler": 16.2.0
+    "@typescript-eslint/utils": 5.62.0
+  peerDependencies:
+    eslint: ^7.20.0 || ^8.0.0
+    typescript: "*"
+  checksum: 25290c1bf45a89f0fdef3908920f67b9498470f3f3e7682c53e6fabbcf52d14adad4a343bc8cde71c92450672e3c91b82a2661db267910fdc7fcbaa26ccee390
+  languageName: node
+  linkType: hard
+
 "@angular/animations@npm:16.2.1":
   version: 16.2.1
   resolution: "@angular/animations@npm:16.2.1"
@@ -12090,6 +12123,7 @@ __metadata:
   resolution: "kubernetes-dashboard@workspace:."
   dependencies:
     "@angular-devkit/build-angular": 16.2.0
+    "@angular-eslint/eslint-plugin": 16.2.0
     "@angular/animations": 16.2.1
     "@angular/cdk": 16.2.1
     "@angular/cli": 16.2.0

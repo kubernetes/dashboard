@@ -15,7 +15,7 @@
 import {Injectable} from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
 
-import {ConfirmDialog, ConfirmDialogConfig} from '@common/dialogs/config/dialog';
+import {ConfirmDialogComponent, ConfirmDialogConfig} from '@common/dialogs/config/dialog';
 import {ICanDeactivate} from '@common/interfaces/candeactivate';
 import {Observable, of} from 'rxjs';
 
@@ -33,6 +33,6 @@ export class CanDeactivateGuard {
       message: 'The form has not been submitted yet, do you really want to leave?',
     } as ConfirmDialogConfig;
 
-    return this.dialog_.open(ConfirmDialog, {data: config}).afterClosed();
+    return this.dialog_.open(ConfirmDialogComponent, {data: config}).afterClosed();
   }
 }

@@ -27,7 +27,7 @@ import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
   selector: 'kd-delete-resource-dialog',
   templateUrl: 'template.html',
 })
-export class EditResourceDialog implements OnInit {
+export class EditResourceDialogComponent implements OnInit {
   selectedMode = EditorMode.YAML;
 
   @ViewChild('group', {static: true}) buttonToggleGroup: MatButtonToggleGroup;
@@ -36,7 +36,7 @@ export class EditResourceDialog implements OnInit {
 
   private destroyRef = inject(DestroyRef);
   constructor(
-    public dialogRef: MatDialogRef<EditResourceDialog>,
+    public dialogRef: MatDialogRef<EditResourceDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: ResourceMeta,
     private readonly http_: HttpClient
   ) {}

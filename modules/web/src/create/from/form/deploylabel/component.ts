@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {Component, forwardRef, Input} from '@angular/core';
+import {Component, forwardRef, Input, OnInit} from '@angular/core';
 import {
   AbstractControl,
   ControlValueAccessor,
@@ -48,7 +48,7 @@ interface DeployLabelI {
     },
   ],
 })
-export class DeployLabelComponent implements ControlValueAccessor {
+export class DeployLabelComponent implements OnInit, ControlValueAccessor {
   @Input() labelArr: DeployLabel[];
 
   labelForm: UntypedFormGroup;

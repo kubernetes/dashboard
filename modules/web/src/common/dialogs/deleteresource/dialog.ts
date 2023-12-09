@@ -20,9 +20,9 @@ import {ResourceMeta} from '../../services/global/actionbar';
   selector: 'kd-delete-resource-dialog',
   templateUrl: 'template.html',
 })
-export class DeleteResourceDialog {
+export class DeleteResourceDialogComponent {
   constructor(
-    public dialogRef: MatDialogRef<DeleteResourceDialog>,
+    public dialogRef: MatDialogRef<DeleteResourceDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: ResourceMeta
   ) {}
 

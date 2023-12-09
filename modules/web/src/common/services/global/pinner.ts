@@ -17,7 +17,7 @@ import {PinnedResource} from '@api/root.api';
 import {HttpClient, HttpErrorResponse} from '@angular/common/http';
 import {Subject} from 'rxjs';
 import {MatDialog, MatDialogConfig} from '@angular/material/dialog';
-import {AlertDialog, AlertDialogConfig} from '../../dialogs/alert/dialog';
+import {AlertDialogComponent, AlertDialogConfig} from '../../dialogs/alert/dialog';
 import {VerberService} from './verber';
 
 @Injectable()
@@ -100,7 +100,7 @@ export class PinnerService {
           confirmLabel: 'OK',
         },
       };
-      this.dialog_.open(AlertDialog, alertDialogConfig);
+      this.dialog_.open(AlertDialogComponent, alertDialogConfig);
     }
   }
 }

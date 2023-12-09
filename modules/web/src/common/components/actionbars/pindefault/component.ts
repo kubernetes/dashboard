@@ -22,7 +22,7 @@ import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
   selector: '',
   templateUrl: './template.html',
 })
-export class PinDefaultActionbar implements OnInit {
+export class PinDefaultActionbarComponent implements OnInit {
   isInitialized = false;
   isVisible = false;
   resourceMeta: ResourceMeta;

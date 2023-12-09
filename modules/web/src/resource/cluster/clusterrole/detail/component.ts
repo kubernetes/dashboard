@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {Component, DestroyRef, inject, OnInit} from '@angular/core';
+import {Component, DestroyRef, inject, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {ClusterRoleDetail} from '@api/root.api';
 
@@ -26,7 +26,7 @@ import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
   selector: 'kd-cluster-role-detail',
   templateUrl: './template.html',
 })
-export class ClusterRoleDetailComponent implements OnInit {
+export class ClusterRoleDetailComponent implements OnInit, OnDestroy {
   private readonly endpoint_ = EndpointManager.resource(Resource.clusterRole);
 
   clusterRole: ClusterRoleDetail;

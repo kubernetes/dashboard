@@ -22,7 +22,7 @@ import {Component, Input, OnInit} from '@angular/core';
     '[class.kd-loading-shade]': 'isLoading',
   },
 })
-export class LoadingSpinner implements OnInit {
+export class LoadingSpinnerComponent implements OnInit {
   @Input() isLoading: boolean;
 
   ngOnInit(): void {

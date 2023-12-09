@@ -18,7 +18,7 @@ import {AbstractControl, UntypedFormBuilder, UntypedFormGroup, Validators} from 
 import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material/dialog';
 import {IConfig} from '@api/root.ui';
 import {switchMap} from 'rxjs/operators';
-import {AlertDialog, AlertDialogConfig} from '@common/dialogs/alert/dialog';
+import {AlertDialogComponent, AlertDialogConfig} from '@common/dialogs/alert/dialog';
 import {CsrfTokenService} from '@common/services/global/csrftoken';
 import {CONFIG_DI_TOKEN} from '../../../../index.config';
 
@@ -33,7 +33,7 @@ export interface CreateNamespaceDialogMeta {
   selector: 'kd-create-namespace-dialog',
   templateUrl: 'template.html',
 })
-export class CreateNamespaceDialog implements OnInit {
+export class CreateNamespaceDialogComponent implements OnInit {
   form: UntypedFormGroup;
 
   /**
@@ -46,7 +46,7 @@ export class CreateNamespaceDialog implements OnInit {
   namespacePattern = new RegExp('^[a-z0-9]([-a-z0-9]*[a-z0-9])?$');
 
   constructor(
-    public dialogRef: MatDialogRef<CreateNamespaceDialog>,
+    public dialogRef: MatDialogRef<CreateNamespaceDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: CreateNamespaceDialogMeta,
     private readonly http_: HttpClient,
     private readonly csrfToken_: CsrfTokenService,
@@ -98,7 +98,7 @@ export class CreateNamespaceDialog implements OnInit {
             message: error.data,
             confirmLabel: 'OK',
           };
-          this.matDialog_.open(AlertDialog, {data: configData});
+          this.matDialog_.open(AlertDialogComponent, {data: configData});
         }
       );
   }

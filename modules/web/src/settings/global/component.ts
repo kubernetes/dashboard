@@ -25,7 +25,7 @@ import {GlobalSettingsService} from '@common/services/global/globalsettings';
 import {TitleService} from '@common/services/global/title';
 import {ResourceService} from '@common/services/resource/resource';
 
-import {SaveAnywayDialog} from './saveanywaysdialog/dialog';
+import {SaveAnywayDialogComponent} from './saveanywaysdialog/dialog';
 import {SettingsHelperService} from './service';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 
@@ -136,7 +136,7 @@ export class GlobalSettingsComponent implements OnInit {
 
   private onSaveError_(err: HttpErrorResponse): Observable<boolean> {
     if (err && err.error.indexOf(this.concurrentChangeErr_) !== -1) {
-      return this.dialog_.open(SaveAnywayDialog, {width: '420px'}).afterClosed();
+      return this.dialog_.open(SaveAnywayDialogComponent, {width: '420px'}).afterClosed();
     }
 
     return of(false);

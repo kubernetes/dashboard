@@ -20,9 +20,9 @@ import {Chip} from '../component';
   selector: 'kd-chip-dialog',
   templateUrl: 'template.html',
 })
-export class ChipDialog {
+export class ChipDialogComponent {
   constructor(
-    public dialogRef: MatDialogRef<ChipDialog>,
+    public dialogRef: MatDialogRef<ChipDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: Chip
   ) {}
 

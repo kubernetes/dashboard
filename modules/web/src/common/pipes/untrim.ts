@@ -12,14 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {Pipe} from '@angular/core';
+import {Pipe, PipeTransform} from '@angular/core';
 import {SafeHtml} from '@angular/platform-browser';
 
 /**
  * Replaces all whitespace characters with the non-breaking unicode space to keep i.e. indent
  */
 @Pipe({name: 'kdUntrim'})
-export class UntrimPipe {
+export class UntrimPipe implements PipeTransform {
   private readonly _nonBreakingSpace = 160;
 
   transform(value: string | SafeHtml): string {

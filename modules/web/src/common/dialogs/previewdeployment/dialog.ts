@@ -28,7 +28,7 @@ export interface PreviewDeploymentDialogData {
   selector: 'kd-preview-deploy-dialog',
   templateUrl: 'template.html',
 })
-export class PreviewDeploymentDialog implements OnInit {
+export class PreviewDeploymentDialogComponent implements OnInit {
   @ViewChild('group', {static: true}) buttonToggleGroup: MatButtonToggleGroup;
   text = '';
   selectedMode = EditorMode.YAML;
@@ -36,7 +36,7 @@ export class PreviewDeploymentDialog implements OnInit {
 
   private destroyRef = inject(DestroyRef);
   constructor(
-    public dialogRef: MatDialogRef<PreviewDeploymentDialog>,
+    public dialogRef: MatDialogRef<PreviewDeploymentDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: PreviewDeploymentDialogData
   ) {}
 

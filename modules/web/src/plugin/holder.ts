@@ -29,7 +29,7 @@ import {PluginLoaderService} from '@common/services/pluginloader/pluginloader.se
 })
 export class PluginHolderComponent implements OnInit {
   @ViewChild('pluginViewRef', {read: ViewContainerRef, static: true}) vcRef: ViewContainerRef;
-  @Input('pluginName') private pluginName: string;
+  @Input() private pluginName: string;
   entryError = false;
 
   constructor(
