@@ -40,10 +40,10 @@ limitations under the License.
         <mat-header-cell *matHeaderCellDef
                          mat-sort-header
                          disableClear="true"
-                         class="col-stretch-xl"
+                         class="col-stretch-l"
                          i18n>Name</mat-header-cell>
         <mat-cell *matCellDef="let ingressRoute"
-                  class="col-stretch-xl">
+                  class="col-stretch-l">
           <a [routerLink]="getDetailsHref(ingressRoute.objectMeta.name, ingressRoute.objectMeta.namespace)"
              queryParamsHandling="preserve">
             {{ ingressRoute.objectMeta.name }}
@@ -62,27 +62,11 @@ limitations under the License.
 
       <ng-container matColumnDef="labels">
         <mat-header-cell *matHeaderCellDef
-                         class="col-stretch-xl"
+                         class="col-stretch-l"
                          i18n>Labels</mat-header-cell>
         <mat-cell *matCellDef="let ingressRoute"
-                  class="col-stretch-xl">
-          <kd-chips [map]="ingressRoute.objectMeta.labels"></kd-chips>
-        </mat-cell>
-      </ng-container>
-
-      <ng-container matColumnDef="endpoints">
-        <mat-header-cell *matHeaderCellDef
-                         class="col-stretch-l"
-                         i18n>
-          Endpoints
-          <mat-icon class="external-link-icon kd-clickable"
-                    i18n-matTooltip
-                    matTooltip="Endpoint links are external links that will be open in a new tab.">open_in_new</mat-icon>
-        </mat-header-cell>
-        <mat-cell *matCellDef="let ingressRoute"
                   class="col-stretch-l">
-          <kd-external-endpoint [endpoints]="ingressRoute.endpoints"
-                                [hideExternalIcon]="true"></kd-external-endpoint>
+          <kd-chips [map]="ingressRoute.objectMeta.labels"></kd-chips>
         </mat-cell>
       </ng-container>
 
@@ -92,29 +76,38 @@ limitations under the License.
                          class="col-stretch-xl"
                          i18n>
           Hosts
+          <mat-icon class="external-link-icon kd-clickable"
+                    i18n-matTooltip
+                    matTooltip="Endpoint links are external links that will be open in a new tab.">open_in_new</mat-icon>
         </mat-header-cell>
         <mat-cell *matCellDef="let ingressRoute"
                   class="col-stretch-xl">
-          <div *ngFor="let host of ingressRoute?.hosts"
-               class="kd-ellipsised">
-            <p> {{ host }} </p>
-          </div>
-
+          <ul style="margin: 0;padding-left: 0;">
+            <li *ngFor="let host of ingressRoute?.hosts"
+                class="kd-ellipsised">
+              <ng-container *ngIf="extractHostname(host) as hostname">
+                <a href="https://{{ hostname }}" target="_blank"> {{ host }}</a>
+              </ng-container>
+            </li>
+          </ul>
           <div *ngIf="ingressRoute?.hosts?.length === 0">-</div>
         </mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="entrypoints">
         <mat-header-cell *matHeaderCellDef
-                         mat-sort-header
-                         disableClear="true"
                          class="col-stretch-m"
                          i18n>Entrypoints</mat-header-cell>
         <mat-cell *matCellDef="let ingressRoute"
                   class="col-stretch-m">
-            <kd-chips [map]="ingressRoute?.entrypoints"></kd-chips>
+          <ul style="list-style-type: none; padding: 0;">
+            <li *ngFor="let entrypoint of ingressRoute.entrypoints">
+              {{ entrypoint }}
+            </li>
+          </ul>
         </mat-cell>
       </ng-container>
+
 
       <ng-container matColumnDef="created">
         <mat-header-cell *matHeaderCellDef

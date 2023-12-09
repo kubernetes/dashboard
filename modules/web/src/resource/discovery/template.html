@@ -15,10 +15,10 @@ limitations under the License.
 -->
 
 <div [hidden]="shouldShowZeroState()">
-  <kd-ingress-list (onchange)="onListUpdate($event)"
-                   [hideable]="true"></kd-ingress-list>
-  <kd-ingress-class-list (onchange)="onListUpdate($event)"
-                         [hideable]="true"></kd-ingress-class-list>
+  <kd-ingressroute-list (onchange)="onListUpdate($event)"
+                   [hideable]="true"></kd-ingressroute-list>
+  <kd-ingressroutetcp-list (onchange)="onListUpdate($event)"
+                         [hideable]="true"></kd-ingressroutetcp-list>
   <kd-service-list (onchange)="onListUpdate($event)"
                    [hideable]="true"></kd-service-list>
 </div>

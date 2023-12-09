@@ -33,11 +33,10 @@ type IngressRoute struct {
 	api.TypeMeta   `json:"typeMeta"`
 
 	// Host of this ingress route.
-	Entrypoints []string `json:"entrypoints"`
-	Hosts       []string `json:"hosts"`
+	Entrypoints []string            `json:"entrypoints"`
+	Hosts       []string            `json:"hosts"`
 	Service     []traefikv1.Service `json:"service"`
 }
-
 
 type IngressRouteList struct {
 	api.ListMeta `json:"listMeta"`
@@ -109,11 +108,11 @@ func getService(ingress *traefikv1.IngressRoute) []traefikv1.Service {
 
 func toIngressRoute(ingress *traefikv1.IngressRoute) IngressRoute {
 	return IngressRoute{
-		ObjectMeta: api.NewObjectMeta(ingress.ObjectMeta),
-		TypeMeta:   api.NewTypeMeta(api.ResourceKindIngress),
-		Entrypoints:  getEntrypoints(ingress),
-		Hosts:      getHosts(ingress),
-		Service:		getService(ingress),
+		ObjectMeta:  api.NewObjectMeta(ingress.ObjectMeta),
+		TypeMeta:    api.NewTypeMeta(api.ResourceKindIngressRoute),
+		Entrypoints: getEntrypoints(ingress),
+		Hosts:       getHosts(ingress),
+		Service:     getService(ingress),
 	}
 }
 

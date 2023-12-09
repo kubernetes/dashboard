@@ -58,7 +58,7 @@ export class IngressRouteTCPListComponent extends ResourceListBase<IngressRouteT
   }
 
   getDisplayColumns(): string[] {
-    return ['name', 'hosts', 'labels', 'entrypoints', 'created']; //'entryPoints', 'hosts',
+    return ['name', 'labels', 'hosts', 'entrypoints', 'created']; //'entryPoints', 'hosts',
   }
 
   private shouldShowNamespaceColumn_(): boolean {

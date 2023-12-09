@@ -17,72 +17,135 @@ limitations under the License.
 <kd-object-meta [initialized]="isInitialized"
                 [objectMeta]="ingressroutetcp?.objectMeta"></kd-object-meta>
 
-<kd-card *ngIf="ingressroutetcp?.spec?.defaultBackend || ingressroutetcp?.endpoints"
+<!-- EntryPoints Block -->
+<kd-card *ngIf="ingressroutetcp?.spec?.entryPoints?.length > 0"
          [initialized]="isInitialized">
-  <div title
-       >Resource information</div>
-  <div content
-       *ngIf="isInitialized"
-       fxLayout="row wrap">
-    <kd-property *ngIf="ingressroutetcp?.spec?.ingressroutetcpClassName">
-      <div key
-           >ingressroute Class Name</div>
-      <div value>{{ ingressroutetcp.spec.ingressrouteClassName }}</div>
-    </kd-property>
-
-    <kd-property *ngIf="ingressroutetcp?.endpoints?.length > 0"
-                 fxFlex="100">
-      <div key
-           >Endpoints</div>
+  <div title>EntryPoints</div>
+  <div content *ngIf="isInitialized" fxLayout="row wrap">
+    <kd-property fxFlex="100">
       <div value>
-        <kd-external-endpoint *ngFor="let endpoint of ingressroutetcp.endpoints"
-                              [endpoints]="[endpoint]"></kd-external-endpoint>
+        <div *ngFor="let entryPoint of ingressroutetcp.spec.entryPoints">
+          {{ entryPoint }}
+        </div>
       </div>
     </kd-property>
+  </div>
+</kd-card>
 
-    <div fxFlex="100"
-         fxLayout="column"
-         fxLayoutGap="8px"
-         *ngIf="ingressroutetcp?.spec?.defaultBackend">
-      <div fxFlex
-           class="kd-muted section-header"
-           >Default Backend</div>
 
-      <div fxLayout="row wrap">
-        <ng-container *ngIf="ingressroutetcp.spec.defaultBackend.service">
-          <kd-property>
-            <div key
-                 >Service Name</div>
-            <div value>{{ ingressroutetcp.spec.defaultBackend.service.name }}</div>
+<!-- Routes Block -->
+<kd-card *ngIf="ingressroutetcp?.spec?.routes?.length > 0" [initialized]="isInitialized">
+  <div title>Routes</div>
+  <div content *ngIf="isInitialized">
+    <mat-table [dataSource]="ingressroutetcp.spec.routes">
+      <!-- Match Column -->
+      <ng-container matColumnDef="match">
+        <mat-header-cell *matHeaderCellDef
+                         disableClear="true"
+                         class="col-stretch-xl"
+                         i18n>
+                         Match
+        </mat-header-cell>                         
+        <mat-cell *matCellDef="let route"
+                  class="col-stretch-xl">
+                  {{ route.match }}
+        </mat-cell>
+      </ng-container>
+
+      <!-- Service Name Column -->
+      <ng-container matColumnDef="serviceName">
+        <mat-header-cell *matHeaderCellDef
+                         disableClear="true"
+                         class="col-stretch-xl"
+                         i18n>
+                         Service
+        </mat-header-cell> 
+        <mat-cell *matCellDef="let route"
+                  class="col-stretch-xl">
+                  <ul style="list-style-type: none; padding: 0;">
+                    <li *ngFor="let service of route.services">
+                      <a [routerLink]="getServiceHref(service.name, ingressroutetcp?.objectMeta?.namespace)" queryParamsHandling="preserve">
+                        {{ service.name }}
+                      </a>
+                    </li>
+                  </ul>
+        </mat-cell>
+      </ng-container>
+
+      <!-- Service Port Column -->
+      <ng-container matColumnDef="servicePort">
+        <mat-header-cell *matHeaderCellDef
+                         disableClear="true"
+                         class="col-stretch-xl"
+                         i18n>
+                         Service Port
+        </mat-header-cell> 
+        <mat-cell *matCellDef="let route"
+                  class="col-stretch-xl">
+                  <ul style="list-style-type: none; padding: 0;">
+                    <li *ngFor="let service of route.services">
+                      {{ service.port }}
+                    </li>
+                  </ul>
+        </mat-cell>
+      </ng-container>
+
+      <mat-header-row *matHeaderRowDef="['match', 'serviceName', 'servicePort']"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: ['match', 'serviceName', 'servicePort']"></mat-row>
+    </mat-table>
+  </div>
+</kd-card>
+
+
+
+<!-- TLS Block -->
+<kd-card *ngIf="ingressroutetcp?.spec?.tls && !isEmptyObject(ingressroutetcp?.spec?.tls)"
+         [initialized]="isInitialized">
+  <div title>TLS</div>
+  <div content *ngIf="isInitialized" fxLayout="column">
+    <!-- Secret Name -->
+    <kd-property *ngIf="ingressroutetcp.spec.tls.secretName">
+      <div key>Secret Name</div>
+      <div value>{{ ingressroutetcp.spec.tls.secretName }}</div>
+    </kd-property>
+    <!-- Options -->
+    <div *ngIf="ingressroutetcp.spec.tls.options">
+      <div class="kd-muted section-header">Options</div>
+      <kd-property *ngIf="ingressroutetcp.spec.tls.options.name">
+        <div key>Name</div>
+        <div value>{{ ingressroutetcp.spec.tls.options.name }}</div>
+      </kd-property>
+      <kd-property *ngIf="ingressroutetcp.spec.tls.options.namespace">
+        <div key>Namespace</div>
+        <div value>{{ ingressroutetcp.spec.tls.options.namespace }}</div>
+      </kd-property>
+    </div>
+    <!-- Cert Resolver -->
+    <kd-property *ngIf="ingressroutetcp.spec.tls.certResolver">
+      <div key>Cert Resolver</div>
+      <div value>{{ ingressroutetcp.spec.tls.certResolver }}</div>
+    </kd-property>
+    <!-- Domains -->
+    <div *ngIf="ingressroutetcp.spec.tls.domains?.length > 0">
+      <div class="kd-muted section-header">Domains</div>
+      <div fxLayout="column" fxLayoutGap="8px">
+        <div *ngFor="let domain of ingressroutetcp.spec.tls.domains">
+          <!-- Main -->
+          <kd-property *ngIf="domain.main">
+            <div key>Main</div>
+            <div value>{{ domain.main }}</div>
           </kd-property>
-
-          <kd-property *ngIf="ingressroutetcp.spec.defaultBackend.service.port?.name">
-            <div key
-                 >Service Port Name</div>
-            <div value>{{ ingressroutetcp.spec.defaultBackend.service.port.name }}</div>
+          <!-- SANs -->
+          <kd-property *ngIf="domain.sans?.length > 0">
+            <div key>SANs</div>
+            <div value>
+              <div *ngFor="let san of domain.sans">
+                {{ san }}
+              </div>
+            </div>
           </kd-property>
-
-          <kd-property *ngIf="ingressroutetcp.spec.defaultBackend.service.port?.number !== undefined">
-            <div key
-                 >Service Port Number</div>
-            <div value>{{ ingressroutetcp.spec.defaultBackend.service.port.number }}</div>
-          </kd-property>
-
-          <kd-property *ngIf="ingressroutetcp.spec.defaultBackend.resource">
-            <div key
-                 >{{ ingressroutetcp.spec.defaultBackend.resource.kind }}</div>
-            <div value>{{ ingressroutetcp.spec.defaultBackend.resource.name }}</div>
-          </kd-property>
-        </ng-container>
+        </div>
       </div>
     </div>
   </div>
 </kd-card>
-
-<!-- <kd-ingressroutetcpruleflat-card-list [ingressroutetcpSpecRules]="ingressroutetcp?.spec?.rules"
-                              [tlsList]="ingressroutetcp?.spec?.tls"
-                              [namespace]="ingressroutetcp?.objectMeta.namespace"
-                              [initialized]="isInitialized">
-</kd-ingressroutetcpruleflat-card-list> -->
-
-<kd-event-list [endpoint]="eventListEndpoint"></kd-event-list>
