@@ -123,6 +123,8 @@ const (
 	ResourceKindEvent                    = "event"
 	ResourceKindHorizontalPodAutoscaler  = "horizontalpodautoscaler"
 	ResourceKindIngress                  = "ingress"
+	ResourceKindIngressRoute             = "ingressroutes.traefik.containo.us"
+	ResourceKindIngressRouteTCP          = "ingressroutetcps.traefik.containo.us"
 	ResourceKindServiceAccount           = "serviceaccount"
 	ResourceKindJob                      = "job"
 	ResourceKindCronJob                  = "cronjob"

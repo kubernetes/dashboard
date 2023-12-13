@@ -1059,8 +1059,8 @@
       <trans-unit id="5808753866335051996" datatype="html">
         <source>Monitors</source>
       </trans-unit>
-      <trans-unit id="4448312914724696881" datatype="html">
-        <source>Ingresses Route</source>
+      <trans-unit id="5813540454109761631" datatype="html">
+        <source>Ingresses </source>
       </trans-unit>
       <trans-unit id="5818955156850908956" datatype="html">
         <source>Secret name</source>
@@ -1805,8 +1805,8 @@
       <trans-unit id="6060619257650890968" datatype="html">
         <source>IngressRoutes</source>
       </trans-unit>
-      <trans-unit id="7634552167815937542" datatype="html">
-        <source>Ingress Route TCP </source>
+      <trans-unit id="5365297951261797365" datatype="html">
+        <source>IngressRouteTCPs </source>
       </trans-unit>
       <trans-unit id="2632454463313076265" datatype="html">
         <source>IngressRoutesTCP</source>
@@ -1816,6 +1816,24 @@
       </trans-unit>
       <trans-unit id="8890401224023450705" datatype="html">
         <source>Entrypoints</source>
+      </trans-unit>
+      <trans-unit id="1784168874629208042" datatype="html">
+        <source> Match </source>
+      </trans-unit>
+      <trans-unit id="1813894172148248223" datatype="html">
+        <source>Ingress Classes </source>
+      </trans-unit>
+      <trans-unit id="5981681848320514663" datatype="html">
+        <source> Service Port </source>
+      </trans-unit>
+      <trans-unit id="6175940703350311460" datatype="html">
+        <source>IngressRouteTCPs</source>
+      </trans-unit>
+      <trans-unit id="7260804917752247227" datatype="html">
+        <source> Service </source>
+      </trans-unit>
+      <trans-unit id="8225641011747898568" datatype="html">
+        <source> Match <x id="START_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&quot;\uFFFD#2\uFFFD&quot;"/>open_in_new<x id="CLOSE_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&quot;\uFFFD/#2\uFFFD&quot;"/></source>
       </trans-unit>
     </body>
   </file>

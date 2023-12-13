@@ -57,8 +57,14 @@ export class IngressRouteListComponent extends ResourceListBase<IngressRouteList
     return ingressList.items;
   }
 
+  extractHostname(host: string): string {
+    const matches = Array.from(host.matchAll(/`([^`]+)`/g));
+    const parts = matches.map(match => match[1]);
+    return parts.join('');
+  }
+
   getDisplayColumns(): string[] {
-    return ['name', 'hosts', 'labels', 'entrypoints', 'created']; //'entryPoints', 'hosts',
+    return ['name', 'labels', 'hosts', 'entrypoints', 'created']; //'entryPoints', 'hosts',
   }
 
   private shouldShowNamespaceColumn_(): boolean {

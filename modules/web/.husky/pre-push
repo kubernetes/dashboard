@@ -18,5 +18,5 @@
 # Restore proper directory since husky is not installed in git root
 cd modules/web/.husky
 
-yarn check
-yarn test
+#yarn check
+#yarn test

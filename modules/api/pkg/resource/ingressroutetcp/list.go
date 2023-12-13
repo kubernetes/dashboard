@@ -28,14 +28,13 @@ import (
 	"k8s.io/dashboard/api/pkg/resource/dataselect"
 )
 
-
 type IngressRouteTCP struct {
 	api.ObjectMeta `json:"objectMeta"`
 	api.TypeMeta   `json:"typeMeta"`
 
 	// Host of this ingress route.
-	Entrypoints []string `json:"entrypoints"`
-	Hosts       []string `json:"hosts"`
+	Entrypoints []string               `json:"entrypoints"`
+	Hosts       []string               `json:"hosts"`
 	Service     []traefikv1.ServiceTCP `json:"service"`
 }
 
@@ -65,7 +64,6 @@ func GetIngressRouteTCPList(client client.Interface, namespace *common.Namespace
 
 	return ToIngressRouteTCPList(ingressList.Items, nonCriticalErrors, dsQuery), nil
 }
-
 
 func getHosts(ingress *traefikv1.IngressRouteTCP) []string {
 	hosts := make([]string, 0)
@@ -110,11 +108,11 @@ func getService(ingress *traefikv1.IngressRouteTCP) []traefikv1.ServiceTCP {
 
 func toIngressRouteTCP(ingress *traefikv1.IngressRouteTCP) IngressRouteTCP {
 	return IngressRouteTCP{
-		ObjectMeta: api.NewObjectMeta(ingress.ObjectMeta),
-		TypeMeta:   api.NewTypeMeta(api.ResourceKindIngress),
-		Entrypoints:  getEntrypoints(ingress),
-		Hosts:      getHosts(ingress),
-		Service:		getService(ingress),
+		ObjectMeta:  api.NewObjectMeta(ingress.ObjectMeta),
+		TypeMeta:    api.NewTypeMeta(api.ResourceKindIngressRouteTCP),
+		Entrypoints: getEntrypoints(ingress),
+		Hosts:       getHosts(ingress),
+		Service:     getService(ingress),
 	}
 }
 

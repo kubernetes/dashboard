@@ -15,6 +15,7 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {IngressRouteDetail} from '@api/root.api';
+import {KdStateService} from '@common/services/global/state';
 
 import {ActionbarService, ResourceMeta} from '@common/services/global/actionbar';
 import {NotificationsService} from '@common/services/global/notifications';
@@ -38,6 +39,7 @@ export class IngressRouteDetailComponent implements OnInit, OnDestroy {
     private readonly ingressroute_: NamespacedResourceService<IngressRouteDetail>,
     private readonly actionbar_: ActionbarService,
     private readonly activatedRoute_: ActivatedRoute,
+    private readonly kdState_: KdStateService,
     private readonly notifications_: NotificationsService
   ) {}
 
@@ -57,6 +59,19 @@ export class IngressRouteDetailComponent implements OnInit, OnDestroy {
         this.actionbar_.onInit.emit(new ResourceMeta('IngressRoute', d.objectMeta, d.typeMeta));
         this.isInitialized = true;
       });
+  }
+  getServiceHref(name: string, namespace: string): string {
+    return this.kdState_.href('service', name, namespace);
+  }
+
+  extractHostname(host: string): string {
+    const matches = Array.from(host.matchAll(/`([^`]+)`/g));
+    const parts = matches.map(match => match[1]);
+    return parts.join('');
+  }
+
+  isEmptyObject(obj: Object): boolean {
+    return Object.keys(obj).length === 0 && obj.constructor === Object;
   }
 
   ngOnDestroy(): void {
