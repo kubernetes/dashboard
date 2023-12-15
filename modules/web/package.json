@@ -124,7 +124,7 @@
     "lodash-es": "4.17.21",
     "minimatch": "9.0.3",
     "minimist": "1.2.8",
-    "ng-extract-i18n-merge": "2.9.0",
+    "ng-extract-i18n-merge": "2.9.1",
     "node-gyp": "10.0.1",
     "q": "1.5.1",
     "raw-loader": "4.0.2",
