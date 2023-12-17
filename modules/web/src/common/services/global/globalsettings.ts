@@ -31,7 +31,7 @@ export const DEFAULT_SETTINGS: GlobalSettings = {
   disableAccessDeniedNotifications: false,
   defaultNamespace: 'default',
   namespaceFallbackList: ['default'],
-  primaryColor: "rgb(0, 0, 0)"
+  primaryColor: "#326de6"
 };
 
 @Injectable({providedIn: 'root'})

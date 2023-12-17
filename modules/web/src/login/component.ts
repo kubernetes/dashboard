@@ -12,6 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import {DOCUMENT} from '@angular/common';
 import {HttpClient, HttpErrorResponse} from '@angular/common/http';
 import {Component, Inject, NgZone, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
@@ -26,6 +27,7 @@ import {CookieService} from 'ngx-cookie-service';
 import {map} from 'rxjs/operators';
 import {CONFIG_DI_TOKEN} from '../index.config';
 import {SKIP_LOGIN_PAGE_QUERY_STATE_PARAM} from '@common/params/params';
+import {GlobalSettingsService} from '@common/services/global/globalsettings';
 
 enum LoginModes {
   Kubeconfig = 'kubeconfig',
@@ -60,7 +62,9 @@ export class LoginComponent implements OnInit {
     private readonly route_: ActivatedRoute,
     private readonly pluginConfigService_: PluginsConfigService,
     private readonly historyService_: HistoryService,
-    @Inject(CONFIG_DI_TOKEN) private readonly CONFIG: IConfig
+    @Inject(CONFIG_DI_TOKEN) private readonly CONFIG: IConfig,
+    @Inject(DOCUMENT) private readonly document_: Document,
+    private readonly globalSettings_: GlobalSettingsService
   ) {}
 
   ngOnInit(): void {
@@ -102,6 +106,10 @@ export class LoginComponent implements OnInit {
     if (this.token_ !== null) {
       this.login();
     }
+  }
+
+  ngAfterViewInit(): void {
+    document.documentElement.style.setProperty('--primary-color', this.globalSettings_.getPrimaryColor());
   }
 
   getEnabledAuthenticationModes(): AuthenticationMode[] {
