@@ -125,7 +125,7 @@ var defaultSettings = Settings{
 	DisableAccessDeniedNotifications: false,
 	DefaultNamespace:                 "default",
 	NamespaceFallbackList:            []string{"default"},
-	PrimaryColor:                     "FFFFFF",
+	PrimaryColor:                     "#326de6",
 }
 
 // GetDefaultSettings returns settings structure, that should be used if there are no
