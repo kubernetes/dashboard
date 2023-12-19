@@ -102,7 +102,7 @@ jobs:
       - name: Start kind cluster
         uses: helm/kind-action@v1.8.0
         with:
-          node_image: kindest/node:v1.28.0
+          node_image: kindest/node:v1.29.0
 
       - name: Set up Go
         uses: actions/setup-go@v5
