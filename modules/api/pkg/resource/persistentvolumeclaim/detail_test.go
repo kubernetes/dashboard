@@ -35,7 +35,7 @@ func TestGetPersistentVolumeClaimDetail(t *testing.T) {
 				ObjectMeta: metaV1.ObjectMeta{Name: "foo", Namespace: "bar"},
 				Spec: v1.PersistentVolumeClaimSpec{
 					AccessModes: []v1.PersistentVolumeAccessMode{v1.ReadWriteOnce},
-					Resources:   v1.ResourceRequirements{},
+					Resources:   v1.VolumeResourceRequirements{},
 					VolumeName:  "volume",
 				},
 				Status: v1.PersistentVolumeClaimStatus{
