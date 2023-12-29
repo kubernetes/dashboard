@@ -25,7 +25,7 @@ metadata:
     app.kubernetes.io/component: {{ .Values.api.role }}
   name: {{ template "kubernetes-dashboard.fullname" . }}-{{ .Values.api.role }}
 spec:
-  replicas: {{ .Values.app.scaling.replicas }}
+  replicas: {{ .Values.api.replicas }}
   revisionHistoryLimit: {{ .Values.app.scaling.revisionHistoryLimit }}
   selector:
     matchLabels:
@@ -91,13 +91,19 @@ spec:
       nodeSelector:
       {{ toYaml . | nindent 8 }}
       {{- end }}
-      {{- with .Values.app.scheduling.nodeSelector }}
-      {{ toYaml . | nindent 8 }}
-      {{- end }}
 
-      {{- with .Values.app.tolerations }}
+      {{- with .Values.api.tolerations }}
       tolerations:
       {{ toYaml . | nindent 8 }}
       {{- end }}
-
+  
+      {{- with .Values.api.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
       serviceAccountName: {{ template "kubernetes-dashboard.fullname" . }}
+
+      {{- with .Values.api.topologySpreadConstraints }}
+      topologySpreadConstraints:
+      {{ toYaml . | nindent 8 }}
+      {{- end }}

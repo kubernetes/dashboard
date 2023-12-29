@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-{{- if .Values.app.security.podDisruptionBudget.enabled -}}
+{{- if .Values.web.podDisruptionBudget }}
 apiVersion: policy/v1
 kind: PodDisruptionBudget
 metadata:
@@ -25,17 +25,16 @@ metadata:
   {{- if .Values.app.annotations }}
   {{- include "common.tplvalues.render" ( dict "value" .Values.app.annotations "context" $ ) | nindent 4 }}
   {{- end }}
-  name: {{ template "kubernetes-dashboard.fullname" . }}
+  name: {{ template "kubernetes-dashboard.fullname" . }}-{{ .Values.web.role }}
 spec:
   selector:
     matchLabels:
-    {{ include "kubernetes-dashboard.matchLabels" . | nindent 6 }}
-
-  {{- if .Values.app.security.podDisruptionBudget.minAvailable }}
-  minAvailable: {{ .Values.app.security.podDisruptionBudget.minAvailable }}
-  {{- end }}
-
-  {{- if .Values.app.security.podDisruptionBudget.maxUnavailable }}
-  maxUnavailable: {{ .Values.app.security.podDisruptionBudget.maxUnavailable }}
-  {{- end }}
+      {{ include "kubernetes-dashboard.matchLabels" . | nindent 6 }}
+      {{- with .Values.web.labels }}
+      {{ toYaml . | nindent 6 }}
+      {{- end }}
+      app.kubernetes.io/name: {{ template "kubernetes-dashboard.name" . }}-{{ .Values.web.role }}
+      app.kubernetes.io/version: {{ .Values.web.image.tag }}
+      app.kubernetes.io/component: {{ .Values.web.role }}
+  {{- toYaml .Values.web.podDisruptionBudget | nindent 2 }}
 {{- end -}}

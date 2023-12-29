@@ -97,14 +97,20 @@ spec:
       nodeSelector:
       {{ toYaml . | nindent 8 }}
       {{- end }}
-      {{- with .Values.app.scheduling.nodeSelector }}
-      {{ toYaml . | nindent 8 }}
-      {{- end }}
 
-      {{- with .Values.app.tolerations }}
+      {{- with .Values.metricsScraper.tolerations }}
       tolerations:
       {{ toYaml . | nindent 8 }}
       {{- end }}
-
+  
+      {{- with .Values.metricsScraper.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
       serviceAccountName: {{ template "kubernetes-dashboard.fullname" . }}
+
+      {{- with .Values.metricsScraper.topologySpreadConstraints }}
+      topologySpreadConstraints:
+      {{ toYaml . | nindent 8 }}
+      {{- end }}
 {{ end }}

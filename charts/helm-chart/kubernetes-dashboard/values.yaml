@@ -18,13 +18,7 @@ app:
     pullPolicy: IfNotPresent
     pullSecrets: []
   scaling:
-    # Default number of replicas
-    replicas: 1
     revisionHistoryLimit: 10
-  scheduling:
-    # Node labels for pod assignment
-    # Ref: https://kubernetes.io/docs/user-guide/node-selection/
-    nodeSelector: {}
   security:
     # SecurityContext to be added to pods
     # To disable set the following configuration to null:
@@ -43,12 +37,6 @@ app:
       runAsGroup: 2001
       capabilities:
         drop: ["ALL"]
-    # Pod Disruption Budget configuration
-    # Ref: https://kubernetes.io/docs/tasks/run-application/configure-pdb/
-    podDisruptionBudget:
-      enabled: false
-      minAvailable: 0
-      maxUnavailable: 0
     networkPolicy:
       enabled: false
       ingressDenyAll: false
@@ -100,10 +88,6 @@ app:
     paths:
       web: /
       api: /api
-  # Use the following toleration if Dashboard can be deployed on a tainted control-plane nodes
-  # - key: node-role.kubernetes.io/control-plane
-  #   effect: NoSchedule
-  tolerations: []
 
 # API deployment configuration
 api:
@@ -111,6 +95,19 @@ api:
   image:
     repository: docker.io/kubernetesui/dashboard-api
     tag: v1.0.0
+  # Default number of replicas
+  replicas: 1
+  #Ref: https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/
+  autoscaling:
+    enabled: false
+    # minReplicas: 1
+    # maxReplicas: 10
+    # targetCPUUtilizationPercentage: 80
+    # targetMemoryUtilizationPercentage: 80
+  # Ref: https://kubernetes.io/docs/tasks/run-application/configure-pdb/
+  podDisruptionBudget: {}
+    # maxUnavailable: 1
+    # minAvailable: 2
   containers:
     ports:
       - name: api
@@ -152,6 +149,17 @@ api:
     - name: tmp-volume
       emptyDir: {}
   nodeSelector: {}
+  # Use the following toleration if API Deployment can be deployed on a tainted control-plane nodes
+  # - key: node-role.kubernetes.io/control-plane
+  #   effect: NoSchedule
+  tolerations: []
+  ## Affinity for pod assignment
+  ## Ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity
+  # Ref: https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#affinity-and-anti-affinity
+  affinity: {}
+  ## Topology spread constraints rely on node labels to identify the topology domain(s) that each Node is in.
+  ## Ref: https://kubernetes.io/docs/concepts/workloads/pods/pod-topology-spread-constraints/
+  topologySpreadConstraints: []
   # Labels & annotations shared between API related resources
   labels: {}
   annotations: {}
@@ -162,6 +170,19 @@ web:
   image:
     repository: docker.io/kubernetesui/dashboard-web
     tag: v1.0.0
+  # Default number of replicas
+  replicas: 1
+  #Ref: https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/
+  autoscaling:
+    enabled: false
+    # minReplicas: 1
+    # maxReplicas: 10
+    # targetCPUUtilizationPercentage: 80
+    # targetMemoryUtilizationPercentage: 80
+  # Ref: https://kubernetes.io/docs/tasks/run-application/configure-pdb/
+  podDisruptionBudget: {}
+    # maxUnavailable: 1
+    # minAvailable: 1
   containers:
     ports:
       - name: web
@@ -205,6 +226,15 @@ web:
   nodeSelector:
     # TODO: check if it's really needed since we offer cross platform images for darwin/windows/linux
     kubernetes.io/os: linux
+  # Use the following toleration if WEB Deployment can be deployed on a tainted control-plane nodes
+  # - key: node-role.kubernetes.io/control-plane
+  #   effect: NoSchedule
+  tolerations: []
+  # Ref: https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#affinity-and-anti-affinity
+  affinity: {}
+  ## Topology spread constraints rely on node labels to identify the topology domain(s) that each Node is in.
+  ## Ref: https://kubernetes.io/docs/concepts/workloads/pods/pod-topology-spread-constraints/
+  topologySpreadConstraints: []
   # Labels & annotations shared between WEB UI related resources
   labels: {}
   annotations: {}
@@ -263,7 +293,16 @@ metricsScraper:
   nodeSelector:
     # TODO: check if it's really needed since we offer cross platform images for darwin/windows/linux
     kubernetes.io/os: linux
-  # Labels & annotations shared between WEB UI related resources
+  # Use the following toleration if Metric Scraper can be deployed on a tainted control-plane nodes
+  # - key: node-role.kubernetes.io/control-plane
+  #   effect: NoSchedule
+  tolerations: []
+  # Ref: https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#affinity-and-anti-affinity
+  affinity: {}
+  ## Topology spread constraints rely on node labels to identify the topology domain(s) that each Node is in.
+  ## Ref: https://kubernetes.io/docs/concepts/workloads/pods/pod-topology-spread-constraints/
+  topologySpreadConstraints: []
+  # Labels & annotations shared between Metric Scraper related resources
   labels: {}
   annotations: {}
 

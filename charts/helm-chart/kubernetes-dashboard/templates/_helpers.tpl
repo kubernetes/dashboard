@@ -62,3 +62,16 @@ Common label selectors
 app.kubernetes.io/instance: {{ .Release.Name }}
 app.kubernetes.io/part-of: {{ include "kubernetes-dashboard.name" . }}
 {{- end -}}
+
+{{/*
+Define apiVersion of HorizontalPodAutoscaler
+*/}}
+{{- define "kubernetes-dashboard.hpa.apiVersion" -}}
+{{- if .Capabilities.APIVersions.Has "autoscaling/v2" -}}
+{{- print "autoscaling/v2" -}}
+{{- else if .Capabilities.APIVersions.Has "autoscaling/v2beta2" -}}
+{{- print "autoscaling/v2beta2" -}}
+{{- else -}}
+{{- print "autoscaling/v2beta1" -}}
+{{- end -}}
+{{- end -}}
