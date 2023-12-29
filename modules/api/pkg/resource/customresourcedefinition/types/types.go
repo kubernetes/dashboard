@@ -18,6 +18,7 @@ import (
 	"encoding/json"
 
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	"k8s.io/apimachinery/pkg/apis/meta/v1/unstructured"
 
 	"k8s.io/apiextensions-apiserver/pkg/apis/apiextensions"
 
@@ -67,8 +68,9 @@ type CustomResourceDefinitionVersion struct {
 
 // CustomResourceObject represents a custom resource object.
 type CustomResourceObject struct {
-	TypeMeta   api.TypeMeta   `json:"typeMeta"`
-	ObjectMeta api.ObjectMeta `json:"objectMeta"`
+	AdditionalPrinterColumns unstructured.Unstructured `json:"additionalPrinterColumns,omitempty"`
+	TypeMeta                 api.TypeMeta              `json:"typeMeta"`
+	ObjectMeta               api.ObjectMeta            `json:"objectMeta"`
 }
 
 func (r *CustomResourceObject) UnmarshalJSON(data []byte) error {
@@ -76,14 +78,21 @@ func (r *CustomResourceObject) UnmarshalJSON(data []byte) error {
 		metav1.TypeMeta `json:",inline"`
 		ObjectMeta      metav1.ObjectMeta `json:"metadata,omitempty"`
 	}{}
+	tempUnstruct := &unstructured.Unstructured{}
 
 	err := json.Unmarshal(data, &tempStruct)
 	if err != nil {
 		return err
 	}
 
+	err = tempUnstruct.UnmarshalJSON(data)
+	if err != nil {
+		return err
+	}
+
 	r.TypeMeta = api.NewTypeMeta(api.ResourceKind(tempStruct.TypeMeta.Kind))
 	r.ObjectMeta = api.NewObjectMeta(tempStruct.ObjectMeta)
+	r.AdditionalPrinterColumns.Object = (*tempUnstruct).Object
 	return nil
 }
 

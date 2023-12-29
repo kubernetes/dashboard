@@ -22,6 +22,7 @@ import (
 	apiextensionsv1 "k8s.io/apiextensions-apiserver/pkg/apis/apiextensions/v1"
 	apiextensionsclientset "k8s.io/apiextensions-apiserver/pkg/client/clientset/clientset"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	"k8s.io/apimachinery/pkg/apis/meta/v1/unstructured"
 	"k8s.io/client-go/rest"
 
 	"k8s.io/dashboard/api/pkg/api"
@@ -29,6 +30,7 @@ import (
 	"k8s.io/dashboard/api/pkg/resource/common"
 	"k8s.io/dashboard/api/pkg/resource/customresourcedefinition/types"
 	"k8s.io/dashboard/api/pkg/resource/dataselect"
+	"strings"
 )
 
 // GetCustomResourceObjectList gets objects for a CR.
@@ -128,4 +130,20 @@ func toCRDObject(object *types.CustomResourceObject, crd *apiextensionsv1.Custom
 	object.TypeMeta.Kind = api.ResourceKind(crd.Name)
 	crdSubresources := crd.Spec.Versions[0].Subresources
 	object.TypeMeta.Scalable = crdSubresources != nil && crdSubresources.Scale != nil
+	tempMap := map[string]interface{}{}
+	for _, col := range crd.Spec.Versions[0].AdditionalPrinterColumns {
+		val, _, _ := unstructured.NestedString(object.AdditionalPrinterColumns.Object, splitJsonPath(col.JSONPath)...)
+		tempMap[col.Name] = val
+	}
+	object.AdditionalPrinterColumns.Object = tempMap
+}
+
+func splitJsonPath(path string) []string {
+	var paths []string
+	for _, p := range strings.Split(path, ".") {
+		if p != "" {
+			paths = append(paths, p)
+		}
+	}
+	return paths
 }
