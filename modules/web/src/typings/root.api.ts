@@ -251,7 +251,13 @@ export interface CRD extends Resource {
   established: string;
 }
 
-export type CRDObject = Resource;
+export interface AdditionalPrinterColumnValue {
+  [key: string]: string;
+}
+
+export interface CRDObject extends Resource {
+  additionalPrinterColumns: AdditionalPrinterColumnValue[];
+}
 
 export interface DaemonSet extends Resource {
   podInfo: PodInfo;
@@ -1002,10 +1008,18 @@ export interface CRDNames {
   categories?: string[];
 }
 
+export interface AdditionalPrinterColumn {
+  name: string;
+  type: string;
+  priority: number;
+  jsonPath: string;
+}
+
 export interface CRDVersion {
   name: string;
   served: boolean;
   storage: boolean;
+  additionalPrinterColumns: AdditionalPrinterColumn[];
 }
 
 export interface PodMetrics {

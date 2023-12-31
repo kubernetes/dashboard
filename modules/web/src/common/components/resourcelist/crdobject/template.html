@@ -53,12 +53,22 @@ limitations under the License.
         <mat-cell *matCellDef="let object">{{ object.objectMeta.namespace }}</mat-cell>
       </ng-container>
 
-      <ng-container [matColumnDef]="getColumns()[2]">
+      <ng-container [matColumnDef]="getColumns()[getColumns().length - 2]">
         <mat-header-cell *matHeaderCellDef
                          i18n>Created</mat-header-cell>
         <mat-cell *matCellDef="let object">
           <kd-date [date]="object.objectMeta.creationTimestamp"
                    relative></kd-date>
+        </mat-cell>
+      </ng-container>
+
+      <ng-container
+        *ngFor="let additionalColumn of getAdditionalDisplayColumns()"
+        [matColumnDef]="additionalColumn">
+        <mat-header-cell *matHeaderCellDef
+                         i18n>{{ additionalColumn }}</mat-header-cell>
+        <mat-cell *matCellDef="let object">
+          {{ object.additionalPrinterColumns[additionalColumn] }}
         </mat-cell>
       </ng-container>
 

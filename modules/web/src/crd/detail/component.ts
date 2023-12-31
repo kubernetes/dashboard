@@ -59,4 +59,10 @@ export class CRDDetailComponent implements OnInit, OnDestroy {
   isNamespaced(): boolean {
     return this.crd && this.crd.scope === 'Namespaced';
   }
+
+  getAdditionalDisplayColumns(): string[] {
+    return this.crd.versions[0]?.additionalPrinterColumns
+      .sort((a, b) => (a.priority < b.priority ? -1 : 1))
+      .map(c => c.name);
+  }
 }

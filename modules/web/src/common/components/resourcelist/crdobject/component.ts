@@ -34,6 +34,7 @@ import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 export class CRDObjectListComponent extends ResourceListBase<CRDObjectList, CRDObject> {
   @Input() endpoint: string;
   @Input() namespaced = false;
+  @Input() additionalDisplayColumns: string[] = [];
 
   constructor(
     private readonly crdObject_: NamespacedResourceService<CRDObjectList>,
@@ -62,7 +63,12 @@ export class CRDObjectListComponent extends ResourceListBase<CRDObjectList, CRDO
   }
 
   getDisplayColumns(): string[] {
-    return ['name', 'namespace', 'created'];
+    return ['name', 'namespace', ...this.getAdditionalDisplayColumns(), 'created'];
+  }
+
+  getAdditionalDisplayColumns(): string[] {
+    const defaultColumns = ['name', 'namespace', 'created'];
+    return this.additionalDisplayColumns.filter(v => !defaultColumns.includes(v));
   }
 
   areMultipleNamespacesSelected(): boolean {
