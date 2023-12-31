@@ -72,17 +72,12 @@ type CustomResourceDefinitionVersion struct {
 	AdditionalPrinterColumns []AdditionalPrinterColumn `json:"additionalPrinterColumns"`
 }
 
-type AdditionalPrinterColumnWithValue struct {
-	Name  string `json:"name"`
-	Value string `json:"value"`
-}
-
 // CustomResourceObject represents a custom resource object.
 type CustomResourceObject struct {
-	AdditionalPrinterColumns []AdditionalPrinterColumnWithValue `json:"additionalPrinterColumns,omitempty"`
-	RawObject                unstructured.Unstructured          `json:"-"` // the raw object as map[string]interface{} to grep the value for AdditionalPrinterColumnWithValue which is present on the CRD Details
-	TypeMeta                 api.TypeMeta                       `json:"typeMeta"`
-	ObjectMeta               api.ObjectMeta                     `json:"objectMeta"`
+	AdditionalPrinterColumns map[string]interface{}    `json:"additionalPrinterColumns,omitempty"`
+	RawObject                unstructured.Unstructured `json:"-"` // the raw object as map[string]interface{} to grep the value for AdditionalPrinterColumnWithValue which is present on the CRD Details
+	TypeMeta                 api.TypeMeta              `json:"typeMeta"`
+	ObjectMeta               api.ObjectMeta            `json:"objectMeta"`
 }
 
 func (r *CustomResourceObject) UnmarshalJSON(data []byte) error {

@@ -129,14 +129,10 @@ func toCRDObject(object *types.CustomResourceObject, crd *apiextensionsv1.Custom
 	object.TypeMeta.Kind = api.ResourceKind(crd.Name)
 	crdSubresources := crd.Spec.Versions[0].Subresources
 	object.TypeMeta.Scalable = crdSubresources != nil && crdSubresources.Scale != nil
+	object.AdditionalPrinterColumns = make(map[string]interface{})
 	for _, col := range crd.Spec.Versions[0].AdditionalPrinterColumns {
 		val, _, _ := unstructured.NestedString(object.RawObject.Object, splitJsonPath(col.JSONPath)...)
-		//if val != "" {
-		object.AdditionalPrinterColumns = append(object.AdditionalPrinterColumns, types.AdditionalPrinterColumnWithValue{
-			Name:  col.Name,
-			Value: val,
-		})
-		//}
+		object.AdditionalPrinterColumns[col.Name] = val
 	}
 }
 
