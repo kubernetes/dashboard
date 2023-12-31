@@ -16,11 +16,9 @@ package types
 
 import (
 	"encoding/json"
-
+	"k8s.io/apiextensions-apiserver/pkg/apis/apiextensions"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/apis/meta/v1/unstructured"
-
-	"k8s.io/apiextensions-apiserver/pkg/apis/apiextensions"
 
 	"k8s.io/dashboard/api/pkg/api"
 	"k8s.io/dashboard/api/pkg/resource/common"
@@ -60,17 +58,31 @@ type CustomResourceDefinitionDetail struct {
 	Errors []error `json:"errors"`
 }
 
+type AdditionalPrinterColumn struct {
+	Name     string `json:"name"`
+	Type     string `json:"type,omitempty"`
+	Priority int32  `json:"priority,omitempty"`
+	JSONPath string `json:"jsonPath"`
+}
+
 type CustomResourceDefinitionVersion struct {
-	Name    string `json:"name"`
-	Served  bool   `json:"served"`
-	Storage bool   `json:"storage"`
+	Name                     string                    `json:"name"`
+	Served                   bool                      `json:"served"`
+	Storage                  bool                      `json:"storage"`
+	AdditionalPrinterColumns []AdditionalPrinterColumn `json:"additionalPrinterColumns"`
+}
+
+type AdditionalPrinterColumnWithValue struct {
+	Name  string `json:"name"`
+	Value string `json:"value"`
 }
 
 // CustomResourceObject represents a custom resource object.
 type CustomResourceObject struct {
-	AdditionalPrinterColumns unstructured.Unstructured `json:"additionalPrinterColumns,omitempty"`
-	TypeMeta                 api.TypeMeta              `json:"typeMeta"`
-	ObjectMeta               api.ObjectMeta            `json:"objectMeta"`
+	AdditionalPrinterColumns []AdditionalPrinterColumnWithValue `json:"additionalPrinterColumns,omitempty"`
+	RawObject                unstructured.Unstructured          `json:"-"` // the raw object as map[string]interface{} to grep the value for AdditionalPrinterColumnWithValue which is present on the CRD Details
+	TypeMeta                 api.TypeMeta                       `json:"typeMeta"`
+	ObjectMeta               api.ObjectMeta                     `json:"objectMeta"`
 }
 
 func (r *CustomResourceObject) UnmarshalJSON(data []byte) error {
@@ -92,7 +104,7 @@ func (r *CustomResourceObject) UnmarshalJSON(data []byte) error {
 
 	r.TypeMeta = api.NewTypeMeta(api.ResourceKind(tempStruct.TypeMeta.Kind))
 	r.ObjectMeta = api.NewObjectMeta(tempStruct.ObjectMeta)
-	r.AdditionalPrinterColumns.Object = (*tempUnstruct).Object
+	r.RawObject = *tempUnstruct
 	return nil
 }
 

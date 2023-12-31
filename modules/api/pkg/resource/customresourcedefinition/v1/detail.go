@@ -71,10 +71,20 @@ func getCRDVersions(crd *apiextensions.CustomResourceDefinition) []types.CustomR
 	crdVersions := make([]types.CustomResourceDefinitionVersion, 0, len(crd.Spec.Versions))
 	if len(crd.Spec.Versions) > 0 {
 		for _, version := range crd.Spec.Versions {
+			tempColumns := make([]types.AdditionalPrinterColumn, 0)
+			for _, column := range version.AdditionalPrinterColumns {
+				tempColumns = append(tempColumns, types.AdditionalPrinterColumn{
+					Name:     column.Name,
+					Type:     column.Type,
+					Priority: column.Priority,
+					JSONPath: column.JSONPath,
+				})
+			}
 			crdVersions = append(crdVersions, types.CustomResourceDefinitionVersion{
-				Name:    version.Name,
-				Served:  version.Served,
-				Storage: version.Storage,
+				Name:                     version.Name,
+				Served:                   version.Served,
+				Storage:                  version.Storage,
+				AdditionalPrinterColumns: tempColumns,
 			})
 		}
 	}
