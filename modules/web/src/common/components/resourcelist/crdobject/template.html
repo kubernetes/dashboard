@@ -62,11 +62,11 @@ limitations under the License.
         </mat-cell>
       </ng-container>
 
-      <ng-container
-        *ngFor="let additionalColumn of getAdditionalDisplayColumns()"
-        [matColumnDef]="additionalColumn">
+      <ng-container *ngFor="let additionalColumn of getAdditionalDisplayColumns()"
+                    [matColumnDef]="additionalColumn">
         <mat-header-cell *matHeaderCellDef
-                         i18n>{{ additionalColumn }}</mat-header-cell>
+                         i18n>{{ additionalColumn }}
+        </mat-header-cell>
         <mat-cell *matCellDef="let object">
           {{ object.additionalPrinterColumns[additionalColumn] }}
         </mat-cell>
