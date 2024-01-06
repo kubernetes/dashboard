@@ -16,10 +16,11 @@ import {Component, ElementRef, Inject, OnDestroy, OnInit, ViewChild} from '@angu
 import {MatDialog} from '@angular/material/dialog';
 import {MatSelect} from '@angular/material/select';
 import {ActivatedRoute, NavigationEnd, Router} from '@angular/router';
+import {PodList} from '@api/root.api';
 import {NamespaceList} from '@api/root.api';
 import {IConfig} from '@api/root.ui';
 import {Subject} from 'rxjs';
-import {distinctUntilChanged, filter, startWith, switchMap, takeUntil} from 'rxjs/operators';
+import {distinctUntilChanged, filter, startWith, switchMap, takeUntil, first} from 'rxjs/operators';
 import {CONFIG_DI_TOKEN} from '../../../index.config';
 
 import {NAMESPACE_STATE_PARAM} from '../../params/params';
@@ -56,6 +57,7 @@ export class NamespaceSelectorComponent implements OnInit, OnDestroy {
     private readonly router_: Router,
     private readonly namespaceService_: NamespaceService,
     private readonly namespace_: ResourceService<NamespaceList>,
+    private readonly podList_: ResourceService<PodList>,
     private readonly dialog_: MatDialog,
     private readonly kdState_: KdStateService,
     private readonly notifications_: NotificationsService,
@@ -171,25 +173,54 @@ export class NamespaceSelectorComponent implements OnInit, OnDestroy {
       .subscribe(
         namespaceList => {
           this.usingFallbackNamespaces = false;
-          this.namespaces = namespaceList.namespaces.map(n => n.objectMeta.name);
-
-          if (!this.namespaces || this.namespaces.length === 0) {
-            this.usingFallbackNamespaces = true;
-            this.namespaces = this.settingsService_.getNamespaceFallbackList();
-          }
-
-          this.namespaces = this.namespaces.sort((a, b) => a.toLowerCase().localeCompare(b.toLowerCase()));
+          const namespacesTemp = namespaceList.namespaces.map(n => n.objectMeta.name);
+          // console.log('namespacesTemp', namespacesTemp);
 
           if (namespaceList.errors.length > 0) {
             for (const err of namespaceList.errors) {
               this.notifications_.pushErrors([err]);
             }
           }
+          for (const namespace of namespacesTemp) {
+            // console.log('traitement du namespace : ' + namespace);
+            this.checkNamespaces_(namespace);
+          }
+          // console.log('namespaces', this.namespaces);
         },
         () => {},
         () => {
           this.onNamespaceLoaded_();
         }
+      );
+  }
+
+
+  // si l'utilisateur peut faire un 'get pod' dans le namespace, on l'ajoute à this.namespaces
+  private checkNamespaces_(namespaceName: string): void {
+    this.podList_
+      .get('api/v1/pod/' + namespaceName)
+      .pipe(first())
+      .subscribe(
+        podList => {
+          if (podList.errors.length === 0) {
+            if (this.namespaces.indexOf(namespaceName) === -1) {
+              // console.log(namespaceName + ' autorisé et non présent. Ajout');
+              this.namespaces = [...this.namespaces, namespaceName];
+              this.namespaces = this.namespaces.sort((a, b) => a.toLowerCase().localeCompare(b.toLowerCase()));
+            } else {
+              // console.log(namespaceName + ' is already in the list');
+            }
+          } else {
+            const index = this.namespaces.indexOf(namespaceName, 0);
+            if (index > -1) {
+              // console.log(namespaceName + ' interdit et présent. Suppression');
+              this.namespaces = [...this.namespaces.slice(0, index), ...this.namespaces.slice(index + 1)];
+              this.namespaces = this.namespaces.sort((a, b) => a.toLowerCase().localeCompare(b.toLowerCase()));
+            }
+          }
+        },
+        () => {},
+        () => {},
       );
   }
 
