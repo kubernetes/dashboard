@@ -15,10 +15,11 @@
 name: CD
 on:
   push:
-    branches: [hadock]
-  create:
+    branches:
+      - 'dev/**'
+      - 'hadock'
     tags:
-      - "v*.*.*"
+      - 'v*.*.*'
 permissions:
   contents: read
   packages: write
@@ -79,7 +80,7 @@ jobs:
         continue-on-error: true
 
       - name: Build and deploy development release
-        if: github.event_name == 'push' && contains(github.ref, 'master')
+        if: github.event_name == 'push' && contains(github.ref, 'dev/**')
         run: PATH=$PATH:$GOPATH/bin make deploy-dev
 
       - name: Build and deploy official release
