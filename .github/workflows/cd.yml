@@ -80,7 +80,7 @@ jobs:
         continue-on-error: true
 
       - name: Build and deploy development release
-        if: github.event_name == 'push' && contains(github.ref, 'dev/**')
+        if: github.event_name == 'push' && contains(github.ref_name, 'dev/')
         run: PATH=$PATH:$GOPATH/bin make deploy-dev
 
       - name: Build and deploy official release
