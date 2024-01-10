@@ -12257,7 +12257,7 @@ __metadata:
     stylelint-config-standard-scss: 12.0.0
     stylelint-no-unsupported-browser-features: 7.0.0
     stylelint-order: 6.0.4
-    systemjs: 6.14.2
+    systemjs: 6.14.3
     tar: 6.2.0
     through2: 4.0.2
     ts-jest: 29.1.1
@@ -16200,10 +16200,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"systemjs@npm:6.14.2":
-  version: 6.14.2
-  resolution: "systemjs@npm:6.14.2"
-  checksum: 1f58c7da8f7deb8e4a3eb357e67f5363eb97e44a456f8f81ece391f2e1ae54ac70fb62135043d4cf96c11c6b76d7963c295ea844ca25bcb3b55193f6727fd0b2
+"systemjs@npm:6.14.3":
+  version: 6.14.3
+  resolution: "systemjs@npm:6.14.3"
+  checksum: 887044d6e74e1af209de5f8e41f94d17c76665336474b4ea5038dac33d324be9d1190e720a5efb63599e26432984d3916d1650d6d446f4913774c6e1167dae10
   languageName: node
   linkType: hard
 
