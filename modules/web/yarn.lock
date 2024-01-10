@@ -12254,7 +12254,7 @@ __metadata:
     source-map-explorer: 2.5.3
     strip-ansi: 7.1.0
     stylelint: 15.11.0
-    stylelint-config-standard-scss: 12.0.0
+    stylelint-config-standard-scss: 13.0.0
     stylelint-no-unsupported-browser-features: 7.0.0
     stylelint-order: 6.0.4
     systemjs: 6.14.3
@@ -15998,30 +15998,30 @@ __metadata:
   languageName: node
   linkType: hard
 
-"stylelint-config-standard-scss@npm:12.0.0":
-  version: 12.0.0
-  resolution: "stylelint-config-standard-scss@npm:12.0.0"
+"stylelint-config-standard-scss@npm:13.0.0":
+  version: 13.0.0
+  resolution: "stylelint-config-standard-scss@npm:13.0.0"
   dependencies:
     stylelint-config-recommended-scss: ^14.0.0
-    stylelint-config-standard: ^35.0.0
+    stylelint-config-standard: ^36.0.0
   peerDependencies:
     postcss: ^8.3.3
-    stylelint: ^16.0.2
+    stylelint: ^16.1.0
   peerDependenciesMeta:
     postcss:
       optional: true
-  checksum: b702189f2e77217a17eeeadd0a520c6e84e8b0637b7914021449e471a38000ce1d1aeac8099e76f783528ab65ba90f56e52b09be8c0e6723236a97650c02465d
+  checksum: 72e8fbb8d49b76e30031d05470d610790a966714fef0101418b889c564d9cc324788519733cad714316224c68541466dce534c51092d13bae3f9e596916415c3
   languageName: node
   linkType: hard
 
-"stylelint-config-standard@npm:^35.0.0":
-  version: 35.0.0
-  resolution: "stylelint-config-standard@npm:35.0.0"
+"stylelint-config-standard@npm:^36.0.0":
+  version: 36.0.0
+  resolution: "stylelint-config-standard@npm:36.0.0"
   dependencies:
     stylelint-config-recommended: ^14.0.0
   peerDependencies:
-    stylelint: ^16.0.0
-  checksum: 527420c64615cb9a403573d0a7b051b4fac4c0eb17b634973fe31a6953217ea4a768283f9cad34e95143f0a3b98ec51c7e379c3199996976ef86696c3a9671f2
+    stylelint: ^16.1.0
+  checksum: 78b14cdfdd03be409687acc863ef88d0e79d9a7f7ab3a9158e7dcd74212893db24841d22f076f248f3b1b6419d778538a5c885dc42fc056eaeb240463edf2f8f
   languageName: node
   linkType: hard
 
