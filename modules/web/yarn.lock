@@ -11527,9 +11527,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"jest-preset-angular@npm:13.1.4":
-  version: 13.1.4
-  resolution: "jest-preset-angular@npm:13.1.4"
+"jest-preset-angular@npm:13.1.5":
+  version: 13.1.5
+  resolution: "jest-preset-angular@npm:13.1.5"
   dependencies:
     bs-logger: ^0.2.6
     esbuild: ">=0.13.8"
@@ -11539,16 +11539,16 @@ __metadata:
     pretty-format: ^29.0.0
     ts-jest: ^29.0.0
   peerDependencies:
-    "@angular-devkit/build-angular": ">=13.0.0 <18.0.0"
-    "@angular/compiler-cli": ">=13.0.0 <18.0.0"
-    "@angular/core": ">=13.0.0 <18.0.0"
-    "@angular/platform-browser-dynamic": ">=13.0.0 <18.0.0"
+    "@angular-devkit/build-angular": ">=15.0.0 <18.0.0"
+    "@angular/compiler-cli": ">=15.0.0 <18.0.0"
+    "@angular/core": ">=15.0.0 <18.0.0"
+    "@angular/platform-browser-dynamic": ">=15.0.0 <18.0.0"
     jest: ^29.0.0
     typescript: ">=4.4"
   dependenciesMeta:
     esbuild:
       optional: true
-  checksum: 2faddff5b36dee439d679f94feb3055395fe2355792ff0e1bfea0227a9deae8346cb7ff346432e91532ebe97438140a4d3da9d9163f59f96aa61deba4e73d9d5
+  checksum: 8b63057aed5770dec48fdfa62d9403fdb9c2cc673376b9540c0e23a003033da8836c2d0f32687a45d8ebdb08d4aa991f93b2447ea33cf2821ce5fce52482c1c3
   languageName: node
   linkType: hard
 
@@ -12179,7 +12179,7 @@ __metadata:
     jasmine-core: 5.1.1
     jasmine-spec-reporter: 7.0.0
     jest: 29.7.0
-    jest-preset-angular: 13.1.4
+    jest-preset-angular: 13.1.5
     js-base64: 3.7.5
     js-beautify: 1.14.11
     js-yaml: 4.1.0
