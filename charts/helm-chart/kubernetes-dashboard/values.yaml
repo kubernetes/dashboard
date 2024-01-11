@@ -85,7 +85,7 @@ app:
     # https://localhost:8443
     - localhost
     # - kubernetes.dashboard.domain.com
-    ingressClassName: internal-nginx
+    ingressClassName: ""
     pathType: ImplementationSpecific
     secretName: kubernetes-dashboard-certs
     issuer:
