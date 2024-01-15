@@ -5181,12 +5181,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:20.11.0":
-  version: 20.11.0
-  resolution: "@types/node@npm:20.11.0"
+"@types/node@npm:20.11.1":
+  version: 20.11.1
+  resolution: "@types/node@npm:20.11.1"
   dependencies:
     undici-types: ~5.26.4
-  checksum: 1bd6890db7e0404d11c33d28f46f19f73256f0ba35d19f0ef2a0faba09f366f188915fb9338eebebcc472075c1c4941e17c7002786aa69afa44980737846b200
+  checksum: d50670a5357968b9ff5214c807f688cb639054eb3d602741e4a381febe3b39624750ee0ea5817e33e3a9f88479cce6d3baf084c0412c614d48e7074d17b8a0de
   languageName: node
   linkType: hard
 
@@ -12173,7 +12173,7 @@ __metadata:
     "@types/jest": 29.5.11
     "@types/js-yaml": 4.0.9
     "@types/lodash-es": 4.17.12
-    "@types/node": 20.11.0
+    "@types/node": 20.11.1
     "@typescript-eslint/eslint-plugin": 6.18.1
     "@typescript-eslint/parser": 6.18.1
     ace-builds: 1.32.3
