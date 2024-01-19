@@ -87,7 +87,7 @@ jobs:
           fetch-depth: 0
 
       - name: Review dependencies
-        uses: actions/dependency-review-action@v3
+        uses: actions/dependency-review-action@v4
         with:
           fail-on-severity: critical
   e2e:
