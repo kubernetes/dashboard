@@ -23,7 +23,7 @@ import {ResourceMeta} from '../../services/global/actionbar';
 export class DeleteResourceDialogComponent {
   isDeleteNowChecked = false;
   cancelDelete = 'cancelDelete';
-  
+
   constructor(
     public dialogRef: MatDialogRef<DeleteResourceDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: ResourceMeta
