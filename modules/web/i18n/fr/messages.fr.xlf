@@ -542,6 +542,10 @@
         <source>Add Namespace</source>
         <target>Ajouter un espace de noms</target>
       </trans-unit>
+      <trans-unit id="2640307640152196302" datatype="html">
+        <source>Delete now (sets delete grace period to 1 second instead of the default, which is usually 30 seconds)</source>
+        <target state="new">Supprimer immédiatement (Défini la période de grâce de suppression à 1 seconde au lieu de la valeur par défaut, habituellement de 30 secondes)</target>
+      </trans-unit>
       <trans-unit id="2642020568748650888" datatype="html">
         <source>Persistent disk name</source>
         <target>Nom du disque persistant</target>

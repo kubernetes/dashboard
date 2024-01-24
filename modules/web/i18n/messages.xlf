@@ -405,6 +405,9 @@
       <trans-unit id="2634769168106360285" datatype="html">
         <source>Add Namespace</source>
       </trans-unit>
+      <trans-unit id="2640307640152196302" datatype="html">
+        <source>Delete now (sets delete grace period to 1 second instead of the default, which is usually 30 seconds)</source>
+      </trans-unit>
       <trans-unit id="2642020568748650888" datatype="html">
         <source>Persistent disk name</source>
       </trans-unit>
