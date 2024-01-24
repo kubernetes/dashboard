@@ -15,14 +15,15 @@
 root: true
 parser: "@typescript-eslint/parser"
 parserOptions:
-  ecmaVersion: '2020'
+  ecmaVersion: 2020
   project:
     - tsconfig.app.json
     - tsconfig.spec.json
-    - cypress/tsconfig.e2e.json
+    - cypress/tsconfig.json
   sourceType: module
 extends:
   - "./node_modules/gts"
+  - plugin:@angular-eslint/recommended
 plugins:
   - rxjs
 rules:
@@ -53,5 +54,6 @@ rules:
   rxjs/no-unbound-methods: error
   rxjs/no-unsafe-takeuntil: error
   rxjs/no-nested-subscribe: error
+  "@angular-eslint/no-host-metadata-property": off
 ignorePatterns:
   - "**/*.js"

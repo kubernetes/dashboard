@@ -4,7 +4,7 @@ PROJECT_NAME := dashboard
 ARCHITECTURES := linux/amd64 linux/arm64 linux/arm linux/ppc64le linux/s390x # darwin/amd64 darwin/arm64 <- TODO: enable once it is natively supported by docker
 BUILDX_ARCHITECTURES := linux/amd64,linux/arm64,linux/arm,linux/ppc64le,linux/s390x # ,darwin/amd64,darwin/arm64
 # Container registry details
-IMAGE_REGISTRIES := docker.io
+IMAGE_REGISTRIES := docker.io # ghcr.io <- TODO: uncomment when ghcr will be supported
 IMAGE_REPOSITORY := kubernetesui
 
 ### Dirs and paths
@@ -13,6 +13,7 @@ PARTIALS_DIRECTORY := $(shell dirname $(realpath $(firstword $(MAKEFILE_LIST))))
 # Modules
 MODULES_DIRECTORY := $(ROOT_DIRECTORY)/modules
 API_DIRECTORY := $(MODULES_DIRECTORY)/api
+METRICS_SCRAPER_DIRECTORY := $(MODULES_DIRECTORY)/metrics-scraper
 WEB_DIRECTORY := $(MODULES_DIRECTORY)/web
 TOOLS_DIRECTORY := $(MODULES_DIRECTORY)/common/tools
 # Gateway

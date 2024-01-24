@@ -14,6 +14,13 @@
  * limitations under the License.
  *
  */
+
+import 'cypress-fail-fast';
+
 before(() => {
   cy.clearCookies();
+});
+
+afterEach(() => {
+  cy.screenshot();
 });

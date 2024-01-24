@@ -15,81 +15,110 @@
 name: CI / API
 on:
   push:
-    branches: [ master ]
+    branches: [master]
     paths-ignore:
-      - '**/*.md'
+      - "**/*.md"
   pull_request:
-    branches: [ master ]
+    branches: [master]
     paths-ignore:
-      - '**/*.md'
+      - "**/*.md"
 permissions:
   contents: read
+env:
+  GOPATH: /home/runner/go/
+  GOPROXY: "https://proxy.golang.org"
+  TERM: xterm
 jobs:
-
-  static:
+  check:
     name: Static check
     runs-on: ubuntu-latest
-    env:
-      GOPROXY: "https://proxy.golang.org"
-      TERM: xterm
     defaults:
       run:
         working-directory: modules/api
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
+      - name: Check out repository
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
-      - name: Setup Go
-        uses: actions/setup-go@v3
+
+      - name: Set up Go
+        uses: actions/setup-go@v5
         with:
-          go-version: 1.19
-      - name: Ensure tools
-        run: make install
+          go-version-file: modules/api/go.mod
+          check-latest: true
+          cache-dependency-path: modules/api/go.sum
+
+      - name: Install API dependencies
+        working-directory: modules/api
+        run: go mod download
+
+      - name: Install tools
         working-directory: modules/common/tools
+        run: PATH=$PATH:$GOPATH/bin make install
+
       - name: Verify codegen
-        run: |
-          export GOPATH=$(go env GOPATH)
-          export PATH=$PATH:$GOPATH/bin
-          make codegen-verify
-      - name: Lint Go
+        run: PATH=$PATH:$GOPATH/bin make codegen-verify
+
+      - name: Lint
         uses: golangci/golangci-lint-action@v3
         with:
-          version: v1.49.0
+          version: v1.52.2
           working-directory: modules/api
+          skip-cache: true
 
-  unit:
-    name: Unit tests with coverage
+  build:
+    name: Build
     runs-on: ubuntu-latest
-    env:
-      NG_CLI_ANALYTICS: ci
-      GOPATH: ${{ github.workspace }}
-      GOPROXY: "https://proxy.golang.org"
-      TERM: xterm
     defaults:
       run:
         working-directory: modules/api
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
+      - name: Check out repository
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
-      - name: Setup Go
-        uses: actions/setup-go@v3
+
+      - name: Set up Go
+        uses: actions/setup-go@v5
         with:
-          go-version: 1.19
+          go-version-file: modules/api/go.mod
           check-latest: true
-          cache: true
           cache-dependency-path: modules/api/go.sum
-      - name: Install dependencies
-        shell: bash
-        run: |
-          export GOPATH=$(go env GOPATH)
-          export PATH=$PATH:$GOPATH/bin
-          go mod download
-      - name: Run unit tests with coverage
-        run: make coverage
-      - name: Upload coverage
+
+      - name: Install API dependencies
+        working-directory: modules/api
+        run: go mod download
+
+      - name: Build
+        run: PATH=$PATH:$GOPATH/bin make build-cross
+
+  unit:
+    name: Run unit tests with coverage
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: modules/api
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version-file: modules/api/go.mod
+          check-latest: true
+          cache-dependency-path: modules/api/go.sum
+
+      - name: Install API dependencies
+        working-directory: modules/api
+        run: go mod download
+
+      - name: Test
+        run: PATH=$PATH:$GOPATH/bin make coverage
+
+      - name: Upload coverage report
         uses: codecov/codecov-action@v3
         with:
           name: api-coverage

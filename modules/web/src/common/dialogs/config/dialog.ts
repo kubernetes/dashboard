@@ -24,6 +24,6 @@ export interface ConfirmDialogConfig {
   selector: 'kd-confirm-dialog',
   templateUrl: 'template.html',
 })
-export class ConfirmDialog {
+export class ConfirmDialogComponent {
   constructor(@Inject(MAT_DIALOG_DATA) public data: ConfirmDialogConfig) {}
 }

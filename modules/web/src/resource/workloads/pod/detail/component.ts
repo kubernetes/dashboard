@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, DestroyRef, inject, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {Container, PodDetail} from '@api/root.api';
 import {ActionbarService, ResourceMeta} from '@common/services/global/actionbar';
@@ -21,8 +21,7 @@ import {KdStateService} from '@common/services/global/state';
 import {EndpointManager, Resource} from '@common/services/resource/endpoint';
 import {NamespacedResourceService} from '@common/services/resource/resource';
 import isEmpty from 'lodash-es/isEmpty';
-import {Subject} from 'rxjs';
-import {takeUntil} from 'rxjs/operators';
+import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'kd-pod-detail',
@@ -31,13 +30,13 @@ import {takeUntil} from 'rxjs/operators';
 })
 export class PodDetailComponent implements OnInit, OnDestroy {
   private readonly endpoint_ = EndpointManager.resource(Resource.pod, true);
-  private readonly unsubscribe_ = new Subject<void>();
 
   pod: PodDetail;
   isInitialized = false;
   eventListEndpoint: string;
   pvcListEndpoint: string;
 
+  private destroyRef = inject(DestroyRef);
   constructor(
     private readonly pod_: NamespacedResourceService<PodDetail>,
     private readonly actionbar_: ActionbarService,
@@ -55,7 +54,7 @@ export class PodDetailComponent implements OnInit, OnDestroy {
 
     this.pod_
       .get(this.endpoint_.detail(), resourceName, resourceNamespace)
-      .pipe(takeUntil(this.unsubscribe_))
+      .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((d: PodDetail) => {
         this.pod = d;
         this.notifications_.pushErrors(d.errors);
@@ -65,8 +64,6 @@ export class PodDetailComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.unsubscribe_.next();
-    this.unsubscribe_.complete();
     this.actionbar_.onDetailsLeave.emit();
   }
 

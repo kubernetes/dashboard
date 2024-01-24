@@ -20,9 +20,9 @@ import {ResourceMeta} from '../../services/global/actionbar';
   selector: 'kd-trigger-resource-dialog',
   templateUrl: 'template.html',
 })
-export class TriggerResourceDialog {
+export class TriggerResourceDialogComponent {
   constructor(
-    public dialogRef: MatDialogRef<TriggerResourceDialog>,
+    public dialogRef: MatDialogRef<TriggerResourceDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: ResourceMeta
   ) {}
 

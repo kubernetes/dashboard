@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {Pipe} from '@angular/core';
+import {Pipe, PipeTransform} from '@angular/core';
 import {ConfigService} from '../services/global/config';
 
 const i18n = {
@@ -58,7 +58,7 @@ const timeConstants = {
 };
 
 @Pipe({name: 'kdRelativeTime'})
-export class RelativeTimeFormatter {
+export class RelativeTimeFormatter implements PipeTransform {
   constructor(private readonly config_: ConfigService) {}
 
   transform(value: string, _: number): string {
@@ -68,7 +68,7 @@ export class RelativeTimeFormatter {
     // Current server time.
     const serverTime = this.config_.getServerTime();
 
-    // Current and given times in miliseconds.
+    // Current and given times in milliseconds.
     const currentTime = this.getCurrentTime_(serverTime);
     const givenTime = new Date(value).getTime();
 

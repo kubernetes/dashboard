@@ -11,6 +11,14 @@
 	fi ; \
 	for REGISTRY in $(IMAGE_REGISTRIES) ; do \
   	for VERSION in $${VERSIONS} ; do \
+  	  if [ "$${VERSION}" != "latest" ] ; then \
+      	echo "Checking if '$(APP_NAME):$${VERSION}' exists in the '$${REGISTRY}/$(IMAGE_REPOSITORY)' registry" ; \
+      	docker pull $${REGISTRY}/$(IMAGE_REPOSITORY)/$(APP_NAME):$${VERSION} > /dev/null 2>&1 ; \
+      	if [ $$? -eq 0 ] ; then \
+      	   echo "This image already exists" ; \
+      	   exit; \
+      	fi ; \
+      fi ; \
   		echo "Deploying '$(APP_NAME):$${VERSION}' to the '$${REGISTRY}/$(IMAGE_REPOSITORY)' registry" ; \
 			docker buildx build \
 				-f $(DOCKERFILE) \
@@ -21,13 +29,11 @@
   	done ; \
   done
 
-# Deployment target for the dev version
-# Image will be always deployed to our static dev registry at:
-# 	docker.io/kubernetesdashboarddev/dashboard:latest
+# Deployment target for the dev version. It is always based
+# on latest master branch. Image will be deployed to official
+# registries with tag 'latest'.
 .PHONY: --deploy-dev
---deploy-dev: IMAGE_REGISTRIES = "docker.io"# Dev registry
---deploy-dev: IMAGE_REPOSITORY = "kubernetesdashboarddev"# Dev repository
---deploy-dev: APP_VERSION = "latest"# Dev repository
+--deploy-dev: APP_VERSION = "latest"
 --deploy-dev: --deploy
 
 .PHONY: --ensure-variables-set
@@ -40,3 +46,13 @@
 		echo "APP_NAME variable not set" ; \
 		exit 1 ; \
 	fi ; \
+
+
+.PHONY: --image
+--image: APP_VERSION = "latest"
+--image: --ensure-variables-set
+	echo "Building '$(APP_NAME):$(APP_VERSION)'" ; \
+	docker build \
+		-f $(DOCKERFILE) \
+		-t $(APP_NAME):$(APP_VERSION) \
+		$(ROOT_DIRECTORY) ; \

@@ -18,12 +18,12 @@
 
 # golang is based on debian:jessie
 # Specify version to clarify which version we use.
-FROM golang:1.19.0-bullseye
+FROM golang:1.20-bullseye
 
 # Install Node.js. Go is already installed.
 # A small tweak, apt-get update is already run by the nodejs setup script,
 # so there's no need to run it again.
-RUN curl -sL https://deb.nodesource.com/setup_16.x | bash - \
+RUN curl -sL https://deb.nodesource.com/setup_18.x | bash - \
 	&& apt-get install -y --no-install-recommends \
 	nodejs \
 	patch \
@@ -61,15 +61,12 @@ ENV TERM=xterm
 # Add ${GOPATH}/bin into ${PATH}
 ENV PATH=${GOPATH}/bin:${PATH}
 
-# For testing, etc., to know if this environment is on container.
-ENV K8S_DASHBOARD_CONTAINER=TRUE
-
 # Suppress angular analytics dialog
 ENV NG_CLI_ANALYTICS=false
 
 # Download a statically linked docker client,
 # so the container is able to build images on the host.
-RUN curl -sSL https://download.docker.com/linux/static/stable/x86_64/docker-20.10.22.tgz > /tmp/docker.tgz && \
+RUN curl -sSL https://download.docker.com/linux/static/stable/x86_64/docker-23.0.1.tgz > /tmp/docker.tgz && \
 	cd /tmp/ && \
 	tar xzvf docker.tgz && \
 	rm docker.tgz && \
@@ -83,7 +80,7 @@ RUN curl -SL https://github.com/docker/compose/releases/download/v2.14.0/docker-
 RUN chmod +x /usr/local/lib/docker/cli-plugins/docker-compose
 
 # Install kubectl
-RUN curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl
+RUN curl -LO https://dl.k8s.io/release/$(curl -sL https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl
 RUN chmod +x ./kubectl
 RUN mv ./kubectl /usr/local/bin/kubectl
 
@@ -91,7 +88,7 @@ RUN mv ./kubectl /usr/local/bin/kubectl
 # `npm ci` installs golangci, but this installation is needed
 # for running `npm run check` singlely, like
 # `hack/develop/run-dev-container.sh run check`.
-RUN curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $(go env GOPATH)/bin v1.49.0
+RUN curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $(go env GOPATH)/bin v1.52.2
 
 # Enable go mod.
 ENV GO111MODULE=on
@@ -117,9 +114,6 @@ RUN mkdir -p /home/user/.kube
 
 # Current directory is always dashboard source directory.
 WORKDIR /go/src/github.com/kubernetes/dashboard
-
-# Expose port for frontend, backend and remote debuging
-EXPOSE 8080 8443 9090 2345
 
 # Run gosu command in container.
 CMD ./hack/develop/gosu-command.sh

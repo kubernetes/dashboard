@@ -18,6 +18,7 @@ import (
 	"context"
 
 	"k8s.io/client-go/rest"
+
 	"k8s.io/dashboard/api/pkg/args"
 )
 
@@ -48,7 +49,7 @@ func (c inClusterSidecarClient) Get(path string) RequestInterface {
 	return c.client.Get().
 		Namespace(args.Holder.GetNamespace()).
 		Resource("services").
-		Name("dashboard-metrics-scraper").
+		Name("kubernetes-dashboard-metrics-scraper").
 		SubResource("proxy").
 		Suffix(path)
 }
@@ -59,7 +60,7 @@ func (self inClusterSidecarClient) HealthCheck() error {
 	_, err := self.client.Get().
 		Namespace(args.Holder.GetNamespace()).
 		Resource("services").
-		Name("dashboard-metrics-scraper").
+		Name("kubernetes-dashboard-metrics-scraper").
 		SubResource("proxy").
 		Suffix("/healthz").
 		DoRaw(context.TODO())

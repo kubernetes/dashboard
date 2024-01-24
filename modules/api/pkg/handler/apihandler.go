@@ -288,11 +288,11 @@ func CreateHTTPAPIHandler(iManager integration.IntegrationManager, cManager clie
 			Writes(deployment.DeploymentDetail{}))
 
 	apiV1Ws.Route(
-		apiV1Ws.PUT("/scale/{kind}/{namespace}/{name}/").
+		apiV1Ws.PUT("/scale/{kind}/{namespace}/{name}").
 			To(apiHandler.handleScaleResource).
 			Writes(scaling.ReplicaCounts{}))
 	apiV1Ws.Route(
-		apiV1Ws.PUT("/scale/{kind}/{name}/").
+		apiV1Ws.PUT("/scale/{kind}/{name}").
 			To(apiHandler.handleScaleResource).
 			Writes(scaling.ReplicaCounts{}))
 	apiV1Ws.Route(

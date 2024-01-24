@@ -17,8 +17,8 @@ import {NgModule} from '@angular/core';
 import {ComponentsModule} from '@common/components/module';
 import {SharedModule} from '../../../shared.module';
 import {CreateFromFormComponent} from './component';
-import {CreateNamespaceDialog} from './createnamespace/dialog';
-import {CreateSecretDialog} from './createsecret/dialog';
+import {CreateNamespaceDialogComponent} from './createnamespace/dialog';
+import {CreateSecretDialogComponent} from './createsecret/dialog';
 import {DeployLabelComponent} from './deploylabel/component';
 import {EnvironmentVariablesComponent} from './environmentvariables/component';
 import {HelpSectionComponent} from './helpsection/component';
@@ -34,8 +34,8 @@ import {WarnThresholdValidator} from './validator/warnthreshold.validator';
     HelpSectionComponent,
     UserHelpComponent,
     CreateFromFormComponent,
-    CreateNamespaceDialog,
-    CreateSecretDialog,
+    CreateNamespaceDialogComponent,
+    CreateSecretDialogComponent,
     EnvironmentVariablesComponent,
     UniqueNameValidator,
     ValidImageReferenceValidator,

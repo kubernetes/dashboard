@@ -1,8 +1,9 @@
-go 1.19
+go 1.20
 
 use (
 	./api // k8s.io/dashboard/api
 	./common/certificates // k8s.io/dashboard/certificates
 	./common/tools // k8s.io/dashboard/tools
+	./metrics-scraper // k8s.io/dashboard/metrics-scraper
 	./web // k8s.io/dashboard/web
 )

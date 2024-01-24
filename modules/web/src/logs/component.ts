@@ -18,7 +18,7 @@ import {MatDialog} from '@angular/material/dialog';
 import {ActivatedRoute, Router} from '@angular/router';
 import {LogControl, LogDetails, LogLine, LogSelection, LogSources} from '@api/root.api';
 
-import {LogsDownloadDialog} from '@common/dialogs/download/dialog';
+import {LogsDownloadDialogComponent} from '@common/dialogs/download/dialog';
 import {GlobalSettingsService} from 'common/services/global/globalsettings';
 import {LogService} from 'common/services/global/logs';
 import {NotificationSeverity, NotificationsService} from 'common/services/global/notifications';
@@ -198,7 +198,7 @@ export class LogsComponent implements OnDestroy {
         namespace: this.activatedRoute_.snapshot.paramMap.get('resourceNamespace'),
       },
     };
-    this.dialog_.open(LogsDownloadDialog, dialogData);
+    this.dialog_.open(LogsDownloadDialogComponent, dialogData);
   }
 
   /**

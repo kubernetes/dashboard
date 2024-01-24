@@ -20,10 +20,10 @@ import {SharedModule} from '../shared.module';
 import {SettingsComponent} from './component';
 import {SettingsEntryComponent} from './entry/component';
 import {GlobalSettingsComponent} from './global/component';
-import {AddFallbackNamespaceDialog} from './global/namespace/adddialog/dialog';
+import {AddFallbackNamespaceDialogComponent} from './global/namespace/adddialog/dialog';
 import {NamespaceSettingsComponent} from './global/namespace/component';
-import {EditFallbackNamespaceDialog} from './global/namespace/editdialog/dialog';
-import {SaveAnywayDialog} from './global/saveanywaysdialog/dialog';
+import {EditFallbackNamespaceDialogComponent} from './global/namespace/editdialog/dialog';
+import {SaveAnywayDialogComponent} from './global/saveanywaysdialog/dialog';
 import {SettingsHelperService} from './global/service';
 import {LocalSettingsComponent} from './local/component';
 import {SettingsRoutingModule} from './routing';
@@ -36,9 +36,9 @@ import {SettingsRoutingModule} from './routing';
     SettingsComponent,
     SettingsEntryComponent,
     NamespaceSettingsComponent,
-    AddFallbackNamespaceDialog,
-    EditFallbackNamespaceDialog,
-    SaveAnywayDialog,
+    AddFallbackNamespaceDialogComponent,
+    EditFallbackNamespaceDialogComponent,
+    SaveAnywayDialogComponent,
   ],
   providers: [SettingsHelperService],
 })

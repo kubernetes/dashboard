@@ -19,12 +19,12 @@ import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
   selector: 'kd-namespace-change-dialog',
   templateUrl: 'template.html',
 })
-export class NamespaceChangeDialog {
+export class NamespaceChangeDialogComponent {
   namespace: string;
   newNamespace: string;
 
   constructor(
-    public dialogRef: MatDialogRef<NamespaceChangeDialog>,
+    public dialogRef: MatDialogRef<NamespaceChangeDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: {namespace: string; newNamespace: string}
   ) {
     this.namespace = data.namespace;

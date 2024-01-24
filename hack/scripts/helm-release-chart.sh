@@ -33,6 +33,8 @@ function release-helm-chart {
   echo "\nGenerating Helm Chart package for new version."
   echo "Please note that your gh-pages branch, if it locally exists, should be up-to-date."
   helm repo add metrics-server https://kubernetes-sigs.github.io/metrics-server/
+  helm repo add cert-manager https://charts.jetstack.io
+  helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
   cd "$HELM_CHART_DIR"
   helm dependency build .
   helm package .
