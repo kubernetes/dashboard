@@ -107,8 +107,8 @@
         <target>Nicht-Ressource URL</target>
       </trans-unit>
       <trans-unit id="1321877744367304738" datatype="html">
-        <source>Image: </source>
-        <target state="new">Image: </target>
+        <source>Image: </source>
+        <target state="new">Image: </target>
       </trans-unit>
       <trans-unit id="1328651869817330586" datatype="html">
         <source>Mount Option(s)</source>
@@ -251,7 +251,7 @@
         <target>Storage Class</target>
       </trans-unit>
       <trans-unit id="1761780531172486555" datatype="html">
-        <source>Available: </source>
+        <source>Available: </source>
         <target state="new">Verfügbar :</target>
       </trans-unit>
       <trans-unit id="1763461605200938061" datatype="html">
@@ -279,7 +279,7 @@
         <target state="new">Ingress Classes </target>
       </trans-unit>
       <trans-unit id="1828068287723658160" datatype="html">
-        <source>Failed: </source>
+        <source>Failed: </source>
         <target state="new">Fehlgeschlagen:</target>
       </trans-unit>
       <trans-unit id="1832995043073719610" datatype="html">
@@ -287,7 +287,7 @@
         <target>Ein Secret mit dem angegebenen Namen wird dem Cluster im Namespace hinzugefügt.</target>
       </trans-unit>
       <trans-unit id="1850293262697508820" datatype="html">
-        <source>Revision history limit: </source>
+        <source>Revision history limit: </source>
         <target state="new">Revisionsverlaufslimit:</target>
       </trans-unit>
       <trans-unit id="1853314835104660335" datatype="html">
@@ -391,7 +391,7 @@
         <target>Ein Deployment, welches die gewünschte Anzahl Pods über das Cluster verteilt sicherstellt, wird erzeugt.</target>
       </trans-unit>
       <trans-unit id="2131524838680811873" datatype="html">
-        <source>You can <x id="START_LINK" ctype="x-a" equiv-text="&quot;\uFFFD#6\uFFFD&quot;"/>deploy a containerized app<x id="CLOSE_LINK" ctype="x-a" equiv-text="&quot;[\uFFFD/#6\uFFFD|\uFFFD/#7\uFFFD]&quot;"/>, select other namespace or <x id="START_LINK_1" equiv-text="&quot;\uFFFD#7\uFFFD&quot;"/>check the Dashboard Docs <x id="START_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&quot;\uFFFD#8\uFFFD&quot;"/>open_in_new<x id="CLOSE_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&quot;\uFFFD/#8\uFFFD&quot;"/><x id="CLOSE_LINK" ctype="x-a" equiv-text="&quot;[\uFFFD/#6\uFFFD|\uFFFD/#7\uFFFD]&quot;"/> to learn more.</source>
+        <source> You can <x id="START_LINK" ctype="x-a" equiv-text="&quot;\uFFFD#6\uFFFD&quot;"/>deploy a containerized app<x id="CLOSE_LINK" ctype="x-a" equiv-text="&quot;[\uFFFD/#6\uFFFD|\uFFFD/#7\uFFFD]&quot;"/>, select other namespace or <x id="START_LINK_1" equiv-text="&quot;\uFFFD#7\uFFFD&quot;"/>check the Dashboard Docs <x id="START_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&quot;\uFFFD#8\uFFFD&quot;"/>open_in_new<x id="CLOSE_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&quot;\uFFFD/#8\uFFFD&quot;"/><x id="CLOSE_LINK" ctype="x-a" equiv-text="&quot;[\uFFFD/#6\uFFFD|\uFFFD/#7\uFFFD]&quot;"/> to learn more. </source>
         <target state="new">Sie können <x id="START_LINK" ctype="x-a" equiv-text="&lt;a&gt;"/>eine containerisierte App deployen<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/>, einen anderen Namespace auswählen oder <x id="START_LINK_1" ctype="x-a" equiv-text="&lt;a&gt;"/>die Dashboard-Tour starten <x id="START_TAG_MAT-ICON" ctype="x-mat-icon" equiv-text="&lt;mat-icon&gt;"/>open_in_new<x id="CLOSE_TAG_MAT-ICON" ctype="x-mat-icon" equiv-text="&lt;/mat-icon&gt;"/> <x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/> um mehr zu erfahren.</target>
       </trans-unit>
       <trans-unit id="2132886845235480834" datatype="html">
@@ -423,7 +423,7 @@
         <target>Metadata</target>
       </trans-unit>
       <trans-unit id="21860712120581731" datatype="html">
-        <source>Updated: </source>
+        <source>Updated: </source>
         <target state="new">Aktualisiert:</target>
       </trans-unit>
       <trans-unit id="2188854519574316630" datatype="html">
@@ -479,8 +479,8 @@
         <target>Alte Replica Sets</target>
       </trans-unit>
       <trans-unit id="2320200316076079587" datatype="html">
-        <source><x id="START_TAG_SPAN" ctype="x-span" equiv-text="&quot;[\uFFFD#5\uFFFD|\uFFFD#8\uFFFD]&quot;"/>Are you sure you want to delete <x id="INTERPOLATION" equiv-text="&quot;\uFFFD0\uFFFD&quot;"/> <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&quot;[\uFFFD#6\uFFFD|\uFFFD#2:1\uFFFD]&quot;"/><x id="INTERPOLATION_1" equiv-text="&quot;\uFFFD1\uFFFD&quot;"/><x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&quot;[\uFFFD/#6\uFFFD|\uFFFD/#2:1\uFFFD]&quot;"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&quot;[\uFFFD/#5\uFFFD|\uFFFD/#1:1\uFFFD\uFFFD/*7:1\uFFFD|\uFFFD/#8\uFFFD]&quot;"/><x id="START_TAG_SPAN_1" ctype="x-span_1" equiv-text="&quot;\uFFFD*7:1\uFFFD\uFFFD#1:1\uFFFD&quot;"/> in namespace <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&quot;[\uFFFD#6\uFFFD|\uFFFD#2:1\uFFFD]&quot;"/><x id="INTERPOLATION_2" equiv-text="&quot;\uFFFD0:1\uFFFD&quot;"/><x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&quot;[\uFFFD/#6\uFFFD|\uFFFD/#2:1\uFFFD]&quot;"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&quot;[\uFFFD/#5\uFFFD|\uFFFD/#1:1\uFFFD\uFFFD/*7:1\uFFFD|\uFFFD/#8\uFFFD]&quot;"/><x id="START_TAG_SPAN" ctype="x-span" equiv-text="&quot;[\uFFFD#5\uFFFD|\uFFFD#8\uFFFD]&quot;"/>?<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&quot;[\uFFFD/#5\uFFFD|\uFFFD/#1:1\uFFFD\uFFFD/*7:1\uFFFD|\uFFFD/#8\uFFFD]&quot;"/></source>
-        <target> <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span&gt;"/>Sind Sie sicher, dass Sie <x id="INTERPOLATION" equiv-text="{{data.displayName}}"/> <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/><x id="INTERPOLATION_1" equiv-text="{{data.objectMeta.name}}"/><x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i&gt;"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/> <x id="START_TAG_SPAN_1" ctype="x-span" equiv-text="&lt;span&gt;"/> im Namespace <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/><x id="INTERPOLATION_2" equiv-text="{{data.objectMeta.namespace}}"/><x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i&gt;"/> <x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/> <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span&gt;"/>löschen möchten?<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/> </target>
+        <source><x id="START_TAG_SPAN" ctype="x-span" equiv-text="&quot;[\uFFFD#5\uFFFD|\uFFFD#8\uFFFD]&quot;"/>Are you sure you want to delete <x id="INTERPOLATION" equiv-text="&quot;\uFFFD0\uFFFD&quot;"/> <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&quot;[\uFFFD#6\uFFFD|\uFFFD#2:1\uFFFD]&quot;"/><x id="INTERPOLATION_1" equiv-text="&quot;\uFFFD1\uFFFD&quot;"/><x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&quot;[\uFFFD/#6\uFFFD|\uFFFD/#2:1\uFFFD]&quot;"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&quot;[\uFFFD/#5\uFFFD|\uFFFD/#1:1\uFFFD\uFFFD/*7:1\uFFFD|\uFFFD/#8\uFFFD]&quot;"/><x id="START_TAG_SPAN_1" ctype="x-span_1" equiv-text="&quot;\uFFFD*7:1\uFFFD\uFFFD#1:1\uFFFD&quot;"/>  in namespace <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&quot;[\uFFFD#6\uFFFD|\uFFFD#2:1\uFFFD]&quot;"/><x id="INTERPOLATION_2" equiv-text="&quot;\uFFFD0:1\uFFFD&quot;"/><x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&quot;[\uFFFD/#6\uFFFD|\uFFFD/#2:1\uFFFD]&quot;"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&quot;[\uFFFD/#5\uFFFD|\uFFFD/#1:1\uFFFD\uFFFD/*7:1\uFFFD|\uFFFD/#8\uFFFD]&quot;"/><x id="START_TAG_SPAN" ctype="x-span" equiv-text="&quot;[\uFFFD#5\uFFFD|\uFFFD#8\uFFFD]&quot;"/>?<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&quot;[\uFFFD/#5\uFFFD|\uFFFD/#1:1\uFFFD\uFFFD/*7:1\uFFFD|\uFFFD/#8\uFFFD]&quot;"/></source>
+        <target state="new"> <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span&gt;"/>Sind Sie sicher, dass Sie <x id="INTERPOLATION" equiv-text="{{data.displayName}}"/> <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/><x id="INTERPOLATION_1" equiv-text="{{data.objectMeta.name}}"/><x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i&gt;"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/> <x id="START_TAG_SPAN_1" ctype="x-span" equiv-text="&lt;span&gt;"/> im Namespace <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/><x id="INTERPOLATION_2" equiv-text="{{data.objectMeta.namespace}}"/><x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i&gt;"/> <x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/> <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span&gt;"/>löschen möchten?<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/> </target>
       </trans-unit>
       <trans-unit id="2335697433764621013" datatype="html">
         <source>Memory limits (bytes)</source>
@@ -627,7 +627,7 @@
         <target>Source Type</target>
       </trans-unit>
       <trans-unit id="2862835290520488117" datatype="html">
-        <source>Unavailable: </source>
+        <source>Unavailable: </source>
         <target state="new">Nicht verfügbar :</target>
       </trans-unit>
       <trans-unit id="2885840307007437390" datatype="html">
@@ -671,7 +671,7 @@
         <target>{VAR_SELECT, select, true {Erweiterte Optionen ausblenden} other {Erweiterte Optionen anzeigen}}</target>
       </trans-unit>
       <trans-unit id="2987268586260348582" datatype="html">
-        <source>Total: </source>
+        <source>Total: </source>
         <target state="new">Gesamt :</target>
       </trans-unit>
       <trans-unit id="3000799346062046358" datatype="html">
@@ -699,11 +699,11 @@
         <target>Token</target>
       </trans-unit>
       <trans-unit id="3068261068429094032" datatype="html">
-        <source>Max unavailable: </source>
+        <source>Max unavailable: </source>
         <target state="new">Maximal nicht verfügbar:</target>
       </trans-unit>
       <trans-unit id="3094294427304814088" datatype="html">
-        <source>Strategy: </source>
+        <source>Strategy: </source>
         <target state="new">Strategie:</target>
       </trans-unit>
       <trans-unit id="3117139905742018214" datatype="html">
@@ -799,7 +799,7 @@
         <target state="new">Der Label Wert muss alphanumerisch und durch &apos;.&apos;, &apos;-&apos; oder &apos;_&apos; getrennt sein.</target>
       </trans-unit>
       <trans-unit id="3368378053177904137" datatype="html">
-        <source>Learn more <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&quot;\uFFFD#5\uFFFD&quot;"/>open_in_new<x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&quot;\uFFFD/#5\uFFFD&quot;"/></source>
+        <source> Learn more <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&quot;\uFFFD#5\uFFFD&quot;"/>open_in_new<x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&quot;\uFFFD/#5\uFFFD&quot;"/></source>
         <target state="new">Mehr erfahren <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/> open_in_new <x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i&gt;"/></target>
       </trans-unit>
       <trans-unit id="3368378053177904137" datatype="html">
@@ -823,8 +823,8 @@
         <target>Abbrechen</target>
       </trans-unit>
       <trans-unit id="3370944056293075657" datatype="html">
-        <source>Name must be up to <x id="INTERPOLATION" equiv-text="&quot;\uFFFD0\uFFFD&quot;"/> characters long.</source>
-        <target state="new">Der Name darf bis zu <x id="INTERPOLATION" equiv-text="{{namespaceMaxLength}}"/> Zeichen lang sein.</target>
+        <source> Name must be up to <x id="INTERPOLATION" equiv-text="&quot;\uFFFD0\uFFFD&quot;"/> characters long. </source>
+        <target state="new">Der Name darf bis zu <x id="INTERPOLATION" equiv-text="{{secretNameMaxLength}}"/> Zeichen lang sein.</target>
       </trans-unit>
       <trans-unit id="3370944056293075657" datatype="html">
         <source> Name must be up to <x id="INTERPOLATION" equiv-text="&quot;\uFFFD0\uFFFD&quot;"/> characters long. </source>
@@ -915,7 +915,7 @@
         <target state="new">Das Protokoll muss angegeben werden.</target>
       </trans-unit>
       <trans-unit id="3569677708978335155" datatype="html">
-        <source>Desired: </source>
+        <source>Desired: </source>
         <target state="new">Gewünscht:</target>
       </trans-unit>
       <trans-unit id="3583123851975839013" datatype="html">
@@ -1011,7 +1011,7 @@
         <target>Node</target>
       </trans-unit>
       <trans-unit id="400776614514525117" datatype="html">
-        <source>Schedule: </source>
+        <source>Schedule: </source>
         <target state="new">Planung:</target>
       </trans-unit>
       <trans-unit id="4021752662928002901" datatype="html">
@@ -1099,7 +1099,7 @@
         <target state="new">Geben Sie den YAML- oder JSON-Inhalt an, der die Ressource beschreibt, die im aktuell angewählten Namespace erzeugt werden soll.</target>
       </trans-unit>
       <trans-unit id="43228639508046926" datatype="html">
-        <source>Completions: </source>
+        <source>Completions: </source>
         <target state="new">Abschlüsse:</target>
       </trans-unit>
       <trans-unit id="4342607865016428668" datatype="html">
@@ -1139,7 +1139,7 @@
         <target>Diese Aktion ist äquivalent zu:</target>
       </trans-unit>
       <trans-unit id="4482298116905997082" datatype="html">
-        <source>Age: </source>
+        <source>Age: </source>
         <target state="new">Alter:</target>
       </trans-unit>
       <trans-unit id="4493030647783338212" datatype="html">
@@ -1175,7 +1175,7 @@
         <target>Secrets</target>
       </trans-unit>
       <trans-unit id="4588432762946433765" datatype="html">
-        <source>Kind: </source>
+        <source>Kind: </source>
         <target state="new">Art:</target>
       </trans-unit>
       <trans-unit id="4613805182430195952" datatype="html">
@@ -1195,7 +1195,7 @@
         <target>iSCSI Qualified Name</target>
       </trans-unit>
       <trans-unit id="4686783485484478974" datatype="html">
-        <source>Parallelism: </source>
+        <source>Parallelism: </source>
         <target state="new">Parallelität:</target>
       </trans-unit>
       <trans-unit id="4708304467453184793" datatype="html">
@@ -1267,7 +1267,7 @@
         <target>SE Linux Level</target>
       </trans-unit>
       <trans-unit id="5103064776441485656" datatype="html">
-        <source>Running: </source>
+        <source>Running: </source>
         <target state="new">Läuft:</target>
       </trans-unit>
       <trans-unit id="5112388980413175570" datatype="html">
@@ -1315,8 +1315,8 @@
         <target state="new">Hochladen</target>
       </trans-unit>
       <trans-unit id="5278726417886231851" datatype="html">
-        <source>IP: </source>
-        <target state="new">IP: </target>
+        <source>IP: </source>
+        <target state="new">IP: </target>
       </trans-unit>
       <trans-unit id="5279881970414324834" datatype="html">
         <source>Taints</source>
@@ -1432,7 +1432,7 @@
       </trans-unit>
       <trans-unit id="5729418620241283277" datatype="html">
         <source>Events</source>
-        <target>Ereignisse</target>
+        <target>Events</target>
       </trans-unit>
       <trans-unit id="5729418620241283277" datatype="html">
         <source>Events</source>
@@ -1593,7 +1593,7 @@
         <target>Das neue Secret wird dem Cluster hinzugefügt</target>
       </trans-unit>
       <trans-unit id="6239075439253810960" datatype="html">
-        <source>Pending: </source>
+        <source>Pending: </source>
         <target state="new">Ausstehend:</target>
       </trans-unit>
       <trans-unit id="6283035888557195281" datatype="html">
@@ -1601,7 +1601,7 @@
         <target state="new">Cluster </target>
       </trans-unit>
       <trans-unit id="6284431271548714587" datatype="html">
-        <source>Suspend: </source>
+        <source>Suspend: </source>
         <target state="new">Anhalten:</target>
       </trans-unit>
       <trans-unit id="6350980688187906033" datatype="html">
@@ -1621,7 +1621,7 @@
         <target>Systeminformation</target>
       </trans-unit>
       <trans-unit id="642253290448532904" datatype="html">
-        <source>Min ready seconds: </source>
+        <source>Min ready seconds: </source>
         <target state="new">Minimale Sekunden in Bereitschaft:</target>
       </trans-unit>
       <trans-unit id="6423210280939340786" datatype="html">
@@ -1649,7 +1649,7 @@
         <target>Kubelet-Version</target>
       </trans-unit>
       <trans-unit id="6494596911805287915" datatype="html">
-        <source>Items: </source>
+        <source>Items: </source>
         <target state="new">Elemente:</target>
       </trans-unit>
       <trans-unit id="6501135579599829770" datatype="html">
@@ -1765,8 +1765,8 @@
         <target>Erweiterungen</target>
       </trans-unit>
       <trans-unit id="6915193719482636823" datatype="html">
-        <source>Name: </source>
-        <target state="new">Name: </target>
+        <source>Name: </source>
+        <target state="new">Name: </target>
       </trans-unit>
       <trans-unit id="6929072613146586031" datatype="html">
         <source>Scale a resource</source>
@@ -1828,8 +1828,8 @@
         <source>Theme</source>
         <target>Theme</target>
       </trans-unit>
-      <trans-unit id="7109976949603290892" datatype="html">
-        <source> Logs from <x id="START_TAG_KD_DATE" ctype="x-kd_date" equiv-text="&quot;\uFFFD#2\uFFFD&quot;"/><x id="CLOSE_TAG_KD_DATE" ctype="x-kd_date" equiv-text="&quot;[\uFFFD/#2\uFFFD|\uFFFD/#3\uFFFD]&quot;"/> to <x id="START_TAG_KD_DATE_1" ctype="x-kd_date_1" equiv-text="&quot;\uFFFD#3\uFFFD&quot;"/><x id="CLOSE_TAG_KD_DATE" ctype="x-kd_date" equiv-text="&quot;[\uFFFD/#2\uFFFD|\uFFFD/#3\uFFFD]&quot;"/> UTC </source>
+      <trans-unit id="4801818354593078957" datatype="html">
+        <source> Logs from <x id="START_TAG_KD_DATE" ctype="x-kd_date" equiv-text="&quot;\uFFFD#2\uFFFD&quot;"/><x id="CLOSE_TAG_KD_DATE" ctype="x-kd_date" equiv-text="&quot;[\uFFFD/#2\uFFFD|\uFFFD/#3\uFFFD]&quot;"/> to <x id="START_TAG_KD_DATE_1" ctype="x-kd_date_1" equiv-text="&quot;\uFFFD#3\uFFFD&quot;"/><x id="CLOSE_TAG_KD_DATE" ctype="x-kd_date" equiv-text="&quot;[\uFFFD/#2\uFFFD|\uFFFD/#3\uFFFD]&quot;"/></source>
         <target state="new">Logs von <x id="START_TAG_KD_DATE" ctype="x-kd_date" equiv-text="&lt;kd-date [date]=&quot;podLogs?.info.fromDate&quot; format=&quot;short&quot;&gt;"/><x id="CLOSE_TAG_KD_DATE" ctype="x-kd_date" equiv-text="&lt;/kd-date&gt;"/> bis <x id="START_TAG_KD_DATE_1" ctype="x-kd_date_1" equiv-text="&lt;kd-date [date]=&quot;podLogs?.info.toDate&quot; format=&quot;short&quot;&gt;"/><x id="CLOSE_TAG_KD_DATE" ctype="x-kd_date" equiv-text="&lt;/kd-date&gt;"/> UTC</target>
       </trans-unit>
       <trans-unit id="7136018875175606726" datatype="html">
@@ -1853,7 +1853,7 @@
         <target>Nicht planbar</target>
       </trans-unit>
       <trans-unit id="7194375808015467595" datatype="html">
-        <source>Max surge: </source>
+        <source>Max surge: </source>
         <target state="new">Maximaler Anstieg:</target>
       </trans-unit>
       <trans-unit id="7194477224906924674" datatype="html">
@@ -1921,7 +1921,7 @@
         <target>Auslösen</target>
       </trans-unit>
       <trans-unit id="7409958205893937925" datatype="html">
-        <source>Active Jobs: </source>
+        <source>Active Jobs: </source>
         <target state="new">Aktive Jobs :</target>
       </trans-unit>
       <trans-unit id="741892530496074339" datatype="html">
@@ -1969,8 +1969,8 @@
         <target>Kubernetes Dashboard</target>
       </trans-unit>
       <trans-unit id="7546647490531252189" datatype="html">
-        <source>Namespace: </source>
-        <target state="new">Namespace: </target>
+        <source>Namespace: </source>
+        <target state="new">Namespace: </target>
       </trans-unit>
       <trans-unit id="7571663901157580742" datatype="html">
         <source>NAMESPACES</source>
@@ -1981,8 +1981,8 @@
         <target>Bearbeiten</target>
       </trans-unit>
       <trans-unit id="761105739794565336" datatype="html">
-        <source>Pods: </source>
-        <target state="new">Pods: </target>
+        <source>Pods: </source>
+        <target state="new">Pods: </target>
       </trans-unit>
       <trans-unit id="7613204568422973266" datatype="html">
         <source>Default Backend</source>
@@ -2265,7 +2265,7 @@
         <target>Datei ist bereit zum Download!</target>
       </trans-unit>
       <trans-unit id="858785118348238543" datatype="html">
-        <source>Succeeded: </source>
+        <source>Succeeded: </source>
         <target state="new">Erfolgreich:</target>
       </trans-unit>
       <trans-unit id="8601511221316154701" datatype="html">
@@ -2329,8 +2329,8 @@
         <target state="new">YAML- oder JSON-Datei auswählen, welche die Ressource beschreibt, die im aktuell angewählten Namespace erzeugt werden soll.</target>
       </trans-unit>
       <trans-unit id="8716879065476971568" datatype="html">
-        <source>Status: </source>
-        <target state="new">Status: </target>
+        <source>Status: </source>
+        <target state="new">Status: </target>
       </trans-unit>
       <trans-unit id="8764790219135296178" datatype="html">
         <source> Target port must be greater than 0. </source>
