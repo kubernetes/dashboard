@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
-  <file source-language="en" datatype="plaintext" original="ng2.template" target-language="ko">
+  <file source-language="en" target-language="ko" datatype="plaintext" original="ng2.template">
     <body>
       <trans-unit id="1000282742611934867" datatype="html">
         <source>Create from file</source>
@@ -107,7 +107,7 @@
         <target>비-리소스 URL</target>
       </trans-unit>
       <trans-unit id="1321877744367304738" datatype="html">
-        <source>Image: </source>
+        <source>Image: </source>
         <target state="new">이미지:</target>
       </trans-unit>
       <trans-unit id="1328651869817330586" datatype="html">
@@ -251,7 +251,7 @@
         <target>스토리지 클래스</target>
       </trans-unit>
       <trans-unit id="1761780531172486555" datatype="html">
-        <source>Available: </source>
+        <source>Available: </source>
         <target state="new">가용</target>
       </trans-unit>
       <trans-unit id="1763461605200938061" datatype="html">
@@ -279,7 +279,7 @@
         <target state="new">인그레스 클래스</target>
       </trans-unit>
       <trans-unit id="1828068287723658160" datatype="html">
-        <source>Failed: </source>
+        <source>Failed: </source>
         <target state="new">실패:</target>
       </trans-unit>
       <trans-unit id="1832995043073719610" datatype="html">
@@ -287,7 +287,7 @@
         <target>명시된 이름의 시크릿은 클러스터의 해당 네임스페이스 안에 추가될 것입니다.</target>
       </trans-unit>
       <trans-unit id="1850293262697508820" datatype="html">
-        <source>Revision history limit: </source>
+        <source>Revision history limit: </source>
         <target state="new">리비전 내역 한도:</target>
       </trans-unit>
       <trans-unit id="1853314835104660335" datatype="html">
@@ -391,7 +391,7 @@
         <target>클러스터에 의도한 파드의 수를 유지하기 위해서 디플로이먼트가 생성됩니다.</target>
       </trans-unit>
       <trans-unit id="2131524838680811873" datatype="html">
-        <source>You can <x id="START_LINK" ctype="x-a" equiv-text="&quot;\uFFFD#6\uFFFD&quot;"/>deploy a containerized app<x id="CLOSE_LINK" ctype="x-a" equiv-text="&quot;[\uFFFD/#6\uFFFD|\uFFFD/#7\uFFFD]&quot;"/>, select other namespace or <x id="START_LINK_1" equiv-text="&quot;\uFFFD#7\uFFFD&quot;"/>check the Dashboard Docs <x id="START_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&quot;\uFFFD#8\uFFFD&quot;"/>open_in_new<x id="CLOSE_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&quot;\uFFFD/#8\uFFFD&quot;"/><x id="CLOSE_LINK" ctype="x-a" equiv-text="&quot;[\uFFFD/#6\uFFFD|\uFFFD/#7\uFFFD]&quot;"/> to learn more.</source>
+        <source> You can <x id="START_LINK" ctype="x-a" equiv-text="&quot;\uFFFD#6\uFFFD&quot;"/>deploy a containerized app<x id="CLOSE_LINK" ctype="x-a" equiv-text="&quot;[\uFFFD/#6\uFFFD|\uFFFD/#7\uFFFD]&quot;"/>, select other namespace or <x id="START_LINK_1" equiv-text="&quot;\uFFFD#7\uFFFD&quot;"/>check the Dashboard Docs <x id="START_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&quot;\uFFFD#8\uFFFD&quot;"/>open_in_new<x id="CLOSE_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&quot;\uFFFD/#8\uFFFD&quot;"/><x id="CLOSE_LINK" ctype="x-a" equiv-text="&quot;[\uFFFD/#6\uFFFD|\uFFFD/#7\uFFFD]&quot;"/> to learn more. </source>
         <target state="new"> <x id="START_LINK" ctype="x-a" equiv-text="&lt;a&gt;"/>컨테이너화된 앱을 배포하거나<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/>, 다른 네임스페이스를 선택하거나 <x id="START_LINK_1" ctype="x-a" equiv-text="&lt;a&gt;"/>대시보드 투어(Dashboard Tour)를 통해 <x id="START_TAG_MAT-ICON" ctype="x-mat-icon" equiv-text="&lt;mat-icon&gt;"/>open_in_new<x id="CLOSE_TAG_MAT-ICON" ctype="x-mat-icon" equiv-text="&lt;/mat-icon&gt;"/> <x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/> 자세한 내용을 확인할 수 있습니다.</target>
       </trans-unit>
       <trans-unit id="2132886845235480834" datatype="html">
@@ -423,7 +423,7 @@
         <target>메타데이터</target>
       </trans-unit>
       <trans-unit id="21860712120581731" datatype="html">
-        <source>Updated: </source>
+        <source>Updated: </source>
         <target state="new">업데이트된:</target>
       </trans-unit>
       <trans-unit id="2188854519574316630" datatype="html">
@@ -479,8 +479,8 @@
         <target>오래된 레플리카 셋</target>
       </trans-unit>
       <trans-unit id="2320200316076079587" datatype="html">
-        <source><x id="START_TAG_SPAN" ctype="x-span" equiv-text="&quot;[\uFFFD#5\uFFFD|\uFFFD#8\uFFFD]&quot;"/>Are you sure you want to delete <x id="INTERPOLATION" equiv-text="&quot;\uFFFD0\uFFFD&quot;"/> <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&quot;[\uFFFD#6\uFFFD|\uFFFD#2:1\uFFFD]&quot;"/><x id="INTERPOLATION_1" equiv-text="&quot;\uFFFD1\uFFFD&quot;"/><x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&quot;[\uFFFD/#6\uFFFD|\uFFFD/#2:1\uFFFD]&quot;"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&quot;[\uFFFD/#5\uFFFD|\uFFFD/#1:1\uFFFD\uFFFD/*7:1\uFFFD|\uFFFD/#8\uFFFD]&quot;"/><x id="START_TAG_SPAN_1" ctype="x-span_1" equiv-text="&quot;\uFFFD*7:1\uFFFD\uFFFD#1:1\uFFFD&quot;"/> in namespace <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&quot;[\uFFFD#6\uFFFD|\uFFFD#2:1\uFFFD]&quot;"/><x id="INTERPOLATION_2" equiv-text="&quot;\uFFFD0:1\uFFFD&quot;"/><x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&quot;[\uFFFD/#6\uFFFD|\uFFFD/#2:1\uFFFD]&quot;"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&quot;[\uFFFD/#5\uFFFD|\uFFFD/#1:1\uFFFD\uFFFD/*7:1\uFFFD|\uFFFD/#8\uFFFD]&quot;"/><x id="START_TAG_SPAN" ctype="x-span" equiv-text="&quot;[\uFFFD#5\uFFFD|\uFFFD#8\uFFFD]&quot;"/>?<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&quot;[\uFFFD/#5\uFFFD|\uFFFD/#1:1\uFFFD\uFFFD/*7:1\uFFFD|\uFFFD/#8\uFFFD]&quot;"/></source>
-        <target> <x id="START_TAG_SPAN_1" ctype="x-span" equiv-text="&lt;span&gt;"/>정말로 <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/><x id="INTERPOLATION_2" equiv-text="{{data.objectMeta.namespace}}"/> <x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i&gt;"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/> <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span&gt;"/>네임스페이스의 <x id="INTERPOLATION" equiv-text="{{data.displayName}}"/> <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/><x id="INTERPOLATION_1" equiv-text="{{data.objectMeta.name}}"/> <x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i&gt;"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/> <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span&gt;"/>를 삭제하시겠습니까?<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/> </target>
+        <source><x id="START_TAG_SPAN" ctype="x-span" equiv-text="&quot;[\uFFFD#5\uFFFD|\uFFFD#8\uFFFD]&quot;"/>Are you sure you want to delete <x id="INTERPOLATION" equiv-text="&quot;\uFFFD0\uFFFD&quot;"/> <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&quot;[\uFFFD#6\uFFFD|\uFFFD#2:1\uFFFD]&quot;"/><x id="INTERPOLATION_1" equiv-text="&quot;\uFFFD1\uFFFD&quot;"/><x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&quot;[\uFFFD/#6\uFFFD|\uFFFD/#2:1\uFFFD]&quot;"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&quot;[\uFFFD/#5\uFFFD|\uFFFD/#1:1\uFFFD\uFFFD/*7:1\uFFFD|\uFFFD/#8\uFFFD]&quot;"/><x id="START_TAG_SPAN_1" ctype="x-span_1" equiv-text="&quot;\uFFFD*7:1\uFFFD\uFFFD#1:1\uFFFD&quot;"/>  in namespace <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&quot;[\uFFFD#6\uFFFD|\uFFFD#2:1\uFFFD]&quot;"/><x id="INTERPOLATION_2" equiv-text="&quot;\uFFFD0:1\uFFFD&quot;"/><x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&quot;[\uFFFD/#6\uFFFD|\uFFFD/#2:1\uFFFD]&quot;"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&quot;[\uFFFD/#5\uFFFD|\uFFFD/#1:1\uFFFD\uFFFD/*7:1\uFFFD|\uFFFD/#8\uFFFD]&quot;"/><x id="START_TAG_SPAN" ctype="x-span" equiv-text="&quot;[\uFFFD#5\uFFFD|\uFFFD#8\uFFFD]&quot;"/>?<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&quot;[\uFFFD/#5\uFFFD|\uFFFD/#1:1\uFFFD\uFFFD/*7:1\uFFFD|\uFFFD/#8\uFFFD]&quot;"/></source>
+        <target state="new"> <x id="START_TAG_SPAN_1" ctype="x-span" equiv-text="&lt;span&gt;"/>정말로 <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/><x id="INTERPOLATION_2" equiv-text="{{data.objectMeta.namespace}}"/> <x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i&gt;"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/> <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span&gt;"/>네임스페이스의 <x id="INTERPOLATION" equiv-text="{{data.displayName}}"/> <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/><x id="INTERPOLATION_1" equiv-text="{{data.objectMeta.name}}"/> <x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i&gt;"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/> <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span&gt;"/>를 삭제하시겠습니까?<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/> </target>
       </trans-unit>
       <trans-unit id="2335697433764621013" datatype="html">
         <source>Memory limits (bytes)</source>
@@ -512,7 +512,7 @@
       </trans-unit>
       <trans-unit id="2397234605876541174" datatype="html">
         <source>Image Pull Secrets</source>
-        <target>이미지 풀 시크릿</target>
+        <target>이미지 풀(Pull) 시크릿</target>
       </trans-unit>
       <trans-unit id="2397234605876541174" datatype="html">
         <source>Image Pull Secrets</source>
@@ -627,7 +627,7 @@
         <target>소스 유형</target>
       </trans-unit>
       <trans-unit id="2862835290520488117" datatype="html">
-        <source>Unavailable: </source>
+        <source>Unavailable: </source>
         <target state="new">비가용:</target>
       </trans-unit>
       <trans-unit id="2885840307007437390" datatype="html">
@@ -671,7 +671,7 @@
         <target>{VAR_SELECT, select, true {고급 옵션 숨기기} other {고급 옵션 보기}}</target>
       </trans-unit>
       <trans-unit id="2987268586260348582" datatype="html">
-        <source>Total: </source>
+        <source>Total: </source>
         <target state="new">전체:</target>
       </trans-unit>
       <trans-unit id="3000799346062046358" datatype="html">
@@ -699,11 +699,11 @@
         <target>토큰</target>
       </trans-unit>
       <trans-unit id="3068261068429094032" datatype="html">
-        <source>Max unavailable: </source>
+        <source>Max unavailable: </source>
         <target state="new">최대 비가용(Max unavailable):</target>
       </trans-unit>
       <trans-unit id="3094294427304814088" datatype="html">
-        <source>Strategy: </source>
+        <source>Strategy: </source>
         <target state="new">전략:</target>
       </trans-unit>
       <trans-unit id="3117139905742018214" datatype="html">
@@ -799,7 +799,7 @@
         <target state="new">레이블 값은 &apos;-&apos;, &apos;_&apos;, 또는 &apos;.&apos;로 분리되는 영숫자이어야 합니다.</target>
       </trans-unit>
       <trans-unit id="3368378053177904137" datatype="html">
-        <source>Learn more <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&quot;\uFFFD#5\uFFFD&quot;"/>open_in_new<x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&quot;\uFFFD/#5\uFFFD&quot;"/></source>
+        <source> Learn more <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&quot;\uFFFD#5\uFFFD&quot;"/>open_in_new<x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&quot;\uFFFD/#5\uFFFD&quot;"/></source>
         <target state="new"> <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/>open_in_new<x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i&gt;"/> 더 배우기</target>
       </trans-unit>
       <trans-unit id="3368378053177904137" datatype="html">
@@ -823,8 +823,8 @@
         <target state="new">중단</target>
       </trans-unit>
       <trans-unit id="3370944056293075657" datatype="html">
-        <source>Name must be up to <x id="INTERPOLATION" equiv-text="&quot;\uFFFD0\uFFFD&quot;"/> characters long.</source>
-        <target state="new">이름의 문자 길이는 최대 <x id="INTERPOLATION" equiv-text="{{namespaceMaxLength}}"/> 입니다.</target>
+        <source> Name must be up to <x id="INTERPOLATION" equiv-text="&quot;\uFFFD0\uFFFD&quot;"/> characters long. </source>
+        <target state="new">이름의 문자 길이는 최대 <x id="INTERPOLATION" equiv-text="{{secretNameMaxLength}}"/> 입니다.</target>
       </trans-unit>
       <trans-unit id="3370944056293075657" datatype="html">
         <source> Name must be up to <x id="INTERPOLATION" equiv-text="&quot;\uFFFD0\uFFFD&quot;"/> characters long. </source>
@@ -915,7 +915,7 @@
         <target state="new">프로토콜은 필수 사항입니다.</target>
       </trans-unit>
       <trans-unit id="3569677708978335155" datatype="html">
-        <source>Desired: </source>
+        <source>Desired: </source>
         <target state="new">원하는 상태:</target>
       </trans-unit>
       <trans-unit id="3583123851975839013" datatype="html">
@@ -1011,7 +1011,7 @@
         <target>노드</target>
       </trans-unit>
       <trans-unit id="400776614514525117" datatype="html">
-        <source>Schedule: </source>
+        <source>Schedule: </source>
         <target state="new">스케줄:</target>
       </trans-unit>
       <trans-unit id="4021752662928002901" datatype="html">
@@ -1099,7 +1099,7 @@
         <target state="new">현재 선택된 네임스페이스에 생성할 리소스를 명시하는 YAML 또는 JSON 내용을 입력하세요.</target>
       </trans-unit>
       <trans-unit id="43228639508046926" datatype="html">
-        <source>Completions: </source>
+        <source>Completions: </source>
         <target state="new">완료:</target>
       </trans-unit>
       <trans-unit id="4342607865016428668" datatype="html">
@@ -1139,7 +1139,7 @@
         <target>이 액션은 다음 커맨드와 동일합니다.</target>
       </trans-unit>
       <trans-unit id="4482298116905997082" datatype="html">
-        <source>Age: </source>
+        <source>Age: </source>
         <target state="new">나이:</target>
       </trans-unit>
       <trans-unit id="4493030647783338212" datatype="html">
@@ -1175,7 +1175,7 @@
         <target>시크릿</target>
       </trans-unit>
       <trans-unit id="4588432762946433765" datatype="html">
-        <source>Kind: </source>
+        <source>Kind: </source>
         <target state="new">종류:</target>
       </trans-unit>
       <trans-unit id="4613805182430195952" datatype="html">
@@ -1195,7 +1195,7 @@
         <target>iSCSI 식별자(IQN)</target>
       </trans-unit>
       <trans-unit id="4686783485484478974" datatype="html">
-        <source>Parallelism: </source>
+        <source>Parallelism: </source>
         <target state="new">병렬성:</target>
       </trans-unit>
       <trans-unit id="4708304467453184793" datatype="html">
@@ -1267,7 +1267,7 @@
         <target>SE 리눅스 레벨</target>
       </trans-unit>
       <trans-unit id="5103064776441485656" datatype="html">
-        <source>Running: </source>
+        <source>Running: </source>
         <target state="new">실행 중:</target>
       </trans-unit>
       <trans-unit id="5112388980413175570" datatype="html">
@@ -1315,8 +1315,8 @@
         <target state="new">업로드</target>
       </trans-unit>
       <trans-unit id="5278726417886231851" datatype="html">
-        <source>IP: </source>
-        <target state="new">IP: </target>
+        <source>IP: </source>
+        <target state="new">IP: </target>
       </trans-unit>
       <trans-unit id="5279881970414324834" datatype="html">
         <source>Taints</source>
@@ -1589,7 +1589,7 @@
         <target>해당 신규 시크릿은 클러스터에 추가될 것입니다.</target>
       </trans-unit>
       <trans-unit id="6239075439253810960" datatype="html">
-        <source>Pending: </source>
+        <source>Pending: </source>
         <target state="new">실행 대기:</target>
       </trans-unit>
       <trans-unit id="6283035888557195281" datatype="html">
@@ -1597,7 +1597,7 @@
         <target state="new">클러스터</target>
       </trans-unit>
       <trans-unit id="6284431271548714587" datatype="html">
-        <source>Suspend: </source>
+        <source>Suspend: </source>
         <target state="new">일시 중지(Suspend):</target>
       </trans-unit>
       <trans-unit id="6350980688187906033" datatype="html">
@@ -1617,7 +1617,7 @@
         <target>시스템 정보</target>
       </trans-unit>
       <trans-unit id="642253290448532904" datatype="html">
-        <source>Min ready seconds: </source>
+        <source>Min ready seconds: </source>
         <target state="new">최소 준비 초(Min ready seconds):</target>
       </trans-unit>
       <trans-unit id="6423210280939340786" datatype="html">
@@ -1645,7 +1645,7 @@
         <target>kubelet 버전</target>
       </trans-unit>
       <trans-unit id="6494596911805287915" datatype="html">
-        <source>Items: </source>
+        <source>Items: </source>
         <target state="new">아이템:</target>
       </trans-unit>
       <trans-unit id="6501135579599829770" datatype="html">
@@ -1761,7 +1761,7 @@
         <target>플러그인</target>
       </trans-unit>
       <trans-unit id="6915193719482636823" datatype="html">
-        <source>Name: </source>
+        <source>Name: </source>
         <target state="new">이름:</target>
       </trans-unit>
       <trans-unit id="6929072613146586031" datatype="html">
@@ -1824,8 +1824,8 @@
         <source>Theme</source>
         <target>테마</target>
       </trans-unit>
-      <trans-unit id="7109976949603290892" datatype="html">
-        <source> Logs from <x id="START_TAG_KD_DATE" ctype="x-kd_date" equiv-text="&quot;\uFFFD#2\uFFFD&quot;"/><x id="CLOSE_TAG_KD_DATE" ctype="x-kd_date" equiv-text="&quot;[\uFFFD/#2\uFFFD|\uFFFD/#3\uFFFD]&quot;"/> to <x id="START_TAG_KD_DATE_1" ctype="x-kd_date_1" equiv-text="&quot;\uFFFD#3\uFFFD&quot;"/><x id="CLOSE_TAG_KD_DATE" ctype="x-kd_date" equiv-text="&quot;[\uFFFD/#2\uFFFD|\uFFFD/#3\uFFFD]&quot;"/> UTC </source>
+      <trans-unit id="4801818354593078957" datatype="html">
+        <source> Logs from <x id="START_TAG_KD_DATE" ctype="x-kd_date" equiv-text="&quot;\uFFFD#2\uFFFD&quot;"/><x id="CLOSE_TAG_KD_DATE" ctype="x-kd_date" equiv-text="&quot;[\uFFFD/#2\uFFFD|\uFFFD/#3\uFFFD]&quot;"/> to <x id="START_TAG_KD_DATE_1" ctype="x-kd_date_1" equiv-text="&quot;\uFFFD#3\uFFFD&quot;"/><x id="CLOSE_TAG_KD_DATE" ctype="x-kd_date" equiv-text="&quot;[\uFFFD/#2\uFFFD|\uFFFD/#3\uFFFD]&quot;"/></source>
         <target state="new"> <x id="START_TAG_KD_DATE" ctype="x-kd_date" equiv-text="&lt;kd-date [date]=&quot;podLogs?.info.fromDate&quot; format=&quot;short&quot;&gt;"/><x id="CLOSE_TAG_KD_DATE" ctype="x-kd_date" equiv-text="&lt;/kd-date&gt;"/> 에서부터 <x id="START_TAG_KD_DATE_1" ctype="x-kd_date_1" equiv-text="&lt;kd-date [date]=&quot;podLogs?.info.toDate&quot; format=&quot;short&quot;&gt;"/><x id="CLOSE_TAG_KD_DATE" ctype="x-kd_date" equiv-text="&lt;/kd-date&gt;"/> 까지의 로그 (UTC)</target>
       </trans-unit>
       <trans-unit id="7136018875175606726" datatype="html">
@@ -1849,7 +1849,7 @@
         <target>스케줄 불가</target>
       </trans-unit>
       <trans-unit id="7194375808015467595" datatype="html">
-        <source>Max surge: </source>
+        <source>Max surge: </source>
         <target state="new">최대 증가율(surge):</target>
       </trans-unit>
       <trans-unit id="7194477224906924674" datatype="html">
@@ -1917,7 +1917,7 @@
         <target state="new">트리거</target>
       </trans-unit>
       <trans-unit id="7409958205893937925" datatype="html">
-        <source>Active Jobs: </source>
+        <source>Active Jobs: </source>
         <target state="new">액티브 잡:</target>
       </trans-unit>
       <trans-unit id="741892530496074339" datatype="html">
@@ -1965,7 +1965,7 @@
         <target>쿠버네티스 대시보드</target>
       </trans-unit>
       <trans-unit id="7546647490531252189" datatype="html">
-        <source>Namespace: </source>
+        <source>Namespace: </source>
         <target state="new">네임스페이스:</target>
       </trans-unit>
       <trans-unit id="7571663901157580742" datatype="html">
@@ -1977,7 +1977,7 @@
         <target>편집</target>
       </trans-unit>
       <trans-unit id="761105739794565336" datatype="html">
-        <source>Pods: </source>
+        <source>Pods: </source>
         <target state="new">파드:</target>
       </trans-unit>
       <trans-unit id="7613204568422973266" datatype="html">
@@ -2257,7 +2257,7 @@
         <target state="new">다운로드 준비 완료!</target>
       </trans-unit>
       <trans-unit id="858785118348238543" datatype="html">
-        <source>Succeeded: </source>
+        <source>Succeeded: </source>
         <target state="new">성공:</target>
       </trans-unit>
       <trans-unit id="8601511221316154701" datatype="html">
@@ -2321,7 +2321,7 @@
         <target state="new">현재 선택된 네임스페이스에 디플로이할 리소스를 명시하는 YAML 또는 JSON 파일을 선택하세요.</target>
       </trans-unit>
       <trans-unit id="8716879065476971568" datatype="html">
-        <source>Status: </source>
+        <source>Status: </source>
         <target state="new">상태:</target>
       </trans-unit>
       <trans-unit id="8764790219135296178" datatype="html">
