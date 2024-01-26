@@ -23,7 +23,10 @@ import {YAMLException} from 'js-yaml';
 
 @Injectable()
 export class GlobalErrorHandler implements ErrorHandler {
-  constructor(private readonly injector_: Injector, private readonly ngZone_: NgZone) {}
+  constructor(
+    private readonly injector_: Injector,
+    private readonly ngZone_: NgZone
+  ) {}
 
   private get router_(): Router {
     return this.injector_.get(Router);

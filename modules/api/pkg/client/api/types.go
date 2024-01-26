@@ -59,7 +59,7 @@ type ResourceVerber interface {
 	Put(kind string, namespaceSet bool, namespace string, name string,
 		object *runtime.Unknown) error
 	Get(kind string, namespaceSet bool, namespace string, name string) (runtime.Object, error)
-	Delete(kind string, namespaceSet bool, namespace string, name string) error
+	Delete(kind string, namespaceSet bool, namespace string, name string, deleteNow bool) error
 }
 
 // CanIResponse is used to as response to check whether or not user is allowed to access given endpoint.

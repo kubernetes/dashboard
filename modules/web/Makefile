@@ -50,6 +50,10 @@ deploy: --deploy
 deploy-dev: DOCKERFILE = $(WEB_DIRECTORY)/Dockerfile
 deploy-dev: --deploy-dev
 
+.PHONY: image
+image: DOCKERFILE = $(WEB_DIRECTORY)/Dockerfile
+image: --image
+
 .PHONY: --serve-go
 --serve-go:
 	go run k8s.io/dashboard/web \
@@ -59,7 +63,7 @@ deploy-dev: --deploy-dev
 
 .PHONY: --serve-angular
 --serve-angular: --ensure-dependencies
-	@npx ng serve --proxy-config=$(PROXY_CONFIG) --ssl=$(SSL_ENABLED)
+	@npx ng serve --proxy-config=$(PROXY_CONFIG) --ssl=$(SSL_ENABLED) --host=$(BIND_ADDRESS)
 
 .PHONY: --build-go
 --build-go:

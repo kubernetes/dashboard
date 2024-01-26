@@ -15,7 +15,7 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
 import {HTMLInputEvent, KdFile} from '@api/root.ui';
-import {AlertDialog, AlertDialogConfig} from 'common/dialogs/alert/dialog';
+import {AlertDialogComponent, AlertDialogConfig} from 'common/dialogs/alert/dialog';
 
 @Component({
   selector: 'kd-upload-file',
@@ -24,7 +24,7 @@ import {AlertDialog, AlertDialogConfig} from 'common/dialogs/alert/dialog';
 })
 export class UploadFileComponent {
   @Input() label: string;
-  @Output() onLoad = new EventEmitter<KdFile>();
+  @Output() fileLoad = new EventEmitter<KdFile>();
   filename: string;
 
   constructor(private readonly matDialog_: MatDialog) {}
@@ -41,7 +41,7 @@ export class UploadFileComponent {
     const reader = new FileReader();
     reader.onload = (event: ProgressEvent) => {
       const content = (event.target as FileReader).result;
-      this.onLoad.emit({
+      this.fileLoad.emit({
         name: this.filename,
         content,
       } as KdFile);
@@ -60,6 +60,6 @@ export class UploadFileComponent {
       message,
       confirmLabel: 'OK',
     };
-    this.matDialog_.open(AlertDialog, {data: configData});
+    this.matDialog_.open(AlertDialogComponent, {data: configData});
   }
 }

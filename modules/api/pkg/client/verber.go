@@ -36,7 +36,6 @@ type resourceVerber struct {
 	client              RESTClient
 	appsClient          RESTClient
 	batchClient         RESTClient
-	betaBatchClient     RESTClient
 	autoscalingClient   RESTClient
 	storageClient       RESTClient
 	rbacClient          RESTClient
@@ -59,8 +58,6 @@ func (verber *resourceVerber) getRESTClientByType(clientType api.ClientType) RES
 		return verber.appsClient
 	case api.ClientTypeBatchClient:
 		return verber.batchClient
-	case api.ClientTypeBetaBatchClient:
-		return verber.betaBatchClient
 	case api.ClientTypeAutoscalingClient:
 		return verber.autoscalingClient
 	case api.ClientTypeStorageClient:
@@ -147,13 +144,13 @@ type RESTClient interface {
 }
 
 // NewResourceVerber creates a new resource verber that uses the given client for performing operations.
-func NewResourceVerber(client, appsClient, batchClient, betaBatchClient, autoscalingClient, storageClient, rbacClient, networkingClient, apiExtensionsClient, pluginsClient RESTClient, config *restclient.Config) clientapi.ResourceVerber {
+func NewResourceVerber(client, appsClient, batchClient, autoscalingClient, storageClient, rbacClient, networkingClient, apiExtensionsClient, pluginsClient RESTClient, config *restclient.Config) clientapi.ResourceVerber {
 	return &resourceVerber{client, appsClient,
-		batchClient, betaBatchClient, autoscalingClient, storageClient, rbacClient, networkingClient, apiExtensionsClient, pluginsClient, config}
+		batchClient, autoscalingClient, storageClient, rbacClient, networkingClient, apiExtensionsClient, pluginsClient, config}
 }
 
 // Delete deletes the resource of the given kind in the given namespace with the given name.
-func (verber *resourceVerber) Delete(kind string, namespaceSet bool, namespace string, name string) error {
+func (verber *resourceVerber) Delete(kind string, namespaceSet bool, namespace string, name string, deleteNow bool) error {
 	client, resourceSpec, err := verber.getResourceSpecFromKind(kind, namespaceSet)
 	if err != nil {
 		return err
@@ -163,6 +160,11 @@ func (verber *resourceVerber) Delete(kind string, namespaceSet bool, namespace s
 	defaultPropagationPolicy := v1.DeletePropagationForeground
 	defaultDeleteOptions := &v1.DeleteOptions{
 		PropagationPolicy: &defaultPropagationPolicy,
+	}
+
+	if deleteNow {
+		gracePeriodSeconds := int64(1)
+		defaultDeleteOptions.GracePeriodSeconds = &gracePeriodSeconds
 	}
 
 	req := client.Delete().Resource(resourceSpec.Resource).Name(name).Body(defaultDeleteOptions)

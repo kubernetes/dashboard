@@ -4,12 +4,10 @@
 
 * [FAQ](common/faq.md)
 * [Roadmap](common/roadmap.md)
-* [Dashboard arguments](common/dashboard-arguments.md)
+* [Dashboard arguments](common/arguments.md)
 
 ## [User Guide](user/README.md)
 
-* [Installation](user/installation.md)
-* [Certificate management](user/certificate-management.md)
 * [Accessing Dashboard](user/accessing-dashboard/README.md)
 * [Access control](user/access-control/README.md)
   * [Creating sample user](user/access-control/creating-sample-user.md)

@@ -21,36 +21,42 @@ on:
 permissions:
   contents: read
 jobs:
-
   helm-lint-test:
     name: Lint and test
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
+      - name: Check out repository
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
-      - name: Validate schema
-        uses: wiremind/helm-kubeval-action@v1.2.2
+
+      - name: Set up Helm
+        uses: azure/setup-helm@v3
         with:
-          path: charts/helm-chart
-          config: charts/helm-chart/config_repos
-          version: 1.23.0
-      - uses: actions/setup-python@v4.4.0
+          version: v3.11.0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
         with:
-          python-version: 3.7
-      - name: Set up chart-testing
-        uses: helm/chart-testing-action@v2.3.1
-      - name: Cleanup charts directory
-        id: cleanup
-        run: sudo rm -rf charts/helm-chart/kubernetes-dashboard/charts
-      - name: Run chart-testing (lint)
-        id: lint
+          python-version: "3.9"
+          check-latest: true
+
+      - name: Install kubeconform-helm
+        run: helm plugin install https://github.com/jtyr/kubeconform-helm
+
+      - name: Install chart-testing
+        uses: helm/chart-testing-action@v2.6.1
+
+      - name: Run chart-testing lint
         run: ct lint --config=charts/helm-chart/.helm-chart-testing.yaml
+
       - name: Start kind cluster
-        uses: helm/kind-action@v1.5.0
-      - name: Install Prometheus Operator CRDs
-        id: prom
+        uses: helm/kind-action@v1.8.0
+        with:
+          node_image: kindest/node:v1.29.0
+
+      - name: Deploy prometheus-operator
         run: kubectl apply --server-side -f https://raw.githubusercontent.com/prometheus-operator/prometheus-operator/v0.54.0/example/prometheus-operator-crd/monitoring.coreos.com_servicemonitors.yaml
-      - name: Run chart-testing (install)
+
+      - name: Run chart-testing install
         run: ct install --config=charts/helm-chart/.helm-chart-testing.yaml

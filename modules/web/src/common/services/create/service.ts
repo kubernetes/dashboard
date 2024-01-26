@@ -20,7 +20,7 @@ import {AppDeploymentContentResponse, AppDeploymentContentSpec, AppDeploymentSpe
 import {IConfig} from '@api/root.ui';
 import {AsKdError} from '@common/errors/errors';
 import {CONFIG_DI_TOKEN} from '../../../index.config';
-import {AlertDialog, AlertDialogConfig} from '../../dialogs/alert/dialog';
+import {AlertDialogComponent, AlertDialogConfig} from '../../dialogs/alert/dialog';
 import {CsrfTokenService} from '../global/csrftoken';
 import {NamespaceService} from '../global/namespace';
 
@@ -127,6 +127,6 @@ export class CreateService {
       message,
       confirmLabel: 'OK',
     };
-    this.matDialog_.open(AlertDialog, {data: configData});
+    this.matDialog_.open(AlertDialogComponent, {data: configData});
   }
 }

@@ -98,10 +98,11 @@ limitations under the License.
         </mat-header-cell>
         <mat-cell *matCellDef="let ingress"
                   class="col-stretch-xl">
-          <div *ngFor="let host of ingress?.hosts"
+          <div *ngFor="let host of ingress?.hosts; let last = last"
                class="kd-ellipsised">
             <a href="https://{{ host }}"
-               target="_blank"> {{ host }} </a>
+               target="_blank"> {{ host }}</a>
+            <span *ngIf="!last">,&nbsp;</span>
           </div>
 
           <div *ngIf="ingress?.hosts?.length === 0">-</div>

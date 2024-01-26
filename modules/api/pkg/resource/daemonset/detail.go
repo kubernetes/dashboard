@@ -19,7 +19,6 @@ import (
 	"log"
 
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
-	v1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	k8sClient "k8s.io/client-go/kubernetes"
 	metricapi "k8s.io/dashboard/api/pkg/integration/metric/api"
 	"k8s.io/dashboard/api/pkg/resource/common"
@@ -30,7 +29,7 @@ type DaemonSetDetail struct {
 	// Extends list item structure.
 	DaemonSet `json:",inline"`
 
-	LabelSelector *v1.LabelSelector `json:"labelSelector,omitempty"`
+	LabelSelector *metaV1.LabelSelector `json:"labelSelector,omitempty"`
 
 	// List of non-critical errors, that occurred during resource retrieval.
 	Errors []error `json:"errors"`

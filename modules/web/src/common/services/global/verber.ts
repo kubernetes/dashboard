@@ -18,13 +18,13 @@ import {MatDialog, MatDialogConfig} from '@angular/material/dialog';
 import {ObjectMeta, TypeMeta, SetImageData} from '@api/root.api';
 import {filter, switchMap} from 'rxjs/operators';
 
-import {AlertDialog, AlertDialogConfig} from '../../dialogs/alert/dialog';
-import {DeleteResourceDialog} from '../../dialogs/deleteresource/dialog';
-import {EditResourceDialog} from '../../dialogs/editresource/dialog';
-import {RestartResourceDialog} from '../../dialogs/restartresource/dialog';
+import {AlertDialogComponent, AlertDialogConfig} from '../../dialogs/alert/dialog';
+import {DeleteResourceDialogComponent} from '../../dialogs/deleteresource/dialog';
+import {EditResourceDialogComponent} from '../../dialogs/editresource/dialog';
+import {RestartResourceDialogComponent} from '../../dialogs/restartresource/dialog';
 import {SetImageDialog} from '../../dialogs/setimage/dialog';
-import {ScaleResourceDialog} from '../../dialogs/scaleresource/dialog';
-import {TriggerResourceDialog} from '../../dialogs/triggerresource/dialog';
+import {ScaleResourceDialogComponent} from '../../dialogs/scaleresource/dialog';
+import {TriggerResourceDialogComponent} from '../../dialogs/triggerresource/dialog';
 import {RawResource} from '../../resources/rawresource';
 
 import {ResourceMeta} from './actionbar';
@@ -37,18 +37,21 @@ export class VerberService {
   onTrigger = new EventEmitter<boolean>();
   onRestart = new EventEmitter<boolean>();
 
-  constructor(private readonly dialog_: MatDialog, private readonly http_: HttpClient) {}
+  constructor(
+    private readonly dialog_: MatDialog,
+    private readonly http_: HttpClient
+  ) {}
 
   showDeleteDialog(displayName: string, typeMeta: TypeMeta, objectMeta: ObjectMeta): void {
     const dialogConfig = this.getDialogConfig_(displayName, typeMeta, objectMeta);
     this.dialog_
-      .open(DeleteResourceDialog, dialogConfig)
+      .open(DeleteResourceDialogComponent, dialogConfig)
       .afterClosed()
-      .pipe(filter(doDelete => doDelete))
+      .pipe(filter(doDelete => doDelete !== 'cancelDelete'))
       .pipe(
-        switchMap(_ => {
+        switchMap(result => {
           const url = RawResource.getUrl(typeMeta, objectMeta);
-          return this.http_.delete(url, {responseType: 'text'});
+          return this.http_.delete(url, {params: {deleteNow: result}, responseType: 'text'});
         })
       )
       .subscribe(_ => this.onDelete.emit(true), this.handleErrorResponse_.bind(this));
@@ -57,7 +60,7 @@ export class VerberService {
   showEditDialog(displayName: string, typeMeta: TypeMeta, objectMeta: ObjectMeta): void {
     const dialogConfig = this.getDialogConfig_(displayName, typeMeta, objectMeta);
     this.dialog_
-      .open(EditResourceDialog, dialogConfig)
+      .open(EditResourceDialogComponent, dialogConfig)
       .afterClosed()
       .pipe(filter(result => result))
       .pipe(
@@ -72,7 +75,7 @@ export class VerberService {
   showRestartDialog(displayName: string, typeMeta: TypeMeta, objectMeta: ObjectMeta): void {
     const dialogConfig = this.getDialogConfig_(displayName, typeMeta, objectMeta);
     this.dialog_
-      .open(RestartResourceDialog, dialogConfig)
+      .open(RestartResourceDialogComponent, dialogConfig)
       .afterClosed()
       .pipe(filter(result => result))
       .pipe(
@@ -107,14 +110,14 @@ export class VerberService {
   showScaleDialog(displayName: string, typeMeta: TypeMeta, objectMeta: ObjectMeta): void {
     const dialogConfig = this.getDialogConfig_(displayName, typeMeta, objectMeta);
     this.dialog_
-      .open(ScaleResourceDialog, dialogConfig)
+      .open(ScaleResourceDialogComponent, dialogConfig)
       .afterClosed()
       .pipe(filter(result => Number.isInteger(result)))
       .pipe(
         switchMap(result => {
           const url = `api/v1/scale/${typeMeta.kind}${objectMeta.namespace ? `/${objectMeta.namespace}` : ''}/${
             objectMeta.name
-          }/`;
+          }`;
 
           return this.http_.put(url, {scaleBy: result}, {params: {scaleBy: result}});
         })
@@ -125,7 +128,7 @@ export class VerberService {
   showTriggerDialog(displayName: string, typeMeta: TypeMeta, objectMeta: ObjectMeta): void {
     const dialogConfig = this.getDialogConfig_(displayName, typeMeta, objectMeta);
     this.dialog_
-      .open(TriggerResourceDialog, dialogConfig)
+      .open(TriggerResourceDialogComponent, dialogConfig)
       .afterClosed()
       .pipe(filter(result => result))
       .pipe(
@@ -151,7 +154,7 @@ export class VerberService {
           confirmLabel: 'OK',
         },
       };
-      this.dialog_.open(AlertDialog, alertDialogConfig);
+      this.dialog_.open(AlertDialogComponent, alertDialogConfig);
     }
   }
 

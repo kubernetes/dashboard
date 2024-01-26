@@ -13,53 +13,51 @@
 # limitations under the License.
 
 name: CD / Helm
-
 on:
   push:
-    branches: [ master ]
+    branches: [master]
     paths:
-    - 'charts/helm-chart/**'
-    - 'hack/scripts/helm-release-chart.sh'
-    - '.github/workflows/cd-helm.yml'
-
+      - "charts/helm-chart/**"
+      - "hack/scripts/helm-release-chart.sh"
+      - ".github/workflows/cd-helm.yml"
 permissions:
   contents: write
   pull-requests: write
-
 jobs:
-
   release:
-    name: Helm Chart Release
+    name: Helm chart release
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
+      - name: Check out repository
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
-      - name: Configure Git
+
+      - name: Set up Git user
         run: |
           git config user.name "$GITHUB_ACTOR"
           git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
-      - name: Package
+
+      - name: Release new Helm chart
         shell: bash
         run: hack/scripts/helm-release-chart.sh
         env:
           TERM: xterm-256color
-      - name: Create Pull Request branch
-        run: |
-          git checkout -b gh-pages-pull-request
-      # Note that will fail if branch already exists.
-      - name: Push Git Branch
-        uses: ad-m/github-push-action@v0.6.0
+
+      - name: Check out gh-pages-pull-request branch # It will fail if branch already exists
+        run: git checkout -b gh-pages-pull-request
+
+      - name: Push changes to gh-pages-pull-request branch # It will silently fail if pull request already exists
+        uses: ad-m/github-push-action@v0.8.0
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           branch: gh-pages-pull-request
-      # Note that will silently fail if PR already exists.
-      - name: Create Pull Request
+
+      - name: Create pull request
         uses: repo-sync/pull-request@v2
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           source_branch: gh-pages-pull-request
           destination_branch: gh-pages
-          pr_title: "Helm Chart: Update Helm repository"
+          pr_title: "Update Helm repository"
           pr_body: "Automatically created from Helm CD workflow."

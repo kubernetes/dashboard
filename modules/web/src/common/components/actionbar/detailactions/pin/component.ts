@@ -28,7 +28,10 @@ export class ActionbarDetailPinComponent {
   @Input() displayName: string;
   @Input() namespaced = false;
 
-  constructor(private readonly pinner_: PinnerService, @Inject(MESSAGES_DI_TOKEN) readonly message: IMessage) {}
+  constructor(
+    private readonly pinner_: PinnerService,
+    @Inject(MESSAGES_DI_TOKEN) readonly message: IMessage
+  ) {}
 
   onClick(): void {
     if (this.isPinned()) {

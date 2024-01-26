@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import {HttpClient} from '@angular/common/http';
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, DestroyRef, inject, OnInit} from '@angular/core';
 import {AbstractControl, UntypedFormArray, UntypedFormBuilder, UntypedFormGroup, Validators} from '@angular/forms';
 import {MatDialog} from '@angular/material/dialog';
 import {ActivatedRoute, Router} from '@angular/router';
@@ -27,20 +27,20 @@ import {
   SecretList,
 } from '@api/root.api';
 import {ICanDeactivate} from '@common/interfaces/candeactivate';
-import {PreviewDeploymentDialog} from '@common/dialogs/previewdeployment/dialog';
+import {PreviewDeploymentDialogComponent} from '@common/dialogs/previewdeployment/dialog';
 import {NAMESPACE_STATE_PARAM} from '@common/params/params';
 
 import {CreateService} from '@common/services/create/service';
 import {HistoryService} from '@common/services/global/history';
 import {NamespaceService} from '@common/services/global/namespace';
-import {take, takeUntil} from 'rxjs/operators';
+import {take} from 'rxjs/operators';
 
-import {CreateNamespaceDialog} from './createnamespace/dialog';
+import {CreateNamespaceDialogComponent} from './createnamespace/dialog';
 import {DeployLabel} from './deploylabel/deploylabel';
 import {validateUniqueName} from './validator/uniquename.validator';
 import {FormValidators} from './validator/validators';
-import {CreateSecretDialog} from './createsecret/dialog';
-import {Subject} from 'rxjs';
+import {CreateSecretDialogComponent} from './createsecret/dialog';
+import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 
 // Label keys for predefined labels
 const APP_LABEL_KEY = 'k8s-app';
@@ -50,7 +50,7 @@ const APP_LABEL_KEY = 'k8s-app';
   templateUrl: './template.html',
   styleUrls: ['./style.scss'],
 })
-export class CreateFromFormComponent extends ICanDeactivate implements OnInit, OnDestroy {
+export class CreateFromFormComponent extends ICanDeactivate implements OnInit {
   showMoreOptions_ = false;
   namespaces: string[];
   protocols: string[];
@@ -60,8 +60,8 @@ export class CreateFromFormComponent extends ICanDeactivate implements OnInit, O
   form: UntypedFormGroup;
   readonly nameMaxLength = 24;
   private created_ = false;
-  private unsubscribe_ = new Subject<void>();
 
+  private destroyRef = inject(DestroyRef);
   constructor(
     private readonly namespace_: NamespaceService,
     private readonly create_: CreateService,
@@ -153,7 +153,7 @@ export class CreateFromFormComponent extends ICanDeactivate implements OnInit, O
       this.labelArr[0].value = v;
       this.labels.patchValue([{index: 0, value: v}]);
     });
-    this.namespace.valueChanges.pipe(takeUntil(this.unsubscribe_)).subscribe((namespace: string) => {
+    this.namespace.valueChanges.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((namespace: string) => {
       this.name.clearAsyncValidators();
       this.name.setAsyncValidators(validateUniqueName(this.http_, namespace));
       this.name.updateValueAndValidity();
@@ -170,11 +170,6 @@ export class CreateFromFormComponent extends ICanDeactivate implements OnInit, O
     this.http_
       .get('api/v1/appdeployment/protocols')
       .subscribe((protocols: Protocols) => (this.protocols = protocols.protocols));
-  }
-
-  ngOnDestroy(): void {
-    this.unsubscribe_.next();
-    this.unsubscribe_.complete();
   }
 
   changeExternal(isExternal: boolean): void {
@@ -217,7 +212,7 @@ export class CreateFromFormComponent extends ICanDeactivate implements OnInit, O
 
   handleNamespaceDialog(): void {
     const dialogData = {data: {namespaces: this.namespaces}};
-    const dialogDef = this.dialog_.open(CreateNamespaceDialog, dialogData);
+    const dialogDef = this.dialog_.open(CreateNamespaceDialogComponent, dialogData);
     dialogDef
       .afterClosed()
       .pipe(take(1))
@@ -237,7 +232,7 @@ export class CreateFromFormComponent extends ICanDeactivate implements OnInit, O
 
   handleCreateSecretDialog(): void {
     const dialogData = {data: {namespace: this.namespace.value}};
-    const dialogDef = this.dialog_.open(CreateSecretDialog, dialogData);
+    const dialogDef = this.dialog_.open(CreateSecretDialogComponent, dialogData);
     dialogDef
       .afterClosed()
       .pipe(take(1))
@@ -283,7 +278,7 @@ export class CreateFromFormComponent extends ICanDeactivate implements OnInit, O
   }
 
   preview(): void {
-    this.dialog_.open(PreviewDeploymentDialog, {
+    this.dialog_.open(PreviewDeploymentDialogComponent, {
       width: '900px',
       data: {
         spec: this.getSpec(),

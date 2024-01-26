@@ -13,9 +13,9 @@
 // limitations under the License.
 
 import {animate, keyframes, state, style, transition, trigger} from '@angular/animations';
-import {Component, EventEmitter, HostListener, Input, OnDestroy, OnInit} from '@angular/core';
-import {Subject} from 'rxjs';
-import {debounceTime, takeUntil, tap} from 'rxjs/operators';
+import {Component, DestroyRef, EventEmitter, HostListener, inject, Input, OnInit} from '@angular/core';
+import {debounceTime, tap} from 'rxjs/operators';
+import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 
 enum NamespacedIndicatorState {
   Enter = 'mouseenter',
@@ -52,7 +52,7 @@ const rollInOut = trigger('rollInOut', [
   styleUrls: ['style.scss'],
   animations: [rollInOut],
 })
-export class NavItemComponent implements OnInit, OnDestroy {
+export class NavItemComponent implements OnInit {
   @Input() state: string;
   @Input() exact = false;
   @Input() namespaced = false;
@@ -62,7 +62,7 @@ export class NavItemComponent implements OnInit, OnDestroy {
 
   private mouseStateChanges_ = new EventEmitter<NamespacedIndicatorState>();
   private debounceTime_ = 500;
-  private unsubscribe_ = new Subject<void>();
+  private destroyRef = inject(DestroyRef);
 
   get indicator(): string {
     return this.animationState === NamespacedIndicatorState.Leave || !this.animated ? 'N' : 'Namespaced';
@@ -83,13 +83,8 @@ export class NavItemComponent implements OnInit, OnDestroy {
         )
       )
       .pipe(debounceTime(this.debounceTime_))
-      .pipe(takeUntil(this.unsubscribe_))
+      .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe(state => (this.animationState = state));
-  }
-
-  ngOnDestroy(): void {
-    this.unsubscribe_.next();
-    this.unsubscribe_.complete();
   }
 
   @HostListener('mouseenter', ['$event'])

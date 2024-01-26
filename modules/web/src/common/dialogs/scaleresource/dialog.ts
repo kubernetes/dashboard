@@ -23,12 +23,12 @@ import {ResourceMeta} from '../../services/global/actionbar';
   selector: 'kd-delete-resource-dialog',
   templateUrl: 'template.html',
 })
-export class ScaleResourceDialog implements OnInit {
+export class ScaleResourceDialogComponent implements OnInit {
   actual = 0;
   desired = 0;
 
   constructor(
-    public dialogRef: MatDialogRef<ScaleResourceDialog>,
+    public dialogRef: MatDialogRef<ScaleResourceDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: ResourceMeta,
     private readonly http_: HttpClient
   ) {}

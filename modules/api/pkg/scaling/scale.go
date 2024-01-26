@@ -70,7 +70,7 @@ func ScaleResource(cfg *rest.Config, kind, namespace, name, count string) (*Repl
 		return nil, err
 	}
 
-	c, err := strconv.Atoi(count)
+	c, err := strconv.ParseInt(count, 10, 32)
 	if err != nil {
 		return nil, err
 	}

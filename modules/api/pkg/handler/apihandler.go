@@ -298,11 +298,11 @@ func CreateHTTPAPIHandler(iManager integration.IntegrationManager, cManager clie
 			Writes(setimage.SetImageData{}))
 
 	apiV1Ws.Route(
-		apiV1Ws.PUT("/scale/{kind}/{namespace}/{name}/").
+		apiV1Ws.PUT("/scale/{kind}/{namespace}/{name}").
 			To(apiHandler.handleScaleResource).
 			Writes(scaling.ReplicaCounts{}))
 	apiV1Ws.Route(
-		apiV1Ws.PUT("/scale/{kind}/{name}/").
+		apiV1Ws.PUT("/scale/{kind}/{name}").
 			To(apiHandler.handleScaleResource).
 			Writes(scaling.ReplicaCounts{}))
 	apiV1Ws.Route(
@@ -1914,8 +1914,9 @@ func (apiHandler *APIHandler) handleDeleteResource(
 	kind := request.PathParameter("kind")
 	namespace, ok := request.PathParameters()["namespace"]
 	name := request.PathParameter("name")
+	deleteNow := request.QueryParameter("deleteNow") == "true"
 
-	if err := verber.Delete(kind, ok, namespace, name); err != nil {
+	if err := verber.Delete(kind, ok, namespace, name, deleteNow); err != nil {
 		errors.HandleInternalError(response, err)
 		return
 	}

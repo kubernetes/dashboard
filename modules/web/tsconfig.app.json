@@ -11,6 +11,5 @@
   "exclude": [
     "src/**/*.spec.ts",
     "src/test.*.ts"
-  ],
-  "lib": ["ES2020", "dom"]
+  ]
 }

@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {Component, forwardRef} from '@angular/core';
+import {Component, forwardRef, OnInit} from '@angular/core';
 import {
   AbstractControl,
   ControlValueAccessor,
@@ -42,7 +42,7 @@ import {EnvironmentVariable} from '@api/root.api';
     },
   ],
 })
-export class EnvironmentVariablesComponent implements ControlValueAccessor {
+export class EnvironmentVariablesComponent implements OnInit, ControlValueAccessor {
   form: UntypedFormGroup;
 
   namePattern = new RegExp('^[A-Za-z_][A-Za-z0-9_]*$');
