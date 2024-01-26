@@ -12219,7 +12219,7 @@ __metadata:
     strip-ansi: 7.1.0
     stylelint: 16.2.0
     stylelint-config-standard-scss: 13.0.0
-    stylelint-no-unsupported-browser-features: 8.0.0
+    stylelint-no-unsupported-browser-features: 8.0.1
     stylelint-order: 6.0.4
     systemjs: 6.14.3
     tar: 6.2.0
@@ -12522,13 +12522,6 @@ __metadata:
   version: 4.1.1
   resolution: "lodash.once@npm:4.1.1"
   checksum: d768fa9f9b4e1dc6453be99b753906f58990e0c45e7b2ca5a3b40a33111e5d17f6edf2f768786e2716af90a8e78f8f91431ab8435f761fef00f9b0c256f6d245
-  languageName: node
-  linkType: hard
-
-"lodash.pick@npm:^4.4.0":
-  version: 4.4.0
-  resolution: "lodash.pick@npm:4.4.0"
-  checksum: 2c36cab7da6b999a20bd3373b40e31a3ef81fa264f34a6979c852c5bc8ac039379686b27380f0cb8e3781610844fafec6949c6fbbebc059c98f8fa8570e3675f
   languageName: node
   linkType: hard
 
@@ -15945,16 +15938,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"stylelint-no-unsupported-browser-features@npm:8.0.0":
-  version: 8.0.0
-  resolution: "stylelint-no-unsupported-browser-features@npm:8.0.0"
+"stylelint-no-unsupported-browser-features@npm:8.0.1":
+  version: 8.0.1
+  resolution: "stylelint-no-unsupported-browser-features@npm:8.0.1"
   dependencies:
     doiuse: ^6.0.2
-    lodash.pick: ^4.4.0
     postcss: ^8.4.32
   peerDependencies:
     stylelint: ^16.0.2
-  checksum: 3626984a219acb2b573260386b1397eeb47799b0de528c0cdf5b8c80df3fe4b7db4c3dcd3f3c5d5d943a70fb525c3106669883f97cc091fd6428f4dd44bce836
+  checksum: 37d69d5a911469b4c31a6a8286a11a96da4e11bda7e4cb30a65672e03166804634f82e5fe480e3821536c3980f95226e893bc79e73c9f2232a296f11f8bf2db3
   languageName: node
   linkType: hard
 
