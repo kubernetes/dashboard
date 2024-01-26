@@ -22,7 +22,7 @@ import {AlertDialogComponent, AlertDialogConfig} from '../../dialogs/alert/dialo
 import {DeleteResourceDialogComponent} from '../../dialogs/deleteresource/dialog';
 import {EditResourceDialogComponent} from '../../dialogs/editresource/dialog';
 import {RestartResourceDialogComponent} from '../../dialogs/restartresource/dialog';
-import {SetImageDialog} from '../../dialogs/setimage/dialog';
+import {SetImageDialogComponent} from '../../dialogs/setimage/dialog';
 import {ScaleResourceDialogComponent} from '../../dialogs/scaleresource/dialog';
 import {TriggerResourceDialogComponent} from '../../dialogs/triggerresource/dialog';
 import {RawResource} from '../../resources/rawresource';
@@ -87,10 +87,10 @@ export class VerberService {
       .subscribe(_ => this.onTrigger.emit(true), this.handleErrorResponse_.bind(this));
   }
 
-  showSetImageDialog(displayName: string, typeMeta: TypeMeta, objectMeta: ObjectMeta): void {
+  showSetImageDialogComponent(displayName: string, typeMeta: TypeMeta, objectMeta: ObjectMeta): void {
     const dialogConfig = this.getDialogConfig_(displayName, typeMeta, objectMeta);
     this.dialog_
-      .open(SetImageDialog, dialogConfig)
+      .open(SetImageDialogComponent, dialogConfig)
       .afterClosed()
       .pipe(filter(result => result))
       .pipe(

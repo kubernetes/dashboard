@@ -29,6 +29,6 @@ export class ActionbarDetailSetImageComponent {
   constructor(private readonly verber_: VerberService) {}
 
   onClick(): void {
-    this.verber_.showSetImageDialog(this.displayName, this.typeMeta, this.objectMeta);
+    this.verber_.showSetImageDialogComponent(this.displayName, this.typeMeta, this.objectMeta);
   }
 }

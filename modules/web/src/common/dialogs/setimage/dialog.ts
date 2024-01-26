@@ -28,7 +28,7 @@ interface LastDeploymentData {
   selector: 'kd-setimage-dialog',
   templateUrl: 'template.html',
 })
-export class SetImageDialog implements OnInit {
+export class SetImageDialogComponent implements OnInit {
   result: SetImageData = {name: '', image: ''};
   no_result: SetImageData = null;
   containerNameList: string[] = [];
@@ -36,7 +36,7 @@ export class SetImageDialog implements OnInit {
   isInitialized = false;
 
   constructor(
-    public dialogRef: MatDialogRef<SetImageDialog>,
+    public dialogRef: MatDialogRef<SetImageDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: ResourceMeta,
     private readonly http_: HttpClient
   ) {}
