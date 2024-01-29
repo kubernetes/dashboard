@@ -24,12 +24,12 @@ import (
 )
 
 // GetPluginSource has the logic to get the actual plugin source code from information in Plugin.Spec
-func GetPluginSource(client pluginclientset.Interface, k8sClient kubernetes.Interface, ns string, name string) ([]byte, error) {
-	plugin, err := client.DashboardV1alpha1().Plugins(ns).Get(context.TODO(), name, v1.GetOptions{})
+func GetPluginSource(ctx context.Context, client pluginclientset.Interface, k8sClient kubernetes.Interface, ns string, name string) ([]byte, error) {
+	plugin, err := client.DashboardV1alpha1().Plugins(ns).Get(ctx, name, v1.GetOptions{})
 	if err != nil {
 		return nil, err
 	}
-	cfgMap, err := k8sClient.CoreV1().ConfigMaps(ns).Get(context.TODO(), plugin.Spec.Source.ConfigMapRef.Name, v1.GetOptions{})
+	cfgMap, err := k8sClient.CoreV1().ConfigMaps(ns).Get(ctx, plugin.Spec.Source.ConfigMapRef.Name, v1.GetOptions{})
 	if err != nil {
 		return nil, err
 	}

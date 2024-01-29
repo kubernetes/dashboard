@@ -91,7 +91,8 @@ func (h *Handler) servePluginSource(request *restful.Request, response *restful.
 	pluginName := request.PathParameter("pluginName")
 	name := strings.TrimSuffix(pluginName, filepath.Ext(pluginName))
 
-	result, err := GetPluginSource(pluginClient, k8sClient, namespace, name)
+	ctx := request.Request.Context()
+	result, err := GetPluginSource(ctx, pluginClient, k8sClient, namespace, name)
 	if err != nil {
 		errors.HandleInternalError(response, err)
 		return
