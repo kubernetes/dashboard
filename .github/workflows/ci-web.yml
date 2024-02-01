@@ -74,7 +74,7 @@ jobs:
         run: yarn coverage
 
       - name: Upload coverage report
-        uses: codecov/codecov-action@v3
+        uses: codecov/codecov-action@v4
         with:
           name: web-coverage
           fail_ci_if_error: true

@@ -119,7 +119,7 @@ jobs:
         run: PATH=$PATH:$GOPATH/bin make coverage
 
       - name: Upload coverage report
-        uses: codecov/codecov-action@v3
+        uses: codecov/codecov-action@v4
         with:
           name: api-coverage
           files: ./modules/api/coverage.out

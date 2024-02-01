@@ -114,7 +114,7 @@ jobs:
         run: PATH=$PATH:$GOPATH/bin make coverage
 
       - name: Upload coverage report
-        uses: codecov/codecov-action@v3
+        uses: codecov/codecov-action@v4
         with:
           name: metrics-scraper-coverage
           files: ./modules/metrics-scraper/coverage.out
