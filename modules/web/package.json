@@ -131,7 +131,7 @@
     "run-node": "2.0.0",
     "sass": "1.70.0",
     "sass-loader": "14.1.0",
-    "semver": "7.5.4",
+    "semver": "7.6.0",
     "source-map-explorer": "2.5.3",
     "stylelint": "16.2.1",
     "stylelint-config-standard-scss": "13.0.0",
