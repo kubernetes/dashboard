@@ -58,7 +58,7 @@ export class IngressRouteListComponent extends ResourceListBase<IngressRouteList
   }
 
   extractHostname(host: string): string {
-    const matches = Array.from(host.matchAll(/`([^`]+)`/g));
+    const matches = Array.from(host.matchAll(/[`"]([^`"]+)[`"]/g));
     const parts = matches.map(match => match[1]);
     return parts.join('');
   }
