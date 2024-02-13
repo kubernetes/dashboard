@@ -60,7 +60,7 @@ jobs:
         run: PATH=$PATH:$GOPATH/bin make codegen-verify
 
       - name: Lint
-        uses: golangci/golangci-lint-action@v3
+        uses: golangci/golangci-lint-action@v4
         with:
           version: v1.52.2
           working-directory: modules/api
