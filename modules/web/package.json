@@ -145,7 +145,7 @@
     "typescript": "5.1.6",
     "wait-on": "7.2.0",
     "webpack-bundle-analyzer": "4.10.1",
-    "webpack-dev-server": "5.0.0"
+    "webpack-dev-server": "5.0.1"
   },
   "overrides": {
     "colors": "1.4.0"
