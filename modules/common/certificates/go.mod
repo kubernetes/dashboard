@@ -4,7 +4,7 @@ go 1.20
 
 require (
 	k8s.io/api v0.29.1
-	k8s.io/apimachinery v0.29.1
+	k8s.io/apimachinery v0.29.2
 )
 
 require (
