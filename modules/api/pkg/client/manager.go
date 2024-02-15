@@ -323,7 +323,10 @@ func (self *clientManager) buildConfigFromFlags(apiserverHost, kubeConfigPath st
 	if len(kubeConfigPath) > 0 || len(apiserverHost) > 0 {
 		return clientcmd.NewNonInteractiveDeferredLoadingClientConfig(
 			&clientcmd.ClientConfigLoadingRules{ExplicitPath: kubeConfigPath},
-			&clientcmd.ConfigOverrides{ClusterInfo: api.Cluster{Server: apiserverHost}}).ClientConfig()
+			&clientcmd.ConfigOverrides{ClusterInfo: api.Cluster{
+				Server:                apiserverHost,
+				InsecureSkipTLSVerify: args.Holder.GetApiServerSkipTLSVerify(),
+			}}).ClientConfig()
 	}
 
 	if self.isRunningInCluster() {

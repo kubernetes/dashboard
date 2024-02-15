@@ -52,6 +52,7 @@ var (
 	argCertFile                  = pflag.String("tls-cert-file", "", "file containing the default x509 certificate for HTTPS")
 	argKeyFile                   = pflag.String("tls-key-file", "", "file containing the default x509 private key matching --tls-cert-file")
 	argApiserverHost             = pflag.String("apiserver-host", "", "address of the Kubernetes API server to connect to in the format of protocol://address:port, leave it empty if the binary runs inside cluster for local discovery attempt")
+	argApiserverSkipTLSVerify    = pflag.Bool("apiserver-skip-tls-verify", false, "enable if connection with remote Kubernetes API server should skip TLS verify")
 	argMetricsProvider           = pflag.String("metrics-provider", "sidecar", "select provider type for metrics, 'none' will not check metrics")
 	argHeapsterHost              = pflag.String("heapster-host", "", "address of the Heapster API server to connect to in the format of protocol://address:port, leave it empty if the binary runs inside cluster for service proxy usage")
 	argSidecarHost               = pflag.String("sidecar-host", "", "address of the Sidecar API server to connect to in the format of protocol://address:port, leave it empty if the binary runs inside cluster for service proxy usage")
@@ -221,6 +222,7 @@ func initArgHolder() {
 	builder.SetDisableSettingsAuthorizer(*argDisableSettingsAuthorizer)
 	builder.SetEnableSkipLogin(*argEnableSkip)
 	builder.SetNamespace(*argNamespace)
+	builder.SetApiServerSkipTLSVerify(*argApiserverSkipTLSVerify)
 }
 
 /**
