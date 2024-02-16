@@ -8549,7 +8549,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"editorconfig@npm:^1.0.3":
+"editorconfig@npm:^1.0.4":
   version: 1.0.4
   resolution: "editorconfig@npm:1.0.4"
   dependencies:
@@ -12014,19 +12014,27 @@ __metadata:
   languageName: node
   linkType: hard
 
-"js-beautify@npm:1.14.11":
-  version: 1.14.11
-  resolution: "js-beautify@npm:1.14.11"
+"js-beautify@npm:1.15.0":
+  version: 1.15.0
+  resolution: "js-beautify@npm:1.15.0"
   dependencies:
     config-chain: ^1.1.13
-    editorconfig: ^1.0.3
+    editorconfig: ^1.0.4
     glob: ^10.3.3
+    js-cookie: ^3.0.5
     nopt: ^7.2.0
   bin:
     css-beautify: js/bin/css-beautify.js
     html-beautify: js/bin/html-beautify.js
     js-beautify: js/bin/js-beautify.js
-  checksum: 92512b8dcc54330fe075569fd0226a1960da3fbb68f91e35dbfb110cc2b85e53e3ef17878c8be88b0888277bc5d51b1a692d72a00142d653ce7a8cbd48c66ee0
+  checksum: 248c89580cfa69ebeae99106bef29b7302935f40c89dc4cd245a39cd7e886e9545ea2f76c963ad2bcdeb7cae8f82bb884aa83a5c04300eaf926f8c097cf15b4e
+  languageName: node
+  linkType: hard
+
+"js-cookie@npm:^3.0.5":
+  version: 3.0.5
+  resolution: "js-cookie@npm:3.0.5"
+  checksum: 2dbd2809c6180fbcf060c6957cb82dbb47edae0ead6bd71cbeedf448aa6b6923115003b995f7d3e3077bfe2cb76295ea6b584eb7196cca8ba0a09f389f64967a
   languageName: node
   linkType: hard
 
@@ -12417,7 +12425,7 @@ __metadata:
     jest: 29.7.0
     jest-preset-angular: 14.0.2
     js-base64: 3.7.6
-    js-beautify: 1.14.11
+    js-beautify: 1.15.0
     js-yaml: 4.1.0
     jwt-decode: 4.0.0
     license-check-and-add: 4.0.5
