@@ -1,0 +1,38 @@
+_format_version: "3.0"
+
+services:
+  - name: api
+    host: api # Internal name of docker service
+    port: 9000
+    protocol: http
+    routes:
+      - name: api
+        paths:
+          - /api
+        strip_path: false
+      - name: metrics
+        paths:
+          - /metrics
+        strip_path: false
+  - name: web
+    host: web-go # Internal name of docker service
+    port: 8000
+    protocol: http
+    routes:
+      - name: config
+        paths:
+          - /config
+        strip_path: false
+      - name: systembanner
+        paths:
+          - /systembanner
+        strip_path: false
+  - name: scraper
+    host: scraper # Internal name of docker service
+    port: 8000
+    protocol: http
+    routes:
+      - name: scraper
+        paths:
+          - /api/v1/dashboard
+        strip_path: false

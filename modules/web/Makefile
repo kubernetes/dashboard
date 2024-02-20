@@ -24,7 +24,7 @@ fix-go: $(PRE)
 	golangci-lint run -c ../../.golangci.yml --fix ./...
 
 .PHONY: serve
-serve: $(PRE) --serve-go --serve-angular
+serve: $(PRE) --serve-angular
 
 .PHONY: serve-https
 serve-https: AUTO_GENERATE_CERTIFICATES = true
@@ -53,13 +53,6 @@ deploy-dev: --deploy-dev
 .PHONY: image
 image: DOCKERFILE = $(WEB_DIRECTORY)/Dockerfile
 image: --image
-
-.PHONY: --serve-go
---serve-go:
-	go run k8s.io/dashboard/web \
-		--system-banner=$(SYSTEM_BANNER) \
-    --system-banner-severity=$(SYSTEM_BANNER_SEVERITY) \
-    --auto-generate-certificates=$(AUTO_GENERATE_CERTIFICATES)
 
 .PHONY: --serve-angular
 --serve-angular: --ensure-dependencies

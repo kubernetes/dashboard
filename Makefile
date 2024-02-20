@@ -39,7 +39,16 @@ fix-license: $(PRE) ## Adds missing license header to repo files
 # Note: Make sure that the port 8080 is free on your localhost
 .PHONY: serve
 serve: $(PRE) ## Starts development version of the application on http://localhost:8080
-	@$(MAKE) --no-print-directory -C $(MODULES_DIRECTORY) TARGET=serve
+	@KUBECONFIG=$(KUBECONFIG) \
+	SYSTEM_BANNER=$(SYSTEM_BANNER) \
+	SYSTEM_BANNER_SEVERITY=$(SYSTEM_BANNER_SEVERITY) \
+	SIDECAR_HOST=$(SIDECAR_HOST) \
+	TOKEN_TTL=$(TOKEN_TTL) \
+	docker compose -f $(DOCKER_COMPOSE_DEV_PATH) --project-name=$(PROJECT_NAME) up \
+		--build \
+		--remove-orphans \
+		--no-attach gateway \
+		--no-attach scraper
 
 # Starts development version of the application with HTTPS enabled.
 #
@@ -69,7 +78,11 @@ run: $(PRE) --ensure-compose-down --compose ## Starts production version of the 
 	TOKEN_TTL=$(TOKEN_TTL) \
 	ARCH=$(ARCH) \
 	OS=$(OS) \
-	docker compose -f $(DOCKER_COMPOSE_PATH) --project-name=$(PROJECT_NAME) up
+	docker compose -f $(DOCKER_COMPOSE_PATH) --project-name=$(PROJECT_NAME) up \
+		--build \
+		--remove-orphans \
+		--no-attach gateway \
+		--no-attach scraper
 
 .PHONY: build
 build: TARGET := build
@@ -121,5 +134,8 @@ image: build ## Builds containers targeting host architecture
 	docker compose -f $(DOCKER_COMPOSE_PATH) --project-name=$(PROJECT_NAME) down
 
 .PHONY: --ensure-certificates
---ensure-certificates:
-	@$(MAKE) --no-print-directory -C $(GATEWAY_DIRECTORY) generate-certificates
+--ensure-certificates: gateway-generate-certificates
+
+.PHONY: gateway-%
+gateway-%:
+	@$(MAKE) --no-print-directory -C $(GATEWAY_DIRECTORY) $*

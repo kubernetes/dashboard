@@ -13,6 +13,7 @@
 # limitations under the License.
 
 version: "3.8"
+
 services:
   gateway:
     container_name: kong-gateway
@@ -26,48 +27,54 @@ services:
       - "KONG_ADMIN_ERROR_LOG=/dev/stderr"
       - "KONG_PROXY_LISTEN=0.0.0.0:7000 reuseport backlog=16384, 0.0.0.0:7443 http2 ssl reuseport backlog=16384"
       - "KONG_DNS_ORDER=LAST,A,CNAME"
-    ports:
-      - "7000:7000"
     volumes:
       - ${PWD}/hack/gateway/kong.yml:/kong/declarative/kong.yml
 
   api:
+    container_name: dashboard-api
     build:
-      context: ../..
-      dockerfile: modules/api/Dockerfile
-      args:
-        - TARGETOS=${OS:?}
-        - TARGETARCH=${ARCH:?}
+      context: ../../modules
+      dockerfile: api/dev.Dockerfile
     command:
       --kubeconfig=${KUBECONFIG:?}
-      --auto-generate-certificates
-      --enable-skip-login=${ENABLE_SKIP_LOGIN:?}
       --sidecar-host=${SIDECAR_HOST:?}
       --token-ttl=${TOKEN_TTL:?}
     volumes:
       - ${KUBECONFIG:?}:${KUBECONFIG:?}
+      - ${PWD}/modules:/workspace
     tmpfs:
       - /tmp
 
-  web:
+  web-go:
+    container_name: dashboard-web-go
     build:
-      context: ../..
-      dockerfile: modules/web/Dockerfile
-      args:
-        - TARGETOS=${OS:?}
-        - TARGETARCH=${ARCH:?}
+      context: ../../modules
+      dockerfile: web/dev.go.Dockerfile
     command:
-      --locale-config=/public/locale_conf.json
-      --auto-generate-certificates
-      --system-banner="${SYSTEM_BANNER:?}"
-      --system-banner-severity=${SYSTEM_BANNER_SEVERITY:?}
+      - "--locale-config=/public/locale_conf.json"
+      - "--system-banner=${SYSTEM_BANNER:?}"
+      - "--system-banner-severity=${SYSTEM_BANNER_SEVERITY:?}"
+    volumes:
+      - ${PWD}/modules:/workspace
     tmpfs:
       - /tmp
+
+  web-angular:
+    container_name: dashboard-web-angular
+    build:
+      context: ../../modules/web
+      dockerfile: dev.web.Dockerfile
+    volumes:
+      - ${PWD}/modules/web:/workspace
+    ports:
+      - "8080:8080"
 
   scraper:
-    image: kubernetesui/metrics-scraper:v1.0.9
+    container_name: metrics-scraper
+    build:
+      context: ../../modules/metrics-scraper
+      dockerfile: dev.Dockerfile
     command:
-      # TODO: move metrics args to some overridable env variables
       --kubeconfig=${KUBECONFIG:?}
       --metric-resolution=5s
       --metric-duration=10m
@@ -78,4 +85,5 @@ services:
 
 networks:
   default:
-    name: kubernetes-dashboard
+    name: kind
+    external: true

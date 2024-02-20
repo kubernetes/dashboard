@@ -24,7 +24,7 @@ import (
 	log "github.com/sirupsen/logrus"
 	flag "github.com/spf13/pflag"
 
-	_ "github.com/mattn/go-sqlite3"
+	_ "modernc.org/sqlite"
 
 	"k8s.io/dashboard/metrics-scraper/pkg/api"
 	"k8s.io/dashboard/metrics-scraper/pkg/database"
@@ -94,7 +94,7 @@ func main() {
 	}
 
 	// Create the db "connection"
-	db, err := sql.Open("sqlite3", *dbFile)
+	db, err := sql.Open("sqlite", *dbFile)
 	if err != nil {
 		log.Fatalf("Unable to open Sqlite database: %s", err)
 	}

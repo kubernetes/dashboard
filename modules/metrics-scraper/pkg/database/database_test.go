@@ -20,13 +20,14 @@ import (
 	"testing"
 	"time"
 
-	_ "github.com/mattn/go-sqlite3"
 	"github.com/onsi/ginkgo"
 	"github.com/onsi/gomega"
 	v1 "k8s.io/api/core/v1"
 	"k8s.io/apimachinery/pkg/api/resource"
-	"k8s.io/dashboard/metrics-scraper/pkg/database"
 	"k8s.io/metrics/pkg/apis/metrics/v1beta1"
+	_ "modernc.org/sqlite"
+
+	"k8s.io/dashboard/metrics-scraper/pkg/database"
 )
 
 func TestMetricsUtil(t *testing.T) {

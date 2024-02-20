@@ -20,8 +20,9 @@ import (
 	"net/http"
 
 	"github.com/gorilla/mux"
-	_ "github.com/mattn/go-sqlite3"
 	log "github.com/sirupsen/logrus"
+	_ "modernc.org/sqlite"
+
 	dashboardProvider "k8s.io/dashboard/metrics-scraper/pkg/api/dashboard"
 )
 

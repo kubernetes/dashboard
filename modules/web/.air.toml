@@ -13,8 +13,32 @@
 # limitations under the License.
 #
 
-.tmp/
-.tools/
-.angular/
-dist/
-node_modules/
+root = "."
+tmp_dir = ".tmp"
+
+[build]
+  cmd = "go build -o .tmp/dashboard-web ."
+  bin = ".tmp/dashboard-web"
+  delay = 2000
+  exclude_unchanged = false
+  include_dir = ["pkg"]
+  include_file = ["main.go"]
+  follow_symlink = false
+  full_bin = ""
+  include_ext = ["go"]
+  kill_delay = "1s"
+  log = "build-errors.log"
+  stop_on_error = true
+
+[color]
+  app = ""
+  build = "yellow"
+  main = "magenta"
+  runner = "green"
+  watcher = "cyan"
+
+[log]
+  time = false
+
+[misc]
+  clean_on_exit = true

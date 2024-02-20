@@ -12,7 +12,7 @@ PROXY_CONFIG ?= proxy.conf.json
 SSL_ENABLED ?= false
 
 # Web UI Arguments (overridable)
-SYSTEM_BANNER ?= "Local test environment"
+SYSTEM_BANNER ?= "Local\ test\ environment"
 SYSTEM_BANNER_SEVERITY ?= INFO
 AUTO_GENERATE_CERTIFICATES ?= false
 BIND_ADDRESS ?= 127.0.0.1

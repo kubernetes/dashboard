@@ -12,9 +12,14 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
+# Ignore all development artifacts so that the build is always clean.
+api/.tmp/
+api/.tools/
+api/dist/
+api/node_modules/
 
-.tmp/
-.tools/
-.angular/
-dist/
-node_modules/
+web/.tmp/
+web/.tools/
+web/.angular/
+web/dist/
+web/node_modules/
