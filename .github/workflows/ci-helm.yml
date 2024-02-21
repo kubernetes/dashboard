@@ -51,9 +51,9 @@ jobs:
         run: ct lint --config=charts/helm-chart/.helm-chart-testing.yaml
 
       - name: Start kind cluster
-        uses: helm/kind-action@v1.8.0
+        uses: helm/kind-action@v1.9.0
         with:
-          node_image: kindest/node:v1.29.0
+          node_image: kindest/node:v1.29.2
 
       - name: Deploy prometheus-operator
         run: kubectl apply --server-side -f https://raw.githubusercontent.com/prometheus-operator/prometheus-operator/v0.54.0/example/prometheus-operator-crd/monitoring.coreos.com_servicemonitors.yaml

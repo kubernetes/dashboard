@@ -41,12 +41,12 @@ func TestGetPluginSource(t *testing.T) {
 	pcs := fakePluginClientset.NewSimpleClientset()
 	cs := fakeK8sClient.NewSimpleClientset()
 
-	_, err := GetPluginSource(pcs, cs, ns, pluginName)
+	_, err := GetPluginSource(context.Background(), pcs, cs, ns, pluginName)
 	if err == nil {
 		t.Errorf("error 'plugins.dashboard.k8s.io \"%s\" not found' did not occur", pluginName)
 	}
 
-	_, _ = pcs.DashboardV1alpha1().Plugins(ns).Create(context.TODO(), &v1alpha1.Plugin{
+	_, _ = pcs.DashboardV1alpha1().Plugins(ns).Create(context.Background(), &v1alpha1.Plugin{
 		ObjectMeta: metaV1.ObjectMeta{Name: pluginName, Namespace: ns},
 		Spec: v1alpha1.PluginSpec{
 			Source: v1alpha1.Source{
@@ -56,18 +56,18 @@ func TestGetPluginSource(t *testing.T) {
 				Filename: filename}},
 	}, metaV1.CreateOptions{})
 
-	_, err = GetPluginSource(pcs, cs, ns, pluginName)
+	_, err = GetPluginSource(context.Background(), pcs, cs, ns, pluginName)
 	if err == nil {
 		t.Errorf("error 'configmaps \"%s\" not found' did not occur", cfgMapName)
 	}
 
-	_, _ = cs.CoreV1().ConfigMaps(ns).Create(context.TODO(), &coreV1.ConfigMap{
+	_, _ = cs.CoreV1().ConfigMaps(ns).Create(context.Background(), &coreV1.ConfigMap{
 		ObjectMeta: metaV1.ObjectMeta{
 			Name: cfgMapName, Namespace: ns},
 		Data: map[string]string{filename: srcData},
 	}, metaV1.CreateOptions{})
 
-	data, err := GetPluginSource(pcs, cs, ns, pluginName)
+	data, err := GetPluginSource(context.Background(), pcs, cs, ns, pluginName)
 	if err != nil {
 		t.Errorf("error while fetching plugin source: %s", err)
 	}
@@ -85,7 +85,7 @@ func Test_servePluginSource(t *testing.T) {
 	h := Handler{&fakeClientManager{}}
 
 	pcs, _ := h.cManager.PluginClient(nil)
-	_, _ = pcs.DashboardV1alpha1().Plugins(ns).Create(context.TODO(), &v1alpha1.Plugin{
+	_, _ = pcs.DashboardV1alpha1().Plugins(ns).Create(context.Background(), &v1alpha1.Plugin{
 		ObjectMeta: metaV1.ObjectMeta{Name: pluginName, Namespace: ns},
 		Spec: v1alpha1.PluginSpec{
 			Source: v1alpha1.Source{

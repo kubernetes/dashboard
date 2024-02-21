@@ -32,10 +32,22 @@ metadata:
 spec:
   endpoints:
     - port: https
-      scheme: https
+      {{- with .Values.extras.serviceMonitor.scheme }}
+      scheme: {{ . }}
+      {{- end }}
+      {{- with .Values.extras.serviceMonitor.tlsConfig }}
       tlsConfig:
-        insecureSkipVerify: true
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
       path: /metrics
+      {{- with .Values.extras.serviceMonitor.metricRelabelings }}
+      metricRelabelings:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.extras.serviceMonitor.relabelings }}
+      relabelings:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
   selector:
     matchLabels:
     {{ include "kubernetes-dashboard.labels" . | nindent 6 }}

@@ -78,9 +78,15 @@ func (self *holderBuilder) SetKeyFile(keyFile string) *holderBuilder {
 	return self
 }
 
-// SetApiServerHost 'api-server-host' argument of Dashboard binary.
+// SetApiServerHost 'apiserver-host' argument of Dashboard binary.
 func (self *holderBuilder) SetApiServerHost(apiServerHost string) *holderBuilder {
 	self.holder.apiServerHost = apiServerHost
+	return self
+}
+
+// SetApiServerSkipTLSVerify 'apiserver-skip-tls-verify' argument of Dashboard binary.
+func (self *holderBuilder) SetApiServerSkipTLSVerify(apiServerSkipTLSVerify bool) *holderBuilder {
+	self.holder.apiServerSkipTLSVerify = apiServerSkipTLSVerify
 	return self
 }
 

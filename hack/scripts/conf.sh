@@ -29,7 +29,7 @@ ARCH=$(uname | awk '{print tolower($0)}')
 HEAPSTER_VERSION="v1.5.4"
 HEAPSTER_PORT=8082
 KIND_VERSION="v0.19.0"
-K8S_VERSION="v1.29.0"
+K8S_VERSION="v1.29.2"
 KIND_BIN=${CACHE_DIR}/kind-${KIND_VERSION}
 
 function ensure-cache {

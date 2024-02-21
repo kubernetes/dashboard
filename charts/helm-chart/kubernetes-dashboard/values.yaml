@@ -336,3 +336,13 @@ extras:
     labels: {}
     # Here annotations can be added to the serviceMonitor
     annotations: {}
+    # metrics.serviceMonitor.metricRelabelings Specify Metric Relabelings to add to the scrape endpoint
+    # ref: https://github.com/coreos/prometheus-operator/blob/master/Documentation/api.md#relabelconfig
+    metricRelabelings: []
+    # metrics.serviceMonitor.relabelings [array] Prometheus relabeling rules
+    relabelings: []
+    # ServiceMonitor connection scheme. Defaults to HTTPS.
+    scheme: https
+    # ServiceMonitor connection tlsConfig. Defaults to {insecureSkipVerify:true}.
+    tlsConfig:
+      insecureSkipVerify: true

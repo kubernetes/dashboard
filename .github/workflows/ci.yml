@@ -87,7 +87,7 @@ jobs:
           fetch-depth: 0
 
       - name: Review dependencies
-        uses: actions/dependency-review-action@v3
+        uses: actions/dependency-review-action@v4
         with:
           fail-on-severity: critical
   e2e:
@@ -100,9 +100,9 @@ jobs:
           fetch-depth: 0
 
       - name: Start kind cluster
-        uses: helm/kind-action@v1.8.0
+        uses: helm/kind-action@v1.9.0
         with:
-          node_image: kindest/node:v1.29.0
+          node_image: kindest/node:v1.29.2
 
       - name: Set up Go
         uses: actions/setup-go@v5
