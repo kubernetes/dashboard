@@ -9,7 +9,7 @@ IMAGE_REPOSITORY := kubernetesui
 
 ### Dirs and paths
 # Base paths
-PARTIALS_DIRECTORY := $(shell dirname $(realpath $(firstword $(MAKEFILE_LIST))))
+PARTIALS_DIRECTORY := $(ROOT_DIRECTORY)/hack/include
 # Modules
 MODULES_DIRECTORY := $(ROOT_DIRECTORY)/modules
 API_DIRECTORY := $(MODULES_DIRECTORY)/api
@@ -24,6 +24,12 @@ DOCKER_COMPOSE_PATH := $(DOCKER_DIRECTORY)/docker.compose.yaml
 DOCKER_COMPOSE_DEV_PATH := $(DOCKER_DIRECTORY)/dev.compose.yml
 # Build
 DIST_DIRECTORY := $(ROOT_DIRECTORY)/.dist
+TMP_DIRECTORY := $(ROOT_DIRECTORY)/.tmp
+# Kind
+KIND_CLUSTER_NAME := kubernetes-dashboard
+KIND_CLUSTER_VERSION := 1.29.0
+KIND_CLUSTER_IMAGE := docker.io/kindest/node:v${KIND_CLUSTER_VERSION}
+KIND_CLUSTER_INTERNAL_KUBECONFIG_PATH := $(TMP_DIRECTORY)/kubeconfig
 
 ### GOPATH check
 ifndef GOPATH

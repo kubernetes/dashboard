@@ -2,11 +2,10 @@ ROOT_DIRECTORY := $(shell dirname $(realpath $(firstword $(MAKEFILE_LIST))))
 
 include $(ROOT_DIRECTORY)/hack/include/config.mk
 include $(ROOT_DIRECTORY)/hack/include/build.mk
+include $(ROOT_DIRECTORY)/hack/include/ensure.mk
 
 include $(API_DIRECTORY)/hack/include/config.mk
 include $(WEB_DIRECTORY)/hack/include/config.mk
-
-MAKEFLAGS += -j2
 
 # List of targets that should be executed before other targets
 PRE = --ensure-tools
@@ -14,7 +13,6 @@ PRE = --ensure-tools
 .PHONY: help
 help:
 	@grep -hE '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":[^:]*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
-
 
 .PHONY: check
 check: $(PRE) check-license ## Runs all available checks
@@ -38,39 +36,32 @@ fix-license: $(PRE) ## Adds missing license header to repo files
 #
 # Note: Make sure that the port 8080 is free on your localhost
 .PHONY: serve
-serve: $(PRE) ## Starts development version of the application on http://localhost:8080
-	@KUBECONFIG=$(KUBECONFIG) \
+serve: $(PRE) --ensure-kind-cluster ## Starts development version of the application on http://localhost:8080
+	@KUBECONFIG=$(KIND_CLUSTER_INTERNAL_KUBECONFIG_PATH) \
 	SYSTEM_BANNER=$(SYSTEM_BANNER) \
 	SYSTEM_BANNER_SEVERITY=$(SYSTEM_BANNER_SEVERITY) \
+	ENABLE_SKIP_LOGIN=$(ENABLE_SKIP_LOGIN) \
 	SIDECAR_HOST=$(SIDECAR_HOST) \
 	TOKEN_TTL=$(TOKEN_TTL) \
+	CLUSTER_VERSION=$(KIND_CLUSTER_VERSION) \
 	docker compose -f $(DOCKER_COMPOSE_DEV_PATH) --project-name=$(PROJECT_NAME) up \
 		--build \
 		--remove-orphans \
 		--no-attach gateway \
-		--no-attach scraper
-
-# Starts development version of the application with HTTPS enabled.
-#
-# URL: https://localhost:8080
-#
-# Note: Make sure that the port 8080 is free on your localhost
-# Note #2: Does not work with "kind".
-.PHONY: serve-https
-serve-https: $(PRE) ## Starts development version of the application with HTTPS enabled on https://localhost:8080
-	@$(MAKE) --no-print-directory -C $(MODULES_DIRECTORY) TARGET=serve-https
+		--no-attach scraper \
+		--no-attach metrics-server
 
 # Starts production version of the application.
 #
-# URL: https://localhost:4443
+# HTTPS: https://localhost:8443
+# HTTP: https://localhost:8000
 #
-# Note: Make sure that the ports 4443 (Gateway) and 9001 (API) are free on your localhost
-# Note #2: Does not work with "kind".
+# Note: Make sure that the ports 8443 (Gateway HTTPS) and 8000 (Gateway HTTP) are free on your localhost
 # Note #3: Darwin doesn't work at the moment, so we are using Linux by default.
 .PHONY: run
 run: export OS := linux
-run: $(PRE) --ensure-compose-down --compose ## Starts production version of the application on https://localhost:4443
-	@KUBECONFIG=$(KUBECONFIG) \
+run: $(PRE) build --ensure-kind-cluster ## Starts production version of the application on https://localhost:4443
+	@KUBECONFIG=$(KIND_CLUSTER_INTERNAL_KUBECONFIG_PATH) \
 	SYSTEM_BANNER=$(SYSTEM_BANNER) \
 	SYSTEM_BANNER_SEVERITY=$(SYSTEM_BANNER_SEVERITY) \
 	ENABLE_SKIP_LOGIN=$(ENABLE_SKIP_LOGIN) \
@@ -82,7 +73,8 @@ run: $(PRE) --ensure-compose-down --compose ## Starts production version of the 
 		--build \
 		--remove-orphans \
 		--no-attach gateway \
-		--no-attach scraper
+		--no-attach scraper \
+		--no-attach metrics-server
 
 .PHONY: build
 build: TARGET := build
@@ -105,37 +97,26 @@ image: export OS := linux
 image: build ## Builds containers targeting host architecture
 	@$(MAKE) --no-print-directory -C $(MODULES_DIRECTORY) TARGET=image
 
-.PHONY: --compose
---compose: --ensure-certificates build
-	@KUBECONFIG=$(KUBECONFIG) \
-	SYSTEM_BANNER=$(SYSTEM_BANNER) \
-	SYSTEM_BANNER_SEVERITY=$(SYSTEM_BANNER_SEVERITY) \
-	ENABLE_SKIP_LOGIN=$(ENABLE_SKIP_LOGIN) \
-	SIDECAR_HOST=$(SIDECAR_HOST) \
-	TOKEN_TTL=$(TOKEN_TTL) \
-	ARCH=$(ARCH) \
-	OS=$(OS) \
-	docker compose -f $(DOCKER_COMPOSE_PATH) --project-name=$(PROJECT_NAME) build
-
-.PHONY: --ensure-tools
---ensure-tools:
-	@$(MAKE) --no-print-directory -C $(TOOLS_DIRECTORY) install
-
-.PHONY: --ensure-compose-down
---ensure-compose-down:
-	@KUBECONFIG=$(KUBECONFIG) \
-	SYSTEM_BANNER=$(SYSTEM_BANNER) \
-	SYSTEM_BANNER_SEVERITY=$(SYSTEM_BANNER_SEVERITY) \
-	ENABLE_SKIP_LOGIN=$(ENABLE_SKIP_LOGIN) \
-	SIDECAR_HOST=$(SIDECAR_HOST) \
-	TOKEN_TTL=$(TOKEN_TTL) \
-	ARCH=$(ARCH) \
-	OS=$(OS) \
-	docker compose -f $(DOCKER_COMPOSE_PATH) --project-name=$(PROJECT_NAME) down
-
-.PHONY: --ensure-certificates
---ensure-certificates: gateway-generate-certificates
-
-.PHONY: gateway-%
-gateway-%:
-	@$(MAKE) --no-print-directory -C $(GATEWAY_DIRECTORY) $*
+#.PHONY: --compose
+#--compose: build
+#	@KUBECONFIG=$(KUBECONFIG) \
+#	SYSTEM_BANNER=$(SYSTEM_BANNER) \
+#	SYSTEM_BANNER_SEVERITY=$(SYSTEM_BANNER_SEVERITY) \
+#	ENABLE_SKIP_LOGIN=$(ENABLE_SKIP_LOGIN) \
+#	SIDECAR_HOST=$(SIDECAR_HOST) \
+#	TOKEN_TTL=$(TOKEN_TTL) \
+#	ARCH=$(ARCH) \
+#	OS=$(OS) \
+#	docker compose -f $(DOCKER_COMPOSE_PATH) --project-name=$(PROJECT_NAME) build
+#
+#.PHONY: --ensure-compose-down
+#--ensure-compose-down:
+#	@KUBECONFIG=$(KUBECONFIG) \
+#	SYSTEM_BANNER=$(SYSTEM_BANNER) \
+#	SYSTEM_BANNER_SEVERITY=$(SYSTEM_BANNER_SEVERITY) \
+#	ENABLE_SKIP_LOGIN=$(ENABLE_SKIP_LOGIN) \
+#	SIDECAR_HOST=$(SIDECAR_HOST) \
+#	TOKEN_TTL=$(TOKEN_TTL) \
+#	ARCH=$(ARCH) \
+#	OS=$(OS) \
+#	docker compose -f $(DOCKER_COMPOSE_PATH) --project-name=$(PROJECT_NAME) down

@@ -12,17 +12,27 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-FROM golang:1.22-alpine3.19 as builder
-
-WORKDIR /workspace/metrics-scraper
+FROM golang:1.22-alpine3.19 as AIR
 
 RUN go install github.com/cosmtrek/air@latest
 
-ADD . .
+FROM golang:1.22-alpine3.19
 
-# cache deps before building and copying source so that we don't need to re-download as much
-# and so that source changes don't invalidate our downloaded layer
+# Copy air binary
+COPY --from=AIR $GOPATH/bin/air $GOPATH/bin/air
+
+# Create and cd into workspace
+WORKDIR /workspace
+
+# Retrieve application dependencies.
+# This allows the container build to reuse cached dependencies.
+# Expecting to copy go.mod and if present go.sum.
+COPY go.* ./
 RUN go mod download
+
+# Copy local scraper code to the container image.
+COPY main.go .
+COPY pkg ./pkg
 
 EXPOSE 8000
 ENTRYPOINT ["air", "-c", ".air.toml", "--"]

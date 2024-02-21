@@ -23,6 +23,7 @@
 .angular
 node_modules
 .dist
+.tmp
 .coverage
 *.swp
 .cached_tools

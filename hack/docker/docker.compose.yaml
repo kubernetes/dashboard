@@ -13,6 +13,7 @@
 # limitations under the License.
 
 version: "3.8"
+
 services:
   gateway:
     container_name: kong-gateway
@@ -24,50 +25,48 @@ services:
       - "KONG_ADMIN_ACCESS_LOG=/dev/stdout"
       - "KONG_PROXY_ERROR_LOG=/dev/stderr"
       - "KONG_ADMIN_ERROR_LOG=/dev/stderr"
-      - "KONG_PROXY_LISTEN=0.0.0.0:7000 reuseport backlog=16384, 0.0.0.0:7443 http2 ssl reuseport backlog=16384"
       - "KONG_DNS_ORDER=LAST,A,CNAME"
-    ports:
-      - "7000:7000"
     volumes:
-      - ${PWD}/hack/gateway/kong.yml:/kong/declarative/kong.yml
+      - ${PWD}/hack/gateway/prod.kong.yml:/kong/declarative/kong.yml
+    ports:
+      - "8000:8000"
+      - "8443:8443"
 
   api:
+    container_name: dashboard-api
     build:
       context: ../..
       dockerfile: modules/api/Dockerfile
-      args:
-        - TARGETOS=${OS:?}
-        - TARGETARCH=${ARCH:?}
     command:
       --kubeconfig=${KUBECONFIG:?}
       --auto-generate-certificates
-      --enable-skip-login=${ENABLE_SKIP_LOGIN:?}
       --sidecar-host=${SIDECAR_HOST:?}
       --token-ttl=${TOKEN_TTL:?}
+      --enable-skip-login=${ENABLE_SKIP_LOGIN:?}
     volumes:
-      - ${KUBECONFIG:?}:${KUBECONFIG:?}
+      - ${KUBECONFIG:?}:${KUBECONFIG:?} # Required - local kubeconfig path resolves to $HOME/<user>/.kube/config
     tmpfs:
       - /tmp
 
   web:
+    container_name: dashboard-web
     build:
       context: ../..
       dockerfile: modules/web/Dockerfile
-      args:
-        - TARGETOS=${OS:?}
-        - TARGETARCH=${ARCH:?}
     command:
-      --locale-config=/public/locale_conf.json
-      --auto-generate-certificates
-      --system-banner="${SYSTEM_BANNER:?}"
-      --system-banner-severity=${SYSTEM_BANNER_SEVERITY:?}
+      - "--locale-config=/public/locale_conf.json"
+      - "--system-banner=${SYSTEM_BANNER:?}"
+      - "--system-banner-severity=${SYSTEM_BANNER_SEVERITY:?}"
+      - "--auto-generate-certificates"
     tmpfs:
       - /tmp
 
   scraper:
-    image: kubernetesui/metrics-scraper:v1.0.9
+    container_name: metrics-scraper
+    build:
+      context: ../..
+      dockerfile: modules/metrics-scraper/Dockerfile
     command:
-      # TODO: move metrics args to some overridable env variables
       --kubeconfig=${KUBECONFIG:?}
       --metric-resolution=5s
       --metric-duration=10m
@@ -76,6 +75,23 @@ services:
     tmpfs:
       - /tmp
 
+  metrics-server:
+    container_name: metrics-server
+    image: registry.k8s.io/metrics-server/metrics-server:v0.7.0
+    command:
+      - "--cert-dir=/tmp"
+      - "--kubelet-preferred-address-types=InternalIP,ExternalIP,Hostname"
+      - "--metric-resolution=15s"
+      - "--kubelet-insecure-tls"
+      - "--authentication-kubeconfig=/.kube/config"
+      - "--authorization-kubeconfig=/.kube/config"
+      - "--kubeconfig=/.kube/config"
+    volumes:
+      - ${KUBECONFIG:?}:/.kube/config
+    tmpfs:
+      - /tmp
+
 networks:
   default:
-    name: kubernetes-dashboard
+    name: kind
+    external: true

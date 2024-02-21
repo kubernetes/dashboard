@@ -25,10 +25,9 @@ services:
       - "KONG_ADMIN_ACCESS_LOG=/dev/stdout"
       - "KONG_PROXY_ERROR_LOG=/dev/stderr"
       - "KONG_ADMIN_ERROR_LOG=/dev/stderr"
-      - "KONG_PROXY_LISTEN=0.0.0.0:7000 reuseport backlog=16384, 0.0.0.0:7443 http2 ssl reuseport backlog=16384"
       - "KONG_DNS_ORDER=LAST,A,CNAME"
     volumes:
-      - ${PWD}/hack/gateway/kong.yml:/kong/declarative/kong.yml
+      - ${PWD}/hack/gateway/dev.kong.yml:/kong/declarative/kong.yml
 
   api:
     container_name: dashboard-api
@@ -39,9 +38,13 @@ services:
       --kubeconfig=${KUBECONFIG:?}
       --sidecar-host=${SIDECAR_HOST:?}
       --token-ttl=${TOKEN_TTL:?}
+      --enable-insecure-login
+      --enable-skip-login=${ENABLE_SKIP_LOGIN:?}
     volumes:
-      - ${KUBECONFIG:?}:${KUBECONFIG:?}
-      - ${PWD}/modules:/workspace
+      - ${PWD}/modules/api/pkg:/workspace/api/pkg # Required - Source dir watched by AIR
+      - ${PWD}/modules/api/main.go:/workspace/api/main.go # Required - Entry file watched by AIR
+      - ${PWD}/modules/api/.air.toml:/workspace/api/.air.toml # Required - AIR configuration
+      - ${KUBECONFIG:?}:${KUBECONFIG:?} # Required - local kubeconfig path resolves to $HOME/<user>/.kube/config
     tmpfs:
       - /tmp
 
@@ -55,7 +58,9 @@ services:
       - "--system-banner=${SYSTEM_BANNER:?}"
       - "--system-banner-severity=${SYSTEM_BANNER_SEVERITY:?}"
     volumes:
-      - ${PWD}/modules:/workspace
+      - ${PWD}/modules/web/pkg:/workspace/web/pkg # Required - Source dir watched by AIR
+      - ${PWD}/modules/web/main.go:/workspace/web/main.go # Required - Entry file watched by AIR
+      - ${PWD}/modules/web/.air.toml:/workspace/web/.air.toml # Required - AIR configuration
     tmpfs:
       - /tmp
 
@@ -79,7 +84,26 @@ services:
       --metric-resolution=5s
       --metric-duration=10m
     volumes:
+      - ${PWD}/modules/metrics-scraper/pkg:/workspace/pkg # Required - Source dir watched by AIR
+      - ${PWD}/modules/metrics-scraper/main.go:/workspace/main.go # Required - Entry file watched by AIR
+      - ${PWD}/modules/metrics-scraper/.air.toml:/workspace/.air.toml # Required - AIR configuration
       - ${KUBECONFIG:?}:${KUBECONFIG:?}
+    tmpfs:
+      - /tmp
+
+  metrics-server:
+    container_name: metrics-server
+    image: registry.k8s.io/metrics-server/metrics-server:v0.7.0
+    command:
+      - "--cert-dir=/tmp"
+      - "--kubelet-preferred-address-types=InternalIP,ExternalIP,Hostname"
+      - "--metric-resolution=15s"
+      - "--kubelet-insecure-tls"
+      - "--authentication-kubeconfig=/.kube/config"
+      - "--authorization-kubeconfig=/.kube/config"
+      - "--kubeconfig=/.kube/config"
+    volumes:
+      - ${KUBECONFIG:?}:/.kube/config
     tmpfs:
       - /tmp
 

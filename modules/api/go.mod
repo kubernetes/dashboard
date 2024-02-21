@@ -1,6 +1,6 @@
 module k8s.io/dashboard/api
 
-go 1.20
+go 1.22
 
 require (
 	github.com/docker/distribution v2.8.3+incompatible

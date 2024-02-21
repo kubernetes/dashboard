@@ -16,8 +16,6 @@ FROM node:20-alpine3.19
 
 WORKDIR /workspace
 
-RUN yarn
-
 # The port that the application listens on.
 EXPOSE 8080
-ENTRYPOINT ["npx", "ng", "serve", "--proxy-config=proxy.conf.json", "--host=0.0.0.0", "--disable-host-check"]
+ENTRYPOINT ["npx", "ng", "serve", "--proxy-config=proxy.conf.json", "--host=0.0.0.0", "--disable-host-check", "--poll=2000"]
