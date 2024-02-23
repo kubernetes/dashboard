@@ -18,4 +18,4 @@ WORKDIR /workspace
 
 # The port that the application listens on.
 EXPOSE 8080
-ENTRYPOINT ["npx", "ng", "serve", "--proxy-config=proxy.conf.json", "--host=0.0.0.0", "--disable-host-check", "--poll=2000"]
+ENTRYPOINT ["/bin/sh", "-c", "./hack/scripts/dev.serve.sh"]
