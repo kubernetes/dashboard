@@ -35,8 +35,8 @@ services:
   auth:
     container_name: dashboard-auth
     build:
-      context: ../..
-      dockerfile: modules/auth/Dockerfile
+      context: ../../modules
+      dockerfile: auth/Dockerfile
     command:
       - "--kubeconfig=${KUBECONFIG:?}"
     volumes:
@@ -47,8 +47,8 @@ services:
   api:
     container_name: dashboard-api
     build:
-      context: ../..
-      dockerfile: modules/api/Dockerfile
+      context: ../../modules
+      dockerfile: api/Dockerfile
     command:
       --kubeconfig=${KUBECONFIG:?}
       --auto-generate-certificates
@@ -76,8 +76,8 @@ services:
   scraper:
     container_name: metrics-scraper
     build:
-      context: ../..
-      dockerfile: modules/metrics-scraper/Dockerfile
+      context: ../../modules/metrics-scraper
+      dockerfile: Dockerfile
     command:
       --kubeconfig=${KUBECONFIG:?}
       --metric-resolution=5s

@@ -1,14 +1,44 @@
 ROOT_DIRECTORY = $(shell dirname $(realpath $(firstword $(MAKEFILE_LIST))))/../..
 
+# Global makefile partial config
 include $(ROOT_DIRECTORY)/hack/include/config.mk
-include $(ROOT_DIRECTORY)/hack/include/build.mk
 
+# Local makefile partial config
 include hack/include/config.mk
 
-include $(ROOT_DIRECTORY)/hack/include/deploy.mk
-
 # List of targets that should be executed before other targets
-PRE := --ensure-dist-exists
+PRE :=
+
+# ==================== GLOBAL ==================== #
+
+.PHONY: check
+check: check-go
+
+.PHONY: coverage
+coverage: DIR := $(API_TMP_DIRECTORY)
+coverage: --ensure-dir
+	@echo "Running tests with coverage"
+	@go test -coverprofile=$(COVERAGE_FILE) -covermode=atomic $(PACKAGE_NAME)/...
+
+.PHONY: fix
+fix: fix-go
+
+.PHONY: test
+test:
+	@echo "Running tests"
+	@go test $(PACKAGE_NAME)/...
+
+# ==================== LOCAL ==================== #
+
+.PHONY: build
+build: $(PRE)
+	@echo "Building dashboard-api"
+	@CGO_ENABLED=0 go build -trimpath -ldflags "-s -w -X $(PACKAGE_NAME)/client.Version=$(APP_VERSION)" -o $(API_DIST_DIRECTORY)/$(APP_NAME) $(PACKAGE_NAME)
+
+.PHONY: check-go
+check-go: $(PRE)
+	@echo "Running lint"
+	@golangci-lint run -c ../../.golangci.yml ./...
 
 .PHONY: codegen-update
 codegen-update: --codegen-update-run --codegen-update-post
@@ -17,32 +47,10 @@ codegen-update: --codegen-update-run --codegen-update-post
 codegen-verify: VERIFY_ONLY = true
 codegen-verify: --codegen-verify-pre --codegen-update-run --codegen-verify-post
 
-.PHONY: check
-check: check-go
-
-.PHONY: check-go
-check-go: $(PRE)
-	golangci-lint run -c ../../.golangci.yml ./...
-
-.PHONY: fix
-fix: fix-go
-
 .PHONY: fix-go
 fix-go: $(PRE)
+	@echo "Running lint --fix"
 	golangci-lint run -c ../../.golangci.yml --fix ./...
-
-.PHONY: build
-build: ARCHITECTURES = $(OS)/$(ARCH)
-build: build-cross
-
-.PHONY: build-cross
-build-cross: $(PRE)
-	@for ARCH in $(ARCHITECTURES) ; do \
-  	os=$${ARCH%/*} ; \
-  	arch=$${ARCH#*/} ; \
-  	echo "Building dashboard-api for $$os/$$arch" ; \
-  	CGO_ENABLED=0 GOOS=$$os GOARCH=$$arch go build -ldflags "-X $(PACKAGE_NAME)/client.Version=$(RELEASE_VERSION)" -o $(API_DIST_DIRECTORY)/$$ARCH/$(APP_NAME) $(PACKAGE_NAME) ; \
-  done
 
 .PHONY: run
 run: build
@@ -53,29 +61,7 @@ run: build
 		--enable-insecure-login=$(ENABLE_INSECURE_LOGIN) \
 		--enable-skip-login=$(ENABLE_SKIP_LOGIN)
 
-.PHONY: test
-test:
-	go test $(PACKAGE_NAME)/...
-
-.PHONY: coverage
-coverage:
-	go test -coverprofile=$(COVERAGE_FILE) -covermode=atomic $(PACKAGE_NAME)/...
-
-.PHONY: deploy
-deploy: DOCKERFILE = $(API_DIRECTORY)/Dockerfile
-deploy: --deploy
-
-.PHONY: deploy-dev
-deploy-dev: DOCKERFILE = $(API_DIRECTORY)/Dockerfile
-deploy-dev: --deploy-dev
-
-.PHONY: image
-image: DOCKERFILE = $(API_DIRECTORY)/Dockerfile
-image: --image
-
-.PHONY: --ensure-dist-exists
---ensure-dist-exists:
-	@mkdir -p $(API_DIST_DIRECTORY)
+# ==================== PRIVATE ==================== #
 
 .PHONY: --codegen-update-run
 --codegen-update-run:
@@ -103,3 +89,11 @@ image: --image
 .PHONY: --codegen-verify-post
 --codegen-verify-post:
 	@rm -rf $(BASE_DIR)/k8s.io
+
+.PHONY: --ensure-dir
+--ensure-dir:
+	@if [ -z "$(DIR)" ]; then \
+  	echo "DIR variable not set" ; \
+  	exit 1 ; \
+  fi ; \
+ 	mkdir -p $(DIR) ; \

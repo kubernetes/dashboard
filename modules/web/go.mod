@@ -3,10 +3,10 @@ module k8s.io/dashboard/web
 go 1.22
 
 require (
-	github.com/golang/glog v1.2.0
 	github.com/spf13/pflag v1.0.5
 	golang.org/x/text v0.14.0
 	k8s.io/dashboard/certificates v0.0.0-00010101000000-000000000000
+	k8s.io/klog/v2 v2.120.1
 )
 
 require (
@@ -21,7 +21,6 @@ require (
 	gopkg.in/yaml.v2 v2.4.0 // indirect
 	k8s.io/api v0.29.2 // indirect
 	k8s.io/apimachinery v0.29.2 // indirect
-	k8s.io/klog/v2 v2.120.1 // indirect
 	k8s.io/utils v0.0.0-20230726121419-3b25d923346b // indirect
 	sigs.k8s.io/json v0.0.0-20221116044647-bc3834ca7abd // indirect
 	sigs.k8s.io/structured-merge-diff/v4 v4.4.1 // indirect

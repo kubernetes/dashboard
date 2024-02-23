@@ -38,7 +38,7 @@ WORKDIR /workspace/api
 COPY api/go.* ./
 RUN go mod download
 
-# Copy local API code to the container image.
+# Copy local code to the container image.
 COPY api/main.go .
 COPY api/pkg ./pkg
 

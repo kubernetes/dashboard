@@ -38,9 +38,10 @@ WORKDIR /workspace/auth
 COPY auth/go.* ./
 RUN go mod download
 
-# Copy local API code to the container image.
-COPY auth/main.go .
+# Copy local code to the container image.
+COPY auth/api ./api
 COPY auth/pkg ./pkg
+COPY auth/main.go .
 
 EXPOSE 8000
 ENTRYPOINT ["air", "-c", ".air.toml", "--"]

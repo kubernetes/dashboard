@@ -13,6 +13,7 @@ PARTIALS_DIRECTORY := $(ROOT_DIRECTORY)/hack/include
 # Modules
 MODULES_DIRECTORY := $(ROOT_DIRECTORY)/modules
 API_DIRECTORY := $(MODULES_DIRECTORY)/api
+AUTH_DIRECTORY := $(MODULES_DIRECTORY)/auth
 METRICS_SCRAPER_DIRECTORY := $(MODULES_DIRECTORY)/metrics-scraper
 WEB_DIRECTORY := $(MODULES_DIRECTORY)/web
 TOOLS_DIRECTORY := $(MODULES_DIRECTORY)/common/tools
@@ -33,9 +34,9 @@ KIND_CLUSTER_INTERNAL_KUBECONFIG_PATH := $(TMP_DIRECTORY)/kubeconfig
 
 ### GOPATH check
 ifndef GOPATH
-$(error $$GOPATH environment variable not set)
+$(warning $$GOPATH environment variable not set)
 endif
 
 ifeq (,$(findstring $(GOPATH)/bin,$(PATH)))
-$(error $$GOPATH/bin directory is not in your $$PATH)
+$(warning $$GOPATH/bin directory is not in your $$PATH)
 endif

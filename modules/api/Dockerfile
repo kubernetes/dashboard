@@ -12,11 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-FROM golang:1.22-alpine3.19 as builder
-
-ARG TARGETARCH
-ARG TARGETOS
-ARG VERSION
+FROM alpine:3.19 as user
 
 ENV USER=nonroot
 ENV UID=10001
@@ -30,6 +26,12 @@ RUN adduser \
     --no-create-home \
     --uid "${UID}" \
     "${USER}"
+
+FROM golang:1.22-alpine3.19 as builder
+
+ARG TARGETARCH
+ARG TARGETOS
+ARG VERSION
 
 WORKDIR /workspace
 
@@ -52,13 +54,11 @@ RUN CGO_ENABLED=0 GOOS=${TARGETOS} GOARCH=${TARGETARCH} go build -trimpath -ldfl
 # Scratch can be used as the base image because the binary is compiled to include all dependencies.
 FROM scratch as final
 
-# Add all files from current working directory to the root of the image, i.e., copy dist directory
-# layout to the root directory.
 COPY --from=builder /workspace/api/dashboard-api /dashboard-api
 
 # Import the user and group files from the builder.
-COPY --from=builder /etc/passwd /etc/passwd
-COPY --from=builder /etc/group /etc/group
+COPY --from=user /etc/passwd /etc/passwd
+COPY --from=user /etc/group /etc/group
 
 USER nonroot:nonroot
 

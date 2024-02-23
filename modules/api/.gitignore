@@ -15,4 +15,5 @@
 codegen/
 vendor/
 .tmp/
+dist/
 coverage.out
