@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/usr/bin/env sh
 # Copyright 2017 The Kubernetes Authors.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -12,6 +12,11 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+
+if [ "${SKIP_POSTINSTALL}" = true ]; then
+  echo Skipping postinstall due to SKIP_POSTINSTALL="${SKIP_POSTINSTALL}"
+  exit 0
+fi
 
 if [ -z "${DEPENDABOT}" ]; then
   # TODO: When dependabot will support yarn postinstall properly, move following line into .yarnrc.yml.
