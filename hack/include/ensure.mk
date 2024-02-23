@@ -6,6 +6,7 @@ include $(PARTIALS_DIRECTORY)/config.mk
 
 .PHONY: --ensure-kind-cluster
 --ensure-kind-cluster:
+  # TODO: Check if existing cluster has KIND_CLUSTER_NAME.
 	@if test -n "$(shell kind get clusters 2>/dev/null)"; then \
   	echo [kind] cluster already exists; \
   else \
