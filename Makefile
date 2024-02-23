@@ -96,27 +96,3 @@ deploy-dev: build-cross ## Builds and deploys all module containers to the confi
 image: export OS := linux
 image: build ## Builds containers targeting host architecture
 	@$(MAKE) --no-print-directory -C $(MODULES_DIRECTORY) TARGET=image
-
-#.PHONY: --compose
-#--compose: build
-#	@KUBECONFIG=$(KUBECONFIG) \
-#	SYSTEM_BANNER=$(SYSTEM_BANNER) \
-#	SYSTEM_BANNER_SEVERITY=$(SYSTEM_BANNER_SEVERITY) \
-#	ENABLE_SKIP_LOGIN=$(ENABLE_SKIP_LOGIN) \
-#	SIDECAR_HOST=$(SIDECAR_HOST) \
-#	TOKEN_TTL=$(TOKEN_TTL) \
-#	ARCH=$(ARCH) \
-#	OS=$(OS) \
-#	docker compose -f $(DOCKER_COMPOSE_PATH) --project-name=$(PROJECT_NAME) build
-#
-#.PHONY: --ensure-compose-down
-#--ensure-compose-down:
-#	@KUBECONFIG=$(KUBECONFIG) \
-#	SYSTEM_BANNER=$(SYSTEM_BANNER) \
-#	SYSTEM_BANNER_SEVERITY=$(SYSTEM_BANNER_SEVERITY) \
-#	ENABLE_SKIP_LOGIN=$(ENABLE_SKIP_LOGIN) \
-#	SIDECAR_HOST=$(SIDECAR_HOST) \
-#	TOKEN_TTL=$(TOKEN_TTL) \
-#	ARCH=$(ARCH) \
-#	OS=$(OS) \
-#	docker compose -f $(DOCKER_COMPOSE_PATH) --project-name=$(PROJECT_NAME) down

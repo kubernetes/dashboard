@@ -41,7 +41,7 @@ build-cross: $(PRE)
   	os=$${ARCH%/*} ; \
   	arch=$${ARCH#*/} ; \
   	echo "Building dashboard-api for $$os/$$arch" ; \
-  	CGO_ENABLED=0 GOOS=$$os GOARCH=$$arch go build -ldflags "-X $(PACKAGE_NAME)/client.Version=$(RELEASE_VERSION)" -gcflags="all=-N -l" -o $(API_DIST_DIRECTORY)/$$ARCH/$(APP_NAME) $(PACKAGE_NAME) ; \
+  	CGO_ENABLED=0 GOOS=$$os GOARCH=$$arch go build -ldflags "-X $(PACKAGE_NAME)/client.Version=$(RELEASE_VERSION)" -o $(API_DIST_DIRECTORY)/$$ARCH/$(APP_NAME) $(PACKAGE_NAME) ; \
   done
 
 .PHONY: run
