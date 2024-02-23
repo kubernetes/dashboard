@@ -111,6 +111,10 @@ export function AsKdError(error: HttpErrorResponse): KdError {
     result.message = error.error;
   }
 
+  if (error?.error?.ErrStatus) {
+    result.message = error.error.ErrStatus.message
+  }
+
   switch (error.status) {
     case ErrorCode.unauthorized:
       status = ErrorStatus.unauthorized;

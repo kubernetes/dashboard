@@ -27,18 +27,10 @@ export class LoginGuard {
   ) {}
 
   canActivate(): Observable<boolean | UrlTree> {
-    return this.authService_
-      .getLoginStatus()
-      .pipe(take(1))
-      .pipe(
-        switchMap((loginStatus: LoginStatus) => {
-          if (!this.authService_.isAuthenticationEnabled(loginStatus)) {
-            return this.router_.navigate(['workloads']);
-          }
+    if (!this.authService_.isLoggedIn()) {
+      return of(true)
+    }
 
-          return of(true);
-        })
-      )
-      .pipe(catchError(_ => this.router_.navigate(['workloads'])));
+    return of(false)
   }
 }

@@ -62,7 +62,7 @@ limitations under the License.
   </div>
   <mat-divider *ngIf="!loginStatus?.headerPresent"></mat-divider>
   <button mat-menu-item
-          *ngIf="isAuthSkipped()"
+          *ngIf="!isLoggedIn()"
           (click)="logout()"
           i18n>Sign in</button>
   <button mat-menu-item
@@ -77,7 +77,7 @@ limitations under the License.
         (click)="$event.stopPropagation()">
   <mat-icon class="kd-user-panel-icon kd-primary-toolbar-icon">account_circle</mat-icon>
   <svg class="kd-cross-style"
-       *ngIf="isAuthSkipped()"
+       *ngIf="!isLoggedIn()"
        width="40px"
        height="40px"
        viewBox="0 0 40 40">

@@ -27,12 +27,16 @@ export class AuthInterceptor implements HttpInterceptor {
   ) {}
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    const authCookie = this.cookies_.get(this.appConfig_.authTokenCookieName);
+    if(!!req.headers.get(this.appConfig_.authTokenHeaderName)) {
+      return next.handle(req)
+    }
+
+    const token = this.cookies_.get(this.appConfig_.authTokenCookieName);
     // Filter requests made to our backend starting with 'api/v1' and append request header
     // with token stored in a cookie.
-    if (req.url.startsWith('api/v1') && authCookie.length) {
+    if (req.url.startsWith('api/v1') && !!token) {
       const authReq = req.clone({
-        headers: req.headers.set(this.appConfig_.authTokenHeaderName, authCookie),
+        headers: req.headers.set(this.appConfig_.authTokenHeaderName, `Bearer ${token}`),
       });
 
       return next.handle(authReq);

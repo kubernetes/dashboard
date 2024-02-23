@@ -61,7 +61,7 @@ export class UserPanelComponent implements OnInit {
   }
 
   isLoggedIn(): boolean {
-    return this.loginStatus && !this.loginStatus.headerPresent && this.loginStatus.tokenPresent;
+    return this.authService_.isLoggedIn()
   }
 
   isAuthEnabled(): boolean {

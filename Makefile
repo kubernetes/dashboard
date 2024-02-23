@@ -60,7 +60,7 @@ serve: $(PRE) --ensure-kind-cluster ## Starts development version of the applica
 # Note #3: Darwin doesn't work at the moment, so we are using Linux by default.
 .PHONY: run
 run: export OS := linux
-run: $(PRE) build --ensure-kind-cluster ## Starts production version of the application on https://localhost:4443
+run: $(PRE) build --ensure-kind-cluster ## Starts production version of the application on https://localhost:8443 and https://localhost:8000
 	@KUBECONFIG=$(KIND_CLUSTER_INTERNAL_KUBECONFIG_PATH) \
 	SYSTEM_BANNER=$(SYSTEM_BANNER) \
 	SYSTEM_BANNER_SEVERITY=$(SYSTEM_BANNER_SEVERITY) \

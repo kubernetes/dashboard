@@ -17,7 +17,7 @@ version: "3.8"
 services:
   gateway:
     container_name: kong-gateway
-    image: kong/kong-gateway:3.6.0.0
+    image: kong/kong-gateway:3.6
     environment:
       - "KONG_DATABASE=off"
       - "KONG_PROXY_ACCESS_LOG=/dev/stdout"
@@ -28,6 +28,22 @@ services:
       - "KONG_DNS_ORDER=LAST,A,CNAME"
     volumes:
       - ${PWD}/hack/gateway/dev.kong.yml:/kong/declarative/kong.yml
+
+  auth:
+    container_name: dashboard-auth
+    build:
+      context: ../../modules
+      dockerfile: auth/dev.Dockerfile
+    command:
+      - "--kubeconfig=${KUBECONFIG:?}"
+    volumes:
+      - ${PWD}/modules/auth/pkg:/workspace/auth/pkg # Required - Source dir watched by AIR
+      - ${PWD}/modules/auth/api:/workspace/auth/api # Required - Source dir watched by AIR
+      - ${PWD}/modules/auth/main.go:/workspace/auth/main.go # Required - Entry file watched by AIR
+      - ${PWD}/modules/auth/.air.toml:/workspace/auth/.air.toml # Required - AIR configuration
+      - ${KUBECONFIG:?}:${KUBECONFIG:?} # Required - local kubeconfig path resolves to $HOME/<user>/.kube/config
+    tmpfs:
+      - /tmp
 
   api:
     container_name: dashboard-api
@@ -55,7 +71,7 @@ services:
       dockerfile: web/dev.go.Dockerfile
     command:
       - "--locale-config=/public/locale_conf.json"
-      - "--system-banner=${SYSTEM_BANNER:?}"
+      - "--system-banner='Local\ dev\ environment'"
       - "--system-banner-severity=${SYSTEM_BANNER_SEVERITY:?}"
     volumes:
       - ${PWD}/modules/web/pkg:/workspace/web/pkg # Required - Source dir watched by AIR

@@ -17,7 +17,7 @@ version: "3.8"
 services:
   gateway:
     container_name: kong-gateway
-    image: kong/kong-gateway:3.6.0.0
+    image: kong/kong-gateway:3.6
     environment:
       - "KONG_DATABASE=off"
       - "KONG_PROXY_ACCESS_LOG=/dev/stdout"
@@ -31,6 +31,18 @@ services:
     ports:
       - "8000:8000"
       - "8443:8443"
+
+  auth:
+    container_name: dashboard-auth
+    build:
+      context: ../..
+      dockerfile: modules/auth/Dockerfile
+    command:
+      - "--kubeconfig=${KUBECONFIG:?}"
+    volumes:
+      - ${KUBECONFIG:?}:${KUBECONFIG:?} # Required - local kubeconfig path resolves to $HOME/<user>/.kube/config
+    tmpfs:
+      - /tmp
 
   api:
     container_name: dashboard-api

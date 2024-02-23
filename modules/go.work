@@ -1,10 +1,10 @@
-go 1.22
-
-toolchain go1.22.0
+go 1.22.0
 
 use (
 	./api // k8s.io/dashboard/api
+	./auth // k8s.io/dashboard/auth
 	./common/certificates // k8s.io/dashboard/certificates
+	./common/errors // k8s.io/dashboard/errors
 	./common/tools // k8s.io/dashboard/tools
 	./metrics-scraper // k8s.io/dashboard/metrics-scraper
 	./web // k8s.io/dashboard/web

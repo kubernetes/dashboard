@@ -186,4 +186,8 @@ export class AuthService {
   isLoginEnabled(): boolean {
     return this.isCurrentDomainSecure_() || this.isCurrentProtocolSecure_();
   }
+
+  isLoggedIn(): boolean {
+    return !!this.cookies_.get(this.config_.authTokenCookieName)
+  }
 }

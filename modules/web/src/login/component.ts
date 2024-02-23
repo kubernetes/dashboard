@@ -40,7 +40,7 @@ enum LoginModes {
 })
 export class LoginComponent implements OnInit {
   loginModes = LoginModes;
-  selectedAuthenticationMode = '';
+  selectedAuthenticationMode = 'token';
   errors: KdError[] = [];
 
   private enabledAuthenticationModes_: AuthenticationMode[] = [];
@@ -66,26 +66,30 @@ export class LoginComponent implements OnInit {
     this.selectedAuthenticationMode =
       this.selectedAuthenticationMode || this.cookies_.get(this.CONFIG.authModeCookieName) || '';
 
-    this.http_
-      .get<EnabledAuthenticationModes>('api/v1/login/modes')
-      .subscribe((enabledModes: EnabledAuthenticationModes) => {
-        this.enabledAuthenticationModes_ = enabledModes.modes;
-        this.enabledAuthenticationModes_.push(LoginModes.Kubeconfig);
-        this.selectedAuthenticationMode = this.selectedAuthenticationMode
-          ? (this.selectedAuthenticationMode as LoginModes)
-          : (this.enabledAuthenticationModes_[0] as LoginModes);
-      });
+    this.enabledAuthenticationModes_ = ['token']
 
-    this.http_
-      .get<LoginSkippableResponse>('api/v1/login/skippable')
-      .subscribe((loginSkippableResponse: LoginSkippableResponse) => {
-        this.isLoginSkippable_ = loginSkippableResponse.skippable;
+    // this.http_
+    //   .get<EnabledAuthenticationModes>('api/v1/login/modes')
+    //   .subscribe((enabledModes: EnabledAuthenticationModes) => {
+    //     this.enabledAuthenticationModes_ = enabledModes.modes;
+    //     this.enabledAuthenticationModes_.push(LoginModes.Kubeconfig);
+    //     this.selectedAuthenticationMode = this.selectedAuthenticationMode
+    //       ? (this.selectedAuthenticationMode as LoginModes)
+    //       : (this.enabledAuthenticationModes_[0] as LoginModes);
+    //   });
 
-        const autoSkipLoginPage = this.route_.snapshot.queryParamMap.get(SKIP_LOGIN_PAGE_QUERY_STATE_PARAM) === 'true';
-        if (this.isLoginSkippable_ && autoSkipLoginPage) {
-          this.skip();
-        }
-      });
+    this.isLoginSkippable_ = false
+
+    // this.http_
+    //   .get<LoginSkippableResponse>('api/v1/login/skippable')
+    //   .subscribe((loginSkippableResponse: LoginSkippableResponse) => {
+    //     this.isLoginSkippable_ = loginSkippableResponse.skippable;
+    //
+    //     const autoSkipLoginPage = this.route_.snapshot.queryParamMap.get(SKIP_LOGIN_PAGE_QUERY_STATE_PARAM) === 'true';
+    //     if (this.isLoginSkippable_ && autoSkipLoginPage) {
+    //       this.skip();
+    //     }
+    //   });
 
     this.route_.paramMap.pipe(map(() => window.history.state)).subscribe((state: StateError) => {
       if (state.error) {

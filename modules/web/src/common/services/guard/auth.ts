@@ -20,37 +20,28 @@ import {catchError, switchMap, take} from 'rxjs/operators';
 import {AuthService} from '../global/authentication';
 import {HistoryService} from '../global/history';
 import {SKIP_LOGIN_PAGE_QUERY_STATE_PARAM} from '@common/params/params';
+import {LocalSettingsService} from "@common/services/global/localsettings";
+import {environment} from "@environments/environment";
 
 @Injectable()
 export class AuthGuard {
   constructor(
     private readonly authService_: AuthService,
     private readonly router_: Router,
-    private readonly historyService_: HistoryService
+    private readonly historyService_: HistoryService,
   ) {}
 
-  canActivate(root: ActivatedRouteSnapshot): Observable<boolean | UrlTree> {
-    const isAutoSkipLoginPage = root.queryParamMap.get(SKIP_LOGIN_PAGE_QUERY_STATE_PARAM);
-    return this.authService_
-      .getLoginStatus()
-      .pipe(take(1))
-      .pipe(
-        switchMap((loginStatus: LoginStatus) => {
-          if (
-            this.authService_.isAuthenticationEnabled(loginStatus) &&
-            !this.authService_.isAuthenticated(loginStatus)
-          ) {
-            this.historyService_.pushState(this.router_.getCurrentNavigation());
-            return this.router_.navigate(['login'], {
-              queryParams: {
-                [SKIP_LOGIN_PAGE_QUERY_STATE_PARAM]: isAutoSkipLoginPage,
-              },
-            });
-          }
+  canActivate(_root: ActivatedRouteSnapshot): Observable<boolean | UrlTree> {
+    // Disable auth guard for dev mode
+    if(!environment.production) {
+      return of(true)
+    }
 
-          return of(true);
-        })
-      )
-      .pipe(catchError(_ => this.router_.navigate(['login'])));
+    if (!this.authService_.isLoggedIn()) {
+      this.historyService_.pushState(this.router_.getCurrentNavigation())
+      return of(this.router_.parseUrl('login'))
+    }
+
+    return of(true)
   }
 }
