@@ -12512,7 +12512,7 @@ __metadata:
     wait-on: 7.2.0
     web-animations-js: 2.3.2
     webpack-bundle-analyzer: 4.10.1
-    webpack-dev-server: 5.0.1
+    webpack-dev-server: 5.0.2
     xterm: 5.3.0
     xterm-addon-fit: 0.8.0
     zone.js: 0.13.3
@@ -17527,9 +17527,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"webpack-dev-server@npm:5.0.1":
-  version: 5.0.1
-  resolution: "webpack-dev-server@npm:5.0.1"
+"webpack-dev-server@npm:5.0.2":
+  version: 5.0.2
+  resolution: "webpack-dev-server@npm:5.0.2"
   dependencies:
     "@types/bonjour": ^3.5.13
     "@types/connect-history-api-fallback": ^1.5.4
@@ -17570,7 +17570,7 @@ __metadata:
       optional: true
   bin:
     webpack-dev-server: bin/webpack-dev-server.js
-  checksum: 142c0a9a999ccffe0efbe89f381da9081fe82e908aaca06261f9e8dc3879d4d6842634015e51079f86d5a0b52adc50066c3d1bc952f3dc7751d88275d86b87b0
+  checksum: d10624915ed25772317a3bd5d487c5fa17c74c2dc30d3abf5514c531a561aa0eaf5bb5b6a12416ee7005e2eea3679dc1616daf2eac69442dd3c579ce9150378b
   languageName: node
   linkType: hard
 
