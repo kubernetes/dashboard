@@ -104,7 +104,7 @@
     "@typescript-eslint/parser": "7.0.1",
     "codelyzer": "6.0.2",
     "concurrently": "8.2.2",
-    "cypress": "13.6.4",
+    "cypress": "13.6.6",
     "cypress-fail-fast": "7.1.0",
     "del": "7.1.0",
     "eslint": "8.56.0",
