@@ -12060,9 +12060,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"js-beautify@npm:1.15.0":
-  version: 1.15.0
-  resolution: "js-beautify@npm:1.15.0"
+"js-beautify@npm:1.15.1":
+  version: 1.15.1
+  resolution: "js-beautify@npm:1.15.1"
   dependencies:
     config-chain: ^1.1.13
     editorconfig: ^1.0.4
@@ -12073,7 +12073,7 @@ __metadata:
     css-beautify: js/bin/css-beautify.js
     html-beautify: js/bin/html-beautify.js
     js-beautify: js/bin/js-beautify.js
-  checksum: 248c89580cfa69ebeae99106bef29b7302935f40c89dc4cd245a39cd7e886e9545ea2f76c963ad2bcdeb7cae8f82bb884aa83a5c04300eaf926f8c097cf15b4e
+  checksum: 0428ea358cdf169da15e11a8b63f13845ee39c707f3718a3ec515eb89d585544525aa8ba5306503431c61e33e1fbfebdf2af41c461e512619d8a2f8664d6c0c4
   languageName: node
   linkType: hard
 
@@ -12471,7 +12471,7 @@ __metadata:
     jest: 29.7.0
     jest-preset-angular: 14.0.3
     js-base64: 3.7.7
-    js-beautify: 1.15.0
+    js-beautify: 1.15.1
     js-yaml: 4.1.0
     jwt-decode: 4.0.0
     license-check-and-add: 4.0.5
