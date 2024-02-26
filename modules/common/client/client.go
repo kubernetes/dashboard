@@ -1,18 +1,16 @@
-package kubernetes
+package client
 
 import (
+	"net/http"
 	"os"
 	"strings"
 
-	"github.com/gin-gonic/gin"
 	client "k8s.io/client-go/kubernetes"
 	"k8s.io/client-go/rest"
 	"k8s.io/client-go/tools/clientcmd"
 	"k8s.io/client-go/tools/clientcmd/api"
 	"k8s.io/klog/v2"
 
-	"k8s.io/dashboard/auth/pkg/args"
-	"k8s.io/dashboard/auth/pkg/environment"
 	"k8s.io/dashboard/errors"
 )
 
@@ -37,54 +35,76 @@ const (
 	// ImpersonateUserExtraHeader is the header name used to associate extra fields with the user.
 	// It is optional, and it requires ImpersonateUserHeader to be set.
 	ImpersonateUserExtraHeader = "Impersonate-Extra-"
-	// AuthorizationHeader is the default authorization header name.
-	AuthorizationHeader = "Authorization"
-	// AuthorizationTokenPrefix is the default bearer token prefix.
-	AuthorizationTokenPrefix = "Bearer "
 )
 
 var (
-	builder *clientBuilder
+	inClusterClient client.Interface
+	baseConfig      *rest.Config
 )
 
-func init() {
-	config, err := buildConfigFromFlags()
+type Option func(*configBuilder)
+
+type configBuilder struct {
+	userAgent      string
+	kubeconfigPath string
+	masterUrl      string
+}
+
+func (in *configBuilder) buildBaseConfig() (*rest.Config, error) {
+	if len(in.kubeconfigPath) == 0 && len(in.masterUrl) == 0 {
+		klog.Info("Using in-cluster config")
+		return rest.InClusterConfig()
+	}
+
+	klog.InfoS("Using kubeconfig", "kubeconfig", in.kubeconfigPath)
+	config, err := clientcmd.BuildConfigFromFlags(in.masterUrl, in.kubeconfigPath)
 	if err != nil {
-		klog.ErrorS(err, "Could not init kubernetes globalClient config")
-		os.Exit(1)
+		return nil, err
 	}
 
 	config.QPS = DefaultQPS
 	config.Burst = DefaultBurst
 	config.ContentType = DefaultContentType
-	config.UserAgent = DefaultUserAgent + "/" + environment.Version
+	config.UserAgent = DefaultUserAgent + "/" + in.userAgent
 
-	builder = &clientBuilder{
-		config: config,
+	return config, nil
+}
+
+func newConfigBuilder(options ...Option) *configBuilder {
+	builder := &configBuilder{}
+
+	for _, opt := range options {
+		opt(builder)
+	}
+
+	return builder
+}
+
+func WithUserAgent(agent string) Option {
+	return func(c *configBuilder) {
+		c.userAgent = agent
 	}
 }
 
-func buildConfigFromFlags() (*rest.Config, error) {
-	if len(args.KubeconfigPath()) == 0 {
-		klog.Info("Using in-cluster config")
-		return rest.InClusterConfig()
+func WithKubeconfig(path string) Option {
+	return func(c *configBuilder) {
+		c.kubeconfigPath = path
 	}
-
-	klog.InfoS("Using kubeconfig", "kubeconfig", args.KubeconfigPath())
-	return clientcmd.BuildConfigFromFlags("", args.KubeconfigPath())
 }
 
-type clientBuilder struct {
-	config *rest.Config
+func WithMasterUrl(url string) Option {
+	return func(c *configBuilder) {
+		c.masterUrl = url
+	}
 }
 
-func (in *clientBuilder) clientFromContext(c *gin.Context) (client.Interface, error) {
-	authInfo, err := in.buildAuthInfo(c)
+func clientFromRequest(request *http.Request) (client.Interface, error) {
+	authInfo, err := buildAuthInfo(request)
 	if err != nil {
 		return nil, err
 	}
 
-	config, err := in.buildConfigFromAuthInfo(authInfo)
+	config, err := buildConfigFromAuthInfo(authInfo)
 	if err != nil {
 		return nil, err
 	}
@@ -92,14 +112,14 @@ func (in *clientBuilder) clientFromContext(c *gin.Context) (client.Interface, er
 	return client.NewForConfig(config)
 }
 
-func (in *clientBuilder) buildConfigFromAuthInfo(authInfo *api.AuthInfo) (*rest.Config, error) {
+func buildConfigFromAuthInfo(authInfo *api.AuthInfo) (*rest.Config, error) {
 	cmdCfg := api.NewConfig()
 
 	cmdCfg.Clusters[DefaultCmdConfigName] = &api.Cluster{
-		Server:                   in.config.Host,
-		CertificateAuthority:     in.config.TLSClientConfig.CAFile,
-		CertificateAuthorityData: in.config.TLSClientConfig.CAData,
-		InsecureSkipTLSVerify:    in.config.TLSClientConfig.Insecure,
+		Server:                   baseConfig.Host,
+		CertificateAuthority:     baseConfig.TLSClientConfig.CAFile,
+		CertificateAuthorityData: baseConfig.TLSClientConfig.CAData,
+		InsecureSkipTLSVerify:    baseConfig.TLSClientConfig.Insecure,
 	}
 
 	cmdCfg.AuthInfos[DefaultCmdConfigName] = authInfo
@@ -117,34 +137,24 @@ func (in *clientBuilder) buildConfigFromAuthInfo(authInfo *api.AuthInfo) (*rest.
 	).ClientConfig()
 }
 
-func (in *clientBuilder) buildAuthInfo(c *gin.Context) (*api.AuthInfo, error) {
-	if !in.hasAuthorizationHeader(c) {
+func buildAuthInfo(request *http.Request) (*api.AuthInfo, error) {
+	if !HasAuthorizationHeader(request) {
 		return nil, errors.NewUnauthorized(errors.MsgLoginUnauthorizedError)
 	}
 
-	token := in.extractAuthorizationToken(c)
+	token := GetBearerToken(request)
 	authInfo := &api.AuthInfo{
 		Token:                token,
 		ImpersonateUserExtra: make(map[string][]string),
 	}
 
-	in.handleImpersonation(authInfo, c)
+	handleImpersonation(authInfo, request)
 	return authInfo, nil
 }
 
-func (in *clientBuilder) extractAuthorizationToken(c *gin.Context) string {
-	header := c.GetHeader(AuthorizationHeader)
-	return strings.TrimPrefix(header, AuthorizationTokenPrefix)
-}
-
-func (in *clientBuilder) hasAuthorizationHeader(c *gin.Context) bool {
-	header := c.GetHeader(AuthorizationHeader)
-	return len(header) > 0 && strings.HasPrefix(header, AuthorizationTokenPrefix)
-}
-
-func (in *clientBuilder) handleImpersonation(authInfo *api.AuthInfo, c *gin.Context) {
-	user := c.GetHeader(ImpersonateUserHeader)
-	groups := c.Request.Header[ImpersonateGroupHeader]
+func handleImpersonation(authInfo *api.AuthInfo, request *http.Request) {
+	user := request.Header.Get(ImpersonateUserHeader)
+	groups := request.Header[ImpersonateGroupHeader]
 
 	if len(user) == 0 {
 		return
@@ -159,7 +169,7 @@ func (in *clientBuilder) handleImpersonation(authInfo *api.AuthInfo, c *gin.Cont
 	}
 
 	// Add extra impersonation fields if available
-	for name, values := range c.Request.Header {
+	for name, values := range request.Header {
 		if strings.HasPrefix(name, ImpersonateUserExtraHeader) {
 			extraName := strings.TrimPrefix(name, ImpersonateUserExtraHeader)
 			authInfo.ImpersonateUserExtra[extraName] = values
@@ -167,6 +177,35 @@ func (in *clientBuilder) handleImpersonation(authInfo *api.AuthInfo, c *gin.Cont
 	}
 }
 
-func Client(c *gin.Context) (client.Interface, error) {
-	return builder.clientFromContext(c)
+func Init(options ...Option) {
+	builder := newConfigBuilder(options...)
+
+	config, err := builder.buildBaseConfig()
+	if err != nil {
+		klog.ErrorS(err, "Could not init kubernetes client config")
+		os.Exit(1)
+	}
+
+	baseConfig = config
+}
+
+func InClusterClient() (client.Interface, error) {
+	if inClusterClient != nil {
+		return inClusterClient, nil
+	}
+
+	// init on-demand only
+	c, err := client.NewForConfig(baseConfig)
+	if err != nil {
+		klog.ErrorS(err, "Could not init kubernetes in-cluster client")
+		os.Exit(1)
+	}
+
+	// initialize in-memory client
+	inClusterClient = c
+	return inClusterClient, nil
+}
+
+func Client(request *http.Request) (client.Interface, error) {
+	return clientFromRequest(request)
 }

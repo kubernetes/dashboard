@@ -18,7 +18,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {AuthenticationMode, LoginSpec} from '@api/root.api';
 import {KdError} from '@api/root.shared';
 import {IConfig, KdFile, StateError} from '@api/root.ui';
-import {AsKdError, ErrorCode, ErrorStatus, K8SError} from '@common/errors/errors';
+import {AsKdError, ErrorCode, ErrorStatus} from '@common/errors/errors';
 import {AuthService} from '@common/services/global/authentication';
 import {HistoryService} from '@common/services/global/history';
 import {CookieService} from 'ngx-cookie-service';
@@ -57,7 +57,8 @@ export class LoginComponent implements OnInit {
     private readonly route_: ActivatedRoute,
     private readonly historyService_: HistoryService,
     @Inject(CONFIG_DI_TOKEN) private readonly CONFIG: IConfig
-  ) {}
+  ) {
+  }
 
   ngOnInit(): void {
     this.selectedAuthenticationMode =
@@ -112,19 +113,10 @@ export class LoginComponent implements OnInit {
     }
 
     this.saveLastLoginMode_();
-    this.authService_.login(this.getLoginSpec_()).subscribe(
-      (errors: K8SError[]) => {
-        if (errors.length > 0) {
-          this.errors = errors.map((error: K8SError) => new K8SError(error.ErrStatus).toKdError().localize());
-          return;
-        }
-
-        this.ngZone_.run(_ => this.historyService_.goToPreviousState('workloads'));
-      },
-      (err: HttpErrorResponse) => {
-        this.errors = [AsKdError(err)];
-      }
-    );
+    this.authService_.login(this.getLoginSpec_()).subscribe({
+      next: () => this.ngZone_.run(() => this.historyService_.goToPreviousState('workloads')),
+      error: (err: HttpErrorResponse) => this.errors = [AsKdError(err)]
+    });
   }
 
   skip(): void {

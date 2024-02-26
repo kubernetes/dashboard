@@ -4,6 +4,7 @@ use (
 	./api // k8s.io/dashboard/api
 	./auth // k8s.io/dashboard/auth
 	./common/certificates // k8s.io/dashboard/certificates
+	./common/client // k8s.io/dashboard/client
 	./common/errors // k8s.io/dashboard/errors
 	./common/tools // k8s.io/dashboard/tools
 	./metrics-scraper // k8s.io/dashboard/metrics-scraper

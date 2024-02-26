@@ -28,6 +28,7 @@ WORKDIR /workspace
 
 # Copy required local modules
 COPY /common/errors /workspace/common/errors
+COPY /common/client /workspace/common/client
 
 # Create and cd into api module
 WORKDIR /workspace/auth

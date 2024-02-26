@@ -731,9 +731,7 @@ export interface ProtocolValiditySpec {
 
 // Auth related types
 export interface AuthResponse {
-  name?: string;
-  jweToken: string;
-  errors: K8sError[];
+  token: string;
 }
 
 export interface CanIResponse {

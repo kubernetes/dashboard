@@ -89,7 +89,7 @@ export class AuthService {
   /**
    * Sends a login request to the backend with filled in login spec structure.
    */
-  login(loginSpec: LoginSpec): Observable<K8SError[]> {
+  login(loginSpec: LoginSpec): Observable<void> {
     return this.csrfTokenService_
       .getTokenForAction('login')
       .pipe(
@@ -101,12 +101,11 @@ export class AuthService {
       )
       .pipe(
         switchMap((authResponse: AuthResponse) => {
-          if (authResponse.jweToken.length !== 0 && authResponse.errors.length === 0) {
-            this.setTokenCookie_(authResponse.jweToken);
-            this.setUsernameCookie_(authResponse.name);
+          if (authResponse.token.length !== 0) {
+            this.setTokenCookie_(authResponse.token);
           }
 
-          return of(authResponse.errors);
+          return of(void 0)
         })
       );
   }
@@ -139,12 +138,9 @@ export class AuthService {
       )
       .pipe(take(1))
       .subscribe((authResponse: AuthResponse) => {
-        if (authResponse.jweToken.length !== 0 && authResponse.errors.length === 0) {
-          this.setTokenCookie_(authResponse.jweToken);
-          return authResponse.jweToken;
+        if (authResponse.token.length !== 0) {
+          this.setTokenCookie_(authResponse.token);
         }
-
-        return authResponse.errors;
       });
   }
 

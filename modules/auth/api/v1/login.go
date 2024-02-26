@@ -1,5 +1,9 @@
 package v1
 
-type UserInfo struct {
-	User *string `json:"user,omitempty"`
+type LoginRequest struct {
+	Token string `json:"token"`
+}
+
+type LoginResponse struct {
+	Token string `json:"token"`
 }
