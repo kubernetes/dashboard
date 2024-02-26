@@ -31,14 +31,14 @@ func TestToStorageClass(t *testing.T) {
 		{
 			storage: &storage.StorageClass{},
 			expected: StorageClass{
-				TypeMeta: api.TypeMeta{Kind: api.ResourceKindStorageClass},
+				TypeMeta: api.TypeMeta{Kind: internalclient.ResourceKindStorageClass},
 			},
 		}, {
 			storage: &storage.StorageClass{
 				ObjectMeta: metaV1.ObjectMeta{Name: "test-storage"}},
 			expected: StorageClass{
 				ObjectMeta: api.ObjectMeta{Name: "test-storage"},
-				TypeMeta:   api.TypeMeta{Kind: api.ResourceKindStorageClass},
+				TypeMeta:   api.TypeMeta{Kind: internalclient.ResourceKindStorageClass},
 			},
 		},
 	}

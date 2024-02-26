@@ -56,7 +56,6 @@ fix-go: $(PRE)
 run: build
 	@$(API_DIST_BINARY) --kubeconfig=$(KUBECONFIG) \
 		--sidecar-host=$(SIDECAR_HOST) \
-		--token-ttl=$(TOKEN_TTL) \
 		--auto-generate-certificates=$(AUTO_GENERATE_CERTIFICATES) \
 		--enable-insecure-login=$(ENABLE_INSECURE_LOGIN) \
 		--enable-skip-login=$(ENABLE_SKIP_LOGIN)

@@ -19,10 +19,12 @@ import (
 
 	v1 "k8s.io/api/core/v1"
 	"k8s.io/client-go/kubernetes"
+
 	"k8s.io/dashboard/api/pkg/api"
-	"k8s.io/dashboard/api/pkg/errors"
 	"k8s.io/dashboard/api/pkg/resource/common"
 	"k8s.io/dashboard/api/pkg/resource/dataselect"
+	internalclient "k8s.io/dashboard/client"
+	"k8s.io/dashboard/errors"
 )
 
 // PersistentVolumeClaimList contains a list of Persistent Volume Claims in the cluster.
@@ -66,7 +68,7 @@ func GetPersistentVolumeClaimListFromChannels(channels *common.ResourceChannels,
 
 	persistentVolumeClaims := <-channels.PersistentVolumeClaimList.List
 	err := <-channels.PersistentVolumeClaimList.Error
-	nonCriticalErrors, criticalError := errors.HandleError(err)
+	nonCriticalErrors, criticalError := errors.ExtractErrors(err)
 	if criticalError != nil {
 		return nil, criticalError
 	}
@@ -77,7 +79,7 @@ func GetPersistentVolumeClaimListFromChannels(channels *common.ResourceChannels,
 func toPersistentVolumeClaim(pvc v1.PersistentVolumeClaim) PersistentVolumeClaim {
 	return PersistentVolumeClaim{
 		ObjectMeta:   api.NewObjectMeta(pvc.ObjectMeta),
-		TypeMeta:     api.NewTypeMeta(api.ResourceKindPersistentVolumeClaim),
+		TypeMeta:     api.NewTypeMeta(internalclient.ResourceKindPersistentVolumeClaim),
 		Status:       string(pvc.Status.Phase),
 		Volume:       pvc.Spec.VolumeName,
 		Capacity:     pvc.Status.Capacity,

@@ -13,8 +13,7 @@ func login(spec *v1.LoginRequest, request *http.Request) (*v1.LoginResponse, int
 
 	k8sClient, err := client.Client(request)
 	if err != nil {
-		code, err := errors.HandleError(err)
-		return nil, code, err
+		return nil, http.StatusInternalServerError, err
 	}
 
 	if _, err = k8sClient.Discovery().ServerVersion(); err != nil {

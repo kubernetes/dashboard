@@ -15,12 +15,11 @@
 package config
 
 import (
-	"encoding/json"
 	"net/http"
-	"text/template"
 	"time"
 
 	"github.com/gin-gonic/gin"
+
 	"k8s.io/dashboard/web/pkg/router"
 )
 
@@ -43,20 +42,22 @@ func handleGetConfig(c *gin.Context) {
 		ServerTime: time.Now().UTC().UnixNano() / 1e6,
 	}
 
-	configTemplate, err := template.New(TemplateName).Parse(Template)
-	if err != nil {
-		c.JSON(http.StatusInternalServerError, err)
-		return
-	}
+	//configTemplate, err := template.New(TemplateName).Parse(Template)
+	//if err != nil {
+	//	c.JSON(http.StatusInternalServerError, err)
+	//	return
+	//}
+	//
+	//jsonConfig, err := json.Marshal(config)
+	//if err != nil {
+	//	c.JSON(http.StatusInternalServerError, err)
+	//	return
+	//}
 
-	jsonConfig, err := json.Marshal(config)
-	if err != nil {
-		c.JSON(http.StatusInternalServerError, err)
-		return
-	}
-
-	err = configTemplate.Execute(c.Writer, jsonConfig)
-	if err != nil {
-		c.JSON(http.StatusInternalServerError, err)
-	}
+	//err = configTemplate.Execute(c.Writer, jsonConfig)
+	//if err != nil {
+	//	c.JSON(http.StatusInternalServerError, err)
+	//}
+	// TODO: check why it was templated
+	c.JSON(http.StatusOK, config)
 }

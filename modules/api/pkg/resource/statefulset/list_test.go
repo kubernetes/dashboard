@@ -27,8 +27,9 @@ import (
 	metricapi "k8s.io/dashboard/api/pkg/integration/metric/api"
 	"k8s.io/dashboard/api/pkg/resource/common"
 	"k8s.io/dashboard/api/pkg/resource/dataselect"
+	internalclient "k8s.io/dashboard/client"
 
-	"k8s.io/dashboard/api/pkg/errors"
+	"k8s.io/dashboard/errors"
 )
 
 func getReplicasPointer(replicas int32) *int32 {
@@ -149,7 +150,7 @@ func TestGetStatefulSetListFromChannels(t *testing.T) {
 						CreationTimestamp: metaV1.Unix(111, 222),
 					},
 					TypeMeta: api.TypeMeta{
-						Kind:     api.ResourceKindStatefulSet,
+						Kind:     internalclient.ResourceKindStatefulSet,
 						Scalable: true,
 					},
 					Pods: common.PodInfo{

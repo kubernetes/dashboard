@@ -94,11 +94,11 @@ func TestToEventList(t *testing.T) {
 				Events: []common.Event{
 					{
 						ObjectMeta: api.ObjectMeta{Name: "event-1"},
-						TypeMeta:   api.TypeMeta{Kind: api.ResourceKindEvent},
+						TypeMeta:   api.TypeMeta{Kind: internalclient.ResourceKindEvent},
 					},
 					{
 						ObjectMeta: api.ObjectMeta{Name: "event-2"},
-						TypeMeta:   api.TypeMeta{Kind: api.ResourceKindEvent},
+						TypeMeta:   api.TypeMeta{Kind: internalclient.ResourceKindEvent},
 					},
 				},
 			},
@@ -144,7 +144,7 @@ func TestGetResourceEvents(t *testing.T) {
 			&common.EventList{
 				ListMeta: api.ListMeta{TotalItems: 1},
 				Events: []common.Event{{
-					TypeMeta: api.TypeMeta{Kind: api.ResourceKindEvent},
+					TypeMeta: api.TypeMeta{Kind: internalclient.ResourceKindEvent},
 					ObjectMeta: api.ObjectMeta{
 						Name: "ev-1", Namespace: "ns-1", Labels: labelSelector},
 					Message: "test-message",

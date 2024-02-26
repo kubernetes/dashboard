@@ -23,27 +23,12 @@ import (
 	"testing"
 
 	"github.com/emicklei/go-restful/v3"
-	"k8s.io/client-go/kubernetes/fake"
 
 	"k8s.io/dashboard/api/pkg/args"
-	"k8s.io/dashboard/api/pkg/auth"
-	authApi "k8s.io/dashboard/api/pkg/auth/api"
-	"k8s.io/dashboard/api/pkg/auth/jwe"
-	"k8s.io/dashboard/api/pkg/client"
-	"k8s.io/dashboard/api/pkg/sync"
 )
 
-func getTokenManager() authApi.TokenManager {
-	c := fake.NewSimpleClientset()
-	syncManager := sync.NewSynchronizerManager(c)
-	holder := jwe.NewRSAKeyHolder(syncManager.Secret("", ""))
-	return jwe.NewJWETokenManager(holder)
-}
-
 func TestCreateHTTPAPIHandler(t *testing.T) {
-	cManager := client.NewClientManager("", "http://localhost:8080")
-	authManager := auth.NewAuthManager(cManager, getTokenManager(), authApi.AuthenticationModes{}, true)
-	_, err := CreateHTTPAPIHandler(nil, cManager, authManager)
+	_, err := CreateHTTPAPIHandler(nil)
 	if err != nil {
 		t.Fatal("CreateHTTPAPIHandler() cannot create HTTP API handler")
 	}

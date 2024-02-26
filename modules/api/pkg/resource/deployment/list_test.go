@@ -28,7 +28,7 @@ import (
 	"k8s.io/dashboard/api/pkg/resource/common"
 	"k8s.io/dashboard/api/pkg/resource/dataselect"
 
-	"k8s.io/dashboard/api/pkg/errors"
+	"k8s.io/dashboard/errors"
 )
 
 func getReplicasPointer(replicas int32) *int32 {
@@ -115,7 +115,7 @@ func TestGetDeploymentListFromChannels(t *testing.T) {
 						CreationTimestamp: metaV1.Unix(111, 222),
 					},
 					TypeMeta: api.TypeMeta{
-						Kind:        api.ResourceKindDeployment,
+						Kind:        internalclient.ResourceKindDeployment,
 						Scalable:    true,
 						Restartable: true,
 					},

@@ -18,9 +18,9 @@ import (
 	"reflect"
 	"testing"
 
-	"k8s.io/dashboard/api/pkg/errors"
 	integrationapi "k8s.io/dashboard/api/pkg/integration/api"
 	"k8s.io/dashboard/api/pkg/integration/metric/api"
+	"k8s.io/dashboard/errors"
 )
 
 const fakeMetricClientID integrationapi.IntegrationID = "test-id"

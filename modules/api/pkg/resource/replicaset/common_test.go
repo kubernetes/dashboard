@@ -20,8 +20,10 @@ import (
 
 	apps "k8s.io/api/apps/v1"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+
 	"k8s.io/dashboard/api/pkg/api"
 	"k8s.io/dashboard/api/pkg/resource/common"
+	internalclient "k8s.io/dashboard/client"
 )
 
 func TestToReplicaSet(t *testing.T) {
@@ -35,7 +37,7 @@ func TestToReplicaSet(t *testing.T) {
 			&common.PodInfo{Running: 1, Warnings: []common.Event{}},
 			ReplicaSet{
 				ObjectMeta: api.ObjectMeta{Name: "replica-set"},
-				TypeMeta:   api.TypeMeta{Kind: api.ResourceKindReplicaSet, Scalable: true},
+				TypeMeta:   api.TypeMeta{Kind: internalclient.ResourceKindReplicaSet, Scalable: true},
 				Pods:       common.PodInfo{Running: 1, Warnings: []common.Event{}},
 			},
 		},

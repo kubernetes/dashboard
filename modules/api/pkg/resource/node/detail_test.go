@@ -21,11 +21,13 @@ import (
 	v1 "k8s.io/api/core/v1"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/client-go/kubernetes/fake"
+
 	"k8s.io/dashboard/api/pkg/api"
 	metricapi "k8s.io/dashboard/api/pkg/integration/metric/api"
 	"k8s.io/dashboard/api/pkg/resource/common"
 	"k8s.io/dashboard/api/pkg/resource/dataselect"
 	"k8s.io/dashboard/api/pkg/resource/pod"
+	internalclient "k8s.io/dashboard/client"
 )
 
 func TestGetNodeDetail(t *testing.T) {
@@ -47,7 +49,7 @@ func TestGetNodeDetail(t *testing.T) {
 			&NodeDetail{
 				Node: Node{
 					ObjectMeta: api.ObjectMeta{Name: "test-node"},
-					TypeMeta:   api.TypeMeta{Kind: api.ResourceKindNode},
+					TypeMeta:   api.TypeMeta{Kind: internalclient.ResourceKindNode},
 					AllocatedResources: NodeAllocatedResources{
 						CPURequests:            0,
 						CPURequestsFraction:    0,

@@ -20,8 +20,9 @@ import (
 
 	v1 "k8s.io/api/core/v1"
 	"k8s.io/apimachinery/pkg/types"
-	"k8s.io/dashboard/api/pkg/api"
+
 	integrationapi "k8s.io/dashboard/api/pkg/integration/api"
+	"k8s.io/dashboard/client"
 )
 
 // MetricClient is an interface that exposes API used by dashboard to show graphs and sparklines.
@@ -82,13 +83,13 @@ var AggregatingFunctions = map[AggregationMode]func([]int64) int64{
 // to native resource (supported by heapster) to which derived resource should be converted.
 // For example, deployment is not available in heapster so it has to be converted to its pods before downloading any data.
 // Hence deployments map to pods.
-var DerivedResources = map[api.ResourceKind]api.ResourceKind{
-	api.ResourceKindDeployment:            api.ResourceKindPod,
-	api.ResourceKindReplicaSet:            api.ResourceKindPod,
-	api.ResourceKindReplicationController: api.ResourceKindPod,
-	api.ResourceKindDaemonSet:             api.ResourceKindPod,
-	api.ResourceKindStatefulSet:           api.ResourceKindPod,
-	api.ResourceKindJob:                   api.ResourceKindPod,
+var DerivedResources = map[client.ResourceKind]client.ResourceKind{
+	client.ResourceKindDeployment:            client.ResourceKindPod,
+	client.ResourceKindReplicaSet:            client.ResourceKindPod,
+	client.ResourceKindReplicationController: client.ResourceKindPod,
+	client.ResourceKindDaemonSet:             client.ResourceKindPod,
+	client.ResourceKindStatefulSet:           client.ResourceKindPod,
+	client.ResourceKindJob:                   client.ResourceKindPod,
 }
 
 // ResourceSelector is a structure used to quickly and uniquely identify given resource.
@@ -97,7 +98,7 @@ type ResourceSelector struct {
 	// Namespace of this resource.
 	Namespace string
 	// Type of this resource
-	ResourceType api.ResourceKind
+	ResourceType client.ResourceKind
 	// Name of this resource.
 	ResourceName string
 	// Selector used to identify this resource (should be used only for Deployments!).
@@ -124,7 +125,7 @@ type MetricPoint struct {
 }
 
 // Label stores information about identity of resources (UIDs) described by metric.
-type Label map[api.ResourceKind][]types.UID
+type Label map[client.ResourceKind][]types.UID
 
 // AddMetricLabel returns a unique combined Label of self and other resource.
 // New label describes both resources.
@@ -150,7 +151,7 @@ func (self Label) AddMetricLabel(other Label) Label {
 	return self
 }
 
-// Metric is a format of data used in this module. This is also the format of data that is being sent by backend API.
+// Metric is a format of data used in this module. This is also the format of data that is being sent by backend client.
 type Metric struct {
 	// DataPoints is a list of X, Y int64 data points, sorted by X.
 	DataPoints `json:"dataPoints"`
@@ -164,7 +165,7 @@ type Metric struct {
 	Aggregate AggregationMode `json:"aggregation,omitempty"`
 }
 
-// SidecarMetric is a format of data used by our sidecar. This is also the format of data that is being sent by backend API.
+// SidecarMetric is a format of data used by our sidecar. This is also the format of data that is being sent by backend client.
 type SidecarMetric struct {
 	// DataPoints is a list of X, Y int64 data points, sorted by X.
 	DataPoints `json:"dataPoints"`

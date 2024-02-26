@@ -20,10 +20,12 @@ import (
 	v1 "k8s.io/api/core/v1"
 
 	client "k8s.io/client-go/kubernetes"
+
 	"k8s.io/dashboard/api/pkg/api"
-	"k8s.io/dashboard/api/pkg/errors"
 	"k8s.io/dashboard/api/pkg/resource/common"
 	"k8s.io/dashboard/api/pkg/resource/dataselect"
+	internalclient "k8s.io/dashboard/client"
+	"k8s.io/dashboard/errors"
 )
 
 // ServiceAccount contains an information about single service account in the list.
@@ -43,9 +45,9 @@ type ServiceAccountList struct {
 func GetServiceAccountList(client client.Interface, namespace *common.NamespaceQuery,
 	dsQuery *dataselect.DataSelectQuery) (*ServiceAccountList, error) {
 	saList, err := client.CoreV1().ServiceAccounts(namespace.ToRequestParam()).List(context.TODO(),
-		api.ListEverything)
+		internalclient.ListEverything)
 
-	nonCriticalErrors, criticalError := errors.HandleError(err)
+	nonCriticalErrors, criticalError := errors.ExtractErrors(err)
 	if criticalError != nil {
 		return nil, criticalError
 	}
@@ -56,7 +58,7 @@ func GetServiceAccountList(client client.Interface, namespace *common.NamespaceQ
 func toServiceAccount(sa *v1.ServiceAccount) ServiceAccount {
 	return ServiceAccount{
 		ObjectMeta: api.NewObjectMeta(sa.ObjectMeta),
-		TypeMeta:   api.NewTypeMeta(api.ResourceKindServiceAccount),
+		TypeMeta:   api.NewTypeMeta(internalclient.ResourceKindServiceAccount),
 	}
 }
 

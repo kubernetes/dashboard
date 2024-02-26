@@ -19,11 +19,11 @@ import (
 
 	v1 "k8s.io/api/core/v1"
 
-	"k8s.io/dashboard/api/pkg/api"
 	metricapi "k8s.io/dashboard/api/pkg/integration/metric/api"
 	"k8s.io/dashboard/api/pkg/resource/common"
 	"k8s.io/dashboard/api/pkg/resource/dataselect"
 	"k8s.io/dashboard/api/pkg/resource/event"
+	internalclient "k8s.io/dashboard/client"
 )
 
 // getRestartCount return the restart count of given pod (total number of its containers restarts).
@@ -195,7 +195,7 @@ func (self PodCell) GetProperty(name dataselect.PropertyName) dataselect.Compara
 func (self PodCell) GetResourceSelector() *metricapi.ResourceSelector {
 	return &metricapi.ResourceSelector{
 		Namespace:    self.ObjectMeta.Namespace,
-		ResourceType: api.ResourceKindPod,
+		ResourceType: internalclient.ResourceKindPod,
 		ResourceName: self.ObjectMeta.Name,
 		UID:          self.ObjectMeta.UID,
 	}

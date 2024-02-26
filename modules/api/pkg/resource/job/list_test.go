@@ -24,10 +24,10 @@ import (
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 
 	"k8s.io/dashboard/api/pkg/api"
-	"k8s.io/dashboard/api/pkg/errors"
 	metricapi "k8s.io/dashboard/api/pkg/integration/metric/api"
 	"k8s.io/dashboard/api/pkg/resource/common"
 	"k8s.io/dashboard/api/pkg/resource/dataselect"
+	"k8s.io/dashboard/errors"
 )
 
 func TestGetJobListFromChannels(t *testing.T) {
@@ -179,7 +179,7 @@ func TestGetJobListFromChannels(t *testing.T) {
 						Labels:            map[string]string{"key": "value"},
 						CreationTimestamp: metaV1.Unix(111, 222),
 					},
-					TypeMeta: api.TypeMeta{Kind: api.ResourceKindJob},
+					TypeMeta: api.TypeMeta{Kind: internalclient.ResourceKindJob},
 					Pods: common.PodInfo{
 						Current:  7,
 						Running:  1,
@@ -198,7 +198,7 @@ func TestGetJobListFromChannels(t *testing.T) {
 						Labels:            map[string]string{"key": "value"},
 						CreationTimestamp: metaV1.Unix(111, 222),
 					},
-					TypeMeta: api.TypeMeta{Kind: api.ResourceKindJob},
+					TypeMeta: api.TypeMeta{Kind: internalclient.ResourceKindJob},
 					Pods: common.PodInfo{
 						Current:  7,
 						Running:  1,

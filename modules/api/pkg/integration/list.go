@@ -18,19 +18,19 @@ import (
 	"k8s.io/dashboard/api/pkg/integration/api"
 )
 
-// IntegrationsGetter is responsible for listing all supported integrations.
-type IntegrationsGetter interface {
+// Getter is responsible for listing all supported integrations.
+type Getter interface {
 	// List returns list of all supported integrations.
 	List() []api.Integration
 }
 
-// List implements integration getter interface. See IntegrationsGetter for
+// List implements integration getter interface. See Getter for
 // more information.
-func (self *integrationManager) List() []api.Integration {
+func (in *manager) List() []api.Integration {
 	result := make([]api.Integration, 0)
 
 	// Append all types of integrations
-	result = append(result, self.Metric().List()...)
+	result = append(result, in.Metric().List()...)
 
 	return result
 }

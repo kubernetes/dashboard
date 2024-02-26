@@ -18,12 +18,14 @@ import (
 	apps "k8s.io/api/apps/v1"
 	v1 "k8s.io/api/core/v1"
 	"k8s.io/client-go/kubernetes"
+
 	"k8s.io/dashboard/api/pkg/api"
-	"k8s.io/dashboard/api/pkg/errors"
 	metricapi "k8s.io/dashboard/api/pkg/integration/metric/api"
 	"k8s.io/dashboard/api/pkg/resource/common"
 	"k8s.io/dashboard/api/pkg/resource/dataselect"
 	"k8s.io/dashboard/api/pkg/resource/event"
+	internalclient "k8s.io/dashboard/client"
+	"k8s.io/dashboard/errors"
 )
 
 // DaemonSetList contains a list of Daemon Sets in the cluster.
@@ -66,7 +68,7 @@ func GetDaemonSetListFromChannels(channels *common.ResourceChannels, dsQuery *da
 
 	daemonSets := <-channels.DaemonSetList.List
 	err := <-channels.DaemonSetList.Error
-	nonCriticalErrors, criticalError := errors.HandleError(err)
+	nonCriticalErrors, criticalError := errors.ExtractErrors(err)
 	if criticalError != nil {
 		return nil, criticalError
 	}
@@ -128,7 +130,7 @@ func toDaemonSet(daemonSet apps.DaemonSet, pods []v1.Pod, events []v1.Event) Dae
 
 	return DaemonSet{
 		ObjectMeta:          api.NewObjectMeta(daemonSet.ObjectMeta),
-		TypeMeta:            api.NewTypeMeta(api.ResourceKindDaemonSet),
+		TypeMeta:            api.NewTypeMeta(internalclient.ResourceKindDaemonSet),
 		Pods:                podInfo,
 		ContainerImages:     common.GetContainerImages(&daemonSet.Spec.Template.Spec),
 		InitContainerImages: common.GetInitContainerImages(&daemonSet.Spec.Template.Spec),

@@ -178,7 +178,7 @@ func TestToReplicationControllerList(t *testing.T) {
 							UID:       "uid-1",
 						},
 						TypeMeta: api.TypeMeta{
-							Kind:     api.ResourceKindReplicationController,
+							Kind:     internalclient.ResourceKindReplicationController,
 							Scalable: true,
 						},
 						ContainerImages: []string{"my-container-image-1"},
@@ -197,7 +197,7 @@ func TestToReplicationControllerList(t *testing.T) {
 							UID:       "uid-2",
 						},
 						TypeMeta: api.TypeMeta{
-							Kind:     api.ResourceKindReplicationController,
+							Kind:     internalclient.ResourceKindReplicationController,
 							Scalable: true,
 						},
 						ContainerImages: []string{"my-container-image-2"},
@@ -252,7 +252,7 @@ func TestGetReplicationControllerList(t *testing.T) {
 							Labels: map[string]string{},
 						},
 						TypeMeta: api.TypeMeta{
-							Kind:     api.ResourceKindReplicationController,
+							Kind:     internalclient.ResourceKindReplicationController,
 							Scalable: true,
 						},
 						Pods: common.PodInfo{

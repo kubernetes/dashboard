@@ -55,7 +55,7 @@ func TestGetCronJobDetail(t *testing.T) {
 						Namespace: namespace,
 						Labels:    labels,
 					},
-					TypeMeta:        api.TypeMeta{Kind: api.ResourceKindCronJob},
+					TypeMeta:        api.TypeMeta{Kind: internalclient.ResourceKindCronJob},
 					Suspend:         &suspend,
 					ContainerImages: []string{},
 				},

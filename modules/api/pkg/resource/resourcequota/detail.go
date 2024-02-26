@@ -16,7 +16,9 @@ package resourcequota
 
 import (
 	v1 "k8s.io/api/core/v1"
+
 	"k8s.io/dashboard/api/pkg/api"
+	"k8s.io/dashboard/client"
 )
 
 // ResourceStatus provides the status of the resource defined by a resource quota.
@@ -55,7 +57,7 @@ func ToResourceQuotaDetail(rawResourceQuota *v1.ResourceQuota) *ResourceQuotaDet
 	}
 	return &ResourceQuotaDetail{
 		ObjectMeta: api.NewObjectMeta(rawResourceQuota.ObjectMeta),
-		TypeMeta:   api.NewTypeMeta(api.ResourceKindResourceQuota),
+		TypeMeta:   api.NewTypeMeta(client.ResourceKindResourceQuota),
 		Scopes:     rawResourceQuota.Spec.Scopes,
 		StatusList: statusList,
 	}

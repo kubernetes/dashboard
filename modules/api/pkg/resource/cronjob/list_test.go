@@ -83,7 +83,7 @@ func TestGetCronJobListFromChannels(t *testing.T) {
 						Namespace: namespace,
 						Labels:    labels,
 					},
-					TypeMeta:        api.TypeMeta{Kind: api.ResourceKindCronJob},
+					TypeMeta:        api.TypeMeta{Kind: internalclient.ResourceKindCronJob},
 					ContainerImages: []string{},
 				}, {
 					ObjectMeta: api.ObjectMeta{
@@ -91,7 +91,7 @@ func TestGetCronJobListFromChannels(t *testing.T) {
 						Namespace: namespace,
 						Labels:    labels,
 					},
-					TypeMeta:        api.TypeMeta{Kind: api.ResourceKindCronJob},
+					TypeMeta:        api.TypeMeta{Kind: internalclient.ResourceKindCronJob},
 					ContainerImages: []string{},
 				}},
 				Errors: []error{},

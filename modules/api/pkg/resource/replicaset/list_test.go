@@ -28,8 +28,9 @@ import (
 	metricapi "k8s.io/dashboard/api/pkg/integration/metric/api"
 	"k8s.io/dashboard/api/pkg/resource/common"
 	"k8s.io/dashboard/api/pkg/resource/dataselect"
+	internalclient "k8s.io/dashboard/client"
 
-	"k8s.io/dashboard/api/pkg/errors"
+	"k8s.io/dashboard/errors"
 )
 
 func TestGetReplicaSetListFromChannels(t *testing.T) {
@@ -144,7 +145,7 @@ func TestGetReplicaSetListFromChannels(t *testing.T) {
 						Labels:            map[string]string{"key": "value"},
 						CreationTimestamp: metaV1.Unix(111, 222),
 					},
-					TypeMeta: api.TypeMeta{Kind: api.ResourceKindReplicaSet, Scalable: true},
+					TypeMeta: api.TypeMeta{Kind: internalclient.ResourceKindReplicaSet, Scalable: true},
 					Pods: common.PodInfo{
 						Current:  7,
 						Desired:  &replicas,
@@ -234,7 +235,7 @@ func TestToReplicaSetList(t *testing.T) {
 				ReplicaSets: []ReplicaSet{
 					{
 						ObjectMeta: api.ObjectMeta{Name: "replica-set", Namespace: "ns-1"},
-						TypeMeta:   api.TypeMeta{Kind: api.ResourceKindReplicaSet, Scalable: true},
+						TypeMeta:   api.TypeMeta{Kind: internalclient.ResourceKindReplicaSet, Scalable: true},
 						Pods: common.PodInfo{
 							Warnings: []common.Event{},
 							Desired:  &replicas,
@@ -285,7 +286,7 @@ func TestGetReplicaSetList(t *testing.T) {
 							Name:   "rs-1",
 							Labels: map[string]string{},
 						},
-						TypeMeta: api.TypeMeta{Kind: api.ResourceKindReplicaSet, Scalable: true},
+						TypeMeta: api.TypeMeta{Kind: internalclient.ResourceKindReplicaSet, Scalable: true},
 						Pods: common.PodInfo{
 							Desired:  &replicas,
 							Warnings: make([]common.Event, 0),

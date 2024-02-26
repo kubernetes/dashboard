@@ -23,6 +23,7 @@ import (
 
 	"k8s.io/dashboard/api/pkg/api"
 	"k8s.io/dashboard/api/pkg/resource/common"
+	"k8s.io/dashboard/client"
 )
 
 // CustomResourceDefinitionList contains a list of Custom Resource Definitions in the cluster.
@@ -82,7 +83,7 @@ func (r *CustomResourceObject) UnmarshalJSON(data []byte) error {
 		return err
 	}
 
-	r.TypeMeta = api.NewTypeMeta(api.ResourceKind(tempStruct.TypeMeta.Kind))
+	r.TypeMeta = api.NewTypeMeta(client.ResourceKind(tempStruct.TypeMeta.Kind))
 	r.ObjectMeta = api.NewObjectMeta(tempStruct.ObjectMeta)
 	return nil
 }

@@ -19,10 +19,12 @@ import (
 
 	rbac "k8s.io/api/rbac/v1"
 	"k8s.io/client-go/kubernetes"
+
 	"k8s.io/dashboard/api/pkg/api"
-	"k8s.io/dashboard/api/pkg/errors"
 	"k8s.io/dashboard/api/pkg/resource/common"
 	"k8s.io/dashboard/api/pkg/resource/dataselect"
+	internalclient "k8s.io/dashboard/client"
+	"k8s.io/dashboard/errors"
 )
 
 // RoleBindingList contains a list of roleBindings in the cluster.
@@ -56,7 +58,7 @@ func GetRoleBindingList(client kubernetes.Interface, nsQuery *common.NamespaceQu
 func GetRoleBindingListFromChannels(channels *common.ResourceChannels, dsQuery *dataselect.DataSelectQuery) (*RoleBindingList, error) {
 	roleBindings := <-channels.RoleBindingList.List
 	err := <-channels.RoleBindingList.Error
-	nonCriticalErrors, criticalError := errors.HandleError(err)
+	nonCriticalErrors, criticalError := errors.ExtractErrors(err)
 	if criticalError != nil {
 		return nil, criticalError
 	}
@@ -67,7 +69,7 @@ func GetRoleBindingListFromChannels(channels *common.ResourceChannels, dsQuery *
 func toRoleBinding(roleBinding rbac.RoleBinding) RoleBinding {
 	return RoleBinding{
 		ObjectMeta: api.NewObjectMeta(roleBinding.ObjectMeta),
-		TypeMeta:   api.NewTypeMeta(api.ResourceKindRoleBinding),
+		TypeMeta:   api.NewTypeMeta(internalclient.ResourceKindRoleBinding),
 	}
 }
 

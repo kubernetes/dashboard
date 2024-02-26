@@ -20,12 +20,14 @@ import (
 	apps "k8s.io/api/apps/v1"
 	v1 "k8s.io/api/core/v1"
 	client "k8s.io/client-go/kubernetes"
+
 	"k8s.io/dashboard/api/pkg/api"
-	"k8s.io/dashboard/api/pkg/errors"
 	metricapi "k8s.io/dashboard/api/pkg/integration/metric/api"
 	"k8s.io/dashboard/api/pkg/resource/common"
 	"k8s.io/dashboard/api/pkg/resource/dataselect"
 	"k8s.io/dashboard/api/pkg/resource/event"
+	internalclient "k8s.io/dashboard/client"
+	"k8s.io/dashboard/errors"
 )
 
 // DeploymentList contains a list of Deployments in the cluster.
@@ -82,7 +84,7 @@ func GetDeploymentListFromChannels(channels *common.ResourceChannels, dsQuery *d
 
 	deployments := <-channels.DeploymentList.List
 	err := <-channels.DeploymentList.Error
-	nonCriticalErrors, criticalError := errors.HandleError(err)
+	nonCriticalErrors, criticalError := errors.ExtractErrors(err)
 	if criticalError != nil {
 		return nil, criticalError
 	}
@@ -151,7 +153,7 @@ func toDeployment(deployment *apps.Deployment, rs []apps.ReplicaSet, pods []v1.P
 
 	return Deployment{
 		ObjectMeta:          api.NewObjectMeta(deployment.ObjectMeta),
-		TypeMeta:            api.NewTypeMeta(api.ResourceKindDeployment),
+		TypeMeta:            api.NewTypeMeta(internalclient.ResourceKindDeployment),
 		Pods:                podInfo,
 		ContainerImages:     common.GetContainerImages(&deployment.Spec.Template.Spec),
 		InitContainerImages: common.GetInitContainerImages(&deployment.Spec.Template.Spec),

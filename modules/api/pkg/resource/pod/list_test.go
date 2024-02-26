@@ -23,11 +23,11 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 
 	"k8s.io/dashboard/api/pkg/api"
-	"k8s.io/dashboard/api/pkg/errors"
 	metricapi "k8s.io/dashboard/api/pkg/integration/metric/api"
 	"k8s.io/dashboard/api/pkg/resource/common"
 	"k8s.io/dashboard/api/pkg/resource/dataselect"
 	"k8s.io/dashboard/api/pkg/resource/pod"
+	"k8s.io/dashboard/errors"
 )
 
 func TestGetPodListFromChannels(t *testing.T) {
@@ -102,7 +102,7 @@ func TestGetPodListFromChannels(t *testing.T) {
 						Labels:            map[string]string{"key": "value"},
 						CreationTimestamp: metav1.Unix(111, 222),
 					},
-					TypeMeta: api.TypeMeta{Kind: api.ResourceKindPod},
+					TypeMeta: api.TypeMeta{Kind: internalclient.ResourceKindPod},
 					Status:   string(v1.PodUnknown),
 					Warnings: []common.Event{},
 				}},

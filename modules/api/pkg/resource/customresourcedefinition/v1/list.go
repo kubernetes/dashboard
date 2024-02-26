@@ -20,10 +20,11 @@ import (
 	apiextensionsclientset "k8s.io/apiextensions-apiserver/pkg/client/clientset/clientset"
 
 	"k8s.io/dashboard/api/pkg/api"
-	"k8s.io/dashboard/api/pkg/errors"
 	"k8s.io/dashboard/api/pkg/resource/common"
 	"k8s.io/dashboard/api/pkg/resource/customresourcedefinition/types"
 	"k8s.io/dashboard/api/pkg/resource/dataselect"
+	internalclient "k8s.io/dashboard/client"
+	"k8s.io/dashboard/errors"
 )
 
 // GetCustomResourceDefinitionList returns all the custom resource definitions in the cluster.
@@ -32,7 +33,7 @@ func GetCustomResourceDefinitionList(client apiextensionsclientset.Interface, ds
 	crdList := <-channel.List
 	err := <-channel.Error
 
-	nonCriticalErrors, criticalError := errors.HandleError(err)
+	nonCriticalErrors, criticalError := errors.ExtractErrors(err)
 	if criticalError != nil {
 		return nil, criticalError
 	}
@@ -71,7 +72,7 @@ func toCustomResourceDefinitionList(crds []apiextensionsv1.CustomResourceDefinit
 func toCustomResourceDefinition(crd *apiextensionsv1.CustomResourceDefinition) types.CustomResourceDefinition {
 	return types.CustomResourceDefinition{
 		ObjectMeta:  api.NewObjectMeta(crd.ObjectMeta),
-		TypeMeta:    api.NewTypeMeta(api.ResourceKindCustomResourceDefinition),
+		TypeMeta:    api.NewTypeMeta(internalclient.ResourceKindCustomResourceDefinition),
 		Version:     crd.Spec.Versions[0].Name,
 		Group:       crd.Spec.Group,
 		Scope:       toCustomResourceDefinitionScope(crd.Spec.Scope),

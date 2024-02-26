@@ -46,7 +46,7 @@ func TestGetPersistentVolumeClaimDetail(t *testing.T) {
 			},
 			&PersistentVolumeClaimDetail{
 				PersistentVolumeClaim: PersistentVolumeClaim{
-					ObjectMeta:  api.ObjectMeta{Name: "foo", Namespace: "bar"},
+					ObjectMeta:  api.TypeMeta{Name: "foo", Namespace: "bar"},
 					TypeMeta:    api.TypeMeta{Kind: "persistentvolumeclaim"},
 					Status:      string(v1.ClaimPending),
 					Volume:      "volume",

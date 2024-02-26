@@ -27,8 +27,9 @@ import (
 	metricapi "k8s.io/dashboard/api/pkg/integration/metric/api"
 	"k8s.io/dashboard/api/pkg/resource/common"
 	"k8s.io/dashboard/api/pkg/resource/dataselect"
+	internalclient "k8s.io/dashboard/client"
 
-	"k8s.io/dashboard/api/pkg/errors"
+	"k8s.io/dashboard/errors"
 )
 
 func TestGetDaemonSetListFromChannels(t *testing.T) {
@@ -107,7 +108,7 @@ func TestGetDaemonSetListFromChannels(t *testing.T) {
 						Labels:            map[string]string{"key": "value"},
 						CreationTimestamp: metaV1.Unix(111, 222),
 					},
-					TypeMeta: api.TypeMeta{Kind: api.ResourceKindDaemonSet},
+					TypeMeta: api.TypeMeta{Kind: internalclient.ResourceKindDaemonSet},
 					Pods: common.PodInfo{
 						Current:  0,
 						Failed:   0,
@@ -352,7 +353,7 @@ func TestToDaemonSetList(t *testing.T) {
 							Namespace: "namespace-1",
 							UID:       "uid-1",
 						},
-						TypeMeta:            api.TypeMeta{Kind: api.ResourceKindDaemonSet},
+						TypeMeta:            api.TypeMeta{Kind: internalclient.ResourceKindDaemonSet},
 						ContainerImages:     []string{"my-container-image-1"},
 						InitContainerImages: []string{"my-init-container-image-1"},
 						Pods: common.PodInfo{
@@ -368,7 +369,7 @@ func TestToDaemonSetList(t *testing.T) {
 							Name:      "my-app-2",
 							Namespace: "namespace-2",
 						},
-						TypeMeta:            api.TypeMeta{Kind: api.ResourceKindDaemonSet},
+						TypeMeta:            api.TypeMeta{Kind: internalclient.ResourceKindDaemonSet},
 						ContainerImages:     []string{"my-container-image-2"},
 						InitContainerImages: []string{"my-init-container-image-2"},
 						Pods: common.PodInfo{
@@ -380,7 +381,7 @@ func TestToDaemonSetList(t *testing.T) {
 							Name:      "my-app-3",
 							Namespace: "namespace-3",
 						},
-						TypeMeta:            api.TypeMeta{Kind: api.ResourceKindDaemonSet},
+						TypeMeta:            api.TypeMeta{Kind: internalclient.ResourceKindDaemonSet},
 						ContainerImages:     []string{"my-container-image-3"},
 						InitContainerImages: []string{"my-init-container-image-3"},
 						Pods: common.PodInfo{

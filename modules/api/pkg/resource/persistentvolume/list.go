@@ -19,10 +19,12 @@ import (
 
 	v1 "k8s.io/api/core/v1"
 	"k8s.io/client-go/kubernetes"
+
 	"k8s.io/dashboard/api/pkg/api"
-	"k8s.io/dashboard/api/pkg/errors"
 	"k8s.io/dashboard/api/pkg/resource/common"
 	"k8s.io/dashboard/api/pkg/resource/dataselect"
+	internalclient "k8s.io/dashboard/client"
+	"k8s.io/dashboard/errors"
 )
 
 // PersistentVolumeList contains a list of Persistent Volumes in the cluster.
@@ -64,7 +66,7 @@ func GetPersistentVolumeListFromChannels(channels *common.ResourceChannels, dsQu
 	persistentVolumes := <-channels.PersistentVolumeList.List
 	err := <-channels.PersistentVolumeList.Error
 
-	nonCriticalErrors, criticalError := errors.HandleError(err)
+	nonCriticalErrors, criticalError := errors.ExtractErrors(err)
 	if criticalError != nil {
 		return nil, criticalError
 	}
@@ -95,7 +97,7 @@ func toPersistentVolumeList(persistentVolumes []v1.PersistentVolume, nonCritical
 func toPersistentVolume(pv v1.PersistentVolume) PersistentVolume {
 	return PersistentVolume{
 		ObjectMeta:    api.NewObjectMeta(pv.ObjectMeta),
-		TypeMeta:      api.NewTypeMeta(api.ResourceKindPersistentVolume),
+		TypeMeta:      api.NewTypeMeta(internalclient.ResourceKindPersistentVolume),
 		Capacity:      pv.Spec.Capacity,
 		AccessModes:   pv.Spec.AccessModes,
 		ReclaimPolicy: pv.Spec.PersistentVolumeReclaimPolicy,

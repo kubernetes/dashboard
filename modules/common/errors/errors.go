@@ -15,12 +15,9 @@
 package errors
 
 import (
-	"errors"
 	"fmt"
 	"net/http"
 
-	"github.com/emicklei/go-restful/v3"
-	k8sErrors "k8s.io/apimachinery/pkg/api/errors"
 	k8serrors "k8s.io/apimachinery/pkg/api/errors"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime"
@@ -173,52 +170,4 @@ func NewGenericResponse(code int, serverMessage string) *k8serrors.StatusError {
 		Reason:  reason,
 		Message: message,
 	}}
-}
-
-// IsTokenExpired determines if the error is an error which errStatus message is MsgTokenExpiredError
-func IsTokenExpired(err error) bool {
-	var statusErr *k8serrors.StatusError
-	if ok := errors.As(err, &statusErr); !ok {
-		return false
-	}
-
-	return statusErr.ErrStatus.Message == MsgTokenExpiredError
-}
-
-// IsAlreadyExists determines if a specified resource already exists.
-func IsAlreadyExists(err error) bool {
-	return k8serrors.IsAlreadyExists(err)
-}
-
-// IsUnauthorized determines if request is unauthorized and requires authentication by the user.
-func IsUnauthorized(err error) bool {
-	return k8serrors.IsUnauthorized(err)
-}
-
-// IsForbidden determines if request has been forbidden and requires extra privileges for the user.
-func IsForbidden(err error) bool {
-	return k8serrors.IsForbidden(err)
-}
-
-func HandleError(err error) (int, error) {
-	if IsUnauthorized(err) {
-		return http.StatusUnauthorized, NewUnauthorized(MsgLoginUnauthorizedError)
-	}
-
-	if IsForbidden(err) {
-		return http.StatusForbidden, NewForbidden(MsgForbiddenError, err)
-	}
-
-	return http.StatusInternalServerError, err
-}
-
-// HandleInternalError writes the given error to the response and sets appropriate HTTP status headers.
-func HandleInternalError(response *restful.Response, err error) {
-	statusCode := http.StatusInternalServerError
-	statusError, ok := err.(*k8sErrors.StatusError)
-	if ok && statusError.Status().Code > 0 {
-		statusCode = int(statusError.Status().Code)
-	}
-	response.AddHeader("Content-Type", "text/plain")
-	response.WriteErrorString(statusCode, err.Error()+"\n")
 }

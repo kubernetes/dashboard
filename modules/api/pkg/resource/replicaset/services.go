@@ -19,10 +19,10 @@ import (
 
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	client "k8s.io/client-go/kubernetes"
-	"k8s.io/dashboard/api/pkg/errors"
 	"k8s.io/dashboard/api/pkg/resource/common"
 	"k8s.io/dashboard/api/pkg/resource/dataselect"
 	"k8s.io/dashboard/api/pkg/resource/service"
+	"k8s.io/dashboard/errors"
 )
 
 // GetReplicaSetServices returns list of services that are related to replica set targeted by given name.
@@ -40,7 +40,7 @@ func GetReplicaSetServices(client client.Interface, dsQuery *dataselect.DataSele
 
 	services := <-channels.ServiceList.List
 	err = <-channels.ServiceList.Error
-	nonCriticalErrors, criticalError := errors.HandleError(err)
+	nonCriticalErrors, criticalError := errors.ExtractErrors(err)
 	if criticalError != nil {
 		return nil, criticalError
 	}

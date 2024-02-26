@@ -25,9 +25,11 @@ import (
 	meta "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/types"
 	client "k8s.io/client-go/kubernetes"
+
 	"k8s.io/dashboard/api/pkg/api"
 	"k8s.io/dashboard/api/pkg/resource/common"
 	"k8s.io/dashboard/api/pkg/resource/event"
+	internalclient "k8s.io/dashboard/client"
 )
 
 // ResourceOwner is an structure representing resource owner, it may be Replication Controller,
@@ -65,37 +67,37 @@ type ResourceController interface {
 func NewResourceController(ref meta.OwnerReference, namespace string, client client.Interface) (
 	ResourceController, error) {
 	switch strings.ToLower(ref.Kind) {
-	case api.ResourceKindJob:
+	case internalclient.ResourceKindJob:
 		job, err := client.BatchV1().Jobs(namespace).Get(context.TODO(), ref.Name, meta.GetOptions{})
 		if err != nil {
 			return nil, err
 		}
 		return JobController(*job), nil
-	case api.ResourceKindPod:
+	case internalclient.ResourceKindPod:
 		pod, err := client.CoreV1().Pods(namespace).Get(context.TODO(), ref.Name, meta.GetOptions{})
 		if err != nil {
 			return nil, err
 		}
 		return PodController(*pod), nil
-	case api.ResourceKindReplicaSet:
+	case internalclient.ResourceKindReplicaSet:
 		rs, err := client.AppsV1().ReplicaSets(namespace).Get(context.TODO(), ref.Name, meta.GetOptions{})
 		if err != nil {
 			return nil, err
 		}
 		return ReplicaSetController(*rs), nil
-	case api.ResourceKindReplicationController:
+	case internalclient.ResourceKindReplicationController:
 		rc, err := client.CoreV1().ReplicationControllers(namespace).Get(context.TODO(), ref.Name, meta.GetOptions{})
 		if err != nil {
 			return nil, err
 		}
 		return ReplicationControllerController(*rc), nil
-	case api.ResourceKindDaemonSet:
+	case internalclient.ResourceKindDaemonSet:
 		ds, err := client.AppsV1().DaemonSets(namespace).Get(context.TODO(), ref.Name, meta.GetOptions{})
 		if err != nil {
 			return nil, err
 		}
 		return DaemonSetController(*ds), nil
-	case api.ResourceKindStatefulSet:
+	case internalclient.ResourceKindStatefulSet:
 		ss, err := client.AppsV1().StatefulSets(namespace).Get(context.TODO(), ref.Name, meta.GetOptions{})
 		if err != nil {
 			return nil, err
@@ -117,7 +119,7 @@ func (self JobController) Get(allPods []v1.Pod, allEvents []v1.Event) ResourceOw
 	podInfo.Warnings = event.GetPodsEventWarnings(allEvents, matchingPods)
 
 	return ResourceOwner{
-		TypeMeta:            api.NewTypeMeta(api.ResourceKindJob),
+		TypeMeta:            api.NewTypeMeta(internalclient.ResourceKindJob),
 		ObjectMeta:          api.NewObjectMeta(self.ObjectMeta),
 		Pods:                podInfo,
 		ContainerImages:     common.GetContainerImages(&self.Spec.Template.Spec),
@@ -149,7 +151,7 @@ func (self PodController) Get(allPods []v1.Pod, allEvents []v1.Event) ResourceOw
 	podInfo.Warnings = event.GetPodsEventWarnings(allEvents, matchingPods)
 
 	return ResourceOwner{
-		TypeMeta:            api.NewTypeMeta(api.ResourceKindPod),
+		TypeMeta:            api.NewTypeMeta(internalclient.ResourceKindPod),
 		ObjectMeta:          api.NewObjectMeta(self.ObjectMeta),
 		Pods:                podInfo,
 		ContainerImages:     common.GetNonduplicateContainerImages(matchingPods),
@@ -183,7 +185,7 @@ func (self ReplicaSetController) Get(allPods []v1.Pod, allEvents []v1.Event) Res
 	podInfo.Warnings = event.GetPodsEventWarnings(allEvents, matchingPods)
 
 	return ResourceOwner{
-		TypeMeta:            api.NewTypeMeta(api.ResourceKindReplicaSet),
+		TypeMeta:            api.NewTypeMeta(internalclient.ResourceKindReplicaSet),
 		ObjectMeta:          api.NewObjectMeta(self.ObjectMeta),
 		Pods:                podInfo,
 		ContainerImages:     common.GetContainerImages(&self.Spec.Template.Spec),
@@ -218,7 +220,7 @@ func (self ReplicationControllerController) Get(allPods []v1.Pod,
 	podInfo.Warnings = event.GetPodsEventWarnings(allEvents, matchingPods)
 
 	return ResourceOwner{
-		TypeMeta:            api.NewTypeMeta(api.ResourceKindReplicationController),
+		TypeMeta:            api.NewTypeMeta(internalclient.ResourceKindReplicationController),
 		ObjectMeta:          api.NewObjectMeta(self.ObjectMeta),
 		Pods:                podInfo,
 		ContainerImages:     common.GetContainerImages(&self.Spec.Template.Spec),
@@ -253,7 +255,7 @@ func (self DaemonSetController) Get(allPods []v1.Pod, allEvents []v1.Event) Reso
 	podInfo.Warnings = event.GetPodsEventWarnings(allEvents, matchingPods)
 
 	return ResourceOwner{
-		TypeMeta:            api.NewTypeMeta(api.ResourceKindDaemonSet),
+		TypeMeta:            api.NewTypeMeta(internalclient.ResourceKindDaemonSet),
 		ObjectMeta:          api.NewObjectMeta(self.ObjectMeta),
 		Pods:                podInfo,
 		ContainerImages:     common.GetContainerImages(&self.Spec.Template.Spec),
@@ -287,7 +289,7 @@ func (self StatefulSetController) Get(allPods []v1.Pod, allEvents []v1.Event) Re
 	podInfo.Warnings = event.GetPodsEventWarnings(allEvents, matchingPods)
 
 	return ResourceOwner{
-		TypeMeta:            api.NewTypeMeta(api.ResourceKindStatefulSet),
+		TypeMeta:            api.NewTypeMeta(internalclient.ResourceKindStatefulSet),
 		ObjectMeta:          api.NewObjectMeta(self.ObjectMeta),
 		Pods:                podInfo,
 		ContainerImages:     common.GetContainerImages(&self.Spec.Template.Spec),

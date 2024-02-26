@@ -54,7 +54,7 @@ func TestGetJobEvents(t *testing.T) {
 				},
 				Events: []common.Event{{
 					TypeMeta: api.TypeMeta{
-						Kind: api.ResourceKindEvent,
+						Kind: internalclient.ResourceKindEvent,
 					},
 					ObjectMeta: api.ObjectMeta{
 						Name:      name,

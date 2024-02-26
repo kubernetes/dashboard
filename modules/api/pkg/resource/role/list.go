@@ -19,10 +19,12 @@ import (
 
 	rbac "k8s.io/api/rbac/v1"
 	"k8s.io/client-go/kubernetes"
+
 	"k8s.io/dashboard/api/pkg/api"
-	"k8s.io/dashboard/api/pkg/errors"
 	"k8s.io/dashboard/api/pkg/resource/common"
 	"k8s.io/dashboard/api/pkg/resource/dataselect"
+	internalclient "k8s.io/dashboard/client"
+	"k8s.io/dashboard/errors"
 )
 
 // RoleList contains a list of role in the cluster.
@@ -56,7 +58,7 @@ func GetRoleList(client kubernetes.Interface, nsQuery *common.NamespaceQuery, ds
 func GetRoleListFromChannels(channels *common.ResourceChannels, dsQuery *dataselect.DataSelectQuery) (*RoleList, error) {
 	roles := <-channels.RoleList.List
 	err := <-channels.RoleList.Error
-	nonCriticalErrors, criticalError := errors.HandleError(err)
+	nonCriticalErrors, criticalError := errors.ExtractErrors(err)
 	if criticalError != nil {
 		return nil, criticalError
 	}
@@ -67,7 +69,7 @@ func GetRoleListFromChannels(channels *common.ResourceChannels, dsQuery *datasel
 func toRole(role rbac.Role) Role {
 	return Role{
 		ObjectMeta: api.NewObjectMeta(role.ObjectMeta),
-		TypeMeta:   api.NewTypeMeta(api.ResourceKindRole),
+		TypeMeta:   api.NewTypeMeta(internalclient.ResourceKindRole),
 	}
 }
 

@@ -21,10 +21,12 @@ import (
 	v1 "k8s.io/api/core/v1"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/client-go/kubernetes"
+
 	"k8s.io/dashboard/api/pkg/api"
-	"k8s.io/dashboard/api/pkg/errors"
 	"k8s.io/dashboard/api/pkg/resource/common"
 	"k8s.io/dashboard/api/pkg/resource/dataselect"
+	internalclient "k8s.io/dashboard/client"
+	"k8s.io/dashboard/errors"
 )
 
 // SecretSpec is a common interface for the specification of different secrets.
@@ -86,9 +88,9 @@ type SecretList struct {
 func GetSecretList(client kubernetes.Interface, namespace *common.NamespaceQuery,
 	dsQuery *dataselect.DataSelectQuery) (*SecretList, error) {
 	log.Printf("Getting list of secrets in %s namespace\n", namespace)
-	secretList, err := client.CoreV1().Secrets(namespace.ToRequestParam()).List(context.TODO(), api.ListEverything)
+	secretList, err := client.CoreV1().Secrets(namespace.ToRequestParam()).List(context.TODO(), internalclient.ListEverything)
 
-	nonCriticalErrors, criticalError := errors.HandleError(err)
+	nonCriticalErrors, criticalError := errors.ExtractErrors(err)
 	if criticalError != nil {
 		return nil, criticalError
 	}
@@ -115,7 +117,7 @@ func CreateSecret(client kubernetes.Interface, spec SecretSpec) (*Secret, error)
 func toSecret(secret *v1.Secret) Secret {
 	return Secret{
 		ObjectMeta: api.NewObjectMeta(secret.ObjectMeta),
-		TypeMeta:   api.NewTypeMeta(api.ResourceKindSecret),
+		TypeMeta:   api.NewTypeMeta(internalclient.ResourceKindSecret),
 		Type:       secret.Type,
 	}
 }

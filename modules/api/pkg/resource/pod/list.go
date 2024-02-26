@@ -20,12 +20,14 @@ import (
 	v1 "k8s.io/api/core/v1"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	k8sClient "k8s.io/client-go/kubernetes"
+
 	"k8s.io/dashboard/api/pkg/api"
-	"k8s.io/dashboard/api/pkg/errors"
 	metricapi "k8s.io/dashboard/api/pkg/integration/metric/api"
 	"k8s.io/dashboard/api/pkg/resource/common"
 	"k8s.io/dashboard/api/pkg/resource/dataselect"
 	"k8s.io/dashboard/api/pkg/resource/event"
+	internalclient "k8s.io/dashboard/client"
+	"k8s.io/dashboard/errors"
 )
 
 // PodList contains a list of Pods in the cluster.
@@ -102,7 +104,7 @@ func GetPodListFromChannels(channels *common.ResourceChannels, dsQuery *datasele
 
 	pods := <-channels.PodList.List
 	err := <-channels.PodList.Error
-	nonCriticalErrors, criticalError := errors.HandleError(err)
+	nonCriticalErrors, criticalError := errors.ExtractErrors(err)
 	if criticalError != nil {
 		return nil, criticalError
 	}
@@ -155,7 +157,7 @@ func ToPodList(pods []v1.Pod, events []v1.Event, nonCriticalErrors []error, dsQu
 func toPod(pod *v1.Pod, metrics *MetricsByPod, warnings []common.Event) Pod {
 	podDetail := Pod{
 		ObjectMeta:      api.NewObjectMeta(pod.ObjectMeta),
-		TypeMeta:        api.NewTypeMeta(api.ResourceKindPod),
+		TypeMeta:        api.NewTypeMeta(internalclient.ResourceKindPod),
 		Warnings:        warnings,
 		Status:          getPodStatus(*pod),
 		RestartCount:    getRestartCount(*pod),

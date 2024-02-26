@@ -44,7 +44,7 @@ func TestToRbacRoleLists(t *testing.T) {
 				ListMeta: api.ListMeta{TotalItems: 1},
 				Items: []Role{{
 					ObjectMeta: api.ObjectMeta{Name: "role", Namespace: ""},
-					TypeMeta:   api.TypeMeta{Kind: api.ResourceKindRole},
+					TypeMeta:   api.TypeMeta{Kind: internalclient.ResourceKindRole},
 				}},
 			},
 		},

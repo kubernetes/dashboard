@@ -21,7 +21,7 @@ import (
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	client "k8s.io/client-go/kubernetes"
 
-	"k8s.io/dashboard/api/pkg/errors"
+	"k8s.io/dashboard/errors"
 )
 
 // AppNameValiditySpec is a specification for application name validation request.
@@ -46,7 +46,7 @@ func ValidateAppName(spec *AppNameValiditySpec, client client.Interface) (*AppNa
 
 	_, err := client.AppsV1().Deployments(spec.Namespace).Get(context.TODO(), spec.Name, metaV1.GetOptions{})
 	if err != nil {
-		if errors.IsNotFoundError(err) || errors.IsForbiddenError(err) {
+		if errors.IsNotFound(err) || errors.IsForbidden(err) {
 			isValidDeployment = true
 		} else {
 			return nil, err
@@ -55,7 +55,7 @@ func ValidateAppName(spec *AppNameValiditySpec, client client.Interface) (*AppNa
 
 	_, err = client.CoreV1().Services(spec.Namespace).Get(context.TODO(), spec.Name, metaV1.GetOptions{})
 	if err != nil {
-		if errors.IsNotFoundError(err) || errors.IsForbiddenError(err) {
+		if errors.IsNotFound(err) || errors.IsForbidden(err) {
 			isValidService = true
 		} else {
 			return nil, err

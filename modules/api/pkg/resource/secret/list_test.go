@@ -20,9 +20,11 @@ import (
 
 	v1 "k8s.io/api/core/v1"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+
 	"k8s.io/dashboard/api/pkg/api"
 	"k8s.io/dashboard/api/pkg/resource/common"
 	"k8s.io/dashboard/api/pkg/resource/dataselect"
+	internalclient "k8s.io/dashboard/client"
 )
 
 func TestToSecretList(t *testing.T) {
@@ -56,7 +58,7 @@ func TestToSecretList(t *testing.T) {
 							Namespace:         "foo",
 							CreationTimestamp: metaV1.Unix(111, 222),
 						},
-						TypeMeta: api.NewTypeMeta(api.ResourceKindSecret),
+						TypeMeta: api.NewTypeMeta(internalclient.ResourceKindSecret),
 					},
 					{
 						ObjectMeta: api.ObjectMeta{
@@ -64,7 +66,7 @@ func TestToSecretList(t *testing.T) {
 							Namespace:         "foo",
 							CreationTimestamp: metaV1.Unix(111, 222),
 						},
-						TypeMeta: api.NewTypeMeta(api.ResourceKindSecret),
+						TypeMeta: api.NewTypeMeta(internalclient.ResourceKindSecret),
 					},
 				},
 				ListMeta: api.ListMeta{

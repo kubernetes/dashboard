@@ -16,7 +16,7 @@ _format_version: "3.0"
 
 services:
   - name: auth
-    host: auth
+    host: auth # Internal name of docker service
     port: 8000
     protocol: http
     routes:

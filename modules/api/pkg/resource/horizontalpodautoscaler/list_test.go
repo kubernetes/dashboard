@@ -21,6 +21,7 @@ import (
 	autoscaling "k8s.io/api/autoscaling/v1"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/client-go/kubernetes/fake"
+
 	"k8s.io/dashboard/api/pkg/api"
 	"k8s.io/dashboard/api/pkg/resource/common"
 	"k8s.io/dashboard/api/pkg/resource/dataselect"
@@ -85,7 +86,7 @@ var (
 	ourHpaList = []HorizontalPodAutoscaler{
 		{
 			ObjectMeta: api.ObjectMeta{Name: "test-hpa1", Namespace: "test-ns"},
-			TypeMeta:   api.TypeMeta{Kind: api.ResourceKindHorizontalPodAutoscaler},
+			TypeMeta:   api.TypeMeta{Kind: internalclient.ResourceKindHorizontalPodAutoscaler},
 			ScaleTargetRef: ScaleTargetRef{
 				Kind: "test-kind1",
 				Name: "test-name1",
@@ -93,7 +94,7 @@ var (
 			MaxReplicas: 3,
 		}, {
 			ObjectMeta: api.ObjectMeta{Name: "test-hpa2", Namespace: "test-ns"},
-			TypeMeta:   api.TypeMeta{Kind: api.ResourceKindHorizontalPodAutoscaler},
+			TypeMeta:   api.TypeMeta{Kind: internalclient.ResourceKindHorizontalPodAutoscaler},
 			ScaleTargetRef: ScaleTargetRef{
 				Kind: "test-kind2",
 				Name: "test-name2",
@@ -101,7 +102,7 @@ var (
 			MaxReplicas: 3,
 		}, {
 			ObjectMeta: api.ObjectMeta{Name: "test-hpa3", Namespace: "test-ns"},
-			TypeMeta:   api.TypeMeta{Kind: api.ResourceKindHorizontalPodAutoscaler},
+			TypeMeta:   api.TypeMeta{Kind: internalclient.ResourceKindHorizontalPodAutoscaler},
 			ScaleTargetRef: ScaleTargetRef{
 				Kind: "test-kind2",
 				Name: "test-name2",
@@ -109,7 +110,7 @@ var (
 			MaxReplicas: 3,
 		}, {
 			ObjectMeta: api.ObjectMeta{Name: "test-hpa4", Namespace: "test-ns"},
-			TypeMeta:   api.TypeMeta{Kind: api.ResourceKindHorizontalPodAutoscaler},
+			TypeMeta:   api.TypeMeta{Kind: internalclient.ResourceKindHorizontalPodAutoscaler},
 			ScaleTargetRef: ScaleTargetRef{
 				Kind: "test-kind2",
 				Name: "test-name3",

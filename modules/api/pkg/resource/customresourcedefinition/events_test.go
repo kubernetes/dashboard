@@ -63,7 +63,7 @@ func TestGetEventsForCustomResourceObject(t *testing.T) {
 			&common.EventList{
 				ListMeta: api.ListMeta{TotalItems: 1},
 				Events: []common.Event{{
-					TypeMeta: api.TypeMeta{Kind: api.ResourceKindEvent},
+					TypeMeta: api.TypeMeta{Kind: internalclient.ResourceKindEvent},
 					ObjectMeta: api.ObjectMeta{Name: "ev-1", Namespace: "ns-1",
 						Labels: map[string]string{"app": "test"}},
 					Message: "test-message",

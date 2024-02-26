@@ -19,10 +19,12 @@ import (
 
 	v1 "k8s.io/api/networking/v1"
 	client "k8s.io/client-go/kubernetes"
+
 	"k8s.io/dashboard/api/pkg/api"
-	"k8s.io/dashboard/api/pkg/errors"
 	"k8s.io/dashboard/api/pkg/resource/common"
 	"k8s.io/dashboard/api/pkg/resource/dataselect"
+	internalclient "k8s.io/dashboard/client"
+	"k8s.io/dashboard/errors"
 )
 
 // Ingress - a single ingress returned to the frontend.
@@ -49,9 +51,9 @@ type IngressList struct {
 // GetIngressList returns all ingresses in the given namespace.
 func GetIngressList(client client.Interface, namespace *common.NamespaceQuery,
 	dsQuery *dataselect.DataSelectQuery) (*IngressList, error) {
-	ingressList, err := client.NetworkingV1().Ingresses(namespace.ToRequestParam()).List(context.TODO(), api.ListEverything)
+	ingressList, err := client.NetworkingV1().Ingresses(namespace.ToRequestParam()).List(context.TODO(), internalclient.ListEverything)
 
-	nonCriticalErrors, criticalError := errors.HandleError(err)
+	nonCriticalErrors, criticalError := errors.ExtractErrors(err)
 	if criticalError != nil {
 		return nil, criticalError
 	}
@@ -93,7 +95,7 @@ func getHosts(ingress *v1.Ingress) []string {
 func toIngress(ingress *v1.Ingress) Ingress {
 	return Ingress{
 		ObjectMeta: api.NewObjectMeta(ingress.ObjectMeta),
-		TypeMeta:   api.NewTypeMeta(api.ResourceKindIngress),
+		TypeMeta:   api.NewTypeMeta(internalclient.ResourceKindIngress),
 		Endpoints:  getEndpoints(ingress),
 		Hosts:      getHosts(ingress),
 	}

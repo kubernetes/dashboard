@@ -50,7 +50,7 @@ func TestToRbacRoleBindingLists(t *testing.T) {
 				ListMeta: api.ListMeta{TotalItems: 1},
 				Items: []RoleBinding{{
 					ObjectMeta: api.ObjectMeta{Name: "rolebinding", Namespace: ""},
-					TypeMeta:   api.TypeMeta{Kind: api.ResourceKindRoleBinding},
+					TypeMeta:   api.TypeMeta{Kind: internalclient.ResourceKindRoleBinding},
 				}},
 			},
 		},

@@ -20,10 +20,12 @@ import (
 
 	v1 "k8s.io/api/core/v1"
 	"k8s.io/client-go/kubernetes"
+
 	"k8s.io/dashboard/api/pkg/api"
-	"k8s.io/dashboard/api/pkg/errors"
 	"k8s.io/dashboard/api/pkg/resource/common"
 	"k8s.io/dashboard/api/pkg/resource/dataselect"
+	internalclient "k8s.io/dashboard/client"
+	"k8s.io/dashboard/errors"
 )
 
 // NamespaceList contains a list of namespaces in the cluster.
@@ -52,7 +54,7 @@ func GetNamespaceListFromChannels(channels *common.ResourceChannels, dsQuery *da
 	namespaces := <-channels.NamespaceList.List
 	err := <-channels.NamespaceList.Error
 
-	nonCriticalErrors, criticalError := errors.HandleError(err)
+	nonCriticalErrors, criticalError := errors.ExtractErrors(err)
 	if criticalError != nil {
 		return nil, criticalError
 	}
@@ -63,9 +65,9 @@ func GetNamespaceListFromChannels(channels *common.ResourceChannels, dsQuery *da
 // GetNamespaceList returns a list of all namespaces in the cluster.
 func GetNamespaceList(client kubernetes.Interface, dsQuery *dataselect.DataSelectQuery) (*NamespaceList, error) {
 	log.Println("Getting list of namespaces")
-	namespaces, err := client.CoreV1().Namespaces().List(context.TODO(), api.ListEverything)
+	namespaces, err := client.CoreV1().Namespaces().List(context.TODO(), internalclient.ListEverything)
 
-	nonCriticalErrors, criticalError := errors.HandleError(err)
+	nonCriticalErrors, criticalError := errors.ExtractErrors(err)
 	if criticalError != nil {
 		return nil, criticalError
 	}
@@ -94,7 +96,7 @@ func toNamespaceList(namespaces []v1.Namespace, nonCriticalErrors []error, dsQue
 func toNamespace(namespace v1.Namespace) Namespace {
 	return Namespace{
 		ObjectMeta: api.NewObjectMeta(namespace.ObjectMeta),
-		TypeMeta:   api.NewTypeMeta(api.ResourceKindNamespace),
+		TypeMeta:   api.NewTypeMeta(internalclient.ResourceKindNamespace),
 		Phase:      namespace.Status.Phase,
 	}
 }

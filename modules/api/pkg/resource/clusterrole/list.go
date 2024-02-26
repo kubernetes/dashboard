@@ -19,10 +19,12 @@ import (
 
 	rbac "k8s.io/api/rbac/v1"
 	"k8s.io/client-go/kubernetes"
+
 	"k8s.io/dashboard/api/pkg/api"
-	"k8s.io/dashboard/api/pkg/errors"
 	"k8s.io/dashboard/api/pkg/resource/common"
 	"k8s.io/dashboard/api/pkg/resource/dataselect"
+	"k8s.io/dashboard/client"
+	"k8s.io/dashboard/errors"
 )
 
 type ClusterRoleList struct {
@@ -50,7 +52,7 @@ func GetClusterRoleList(client kubernetes.Interface, dsQuery *dataselect.DataSel
 func GetClusterRoleListFromChannels(channels *common.ResourceChannels, dsQuery *dataselect.DataSelectQuery) (*ClusterRoleList, error) {
 	clusterRoles := <-channels.ClusterRoleList.List
 	err := <-channels.ClusterRoleList.Error
-	nonCriticalErrors, criticalError := errors.HandleError(err)
+	nonCriticalErrors, criticalError := errors.ExtractErrors(err)
 	if criticalError != nil {
 		return nil, criticalError
 	}
@@ -62,7 +64,7 @@ func GetClusterRoleListFromChannels(channels *common.ResourceChannels, dsQuery *
 func toClusterRole(role rbac.ClusterRole) ClusterRole {
 	return ClusterRole{
 		ObjectMeta: api.NewObjectMeta(role.ObjectMeta),
-		TypeMeta:   api.NewTypeMeta(api.ResourceKindClusterRole),
+		TypeMeta:   api.NewTypeMeta(client.ResourceKindClusterRole),
 	}
 }
 

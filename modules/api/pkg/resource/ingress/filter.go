@@ -16,7 +16,8 @@ package ingress
 
 import (
 	networkingv1 "k8s.io/api/networking/v1"
-	"k8s.io/dashboard/api/pkg/api"
+
+	internalclient "k8s.io/dashboard/client"
 )
 
 func FilterIngressByService(ingresses []networkingv1.Ingress, serviceName string) []networkingv1.Ingress {
@@ -57,7 +58,7 @@ func ingressBackendMatchesServiceName(ingressBackend *networkingv1.IngressBacken
 		return true
 	}
 
-	if ingressBackend.Resource != nil && ingressBackend.Resource.Kind == api.ResourceKindService && ingressBackend.Resource.Name == serviceName {
+	if ingressBackend.Resource != nil && ingressBackend.Resource.Kind == internalclient.ResourceKindService && ingressBackend.Resource.Name == serviceName {
 		return true
 	}
 	return false

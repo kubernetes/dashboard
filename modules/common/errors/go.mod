@@ -2,7 +2,10 @@ module k8s.io/dashboard/errors
 
 go 1.22.0
 
-require k8s.io/apimachinery v0.29.2
+require (
+	github.com/emicklei/go-restful/v3 v3.11.3
+	k8s.io/apimachinery v0.29.2
+)
 
 require (
 	github.com/go-logr/logr v1.4.1 // indirect

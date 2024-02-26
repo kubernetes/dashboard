@@ -22,9 +22,10 @@ import (
 	client "k8s.io/client-go/kubernetes"
 
 	"k8s.io/dashboard/api/pkg/api"
-	"k8s.io/dashboard/api/pkg/errors"
 	"k8s.io/dashboard/api/pkg/resource/common"
 	"k8s.io/dashboard/api/pkg/resource/dataselect"
+	internalclient "k8s.io/dashboard/client"
+	"k8s.io/dashboard/errors"
 )
 
 // NetworkPolicy contains an information about single network policy in the list.
@@ -44,9 +45,9 @@ type NetworkPolicyList struct {
 func GetNetworkPolicyList(client client.Interface, namespace *common.NamespaceQuery,
 	dsQuery *dataselect.DataSelectQuery) (*NetworkPolicyList, error) {
 	saList, err := client.NetworkingV1().NetworkPolicies(namespace.ToRequestParam()).List(context.TODO(),
-		api.ListEverything)
+		internalclient.ListEverything)
 
-	nonCriticalErrors, criticalError := errors.HandleError(err)
+	nonCriticalErrors, criticalError := errors.ExtractErrors(err)
 	if criticalError != nil {
 		return nil, criticalError
 	}
@@ -57,7 +58,7 @@ func GetNetworkPolicyList(client client.Interface, namespace *common.NamespaceQu
 func toNetworkPolicy(sa *v1.NetworkPolicy) NetworkPolicy {
 	return NetworkPolicy{
 		ObjectMeta: api.NewObjectMeta(sa.ObjectMeta),
-		TypeMeta:   api.NewTypeMeta(api.ResourceKindNetworkPolicy),
+		TypeMeta:   api.NewTypeMeta(internalclient.ResourceKindNetworkPolicy),
 	}
 }
 

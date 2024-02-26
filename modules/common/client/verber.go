@@ -17,31 +17,21 @@ package client
 import (
 	"context"
 	"fmt"
+	"net/http"
 
 	apiextensionsv1 "k8s.io/apiextensions-apiserver/pkg/apis/apiextensions/v1"
-
 	v1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime"
 	restclient "k8s.io/client-go/rest"
 
-	"k8s.io/dashboard/api/pkg/api"
-	clientapi "k8s.io/dashboard/api/pkg/client/api"
-	"k8s.io/dashboard/api/pkg/errors"
-	"k8s.io/dashboard/api/pkg/resource/customresourcedefinition"
+	"k8s.io/dashboard/errors"
 )
 
-// resourceVerber is a struct responsible for doing common verb operations on resources, like
-// DELETE, PUT, UPDATE.
-type resourceVerber struct {
-	client              RESTClient
-	appsClient          RESTClient
-	batchClient         RESTClient
-	autoscalingClient   RESTClient
-	storageClient       RESTClient
-	rbacClient          RESTClient
-	networkingClient    RESTClient
-	apiExtensionsClient RESTClient
-	config              *restclient.Config
+// restClient is an interface for REST operations used in this file.
+type restClient interface {
+	Delete() *restclient.Request
+	Put() *restclient.Request
+	Get() *restclient.Request
 }
 
 type crdInfo struct {
@@ -51,29 +41,43 @@ type crdInfo struct {
 	namespaced bool
 }
 
-func (verber *resourceVerber) getRESTClientByType(clientType api.ClientType) RESTClient {
+// resourceVerber is a struct responsible for doing common verb operations on resources, like
+// DELETE, PUT, UPDATE.
+type resourceVerber struct {
+	client              restClient
+	appsClient          restClient
+	batchClient         restClient
+	autoscalingClient   restClient
+	storageClient       restClient
+	rbacClient          restClient
+	networkingClient    restClient
+	apiExtensionsClient restClient
+	config              *restclient.Config
+}
+
+func (verber *resourceVerber) getRESTClientByType(clientType ClientType) restClient {
 	switch clientType {
-	case api.ClientTypeAppsClient:
+	case ClientTypeAppsClient:
 		return verber.appsClient
-	case api.ClientTypeBatchClient:
+	case ClientTypeBatchClient:
 		return verber.batchClient
-	case api.ClientTypeAutoscalingClient:
+	case ClientTypeAutoscalingClient:
 		return verber.autoscalingClient
-	case api.ClientTypeStorageClient:
+	case ClientTypeStorageClient:
 		return verber.storageClient
-	case api.ClientTypeRbacClient:
+	case ClientTypeRbacClient:
 		return verber.rbacClient
-	case api.ClientTypeNetworkingClient:
+	case ClientTypeNetworkingClient:
 		return verber.networkingClient
-	case api.ClientTypeAPIExtensionsClient:
+	case ClientTypeAPIExtensionsClient:
 		return verber.apiExtensionsClient
 	default:
 		return verber.client
 	}
 }
 
-func (verber *resourceVerber) getResourceSpecFromKind(kind string, namespaceSet bool) (client RESTClient, resourceSpec api.APIMapping, err error) {
-	resourceSpec, ok := api.KindToAPIMapping[kind]
+func (verber *resourceVerber) getResourceSpecFromKind(kind string, namespaceSet bool) (client restClient, resourceSpec APIMapping, err error) {
+	resourceSpec, ok := KindToAPIMapping[kind]
 	if !ok {
 		var crdInfo crdInfo
 
@@ -83,12 +87,12 @@ func (verber *resourceVerber) getResourceSpecFromKind(kind string, namespaceSet 
 			return
 		}
 
-		client, err = customresourcedefinition.NewRESTClient(verber.config, crdInfo.group, crdInfo.version)
+		client, err = RESTClient(verber.config, crdInfo.group, crdInfo.version)
 		if err != nil {
 			return
 		}
 
-		resourceSpec = api.APIMapping{
+		resourceSpec = APIMapping{
 			Resource:   crdInfo.pluralName,
 			Namespaced: crdInfo.namespaced,
 		}
@@ -114,7 +118,7 @@ func (verber *resourceVerber) getCRDGroupAndVersion(kind string) (info crdInfo, 
 
 	err = verber.apiExtensionsClient.Get().Resource("customresourcedefinitions").Name(kind).Do(context.TODO()).Into(&crdv1)
 	if err != nil {
-		if errors.IsNotFoundError(err) {
+		if errors.IsNotFound(err) {
 			return info, errors.NewInvalid(fmt.Sprintf("Unknown resource kind: %s", kind))
 		}
 
@@ -131,19 +135,6 @@ func (verber *resourceVerber) getCRDGroupAndVersion(kind string) (info crdInfo, 
 	}
 
 	return
-}
-
-// RESTClient is an interface for REST operations used in this file.
-type RESTClient interface {
-	Delete() *restclient.Request
-	Put() *restclient.Request
-	Get() *restclient.Request
-}
-
-// NewResourceVerber creates a new resource verber that uses the given client for performing operations.
-func NewResourceVerber(client, appsClient, batchClient, autoscalingClient, storageClient, rbacClient, networkingClient, apiExtensionsClient RESTClient, config *restclient.Config) clientapi.ResourceVerber {
-	return &resourceVerber{client, appsClient,
-		batchClient, autoscalingClient, storageClient, rbacClient, networkingClient, apiExtensionsClient, config}
 }
 
 // Delete deletes the resource of the given kind in the given namespace with the given name.
@@ -186,7 +177,7 @@ func (verber *resourceVerber) Put(kind string, namespaceSet bool, namespace stri
 		Resource(resourceSpec.Resource).
 		Name(name).
 		SetHeader("Content-Type", "application/json").
-		Body([]byte(object.Raw))
+		Body(object.Raw)
 
 	if resourceSpec.Namespaced {
 		req.Namespace(namespace)
@@ -211,4 +202,32 @@ func (verber *resourceVerber) Get(kind string, namespaceSet bool, namespace stri
 
 	err = req.Do(context.TODO()).Into(result)
 	return result, err
+}
+
+func VerberClient(request *http.Request) (ResourceVerber, error) {
+	k8sClient, err := clientFromRequest(request)
+	if err != nil {
+		return nil, err
+	}
+
+	config, err := configFromRequest(request)
+	if err != nil {
+		return nil, err
+	}
+
+	extensionsClient, err := APIExtensionsClient(request)
+	if err != nil {
+		return nil, err
+	}
+
+	return &resourceVerber{
+		k8sClient.CoreV1().RESTClient(),
+		k8sClient.AppsV1().RESTClient(),
+		k8sClient.BatchV1().RESTClient(),
+		k8sClient.AutoscalingV1().RESTClient(),
+		k8sClient.StorageV1().RESTClient(),
+		k8sClient.RbacV1().RESTClient(),
+		k8sClient.NetworkingV1().RESTClient(),
+		extensionsClient.ApiextensionsV1().RESTClient(),
+		config}, nil
 }

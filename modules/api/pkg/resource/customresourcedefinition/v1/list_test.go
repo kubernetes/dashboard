@@ -26,6 +26,7 @@ import (
 	"k8s.io/dashboard/api/pkg/api"
 	"k8s.io/dashboard/api/pkg/resource/customresourcedefinition/types"
 	"k8s.io/dashboard/api/pkg/resource/dataselect"
+	internalclient "k8s.io/dashboard/client"
 )
 
 func TestGetCustomResourceDefinition(t *testing.T) {
@@ -60,7 +61,7 @@ func TestGetCustomResourceDefinition(t *testing.T) {
 				Items: []types.CustomResourceDefinition{
 					{
 						ObjectMeta:  api.ObjectMeta{Name: "foos.samplecontroller.k8s.io"},
-						TypeMeta:    api.TypeMeta{Kind: api.ResourceKindCustomResourceDefinition},
+						TypeMeta:    api.TypeMeta{Kind: internalclient.ResourceKindCustomResourceDefinition},
 						Version:     "v1alpha1",
 						Established: apiextensions.ConditionUnknown,
 					},
@@ -105,7 +106,7 @@ func TestGetCustomResourceDefinition(t *testing.T) {
 				Items: []types.CustomResourceDefinition{
 					{
 						ObjectMeta:  api.ObjectMeta{Name: "foos.samplecontroller.k8s.io"},
-						TypeMeta:    api.TypeMeta{Kind: api.ResourceKindCustomResourceDefinition},
+						TypeMeta:    api.TypeMeta{Kind: internalclient.ResourceKindCustomResourceDefinition},
 						Version:     "v1alpha1",
 						Established: apiextensions.ConditionUnknown,
 					},

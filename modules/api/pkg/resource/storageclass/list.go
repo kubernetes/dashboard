@@ -19,10 +19,12 @@ import (
 
 	storage "k8s.io/api/storage/v1"
 	"k8s.io/client-go/kubernetes"
+
 	"k8s.io/dashboard/api/pkg/api"
-	"k8s.io/dashboard/api/pkg/errors"
 	"k8s.io/dashboard/api/pkg/resource/common"
 	"k8s.io/dashboard/api/pkg/resource/dataselect"
+	internalclient "k8s.io/dashboard/client"
+	"k8s.io/dashboard/errors"
 )
 
 // StorageClassList holds a list of Storage Class objects in the cluster.
@@ -59,7 +61,7 @@ func GetStorageClassListFromChannels(channels *common.ResourceChannels,
 	dsQuery *dataselect.DataSelectQuery) (*StorageClassList, error) {
 	storageClasses := <-channels.StorageClassList.List
 	err := <-channels.StorageClassList.Error
-	nonCriticalErrors, criticalError := errors.HandleError(err)
+	nonCriticalErrors, criticalError := errors.ExtractErrors(err)
 	if criticalError != nil {
 		return nil, criticalError
 	}
@@ -90,7 +92,7 @@ func toStorageClassList(storageClasses []storage.StorageClass, nonCriticalErrors
 func toStorageClass(storageClass *storage.StorageClass) StorageClass {
 	return StorageClass{
 		ObjectMeta:  api.NewObjectMeta(storageClass.ObjectMeta),
-		TypeMeta:    api.NewTypeMeta(api.ResourceKindStorageClass),
+		TypeMeta:    api.NewTypeMeta(internalclient.ResourceKindStorageClass),
 		Provisioner: storageClass.Provisioner,
 		Parameters:  storageClass.Parameters,
 	}

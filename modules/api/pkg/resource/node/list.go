@@ -22,9 +22,10 @@ import (
 	client "k8s.io/client-go/kubernetes"
 
 	"k8s.io/dashboard/api/pkg/api"
-	"k8s.io/dashboard/api/pkg/errors"
 	metricapi "k8s.io/dashboard/api/pkg/integration/metric/api"
 	"k8s.io/dashboard/api/pkg/resource/dataselect"
+	internalclient "k8s.io/dashboard/client"
+	"k8s.io/dashboard/errors"
 )
 
 // NodeList contains a list of nodes in the cluster.
@@ -48,9 +49,9 @@ type Node struct {
 
 // GetNodeList returns a list of all Nodes in the cluster.
 func GetNodeList(client client.Interface, dsQuery *dataselect.DataSelectQuery, metricClient metricapi.MetricClient) (*NodeList, error) {
-	nodes, err := client.CoreV1().Nodes().List(context.TODO(), api.ListEverything)
+	nodes, err := client.CoreV1().Nodes().List(context.TODO(), internalclient.ListEverything)
 
-	nonCriticalErrors, criticalError := errors.HandleError(err)
+	nonCriticalErrors, criticalError := errors.ExtractErrors(err)
 	if criticalError != nil {
 		return nil, criticalError
 	}
@@ -97,7 +98,7 @@ func toNode(node v1.Node, pods *v1.PodList) Node {
 
 	return Node{
 		ObjectMeta:         api.NewObjectMeta(node.ObjectMeta),
-		TypeMeta:           api.NewTypeMeta(api.ResourceKindNode),
+		TypeMeta:           api.NewTypeMeta(internalclient.ResourceKindNode),
 		Ready:              getNodeConditionStatus(node, v1.NodeReady),
 		AllocatedResources: allocatedResources,
 	}

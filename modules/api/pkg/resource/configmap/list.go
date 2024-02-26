@@ -20,10 +20,12 @@ import (
 	v1 "k8s.io/api/core/v1"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/client-go/kubernetes"
+
 	"k8s.io/dashboard/api/pkg/api"
-	"k8s.io/dashboard/api/pkg/errors"
 	"k8s.io/dashboard/api/pkg/resource/common"
 	"k8s.io/dashboard/api/pkg/resource/dataselect"
+	internalclient "k8s.io/dashboard/client"
+	"k8s.io/dashboard/errors"
 )
 
 // ConfigMapList contains a list of Config Maps in the cluster.
@@ -58,7 +60,7 @@ func GetConfigMapList(client kubernetes.Interface, nsQuery *common.NamespaceQuer
 func GetConfigMapListFromChannels(channels *common.ResourceChannels, dsQuery *dataselect.DataSelectQuery) (*ConfigMapList, error) {
 	configMaps := <-channels.ConfigMapList.List
 	err := <-channels.ConfigMapList.Error
-	nonCriticalErrors, criticalError := errors.HandleError(err)
+	nonCriticalErrors, criticalError := errors.ExtractErrors(err)
 	if criticalError != nil {
 		return nil, criticalError
 	}
@@ -71,7 +73,7 @@ func GetConfigMapListFromChannels(channels *common.ResourceChannels, dsQuery *da
 func toConfigMap(meta metaV1.ObjectMeta) ConfigMap {
 	return ConfigMap{
 		ObjectMeta: api.NewObjectMeta(meta),
-		TypeMeta:   api.NewTypeMeta(api.ResourceKindConfigMap),
+		TypeMeta:   api.NewTypeMeta(internalclient.ResourceKindConfigMap),
 	}
 }
 

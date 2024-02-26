@@ -20,12 +20,14 @@ import (
 	apps "k8s.io/api/apps/v1"
 	v1 "k8s.io/api/core/v1"
 	"k8s.io/client-go/kubernetes"
+
 	"k8s.io/dashboard/api/pkg/api"
-	"k8s.io/dashboard/api/pkg/errors"
 	metricapi "k8s.io/dashboard/api/pkg/integration/metric/api"
 	"k8s.io/dashboard/api/pkg/resource/common"
 	"k8s.io/dashboard/api/pkg/resource/dataselect"
 	"k8s.io/dashboard/api/pkg/resource/event"
+	internalclient "k8s.io/dashboard/client"
+	"k8s.io/dashboard/errors"
 )
 
 // StatefulSetList contains a list of Stateful Sets in the cluster.
@@ -70,7 +72,7 @@ func GetStatefulSetListFromChannels(channels *common.ResourceChannels, dsQuery *
 
 	statefulSets := <-channels.StatefulSetList.List
 	err := <-channels.StatefulSetList.Error
-	nonCriticalErrors, criticalError := errors.HandleError(err)
+	nonCriticalErrors, criticalError := errors.ExtractErrors(err)
 	if criticalError != nil {
 		return nil, criticalError
 	}
@@ -130,7 +132,7 @@ func toStatefulSetList(statefulSets []apps.StatefulSet, pods []v1.Pod, events []
 func toStatefulSet(statefulSet *apps.StatefulSet, podInfo *common.PodInfo) StatefulSet {
 	return StatefulSet{
 		ObjectMeta:          api.NewObjectMeta(statefulSet.ObjectMeta),
-		TypeMeta:            api.NewTypeMeta(api.ResourceKindStatefulSet),
+		TypeMeta:            api.NewTypeMeta(internalclient.ResourceKindStatefulSet),
 		ContainerImages:     common.GetContainerImages(&statefulSet.Spec.Template.Spec),
 		InitContainerImages: common.GetInitContainerImages(&statefulSet.Spec.Template.Spec),
 		Pods:                *podInfo,

@@ -28,6 +28,9 @@ WORKDIR /workspace
 
 # Copy required local modules
 COPY /common/certificates /workspace/common/certificates
+COPY /common/client /workspace/common/client
+COPY /common/csrf /workspace/common/csrf
+COPY /common/errors /workspace/common/errors
 
 # Create and cd into api module
 WORKDIR /workspace/api

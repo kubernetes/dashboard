@@ -19,7 +19,7 @@ import (
 	"testing"
 
 	"k8s.io/apimachinery/pkg/types"
-	"k8s.io/dashboard/api/pkg/api"
+
 	metricapi "k8s.io/dashboard/api/pkg/integration/metric/api"
 )
 
@@ -49,7 +49,7 @@ func TestAggregateMetricPromises(t *testing.T) {
 					},
 					MetricName: "test-metric",
 					Label: metricapi.Label{
-						api.ResourceKindPod: []types.UID{"U1"},
+						internalclient.ResourceKindPod: []types.UID{"U1"},
 					},
 				},
 			}),
@@ -70,14 +70,14 @@ func TestAggregateMetricPromises(t *testing.T) {
 			getMetricPromises([]metricapi.Metric{}),
 			"",
 			metricapi.OnlyDefaultAggregation,
-			metricapi.Label{api.ResourceKindPod: []types.UID{"overridden-uid"}},
+			metricapi.Label{internalclient.ResourceKindPod: []types.UID{"overridden-uid"}},
 			[]metricapi.Metric{
 				{
 					DataPoints:   metricapi.DataPoints{},
 					MetricPoints: []metricapi.MetricPoint{},
 					MetricName:   "",
 					Label: metricapi.Label{
-						api.ResourceKindPod: []types.UID{"overridden-uid"},
+						internalclient.ResourceKindPod: []types.UID{"overridden-uid"},
 					},
 					Aggregate: metricapi.SumAggregation,
 				},
@@ -94,7 +94,7 @@ func TestAggregateMetricPromises(t *testing.T) {
 					},
 					MetricName: "test-metric",
 					Label: metricapi.Label{
-						api.ResourceKindPod: []types.UID{"U1"},
+						internalclient.ResourceKindPod: []types.UID{"U1"},
 					},
 				},
 				{
@@ -105,7 +105,7 @@ func TestAggregateMetricPromises(t *testing.T) {
 					},
 					MetricName: "test-metric",
 					Label: metricapi.Label{
-						api.ResourceKindPod: []types.UID{"U2"},
+						internalclient.ResourceKindPod: []types.UID{"U2"},
 					},
 				},
 			}),
@@ -122,7 +122,7 @@ func TestAggregateMetricPromises(t *testing.T) {
 					MetricPoints: []metricapi.MetricPoint{},
 					MetricName:   "test-metric",
 					Label: metricapi.Label{
-						api.ResourceKindPod: []types.UID{"U1", "U2"},
+						internalclient.ResourceKindPod: []types.UID{"U1", "U2"},
 					},
 					Aggregate: metricapi.SumAggregation,
 				},
@@ -139,7 +139,7 @@ func TestAggregateMetricPromises(t *testing.T) {
 					},
 					MetricName: "test-metric",
 					Label: metricapi.Label{
-						api.ResourceKindPod: []types.UID{"U1"},
+						internalclient.ResourceKindPod: []types.UID{"U1"},
 					},
 				},
 				{
@@ -150,7 +150,7 @@ func TestAggregateMetricPromises(t *testing.T) {
 					},
 					MetricName: "test-metric",
 					Label: metricapi.Label{
-						api.ResourceKindPod: []types.UID{"U2"},
+						internalclient.ResourceKindPod: []types.UID{"U2"},
 					},
 				},
 			}),
@@ -167,7 +167,7 @@ func TestAggregateMetricPromises(t *testing.T) {
 					MetricPoints: []metricapi.MetricPoint{},
 					MetricName:   "test-metric",
 					Label: metricapi.Label{
-						api.ResourceKindPod: []types.UID{"U1", "U2"},
+						internalclient.ResourceKindPod: []types.UID{"U1", "U2"},
 					},
 					Aggregate: metricapi.SumAggregation,
 				},
@@ -184,7 +184,7 @@ func TestAggregateMetricPromises(t *testing.T) {
 					},
 					MetricName: "test-metric",
 					Label: metricapi.Label{
-						api.ResourceKindPod: []types.UID{"U1"},
+						internalclient.ResourceKindPod: []types.UID{"U1"},
 					},
 				},
 				{
@@ -195,7 +195,7 @@ func TestAggregateMetricPromises(t *testing.T) {
 					},
 					MetricName: "test-metric",
 					Label: metricapi.Label{
-						api.ResourceKindPod: []types.UID{"U2"},
+						internalclient.ResourceKindPod: []types.UID{"U2"},
 					},
 				},
 			}),
@@ -212,7 +212,7 @@ func TestAggregateMetricPromises(t *testing.T) {
 					MetricPoints: []metricapi.MetricPoint{},
 					MetricName:   "test-metric",
 					Label: metricapi.Label{
-						api.ResourceKindPod: []types.UID{"U1", "U2"},
+						internalclient.ResourceKindPod: []types.UID{"U1", "U2"},
 					},
 					Aggregate: metricapi.MinAggregation,
 				},
@@ -229,7 +229,7 @@ func TestAggregateMetricPromises(t *testing.T) {
 					},
 					MetricName: "test-metric",
 					Label: metricapi.Label{
-						api.ResourceKindPod: []types.UID{"U1"},
+						internalclient.ResourceKindPod: []types.UID{"U1"},
 					},
 				},
 				{
@@ -240,7 +240,7 @@ func TestAggregateMetricPromises(t *testing.T) {
 					},
 					MetricName: "test-metric",
 					Label: metricapi.Label{
-						api.ResourceKindPod: []types.UID{"U2"},
+						internalclient.ResourceKindPod: []types.UID{"U2"},
 					},
 				},
 			}),
@@ -257,7 +257,7 @@ func TestAggregateMetricPromises(t *testing.T) {
 					MetricPoints: []metricapi.MetricPoint{},
 					MetricName:   "test-metric",
 					Label: metricapi.Label{
-						api.ResourceKindPod: []types.UID{"U1", "U2"},
+						internalclient.ResourceKindPod: []types.UID{"U1", "U2"},
 					},
 					Aggregate: metricapi.MaxAggregation,
 				},

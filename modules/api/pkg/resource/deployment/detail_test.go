@@ -23,6 +23,7 @@ import (
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/util/intstr"
 	"k8s.io/client-go/kubernetes/fake"
+
 	"k8s.io/dashboard/api/pkg/api"
 	"k8s.io/dashboard/api/pkg/resource/common"
 	"k8s.io/dashboard/api/pkg/resource/dataselect"
@@ -112,7 +113,7 @@ func TestGetDeploymentDetail(t *testing.T) {
 						Labels:    map[string]string{"foo": "bar"},
 					},
 					TypeMeta: api.TypeMeta{
-						Kind:        api.ResourceKindDeployment,
+						Kind:        internalclient.ResourceKindDeployment,
 						Scalable:    true,
 						Restartable: true,
 					},

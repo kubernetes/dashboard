@@ -22,10 +22,11 @@ import (
 	client "k8s.io/client-go/kubernetes"
 
 	"k8s.io/dashboard/api/pkg/api"
-	"k8s.io/dashboard/api/pkg/errors"
 	metricapi "k8s.io/dashboard/api/pkg/integration/metric/api"
 	"k8s.io/dashboard/api/pkg/resource/common"
 	"k8s.io/dashboard/api/pkg/resource/dataselect"
+	internalclient "k8s.io/dashboard/client"
+	"k8s.io/dashboard/errors"
 )
 
 // CronJobList contains a list of CronJobs in the cluster.
@@ -73,7 +74,7 @@ func GetCronJobListFromChannels(channels *common.ResourceChannels, dsQuery *data
 
 	cronJobs := <-channels.CronJobList.List
 	err := <-channels.CronJobList.Error
-	nonCriticalErrors, criticalError := errors.HandleError(err)
+	nonCriticalErrors, criticalError := errors.ExtractErrors(err)
 	if criticalError != nil {
 		return nil, criticalError
 	}
@@ -116,7 +117,7 @@ func toCronJobList(cronJobs []batch.CronJob, nonCriticalErrors []error, dsQuery 
 func toCronJob(cj *batch.CronJob) CronJob {
 	return CronJob{
 		ObjectMeta:      api.NewObjectMeta(cj.ObjectMeta),
-		TypeMeta:        api.NewTypeMeta(api.ResourceKindCronJob),
+		TypeMeta:        api.NewTypeMeta(internalclient.ResourceKindCronJob),
 		Schedule:        cj.Spec.Schedule,
 		Suspend:         cj.Spec.Suspend,
 		Active:          len(cj.Status.Active),

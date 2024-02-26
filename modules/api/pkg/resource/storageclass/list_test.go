@@ -50,7 +50,7 @@ func TestGetStorageClassList(t *testing.T) {
 							Name:   "storage-1",
 							Labels: map[string]string{},
 						},
-						TypeMeta: api.TypeMeta{Kind: api.ResourceKindStorageClass},
+						TypeMeta: api.TypeMeta{Kind: internalclient.ResourceKindStorageClass},
 					},
 				},
 				Errors: []error{},

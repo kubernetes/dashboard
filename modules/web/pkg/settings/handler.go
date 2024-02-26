@@ -18,6 +18,7 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
+
 	"k8s.io/dashboard/client"
 	"k8s.io/dashboard/errors"
 	"k8s.io/dashboard/web/pkg/router"
@@ -60,22 +61,12 @@ func init() {
 //}
 
 func handleGetSettingGlobal(c *gin.Context) {
-	k8sClient, err := client.InClusterClient()
-	if err != nil {
-		c.JSON(http.StatusInternalServerError, err)
-		return
-	}
-
+	k8sClient := client.InClusterClient()
 	c.JSON(http.StatusOK, manager.GetGlobalSettings(k8sClient))
 }
 
 func handleSettingsGlobalSave(c *gin.Context) {
-	k8sClient, err := client.InClusterClient()
-	if err != nil {
-		c.JSON(http.StatusInternalServerError, err)
-		return
-	}
-
+	k8sClient := client.InClusterClient()
 	settings := new(api.Settings)
 	if err := c.Bind(settings); err != nil {
 		c.JSON(http.StatusBadRequest, err)
@@ -92,12 +83,7 @@ func handleSettingsGlobalSave(c *gin.Context) {
 }
 
 func handleSettingsGetPinned(c *gin.Context) {
-	k8sClient, err := client.InClusterClient()
-	if err != nil {
-		c.JSON(http.StatusInternalServerError, err)
-		return
-	}
-
+	k8sClient := client.InClusterClient()
 	c.JSON(http.StatusOK, manager.GetPinnedResources(k8sClient))
 }
 

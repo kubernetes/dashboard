@@ -22,11 +22,12 @@ import (
 	client "k8s.io/client-go/kubernetes"
 
 	"k8s.io/dashboard/api/pkg/api"
-	"k8s.io/dashboard/api/pkg/errors"
 	metricapi "k8s.io/dashboard/api/pkg/integration/metric/api"
 	"k8s.io/dashboard/api/pkg/resource/common"
 	"k8s.io/dashboard/api/pkg/resource/dataselect"
 	"k8s.io/dashboard/api/pkg/resource/event"
+	internalclient "k8s.io/dashboard/client"
+	"k8s.io/dashboard/errors"
 )
 
 // JobList contains a list of Jobs in the cluster.
@@ -106,7 +107,7 @@ func GetJobListFromChannels(channels *common.ResourceChannels, dsQuery *datasele
 
 	jobs := <-channels.JobList.List
 	err := <-channels.JobList.Error
-	nonCriticalErrors, criticalError := errors.HandleError(err)
+	nonCriticalErrors, criticalError := errors.ExtractErrors(err)
 	if criticalError != nil {
 		return nil, criticalError
 	}
@@ -166,7 +167,7 @@ func ToJobList(jobs []batch.Job, pods []v1.Pod, events []v1.Event, nonCriticalEr
 func toJob(job *batch.Job, podInfo *common.PodInfo) Job {
 	return Job{
 		ObjectMeta:          api.NewObjectMeta(job.ObjectMeta),
-		TypeMeta:            api.NewTypeMeta(api.ResourceKindJob),
+		TypeMeta:            api.NewTypeMeta(internalclient.ResourceKindJob),
 		ContainerImages:     common.GetContainerImages(&job.Spec.Template.Spec),
 		InitContainerImages: common.GetInitContainerImages(&job.Spec.Template.Spec),
 		Pods:                *podInfo,

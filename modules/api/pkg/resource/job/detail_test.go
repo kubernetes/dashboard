@@ -18,12 +18,13 @@ import (
 	"reflect"
 	"testing"
 
-	"k8s.io/dashboard/api/pkg/api"
-	"k8s.io/dashboard/api/pkg/resource/common"
-
 	batch "k8s.io/api/batch/v1"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/client-go/kubernetes/fake"
+
+	"k8s.io/dashboard/api/pkg/api"
+	"k8s.io/dashboard/api/pkg/resource/common"
+
 	"k8s.io/dashboard/api/pkg/resource/dataselect"
 )
 
@@ -59,7 +60,7 @@ func TestGetJobDetail(t *testing.T) {
 				Job: Job{
 					ObjectMeta: api.ObjectMeta{Name: "job-1", Namespace: "ns-1",
 						Labels: map[string]string{"app": "test"}},
-					TypeMeta: api.TypeMeta{Kind: api.ResourceKindJob},
+					TypeMeta: api.TypeMeta{Kind: internalclient.ResourceKindJob},
 					Pods: common.PodInfo{
 						Warnings: []common.Event{},
 						Desired:  &jobCompletions,

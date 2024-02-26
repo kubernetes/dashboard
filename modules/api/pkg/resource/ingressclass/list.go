@@ -19,10 +19,12 @@ import (
 
 	networkingv1 "k8s.io/api/networking/v1"
 	"k8s.io/client-go/kubernetes"
+
 	"k8s.io/dashboard/api/pkg/api"
-	"k8s.io/dashboard/api/pkg/errors"
 	"k8s.io/dashboard/api/pkg/resource/common"
 	"k8s.io/dashboard/api/pkg/resource/dataselect"
+	internalclient "k8s.io/dashboard/client"
+	"k8s.io/dashboard/errors"
 )
 
 // IngressClassList holds a list of Ingress Class objects in the cluster.
@@ -58,7 +60,7 @@ func GetIngressClassListFromChannels(channels *common.ResourceChannels,
 	dsQuery *dataselect.DataSelectQuery) (*IngressClassList, error) {
 	ingressClasses := <-channels.IngressClassList.List
 	err := <-channels.IngressClassList.Error
-	nonCriticalErrors, criticalError := errors.HandleError(err)
+	nonCriticalErrors, criticalError := errors.ExtractErrors(err)
 	if criticalError != nil {
 		return nil, criticalError
 	}
@@ -89,7 +91,7 @@ func toIngressClassList(ingressClasses []networkingv1.IngressClass, nonCriticalE
 func toIngressClass(ingressClass *networkingv1.IngressClass) IngressClass {
 	return IngressClass{
 		ObjectMeta: api.NewObjectMeta(ingressClass.ObjectMeta),
-		TypeMeta:   api.NewTypeMeta(api.ResourceKindIngressClass),
+		TypeMeta:   api.NewTypeMeta(internalclient.ResourceKindIngressClass),
 		Controller: ingressClass.Spec.Controller,
 	}
 }

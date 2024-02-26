@@ -20,8 +20,9 @@ import (
 	batch "k8s.io/api/batch/v1"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	k8sClient "k8s.io/client-go/kubernetes"
-	"k8s.io/dashboard/api/pkg/errors"
+
 	"k8s.io/dashboard/api/pkg/resource/common"
+	"k8s.io/dashboard/errors"
 )
 
 // JobDetail is a presentation layer view of Kubernetes Job resource.
@@ -44,7 +45,7 @@ func GetJobDetail(client k8sClient.Interface, namespace, name string) (*JobDetai
 	}
 
 	podInfo, err := getJobPodInfo(client, jobData)
-	nonCriticalErrors, criticalError := errors.HandleError(err)
+	nonCriticalErrors, criticalError := errors.ExtractErrors(err)
 	if criticalError != nil {
 		return nil, criticalError
 	}

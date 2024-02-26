@@ -20,10 +20,10 @@ import (
 	v1 "k8s.io/api/core/v1"
 	"k8s.io/apimachinery/pkg/types"
 
-	"k8s.io/dashboard/api/pkg/api"
-	"k8s.io/dashboard/api/pkg/errors"
 	metricapi "k8s.io/dashboard/api/pkg/integration/metric/api"
 	"k8s.io/dashboard/api/pkg/resource/dataselect"
+	internalclient "k8s.io/dashboard/client"
+	"k8s.io/dashboard/errors"
 )
 
 // MetricsByPod is a metrics map by pod name.
@@ -86,7 +86,7 @@ func getMetricsPerPod(pods []v1.Pod, metricClient metricapi.MetricClient, dsQuer
 
 func getPodUIDFromMetric(metric metricapi.Metric) (types.UID, error) {
 	// Check is metric label contains required resource UID
-	uidList, exists := metric.Label[api.ResourceKindPod]
+	uidList, exists := metric.Label[internalclient.ResourceKindPod]
 	if !exists {
 		return "", errors.NewInvalid("Metric label not set.")
 	}

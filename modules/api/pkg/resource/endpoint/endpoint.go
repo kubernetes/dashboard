@@ -22,8 +22,10 @@ import (
 	"k8s.io/apimachinery/pkg/fields"
 	"k8s.io/apimachinery/pkg/labels"
 	k8sClient "k8s.io/client-go/kubernetes"
+
 	"k8s.io/dashboard/api/pkg/api"
 	"k8s.io/dashboard/api/pkg/resource/common"
+	internalclient "k8s.io/dashboard/client"
 )
 
 type Endpoint struct {
@@ -88,7 +90,7 @@ func GetEndpoints(client k8sClient.Interface, namespace, name string) ([]v1.Endp
 // toEndpoint converts endpoint api Endpoint to Endpoint model object.
 func toEndpoint(address v1.EndpointAddress, ports []v1.EndpointPort, ready bool) *Endpoint {
 	return &Endpoint{
-		TypeMeta: api.NewTypeMeta(api.ResourceKindEndpoint),
+		TypeMeta: api.NewTypeMeta(internalclient.ResourceKindEndpoint),
 		Host:     address.IP,
 		Ports:    ports,
 		Ready:    ready,

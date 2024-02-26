@@ -53,7 +53,6 @@ services:
       --kubeconfig=${KUBECONFIG:?}
       --auto-generate-certificates
       --sidecar-host=${SIDECAR_HOST:?}
-      --token-ttl=${TOKEN_TTL:?}
       --enable-skip-login=${ENABLE_SKIP_LOGIN:?}
     volumes:
       - ${KUBECONFIG:?}:${KUBECONFIG:?} # Required - local kubeconfig path resolves to $HOME/<user>/.kube/config

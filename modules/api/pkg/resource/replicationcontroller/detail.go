@@ -21,8 +21,9 @@ import (
 	v1 "k8s.io/api/core/v1"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	k8sClient "k8s.io/client-go/kubernetes"
-	"k8s.io/dashboard/api/pkg/errors"
+
 	"k8s.io/dashboard/api/pkg/resource/common"
+	"k8s.io/dashboard/errors"
 )
 
 // ReplicationControllerDetail represents detailed information about a Replication Controller.
@@ -53,7 +54,7 @@ func GetReplicationControllerDetail(client k8sClient.Interface, namespace, name 
 	}
 
 	podInfo, err := getReplicationControllerPodInfo(client, replicationController, namespace)
-	nonCriticalErrors, criticalError := errors.HandleError(err)
+	nonCriticalErrors, criticalError := errors.ExtractErrors(err)
 	if criticalError != nil {
 		return nil, criticalError
 	}

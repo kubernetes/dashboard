@@ -1,10 +1,10 @@
 module k8s.io/dashboard/api
 
-go 1.22
+go 1.22.0
 
 require (
 	github.com/docker/distribution v2.8.3+incompatible
-	github.com/emicklei/go-restful/v3 v3.11.2
+	github.com/emicklei/go-restful/v3 v3.11.3
 	github.com/prometheus/client_golang v1.18.0
 	github.com/spf13/pflag v1.0.5
 	golang.org/x/net v0.21.0
@@ -16,6 +16,8 @@ require (
 	k8s.io/apimachinery v0.29.2
 	k8s.io/client-go v0.29.2
 	k8s.io/dashboard/certificates v0.0.0-00010101000000-000000000000
+	k8s.io/dashboard/client v0.0.0-00010101000000-000000000000
+	k8s.io/dashboard/csrf v0.0.0-00010101000000-000000000000
 )
 
 require (
@@ -61,6 +63,7 @@ require (
 	google.golang.org/protobuf v1.31.0 // indirect
 	gopkg.in/inf.v0 v0.9.1 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
+	k8s.io/dashboard/errors v0.0.0-00010101000000-000000000000 // indirect
 	k8s.io/klog/v2 v2.120.1 // indirect
 	k8s.io/kube-openapi v0.0.0-20231010175941-2dd684a91f00 // indirect
 	k8s.io/utils v0.0.0-20230726121419-3b25d923346b // indirect
@@ -69,4 +72,9 @@ require (
 	sigs.k8s.io/yaml v1.3.0 // indirect
 )
 
-replace k8s.io/dashboard/certificates => ../common/certificates
+replace (
+	k8s.io/dashboard/certificates => ../common/certificates
+	k8s.io/dashboard/client => ../common/client
+	k8s.io/dashboard/csrf => ../common/csrf
+	k8s.io/dashboard/errors => ../common/errors
+)

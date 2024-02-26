@@ -20,12 +20,13 @@ import (
 	"github.com/emicklei/go-restful/v3/log"
 	v1 "k8s.io/api/core/v1"
 	"k8s.io/apimachinery/pkg/types"
-	"k8s.io/dashboard/api/pkg/api"
+
 	metricapi "k8s.io/dashboard/api/pkg/integration/metric/api"
+	"k8s.io/dashboard/client"
 )
 
 type sidecarSelector struct {
-	TargetResourceType api.ResourceKind
+	TargetResourceType client.ResourceKind
 	Path               string
 	Resources          []string
 	metricapi.Label
@@ -56,12 +57,12 @@ func getSidecarSelector(selector metricapi.ResourceSelector,
 	}
 	// We are dealing with derived resource. Convert derived resource to its native resources.
 	// For example, convert deployment to the list of pod names that belong to this deployment
-	if summingResource == api.ResourceKindPod {
+	if summingResource == client.ResourceKindPod {
 		myPods, err := getMyPodsFromCache(selector, cachedResources.Pods)
 		if err != nil {
 			return sidecarSelector{}, err
 		}
-		return newSidecarSelectorFromNativeResource(api.ResourceKindPod,
+		return newSidecarSelectorFromNativeResource(client.ResourceKindPod,
 			selector.Namespace, podListToNameList(myPods), podListToUIDList(myPods))
 	}
 	// currently can only convert derived resource to pods. You can change it by implementing other methods
@@ -76,9 +77,9 @@ func getMyPodsFromCache(selector metricapi.ResourceSelector, cachedPods []v1.Pod
 	case cachedPods == nil:
 		err = fmt.Errorf(`Pods were not available in cache. Required for resource type: "%s"`,
 			selector.ResourceType)
-	case selector.ResourceType == api.ResourceKindDeployment:
+	case selector.ResourceType == client.ResourceKindDeployment:
 		for _, pod := range cachedPods {
-			if pod.ObjectMeta.Namespace == selector.Namespace && api.IsSelectorMatching(selector.Selector, pod.Labels) {
+			if pod.ObjectMeta.Namespace == selector.Namespace && client.IsSelectorMatching(selector.Selector, pod.Labels) {
 				matchingPods = append(matchingPods, pod)
 			}
 		}
@@ -99,19 +100,19 @@ func getMyPodsFromCache(selector metricapi.ResourceSelector, cachedPods []v1.Pod
 
 // NewSidecarSelectorFromNativeResource returns new sidecar selector for native resources specified in arguments.
 // returns error if requested resource is not native or is not supported.
-func newSidecarSelectorFromNativeResource(resourceType api.ResourceKind, namespace string,
+func newSidecarSelectorFromNativeResource(resourceType client.ResourceKind, namespace string,
 	resourceNames []string, resourceUIDs []types.UID) (sidecarSelector, error) {
 	// Here we have 2 possibilities because this module allows downloading Nodes and Pods from sidecar
-	if resourceType == api.ResourceKindPod {
+	if resourceType == client.ResourceKindPod {
 		return sidecarSelector{
-			TargetResourceType: api.ResourceKindPod,
+			TargetResourceType: client.ResourceKindPod,
 			Path:               `namespaces/` + namespace + `/pod-list/`,
 			Resources:          resourceNames,
 			Label:              metricapi.Label{resourceType: resourceUIDs},
 		}, nil
-	} else if resourceType == api.ResourceKindNode {
+	} else if resourceType == client.ResourceKindNode {
 		return sidecarSelector{
-			TargetResourceType: api.ResourceKindNode,
+			TargetResourceType: client.ResourceKindNode,
 			Path:               `nodes/`,
 			Resources:          resourceNames,
 			Label:              metricapi.Label{resourceType: resourceUIDs},

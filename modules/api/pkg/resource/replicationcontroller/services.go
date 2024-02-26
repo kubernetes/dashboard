@@ -19,10 +19,10 @@ import (
 
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	client "k8s.io/client-go/kubernetes"
-	"k8s.io/dashboard/api/pkg/errors"
 	"k8s.io/dashboard/api/pkg/resource/common"
 	"k8s.io/dashboard/api/pkg/resource/dataselect"
 	"k8s.io/dashboard/api/pkg/resource/service"
+	"k8s.io/dashboard/errors"
 )
 
 // GetReplicationControllerServices returns list of services that are related to replication
@@ -41,7 +41,7 @@ func GetReplicationControllerServices(client client.Interface, dsQuery *datasele
 
 	services := <-channels.ServiceList.List
 	err = <-channels.ServiceList.Error
-	nonCriticalErrors, criticalError := errors.HandleError(err)
+	nonCriticalErrors, criticalError := errors.ExtractErrors(err)
 	if criticalError != nil {
 		return nil, criticalError
 	}

@@ -28,9 +28,8 @@ import (
 	utilnet "k8s.io/apimachinery/pkg/util/net"
 
 	"k8s.io/dashboard/api/pkg/args"
-	authApi "k8s.io/dashboard/api/pkg/auth/api"
-	clientapi "k8s.io/dashboard/api/pkg/client/api"
-	"k8s.io/dashboard/api/pkg/errors"
+	"k8s.io/dashboard/csrf"
+	"k8s.io/dashboard/errors"
 )
 
 const (
@@ -40,22 +39,10 @@ const (
 )
 
 // InstallFilters installs defined filter for given web service
-func InstallFilters(ws *restful.WebService, manager clientapi.ClientManager) {
+func InstallFilters(ws *restful.WebService) {
 	ws.Filter(requestAndResponseLogger)
 	ws.Filter(metricsFilter)
-	ws.Filter(validateXSRFFilter(manager.CSRFKey()))
-	ws.Filter(restrictedResourcesFilter)
-}
-
-// Filter used to restrict access to dashboard exclusive resource, i.e. secret used to store dashboard encryption key.
-func restrictedResourcesFilter(request *restful.Request, response *restful.Response, chain *restful.FilterChain) {
-	if !authApi.ShouldRejectRequest(request.Request.URL.String()) {
-		chain.ProcessFilter(request, response)
-		return
-	}
-
-	err := errors.NewUnauthorized(errors.MsgDashboardExclusiveResourceError)
-	response.WriteHeaderAndEntity(int(err.ErrStatus.Code), err.Error())
+	ws.Filter(validateXSRFFilter())
 }
 
 // web-service filter function used for request and response logging.
@@ -139,12 +126,12 @@ func metricsFilter(req *restful.Request, resp *restful.Response,
 	}
 }
 
-func validateXSRFFilter(csrfKey string) restful.FilterFunction {
+func validateXSRFFilter() restful.FilterFunction {
 	return func(req *restful.Request, resp *restful.Response, chain *restful.FilterChain) {
 		resource := mapUrlToResource(req.SelectedRoutePath())
 
 		if resource == nil || (shouldDoCsrfValidation(req) &&
-			!xsrftoken.Valid(req.HeaderParameter("X-CSRF-TOKEN"), csrfKey, "none",
+			!xsrftoken.Valid(req.HeaderParameter("X-CSRF-TOKEN"), csrf.Key(), "none",
 				*resource)) {
 			err := errors.NewInvalid("CSRF validation failed")
 			log.Print(err)

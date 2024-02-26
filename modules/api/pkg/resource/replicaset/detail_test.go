@@ -21,12 +21,14 @@ import (
 	apps "k8s.io/api/apps/v1"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/client-go/kubernetes/fake"
+
 	"k8s.io/dashboard/api/pkg/api"
 	"k8s.io/dashboard/api/pkg/resource/common"
 	"k8s.io/dashboard/api/pkg/resource/dataselect"
 	"k8s.io/dashboard/api/pkg/resource/horizontalpodautoscaler"
 	"k8s.io/dashboard/api/pkg/resource/pod"
 	"k8s.io/dashboard/api/pkg/resource/service"
+	internalclient "k8s.io/dashboard/client"
 )
 
 func TestGetReplicaSetDetail(t *testing.T) {
@@ -54,7 +56,7 @@ func TestGetReplicaSetDetail(t *testing.T) {
 				ReplicaSet: ReplicaSet{
 					ObjectMeta: api.ObjectMeta{Name: "rs-1", Namespace: "ns-1",
 						Labels: map[string]string{"app": "test"}},
-					TypeMeta: api.TypeMeta{Kind: api.ResourceKindReplicaSet, Scalable: true},
+					TypeMeta: api.TypeMeta{Kind: internalclient.ResourceKindReplicaSet, Scalable: true},
 					Pods: common.PodInfo{
 						Warnings: []common.Event{},
 						Desired:  &replicas,
@@ -118,7 +120,7 @@ func TestToReplicaSetDetail(t *testing.T) {
 			horizontalpodautoscaler.HorizontalPodAutoscalerList{},
 			ReplicaSetDetail{
 				ReplicaSet: ReplicaSet{
-					TypeMeta: api.TypeMeta{Kind: api.ResourceKindReplicaSet, Scalable: true},
+					TypeMeta: api.TypeMeta{Kind: internalclient.ResourceKindReplicaSet, Scalable: true},
 				},
 				Errors: []error{},
 			},
@@ -136,7 +138,7 @@ func TestToReplicaSetDetail(t *testing.T) {
 			ReplicaSetDetail{
 				ReplicaSet: ReplicaSet{
 					ObjectMeta: api.ObjectMeta{Name: "replica-set"},
-					TypeMeta:   api.TypeMeta{Kind: api.ResourceKindReplicaSet, Scalable: true},
+					TypeMeta:   api.TypeMeta{Kind: internalclient.ResourceKindReplicaSet, Scalable: true},
 				},
 				HorizontalPodAutoscalerList: horizontalpodautoscaler.HorizontalPodAutoscalerList{
 					HorizontalPodAutoscalers: []horizontalpodautoscaler.HorizontalPodAutoscaler{{
