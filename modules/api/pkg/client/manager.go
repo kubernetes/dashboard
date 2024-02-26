@@ -36,7 +36,6 @@ import (
 	clientapi "k8s.io/dashboard/api/pkg/client/api"
 	"k8s.io/dashboard/api/pkg/client/csrf"
 	"k8s.io/dashboard/api/pkg/errors"
-	pluginclientset "k8s.io/dashboard/api/pkg/plugin/client/clientset"
 	"k8s.io/dashboard/api/pkg/resource/customresourcedefinition"
 )
 
@@ -80,9 +79,6 @@ type clientManager struct {
 	// API Extensions client created without providing auth info. It uses permissions granted to
 	// service account used by dashboard or kubeconfig file if it was passed during dashboard init.
 	insecureAPIExtensionsClient apiextensionsclientset.Interface
-	// Plugin client created without providing auth info. It uses permissions granted to
-	// service account used by dashboard or kubeconfig file if it was passed during dashboard init.
-	insecurePluginClient pluginclientset.Interface
 	// Kubernetes client created without providing auth info. It uses permissions granted to
 	// service account used by dashboard or kubeconfig file if it was passed during dashboard init.
 	insecureClient kubernetes.Interface
@@ -122,21 +118,6 @@ func (self *clientManager) APIExtensionsClient(req *restful.Request) (apiextensi
 	return self.InsecureAPIExtensionsClient(), nil
 }
 
-// PluginClient returns a plugin client. In case dashboard login is enabled and
-// option to skip login page is disabled only secure client will be returned, otherwise insecure
-// client will be used.
-func (self *clientManager) PluginClient(req *restful.Request) (pluginclientset.Interface, error) {
-	if req == nil {
-		return nil, errors.NewBadRequest("request can not be nil!")
-	}
-
-	if self.isSecureModeEnabled(req) {
-		return self.securePluginClient(req)
-	}
-
-	return self.InsecurePluginClient(), nil
-}
-
 // Config returns a rest config. In case dashboard login is enabled and option to skip
 // login page is disabled only secure config will be returned, otherwise insecure config will be
 // used.
@@ -164,13 +145,6 @@ func (self *clientManager) InsecureClient() kubernetes.Interface {
 // if it was passed during dashboard init.
 func (self *clientManager) InsecureAPIExtensionsClient() apiextensionsclientset.Interface {
 	return self.insecureAPIExtensionsClient
-}
-
-// InsecurePluginClient returns plugin client that was created without providing
-// auth info. It uses permissions granted to service account used by dashboard or kubeconfig file
-// if it was passed during dashboard init.
-func (self *clientManager) InsecurePluginClient() pluginclientset.Interface {
-	return self.insecurePluginClient
 }
 
 // InsecureConfig returns kubernetes client config that used privileges of dashboard service account
@@ -280,11 +254,6 @@ func (self *clientManager) VerberClient(req *restful.Request, config *rest.Confi
 		return nil, err
 	}
 
-	pluginsclient, err := self.PluginClient(req)
-	if err != nil {
-		return nil, err
-	}
-
 	apiextensionsRestClient, err := customresourcedefinition.GetExtensionsAPIRestClient(apiextensionsclient)
 	if err != nil {
 		return nil, err
@@ -299,7 +268,6 @@ func (self *clientManager) VerberClient(req *restful.Request, config *rest.Confi
 		k8sClient.RbacV1().RESTClient(),
 		k8sClient.NetworkingV1().RESTClient(),
 		apiextensionsRestClient,
-		pluginsclient.DashboardV1alpha1().RESTClient(),
 		config), nil
 }
 
@@ -459,20 +427,6 @@ func (self *clientManager) secureAPIExtensionsClient(req *restful.Request) (apie
 	return client, nil
 }
 
-func (self *clientManager) securePluginClient(req *restful.Request) (pluginclientset.Interface, error) {
-	cfg, err := self.secureConfig(req)
-	if err != nil {
-		return nil, err
-	}
-
-	client, err := pluginclientset.NewForConfig(cfg)
-	if err != nil {
-		return nil, err
-	}
-
-	return client, nil
-}
-
 func (self *clientManager) secureConfig(req *restful.Request) (*rest.Config, error) {
 	cmdConfig, err := self.ClientCmdConfig(req)
 	if err != nil {
@@ -540,14 +494,8 @@ func (self *clientManager) initInsecureClients() {
 		panic(err)
 	}
 
-	pluginclient, err := pluginclientset.NewForConfig(self.insecureConfig)
-	if err != nil {
-		panic(err)
-	}
-
 	self.insecureClient = k8sClient
 	self.insecureAPIExtensionsClient = apiextensionsclient
-	self.insecurePluginClient = pluginclient
 }
 
 func (self *clientManager) initInsecureConfig() {

@@ -39,11 +39,8 @@ if [[ "${K8S_OWN_CLUSTER}" != true ]] ; then
   kubectl apply -f hack/develop/developmental-role.yaml
   echo "@@@@@@@@@@@@@@ CAUTION!! @@@@@@@@@@@@@@"
   echo "ADDED FULL ACCESS ROLE FOR DEVELOPMENT!"
-  echo "DO NOT WORK THIS IN OPEN NETWORK!"
+  echo "DO NOT USE THIS IN OPEN NETWORK!"
   echo "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
-  # Add sample CRD
-  echo "Add sample CRD"
-  kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/master/hack/test-resources/plugin-crd.yml
   # Kill and run `kubectl proxy`
   KUBECTL_PID=$(ps -A|grep 'kubectl'|tr -s ' '|cut -d ' ' -f 2)
   echo "Kill kubectl ${KUBECTL_PID}"

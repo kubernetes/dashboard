@@ -10,8 +10,6 @@ API_TMP_DIRECTORY = $(API_DIRECTORY)/.tmp
 COVERAGE_FILE = $(API_TMP_DIRECTORY)/coverage.out
 
 ### Codegen configuration
-BASE_DIR = $(API_DIRECTORY)/pkg/plugin
-INPUT_BASE = $(PACKAGE_NAME)/pkg/plugin
 INPUT = "apis/v1alpha1"
 CLIENTSET_NAME = clientset
 OUTPUT_BASE = $(BASE_DIR)

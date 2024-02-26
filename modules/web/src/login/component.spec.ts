@@ -23,11 +23,10 @@ import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {ActivatedRoute, Router, convertToParamMap} from '@angular/router';
 import {RouterTestingModule} from '@angular/router/testing';
 import {EnabledAuthenticationModes, LoginSkippableResponse, LoginSpec} from '@api/root.api';
-import {IConfig, PluginMetadata} from '@api/root.ui';
+import {IConfig} from '@api/root.ui';
 import {K8SError, KdError} from '@common/errors/errors';
 import {AuthService} from '@common/services/global/authentication';
 import {HistoryService} from '@common/services/global/history';
-import {PluginsConfigService} from '@common/services/global/plugin';
 import {from, Observable, of, throwError} from 'rxjs';
 import {CONFIG_DI_TOKEN} from '../index.config';
 import {LoginComponent} from './component';
@@ -74,20 +73,6 @@ class MockAuthService {
 
 class MockRouter {
   navigate(): void {}
-}
-
-class MockPluginsConfigService {
-  static pluginsMetadata(): PluginMetadata[] {
-    return [];
-  }
-
-  static status(): number {
-    return 200;
-  }
-
-  init(): void {}
-
-  refreshConfig(): void {}
 }
 
 class MockHistoryService {
@@ -138,10 +123,6 @@ describe('LoginComponent', () => {
         {
           provide: Router,
           useClass: MockRouter,
-        },
-        {
-          provide: PluginsConfigService,
-          useClass: MockPluginsConfigService,
         },
         {
           provide: CONFIG_DI_TOKEN,

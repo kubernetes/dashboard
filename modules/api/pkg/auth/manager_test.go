@@ -31,7 +31,6 @@ import (
 	"k8s.io/dashboard/api/pkg/client"
 	clientapi "k8s.io/dashboard/api/pkg/client/api"
 	"k8s.io/dashboard/api/pkg/errors"
-	pluginclientset "k8s.io/dashboard/api/pkg/plugin/client/clientset"
 )
 
 func areErrorsEqual(err1, err2 error) bool {
@@ -51,19 +50,11 @@ func (self *fakeClientManager) APIExtensionsClient(req *restful.Request) (apiext
 	return nil, nil
 }
 
-func (self *fakeClientManager) PluginClient(req *restful.Request) (pluginclientset.Interface, error) {
-	return nil, nil
-}
-
 func (self *fakeClientManager) InsecureClient() kubernetes.Interface {
 	return nil
 }
 
 func (self *fakeClientManager) InsecureAPIExtensionsClient() apiextensionsclientset.Interface {
-	return nil
-}
-
-func (self *fakeClientManager) InsecurePluginClient() pluginclientset.Interface {
 	return nil
 }
 

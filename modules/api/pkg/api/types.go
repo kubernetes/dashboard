@@ -144,7 +144,6 @@ const (
 	ResourceKindClusterRoleBinding       = "clusterrolebinding"
 	ResourceKindRole                     = "role"
 	ResourceKindRoleBinding              = "rolebinding"
-	ResourceKindPlugin                   = "plugin"
 	ResourceKindEndpoint                 = "endpoint"
 	ResourceKindNetworkPolicy            = "networkpolicy"
 	ResourceKindIngressClass             = "ingressclass"
@@ -198,7 +197,6 @@ const (
 	ClientTypeRbacClient          = "rbacclient"
 	ClientTypeAPIExtensionsClient = "apiextensionsclient"
 	ClientTypeNetworkingClient    = "networkingclient"
-	ClientTypePluginsClient       = "plugin"
 )
 
 // APIMapping is the mapping from resource kind to ClientType and Namespaced.
@@ -246,7 +244,6 @@ var KindToAPIMapping = map[string]APIMapping{
 	ResourceKindClusterRoleBinding:       {"clusterrolebindings", ClientTypeRbacClient, false},
 	ResourceKindRole:                     {"roles", ClientTypeRbacClient, true},
 	ResourceKindRoleBinding:              {"rolebindings", ClientTypeRbacClient, true},
-	ResourceKindPlugin:                   {"plugins", ClientTypePluginsClient, true},
 }
 
 // IsSelectorMatching returns true when an object with the given selector targets the same

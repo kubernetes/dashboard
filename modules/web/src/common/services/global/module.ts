@@ -35,9 +35,6 @@ import {KdStateService} from './state';
 import {ThemeService} from './theme';
 import {TitleService} from './title';
 import {VerberService} from './verber';
-import {PluginsConfigService} from './plugin';
-import {PluginLoaderService} from '../pluginloader/pluginloader.service';
-import {ClientPluginLoaderService} from '../pluginloader/clientloader.service';
 import {PinnerService} from './pinner';
 
 @NgModule({
@@ -47,7 +44,6 @@ import {PinnerService} from './pinner';
     LocalSettingsService,
     GlobalSettingsService,
     ConfigService,
-    PluginsConfigService,
     TitleService,
     AuthService,
     CsrfTokenService,
@@ -71,7 +67,6 @@ import {PinnerService} from './pinner';
         LocalSettingsService,
         ConfigService,
         HistoryService,
-        PluginsConfigService,
         PinnerService,
         ThemeService,
         LocalConfigLoaderService,
@@ -83,7 +78,6 @@ import {PinnerService} from './pinner';
       useClass: AuthInterceptor,
       multi: true,
     },
-    {provide: PluginLoaderService, useClass: ClientPluginLoaderService},
   ],
 })
 export class GlobalServicesModule {
@@ -99,7 +93,6 @@ export function init(
   pinner: PinnerService,
   config: ConfigService,
   history: HistoryService,
-  pluginsConfig: PluginsConfigService,
   theme: ThemeService,
   loader: LocalConfigLoaderService
 ): Function {
@@ -110,7 +103,7 @@ export function init(
       config.init();
       history.init();
       theme.init();
-      return globalSettings.init().then(() => pluginsConfig.init());
+      return globalSettings.init();
     });
   };
 }
