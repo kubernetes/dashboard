@@ -30,7 +30,6 @@ import (
 	authApi "k8s.io/dashboard/api/pkg/auth/api"
 	"k8s.io/dashboard/api/pkg/auth/jwe"
 	"k8s.io/dashboard/api/pkg/client"
-	"k8s.io/dashboard/api/pkg/settings"
 	"k8s.io/dashboard/api/pkg/sync"
 )
 
@@ -44,8 +43,7 @@ func getTokenManager() authApi.TokenManager {
 func TestCreateHTTPAPIHandler(t *testing.T) {
 	cManager := client.NewClientManager("", "http://localhost:8080")
 	authManager := auth.NewAuthManager(cManager, getTokenManager(), authApi.AuthenticationModes{}, true)
-	sManager := settings.NewSettingsManager()
-	_, err := CreateHTTPAPIHandler(nil, cManager, authManager, sManager)
+	_, err := CreateHTTPAPIHandler(nil, cManager, authManager)
 	if err != nil {
 		t.Fatal("CreateHTTPAPIHandler() cannot create HTTP API handler")
 	}

@@ -58,6 +58,30 @@ func (self *Manager) GetCertificates() ([]tls.Certificate, error) {
 	return nil, nil
 }
 
+func (self *Manager) GetCertificatePaths() (string, string, error) {
+	// Make the autogenerate the top priority option.
+	if self.autogenerate {
+		key := self.creator.GenerateKey()
+		cert := self.creator.GenerateCertificate(key)
+		log.Println("Successfully created certificates")
+		keyPEM, certPEM, err := self.creator.KeyCertPEMBytes(key, cert)
+		if err != nil {
+			return "", "", err
+		}
+		certPath, keyPath := self.creator.StoreCertificates(self.certDir, certPEM, keyPEM)
+		return certPath, keyPath, nil
+	}
+
+	// When autogenerate is disabled and provided cert files exist use them.
+	if self.keyFileExists() && self.certFileExists() && !self.autogenerate {
+		log.Println("Certificates already exist. Returning.")
+
+		return self.path(self.creator.GetCertFileName()), self.path(self.creator.GetKeyFileName()), nil
+	}
+
+	return "", "", nil
+}
+
 func (self *Manager) keyFileExists() bool {
 	return self.exists(self.path(self.creator.GetKeyFileName()))
 }

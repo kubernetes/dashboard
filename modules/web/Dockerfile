@@ -60,6 +60,8 @@ WORKDIR /workspace
 
 # Copy required local modules
 COPY /modules/common/certificates /workspace/common/certificates
+COPY /modules/common/errors /workspace/common/errors
+COPY /modules/common/client /workspace/common/client
 
 WORKDIR /workspace/web
 

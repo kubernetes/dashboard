@@ -47,9 +47,8 @@ type holder struct {
 
 	authenticationMode []string
 
-	autoGenerateCertificates  bool
-	enableInsecureLogin       bool
-	disableSettingsAuthorizer bool
+	autoGenerateCertificates bool
+	enableInsecureLogin      bool
 
 	enableSkipLogin bool
 }
@@ -155,11 +154,6 @@ func (self *holder) GetAutoGenerateCertificates() bool {
 // GetEnableInsecureLogin 'enable-insecure-login' argument of Dashboard binary.
 func (self *holder) GetEnableInsecureLogin() bool {
 	return self.enableInsecureLogin
-}
-
-// GetDisableSettingsAuthorizer 'disable-settings-authorizer' argument of Dashboard binary.
-func (self *holder) GetDisableSettingsAuthorizer() bool {
-	return self.disableSettingsAuthorizer
 }
 
 // GetEnableSkipLogin 'enable-skip-login' argument of Dashboard binary.

@@ -19,6 +19,8 @@ import (
 	"fmt"
 	"net/http"
 
+	"github.com/emicklei/go-restful/v3"
+	k8sErrors "k8s.io/apimachinery/pkg/api/errors"
 	k8serrors "k8s.io/apimachinery/pkg/api/errors"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime"
@@ -208,4 +210,15 @@ func HandleError(err error) (int, error) {
 	}
 
 	return http.StatusInternalServerError, err
+}
+
+// HandleInternalError writes the given error to the response and sets appropriate HTTP status headers.
+func HandleInternalError(response *restful.Response, err error) {
+	statusCode := http.StatusInternalServerError
+	statusError, ok := err.(*k8sErrors.StatusError)
+	if ok && statusError.Status().Code > 0 {
+		statusCode = int(statusError.Status().Code)
+	}
+	response.AddHeader("Content-Type", "text/plain")
+	response.WriteErrorString(statusCode, err.Error()+"\n")
 }

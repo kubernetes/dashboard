@@ -70,10 +70,12 @@ services:
       context: ../../modules
       dockerfile: web/dev.go.Dockerfile
     command:
+      - "--kubeconfig=${KUBECONFIG:?}"
       - "--locale-config=/public/locale_conf.json"
       - "--system-banner='Local\ dev\ environment'"
       - "--system-banner-severity=${SYSTEM_BANNER_SEVERITY:?}"
     volumes:
+      - ${KUBECONFIG:?}:${KUBECONFIG:?} # Required - local kubeconfig path resolves to $HOME/<user>/.kube/config
       - ${PWD}/modules/web/pkg:/workspace/web/pkg # Required - Source dir watched by AIR
       - ${PWD}/modules/web/main.go:/workspace/web/main.go # Required - Entry file watched by AIR
       - ${PWD}/modules/web/.air.toml:/workspace/web/.air.toml # Required - AIR configuration

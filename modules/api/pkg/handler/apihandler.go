@@ -70,8 +70,6 @@ import (
 	"k8s.io/dashboard/api/pkg/resource/statefulset"
 	"k8s.io/dashboard/api/pkg/resource/storageclass"
 	"k8s.io/dashboard/api/pkg/scaling"
-	"k8s.io/dashboard/api/pkg/settings"
-	settingsApi "k8s.io/dashboard/api/pkg/settings/api"
 	"k8s.io/dashboard/api/pkg/validation"
 )
 
@@ -87,7 +85,6 @@ const (
 type APIHandler struct {
 	iManager integration.IntegrationManager
 	cManager clientapi.ClientManager
-	sManager settingsApi.SettingsManager
 }
 
 // TerminalResponse is sent by handleExecShell. The Id is a random session id that binds the original REST request and the SockJS connection.
@@ -98,8 +95,8 @@ type TerminalResponse struct {
 
 // CreateHTTPAPIHandler creates a new HTTP handler that handles all requests to the API of the backend.
 func CreateHTTPAPIHandler(iManager integration.IntegrationManager, cManager clientapi.ClientManager,
-	authManager authApi.AuthManager, sManager settingsApi.SettingsManager) (http.Handler, error) {
-	apiHandler := APIHandler{iManager: iManager, cManager: cManager, sManager: sManager}
+	authManager authApi.AuthManager) (http.Handler, error) {
+	apiHandler := APIHandler{iManager: iManager, cManager: cManager}
 	wsContainer := restful.NewContainer()
 	wsContainer.EnableContentEncoding(true)
 
@@ -117,9 +114,6 @@ func CreateHTTPAPIHandler(iManager integration.IntegrationManager, cManager clie
 
 	authHandler := auth.NewAuthHandler(authManager)
 	authHandler.Install(apiV1Ws)
-
-	settingsHandler := settings.NewSettingsHandler(sManager, cManager)
-	settingsHandler.Install(apiV1Ws)
 
 	apiV1Ws.Route(
 		apiV1Ws.GET("csrftoken/{action}").
@@ -1861,23 +1855,23 @@ func (apiHandler *APIHandler) handleDeleteResource(
 		return
 	}
 
-	// Try to unpin resource if it was pinned.
-	pinnedResource := &settingsApi.PinnedResource{
-		Name:      name,
-		Kind:      kind,
-		Namespace: namespace,
-	}
-
-	k8sClient, err := apiHandler.cManager.Client(request)
-	if err != nil {
-		errors.HandleInternalError(response, err)
-		return
-	}
-	if err = apiHandler.sManager.DeletePinnedResource(k8sClient, pinnedResource); err != nil {
-		if !errors.IsNotFoundError(err) {
-			log.Printf("error while unpinning resource: %s", err.Error())
-		}
-	}
+	// TODO: Try to unpin resource if it was pinned.
+	//pinnedResource := &settingsApi.PinnedResource{
+	//	Name:      name,
+	//	Kind:      kind,
+	//	Namespace: namespace,
+	//}
+	//
+	//k8sClient, err := apiHandler.cManager.Client(request)
+	//if err != nil {
+	//	errors.HandleInternalError(response, err)
+	//	return
+	//}
+	//if err = apiHandler.sManager.DeletePinnedResource(k8sClient, pinnedResource); err != nil {
+	//	if !errors.IsNotFoundError(err) {
+	//		log.Printf("error while unpinning resource: %s", err.Error())
+	//	}
+	//}
 
 	response.WriteHeader(http.StatusOK)
 }

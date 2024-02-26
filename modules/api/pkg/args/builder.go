@@ -138,12 +138,6 @@ func (self *holderBuilder) SetEnableInsecureLogin(enableInsecureLogin bool) *hol
 	return self
 }
 
-// SetDisableSettingsAuthorizer 'disable-settings-authorizer' argument of Dashboard binary.
-func (self *holderBuilder) SetDisableSettingsAuthorizer(disableSettingsAuthorizer bool) *holderBuilder {
-	self.holder.disableSettingsAuthorizer = disableSettingsAuthorizer
-	return self
-}
-
 // SetEnableSkipLogin 'enable-skip-login' argument of Dashboard binary.
 func (self *holderBuilder) SetEnableSkipLogin(enableSkipLogin bool) *holderBuilder {
 	self.holder.enableSkipLogin = enableSkipLogin

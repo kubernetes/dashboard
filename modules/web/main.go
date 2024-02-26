@@ -16,112 +16,59 @@ package main
 
 import (
 	"crypto/elliptic"
-	"crypto/tls"
-	"flag"
-	"fmt"
-	"log"
-	"net"
-	"net/http"
-
-	"github.com/spf13/pflag"
-	"k8s.io/klog/v2"
+	"os"
 
 	"k8s.io/dashboard/certificates"
 	"k8s.io/dashboard/certificates/ecdsa"
+	"k8s.io/dashboard/client"
 	"k8s.io/dashboard/web/pkg/args"
-	"k8s.io/dashboard/web/pkg/handler"
-	"k8s.io/dashboard/web/pkg/systembanner"
-)
+	"k8s.io/dashboard/web/pkg/environment"
+	"k8s.io/dashboard/web/pkg/router"
+	"k8s.io/klog/v2"
 
-var (
-	argInsecurePort             = pflag.Int("insecure-port", 8000, "port to listen to for incoming HTTP requests")
-	argPort                     = pflag.Int("port", 8001, "secure port to listen to for incoming HTTPS requests")
-	argInsecureBindAddress      = pflag.IP("insecure-bind-address", net.IPv4(127, 0, 0, 1), "IP address on which to serve the --insecure-port, set to 127.0.0.1 for all interfaces")
-	argBindAddress              = pflag.IP("bind-address", net.IPv4(0, 0, 0, 0), "IP address on which to serve the --port, set to 0.0.0.0 for all interfaces")
-	argDefaultCertDir           = pflag.String("default-cert-dir", "/certs", "directory path containing files from --tls-cert-file and --tls-key-file, used also when auto-generating certificates flag is set")
-	argCertFile                 = pflag.String("tls-cert-file", "", "file containing the default x509 certificate for HTTPS")
-	argKeyFile                  = pflag.String("tls-key-file", "", "file containing the default x509 private key matching --tls-cert-file")
-	argSystemBanner             = pflag.String("system-banner", "", "system banner message displayed in the app if non-empty, it accepts simple HTML")
-	argSystemBannerSeverity     = pflag.String("system-banner-severity", "INFO", "severity of system banner, should be one of 'INFO', 'WARNING' or 'ERROR'")
-	argAutoGenerateCertificates = pflag.Bool("auto-generate-certificates", false, "enables automatic certificates generation used to serve HTTPS")
-	localeConfig                = pflag.String("locale-config", "./locale_conf.json", "path to file containing the locale configuration")
+	// Importing route packages forces route registration
+	_ "k8s.io/dashboard/web/pkg/config"
+	_ "k8s.io/dashboard/web/pkg/locale"
+	_ "k8s.io/dashboard/web/pkg/settings"
+	_ "k8s.io/dashboard/web/pkg/systembanner"
 )
 
 func main() {
-	// Init klog
-	fs := flag.NewFlagSet("", flag.PanicOnError)
-	klog.InitFlags(fs)
+	client.Init(
+		client.WithUserAgent(environment.UserAgent()),
+		client.WithKubeconfig(args.KubeconfigPath()),
+	)
 
-	pflag.CommandLine.AddGoFlagSet(fs)
-	pflag.Parse()
-
-	// Initializes dashboard arguments holder, so we can read them in other packages
-	initArgHolder()
-
-	// Init system banner manager
-	systemBannerManager := systembanner.NewSystemBannerManager(args.Holder.GetSystemBanner(),
-		args.Holder.GetSystemBannerSeverity())
-	systembanner.NewSystemBannerHandler(systemBannerManager).Install()
-
-	certCreator := ecdsa.NewECDSACreator(args.Holder.GetKeyFile(), args.Holder.GetCertFile(), elliptic.P256())
-	certManager := certificates.NewCertManager(certCreator, args.Holder.GetDefaultCertDir(), args.Holder.GetAutoGenerateCertificates())
-	certs, err := certManager.GetCertificates()
+	certCreator := ecdsa.NewECDSACreator(args.KeyFile(), args.CertFile(), elliptic.P256())
+	certManager := certificates.NewCertManager(certCreator, args.DefaultCertDir(), args.AutoGenerateCertificates())
+	certPath, keyPath, err := certManager.GetCertificatePaths()
 	if err != nil {
-		handleFatalInitServingCertError(err)
+		klog.Fatalf("Error while loading dashboard server certificates. Reason: %s", err)
 	}
 
-	// Run HTTP server that serves static public files from './public' and handles API calls.
-	http.Handle("/", handler.MakeGzipHandler(handler.CreateLocaleHandler()))
-	http.Handle("/config", handler.AppHandler(handler.ConfigHandler))
-
-	// Listen for http or https
-	if certs != nil {
-		serveTLS(certs)
+	if len(certPath) != 0 && len(keyPath) != 0 {
+		serveTLS(certPath, keyPath)
 	} else {
 		serve()
 	}
-
-	select {}
 }
 
 func serve() {
-	klog.Infof("Serving insecurely on HTTP port: %d", args.Holder.GetInsecurePort())
-	addr := fmt.Sprintf("%s:%d", args.Holder.GetInsecureBindAddress(), args.Holder.GetInsecurePort())
-	go func() { log.Fatal(http.ListenAndServe(addr, nil)) }()
-}
+	klog.Infof("Serving insecurely on HTTP port: %d", args.InsecurePort())
 
-func serveTLS(certificates []tls.Certificate) {
-	klog.Infof("Serving securely on HTTPS port: %d", args.Holder.GetPort())
-	secureAddr := fmt.Sprintf("%s:%d", args.Holder.GetBindAddress(), args.Holder.GetPort())
-	server := &http.Server{
-		Addr:    secureAddr,
-		Handler: http.DefaultServeMux,
-		TLSConfig: &tls.Config{
-			Certificates: certificates,
-			MinVersion:   tls.VersionTLS12,
-		},
+	klog.V(1).InfoS("Listening and serving on", "address", args.InsecureAddress())
+	if err := router.Router().Run(args.InsecureAddress()); err != nil {
+		klog.ErrorS(err, "Router error")
+		os.Exit(1)
 	}
-	go func() { klog.Fatal(server.ListenAndServeTLS("", "")) }()
 }
 
-func initArgHolder() {
-	builder := args.GetHolderBuilder()
-	builder.SetInsecurePort(*argInsecurePort)
-	builder.SetPort(*argPort)
-	builder.SetInsecureBindAddress(*argInsecureBindAddress)
-	builder.SetBindAddress(*argBindAddress)
-	builder.SetDefaultCertDir(*argDefaultCertDir)
-	builder.SetCertFile(*argCertFile)
-	builder.SetKeyFile(*argKeyFile)
-	builder.SetSystemBanner(*argSystemBanner)
-	builder.SetSystemBannerSeverity(*argSystemBannerSeverity)
-	builder.SetAutoGenerateCertificates(*argAutoGenerateCertificates)
-	builder.SetLocaleConfig(*localeConfig)
-}
+func serveTLS(certPath, keyPath string) {
+	klog.Infof("Serving securely on HTTPS port: %d", args.Port())
 
-/**
- * Handles fatal init errors encountered during service cert loading.
- */
-func handleFatalInitServingCertError(err error) {
-	klog.Fatalf("Error while loading dashboard server certificates. Reason: %s", err)
+	klog.V(1).InfoS("Listening and serving on", "address", args.Address())
+	if err := router.Router().RunTLS(args.Address(), certPath, keyPath); err != nil {
+		klog.ErrorS(err, "Router error")
+		os.Exit(1)
+	}
 }

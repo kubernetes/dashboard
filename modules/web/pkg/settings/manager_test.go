@@ -19,7 +19,7 @@ import (
 	"testing"
 
 	"k8s.io/client-go/kubernetes/fake"
-	"k8s.io/dashboard/api/pkg/settings/api"
+	"k8s.io/dashboard/web/pkg/settings/api"
 )
 
 func TestNewSettingsManager(t *testing.T) {

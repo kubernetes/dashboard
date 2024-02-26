@@ -29,7 +29,7 @@ const (
 	// ConfigMapKindName is a name of config map kind.
 	ConfigMapKindName = "ConfigMap"
 
-	// ConfigMapAPIVersion is a API version of config map.
+	// ConfigMapAPIVersion is an API version of a config map.
 	ConfigMapAPIVersion = "v1"
 
 	// GlobalSettingsKey is a settings map key which maps to current global settings.
@@ -126,13 +126,13 @@ var defaultSettings = Settings{
 	NamespaceFallbackList:            []string{"default"},
 }
 
-// GetDefaultSettings returns settings structure, that should be used if there are no
+// GetDefaultSettings returns settings structure that should be used if there are no
 // global or local settings overriding them. It should not change during runtime.
 func GetDefaultSettings() Settings {
 	return defaultSettings
 }
 
-// GetDefaultSettingsConfigMap returns config map with default settings.
+// GetDefaultSettingsConfigMap returns a config map with default settings.
 func GetDefaultSettingsConfigMap(namespace string) *corev1.ConfigMap {
 	return &corev1.ConfigMap{
 		ObjectMeta: metav1.ObjectMeta{

@@ -50,6 +50,10 @@ services:
         paths:
           - /systembanner
         strip_path: false
+      - name: settings
+        paths:
+          - /api/v1/settings
+        strip_path: false
   - name: scraper
     host: scraper # Internal name of docker service
     port: 8000

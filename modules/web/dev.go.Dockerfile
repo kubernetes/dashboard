@@ -28,6 +28,8 @@ WORKDIR /workspace
 
 # Copy required local modules
 COPY /common/certificates /workspace/common/certificates
+COPY /common/errors /workspace/common/errors
+COPY /common/client /workspace/common/client
 
 # Create and cd into web module
 WORKDIR /workspace/web
