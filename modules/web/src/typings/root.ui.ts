@@ -117,18 +117,6 @@ export interface StateError {
   error: KdError;
 }
 
-export interface PluginMetadata {
-  name: string;
-  path: string;
-  dependencies: string[];
-}
-
-export interface PluginsConfig {
-  status: number;
-  plugins: PluginMetadata[];
-  errors?: object[];
-}
-
 export interface ViewportMetadata {
   target: HTMLElement;
   visible: boolean;
@@ -174,7 +162,6 @@ export enum IBreadcrumbMessageKey {
   Logs = 'Logs',
   Error = 'Error',
   Create = 'Create',
-  Plugins = 'Plugins',
   Shell = 'Shell',
   Events = 'Events',
   Overview = 'Overview',

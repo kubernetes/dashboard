@@ -48,7 +48,6 @@ export enum Resource {
   networkPolicy = 'networkpolicy',
   event = 'event',
   container = 'container',
-  plugin = 'plugin',
 }
 
 export enum Utility {

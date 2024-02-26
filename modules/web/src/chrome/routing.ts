@@ -137,10 +137,6 @@ const routes: Routes = [
         path: 'service',
         loadChildren: () => import('resource/discovery/service/module').then(m => m.ServiceModule),
       },
-      {
-        path: 'plugin',
-        loadChildren: () => import('plugin/module').then(m => m.PluginModule),
-      },
 
       // Config group
       {

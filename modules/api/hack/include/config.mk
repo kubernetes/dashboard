@@ -9,8 +9,6 @@ API_DIST_BINARY = $(API_DIST_DIRECTORY)/$(OS)/$(ARCH)/$(APP_NAME)
 COVERAGE_FILE = $(API_DIRECTORY)/coverage.out
 
 ### Codegen configuration
-BASE_DIR = $(API_DIRECTORY)/pkg/plugin
-INPUT_BASE = $(PACKAGE_NAME)/pkg/plugin
 INPUT = "apis/v1alpha1"
 CLIENTSET_NAME = clientset
 OUTPUT_BASE = $(BASE_DIR)

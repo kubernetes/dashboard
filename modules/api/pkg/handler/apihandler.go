@@ -27,8 +27,6 @@ import (
 	"k8s.io/dashboard/api/pkg/handler/parser"
 	"k8s.io/dashboard/api/pkg/resource/customresourcedefinition/types"
 
-	"k8s.io/dashboard/api/pkg/plugin"
-
 	"github.com/emicklei/go-restful/v3"
 	"golang.org/x/net/xsrftoken"
 	"k8s.io/apimachinery/pkg/runtime"
@@ -116,9 +114,6 @@ func CreateHTTPAPIHandler(iManager integration.IntegrationManager, cManager clie
 
 	integrationHandler := integration.NewIntegrationHandler(iManager)
 	integrationHandler.Install(apiV1Ws)
-
-	pluginHandler := plugin.NewPluginHandler(cManager)
-	pluginHandler.Install(apiV1Ws)
 
 	authHandler := auth.NewAuthHandler(authManager)
 	authHandler.Install(apiV1Ws)
