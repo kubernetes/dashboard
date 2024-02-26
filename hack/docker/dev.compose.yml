@@ -105,7 +105,7 @@ services:
       - ${PWD}/modules/metrics-scraper/.air.toml:/workspace/.air.toml # Required - AIR configuration
       - ${KUBECONFIG:?}:${KUBECONFIG:?}
     tmpfs:
-      - /tmp
+      - /tmp:size=1G
 
   metrics-server:
     container_name: metrics-server

@@ -85,7 +85,7 @@ services:
     volumes:
       - ${KUBECONFIG:?}:${KUBECONFIG:?}
     tmpfs:
-      - /tmp
+      - /tmp:size=1G
 
   metrics-server:
     container_name: metrics-server

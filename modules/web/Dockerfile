@@ -30,7 +30,8 @@ RUN adduser \
 FROM node:20.11.1-alpine3.19 as web-builder
 
 RUN apk add --no-cache \
-    make
+    make \
+    perl
 
 WORKDIR /workspace
 
@@ -79,9 +80,9 @@ FROM scratch as final
 WORKDIR /web
 
 # By default dashboard-web will look for locale_conf.json in the same directory as binary
-COPY --from=web-builder /workspace/modules/web/dist/public/locale_conf.json /web/locale_conf.json
-COPY --from=web-builder /workspace/modules/web/dist/public /web/
-COPY --from=go-builder /workspace/web/dashboard-web /web/dashboard-web
+COPY --from=web-builder /workspace/modules/web/dist/public/locale_conf.json /locale_conf.json
+COPY --from=web-builder /workspace/modules/web/dist/public /public
+COPY --from=go-builder /workspace/web/dashboard-web /dashboard-web
 
 # Import the user and group files from the builder.
 COPY --from=user /etc/passwd /etc/passwd
@@ -91,4 +92,4 @@ USER nonroot:nonroot
 
 # The port that the application listens on.
 EXPOSE 8000 8001
-ENTRYPOINT ["/web/dashboard-web", "--insecure-bind-address=0.0.0.0", "--bind-address=0.0.0.0"]
+ENTRYPOINT ["/dashboard-web", "--insecure-bind-address=0.0.0.0", "--bind-address=0.0.0.0"]

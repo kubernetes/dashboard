@@ -52,7 +52,7 @@ serve: $(PRE) --ensure-kind-cluster ## Starts development version of the applica
 	SIDECAR_HOST=$(SIDECAR_HOST) \
 	TOKEN_TTL=$(TOKEN_TTL) \
 	CLUSTER_VERSION=$(KIND_CLUSTER_VERSION) \
-	docker compose -f $(DOCKER_COMPOSE_DEV_PATH) --project-name=$(PROJECT_NAME) up web-angular \
+	docker compose -f $(DOCKER_COMPOSE_DEV_PATH) --project-name=$(PROJECT_NAME) up \
 		--build \
 		--remove-orphans \
 		--no-attach gateway \
