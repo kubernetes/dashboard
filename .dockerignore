@@ -1,0 +1,5 @@
+# Web module
+modules/web/.angular/
+modules/web/node_modules/
+modules/web/dist/
+modules/web/tmp/

@@ -22,6 +22,14 @@ check: $(PRE) check-license ## Runs all available checks
 fix: $(PRE) fix-license ## Runs all available fix scripts
 	@$(MAKE) --no-print-directory -C $(MODULES_DIRECTORY) TARGET=fix
 
+.PHONY: test
+test: $(PRE) ## Runs all available test scripts
+	@$(MAKE) --no-print-directory -C $(MODULES_DIRECTORY) TARGET=test
+
+.PHONY: coverage
+coverage: $(PRE) ## Runs all available test coverage scripts
+	@$(MAKE) --no-print-directory -C $(MODULES_DIRECTORY) TARGET=coverage
+
 .PHONY: check-license
 check-license: $(PRE) ## Checks if repo files contain valid license header
 	@${GOPATH}/bin/license-eye header check
@@ -60,7 +68,7 @@ serve: $(PRE) --ensure-kind-cluster ## Starts development version of the applica
 # Note #3: Darwin doesn't work at the moment, so we are using Linux by default.
 .PHONY: run
 run: export OS := linux
-run: $(PRE) build --ensure-kind-cluster ## Starts production version of the application on https://localhost:8443 and https://localhost:8000
+run: $(PRE) --ensure-kind-cluster ## Starts production version of the application on https://localhost:8443 and https://localhost:8000
 	@KUBECONFIG=$(KIND_CLUSTER_INTERNAL_KUBECONFIG_PATH) \
 	SYSTEM_BANNER=$(SYSTEM_BANNER) \
 	SYSTEM_BANNER_SEVERITY=$(SYSTEM_BANNER_SEVERITY) \
@@ -76,47 +84,23 @@ run: $(PRE) build --ensure-kind-cluster ## Starts production version of the appl
 		--no-attach scraper \
 		--no-attach metrics-server
 
-.PHONY: build
-build: TARGET := build
-build: build-cross ## Builds the application for the architecture of the host machine
-
-.PHONY: build-cross
-build-cross: ## Builds the application for all supported architectures
-	@$(MAKE) --no-print-directory -C $(MODULES_DIRECTORY) TARGET=$(or $(TARGET),build-cross)
-
-.PHONY: deploy
-deploy: build-cross ## Builds and deploys all module containers to the configured registries
-	@$(MAKE) --no-print-directory -C $(MODULES_DIRECTORY) TARGET=deploy
-
-.PHONY: deploy-dev
-deploy-dev: build-cross ## Builds and deploys all module containers to the configured dev registries
-	@$(MAKE) --no-print-directory -C $(MODULES_DIRECTORY) TARGET=deploy-dev
-
-.PHONY: image
-image: export OS := linux
-image: build ## Builds containers targeting host architecture
-	@$(MAKE) --no-print-directory -C $(MODULES_DIRECTORY) TARGET=image
-
-#.PHONY: --compose
-#--compose: build
-#	@KUBECONFIG=$(KUBECONFIG) \
-#	SYSTEM_BANNER=$(SYSTEM_BANNER) \
-#	SYSTEM_BANNER_SEVERITY=$(SYSTEM_BANNER_SEVERITY) \
-#	ENABLE_SKIP_LOGIN=$(ENABLE_SKIP_LOGIN) \
-#	SIDECAR_HOST=$(SIDECAR_HOST) \
-#	TOKEN_TTL=$(TOKEN_TTL) \
-#	ARCH=$(ARCH) \
-#	OS=$(OS) \
-#	docker compose -f $(DOCKER_COMPOSE_PATH) --project-name=$(PROJECT_NAME) build
+#.PHONY: build
+#build: TARGET := build
+#build: build-cross ## Builds the application for the architecture of the host machine
 #
-#.PHONY: --ensure-compose-down
-#--ensure-compose-down:
-#	@KUBECONFIG=$(KUBECONFIG) \
-#	SYSTEM_BANNER=$(SYSTEM_BANNER) \
-#	SYSTEM_BANNER_SEVERITY=$(SYSTEM_BANNER_SEVERITY) \
-#	ENABLE_SKIP_LOGIN=$(ENABLE_SKIP_LOGIN) \
-#	SIDECAR_HOST=$(SIDECAR_HOST) \
-#	TOKEN_TTL=$(TOKEN_TTL) \
-#	ARCH=$(ARCH) \
-#	OS=$(OS) \
-#	docker compose -f $(DOCKER_COMPOSE_PATH) --project-name=$(PROJECT_NAME) down
+#.PHONY: build-cross
+#build-cross: ## Builds the application for all supported architectures
+#	@$(MAKE) --no-print-directory -C $(MODULES_DIRECTORY) TARGET=$(or $(TARGET),build-cross)
+
+#.PHONY: deploy
+#deploy: build-cross ## Builds and deploys all module containers to the configured registries
+#	@$(MAKE) --no-print-directory -C $(MODULES_DIRECTORY) TARGET=deploy
+#
+#.PHONY: deploy-dev
+#deploy-dev: build-cross ## Builds and deploys all module containers to the configured dev registries
+#	@$(MAKE) --no-print-directory -C $(MODULES_DIRECTORY) TARGET=deploy-dev
+#
+#.PHONY: image
+#image: export OS := linux
+#image: build ## Builds containers targeting host architecture
+#	@$(MAKE) --no-print-directory -C $(MODULES_DIRECTORY) TARGET=image

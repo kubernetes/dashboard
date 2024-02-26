@@ -12,10 +12,45 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-FROM ubuntu:20.04 as builder
+FROM alpine:3.19 as user
 
-# Create a nonroot user for final image
-RUN useradd -u 10001 nonroot
+ENV USER=nonroot
+ENV UID=10001
+
+# Create nonroot user.
+RUN adduser \
+    --disabled-password \
+    --gecos "" \
+    --home "/nonexistent" \
+    --shell "/sbin/nologin" \
+    --no-create-home \
+    --uid "${UID}" \
+    "${USER}"
+
+FROM golang:1.22-alpine3.19 as builder
+
+ARG TARGETARCH
+ARG TARGETOS
+ARG VERSION
+
+WORKDIR /workspace
+
+# Copy required local modules
+COPY /common/errors /workspace/common/errors
+
+WORKDIR /workspace/auth
+
+# Retrieve application dependencies.
+# This allows the container build to reuse cached dependencies.
+# Expecting to copy go.mod and if present go.sum.
+COPY auth/go.* ./
+RUN go mod download
+
+COPY auth/api ./api
+COPY auth/pkg ./pkg
+COPY auth/main.go ./
+
+RUN CGO_ENABLED=0 GOOS=${TARGETOS} GOARCH=${TARGETARCH} go build -trimpath -ldflags="-s -w -X k8s.io/dashboard/auth/client.Version=${VERSION}" -o dashboard-auth .
 
 # Scratch can be used as the base image because the backend is compiled to include all
 # its dependencies.
@@ -25,11 +60,13 @@ ARG TARGETOS
 
 # Add all files from current working directory to the root of the image, i.e., copy dist directory
 # layout to the root directory.
-ADD .dist/auth/$TARGETOS/$TARGETARCH /
+COPY --from=builder /workspace/auth/dashboard-auth /dashboard-auth
 
-# Copy nonroot user
-COPY --from=builder /etc/passwd /etc/passwd
-USER nonroot
+# Import the user and group files from the builder.
+COPY --from=user /etc/passwd /etc/passwd
+COPY --from=user /etc/group /etc/group
+
+USER nonroot:nonroot
 
 # The port that the application listens on.
 EXPOSE 8000

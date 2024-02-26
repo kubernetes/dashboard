@@ -16,10 +16,11 @@ package handler
 
 import (
 	"encoding/json"
-	"log"
 	"net/http"
 	"text/template"
 	"time"
+
+	"k8s.io/klog/v2"
 )
 
 // AppHandler is an application handler.
@@ -47,14 +48,14 @@ func (fn AppHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 }
 
 func getAppConfigJSON() string {
-	log.Println("Getting application global configuration")
+	klog.Info("Getting application global configuration")
 
 	config := &AppConfig{
 		ServerTime: time.Now().UTC().UnixNano() / 1e6,
 	}
 
 	jsonConfig, _ := json.Marshal(config)
-	log.Printf("Application configuration %s", jsonConfig)
+	klog.Infof("Application configuration %s", jsonConfig)
 	return string(jsonConfig)
 }
 

@@ -1,87 +1,61 @@
 ROOT_DIRECTORY = $(shell dirname $(realpath $(firstword $(MAKEFILE_LIST))))/../..
 
+# Global makefile partial config
 include $(ROOT_DIRECTORY)/hack/include/config.mk
-include $(ROOT_DIRECTORY)/hack/include/build.mk
 
+# Local makefile partial config
 include hack/include/config.mk
 
-include $(ROOT_DIRECTORY)/hack/include/deploy.mk
+# List of targets that should be executed before other targets
+PRE :=
 
-MAKEFLAGS += -j2
+# ==================== GLOBAL ==================== #
 
 .PHONY: check
 check: check-go
+
+.PHONY: coverage
+coverage: coverage-go
+
+.PHONY: fix
+fix: fix-go
+
+.PHONY: test
+test: test-go
+
+# ==================== LOCAL ==================== #
+
+.PHONY: build
+build: --clean build-go build-angular
+
+.PHONY: build-angular
+build-angular: --fix-locale-caching
+
+.PHONY: build-go
+build-go:
+	@echo "Building $(APP_NAME)"
+	@CGO_ENABLED=0 go build -trimpath -ldflags "-s -w" -o $(WEB_DIST_DIRECTORY)/$(APP_NAME) $(PACKAGE_NAME)
 
 .PHONY: check-go
 check-go: $(PRE)
 	golangci-lint run -c ../../.golangci.yml ./...
 
-.PHONY: fix
-fix: fix-go
+.PHONY: coverage-go
+coverage-go: DIR := $(WEB_TMP_DIRECTORY)
+coverage-go:
+	@echo "Running tests with coverage"
+	@go test -coverprofile=$(COVERAGE_FILE) -covermode=atomic $(PACKAGE_NAME)/...
 
 .PHONY: fix-go
 fix-go: $(PRE)
 	golangci-lint run -c ../../.golangci.yml --fix ./...
 
-.PHONY: serve
-serve: $(PRE) --serve-angular
+.PHONY: test-go
+test-go:
+	@echo "Running tests"
+	@go test $(PACKAGE_NAME)/...
 
-.PHONY: serve-https
-serve-https: AUTO_GENERATE_CERTIFICATES = true
-serve-https: PROXY_CONFIG = proxy-https.conf.json
-serve-https: SSL_ENABLED = true
-serve-https: $(PRE) --serve-go --serve-angular
-
-.PHONY: serve-frontend
-serve-frontend: $(PRE) --serve-angular
-
-.PHONY: build
-build: ARCHITECTURES = $(OS)/$(ARCH)
-build: build-cross
-
-.PHONY: build-cross
-build-cross: --clean --build-go --build-angular
-
-.PHONY: deploy
-deploy: DOCKERFILE = $(WEB_DIRECTORY)/Dockerfile
-deploy: --deploy
-
-.PHONY: deploy-dev
-deploy-dev: DOCKERFILE = $(WEB_DIRECTORY)/Dockerfile
-deploy-dev: --deploy-dev
-
-.PHONY: image
-image: DOCKERFILE = $(WEB_DIRECTORY)/Dockerfile
-image: --image
-
-.PHONY: --serve-angular
---serve-angular: --ensure-dependencies
-	@npx ng serve --proxy-config=$(PROXY_CONFIG) --ssl=$(SSL_ENABLED) --host=$(BIND_ADDRESS)
-
-.PHONY: --build-go
---build-go:
-	@for ARCH in $(ARCHITECTURES) ; do \
-  	os=$${ARCH%/*} ; \
-  	arch=$${ARCH#*/} ; \
-  	echo "Building dashboard-web for $$os/$$arch" ; \
-  	CGO_ENABLED=0 GOOS=$$os GOARCH=$$arch go build -ldflags "-X $(PACKAGE_NAME)/client.Version=$(RELEASE_VERSION)" -gcflags="all=-N -l" -o $(WEB_DIST_DIRECTORY)/$$ARCH/$(APP_NAME) $(PACKAGE_NAME) ; \
-	done ; \
-
-.PHONY: --build-angular
---build-angular: --copy-angular
-
-.PHONY: --copy-angular
---copy-angular: LANGUAGES = $(shell ls $(WEB_DIST_ANGULAR_DIRECTORY))
---copy-angular: --fix-locale-caching
-	@echo "Copying frontend to the dashboard-web API" ; \
-	for arch in $(ARCHITECTURES) ; do \
-		for language in $(LANGUAGES) ; do \
-			outDir=$(WEB_DIST_DIRECTORY)/$${arch}/public ; \
-      mkdir -p $${outDir} ; \
-      cp -r $(WEB_DIST_ANGULAR_DIRECTORY)/$${language} $${outDir} ; \
-    done ; \
-	done ; \
-	rm -rf $(WEB_DIST_ANGULAR_DIRECTORY)
+# ==================== PRIVATE ==================== #
 
 # Avoid locale caching due to the same output file naming
 # We'll add language code prefix to the generated main javascript file.
@@ -116,3 +90,11 @@ ifeq ($(wildcard node_modules/.*),)
 	@echo "Installing dependencies"
 	@yarn install --immutable
 endif
+
+.PHONY: --ensure-dir
+--ensure-dir:
+	@if [ -z "$(DIR)" ]; then \
+  	echo "DIR variable not set" ; \
+  	exit 1 ; \
+  fi ; \
+ 	mkdir -p $(DIR) ; \

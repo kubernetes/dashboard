@@ -21,8 +21,8 @@ import (
 	"path/filepath"
 	"strings"
 
-	"github.com/golang/glog"
 	"golang.org/x/text/language"
+	"k8s.io/klog/v2"
 
 	"k8s.io/dashboard/web/pkg/args"
 )
@@ -45,7 +45,7 @@ type LocaleHandler struct {
 func CreateLocaleHandler() *LocaleHandler {
 	locales, err := getSupportedLocales(args.Holder.GetLocaleConfig())
 	if err != nil {
-		glog.Warningf("Error when loading the localization configuration. Dashboard will not be localized. %s", err)
+		klog.Warningf("Error when loading the localization configuration. Dashboard will not be localized. %s", err)
 		locales = []language.Tag{}
 	}
 	return &LocaleHandler{SupportedLocales: locales}
@@ -62,7 +62,7 @@ func getSupportedLocales(configFile string) ([]language.Tag, error) {
 	localization := Localization{}
 	err = json.Unmarshal(localesFile, &localization)
 	if err != nil {
-		glog.Warningf("%s %s", string(localesFile), err)
+		klog.Warningf("%s %s", string(localesFile), err)
 	}
 
 	// filter locale keys
@@ -77,11 +77,11 @@ func getSupportedLocales(configFile string) ([]language.Tag, error) {
 func getAssetsDir() string {
 	path, err := os.Executable()
 	if err != nil {
-		glog.Fatalf("Error determining path to executable: %#v", err)
+		klog.Fatalf("Error determining path to executable: %#v", err)
 	}
 	path, err = filepath.EvalSymlinks(path)
 	if err != nil {
-		glog.Fatalf("Error evaluating symlinks for path '%s': %#v", path, err)
+		klog.Fatalf("Error evaluating symlinks for path '%s': %#v", path, err)
 	}
 	return filepath.Join(filepath.Dir(path), assetsDir)
 }
@@ -165,7 +165,7 @@ func (handler *LocaleHandler) getLocaleMap() map[string]struct{} {
 func (handler *LocaleHandler) dirExists(name string) bool {
 	if _, err := os.Stat(name); err != nil {
 		if os.IsNotExist(err) {
-			glog.Warningf(name)
+			klog.Warningf(name)
 			return false
 		}
 	}

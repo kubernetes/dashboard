@@ -22,9 +22,9 @@ import (
 	"log"
 	"net"
 	"net/http"
-	"os"
 
 	"github.com/spf13/pflag"
+	"k8s.io/klog/v2"
 
 	"k8s.io/dashboard/certificates"
 	"k8s.io/dashboard/certificates/ecdsa"
@@ -48,13 +48,12 @@ var (
 )
 
 func main() {
-	// TODO: use klog instead?
-	// Set logging output to standard console out
-	log.SetOutput(os.Stdout)
+	// Init klog
+	fs := flag.NewFlagSet("", flag.PanicOnError)
+	klog.InitFlags(fs)
 
-	pflag.CommandLine.AddGoFlagSet(flag.CommandLine)
+	pflag.CommandLine.AddGoFlagSet(fs)
 	pflag.Parse()
-	_ = flag.CommandLine.Parse(make([]string, 0)) // Init for glog calls in kubernetes packages
 
 	// Initializes dashboard arguments holder, so we can read them in other packages
 	initArgHolder()
@@ -86,13 +85,13 @@ func main() {
 }
 
 func serve() {
-	log.Printf("Serving insecurely on HTTP port: %d", args.Holder.GetInsecurePort())
+	klog.Infof("Serving insecurely on HTTP port: %d", args.Holder.GetInsecurePort())
 	addr := fmt.Sprintf("%s:%d", args.Holder.GetInsecureBindAddress(), args.Holder.GetInsecurePort())
 	go func() { log.Fatal(http.ListenAndServe(addr, nil)) }()
 }
 
 func serveTLS(certificates []tls.Certificate) {
-	log.Printf("Serving securely on HTTPS port: %d", args.Holder.GetPort())
+	klog.Infof("Serving securely on HTTPS port: %d", args.Holder.GetPort())
 	secureAddr := fmt.Sprintf("%s:%d", args.Holder.GetBindAddress(), args.Holder.GetPort())
 	server := &http.Server{
 		Addr:    secureAddr,
@@ -102,7 +101,7 @@ func serveTLS(certificates []tls.Certificate) {
 			MinVersion:   tls.VersionTLS12,
 		},
 	}
-	go func() { log.Fatal(server.ListenAndServeTLS("", "")) }()
+	go func() { klog.Fatal(server.ListenAndServeTLS("", "")) }()
 }
 
 func initArgHolder() {
@@ -124,5 +123,5 @@ func initArgHolder() {
  * Handles fatal init errors encountered during service cert loading.
  */
 func handleFatalInitServingCertError(err error) {
-	log.Fatalf("Error while loading dashboard server certificates. Reason: %s", err)
+	klog.Fatalf("Error while loading dashboard server certificates. Reason: %s", err)
 }
