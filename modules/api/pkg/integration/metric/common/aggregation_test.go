@@ -21,6 +21,7 @@ import (
 	"k8s.io/apimachinery/pkg/types"
 
 	metricapi "k8s.io/dashboard/api/pkg/integration/metric/api"
+	internalclient "k8s.io/dashboard/client"
 )
 
 func getMetricPromises(metrics []metricapi.Metric) metricapi.MetricPromises {

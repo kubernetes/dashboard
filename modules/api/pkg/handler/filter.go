@@ -48,13 +48,13 @@ func InstallFilters(ws *restful.WebService) {
 // web-service filter function used for request and response logging.
 func requestAndResponseLogger(request *restful.Request, response *restful.Response,
 	chain *restful.FilterChain) {
-	if args.Holder.GetAPILogLevel() != "NONE" {
+	if args.APILogLevel() != "NONE" {
 		log.Printf(formatRequestLog(request))
 	}
 
 	chain.ProcessFilter(request, response)
 
-	if args.Holder.GetAPILogLevel() != "NONE" {
+	if args.APILogLevel() != "NONE" {
 		log.Printf(formatResponseLog(response, request))
 	}
 }
@@ -78,7 +78,7 @@ func formatRequestLog(request *restful.Request) string {
 
 	// Is DEBUG level logging enabled? Yes?
 	// Great now let's filter out any content from sensitive URLs
-	if args.Holder.GetAPILogLevel() != "DEBUG" && checkSensitiveURL(&uri) {
+	if args.APILogLevel() != "DEBUG" && checkSensitiveURL(&uri) {
 		content = "{ contents hidden }"
 	}
 

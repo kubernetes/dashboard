@@ -34,7 +34,14 @@ func (in *configBuilder) buildBaseConfig() (*rest.Config, error) {
 		return rest.InClusterConfig()
 	}
 
-	klog.InfoS("Using kubeconfig", "kubeconfig", in.kubeconfigPath)
+	if len(in.kubeconfigPath) > 0 {
+		klog.InfoS("Using kubeconfig", "kubeconfig", in.kubeconfigPath)
+	}
+
+	if len(in.masterUrl) > 0 {
+		klog.InfoS("Using apiserver-host location", "masterUrl", in.masterUrl)
+	}
+
 	config, err := clientcmd.BuildConfigFromFlags(in.masterUrl, in.kubeconfigPath)
 	if err != nil {
 		return nil, err
@@ -176,4 +183,13 @@ func Init(options ...Option) {
 	}
 
 	baseConfig = config
+}
+
+func isInitialized() bool {
+	if baseConfig == nil {
+		klog.Errorf(`k8s.io/dasboard/client' package has not been initialized properly. Run 'client.Init(...)' to initialize it. `)
+		return false
+	}
+
+	return true
 }

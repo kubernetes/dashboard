@@ -2,6 +2,7 @@ package client
 
 import (
 	"context"
+	"fmt"
 	"net/http"
 	"os"
 
@@ -17,6 +18,10 @@ import (
 )
 
 func InClusterClient() client.Interface {
+	if !isInitialized() {
+		return nil
+	}
+
 	if inClusterClient != nil {
 		return inClusterClient
 	}
@@ -34,10 +39,18 @@ func InClusterClient() client.Interface {
 }
 
 func Client(request *http.Request) (client.Interface, error) {
+	if !isInitialized() {
+		return nil, fmt.Errorf("client package not initialized")
+	}
+
 	return clientFromRequest(request)
 }
 
 func APIExtensionsClient(request *http.Request) (*apiextensionsclientset.Clientset, error) {
+	if !isInitialized() {
+		return nil, fmt.Errorf("client package not initialized")
+	}
+
 	config, err := configFromRequest(request)
 	if err != nil {
 		return nil, err
@@ -47,6 +60,10 @@ func APIExtensionsClient(request *http.Request) (*apiextensionsclientset.Clients
 }
 
 func Config(request *http.Request) (*rest.Config, error) {
+	if !isInitialized() {
+		return nil, fmt.Errorf("client package not initialized")
+	}
+
 	return configFromRequest(request)
 }
 

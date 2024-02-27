@@ -107,14 +107,8 @@ func getPodStatus(pod v1.Pod) string {
 		}
 	}
 
-	if pod.DeletionTimestamp != nil && pod.Status.Reason == "NodeLost" {
-		reason = string(v1.PodUnknown)
-	} else if pod.DeletionTimestamp != nil {
+	if pod.DeletionTimestamp != nil {
 		reason = "Terminating"
-	}
-
-	if len(reason) == 0 {
-		reason = string(v1.PodUnknown)
 	}
 
 	return reason
@@ -162,14 +156,11 @@ func getPodStatusPhase(pod v1.Pod, warnings []common.Event) v1.PodPhase {
 		return v1.PodFailed
 	}
 
-	if pod.DeletionTimestamp != nil && pod.Status.Reason == "NodeLost" {
-		return v1.PodUnknown
-	} else if pod.DeletionTimestamp != nil {
+	if pod.DeletionTimestamp != nil {
 		return "Terminating"
 	}
 
-	// pending
-	return v1.PodPending
+	return ""
 }
 
 // The code below allows to perform complex data section on []api.Pod
@@ -249,8 +240,6 @@ func getStatus(list *v1.PodList, events []v1.Event) common.ResourceStatus {
 			info.Running++
 		case v1.PodPending:
 			info.Pending++
-		case v1.PodUnknown:
-			info.Unknown++
 		case "Terminating":
 			info.Terminating++
 		}

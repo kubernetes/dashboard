@@ -24,6 +24,7 @@ import (
 
 	"k8s.io/dashboard/api/pkg/api"
 	"k8s.io/dashboard/api/pkg/resource/common"
+	internalclient "k8s.io/dashboard/client"
 
 	"k8s.io/dashboard/api/pkg/resource/dataselect"
 )

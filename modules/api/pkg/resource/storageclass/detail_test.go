@@ -20,7 +20,9 @@ import (
 
 	storage "k8s.io/api/storage/v1"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+
 	"k8s.io/dashboard/api/pkg/api"
+	internalclient "k8s.io/dashboard/client"
 )
 
 func TestToStorageClass(t *testing.T) {

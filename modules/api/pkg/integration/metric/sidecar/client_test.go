@@ -30,11 +30,10 @@ import (
 	"k8s.io/apimachinery/pkg/types"
 	"k8s.io/client-go/kubernetes"
 	"k8s.io/client-go/rest"
-	"k8s.io/dashboard/api/pkg/client"
 
-	"k8s.io/dashboard/api/pkg/api"
 	integrationapi "k8s.io/dashboard/api/pkg/integration/api"
 	metricapi "k8s.io/dashboard/api/pkg/integration/metric/api"
+	internalclient "k8s.io/dashboard/client"
 )
 
 func areErrorsEqual(err1, err2 error) bool {
@@ -451,7 +450,6 @@ func TestDownloadMetrics(t *testing.T) {
 }
 
 func TestCreateSidecarClient(t *testing.T) {
-	k8sClient := client.NewClientManager("", "http://localhost:8080").InsecureClient()
 	cases := []struct {
 		info        string
 		sidecarHost string
@@ -459,13 +457,6 @@ func TestCreateSidecarClient(t *testing.T) {
 		expected    SidecarRESTClient
 		expectedErr error
 	}{
-		{
-			"should create in-cluster sidecar client",
-			"",
-			k8sClient,
-			inClusterSidecarClient{},
-			nil,
-		},
 		{
 			"should create remote sidecar client",
 			"http://localhost:80801",

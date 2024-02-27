@@ -23,6 +23,7 @@ import (
 
 	"k8s.io/dashboard/api/pkg/api"
 	"k8s.io/dashboard/api/pkg/resource/dataselect"
+	internalclient "k8s.io/dashboard/client"
 )
 
 func TestToRbacClusterRoleBindingLists(t *testing.T) {
@@ -51,7 +52,7 @@ func TestToRbacClusterRoleBindingLists(t *testing.T) {
 				ListMeta: api.ListMeta{TotalItems: 1},
 				Items: []ClusterRoleBinding{{
 					ObjectMeta: api.ObjectMeta{Name: "clusterRoleBinding", Namespace: ""},
-					TypeMeta:   api.TypeMeta{Kind: client.ResourceKindClusterRoleBinding},
+					TypeMeta:   api.TypeMeta{Kind: internalclient.ResourceKindClusterRoleBinding},
 				}},
 			},
 		},

@@ -27,6 +27,7 @@ import (
 	metricapi "k8s.io/dashboard/api/pkg/integration/metric/api"
 	"k8s.io/dashboard/api/pkg/resource/common"
 	"k8s.io/dashboard/api/pkg/resource/dataselect"
+	internalclient "k8s.io/dashboard/client"
 
 	"k8s.io/dashboard/errors"
 )

@@ -186,7 +186,6 @@ func TestToPod(t *testing.T) {
 			pod: &v1.Pod{}, metrics: &MetricsByPod{},
 			expected: Pod{
 				TypeMeta: api.TypeMeta{Kind: internalclient.ResourceKindPod},
-				Status:   string(v1.PodUnknown),
 				Warnings: []common.Event{},
 			},
 		}, {
@@ -201,7 +200,6 @@ func TestToPod(t *testing.T) {
 					Name:      "test-pod",
 					Namespace: "test-namespace",
 				},
-				Status:   string(v1.PodUnknown),
 				Warnings: []common.Event{},
 			},
 		},

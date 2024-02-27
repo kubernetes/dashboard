@@ -27,11 +27,12 @@ import (
 	"k8s.io/dashboard/api/pkg/api"
 	"k8s.io/dashboard/api/pkg/resource/common"
 	"k8s.io/dashboard/api/pkg/resource/dataselect"
+	internalclient "k8s.io/dashboard/client"
 )
 
 func createDeployment(name, namespace, podTemplateName string, replicas int32, podLabel,
 	labelSelector map[string]string) *apps.Deployment {
-	maxSurge := intstr.FromInt(1)
+	maxSurge := intstr.FromInt32(1)
 	maxUnavailable := intstr.FromString("25%")
 
 	return &apps.Deployment{

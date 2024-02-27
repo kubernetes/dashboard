@@ -23,8 +23,7 @@ import (
 	"testing"
 
 	"github.com/emicklei/go-restful/v3"
-
-	"k8s.io/dashboard/api/pkg/args"
+	"github.com/spf13/pflag"
 )
 
 func TestCreateHTTPAPIHandler(t *testing.T) {
@@ -140,8 +139,7 @@ func TestFormatRequestLog(t *testing.T) {
 			t.Error("Cannot mockup request")
 		}
 
-		builder := args.GetHolderBuilder()
-		builder.SetAPILogLevel(c.apiLogLevel)
+		pflag.Set("api-log-level", c.apiLogLevel)
 
 		var restfulRequest restful.Request
 		restfulRequest.Request = req

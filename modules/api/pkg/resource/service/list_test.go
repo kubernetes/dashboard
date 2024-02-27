@@ -20,6 +20,7 @@ import (
 
 	"k8s.io/dashboard/api/pkg/resource/endpoint"
 	"k8s.io/dashboard/api/pkg/resource/pod"
+	internalclient "k8s.io/dashboard/client"
 
 	v1 "k8s.io/api/core/v1"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"

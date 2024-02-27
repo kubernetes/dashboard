@@ -25,6 +25,7 @@ import (
 	"k8s.io/dashboard/api/pkg/api"
 	"k8s.io/dashboard/api/pkg/resource/cronjob"
 	"k8s.io/dashboard/api/pkg/resource/dataselect"
+	internalclient "k8s.io/dashboard/client"
 )
 
 func TestGetCronJobDetail(t *testing.T) {

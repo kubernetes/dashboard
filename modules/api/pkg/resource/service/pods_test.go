@@ -27,6 +27,7 @@ import (
 	"k8s.io/dashboard/api/pkg/resource/common"
 	"k8s.io/dashboard/api/pkg/resource/dataselect"
 	"k8s.io/dashboard/api/pkg/resource/pod"
+	internalclient "k8s.io/dashboard/client"
 )
 
 func TestGetServicePods(t *testing.T) {
@@ -59,7 +60,6 @@ func TestGetServicePods(t *testing.T) {
 							UID:       "test-uid",
 							Namespace: "ns-1"},
 						TypeMeta: api.TypeMeta{Kind: internalclient.ResourceKindPod},
-						Status:   string(v1.PodUnknown),
 						Warnings: []common.Event{},
 					},
 				},

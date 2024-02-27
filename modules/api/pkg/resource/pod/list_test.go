@@ -27,6 +27,7 @@ import (
 	"k8s.io/dashboard/api/pkg/resource/common"
 	"k8s.io/dashboard/api/pkg/resource/dataselect"
 	"k8s.io/dashboard/api/pkg/resource/pod"
+	internalclient "k8s.io/dashboard/client"
 	"k8s.io/dashboard/errors"
 )
 
@@ -94,7 +95,7 @@ func TestGetPodListFromChannels(t *testing.T) {
 			&pod.PodList{
 				ListMeta:          api.ListMeta{TotalItems: 1},
 				CumulativeMetrics: make([]metricapi.Metric, 0),
-				Status:            common.ResourceStatus{Pending: 1},
+				Status:            common.ResourceStatus{},
 				Pods: []pod.Pod{{
 					ObjectMeta: api.ObjectMeta{
 						Name:              "pod-name",
@@ -103,7 +104,6 @@ func TestGetPodListFromChannels(t *testing.T) {
 						CreationTimestamp: metav1.Unix(111, 222),
 					},
 					TypeMeta: api.TypeMeta{Kind: internalclient.ResourceKindPod},
-					Status:   string(v1.PodUnknown),
 					Warnings: []common.Event{},
 				}},
 				Errors: []error{},
