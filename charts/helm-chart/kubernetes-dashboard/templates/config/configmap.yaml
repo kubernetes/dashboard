@@ -20,7 +20,7 @@ metadata:
   name: kubernetes-dashboard-settings
 data:
 {{- with .Values.app.settings.global }}
-  _global: {{ toJson . | quote }}
+  _global: {{ tpl (toJson .) $ | quote }}
 {{- end }}
 {{- with .Values.app.settings.pinnedCRDs }}
   _pinnedCRD: {{ toJson . | quote }}
