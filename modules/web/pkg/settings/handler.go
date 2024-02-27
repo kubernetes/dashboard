@@ -15,50 +15,73 @@
 package settings
 
 import (
+	"fmt"
 	"net/http"
+	"strings"
 
 	"github.com/gin-gonic/gin"
+	v1 "k8s.io/api/authorization/v1"
+	"k8s.io/dashboard/web/pkg/args"
 
 	"k8s.io/dashboard/client"
 	"k8s.io/dashboard/errors"
 	"k8s.io/dashboard/web/pkg/router"
-	"k8s.io/dashboard/web/pkg/settings/api"
 )
 
 var manager = NewSettingsManager()
 
-// TODO: Enable canI.
-func init() {
-	//router.V1().GET("/settings/global/cani", handleGetSettingsGlobalCanI)
-	router.V1().GET("/settings/global", handleGetSettingGlobal)
-	router.V1().PUT("/settings/global", handleSettingsGlobalSave)
-	//router.V1().GET("/settings/pinner/cani", handleGetSettingsGlobalCanI)
-	router.V1().GET("/settings/pinner", handleSettingsGetPinned)
-	router.V1().PUT("/settings/pinner", handleSettingsSavePinned)
-	router.V1().DELETE("/settings/pinner/:kind/:nameOrNamespace/:name", handleSettingsDeletePinned)
-	router.V1().DELETE("/settings/pinner/:kind/:nameOrNamespace", handleSettingsDeletePinned)
+const ConfigMapKindName = "ConfigMap"
+
+type CanIResponse struct {
+	Allowed bool `json:"allowed"`
 }
 
-//func handleGetSettingsGlobalCanI(c *gin.Context) {
-//	if args.DisableSettingsAuthorizer() {
-//		c.JSON(http.StatusOK, clientapi.CanIResponse{Allowed: true})
-//		return
-//	}
-//
-//	verb := c.Param("verb")
-//	if len(verb) == 0 {
-//		verb = http.MethodGet
-//	}
-//
-//	canI := x.CanI(c.Request, clientapi.ToSelfSubjectAccessReview(
-//		args.Namespace(),
-//		api.SettingsConfigMapName,
-//		api.ConfigMapKindName,
-//		verb,
-//	))
-//
-//	c.JSON(http.StatusOK, clientapi.CanIResponse{Allowed: canI})
-//}
+// ToSelfSubjectAccessReview creates kubernetes API object based on provided data.
+func ToSelfSubjectAccessReview(namespace, name, resourceKind, verb string) *v1.SelfSubjectAccessReview {
+	return &v1.SelfSubjectAccessReview{
+		Spec: v1.SelfSubjectAccessReviewSpec{
+			ResourceAttributes: &v1.ResourceAttributes{
+				Namespace: namespace,
+				Name:      name,
+				Resource:  fmt.Sprintf("%ss", strings.ToLower(resourceKind)),
+				Verb:      strings.ToLower(verb),
+			},
+		},
+	}
+}
+
+func init() {
+	router.Root().GET("/settings/cani", handleGetSettingsGlobalCanI)
+	router.Root().GET("/settings", handleGetSettingGlobal)
+	router.Root().PUT("/settings", handleSettingsGlobalSave)
+
+	router.Root().GET("/settings/pinnedresources/cani", handleGetSettingsGlobalCanI)
+	router.Root().GET("/settings/pinnedresources", handleSettingsGetPinned)
+	router.Root().PUT("/settings/pinnedresources", handleSettingsSavePinned)
+	router.Root().DELETE("/settings/pinnedresources/:kind/:nameOrNamespace/:name", handleSettingsDeletePinned)
+	router.Root().DELETE("/settings/pinnedresources/:kind/:nameOrNamespace", handleSettingsDeletePinned)
+}
+
+func handleGetSettingsGlobalCanI(c *gin.Context) {
+	if args.DisableSettingsAuthorizer() {
+		c.JSON(http.StatusOK, CanIResponse{Allowed: true})
+		return
+	}
+
+	verb := c.Param("verb")
+	if len(verb) == 0 {
+		verb = http.MethodGet
+	}
+
+	canI := client.CanI(c.Request, ToSelfSubjectAccessReview(
+		args.Namespace(),
+		args.SettingsConfigMapName(),
+		ConfigMapKindName,
+		verb,
+	))
+
+	c.JSON(http.StatusOK, CanIResponse{Allowed: canI})
+}
 
 func handleGetSettingGlobal(c *gin.Context) {
 	k8sClient := client.InClusterClient()
@@ -67,7 +90,7 @@ func handleGetSettingGlobal(c *gin.Context) {
 
 func handleSettingsGlobalSave(c *gin.Context) {
 	k8sClient := client.InClusterClient()
-	settings := new(api.Settings)
+	settings := new(Settings)
 	if err := c.Bind(settings); err != nil {
 		c.JSON(http.StatusBadRequest, err)
 		return
@@ -94,7 +117,7 @@ func handleSettingsSavePinned(c *gin.Context) {
 		return
 	}
 
-	pinnedResource := new(api.PinnedResource)
+	pinnedResource := new(PinnedResource)
 	if err := c.Bind(pinnedResource); err != nil {
 		c.JSON(http.StatusBadRequest, err)
 		return
@@ -124,7 +147,7 @@ func handleSettingsDeletePinned(c *gin.Context) {
 		namespace = ""
 	}
 
-	resource := &api.PinnedResource{
+	resource := &PinnedResource{
 		Kind:      c.Request.PathValue("kind"),
 		Name:      name,
 		Namespace: namespace,

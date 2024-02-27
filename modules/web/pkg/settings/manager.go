@@ -16,6 +16,7 @@ package settings
 
 import (
 	"context"
+	"encoding/json"
 	"log"
 	"net/http"
 	"reflect"
@@ -23,36 +24,54 @@ import (
 
 	v1 "k8s.io/api/core/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	"k8s.io/apimachinery/pkg/types"
 	"k8s.io/client-go/kubernetes"
 	"k8s.io/dashboard/web/pkg/args"
+	"k8s.io/klog/v2"
 
 	"k8s.io/dashboard/errors"
-	"k8s.io/dashboard/web/pkg/settings/api"
 )
 
 // SettingsManager is a structure containing all settings manager members.
 type SettingsManager struct {
-	settings        map[string]api.Settings
-	pinnedResources []api.PinnedResource
+	settings        *Settings
+	pinnedResources []PinnedResource
 	rawSettings     map[string]string
 	mux             sync.Mutex
 }
 
+// SettingsManagerI is used for user settings management.
+type SettingsManagerI interface {
+	// GetGlobalSettings gets current global settings from config map.
+	GetGlobalSettings(client kubernetes.Interface) (s *Settings)
+	// SaveGlobalSettings saves provided global settings in config map.
+	SaveGlobalSettings(client kubernetes.Interface, s *Settings) error
+	// GetPinnedResources gets the pinned resources from config map.
+	GetPinnedResources(client kubernetes.Interface) (r []PinnedResource)
+	// SavePinnedResource adds a new pinned resource to config map.
+	SavePinnedResource(client kubernetes.Interface, r *PinnedResource) error
+	// DeletePinnedResource removes a pinned resource from config map.
+	DeletePinnedResource(client kubernetes.Interface, r *PinnedResource) error
+}
+
 // NewSettingsManager creates new settings manager.
-func NewSettingsManager() api.SettingsManager {
+func NewSettingsManager() SettingsManagerI {
 	return &SettingsManager{
-		settings:        make(map[string]api.Settings),
-		pinnedResources: []api.PinnedResource{},
+		settings:        new(Settings),
+		pinnedResources: []PinnedResource{},
 	}
 }
 
 // load config map data into settings manager and return true if new settings are different.
 func (sm *SettingsManager) load(client kubernetes.Interface) (configMap *v1.ConfigMap, isDifferent bool) {
 	configMap, err := client.CoreV1().ConfigMaps(args.Namespace()).
-		Get(context.TODO(), api.SettingsConfigMapName, metav1.GetOptions{})
+		Get(context.TODO(), args.SettingsConfigMapName(), metav1.GetOptions{})
 	if err != nil {
 		log.Printf("Cannot find settings config map: %s", err.Error())
-		sm.restoreConfigMap(client)
+		err = sm.restoreConfigMap(client)
+		if err != nil {
+			log.Printf("Cannot restore settings config map: %s", err.Error())
+		}
 		return
 	}
 
@@ -63,23 +82,21 @@ func (sm *SettingsManager) load(client kubernetes.Interface) (configMap *v1.Conf
 		sm.mux.Lock()
 		defer sm.mux.Unlock()
 		sm.rawSettings = configMap.Data
-		sm.settings = make(map[string]api.Settings)
+		sm.settings = new(Settings)
 
-		for key, value := range sm.rawSettings {
-			if key == api.PinnedResourcesKey {
-				p, err := api.UnmarshalPinnedResources(value)
-				if err != nil {
-					log.Printf("Cannot unmarshal settings key %s with %s value: %s", key, value, err.Error())
-				} else {
-					sm.pinnedResources = *p
-				}
+		if pinnedResources, ok := sm.rawSettings[PinnedResourcesKey]; ok {
+			if p, err := UnmarshalPinnedResources(pinnedResources); err != nil {
+				klog.InfoS("Cannot unmarshal pinned resources", "pinnedResources", pinnedResources, "error", err)
 			} else {
-				s, err := api.Unmarshal(value)
-				if err != nil {
-					log.Printf("Cannot unmarshal settings key %s with %s value: %s", key, value, err.Error())
-				} else {
-					sm.settings[key] = *s
-				}
+				sm.pinnedResources = *p
+			}
+		}
+
+		if settings, ok := sm.rawSettings[ConfigMapSettingsKey]; ok {
+			if s, err := UnmarshalSettings(settings); err != nil {
+				klog.InfoS("Cannot unmarshal settings", "settings", settings, "error", err)
+			} else {
+				sm.settings = s
 			}
 		}
 	}
@@ -88,52 +105,55 @@ func (sm *SettingsManager) load(client kubernetes.Interface) (configMap *v1.Conf
 }
 
 // restoreConfigMap restores settings config map using default global settings.
-func (sm *SettingsManager) restoreConfigMap(client kubernetes.Interface) {
+func (sm *SettingsManager) restoreConfigMap(client kubernetes.Interface) error {
+	configMap := &v1.ConfigMap{
+		ObjectMeta: metav1.ObjectMeta{
+			Name:      args.SettingsConfigMapName(),
+			Namespace: args.Namespace(),
+		},
+		Data: map[string]string{
+			ConfigMapSettingsKey: defaultSettings.Marshal(),
+		},
+	}
+
 	restoredConfigMap, err := client.CoreV1().ConfigMaps(args.Namespace()).
-		Create(context.TODO(), api.GetDefaultSettingsConfigMap(args.Namespace()), metav1.CreateOptions{})
+		Create(context.TODO(), configMap, metav1.CreateOptions{})
 	if err != nil {
-		log.Printf("Cannot restore settings config map: %s", err.Error())
-	} else {
-		sm.settings = make(map[string]api.Settings)
-		sm.settings[api.GlobalSettingsKey] = api.GetDefaultSettings()
-		sm.rawSettings = restoredConfigMap.Data
+		return err
 	}
+
+	sm.settings = &defaultSettings
+	sm.rawSettings = restoredConfigMap.Data
+
+	return nil
 }
 
-// GetGlobalSettings implements SettingsManager interface. Check it for more information.
-func (sm *SettingsManager) GetGlobalSettings(client kubernetes.Interface) api.Settings {
-	cm, _ := sm.load(client)
-	if cm == nil {
-		return api.GetDefaultSettings()
-	}
+func (sm *SettingsManager) GetGlobalSettings(client kubernetes.Interface) *Settings {
+	_, _ = sm.load(client)
 
-	s, ok := sm.settings[api.GlobalSettingsKey]
-	if !ok {
-		return api.GetDefaultSettings()
-	}
-
-	return s
+	return sm.settings.Default()
 }
 
-// GetGlobalSettings implements SettingsManager interface. Check it for more information.
-func (sm *SettingsManager) SaveGlobalSettings(client kubernetes.Interface, s *api.Settings) error {
-	cm, isDiff := sm.load(client)
+func (sm *SettingsManager) SaveGlobalSettings(client kubernetes.Interface, s *Settings) error {
+	_, isDiff := sm.load(client)
 	if isDiff {
-		return errors.NewInvalid(api.ConcurrentSettingsChangeError)
-	}
-
-	// Data can be nil if the configMap exists but does not have any data
-	if cm.Data == nil {
-		cm.Data = make(map[string]string)
+		return errors.NewInvalid(ConcurrentSettingsChangeError)
 	}
 
 	defer sm.load(client)
-	cm.Data[api.GlobalSettingsKey] = s.Marshal()
-	_, err := client.CoreV1().ConfigMaps(args.Namespace()).Update(context.TODO(), cm, metav1.UpdateOptions{})
+
+	data := map[string]*Settings{ConfigMapSettingsKey: s.Default()}
+	marshal, err := json.Marshal(data)
+	if err != nil {
+		return err
+	}
+
+	_, err = client.CoreV1().ConfigMaps(args.Namespace()).
+		Patch(context.TODO(), args.SettingsConfigMapName(), types.MergePatchType, marshal, metav1.PatchOptions{})
 	return err
 }
 
-func (sm *SettingsManager) GetPinnedResources(client kubernetes.Interface) (r []api.PinnedResource) {
+func (sm *SettingsManager) GetPinnedResources(client kubernetes.Interface) (r []PinnedResource) {
 	cm, _ := sm.load(client)
 	if cm == nil {
 		return
@@ -142,10 +162,10 @@ func (sm *SettingsManager) GetPinnedResources(client kubernetes.Interface) (r []
 	return sm.pinnedResources
 }
 
-func (sm *SettingsManager) SavePinnedResource(client kubernetes.Interface, r *api.PinnedResource) error {
+func (sm *SettingsManager) SavePinnedResource(client kubernetes.Interface, r *PinnedResource) error {
 	cm, isDiff := sm.load(client)
 	if isDiff {
-		return errors.NewInvalid(api.ConcurrentSettingsChangeError)
+		return errors.NewInvalid(ConcurrentSettingsChangeError)
 	}
 
 	// Data can be nil if the configMap exists but does not have any data
@@ -161,25 +181,25 @@ func (sm *SettingsManager) SavePinnedResource(client kubernetes.Interface, r *ap
 	}
 
 	if exists {
-		return errors.NewGenericResponse(http.StatusConflict, api.ResourceAlreadyPinnedError)
+		return errors.NewGenericResponse(http.StatusConflict, ResourceAlreadyPinnedError)
 	}
 
 	defer sm.load(client)
 	sm.pinnedResources = append(sm.pinnedResources, *r)
-	cm.Data[api.PinnedResourcesKey] = api.MarshalPinnedResources(sm.pinnedResources)
+	cm.Data[PinnedResourcesKey] = MarshalPinnedResources(sm.pinnedResources)
 	_, err := client.CoreV1().ConfigMaps(args.Namespace()).Update(context.TODO(), cm, metav1.UpdateOptions{})
 	return err
 }
 
-func (sm *SettingsManager) DeletePinnedResource(client kubernetes.Interface, r *api.PinnedResource) error {
+func (sm *SettingsManager) DeletePinnedResource(client kubernetes.Interface, r *PinnedResource) error {
 	cm, isDiff := sm.load(client)
 	if isDiff {
-		return errors.NewInvalid(api.ConcurrentSettingsChangeError)
+		return errors.NewInvalid(ConcurrentSettingsChangeError)
 	}
 
 	// Data can be nil if the configMap exists but does not have any data
 	if cm.Data == nil {
-		return errors.NewNotFound(api.PinnedResourceNotFoundError)
+		return errors.NewNotFound(PinnedResourceNotFoundError)
 	}
 
 	index := len(sm.pinnedResources)
@@ -190,12 +210,12 @@ func (sm *SettingsManager) DeletePinnedResource(client kubernetes.Interface, r *
 	}
 
 	if index == len(sm.pinnedResources) {
-		return errors.NewNotFound(api.PinnedResourceNotFoundError)
+		return errors.NewNotFound(PinnedResourceNotFoundError)
 	}
 
 	defer sm.load(client)
 	sm.pinnedResources = append(sm.pinnedResources[:index], sm.pinnedResources[index+1:]...)
-	cm.Data[api.PinnedResourcesKey] = api.MarshalPinnedResources(sm.pinnedResources)
+	cm.Data[PinnedResourcesKey] = MarshalPinnedResources(sm.pinnedResources)
 	_, err := client.CoreV1().ConfigMaps(args.Namespace()).Update(context.TODO(), cm, metav1.UpdateOptions{})
 	return err
 }

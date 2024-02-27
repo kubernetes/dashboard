@@ -1,4 +1,4 @@
-package login
+package systembanner
 
 import (
 	"net/http"
@@ -8,40 +8,13 @@ import (
 	"k8s.io/dashboard/web/pkg/router"
 )
 
-type SystemBanner struct {
-	Message  string               `json:"message"`
-	Severity SystemBannerSeverity `json:"severity"`
-}
-
-type SystemBannerSeverity string
-
-const (
-	SystemBannerSeverityInfo    SystemBannerSeverity = "INFO"
-	SystemBannerSeverityWarning SystemBannerSeverity = "WARNING"
-	SystemBannerSeverityError   SystemBannerSeverity = "ERROR"
-)
-
 func init() {
 	router.Root().GET("/systembanner", handleGetSystemBanner)
 }
 
 func handleGetSystemBanner(c *gin.Context) {
-	systemBanner := SystemBanner{
+	c.JSON(http.StatusOK, SystemBanner{
 		Message:  args.SystemBanner(),
-		Severity: getSeverity(args.SystemBannerSeverity()),
-	}
-
-	c.JSON(http.StatusOK, systemBanner)
-}
-
-// getSeverity returns one of the allowed severity values based on given parameter.
-func getSeverity(severity string) SystemBannerSeverity {
-	switch severity {
-	case string(SystemBannerSeverityWarning):
-		return SystemBannerSeverityWarning
-	case string(SystemBannerSeverityError):
-		return SystemBannerSeverityError
-	default:
-		return SystemBannerSeverityInfo
-	}
+		Severity: toSystemBannerSeverity(args.SystemBannerSeverity()),
+	})
 }
