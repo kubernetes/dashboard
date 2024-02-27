@@ -20,8 +20,9 @@ import (
 
 	v1 "k8s.io/api/core/v1"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
-	"k8s.io/dashboard/api/pkg/api"
+
 	"k8s.io/dashboard/api/pkg/resource/dataselect"
+	"k8s.io/dashboard/types"
 )
 
 func TestToPersistentVolumeList(t *testing.T) {
@@ -60,14 +61,14 @@ func TestToPersistentVolumeList(t *testing.T) {
 				},
 			},
 			&PersistentVolumeList{
-				ListMeta: api.ListMeta{
+				ListMeta: types.ListMeta{
 					TotalItems: 1,
 				},
 				Items: []PersistentVolume{{
-					TypeMeta: api.TypeMeta{
+					TypeMeta: types.TypeMeta{
 						Kind: "persistentvolume",
 					},
-					ObjectMeta: api.ObjectMeta{
+					ObjectMeta: types.ObjectMeta{
 						Name: "foo",
 					},
 					Capacity:      nil,

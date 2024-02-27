@@ -17,7 +17,7 @@ package common
 import (
 	v1 "k8s.io/api/core/v1"
 
-	"k8s.io/dashboard/client"
+	"k8s.io/dashboard/helpers"
 )
 
 // FilterNamespacedServicesBySelector returns services targeted by given resource selector in
@@ -28,7 +28,7 @@ func FilterNamespacedServicesBySelector(services []v1.Service, namespace string,
 	var matchingServices []v1.Service
 	for _, service := range services {
 		if service.ObjectMeta.Namespace == namespace &&
-			client.IsSelectorMatching(service.Spec.Selector, resourceSelector) {
+			helpers.IsSelectorMatching(service.Spec.Selector, resourceSelector) {
 			matchingServices = append(matchingServices, service)
 		}
 	}

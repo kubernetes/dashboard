@@ -19,10 +19,10 @@ import (
 	"time"
 
 	v1 "k8s.io/api/core/v1"
-	"k8s.io/apimachinery/pkg/types"
+	apimachinery "k8s.io/apimachinery/pkg/types"
 
 	integrationapi "k8s.io/dashboard/api/pkg/integration/api"
-	"k8s.io/dashboard/client"
+	"k8s.io/dashboard/types"
 )
 
 // MetricClient is an interface that exposes API used by dashboard to show graphs and sparklines.
@@ -83,13 +83,13 @@ var AggregatingFunctions = map[AggregationMode]func([]int64) int64{
 // to native resource (supported by heapster) to which derived resource should be converted.
 // For example, deployment is not available in heapster so it has to be converted to its pods before downloading any data.
 // Hence deployments map to pods.
-var DerivedResources = map[client.ResourceKind]client.ResourceKind{
-	client.ResourceKindDeployment:            client.ResourceKindPod,
-	client.ResourceKindReplicaSet:            client.ResourceKindPod,
-	client.ResourceKindReplicationController: client.ResourceKindPod,
-	client.ResourceKindDaemonSet:             client.ResourceKindPod,
-	client.ResourceKindStatefulSet:           client.ResourceKindPod,
-	client.ResourceKindJob:                   client.ResourceKindPod,
+var DerivedResources = map[types.ResourceKind]types.ResourceKind{
+	types.ResourceKindDeployment:            types.ResourceKindPod,
+	types.ResourceKindReplicaSet:            types.ResourceKindPod,
+	types.ResourceKindReplicationController: types.ResourceKindPod,
+	types.ResourceKindDaemonSet:             types.ResourceKindPod,
+	types.ResourceKindStatefulSet:           types.ResourceKindPod,
+	types.ResourceKindJob:                   types.ResourceKindPod,
 }
 
 // ResourceSelector is a structure used to quickly and uniquely identify given resource.
@@ -98,13 +98,13 @@ type ResourceSelector struct {
 	// Namespace of this resource.
 	Namespace string
 	// Type of this resource
-	ResourceType client.ResourceKind
+	ResourceType types.ResourceKind
 	// Name of this resource.
 	ResourceName string
 	// Selector used to identify this resource (should be used only for Deployments!).
 	Selector map[string]string
 	// UID is resource unique identifier.
-	UID types.UID
+	UID apimachinery.UID
 }
 
 const (
@@ -125,7 +125,7 @@ type MetricPoint struct {
 }
 
 // Label stores information about identity of resources (UIDs) described by metric.
-type Label map[client.ResourceKind][]types.UID
+type Label map[types.ResourceKind][]apimachinery.UID
 
 // AddMetricLabel returns a unique combined Label of self and other resource.
 // New label describes both resources.
@@ -134,7 +134,7 @@ func (self Label) AddMetricLabel(other Label) Label {
 		return self
 	}
 
-	uniqueMap := map[types.UID]bool{}
+	uniqueMap := map[apimachinery.UID]bool{}
 	for _, v := range self {
 		for _, t := range v {
 			uniqueMap[t] = true

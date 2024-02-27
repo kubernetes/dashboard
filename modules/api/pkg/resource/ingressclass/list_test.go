@@ -22,9 +22,8 @@ import (
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/client-go/kubernetes/fake"
 
-	"k8s.io/dashboard/api/pkg/api"
 	"k8s.io/dashboard/api/pkg/resource/dataselect"
-	internalclient "k8s.io/dashboard/client"
+	"k8s.io/dashboard/types"
 )
 
 func TestGetIngressClassList(t *testing.T) {
@@ -45,14 +44,14 @@ func TestGetIngressClassList(t *testing.T) {
 				}},
 			expectedActions: []string{"list"},
 			expected: &IngressClassList{
-				ListMeta: api.ListMeta{TotalItems: 1},
+				ListMeta: types.ListMeta{TotalItems: 1},
 				Items: []IngressClass{
 					{
-						ObjectMeta: api.ObjectMeta{
+						ObjectMeta: types.ObjectMeta{
 							Name:   "ingress-1",
 							Labels: map[string]string{},
 						},
-						TypeMeta: api.TypeMeta{Kind: internalclient.ResourceKindIngressClass},
+						TypeMeta: types.TypeMeta{Kind: types.ResourceKindIngressClass},
 					},
 				},
 				Errors: []error{},
@@ -94,14 +93,14 @@ func TestToIngressClass(t *testing.T) {
 		{
 			ingressClass: &networkingv1.IngressClass{},
 			expected: IngressClass{
-				TypeMeta: api.TypeMeta{Kind: internalclient.ResourceKindIngressClass},
+				TypeMeta: types.TypeMeta{Kind: types.ResourceKindIngressClass},
 			},
 		}, {
 			ingressClass: &networkingv1.IngressClass{
 				ObjectMeta: metaV1.ObjectMeta{Name: "test-ic"}},
 			expected: IngressClass{
-				ObjectMeta: api.ObjectMeta{Name: "test-ic"},
-				TypeMeta:   api.TypeMeta{Kind: internalclient.ResourceKindIngressClass},
+				ObjectMeta: types.ObjectMeta{Name: "test-ic"},
+				TypeMeta:   types.TypeMeta{Kind: types.ResourceKindIngressClass},
 			},
 		}, {
 			ingressClass: &networkingv1.IngressClass{
@@ -109,8 +108,8 @@ func TestToIngressClass(t *testing.T) {
 				Spec:       networkingv1.IngressClassSpec{Controller: "k8s.io/ingress-nginx"},
 			},
 			expected: IngressClass{
-				ObjectMeta: api.ObjectMeta{Name: "test-ic"},
-				TypeMeta:   api.TypeMeta{Kind: internalclient.ResourceKindIngressClass},
+				ObjectMeta: types.ObjectMeta{Name: "test-ic"},
+				TypeMeta:   types.TypeMeta{Kind: types.ResourceKindIngressClass},
 				Controller: "k8s.io/ingress-nginx",
 			},
 		}, {
@@ -119,8 +118,8 @@ func TestToIngressClass(t *testing.T) {
 				Spec:       networkingv1.IngressClassSpec{Controller: "k8s.io/ingress-nginx", Parameters: &paramRef},
 			},
 			expected: IngressClass{
-				ObjectMeta: api.ObjectMeta{Name: "test-ic"},
-				TypeMeta:   api.TypeMeta{Kind: internalclient.ResourceKindIngressClass},
+				ObjectMeta: types.ObjectMeta{Name: "test-ic"},
+				TypeMeta:   types.TypeMeta{Kind: types.ResourceKindIngressClass},
 				Controller: "k8s.io/ingress-nginx",
 			},
 		},

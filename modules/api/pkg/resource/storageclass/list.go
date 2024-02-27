@@ -20,16 +20,15 @@ import (
 	storage "k8s.io/api/storage/v1"
 	"k8s.io/client-go/kubernetes"
 
-	"k8s.io/dashboard/api/pkg/api"
 	"k8s.io/dashboard/api/pkg/resource/common"
 	"k8s.io/dashboard/api/pkg/resource/dataselect"
-	internalclient "k8s.io/dashboard/client"
 	"k8s.io/dashboard/errors"
+	"k8s.io/dashboard/types"
 )
 
 // StorageClassList holds a list of Storage Class objects in the cluster.
 type StorageClassList struct {
-	ListMeta api.ListMeta   `json:"listMeta"`
+	ListMeta types.ListMeta `json:"listMeta"`
 	Items    []StorageClass `json:"items"`
 
 	// List of non-critical errors, that occurred during resource retrieval.
@@ -38,8 +37,8 @@ type StorageClassList struct {
 
 // StorageClass is a representation of a Kubernetes Storage Class object.
 type StorageClass struct {
-	ObjectMeta  api.ObjectMeta    `json:"objectMeta"`
-	TypeMeta    api.TypeMeta      `json:"typeMeta"`
+	ObjectMeta  types.ObjectMeta  `json:"objectMeta"`
+	TypeMeta    types.TypeMeta    `json:"typeMeta"`
 	Provisioner string            `json:"provisioner"`
 	Parameters  map[string]string `json:"parameters"`
 }
@@ -74,13 +73,13 @@ func toStorageClassList(storageClasses []storage.StorageClass, nonCriticalErrors
 
 	storageClassList := &StorageClassList{
 		Items:    make([]StorageClass, 0),
-		ListMeta: api.ListMeta{TotalItems: len(storageClasses)},
+		ListMeta: types.ListMeta{TotalItems: len(storageClasses)},
 		Errors:   nonCriticalErrors,
 	}
 
 	storageClassCells, filteredTotal := dataselect.GenericDataSelectWithFilter(toCells(storageClasses), dsQuery)
 	storageClasses = fromCells(storageClassCells)
-	storageClassList.ListMeta = api.ListMeta{TotalItems: filteredTotal}
+	storageClassList.ListMeta = types.ListMeta{TotalItems: filteredTotal}
 
 	for _, storageClass := range storageClasses {
 		storageClassList.Items = append(storageClassList.Items, toStorageClass(&storageClass))
@@ -91,8 +90,8 @@ func toStorageClassList(storageClasses []storage.StorageClass, nonCriticalErrors
 
 func toStorageClass(storageClass *storage.StorageClass) StorageClass {
 	return StorageClass{
-		ObjectMeta:  api.NewObjectMeta(storageClass.ObjectMeta),
-		TypeMeta:    api.NewTypeMeta(internalclient.ResourceKindStorageClass),
+		ObjectMeta:  types.NewObjectMeta(storageClass.ObjectMeta),
+		TypeMeta:    types.NewTypeMeta(types.ResourceKindStorageClass),
 		Provisioner: storageClass.Provisioner,
 		Parameters:  storageClass.Parameters,
 	}

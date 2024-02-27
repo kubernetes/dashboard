@@ -20,7 +20,8 @@ import (
 
 	v1 "k8s.io/api/core/v1"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
-	"k8s.io/dashboard/api/pkg/api"
+
+	"k8s.io/dashboard/types"
 )
 
 func TestGetConfigMapDetail(t *testing.T) {
@@ -34,8 +35,8 @@ func TestGetConfigMapDetail(t *testing.T) {
 			},
 			&ConfigMapDetail{
 				ConfigMap: ConfigMap{
-					TypeMeta:   api.TypeMeta{Kind: "configmap"},
-					ObjectMeta: api.ObjectMeta{Name: "foo"},
+					TypeMeta:   types.TypeMeta{Kind: "configmap"},
+					ObjectMeta: types.ObjectMeta{Name: "foo"},
 				},
 				Data: map[string]string{"app": "my-name"},
 			},

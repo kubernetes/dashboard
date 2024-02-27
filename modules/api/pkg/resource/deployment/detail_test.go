@@ -24,10 +24,9 @@ import (
 	"k8s.io/apimachinery/pkg/util/intstr"
 	"k8s.io/client-go/kubernetes/fake"
 
-	"k8s.io/dashboard/api/pkg/api"
 	"k8s.io/dashboard/api/pkg/resource/common"
 	"k8s.io/dashboard/api/pkg/resource/dataselect"
-	internalclient "k8s.io/dashboard/client"
+	"k8s.io/dashboard/types"
 )
 
 func createDeployment(name, namespace, podTemplateName string, replicas int32, podLabel,
@@ -108,13 +107,13 @@ func TestGetDeploymentDetail(t *testing.T) {
 			deployment,
 			&DeploymentDetail{
 				Deployment: Deployment{
-					ObjectMeta: api.ObjectMeta{
+					ObjectMeta: types.ObjectMeta{
 						Name:      "dp-1",
 						Namespace: "ns-1",
 						Labels:    map[string]string{"foo": "bar"},
 					},
-					TypeMeta: api.TypeMeta{
-						Kind:        internalclient.ResourceKindDeployment,
+					TypeMeta: types.TypeMeta{
+						Kind:        types.ResourceKindDeployment,
 						Scalable:    true,
 						Restartable: true,
 					},

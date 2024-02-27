@@ -24,14 +24,13 @@ import (
 	"k8s.io/apimachinery/pkg/fields"
 	k8sClient "k8s.io/client-go/kubernetes"
 
-	"k8s.io/dashboard/api/pkg/api"
 	metricapi "k8s.io/dashboard/api/pkg/integration/metric/api"
 	"k8s.io/dashboard/api/pkg/resource/common"
 	"k8s.io/dashboard/api/pkg/resource/dataselect"
 	"k8s.io/dashboard/api/pkg/resource/event"
 	"k8s.io/dashboard/api/pkg/resource/pod"
-	"k8s.io/dashboard/client"
 	"k8s.io/dashboard/errors"
+	"k8s.io/dashboard/types"
 )
 
 // NodeAllocatedResources describes node allocated resources.
@@ -338,8 +337,8 @@ func toNodeDetail(node v1.Node, pods *pod.PodList, eventList *common.EventList,
 	allocatedResources NodeAllocatedResources, metrics []metricapi.Metric, nonCriticalErrors []error) NodeDetail {
 	return NodeDetail{
 		Node: Node{
-			ObjectMeta:         api.NewObjectMeta(node.ObjectMeta),
-			TypeMeta:           api.NewTypeMeta(client.ResourceKindNode),
+			ObjectMeta:         types.NewObjectMeta(node.ObjectMeta),
+			TypeMeta:           types.NewTypeMeta(types.ResourceKindNode),
 			AllocatedResources: allocatedResources,
 		},
 		Phase:           node.Status.Phase,

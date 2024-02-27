@@ -22,7 +22,7 @@ import (
 
 	"k8s.io/dashboard/api/pkg/resource/common"
 	"k8s.io/dashboard/api/pkg/resource/controller"
-	internalclient "k8s.io/dashboard/client"
+	"k8s.io/dashboard/helpers"
 )
 
 // GetLogSources returns all log sources for a given resource. A log source identifies a log file through the combination of pod & container
@@ -53,7 +53,7 @@ func getLogSourcesFromController(k8sClient kubernetes.Interface, ns, resourceNam
 	if err != nil {
 		return controller.LogSources{}, err
 	}
-	allPods, err := k8sClient.CoreV1().Pods(ns).List(context.TODO(), internalclient.ListEverything)
+	allPods, err := k8sClient.CoreV1().Pods(ns).List(context.TODO(), helpers.ListEverything)
 	if err != nil {
 		return controller.LogSources{}, err
 	}

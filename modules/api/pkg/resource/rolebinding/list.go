@@ -20,17 +20,16 @@ import (
 	rbac "k8s.io/api/rbac/v1"
 	"k8s.io/client-go/kubernetes"
 
-	"k8s.io/dashboard/api/pkg/api"
 	"k8s.io/dashboard/api/pkg/resource/common"
 	"k8s.io/dashboard/api/pkg/resource/dataselect"
-	internalclient "k8s.io/dashboard/client"
 	"k8s.io/dashboard/errors"
+	"k8s.io/dashboard/types"
 )
 
 // RoleBindingList contains a list of roleBindings in the cluster.
 type RoleBindingList struct {
-	ListMeta api.ListMeta  `json:"listMeta"`
-	Items    []RoleBinding `json:"items"`
+	ListMeta types.ListMeta `json:"listMeta"`
+	Items    []RoleBinding  `json:"items"`
 
 	// List of non-critical errors, that occurred during resource retrieval.
 	Errors []error `json:"errors"`
@@ -39,8 +38,8 @@ type RoleBindingList struct {
 // RoleBinding is a presentation layer view of Kubernetes roleBinding. This means it is roleBinding plus additional
 // augmented data we can get from other sources.
 type RoleBinding struct {
-	ObjectMeta api.ObjectMeta `json:"objectMeta"`
-	TypeMeta   api.TypeMeta   `json:"typeMeta"`
+	ObjectMeta types.ObjectMeta `json:"objectMeta"`
+	TypeMeta   types.TypeMeta   `json:"typeMeta"`
 }
 
 // GetRoleBindingList returns a list of all RoleBindings in the cluster.
@@ -68,14 +67,14 @@ func GetRoleBindingListFromChannels(channels *common.ResourceChannels, dsQuery *
 
 func toRoleBinding(roleBinding rbac.RoleBinding) RoleBinding {
 	return RoleBinding{
-		ObjectMeta: api.NewObjectMeta(roleBinding.ObjectMeta),
-		TypeMeta:   api.NewTypeMeta(internalclient.ResourceKindRoleBinding),
+		ObjectMeta: types.NewObjectMeta(roleBinding.ObjectMeta),
+		TypeMeta:   types.NewTypeMeta(types.ResourceKindRoleBinding),
 	}
 }
 
 func toRoleBindingList(roleBindings []rbac.RoleBinding, nonCriticalErrors []error, dsQuery *dataselect.DataSelectQuery) *RoleBindingList {
 	result := &RoleBindingList{
-		ListMeta: api.ListMeta{TotalItems: len(roleBindings)},
+		ListMeta: types.ListMeta{TotalItems: len(roleBindings)},
 		Errors:   nonCriticalErrors,
 	}
 
@@ -85,7 +84,7 @@ func toRoleBindingList(roleBindings []rbac.RoleBinding, nonCriticalErrors []erro
 	}
 
 	roleBindingCells, filteredTotal := dataselect.GenericDataSelectWithFilter(toCells(items), dsQuery)
-	result.ListMeta = api.ListMeta{TotalItems: filteredTotal}
+	result.ListMeta = types.ListMeta{TotalItems: filteredTotal}
 	result.Items = fromCells(roleBindingCells)
 	return result
 }

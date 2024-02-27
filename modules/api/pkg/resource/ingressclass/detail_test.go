@@ -20,7 +20,8 @@ import (
 
 	networkingv1 "k8s.io/api/networking/v1"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
-	"k8s.io/dashboard/api/pkg/api"
+
+	"k8s.io/dashboard/types"
 )
 
 func TestToIngressClassDetails(t *testing.T) {
@@ -39,8 +40,8 @@ func TestToIngressClassDetails(t *testing.T) {
 			},
 			expected: IngressClassDetail{
 				IngressClass: IngressClass{
-					ObjectMeta: api.ObjectMeta{Name: "test-ic"},
-					TypeMeta:   api.TypeMeta{Kind: "ingressclass"},
+					ObjectMeta: types.ObjectMeta{Name: "test-ic"},
+					TypeMeta:   types.TypeMeta{Kind: "ingressclass"},
 					Controller: "k8s.io/ingress-nginx"},
 				Parameters: map[string]string{"Kind": "pods", "Name": "test"},
 			},
@@ -51,8 +52,8 @@ func TestToIngressClassDetails(t *testing.T) {
 			},
 			expected: IngressClassDetail{
 				IngressClass: IngressClass{
-					ObjectMeta: api.ObjectMeta{Name: "test-ic"},
-					TypeMeta:   api.TypeMeta{Kind: "ingressclass"},
+					ObjectMeta: types.ObjectMeta{Name: "test-ic"},
+					TypeMeta:   types.TypeMeta{Kind: "ingressclass"},
 					Controller: "k8s.io/ingress-nginx"},
 				Parameters: map[string]string{"ApiGroup": "k8s.example.com", "Kind": "pods", "Name": "test", "Scope": "Namespace"},
 			},

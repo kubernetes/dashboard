@@ -12,12 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package client
+package helpers_test
 
 import (
 	"testing"
 
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+
+	"k8s.io/dashboard/helpers"
 )
 
 func TestIsSelectorMatching(t *testing.T) {
@@ -41,7 +43,7 @@ func TestIsSelectorMatching(t *testing.T) {
 			map[string]string{"app": "my-name", "version": "1.1"}, true},
 	}
 	for _, c := range cases {
-		actual := IsSelectorMatching(c.serviceSelector, c.replicationControllerSelector)
+		actual := helpers.IsSelectorMatching(c.serviceSelector, c.replicationControllerSelector)
 		if actual != c.expected {
 			t.Errorf("isSelectorMatching(%+v, %+v) == %+v, expected %+v",
 				c.serviceSelector, c.replicationControllerSelector, actual, c.expected)
@@ -80,7 +82,7 @@ func TestIsLabelSelectorMatching(t *testing.T) {
 			true},
 	}
 	for _, c := range cases {
-		actual := IsLabelSelectorMatching(c.serviceSelector, c.daemonSetselector)
+		actual := helpers.IsLabelSelectorMatching(c.serviceSelector, c.daemonSetselector)
 		if actual != c.expected {
 			t.Errorf("isLabelSelectorMatching(%+v, %+v) == %+v, expected %+v",
 				c.serviceSelector, c.daemonSetselector, actual, c.expected)

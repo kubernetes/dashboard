@@ -19,12 +19,11 @@ import (
 	apiextensionsv1 "k8s.io/apiextensions-apiserver/pkg/apis/apiextensions/v1"
 	apiextensionsclientset "k8s.io/apiextensions-apiserver/pkg/client/clientset/clientset"
 
-	"k8s.io/dashboard/api/pkg/api"
 	"k8s.io/dashboard/api/pkg/resource/common"
 	"k8s.io/dashboard/api/pkg/resource/customresourcedefinition/types"
 	"k8s.io/dashboard/api/pkg/resource/dataselect"
-	internalclient "k8s.io/dashboard/client"
 	"k8s.io/dashboard/errors"
+	commontypes "k8s.io/dashboard/types"
 )
 
 // GetCustomResourceDefinitionList returns all the custom resource definitions in the cluster.
@@ -44,7 +43,7 @@ func GetCustomResourceDefinitionList(client apiextensionsclientset.Interface, ds
 func toCustomResourceDefinitionList(crds []apiextensionsv1.CustomResourceDefinition, nonCriticalErrors []error, dsQuery *dataselect.DataSelectQuery) *types.CustomResourceDefinitionList {
 	crdList := &types.CustomResourceDefinitionList{
 		Items:    make([]types.CustomResourceDefinition, 0),
-		ListMeta: api.ListMeta{TotalItems: len(crds)},
+		ListMeta: commontypes.ListMeta{TotalItems: len(crds)},
 		Errors:   nonCriticalErrors,
 	}
 
@@ -54,12 +53,12 @@ func toCustomResourceDefinitionList(crds []apiextensionsv1.CustomResourceDefinit
 
 	crdCells, filteredTotal := dataselect.GenericDataSelectWithFilter(toCells(crds), dsQuery)
 	crds = fromCells(crdCells)
-	crdList.ListMeta = api.ListMeta{TotalItems: filteredTotal}
+	crdList.ListMeta = commontypes.ListMeta{TotalItems: filteredTotal}
 
 	for _, crd := range crds {
 		if !isServed(crd) {
 			filteredTotal--
-			crdList.ListMeta = api.ListMeta{TotalItems: filteredTotal}
+			crdList.ListMeta = commontypes.ListMeta{TotalItems: filteredTotal}
 			continue
 		}
 
@@ -71,8 +70,8 @@ func toCustomResourceDefinitionList(crds []apiextensionsv1.CustomResourceDefinit
 
 func toCustomResourceDefinition(crd *apiextensionsv1.CustomResourceDefinition) types.CustomResourceDefinition {
 	return types.CustomResourceDefinition{
-		ObjectMeta:  api.NewObjectMeta(crd.ObjectMeta),
-		TypeMeta:    api.NewTypeMeta(internalclient.ResourceKindCustomResourceDefinition),
+		ObjectMeta:  commontypes.NewObjectMeta(crd.ObjectMeta),
+		TypeMeta:    commontypes.NewTypeMeta(commontypes.ResourceKindCustomResourceDefinition),
 		Version:     crd.Spec.Versions[0].Name,
 		Group:       crd.Spec.Group,
 		Scope:       toCustomResourceDefinitionScope(crd.Spec.Scope),

@@ -32,7 +32,6 @@ import (
 	"k8s.io/apimachinery/pkg/runtime"
 	"k8s.io/client-go/tools/remotecommand"
 
-	"k8s.io/dashboard/api/pkg/api"
 	"k8s.io/dashboard/api/pkg/handler/parser"
 	"k8s.io/dashboard/api/pkg/integration"
 	"k8s.io/dashboard/api/pkg/resource/clusterrole"
@@ -114,7 +113,7 @@ func CreateHTTPAPIHandler(iManager integration.Manager) (http.Handler, error) {
 	apiV1Ws.Route(
 		apiV1Ws.GET("csrftoken/{action}").
 			To(apiHandler.handleGetCsrfToken).
-			Writes(api.CsrfToken{}))
+			Writes(csrf.Response{}))
 
 	apiV1Ws.Route(
 		apiV1Ws.POST("/appdeployment").
@@ -834,7 +833,7 @@ func (apiHandler *APIHandler) handleGetRoleBindingDetail(request *restful.Reques
 func (apiHandler *APIHandler) handleGetCsrfToken(request *restful.Request, response *restful.Response) {
 	action := request.PathParameter("action")
 	token := xsrftoken.Generate(csrf.Key(), "none", action)
-	response.WriteHeaderAndEntity(http.StatusOK, api.CsrfToken{Token: token})
+	response.WriteHeaderAndEntity(http.StatusOK, csrf.Response{Token: token})
 }
 
 func (apiHandler *APIHandler) handleGetStatefulSetList(request *restful.Request, response *restful.Response) {

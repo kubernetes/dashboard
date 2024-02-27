@@ -22,7 +22,7 @@ import (
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 
 	metricapi "k8s.io/dashboard/api/pkg/integration/metric/api"
-	internalclient "k8s.io/dashboard/client"
+	"k8s.io/dashboard/types"
 )
 
 func TestGetSidecarSelector(t *testing.T) {
@@ -72,41 +72,41 @@ func TestGetSidecarSelector(t *testing.T) {
 		Info                   string
 		ResourceSelector       metricapi.ResourceSelector
 		ExpectedPath           string
-		ExpectedTargetResource internalclient.ResourceKind
+		ExpectedTargetResource types.ResourceKind
 		ExpectedResources      []string
 	}{
 		{
 			"ResourceSelector for native resource - pod",
 			metricapi.ResourceSelector{
 				Namespace:    "bar",
-				ResourceType: internalclient.ResourceKindPod,
+				ResourceType: types.ResourceKindPod,
 				ResourceName: "foo",
 			},
 			`namespaces/bar/pod-list/`,
-			internalclient.ResourceKindPod,
+			types.ResourceKindPod,
 			[]string{"foo"},
 		},
 		{
 			"ResourceSelector for native resource - node",
 			metricapi.ResourceSelector{
 				Namespace:    "barn",
-				ResourceType: internalclient.ResourceKindNode,
+				ResourceType: types.ResourceKindNode,
 				ResourceName: "foon",
 			},
 			`nodes/`,
-			internalclient.ResourceKindNode,
+			types.ResourceKindNode,
 			[]string{"foon"},
 		},
 		{
 			"ResourceSelector for derived resource with old style selector",
 			metricapi.ResourceSelector{
 				Namespace:    "a",
-				ResourceType: internalclient.ResourceKindDeployment,
+				ResourceType: types.ResourceKindDeployment,
 				ResourceName: "baba",
 				Selector:     resource1,
 			},
 			`namespaces/a/pod-list/`,
-			internalclient.ResourceKindPod,
+			types.ResourceKindPod,
 			[]string{"1", "3"},
 		},
 	}

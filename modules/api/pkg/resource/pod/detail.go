@@ -30,20 +30,19 @@ import (
 	"k8s.io/apimachinery/pkg/runtime"
 	"k8s.io/client-go/kubernetes"
 
-	"k8s.io/dashboard/api/pkg/api"
 	metricapi "k8s.io/dashboard/api/pkg/integration/metric/api"
 	"k8s.io/dashboard/api/pkg/resource/common"
 	"k8s.io/dashboard/api/pkg/resource/controller"
 	"k8s.io/dashboard/api/pkg/resource/dataselect"
 	"k8s.io/dashboard/api/pkg/resource/persistentvolumeclaim"
-	"k8s.io/dashboard/client"
 	"k8s.io/dashboard/errors"
+	"k8s.io/dashboard/types"
 )
 
 // PodDetail is a presentation layer view of Kubernetes Pod resource.
 type PodDetail struct {
-	ObjectMeta                api.ObjectMeta                                  `json:"objectMeta"`
-	TypeMeta                  api.TypeMeta                                    `json:"typeMeta"`
+	ObjectMeta                types.ObjectMeta                                `json:"objectMeta"`
+	TypeMeta                  types.TypeMeta                                  `json:"typeMeta"`
 	PodPhase                  string                                          `json:"podPhase"`
 	PodIP                     string                                          `json:"podIP"`
 	NodeName                  string                                          `json:"nodeName"`
@@ -284,8 +283,8 @@ func toPodDetail(pod *v1.Pod, metrics []metricapi.Metric, configMaps *v1.ConfigM
 	controller *controller.ResourceOwner, events *common.EventList,
 	persistentVolumeClaimList *persistentvolumeclaim.PersistentVolumeClaimList, nonCriticalErrors []error) PodDetail {
 	return PodDetail{
-		ObjectMeta:                api.NewObjectMeta(pod.ObjectMeta),
-		TypeMeta:                  api.NewTypeMeta(client.ResourceKindPod),
+		ObjectMeta:                types.NewObjectMeta(pod.ObjectMeta),
+		TypeMeta:                  types.NewTypeMeta(types.ResourceKindPod),
 		PodPhase:                  getPodStatus(*pod),
 		PodIP:                     pod.Status.PodIP,
 		RestartCount:              getRestartCount(*pod),

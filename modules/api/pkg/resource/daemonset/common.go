@@ -28,7 +28,7 @@ import (
 	"k8s.io/dashboard/api/pkg/resource/common"
 	"k8s.io/dashboard/api/pkg/resource/dataselect"
 	"k8s.io/dashboard/api/pkg/resource/event"
-	internalclient "k8s.io/dashboard/client"
+	"k8s.io/dashboard/types"
 )
 
 // GetServicesForDSDeletion is based on given selector returns list of services that are candidates for deletion.
@@ -84,7 +84,7 @@ func (self DaemonSetCell) GetProperty(name dataselect.PropertyName) dataselect.C
 func (self DaemonSetCell) GetResourceSelector() *metricapi.ResourceSelector {
 	return &metricapi.ResourceSelector{
 		Namespace:    self.ObjectMeta.Namespace,
-		ResourceType: internalclient.ResourceKindDaemonSet,
+		ResourceType: types.ResourceKindDaemonSet,
 		ResourceName: self.ObjectMeta.Name,
 		UID:          self.UID,
 	}

@@ -22,7 +22,7 @@ import (
 	"k8s.io/dashboard/api/pkg/resource/common"
 	"k8s.io/dashboard/api/pkg/resource/dataselect"
 	"k8s.io/dashboard/api/pkg/resource/event"
-	internalclient "k8s.io/dashboard/client"
+	"k8s.io/dashboard/types"
 )
 
 // The code below allows to perform complex data section on Replica Set
@@ -46,7 +46,7 @@ func (self ReplicaSetCell) GetProperty(name dataselect.PropertyName) dataselect.
 func (self ReplicaSetCell) GetResourceSelector() *metricapi.ResourceSelector {
 	return &metricapi.ResourceSelector{
 		Namespace:    self.ObjectMeta.Namespace,
-		ResourceType: internalclient.ResourceKindReplicaSet,
+		ResourceType: types.ResourceKindReplicaSet,
 		ResourceName: self.ObjectMeta.Name,
 		UID:          self.UID,
 	}

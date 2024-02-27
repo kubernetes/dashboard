@@ -20,17 +20,16 @@ import (
 	rbac "k8s.io/api/rbac/v1"
 	"k8s.io/client-go/kubernetes"
 
-	"k8s.io/dashboard/api/pkg/api"
 	"k8s.io/dashboard/api/pkg/resource/common"
 	"k8s.io/dashboard/api/pkg/resource/dataselect"
-	internalclient "k8s.io/dashboard/client"
 	"k8s.io/dashboard/errors"
+	"k8s.io/dashboard/types"
 )
 
 // RoleList contains a list of role in the cluster.
 type RoleList struct {
-	ListMeta api.ListMeta `json:"listMeta"`
-	Items    []Role       `json:"items"`
+	ListMeta types.ListMeta `json:"listMeta"`
+	Items    []Role         `json:"items"`
 
 	// List of non-critical errors, that occurred during resource retrieval.
 	Errors []error `json:"errors"`
@@ -39,8 +38,8 @@ type RoleList struct {
 // Role is a presentation layer view of Kubernetes role. This means it is role plus additional
 // augmented data we can get from other sources.
 type Role struct {
-	ObjectMeta api.ObjectMeta `json:"objectMeta"`
-	TypeMeta   api.TypeMeta   `json:"typeMeta"`
+	ObjectMeta types.ObjectMeta `json:"objectMeta"`
+	TypeMeta   types.TypeMeta   `json:"typeMeta"`
 }
 
 // GetRoleList returns a list of all Roles in the cluster.
@@ -68,14 +67,14 @@ func GetRoleListFromChannels(channels *common.ResourceChannels, dsQuery *datasel
 
 func toRole(role rbac.Role) Role {
 	return Role{
-		ObjectMeta: api.NewObjectMeta(role.ObjectMeta),
-		TypeMeta:   api.NewTypeMeta(internalclient.ResourceKindRole),
+		ObjectMeta: types.NewObjectMeta(role.ObjectMeta),
+		TypeMeta:   types.NewTypeMeta(types.ResourceKindRole),
 	}
 }
 
 func toRoleList(roles []rbac.Role, nonCriticalErrors []error, dsQuery *dataselect.DataSelectQuery) *RoleList {
 	result := &RoleList{
-		ListMeta: api.ListMeta{TotalItems: len(roles)},
+		ListMeta: types.ListMeta{TotalItems: len(roles)},
 		Errors:   nonCriticalErrors,
 	}
 
@@ -85,7 +84,7 @@ func toRoleList(roles []rbac.Role, nonCriticalErrors []error, dsQuery *dataselec
 	}
 
 	roleCells, filteredTotal := dataselect.GenericDataSelectWithFilter(toCells(items), dsQuery)
-	result.ListMeta = api.ListMeta{TotalItems: filteredTotal}
+	result.ListMeta = types.ListMeta{TotalItems: filteredTotal}
 	result.Items = fromCells(roleCells)
 	return result
 }

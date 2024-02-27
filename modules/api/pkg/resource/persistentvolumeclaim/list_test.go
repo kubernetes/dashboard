@@ -20,8 +20,9 @@ import (
 
 	v1 "k8s.io/api/core/v1"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
-	"k8s.io/dashboard/api/pkg/api"
+
 	"k8s.io/dashboard/api/pkg/resource/dataselect"
+	"k8s.io/dashboard/types"
 )
 
 func TestGetPersistentVolumeClaimList(t *testing.T) {
@@ -42,10 +43,10 @@ func TestGetPersistentVolumeClaimList(t *testing.T) {
 				Status:     v1.PersistentVolumeClaimStatus{Phase: v1.ClaimBound},
 			}},
 			&PersistentVolumeClaimList{
-				ListMeta: api.ListMeta{TotalItems: 1},
+				ListMeta: types.ListMeta{TotalItems: 1},
 				Items: []PersistentVolumeClaim{{
-					TypeMeta:   api.TypeMeta{Kind: "persistentvolumeclaim"},
-					ObjectMeta: api.ObjectMeta{Name: "foo"},
+					TypeMeta:   types.TypeMeta{Kind: "persistentvolumeclaim"},
+					ObjectMeta: types.ObjectMeta{Name: "foo"},
 					Status:     "Bound",
 					Volume:     "my-volume",
 				}},

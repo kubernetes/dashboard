@@ -23,9 +23,8 @@ import (
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/client-go/kubernetes/fake"
 
-	"k8s.io/dashboard/api/pkg/api"
 	"k8s.io/dashboard/api/pkg/resource/dataselect"
-	internalclient "k8s.io/dashboard/client"
+	"k8s.io/dashboard/types"
 )
 
 func TestGetPersistentVolumeClaim(t *testing.T) {
@@ -84,11 +83,11 @@ func TestGetStorageClassPersistentVolumes(t *testing.T) {
 				},
 			}},
 			expected: &PersistentVolumeList{
-				ListMeta: api.ListMeta{TotalItems: 1},
+				ListMeta: types.ListMeta{TotalItems: 1},
 				Items: []PersistentVolume{{
-					TypeMeta:     api.TypeMeta{Kind: internalclient.ResourceKindPersistentVolume},
+					TypeMeta:     types.TypeMeta{Kind: types.ResourceKindPersistentVolume},
 					StorageClass: "test-storage",
-					ObjectMeta: api.ObjectMeta{Name: "pv-1",
+					ObjectMeta: types.ObjectMeta{Name: "pv-1",
 						Labels: map[string]string{"app": "test"}},
 				}},
 				Errors: []error{},

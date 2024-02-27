@@ -20,7 +20,7 @@ import (
 	metricapi "k8s.io/dashboard/api/pkg/integration/metric/api"
 	"k8s.io/dashboard/api/pkg/resource/common"
 	"k8s.io/dashboard/api/pkg/resource/dataselect"
-	internalclient "k8s.io/dashboard/client"
+	"k8s.io/dashboard/types"
 )
 
 // getContainerImages returns container image strings from the given node.
@@ -55,7 +55,7 @@ func (self NodeCell) GetProperty(name dataselect.PropertyName) dataselect.Compar
 func (self NodeCell) GetResourceSelector() *metricapi.ResourceSelector {
 	return &metricapi.ResourceSelector{
 		Namespace:    self.ObjectMeta.Namespace,
-		ResourceType: internalclient.ResourceKindNode,
+		ResourceType: types.ResourceKindNode,
 		ResourceName: self.ObjectMeta.Name,
 		UID:          self.ObjectMeta.UID,
 	}

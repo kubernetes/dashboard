@@ -178,7 +178,7 @@ func Init(options ...Option) {
 
 	config, err := builder.buildBaseConfig()
 	if err != nil {
-		klog.ErrorS(err, "Could not init kubernetes client config")
+		klog.Errorf("Could not init kubernetes client config: %s", err)
 		os.Exit(1)
 	}
 

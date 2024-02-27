@@ -25,6 +25,7 @@ import (
 	restclient "k8s.io/client-go/rest"
 
 	"k8s.io/dashboard/errors"
+	"k8s.io/dashboard/types"
 )
 
 // restClient is an interface for REST operations used in this file.
@@ -55,29 +56,29 @@ type resourceVerber struct {
 	config              *restclient.Config
 }
 
-func (verber *resourceVerber) getRESTClientByType(clientType ClientType) restClient {
+func (verber *resourceVerber) getRESTClientByType(clientType types.ClientType) restClient {
 	switch clientType {
-	case ClientTypeAppsClient:
+	case types.ClientTypeAppsClient:
 		return verber.appsClient
-	case ClientTypeBatchClient:
+	case types.ClientTypeBatchClient:
 		return verber.batchClient
-	case ClientTypeAutoscalingClient:
+	case types.ClientTypeAutoscalingClient:
 		return verber.autoscalingClient
-	case ClientTypeStorageClient:
+	case types.ClientTypeStorageClient:
 		return verber.storageClient
-	case ClientTypeRbacClient:
+	case types.ClientTypeRbacClient:
 		return verber.rbacClient
-	case ClientTypeNetworkingClient:
+	case types.ClientTypeNetworkingClient:
 		return verber.networkingClient
-	case ClientTypeAPIExtensionsClient:
+	case types.ClientTypeAPIExtensionsClient:
 		return verber.apiExtensionsClient
 	default:
 		return verber.client
 	}
 }
 
-func (verber *resourceVerber) getResourceSpecFromKind(kind string, namespaceSet bool) (client restClient, resourceSpec APIMapping, err error) {
-	resourceSpec, ok := KindToAPIMapping[kind]
+func (verber *resourceVerber) getResourceSpecFromKind(kind string, namespaceSet bool) (client restClient, resourceSpec types.APIMapping, err error) {
+	resourceSpec, ok := types.APIMappingByKind(types.ResourceKind(kind))
 	if !ok {
 		var crdInfo crdInfo
 
@@ -92,7 +93,7 @@ func (verber *resourceVerber) getResourceSpecFromKind(kind string, namespaceSet 
 			return
 		}
 
-		resourceSpec = APIMapping{
+		resourceSpec = types.APIMapping{
 			Resource:   crdInfo.pluralName,
 			Namespaced: crdInfo.namespaced,
 		}

@@ -23,10 +23,9 @@ import (
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/client-go/kubernetes/fake"
 
-	"k8s.io/dashboard/api/pkg/api"
 	"k8s.io/dashboard/api/pkg/resource/common"
 	"k8s.io/dashboard/api/pkg/resource/dataselect"
-	internalclient "k8s.io/dashboard/client"
+	"k8s.io/dashboard/types"
 )
 
 func TestGetEvents(t *testing.T) {
@@ -92,15 +91,15 @@ func TestToEventList(t *testing.T) {
 			},
 			"namespace-1",
 			common.EventList{
-				ListMeta: api.ListMeta{TotalItems: 2},
+				ListMeta: types.ListMeta{TotalItems: 2},
 				Events: []common.Event{
 					{
-						ObjectMeta: api.ObjectMeta{Name: "event-1"},
-						TypeMeta:   api.TypeMeta{Kind: internalclient.ResourceKindEvent},
+						ObjectMeta: types.ObjectMeta{Name: "event-1"},
+						TypeMeta:   types.TypeMeta{Kind: types.ResourceKindEvent},
 					},
 					{
-						ObjectMeta: api.ObjectMeta{Name: "event-2"},
-						TypeMeta:   api.TypeMeta{Kind: internalclient.ResourceKindEvent},
+						ObjectMeta: types.ObjectMeta{Name: "event-2"},
+						TypeMeta:   types.TypeMeta{Kind: types.ResourceKindEvent},
 					},
 				},
 			},
@@ -144,10 +143,10 @@ func TestGetResourceEvents(t *testing.T) {
 					}}},
 			[]string{"list"},
 			&common.EventList{
-				ListMeta: api.ListMeta{TotalItems: 1},
+				ListMeta: types.ListMeta{TotalItems: 1},
 				Events: []common.Event{{
-					TypeMeta: api.TypeMeta{Kind: internalclient.ResourceKindEvent},
-					ObjectMeta: api.ObjectMeta{
+					TypeMeta: types.TypeMeta{Kind: types.ResourceKindEvent},
+					ObjectMeta: types.ObjectMeta{
 						Name: "ev-1", Namespace: "ns-1", Labels: labelSelector},
 					Message: "test-message",
 					Type:    v1.EventTypeNormal,

@@ -22,8 +22,7 @@ import (
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/client-go/kubernetes/fake"
 
-	"k8s.io/dashboard/api/pkg/api"
-	internalclient "k8s.io/dashboard/client"
+	"k8s.io/dashboard/types"
 )
 
 // func GetHorizontalPodAutoscalerDetail(client *client.Client, namespace string, name string) (*HorizontalPodAutoscalerDetail, error)
@@ -54,8 +53,8 @@ func TestGetHorizontalPodAutoscalerDetail(t *testing.T) {
 			},
 			&HorizontalPodAutoscalerDetail{
 				HorizontalPodAutoscaler: HorizontalPodAutoscaler{
-					ObjectMeta: api.ObjectMeta{Name: "test-name", Namespace: "test-ns"},
-					TypeMeta:   api.TypeMeta{Kind: internalclient.ResourceKindHorizontalPodAutoscaler},
+					ObjectMeta: types.ObjectMeta{Name: "test-name", Namespace: "test-ns"},
+					TypeMeta:   types.TypeMeta{Kind: types.ResourceKindHorizontalPodAutoscaler},
 					ScaleTargetRef: ScaleTargetRef{
 						Kind: "test-kind",
 						Name: "test-name2",

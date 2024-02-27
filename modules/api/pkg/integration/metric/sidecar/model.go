@@ -16,14 +16,14 @@ package sidecar
 
 import (
 	metricapi "k8s.io/dashboard/api/pkg/integration/metric/api"
-	"k8s.io/dashboard/client"
+	"k8s.io/dashboard/types"
 )
 
 // SidecarAllInOneDownloadConfig holds config information specifying whether given native Sidecar
 // resource type supports list download.
-var SidecarAllInOneDownloadConfig = map[client.ResourceKind]bool{
-	client.ResourceKindPod:  true,
-	client.ResourceKindNode: false,
+var SidecarAllInOneDownloadConfig = map[types.ResourceKind]bool{
+	types.ResourceKindPod:  true,
+	types.ResourceKindNode: false,
 }
 
 // DataPointsFromMetricJSONFormat converts all the data points from format used by sidecar to our

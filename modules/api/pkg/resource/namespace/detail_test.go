@@ -20,7 +20,8 @@ import (
 
 	v1 "k8s.io/api/core/v1"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
-	"k8s.io/dashboard/api/pkg/api"
+
+	"k8s.io/dashboard/types"
 )
 
 func TestGetNamespaceDetail(t *testing.T) {
@@ -37,8 +38,8 @@ func TestGetNamespaceDetail(t *testing.T) {
 			},
 			&NamespaceDetail{
 				Namespace: Namespace{
-					TypeMeta:   api.TypeMeta{Kind: "namespace"},
-					ObjectMeta: api.ObjectMeta{Name: "foo"},
+					TypeMeta:   types.TypeMeta{Kind: "namespace"},
+					ObjectMeta: types.ObjectMeta{Name: "foo"},
 					Phase:      v1.NamespaceActive,
 				},
 			},

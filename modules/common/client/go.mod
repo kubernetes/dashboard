@@ -49,4 +49,7 @@ require (
 	sigs.k8s.io/yaml v1.3.0 // indirect
 )
 
-replace k8s.io/dashboard/errors => ../errors
+replace (
+	k8s.io/dashboard/errors => ../errors
+	k8s.io/dashboard/types => ../types
+)

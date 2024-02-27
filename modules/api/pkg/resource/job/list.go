@@ -21,18 +21,17 @@ import (
 	v1 "k8s.io/api/core/v1"
 	client "k8s.io/client-go/kubernetes"
 
-	"k8s.io/dashboard/api/pkg/api"
 	metricapi "k8s.io/dashboard/api/pkg/integration/metric/api"
 	"k8s.io/dashboard/api/pkg/resource/common"
 	"k8s.io/dashboard/api/pkg/resource/dataselect"
 	"k8s.io/dashboard/api/pkg/resource/event"
-	internalclient "k8s.io/dashboard/client"
 	"k8s.io/dashboard/errors"
+	"k8s.io/dashboard/types"
 )
 
 // JobList contains a list of Jobs in the cluster.
 type JobList struct {
-	ListMeta          api.ListMeta       `json:"listMeta"`
+	ListMeta          types.ListMeta     `json:"listMeta"`
 	CumulativeMetrics []metricapi.Metric `json:"cumulativeMetrics"`
 
 	// Basic information about resources status on the list.
@@ -68,8 +67,8 @@ type JobStatus struct {
 // Job is a presentation layer view of Kubernetes Job resource. This means it is Job plus additional
 // augmented data we can get from other sources
 type Job struct {
-	ObjectMeta api.ObjectMeta `json:"objectMeta"`
-	TypeMeta   api.TypeMeta   `json:"typeMeta"`
+	ObjectMeta types.ObjectMeta `json:"objectMeta"`
+	TypeMeta   types.TypeMeta   `json:"typeMeta"`
 
 	// Aggregate information about pods belonging to this Job.
 	Pods common.PodInfo `json:"podInfo"`
@@ -136,7 +135,7 @@ func ToJobList(jobs []batch.Job, pods []v1.Pod, events []v1.Event, nonCriticalEr
 
 	jobList := &JobList{
 		Jobs:     make([]Job, 0),
-		ListMeta: api.ListMeta{TotalItems: len(jobs)},
+		ListMeta: types.ListMeta{TotalItems: len(jobs)},
 		Errors:   nonCriticalErrors,
 	}
 
@@ -146,7 +145,7 @@ func ToJobList(jobs []batch.Job, pods []v1.Pod, events []v1.Event, nonCriticalEr
 	jobCells, metricPromises, filteredTotal := dataselect.GenericDataSelectWithFilterAndMetrics(ToCells(jobs),
 		dsQuery, cachedResources, metricClient)
 	jobs = FromCells(jobCells)
-	jobList.ListMeta = api.ListMeta{TotalItems: filteredTotal}
+	jobList.ListMeta = types.ListMeta{TotalItems: filteredTotal}
 
 	for _, job := range jobs {
 		matchingPods := common.FilterPodsForJob(job, pods)
@@ -166,8 +165,8 @@ func ToJobList(jobs []batch.Job, pods []v1.Pod, events []v1.Event, nonCriticalEr
 
 func toJob(job *batch.Job, podInfo *common.PodInfo) Job {
 	return Job{
-		ObjectMeta:          api.NewObjectMeta(job.ObjectMeta),
-		TypeMeta:            api.NewTypeMeta(internalclient.ResourceKindJob),
+		ObjectMeta:          types.NewObjectMeta(job.ObjectMeta),
+		TypeMeta:            types.NewTypeMeta(types.ResourceKindJob),
 		ContainerImages:     common.GetContainerImages(&job.Spec.Template.Spec),
 		InitContainerImages: common.GetInitContainerImages(&job.Spec.Template.Spec),
 		Pods:                *podInfo,

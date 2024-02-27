@@ -21,9 +21,8 @@ import (
 	rbac "k8s.io/api/rbac/v1"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 
-	"k8s.io/dashboard/api/pkg/api"
 	"k8s.io/dashboard/api/pkg/resource/dataselect"
-	internalclient "k8s.io/dashboard/client"
+	"k8s.io/dashboard/types"
 )
 
 func TestToRbacRoleBindingLists(t *testing.T) {
@@ -49,10 +48,10 @@ func TestToRbacRoleBindingLists(t *testing.T) {
 				},
 			},
 			&RoleBindingList{
-				ListMeta: api.ListMeta{TotalItems: 1},
+				ListMeta: types.ListMeta{TotalItems: 1},
 				Items: []RoleBinding{{
-					ObjectMeta: api.ObjectMeta{Name: "rolebinding", Namespace: ""},
-					TypeMeta:   api.TypeMeta{Kind: internalclient.ResourceKindRoleBinding},
+					ObjectMeta: types.ObjectMeta{Name: "rolebinding", Namespace: ""},
+					TypeMeta:   types.TypeMeta{Kind: types.ResourceKindRoleBinding},
 				}},
 			},
 		},

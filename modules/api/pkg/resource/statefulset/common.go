@@ -22,7 +22,7 @@ import (
 	"k8s.io/dashboard/api/pkg/resource/common"
 	"k8s.io/dashboard/api/pkg/resource/dataselect"
 	"k8s.io/dashboard/api/pkg/resource/event"
-	internalclient "k8s.io/dashboard/client"
+	"k8s.io/dashboard/types"
 )
 
 // The code below allows to perform complex data section on []apps.StatefulSet
@@ -46,7 +46,7 @@ func (self StatefulSetCell) GetProperty(name dataselect.PropertyName) dataselect
 func (self StatefulSetCell) GetResourceSelector() *metricapi.ResourceSelector {
 	return &metricapi.ResourceSelector{
 		Namespace:    self.ObjectMeta.Namespace,
-		ResourceType: internalclient.ResourceKindStatefulSet,
+		ResourceType: types.ResourceKindStatefulSet,
 		ResourceName: self.ObjectMeta.Name,
 		UID:          self.UID,
 	}
