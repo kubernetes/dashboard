@@ -8,7 +8,6 @@ import (
 var (
 	router *gin.Engine
 	root   *gin.RouterGroup
-	v1     *gin.RouterGroup
 )
 
 func init() {
@@ -19,15 +18,10 @@ func init() {
 	router = gin.Default()
 	_ = router.SetTrustedProxies(nil)
 	root = router.Group("/")
-	v1 = router.Group("/api/v1")
 }
 
 func Root() *gin.RouterGroup {
 	return root
-}
-
-func V1() *gin.RouterGroup {
-	return v1
 }
 
 func Router() *gin.Engine {

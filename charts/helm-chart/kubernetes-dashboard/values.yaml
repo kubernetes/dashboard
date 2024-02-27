@@ -70,7 +70,7 @@ app:
     #  # Hide all access denied warnings in the notification panel
     #  disableAccessDeniedNotifications: false
     ## Pinned CRDs that will be displayed in dashboard's menu
-    pinnedCRDs: []
+    pinnedCustomResources: []
     # - kind: customresourcedefinition
     #  #  Fully qualified name of a CRD
     #  name: prometheus.monitoring.coreos.com

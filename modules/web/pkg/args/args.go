@@ -21,6 +21,7 @@ var (
 	argDefaultCertDir            = pflag.String("default-cert-dir", "/certs", "directory path containing files from --tls-cert-file and --tls-key-file, used also when auto-generating certificates flag is set")
 	argCertFile                  = pflag.String("tls-cert-file", "", "file containing the default x509 certificate for HTTPS")
 	argKeyFile                   = pflag.String("tls-key-file", "", "file containing the default x509 private key matching --tls-cert-file")
+	argSettingsConfigMapName     = pflag.String("settings-config-map-name", "kubernetes-dashboard-settings", "a name of config map, that stores settings")
 	argSystemBanner              = pflag.String("system-banner", "", "system banner message displayed in the app if non-empty, it accepts simple HTML")
 	argSystemBannerSeverity      = pflag.String("system-banner-severity", "INFO", "severity of system banner, should be one of 'INFO', 'WARNING' or 'ERROR'")
 	argAutoGenerateCertificates  = pflag.Bool("auto-generate-certificates", false, "enables automatic certificates generation used to serve HTTPS")
@@ -92,6 +93,10 @@ func KeyFile() string {
 	return *argKeyFile
 }
 
+func SettingsConfigMapName() string {
+	return *argSettingsConfigMapName
+}
+
 func SystemBanner() string {
 	return *argSystemBanner
 }
@@ -115,6 +120,7 @@ func InsecureAddress() string {
 func Address() string {
 	return fmt.Sprintf("%s:%d", BindAddress(), Port())
 }
+
 func KubeconfigPath() string {
 	return *argKubeconfig
 }

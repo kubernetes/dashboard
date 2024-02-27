@@ -17,6 +17,7 @@ require (
 )
 
 require (
+	dario.cat/mergo v1.0.0 // indirect
 	github.com/davecgh/go-spew v1.1.1 // indirect
 	github.com/emicklei/go-restful/v3 v3.11.3 // indirect
 	github.com/evanphx/json-patch v4.12.0+incompatible // indirect

@@ -23,41 +23,12 @@ import (
 	"k8s.io/dashboard/web/pkg/router"
 )
 
-const (
-	TemplateName = "appConfig"
-	Template     = "{{.}}"
-)
-
-// AppConfig represents global configuration of application.
-type AppConfig struct {
-	ServerTime int64 `json:"serverTime"`
-}
-
 func init() {
 	router.Root().GET("/config", handleGetConfig)
 }
 
 func handleGetConfig(c *gin.Context) {
-	config := &AppConfig{
+	c.JSON(http.StatusOK, &Config{
 		ServerTime: time.Now().UTC().UnixNano() / 1e6,
-	}
-
-	//configTemplate, err := template.New(TemplateName).Parse(Template)
-	//if err != nil {
-	//	c.JSON(http.StatusInternalServerError, err)
-	//	return
-	//}
-	//
-	//jsonConfig, err := json.Marshal(config)
-	//if err != nil {
-	//	c.JSON(http.StatusInternalServerError, err)
-	//	return
-	//}
-
-	//err = configTemplate.Execute(c.Writer, jsonConfig)
-	//if err != nil {
-	//	c.JSON(http.StatusInternalServerError, err)
-	//}
-	// TODO: check why it was templated
-	c.JSON(http.StatusOK, config)
+	})
 }

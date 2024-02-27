@@ -16,7 +16,6 @@ package main
 
 import (
 	"crypto/elliptic"
-	"os"
 
 	"k8s.io/dashboard/certificates"
 	"k8s.io/dashboard/certificates/ecdsa"
@@ -47,28 +46,14 @@ func main() {
 	}
 
 	if len(certPath) != 0 && len(keyPath) != 0 {
-		serveTLS(certPath, keyPath)
+		klog.V(1).InfoS("Listening and serving securely on", "address", args.Address())
+		if err := router.Router().RunTLS(args.Address(), certPath, keyPath); err != nil {
+			klog.Fatalf("Router error: %s", err)
+		}
 	} else {
-		serve()
-	}
-}
-
-func serve() {
-	klog.Infof("Serving insecurely on HTTP port: %d", args.InsecurePort())
-
-	klog.V(1).InfoS("Listening and serving on", "address", args.InsecureAddress())
-	if err := router.Router().Run(args.InsecureAddress()); err != nil {
-		klog.ErrorS(err, "Router error")
-		os.Exit(1)
-	}
-}
-
-func serveTLS(certPath, keyPath string) {
-	klog.Infof("Serving securely on HTTPS port: %d", args.Port())
-
-	klog.V(1).InfoS("Listening and serving on", "address", args.Address())
-	if err := router.Router().RunTLS(args.Address(), certPath, keyPath); err != nil {
-		klog.ErrorS(err, "Router error")
-		os.Exit(1)
+		klog.V(1).InfoS("Listening and serving insecurely on", "address", args.InsecureAddress())
+		if err := router.Router().Run(args.InsecureAddress()); err != nil {
+			klog.Fatalf("Router error: %s", err)
+		}
 	}
 }
