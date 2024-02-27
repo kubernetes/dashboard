@@ -52,8 +52,25 @@ code {
   }
 }
 
-.mat-cell,
-.mat-header-cell {
+.mat-mdc-progress-spinner {
+  margin: 0 auto;
+}
+
+.mat-mdc-card {
+  margin: $content-padding;
+
+  .mat-mdc-card-title {
+    margin-bottom: $baseline-grid;
+  }
+
+  .mat-mdc-card-content {
+    padding-top: 2 * $baseline-grid;
+  }
+}
+
+/* Table */
+.mat-mdc-cell,
+.mat-mdc-header-cell {
   @for $i from 30 through 150 {
     &.col-min-#{$i} {
       min-width: #{$i}#{'px'};
@@ -77,44 +94,8 @@ code {
   }
 }
 
-.mat-progress-spinner {
-  margin: 0 auto;
-}
-
-.mat-card {
-  margin: $content-padding;
-
-  .mat-card-title {
-    margin-bottom: $baseline-grid;
-  }
-
-  .mat-card-content {
-    padding-top: 2 * $baseline-grid;
-  }
-}
-
-.mat-chip.mat-standard-chip {
-  box-shadow: none !important;
-  font-size: $body-font-size-base;
-  font-weight: $regular-font-weight;
-  height: fit-content;
-  line-height: $body-font-size-base;
-  min-height: unset;
-  padding: ($baseline-grid * 0.75) ($baseline-grid * 1.25);
-  transition: none !important;
-  word-break: break-all !important;
-
-  &:hover::after {
-    opacity: 0 !important;
-  }
-
-  &:focus::after {
-    opacity: 0 !important;
-  }
-}
-
-.mat-header-row,
-.mat-row {
+.mat-mdc-header-row,
+.mat-mdc-row {
   min-height: (5 * $baseline-grid) !important;
   padding: 0 (2 * $baseline-grid) !important;
 
@@ -123,13 +104,13 @@ code {
     min-height: 0 !important;
     padding: 0 !important;
 
-    .mat-cell {
+    .mat-mdc-cell {
       margin: 0 !important;
     }
   }
 }
 
-.mat-header-cell {
+.mat-mdc-header-cell {
   font-size: $body-font-size-base;
   padding: 0 ($baseline-grid * 0.5);
 
@@ -139,7 +120,7 @@ code {
   }
 }
 
-.mat-cell {
+.mat-mdc-cell {
   margin: (0.5 * $baseline-grid) 0 !important;
 
   &:not(:first-child) {
@@ -148,23 +129,14 @@ code {
     }
   }
 
+  &:first-child,
   &:last-child {
-    padding-right: 0 !important;
-  }
-
-  &:first-child {
-    padding-left: 0 !important;
+    padding: 0;
   }
 }
 
 .mat-column-statusicon {
   flex: 0 0 ($baseline-grid * 5);
-
-  .mat-icon {
-    cursor: default;
-    font-size: 2.5 * $baseline-grid;
-    margin-top: 0.66 * $baseline-grid;
-  }
 }
 
 [class^='mat-column-action'],
@@ -176,13 +148,13 @@ code {
   align-self: center;
 }
 
-.mat-paginator-container,
-.mat-paginator-range-actions {
+.mat-mdc-paginator-container,
+.mat-mdc-paginator-range-actions {
   font-size: $body-font-size-base;
   min-height: 5 * $baseline-grid !important;
 }
 
-.mat-paginator-container {
+.mat-mdc-paginator-container {
   padding-right: 3 * $baseline-grid !important;
 }
 
@@ -222,16 +194,6 @@ router-outlet::after {
   margin: 0 (0.75 * $baseline-grid) !important;
 }
 
-.kd-code-block {
-  border-radius: $baseline-grid * 0.25;
-  display: block;
-  font-family: $font-family-monospace;
-  font-size: $body-font-size-base;
-  padding: $baseline-grid * 2;
-  white-space: pre-wrap;
-  width: 100%;
-}
-
 .kd-code-block-font {
   font-size: $body-font-size-base;
 }
@@ -240,7 +202,7 @@ router-outlet::after {
   margin: 0 (2.5 * $baseline-grid);
   outline: none;
 
-  &.mat-card {
+  &.mat-mdc-card {
     border-radius: 0;
   }
 }
@@ -295,10 +257,6 @@ router-outlet::after {
   width: 2 * $baseline-grid;
 }
 
-.mat-slider {
-  margin-left: -$baseline-grid;
-}
-
 .kd-comma-separated-item {
   display: inline-block;
 
@@ -324,6 +282,39 @@ router-outlet::after {
   position: absolute;
   z-index: 1;
 }
+
+/* Angular Material 15/16 chips */
+.mat-mdc-chip.mat-mdc-standard-chip {
+  box-shadow: none !important;
+  font-size: $body-font-size-base;
+  font-weight: $regular-font-weight;
+  height: fit-content;
+  line-height: $body-font-size-base;
+  min-height: unset;
+  padding: ($baseline-grid * 0.75) ($baseline-grid * 1.25);
+  padding-left: unset;
+  padding-right: unset;
+  transition: none !important;
+  word-break: break-all !important;
+
+  .mdc-evolution-chip__text-label {
+    line-height: normal;
+    white-space: normal;
+  }
+
+  &:hover::after {
+    opacity: 0 !important;
+  }
+
+  &:focus::after {
+    opacity: 0 !important;
+  }
+}
+
+.mat-mdc-chip-focus-overlay {
+  display: none !important;
+}
+
 
 .kd-chips-show-button {
   cursor: pointer;
@@ -372,7 +363,7 @@ router-outlet::after {
   display: none !important;
 }
 
-.mat-row:last-of-type {
+.mat-mdc-row:last-of-type {
   border-bottom: 0;
 }
 
@@ -381,76 +372,60 @@ router-outlet::after {
   font-family: Roboto, sans-serif;
 }
 
-.kd-secret-detail-text {
-  .mat-form-field-wrapper {
-    padding-bottom: $baseline-grid;
-  }
-
-  .mat-form-field-infix {
-    padding-top: 2px;
-  }
-
-  textarea {
-    padding: (2 * $baseline-grid) (2 * $baseline-grid) 0 !important;
-  }
-}
-
-.kd-namespace-chip-list {
-  overflow-x: hidden;
-
-  &:focus {
-    outline: none;
-  }
-
-  .mat-chip-list-wrapper {
-    flex-wrap: nowrap;
-    overflow-x: hidden;
-  }
-}
-
-.mat-list {
+.mat-mdc-list {
   margin-top: $baseline-grid;
 
-  &.mat-list-base {
+  &.mat-mdc-list-base {
     padding-top: 0;
   }
 }
 
 kd-logs {
-  .mat-form-field {
+  .mat-mdc-form-field {
     max-width: 22 * $baseline-grid;
     width: auto;
-
-    .mat-form-field-underline {
-      margin-top: 0.25 * $baseline-grid;
-      position: initial;
-    }
-
-    .mat-form-field-wrapper {
-      padding-bottom: 0;
-    }
-
-    .mat-form-field-infix {
-      border-top: 0;
-      padding: 0;
-      width: auto;
-    }
-
-    .mat-select-trigger {
-      align-items: center;
-      display: flex;
-    }
-
-    .mat-select-value {
-      display: inline-flex;
-      max-width: 100%;
-      padding-right: $baseline-grid;
-    }
   }
 }
 
-.mat-menu-panel {
+.mat-mdc-menu-panel {
   &.kd-user-panel {
     min-width: 15 * $baseline-grid;
+  }
+}
+
+// Angular Material 15/16 standard appearance in form field
+.kd-standard-form-field {
+  mat-form-field {
+    width: 100%;
+
+    .mdc-text-field {
+      padding: unset;
+    }
+
+    .mdc-notched-outline {
+      .mdc-notched-outline__leading {
+        display: none;
+      }
+
+      .mdc-notched-outline__notch {
+        border-radius: 0;
+        border-top: none;
+
+        .mdc-floating-label {
+          left: 0;
+        }
+      }
+
+      .mdc-notched-outline__trailing {
+        border-radius: 0;
+        border-right: none;
+        border-top: none;
+      }
+    }
+
+    .mat-mdc-form-field-hint-wrapper,
+    .mat-mdc-form-field-error-wrapper {
+      padding: unset;
+    }
   }
 }
