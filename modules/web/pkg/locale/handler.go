@@ -71,21 +71,18 @@ func handleAny(c *gin.Context) {
 }
 
 func getSupportedLocales() (tags []language.Tag) {
-	// read config file
 	localesFile, err := os.ReadFile(args.LocaleConfig())
 	if err != nil {
-		klog.Warningf("Error when loading the localization configuration. Dashboard will not be localized. %s", err)
+		klog.Warningf("Dashboard will not be localized, cannot load config: %s", err)
 		return
 	}
 
-	// unmarshall
 	localization := Localization{}
 	err = json.Unmarshal(localesFile, &localization)
 	if err != nil {
 		klog.Warningf("%s %s", string(localesFile), err)
 	}
 
-	// filter locale keys
 	for _, translation := range localization.Translations {
 		tags = append(tags, language.Make(translation))
 	}

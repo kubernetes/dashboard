@@ -54,7 +54,6 @@ func init() {
 	router.Root().GET("/settings/cani", handleGetSettingsGlobalCanI)
 	router.Root().GET("/settings", handleGetSettingGlobal)
 	router.Root().PUT("/settings", handleSettingsGlobalSave)
-
 	router.Root().GET("/settings/pinnedresources/cani", handleGetSettingsGlobalCanI)
 	router.Root().GET("/settings/pinnedresources", handleSettingsGetPinned)
 	router.Root().PUT("/settings/pinnedresources", handleSettingsSavePinned)
