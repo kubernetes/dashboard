@@ -79,7 +79,7 @@ func NewSettingsManager() SettingsManagerI {
 // load config map data into settings manager and return true if new settings are different.
 func (sm *SettingsManager) load(client kubernetes.Interface) (changed bool) {
 	configMap, err := client.CoreV1().ConfigMaps(args.Namespace()).
-		Get(context.TODO(), args.SettingsConfigMapName(), metav1.GetOptions{})
+		Get(context.Background(), args.SettingsConfigMapName(), metav1.GetOptions{})
 	if err != nil {
 		log.Printf("Cannot find settings config map: %s", err.Error())
 		err = sm.restoreConfigMap(client)
@@ -130,7 +130,7 @@ func (sm *SettingsManager) restoreConfigMap(client kubernetes.Interface) error {
 	}
 
 	restoredConfigMap, err := client.CoreV1().ConfigMaps(args.Namespace()).
-		Create(context.TODO(), configMap, metav1.CreateOptions{})
+		Create(context.Background(), configMap, metav1.CreateOptions{})
 	if err != nil {
 		return err
 	}
@@ -218,7 +218,7 @@ func (sm *SettingsManager) saveSettings(client kubernetes.Interface) error {
 	}
 
 	_, err = client.CoreV1().ConfigMaps(args.Namespace()).
-		Patch(context.TODO(), args.SettingsConfigMapName(), types.MergePatchType, marshal, metav1.PatchOptions{})
+		Patch(context.Background(), args.SettingsConfigMapName(), types.MergePatchType, marshal, metav1.PatchOptions{})
 	return err
 }
 

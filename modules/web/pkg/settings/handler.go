@@ -83,8 +83,7 @@ func handleGetSettingsGlobalCanI(c *gin.Context) {
 }
 
 func handleGetSettingGlobal(c *gin.Context) {
-	k8sClient := client.InClusterClient()
-	c.JSON(http.StatusOK, manager.GetGlobalSettings(k8sClient))
+	c.JSON(http.StatusOK, manager.GetGlobalSettings(client.InClusterClient()))
 }
 
 func handleSettingsGlobalSave(c *gin.Context) {

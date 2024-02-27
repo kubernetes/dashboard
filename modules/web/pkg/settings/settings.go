@@ -18,28 +18,29 @@ import (
 	"encoding/json"
 
 	"dario.cat/mergo"
+	"github.com/samber/lo"
 )
 
 var defaultSettings = Settings{
-	ClusterName:                      "",
-	ItemsPerPage:                     10,
-	LabelsLimit:                      3,
-	LogsAutoRefreshTimeInterval:      5,
-	ResourceAutoRefreshTimeInterval:  5,
-	DisableAccessDeniedNotifications: false,
-	DefaultNamespace:                 "default",
+	ClusterName:                      lo.ToPtr(""),
+	ItemsPerPage:                     lo.ToPtr(10),
+	LabelsLimit:                      lo.ToPtr(3),
+	LogsAutoRefreshTimeInterval:      lo.ToPtr(5),
+	ResourceAutoRefreshTimeInterval:  lo.ToPtr(5),
+	DisableAccessDeniedNotifications: lo.ToPtr(false),
+	DefaultNamespace:                 lo.ToPtr("default"),
 	NamespaceFallbackList:            []string{"default"},
 }
 
 type Settings struct {
-	ClusterName                      string   `json:"clusterName"`
-	ItemsPerPage                     int      `json:"itemsPerPage"`
-	LabelsLimit                      int      `json:"labelsLimit"`
-	LogsAutoRefreshTimeInterval      int      `json:"logsAutoRefreshTimeInterval"`
-	ResourceAutoRefreshTimeInterval  int      `json:"resourceAutoRefreshTimeInterval"`
-	DisableAccessDeniedNotifications bool     `json:"disableAccessDeniedNotifications"`
-	DefaultNamespace                 string   `json:"defaultNamespace"`
-	NamespaceFallbackList            []string `json:"namespaceFallbackList"`
+	ClusterName                      *string  `json:"clusterName,omitempty"`
+	ItemsPerPage                     *int     `json:"itemsPerPage,omitempty"`
+	LabelsLimit                      *int     `json:"labelsLimit,omitempty"`
+	LogsAutoRefreshTimeInterval      *int     `json:"logsAutoRefreshTimeInterval,omitempty"`
+	ResourceAutoRefreshTimeInterval  *int     `json:"resourceAutoRefreshTimeInterval,omitempty"`
+	DisableAccessDeniedNotifications *bool    `json:"disableAccessDeniedNotifications,omitempty"`
+	DefaultNamespace                 *string  `json:"defaultNamespace,omitempty"`
+	NamespaceFallbackList            []string `json:"namespaceFallbackList,omitempty"`
 }
 
 func (s *Settings) Default() *Settings {
@@ -47,7 +48,7 @@ func (s *Settings) Default() *Settings {
 		return &defaultSettings
 	}
 
-	_ = mergo.Merge(&s, defaultSettings)
+	_ = mergo.Merge(s, defaultSettings)
 
 	return s
 }
