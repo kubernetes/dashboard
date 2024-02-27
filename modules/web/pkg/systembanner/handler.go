@@ -8,24 +8,17 @@ import (
 	"k8s.io/dashboard/web/pkg/router"
 )
 
-// SystemBanner represents system banner.
 type SystemBanner struct {
 	Message  string               `json:"message"`
 	Severity SystemBannerSeverity `json:"severity"`
 }
 
-// SystemBannerSeverity represents the severity of system banner.
 type SystemBannerSeverity string
 
 const (
-	// SystemBannerSeverityInfo is the lowest of allowed system banner severities.
-	SystemBannerSeverityInfo SystemBannerSeverity = "INFO"
-
-	// SystemBannerSeverityWarning is in the middle of allowed system banner severities.
+	SystemBannerSeverityInfo    SystemBannerSeverity = "INFO"
 	SystemBannerSeverityWarning SystemBannerSeverity = "WARNING"
-
-	// SystemBannerSeverityError is the highest of allowed system banner severities.
-	SystemBannerSeverityError SystemBannerSeverity = "ERROR"
+	SystemBannerSeverityError   SystemBannerSeverity = "ERROR"
 )
 
 func init() {
