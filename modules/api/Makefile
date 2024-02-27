@@ -56,9 +56,7 @@ fix-go: $(PRE)
 run: build
 	@$(API_DIST_BINARY) --kubeconfig=$(KUBECONFIG) \
 		--sidecar-host=$(SIDECAR_HOST) \
-		--auto-generate-certificates=$(AUTO_GENERATE_CERTIFICATES) \
-		--enable-insecure-login=$(ENABLE_INSECURE_LOGIN) \
-		--enable-skip-login=$(ENABLE_SKIP_LOGIN)
+		--auto-generate-certificates=$(AUTO_GENERATE_CERTIFICATES)
 
 # ==================== PRIVATE ==================== #
 

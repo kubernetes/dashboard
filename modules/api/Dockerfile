@@ -40,6 +40,8 @@ COPY /common/certificates /workspace/common/certificates
 COPY /common/client /workspace/common/client
 COPY /common/csrf /workspace/common/csrf
 COPY /common/errors /workspace/common/errors
+COPY /common/types /workspace/common/types
+COPY /common/helpers /workspace/common/helpers
 
 WORKDIR /workspace/api
 

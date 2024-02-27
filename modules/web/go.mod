@@ -3,6 +3,7 @@ module k8s.io/dashboard/web
 go 1.22.0
 
 require (
+	dario.cat/mergo v1.0.0
 	github.com/gin-contrib/gzip v0.0.6
 	github.com/gin-gonic/gin v1.8.1
 	github.com/spf13/pflag v1.0.5
@@ -17,7 +18,6 @@ require (
 )
 
 require (
-	dario.cat/mergo v1.0.0 // indirect
 	github.com/davecgh/go-spew v1.1.1 // indirect
 	github.com/emicklei/go-restful/v3 v3.11.3 // indirect
 	github.com/evanphx/json-patch v4.12.0+incompatible // indirect
@@ -59,6 +59,7 @@ require (
 	gopkg.in/yaml.v2 v2.4.0 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 	k8s.io/apiextensions-apiserver v0.29.2 // indirect
+	k8s.io/dashboard/types v0.0.0-00010101000000-000000000000 // indirect
 	k8s.io/kube-openapi v0.0.0-20231010175941-2dd684a91f00 // indirect
 	k8s.io/utils v0.0.0-20230726121419-3b25d923346b // indirect
 	sigs.k8s.io/json v0.0.0-20221116044647-bc3834ca7abd // indirect
@@ -70,4 +71,5 @@ replace (
 	k8s.io/dashboard/certificates => ../common/certificates
 	k8s.io/dashboard/client => ../common/client
 	k8s.io/dashboard/errors => ../common/errors
+	k8s.io/dashboard/types => ../common/types
 )

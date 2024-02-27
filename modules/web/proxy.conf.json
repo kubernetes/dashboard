@@ -16,5 +16,11 @@
     "secure": false,
     "ws": true,
     "changeOrigin": true
+  },
+  "/settings": {
+    "target": "http://gateway:8000",
+    "secure": false,
+    "ws": true,
+    "changeOrigin": true
   }
 }

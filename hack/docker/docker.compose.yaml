@@ -51,9 +51,7 @@ services:
       dockerfile: api/Dockerfile
     command:
       --kubeconfig=${KUBECONFIG:?}
-      --auto-generate-certificates
       --sidecar-host=${SIDECAR_HOST:?}
-      --enable-skip-login=${ENABLE_SKIP_LOGIN:?}
     volumes:
       - ${KUBECONFIG:?}:${KUBECONFIG:?} # Required - local kubeconfig path resolves to $HOME/<user>/.kube/config
     tmpfs:
@@ -69,7 +67,6 @@ services:
       - "--locale-config=/public/locale_conf.json"
       - "--system-banner=${SYSTEM_BANNER:?}"
       - "--system-banner-severity=${SYSTEM_BANNER_SEVERITY:?}"
-      - "--auto-generate-certificates"
     volumes:
       - ${KUBECONFIG:?}:${KUBECONFIG:?} # Required - local kubeconfig path resolves to $HOME/<user>/.kube/config
     tmpfs:

@@ -38,6 +38,7 @@ WORKDIR /workspace
 # Copy required local modules
 COPY /common/errors /workspace/common/errors
 COPY /common/client /workspace/common/client
+COPY /common/types /workspace/common/types
 
 WORKDIR /workspace/auth
 

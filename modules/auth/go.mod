@@ -62,6 +62,7 @@ require (
 	k8s.io/apiextensions-apiserver v0.29.2 // indirect
 	k8s.io/apimachinery v0.29.2 // indirect
 	k8s.io/client-go v0.29.2 // indirect
+	k8s.io/dashboard/types v0.0.0-00010101000000-000000000000 // indirect
 	k8s.io/kube-openapi v0.0.0-20231010175941-2dd684a91f00 // indirect
 	k8s.io/utils v0.0.0-20230726121419-3b25d923346b // indirect
 	sigs.k8s.io/json v0.0.0-20221116044647-bc3834ca7abd // indirect
@@ -72,4 +73,5 @@ require (
 replace (
 	k8s.io/dashboard/client => ../common/client
 	k8s.io/dashboard/errors => ../common/errors
+	k8s.io/dashboard/types => ../common/types
 )

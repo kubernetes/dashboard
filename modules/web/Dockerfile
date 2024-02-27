@@ -62,6 +62,7 @@ WORKDIR /workspace
 COPY /modules/common/certificates /workspace/common/certificates
 COPY /modules/common/errors /workspace/common/errors
 COPY /modules/common/client /workspace/common/client
+COPY /common/types /workspace/common/types
 
 WORKDIR /workspace/web
 

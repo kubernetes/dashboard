@@ -4,10 +4,11 @@ import (
 	"flag"
 	"fmt"
 	"net"
-	"os"
 
 	"github.com/spf13/pflag"
 	"k8s.io/klog/v2"
+
+	"k8s.io/dashboard/helpers"
 )
 
 var (
@@ -26,7 +27,7 @@ var (
 	argMetricClientCheckPeriod  = pflag.Int("metric-client-check-period", 30, "time interval between separate metric client health checks in seconds")
 	argAutoGenerateCertificates = pflag.Bool("auto-generate-certificates", false, "enables automatic certificates generation used to serve HTTPS")
 	argAPILogLevel              = pflag.String("api-log-level", "INFO", "level of API request logging, should be one of 'NONE', 'INFO' or 'DEBUG'")
-	argNamespace                = pflag.String("namespace", getEnv("POD_NAMESPACE", "kube-system"), "if non-default namespace is used encryption key will be created in the specified namespace")
+	argNamespace                = pflag.String("namespace", helpers.GetEnv("POD_NAMESPACE", "kube-system"), "if non-default namespace is used encryption key will be created in the specified namespace")
 )
 
 func init() {
@@ -41,17 +42,6 @@ func init() {
 	pflag.Parse()
 
 	klog.Infof("Using namespace: %s", Namespace())
-}
-
-/**
-* Lookup the environment variable provided and set to default value if variable isn't found
- */
-func getEnv(key, fallback string) string {
-	if value := os.Getenv(key); len(value) > 0 {
-		return value
-	}
-
-	return fallback
 }
 
 func Address() string {

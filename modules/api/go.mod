@@ -17,6 +17,8 @@ require (
 	k8s.io/dashboard/client v0.0.0-00010101000000-000000000000
 	k8s.io/dashboard/csrf v0.0.0-00010101000000-000000000000
 	k8s.io/dashboard/errors v0.0.0-00010101000000-000000000000
+	k8s.io/dashboard/helpers v0.0.0-00010101000000-000000000000
+	k8s.io/dashboard/types v0.0.0-00010101000000-000000000000
 	k8s.io/klog/v2 v2.120.1
 )
 
@@ -75,4 +77,6 @@ replace (
 	k8s.io/dashboard/client => ../common/client
 	k8s.io/dashboard/csrf => ../common/csrf
 	k8s.io/dashboard/errors => ../common/errors
+	k8s.io/dashboard/helpers => ../common/helpers
+	k8s.io/dashboard/types => ../common/types
 )
