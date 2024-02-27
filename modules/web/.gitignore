@@ -21,9 +21,6 @@ coverage/
 # Dependencies
 node_modules/
 
-# Generated version file
-src/environments/version.ts
-
 # Dist
 dist/
 

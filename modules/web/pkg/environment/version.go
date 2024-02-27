@@ -5,7 +5,7 @@ import (
 )
 
 const (
-	userAgent = "dashboard-web-go"
+	userAgent = "dashboard-web"
 	dev       = "0.0.0-dev"
 )
 

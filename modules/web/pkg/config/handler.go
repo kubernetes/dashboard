@@ -19,6 +19,7 @@ import (
 	"time"
 
 	"github.com/gin-gonic/gin"
+	"k8s.io/dashboard/web/pkg/environment"
 
 	"k8s.io/dashboard/web/pkg/router"
 )
@@ -30,5 +31,7 @@ func init() {
 func handleGetConfig(c *gin.Context) {
 	c.JSON(http.StatusOK, &Config{
 		ServerTime: time.Now().UTC().UnixNano() / 1e6,
+		UserAgent:  environment.UserAgent(),
+		Version:    environment.Version,
 	})
 }

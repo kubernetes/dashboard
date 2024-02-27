@@ -785,6 +785,8 @@ export interface Theme {
 
 export interface AppConfig {
   serverTime: number;
+  userAgent: string;
+  version: string;
 }
 
 export interface ErrStatus {

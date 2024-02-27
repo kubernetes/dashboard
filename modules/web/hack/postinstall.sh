@@ -20,7 +20,7 @@ fi
 
 if [ -z "${DEPENDABOT}" ]; then
   # TODO: When dependabot will support yarn postinstall properly, move following line into .yarnrc.yml.
-  node ./hack/version.mjs && cd ../../ && npx husky install modules/web/.husky
+  cd ../../ && npx husky install modules/web/.husky
   exit $?
 fi
 
