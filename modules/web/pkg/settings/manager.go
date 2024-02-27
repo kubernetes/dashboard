@@ -18,7 +18,6 @@ import (
 	"context"
 	"encoding/json"
 	"log"
-	"net/http"
 	"reflect"
 	"sync"
 
@@ -30,6 +29,21 @@ import (
 	"k8s.io/klog/v2"
 
 	"k8s.io/dashboard/errors"
+)
+
+const (
+	// ConfigMapSettingsKey is a settings map key that maps to current settings.
+	ConfigMapSettingsKey = "settings"
+
+	// PinnedResourcesKey is a settings map key which maps to current pinned resources.
+	PinnedResourcesKey = "pinnedCustomResources"
+
+	// ConcurrentSettingsChangeError occurs during settings save if settings were modified concurrently.
+	// Keep it in sync with concurrentChangeErr_ constant from the frontend.
+	ConcurrentSettingsChangeError = "settings changed since last reload"
+
+	// PinnedResourceNotFoundError occurs while deleting pinned resource if the resource wasn't already pinned.
+	PinnedResourceNotFoundError = "pinned resource not found"
 )
 
 // SettingsManager is a structure containing all settings manager members.
@@ -63,7 +77,7 @@ func NewSettingsManager() SettingsManagerI {
 }
 
 // load config map data into settings manager and return true if new settings are different.
-func (sm *SettingsManager) load(client kubernetes.Interface) (configMap *v1.ConfigMap, isDifferent bool) {
+func (sm *SettingsManager) load(client kubernetes.Interface) (changed bool) {
 	configMap, err := client.CoreV1().ConfigMaps(args.Namespace()).
 		Get(context.TODO(), args.SettingsConfigMapName(), metav1.GetOptions{})
 	if err != nil {
@@ -76,13 +90,12 @@ func (sm *SettingsManager) load(client kubernetes.Interface) (configMap *v1.Conf
 	}
 
 	// Check if anything has changed from the last time when function was executed.
-	isDifferent = !reflect.DeepEqual(sm.rawSettings, configMap.Data)
+	changed = !reflect.DeepEqual(sm.rawSettings, configMap.Data)
 
-	if isDifferent {
+	if changed {
 		sm.mux.Lock()
 		defer sm.mux.Unlock()
 		sm.rawSettings = configMap.Data
-		sm.settings = new(Settings)
 
 		if pinnedResources, ok := sm.rawSettings[PinnedResourcesKey]; ok {
 			if p, err := UnmarshalPinnedResources(pinnedResources); err != nil {
@@ -129,20 +142,76 @@ func (sm *SettingsManager) restoreConfigMap(client kubernetes.Interface) error {
 }
 
 func (sm *SettingsManager) GetGlobalSettings(client kubernetes.Interface) *Settings {
-	_, _ = sm.load(client)
+	_ = sm.load(client)
 
 	return sm.settings.Default()
 }
 
 func (sm *SettingsManager) SaveGlobalSettings(client kubernetes.Interface, s *Settings) error {
-	_, isDiff := sm.load(client)
-	if isDiff {
+	if changed := sm.load(client); changed {
 		return errors.NewInvalid(ConcurrentSettingsChangeError)
 	}
 
 	defer sm.load(client)
 
-	data := map[string]*Settings{ConfigMapSettingsKey: s.Default()}
+	sm.settings = s.Default()
+
+	return sm.saveSettings(client)
+}
+
+func (sm *SettingsManager) GetPinnedResources(client kubernetes.Interface) (r []PinnedResource) {
+	_ = sm.load(client)
+
+	return sm.pinnedResources
+}
+
+func (sm *SettingsManager) SavePinnedResource(client kubernetes.Interface, r *PinnedResource) error {
+	if changed := sm.load(client); changed {
+		return errors.NewInvalid(ConcurrentSettingsChangeError)
+	}
+
+	exists := false
+	for _, pinnedResource := range sm.pinnedResources {
+		if pinnedResource.IsEqual(r) {
+			exists = true
+		}
+	}
+
+	defer sm.load(client)
+
+	if !exists {
+		sm.pinnedResources = append(sm.pinnedResources, *r)
+	}
+
+	return sm.savePinnedResources(client)
+}
+
+func (sm *SettingsManager) DeletePinnedResource(client kubernetes.Interface, r *PinnedResource) error {
+	if changed := sm.load(client); changed {
+		return errors.NewInvalid(ConcurrentSettingsChangeError)
+	}
+
+	index := -1
+	for i, pinnedResource := range sm.pinnedResources {
+		if pinnedResource.IsEqual(r) {
+			index = i
+		}
+	}
+
+	if index < 0 {
+		return errors.NewNotFound(PinnedResourceNotFoundError)
+	}
+
+	defer sm.load(client)
+
+	sm.pinnedResources = append(sm.pinnedResources[:index], sm.pinnedResources[index+1:]...)
+
+	return sm.savePinnedResources(client)
+}
+
+func (sm *SettingsManager) saveSettings(client kubernetes.Interface) error {
+	data := map[string]*Settings{ConfigMapSettingsKey: sm.settings}
+
 	marshal, err := json.Marshal(data)
 	if err != nil {
 		return err
@@ -153,69 +222,15 @@ func (sm *SettingsManager) SaveGlobalSettings(client kubernetes.Interface, s *Se
 	return err
 }
 
-func (sm *SettingsManager) GetPinnedResources(client kubernetes.Interface) (r []PinnedResource) {
-	cm, _ := sm.load(client)
-	if cm == nil {
-		return
+func (sm *SettingsManager) savePinnedResources(client kubernetes.Interface) error {
+	data := map[string][]PinnedResource{PinnedResourcesKey: sm.pinnedResources}
+
+	patch, err := json.Marshal(data)
+	if err != nil {
+		return err
 	}
 
-	return sm.pinnedResources
-}
-
-func (sm *SettingsManager) SavePinnedResource(client kubernetes.Interface, r *PinnedResource) error {
-	cm, isDiff := sm.load(client)
-	if isDiff {
-		return errors.NewInvalid(ConcurrentSettingsChangeError)
-	}
-
-	// Data can be nil if the configMap exists but does not have any data
-	if cm.Data == nil {
-		cm.Data = make(map[string]string)
-	}
-
-	exists := false
-	for _, pinnedResource := range sm.pinnedResources {
-		if pinnedResource.IsEqual(r) {
-			exists = true
-		}
-	}
-
-	if exists {
-		return errors.NewGenericResponse(http.StatusConflict, ResourceAlreadyPinnedError)
-	}
-
-	defer sm.load(client)
-	sm.pinnedResources = append(sm.pinnedResources, *r)
-	cm.Data[PinnedResourcesKey] = MarshalPinnedResources(sm.pinnedResources)
-	_, err := client.CoreV1().ConfigMaps(args.Namespace()).Update(context.TODO(), cm, metav1.UpdateOptions{})
-	return err
-}
-
-func (sm *SettingsManager) DeletePinnedResource(client kubernetes.Interface, r *PinnedResource) error {
-	cm, isDiff := sm.load(client)
-	if isDiff {
-		return errors.NewInvalid(ConcurrentSettingsChangeError)
-	}
-
-	// Data can be nil if the configMap exists but does not have any data
-	if cm.Data == nil {
-		return errors.NewNotFound(PinnedResourceNotFoundError)
-	}
-
-	index := len(sm.pinnedResources)
-	for i, pinnedResource := range sm.pinnedResources {
-		if pinnedResource.IsEqual(r) {
-			index = i
-		}
-	}
-
-	if index == len(sm.pinnedResources) {
-		return errors.NewNotFound(PinnedResourceNotFoundError)
-	}
-
-	defer sm.load(client)
-	sm.pinnedResources = append(sm.pinnedResources[:index], sm.pinnedResources[index+1:]...)
-	cm.Data[PinnedResourcesKey] = MarshalPinnedResources(sm.pinnedResources)
-	_, err := client.CoreV1().ConfigMaps(args.Namespace()).Update(context.TODO(), cm, metav1.UpdateOptions{})
+	_, err = client.CoreV1().ConfigMaps(args.Namespace()).
+		Patch(context.Background(), args.SettingsConfigMapName(), types.MergePatchType, patch, metav1.PatchOptions{})
 	return err
 }

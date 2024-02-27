@@ -20,15 +20,6 @@ import (
 	"dario.cat/mergo"
 )
 
-const (
-	// ConfigMapSettingsKey is a settings map key that maps to current settings.
-	ConfigMapSettingsKey = "settings"
-
-	// ConcurrentSettingsChangeError occurs during settings save if settings were modified concurrently.
-	// Keep it in sync with concurrentChangeErr_ constant from the frontend.
-	ConcurrentSettingsChangeError = "settings changed since last reload"
-)
-
 var defaultSettings = Settings{
 	ClusterName:                      "",
 	ItemsPerPage:                     10,
