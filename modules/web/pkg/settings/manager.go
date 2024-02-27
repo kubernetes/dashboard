@@ -210,22 +210,19 @@ func (sm *SettingsManager) DeletePinnedResource(client kubernetes.Interface, r *
 }
 
 func (sm *SettingsManager) saveSettings(client kubernetes.Interface) error {
-	data := map[string]*Settings{ConfigMapSettingsKey: sm.settings}
-
-	marshal, err := json.Marshal(data)
+	patch, err := json.Marshal(v1.ConfigMap{Data: map[string]string{ConfigMapSettingsKey: sm.settings.Marshal()}})
 	if err != nil {
 		return err
 	}
 
 	_, err = client.CoreV1().ConfigMaps(args.Namespace()).
-		Patch(context.Background(), args.SettingsConfigMapName(), types.MergePatchType, marshal, metav1.PatchOptions{})
+		Patch(context.Background(), args.SettingsConfigMapName(), types.MergePatchType, patch, metav1.PatchOptions{})
+
 	return err
 }
 
 func (sm *SettingsManager) savePinnedResources(client kubernetes.Interface) error {
-	data := map[string][]PinnedResource{PinnedResourcesKey: sm.pinnedResources}
-
-	patch, err := json.Marshal(data)
+	patch, err := json.Marshal(v1.ConfigMap{Data: map[string]string{PinnedResourcesKey: MarshalPinnedResources(sm.pinnedResources)}})
 	if err != nil {
 		return err
 	}
