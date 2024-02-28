@@ -29,9 +29,7 @@ export class NavComponent implements OnInit {
     return this.nav_.opened;
   }
 
-  constructor(
-    private readonly navService_: NavService,
-  ) {}
+  constructor(private readonly navService_: NavService) {}
 
   ngOnInit(): void {
     this.navService_.setNav(this.nav_);

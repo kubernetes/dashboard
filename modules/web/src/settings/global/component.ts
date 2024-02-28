@@ -108,7 +108,7 @@ export class GlobalSettingsComponent implements OnInit {
   }
 
   canSave(): boolean {
-    return !isEqual(this.settings, this.externalSettings_);
+    return !isEqual(this.settings, this.externalSettings_) && !this.hasLoadError;
   }
 
   save(): void {

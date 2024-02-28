@@ -53,7 +53,7 @@ export class GlobalErrorHandler implements ErrorHandler {
   private handleHTTPError_(error: HttpErrorResponse): void {
     this.ngZone_.run(() => {
       if (KdError.isError(error, ApiError.tokenExpired, ApiError.encryptionKeyChanged)) {
-        this.auth_.removeAuthCookies();
+        this.auth_.removeTokenCookie();
         this.router_.navigate(['login'], {
           state: {error: AsKdError(error)} as StateError,
         });

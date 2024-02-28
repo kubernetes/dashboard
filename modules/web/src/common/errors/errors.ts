@@ -112,7 +112,7 @@ export function AsKdError(error: HttpErrorResponse): KdError {
   }
 
   if (error?.error?.ErrStatus) {
-    result.message = error.error.ErrStatus.message
+    result.message = error.error.ErrStatus.message;
   }
 
   switch (error.status) {

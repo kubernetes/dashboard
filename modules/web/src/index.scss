@@ -257,8 +257,8 @@ router-outlet::after {
 }
 
 .kd-card-top-radius {
-  border-top-left-radius: 0.25 * $baseline-grid;
-  border-top-right-radius: 0.25 * $baseline-grid;
+  border-top-left-radius: 0.5 * $baseline-grid;
+  border-top-right-radius: 0.5 * $baseline-grid;
 }
 
 .kd-bold {

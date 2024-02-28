@@ -98,10 +98,6 @@
         <source>New Replica Set</source>
         <target>新的 Replica Set</target>
       </trans-unit>
-      <trans-unit id="1268395641466243700" datatype="html">
-        <source> Every Service Account has a Secret with valid Bearer Token that can be used to log in to Dashboard. To find out more about how to configure and use Bearer Tokens, please refer to the <x id="START_LINK" ctype="x-a" equiv-text="&quot;\uFFFD#2\uFFFD&quot;"/>Authentication<x id="CLOSE_LINK" ctype="x-a" equiv-text="&quot;\uFFFD/#2\uFFFD&quot;"/> section. </source>
-        <target state="new">每个 Service Account 都有一个 Secret 具有合法的 Bearer Token，可用于登录 Dashboard。要了解有关如何配置和使用 Bearer Token 的更多信息，请参阅 <x id="START_LINK" ctype="x-a" equiv-text="&lt;a&gt;"/>身份验证<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/> 部分。</target>
-      </trans-unit>
       <trans-unit id="1292699022746959928" datatype="html">
         <source>Non-resource URL</source>
         <target>非资源 URL</target>
@@ -138,10 +134,6 @@
         <source>Revision history limit</source>
         <target>修订历史限制</target>
       </trans-unit>
-      <trans-unit id="1431416938026210429" datatype="html">
-        <source>Password</source>
-        <target>密码</target>
-      </trans-unit>
       <trans-unit id="1440494756566469853" datatype="html">
         <source>Labels limit</source>
         <target>标签限制</target>
@@ -157,10 +149,6 @@
       <trans-unit id="1480519621633238451" datatype="html">
         <source>UID</source>
         <target>UID</target>
-      </trans-unit>
-      <trans-unit id="1498711031361519795" datatype="html">
-        <source>Choose kubeconfig file</source>
-        <target>选择 kubeconfig 文件</target>
       </trans-unit>
       <trans-unit id="149997197907824533" datatype="html">
         <source>Volume Name</source>
@@ -213,10 +201,6 @@
       <trans-unit id="1636259016604132537" datatype="html">
         <source> Select YAML or JSON file specifying the resources to deploy to the namespace specified in the file. </source>
         <target state="new">选择 YAML 或 JSON 文件中指定的资源部署到该文件中指定的命名空间。</target>
-      </trans-unit>
-      <trans-unit id="1649590266934618453" datatype="html">
-        <source> Insecure access detected. Sign in will not be available. Access Dashboard securely over HTTPS or using localhost. Read more <x id="START_LINK" ctype="x-a" equiv-text="&quot;\uFFFD#2\uFFFD&quot;"/> here <x id="CLOSE_LINK" ctype="x-a" equiv-text="&quot;\uFFFD/#2\uFFFD&quot;"/>. </source>
-        <target state="new">检测到不安全的访问。无法登录。通过 HTTPS 或使用 localhost 安全访问 Dashboard。更多信息 <x id="START_LINK" ctype="x-a" equiv-text="&lt;a&gt;"/>在这里 <x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/>阅读。</target>
       </trans-unit>
       <trans-unit id="1678478837387802521" datatype="html">
         <source>You do not have required permissions to access this resource.</source>
@@ -397,10 +381,6 @@
       <trans-unit id="2132886845235480834" datatype="html">
         <source>Resource type</source>
         <target>资源类别</target>
-      </trans-unit>
-      <trans-unit id="2135976822395163664" datatype="html">
-        <source> Please select the kubeconfig file that you have created to configure access to the cluster. To find out more about how to configure and use kubeconfig file, please refer to the <x id="START_LINK" ctype="x-a" equiv-text="&quot;\uFFFD#2\uFFFD&quot;"/>Configure Access to Multiple Clusters<x id="CLOSE_LINK" ctype="x-a" equiv-text="&quot;\uFFFD/#2\uFFFD&quot;"/> section. </source>
-        <target state="new">请选择您创建的 kubeconfig 文件以配置对集群的访问权限。要了解有关如何配置和使用 kubeconfig 文件的更多信息，请参阅<x id="START_LINK" ctype="x-a" equiv-text="&lt;a&gt;"/>配置到多个集群的访问<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/> 部分。</target>
       </trans-unit>
       <trans-unit id="214884265476562782" datatype="html">
         <source>Seccomp Profile Type</source>
@@ -693,10 +673,6 @@
       <trans-unit id="3037001602563649018" datatype="html">
         <source> Name must be alphanumeric and may contain dashes. </source>
         <target state="new">名称必须是字母或者数字，可以包含短划线。</target>
-      </trans-unit>
-      <trans-unit id="3039940756451018621" datatype="html">
-        <source>Token</source>
-        <target>Token</target>
       </trans-unit>
       <trans-unit id="3068261068429094032" datatype="html">
         <source>Max unavailable: </source>
@@ -1050,10 +1026,6 @@
         <source>Images</source>
         <target>镜像</target>
       </trans-unit>
-      <trans-unit id="4170719254013309689" datatype="html">
-        <source> Skip </source>
-        <target state="new">跳过</target>
-      </trans-unit>
       <trans-unit id="4207916966377787111" datatype="html">
         <source>Created</source>
         <target>创建时间</target>
@@ -1298,10 +1270,6 @@
         <source>Waiting for more data to display chart... </source>
         <target state="new">等待更多的数据来显示图表...</target>
       </trans-unit>
-      <trans-unit id="5248717555542428023" datatype="html">
-        <source>Username</source>
-        <target>用户名</target>
-      </trans-unit>
       <trans-unit id="5257636795023365764" datatype="html">
         <source> Upload </source>
         <target state="new">上传</target>
@@ -1345,10 +1313,6 @@
       <trans-unit id="5433782699501161466" datatype="html">
         <source>Schedule</source>
         <target>调度</target>
-      </trans-unit>
-      <trans-unit id="5434669375404653384" datatype="html">
-        <source>Enter token</source>
-        <target>输入 token</target>
       </trans-unit>
       <trans-unit id="5465493507580320337" datatype="html">
         <source>Allow Privilege Escalation</source>
@@ -1405,10 +1369,6 @@
       <trans-unit id="5643561794785412000" datatype="html">
         <source>Unavailable</source>
         <target>不可用</target>
-      </trans-unit>
-      <trans-unit id="5666190010581393226" datatype="html">
-        <source>Kubeconfig</source>
-        <target>Kubeconfig</target>
       </trans-unit>
       <trans-unit id="5674286808255988565" datatype="html">
         <source>Create</source>
@@ -1880,10 +1840,6 @@
         <source>There is no data to display.</source>
         <target>没有要显示的数据。</target>
       </trans-unit>
-      <trans-unit id="7327432642990246284" datatype="html">
-        <source>Default service account </source>
-        <target state="new">默认服务账号</target>
-      </trans-unit>
       <trans-unit id="7330483736355831593" datatype="html">
         <source>Config and Storage </source>
         <target state="new">配置和存储</target>
@@ -1940,9 +1896,9 @@
         <source> Setting high number of pods may cause performance issues of the cluster and Dashboard UI. </source>
         <target state="new">设置大量 Pod 可能会导致集群和 Dashboard UI 出现性能问题。</target>
       </trans-unit>
-      <trans-unit id="7542300534444838884" datatype="html">
-        <source>Kubernetes Dashboard</source>
-        <target>Kubernetes 仪表板</target>
+      <trans-unit id="5973674058839107725" datatype="html">
+        <source>Kubernetes Dashboard </source>
+        <target state="new">Kubernetes 仪表板</target>
       </trans-unit>
       <trans-unit id="7546647490531252189" datatype="html">
         <source>Namespace: </source>
@@ -2051,10 +2007,6 @@
       <trans-unit id="7920227693577024356" datatype="html">
         <source>Workloads</source>
         <target>工作负载</target>
-      </trans-unit>
-      <trans-unit id="7927427229271598667" datatype="html">
-        <source> Make sure that support for basic authentication is enabled in the cluster. To find out more about how to configure basic authentication, please refer to the <x id="START_LINK" ctype="x-a" equiv-text="&quot;\uFFFD#2\uFFFD&quot;"/>Authenticating<x id="CLOSE_LINK" ctype="x-a" equiv-text="&quot;[\uFFFD/#2\uFFFD|\uFFFD/#3\uFFFD]&quot;"/> and <x id="START_LINK_1" equiv-text="&quot;\uFFFD#3\uFFFD&quot;"/>ABAC Mode<x id="CLOSE_LINK" ctype="x-a" equiv-text="&quot;[\uFFFD/#2\uFFFD|\uFFFD/#3\uFFFD]&quot;"/> sections. </source>
-        <target state="new">确保在集群中启用了对基本身份验证的支持。要了解有关如何配置基本身份验证的详情，请参阅 <x id="START_LINK" ctype="x-a" equiv-text="&lt;a&gt;"/>Authenticating<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/> 和 <x id="START_LINK_1" ctype="x-a" equiv-text="&lt;a&gt;"/>ABAC 模式<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/> 部分。</target>
       </trans-unit>
       <trans-unit id="7941428823403788384" datatype="html">
         <source> Create </source>
@@ -2264,10 +2216,6 @@
         <source>Group</source>
         <target>Group</target>
       </trans-unit>
-      <trans-unit id="8643289769990675407" datatype="html">
-        <source>Basic</source>
-        <target>基本</target>
-      </trans-unit>
       <trans-unit id="864882670483831190" datatype="html">
         <source> There are no notifications </source>
         <target state="new">没有通知</target>
@@ -2435,6 +2383,18 @@
       <trans-unit id="97066167691656299" datatype="html">
         <source>Provisioner</source>
         <target>提供者</target>
+      </trans-unit>
+      <trans-unit id="279917385815280643" datatype="html">
+        <source>Bearer token</source>
+        <target state="new">Bearer token</target>
+      </trans-unit>
+      <trans-unit id="4667215985978511334" datatype="html">
+        <source>You can generate token for service account with:</source>
+        <target state="new">You can generate token for service account with:</target>
+      </trans-unit>
+      <trans-unit id="5911975001974379688" datatype="html">
+        <source> To find out more on how to configure and use bearer tokens, please refer to the <x id="START_LINK" ctype="x-a" equiv-text="&quot;\uFFFD#20\uFFFD&quot;"/>documentation<x id="CLOSE_LINK" ctype="x-a" equiv-text="&quot;\uFFFD/#20\uFFFD&quot;"/>. </source>
+        <target state="new"> To find out more on how to configure and use bearer tokens, please refer to the <x id="START_LINK" ctype="x-a" equiv-text="&quot;\uFFFD#20\uFFFD&quot;"/>documentation<x id="CLOSE_LINK" ctype="x-a" equiv-text="&quot;\uFFFD/#20\uFFFD&quot;"/>. </target>
       </trans-unit>
     </body>
   </file>

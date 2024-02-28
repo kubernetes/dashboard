@@ -1245,14 +1245,6 @@ export interface LoginSpec {
   kubeConfig: string;
 }
 
-export interface LoginStatus {
-  tokenPresent: boolean;
-  headerPresent: boolean;
-  httpsMode: boolean;
-  impersonationPresent?: boolean;
-  impersonatedUser?: string;
-}
-
 export type AuthenticationMode = string;
 
 export interface EnabledAuthenticationModes {
