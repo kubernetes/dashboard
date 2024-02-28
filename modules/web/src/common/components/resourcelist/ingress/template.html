@@ -101,7 +101,8 @@ limitations under the License.
           <div *ngFor="let host of ingress?.hosts; let last = last"
                class="kd-ellipsised">
             <a href="https://{{ host }}"
-               target="_blank"> {{ host }}</a>
+               target="_blank"
+               rel="noopener noreferrer"> {{ host }}</a>
             <span *ngIf="!last">,&nbsp;</span>
           </div>
 
