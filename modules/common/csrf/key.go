@@ -10,9 +10,6 @@ var (
 	csrfKey = ""
 )
 
-type csrfManager struct {
-}
-
 func init() {
 	csrfKey = generateCSRFKey()
 }
@@ -26,12 +23,6 @@ func generateCSRFKey() string {
 	}
 
 	return string(bytes)
-}
-
-type Option func(*csrfManager)
-
-func Init(options ...Option) {
-
 }
 
 func Key() string {

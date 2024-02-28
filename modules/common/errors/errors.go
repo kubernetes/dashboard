@@ -48,6 +48,17 @@ func NewTokenExpired(reason string) *k8serrors.StatusError {
 	}
 }
 
+func NewCSRFValidationFailed() *k8serrors.StatusError {
+	return &k8serrors.StatusError{
+		ErrStatus: metav1.Status{
+			Status:  metav1.StatusFailure,
+			Code:    http.StatusUnauthorized,
+			Reason:  metav1.StatusReasonInvalid,
+			Message: MsgCSRFValidationError,
+		},
+	}
+}
+
 // NewBadRequest creates an error that indicates that the request is invalid and can not be processed.
 func NewBadRequest(reason string) *k8serrors.StatusError {
 	return k8serrors.NewBadRequest(reason)

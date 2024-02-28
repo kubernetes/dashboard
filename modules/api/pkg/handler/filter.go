@@ -18,19 +18,17 @@ import (
 	"bytes"
 	"fmt"
 	"io"
-	"log"
 	"net/http"
 	"strings"
 	"time"
 
 	"github.com/emicklei/go-restful/v3"
-	"golang.org/x/net/xsrftoken"
 	utilnet "k8s.io/apimachinery/pkg/util/net"
 	"k8s.io/klog/v2"
 
 	"k8s.io/dashboard/api/pkg/args"
 	"k8s.io/dashboard/csrf"
-	"k8s.io/dashboard/errors"
+	"k8s.io/dashboard/helpers"
 )
 
 const (
@@ -43,7 +41,10 @@ const (
 func InstallFilters(ws *restful.WebService) {
 	ws.Filter(requestAndResponseLogger)
 	ws.Filter(metricsFilter)
-	ws.Filter(validateXSRFFilter())
+	ws.Filter(csrf.GoRestful().CSRF(
+		csrf.GoRestful().WithCSRFActionGetter(helpers.GetResourceFromPath),
+		csrf.GoRestful().WithCSRFRunCondition(shouldDoCsrfValidation),
+	))
 }
 
 // web-service filter function used for request and response logging.
@@ -105,7 +106,7 @@ func checkSensitiveURL(url *string) bool {
 
 func metricsFilter(req *restful.Request, resp *restful.Response,
 	chain *restful.FilterChain) {
-	resource := mapUrlToResource(req.SelectedRoutePath())
+	resource := helpers.GetResourceFromPath(req.SelectedRoutePath())
 	httpClient := utilnet.GetHTTPClient(req.Request)
 
 	chain.ProcessFilter(req, resp)
@@ -118,24 +119,6 @@ func metricsFilter(req *restful.Request, resp *restful.Response,
 			resp.StatusCode(),
 			time.Now(),
 		)
-	}
-}
-
-func validateXSRFFilter() restful.FilterFunction {
-	return func(req *restful.Request, resp *restful.Response, chain *restful.FilterChain) {
-		resource := mapUrlToResource(req.SelectedRoutePath())
-
-		if resource == nil || (shouldDoCsrfValidation(req) &&
-			!xsrftoken.Valid(req.HeaderParameter("X-CSRF-TOKEN"), csrf.Key(), "none",
-				*resource)) {
-			err := errors.NewInvalid("CSRF validation failed")
-			log.Print(err)
-			resp.AddHeader("Content-Type", "text/plain")
-			resp.WriteErrorString(http.StatusUnauthorized, err.Error()+"\n")
-			return
-		}
-
-		chain.ProcessFilter(req, resp)
 	}
 }
 
@@ -158,16 +141,6 @@ func shouldDoCsrfValidation(req *restful.Request) bool {
 	}
 
 	return true
-}
-
-// mapUrlToResource extracts the resource from the URL path /api/v1/<resource>.
-// Ignores potential subresources.
-func mapUrlToResource(url string) *string {
-	parts := strings.Split(url, "/")
-	if len(parts) < 3 {
-		return nil
-	}
-	return &parts[3]
 }
 
 // getRemoteAddr extracts the remote address of the request, taking into

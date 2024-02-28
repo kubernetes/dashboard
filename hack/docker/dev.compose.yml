@@ -39,6 +39,7 @@ services:
     command:
       - "--kubeconfig=${KUBECONFIG:?}"
     volumes:
+      - ${PWD}/modules/common:/workspace/common # Required - Common dir watched by AIR
       - ${PWD}/modules/auth/pkg:/workspace/auth/pkg # Required - Source dir watched by AIR
       - ${PWD}/modules/auth/api:/workspace/auth/api # Required - Source dir watched by AIR
       - ${PWD}/modules/auth/main.go:/workspace/auth/main.go # Required - Entry file watched by AIR
@@ -56,6 +57,7 @@ services:
       --kubeconfig=${KUBECONFIG:?}
       --sidecar-host=${SIDECAR_HOST:?}
     volumes:
+      - ${PWD}/modules/common:/workspace/common # Required - Common dir watched by AIR
       - ${PWD}/modules/api/pkg:/workspace/api/pkg # Required - Source dir watched by AIR
       - ${PWD}/modules/api/main.go:/workspace/api/main.go # Required - Entry file watched by AIR
       - ${PWD}/modules/api/.air.toml:/workspace/api/.air.toml # Required - AIR configuration
@@ -74,10 +76,11 @@ services:
       - "--system-banner='Local\ dev\ environment'"
       - "--system-banner-severity=${SYSTEM_BANNER_SEVERITY:?}"
     volumes:
-      - ${KUBECONFIG:?}:${KUBECONFIG:?} # Required - local kubeconfig path resolves to $HOME/<user>/.kube/config
+      - ${PWD}/modules/common:/workspace/common # Required - Common dir watched by AIR
       - ${PWD}/modules/web/pkg:/workspace/web/pkg # Required - Source dir watched by AIR
       - ${PWD}/modules/web/main.go:/workspace/web/main.go # Required - Entry file watched by AIR
       - ${PWD}/modules/web/.air.toml:/workspace/web/.air.toml # Required - AIR configuration
+      - ${KUBECONFIG:?}:${KUBECONFIG:?} # Required - local kubeconfig path resolves to $HOME/<user>/.kube/config
     tmpfs:
       - /tmp
 
@@ -101,9 +104,10 @@ services:
       --metric-resolution=5s
       --metric-duration=10m
     volumes:
-      - ${PWD}/modules/metrics-scraper/pkg:/workspace/pkg # Required - Source dir watched by AIR
-      - ${PWD}/modules/metrics-scraper/main.go:/workspace/main.go # Required - Entry file watched by AIR
-      - ${PWD}/modules/metrics-scraper/.air.toml:/workspace/.air.toml # Required - AIR configuration
+      - ${PWD}/modules/common:/workspace/common # Required - Common dir watched by AIR
+      - ${PWD}/modules/metrics-scraper/pkg:/workspace/metrics-scraper/pkg # Required - Source dir watched by AIR
+      - ${PWD}/modules/metrics-scraper/main.go:/workspace/metrics-scraper/main.go # Required - Entry file watched by AIR
+      - ${PWD}/modules/metrics-scraper/.air.toml:/workspace/metrics-scraper/.air.toml # Required - AIR configuration
       - ${KUBECONFIG:?}:${KUBECONFIG:?}
     shm_size: 1G
     tmpfs:

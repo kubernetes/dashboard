@@ -26,6 +26,7 @@ const (
 	MsgForbiddenError                  = "MSG_FORBIDDEN_ERROR"
 	MsgDashboardExclusiveResourceError = "MSG_DASHBOARD_EXCLUSIVE_RESOURCE_ERROR"
 	MsgTokenExpiredError               = "MSG_TOKEN_EXPIRED_ERROR"
+	MsgCSRFValidationError             = "MSG_CSRF_VALIDATION_ERROR"
 )
 
 // This file contains all errors that should be kept in sync with:

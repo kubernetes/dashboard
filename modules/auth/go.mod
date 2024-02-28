@@ -5,8 +5,11 @@ go 1.22.0
 require (
 	github.com/gin-gonic/gin v1.9.1
 	github.com/spf13/pflag v1.0.5
+	golang.org/x/net v0.21.0
 	k8s.io/dashboard/client v0.0.0-00010101000000-000000000000
+	k8s.io/dashboard/csrf v0.0.0-00010101000000-000000000000
 	k8s.io/dashboard/errors v0.0.0-00010101000000-000000000000
+	k8s.io/dashboard/helpers v0.0.0-00010101000000-000000000000
 	k8s.io/klog/v2 v2.120.1
 )
 
@@ -46,7 +49,6 @@ require (
 	github.com/ugorji/go/codec v1.2.11 // indirect
 	golang.org/x/arch v0.3.0 // indirect
 	golang.org/x/crypto v0.19.0 // indirect
-	golang.org/x/net v0.21.0 // indirect
 	golang.org/x/oauth2 v0.12.0 // indirect
 	golang.org/x/sys v0.17.0 // indirect
 	golang.org/x/term v0.17.0 // indirect
@@ -72,6 +74,8 @@ require (
 
 replace (
 	k8s.io/dashboard/client => ../common/client
+	k8s.io/dashboard/csrf => ../common/csrf
 	k8s.io/dashboard/errors => ../common/errors
+	k8s.io/dashboard/helpers => ../common/helpers
 	k8s.io/dashboard/types => ../common/types
 )

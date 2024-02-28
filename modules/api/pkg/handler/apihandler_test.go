@@ -18,7 +18,6 @@ import (
 	"bytes"
 	"encoding/json"
 	"net/http"
-	"reflect"
 	"strings"
 	"testing"
 
@@ -59,27 +58,6 @@ func TestShouldDoCsrfValidation(t *testing.T) {
 		actual := shouldDoCsrfValidation(c.request)
 		if actual != c.expected {
 			t.Errorf("shouldDoCsrfValidation(%#v) returns %#v, expected %#v", c.request, actual, c.expected)
-		}
-	}
-}
-
-func TestMapUrlToResource(t *testing.T) {
-	cases := []struct {
-		url, expected string
-	}{
-		{
-			"/api/v1/pod",
-			"pod",
-		},
-		{
-			"/api/v1/node",
-			"node",
-		},
-	}
-	for _, c := range cases {
-		actual := mapUrlToResource(c.url)
-		if !reflect.DeepEqual(actual, &c.expected) {
-			t.Errorf("mapUrlToResource(%#v) returns %#v, expected %#v", c.url, actual, c.expected)
 		}
 	}
 }

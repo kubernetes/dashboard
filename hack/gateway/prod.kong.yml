@@ -20,9 +20,13 @@ services:
     port: 8000
     protocol: http
     routes:
-      - name: login
+      - name: authLogin
         paths:
           - /api/v1/login
+        strip_path: false
+      - name: authCsrf
+        paths:
+          - /api/v1/csrftoken/login
         strip_path: false
   - name: api
     host: api # Internal name of docker service

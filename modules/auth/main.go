@@ -11,7 +11,8 @@ import (
 	"k8s.io/dashboard/client"
 
 	// Importing route packages forces route registration
-	_ "k8s.io/dashboard/auth/pkg/login"
+	_ "k8s.io/dashboard/auth/pkg/routes/csrftoken"
+	_ "k8s.io/dashboard/auth/pkg/routes/login"
 )
 
 func main() {
