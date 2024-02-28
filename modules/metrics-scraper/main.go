@@ -145,14 +145,3 @@ func update(client *metricsclient.Clientset, db *sql.DB, metricDuration time.Dur
 	klog.Infof("Database updated: %d nodes, %d pods", len(nodeMetrics.Items), len(podMetrics.Items))
 	return nil
 }
-
-/**
-* Lookup the environment variable provided and set to default value if variable isn't found
- */
-func getEnv(key, fallback string) string {
-	value := os.Getenv(key)
-	if value == "" {
-		value = fallback
-	}
-	return value
-}
