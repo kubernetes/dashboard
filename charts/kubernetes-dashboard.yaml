@@ -317,7 +317,6 @@ spec:
               name: api
               protocol: TCP
           args:
-            - --enable-insecure-login
             - --namespace=kubernetes-dashboard
           volumeMounts:
               # Create on-disk volume to store exec logs

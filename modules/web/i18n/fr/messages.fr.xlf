@@ -98,10 +98,6 @@
         <source>New Replica Set</source>
         <target>Nouveau Replica Set</target>
       </trans-unit>
-      <trans-unit id="1268395641466243700" datatype="html">
-        <source> Every Service Account has a Secret with valid Bearer Token that can be used to log in to Dashboard. To find out more about how to configure and use Bearer Tokens, please refer to the <x id="START_LINK" ctype="x-a" equiv-text="&quot;\uFFFD#2\uFFFD&quot;"/>Authentication<x id="CLOSE_LINK" ctype="x-a" equiv-text="&quot;\uFFFD/#2\uFFFD&quot;"/> section. </source>
-        <target>Chaque compte de service a un Secret associé avec un jeton porteur (Bearer Token) valide qui peut être utilisé pour se connecter au Dashboard. Pour en savoir plus sur la façon de configurer et utiliser des jetons porteurs, veuillez vous référer à la section <x id="START_LINK" ctype="x-a" equiv-text="&quot;\uFFFD/#2\uFFFD&quot;"/>Authentification<x id="CLOSE_LINK" ctype="x-a" equiv-text="&quot;\uFFFD/#2\uFFFD&quot;"/>. </target>
-      </trans-unit>
       <trans-unit id="1292699022746959928" datatype="html">
         <source>Non-resource URL</source>
         <target>URL non-ressource</target>
@@ -138,10 +134,6 @@
         <source>Revision history limit</source>
         <target>Limite d&apos;historiques de révision</target>
       </trans-unit>
-      <trans-unit id="1431416938026210429" datatype="html">
-        <source>Password</source>
-        <target>Mot de passe</target>
-      </trans-unit>
       <trans-unit id="1440494756566469853" datatype="html">
         <source>Labels limit</source>
         <target>Limite de labels</target>
@@ -157,10 +149,6 @@
       <trans-unit id="1480519621633238451" datatype="html">
         <source>UID</source>
         <target>UID</target>
-      </trans-unit>
-      <trans-unit id="1498711031361519795" datatype="html">
-        <source>Choose kubeconfig file</source>
-        <target>Sélectionnez un fichier kubeconfig</target>
       </trans-unit>
       <trans-unit id="149997197907824533" datatype="html">
         <source>Volume Name</source>
@@ -213,10 +201,6 @@
       <trans-unit id="1636259016604132537" datatype="html">
         <source> Select YAML or JSON file specifying the resources to deploy to the namespace specified in the file. </source>
         <target>Sélectionnez un fichier YAML ou JSON spécifiant les ressources à déployer dans l&apos;espace de noms spécifié dans le fichier. </target>
-      </trans-unit>
-      <trans-unit id="1649590266934618453" datatype="html">
-        <source> Insecure access detected. Sign in will not be available. Access Dashboard securely over HTTPS or using localhost. Read more <x id="START_LINK" ctype="x-a" equiv-text="&quot;\uFFFD#2\uFFFD&quot;"/> here <x id="CLOSE_LINK" ctype="x-a" equiv-text="&quot;\uFFFD/#2\uFFFD&quot;"/>. </source>
-        <target>Accès non sécurisé détecté. La connexion ne sera pas disponible. Accédez au tableau de bord en toute sécurité via HTTPS ou en utilisant localhost. En savoir plus <x id="START_LINK" ctype="x-a" equiv-text="&lt;a&gt;"/> ici <x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/>. </target>
       </trans-unit>
       <trans-unit id="1678478837387802521" datatype="html">
         <source>You do not have required permissions to access this resource.</source>
@@ -398,10 +382,6 @@
         <source>Resource type</source>
         <target>Type de la ressource</target>
       </trans-unit>
-      <trans-unit id="2135976822395163664" datatype="html">
-        <source> Please select the kubeconfig file that you have created to configure access to the cluster. To find out more about how to configure and use kubeconfig file, please refer to the <x id="START_LINK" ctype="x-a" equiv-text="&quot;\uFFFD#2\uFFFD&quot;"/>Configure Access to Multiple Clusters<x id="CLOSE_LINK" ctype="x-a" equiv-text="&quot;\uFFFD/#2\uFFFD&quot;"/> section. </source>
-        <target>Veuillez sélectionner le fichier kubeconfig que vous avez créé pour accéder au cluster. Pour en savoir plus sur la façon de configurer et utiliser un fichier kubeconfig, veuillez vous référer à la section <x id="START_LINK" ctype="x-a" equiv-text="&quot;\uFFFD#2\uFFFD&quot;"/>Configurer l&apos;accès à plusieurs clusters<x id="CLOSE_LINK" ctype="x-a" equiv-text="&quot;\uFFFD#2\uFFFD&quot;"/>. </target>
-      </trans-unit>
       <trans-unit id="214884265476562782" datatype="html">
         <source>Seccomp Profile Type</source>
         <target>Type de profil Seccomp</target>
@@ -434,9 +414,9 @@
         <source>Service</source>
         <target>Service</target>
       </trans-unit>
-      <trans-unit id="222595489358095649" datatype="html">
-        <source> Kubernetes Dashboard v<x id="INTERPOLATION" equiv-text="&quot;\uFFFD0\uFFFD&quot;"/> © <x id="INTERPOLATION_1" equiv-text="&quot;\uFFFD1\uFFFD&quot;"/> The Kubernetes Authors </source>
-        <target> Kubernetes Dashboard v<x id="INTERPOLATION" equiv-text="&quot;\uFFFD0\uFFFD&quot;"/> © <x id="INTERPOLATION_1" equiv-text="&quot;\uFFFD1\uFFFD&quot;"/> The Kubernetes Authors </target>
+      <trans-unit id="4335281277764237619" datatype="html">
+        <source> <x id="INTERPOLATION" equiv-text="&quot;\uFFFD0\uFFFD&quot;"/> © <x id="INTERPOLATION_1" equiv-text="&quot;\uFFFD1\uFFFD&quot;"/> The Kubernetes Authors </source>
+        <target state="new"> Kubernetes Dashboard v<x id="INTERPOLATION" equiv-text="&quot;\uFFFD0\uFFFD&quot;"/> © <x id="INTERPOLATION_1" equiv-text="&quot;\uFFFD1\uFFFD&quot;"/> The Kubernetes Authors </target>
       </trans-unit>
       <trans-unit id="2235593604907350097" datatype="html">
         <source>Resource Names</source>
@@ -689,10 +669,6 @@
       <trans-unit id="3037001602563649018" datatype="html">
         <source> Name must be alphanumeric and may contain dashes. </source>
         <target>Le nom doit être alphanumérique et peut contenir des tirets. </target>
-      </trans-unit>
-      <trans-unit id="3039940756451018621" datatype="html">
-        <source>Token</source>
-        <target>Jeton</target>
       </trans-unit>
       <trans-unit id="3068261068429094032" datatype="html">
         <source>Max unavailable: </source>
@@ -982,10 +958,6 @@
         <source>Run command arguments</source>
         <target>Arguments de la commande à exécuter</target>
       </trans-unit>
-      <trans-unit id="3848712021572607026" datatype="html">
-        <source>Can&apos;t find plugin &quot;<x id="PH" equiv-text="pluginName"/>&quot;</source>
-        <target>Impossible de trouver le plug-in &quot;<x id="PH" equiv-text="pluginName"/>&quot;</target>
-      </trans-unit>
       <trans-unit id="3856193213296741054" datatype="html">
         <source>Last Seen</source>
         <target>Dernière vue</target>
@@ -1018,10 +990,6 @@
         <source>Arguments</source>
         <target>Arguments</target>
       </trans-unit>
-      <trans-unit id="4045087308145757242" datatype="html">
-        <source>Dependencies</source>
-        <target>Dépendances</target>
-      </trans-unit>
       <trans-unit id="4052052481087794292" datatype="html">
         <source>Role Bindings </source>
         <target>Liaisons de rôle </target>
@@ -1053,10 +1021,6 @@
       <trans-unit id="414887388288176527" datatype="html">
         <source>Images</source>
         <target>Images</target>
-      </trans-unit>
-      <trans-unit id="4170719254013309689" datatype="html">
-        <source> Skip </source>
-        <target>Passer </target>
       </trans-unit>
       <trans-unit id="4207916966377787111" datatype="html">
         <source>Created</source>
@@ -1302,10 +1266,6 @@
         <source>Waiting for more data to display chart... </source>
         <target>En attente de plus de données pour afficher le graphique... </target>
       </trans-unit>
-      <trans-unit id="5248717555542428023" datatype="html">
-        <source>Username</source>
-        <target>Nom d&apos;utilisateur</target>
-      </trans-unit>
       <trans-unit id="5257636795023365764" datatype="html">
         <source> Upload </source>
         <target>Télécharger </target>
@@ -1349,10 +1309,6 @@
       <trans-unit id="5433782699501161466" datatype="html">
         <source>Schedule</source>
         <target>Planning</target>
-      </trans-unit>
-      <trans-unit id="5434669375404653384" datatype="html">
-        <source>Enter token</source>
-        <target>Saisissez un jeton</target>
       </trans-unit>
       <trans-unit id="5465493507580320337" datatype="html">
         <source>Allow Privilege Escalation</source>
@@ -1409,10 +1365,6 @@
       <trans-unit id="5643561794785412000" datatype="html">
         <source>Unavailable</source>
         <target>Non disponibles</target>
-      </trans-unit>
-      <trans-unit id="5666190010581393226" datatype="html">
-        <source>Kubeconfig</source>
-        <target>Kubeconfig</target>
       </trans-unit>
       <trans-unit id="5674286808255988565" datatype="html">
         <source>Create</source>
@@ -1575,10 +1527,6 @@
       <trans-unit id="6163370502260387661" datatype="html">
         <source> Invalid protocol. </source>
         <target>Protocole invalide. </target>
-      </trans-unit>
-      <trans-unit id="6185721657347844438" datatype="html">
-        <source>Can&apos;t find dependency &quot;<x id="PH" equiv-text="dep"/>&quot; for plugin &quot;<x id="PH_1" equiv-text="pluginName"/>&quot;</source>
-        <target>Impossible de trouver la dépendance &quot;<x id="PH" equiv-text="dep"/>&quot; pour le plugin &quot;<x id="PH_1" equiv-text="pluginName"/>&quot;</target>
       </trans-unit>
       <trans-unit id="6194056995548896650" datatype="html">
         <source>The new secret will be added to the cluster</source>
@@ -1752,10 +1700,6 @@
         <source>Served</source>
         <target>Servie</target>
       </trans-unit>
-      <trans-unit id="6901018060567164184" datatype="html">
-        <source>Plugins</source>
-        <target>Extensions</target>
-      </trans-unit>
       <trans-unit id="6915193719482636823" datatype="html">
         <source>Name: </source>
         <target state="new">Nom: </target>
@@ -1888,17 +1832,9 @@
         <source>Init Containers</source>
         <target>Conteneurs d&apos;initilisation</target>
       </trans-unit>
-      <trans-unit id="7293190222859783293" datatype="html">
-        <source>Plugins </source>
-        <target>Plugins </target>
-      </trans-unit>
       <trans-unit id="7298863100332850221" datatype="html">
         <source>There is no data to display.</source>
         <target>Il n&apos;y a pas de données à afficher.</target>
-      </trans-unit>
-      <trans-unit id="7327432642990246284" datatype="html">
-        <source>Default service account </source>
-        <target>Compte de service par défaut </target>
       </trans-unit>
       <trans-unit id="7330483736355831593" datatype="html">
         <source>Config and Storage </source>
@@ -1956,9 +1892,9 @@
         <source> Setting high number of pods may cause performance issues of the cluster and Dashboard UI. </source>
         <target>Définir un grand nombre de pods peut entaîner des problèmes de performance du cluster et de l&apos;UI tableau de bord. </target>
       </trans-unit>
-      <trans-unit id="7542300534444838884" datatype="html">
-        <source>Kubernetes Dashboard</source>
-        <target>Tableau de bord Kubernetes</target>
+      <trans-unit id="5973674058839107725" datatype="html">
+        <source>Kubernetes Dashboard </source>
+        <target state="new">Tableau de bord Kubernetes</target>
       </trans-unit>
       <trans-unit id="7546647490531252189" datatype="html">
         <source>Namespace: </source>
@@ -2067,10 +2003,6 @@
       <trans-unit id="7920227693577024356" datatype="html">
         <source>Workloads</source>
         <target>Charges de travail</target>
-      </trans-unit>
-      <trans-unit id="7927427229271598667" datatype="html">
-        <source> Make sure that support for basic authentication is enabled in the cluster. To find out more about how to configure basic authentication, please refer to the <x id="START_LINK" ctype="x-a" equiv-text="&quot;\uFFFD#2\uFFFD&quot;"/>Authenticating<x id="CLOSE_LINK" ctype="x-a" equiv-text="&quot;[\uFFFD/#2\uFFFD|\uFFFD/#3\uFFFD]&quot;"/> and <x id="START_LINK_1" equiv-text="&quot;\uFFFD#3\uFFFD&quot;"/>ABAC Mode<x id="CLOSE_LINK" ctype="x-a" equiv-text="&quot;[\uFFFD/#2\uFFFD|\uFFFD/#3\uFFFD]&quot;"/> sections. </source>
-        <target>Assurez-vous que le support pour l&apos;authentification Basic est activéde pour le cluster. Pour en savoir plus sur la façon de configurer l&apos;authentification Basic, veuillez vous référer aux sections <x id="START_LINK" ctype="x-a" equiv-text="&lt;a&gt;"/>S&apos;authentifier<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/> et <x id="START_LINK_1" ctype="x-a" equiv-text="&lt;a&gt;"/>Mode ABAC<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/>. </target>
       </trans-unit>
       <trans-unit id="7941428823403788384" datatype="html">
         <source> Create </source>
@@ -2280,10 +2212,6 @@
         <source>Group</source>
         <target>Groupe</target>
       </trans-unit>
-      <trans-unit id="8643289769990675407" datatype="html">
-        <source>Basic</source>
-        <target>Basic</target>
-      </trans-unit>
       <trans-unit id="864882670483831190" datatype="html">
         <source> There are no notifications </source>
         <target>Il n&apos;y a pas de notification </target>
@@ -2451,6 +2379,18 @@
       <trans-unit id="97066167691656299" datatype="html">
         <source>Provisioner</source>
         <target>Approvisionneur</target>
+      </trans-unit>
+      <trans-unit id="279917385815280643" datatype="html">
+        <source>Bearer token</source>
+        <target state="new">Bearer token</target>
+      </trans-unit>
+      <trans-unit id="4667215985978511334" datatype="html">
+        <source>You can generate token for service account with:</source>
+        <target state="new">You can generate token for service account with:</target>
+      </trans-unit>
+      <trans-unit id="5911975001974379688" datatype="html">
+        <source> To find out more on how to configure and use bearer tokens, please refer to the <x id="START_LINK" ctype="x-a" equiv-text="&quot;\uFFFD#20\uFFFD&quot;"/>documentation<x id="CLOSE_LINK" ctype="x-a" equiv-text="&quot;\uFFFD/#20\uFFFD&quot;"/>. </source>
+        <target state="new"> To find out more on how to configure and use bearer tokens, please refer to the <x id="START_LINK" ctype="x-a" equiv-text="&quot;\uFFFD#20\uFFFD&quot;"/>documentation<x id="CLOSE_LINK" ctype="x-a" equiv-text="&quot;\uFFFD/#20\uFFFD&quot;"/>. </target>
       </trans-unit>
     </body>
   </file>

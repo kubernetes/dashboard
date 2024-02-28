@@ -29,8 +29,6 @@ Kubernetes Dashboard supports a few different ways of authenticating users:
 
 In case you are using the latest recommended installation then login functionality will be enabled by default. In any other case and if you prefer to configure certificates manually you need to pass `--tls-cert-file` and `--tls-cert-key` flags to Dashboard. HTTPS endpoint will be exposed on port `8443` of Dashboard container. You can change it by providing `--port` flag.
 
-Using `Skip` option will make Dashboard use privileges of Service Account used by Dashboard. `Skip` button is disabled by default since 1.10.1. Use `--enable-skip-login` dashboard flag to display it.
-
 ![Sing in](../../images/signin.png)
 
 ### Authorization header

@@ -62,11 +62,6 @@ func init() {
 }
 
 func handleGetSettingsGlobalCanI(c *gin.Context) {
-	if args.DisableSettingsAuthorizer() {
-		c.JSON(http.StatusOK, CanIResponse{Allowed: true})
-		return
-	}
-
 	verb := c.Param("verb")
 	if len(verb) == 0 {
 		verb = http.MethodGet

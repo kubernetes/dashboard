@@ -47,7 +47,6 @@ spec:
           image: "{{ .Values.api.image.repository }}:{{ .Values.api.image.tag }}"
           imagePullPolicy: {{ .Values.app.image.pullPolicy }}
           args:
-            - --enable-insecure-login
             - --namespace={{ .Release.Namespace }}
           {{- with .Values.api.containers.args }}
           {{ toYaml . | nindent 12 }}

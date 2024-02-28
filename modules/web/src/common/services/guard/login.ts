@@ -14,9 +14,7 @@
 
 import {Injectable} from '@angular/core';
 import {Router, UrlTree} from '@angular/router';
-import {LoginStatus} from '@api/root.api';
 import {Observable, of} from 'rxjs';
-import {catchError, switchMap, take} from 'rxjs/operators';
 import {AuthService} from '../global/authentication';
 
 @Injectable()
@@ -27,10 +25,10 @@ export class LoginGuard {
   ) {}
 
   canActivate(): Observable<boolean | UrlTree> {
-    if (!this.authService_.isLoggedIn()) {
-      return of(true)
+    if (!this.authService_.isAuthenticated()) {
+      return of(true);
     }
 
-    return of(false)
+    return of(false);
   }
 }

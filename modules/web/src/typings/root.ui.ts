@@ -128,12 +128,9 @@ export interface AppConfig {
 
 export interface IConfig {
   authTokenCookieName: string;
-  usernameCookieName: string;
-  skipLoginPageCookieName: string;
   csrfHeaderName: string;
   authTokenHeaderName: string;
   defaultNamespace: string;
-  authModeCookieName: string;
   supportedLanguages: LanguageConfig[];
   defaultLanguage: string;
   languageCookieName: string;
