@@ -32,23 +32,15 @@ jobs:
       run:
         working-directory: modules/web
     steps:
-      - name: Check out repository
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
         with:
           fetch-depth: 0
-
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
+      - uses: actions/setup-node@v4
         with:
           node-version: 18.14.0
-
-      - name: Install web dependencies
-        working-directory: modules/web
+      - working-directory: modules/web
         run: yarn
-
-      - name: Check
-        run: yarn check
-
+      - run: yarn check
   unit:
     name: Unit tests with coverage
     runs-on: ubuntu-latest
@@ -56,25 +48,16 @@ jobs:
       run:
         working-directory: modules/web
     steps:
-      - name: Check out repository
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
         with:
           fetch-depth: 0
-
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
+      - uses: actions/setup-node@v4
         with:
           node-version: 18.14.0
-
-      - name: Install web dependencies
-        working-directory: modules/web
+      - working-directory: modules/web
         run: yarn
-
-      - name: Test
-        run: yarn coverage
-
-      - name: Upload coverage report
-        uses: codecov/codecov-action@v3
+      - run: yarn coverage
+      - uses: codecov/codecov-action@v3
         with:
           name: web-coverage
           fail_ci_if_error: true

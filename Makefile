@@ -41,6 +41,9 @@ check-license: $(PRE) ## Checks if repo files contain valid license header
 fix-license: $(PRE) ## Adds missing license header to repo files
 	@${GOPATH}/bin/license-eye header fix
 
+.PHONY: tools
+tools: $(PRE) ## Installs required tools
+
 # Starts development version of the application.
 #
 # URL: http://localhost:8080
