@@ -138,15 +138,15 @@ func handleSettingsDeletePinned(c *gin.Context) {
 	}
 
 	// TODO: Export this workaround to some func.
-	name := c.Request.PathValue("name")
-	namespace := c.Request.PathValue("nameOrNamespace")
+	name := c.Param("name")
+	namespace := c.Param("nameOrNamespace")
 	if len(name) == 0 {
 		name = namespace
 		namespace = ""
 	}
 
 	resource := &PinnedResource{
-		Kind:      c.Request.PathValue("kind"),
+		Kind:      c.Param("kind"),
 		Name:      name,
 		Namespace: namespace,
 	}

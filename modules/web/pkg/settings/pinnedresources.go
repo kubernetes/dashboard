@@ -28,7 +28,7 @@ func (p PinnedResources) IndexOf(r *PinnedResource) int {
 }
 
 func (p PinnedResources) Includes(r *PinnedResource) bool {
-	return p.IndexOf(r) < 0
+	return p.IndexOf(r) >= 0
 }
 
 func (p PinnedResources) DeleteAt(index int, count int) PinnedResources {

@@ -169,12 +169,13 @@ func (sm *SettingsManager) SavePinnedResource(client kubernetes.Interface, r *Pi
 		return errors.NewInvalid(ConcurrentSettingsChangeError)
 	}
 
-	defer sm.load(client)
-
-	if !sm.pinnedResources.Includes(r) {
-		sm.pinnedResources = append(sm.pinnedResources, *r)
+	if sm.pinnedResources.Includes(r) {
+		return nil
 	}
 
+	defer sm.load(client)
+
+	sm.pinnedResources = append(sm.pinnedResources, *r)
 	return sm.patchConfigMap(client, PinnedResourcesKey, sm.pinnedResources.Marshal())
 }
 
