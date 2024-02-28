@@ -20,7 +20,7 @@ import (
 	"net/http"
 
 	"github.com/gorilla/mux"
-	log "github.com/sirupsen/logrus"
+	"k8s.io/klog/v2"
 	_ "modernc.org/sqlite"
 
 	dashboardProvider "k8s.io/dashboard/metrics-scraper/pkg/api/dashboard"
@@ -38,6 +38,6 @@ func DefaultHandler(w http.ResponseWriter, r *http.Request) {
 	msg := fmt.Sprintf("URL: %s", r.URL)
 	_, err := w.Write([]byte(msg))
 	if err != nil {
-		log.Errorf("Error cannot write response: %v", err)
+		klog.Errorf("Error cannot write response: %v", err)
 	}
 }

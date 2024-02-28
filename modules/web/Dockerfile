@@ -55,6 +55,7 @@ FROM golang:1.22-alpine3.19 as go-builder
 
 ARG TARGETARCH
 ARG TARGETOS
+ARG VERSION
 
 WORKDIR /workspace
 
@@ -62,7 +63,7 @@ WORKDIR /workspace
 COPY /modules/common/certificates /workspace/common/certificates
 COPY /modules/common/errors /workspace/common/errors
 COPY /modules/common/client /workspace/common/client
-COPY /common/types /workspace/common/types
+COPY /modules/common/types /workspace/common/types
 
 WORKDIR /workspace/web
 
@@ -75,7 +76,7 @@ RUN go mod download
 COPY /modules/web/pkg ./pkg
 COPY /modules/web/main.go ./
 
-RUN CGO_ENABLED=0 GOOS=${TARGETOS} GOARCH=${TARGETARCH} go build -trimpath -ldflags="-s -w" -o dashboard-web .
+RUN CGO_ENABLED=0 GOOS=${TARGETOS} GOARCH=${TARGETARCH} go build -trimpath -ldflags="-s -w -X k8s.io/dashboard/web/pkg/environment.Version=${VERSION}" -o dashboard-web .
 
 # Scratch can be used as the base image because the binary is compiled to include all dependencies.
 FROM scratch as final

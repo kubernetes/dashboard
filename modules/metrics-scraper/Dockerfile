@@ -35,21 +35,26 @@ ARG VERSION
 
 WORKDIR /workspace
 
+# Copy required local modules
+COPY /common/helpers /workspace/common/helpers
+
+WORKDIR /workspace/metrics-scraper
+
 # Retrieve application dependencies.
 # This allows the container build to reuse cached dependencies.
 # Expecting to copy go.mod and if present go.sum.
-COPY go.* ./
+COPY metrics-scraper/go.* ./
 RUN go mod download
 
-COPY pkg ./pkg
-COPY main.go ./
+COPY metrics-scraper/pkg ./pkg
+COPY metrics-scraper/main.go ./
 
-RUN CGO_ENABLED=0 GOOS=${TARGETOS} GOARCH=${TARGETARCH} go build -trimpath -ldflags="-s -w" -o dashboard-metrics-scraper .
+RUN CGO_ENABLED=0 GOOS=${TARGETOS} GOARCH=${TARGETARCH} go build -trimpath -ldflags="-s -w -X k8s.io/dashboard/metrics-scraper/pkg/environment.Version=${VERSION}" -o dashboard-metrics-scraper .
 
 # Scratch can be used as the base image because the binary is compiled to include all dependencies.
 FROM scratch as final
 
-COPY --from=builder /workspace/dashboard-metrics-scraper /dashboard-metrics-scraper
+COPY --from=builder /workspace/metrics-scraper/dashboard-metrics-scraper /dashboard-metrics-scraper
 
 # Import the user and group files from the builder.
 COPY --from=user /etc/passwd /etc/passwd

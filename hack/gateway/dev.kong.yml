@@ -26,7 +26,7 @@ services:
         strip_path: false
   - name: api
     host: api # Internal name of docker service
-    port: 9000
+    port: 8000
     protocol: http
     routes:
       - name: api
@@ -42,6 +42,10 @@ services:
     port: 8000
     protocol: http
     routes:
+      - name: root
+        paths:
+          - /
+        strip_path: false
       - name: config
         paths:
           - /config

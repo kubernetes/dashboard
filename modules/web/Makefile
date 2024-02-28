@@ -38,17 +38,17 @@ build-go:
 
 .PHONY: check-go
 check-go: $(PRE)
-	golangci-lint run -c ../../.golangci.yml ./...
+	@golangci-lint run -c ../../.golangci.yml ./...
 
 .PHONY: coverage-go
 coverage-go: DIR := $(WEB_TMP_DIRECTORY)
-coverage-go:
+coverage-go: --ensure-dir
 	@echo "Running tests with coverage"
 	@go test -coverprofile=$(COVERAGE_FILE) -covermode=atomic $(PACKAGE_NAME)/...
 
 .PHONY: fix-go
 fix-go: $(PRE)
-	golangci-lint run -c ../../.golangci.yml --fix ./...
+	@golangci-lint run -c ../../.golangci.yml --fix ./...
 
 .PHONY: test-go
 test-go:

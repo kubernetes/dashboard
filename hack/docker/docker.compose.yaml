@@ -37,6 +37,8 @@ services:
     build:
       context: ../../modules
       dockerfile: auth/Dockerfile
+      args:
+        VERSION: ${VERSION:?}
     command:
       - "--kubeconfig=${KUBECONFIG:?}"
     volumes:
@@ -49,6 +51,8 @@ services:
     build:
       context: ../../modules
       dockerfile: api/Dockerfile
+      args:
+        VERSION: ${VERSION:?}
     command:
       --kubeconfig=${KUBECONFIG:?}
       --sidecar-host=${SIDECAR_HOST:?}
@@ -62,6 +66,8 @@ services:
     build:
       context: ../..
       dockerfile: modules/web/Dockerfile
+      args:
+        VERSION: ${VERSION:?}
     command:
       - "--kubeconfig=${KUBECONFIG:?}"
       - "--locale-config=/public/locale_conf.json"
@@ -75,16 +81,19 @@ services:
   scraper:
     container_name: metrics-scraper
     build:
-      context: ../../modules/metrics-scraper
-      dockerfile: Dockerfile
+      context: ../../modules
+      dockerfile: metrics-scraper/Dockerfile
+      args:
+        VERSION: ${VERSION:?}
     command:
       --kubeconfig=${KUBECONFIG:?}
       --metric-resolution=5s
       --metric-duration=10m
     volumes:
       - ${KUBECONFIG:?}:${KUBECONFIG:?}
+    shm_size: 1G
     tmpfs:
-      - /tmp:size=1G
+      - /tmp
 
   metrics-server:
     container_name: metrics-server

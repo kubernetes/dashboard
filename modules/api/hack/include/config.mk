@@ -1,6 +1,5 @@
 ### Application details
 APP_NAME := $(PROJECT_NAME)-api
-APP_VERSION := v1.0.0
 PACKAGE_NAME := k8s.io/$(PROJECT_NAME)/api
 
 ### Dirs and paths

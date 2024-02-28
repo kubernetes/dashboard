@@ -54,7 +54,8 @@ RUN go mod download
 COPY api/pkg ./pkg
 COPY api/main.go ./
 
-RUN CGO_ENABLED=0 GOOS=${TARGETOS} GOARCH=${TARGETARCH} go build -trimpath -ldflags="-s -w -X k8s.io/dashboard/api/client.Version=${VERSION}" -o dashboard-api .
+RUN echo ${VERSION}
+RUN CGO_ENABLED=0 GOOS=${TARGETOS} GOARCH=${TARGETARCH} go build -trimpath -ldflags="-s -w -X k8s.io/dashboard/api/pkg/environment.Version=${VERSION}" -o dashboard-api .
 
 # Scratch can be used as the base image because the binary is compiled to include all dependencies.
 FROM scratch as final
@@ -68,5 +69,5 @@ COPY --from=user /etc/group /etc/group
 USER nonroot:nonroot
 
 # The port that the application listens on.
-EXPOSE 9000 9001
+EXPOSE 8000 8001
 ENTRYPOINT ["/dashboard-api", "--insecure-bind-address=0.0.0.0", "--bind-address=0.0.0.0"]

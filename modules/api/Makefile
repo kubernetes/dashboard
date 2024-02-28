@@ -11,6 +11,11 @@ PRE :=
 
 # ==================== GLOBAL ==================== #
 
+.PHONY: build
+build: $(PRE)
+	@echo "Building $(APP_NAME)"
+	@CGO_ENABLED=0 go build -trimpath -ldflags "-s -w" -o $(API_DIST_DIRECTORY)/$(APP_NAME) .
+
 .PHONY: check
 check: check-go
 
@@ -29,11 +34,6 @@ test:
 	@go test $(PACKAGE_NAME)/...
 
 # ==================== LOCAL ==================== #
-
-.PHONY: build
-build: $(PRE)
-	@echo "Building dashboard-api"
-	@CGO_ENABLED=0 go build -trimpath -ldflags "-s -w -X $(PACKAGE_NAME)/client.Version=$(APP_VERSION)" -o $(API_DIST_DIRECTORY)/$(APP_NAME) $(PACKAGE_NAME)
 
 .PHONY: check-go
 check-go: $(PRE)

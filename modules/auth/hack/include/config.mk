@@ -1,6 +1,5 @@
 ### Application details
 APP_NAME := $(PROJECT_NAME)-auth
-APP_VERSION := v1.0.0
 PACKAGE_NAME := k8s.io/$(PROJECT_NAME)/auth
 
 ### Dirs and paths

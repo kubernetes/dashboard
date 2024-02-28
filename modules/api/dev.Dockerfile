@@ -47,5 +47,5 @@ RUN go mod download
 COPY api/main.go .
 COPY api/pkg ./pkg
 
-EXPOSE 9000 9001
+EXPOSE 8000 8001
 ENTRYPOINT ["air", "-c", ".air.toml", "--", "--insecure-bind-address=0.0.0.0", "--bind-address=0.0.0.0"]
