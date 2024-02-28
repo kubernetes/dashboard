@@ -18,6 +18,7 @@ import (
 	"database/sql"
 	"encoding/json"
 	"fmt"
+	"html"
 	"net/http"
 	"strconv"
 	"strings"
@@ -36,7 +37,7 @@ func DashboardRouter(r *mux.Router, db *sql.DB) {
 }
 
 func defaultHandler(w http.ResponseWriter, r *http.Request) {
-	msg := fmt.Sprintf("%v - URL: %s", time.Now(), r.URL)
+	msg := fmt.Sprintf("%v - URL: %s", time.Now(), html.EscapeString(r.URL.String()))
 	_, err := w.Write([]byte(msg))
 	if err != nil {
 		klog.Errorf("Error cannot write response: %v", err)
