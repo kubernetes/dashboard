@@ -72,10 +72,9 @@ func formatRequestLog(request *restful.Request) string {
 	// Restore request body so we can read it again in regular request handlers
 	request.Request.Body = io.NopCloser(bytes.NewReader(byteArr))
 
-	// Is DEBUG level logging enabled? Yes?
-	// Great now let's filter out any content from sensitive URLs
+	// Hide sensitive url content for log level lower than debug
 	if args.APILogLevel() < args.LogLevelDebug && checkSensitiveURL(&uri) {
-		content = "{ contents hidden }"
+		content = "{ content hidden }"
 	}
 
 	return fmt.Sprintf(RequestLogString, time.Now().Format(time.RFC3339), request.Request.Proto,
@@ -95,7 +94,6 @@ func checkSensitiveURL(url *string) bool {
 	var sensitiveUrls = make(map[string]struct{})
 	sensitiveUrls["/api/v1/login"] = s
 	sensitiveUrls["/api/v1/csrftoken/login"] = s
-	sensitiveUrls["/api/v1/token/refresh"] = s
 
 	if _, ok := sensitiveUrls[*url]; ok {
 		return true
@@ -146,6 +144,11 @@ func shouldDoCsrfValidation(req *restful.Request) bool {
 // getRemoteAddr extracts the remote address of the request, taking into
 // account proxy headers.
 func getRemoteAddr(r *http.Request) string {
+	// Hide sensitive content for log level lower than debug
+	if args.APILogLevel() < args.LogLevelDebug {
+		return "{ content hidden }"
+	}
+
 	if ip := getRemoteIPFromForwardHeader(r, originalForwardedForHeader); ip != "" {
 		return ip
 	}
