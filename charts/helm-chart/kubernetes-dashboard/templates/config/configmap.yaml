@@ -22,6 +22,6 @@ data:
 {{- with .Values.app.settings.global }}
   settings: {{ toJson . | quote }}
 {{- end }}
-{{- with .Values.app.settings.pinnedCustomResources }}
-  pinnedCustomResources: {{ toJson . | quote }}
+{{- with .Values.app.settings.pinnedResources }}
+  pinnedResources: {{ toJson . | quote }}
 {{- end }}

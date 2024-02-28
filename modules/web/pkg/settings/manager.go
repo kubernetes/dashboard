@@ -36,7 +36,7 @@ const (
 	ConfigMapSettingsKey = "settings"
 
 	// PinnedResourcesKey is a settings map key which maps to current pinned resources.
-	PinnedResourcesKey = "pinnedCustomResources"
+	PinnedResourcesKey = "pinnedResources"
 
 	// ConcurrentSettingsChangeError occurs during settings save if settings were modified concurrently.
 	// Keep it in sync with concurrentChangeErr_ constant from the frontend.

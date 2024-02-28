@@ -69,8 +69,8 @@ app:
     #  resourceAutoRefreshTimeInterval: 5
     #  # Hide all access denied warnings in the notification panel
     #  disableAccessDeniedNotifications: false
-    ## Pinned CRDs that will be displayed in dashboard's menu
-    pinnedCustomResources: []
+    ## Pinned resources that will be displayed in dashboard's menu
+    pinnedResources: []
     # - kind: customresourcedefinition
     #  #  Fully qualified name of a CRD
     #  name: prometheus.monitoring.coreos.com
