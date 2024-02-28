@@ -94,8 +94,8 @@ services:
   scraper:
     container_name: metrics-scraper
     build:
-      context: ../../modules/metrics-scraper
-      dockerfile: dev.Dockerfile
+      context: ../../modules
+      dockerfile: metrics-scraper/dev.Dockerfile
     command:
       --kubeconfig=${KUBECONFIG:?}
       --metric-resolution=5s
@@ -105,8 +105,9 @@ services:
       - ${PWD}/modules/metrics-scraper/main.go:/workspace/main.go # Required - Entry file watched by AIR
       - ${PWD}/modules/metrics-scraper/.air.toml:/workspace/.air.toml # Required - AIR configuration
       - ${KUBECONFIG:?}:${KUBECONFIG:?}
+    shm_size: 1G
     tmpfs:
-      - /tmp:size=1G
+      - /tmp
 
   metrics-server:
     container_name: metrics-server

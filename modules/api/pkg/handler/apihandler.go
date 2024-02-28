@@ -107,9 +107,6 @@ func CreateHTTPAPIHandler(iManager integration.Manager) (http.Handler, error) {
 	integrationHandler := integration.NewHandler(iManager)
 	integrationHandler.Install(apiV1Ws)
 
-	//authHandler := auth.NewAuthHandler(authManager)
-	//authHandler.Install(apiV1Ws)
-
 	apiV1Ws.Route(
 		apiV1Ws.GET("csrftoken/{action}").
 			To(apiHandler.handleGetCsrfToken).

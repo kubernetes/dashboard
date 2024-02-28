@@ -16,18 +16,18 @@ package locale
 
 import (
 	"encoding/json"
-	"fmt"
 	"net/http"
 	"os"
 	"path/filepath"
 	"strings"
 
-	"github.com/gin-contrib/gzip"
+	"github.com/gin-gonic/contrib/static"
 	"github.com/gin-gonic/gin"
 	"golang.org/x/text/language"
+	"k8s.io/klog/v2"
+
 	"k8s.io/dashboard/web/pkg/args"
 	"k8s.io/dashboard/web/pkg/router"
-	"k8s.io/klog/v2"
 )
 
 const defaultLocaleDir = "en"
@@ -36,22 +36,10 @@ const assetsDir = "public"
 var supportedLocales = getSupportedLocales()
 
 func init() {
-	router.Router().Any("/", handleAny).Use(gzip.Gzip(gzip.DefaultCompression))
+	router.Router().Use(localeHandler("/"))
 }
 
-func handleAny(c *gin.Context) {
-	if c.Request.URL.EscapedPath() == "/" || c.Request.URL.EscapedPath() == "/index.html" {
-		// Do not store the html page in the cache. If the user is to click on 'switch language',
-		// we want a different index.html (for the right locale) to be served when the page refreshes.
-		c.Header("Cache-Control", "no-cache, no-store, must-revalidate")
-	}
-
-	// Disable directory listing.
-	if c.Request.URL.Path != "/" && strings.HasSuffix(c.Request.URL.Path, "/") {
-		c.JSON(http.StatusNotFound, fmt.Errorf("page not found"))
-		return
-	}
-
+func getAcceptLanguage(c *gin.Context) string {
 	acceptLanguage := ""
 	cookie, err := c.Cookie("lang")
 	if err == nil {
@@ -66,8 +54,43 @@ func handleAny(c *gin.Context) {
 		acceptLanguage = c.GetHeader("Accept-Language")
 	}
 
-	dirName := determineLocalizedDir(acceptLanguage)
-	c.FileFromFS(c.Request.URL.Path, http.Dir(dirName))
+	return acceptLanguage
+}
+
+func localeHandler(urlPrefix string) gin.HandlerFunc {
+	return func(c *gin.Context) {
+		if c.Request.URL.EscapedPath() == "/" || c.Request.URL.EscapedPath() == "/index.html" {
+			// Do not store the html page in the cache. If the user is to click on 'switch language',
+			// we want a different index.html (for the right locale) to be served when the page refreshes.
+			c.Header("Cache-Control", "no-cache, no-store, must-revalidate")
+		}
+
+		// Disable directory listing.
+		if c.Request.URL.Path != "/" && strings.HasSuffix(c.Request.URL.Path, "/") {
+			klog.InfoS("Directory listing is disabled", "requestPath", c.Request.URL.Path)
+			c.AbortWithStatusJSON(http.StatusNotFound, "page not found")
+			return
+		}
+
+		acceptLanguage := getAcceptLanguage(c)
+		dirName := determineLocalizedDir(acceptLanguage)
+		directory := static.LocalFile(dirName, true)
+
+		// Fallback to index.html if request file does not exist.
+		if !directory.Exists(urlPrefix, c.Request.URL.Path) {
+			klog.InfoS("Directory does not exist", "directory", directory, "dirName", dirName, "acceptLanguage", acceptLanguage)
+			c.Request.URL.Path = "/"
+		}
+
+		fileServer := http.FileServer(directory)
+
+		if urlPrefix != "" {
+			fileServer = http.StripPrefix(urlPrefix, fileServer)
+		}
+
+		fileServer.ServeHTTP(c.Writer, c.Request)
+		c.Abort()
+	}
 }
 
 func getSupportedLocales() (tags []language.Tag) {

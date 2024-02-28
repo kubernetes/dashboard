@@ -434,9 +434,9 @@
         <source>Service</source>
         <target>Service</target>
       </trans-unit>
-      <trans-unit id="222595489358095649" datatype="html">
-        <source> Kubernetes Dashboard v<x id="INTERPOLATION" equiv-text="&quot;\uFFFD0\uFFFD&quot;"/> © <x id="INTERPOLATION_1" equiv-text="&quot;\uFFFD1\uFFFD&quot;"/> The Kubernetes Authors </source>
-        <target> Kubernetes Dashboard v<x id="INTERPOLATION" equiv-text="&quot;\uFFFD0\uFFFD&quot;"/> © <x id="INTERPOLATION_1" equiv-text="&quot;\uFFFD1\uFFFD&quot;"/> The Kubernetes Authors </target>
+      <trans-unit id="4335281277764237619" datatype="html">
+        <source> <x id="INTERPOLATION" equiv-text="&quot;\uFFFD0\uFFFD&quot;"/> © <x id="INTERPOLATION_1" equiv-text="&quot;\uFFFD1\uFFFD&quot;"/> The Kubernetes Authors </source>
+        <target state="new"> Kubernetes Dashboard v<x id="INTERPOLATION" equiv-text="&quot;\uFFFD0\uFFFD&quot;"/> © <x id="INTERPOLATION_1" equiv-text="&quot;\uFFFD1\uFFFD&quot;"/> The Kubernetes Authors </target>
       </trans-unit>
       <trans-unit id="2235593604907350097" datatype="html">
         <source>Resource Names</source>
@@ -982,10 +982,6 @@
         <source>Run command arguments</source>
         <target>Arguments de la commande à exécuter</target>
       </trans-unit>
-      <trans-unit id="3848712021572607026" datatype="html">
-        <source>Can&apos;t find plugin &quot;<x id="PH" equiv-text="pluginName"/>&quot;</source>
-        <target>Impossible de trouver le plug-in &quot;<x id="PH" equiv-text="pluginName"/>&quot;</target>
-      </trans-unit>
       <trans-unit id="3856193213296741054" datatype="html">
         <source>Last Seen</source>
         <target>Dernière vue</target>
@@ -1017,10 +1013,6 @@
       <trans-unit id="4027897116563107017" datatype="html">
         <source>Arguments</source>
         <target>Arguments</target>
-      </trans-unit>
-      <trans-unit id="4045087308145757242" datatype="html">
-        <source>Dependencies</source>
-        <target>Dépendances</target>
       </trans-unit>
       <trans-unit id="4052052481087794292" datatype="html">
         <source>Role Bindings </source>
@@ -1576,10 +1568,6 @@
         <source> Invalid protocol. </source>
         <target>Protocole invalide. </target>
       </trans-unit>
-      <trans-unit id="6185721657347844438" datatype="html">
-        <source>Can&apos;t find dependency &quot;<x id="PH" equiv-text="dep"/>&quot; for plugin &quot;<x id="PH_1" equiv-text="pluginName"/>&quot;</source>
-        <target>Impossible de trouver la dépendance &quot;<x id="PH" equiv-text="dep"/>&quot; pour le plugin &quot;<x id="PH_1" equiv-text="pluginName"/>&quot;</target>
-      </trans-unit>
       <trans-unit id="6194056995548896650" datatype="html">
         <source>The new secret will be added to the cluster</source>
         <target>Le nouveau secret sera rajouté au cluster</target>
@@ -1752,10 +1740,6 @@
         <source>Served</source>
         <target>Servie</target>
       </trans-unit>
-      <trans-unit id="6901018060567164184" datatype="html">
-        <source>Plugins</source>
-        <target>Extensions</target>
-      </trans-unit>
       <trans-unit id="6915193719482636823" datatype="html">
         <source>Name: </source>
         <target state="new">Nom: </target>
@@ -1887,10 +1871,6 @@
       <trans-unit id="7281870845577621674" datatype="html">
         <source>Init Containers</source>
         <target>Conteneurs d&apos;initilisation</target>
-      </trans-unit>
-      <trans-unit id="7293190222859783293" datatype="html">
-        <source>Plugins </source>
-        <target>Plugins </target>
       </trans-unit>
       <trans-unit id="7298863100332850221" datatype="html">
         <source>There is no data to display.</source>

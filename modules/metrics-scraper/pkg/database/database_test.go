@@ -211,7 +211,7 @@ var _ = ginkgo.Describe("Database functions", func() {
 				panic(err.Error())
 			}
 
-			err = database.CullDatabase(db, &timeWindow)
+			err = database.CullDatabase(db, timeWindow)
 			if err != nil {
 				panic(err.Error())
 			}

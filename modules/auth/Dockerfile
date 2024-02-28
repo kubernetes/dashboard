@@ -52,7 +52,7 @@ COPY auth/api ./api
 COPY auth/pkg ./pkg
 COPY auth/main.go ./
 
-RUN CGO_ENABLED=0 GOOS=${TARGETOS} GOARCH=${TARGETARCH} go build -trimpath -ldflags="-s -w -X k8s.io/dashboard/auth/client.Version=${VERSION}" -o dashboard-auth .
+RUN CGO_ENABLED=0 GOOS=${TARGETOS} GOARCH=${TARGETARCH} go build -trimpath -ldflags="-s -w -X k8s.io/dashboard/auth/pkg/environment.Version=${VERSION}" -o dashboard-auth .
 
 # Scratch can be used as the base image because the backend is compiled to include all
 # its dependencies.

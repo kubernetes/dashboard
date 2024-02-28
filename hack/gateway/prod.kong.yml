@@ -26,8 +26,8 @@ services:
         strip_path: false
   - name: api
     host: api # Internal name of docker service
-    port: 9001
-    protocol: https
+    port: 8000
+    protocol: http
     routes:
       - name: api
         paths:
@@ -39,16 +39,12 @@ services:
         strip_path: false
   - name: web
     host: web # Internal name of docker service
-    port: 8001
-    protocol: https
+    port: 8000
+    protocol: http
     routes:
       - name: root
         paths:
           - /
-        strip_path: false
-      - name: settings
-        paths:
-          - /settings
         strip_path: false
   - name: scraper
     host: scraper # Internal name of docker service

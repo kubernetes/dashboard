@@ -24,6 +24,7 @@ import (
 	"k8s.io/klog/v2"
 
 	"k8s.io/dashboard/api/pkg/args"
+	"k8s.io/dashboard/api/pkg/environment"
 	"k8s.io/dashboard/api/pkg/handler"
 	"k8s.io/dashboard/api/pkg/integration"
 	integrationapi "k8s.io/dashboard/api/pkg/integration/api"
@@ -33,7 +34,10 @@ import (
 )
 
 func main() {
+	klog.InfoS("Starting Kubernetes Dashboard API", "version", environment.Version)
+
 	client.Init(
+		client.WithUserAgent(environment.UserAgent()),
 		client.WithKubeconfig(args.KubeconfigPath()),
 		client.WithMasterUrl(args.ApiServerHost()),
 		client.WithInsecureTLSSkipVerify(args.ApiServerSkipTLSVerify()),

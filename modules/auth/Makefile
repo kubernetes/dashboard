@@ -33,7 +33,7 @@ test:
 .PHONY: build
 build:
 	@echo "Building $(APP_NAME)"
-	@CGO_ENABLED=0 go build -trimpath -ldflags "-s -w -X $(PACKAGE_NAME)/environment.Version=$(APP_VERSION)" -o $(AUTH_DIST_DIRECTORY)/$(APP_NAME) $(PACKAGE_NAME)
+	@CGO_ENABLED=0 go build -trimpath -ldflags "-s -w" -o $(AUTH_DIST_DIRECTORY)/$(APP_NAME) $(PACKAGE_NAME)
 
 .PHONY: check-go
 check-go: $(PRE)

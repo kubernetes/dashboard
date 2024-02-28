@@ -11,6 +11,7 @@ import (
 )
 
 func init() {
+	// TODO: add CSRF protection to login endpoint
 	router.V1().POST("/login", handleLogin)
 	router.V1().GET("/login/status", handleLoginStatus)
 }

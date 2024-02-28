@@ -24,15 +24,21 @@ COPY --from=AIR $GOPATH/bin/air $GOPATH/bin/air
 # Create and cd into workspace
 WORKDIR /workspace
 
+# Copy required local modules
+COPY /common/helpers /workspace/common/helpers
+
+# Create and cd into metrics-scraper module
+WORKDIR /workspace/metrics-scraper
+
 # Retrieve application dependencies.
 # This allows the container build to reuse cached dependencies.
 # Expecting to copy go.mod and if present go.sum.
-COPY go.* ./
+COPY metrics-scraper/go.* ./
 RUN go mod download
 
-# Copy local scraper code to the container image.
-COPY main.go .
-COPY pkg ./pkg
+# Copy local code to the container image.
+COPY metrics-scraper/main.go .
+COPY metrics-scraper/pkg ./pkg
 
 EXPOSE 8000
 ENTRYPOINT ["air", "-c", ".air.toml", "--"]

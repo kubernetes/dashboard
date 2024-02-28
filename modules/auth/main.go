@@ -15,12 +15,14 @@ import (
 )
 
 func main() {
+	klog.InfoS("Starting Kubernetes Dashboard Auth", "version", environment.Version)
+
 	client.Init(
 		client.WithUserAgent(environment.UserAgent()),
 		client.WithKubeconfig(args.KubeconfigPath()),
 	)
 
-	klog.V(1).InfoS("Listening and serving on", "address", args.Address())
+	klog.V(1).InfoS("Listening and serving insecurely on", "address", args.Address())
 	if err := router.Router().Run(args.Address()); err != nil {
 		klog.ErrorS(err, "Router error")
 		os.Exit(1)

@@ -26,6 +26,7 @@ import (
 	"github.com/emicklei/go-restful/v3"
 	"golang.org/x/net/xsrftoken"
 	utilnet "k8s.io/apimachinery/pkg/util/net"
+	"k8s.io/klog/v2"
 
 	"k8s.io/dashboard/api/pkg/args"
 	"k8s.io/dashboard/csrf"
@@ -48,15 +49,9 @@ func InstallFilters(ws *restful.WebService) {
 // web-service filter function used for request and response logging.
 func requestAndResponseLogger(request *restful.Request, response *restful.Response,
 	chain *restful.FilterChain) {
-	if args.APILogLevel() != "NONE" {
-		log.Printf(formatRequestLog(request))
-	}
-
+	klog.V(args.LogLevelVerbose).Info(formatRequestLog(request))
 	chain.ProcessFilter(request, response)
-
-	if args.APILogLevel() != "NONE" {
-		log.Printf(formatResponseLog(response, request))
-	}
+	klog.V(args.LogLevelVerbose).Info(formatResponseLog(response, request))
 }
 
 // formatRequestLog formats request log string.
@@ -78,7 +73,7 @@ func formatRequestLog(request *restful.Request) string {
 
 	// Is DEBUG level logging enabled? Yes?
 	// Great now let's filter out any content from sensitive URLs
-	if args.APILogLevel() != "DEBUG" && checkSensitiveURL(&uri) {
+	if args.APILogLevel() < args.LogLevelDebug && checkSensitiveURL(&uri) {
 		content = "{ contents hidden }"
 	}
 
@@ -148,6 +143,10 @@ func validateXSRFFilter() restful.FilterFunction {
 // should either not edit anything or be already safe to CSRF attacks (PUT
 // and DELETE)
 func shouldDoCsrfValidation(req *restful.Request) bool {
+	if !args.IsCSRFProtectionEnabled() {
+		return false
+	}
+
 	if req.Request.Method != http.MethodPost {
 		return false
 	}

@@ -434,9 +434,9 @@
         <source>Service</source>
         <target>サービス</target>
       </trans-unit>
-      <trans-unit id="222595489358095649" datatype="html">
-        <source> Kubernetes Dashboard v<x id="INTERPOLATION" equiv-text="&quot;\uFFFD0\uFFFD&quot;"/> © <x id="INTERPOLATION_1" equiv-text="&quot;\uFFFD1\uFFFD&quot;"/> The Kubernetes Authors </source>
-        <target> Kubernetes Dashboard v<x id="INTERPOLATION" equiv-text="&quot;\uFFFD0\uFFFD&quot;"/> © <x id="INTERPOLATION_1" equiv-text="&quot;\uFFFD1\uFFFD&quot;"/> The Kubernetes Authors </target>
+      <trans-unit id="4335281277764237619" datatype="html">
+        <source> <x id="INTERPOLATION" equiv-text="&quot;\uFFFD0\uFFFD&quot;"/> © <x id="INTERPOLATION_1" equiv-text="&quot;\uFFFD1\uFFFD&quot;"/> The Kubernetes Authors </source>
+        <target state="new"> Kubernetes Dashboard v<x id="INTERPOLATION" equiv-text="&quot;\uFFFD0\uFFFD&quot;"/> © <x id="INTERPOLATION_1" equiv-text="&quot;\uFFFD1\uFFFD&quot;"/> The Kubernetes Authors </target>
       </trans-unit>
       <trans-unit id="2235593604907350097" datatype="html">
         <source>Resource Names</source>
@@ -986,10 +986,6 @@
         <source>Run command arguments</source>
         <target>実行コマンドの引数</target>
       </trans-unit>
-      <trans-unit id="3848712021572607026" datatype="html">
-        <source>Can&apos;t find plugin &quot;<x id="PH" equiv-text="pluginName"/>&quot;</source>
-        <target>プラグイン &quot;<x id="PH" equiv-text="pluginName"/> が見つかりません&quot;</target>
-      </trans-unit>
       <trans-unit id="3856193213296741054" datatype="html">
         <source>Last Seen</source>
         <target>直近</target>
@@ -1021,10 +1017,6 @@
       <trans-unit id="4027897116563107017" datatype="html">
         <source>Arguments</source>
         <target>引数</target>
-      </trans-unit>
-      <trans-unit id="4045087308145757242" datatype="html">
-        <source>Dependencies</source>
-        <target>依存関係</target>
       </trans-unit>
       <trans-unit id="4052052481087794292" datatype="html">
         <source>Role Bindings </source>
@@ -1580,10 +1572,6 @@
         <source> Invalid protocol. </source>
         <target>無効なプロトコルです。</target>
       </trans-unit>
-      <trans-unit id="6185721657347844438" datatype="html">
-        <source>Can&apos;t find dependency &quot;<x id="PH" equiv-text="dep"/>&quot; for plugin &quot;<x id="PH_1" equiv-text="pluginName"/>&quot;</source>
-        <target>依存関係 &quot;<x id="PH" equiv-text="dep"/>&quot; for plugin &quot;<x id="PH_1" equiv-text="pluginName"/>&quot; が見つかりません</target>
-      </trans-unit>
       <trans-unit id="6194056995548896650" datatype="html">
         <source>The new secret will be added to the cluster</source>
         <target>新しいシークレットがクラスターに追加されます。</target>
@@ -1756,10 +1744,6 @@
         <source>Served</source>
         <target>提供済み</target>
       </trans-unit>
-      <trans-unit id="6901018060567164184" datatype="html">
-        <source>Plugins</source>
-        <target>プラグイン</target>
-      </trans-unit>
       <trans-unit id="6915193719482636823" datatype="html">
         <source>Name: </source>
         <target state="new">名前:</target>
@@ -1891,10 +1875,6 @@
       <trans-unit id="7281870845577621674" datatype="html">
         <source>Init Containers</source>
         <target>初期化コンテナー</target>
-      </trans-unit>
-      <trans-unit id="7293190222859783293" datatype="html">
-        <source>Plugins </source>
-        <target>プラグイン</target>
       </trans-unit>
       <trans-unit id="7298863100332850221" datatype="html">
         <source>There is no data to display.</source>

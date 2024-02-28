@@ -1,7 +1,6 @@
 ROOT_DIRECTORY := $(shell dirname $(realpath $(firstword $(MAKEFILE_LIST))))
 
 include $(ROOT_DIRECTORY)/hack/include/config.mk
-include $(ROOT_DIRECTORY)/hack/include/build.mk
 include $(ROOT_DIRECTORY)/hack/include/ensure.mk
 
 include $(API_DIRECTORY)/hack/include/config.mk
@@ -13,6 +12,10 @@ PRE = --ensure-tools
 .PHONY: help
 help:
 	@grep -hE '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":[^:]*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
+
+.PHONY: build
+build: $(PRE) ## Runs all available checks
+	@$(MAKE) --no-print-directory -C $(MODULES_DIRECTORY) TARGET=build
 
 .PHONY: check
 check: $(PRE) check-license ## Runs all available checks
@@ -49,8 +52,6 @@ serve: $(PRE) --ensure-kind-cluster ## Starts development version of the applica
 	SYSTEM_BANNER=$(SYSTEM_BANNER) \
 	SYSTEM_BANNER_SEVERITY=$(SYSTEM_BANNER_SEVERITY) \
 	SIDECAR_HOST=$(SIDECAR_HOST) \
-	TOKEN_TTL=$(TOKEN_TTL) \
-	CLUSTER_VERSION=$(KIND_CLUSTER_VERSION) \
 	docker compose -f $(DOCKER_COMPOSE_DEV_PATH) --project-name=$(PROJECT_NAME) up \
 		--build \
 		--remove-orphans \
@@ -72,33 +73,10 @@ run: $(PRE) --ensure-kind-cluster ## Starts production version of the applicatio
 	SYSTEM_BANNER=$(SYSTEM_BANNER) \
 	SYSTEM_BANNER_SEVERITY=$(SYSTEM_BANNER_SEVERITY) \
 	SIDECAR_HOST=$(SIDECAR_HOST) \
-	TOKEN_TTL=$(TOKEN_TTL) \
-	ARCH=$(ARCH) \
-	OS=$(OS) \
+	VERSION="v0.0.0-prod" \
 	docker compose -f $(DOCKER_COMPOSE_PATH) --project-name=$(PROJECT_NAME) up \
 		--build \
 		--remove-orphans \
 		--no-attach gateway \
 		--no-attach scraper \
 		--no-attach metrics-server
-
-#.PHONY: build
-#build: TARGET := build
-#build: build-cross ## Builds the application for the architecture of the host machine
-#
-#.PHONY: build-cross
-#build-cross: ## Builds the application for all supported architectures
-#	@$(MAKE) --no-print-directory -C $(MODULES_DIRECTORY) TARGET=$(or $(TARGET),build-cross)
-
-#.PHONY: deploy
-#deploy: build-cross ## Builds and deploys all module containers to the configured registries
-#	@$(MAKE) --no-print-directory -C $(MODULES_DIRECTORY) TARGET=deploy
-#
-#.PHONY: deploy-dev
-#deploy-dev: build-cross ## Builds and deploys all module containers to the configured dev registries
-#	@$(MAKE) --no-print-directory -C $(MODULES_DIRECTORY) TARGET=deploy-dev
-#
-#.PHONY: image
-#image: export OS := linux
-#image: build ## Builds containers targeting host architecture
-#	@$(MAKE) --no-print-directory -C $(MODULES_DIRECTORY) TARGET=image

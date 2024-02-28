@@ -17,13 +17,14 @@ package main
 import (
 	"crypto/elliptic"
 
+	"k8s.io/klog/v2"
+
 	"k8s.io/dashboard/certificates"
 	"k8s.io/dashboard/certificates/ecdsa"
 	"k8s.io/dashboard/client"
 	"k8s.io/dashboard/web/pkg/args"
 	"k8s.io/dashboard/web/pkg/environment"
 	"k8s.io/dashboard/web/pkg/router"
-	"k8s.io/klog/v2"
 
 	// Importing route packages forces route registration
 	_ "k8s.io/dashboard/web/pkg/config"
@@ -33,6 +34,8 @@ import (
 )
 
 func main() {
+	klog.InfoS("Starting Kubernetes Dashboard Web", "version", environment.Version)
+
 	client.Init(
 		client.WithUserAgent(environment.UserAgent()),
 		client.WithKubeconfig(args.KubeconfigPath()),
