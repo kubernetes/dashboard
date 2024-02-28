@@ -47,7 +47,7 @@ var (
 	argApiServerSkipTLSVerify   = pflag.Bool("apiserver-skip-tls-verify", false, "enable if connection with remote Kubernetes API server should skip TLS verify")
 	argMetricsProvider          = pflag.String("metrics-provider", "sidecar", "select provider type for metrics, 'none' will not check metrics")
 	argSidecarHost              = pflag.String("sidecar-host", "", "address of the Sidecar API server to connect to in the format of protocol://address:port, leave it empty if the binary runs inside cluster for service proxy usage")
-	argKubeConfigFile           = pflag.String("kubeconfig", "", "path to kubeconfig file with authorization and control plane location information")
+	argKubeConfigFile           = pflag.String("kubeconfig", "", "path to kubeconfig file with control plane location information")
 	argMetricClientCheckPeriod  = pflag.Int("metric-client-check-period", 30, "time interval between separate metric client health checks in seconds")
 	argAutoGenerateCertificates = pflag.Bool("auto-generate-certificates", false, "enables automatic certificates generation used to serve HTTPS")
 	argNamespace                = pflag.String("namespace", helpers.GetEnv("POD_NAMESPACE", "kube-system"), "if non-default namespace is used encryption key will be created in the specified namespace")

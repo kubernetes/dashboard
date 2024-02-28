@@ -24,7 +24,7 @@ import (
 
 // nonCriticalErrors is an array of error statuses, that are non-critical. That means, that this error can be
 // silenced and displayed to the user as a warning on the frontend side.
-var nonCriticalErrors = []int32{http.StatusForbidden, http.StatusUnauthorized}
+var nonCriticalErrors = []int32{http.StatusForbidden}
 
 func HandleError(err error) (int, error) {
 	if IsUnauthorized(err) {
@@ -48,18 +48,10 @@ func ExtractErrors(err error) ([]error, error) {
 
 // HandleInternalError writes the given error to the response and sets appropriate HTTP status headers.
 func HandleInternalError(response *restful.Response, err error) {
-	var (
-		statusError   *k8sErrors.StatusError
-		statusCode    = http.StatusInternalServerError
-		isStatusError = errors.As(err, &statusError)
-	)
-
-	if isStatusError && statusError.Status().Code > 0 {
-		statusCode = int(statusError.Status().Code)
-	}
+	code, err := HandleError(err)
 
 	response.AddHeader("Content-Type", "text/plain")
-	response.WriteErrorString(statusCode, err.Error()+"\n")
+	response.WriteError(code, err)
 }
 
 // AppendError handles single error, that occurred during API GET call. If it is not critical, then it will be

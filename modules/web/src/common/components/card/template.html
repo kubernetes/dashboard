@@ -18,7 +18,8 @@ limitations under the License.
     'kd-minimized-card': !expanded && !graphMode,
     'kd-graph': graphMode,
     'kd-inner-table': role === 'inner',
-    'kd-inner-content': role === 'inner-content'
+    'kd-inner-content': role === 'inner-content',
+    'kd-flex': role === 'flex',
   }">
   <mat-card-title *ngIf="withTitle"
                   [ngClass]="getTitleClasses()"

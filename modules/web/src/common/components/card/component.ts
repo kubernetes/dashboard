@@ -25,7 +25,7 @@ import {Animations} from '../../animations/animations';
 })
 export class CardComponent {
   @Input() initialized = true;
-  @Input() role: 'inner' | 'table' | 'inner-content';
+  @Input() role: 'inner' | 'table' | 'inner-content' | 'flex';
   @Input() withFooter = false;
   @Input() withTitle = true;
   @Input() expandable = true;

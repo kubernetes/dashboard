@@ -17,8 +17,7 @@ import {ErrStatus, K8sError as K8SApiError} from '@api/root.api';
 import {KdError as KdApiError} from '@api/root.shared';
 
 export enum ApiError {
-  tokenExpired = 'MSG_TOKEN_EXPIRED_ERROR',
-  encryptionKeyChanged = 'MSG_ENCRYPTION_KEY_CHANGED',
+  unauthorized = 'MSG_LOGIN_UNAUTHORIZED_ERROR',
 }
 
 export enum ErrorStatus {
@@ -40,7 +39,6 @@ export enum ErrorCode {
 
 const localizedErrors: {[key: string]: string} = {
   MSG_TOKEN_EXPIRED_ERROR: 'You have been logged out because your token has expired.',
-  MSG_ENCRYPTION_KEY_CHANGED: 'You have been logged out because your token is invalid.',
   MSG_ACCESS_DENIED: 'Access denied.',
   MSG_DASHBOARD_EXCLUSIVE_RESOURCE_ERROR: 'Trying to access/modify dashboard exclusive resource.',
   MSG_LOGIN_UNAUTHORIZED_ERROR: 'Invalid credentials provided',
