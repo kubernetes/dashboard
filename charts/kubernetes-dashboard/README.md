@@ -72,7 +72,7 @@ If ingress is disabled you must use direct port-forwarding to access this applic
 ## Configuration
 
 Please refer
-to [values.yaml](https://github.com/kubernetes/dashboard/blob/master/charts/helm-chart/kubernetes-dashboard/values.yaml)
+to [values.yaml](https://github.com/kubernetes/dashboard/blob/master/charts/kubernetes-dashboard/values.yaml)
 for valid values and their defaults.
 
 Specify each parameter using the `--set key=value[,key=value]` argument to `helm install/upgrade`. For example,
