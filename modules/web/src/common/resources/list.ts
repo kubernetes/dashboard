@@ -58,7 +58,7 @@ enum SortableColumn {
 export abstract class ResourceListBase<T extends ResourceList, R extends Resource> implements OnInit {
   isLoading = false;
   totalItems = 0;
-  @Output() listChangeEvent: EventEmitter<OnListChangeEvent> = new EventEmitter();
+  @Output() onchange: EventEmitter<OnListChangeEvent> = new EventEmitter();
   @Input() groupId: string;
   @Input() hideable = false;
   @Input() id: string;
@@ -351,7 +351,7 @@ export abstract class ResourceListBase<T extends ResourceList, R extends Resourc
       emitValue.filtered = this.filtered_();
     }
 
-    this.listChangeEvent.emit(emitValue);
+    this.onchange.emit(emitValue);
   }
 }
 
