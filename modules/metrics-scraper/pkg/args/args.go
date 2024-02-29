@@ -16,6 +16,7 @@ package args
 
 import (
 	"flag"
+	"strconv"
 	"time"
 
 	"github.com/spf13/pflag"
@@ -82,11 +83,11 @@ func APILogLevel() klog.Level {
 		return LogLevelDefault
 	}
 
-	level := new(klog.Level)
-	if err := level.Set(v.Value.String()); err != nil {
+	level, err := strconv.Atoi(v.Value.String())
+	if err != nil {
 		klog.ErrorS(err, "Could not parse log level", "level", v.Value.String())
 		return LogLevelDefault
 	}
 
-	return LogLevelDefault
+	return klog.Level(level)
 }
