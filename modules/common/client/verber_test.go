@@ -161,7 +161,7 @@ func TestDeleteShouldThrowErrorOnUnknownResourceKind(t *testing.T) {
 
 	err := verber.Delete("foo", true, "bar", "baz", false)
 
-	if !reflect.DeepEqual(normalize(err.Error()), "Get /api/v1/customresourcedefinitions/foo: err") {
+	if !reflect.DeepEqual(normalize(err.Error()), "Unknown resource kind: foo") {
 		t.Fatalf("Expected error on verber delete but got %#v", err.Error())
 	}
 }
@@ -174,7 +174,7 @@ func TestDeleteNowShouldThrowErrorOnUnknownResourceKind(t *testing.T) {
 
 	err := verber.Delete("foo", true, "bar", "baz", true)
 
-	if !reflect.DeepEqual(normalize(err.Error()), "Get /api/v1/customresourcedefinitions/foo: err") {
+	if !reflect.DeepEqual(normalize(err.Error()), "Unknown resource kind: foo") {
 		t.Fatalf("Expected error on verber delete but got %#v", err.Error())
 	}
 }
@@ -186,7 +186,7 @@ func TestGetShouldThrowErrorOnUnknownResourceKind(t *testing.T) {
 
 	_, err := verber.Get("foo", true, "bar", "baz")
 
-	if !reflect.DeepEqual(normalize(err.Error()), "Get /api/v1/customresourcedefinitions/foo: err") {
+	if !reflect.DeepEqual(normalize(err.Error()), "Unknown resource kind: foo") {
 		t.Fatalf("Expected error on verber get but got %#v", err.Error())
 	}
 }
@@ -199,7 +199,7 @@ func TestPutShouldThrowErrorOnUnknownResourceKind(t *testing.T) {
 
 	err := verber.Put("foo", false, "", "baz", nil)
 
-	if !reflect.DeepEqual(normalize(err.Error()), "Get /api/v1/customresourcedefinitions/foo: err") {
+	if !reflect.DeepEqual(normalize(err.Error()), "Unknown resource kind: foo") {
 		t.Fatalf("Expected error on verber put but got %#v", err.Error())
 	}
 }

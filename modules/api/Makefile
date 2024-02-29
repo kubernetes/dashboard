@@ -13,16 +13,21 @@ PRE :=
 
 .PHONY: build
 build: $(PRE)
-	@echo "Building $(APP_NAME)"
+	@echo "[$(APP_NAME)] Building"
 	@CGO_ENABLED=0 go build -trimpath -ldflags "-s -w" -o $(API_DIST_DIRECTORY)/$(APP_NAME) .
 
 .PHONY: check
 check: check-go
 
+.PHONY: clean
+clean:
+	@echo "[$(APP_NAME)] Cleaning up"
+	@rm -rf $(API_DIST_DIRECTORY)
+
 .PHONY: coverage
-coverage: DIR := $(API_TMP_DIRECTORY)
+coverage: DIR := $(TMP_DIRECTORY)
 coverage: --ensure-dir
-	@echo "Running tests with coverage"
+	@echo "[$(APP_NAME)] Running tests with coverage"
 	@go test -coverprofile=$(COVERAGE_FILE) -covermode=atomic $(PACKAGE_NAME)/...
 
 .PHONY: fix
@@ -30,14 +35,14 @@ fix: fix-go
 
 .PHONY: test
 test:
-	@echo "Running tests"
+	@echo "[$(APP_NAME)] Running tests"
 	@go test $(PACKAGE_NAME)/...
 
 # ==================== LOCAL ==================== #
 
 .PHONY: check-go
 check-go: $(PRE)
-	@echo "Running lint"
+	@echo "[$(APP_NAME)] Running lint"
 	@golangci-lint run -c ../../.golangci.yml ./...
 
 .PHONY: codegen-update
@@ -49,8 +54,8 @@ codegen-verify: --codegen-verify-pre --codegen-update-run --codegen-verify-post
 
 .PHONY: fix-go
 fix-go: $(PRE)
-	@echo "Running lint --fix"
-	golangci-lint run -c ../../.golangci.yml --fix ./...
+	@echo "[$(APP_NAME)] Running lint --fix"
+	@golangci-lint run -c ../../.golangci.yml --fix ./...
 
 .PHONY: run
 run: build

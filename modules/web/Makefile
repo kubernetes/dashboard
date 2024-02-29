@@ -11,8 +11,16 @@ PRE :=
 
 # ==================== GLOBAL ==================== #
 
+.PHONY: build
+build: --clean build-go build-frontend
+
 .PHONY: check
 check: check-frontend check-go
+
+.PHONY: clean
+clean:
+	@echo "[$(APP_NAME)] Cleaning up"
+	@rm -rf $(WEB_DIST_DIRECTORY)
 
 .PHONY: coverage
 coverage: coverage-go
@@ -25,15 +33,12 @@ test: test-go
 
 # ==================== LOCAL ==================== #
 
-.PHONY: build
-build: --clean build-go build-frontend
-
 .PHONY: build-frontend
 build-frontend: --fix-locale-caching
 
 .PHONY: build-go
 build-go:
-	@echo "Building $(APP_NAME)"
+	@echo "[$(APP_NAME)] Building backend"
 	@CGO_ENABLED=0 go build -trimpath -ldflags "-s -w" -o $(WEB_DIST_DIRECTORY)/$(APP_NAME) $(PACKAGE_NAME)
 
 .PHONY: check-frontend
@@ -42,21 +47,23 @@ check-frontend: $(PRE)
 
 .PHONY: check-go
 check-go: $(PRE)
+	@echo "[$(APP_NAME)] Running lint"
 	@golangci-lint run -c ../../.golangci.yml ./...
 
 .PHONY: coverage-go
-coverage-go: DIR := $(WEB_TMP_DIRECTORY)
+coverage-go: DIR := $(TMP_DIRECTORY)
 coverage-go: --ensure-dir
-	@echo "Running tests with coverage"
+	@echo "[$(APP_NAME)] Running tests with coverage"
 	@go test -coverprofile=$(COVERAGE_FILE) -covermode=atomic $(PACKAGE_NAME)/...
 
 .PHONY: fix-go
 fix-go: $(PRE)
+	@echo "[$(APP_NAME)] Running lint --fix"
 	@golangci-lint run -c ../../.golangci.yml --fix ./...
 
 .PHONY: test-go
 test-go:
-	@echo "Running tests"
+	@echo "[$(APP_NAME)] Running tests"
 	@go test $(PACKAGE_NAME)/...
 
 # ==================== PRIVATE ==================== #
@@ -66,7 +73,7 @@ test-go:
 .PHONY: --fix-locale-caching
 --fix-locale-caching: LANGUAGES = $(shell ls $(WEB_DIST_ANGULAR_DIRECTORY))
 --fix-locale-caching: --ng-build
-	@echo "Patching locale caching" ; \
+	@echo "[$(APP_NAME)] Patching locale caching" ; \
 	for language in $(LANGUAGES) ; do \
   		localeDir=$(WEB_DIST_ANGULAR_DIRECTORY)/$${language} ; \
   		filename=$$(find $${localeDir} -name 'main.*.js' -exec basename {} \;) ; \
@@ -77,7 +84,7 @@ test-go:
 
 .PHONY: --ng-build
 --ng-build: --ensure-dependencies
-	@echo "Building localized frontend" ; \
+	@echo "[$(APP_NAME)] Building localized frontend" ; \
 	npx ng build \
       --configuration production \
       --localize \
@@ -91,7 +98,7 @@ test-go:
 .PHONY: --ensure-dependencies
 --ensure-dependencies:
 ifeq ($(wildcard node_modules/.*),)
-	@echo "Installing dependencies"
+	@echo "[$(APP_NAME)] Installing dependencies"
 	@yarn install --immutable
 endif
 

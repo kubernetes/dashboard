@@ -24,7 +24,6 @@ DOCKER_DIRECTORY := $(ROOT_DIRECTORY)/hack/docker
 DOCKER_COMPOSE_PATH := $(DOCKER_DIRECTORY)/docker.compose.yaml
 DOCKER_COMPOSE_DEV_PATH := $(DOCKER_DIRECTORY)/dev.compose.yml
 # Build
-DIST_DIRECTORY := $(ROOT_DIRECTORY)/.dist
 TMP_DIRECTORY := $(ROOT_DIRECTORY)/.tmp
 # Kind
 KIND_CLUSTER_NAME := kubernetes-dashboard

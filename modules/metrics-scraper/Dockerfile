@@ -63,5 +63,5 @@ COPY --from=user /etc/group /etc/group
 USER nonroot:nonroot
 
 # The port that the application listens on.
-EXPOSE 8080
+EXPOSE 8000
 ENTRYPOINT ["/dashboard-metrics-scraper"]

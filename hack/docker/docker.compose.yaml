@@ -29,7 +29,7 @@ services:
     volumes:
       - ${PWD}/hack/gateway/prod.kong.yml:/kong/declarative/kong.yml
     ports:
-      - "8000:8000"
+      - "8080:8000"
       - "8443:8443"
 
   auth:

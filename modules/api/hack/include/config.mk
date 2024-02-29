@@ -3,10 +3,9 @@ APP_NAME := $(PROJECT_NAME)-api
 PACKAGE_NAME := k8s.io/$(PROJECT_NAME)/api
 
 ### Dirs and paths
-API_DIST_DIRECTORY = $(API_DIRECTORY)/dist
+API_DIST_DIRECTORY = $(API_DIRECTORY)/.dist
 API_DIST_BINARY = $(API_DIST_DIRECTORY)/$(APP_NAME)
-API_TMP_DIRECTORY = $(API_DIRECTORY)/.tmp
-COVERAGE_FILE = $(API_TMP_DIRECTORY)/coverage.out
+COVERAGE_FILE = $(TMP_DIRECTORY)/$(APP_NAME).coverage.out
 
 ### Codegen configuration
 INPUT = "apis/v1alpha1"
