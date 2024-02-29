@@ -2388,9 +2388,9 @@
         <source>Bearer token</source>
         <target state="new">Bearer token</target>
       </trans-unit>
-      <trans-unit id="4667215985978511334" datatype="html">
-        <source>You can generate token for service account with:</source>
-        <target state="new">You can generate token for service account with:</target>
+      <trans-unit id="1238329720473375504" datatype="html">
+        <source>You can generate token for service account with: </source>
+        <target state="new">You can generate token for service account with: </target>
       </trans-unit>
       <trans-unit id="5911975001974379688" datatype="html">
         <source> To find out more on how to configure and use bearer tokens, please refer to the <x id="START_LINK" ctype="x-a" equiv-text="&quot;\uFFFD#20\uFFFD&quot;"/>documentation<x id="CLOSE_LINK" ctype="x-a" equiv-text="&quot;\uFFFD/#20\uFFFD&quot;"/>. </source>

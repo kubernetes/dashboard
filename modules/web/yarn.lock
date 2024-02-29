@@ -269,20 +269,20 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@angular/cdk@npm:16.2.1":
-  version: 16.2.1
-  resolution: "@angular/cdk@npm:16.2.1"
+"@angular/cdk@npm:14.2.7":
+  version: 14.2.7
+  resolution: "@angular/cdk@npm:14.2.7"
   dependencies:
-    parse5: ^7.1.2
+    parse5: ^5.0.0
     tslib: ^2.3.0
   peerDependencies:
-    "@angular/common": ^16.0.0 || ^17.0.0
-    "@angular/core": ^16.0.0 || ^17.0.0
+    "@angular/common": ^14.0.0 || ^15.0.0
+    "@angular/core": ^14.0.0 || ^15.0.0
     rxjs: ^6.5.3 || ^7.4.0
   dependenciesMeta:
     parse5:
       optional: true
-  checksum: 119184f800138ce284a0bb4af2f4ba8a71cdc78ba6090a9c5bf49e24bc60642f4929bd01b1735d3fc437b91b1bb0741d20218a8478efb2d89bff3cb55049d666
+  checksum: 121cfbd556003e9e81115f43de3ff8597e2e2157dae91064d0e5c533e9c9e8378b5737d72cfd849dc93f9dcda0a8307aaaea1b2ae0605c6ddd6c1a11499da00a
   languageName: node
   linkType: hard
 
@@ -449,20 +449,20 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@angular/material@npm:14.2.2":
-  version: 14.2.2
-  resolution: "@angular/material@npm:14.2.2"
+"@angular/material@npm:14.2.7":
+  version: 14.2.7
+  resolution: "@angular/material@npm:14.2.7"
   dependencies:
     tslib: ^2.3.0
   peerDependencies:
     "@angular/animations": ^14.0.0 || ^15.0.0
-    "@angular/cdk": 14.2.2
+    "@angular/cdk": 14.2.7
     "@angular/common": ^14.0.0 || ^15.0.0
     "@angular/core": ^14.0.0 || ^15.0.0
     "@angular/forms": ^14.0.0 || ^15.0.0
     "@angular/platform-browser": ^14.0.0 || ^15.0.0
     rxjs: ^6.5.3 || ^7.4.0
-  checksum: 4ca914b76c5233be07c2b18e05e01bc9d2ab47d904803103ae50ca4b33d485eda2d1435902b8d2010709816a95ddef3eccae6e9784de41bf3c50f18c5f71ed3c
+  checksum: 078e944fb852b7d727a879c7fb5a9914f12447dbb4686444405565ea4aa40b076a60624c9bf2b3d9bc568ac6a50026b8a5ca614494253328421f8d14adb4afde
   languageName: node
   linkType: hard
 
@@ -7004,17 +7004,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"caniuse-lite@npm:^1.0.30001464, caniuse-lite@npm:^1.0.30001487, caniuse-lite@npm:^1.0.30001517":
-  version: 1.0.30001521
-  resolution: "caniuse-lite@npm:1.0.30001521"
-  checksum: be2a2b2cd3be03401887aaa31b89f3e7c6230289e6ef704e224268389cc136480fca502ac9e5001a65ff1e50459d3d95f8c4b2d39f878ab9843af3d6f372c8bb
-  languageName: node
-  linkType: hard
-
-"caniuse-lite@npm:^1.0.30001565":
-  version: 1.0.30001568
-  resolution: "caniuse-lite@npm:1.0.30001568"
-  checksum: 7092aaa246dc8531fbca5b47be91e92065db7e5c04cc9e3d864e848f8f1be769ac6754429e843a5e939f7331a771e8b0a1bc3b13495c66b748c65e2f5bdb1220
+"caniuse-lite@npm:^1.0.30001464, caniuse-lite@npm:^1.0.30001487, caniuse-lite@npm:^1.0.30001517, caniuse-lite@npm:^1.0.30001565":
+  version: 1.0.30001591
+  resolution: "caniuse-lite@npm:1.0.30001591"
+  checksum: e48f924cdefff86d29d38ee1bffe2cdb1ef55e179d08ae2f1f5546d9d563e030f13755a0096ea87a09498daffd18666d1fe0b2759aea8421bbf4c214b47d410d
   languageName: node
   linkType: hard
 
@@ -12372,7 +12365,7 @@ __metadata:
     "@angular-devkit/build-angular": 16.2.0
     "@angular-eslint/eslint-plugin": 16.2.0
     "@angular/animations": 16.2.1
-    "@angular/cdk": 16.2.1
+    "@angular/cdk": 14.2.7
     "@angular/cli": 16.2.0
     "@angular/common": 16.2.1
     "@angular/compiler": 16.2.1
@@ -12382,7 +12375,7 @@ __metadata:
     "@angular/forms": 16.2.1
     "@angular/language-service": 16.2.1
     "@angular/localize": 16.2.1
-    "@angular/material": 14.2.2
+    "@angular/material": 14.2.7
     "@angular/platform-browser": 16.2.1
     "@angular/platform-browser-dynamic": 16.2.1
     "@angular/router": 16.2.1
@@ -14152,7 +14145,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"parse5@npm:^7.0.0, parse5@npm:^7.1.1, parse5@npm:^7.1.2":
+"parse5@npm:^5.0.0":
+  version: 5.1.1
+  resolution: "parse5@npm:5.1.1"
+  checksum: 613a714af4c1101d1cb9f7cece2558e35b9ae8a0c03518223a4a1e35494624d9a9ad5fad4c13eab66a0e0adccd9aa3d522fc8f5f9cc19789e0579f3fa0bdfc65
+  languageName: node
+  linkType: hard
+
+"parse5@npm:^7.0.0, parse5@npm:^7.1.1":
   version: 7.1.2
   resolution: "parse5@npm:7.1.2"
   dependencies:

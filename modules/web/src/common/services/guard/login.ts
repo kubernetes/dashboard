@@ -27,7 +27,7 @@ export class LoginGuard {
   canActivate(): Observable<boolean | UrlTree> {
     // If user is already authenticated do not allow login view access.
     if (this.authService_.isAuthenticated()) {
-      return of(false)
+      return of(false);
     }
 
     return of(true);
