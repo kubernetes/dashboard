@@ -123,7 +123,7 @@ func APILogLevel() klog.Level {
 		return LogLevelDefault
 	}
 
-	level, err := strconv.Atoi(v.Value.String())
+	level, err := strconv.ParseInt(v.Value.String(), 10, 32)
 	if err != nil {
 		klog.ErrorS(err, "Could not parse log level", "level", v.Value.String())
 		return LogLevelDefault
