@@ -13,8 +13,7 @@
 # limitations under the License.
 #
 codecov:
-  notify:
-    require_ci_to_pass: yes
+  require_ci_to_pass: true
 
 coverage:
   precision: 2
