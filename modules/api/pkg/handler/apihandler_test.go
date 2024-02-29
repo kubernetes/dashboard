@@ -23,6 +23,8 @@ import (
 
 	"github.com/emicklei/go-restful/v3"
 	"github.com/spf13/pflag"
+	"k8s.io/dashboard/api/pkg/args"
+	"k8s.io/klog/v2"
 )
 
 func TestCreateHTTPAPIHandler(t *testing.T) {
@@ -68,42 +70,42 @@ func TestFormatRequestLog(t *testing.T) {
 		uri         string
 		content     map[string]string
 		expected    string
-		apiLogLevel string
+		apiLogLevel klog.Level
 	}{
 		{
 			"PUT",
 			"/api/v1/pod",
 			map[string]string{},
 			"Incoming HTTP/1.1 PUT /api/v1/pod request",
-			"DEFAULT",
+			args.LogLevelDefault,
 		},
 		{
 			"PUT",
 			"/api/v1/pod",
 			map[string]string{},
 			"",
-			"NONE",
+			args.LogLevelMinimal,
 		},
 		{
 			"POST",
 			"/api/v1/login",
 			map[string]string{"password": "abc123"},
-			"Incoming HTTP/1.1 POST /api/v1/login request from : { contents hidden }",
-			"DEFAULT",
+			"Incoming HTTP/1.1 POST /api/v1/login request from { content hidden }: { content hidden }",
+			args.LogLevelDefault,
 		},
 		{
 			"POST",
 			"/api/v1/login",
 			map[string]string{},
 			"",
-			"NONE",
+			args.LogLevelMinimal,
 		},
 		{
 			"POST",
 			"/api/v1/login",
 			map[string]string{"password": "abc123"},
 			"Incoming HTTP/1.1 POST /api/v1/login request from : {\"password\":\"abc123\"}",
-			"DEBUG",
+			args.LogLevelDebug,
 		},
 	}
 
@@ -117,7 +119,7 @@ func TestFormatRequestLog(t *testing.T) {
 			t.Error("Cannot mockup request")
 		}
 
-		pflag.Set("api-log-level", c.apiLogLevel)
+		pflag.Set("v", c.apiLogLevel.String())
 
 		var restfulRequest restful.Request
 		restfulRequest.Request = req

@@ -98,6 +98,23 @@ jobs:
       - working-directory: modules/web
         run: yarn
       - run: PATH=$PATH:$GOPATH/bin make build
+  unit-tests:
+    name: Unit tests with coverage
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-go@v5
+        with:
+          go-version-file: modules/api/go.mod
+          check-latest: true
+      - run: PATH=$PATH:$GOPATH/bin make coverage
+      - uses: codecov/codecov-action@v3
+        with:
+          name: metrics-scraper-coverage
+          files: ./modules/api/coverage.out,./modules/metrics-scraper/coverage.out
+          fail_ci_if_error: true
   e2e-tests:
     name: End-to-end tests
     runs-on: ubuntu-latest

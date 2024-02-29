@@ -122,13 +122,13 @@ func APILogLevel() klog.Level {
 		return LogLevelDefault
 	}
 
-	level := new(klog.Level)
+	var level klog.Level
 	if err := level.Set(v.Value.String()); err != nil {
 		klog.ErrorS(err, "Could not parse log level", "level", v.Value.String())
 		return LogLevelDefault
 	}
 
-	return LogLevelDefault
+	return level
 }
 
 func Namespace() string {
