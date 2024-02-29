@@ -114,7 +114,6 @@ jobs:
         with:
           directory: ./.tmp
           fail_ci_if_error: true
-          token: ${{ secrets.CODECOV_TOKEN }}
 # TODO: needs to be fixed
 #  e2e-tests:
 #    name: End-to-end tests
