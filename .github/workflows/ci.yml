@@ -110,7 +110,7 @@ jobs:
           go-version-file: modules/go.work
           check-latest: true
       - run: PATH=$PATH:$GOPATH/bin make coverage
-      - uses: codecov/codecov-action@v4.1.0
+      - uses: codecov/codecov-action@v3.1.6
         with:
           directory: ./.tmp
           fail_ci_if_error: true
