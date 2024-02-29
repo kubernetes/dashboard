@@ -43,7 +43,7 @@ test:
 .PHONY: check-go
 check-go: $(PRE)
 	@echo "[$(APP_NAME)] Running lint"
-	@golangci-lint run -c ../../.golangci.yml ./...
+	@golangci-lint run -c $(GOLANGCI_LINT_CONFIG) ./...
 
 .PHONY: codegen-update
 codegen-update: --codegen-update-run --codegen-update-post
@@ -55,7 +55,7 @@ codegen-verify: --codegen-verify-pre --codegen-update-run --codegen-verify-post
 .PHONY: fix-go
 fix-go: $(PRE)
 	@echo "[$(APP_NAME)] Running lint --fix"
-	@golangci-lint run -c ../../.golangci.yml --fix ./...
+	@golangci-lint run -c $(GOLANGCI_LINT_CONFIG) --fix ./...
 
 .PHONY: run
 run: build

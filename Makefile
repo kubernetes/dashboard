@@ -16,8 +16,8 @@ help:
 # ============================ GLOBAL ============================ #
 #
 # A global list of targets executed for every module, it includes:
-# - all modules in 'modules' directory
-# - all common modules in 'modules/common' directory
+# - all modules in 'modules' directory except 'modules/common'
+# - all common modules in 'modules/common' directory except 'modules/common/tools'
 #
 # ================================================================ #
 

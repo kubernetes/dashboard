@@ -16,7 +16,7 @@ build:
 .PHONY: check
 check:
 	@echo "[$(MODULE_NAME)] Running lint"
-	@golangci-lint run -c ../../.golangci.yml ./...
+	@golangci-lint run -c $(GOLANGCI_LINT_CONFIG) ./...
 
 .PHONY: coverage
 coverage: DIR := $(TMP_DIRECTORY)
@@ -32,7 +32,7 @@ clean:
 .PHONY: fix
 fix:
 	@echo "[$(MODULE_NAME)] Running lint --fix"
-	@golangci-lint run -c ../../.golangci.yml --fix ./...
+	@golangci-lint run -c $(GOLANGCI_LINT_CONFIG) --fix ./...
 
 .PHONY: test
 test:

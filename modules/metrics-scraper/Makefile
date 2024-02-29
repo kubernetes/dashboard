@@ -43,12 +43,12 @@ test:
 .PHONY: check-go
 check-go:
 	@echo "[$(APP_NAME)] Running lint"
-	@golangci-lint run -c ../../.golangci.yml ./...
+	@golangci-lint run -c $(GOLANGCI_LINT_CONFIG) ./...
 
 .PHONY: fix-go
 fix-go:
 	@echo "[$(APP_NAME)] Running lint --fix"
-	@golangci-lint run -c ../../.golangci.yml --fix ./...
+	@golangci-lint run -c $(GOLANGCI_LINT_CONFIG) --fix ./...
 
 # ==================== PRIVATE ==================== #
 

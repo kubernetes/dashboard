@@ -39,6 +39,6 @@ func GetResourceFromPath(path string) *string {
 	if len(parts) < 3 {
 		return nil
 	}
-	
+
 	return &parts[3]
 }

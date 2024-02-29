@@ -48,7 +48,7 @@ check-frontend: $(PRE)
 .PHONY: check-go
 check-go: $(PRE)
 	@echo "[$(APP_NAME)] Running lint"
-	@golangci-lint run -c ../../.golangci.yml ./...
+	@golangci-lint run -c $(GOLANGCI_LINT_CONFIG) ./...
 
 .PHONY: coverage-go
 coverage-go: DIR := $(TMP_DIRECTORY)
@@ -59,7 +59,7 @@ coverage-go: --ensure-dir
 .PHONY: fix-go
 fix-go: $(PRE)
 	@echo "[$(APP_NAME)] Running lint --fix"
-	@golangci-lint run -c ../../.golangci.yml --fix ./...
+	@golangci-lint run -c $(GOLANGCI_LINT_CONFIG) --fix ./...
 
 .PHONY: test-go
 test-go:

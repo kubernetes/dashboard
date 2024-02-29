@@ -30,6 +30,8 @@ KIND_CLUSTER_NAME := kubernetes-dashboard
 KIND_CLUSTER_VERSION := 1.29.0
 KIND_CLUSTER_IMAGE := docker.io/kindest/node:v${KIND_CLUSTER_VERSION}
 KIND_CLUSTER_INTERNAL_KUBECONFIG_PATH := $(TMP_DIRECTORY)/kubeconfig
+# Tools
+GOLANGCI_LINT_CONFIG := $(ROOT_DIRECTORY)/.golangci.yml
 
 ### GOPATH check
 ifndef GOPATH
