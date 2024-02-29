@@ -43,6 +43,7 @@ build-go:
 
 .PHONY: check-frontend
 check-frontend: $(PRE)
+	@echo "[$(APP_NAME)] Running frontend checks"
 	@yarn check
 
 .PHONY: check-go
