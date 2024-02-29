@@ -95,11 +95,8 @@ func checkSensitiveURL(url *string) bool {
 	sensitiveUrls["/api/v1/login"] = s
 	sensitiveUrls["/api/v1/csrftoken/login"] = s
 
-	if _, ok := sensitiveUrls[*url]; ok {
-		return true
-	}
-	return false
-
+	_, ok := sensitiveUrls[*url]
+	return ok
 }
 
 func metricsFilter(req *restful.Request, resp *restful.Response,

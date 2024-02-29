@@ -33,14 +33,6 @@ env:
   NODE_OPTIONS: "--max-old-space-size=8192"
   TERM: xterm
 jobs:
-  license-check:
-    name: License check
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-      - uses: apache/skywalking-eyes@main
   dependency-review:
     name: Dependency review
     permissions:
@@ -75,8 +67,8 @@ jobs:
           languages: ${{ matrix.language }}
       - uses: github/codeql-action/autobuild@v3
       - uses: github/codeql-action/analyze@v3
-  go-lint:
-    name: Go lint
+  static-check:
+    name: Static check
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -86,11 +78,12 @@ jobs:
         with:
           go-version-file: modules/api/go.mod
           check-latest: true
-      - run: PATH=$PATH:$GOPATH/bin make tools
-      - uses: golangci/golangci-lint-action@v4
+      - uses: actions/setup-node@v4
         with:
-          version: v1.52.2
-          skip-cache: true
+          node-version: 18.14.0
+      - working-directory: modules/web
+        run: yarn
+      - run: PATH=$PATH:$GOPATH/bin make check
   build:
     name: Build
     runs-on: ubuntu-latest
@@ -105,7 +98,24 @@ jobs:
       - working-directory: modules/web
         run: yarn
       - run: PATH=$PATH:$GOPATH/bin make build
-  e2e:
+  unit-tests:
+    name: Unit tests with coverage
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-go@v5
+        with:
+          go-version-file: modules/api/go.mod
+          check-latest: true
+      - run: PATH=$PATH:$GOPATH/bin make coverage
+      - uses: codecov/codecov-action@v3
+        with:
+          name: metrics-scraper-coverage
+          files: ./modules/api/coverage.out,./modules/metrics-scraper/coverage.out
+          fail_ci_if_error: true
+  e2e-tests:
     name: End-to-end tests
     runs-on: ubuntu-latest
     steps:

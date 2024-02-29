@@ -49,7 +49,7 @@ RUN yarn plugin import workspace-tools
 RUN SKIP_POSTINSTALL=true yarn workspaces focus
 
 # Build prod version of web app
-RUN make build-angular
+RUN make build-frontend
 
 FROM golang:1.22-alpine3.19 as go-builder
 

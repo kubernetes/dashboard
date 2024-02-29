@@ -159,7 +159,11 @@ describe('ServiceDetailComponent', () => {
   beforeEach(() => {
     configService.init();
     const configRequest = httpMock.expectOne('config');
-    const config: AppConfig = {serverTime: new Date().getTime()};
+    const config: AppConfig = {
+      serverTime: new Date().getTime(),
+      version: '0.0.0-dev',
+      userAgent: 'dashboard-web-go:0.0.0-dev',
+    };
     configRequest.flush(config);
   });
 

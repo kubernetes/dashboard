@@ -25,22 +25,6 @@ env:
   NODE_OPTIONS: "--max-old-space-size=8192"
   TERM: xterm
 jobs:
-  check:
-    name: Static check
-    runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: modules/web
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 18.14.0
-      - working-directory: modules/web
-        run: yarn
-      - run: yarn check
   unit:
     name: Unit tests with coverage
     runs-on: ubuntu-latest
