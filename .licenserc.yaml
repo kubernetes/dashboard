@@ -63,6 +63,7 @@ header:
     - ".vscode/**"
     - ".dist/**"
     - ".husky/**"
+    - "modules/api/.tmp/**"
     - "modules/web/.angular/**"
     - "modules/web/.yarn/**"
     - "modules/web/dist/**"

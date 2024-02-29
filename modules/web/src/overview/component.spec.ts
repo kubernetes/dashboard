@@ -90,7 +90,8 @@ describe('OverviewComponent', () => {
       serverTime: new Date().getTime(),
       version: '0.0.0-dev',
       userAgent: 'dashboard-web-go:0.0.0-dev',
-    };    configRequest.flush(config);
+    };
+    configRequest.flush(config);
 
     testHostFixture = TestBed.createComponent(OverviewComponent);
   });
