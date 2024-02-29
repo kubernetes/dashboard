@@ -12,7 +12,7 @@ PRE :=
 # ==================== GLOBAL ==================== #
 
 .PHONY: check
-check: check-go
+check: check-frontend check-go
 
 .PHONY: coverage
 coverage: coverage-go
@@ -26,15 +26,19 @@ test: test-go
 # ==================== LOCAL ==================== #
 
 .PHONY: build
-build: --clean build-go build-angular
+build: --clean build-go build-frontend
 
-.PHONY: build-angular
-build-angular: --fix-locale-caching
+.PHONY: build-frontend
+build-frontend: --fix-locale-caching
 
 .PHONY: build-go
 build-go:
 	@echo "Building $(APP_NAME)"
 	@CGO_ENABLED=0 go build -trimpath -ldflags "-s -w" -o $(WEB_DIST_DIRECTORY)/$(APP_NAME) $(PACKAGE_NAME)
+
+.PHONY: check-frontend
+check-frontend: $(PRE)
+	@yarn check
 
 .PHONY: check-go
 check-go: $(PRE)
