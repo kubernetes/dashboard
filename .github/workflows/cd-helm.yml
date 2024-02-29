@@ -13,23 +13,20 @@
 # limitations under the License.
 
 name: CD / Helm
+
 on:
   push:
-    branches: [master]
-    paths:
-      - "charts/helm-chart/**"
-      - "hack/scripts/helm-release-chart.sh"
-      - ".github/workflows/cd-helm.yml"
-permissions:
-  contents: write
-  pull-requests: write
+    branches: [ master ]
+
 jobs:
   release:
     name: Helm chart release
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
       - name: Check out repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v4.1.1
         with:
           fetch-depth: 0
 
@@ -38,26 +35,14 @@ jobs:
           git config user.name "$GITHUB_ACTOR"
           git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
 
-      - name: Release new Helm chart
-        shell: bash
-        run: hack/scripts/helm-release-chart.sh
+      - name: Set up Helm
+        uses: azure/setup-helm@v4.0.0
+        with:
+          version: v3.12.1
+
+      - name: Run chart-releaser
+        uses: helm/chart-releaser-action@v1.6.0
+        with:
+          skip_existing: true
         env:
-          TERM: xterm-256color
-
-      - name: Check out gh-pages-pull-request branch # It will fail if branch already exists
-        run: git checkout -b gh-pages-pull-request
-
-      - name: Push changes to gh-pages-pull-request branch # It will silently fail if pull request already exists
-        uses: ad-m/github-push-action@v0.8.0
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          branch: gh-pages-pull-request
-
-      - name: Create pull request
-        uses: repo-sync/pull-request@v2
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          source_branch: gh-pages-pull-request
-          destination_branch: gh-pages
-          pr_title: "Update Helm repository"
-          pr_body: "Automatically created from Helm CD workflow."
+          CR_TOKEN: "${{ secrets.GITHUB_TOKEN }}"

@@ -40,3 +40,7 @@ OWNERS
 
 ci/
 _templates_old/
+
+# Unit test
+.kubeconform
+.helm-chart-testing.yaml
