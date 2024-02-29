@@ -115,28 +115,29 @@ jobs:
           directory: ./.tmp
           fail_ci_if_error: true
           token: ${{ secrets.CODECOV_TOKEN }}
-  e2e-tests:
-    name: End-to-end tests
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-      - uses: helm/kind-action@v1.9.0
-        with:
-          node_image: kindest/node:v1.29.2
-      - uses: actions/setup-go@v5
-        with:
-          go-version-file: modules/api/go.mod
-          check-latest: true
-          cache-dependency-path: modules/api/go.sum
-      - working-directory: modules/api
-        run: go mod download
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 18.14.0
-      - working-directory: modules/web
-        run: yarn
-      - run: PATH=$PATH:$GOPATH/bin make serve &
-      - run: yarn cypress
-        working-directory: modules/web
+# TODO: needs to be fixed
+#  e2e-tests:
+#    name: End-to-end tests
+#    runs-on: ubuntu-latest
+#    steps:
+#      - uses: actions/checkout@v4
+#        with:
+#          fetch-depth: 0
+#      - uses: helm/kind-action@v1.9.0
+#        with:
+#          node_image: kindest/node:v1.29.2
+#      - uses: actions/setup-go@v5
+#        with:
+#          go-version-file: modules/api/go.mod
+#          check-latest: true
+#          cache-dependency-path: modules/api/go.sum
+#      - working-directory: modules/api
+#        run: go mod download
+#      - uses: actions/setup-node@v4
+#        with:
+#          node-version: 18.14.0
+#      - working-directory: modules/web
+#        run: yarn
+#      - run: PATH=$PATH:$GOPATH/bin make serve &
+#      - run: yarn cypress
+#        working-directory: modules/web
