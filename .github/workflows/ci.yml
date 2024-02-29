@@ -110,10 +110,11 @@ jobs:
           go-version-file: modules/go.work
           check-latest: true
       - run: PATH=$PATH:$GOPATH/bin make coverage
-      - uses: codecov/codecov-action@v3.1.6
+      - uses: codecov/codecov-action@v4.1.0
         with:
           directory: ./.tmp
           fail_ci_if_error: true
+          token: ${{ secrets.CODECOV_TOKEN }}
 # TODO: needs to be fixed
 #  e2e-tests:
 #    name: End-to-end tests
