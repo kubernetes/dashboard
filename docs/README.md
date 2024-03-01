@@ -3,7 +3,6 @@
 ## [Common](common/README.md)
 
 * [FAQ](common/faq.md)
-* [Roadmap](common/roadmap.md)
 * [Dashboard arguments](common/arguments.md)
 
 ## [User Guide](user/README.md)

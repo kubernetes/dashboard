@@ -1,7 +1,6 @@
 # Common
 
 * [FAQ](faq.md)
-* [Roadmap](roadmap.md)
 * [Dashboard arguments](arguments.md)
 
 ----
