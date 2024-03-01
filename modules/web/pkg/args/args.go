@@ -20,12 +20,15 @@ import (
 	"net"
 
 	"github.com/spf13/pflag"
+
 	"k8s.io/dashboard/certificates/api"
+	"k8s.io/dashboard/helpers"
+
 	"k8s.io/klog/v2"
 )
 
 var (
-	argNamespace                = pflag.String("namespace", "kube-system", "Namespace to use when creating Dashboard specific resources, i.e. settings config map")
+	argNamespace                = pflag.String("namespace", helpers.GetEnv("POD_NAMESPACE", "kubernetes-dashboard"), "Namespace to use when creating Dashboard specific resources, i.e. settings config map")
 	argInsecurePort             = pflag.Int("insecure-port", 8000, "port to listen to for incoming HTTP requests")
 	argPort                     = pflag.Int("port", 8001, "secure port to listen to for incoming HTTPS requests")
 	argInsecureBindAddress      = pflag.IP("insecure-bind-address", net.IPv4(127, 0, 0, 1), "IP address on which to serve the --insecure-port, set to 127.0.0.1 for all interfaces")

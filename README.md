@@ -9,7 +9,7 @@
 
 Kubernetes Dashboard is a general purpose, web-based UI for Kubernetes clusters. It allows users to manage applications running in the cluster and troubleshoot them, as well as manage the cluster itself.
 
-![Dashboard UI workloads page](docs/images/dashboard-ui.png)
+![Dashboard UI workloads page](docs/images/overview.png)
 
 ## Getting Started
 
@@ -46,7 +46,7 @@ Dashboard documentation can be found on [docs](docs/README.md) directory which c
 
 * [Common](docs/common/README.md): Entry-level overview.
 * [User Guide](docs/user/README.md): [Accessing Dashboard](docs/user/accessing-dashboard/README.md) and more for users.
-* [Developer Guide](docs/developer/README.md): [Getting Started](docs/developer/getting-started.md), [Dependency Management](docs/developer/dependency-management.md) and more for anyone interested in contributing.
+* [Developer Guide](docs/developer/README.md): Important information for contributors that would like to test, run and work on Dashboard locally.
 
 ## Community, discussion, contribution, and support
 

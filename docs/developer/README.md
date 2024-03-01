@@ -1,5 +1,14 @@
 # Developer guide
 
+## Important
+
+Most of the development guidelines are outdated and will be updated as soon as possible. Refer to the `Makefile` in the root directory of the project for helpful
+targets that will help you get started.
+
+---
+
+## Deprecated
+
 * [Getting started](getting-started.md)
 * [Release procedures](release-procedures.md)
 * [Dependency management](dependency-management.md)
