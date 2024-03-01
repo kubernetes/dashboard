@@ -2,6 +2,7 @@ ROOT_DIRECTORY := $(shell dirname $(realpath $(firstword $(MAKEFILE_LIST))))
 
 include $(ROOT_DIRECTORY)/hack/include/config.mk
 include $(ROOT_DIRECTORY)/hack/include/ensure.mk
+include $(ROOT_DIRECTORY)/hack/include/kind.mk
 
 include $(API_DIRECTORY)/hack/include/config.mk
 include $(WEB_DIRECTORY)/hack/include/config.mk
@@ -107,6 +108,34 @@ image:
   	VERSION="v0.0.0-prod" \
   	docker compose -f $(DOCKER_COMPOSE_PATH) --project-name=$(PROJECT_NAME) build \
   	--no-cache
+
+# Prepares and installs local dev version of Kubernetes Dashboard in our dedicated kind cluster.
+#
+# 1. Build all docker images
+# 2. Load images into kind cluster
+# 3. Run helm install using loaded dev images
+#
+# Note: Requires kind to set up and run
+.PHONY: helm
+helm: --ensure-kind-cluster image --kind-load-images
+	@helm upgrade \
+		--create-namespace \
+		--namespace kubernetes-dashboard \
+		--install kubernetes-dashboard \
+		--set auth.image.repository=dashboard-auth \
+		--set auth.image.tag=latest \
+		--set api.image.repository=dashboard-api \
+		--set api.image.tag=latest \
+		--set web.image.repository=dashboard-web \
+		--set web.image.tag=latest \
+		--set metricsScraper.image.repository=dashboard-scraper \
+		--set metricsScraper.image.tag=latest \
+		charts/kubernetes-dashboard
+
+#
+.PHONY: helm-uninstall
+helm-uninstall: ## Uninstall helm dev installation of Kubernetes Dashboard
+	@helm uninstall -n kubernetes-dashboard kubernetes-dashboard
 
 # ============================ Private ============================ #
 

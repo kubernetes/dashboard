@@ -19,20 +19,13 @@ metadata:
     {{- include "kubernetes-dashboard.labels" . | nindent 4 }}
   name: {{ template "kubernetes-dashboard.fullname" . }}
 rules:
-  # Allow Dashboard to get, update and delete Dashboard exclusive secrets.
-  - apiGroups: [ "" ]
-    resources: [ "secrets" ]
-    resourceNames: [ "kubernetes-dashboard-key-holder", "kubernetes-dashboard-csrf" ]
-    verbs: [ "get", "update", "delete" ]
-    # Allow Dashboard to get and update 'kubernetes-dashboard-settings' config map.
+    # Allow Dashboard Web to get and update 'kubernetes-dashboard-settings' config map.
   - apiGroups: [ "" ]
     resources: [ "configmaps" ]
-    resourceNames: [ "kubernetes-dashboard-settings" ]
+    resourceNames: [ "{{ .Values.web.settings.configMap }}" ]
     verbs: [ "get", "update" ]
     # Allow Dashboard to get metrics.
   - apiGroups: [ "" ]
     resources: [ "services/proxy" ]
-    # TODO: kubernetes-dashboard-metrics-scraper name is currently hardcoded into the API.
-    # Use same name pattern as for other deployments when this will be configurable via the API.
-    resourceNames: [ "kubernetes-dashboard-metrics-scraper", "http:kubernetes-dashboard-metrics-scraper" ]
+    resourceNames: [ "{{ template "kubernetes-dashboard.metrics-scraper.name" . }}", "http:{{ template "kubernetes-dashboard.metrics-scraper.name" . }}" ]
     verbs: [ "get" ]

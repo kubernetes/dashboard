@@ -12,22 +12,21 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+kind: Service
 apiVersion: v1
-kind: Secret
 metadata:
   labels:
     {{- include "kubernetes-dashboard.labels" . | nindent 4 }}
-  name: kubernetes-dashboard-csrf
-type: Opaque
-data:
-  csrf: ""
-
----
-
-apiVersion: v1
-kind: Secret
-metadata:
-  labels:
-    {{- include "kubernetes-dashboard.labels" . | nindent 4 }}
-  name: kubernetes-dashboard-key-holder
-type: Opaque
+    app.kubernetes.io/name: {{ template "kubernetes-dashboard.name" . }}-{{ .Values.auth.role }}
+    app.kubernetes.io/version: {{ .Values.auth.image.tag }}
+    app.kubernetes.io/component: {{ .Values.auth.role }}
+  name: {{ template "kubernetes-dashboard.fullname" . }}-{{ .Values.auth.role }}
+spec:
+  ports:
+    - name: {{ .Values.auth.role }}
+    {{- with (index .Values.auth.containers.ports 0) }}
+      port: {{ .containerPort }}
+    {{- end }}
+  selector:
+    {{- include "kubernetes-dashboard.matchLabels" . | nindent 4 }}
+    app.kubernetes.io/name: {{ template "kubernetes-dashboard.name" . }}-{{ .Values.auth.role }}

@@ -8,5 +8,8 @@ dependencies:
 - name: metrics-server
   repository: https://kubernetes-sigs.github.io/metrics-server/
   version: 3.8.4
-digest: sha256:a55a0d3f36aa4d4a38218c7f79224b273ce6388743574de2d679400c93d2b2d6
-generated: "2023-07-08T19:07:40.182171996+02:00"
+- name: kong
+  repository: https://charts.konghq.com
+  version: 2.38.0
+digest: sha256:226449310a2a7d1d89ba7a1d268fa21f6c702589b10d4097f2f2a3601f4bbab6
+generated: "2024-03-01T16:11:58.462480226+01:00"

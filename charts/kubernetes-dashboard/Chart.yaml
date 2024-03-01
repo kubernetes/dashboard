@@ -44,3 +44,7 @@ dependencies:
     version: 3.8.4
     repository: https://kubernetes-sigs.github.io/metrics-server/
     condition: metrics-server.enabled
+  - name: kong
+    version: 2.38.0
+    repository: https://charts.konghq.com
+    condition: kong.enabled

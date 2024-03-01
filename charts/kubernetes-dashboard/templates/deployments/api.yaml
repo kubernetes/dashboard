@@ -47,7 +47,8 @@ spec:
           image: "{{ .Values.api.image.repository }}:{{ .Values.api.image.tag }}"
           imagePullPolicy: {{ .Values.app.image.pullPolicy }}
           args:
-{{/*            - --namespace={{ .Release.Namespace }}*/}}
+            - --namespace={{ .Release.Namespace }}
+            - --metrics-scraper-service-name={{ template "kubernetes-dashboard.metrics-scraper.name" . }}
           {{- with .Values.api.containers.args }}
           {{ toYaml . | nindent 12 }}
           {{- end }}
@@ -98,5 +99,3 @@ spec:
       tolerations:
       {{ toYaml . | nindent 8 }}
       {{- end }}
-
-      serviceAccountName: {{ template "kubernetes-dashboard.fullname" . }}

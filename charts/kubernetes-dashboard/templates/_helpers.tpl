@@ -62,3 +62,7 @@ Common label selectors
 app.kubernetes.io/instance: {{ .Release.Name }}
 app.kubernetes.io/part-of: {{ include "kubernetes-dashboard.name" . }}
 {{- end -}}
+
+{{- define "kubernetes-dashboard.metrics-scraper.name" -}}
+{{- printf "%s-%s" ( include "kubernetes-dashboard.fullname" . ) ( .Values.metricsScraper.role )}}
+{{- end -}}

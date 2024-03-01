@@ -17,52 +17,51 @@ apiVersion: apps/v1
 metadata:
   labels:
     {{- include "kubernetes-dashboard.labels" . | nindent 4 }}
-    {{- with .Values.web.labels }}
+    {{- with .Values.auth.labels }}
     {{ toYaml . | nindent 4 }}
     {{- end }}
-    app.kubernetes.io/name: {{ template "kubernetes-dashboard.name" . }}-{{ .Values.web.role }}
-    app.kubernetes.io/version: {{ .Values.web.image.tag }}
-    app.kubernetes.io/component: {{ .Values.web.role }}
-  name: {{ template "kubernetes-dashboard.fullname" . }}-{{ .Values.web.role }}
+    app.kubernetes.io/name: {{ template "kubernetes-dashboard.name" . }}-{{ .Values.auth.role }}
+    app.kubernetes.io/version: {{ .Values.api.image.tag }}
+    app.kubernetes.io/component: {{ .Values.auth.role }}
+  name: {{ template "kubernetes-dashboard.fullname" . }}-{{ .Values.auth.role }}
 spec:
   replicas: {{ .Values.app.scaling.replicas }}
   revisionHistoryLimit: {{ .Values.app.scaling.revisionHistoryLimit }}
   selector:
     matchLabels:
       {{- include "kubernetes-dashboard.matchLabels" . | nindent 6 }}
-      app.kubernetes.io/name: {{ template "kubernetes-dashboard.name" . }}-{{ .Values.web.role }}
+      app.kubernetes.io/name: {{ template "kubernetes-dashboard.name" . }}-{{ .Values.auth.role }}
   template:
     metadata:
       labels:
         {{- include "kubernetes-dashboard.labels" . | nindent 8 }}
-        {{- with .Values.web.labels }}
+        {{- with .Values.auth.labels }}
         {{ toYaml . | nindent 8 }}
         {{- end }}
-        app.kubernetes.io/name: {{ template "kubernetes-dashboard.name" . }}-{{ .Values.web.role }}
-        app.kubernetes.io/version: {{ .Values.web.image.tag }}
-        app.kubernetes.io/component: {{ .Values.web.role }}
+        app.kubernetes.io/name: {{ template "kubernetes-dashboard.name" . }}-{{ .Values.auth.role }}
+        app.kubernetes.io/version: {{ .Values.auth.image.tag }}
+        app.kubernetes.io/component: {{ .Values.auth.role }}
     spec:
       containers:
-        - name: {{ template "kubernetes-dashboard.name" . }}-{{ .Values.web.role }}
-          image: "{{ .Values.web.image.repository }}:{{ .Values.web.image.tag }}"
+        - name: {{ template "kubernetes-dashboard.name" . }}-{{ .Values.auth.role }}
+          image: "{{ .Values.auth.image.repository }}:{{ .Values.auth.image.tag }}"
           imagePullPolicy: {{ .Values.app.image.pullPolicy }}
           args:
-            - --settings-config-map-name={{ .Values.web.settings.configMap }}
-          {{- with .Values.web.containers.args }}
+          {{- with .Values.auth.containers.args }}
           {{ toYaml . | nindent 12 }}
           {{- end }}
 
-          {{- with .Values.web.containers.env }}
+          {{- with .Values.auth.containers.env }}
           env:
           {{ toYaml . | nindent 12 }}
           {{- end }}
 
-          {{- with .Values.web.containers.ports }}
+          {{- with .Values.auth.containers.ports }}
           ports:
           {{ toYaml . | nindent 12 }}
           {{- end }}
 
-          {{- with .Values.web.containers.volumeMounts }}
+          {{- with .Values.auth.containers.volumeMounts }}
           volumeMounts:
           {{ toYaml . | nindent 12 }}
           {{- end }}
@@ -72,7 +71,7 @@ spec:
           {{ toYaml . | nindent 12 }}
           {{- end }}
 
-          {{- with .Values.web.containers.resources }}
+          {{- with .Values.auth.containers.resources }}
           resources:
           {{ toYaml . | nindent 12 }}
           {{- end }}
@@ -81,12 +80,12 @@ spec:
       {{ toYaml . | nindent 8 }}
       {{- end }}
 
-      {{- with .Values.web.volumes }}
+      {{- with .Values.auth.volumes }}
       volumes:
       {{ toYaml . | nindent 8 }}
       {{- end }}
 
-      {{- with .Values.web.nodeSelector }}
+      {{- with .Values.auth.nodeSelector }}
       nodeSelector:
       {{ toYaml . | nindent 8 }}
       {{- end }}
@@ -98,5 +97,3 @@ spec:
       tolerations:
       {{ toYaml . | nindent 8 }}
       {{- end }}
-
-      serviceAccountName: {{ template "kubernetes-dashboard.fullname" . }}

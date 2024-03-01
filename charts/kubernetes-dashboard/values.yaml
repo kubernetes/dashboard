@@ -79,7 +79,7 @@ app:
     #  #  Is this CRD namespaced?
     #  namespaced: true
   ingress:
-    enabled: true
+    enabled: false
     hosts:
     # Keep 'localhost' host only if you want to access Dashboard using 'kubectl port-forward ...' on:
     # https://localhost:8443
@@ -105,6 +105,39 @@ app:
   #   effect: NoSchedule
   tolerations: []
 
+auth:
+  role: auth
+  image:
+    repository: docker.io/kubernetesui/dashboard-auth
+    tag: v1.0.0
+  containers:
+    ports:
+      - name: auth
+        containerPort: 8000
+        protocol: TCP
+    args: []
+    env: []
+    volumeMounts:
+      - mountPath: /tmp
+        name: tmp-volume
+    # TODO: Validate configuration
+    resources:
+      requests:
+        cpu: 100m
+        memory: 200Mi
+      limits:
+        cpu: 250m
+        memory: 400Mi
+  volumes:
+    # Create on-disk volume to store exec logs (required)
+    - name: tmp-volume
+      emptyDir: { }
+  nodeSelector: { }
+  # Labels & annotations shared between API related resources
+  labels: { }
+  annotations: { }
+
+
 # API deployment configuration
 api:
   role: api
@@ -114,7 +147,7 @@ api:
   containers:
     ports:
       - name: api
-        containerPort: 9000
+        containerPort: 8000
         protocol: TCP
     # Additional container arguments
     # Full list of arguments: https://github.com/kubernetes/dashboard/blob/master/docs/common/arguments.md
@@ -162,6 +195,8 @@ web:
   image:
     repository: docker.io/kubernetesui/dashboard-web
     tag: v1.0.0
+  settings:
+    configMap: kubernetes-dashboard-settings
   containers:
     ports:
       - name: web
@@ -202,16 +237,14 @@ web:
     # Create on-disk volume to store exec logs (required)
     - name: tmp-volume
       emptyDir: {}
-  nodeSelector:
-    # TODO: check if it's really needed since we offer cross platform images for darwin/windows/linux
-    kubernetes.io/os: linux
+  nodeSelector: {}
   # Labels & annotations shared between WEB UI related resources
   labels: {}
   annotations: {}
 
 ### Metrics Scraper
 ### Container to scrape, store, and retrieve a window of time from the Metrics Server.
-### refs: https://github.com/kubernetes-sigs/dashboard-metrics-scraper
+### refs: https://github.com/kubernetes/dashboard/tree/master/modules/metrics-scraper
 metricsScraper:
   enabled: true
   role: metrics-scraper
@@ -260,9 +293,7 @@ metricsScraper:
     # Create on-disk volume to store exec logs (required)
     - name: tmp-volume
       emptyDir: {}
-  nodeSelector:
-    # TODO: check if it's really needed since we offer cross platform images for darwin/windows/linux
-    kubernetes.io/os: linux
+  nodeSelector: {}
   # Labels & annotations shared between WEB UI related resources
   labels: {}
   annotations: {}
@@ -280,16 +311,23 @@ metrics-server:
     - --kubelet-preferred-address-types=InternalIP
     - --kubelet-insecure-tls
 
+kong:
+  enabled: true
+  ingressController:
+    enabled: false
+  dblessConfig:
+    configMap: kong-dbless-config
+
 ## Optional Cert Manager sub-chart configuration
 ## Enable this if you don't already have cert-manager enabled on your cluster.
 cert-manager:
-  enabled: true
+  enabled: false
   installCRDs: true
 
 ## Optional Nginx Ingress sub-chart configuration
 ## Enable this if you don't already have nginx-ingress enabled on your cluster.
 nginx:
-  enabled: true
+  enabled: false
   controller:
     electionID: ingress-controller-leader
     ingressClassResource:
@@ -314,21 +352,6 @@ extras:
   #   data:
   #     mykey: myvalue
   manifests: []
-  # Start in ReadOnly mode.
-  # Specifies whether cluster-wide RBAC resources (ClusterRole, ClusterRolebinding) with read only permissions to all resources listed inside the cluster should be created
-  # Only dashboard-related Secrets and ConfigMaps will still be available for writing.
-  #
-  # The basic idea of the clusterReadOnlyRole
-  # is not to hide all the secrets and sensitive data but more
-  # to avoid accidental changes in the cluster outside the standard CI/CD.
-  #
-  # It is NOT RECOMMENDED to use this version in production.
-  # Instead, you should review the role and remove all potentially sensitive parts such as
-  # access to persistentvolumes, pods/log etc.
-  clusterReadOnlyRole: false
-  # It is possible to add additional rules if read only role is enabled.
-  # This can be useful, for example, to show CRD resources.
-  clusterReadOnlyRoleAdditionalRules: []
   serviceMonitor:
     # Whether to create a Prometheus Operator service monitor.
     enabled: false
