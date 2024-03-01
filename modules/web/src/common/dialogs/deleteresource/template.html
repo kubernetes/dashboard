@@ -14,8 +14,12 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<h2 mat-dialog-title
-    i18n>Delete a resource</h2>
+<h2
+  mat-dialog-title
+  i18n
+>
+  Delete a resource
+</h2>
 <mat-dialog-content class="kd-dialog-text">
   <ng-container i18n>
     <span>Are you sure you want to delete {{ data.displayName }} <i>{{ data.objectMeta.name }}</i></span>
@@ -24,15 +28,21 @@ limitations under the License.
   </ng-container>
   <ng-container>
     <div class="kd-equivalent-block">
-      <mat-checkbox color="primary"
-                    [(ngModel)]="isDeleteNowChecked"
-                    name="isDeleteNowChecked"
-                    matInput
-                    i18n>Delete now (sets delete grace period to 1 second instead of the default, which is usually 30 seconds)</mat-checkbox>
+      <mat-checkbox
+        color="primary"
+        [(ngModel)]="isDeleteNowChecked"
+        name="isDeleteNowChecked"
+        matInput
+        i18n
+        >Delete now (sets delete grace period to 1 second instead of the default, which is usually 30
+        seconds)</mat-checkbox
+      >
     </div>
   </ng-container>
-  <div class="kd-equivalent-block kd-muted kd-bg-card-dark"
-       fxLayoutAlign=" center">
+  <div
+    class="kd-equivalent-block kd-muted kd-bg-card-dark"
+    fxLayoutAlign=" center"
+  >
     <mat-icon>info</mat-icon>
     <div>
       <div i18n>This action is equivalent to:</div>
@@ -46,13 +56,21 @@ limitations under the License.
   </div>
 </mat-dialog-content>
 <mat-dialog-actions>
-  <button mat-button
-          color="primary"
-          id="confirm-delete"
-          [mat-dialog-close]="isDeleteNowChecked"
-          i18n>Delete</button>
-  <button mat-button
-          color="primary"
-          [mat-dialog-close]="cancelDelete"
-          i18n>Cancel</button>
+  <button
+    mat-button
+    color="primary"
+    id="confirm-delete"
+    [mat-dialog-close]="isDeleteNowChecked"
+    i18n
+  >
+    Delete
+  </button>
+  <button
+    mat-button
+    color="primary"
+    [mat-dialog-close]="cancelDelete"
+    i18n
+  >
+    Cancel
+  </button>
 </mat-dialog-actions>

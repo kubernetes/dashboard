@@ -14,41 +14,58 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<div class="kd-bg-background"
-     fxFlex
-     fxLayoutAlign="space-around center">
-  <kd-card titleClasses="kd-card-top-radius kd-bg-primary kd-accent"
-           [role]="'flex'"
-           [expandable]="false">
-    <div title
-         i18n>Kubernetes Dashboard
+<div
+  class="kd-bg-background"
+  fxFlex
+  fxLayoutAlign="space-around center"
+>
+  <kd-card
+    titleClasses="kd-card-top-radius kd-bg-primary kd-accent"
+    [role]="'flex'"
+    [expandable]="false"
+  >
+    <div
+      title
+      i18n
+    >
+      Kubernetes Dashboard
     </div>
     <div content>
-      <form fxLayout="column"
-            (ngSubmit)="login()">
-        <mat-form-field fxFlex
-                        class="kd-login-input">
-          <input matInput
-                 id="token"
-                 name="token"
-                 i18n-placeholder
-                 placeholder="Bearer token"
-                 type="password"
-                 required
-                 (keyup)="onChange($event)" />
+      <form
+        fxLayout="column"
+        (ngSubmit)="login()"
+      >
+        <mat-form-field
+          fxFlex
+          class="kd-login-input"
+        >
+          <input
+            matInput
+            id="token"
+            name="token"
+            i18n-placeholder
+            placeholder="Bearer token"
+            type="password"
+            required
+            (keyup)="onChange($event)"
+          />
         </mat-form-field>
-        <mat-error *ngFor="let error of errors"
-                   class="kd-login-input kd-error kd-error-text">
+        <mat-error
+          *ngFor="let error of errors"
+          class="kd-login-input kd-error kd-error-text"
+        >
           {{ error.status }} ({{ error.code }}): {{ error.message }}
         </mat-error>
 
-
-
-        <div class="kd-login-mode-description"
-             fxFlex
-             fxLayout="column">
-          <div class="kd-equivalent-block kd-muted kd-bg-card-dark"
-               fxLayoutAlign=" center">
+        <div
+          class="kd-login-mode-description"
+          fxFlex
+          fxLayout="column"
+        >
+          <div
+            class="kd-equivalent-block kd-muted kd-bg-card-dark"
+            fxLayoutAlign=" center"
+          >
             <mat-icon>info</mat-icon>
             <div>
               <span i18n>You can generate token for service account with:&nbsp;</span>
@@ -62,14 +79,18 @@ limitations under the License.
           </div>
         </div>
 
-        <div fxLayout="row"
-             fxLayoutAlign="end center">
-          <button mat-raised-button
-                  color="primary"
-                  type="submit"
-                  class="kd-login-button"
-                  [disabled]="hasEmptyToken()"
-                  i18n>
+        <div
+          fxLayout="row"
+          fxLayoutAlign="end center"
+        >
+          <button
+            mat-raised-button
+            color="primary"
+            type="submit"
+            class="kd-login-button"
+            [disabled]="hasEmptyToken()"
+            i18n
+          >
             Sign in
           </button>
         </div>
