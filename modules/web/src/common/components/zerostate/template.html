@@ -15,20 +15,33 @@ limitations under the License.
 -->
 
 <kd-card [withTitle]="false">
-  <div content
-       fxLayout="column"
-       class="kd-muted">
-    <div fxFlexAlign="center"
-         class="kd-zerostate-title"
-         i18n>There is nothing to display here</div>
-    <div fxFlexAlign="center"
-         class="kd-zerostate-text"
-         i18n>
+  <div
+    content
+    fxLayout="column"
+    class="kd-muted"
+  >
+    <div
+      fxFlexAlign="center"
+      class="kd-zerostate-title"
+      i18n
+    >
+      There is nothing to display here
+    </div>
+    <div
+      fxFlexAlign="center"
+      class="kd-zerostate-text"
+      i18n
+    >
       You can
-      <a routerLink="deploy"
-         queryParamsHandling="preserve">deploy a containerized app</a>, select other namespace or
-      <a href="https://kubernetes.io/docs/tasks/access-application-cluster/web-ui-dashboard/#using-dashboard"
-         target="_blank">check the Dashboard Docs
+      <a
+        routerLink="deploy"
+        queryParamsHandling="preserve"
+        >deploy a containerized app</a
+      >, select other namespace or
+      <a
+        href="https://kubernetes.io/docs/tasks/access-application-cluster/web-ui-dashboard/#using-dashboard"
+        target="_blank"
+        >check the Dashboard Docs
         <mat-icon class="kd-zerostate-icon">open_in_new</mat-icon>
       </a>
       to learn more.

@@ -14,28 +14,47 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<kd-object-meta [initialized]="isInitialized"
-                [objectMeta]="ingressClass?.objectMeta"></kd-object-meta>
+<kd-object-meta
+  [initialized]="isInitialized"
+  [objectMeta]="ingressClass?.objectMeta"
+></kd-object-meta>
 
 <kd-card [initialized]="isInitialized">
-  <div title
-       i18n>Resource information</div>
-  <div content
-       *ngIf="isInitialized"
-       fxLayout="row wrap">
-    <kd-property *ngIf="ingressClass?.controller"
-                 fxFlex="100">
-      <div key
-           i18n>Controller</div>
+  <div
+    title
+    i18n
+  >
+    Resource information
+  </div>
+  <div
+    content
+    *ngIf="isInitialized"
+    fxLayout="row wrap"
+  >
+    <kd-property
+      *ngIf="ingressClass?.controller"
+      fxFlex="100"
+    >
+      <div
+        key
+        i18n
+      >
+        Controller
+      </div>
       <div value>{{ ingressClass?.controller }}</div>
     </kd-property>
     <kd-property *ngFor="let parameter of getParameterNames()">
-      <div key
-           fxLayout>
+      <div
+        key
+        fxLayout
+      >
         {{ parameter }}
-        <mat-icon i18n-matTooltip
-                  matTooltip="Parameter"
-                  class="kd-ingress-class-parameter-icon">tune</mat-icon>
+        <mat-icon
+          i18n-matTooltip
+          matTooltip="Parameter"
+          class="kd-ingress-class-parameter-icon"
+          >tune</mat-icon
+        >
       </div>
       <div value>{{ ingressClass?.parameters[parameter] }}</div>
     </kd-property>
