@@ -20,12 +20,12 @@
     "fix:i18n": "ng run kubernetes-dashboard:extract-i18n-merge",
     "fix:html": "npx html-beautify -f src/**/*.html",
     "fix:scss": "stylelint src/**/*.scss",
-    "fix:ts": "gts fix",
+    "fix:ts": "eslint . --fix",
     "check": "yarn check:i18n && yarn check:html && yarn check:scss && yarn check:ts",
     "check:i18n": "yarn fix:i18n",
     "check:html": "./hack/check-html.sh",
     "check:scss": "stylelint src/**/*.scss --fix",
-    "check:ts": "gts lint",
+    "check:ts": "eslint .",
     "test": "npx jest -c jest.config.js",
     "coverage": "npx jest -c jest.config.js --coverage",
     "cypress": "wait-on -v -i 10000 http-get://127.0.0.1:8080/api/v1/node http://127.0.0.1:8080/config http://127.0.0.1:8080 && npx cypress run",
@@ -35,7 +35,7 @@
   },
   "lint-staged": {
     "src/**/*.ts": [
-      "gts fix"
+      "eslint --fix"
     ],
     "src/**/*.scss": [
       "stylelint --fix"
@@ -108,11 +108,11 @@
     "cypress-fail-fast": "7.1.0",
     "del": "7.1.0",
     "eslint": "8.56.0",
+    "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-node": "11.1.0",
     "eslint-plugin-prettier": "5.1.3",
     "eslint-plugin-rxjs": "5.0.3",
     "git-describe": "4.1.1",
-    "gts": "5.2.0",
     "husky": "9.0.11",
     "jasmine-core": "5.1.2",
     "jasmine-spec-reporter": "7.0.0",
@@ -126,6 +126,7 @@
     "minimist": "1.2.8",
     "ng-extract-i18n-merge": "2.10.0",
     "node-gyp": "10.0.1",
+    "prettier": "^3.2.5",
     "q": "1.5.1",
     "raw-loader": "4.0.2",
     "run-node": "2.0.0",

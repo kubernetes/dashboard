@@ -11,7 +11,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-#
+
 root: true
 parser: "@typescript-eslint/parser"
 parserOptions:
@@ -22,20 +22,61 @@ parserOptions:
     - cypress/tsconfig.json
   sourceType: module
 extends:
-  - "./node_modules/gts"
+  - prettier
+  - eslint:recommended
+  - plugin:node/recommended
+  - plugin:@typescript-eslint/recommended
   - plugin:@angular-eslint/recommended
 plugins:
   - rxjs
+  - node
+  - prettier
 rules:
   "@typescript-eslint/no-unused-vars":
     - error
     - argsIgnorePattern: "^_"
-  "@typescript-eslint/ban-ts-comment": off
+  "@typescript-eslint/ban-ts-comment": warn
+  "@typescript-eslint/no-non-null-assertion": off
+  "@typescript-eslint/no-use-before-define": off
+  "@typescript-eslint/no-warning-comments": off
+  "@typescript-eslint/no-empty-function": off
+  "@typescript-eslint/no-var-requires": off
+  "@typescript-eslint/explicit-function-return-type": off
+  "@typescript-eslint/explicit-module-boundary-types": off
+  "@typescript-eslint/ban-types": off
+  "@typescript-eslint/camelcase": off
   "@typescript-eslint/interface-name-prefix": off
   "@typescript-eslint/no-namespace": off
   "@typescript-eslint/no-this-alias": off
   "@typescript-eslint/no-explicit-any": off
+  "@angular-eslint/no-host-metadata-property": off
+  node/no-missing-import: off
+  node/no-empty-function: off
   node/no-unpublished-import: off
+  node/no-extraneous-require: error
+  node/no-unpublished-require: error
+  node/no-unsupported-features/es-syntax: off
+  node/no-missing-require: off
+  node/shebang: off
+  prettier/prettier: error
+  block-scoped-var: error
+  eqeqeq: error
+  no-var: error
+  prefer-const: error
+  prefer-arrow-callback: error
+  no-trailing-spaces: error
+  quotes:
+    - "warn"
+    - "single"
+    - avoidEscape: true
+  no-restricted-properties:
+    - "error"
+    - object: describe
+      property: only
+    - object: it
+      property: only
+  no-dupe-class-members: off
+  require-atomic-updates: off
   no-undef: off
   no-inner-declarations: off
   no-redeclare: off
@@ -44,8 +85,6 @@ rules:
   no-prototype-builtins: off
   no-extra-boolean-cast: error
   no-else-return: error
-  node/no-extraneous-require: error
-  node/no-unpublished-require: error
   prefer-rest-params: error
   rxjs/ban-operators:
     - error
@@ -54,6 +93,5 @@ rules:
   rxjs/no-unbound-methods: error
   rxjs/no-unsafe-takeuntil: error
   rxjs/no-nested-subscribe: error
-  "@angular-eslint/no-host-metadata-property": off
 ignorePatterns:
   - "**/*.js"

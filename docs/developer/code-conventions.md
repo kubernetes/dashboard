@@ -38,7 +38,7 @@ We use following tools and settings for each check and formatting:
 | code    | tools                                                                  | setting                                                                               |
 |---------|------------------------------------------------------------------------|---------------------------------------------------------------------------------------|
 | go      | [golangci-lint](https://github.com/golangci/golangci-lint)             | [`.golangci.yml`](../../.golangci.yml)                                                |
-| ts      | [gts](https://github.com/google/gts)                                   | [`.eslintrc.yaml`](../../.eslintrc.yaml) and [`.prettierrc.js`](../../.prettierrc.js) |
+| ts      | [eslint](https://eslint.org)                                           | [`.eslintrc.yaml`](../../.eslintrc.yaml) and [`.prettierrc.js`](../../.prettierrc.js) |
 | scss    | [stylelint](https://github.com/stylelint/stylelint)                    | [`.stylelintrc.yaml`](../../.stylelintrc.yaml)                                        |
 | html    | [prettier](https://prettier.io/)                                       | [`.jsbeautifyrc`](../../.jsbeautifyrc)                                                |
 | license | [license-check-and-add](https://github.com/awjh/license-check-and-add) | [`license-checker-config.json`](../../license-checker-config.json)                    |
