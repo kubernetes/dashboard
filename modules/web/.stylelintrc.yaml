@@ -35,4 +35,5 @@ rules:
     - rules
   order/properties-alphabetical-order: true
   scss/comment-no-empty:
+  scss/dollar-variable-colon-space-after:
   selector-pseudo-element-no-unknown:
