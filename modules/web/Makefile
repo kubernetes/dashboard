@@ -23,7 +23,7 @@ clean:
 	@rm -rf $(WEB_DIST_DIRECTORY)
 
 .PHONY: coverage
-coverage: coverage-go
+coverage: coverage-frontend coverage-go
 
 .PHONY: fix
 fix: fix-go
@@ -50,6 +50,11 @@ check-frontend: $(PRE)
 check-go: $(PRE)
 	@echo "[$(APP_NAME)] Running lint"
 	@golangci-lint run -c $(GOLANGCI_LINT_CONFIG) ./...
+
+.PHONY: coverage-frontend
+coverage-frontend: $(PRE)
+	@echo "[$(APP_NAME)]  Running frontend tests with coverage"
+	@yarn coverage
 
 .PHONY: coverage-go
 coverage-go: DIR := $(TMP_DIRECTORY)
