@@ -30,7 +30,10 @@
   $box-shadow-1: rgb(0 0 0 / 0.2);
   $box-shadow-2: rgb(0 0 0 / 0.14);
   $box-shadow-3: rgb(0 0 0 / 0.12);
-  $box-shadow: 0 3px 1px -2px $box-shadow-1, 0 2px 2px 0 $box-shadow-2, 0 1px 5px 0 $box-shadow-3;
+  $box-shadow:
+    0 3px 1px -2px $box-shadow-1,
+    0 2px 2px 0 $box-shadow-2,
+    0 1px 5px 0 $box-shadow-3;
   $white: #fff;
 
   // Global style overrides.
@@ -337,7 +340,8 @@
         background-color: map.get($colors, log-viewer-scrollbar);
       }
 
-      .kd-logs-element, .kd-logs-element-compact {
+      .kd-logs-element,
+      .kd-logs-element-compact {
         &:hover {
           background: color.adjust(map.get($colors, log-viewer-bg), $lightness: 20%);
         }

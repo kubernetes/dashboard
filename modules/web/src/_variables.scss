@@ -29,7 +29,10 @@ $font-family-monospace: 'Roboto Mono Regular', monospace;
 $font-family-sans: roboto, 'Helvetica Neue', sans-serif;
 $regular-font-weight: 400;
 $bold-font-weight: 500;
-$whiteframe-shadow-1dp: 0 1px 3px 0 rgb(0 0 0 / 0.2), 0 1px 1px 0 rgb(0 0 0 / 0.14), 0 2px 1px -1px rgb(0 0 0 / 0.12);
+$whiteframe-shadow-1dp:
+  0 1px 3px 0 rgb(0 0 0 / 0.2),
+  0 1px 1px 0 rgb(0 0 0 / 0.14),
+  0 2px 1px -1px rgb(0 0 0 / 0.12);
 $baseline-grid: 8px;
 $primary-toolbar-height: 60px;
 $secondary-toolbar-height: 48px;
