@@ -20,13 +20,14 @@ import (
 	"testing"
 	"time"
 
-	_ "github.com/mattn/go-sqlite3"
 	"github.com/onsi/ginkgo"
 	"github.com/onsi/gomega"
 	v1 "k8s.io/api/core/v1"
 	"k8s.io/apimachinery/pkg/api/resource"
-	"k8s.io/dashboard/metrics-scraper/pkg/database"
 	"k8s.io/metrics/pkg/apis/metrics/v1beta1"
+	_ "modernc.org/sqlite"
+
+	"k8s.io/dashboard/metrics-scraper/pkg/database"
 )
 
 func TestMetricsUtil(t *testing.T) {
@@ -77,7 +78,7 @@ func podMetrics() v1beta1.PodMetricsList {
 var _ = ginkgo.Describe("Database functions", func() {
 	ginkgo.Context("With an in-memory database", func() {
 		ginkgo.It("should generate 'nodes' table to dump metrics in.", func() {
-			db, err := sql.Open("sqlite3", ":memory:")
+			db, err := sql.Open("sqlite", ":memory:")
 			if err != nil {
 				panic(err.Error())
 			}
@@ -97,7 +98,7 @@ var _ = ginkgo.Describe("Database functions", func() {
 		})
 
 		ginkgo.It("should generate 'pods' table to dump metrics in.", func() {
-			db, err := sql.Open("sqlite3", ":memory:")
+			db, err := sql.Open("sqlite", ":memory:")
 			if err != nil {
 				panic(err.Error())
 			}
@@ -116,7 +117,7 @@ var _ = ginkgo.Describe("Database functions", func() {
 		})
 
 		ginkgo.It("should insert metrics into the database.", func() {
-			db, err := sql.Open("sqlite3", ":memory:")
+			db, err := sql.Open("sqlite", ":memory:")
 			if err != nil {
 				panic(err.Error())
 			}
@@ -180,7 +181,7 @@ var _ = ginkgo.Describe("Database functions", func() {
 			}
 		})
 		ginkgo.It("should cull the database based on a window.", func() {
-			db, err := sql.Open("sqlite3", ":memory:")
+			db, err := sql.Open("sqlite", ":memory:")
 			if err != nil {
 				panic(err.Error())
 			}
@@ -210,7 +211,7 @@ var _ = ginkgo.Describe("Database functions", func() {
 				panic(err.Error())
 			}
 
-			err = database.CullDatabase(db, &timeWindow)
+			err = database.CullDatabase(db, timeWindow)
 			if err != nil {
 				panic(err.Error())
 			}

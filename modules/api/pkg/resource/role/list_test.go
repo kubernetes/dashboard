@@ -20,8 +20,9 @@ import (
 
 	rbac "k8s.io/api/rbac/v1"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
-	"k8s.io/dashboard/api/pkg/api"
+
 	"k8s.io/dashboard/api/pkg/resource/dataselect"
+	"k8s.io/dashboard/types"
 )
 
 func TestToRbacRoleLists(t *testing.T) {
@@ -41,10 +42,10 @@ func TestToRbacRoleLists(t *testing.T) {
 				},
 			},
 			&RoleList{
-				ListMeta: api.ListMeta{TotalItems: 1},
+				ListMeta: types.ListMeta{TotalItems: 1},
 				Items: []Role{{
-					ObjectMeta: api.ObjectMeta{Name: "role", Namespace: ""},
-					TypeMeta:   api.TypeMeta{Kind: api.ResourceKindRole},
+					ObjectMeta: types.ObjectMeta{Name: "role", Namespace: ""},
+					TypeMeta:   types.TypeMeta{Kind: types.ResourceKindRole},
 				}},
 			},
 		},

@@ -24,11 +24,11 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/client-go/rest"
 
-	"k8s.io/dashboard/api/pkg/api"
-	"k8s.io/dashboard/api/pkg/errors"
 	"k8s.io/dashboard/api/pkg/resource/common"
 	"k8s.io/dashboard/api/pkg/resource/customresourcedefinition/types"
 	"k8s.io/dashboard/api/pkg/resource/dataselect"
+	"k8s.io/dashboard/errors"
+	commontypes "k8s.io/dashboard/types"
 )
 
 // GetCustomResourceObjectList gets objects for a CR.
@@ -39,7 +39,7 @@ func GetCustomResourceObjectList(client apiextensionsclientset.Interface, config
 	customResourceDefinition, err := client.ApiextensionsV1().
 		CustomResourceDefinitions().
 		Get(context.TODO(), crdName, metav1.GetOptions{})
-	nonCriticalErrors, criticalError := errors.HandleError(err)
+	nonCriticalErrors, criticalError := errors.ExtractErrors(err)
 	if criticalError != nil {
 		return nil, criticalError
 	}
@@ -75,7 +75,7 @@ func GetCustomResourceObjectList(client apiextensionsclientset.Interface, config
 	// Return only slice of data, pagination is done here.
 	crdObjectCells, filteredTotal := dataselect.GenericDataSelectWithFilter(toObjectCells(list.Items), dsQuery)
 	list.Items = fromObjectCells(crdObjectCells)
-	list.ListMeta = api.ListMeta{TotalItems: filteredTotal}
+	list.ListMeta = commontypes.ListMeta{TotalItems: filteredTotal}
 
 	for i := range list.Items {
 		toCRDObject(&list.Items[i], customResourceDefinition)
@@ -91,7 +91,7 @@ func GetCustomResourceObjectDetail(client apiextensionsclientset.Interface, name
 	customResourceDefinition, err := client.ApiextensionsV1().
 		CustomResourceDefinitions().
 		Get(context.TODO(), crdName, metav1.GetOptions{})
-	nonCriticalErrors, criticalError := errors.HandleError(err)
+	nonCriticalErrors, criticalError := errors.ExtractErrors(err)
 	if criticalError != nil {
 		return nil, criticalError
 	}
@@ -125,7 +125,7 @@ func GetCustomResourceObjectDetail(client apiextensionsclientset.Interface, name
 // toCRDObject sets the object kind to the full name of the CRD.
 // E.g. changes "Foo" to "foos.samplecontroller.k8s.io"
 func toCRDObject(object *types.CustomResourceObject, crd *apiextensionsv1.CustomResourceDefinition) {
-	object.TypeMeta.Kind = api.ResourceKind(crd.Name)
+	object.TypeMeta.Kind = commontypes.ResourceKind(crd.Name)
 	crdSubresources := crd.Spec.Versions[0].Subresources
 	object.TypeMeta.Scalable = crdSubresources != nil && crdSubresources.Scale != nil
 }

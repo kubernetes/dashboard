@@ -21,9 +21,10 @@ import (
 	v1 "k8s.io/api/core/v1"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/client-go/kubernetes/fake"
-	"k8s.io/dashboard/api/pkg/api"
+
 	"k8s.io/dashboard/api/pkg/resource/common"
 	"k8s.io/dashboard/api/pkg/resource/endpoint"
+	"k8s.io/dashboard/types"
 )
 
 func TestGetServiceDetail(t *testing.T) {
@@ -41,12 +42,12 @@ func TestGetServiceDetail(t *testing.T) {
 			expectedActions: []string{"get", "list"},
 			expected: &ServiceDetail{
 				Service: Service{
-					ObjectMeta: api.ObjectMeta{
+					ObjectMeta: types.ObjectMeta{
 						Name:      "svc-1",
 						Namespace: "ns-1",
 						Labels:    map[string]string{},
 					},
-					TypeMeta:          api.TypeMeta{Kind: api.ResourceKindService},
+					TypeMeta:          types.TypeMeta{Kind: types.ResourceKindService},
 					InternalEndpoint:  common.Endpoint{Host: "svc-1.ns-1"},
 					ExternalEndpoints: []common.Endpoint{},
 				},
@@ -70,12 +71,12 @@ func TestGetServiceDetail(t *testing.T) {
 			expectedActions: []string{"get", "list"},
 			expected: &ServiceDetail{
 				Service: Service{
-					ObjectMeta: api.ObjectMeta{
+					ObjectMeta: types.ObjectMeta{
 						Name:      "svc-2",
 						Namespace: "ns-2",
 					},
 					Selector:          map[string]string{"app": "app2"},
-					TypeMeta:          api.TypeMeta{Kind: api.ResourceKindService},
+					TypeMeta:          types.TypeMeta{Kind: types.ResourceKindService},
 					InternalEndpoint:  common.Endpoint{Host: "svc-2.ns-2"},
 					ExternalEndpoints: []common.Endpoint{},
 				},

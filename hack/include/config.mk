@@ -9,10 +9,11 @@ IMAGE_REPOSITORY := kubernetesui
 
 ### Dirs and paths
 # Base paths
-PARTIALS_DIRECTORY := $(shell dirname $(realpath $(firstword $(MAKEFILE_LIST))))
+PARTIALS_DIRECTORY := $(ROOT_DIRECTORY)/hack/include
 # Modules
 MODULES_DIRECTORY := $(ROOT_DIRECTORY)/modules
 API_DIRECTORY := $(MODULES_DIRECTORY)/api
+AUTH_DIRECTORY := $(MODULES_DIRECTORY)/auth
 METRICS_SCRAPER_DIRECTORY := $(MODULES_DIRECTORY)/metrics-scraper
 WEB_DIRECTORY := $(MODULES_DIRECTORY)/web
 TOOLS_DIRECTORY := $(MODULES_DIRECTORY)/common/tools
@@ -21,14 +22,22 @@ GATEWAY_DIRECTORY := $(ROOT_DIRECTORY)/hack/gateway
 # Docker files
 DOCKER_DIRECTORY := $(ROOT_DIRECTORY)/hack/docker
 DOCKER_COMPOSE_PATH := $(DOCKER_DIRECTORY)/docker.compose.yaml
+DOCKER_COMPOSE_DEV_PATH := $(DOCKER_DIRECTORY)/dev.compose.yml
 # Build
-DIST_DIRECTORY := $(ROOT_DIRECTORY)/.dist
+TMP_DIRECTORY := $(ROOT_DIRECTORY)/.tmp
+# Kind
+KIND_CLUSTER_NAME := kubernetes-dashboard
+KIND_CLUSTER_VERSION := 1.29.0
+KIND_CLUSTER_IMAGE := docker.io/kindest/node:v${KIND_CLUSTER_VERSION}
+KIND_CLUSTER_INTERNAL_KUBECONFIG_PATH := $(TMP_DIRECTORY)/kubeconfig
+# Tools
+GOLANGCI_LINT_CONFIG := $(ROOT_DIRECTORY)/.golangci.yml
 
 ### GOPATH check
 ifndef GOPATH
-$(error $$GOPATH environment variable not set)
+$(warning $$GOPATH environment variable not set)
 endif
 
 ifeq (,$(findstring $(GOPATH)/bin,$(PATH)))
-$(error $$GOPATH/bin directory is not in your $$PATH)
+$(warning $$GOPATH/bin directory is not in your $$PATH)
 endif

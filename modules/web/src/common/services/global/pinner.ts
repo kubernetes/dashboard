@@ -25,7 +25,7 @@ export class PinnerService {
   onPinUpdate = new Subject<void>();
   private isInitialized_ = false;
   private pinnedResources_: PinnedResource[] = [];
-  private readonly endpoint_ = 'api/v1/settings/pinner';
+  private readonly endpoint_ = 'settings/pinnedresources';
 
   constructor(
     private readonly dialog_: MatDialog,

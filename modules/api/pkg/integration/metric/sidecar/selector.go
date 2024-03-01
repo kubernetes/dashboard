@@ -19,13 +19,15 @@ import (
 
 	"github.com/emicklei/go-restful/v3/log"
 	v1 "k8s.io/api/core/v1"
-	"k8s.io/apimachinery/pkg/types"
-	"k8s.io/dashboard/api/pkg/api"
+	apimachinery "k8s.io/apimachinery/pkg/types"
+
 	metricapi "k8s.io/dashboard/api/pkg/integration/metric/api"
+	"k8s.io/dashboard/helpers"
+	"k8s.io/dashboard/types"
 )
 
 type sidecarSelector struct {
-	TargetResourceType api.ResourceKind
+	TargetResourceType types.ResourceKind
 	Path               string
 	Resources          []string
 	metricapi.Label
@@ -52,16 +54,16 @@ func getSidecarSelector(selector metricapi.ResourceSelector,
 	summingResource, isDerivedResource := metricapi.DerivedResources[selector.ResourceType]
 	if !isDerivedResource {
 		return newSidecarSelectorFromNativeResource(selector.ResourceType, selector.Namespace,
-			[]string{selector.ResourceName}, []types.UID{selector.UID})
+			[]string{selector.ResourceName}, []apimachinery.UID{selector.UID})
 	}
 	// We are dealing with derived resource. Convert derived resource to its native resources.
 	// For example, convert deployment to the list of pod names that belong to this deployment
-	if summingResource == api.ResourceKindPod {
+	if summingResource == types.ResourceKindPod {
 		myPods, err := getMyPodsFromCache(selector, cachedResources.Pods)
 		if err != nil {
 			return sidecarSelector{}, err
 		}
-		return newSidecarSelectorFromNativeResource(api.ResourceKindPod,
+		return newSidecarSelectorFromNativeResource(types.ResourceKindPod,
 			selector.Namespace, podListToNameList(myPods), podListToUIDList(myPods))
 	}
 	// currently can only convert derived resource to pods. You can change it by implementing other methods
@@ -76,9 +78,9 @@ func getMyPodsFromCache(selector metricapi.ResourceSelector, cachedPods []v1.Pod
 	case cachedPods == nil:
 		err = fmt.Errorf(`Pods were not available in cache. Required for resource type: "%s"`,
 			selector.ResourceType)
-	case selector.ResourceType == api.ResourceKindDeployment:
+	case selector.ResourceType == types.ResourceKindDeployment:
 		for _, pod := range cachedPods {
-			if pod.ObjectMeta.Namespace == selector.Namespace && api.IsSelectorMatching(selector.Selector, pod.Labels) {
+			if pod.ObjectMeta.Namespace == selector.Namespace && helpers.IsSelectorMatching(selector.Selector, pod.Labels) {
 				matchingPods = append(matchingPods, pod)
 			}
 		}
@@ -99,19 +101,19 @@ func getMyPodsFromCache(selector metricapi.ResourceSelector, cachedPods []v1.Pod
 
 // NewSidecarSelectorFromNativeResource returns new sidecar selector for native resources specified in arguments.
 // returns error if requested resource is not native or is not supported.
-func newSidecarSelectorFromNativeResource(resourceType api.ResourceKind, namespace string,
-	resourceNames []string, resourceUIDs []types.UID) (sidecarSelector, error) {
+func newSidecarSelectorFromNativeResource(resourceType types.ResourceKind, namespace string,
+	resourceNames []string, resourceUIDs []apimachinery.UID) (sidecarSelector, error) {
 	// Here we have 2 possibilities because this module allows downloading Nodes and Pods from sidecar
-	if resourceType == api.ResourceKindPod {
+	if resourceType == types.ResourceKindPod {
 		return sidecarSelector{
-			TargetResourceType: api.ResourceKindPod,
+			TargetResourceType: types.ResourceKindPod,
 			Path:               `namespaces/` + namespace + `/pod-list/`,
 			Resources:          resourceNames,
 			Label:              metricapi.Label{resourceType: resourceUIDs},
 		}, nil
-	} else if resourceType == api.ResourceKindNode {
+	} else if resourceType == types.ResourceKindNode {
 		return sidecarSelector{
-			TargetResourceType: api.ResourceKindNode,
+			TargetResourceType: types.ResourceKindNode,
 			Path:               `nodes/`,
 			Resources:          resourceNames,
 			Label:              metricapi.Label{resourceType: resourceUIDs},
@@ -129,7 +131,7 @@ func podListToNameList(podList []v1.Pod) (result []string) {
 	return
 }
 
-func podListToUIDList(podList []v1.Pod) (result []types.UID) {
+func podListToUIDList(podList []v1.Pod) (result []apimachinery.UID) {
 	for _, pod := range podList {
 		result = append(result, pod.UID)
 	}

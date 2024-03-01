@@ -18,8 +18,8 @@ import (
 	"log"
 	"sort"
 
-	"k8s.io/dashboard/api/pkg/errors"
 	metricapi "k8s.io/dashboard/api/pkg/integration/metric/api"
+	"k8s.io/dashboard/errors"
 )
 
 // GenericDataCell describes the interface of the data cell that contains all the necessary methods needed to perform

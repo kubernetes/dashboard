@@ -16,9 +16,10 @@ LICENSE_EYE_BINARY := $(shell which license-eye)
 AIR_BINARY := $(shell which air)
 GOLANGCI_LINT_BINARY := $(shell which golangci-lint)
 CLIENT_GEN_BINARY := $(shell which client-gen)
+KIND_BINARY := $(shell which kind)
 
 .PHONY: install
-install: ensure-node ensure-yarn ensure-go install-license-eye install-air install-golangci-lint install-client-gen
+install: ensure-node ensure-yarn ensure-go install-license-eye install-air install-golangci-lint install-client-gen install-kind
 
 .PHONY: ensure-node
 ensure-node:
@@ -98,4 +99,13 @@ ifndef CLIENT_GEN_BINARY
 	@go install k8s.io/code-generator/cmd/client-gen
 else
 	@echo "[tools] client-gen already exists"
+endif
+
+.PHONY: install-kind
+install-kind:
+ifndef KIND_BINARY
+	@echo "[tools] downloading kind..."
+	@go install sigs.k8s.io/kind
+else
+	@echo "[tools] kind already exists"
 endif

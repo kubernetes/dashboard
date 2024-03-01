@@ -23,21 +23,22 @@ import (
 	batch "k8s.io/api/batch/v1"
 	v1 "k8s.io/api/core/v1"
 	meta "k8s.io/apimachinery/pkg/apis/meta/v1"
-	"k8s.io/apimachinery/pkg/types"
+	apimachinery "k8s.io/apimachinery/pkg/types"
 	client "k8s.io/client-go/kubernetes"
-	"k8s.io/dashboard/api/pkg/api"
+
 	"k8s.io/dashboard/api/pkg/resource/common"
 	"k8s.io/dashboard/api/pkg/resource/event"
+	"k8s.io/dashboard/types"
 )
 
 // ResourceOwner is an structure representing resource owner, it may be Replication Controller,
 // Daemon Set, Job etc.
 type ResourceOwner struct {
-	ObjectMeta          api.ObjectMeta `json:"objectMeta"`
-	TypeMeta            api.TypeMeta   `json:"typeMeta"`
-	Pods                common.PodInfo `json:"pods"`
-	ContainerImages     []string       `json:"containerImages"`
-	InitContainerImages []string       `json:"initContainerImages"`
+	ObjectMeta          types.ObjectMeta `json:"objectMeta"`
+	TypeMeta            types.TypeMeta   `json:"typeMeta"`
+	Pods                common.PodInfo   `json:"pods"`
+	ContainerImages     []string         `json:"containerImages"`
+	InitContainerImages []string         `json:"initContainerImages"`
 }
 
 // LogSources is a structure that represents all log files (all combinations of pods and container)
@@ -53,7 +54,7 @@ type LogSources struct {
 // provide more detailed set of functions.
 type ResourceController interface {
 	// UID returns UID of controlled resource.
-	UID() types.UID
+	UID() apimachinery.UID
 	// Get is a method, that returns ResourceOwner object.
 	Get(allPods []v1.Pod, allEvents []v1.Event) ResourceOwner
 	// Returns all log sources of controlled resource (e.g. a list of containers and pods for a replica set).
@@ -65,37 +66,37 @@ type ResourceController interface {
 func NewResourceController(ref meta.OwnerReference, namespace string, client client.Interface) (
 	ResourceController, error) {
 	switch strings.ToLower(ref.Kind) {
-	case api.ResourceKindJob:
+	case types.ResourceKindJob:
 		job, err := client.BatchV1().Jobs(namespace).Get(context.TODO(), ref.Name, meta.GetOptions{})
 		if err != nil {
 			return nil, err
 		}
 		return JobController(*job), nil
-	case api.ResourceKindPod:
+	case types.ResourceKindPod:
 		pod, err := client.CoreV1().Pods(namespace).Get(context.TODO(), ref.Name, meta.GetOptions{})
 		if err != nil {
 			return nil, err
 		}
 		return PodController(*pod), nil
-	case api.ResourceKindReplicaSet:
+	case types.ResourceKindReplicaSet:
 		rs, err := client.AppsV1().ReplicaSets(namespace).Get(context.TODO(), ref.Name, meta.GetOptions{})
 		if err != nil {
 			return nil, err
 		}
 		return ReplicaSetController(*rs), nil
-	case api.ResourceKindReplicationController:
+	case types.ResourceKindReplicationController:
 		rc, err := client.CoreV1().ReplicationControllers(namespace).Get(context.TODO(), ref.Name, meta.GetOptions{})
 		if err != nil {
 			return nil, err
 		}
 		return ReplicationControllerController(*rc), nil
-	case api.ResourceKindDaemonSet:
+	case types.ResourceKindDaemonSet:
 		ds, err := client.AppsV1().DaemonSets(namespace).Get(context.TODO(), ref.Name, meta.GetOptions{})
 		if err != nil {
 			return nil, err
 		}
 		return DaemonSetController(*ds), nil
-	case api.ResourceKindStatefulSet:
+	case types.ResourceKindStatefulSet:
 		ss, err := client.AppsV1().StatefulSets(namespace).Get(context.TODO(), ref.Name, meta.GetOptions{})
 		if err != nil {
 			return nil, err
@@ -117,8 +118,8 @@ func (self JobController) Get(allPods []v1.Pod, allEvents []v1.Event) ResourceOw
 	podInfo.Warnings = event.GetPodsEventWarnings(allEvents, matchingPods)
 
 	return ResourceOwner{
-		TypeMeta:            api.NewTypeMeta(api.ResourceKindJob),
-		ObjectMeta:          api.NewObjectMeta(self.ObjectMeta),
+		TypeMeta:            types.NewTypeMeta(types.ResourceKindJob),
+		ObjectMeta:          types.NewObjectMeta(self.ObjectMeta),
 		Pods:                podInfo,
 		ContainerImages:     common.GetContainerImages(&self.Spec.Template.Spec),
 		InitContainerImages: common.GetInitContainerImages(&self.Spec.Template.Spec),
@@ -126,7 +127,7 @@ func (self JobController) Get(allPods []v1.Pod, allEvents []v1.Event) ResourceOw
 }
 
 // UID is an implementation of UID method from ResourceController interface.
-func (self JobController) UID() types.UID {
+func (self JobController) UID() apimachinery.UID {
 	return batch.Job(self).UID
 }
 
@@ -149,8 +150,8 @@ func (self PodController) Get(allPods []v1.Pod, allEvents []v1.Event) ResourceOw
 	podInfo.Warnings = event.GetPodsEventWarnings(allEvents, matchingPods)
 
 	return ResourceOwner{
-		TypeMeta:            api.NewTypeMeta(api.ResourceKindPod),
-		ObjectMeta:          api.NewObjectMeta(self.ObjectMeta),
+		TypeMeta:            types.NewTypeMeta(types.ResourceKindPod),
+		ObjectMeta:          types.NewObjectMeta(self.ObjectMeta),
 		Pods:                podInfo,
 		ContainerImages:     common.GetNonduplicateContainerImages(matchingPods),
 		InitContainerImages: common.GetNonduplicateInitContainerImages(matchingPods),
@@ -158,7 +159,7 @@ func (self PodController) Get(allPods []v1.Pod, allEvents []v1.Event) ResourceOw
 }
 
 // UID is an implementation of UID method from ResourceController interface.
-func (self PodController) UID() types.UID {
+func (self PodController) UID() apimachinery.UID {
 	return v1.Pod(self).UID
 }
 
@@ -183,8 +184,8 @@ func (self ReplicaSetController) Get(allPods []v1.Pod, allEvents []v1.Event) Res
 	podInfo.Warnings = event.GetPodsEventWarnings(allEvents, matchingPods)
 
 	return ResourceOwner{
-		TypeMeta:            api.NewTypeMeta(api.ResourceKindReplicaSet),
-		ObjectMeta:          api.NewObjectMeta(self.ObjectMeta),
+		TypeMeta:            types.NewTypeMeta(types.ResourceKindReplicaSet),
+		ObjectMeta:          types.NewObjectMeta(self.ObjectMeta),
 		Pods:                podInfo,
 		ContainerImages:     common.GetContainerImages(&self.Spec.Template.Spec),
 		InitContainerImages: common.GetInitContainerImages(&self.Spec.Template.Spec),
@@ -192,7 +193,7 @@ func (self ReplicaSetController) Get(allPods []v1.Pod, allEvents []v1.Event) Res
 }
 
 // UID is an implementation of UID method from ResourceController interface.
-func (self ReplicaSetController) UID() types.UID {
+func (self ReplicaSetController) UID() apimachinery.UID {
 	return apps.ReplicaSet(self).UID
 }
 
@@ -218,8 +219,8 @@ func (self ReplicationControllerController) Get(allPods []v1.Pod,
 	podInfo.Warnings = event.GetPodsEventWarnings(allEvents, matchingPods)
 
 	return ResourceOwner{
-		TypeMeta:            api.NewTypeMeta(api.ResourceKindReplicationController),
-		ObjectMeta:          api.NewObjectMeta(self.ObjectMeta),
+		TypeMeta:            types.NewTypeMeta(types.ResourceKindReplicationController),
+		ObjectMeta:          types.NewObjectMeta(self.ObjectMeta),
 		Pods:                podInfo,
 		ContainerImages:     common.GetContainerImages(&self.Spec.Template.Spec),
 		InitContainerImages: common.GetInitContainerImages(&self.Spec.Template.Spec),
@@ -227,7 +228,7 @@ func (self ReplicationControllerController) Get(allPods []v1.Pod,
 }
 
 // UID is an implementation of UID method from ResourceController interface.
-func (self ReplicationControllerController) UID() types.UID {
+func (self ReplicationControllerController) UID() apimachinery.UID {
 	return v1.ReplicationController(self).UID
 }
 
@@ -253,8 +254,8 @@ func (self DaemonSetController) Get(allPods []v1.Pod, allEvents []v1.Event) Reso
 	podInfo.Warnings = event.GetPodsEventWarnings(allEvents, matchingPods)
 
 	return ResourceOwner{
-		TypeMeta:            api.NewTypeMeta(api.ResourceKindDaemonSet),
-		ObjectMeta:          api.NewObjectMeta(self.ObjectMeta),
+		TypeMeta:            types.NewTypeMeta(types.ResourceKindDaemonSet),
+		ObjectMeta:          types.NewObjectMeta(self.ObjectMeta),
 		Pods:                podInfo,
 		ContainerImages:     common.GetContainerImages(&self.Spec.Template.Spec),
 		InitContainerImages: common.GetInitContainerImages(&self.Spec.Template.Spec),
@@ -262,7 +263,7 @@ func (self DaemonSetController) Get(allPods []v1.Pod, allEvents []v1.Event) Reso
 }
 
 // UID is an implementation of UID method from ResourceController interface.
-func (self DaemonSetController) UID() types.UID {
+func (self DaemonSetController) UID() apimachinery.UID {
 	return apps.DaemonSet(self).UID
 }
 
@@ -287,8 +288,8 @@ func (self StatefulSetController) Get(allPods []v1.Pod, allEvents []v1.Event) Re
 	podInfo.Warnings = event.GetPodsEventWarnings(allEvents, matchingPods)
 
 	return ResourceOwner{
-		TypeMeta:            api.NewTypeMeta(api.ResourceKindStatefulSet),
-		ObjectMeta:          api.NewObjectMeta(self.ObjectMeta),
+		TypeMeta:            types.NewTypeMeta(types.ResourceKindStatefulSet),
+		ObjectMeta:          types.NewObjectMeta(self.ObjectMeta),
 		Pods:                podInfo,
 		ContainerImages:     common.GetContainerImages(&self.Spec.Template.Spec),
 		InitContainerImages: common.GetInitContainerImages(&self.Spec.Template.Spec),
@@ -296,7 +297,7 @@ func (self StatefulSetController) Get(allPods []v1.Pod, allEvents []v1.Event) Re
 }
 
 // UID is an implementation of UID method from ResourceController interface.
-func (self StatefulSetController) UID() types.UID {
+func (self StatefulSetController) UID() apimachinery.UID {
 	return apps.StatefulSet(self).UID
 }
 

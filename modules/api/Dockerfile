@@ -12,25 +12,62 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-FROM ubuntu:20.04 as builder
+FROM alpine:3.19 as user
 
-# Create a nonroot user for final image
-RUN useradd -u 10001 nonroot
+ENV USER=nonroot
+ENV UID=10001
 
-# Scratch can be used as the base image because the backend is compiled to include all
-# its dependencies.
-FROM scratch as final
+# Create nonroot user.
+RUN adduser \
+    --disabled-password \
+    --gecos "" \
+    --home "/nonexistent" \
+    --shell "/sbin/nologin" \
+    --no-create-home \
+    --uid "${UID}" \
+    "${USER}"
+
+FROM golang:1.22-alpine3.19 as builder
+
 ARG TARGETARCH
 ARG TARGETOS
+ARG VERSION
 
-# Add all files from current working directory to the root of the image, i.e., copy dist directory
-# layout to the root directory.
-ADD .dist/api/$TARGETOS/$TARGETARCH /
+WORKDIR /workspace
 
-# Copy nonroot user
-COPY --from=builder /etc/passwd /etc/passwd
-USER nonroot
+# Copy required local modules
+COPY /common/certificates /workspace/common/certificates
+COPY /common/client /workspace/common/client
+COPY /common/csrf /workspace/common/csrf
+COPY /common/errors /workspace/common/errors
+COPY /common/types /workspace/common/types
+COPY /common/helpers /workspace/common/helpers
+
+WORKDIR /workspace/api
+
+# Retrieve application dependencies.
+# This allows the container build to reuse cached dependencies.
+# Expecting to copy go.mod and if present go.sum.
+COPY api/go.* ./
+RUN go mod download
+
+COPY api/pkg ./pkg
+COPY api/main.go ./
+
+RUN echo ${VERSION}
+RUN CGO_ENABLED=0 GOOS=${TARGETOS} GOARCH=${TARGETARCH} go build -trimpath -ldflags="-s -w -X k8s.io/dashboard/api/pkg/environment.Version=${VERSION}" -o dashboard-api .
+
+# Scratch can be used as the base image because the binary is compiled to include all dependencies.
+FROM scratch as final
+
+COPY --from=builder /workspace/api/dashboard-api /dashboard-api
+
+# Import the user and group files from the builder.
+COPY --from=user /etc/passwd /etc/passwd
+COPY --from=user /etc/group /etc/group
+
+USER nonroot:nonroot
 
 # The port that the application listens on.
-EXPOSE 9000 9001
+EXPOSE 8000 8001
 ENTRYPOINT ["/dashboard-api", "--insecure-bind-address=0.0.0.0", "--bind-address=0.0.0.0"]

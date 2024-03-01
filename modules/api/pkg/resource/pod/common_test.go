@@ -20,8 +20,9 @@ import (
 
 	v1 "k8s.io/api/core/v1"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
-	"k8s.io/dashboard/api/pkg/api"
+
 	"k8s.io/dashboard/api/pkg/resource/common"
+	"k8s.io/dashboard/types"
 )
 
 // TestToPodPodStatusFailed tests the returned status for pods that have completed unsuccessfully.
@@ -39,7 +40,7 @@ func TestToPodPodStatusFailed(t *testing.T) {
 	}
 
 	expected := Pod{
-		TypeMeta: api.TypeMeta{Kind: api.ResourceKindPod},
+		TypeMeta: types.TypeMeta{Kind: types.ResourceKindPod},
 		Status:   string(v1.PodFailed),
 		Warnings: []common.Event{},
 	}
@@ -66,7 +67,7 @@ func TestToPodPodStatusSucceeded(t *testing.T) {
 	}
 
 	expected := Pod{
-		TypeMeta: api.TypeMeta{Kind: api.ResourceKindPod},
+		TypeMeta: types.TypeMeta{Kind: types.ResourceKindPod},
 		Status:   string(v1.PodSucceeded),
 		Warnings: []common.Event{},
 	}
@@ -97,7 +98,7 @@ func TestToPodPodStatusRunning(t *testing.T) {
 	}
 
 	expected := Pod{
-		TypeMeta: api.TypeMeta{Kind: api.ResourceKindPod},
+		TypeMeta: types.TypeMeta{Kind: types.ResourceKindPod},
 		Status:   string(v1.PodRunning),
 		Warnings: []common.Event{},
 	}
@@ -124,7 +125,7 @@ func TestToPodPodStatusPending(t *testing.T) {
 	}
 
 	expected := Pod{
-		TypeMeta: api.TypeMeta{Kind: api.ResourceKindPod},
+		TypeMeta: types.TypeMeta{Kind: types.ResourceKindPod},
 		Status:   string(v1.PodPending),
 		Warnings: []common.Event{},
 	}
@@ -161,7 +162,7 @@ func TestToPodContainerStates(t *testing.T) {
 	}
 
 	expected := Pod{
-		TypeMeta: api.TypeMeta{Kind: api.ResourceKindPod},
+		TypeMeta: types.TypeMeta{Kind: types.ResourceKindPod},
 		Status:   "Terminated",
 		Warnings: []common.Event{},
 	}
@@ -183,8 +184,7 @@ func TestToPod(t *testing.T) {
 		{
 			pod: &v1.Pod{}, metrics: &MetricsByPod{},
 			expected: Pod{
-				TypeMeta: api.TypeMeta{Kind: api.ResourceKindPod},
-				Status:   string(v1.PodUnknown),
+				TypeMeta: types.TypeMeta{Kind: types.ResourceKindPod},
 				Warnings: []common.Event{},
 			},
 		}, {
@@ -194,12 +194,11 @@ func TestToPod(t *testing.T) {
 				}},
 			metrics: &MetricsByPod{},
 			expected: Pod{
-				TypeMeta: api.TypeMeta{Kind: api.ResourceKindPod},
-				ObjectMeta: api.ObjectMeta{
+				TypeMeta: types.TypeMeta{Kind: types.ResourceKindPod},
+				ObjectMeta: types.ObjectMeta{
 					Name:      "test-pod",
 					Namespace: "test-namespace",
 				},
-				Status:   string(v1.PodUnknown),
 				Warnings: []common.Event{},
 			},
 		},

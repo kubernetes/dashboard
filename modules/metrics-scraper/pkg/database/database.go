@@ -19,8 +19,10 @@ import (
 	"fmt"
 	"time"
 
-	log "github.com/sirupsen/logrus"
+	"k8s.io/klog/v2"
 	"k8s.io/metrics/pkg/apis/metrics/v1beta1"
+
+	"k8s.io/dashboard/metrics-scraper/pkg/args"
 )
 
 /*
@@ -91,7 +93,7 @@ func UpdateDatabase(db *sql.DB, nodeMetrics *v1beta1.NodeMetricsList, podMetrics
 /*
 CullDatabase deletes rows from nodes and pods based on a time window.
 */
-func CullDatabase(db *sql.DB, window *time.Duration) error {
+func CullDatabase(db *sql.DB, window time.Duration) error {
 	tx, err := db.Begin()
 	if err != nil {
 		return err
@@ -111,7 +113,7 @@ func CullDatabase(db *sql.DB, window *time.Duration) error {
 	}
 
 	affected, _ := res.RowsAffected()
-	log.Debugf("Cleaning up nodes: %d rows removed", affected)
+	klog.V(args.LogLevelDebug).Infof("Cleaning up nodes: %d rows removed", affected)
 
 	podstmt, err := tx.Prepare("delete from pods where time <= datetime('now', ?);")
 	if err != nil {
@@ -125,7 +127,7 @@ func CullDatabase(db *sql.DB, window *time.Duration) error {
 	}
 
 	affected, _ = res.RowsAffected()
-	log.Debugf("Cleaning up pods: %d rows removed", affected)
+	klog.V(args.LogLevelDebug).Infof("Cleaning up pods: %d rows removed", affected)
 	err = tx.Commit()
 
 	if err != nil {

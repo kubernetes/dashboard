@@ -3,7 +3,6 @@
 ## [Common](common/README.md)
 
 * [FAQ](common/faq.md)
-* [Roadmap](common/roadmap.md)
 * [Dashboard arguments](common/arguments.md)
 
 ## [User Guide](user/README.md)
@@ -23,7 +22,6 @@
 * [Code conventions](developer/code-conventions.md)
 * [Text conventions](developer/text-conventions.md)
 * [Internationalization](developer/internationalization.md)
-* [Plugins](plugins/README.md)
 
 ----
 _Copyright 2019 [The Kubernetes Dashboard Authors](https://github.com/kubernetes/dashboard/graphs/contributors)_

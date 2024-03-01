@@ -21,8 +21,9 @@ import (
 	v1 "k8s.io/api/core/v1"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/client-go/kubernetes/fake"
-	"k8s.io/dashboard/api/pkg/api"
+
 	"k8s.io/dashboard/api/pkg/resource/dataselect"
+	"k8s.io/dashboard/types"
 )
 
 func TestGetPodPersistentVolumeClaims(t *testing.T) {
@@ -59,10 +60,10 @@ func TestGetPodPersistentVolumeClaims(t *testing.T) {
 				},
 			}},
 			expected: &PersistentVolumeClaimList{
-				ListMeta: api.ListMeta{TotalItems: 1},
+				ListMeta: types.ListMeta{TotalItems: 1},
 				Items: []PersistentVolumeClaim{{
-					TypeMeta: api.TypeMeta{Kind: api.ResourceKindPersistentVolumeClaim},
-					ObjectMeta: api.ObjectMeta{Name: "pvc-1", Namespace: "test-namespace",
+					TypeMeta: types.TypeMeta{Kind: types.ResourceKindPersistentVolumeClaim},
+					ObjectMeta: types.ObjectMeta{Name: "pvc-1", Namespace: "test-namespace",
 						Labels: map[string]string{"app": "test"}},
 				}},
 				Errors: []error{},

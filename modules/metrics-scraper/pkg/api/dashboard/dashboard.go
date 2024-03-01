@@ -18,14 +18,15 @@ import (
 	"database/sql"
 	"encoding/json"
 	"fmt"
+	"html"
 	"net/http"
 	"strconv"
 	"strings"
 	"time"
 
 	"github.com/gorilla/mux"
-	log "github.com/sirupsen/logrus"
 	"k8s.io/apimachinery/pkg/types"
+	"k8s.io/klog/v2"
 )
 
 // DashboardRouter defines the usable API routes
@@ -36,10 +37,10 @@ func DashboardRouter(r *mux.Router, db *sql.DB) {
 }
 
 func defaultHandler(w http.ResponseWriter, r *http.Request) {
-	msg := fmt.Sprintf("%v - URL: %s", time.Now(), r.URL)
+	msg := fmt.Sprintf("%v - URL: %s", time.Now(), html.EscapeString(r.URL.String()))
 	_, err := w.Write([]byte(msg))
 	if err != nil {
-		log.Errorf("Error cannot write response: %v", err)
+		klog.Errorf("Error cannot write response: %v", err)
 	}
 }
 
@@ -56,7 +57,7 @@ func nodeHandler(db *sql.DB) http.HandlerFunc {
 			w.WriteHeader(http.StatusInternalServerError)
 			_, err := w.Write([]byte(fmt.Sprintf("Node Metrics Error - %v", err.Error())))
 			if err != nil {
-				log.Errorf("Error cannot write response: %v", err)
+				klog.Errorf("Error cannot write response: %v", err)
 			}
 		}
 
@@ -66,13 +67,13 @@ func nodeHandler(db *sql.DB) http.HandlerFunc {
 			w.WriteHeader(http.StatusInternalServerError)
 			_, err := w.Write([]byte(fmt.Sprintf("JSON Error - %v", err.Error())))
 			if err != nil {
-				log.Errorf("Error cannot write response: %v", err)
+				klog.Errorf("Error cannot write response: %v", err)
 			}
 		}
 
 		_, err = w.Write(j)
 		if err != nil {
-			log.Errorf("Error cannot write response: %v", err)
+			klog.Errorf("Error cannot write response: %v", err)
 		}
 	}
 
@@ -92,7 +93,7 @@ func podHandler(db *sql.DB) http.HandlerFunc {
 			w.WriteHeader(http.StatusInternalServerError)
 			_, err := w.Write([]byte(fmt.Sprintf("Pod Metrics Error - %v", err.Error())))
 			if err != nil {
-				log.Errorf("Error cannot write response: %v", err)
+				klog.Errorf("Error cannot write response: %v", err)
 			}
 		}
 
@@ -102,13 +103,13 @@ func podHandler(db *sql.DB) http.HandlerFunc {
 			w.WriteHeader(http.StatusInternalServerError)
 			_, err := w.Write([]byte(fmt.Sprintf("JSON Error - %v", err.Error())))
 			if err != nil {
-				log.Errorf("Error cannot write response: %v", err)
+				klog.Errorf("Error cannot write response: %v", err)
 			}
 		}
 
 		_, err = w.Write(j)
 		if err != nil {
-			log.Errorf("Error cannot write response: %v", err)
+			klog.Errorf("Error cannot write response: %v", err)
 		}
 	}
 
@@ -168,7 +169,7 @@ Queries SQLite and returns a list of metrics.
 func getPodMetrics(db *sql.DB, metricName string, selector ResourceSelector) (SidecarMetricResultList, error) {
 	rows, err := getRows(db, "pods", metricName, selector)
 	if err != nil {
-		log.Errorf("Error getting pod metrics: %v", err)
+		klog.Errorf("Error getting pod metrics: %v", err)
 		return SidecarMetricResultList{}, err
 	}
 
@@ -240,7 +241,7 @@ func getNodeMetrics(db *sql.DB, metricName string, selector ResourceSelector) (S
 	rows, err := getRows(db, "nodes", metricName, selector)
 
 	if err != nil {
-		log.Errorf("Error getting node metrics: %v", err)
+		klog.Errorf("Error getting node metrics: %v", err)
 		return SidecarMetricResultList{}, err
 	}
 

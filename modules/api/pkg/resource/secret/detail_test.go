@@ -18,10 +18,10 @@ import (
 	"reflect"
 	"testing"
 
-	"k8s.io/dashboard/api/pkg/api"
-
 	v1 "k8s.io/api/core/v1"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+
+	"k8s.io/dashboard/types"
 )
 
 func TestGetSecretDetail(t *testing.T) {
@@ -38,10 +38,10 @@ func TestGetSecretDetail(t *testing.T) {
 			},
 			&SecretDetail{
 				Secret: Secret{
-					TypeMeta: api.TypeMeta{
+					TypeMeta: types.TypeMeta{
 						Kind: "secret",
 					},
-					ObjectMeta: api.ObjectMeta{
+					ObjectMeta: types.ObjectMeta{
 						Name: "foo",
 					},
 				},

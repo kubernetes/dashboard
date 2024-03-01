@@ -24,12 +24,12 @@ import (
 	"k8s.io/apimachinery/pkg/fields"
 	"k8s.io/apimachinery/pkg/labels"
 	k8sClient "k8s.io/client-go/kubernetes"
-	"k8s.io/dashboard/api/pkg/errors"
 	metricapi "k8s.io/dashboard/api/pkg/integration/metric/api"
 	"k8s.io/dashboard/api/pkg/resource/common"
 	"k8s.io/dashboard/api/pkg/resource/dataselect"
 	"k8s.io/dashboard/api/pkg/resource/event"
 	"k8s.io/dashboard/api/pkg/resource/pod"
+	"k8s.io/dashboard/errors"
 )
 
 // GetJobPods return list of pods targeting job.
@@ -43,7 +43,7 @@ func GetJobPods(client k8sClient.Interface, metricClient metricapi.MetricClient,
 	}
 
 	events, err := event.GetPodsEvents(client, namespace, pods)
-	nonCriticalErrors, criticalError := errors.HandleError(err)
+	nonCriticalErrors, criticalError := errors.ExtractErrors(err)
 	if criticalError != nil {
 		return pod.EmptyPodList, criticalError
 	}

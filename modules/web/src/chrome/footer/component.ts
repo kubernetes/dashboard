@@ -13,7 +13,6 @@
 // limitations under the License.
 
 import {Component, Inject} from '@angular/core';
-import {VersionInfo} from '@api/root.ui';
 
 import {AssetsService} from '@common/services/global/assets';
 import {ConfigService} from '@common/services/global/config';
@@ -24,14 +23,14 @@ import {ConfigService} from '@common/services/global/config';
   styleUrls: ['./style.scss'],
 })
 export class FooterComponent {
-  latestCopyrightYear: number;
-  versionInfo: VersionInfo;
+  copyrightYear: number;
+  userAgent: string;
 
   constructor(
     @Inject(AssetsService) public assets: AssetsService,
     config: ConfigService
   ) {
-    this.versionInfo = config.getVersionInfo();
-    this.latestCopyrightYear = new Date().getFullYear();
+    this.userAgent = config.getUserAgent();
+    this.copyrightYear = new Date().getFullYear();
   }
 }

@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {HttpClientTestingModule, HttpTestingController} from '@angular/common/http/testing';
+import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {CUSTOM_ELEMENTS_SCHEMA, InjectionToken} from '@angular/core';
 import {ComponentFixture, TestBed, waitForAsync} from '@angular/core/testing';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
@@ -20,14 +20,13 @@ import {MatButtonModule} from '@angular/material/button';
 import {MatRadioModule} from '@angular/material/radio';
 import {By} from '@angular/platform-browser';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
-import {ActivatedRoute, Router, convertToParamMap} from '@angular/router';
+import {ActivatedRoute, convertToParamMap, Router} from '@angular/router';
 import {RouterTestingModule} from '@angular/router/testing';
-import {EnabledAuthenticationModes, LoginSkippableResponse, LoginSpec} from '@api/root.api';
-import {IConfig, PluginMetadata} from '@api/root.ui';
+import {LoginSpec} from '@api/root.api';
+import {IConfig} from '@api/root.ui';
 import {K8SError, KdError} from '@common/errors/errors';
 import {AuthService} from '@common/services/global/authentication';
 import {HistoryService} from '@common/services/global/history';
-import {PluginsConfigService} from '@common/services/global/plugin';
 import {from, Observable, of, throwError} from 'rxjs';
 import {CONFIG_DI_TOKEN} from '../index.config';
 import {LoginComponent} from './component';
@@ -76,20 +75,6 @@ class MockRouter {
   navigate(): void {}
 }
 
-class MockPluginsConfigService {
-  static pluginsMetadata(): PluginMetadata[] {
-    return [];
-  }
-
-  static status(): number {
-    return 200;
-  }
-
-  init(): void {}
-
-  refreshConfig(): void {}
-}
-
 class MockHistoryService {
   router_: MockRouter;
 
@@ -101,9 +86,7 @@ class MockHistoryService {
 }
 
 describe('LoginComponent', () => {
-  let component: LoginComponent;
   let fixture: ComponentFixture<LoginComponent>;
-  let httpTestingController: HttpTestingController;
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
@@ -140,10 +123,6 @@ describe('LoginComponent', () => {
           useClass: MockRouter,
         },
         {
-          provide: PluginsConfigService,
-          useClass: MockPluginsConfigService,
-        },
-        {
           provide: CONFIG_DI_TOKEN,
           useValue: MOCK_CONFIG_DI_TOKEN,
         },
@@ -157,54 +136,11 @@ describe('LoginComponent', () => {
 
   beforeEach(() => {
     fixture = TestBed.createComponent(LoginComponent);
-    component = fixture.componentInstance;
-    httpTestingController = TestBed.inject(HttpTestingController);
-  });
-
-  describe('initialization', () => {
-    it('renders appropriate number of authentication mode mat-radio-buttons from api/v1/login/modes call', () => {
-      const mockEnabledAuthenticationModes: EnabledAuthenticationModes = {
-        modes: ['kubeconfig', 'basic', 'token', 'hard-mode', 'a-la-mode'],
-      };
-      fixture.detectChanges();
-      const req = httpTestingController.expectOne('api/v1/login/modes');
-      req.flush(mockEnabledAuthenticationModes);
-      fixture.detectChanges();
-      expect(fixture.debugElement.queryAll(By.css('mat-radio-button')).length).toEqual(6);
-    });
-
-    it('renders skip button if login is skippable', () => {
-      initializeForSkip();
-      expect(fixture.debugElement.query(By.css(queries.skipButton))).toBeTruthy();
-    });
-
-    it('does not render skip button if login is not skippable', () => {
-      const mockLoginSkippableResponse: LoginSkippableResponse = {
-        skippable: false,
-      };
-      fixture.detectChanges();
-      const req = httpTestingController.expectOne('api/v1/login/skippable');
-      req.flush(mockLoginSkippableResponse);
-      fixture.detectChanges();
-      expect(fixture.debugElement.query(By.css(queries.skipButton))).toBeFalsy();
-    });
   });
 
   describe('options', () => {
-    it('renders token inputs if selectedAuthenticationMode === token', async () => {
-      await setSelectedAuthenticationMode('token');
+    it('renders token inputs', async () => {
       expect(fixture.debugElement.query(By.css('#token'))).toBeTruthy();
-    });
-
-    it('renders user and password inputs if selectedAuthenticationMode === basic', async () => {
-      await setSelectedAuthenticationMode('basic');
-      expect(fixture.debugElement.query(By.css('#username'))).toBeTruthy();
-      expect(fixture.debugElement.query(By.css('#password'))).toBeTruthy();
-    });
-
-    it('renders kd-upload-file if selectedAuthenticationMode === kubeconfig', async () => {
-      await setSelectedAuthenticationMode('kubeconfig');
-      expect(fixture.debugElement.query(By.css('kd-upload-file'))).toBeTruthy();
     });
   });
 
@@ -214,12 +150,10 @@ describe('LoginComponent', () => {
       const loginSpy = jest.spyOn(TestBed.inject(AuthService), 'login');
       const goToPreviousStateSpy = jest.spyOn(TestBed.inject(HistoryService), 'goToPreviousState');
 
-      await setSelectedAuthenticationMode('token');
-
       // set inputs and fire change events to trigger onChange()
       const token = fixture.debugElement.query(By.css(queries.token)).nativeElement;
       token.value = loginToken;
-      token.dispatchEvent(new Event('change'));
+      token.dispatchEvent(new Event('keyup'));
 
       submit();
 
@@ -233,8 +167,6 @@ describe('LoginComponent', () => {
       const loginSpy = jest.spyOn(TestBed.inject(AuthService), 'login').mockReturnValue(throwError(err));
       const navigateSpy = jest.spyOn(TestBed.inject(Router), 'navigate');
 
-      await setSelectedAuthenticationMode('token');
-
       // set inputs and fire change events to trigger onChange()
       const token = fixture.debugElement.query(By.css(queries.token)).nativeElement;
       token.value = loginToken;
@@ -247,41 +179,6 @@ describe('LoginComponent', () => {
       expect(navigateSpy).not.toHaveBeenCalledWith(['overview']);
     });
   });
-
-  describe('skip', () => {
-    it('calls AuthService.skipLoginPage and redirects to overview', async () => {
-      initializeForSkip();
-      fixture.debugElement.query(By.css(queries.skipButton)).nativeElement.click();
-
-      // setups spies in services
-      const skipLoginPageSpy = jest.spyOn(TestBed.inject(AuthService), 'skipLoginPage');
-      const goToPreviousStateSpy = jest.spyOn(TestBed.inject(HistoryService), 'goToPreviousState');
-
-      await setSelectedAuthenticationMode('basic');
-
-      fixture.debugElement.query(By.css(queries.skipButton)).nativeElement.click();
-      fixture.detectChanges();
-
-      expect(skipLoginPageSpy).toHaveBeenCalledWith(true);
-      expect(goToPreviousStateSpy).toHaveBeenCalledWith('workloads');
-    });
-  });
-
-  const initializeForSkip = (): void => {
-    const mockLoginSkippableResponse: LoginSkippableResponse = {
-      skippable: true,
-    };
-    fixture.detectChanges();
-    const req = httpTestingController.expectOne('api/v1/login/skippable');
-    req.flush(mockLoginSkippableResponse);
-    fixture.detectChanges();
-  };
-
-  const setSelectedAuthenticationMode = (mode: 'basic' | 'token' | 'kubeconfig'): Promise<void> => {
-    (component.selectedAuthenticationMode as unknown) = mode;
-    fixture.detectChanges();
-    return fixture.whenStable();
-  };
 
   const submit = (): void => {
     fixture.debugElement.query(By.css(queries.submitButton)).nativeElement.click();

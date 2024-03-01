@@ -21,10 +21,10 @@ import (
 	apps "k8s.io/api/apps/v1"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	k8sClient "k8s.io/client-go/kubernetes"
-	"k8s.io/dashboard/api/pkg/errors"
 	metricapi "k8s.io/dashboard/api/pkg/integration/metric/api"
 	"k8s.io/dashboard/api/pkg/resource/common"
 	hpa "k8s.io/dashboard/api/pkg/resource/horizontalpodautoscaler"
+	"k8s.io/dashboard/errors"
 )
 
 // ReplicaSetDetail is a presentation layer view of Kubernetes Replica Set resource. This means
@@ -55,7 +55,7 @@ func GetReplicaSetDetail(client k8sClient.Interface, metricClient metricapi.Metr
 	}
 
 	podInfo, err := getReplicaSetPodInfo(client, rs)
-	nonCriticalErrors, criticalError := errors.HandleError(err)
+	nonCriticalErrors, criticalError := errors.ExtractErrors(err)
 	if criticalError != nil {
 		return nil, criticalError
 	}

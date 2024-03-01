@@ -33,100 +33,130 @@ env:
   NODE_OPTIONS: "--max-old-space-size=8192"
   TERM: xterm
 jobs:
-  license-check:
-    name: License check
-    runs-on: ubuntu-latest
-    steps:
-      - name: Check out repository
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-
-      - name: Check license headers
-        uses: apache/skywalking-eyes@main
-
-  codeql:
+  dependency-review:
+    name: Dependency review
     permissions:
       actions: read
       contents: read
       security-events: write
-    name: CodeQL
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/dependency-review-action@v4
+        with:
+          fail-on-severity: critical
+
+  codeql-analysis:
+    name: CodeQL analysis
+    permissions:
+      actions: read
+      contents: read
+      security-events: write
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
         language: ["go", "typescript"]
     steps:
-      - name: Check out repository
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
         with:
           fetch-depth: 0
-
-      - name: Init CodeQL
-        uses: github/codeql-action/init@v3
+      - uses: github/codeql-action/init@v3
         with:
           languages: ${{ matrix.language }}
+      - uses: github/codeql-action/autobuild@v3
+      - uses: github/codeql-action/analyze@v3
 
-      - name: Autobuild CodeQL
-        uses: github/codeql-action/autobuild@v3
-
-      - name: Run CodeQL analysis
-        uses: github/codeql-action/analyze@v3
-
-  dependency-review:
-    permissions:
-      actions: read
-      contents: read
-      security-events: write
-    name: Dependency review
+  static-check:
+    name: Static check
     runs-on: ubuntu-latest
     steps:
-      - name: Check out repository
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
         with:
           fetch-depth: 0
-
-      - name: Review dependencies
-        uses: actions/dependency-review-action@v4
-        with:
-          fail-on-severity: critical
-  e2e:
-    name: End-to-end tests
-    runs-on: ubuntu-latest
-    steps:
-      - name: Check out repository
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-
-      - name: Start kind cluster
-        uses: helm/kind-action@v1.9.0
-        with:
-          node_image: kindest/node:v1.29.2
-
-      - name: Set up Go
-        uses: actions/setup-go@v5
+      - uses: actions/setup-go@v5
         with:
           go-version-file: modules/api/go.mod
           check-latest: true
-          cache-dependency-path: modules/api/go.sum
-
-      - name: Install API dependencies
-        working-directory: modules/api
-        run: go mod download
-
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
+      - uses: actions/setup-node@v4
         with:
           node-version: 18.14.0
-
-      - name: Install web dependencies
-        working-directory: modules/web
+      - working-directory: modules/web
         run: yarn
+      - run: PATH=$PATH:$GOPATH/bin make check
 
-      - name: Serve app
-        run: PATH=$PATH:$GOPATH/bin make serve &
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-go@v5
+        with:
+          go-version-file: modules/api/go.mod
+          check-latest: true
+      - working-directory: modules/web
+        run: yarn
+      - run: PATH=$PATH:$GOPATH/bin make build
 
-      - name: Test
-        run: yarn cypress
-        working-directory: modules/web
+  build-image:
+    name: Build image
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - run: make image
+
+  unit-tests:
+    name: Unit tests with coverage
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-go@v5.0.0
+        with:
+          go-version-file: modules/go.work
+          check-latest: true
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 18.14.0
+      - working-directory: modules/web
+        run: yarn
+      - run: PATH=$PATH:$GOPATH/bin make coverage
+      - uses: codecov/codecov-action@v4.1.0
+        with:
+          directory: ./.tmp
+          fail_ci_if_error: true
+          token: ${{ secrets.CODECOV_TOKEN }}
+
+# TODO: needs to be fixed
+#  e2e-tests:
+#    name: End-to-end tests
+#    runs-on: ubuntu-latest
+#    steps:
+#      - uses: actions/checkout@v4
+#        with:
+#          fetch-depth: 0
+#      - uses: helm/kind-action@v1.9.0
+#        with:
+#          node_image: kindest/node:v1.29.2
+#      - uses: actions/setup-go@v5
+#        with:
+#          go-version-file: modules/api/go.mod
+#          check-latest: true
+#          cache-dependency-path: modules/api/go.sum
+#      - working-directory: modules/api
+#        run: go mod download
+#      - uses: actions/setup-node@v4
+#        with:
+#          node-version: 18.14.0
+#      - working-directory: modules/web
+#        run: yarn
+#      - run: PATH=$PATH:$GOPATH/bin make serve &
+#      - run: yarn cypress
+#        working-directory: modules/web

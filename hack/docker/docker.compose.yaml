@@ -13,58 +13,105 @@
 # limitations under the License.
 
 version: "3.8"
+
 services:
+  gateway:
+    container_name: kong-gateway
+    image: kong/kong-gateway:3.6
+    environment:
+      - "KONG_DATABASE=off"
+      - "KONG_PROXY_ACCESS_LOG=/dev/stdout"
+      - "KONG_DECLARATIVE_CONFIG=/kong/declarative/kong.yml"
+      - "KONG_ADMIN_ACCESS_LOG=/dev/stdout"
+      - "KONG_PROXY_ERROR_LOG=/dev/stderr"
+      - "KONG_ADMIN_ERROR_LOG=/dev/stderr"
+      - "KONG_DNS_ORDER=LAST,A,CNAME"
+    volumes:
+      - ${PWD}/hack/gateway/prod.kong.yml:/kong/declarative/kong.yml
+    ports:
+      - "8080:8000"
+      - "8443:8443"
+
+  auth:
+    container_name: dashboard-auth
+    build:
+      context: ../../modules
+      dockerfile: auth/Dockerfile
+      args:
+        VERSION: ${VERSION:?}
+    command:
+      - "--kubeconfig=${KUBECONFIG:?}"
+    volumes:
+      - ${KUBECONFIG:?}:${KUBECONFIG:?} # Required - local kubeconfig path resolves to $HOME/<user>/.kube/config
+    tmpfs:
+      - /tmp
+
+  api:
+    container_name: dashboard-api
+    build:
+      context: ../../modules
+      dockerfile: api/Dockerfile
+      args:
+        VERSION: ${VERSION:?}
+    command:
+      --kubeconfig=${KUBECONFIG:?}
+      --sidecar-host=${SIDECAR_HOST:?}
+    volumes:
+      - ${KUBECONFIG:?}:${KUBECONFIG:?} # Required - local kubeconfig path resolves to $HOME/<user>/.kube/config
+    tmpfs:
+      - /tmp
+
   web:
+    container_name: dashboard-web
     build:
       context: ../..
       dockerfile: modules/web/Dockerfile
       args:
-        - TARGETOS=${OS:?}
-        - TARGETARCH=${ARCH:?}
+        VERSION: ${VERSION:?}
     command:
-      --locale-config=/public/locale_conf.json
-      --auto-generate-certificates
-      --system-banner="${SYSTEM_BANNER:?}"
-      --system-banner-severity=${SYSTEM_BANNER_SEVERITY:?}
-    tmpfs:
-      - /tmp
-  api:
-    build:
-      context: ../..
-      dockerfile: modules/api/Dockerfile
-      args:
-        - TARGETOS=${OS:?}
-        - TARGETARCH=${ARCH:?}
-    command:
-      --kubeconfig=${KUBECONFIG:?}
-      --auto-generate-certificates
-      --enable-skip-login=${ENABLE_SKIP_LOGIN:?}
-      --sidecar-host=${SIDECAR_HOST:?}
-      --token-ttl=${TOKEN_TTL:?}
+      - "--kubeconfig=${KUBECONFIG:?}"
+      - "--locale-config=/public/locale_conf.json"
+      - "--system-banner=${SYSTEM_BANNER:?}"
+      - "--system-banner-severity=${SYSTEM_BANNER_SEVERITY:?}"
     volumes:
-      - ${KUBECONFIG:?}:${KUBECONFIG:?}
+      - ${KUBECONFIG:?}:${KUBECONFIG:?} # Required - local kubeconfig path resolves to $HOME/<user>/.kube/config
     tmpfs:
       - /tmp
-    ports:
-      - "9001:9001"
+
   scraper:
-    image: kubernetesui/metrics-scraper:v1.0.9
+    container_name: metrics-scraper
+    build:
+      context: ../../modules
+      dockerfile: metrics-scraper/Dockerfile
+      args:
+        VERSION: ${VERSION:?}
     command:
-      # TODO: move metrics args to some overridable env variables
       --kubeconfig=${KUBECONFIG:?}
       --metric-resolution=5s
       --metric-duration=10m
     volumes:
       - ${KUBECONFIG:?}:${KUBECONFIG:?}
+    shm_size: 1G
     tmpfs:
       - /tmp
-  gateway:
-    build:
-      context: ../..
-      dockerfile: hack/gateway/Dockerfile
-    ports:
-      - "4443:4443"
+
+  metrics-server:
+    container_name: metrics-server
+    image: registry.k8s.io/metrics-server/metrics-server:v0.7.0
+    command:
+      - "--cert-dir=/tmp"
+      - "--kubelet-preferred-address-types=InternalIP,ExternalIP,Hostname"
+      - "--metric-resolution=15s"
+      - "--kubelet-insecure-tls"
+      - "--authentication-kubeconfig=/.kube/config"
+      - "--authorization-kubeconfig=/.kube/config"
+      - "--kubeconfig=/.kube/config"
+    volumes:
+      - ${KUBECONFIG:?}:/.kube/config
+    tmpfs:
+      - /tmp
 
 networks:
   default:
-    name: kubernetes-dashboard
+    name: kind
+    external: true

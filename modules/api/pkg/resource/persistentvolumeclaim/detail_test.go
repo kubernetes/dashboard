@@ -20,7 +20,8 @@ import (
 
 	v1 "k8s.io/api/core/v1"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
-	"k8s.io/dashboard/api/pkg/api"
+
+	"k8s.io/dashboard/types"
 )
 
 func TestGetPersistentVolumeClaimDetail(t *testing.T) {
@@ -46,8 +47,8 @@ func TestGetPersistentVolumeClaimDetail(t *testing.T) {
 			},
 			&PersistentVolumeClaimDetail{
 				PersistentVolumeClaim: PersistentVolumeClaim{
-					ObjectMeta:  api.ObjectMeta{Name: "foo", Namespace: "bar"},
-					TypeMeta:    api.TypeMeta{Kind: "persistentvolumeclaim"},
+					ObjectMeta:  types.ObjectMeta{Name: "foo", Namespace: "bar"},
+					TypeMeta:    types.TypeMeta{Kind: "persistentvolumeclaim"},
 					Status:      string(v1.ClaimPending),
 					Volume:      "volume",
 					Capacity:    nil,

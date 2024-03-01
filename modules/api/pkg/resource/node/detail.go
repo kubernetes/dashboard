@@ -24,13 +24,13 @@ import (
 	"k8s.io/apimachinery/pkg/fields"
 	k8sClient "k8s.io/client-go/kubernetes"
 
-	"k8s.io/dashboard/api/pkg/api"
-	"k8s.io/dashboard/api/pkg/errors"
 	metricapi "k8s.io/dashboard/api/pkg/integration/metric/api"
 	"k8s.io/dashboard/api/pkg/resource/common"
 	"k8s.io/dashboard/api/pkg/resource/dataselect"
 	"k8s.io/dashboard/api/pkg/resource/event"
 	"k8s.io/dashboard/api/pkg/resource/pod"
+	"k8s.io/dashboard/errors"
+	"k8s.io/dashboard/types"
 )
 
 // NodeAllocatedResources describes node allocated resources.
@@ -140,7 +140,7 @@ func GetNodeDetail(client k8sClient.Interface, metricClient metricapi.MetricClie
 		metricapi.NoResourceCache, metricClient)
 
 	pods, err := getNodePods(client, *node)
-	nonCriticalErrors, criticalError := errors.HandleError(err)
+	nonCriticalErrors, criticalError := errors.ExtractErrors(err)
 	if criticalError != nil {
 		return nil, criticalError
 	}
@@ -303,13 +303,13 @@ func GetNodePods(client k8sClient.Interface, metricClient metricapi.MetricClient
 	}
 
 	pods, err := getNodePods(client, *node)
-	podNonCriticalErrors, criticalError := errors.HandleError(err)
+	podNonCriticalErrors, criticalError := errors.ExtractErrors(err)
 	if criticalError != nil {
 		return &podList, criticalError
 	}
 
 	events, err := event.GetPodsEvents(client, v1.NamespaceAll, pods.Items)
-	nonCriticalErrors, criticalError := errors.HandleError(err)
+	nonCriticalErrors, criticalError := errors.ExtractErrors(err)
 	if criticalError != nil {
 		return &podList, criticalError
 	}
@@ -337,8 +337,8 @@ func toNodeDetail(node v1.Node, pods *pod.PodList, eventList *common.EventList,
 	allocatedResources NodeAllocatedResources, metrics []metricapi.Metric, nonCriticalErrors []error) NodeDetail {
 	return NodeDetail{
 		Node: Node{
-			ObjectMeta:         api.NewObjectMeta(node.ObjectMeta),
-			TypeMeta:           api.NewTypeMeta(api.ResourceKindNode),
+			ObjectMeta:         types.NewObjectMeta(node.ObjectMeta),
+			TypeMeta:           types.NewTypeMeta(types.ResourceKindNode),
 			AllocatedResources: allocatedResources,
 		},
 		Phase:           node.Status.Phase,

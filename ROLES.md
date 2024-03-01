@@ -18,7 +18,10 @@ This document describes the set of roles individuals may have within the Kuberne
   <tr>
     <td>Administrator</td>
     <td>Takes care of repository settings, manages permissions and plugins.</td>
-    <td><a href="https://github.com/floreks">@floreks</a></td>
+    <td>
+      <a href="https://github.com/floreks">@floreks</a>
+      <a href="https://github.com/maciaszczykm">@maciaszczykm</a>
+    </td>
   </tr>
   
   <tr>

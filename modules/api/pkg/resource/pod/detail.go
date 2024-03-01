@@ -30,19 +30,19 @@ import (
 	"k8s.io/apimachinery/pkg/runtime"
 	"k8s.io/client-go/kubernetes"
 
-	"k8s.io/dashboard/api/pkg/api"
-	errorHandler "k8s.io/dashboard/api/pkg/errors"
 	metricapi "k8s.io/dashboard/api/pkg/integration/metric/api"
 	"k8s.io/dashboard/api/pkg/resource/common"
 	"k8s.io/dashboard/api/pkg/resource/controller"
 	"k8s.io/dashboard/api/pkg/resource/dataselect"
 	"k8s.io/dashboard/api/pkg/resource/persistentvolumeclaim"
+	"k8s.io/dashboard/errors"
+	"k8s.io/dashboard/types"
 )
 
 // PodDetail is a presentation layer view of Kubernetes Pod resource.
 type PodDetail struct {
-	ObjectMeta                api.ObjectMeta                                  `json:"objectMeta"`
-	TypeMeta                  api.TypeMeta                                    `json:"typeMeta"`
+	ObjectMeta                types.ObjectMeta                                `json:"objectMeta"`
+	TypeMeta                  types.TypeMeta                                  `json:"typeMeta"`
 	PodPhase                  string                                          `json:"podPhase"`
 	PodIP                     string                                          `json:"podIP"`
 	NodeName                  string                                          `json:"nodeName"`
@@ -145,7 +145,7 @@ func GetPodDetail(client kubernetes.Interface, metricClient metricapi.MetricClie
 	}
 
 	podController, err := getPodController(client, common.NewSameNamespaceQuery(namespace), pod)
-	nonCriticalErrors, criticalError := errorHandler.HandleError(err)
+	nonCriticalErrors, criticalError := errors.ExtractErrors(err)
 	if criticalError != nil {
 		return nil, criticalError
 	}
@@ -156,27 +156,27 @@ func GetPodDetail(client kubernetes.Interface, metricClient metricapi.MetricClie
 
 	configMapList := <-channels.ConfigMapList.List
 	err = <-channels.ConfigMapList.Error
-	nonCriticalErrors, criticalError = errorHandler.AppendError(err, nonCriticalErrors)
+	nonCriticalErrors, criticalError = errors.AppendError(err, nonCriticalErrors)
 	if criticalError != nil {
 		return nil, criticalError
 	}
 
 	secretList := <-channels.SecretList.List
 	err = <-channels.SecretList.Error
-	nonCriticalErrors, criticalError = errorHandler.AppendError(err, nonCriticalErrors)
+	nonCriticalErrors, criticalError = errors.AppendError(err, nonCriticalErrors)
 	if criticalError != nil {
 		return nil, criticalError
 	}
 
 	eventList, err := GetEventsForPod(client, dataselect.DefaultDataSelect, pod.Namespace, pod.Name)
-	nonCriticalErrors, criticalError = errorHandler.AppendError(err, nonCriticalErrors)
+	nonCriticalErrors, criticalError = errors.AppendError(err, nonCriticalErrors)
 	if criticalError != nil {
 		return nil, criticalError
 	}
 
 	persistentVolumeClaimList, err := persistentvolumeclaim.GetPodPersistentVolumeClaims(client,
 		namespace, name, dataselect.DefaultDataSelect)
-	nonCriticalErrors, criticalError = errorHandler.AppendError(err, nonCriticalErrors)
+	nonCriticalErrors, criticalError = errors.AppendError(err, nonCriticalErrors)
 	if criticalError != nil {
 		return nil, criticalError
 	}
@@ -283,8 +283,8 @@ func toPodDetail(pod *v1.Pod, metrics []metricapi.Metric, configMaps *v1.ConfigM
 	controller *controller.ResourceOwner, events *common.EventList,
 	persistentVolumeClaimList *persistentvolumeclaim.PersistentVolumeClaimList, nonCriticalErrors []error) PodDetail {
 	return PodDetail{
-		ObjectMeta:                api.NewObjectMeta(pod.ObjectMeta),
-		TypeMeta:                  api.NewTypeMeta(api.ResourceKindPod),
+		ObjectMeta:                types.NewObjectMeta(pod.ObjectMeta),
+		TypeMeta:                  types.NewTypeMeta(types.ResourceKindPod),
 		PodPhase:                  getPodStatus(*pod),
 		PodIP:                     pod.Status.PodIP,
 		RestartCount:              getRestartCount(*pod),

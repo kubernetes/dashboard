@@ -47,9 +47,9 @@ type inClusterSidecarClient struct {
 // Get creates request to given path.
 func (c inClusterSidecarClient) Get(path string) RequestInterface {
 	return c.client.Get().
-		Namespace(args.Holder.GetNamespace()).
+		Namespace(args.Namespace()).
 		Resource("services").
-		Name("kubernetes-dashboard-metrics-scraper").
+		Name(args.MetricsScraperServiceName()).
 		SubResource("proxy").
 		Suffix(path)
 }
@@ -58,9 +58,9 @@ func (c inClusterSidecarClient) Get(path string) RequestInterface {
 // Returns nil if connection to application can be established, error object otherwise.
 func (self inClusterSidecarClient) HealthCheck() error {
 	_, err := self.client.Get().
-		Namespace(args.Holder.GetNamespace()).
+		Namespace(args.Namespace()).
 		Resource("services").
-		Name("kubernetes-dashboard-metrics-scraper").
+		Name(args.MetricsScraperServiceName()).
 		SubResource("proxy").
 		Suffix("/healthz").
 		DoRaw(context.TODO())

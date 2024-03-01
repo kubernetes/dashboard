@@ -21,8 +21,9 @@ import (
 	storage "k8s.io/api/storage/v1"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/client-go/kubernetes/fake"
-	"k8s.io/dashboard/api/pkg/api"
+
 	"k8s.io/dashboard/api/pkg/resource/dataselect"
+	"k8s.io/dashboard/types"
 )
 
 func TestGetStorageClassList(t *testing.T) {
@@ -43,14 +44,14 @@ func TestGetStorageClassList(t *testing.T) {
 				}},
 			expectedActions: []string{"list"},
 			expected: &StorageClassList{
-				ListMeta: api.ListMeta{TotalItems: 1},
+				ListMeta: types.ListMeta{TotalItems: 1},
 				Items: []StorageClass{
 					{
-						ObjectMeta: api.ObjectMeta{
+						ObjectMeta: types.ObjectMeta{
 							Name:   "storage-1",
 							Labels: map[string]string{},
 						},
-						TypeMeta: api.TypeMeta{Kind: api.ResourceKindStorageClass},
+						TypeMeta: types.TypeMeta{Kind: types.ResourceKindStorageClass},
 					},
 				},
 				Errors: []error{},

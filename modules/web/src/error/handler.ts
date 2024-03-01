@@ -52,14 +52,15 @@ export class GlobalErrorHandler implements ErrorHandler {
 
   private handleHTTPError_(error: HttpErrorResponse): void {
     this.ngZone_.run(() => {
-      if (KdError.isError(error, ApiError.tokenExpired, ApiError.encryptionKeyChanged)) {
-        this.auth_.removeAuthCookies();
+      if (KdError.isError(error, ApiError.unauthorized)) {
+        this.auth_.removeTokenCookie();
         this.router_.navigate(['login'], {
           state: {error: AsKdError(error)} as StateError,
         });
         return;
       }
 
+      // TODO: Add error tooltip and push errors to notifications
       if (!this.router_.routerState.snapshot.url.includes('error')) {
         this.router_.navigate(['error'], {
           queryParamsHandling: 'preserve',

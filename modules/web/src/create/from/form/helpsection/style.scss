@@ -35,7 +35,9 @@
 @media (width <= 959px) {
   .kd-help-section ::ng-deep > {
     * {
-      &:first-child { max-width: 100%; }
+      &:first-child {
+        max-width: 100%;
+      }
     }
   }
 }

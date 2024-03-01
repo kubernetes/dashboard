@@ -17,11 +17,11 @@ package integration
 import (
 	"testing"
 
-	restful "github.com/emicklei/go-restful/v3"
+	"github.com/emicklei/go-restful/v3"
 )
 
 func TestIntegrationHandler_Install(t *testing.T) {
-	iHandler := NewIntegrationHandler(nil)
+	iHandler := NewHandler(nil)
 	ws := new(restful.WebService)
 	iHandler.Install(ws)
 

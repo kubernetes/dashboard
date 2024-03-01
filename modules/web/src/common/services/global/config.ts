@@ -15,9 +15,7 @@
 import {HttpClient} from '@angular/common/http';
 import {Injectable} from '@angular/core';
 import {AppConfig} from '@api/root.api';
-import {VersionInfo} from '@api/root.ui';
 import {Observable} from 'rxjs';
-import {version} from '@environments/version';
 
 @Injectable()
 export class ConfigService {
@@ -47,7 +45,11 @@ export class ConfigService {
     return new Date();
   }
 
-  getVersionInfo(): VersionInfo {
-    return version;
+  getUserAgent(): string {
+    return this.config_.userAgent;
+  }
+
+  getVersion(): string {
+    return this.config_.version;
   }
 }

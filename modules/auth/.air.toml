@@ -1,0 +1,44 @@
+# Copyright 2017 The Kubernetes Authors.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+# http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+
+root = "."
+tmp_dir = ".tmp"
+
+[build]
+  cmd = "go build -o .tmp/dashboard-auth ."
+  bin = ".tmp/dashboard-auth"
+  delay = 2000
+  exclude_unchanged = false
+  include_dir = ["pkg", "api", "../common"]
+  include_file = ["main.go"]
+  follow_symlink = false
+  full_bin = ""
+  include_ext = ["go"]
+  kill_delay = "1s"
+  log = "build-errors.log"
+  stop_on_error = true
+
+[color]
+  app = ""
+  build = "yellow"
+  main = "magenta"
+  runner = "green"
+  watcher = "cyan"
+
+[log]
+  time = false
+
+[misc]
+  clean_on_exit = true

@@ -14,9 +14,10 @@
 #
 extends:
   - stylelint-config-standard-scss
+  - stylelint-prettier/recommended
 plugins:
-  - stylelint-no-unsupported-browser-features
   - stylelint-order
+  - stylelint-prettier
 rules:
   alpha-value-notation: number
   no-descending-specificity:
@@ -33,8 +34,6 @@ rules:
     - at-rules
     - rules
   order/properties-alphabetical-order: true
-  plugin/no-unsupported-browser-features:
-    - true
-    - severity: warning
   scss/comment-no-empty:
+  scss/dollar-variable-colon-space-after:
   selector-pseudo-element-no-unknown:

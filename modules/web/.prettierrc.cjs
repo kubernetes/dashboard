@@ -15,7 +15,11 @@
  *
  */
 module.exports = {
-  ...require('gts/.prettierrc.json'),
+  bracketSpacing: false,
+  singleAttributePerLine: true,
+  singleQuote: true,
+  trailingComma: "es5",
+  arrowParens: "avoid",
   semi: true,
   printWidth: 120,
 }

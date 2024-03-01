@@ -19,14 +19,15 @@ import (
 
 	autoscaling "k8s.io/api/autoscaling/v1"
 	k8sClient "k8s.io/client-go/kubernetes"
-	"k8s.io/dashboard/api/pkg/api"
-	"k8s.io/dashboard/api/pkg/errors"
+
 	"k8s.io/dashboard/api/pkg/resource/common"
 	"k8s.io/dashboard/api/pkg/resource/dataselect"
+	"k8s.io/dashboard/errors"
+	"k8s.io/dashboard/types"
 )
 
 type HorizontalPodAutoscalerList struct {
-	ListMeta api.ListMeta `json:"listMeta"`
+	ListMeta types.ListMeta `json:"listMeta"`
 
 	// Unordered list of Horizontal Pod Autoscalers.
 	HorizontalPodAutoscalers []HorizontalPodAutoscaler `json:"horizontalpodautoscalers"`
@@ -37,13 +38,13 @@ type HorizontalPodAutoscalerList struct {
 
 // HorizontalPodAutoscaler (aka. Horizontal Pod Autoscaler)
 type HorizontalPodAutoscaler struct {
-	ObjectMeta                      api.ObjectMeta `json:"objectMeta"`
-	TypeMeta                        api.TypeMeta   `json:"typeMeta"`
-	ScaleTargetRef                  ScaleTargetRef `json:"scaleTargetRef"`
-	MinReplicas                     *int32         `json:"minReplicas"`
-	MaxReplicas                     int32          `json:"maxReplicas"`
-	CurrentCPUUtilizationPercentage *int32         `json:"currentCPUUtilizationPercentage"`
-	TargetCPUUtilizationPercentage  *int32         `json:"targetCPUUtilizationPercentage"`
+	ObjectMeta                      types.ObjectMeta `json:"objectMeta"`
+	TypeMeta                        types.TypeMeta   `json:"typeMeta"`
+	ScaleTargetRef                  ScaleTargetRef   `json:"scaleTargetRef"`
+	MinReplicas                     *int32           `json:"minReplicas"`
+	MaxReplicas                     int32            `json:"maxReplicas"`
+	CurrentCPUUtilizationPercentage *int32           `json:"currentCPUUtilizationPercentage"`
+	TargetCPUUtilizationPercentage  *int32           `json:"targetCPUUtilizationPercentage"`
 }
 
 func GetHorizontalPodAutoscalerList(client k8sClient.Interface, nsQuery *common.NamespaceQuery, dsQuery *dataselect.DataSelectQuery) (*HorizontalPodAutoscalerList, error) {
@@ -51,7 +52,7 @@ func GetHorizontalPodAutoscalerList(client k8sClient.Interface, nsQuery *common.
 	hpaList := <-channel.List
 	err := <-channel.Error
 
-	nonCriticalErrors, criticalError := errors.HandleError(err)
+	nonCriticalErrors, criticalError := errors.ExtractErrors(err)
 	if criticalError != nil {
 		return nil, criticalError
 	}
@@ -65,7 +66,7 @@ func GetHorizontalPodAutoscalerListForResource(client k8sClient.Interface, names
 	hpaList := <-channel.List
 	err := <-channel.Error
 
-	nonCriticalErrors, criticalError := errors.HandleError(err)
+	nonCriticalErrors, criticalError := errors.ExtractErrors(err)
 	if criticalError != nil {
 		return nil, criticalError
 	}
@@ -83,13 +84,13 @@ func GetHorizontalPodAutoscalerListForResource(client k8sClient.Interface, names
 func toHorizontalPodAutoscalerList(hpas []autoscaling.HorizontalPodAutoscaler, nonCriticalErrors []error, dsQuery *dataselect.DataSelectQuery) *HorizontalPodAutoscalerList {
 	hpaList := &HorizontalPodAutoscalerList{
 		HorizontalPodAutoscalers: make([]HorizontalPodAutoscaler, 0),
-		ListMeta:                 api.ListMeta{TotalItems: len(hpas)},
+		ListMeta:                 types.ListMeta{TotalItems: len(hpas)},
 		Errors:                   nonCriticalErrors,
 	}
 
 	hpaCells, filteredTotal := dataselect.GenericDataSelectWithFilter(toCells(hpas), dsQuery)
 	hpas = fromCells(hpaCells)
-	hpaList.ListMeta = api.ListMeta{TotalItems: filteredTotal}
+	hpaList.ListMeta = types.ListMeta{TotalItems: filteredTotal}
 
 	for _, hpa := range hpas {
 		horizontalPodAutoscaler := toHorizontalPodAutoScaler(&hpa)
@@ -100,8 +101,8 @@ func toHorizontalPodAutoscalerList(hpas []autoscaling.HorizontalPodAutoscaler, n
 
 func toHorizontalPodAutoScaler(hpa *autoscaling.HorizontalPodAutoscaler) HorizontalPodAutoscaler {
 	return HorizontalPodAutoscaler{
-		ObjectMeta: api.NewObjectMeta(hpa.ObjectMeta),
-		TypeMeta:   api.NewTypeMeta(api.ResourceKindHorizontalPodAutoscaler),
+		ObjectMeta: types.NewObjectMeta(hpa.ObjectMeta),
+		TypeMeta:   types.NewTypeMeta(types.ResourceKindHorizontalPodAutoscaler),
 		ScaleTargetRef: ScaleTargetRef{
 			Kind: hpa.Spec.ScaleTargetRef.Kind,
 			Name: hpa.Spec.ScaleTargetRef.Name,

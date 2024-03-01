@@ -86,7 +86,6 @@ import {NetworkPolicyListComponent} from './resourcelist/networkpolicy/component
 import {NodeListComponent} from './resourcelist/node/component';
 import {PersistentVolumeListComponent} from './resourcelist/persistentvolume/component';
 import {PersistentVolumeClaimListComponent} from './resourcelist/persistentvolumeclaim/component';
-import {PluginListComponent} from './resourcelist/plugin/component';
 import {PodListComponent} from './resourcelist/pod/component';
 import {ReplicaSetListComponent} from './resourcelist/replicaset/component';
 import {ReplicationControllerListComponent} from './resourcelist/replicationcontroller/component';
@@ -126,7 +125,6 @@ const components = [
   ClusterRoleListComponent,
   ClusterRoleBindingListComponent,
   ConfigMapListComponent,
-  PluginListComponent,
   ColumnComponent,
   ChipDialogComponent,
   ContainerCardComponent,

@@ -63,13 +63,14 @@ header:
     - ".vscode/**"
     - ".dist/**"
     - ".husky/**"
-    - "modules/api/pkg/plugin/client/clientset/**"
+    - "modules/api/.tmp/**"
     - "modules/web/.angular/**"
     - "modules/web/.yarn/**"
+    - "modules/web/dist/**"
     - "modules/web/src/coverage/**"
     - "LICENSE"
     - "OWNERS_ALIASES"
     - "SECURITY_CONTACTS"
-    - "charts/helm-chart/kubernetes-dashboard/templates/networking/post-install-ingress-issuer.yaml"
+    - "charts/kubernetes-dashboard/templates/networking/post-install-ingress-issuer.yaml"
   comment: on-failure
   license-location-threshold: 80

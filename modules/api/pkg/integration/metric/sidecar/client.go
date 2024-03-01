@@ -25,10 +25,11 @@ import (
 	"k8s.io/apimachinery/pkg/types"
 	"k8s.io/client-go/kubernetes"
 	"k8s.io/client-go/rest"
-	"k8s.io/dashboard/api/pkg/client"
+
 	integrationapi "k8s.io/dashboard/api/pkg/integration/api"
 	metricapi "k8s.io/dashboard/api/pkg/integration/metric/api"
 	"k8s.io/dashboard/api/pkg/integration/metric/common"
+	"k8s.io/dashboard/client"
 )
 
 // Sidecar client implements MetricClient and Integration interfaces.

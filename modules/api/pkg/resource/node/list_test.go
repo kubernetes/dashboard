@@ -21,9 +21,10 @@ import (
 	v1 "k8s.io/api/core/v1"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/client-go/kubernetes/fake"
-	"k8s.io/dashboard/api/pkg/api"
+
 	metricapi "k8s.io/dashboard/api/pkg/integration/metric/api"
 	"k8s.io/dashboard/api/pkg/resource/dataselect"
+	"k8s.io/dashboard/types"
 )
 
 func TestGetNodeList(t *testing.T) {
@@ -39,14 +40,14 @@ func TestGetNodeList(t *testing.T) {
 				},
 			},
 			&NodeList{
-				ListMeta: api.ListMeta{
+				ListMeta: types.ListMeta{
 					TotalItems: 1,
 				},
 				Errors:            []error{},
 				CumulativeMetrics: make([]metricapi.Metric, 0),
 				Nodes: []Node{{
-					ObjectMeta: api.ObjectMeta{Name: "test-node"},
-					TypeMeta:   api.TypeMeta{Kind: api.ResourceKindNode},
+					ObjectMeta: types.ObjectMeta{Name: "test-node"},
+					TypeMeta:   types.TypeMeta{Kind: types.ResourceKindNode},
 					Ready:      "Unknown",
 					AllocatedResources: NodeAllocatedResources{
 						CPURequests:            0,

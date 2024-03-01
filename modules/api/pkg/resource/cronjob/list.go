@@ -21,16 +21,16 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	client "k8s.io/client-go/kubernetes"
 
-	"k8s.io/dashboard/api/pkg/api"
-	"k8s.io/dashboard/api/pkg/errors"
 	metricapi "k8s.io/dashboard/api/pkg/integration/metric/api"
 	"k8s.io/dashboard/api/pkg/resource/common"
 	"k8s.io/dashboard/api/pkg/resource/dataselect"
+	"k8s.io/dashboard/errors"
+	"k8s.io/dashboard/types"
 )
 
 // CronJobList contains a list of CronJobs in the cluster.
 type CronJobList struct {
-	ListMeta          api.ListMeta       `json:"listMeta"`
+	ListMeta          types.ListMeta     `json:"listMeta"`
 	CumulativeMetrics []metricapi.Metric `json:"cumulativeMetrics"`
 	Items             []CronJob          `json:"items"`
 
@@ -43,12 +43,12 @@ type CronJobList struct {
 
 // CronJob is a presentation layer view of Kubernetes Cron Job resource.
 type CronJob struct {
-	ObjectMeta   api.ObjectMeta `json:"objectMeta"`
-	TypeMeta     api.TypeMeta   `json:"typeMeta"`
-	Schedule     string         `json:"schedule"`
-	Suspend      *bool          `json:"suspend"`
-	Active       int            `json:"active"`
-	LastSchedule *metav1.Time   `json:"lastSchedule"`
+	ObjectMeta   types.ObjectMeta `json:"objectMeta"`
+	TypeMeta     types.TypeMeta   `json:"typeMeta"`
+	Schedule     string           `json:"schedule"`
+	Suspend      *bool            `json:"suspend"`
+	Active       int              `json:"active"`
+	LastSchedule *metav1.Time     `json:"lastSchedule"`
 
 	// ContainerImages holds a list of the CronJob images.
 	ContainerImages []string `json:"containerImages"`
@@ -73,7 +73,7 @@ func GetCronJobListFromChannels(channels *common.ResourceChannels, dsQuery *data
 
 	cronJobs := <-channels.CronJobList.List
 	err := <-channels.CronJobList.Error
-	nonCriticalErrors, criticalError := errors.HandleError(err)
+	nonCriticalErrors, criticalError := errors.ExtractErrors(err)
 	if criticalError != nil {
 		return nil, criticalError
 	}
@@ -88,7 +88,7 @@ func toCronJobList(cronJobs []batch.CronJob, nonCriticalErrors []error, dsQuery 
 
 	list := &CronJobList{
 		Items:    make([]CronJob, 0),
-		ListMeta: api.ListMeta{TotalItems: len(cronJobs)},
+		ListMeta: types.ListMeta{TotalItems: len(cronJobs)},
 		Errors:   nonCriticalErrors,
 	}
 
@@ -97,7 +97,7 @@ func toCronJobList(cronJobs []batch.CronJob, nonCriticalErrors []error, dsQuery 
 	cronJobCells, metricPromises, filteredTotal := dataselect.GenericDataSelectWithFilterAndMetrics(ToCells(cronJobs),
 		dsQuery, cachedResources, metricClient)
 	cronJobs = FromCells(cronJobCells)
-	list.ListMeta = api.ListMeta{TotalItems: filteredTotal}
+	list.ListMeta = types.ListMeta{TotalItems: filteredTotal}
 
 	for _, cronJob := range cronJobs {
 		list.Items = append(list.Items, toCronJob(&cronJob))
@@ -115,8 +115,8 @@ func toCronJobList(cronJobs []batch.CronJob, nonCriticalErrors []error, dsQuery 
 
 func toCronJob(cj *batch.CronJob) CronJob {
 	return CronJob{
-		ObjectMeta:      api.NewObjectMeta(cj.ObjectMeta),
-		TypeMeta:        api.NewTypeMeta(api.ResourceKindCronJob),
+		ObjectMeta:      types.NewObjectMeta(cj.ObjectMeta),
+		TypeMeta:        types.NewTypeMeta(types.ResourceKindCronJob),
 		Schedule:        cj.Spec.Schedule,
 		Suspend:         cj.Spec.Suspend,
 		Active:          len(cj.Status.Active),

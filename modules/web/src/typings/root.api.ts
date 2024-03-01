@@ -731,9 +731,7 @@ export interface ProtocolValiditySpec {
 
 // Auth related types
 export interface AuthResponse {
-  name?: string;
-  jweToken: string;
-  errors: K8sError[];
+  token: string;
 }
 
 export interface CanIResponse {
@@ -787,6 +785,8 @@ export interface Theme {
 
 export interface AppConfig {
   serverTime: number;
+  userAgent: string;
+  version: string;
 }
 
 export interface ErrStatus {
@@ -1245,14 +1245,6 @@ export interface LoginSpec {
   kubeConfig: string;
 }
 
-export interface LoginStatus {
-  tokenPresent: boolean;
-  headerPresent: boolean;
-  httpsMode: boolean;
-  impersonationPresent?: boolean;
-  impersonatedUser?: string;
-}
-
 export type AuthenticationMode = string;
 
 export interface EnabledAuthenticationModes {
@@ -1302,14 +1294,4 @@ export interface SJSCloseEvent extends SockJSSimpleEvent {
 
 export interface SJSMessageEvent extends SockJSSimpleEvent {
   data: string;
-}
-
-export interface Plugin extends Resource {
-  name: string;
-  path: string;
-  dependencies: string[];
-}
-
-export interface PluginList extends ResourceList {
-  items?: Plugin[];
 }

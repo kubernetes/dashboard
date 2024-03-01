@@ -58,13 +58,10 @@ const supportedLanguages: LanguageConfig[] = [
 export const CONFIG_DI_TOKEN = new InjectionToken<IConfig>('kd.config');
 
 export const CONFIG: IConfig = {
-  authTokenCookieName: 'jweToken',
-  authTokenHeaderName: 'jweToken',
-  usernameCookieName: 'username',
+  authTokenCookieName: 'token',
+  authTokenHeaderName: 'Authorization',
   csrfHeaderName: 'X-CSRF-TOKEN',
-  skipLoginPageCookieName: 'skipLoginPage',
   defaultNamespace: 'default',
-  authModeCookieName: 'authMode',
   supportedLanguages: supportedLanguages,
   defaultLanguage: 'en',
   languageCookieName: 'lang',

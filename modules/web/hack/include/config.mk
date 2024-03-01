@@ -1,11 +1,11 @@
 ### Application details
 APP_NAME := $(PROJECT_NAME)-web
-APP_VERSION := v1.0.0
 PACKAGE_NAME := k8s.io/$(PROJECT_NAME)/web
 
 ### Dirs and paths
-WEB_DIST_DIRECTORY = $(DIST_DIRECTORY)/web
-WEB_DIST_ANGULAR_DIRECTORY = $(WEB_DIST_DIRECTORY)/angular
+WEB_DIST_DIRECTORY = $(WEB_DIRECTORY)/.dist
+WEB_DIST_ANGULAR_DIRECTORY = $(WEB_DIST_DIRECTORY)/public
+COVERAGE_FILE = $(TMP_DIRECTORY)/$(APP_NAME).coverage.out
 
 # Angular Serve Arguments
 PROXY_CONFIG ?= proxy.conf.json

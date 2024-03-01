@@ -22,9 +22,9 @@ import (
 	v1 "k8s.io/api/core/v1"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	client "k8s.io/client-go/kubernetes"
-	"k8s.io/dashboard/api/pkg/errors"
 	"k8s.io/dashboard/api/pkg/resource/common"
 	"k8s.io/dashboard/api/pkg/resource/dataselect"
+	"k8s.io/dashboard/errors"
 )
 
 // GetStorageClassPersistentVolumes gets persistentvolumes that are associated with this storageclass.
@@ -45,7 +45,7 @@ func GetStorageClassPersistentVolumes(client client.Interface, storageClassName 
 	persistentVolumeList := <-channels.PersistentVolumeList.List
 
 	err = <-channels.PersistentVolumeList.Error
-	nonCriticalErrors, criticalError := errors.HandleError(err)
+	nonCriticalErrors, criticalError := errors.ExtractErrors(err)
 	if criticalError != nil {
 		return nil, criticalError
 	}

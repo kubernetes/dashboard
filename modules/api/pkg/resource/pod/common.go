@@ -19,11 +19,11 @@ import (
 
 	v1 "k8s.io/api/core/v1"
 
-	"k8s.io/dashboard/api/pkg/api"
 	metricapi "k8s.io/dashboard/api/pkg/integration/metric/api"
 	"k8s.io/dashboard/api/pkg/resource/common"
 	"k8s.io/dashboard/api/pkg/resource/dataselect"
 	"k8s.io/dashboard/api/pkg/resource/event"
+	"k8s.io/dashboard/types"
 )
 
 // getRestartCount return the restart count of given pod (total number of its containers restarts).
@@ -107,14 +107,8 @@ func getPodStatus(pod v1.Pod) string {
 		}
 	}
 
-	if pod.DeletionTimestamp != nil && pod.Status.Reason == "NodeLost" {
-		reason = string(v1.PodUnknown)
-	} else if pod.DeletionTimestamp != nil {
+	if pod.DeletionTimestamp != nil {
 		reason = "Terminating"
-	}
-
-	if len(reason) == 0 {
-		reason = string(v1.PodUnknown)
 	}
 
 	return reason
@@ -162,14 +156,11 @@ func getPodStatusPhase(pod v1.Pod, warnings []common.Event) v1.PodPhase {
 		return v1.PodFailed
 	}
 
-	if pod.DeletionTimestamp != nil && pod.Status.Reason == "NodeLost" {
-		return v1.PodUnknown
-	} else if pod.DeletionTimestamp != nil {
+	if pod.DeletionTimestamp != nil {
 		return "Terminating"
 	}
 
-	// pending
-	return v1.PodPending
+	return ""
 }
 
 // The code below allows to perform complex data section on []api.Pod
@@ -195,7 +186,7 @@ func (self PodCell) GetProperty(name dataselect.PropertyName) dataselect.Compara
 func (self PodCell) GetResourceSelector() *metricapi.ResourceSelector {
 	return &metricapi.ResourceSelector{
 		Namespace:    self.ObjectMeta.Namespace,
-		ResourceType: api.ResourceKindPod,
+		ResourceType: types.ResourceKindPod,
 		ResourceName: self.ObjectMeta.Name,
 		UID:          self.ObjectMeta.UID,
 	}
@@ -249,8 +240,6 @@ func getStatus(list *v1.PodList, events []v1.Event) common.ResourceStatus {
 			info.Running++
 		case v1.PodPending:
 			info.Pending++
-		case v1.PodUnknown:
-			info.Unknown++
 		case "Terminating":
 			info.Terminating++
 		}

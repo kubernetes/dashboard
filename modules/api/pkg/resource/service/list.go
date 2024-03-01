@@ -19,16 +19,17 @@ import (
 
 	v1 "k8s.io/api/core/v1"
 	client "k8s.io/client-go/kubernetes"
-	"k8s.io/dashboard/api/pkg/api"
-	"k8s.io/dashboard/api/pkg/errors"
+
 	"k8s.io/dashboard/api/pkg/resource/common"
 	"k8s.io/dashboard/api/pkg/resource/dataselect"
+	"k8s.io/dashboard/errors"
+	"k8s.io/dashboard/types"
 )
 
 // Service is a representation of a service.
 type Service struct {
-	ObjectMeta api.ObjectMeta `json:"objectMeta"`
-	TypeMeta   api.TypeMeta   `json:"typeMeta"`
+	ObjectMeta types.ObjectMeta `json:"objectMeta"`
+	TypeMeta   types.TypeMeta   `json:"typeMeta"`
 
 	// InternalEndpoint of all Kubernetes services that have the same label selector as connected Replication
 	// Controller. Endpoint is DNS name merged with ports.
@@ -51,7 +52,7 @@ type Service struct {
 
 // ServiceList contains a list of services in the cluster.
 type ServiceList struct {
-	ListMeta api.ListMeta `json:"listMeta"`
+	ListMeta types.ListMeta `json:"listMeta"`
 
 	// Unordered list of services.
 	Services []Service `json:"services"`
@@ -77,7 +78,7 @@ func GetServiceListFromChannels(channels *common.ResourceChannels,
 	dsQuery *dataselect.DataSelectQuery) (*ServiceList, error) {
 	services := <-channels.ServiceList.List
 	err := <-channels.ServiceList.Error
-	nonCriticalErrors, criticalError := errors.HandleError(err)
+	nonCriticalErrors, criticalError := errors.ExtractErrors(err)
 	if criticalError != nil {
 		return nil, criticalError
 	}
@@ -87,8 +88,8 @@ func GetServiceListFromChannels(channels *common.ResourceChannels,
 
 func toService(service *v1.Service) Service {
 	return Service{
-		ObjectMeta:        api.NewObjectMeta(service.ObjectMeta),
-		TypeMeta:          api.NewTypeMeta(api.ResourceKindService),
+		ObjectMeta:        types.NewObjectMeta(service.ObjectMeta),
+		TypeMeta:          types.NewTypeMeta(types.ResourceKindService),
 		InternalEndpoint:  common.GetInternalEndpoint(service.Name, service.Namespace, service.Spec.Ports),
 		ExternalEndpoints: common.GetExternalEndpoints(service),
 		Selector:          service.Spec.Selector,
@@ -101,13 +102,13 @@ func toService(service *v1.Service) Service {
 func CreateServiceList(services []v1.Service, nonCriticalErrors []error, dsQuery *dataselect.DataSelectQuery) *ServiceList {
 	serviceList := &ServiceList{
 		Services: make([]Service, 0),
-		ListMeta: api.ListMeta{TotalItems: len(services)},
+		ListMeta: types.ListMeta{TotalItems: len(services)},
 		Errors:   nonCriticalErrors,
 	}
 
 	serviceCells, filteredTotal := dataselect.GenericDataSelectWithFilter(toCells(services), dsQuery)
 	services = fromCells(serviceCells)
-	serviceList.ListMeta = api.ListMeta{TotalItems: filteredTotal}
+	serviceList.ListMeta = types.ListMeta{TotalItems: filteredTotal}
 
 	for _, service := range services {
 		serviceList.Services = append(serviceList.Services, toService(&service))

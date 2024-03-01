@@ -15,7 +15,7 @@
 package cronjob_test
 
 import (
-	"k8s.io/dashboard/api/pkg/errors"
+	"k8s.io/dashboard/errors"
 )
 
 var (

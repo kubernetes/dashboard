@@ -23,11 +23,11 @@ import (
 	k8serrors "k8s.io/apimachinery/pkg/api/errors"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 
-	"k8s.io/dashboard/api/pkg/api"
-	"k8s.io/dashboard/api/pkg/errors"
 	metricapi "k8s.io/dashboard/api/pkg/integration/metric/api"
 	"k8s.io/dashboard/api/pkg/resource/common"
 	"k8s.io/dashboard/api/pkg/resource/dataselect"
+	"k8s.io/dashboard/errors"
+	"k8s.io/dashboard/types"
 )
 
 func TestGetJobListFromChannels(t *testing.T) {
@@ -45,7 +45,7 @@ func TestGetJobListFromChannels(t *testing.T) {
 			nil,
 			&v1.PodList{},
 			&JobList{
-				ListMeta:          api.ListMeta{},
+				ListMeta:          types.ListMeta{},
 				Status:            common.ResourceStatus{},
 				CumulativeMetrics: make([]metricapi.Metric, 0),
 				Jobs:              []Job{},
@@ -168,18 +168,18 @@ func TestGetJobListFromChannels(t *testing.T) {
 				},
 			},
 			&JobList{
-				ListMeta:          api.ListMeta{TotalItems: 2},
+				ListMeta:          types.ListMeta{TotalItems: 2},
 				CumulativeMetrics: make([]metricapi.Metric, 0),
 				Status:            common.ResourceStatus{Running: 1, Failed: 1},
 				Jobs: []Job{{
-					ObjectMeta: api.ObjectMeta{
+					ObjectMeta: types.ObjectMeta{
 						Name:              "rs-name",
 						Namespace:         "rs-namespace",
 						UID:               "uid",
 						Labels:            map[string]string{"key": "value"},
 						CreationTimestamp: metaV1.Unix(111, 222),
 					},
-					TypeMeta: api.TypeMeta{Kind: api.ResourceKindJob},
+					TypeMeta: types.TypeMeta{Kind: types.ResourceKindJob},
 					Pods: common.PodInfo{
 						Current:  7,
 						Running:  1,
@@ -191,14 +191,14 @@ func TestGetJobListFromChannels(t *testing.T) {
 						Status: JobStatusRunning,
 					},
 				}, {
-					ObjectMeta: api.ObjectMeta{
+					ObjectMeta: types.ObjectMeta{
 						Name:              "rs-name",
 						Namespace:         "rs-namespace",
 						UID:               "uid",
 						Labels:            map[string]string{"key": "value"},
 						CreationTimestamp: metaV1.Unix(111, 222),
 					},
-					TypeMeta: api.TypeMeta{Kind: api.ResourceKindJob},
+					TypeMeta: types.TypeMeta{Kind: types.ResourceKindJob},
 					Pods: common.PodInfo{
 						Current:  7,
 						Running:  1,

@@ -21,8 +21,8 @@ import (
 	v1 "k8s.io/api/core/v1"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	k8sClient "k8s.io/client-go/kubernetes"
-	"k8s.io/dashboard/api/pkg/errors"
 	"k8s.io/dashboard/api/pkg/resource/endpoint"
+	"k8s.io/dashboard/errors"
 )
 
 // Service is a representation of a service.
@@ -49,7 +49,7 @@ func GetServiceDetail(client k8sClient.Interface, namespace, name string) (*Serv
 	}
 
 	endpointList, err := endpoint.GetServiceEndpoints(client, namespace, name)
-	nonCriticalErrors, criticalError := errors.HandleError(err)
+	nonCriticalErrors, criticalError := errors.ExtractErrors(err)
 	if criticalError != nil {
 		return nil, criticalError
 	}

@@ -23,12 +23,11 @@ import (
 	k8serrors "k8s.io/apimachinery/pkg/api/errors"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 
-	"k8s.io/dashboard/api/pkg/api"
 	metricapi "k8s.io/dashboard/api/pkg/integration/metric/api"
 	"k8s.io/dashboard/api/pkg/resource/common"
 	"k8s.io/dashboard/api/pkg/resource/dataselect"
-
-	"k8s.io/dashboard/api/pkg/errors"
+	"k8s.io/dashboard/errors"
+	"k8s.io/dashboard/types"
 )
 
 func getReplicasPointer(replicas int32) *int32 {
@@ -49,7 +48,7 @@ func TestGetStatefulSetListFromChannels(t *testing.T) {
 			nil,
 			&v1.PodList{},
 			&StatefulSetList{
-				ListMeta:          api.ListMeta{},
+				ListMeta:          types.ListMeta{},
 				CumulativeMetrics: make([]metricapi.Metric, 0),
 				StatefulSets:      []StatefulSet{},
 				Errors:            []error{},
@@ -137,19 +136,19 @@ func TestGetStatefulSetListFromChannels(t *testing.T) {
 				},
 			},
 			&StatefulSetList{
-				ListMeta:          api.ListMeta{TotalItems: 1},
+				ListMeta:          types.ListMeta{TotalItems: 1},
 				CumulativeMetrics: make([]metricapi.Metric, 0),
 				Status:            common.ResourceStatus{Running: 1},
 				StatefulSets: []StatefulSet{{
-					ObjectMeta: api.ObjectMeta{
+					ObjectMeta: types.ObjectMeta{
 						Name:              "rs-name",
 						Namespace:         "rs-namespace",
 						UID:               "uid",
 						Labels:            map[string]string{"key": "value"},
 						CreationTimestamp: metaV1.Unix(111, 222),
 					},
-					TypeMeta: api.TypeMeta{
-						Kind:     api.ResourceKindStatefulSet,
+					TypeMeta: types.TypeMeta{
+						Kind:     types.ResourceKindStatefulSet,
 						Scalable: true,
 					},
 					Pods: common.PodInfo{

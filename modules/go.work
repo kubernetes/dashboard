@@ -1,9 +1,15 @@
-go 1.20
+go 1.22.0
 
 use (
 	./api // k8s.io/dashboard/api
+	./auth // k8s.io/dashboard/auth
 	./common/certificates // k8s.io/dashboard/certificates
+	./common/client // k8s.io/dashboard/client
+	./common/csrf // k8s.io/dashboard/csrf
+	./common/errors // k8s.io/dashboard/errors
+	./common/helpers // k8s.io/dashboard/helpers
 	./common/tools // k8s.io/dashboard/tools
+	./common/types // k8s.io/dashboard/types
 	./metrics-scraper // k8s.io/dashboard/metrics-scraper
 	./web // k8s.io/dashboard/web
 )

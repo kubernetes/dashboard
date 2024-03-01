@@ -14,146 +14,227 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<kd-graph-metrics [metrics]="cumulativeMetrics"
-                  *ngIf="showMetrics"></kd-graph-metrics>
+<kd-graph-metrics
+  [metrics]="cumulativeMetrics"
+  *ngIf="showMetrics"
+></kd-graph-metrics>
 
-<kd-card role="table"
-         [hidden]="isHidden()">
-  <div title
-       fxLayout="row"
-       i18n>Cron Jobs</div>
-  <div description><span class="kd-muted-light"
-          i18n>Items:&nbsp;</span>{{ totalItems }}</div>
+<kd-card
+  role="table"
+  [hidden]="isHidden()"
+>
+  <div
+    title
+    fxLayout="row"
+    i18n
+  >
+    Cron Jobs
+  </div>
+  <div description>
+    <span
+      class="kd-muted-light"
+      i18n
+      >Items:&nbsp;</span
+    >{{ totalItems }}
+  </div>
   <div actions>
     <kd-card-list-filter></kd-card-list-filter>
   </div>
 
-  <div content
-       [hidden]="showZeroState()">
-    <div kdLoadingSpinner
-         [isLoading]="isLoading"></div>
+  <div
+    content
+    [hidden]="showZeroState()"
+  >
+    <div
+      kdLoadingSpinner
+      [isLoading]="isLoading"
+    ></div>
 
-    <mat-table [dataSource]="getData()"
-               [trackBy]="trackByResource"
-               matSort
-               matSortActive="created"
-               matSortDisableClear
-               matSortDirection="asc">
+    <mat-table
+      [dataSource]="getData()"
+      [trackBy]="trackByResource"
+      matSort
+      matSortActive="created"
+      matSortDisableClear
+      matSortDirection="asc"
+    >
       <ng-container matColumnDef="statusicon">
         <mat-header-cell *matHeaderCellDef></mat-header-cell>
         <mat-cell *matCellDef="let cronJob">
-          <mat-icon [ngClass]="getStatus(cronJob).iconClass"
-                    [matTooltip]="getStatus(cronJob).iconTooltip">
+          <mat-icon
+            [ngClass]="getStatus(cronJob).iconClass"
+            [matTooltip]="getStatus(cronJob).iconTooltip"
+          >
             {{ getStatus(cronJob).iconName }}
           </mat-icon>
         </mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="name">
-        <mat-header-cell *matHeaderCellDef
-                         mat-sort-header
-                         class="col-stretch-xl"
-                         disableClear="true"
-                         i18n>Name</mat-header-cell>
-        <mat-cell *matCellDef="let cronJob"
-                  class="col-stretch-xl">
-          <a [routerLink]="getDetailsHref(cronJob.objectMeta.name, cronJob.objectMeta.namespace)"
-             queryParamsHandling="preserve">
+        <mat-header-cell
+          *matHeaderCellDef
+          mat-sort-header
+          class="col-stretch-xl"
+          disableClear="true"
+          i18n
+          >Name</mat-header-cell
+        >
+        <mat-cell
+          *matCellDef="let cronJob"
+          class="col-stretch-xl"
+        >
+          <a
+            [routerLink]="getDetailsHref(cronJob.objectMeta.name, cronJob.objectMeta.namespace)"
+            queryParamsHandling="preserve"
+          >
             {{ cronJob.objectMeta.name }}
           </a>
         </mat-cell>
       </ng-container>
 
-      <ng-container *ngIf="shouldShowColumn('namespace')"
-                    matColumnDef="namespace">
-        <mat-header-cell *matHeaderCellDef
-                         class="col-stretch-l col-min-90"
-                         i18n>Namespace</mat-header-cell>
-        <mat-cell *matCellDef="let cronJob"
-                  class="col-stretch-l col-min-90">{{ cronJob.objectMeta.namespace }}</mat-cell>
+      <ng-container
+        *ngIf="shouldShowColumn('namespace')"
+        matColumnDef="namespace"
+      >
+        <mat-header-cell
+          *matHeaderCellDef
+          class="col-stretch-l col-min-90"
+          i18n
+          >Namespace</mat-header-cell
+        >
+        <mat-cell
+          *matCellDef="let cronJob"
+          class="col-stretch-l col-min-90"
+          >{{ cronJob.objectMeta.namespace }}</mat-cell
+        >
       </ng-container>
 
       <ng-container matColumnDef="images">
-        <mat-header-cell *matHeaderCellDef
-                         class="col-stretch-xl"
-                         i18n>Images</mat-header-cell>
-        <mat-cell *matCellDef="let cronJob"
-                  class="col-stretch-xl">
+        <mat-header-cell
+          *matHeaderCellDef
+          class="col-stretch-xl"
+          i18n
+          >Images</mat-header-cell
+        >
+        <mat-cell
+          *matCellDef="let cronJob"
+          class="col-stretch-xl"
+        >
           <kd-chips [map]="cronJob.containerImages"></kd-chips>
         </mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="labels">
-        <mat-header-cell *matHeaderCellDef
-                         class="col-stretch-s"
-                         i18n>Labels</mat-header-cell>
-        <mat-cell *matCellDef="let cronJob"
-                  class="col-stretch-s">
+        <mat-header-cell
+          *matHeaderCellDef
+          class="col-stretch-s"
+          i18n
+          >Labels</mat-header-cell
+        >
+        <mat-cell
+          *matCellDef="let cronJob"
+          class="col-stretch-s"
+        >
           <kd-chips [map]="cronJob.objectMeta.labels"></kd-chips>
         </mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="schedule">
-        <mat-header-cell *matHeaderCellDef
-                         class="col-stretch-m"
-                         i18n>Schedule</mat-header-cell>
-        <mat-cell *matCellDef="let cronJob"
-                  class="col-stretch-m">
+        <mat-header-cell
+          *matHeaderCellDef
+          class="col-stretch-m"
+          i18n
+          >Schedule</mat-header-cell
+        >
+        <mat-cell
+          *matCellDef="let cronJob"
+          class="col-stretch-m"
+        >
           <span>{{ cronJob.schedule }}</span>
           <span *ngIf="!cronJob.schedule">-</span>
         </mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="suspend">
-        <mat-header-cell *matHeaderCellDef
-                         class="col-stretch-m"
-                         i18n>Suspend</mat-header-cell>
-        <mat-cell *matCellDef="let cronJob"
-                  class="col-stretch-m">{{ !!cronJob.suspend }}</mat-cell>
+        <mat-header-cell
+          *matHeaderCellDef
+          class="col-stretch-m"
+          i18n
+          >Suspend</mat-header-cell
+        >
+        <mat-cell
+          *matCellDef="let cronJob"
+          class="col-stretch-m"
+          >{{ !!cronJob.suspend }}</mat-cell
+        >
       </ng-container>
 
       <ng-container matColumnDef="active">
-        <mat-header-cell *matHeaderCellDef
-                         mat-sort-header
-                         disableClear="true"
-                         class="col-stretch-m"
-                         i18n>Active</mat-header-cell>
-        <mat-cell *matCellDef="let cronJob"
-                  class="col-stretch-m">{{ cronJob.active }}</mat-cell>
+        <mat-header-cell
+          *matHeaderCellDef
+          mat-sort-header
+          disableClear="true"
+          class="col-stretch-m"
+          i18n
+          >Active</mat-header-cell
+        >
+        <mat-cell
+          *matCellDef="let cronJob"
+          class="col-stretch-m"
+          >{{ cronJob.active }}</mat-cell
+        >
       </ng-container>
 
       <ng-container matColumnDef="lastschedule">
-        <mat-header-cell *matHeaderCellDef
-                         class="col-stretch-l"
-                         i18n>Last Schedule</mat-header-cell>
-        <mat-cell *matCellDef="let cronJob"
-                  class="col-stretch-l">
-          <kd-date *ngIf="cronJob.lastSchedule"
-                   [date]="cronJob.lastSchedule"
-                   relative></kd-date>
+        <mat-header-cell
+          *matHeaderCellDef
+          class="col-stretch-l"
+          i18n
+          >Last Schedule</mat-header-cell
+        >
+        <mat-cell
+          *matCellDef="let cronJob"
+          class="col-stretch-l"
+        >
+          <kd-date
+            *ngIf="cronJob.lastSchedule"
+            [date]="cronJob.lastSchedule"
+            relative
+          ></kd-date>
           <ng-container *ngIf="!cronJob.lastSchedule">-</ng-container>
         </mat-cell>
       </ng-container>
 
-      <ng-container *ngFor="let col of getActionColumns()"
-                    [matColumnDef]="col.name">
+      <ng-container
+        *ngFor="let col of getActionColumns()"
+        [matColumnDef]="col.name"
+      >
         <mat-header-cell *matHeaderCellDef></mat-header-cell>
         <mat-cell *matCellDef="let cj">
-          <kd-dynamic-cell [component]="col.component"
-                           [resource]="cj"></kd-dynamic-cell>
+          <kd-dynamic-cell
+            [component]="col.component"
+            [resource]="cj"
+          ></kd-dynamic-cell>
         </mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="created">
-        <mat-header-cell *matHeaderCellDef
-                         mat-sort-header
-                         disableClear="true"
-                         class="col-stretch-l"
-                         i18n>Created</mat-header-cell>
-        <mat-cell *matCellDef="let cronJob"
-                  class="col-stretch-l">
-          <kd-date [date]="cronJob.objectMeta.creationTimestamp"
-                   relative></kd-date>
+        <mat-header-cell
+          *matHeaderCellDef
+          mat-sort-header
+          disableClear="true"
+          class="col-stretch-l"
+          i18n
+          >Created</mat-header-cell
+        >
+        <mat-cell
+          *matCellDef="let cronJob"
+          class="col-stretch-l"
+        >
+          <kd-date
+            [date]="cronJob.objectMeta.creationTimestamp"
+            relative
+          ></kd-date>
         </mat-cell>
       </ng-container>
 
@@ -162,15 +243,19 @@ limitations under the License.
     </mat-table>
 
     <div [hidden]="totalItems <= itemsPerPage">
-      <mat-paginator [length]="totalItems"
-                     [pageSize]="itemsPerPage"
-                     hidePageSize
-                     showFirstLastButtons></mat-paginator>
+      <mat-paginator
+        [length]="totalItems"
+        [pageSize]="itemsPerPage"
+        hidePageSize
+        showFirstLastButtons
+      ></mat-paginator>
     </div>
   </div>
 
-  <div content
-       [hidden]="!showZeroState()">
+  <div
+    content
+    [hidden]="!showZeroState()"
+  >
     <kd-list-zero-state></kd-list-zero-state>
   </div>
 </kd-card>

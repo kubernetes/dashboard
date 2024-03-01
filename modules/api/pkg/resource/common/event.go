@@ -16,12 +16,13 @@ package common
 
 import (
 	v1 "k8s.io/apimachinery/pkg/apis/meta/v1"
-	"k8s.io/dashboard/api/pkg/api"
+
+	"k8s.io/dashboard/types"
 )
 
 // EventList is an events response structure.
 type EventList struct {
-	ListMeta api.ListMeta `json:"listMeta"`
+	ListMeta types.ListMeta `json:"listMeta"`
 
 	// List of events from given namespace.
 	Events []Event `json:"events"`
@@ -32,8 +33,8 @@ type EventList struct {
 
 // Event is a single event representation.
 type Event struct {
-	ObjectMeta api.ObjectMeta `json:"objectMeta"`
-	TypeMeta   api.TypeMeta   `json:"typeMeta"`
+	ObjectMeta types.ObjectMeta `json:"objectMeta"`
+	TypeMeta   types.TypeMeta   `json:"typeMeta"`
 
 	// A human-readable description of the status of related object.
 	Message string `json:"message"`

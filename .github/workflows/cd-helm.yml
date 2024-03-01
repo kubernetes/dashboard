@@ -12,52 +12,65 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-name: CD / Helm
-on:
-  push:
-    branches: [master]
-    paths:
-      - "charts/helm-chart/**"
-      - "hack/scripts/helm-release-chart.sh"
-      - ".github/workflows/cd-helm.yml"
-permissions:
-  contents: write
-  pull-requests: write
-jobs:
-  release:
-    name: Helm chart release
-    runs-on: ubuntu-latest
-    steps:
-      - name: Check out repository
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-
-      - name: Set up Git user
-        run: |
-          git config user.name "$GITHUB_ACTOR"
-          git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
-
-      - name: Release new Helm chart
-        shell: bash
-        run: hack/scripts/helm-release-chart.sh
-        env:
-          TERM: xterm-256color
-
-      - name: Check out gh-pages-pull-request branch # It will fail if branch already exists
-        run: git checkout -b gh-pages-pull-request
-
-      - name: Push changes to gh-pages-pull-request branch # It will silently fail if pull request already exists
-        uses: ad-m/github-push-action@v0.8.0
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          branch: gh-pages-pull-request
-
-      - name: Create pull request
-        uses: repo-sync/pull-request@v2
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          source_branch: gh-pages-pull-request
-          destination_branch: gh-pages
-          pr_title: "Update Helm repository"
-          pr_body: "Automatically created from Helm CD workflow."
+# TODO: Enable once helm chart is updated
+#name: CD / Helm
+#
+#on:
+#  push:
+#    branches: [ master ]
+#
+#jobs:
+#  lint-test:
+#    name: Lint and test
+#    runs-on: ubuntu-latest
+#    steps:
+#      - uses: actions/checkout@v4.1.1
+#        with:
+#          fetch-depth: 0
+#      - uses: azure/setup-helm@v4.0.0
+#        with:
+#          version: v3.12.1
+#      - uses: helm/chart-testing-action@v2.6.1
+#      - id: list-changed
+#        run: |
+#          changed=$(ct list-changed --config=.ct.yml --target-branch ${{ github.event.repository.default_branch }})
+#          if [[ -n "$changed" ]]; then
+#            echo "changed=true" >> "$GITHUB_OUTPUT"
+#          fi
+#      - if: steps.list-changed.outputs.changed == 'true'
+#        run: ct lint --config=.ct.yml --target-branch ${{ github.event.repository.default_branch }}
+#      - if: steps.list-changed.outputs.changed == 'true'
+#        uses: helm/kind-action@v1.9.0
+#        with:
+#          node_image: kindest/node:v1.29.0
+#      - if: steps.list-changed.outputs.changed == 'true'
+#        run: ct install --target-branch ${{ github.event.repository.default_branch }}
+#
+#  release:
+#    name: Helm chart release
+#    runs-on: ubuntu-latest
+#    needs: [ 'lint-test' ]
+#    permissions:
+#      contents: write
+#    steps:
+#      - name: Check out repository
+#        uses: actions/checkout@v4.1.1
+#        with:
+#          fetch-depth: 0
+#
+#      - name: Set up Git user
+#        run: |
+#          git config user.name "$GITHUB_ACTOR"
+#          git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
+#
+#      - name: Set up Helm
+#        uses: azure/setup-helm@v4.0.0
+#        with:
+#          version: v3.12.1
+#
+#      - name: Run chart-releaser
+#        uses: helm/chart-releaser-action@v1.6.0
+#        with:
+#          skip_existing: true
+#        env:
+#          CR_TOKEN: "${{ secrets.GITHUB_TOKEN }}"

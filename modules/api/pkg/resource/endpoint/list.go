@@ -16,11 +16,12 @@ package endpoint
 
 import (
 	v1 "k8s.io/api/core/v1"
-	"k8s.io/dashboard/api/pkg/api"
+
+	"k8s.io/dashboard/types"
 )
 
 type EndpointList struct {
-	ListMeta api.ListMeta `json:"listMeta"`
+	ListMeta types.ListMeta `json:"listMeta"`
 	// List of endpoints
 	Endpoints []Endpoint `json:"endpoints"`
 }
@@ -29,7 +30,7 @@ type EndpointList struct {
 func toEndpointList(endpoints []v1.Endpoints) *EndpointList {
 	endpointList := EndpointList{
 		Endpoints: make([]Endpoint, 0),
-		ListMeta:  api.ListMeta{TotalItems: len(endpoints)},
+		ListMeta:  types.ListMeta{TotalItems: len(endpoints)},
 	}
 
 	for _, endpoint := range endpoints {

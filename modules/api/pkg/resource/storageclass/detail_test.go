@@ -20,7 +20,8 @@ import (
 
 	storage "k8s.io/api/storage/v1"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
-	"k8s.io/dashboard/api/pkg/api"
+
+	"k8s.io/dashboard/types"
 )
 
 func TestToStorageClass(t *testing.T) {
@@ -31,14 +32,14 @@ func TestToStorageClass(t *testing.T) {
 		{
 			storage: &storage.StorageClass{},
 			expected: StorageClass{
-				TypeMeta: api.TypeMeta{Kind: api.ResourceKindStorageClass},
+				TypeMeta: types.TypeMeta{Kind: types.ResourceKindStorageClass},
 			},
 		}, {
 			storage: &storage.StorageClass{
 				ObjectMeta: metaV1.ObjectMeta{Name: "test-storage"}},
 			expected: StorageClass{
-				ObjectMeta: api.ObjectMeta{Name: "test-storage"},
-				TypeMeta:   api.TypeMeta{Kind: api.ResourceKindStorageClass},
+				ObjectMeta: types.ObjectMeta{Name: "test-storage"},
+				TypeMeta:   types.TypeMeta{Kind: types.ResourceKindStorageClass},
 			},
 		},
 	}

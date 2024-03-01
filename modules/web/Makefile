@@ -1,101 +1,85 @@
 ROOT_DIRECTORY = $(shell dirname $(realpath $(firstword $(MAKEFILE_LIST))))/../..
 
+# Global makefile partial config
 include $(ROOT_DIRECTORY)/hack/include/config.mk
-include $(ROOT_DIRECTORY)/hack/include/build.mk
 
+# Local makefile partial config
 include hack/include/config.mk
 
-include $(ROOT_DIRECTORY)/hack/include/deploy.mk
+# List of targets that should be executed before other targets
+PRE :=
 
-MAKEFLAGS += -j2
+# ==================== GLOBAL ==================== #
+
+.PHONY: build
+build: --clean build-go build-frontend
 
 .PHONY: check
-check: check-go
+check: check-frontend check-go
 
-.PHONY: check-go
-check-go: $(PRE)
-	golangci-lint run -c ../../.golangci.yml ./...
+.PHONY: clean
+clean:
+	@echo "[$(APP_NAME)] Cleaning up"
+	@rm -rf $(WEB_DIST_DIRECTORY)
+
+.PHONY: coverage
+coverage: coverage-frontend coverage-go
 
 .PHONY: fix
 fix: fix-go
 
+.PHONY: test
+test: test-go
+
+# ==================== LOCAL ==================== #
+
+.PHONY: build-frontend
+build-frontend: --fix-locale-caching
+
+.PHONY: build-go
+build-go:
+	@echo "[$(APP_NAME)] Building backend"
+	@CGO_ENABLED=0 go build -trimpath -ldflags "-s -w" -o $(WEB_DIST_DIRECTORY)/$(APP_NAME) $(PACKAGE_NAME)
+
+.PHONY: check-frontend
+check-frontend: $(PRE)
+	@echo "[$(APP_NAME)] Running frontend checks"
+	@yarn check
+
+.PHONY: check-go
+check-go: $(PRE)
+	@echo "[$(APP_NAME)] Running lint"
+	@golangci-lint run -c $(GOLANGCI_LINT_CONFIG) ./...
+
+.PHONY: coverage-frontend
+coverage-frontend: $(PRE)
+	@echo "[$(APP_NAME)]  Running frontend tests with coverage"
+	@yarn coverage
+
+.PHONY: coverage-go
+coverage-go: DIR := $(TMP_DIRECTORY)
+coverage-go: --ensure-dir
+	@echo "[$(APP_NAME)] Running tests with coverage"
+	@go test -coverprofile=$(COVERAGE_FILE) -covermode=atomic $(PACKAGE_NAME)/...
+
 .PHONY: fix-go
 fix-go: $(PRE)
-	golangci-lint run -c ../../.golangci.yml --fix ./...
+	@echo "[$(APP_NAME)] Running lint --fix"
+	@golangci-lint run -c $(GOLANGCI_LINT_CONFIG) --fix ./...
 
-.PHONY: serve
-serve: $(PRE) --serve-go --serve-angular
+.PHONY: test-go
+test-go:
+	@echo "[$(APP_NAME)] Running tests"
+	@go test $(PACKAGE_NAME)/...
 
-.PHONY: serve-https
-serve-https: AUTO_GENERATE_CERTIFICATES = true
-serve-https: PROXY_CONFIG = proxy-https.conf.json
-serve-https: SSL_ENABLED = true
-serve-https: $(PRE) --serve-go --serve-angular
-
-.PHONY: serve-frontend
-serve-frontend: $(PRE) --serve-angular
-
-.PHONY: build
-build: ARCHITECTURES = $(OS)/$(ARCH)
-build: build-cross
-
-.PHONY: build-cross
-build-cross: --clean --build-go --build-angular
-
-.PHONY: deploy
-deploy: DOCKERFILE = $(WEB_DIRECTORY)/Dockerfile
-deploy: --deploy
-
-.PHONY: deploy-dev
-deploy-dev: DOCKERFILE = $(WEB_DIRECTORY)/Dockerfile
-deploy-dev: --deploy-dev
-
-.PHONY: image
-image: DOCKERFILE = $(WEB_DIRECTORY)/Dockerfile
-image: --image
-
-.PHONY: --serve-go
---serve-go:
-	go run k8s.io/dashboard/web \
-		--system-banner=$(SYSTEM_BANNER) \
-    --system-banner-severity=$(SYSTEM_BANNER_SEVERITY) \
-    --auto-generate-certificates=$(AUTO_GENERATE_CERTIFICATES)
-
-.PHONY: --serve-angular
---serve-angular: --ensure-dependencies
-	@npx ng serve --proxy-config=$(PROXY_CONFIG) --ssl=$(SSL_ENABLED) --host=$(BIND_ADDRESS)
-
-.PHONY: --build-go
---build-go:
-	@for ARCH in $(ARCHITECTURES) ; do \
-  	os=$${ARCH%/*} ; \
-  	arch=$${ARCH#*/} ; \
-  	echo "Building dashboard-web for $$os/$$arch" ; \
-  	CGO_ENABLED=0 GOOS=$$os GOARCH=$$arch go build -ldflags "-X $(PACKAGE_NAME)/client.Version=$(RELEASE_VERSION)" -gcflags="all=-N -l" -o $(WEB_DIST_DIRECTORY)/$$ARCH/$(APP_NAME) $(PACKAGE_NAME) ; \
-	done ; \
-
-.PHONY: --build-angular
---build-angular: --copy-angular
-
-.PHONY: --copy-angular
---copy-angular: LANGUAGES = $(shell ls $(WEB_DIST_ANGULAR_DIRECTORY))
---copy-angular: --fix-locale-caching
-	@echo "Copying frontend to the dashboard-web API" ; \
-	for arch in $(ARCHITECTURES) ; do \
-		for language in $(LANGUAGES) ; do \
-			outDir=$(WEB_DIST_DIRECTORY)/$${arch}/public ; \
-      mkdir -p $${outDir} ; \
-      cp -r $(WEB_DIST_ANGULAR_DIRECTORY)/$${language} $${outDir} ; \
-    done ; \
-	done ; \
-	rm -rf $(WEB_DIST_ANGULAR_DIRECTORY)
+# ==================== PRIVATE ==================== #
 
 # Avoid locale caching due to the same output file naming
 # We'll add language code prefix to the generated main javascript file.
 .PHONY: --fix-locale-caching
 --fix-locale-caching: LANGUAGES = $(shell ls $(WEB_DIST_ANGULAR_DIRECTORY))
 --fix-locale-caching: --ng-build
-	@echo "Patching locale caching" ; \
+	@echo "[$(APP_NAME)] Patching locale caching" ; \
 	for language in $(LANGUAGES) ; do \
   		localeDir=$(WEB_DIST_ANGULAR_DIRECTORY)/$${language} ; \
   		filename=$$(find $${localeDir} -name 'main.*.js' -exec basename {} \;) ; \
@@ -106,7 +90,7 @@ image: --image
 
 .PHONY: --ng-build
 --ng-build: --ensure-dependencies
-	@echo "Building localized frontend" ; \
+	@echo "[$(APP_NAME)] Building localized frontend" ; \
 	npx ng build \
       --configuration production \
       --localize \
@@ -120,6 +104,14 @@ image: --image
 .PHONY: --ensure-dependencies
 --ensure-dependencies:
 ifeq ($(wildcard node_modules/.*),)
-	@echo "Installing dependencies"
+	@echo "[$(APP_NAME)] Installing dependencies"
 	@yarn install --immutable
 endif
+
+.PHONY: --ensure-dir
+--ensure-dir:
+	@if [ -z "$(DIR)" ]; then \
+  	echo "DIR variable not set" ; \
+  	exit 1 ; \
+  fi ; \
+ 	mkdir -p $(DIR) ; \

@@ -23,12 +23,13 @@
 .angular
 node_modules
 .dist
+.tmp
 .coverage
 *.swp
 .cached_tools
 
 # Helm deps
-charts/helm-chart/kubernetes-dashboard/charts
+charts/kubernetes-dashboard/charts
 
 # Cypress
 screenshots

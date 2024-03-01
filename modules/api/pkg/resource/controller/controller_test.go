@@ -21,7 +21,8 @@ import (
 	v1 "k8s.io/api/core/v1"
 	meta "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/client-go/kubernetes/fake"
-	"k8s.io/dashboard/api/pkg/api"
+
+	"k8s.io/dashboard/types"
 )
 
 func TestGetPodNames(t *testing.T) {
@@ -63,7 +64,7 @@ func TestNewResourceController(t *testing.T) {
 
 	ctrl, err := NewResourceController(
 		meta.OwnerReference{
-			Kind: api.ResourceKindPod,
+			Kind: types.ResourceKindPod,
 			Name: "test-name",
 		}, "default", cli)
 
@@ -79,7 +80,7 @@ func TestNewResourceController(t *testing.T) {
 	}
 	NewResourceController(
 		meta.OwnerReference{
-			Kind: api.ResourceKindPod,
+			Kind: types.ResourceKindPod,
 			Name: "test-name",
 		}, "default", fake.NewSimpleClientset())
 	podCtrl.Get([]v1.Pod{pod}, []v1.Event{})

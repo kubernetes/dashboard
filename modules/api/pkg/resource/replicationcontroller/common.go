@@ -22,11 +22,12 @@ import (
 	"k8s.io/apimachinery/pkg/fields"
 	"k8s.io/apimachinery/pkg/labels"
 	client "k8s.io/client-go/kubernetes"
-	"k8s.io/dashboard/api/pkg/api"
+
 	metricapi "k8s.io/dashboard/api/pkg/integration/metric/api"
 	"k8s.io/dashboard/api/pkg/resource/common"
 	"k8s.io/dashboard/api/pkg/resource/dataselect"
 	"k8s.io/dashboard/api/pkg/resource/event"
+	"k8s.io/dashboard/types"
 )
 
 // Transforms simple selector map to labels.Selector object that can be used when querying for
@@ -79,8 +80,8 @@ func ToReplicationController(replicationController *v1.ReplicationController,
 	podInfo *common.PodInfo) ReplicationController {
 
 	return ReplicationController{
-		ObjectMeta:          api.NewObjectMeta(replicationController.ObjectMeta),
-		TypeMeta:            api.NewTypeMeta(api.ResourceKindReplicationController),
+		ObjectMeta:          types.NewObjectMeta(replicationController.ObjectMeta),
+		TypeMeta:            types.NewTypeMeta(types.ResourceKindReplicationController),
 		Pods:                *podInfo,
 		ContainerImages:     common.GetContainerImages(&replicationController.Spec.Template.Spec),
 		InitContainerImages: common.GetInitContainerImages(&replicationController.Spec.Template.Spec),
@@ -107,7 +108,7 @@ func (self ReplicationControllerCell) GetProperty(name dataselect.PropertyName) 
 func (self ReplicationControllerCell) GetResourceSelector() *metricapi.ResourceSelector {
 	return &metricapi.ResourceSelector{
 		Namespace:    self.ObjectMeta.Namespace,
-		ResourceType: api.ResourceKindReplicationController,
+		ResourceType: types.ResourceKindReplicationController,
 		ResourceName: self.ObjectMeta.Name,
 		UID:          self.UID,
 	}

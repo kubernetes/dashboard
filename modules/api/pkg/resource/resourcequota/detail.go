@@ -16,7 +16,8 @@ package resourcequota
 
 import (
 	v1 "k8s.io/api/core/v1"
-	"k8s.io/dashboard/api/pkg/api"
+
+	"k8s.io/dashboard/types"
 )
 
 // ResourceStatus provides the status of the resource defined by a resource quota.
@@ -27,8 +28,8 @@ type ResourceStatus struct {
 
 // ResourceQuotaDetail provides the presentation layer view of Kubernetes Resource Quotas resource.
 type ResourceQuotaDetail struct {
-	ObjectMeta api.ObjectMeta `json:"objectMeta"`
-	TypeMeta   api.TypeMeta   `json:"typeMeta"`
+	ObjectMeta types.ObjectMeta `json:"objectMeta"`
+	TypeMeta   types.TypeMeta   `json:"typeMeta"`
 
 	// Scopes defines quota scopes
 	Scopes []v1.ResourceQuotaScope `json:"scopes,omitempty"`
@@ -39,7 +40,7 @@ type ResourceQuotaDetail struct {
 
 // ResourceQuotaDetailList provides a set of resource Quotas.
 type ResourceQuotaDetailList struct {
-	ListMeta api.ListMeta          `json:"listMeta"`
+	ListMeta types.ListMeta        `json:"listMeta"`
 	Items    []ResourceQuotaDetail `json:"items"`
 }
 
@@ -54,8 +55,8 @@ func ToResourceQuotaDetail(rawResourceQuota *v1.ResourceQuota) *ResourceQuotaDet
 		}
 	}
 	return &ResourceQuotaDetail{
-		ObjectMeta: api.NewObjectMeta(rawResourceQuota.ObjectMeta),
-		TypeMeta:   api.NewTypeMeta(api.ResourceKindResourceQuota),
+		ObjectMeta: types.NewObjectMeta(rawResourceQuota.ObjectMeta),
+		TypeMeta:   types.NewTypeMeta(types.ResourceKindResourceQuota),
 		Scopes:     rawResourceQuota.Spec.Scopes,
 		StatusList: statusList,
 	}

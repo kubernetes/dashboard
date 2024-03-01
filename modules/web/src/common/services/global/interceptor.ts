@@ -18,21 +18,29 @@ import {IConfig} from '@api/root.ui';
 import {CookieService} from 'ngx-cookie-service';
 import {Observable} from 'rxjs';
 import {CONFIG_DI_TOKEN} from '../../../index.config';
+import {AuthService} from '@common/services/global/authentication';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
   constructor(
     private readonly cookies_: CookieService,
+    private readonly _authService: AuthService,
     @Inject(CONFIG_DI_TOKEN) private readonly appConfig_: IConfig
   ) {}
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    const authCookie = this.cookies_.get(this.appConfig_.authTokenCookieName);
+    if (req.headers.get(this.appConfig_.authTokenHeaderName)) {
+      this._authService.setHasAuthHeader(true);
+      return next.handle(req);
+    }
+
+    this._authService.setHasAuthHeader(false);
+    const token = this.cookies_.get(this.appConfig_.authTokenCookieName);
     // Filter requests made to our backend starting with 'api/v1' and append request header
     // with token stored in a cookie.
-    if (req.url.startsWith('api/v1') && authCookie.length) {
+    if ((req.url.startsWith('api/v1') || req.url.startsWith('settings')) && !!token) {
       const authReq = req.clone({
-        headers: req.headers.set(this.appConfig_.authTokenHeaderName, authCookie),
+        headers: req.headers.set(this.appConfig_.authTokenHeaderName, `Bearer ${token}`),
       });
 
       return next.handle(authReq);

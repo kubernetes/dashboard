@@ -12,27 +12,56 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-FROM ubuntu:20.04 as builder
+FROM alpine:3.19 as user
 
-# Create a nonroot user for final image
-RUN useradd -u 10001 nonroot
+ENV USER=nonroot
+ENV UID=10001
 
-# Scratch can be used as the base image because the backend is compiled to include all
-# its dependencies.
-FROM scratch as final
+# Create nonroot user.
+RUN adduser \
+    --disabled-password \
+    --gecos "" \
+    --home "/nonexistent" \
+    --shell "/sbin/nologin" \
+    --no-create-home \
+    --uid "${UID}" \
+    "${USER}"
+
+FROM golang:1.22-alpine3.19 as builder
+
 ARG TARGETARCH
 ARG TARGETOS
+ARG VERSION
 
-# Add all files from current working directory to the root of the image, i.e., copy dist directory
-# layout to the root directory.
-ADD .dist/metrics-scraper/$TARGETOS/$TARGETARCH /
+WORKDIR /workspace
 
-# Copy nonroot user
-COPY --from=builder /etc/passwd /etc/passwd
-USER nonroot
+# Copy required local modules
+COPY /common/helpers /workspace/common/helpers
 
-# Declare the port on which the webserver will be exposed.
-EXPOSE 8080
+WORKDIR /workspace/metrics-scraper
 
-# Run the compiled binary.
-ENTRYPOINT ["/metrics-scraper"]
+# Retrieve application dependencies.
+# This allows the container build to reuse cached dependencies.
+# Expecting to copy go.mod and if present go.sum.
+COPY metrics-scraper/go.* ./
+RUN go mod download
+
+COPY metrics-scraper/pkg ./pkg
+COPY metrics-scraper/main.go ./
+
+RUN CGO_ENABLED=0 GOOS=${TARGETOS} GOARCH=${TARGETARCH} go build -trimpath -ldflags="-s -w -X k8s.io/dashboard/metrics-scraper/pkg/environment.Version=${VERSION}" -o dashboard-metrics-scraper .
+
+# Scratch can be used as the base image because the binary is compiled to include all dependencies.
+FROM scratch as final
+
+COPY --from=builder /workspace/metrics-scraper/dashboard-metrics-scraper /dashboard-metrics-scraper
+
+# Import the user and group files from the builder.
+COPY --from=user /etc/passwd /etc/passwd
+COPY --from=user /etc/group /etc/group
+
+USER nonroot:nonroot
+
+# The port that the application listens on.
+EXPOSE 8000
+ENTRYPOINT ["/dashboard-metrics-scraper"]

@@ -21,7 +21,8 @@ import (
 	v1 "k8s.io/api/core/v1"
 	"k8s.io/apimachinery/pkg/api/resource"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
-	"k8s.io/dashboard/api/pkg/api"
+
+	"k8s.io/dashboard/types"
 )
 
 func TestGetResourceQuotaDetail(t *testing.T) {
@@ -53,8 +54,8 @@ func TestGetResourceQuotaDetail(t *testing.T) {
 				},
 			},
 			&ResourceQuotaDetail{
-				TypeMeta:   api.TypeMeta{Kind: "resourcequota"},
-				ObjectMeta: api.ObjectMeta{Name: "foo"},
+				TypeMeta:   types.TypeMeta{Kind: "resourcequota"},
+				ObjectMeta: types.ObjectMeta{Name: "foo"},
 				Scopes: []v1.ResourceQuotaScope{
 					v1.ResourceQuotaScopeBestEffort,
 				},

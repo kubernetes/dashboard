@@ -27,8 +27,15 @@ import {CardComponent} from './component';
 @Component({
   selector: 'test',
   template: `
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
-    <kd-card [expanded]="isExpanded" [expandable]="isExpandable" role="table">
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet"
+    />
+    <kd-card
+      [expanded]="isExpanded"
+      [expandable]="isExpandable"
+      role="table"
+    >
       <div title>{{ title }}</div>
       <div description>Description: default</div>
       <div actions>Actions: default</div>

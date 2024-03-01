@@ -23,12 +23,11 @@ import (
 	k8serrors "k8s.io/apimachinery/pkg/api/errors"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 
-	"k8s.io/dashboard/api/pkg/api"
 	metricapi "k8s.io/dashboard/api/pkg/integration/metric/api"
 	"k8s.io/dashboard/api/pkg/resource/common"
 	"k8s.io/dashboard/api/pkg/resource/dataselect"
-
-	"k8s.io/dashboard/api/pkg/errors"
+	"k8s.io/dashboard/errors"
+	"k8s.io/dashboard/types"
 )
 
 func TestGetDaemonSetListFromChannels(t *testing.T) {
@@ -44,7 +43,7 @@ func TestGetDaemonSetListFromChannels(t *testing.T) {
 			nil,
 			&v1.PodList{},
 			&DaemonSetList{
-				ListMeta:          api.ListMeta{},
+				ListMeta:          types.ListMeta{},
 				DaemonSets:        []DaemonSet{},
 				CumulativeMetrics: make([]metricapi.Metric, 0),
 				Errors:            []error{},
@@ -97,17 +96,17 @@ func TestGetDaemonSetListFromChannels(t *testing.T) {
 			nil,
 			&v1.PodList{},
 			&DaemonSetList{
-				ListMeta:          api.ListMeta{TotalItems: 1},
+				ListMeta:          types.ListMeta{TotalItems: 1},
 				CumulativeMetrics: make([]metricapi.Metric, 0),
 				Status:            common.ResourceStatus{Running: 1},
 				DaemonSets: []DaemonSet{{
-					ObjectMeta: api.ObjectMeta{
+					ObjectMeta: types.ObjectMeta{
 						Name:              "ds-name",
 						Namespace:         "ds-namespace",
 						Labels:            map[string]string{"key": "value"},
 						CreationTimestamp: metaV1.Unix(111, 222),
 					},
-					TypeMeta: api.TypeMeta{Kind: api.ResourceKindDaemonSet},
+					TypeMeta: types.TypeMeta{Kind: types.ResourceKindDaemonSet},
 					Pods: common.PodInfo{
 						Current:  0,
 						Failed:   0,
@@ -343,16 +342,16 @@ func TestToDaemonSetList(t *testing.T) {
 			},
 			},
 			&DaemonSetList{
-				ListMeta:          api.ListMeta{TotalItems: 3},
+				ListMeta:          types.ListMeta{TotalItems: 3},
 				CumulativeMetrics: make([]metricapi.Metric, 0),
 				DaemonSets: []DaemonSet{
 					{
-						ObjectMeta: api.ObjectMeta{
+						ObjectMeta: types.ObjectMeta{
 							Name:      "my-app-1",
 							Namespace: "namespace-1",
 							UID:       "uid-1",
 						},
-						TypeMeta:            api.TypeMeta{Kind: api.ResourceKindDaemonSet},
+						TypeMeta:            types.TypeMeta{Kind: types.ResourceKindDaemonSet},
 						ContainerImages:     []string{"my-container-image-1"},
 						InitContainerImages: []string{"my-init-container-image-1"},
 						Pods: common.PodInfo{
@@ -364,11 +363,11 @@ func TestToDaemonSetList(t *testing.T) {
 							Warnings:  []common.Event{},
 						},
 					}, {
-						ObjectMeta: api.ObjectMeta{
+						ObjectMeta: types.ObjectMeta{
 							Name:      "my-app-2",
 							Namespace: "namespace-2",
 						},
-						TypeMeta:            api.TypeMeta{Kind: api.ResourceKindDaemonSet},
+						TypeMeta:            types.TypeMeta{Kind: types.ResourceKindDaemonSet},
 						ContainerImages:     []string{"my-container-image-2"},
 						InitContainerImages: []string{"my-init-container-image-2"},
 						Pods: common.PodInfo{
@@ -376,11 +375,11 @@ func TestToDaemonSetList(t *testing.T) {
 							Warnings: []common.Event{},
 						},
 					}, {
-						ObjectMeta: api.ObjectMeta{
+						ObjectMeta: types.ObjectMeta{
 							Name:      "my-app-3",
 							Namespace: "namespace-3",
 						},
-						TypeMeta:            api.TypeMeta{Kind: api.ResourceKindDaemonSet},
+						TypeMeta:            types.TypeMeta{Kind: types.ResourceKindDaemonSet},
 						ContainerImages:     []string{"my-container-image-3"},
 						InitContainerImages: []string{"my-init-container-image-3"},
 						Pods: common.PodInfo{

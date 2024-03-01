@@ -16,47 +16,31 @@ name: CI / Helm
 on:
   pull_request:
     paths:
-    - 'charts/helm-chart/**'
+    - 'charts/**'
     - '.github/workflows/ci-helm.yml'
-permissions:
-  contents: read
 jobs:
-  helm-lint-test:
+  lint-test:
     name: Lint and test
     runs-on: ubuntu-latest
     steps:
-      - name: Check out repository
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4.1.1
         with:
           fetch-depth: 0
-
-      - name: Set up Helm
-        uses: azure/setup-helm@v3
+      - uses: azure/setup-helm@v4.0.0
         with:
-          version: v3.11.0
-
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: "3.9"
-          check-latest: true
-
-      - name: Install kubeconform-helm
-        run: helm plugin install https://github.com/jtyr/kubeconform-helm
-
-      - name: Install chart-testing
-        uses: helm/chart-testing-action@v2.6.1
-
-      - name: Run chart-testing lint
-        run: ct lint --config=charts/helm-chart/.helm-chart-testing.yaml
-
-      - name: Start kind cluster
+          version: v3.12.1
+      - uses: helm/chart-testing-action@v2.6.1
+      - id: list-changed
+        run: |
+          changed=$(ct list-changed --config=.ct.yml --target-branch ${{ github.event.repository.default_branch }})
+          if [[ -n "$changed" ]]; then
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          fi
+      - if: steps.list-changed.outputs.changed == 'true'
+        run: ct lint --config=.ct.yml --target-branch ${{ github.event.repository.default_branch }}
+      - if: steps.list-changed.outputs.changed == 'true'
         uses: helm/kind-action@v1.9.0
         with:
-          node_image: kindest/node:v1.29.2
-
-      - name: Deploy prometheus-operator
-        run: kubectl apply --server-side -f https://raw.githubusercontent.com/prometheus-operator/prometheus-operator/v0.54.0/example/prometheus-operator-crd/monitoring.coreos.com_servicemonitors.yaml
-
-      - name: Run chart-testing install
-        run: ct install --config=charts/helm-chart/.helm-chart-testing.yaml
+          node_image: kindest/node:v1.29.0
+      - if: steps.list-changed.outputs.changed == 'true'
+        run: ct install --target-branch ${{ github.event.repository.default_branch }}

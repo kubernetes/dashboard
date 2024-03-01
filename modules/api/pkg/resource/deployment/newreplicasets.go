@@ -21,10 +21,10 @@ import (
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	client "k8s.io/client-go/kubernetes"
 
-	"k8s.io/dashboard/api/pkg/errors"
 	"k8s.io/dashboard/api/pkg/resource/common"
 	"k8s.io/dashboard/api/pkg/resource/dataselect"
 	"k8s.io/dashboard/api/pkg/resource/replicaset"
+	"k8s.io/dashboard/errors"
 )
 
 // GetDeploymentNewReplicaSet returns old replica sets targeting Deployment with given name
@@ -65,7 +65,7 @@ func GetDeploymentNewReplicaSet(client client.Interface, dsQuery *dataselect.Dat
 
 	rawEvents := <-channels.EventList.List
 	err = <-channels.EventList.Error
-	nonCriticalErrors, criticalError := errors.HandleError(err)
+	nonCriticalErrors, criticalError := errors.ExtractErrors(err)
 	if criticalError != nil {
 		return newReplicaSet, criticalError
 	}
