@@ -1282,7 +1282,7 @@
       <trans-unit id="765635835361713756" datatype="html">
         <source> Preview </source>
       </trans-unit>
-      <trans-unit id="2330577642930707695" datatype="html">
+      <trans-unit id="1293084960403366485" datatype="html">
         <source> Cancel </source>
       </trans-unit>
       <trans-unit id="7680153547364305148" datatype="html">
@@ -1614,9 +1614,6 @@
       <trans-unit id="1089159169028543625" datatype="html">
         <source> Config and Storage </source>
       </trans-unit>
-      <trans-unit id="1293084960403366485" datatype="html">
-        <source> Cancel </source>
-      </trans-unit>
       <trans-unit id="1605722877027082425" datatype="html">
         <source> Mounts </source>
       </trans-unit>
@@ -1652,6 +1649,9 @@
       </trans-unit>
       <trans-unit id="2266759289979755671" datatype="html">
         <source> Stateful Sets </source>
+      </trans-unit>
+      <trans-unit id="2330577642930707695" datatype="html">
+        <source> Cancel </source>
       </trans-unit>
       <trans-unit id="2346516904664196196" datatype="html">
         <source> Workloads </source>

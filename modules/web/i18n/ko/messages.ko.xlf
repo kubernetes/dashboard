@@ -1740,7 +1740,7 @@
         <source> Preview </source>
         <target state="new">미리보기</target>
       </trans-unit>
-      <trans-unit id="2330577642930707695" datatype="html">
+      <trans-unit id="1293084960403366485" datatype="html">
         <source> Cancel </source>
         <target state="new">취소</target>
       </trans-unit>
@@ -2184,9 +2184,21 @@
         <source> Sign out </source>
         <target state="new"> Sign out </target>
       </trans-unit>
+      <trans-unit id="4861926948802653243" datatype="html">
+        <source> Yes </source>
+        <target state="new"> Yes </target>
+      </trans-unit>
+      <trans-unit id="3603720768157919481" datatype="html">
+        <source> No </source>
+        <target state="new"> No </target>
+      </trans-unit>
       <trans-unit id="3620188369327429839" datatype="html">
         <source> Save </source>
         <target state="new"> Save </target>
+      </trans-unit>
+      <trans-unit id="6992582657488330431" datatype="html">
+        <source> Reload </source>
+        <target state="new"> Reload </target>
       </trans-unit>
       <trans-unit id="801262465601924408" datatype="html">
         <source> Abort </source>
@@ -2195,6 +2207,38 @@
       <trans-unit id="5547981558491672240" datatype="html">
         <source> Close </source>
         <target state="new"> Close </target>
+      </trans-unit>
+      <trans-unit id="5377078063439833222" datatype="html">
+        <source> Edit </source>
+        <target state="new"> Edit </target>
+      </trans-unit>
+      <trans-unit id="2172902003676402663" datatype="html">
+        <source> Refresh </source>
+        <target state="new"> Refresh </target>
+      </trans-unit>
+      <trans-unit id="6660925946511264619" datatype="html">
+        <source> Delete </source>
+        <target state="new"> Delete </target>
+      </trans-unit>
+      <trans-unit id="2330577642930707695" datatype="html">
+        <source> Cancel </source>
+        <target state="new"> Cancel </target>
+      </trans-unit>
+      <trans-unit id="2592690450389009216" datatype="html">
+        <source> Update </source>
+        <target state="new"> Update </target>
+      </trans-unit>
+      <trans-unit id="6096531998816402984" datatype="html">
+        <source> Restart </source>
+        <target state="new"> Restart </target>
+      </trans-unit>
+      <trans-unit id="6102980706073008651" datatype="html">
+        <source> Scale </source>
+        <target state="new"> Scale </target>
+      </trans-unit>
+      <trans-unit id="8425620343514116260" datatype="html">
+        <source> Trigger </source>
+        <target state="new"> Trigger </target>
       </trans-unit>
       <trans-unit id="950338657895578107" datatype="html">
         <source> Image </source>
@@ -2232,26 +2276,6 @@
         <source> Mounts </source>
         <target state="new"> Mounts </target>
       </trans-unit>
-      <trans-unit id="2592690450389009216" datatype="html">
-        <source> Update </source>
-        <target state="new"> Update </target>
-      </trans-unit>
-      <trans-unit id="6660925946511264619" datatype="html">
-        <source> Delete </source>
-        <target state="new"> Delete </target>
-      </trans-unit>
-      <trans-unit id="6096531998816402984" datatype="html">
-        <source> Restart </source>
-        <target state="new"> Restart </target>
-      </trans-unit>
-      <trans-unit id="6102980706073008651" datatype="html">
-        <source> Scale </source>
-        <target state="new"> Scale </target>
-      </trans-unit>
-      <trans-unit id="8425620343514116260" datatype="html">
-        <source> Trigger </source>
-        <target state="new"> Trigger </target>
-      </trans-unit>
       <trans-unit id="8778616811237742446" datatype="html">
         <source> Name </source>
         <target state="new"> Name </target>
@@ -2276,21 +2300,13 @@
         <source> Images </source>
         <target state="new"> Images </target>
       </trans-unit>
+      <trans-unit id="4978898910152922146" datatype="html">
+        <source> Ingresses </source>
+        <target state="new"> Ingresses </target>
+      </trans-unit>
       <trans-unit id="2067623164770526649" datatype="html">
         <source> Rules </source>
         <target state="new"> Rules </target>
-      </trans-unit>
-      <trans-unit id="5377078063439833222" datatype="html">
-        <source> Edit </source>
-        <target state="new"> Edit </target>
-      </trans-unit>
-      <trans-unit id="4861926948802653243" datatype="html">
-        <source> Yes </source>
-        <target state="new"> Yes </target>
-      </trans-unit>
-      <trans-unit id="3603720768157919481" datatype="html">
-        <source> No </source>
-        <target state="new"> No </target>
       </trans-unit>
       <trans-unit id="4770199518844597200" datatype="html">
         <source> Metadata </source>
@@ -2332,10 +2348,6 @@
         <source> Cluster Role Bindings </source>
         <target state="new"> Cluster Role Bindings </target>
       </trans-unit>
-      <trans-unit id="4978898910152922146" datatype="html">
-        <source> Ingresses </source>
-        <target state="new"> Ingresses </target>
-      </trans-unit>
       <trans-unit id="4762465415007246389" datatype="html">
         <source> Cluster Roles </source>
         <target state="new"> Cluster Roles </target>
@@ -2352,10 +2364,6 @@
         <source> Objects </source>
         <target state="new"> Objects </target>
       </trans-unit>
-      <trans-unit id="8176835239236146567" datatype="html">
-        <source> Versions </source>
-        <target state="new"> Versions </target>
-      </trans-unit>
       <trans-unit id="5259740794430737809" datatype="html">
         <source> Cron Jobs </source>
         <target state="new"> Cron Jobs </target>
@@ -2364,13 +2372,33 @@
         <source> Daemon Sets </source>
         <target state="new"> Daemon Sets </target>
       </trans-unit>
-      <trans-unit id="6135730309605714166" datatype="html">
-        <source> Deployments </source>
-        <target state="new"> Deployments </target>
+      <trans-unit id="8176835239236146567" datatype="html">
+        <source> Versions </source>
+        <target state="new"> Versions </target>
       </trans-unit>
       <trans-unit id="7435061610486266714" datatype="html">
         <source> Events </source>
         <target state="new"> Events </target>
+      </trans-unit>
+      <trans-unit id="6135730309605714166" datatype="html">
+        <source> Deployments </source>
+        <target state="new"> Deployments </target>
+      </trans-unit>
+      <trans-unit id="2744671069852563724" datatype="html">
+        <source> Jobs </source>
+        <target state="new"> Jobs </target>
+      </trans-unit>
+      <trans-unit id="7336635620626168769" datatype="html">
+        <source> Replica Sets </source>
+        <target state="new"> Replica Sets </target>
+      </trans-unit>
+      <trans-unit id="8932897792111782297" datatype="html">
+        <source> Replication Controllers </source>
+        <target state="new"> Replication Controllers </target>
+      </trans-unit>
+      <trans-unit id="2266759289979755671" datatype="html">
+        <source> Stateful Sets </source>
+        <target state="new"> Stateful Sets </target>
       </trans-unit>
       <trans-unit id="4259860093573691667" datatype="html">
         <source> Ingress Classes </source>
@@ -2396,29 +2424,13 @@
         <source> Persistent Volume Claims </source>
         <target state="new"> Persistent Volume Claims </target>
       </trans-unit>
-      <trans-unit id="2744671069852563724" datatype="html">
-        <source> Jobs </source>
-        <target state="new"> Jobs </target>
-      </trans-unit>
-      <trans-unit id="7336635620626168769" datatype="html">
-        <source> Replica Sets </source>
-        <target state="new"> Replica Sets </target>
-      </trans-unit>
-      <trans-unit id="8932897792111782297" datatype="html">
-        <source> Replication Controllers </source>
-        <target state="new"> Replication Controllers </target>
-      </trans-unit>
-      <trans-unit id="2266759289979755671" datatype="html">
-        <source> Stateful Sets </source>
-        <target state="new"> Stateful Sets </target>
+      <trans-unit id="6587107798974923353" datatype="html">
+        <source> Roles </source>
+        <target state="new"> Roles </target>
       </trans-unit>
       <trans-unit id="7849764450282789949" datatype="html">
         <source> Role Bindings </source>
         <target state="new"> Role Bindings </target>
-      </trans-unit>
-      <trans-unit id="6587107798974923353" datatype="html">
-        <source> Roles </source>
-        <target state="new"> Roles </target>
       </trans-unit>
       <trans-unit id="1752396967771808140" datatype="html">
         <source> Services </source>
@@ -2436,34 +2448,6 @@
         <source> Sysctls </source>
         <target state="new"> Sysctls </target>
       </trans-unit>
-      <trans-unit id="2418254154140218613" datatype="html">
-        <source> Subjects </source>
-        <target state="new"> Subjects </target>
-      </trans-unit>
-      <trans-unit id="1293084960403366485" datatype="html">
-        <source> Cancel </source>
-        <target state="new"> Cancel </target>
-      </trans-unit>
-      <trans-unit id="6992582657488330431" datatype="html">
-        <source> Reload </source>
-        <target state="new"> Reload </target>
-      </trans-unit>
-      <trans-unit id="691615104272129409" datatype="html">
-        <source> Provisioner </source>
-        <target state="new"> Provisioner </target>
-      </trans-unit>
-      <trans-unit id="2172902003676402663" datatype="html">
-        <source> Refresh </source>
-        <target state="new"> Refresh </target>
-      </trans-unit>
-      <trans-unit id="326819936092149573" datatype="html">
-        <source> Data </source>
-        <target state="new"> Data </target>
-      </trans-unit>
-      <trans-unit id="79873745480177398" datatype="html">
-        <source> Controller </source>
-        <target state="new"> Controller </target>
-      </trans-unit>
       <trans-unit id="2346516904664196196" datatype="html">
         <source> Workloads </source>
         <target state="new"> Workloads </target>
@@ -2475,6 +2459,22 @@
       <trans-unit id="1774910053126751262" datatype="html">
         <source> Cluster </source>
         <target state="new"> Cluster </target>
+      </trans-unit>
+      <trans-unit id="2418254154140218613" datatype="html">
+        <source> Subjects </source>
+        <target state="new"> Subjects </target>
+      </trans-unit>
+      <trans-unit id="691615104272129409" datatype="html">
+        <source> Provisioner </source>
+        <target state="new"> Provisioner </target>
+      </trans-unit>
+      <trans-unit id="326819936092149573" datatype="html">
+        <source> Data </source>
+        <target state="new"> Data </target>
+      </trans-unit>
+      <trans-unit id="79873745480177398" datatype="html">
+        <source> Controller </source>
+        <target state="new"> Controller </target>
       </trans-unit>
       <trans-unit id="7457787190624460420" datatype="html">
         <source> Node </source>
@@ -2496,18 +2496,6 @@
         <source> Containers </source>
         <target state="new"> Containers </target>
       </trans-unit>
-      <trans-unit id="2401308451055175905" datatype="html">
-        <source> Storage Class </source>
-        <target state="new"> Storage Class </target>
-      </trans-unit>
-      <trans-unit id="1951040860650392508" datatype="html">
-        <source> Capacity </source>
-        <target state="new"> Capacity </target>
-      </trans-unit>
-      <trans-unit id="7717653945231723231" datatype="html">
-        <source> Access Modes </source>
-        <target state="new"> Access Modes </target>
-      </trans-unit>
       <trans-unit id="5747310913564651286" datatype="html">
         <source> Scope </source>
         <target state="new"> Scope </target>
@@ -2528,22 +2516,6 @@
         <source> Singular </source>
         <target state="new"> Singular </target>
       </trans-unit>
-      <trans-unit id="4044364205215189352" datatype="html">
-        <source> There is no data to display. </source>
-        <target state="new"> There is no data to display. </target>
-      </trans-unit>
-      <trans-unit id="7840301863034787689" datatype="html">
-        <source> Type </source>
-        <target state="new"> Type </target>
-      </trans-unit>
-      <trans-unit id="6531676960731973663" datatype="html">
-        <source> Cluster IP </source>
-        <target state="new"> Cluster IP </target>
-      </trans-unit>
-      <trans-unit id="87114898918703327" datatype="html">
-        <source> Selector </source>
-        <target state="new"> Selector </target>
-      </trans-unit>
       <trans-unit id="7962024126835900317" datatype="html">
         <source> Workloads </source>
         <target state="new"> Workloads </target>
@@ -2556,13 +2528,9 @@
         <source> Config and Storage </source>
         <target state="new"> Config and Storage </target>
       </trans-unit>
-      <trans-unit id="7708270344948043036" datatype="html">
-        <source>
-          <x id="INTERPOLATION" equiv-text="&quot;\uFFFD0\uFFFD&quot;"/>
-        </source>
-        <target state="new">
-          <x id="INTERPOLATION" equiv-text="&quot;\uFFFD0\uFFFD&quot;"/>
-        </target>
+      <trans-unit id="1951040860650392508" datatype="html">
+        <source> Capacity </source>
+        <target state="new"> Capacity </target>
       </trans-unit>
       <trans-unit id="6188069562258249012" datatype="html">
         <source> Claim </source>
@@ -2571,6 +2539,10 @@
       <trans-unit id="588328081066368660" datatype="html">
         <source> Source </source>
         <target state="new"> Source </target>
+      </trans-unit>
+      <trans-unit id="7840301863034787689" datatype="html">
+        <source> Type </source>
+        <target state="new"> Type </target>
       </trans-unit>
       <trans-unit id="3158035581938683136" datatype="html">
         <source> Path </source>
@@ -2603,6 +2575,34 @@
       <trans-unit id="2179675132693271881" datatype="html">
         <source> User </source>
         <target state="new"> User </target>
+      </trans-unit>
+      <trans-unit id="2401308451055175905" datatype="html">
+        <source> Storage Class </source>
+        <target state="new"> Storage Class </target>
+      </trans-unit>
+      <trans-unit id="7717653945231723231" datatype="html">
+        <source> Access Modes </source>
+        <target state="new"> Access Modes </target>
+      </trans-unit>
+      <trans-unit id="4044364205215189352" datatype="html">
+        <source> There is no data to display. </source>
+        <target state="new"> There is no data to display. </target>
+      </trans-unit>
+      <trans-unit id="6531676960731973663" datatype="html">
+        <source> Cluster IP </source>
+        <target state="new"> Cluster IP </target>
+      </trans-unit>
+      <trans-unit id="87114898918703327" datatype="html">
+        <source> Selector </source>
+        <target state="new"> Selector </target>
+      </trans-unit>
+      <trans-unit id="7708270344948043036" datatype="html">
+        <source>
+          <x id="INTERPOLATION" equiv-text="&quot;\uFFFD0\uFFFD&quot;"/>
+        </source>
+        <target state="new">
+          <x id="INTERPOLATION" equiv-text="&quot;\uFFFD0\uFFFD&quot;"/>
+        </target>
       </trans-unit>
       <trans-unit id="3292993112071634423" datatype="html">
         <source> Strategy </source>
