@@ -29,6 +29,7 @@ WORKDIR /workspace
 # Copy required local modules
 COPY /common/certificates /workspace/common/certificates
 COPY /common/errors /workspace/common/errors
+COPY /common/helpers /workspace/common/helpers
 COPY /common/client /workspace/common/client
 COPY /common/types /workspace/common/types
 
