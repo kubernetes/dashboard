@@ -99,3 +99,5 @@ spec:
       tolerations:
       {{ toYaml . | nindent 8 }}
       {{- end }}
+
+      serviceAccountName: {{ template "kubernetes-dashboard.fullname" . }}

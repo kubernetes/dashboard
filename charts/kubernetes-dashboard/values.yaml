@@ -79,7 +79,7 @@ app:
     #  #  Is this CRD namespaced?
     #  namespaced: true
   ingress:
-    enabled: false
+    enabled: true
     hosts:
     # Keep 'localhost' host only if you want to access Dashboard using 'kubectl port-forward ...' on:
     # https://localhost:8443
@@ -88,6 +88,7 @@ app:
     ingressClassName: internal-nginx
     pathType: ImplementationSpecific
     secretName: kubernetes-dashboard-certs
+    path: /
     issuer:
       name: selfsigned
       # Scope determines what kind of issuer annotation will be used on ingress resource
@@ -97,9 +98,7 @@ app:
       scope: default
     labels: {}
     annotations: {}
-    paths:
-      web: /
-      api: /api
+
   # Use the following toleration if Dashboard can be deployed on a tainted control-plane nodes
   # - key: node-role.kubernetes.io/control-plane
   #   effect: NoSchedule
@@ -136,7 +135,6 @@ auth:
   # Labels & annotations shared between API related resources
   labels: { }
   annotations: { }
-
 
 # API deployment configuration
 api:
@@ -317,6 +315,9 @@ kong:
     enabled: false
   dblessConfig:
     configMap: kong-dbless-config
+  proxy:
+    http:
+      enabled: false
 
 ## Optional Cert Manager sub-chart configuration
 ## Enable this if you don't already have cert-manager enabled on your cluster.

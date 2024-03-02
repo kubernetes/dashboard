@@ -26,7 +26,7 @@ var defaultSettings = Settings{
 	ItemsPerPage:                     lo.ToPtr(10),
 	LabelsLimit:                      lo.ToPtr(3),
 	LogsAutoRefreshTimeInterval:      lo.ToPtr(5),
-	ResourceAutoRefreshTimeInterval:  lo.ToPtr(5),
+	ResourceAutoRefreshTimeInterval:  lo.ToPtr(10),
 	DisableAccessDeniedNotifications: lo.ToPtr(false),
 	DefaultNamespace:                 lo.ToPtr("default"),
 	NamespaceFallbackList:            []string{"default"},

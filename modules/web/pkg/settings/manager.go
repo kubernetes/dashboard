@@ -25,8 +25,9 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/types"
 	"k8s.io/client-go/kubernetes"
-	"k8s.io/dashboard/web/pkg/args"
 	"k8s.io/klog/v2"
+
+	"k8s.io/dashboard/web/pkg/args"
 
 	"k8s.io/dashboard/errors"
 )
@@ -122,6 +123,9 @@ func (sm *SettingsManager) restoreConfigMap(client kubernetes.Interface) error {
 		ObjectMeta: metav1.ObjectMeta{
 			Name:      args.SettingsConfigMapName(),
 			Namespace: args.Namespace(),
+			Labels: map[string]string{
+				"app.kubernetes.io/managed-by": "Helm",
+			},
 		},
 		Data: map[string]string{
 			ConfigMapSettingsKey: defaultSettings.Marshal(),

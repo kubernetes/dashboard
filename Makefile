@@ -67,7 +67,7 @@ tools: $(PRE) ## Installs required tools
 #
 # Note: Make sure that the port 8080 (Web HTTP) is free on your localhost
 .PHONY: serve
-serve: $(PRE) --ensure-kind-cluster ## Starts development version of the application on http://localhost:8080
+serve: $(PRE) --ensure-kind-cluster --ensure-metrics-server ## Starts development version of the application on http://localhost:8080
 	@KUBECONFIG=$(KIND_CLUSTER_INTERNAL_KUBECONFIG_PATH) \
 	SYSTEM_BANNER=$(SYSTEM_BANNER) \
 	SYSTEM_BANNER_SEVERITY=$(SYSTEM_BANNER_SEVERITY) \
@@ -86,7 +86,7 @@ serve: $(PRE) --ensure-kind-cluster ## Starts development version of the applica
 #
 # Note: Make sure that the ports 8443 (Gateway HTTPS) and 8080 (Gateway HTTP) are free on your localhost
 .PHONY: run
-run: $(PRE) --ensure-kind-cluster ## Starts production version of the application on https://localhost:8443 and https://localhost:8000
+run: $(PRE) --ensure-kind-cluster --ensure-metrics-server ## Starts production version of the application on https://localhost:8443 and https://localhost:8000
 	@KUBECONFIG=$(KIND_CLUSTER_INTERNAL_KUBECONFIG_PATH) \
 	SYSTEM_BANNER=$(SYSTEM_BANNER) \
 	SYSTEM_BANNER_SEVERITY=$(SYSTEM_BANNER_SEVERITY) \
@@ -141,5 +141,5 @@ helm-uninstall: ## Uninstall helm dev installation of Kubernetes Dashboard
 
 .PHONY: --clean
 --clean:
-	@echo "[Global] Cleaning up"
+	@echo "[root] Cleaning up"
 	@rm -rf $(TMP_DIRECTORY)

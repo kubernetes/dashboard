@@ -14,7 +14,7 @@
 
 {{- if .Values.app.ingress.enabled }}
 {{- if not (or (eq .Values.app.ingress.issuer.scope "disabled") (eq .Values.app.ingress.issuer.scope "default") (eq .Values.app.ingress.issuer.scope "cluster")) }}
-{{- fail "value of .Values.app.ingress.issuer.scope must be one of [default, cluster]"}}
+{{- fail "value of .Values.app.ingress.issuer.scope must be one of [default, cluster, disabled]"}}
 {{- end }}
 
 kind: Ingress
@@ -33,6 +33,8 @@ metadata:
     cert-manager.io/cluster-issuer: {{ .Values.app.ingress.issuer.name }}
     {{- end }}
     {{- if eq .Values.app.ingress.ingressClassName "internal-nginx" }}
+    nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
+    nginx.ingress.kubernetes.io/ssl-passthrough: "true"
     nginx.ingress.kubernetes.io/ssl-redirect: "true"
     {{- end }}
     {{- with .Values.app.ingress.annotations }}
@@ -53,37 +55,23 @@ spec:
     - host: {{ $host }}
       http:
         paths:
-          - path: {{ $.Values.app.ingress.paths.web }}
+          - path: {{ $.Values.app.ingress.path }}
             pathType: {{ $.Values.app.ingress.pathType }}
             backend:
               service:
-                name: {{ template "kubernetes-dashboard.fullname" $ }}-{{ $.Values.web.role }}
+                name: {{ template "kong.fullname" (index $.Subcharts "kong") }}-proxy
                 port:
-                  name: {{ $.Values.web.role }}
-          - path: {{ $.Values.app.ingress.paths.api }}
-            pathType: {{ $.Values.app.ingress.pathType }}
-            backend:
-              service:
-                name: {{ template "kubernetes-dashboard.fullname" $ }}-{{ $.Values.api.role }}
-                port:
-                  name: {{ $.Values.api.role }}
+                  number: {{ $.Values.kong.proxy.tls.servicePort }}
     {{- end }}
     {{- else }}
     - http:
         paths:
-          - path: {{ .Values.app.ingress.paths.web }}
+          - path: {{ .Values.app.ingress.path }}
             pathType: {{ .Values.app.ingress.pathType }}
             backend:
               service:
-                name: {{ template "kubernetes-dashboard.fullname" $ }}-{{ .Values.web.role }}
+                name: {{ template "kong.fullname" (index $.Subcharts "kong") }}-proxy
                 port:
-                  name: {{ .Values.web.role }}
-          - path: {{ .Values.app.ingress.paths.api }}
-            pathType: {{ .Values.app.ingress.pathType }}
-            backend:
-              service:
-                name: {{ template "kubernetes-dashboard.fullname" $ }}-{{ .Values.api.role }}
-                port:
-                  name: {{ .Values.api.role }}
+                  number: {{ $.Values.kong.proxy.tls.servicePort }}
     {{- end }}
 {{- end }}

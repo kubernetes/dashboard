@@ -264,7 +264,6 @@ func (self sidecarClient) unmarshalType(path string, v interface{}) error {
 // e.g., http://localhost:8002.
 func CreateSidecarClient(host string, k8sClient kubernetes.Interface) (
 	metricapi.MetricClient, error) {
-
 	if host == "" && k8sClient != nil {
 		log.Print("Creating in-cluster Sidecar client")
 		c := inClusterSidecarClient{client: k8sClient.CoreV1().RESTClient()}

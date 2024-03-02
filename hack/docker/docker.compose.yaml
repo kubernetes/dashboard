@@ -95,22 +95,6 @@ services:
     tmpfs:
       - /tmp
 
-  metrics-server:
-    container_name: metrics-server
-    image: registry.k8s.io/metrics-server/metrics-server:v0.7.0
-    command:
-      - "--cert-dir=/tmp"
-      - "--kubelet-preferred-address-types=InternalIP,ExternalIP,Hostname"
-      - "--metric-resolution=15s"
-      - "--kubelet-insecure-tls"
-      - "--authentication-kubeconfig=/.kube/config"
-      - "--authorization-kubeconfig=/.kube/config"
-      - "--kubeconfig=/.kube/config"
-    volumes:
-      - ${KUBECONFIG:?}:/.kube/config
-    tmpfs:
-      - /tmp
-
 networks:
   default:
     name: kind
