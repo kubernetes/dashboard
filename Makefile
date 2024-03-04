@@ -130,6 +130,7 @@ helm: --ensure-kind-cluster image --kind-load-images
 		--set web.image.tag=latest \
 		--set metricsScraper.image.repository=dashboard-scraper \
 		--set metricsScraper.image.tag=latest \
+		--set app.mode=api \
 		charts/kubernetes-dashboard
 
 #

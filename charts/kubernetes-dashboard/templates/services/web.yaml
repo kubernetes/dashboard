@@ -12,6 +12,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+{{- if eq .Values.app.mode "dashboard" -}}
+
 kind: Service
 apiVersion: v1
 metadata:
@@ -30,3 +32,5 @@ spec:
   selector:
     {{- include "kubernetes-dashboard.matchLabels" . | nindent 4 }}
     app.kubernetes.io/name: {{ template "kubernetes-dashboard.name" . }}-{{ .Values.web.role }}
+
+{{- end -}}

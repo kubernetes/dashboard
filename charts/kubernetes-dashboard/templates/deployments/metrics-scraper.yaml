@@ -12,7 +12,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-{{ if .Values.metricsScraper.enabled }}
+{{- if and .Values.metricsScraper.enabled (eq .Values.app.mode "dashboard") -}}
+
 kind: Deployment
 apiVersion: apps/v1
 metadata:
@@ -104,5 +105,5 @@ spec:
       {{ toYaml . | nindent 8 }}
       {{- end }}
 
-      serviceAccountName: {{ template "kubernetes-dashboard.fullname" . }}
+      serviceAccountName: {{ template "kubernetes-dashboard.fullname" . }}-{{ .Values.metricsScraper.role }}
 {{ end }}

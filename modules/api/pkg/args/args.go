@@ -53,7 +53,7 @@ var (
 	argAutoGenerateCertificates  = pflag.Bool("auto-generate-certificates", false, "enables automatic certificates generation used to serve HTTPS")
 	argNamespace                 = pflag.String("namespace", helpers.GetEnv("POD_NAMESPACE", "kubernetes-dashboard"), "Namespace to use when accessing Dashboard specific resources, i.e. metrics scraper service")
 	argMetricsScraperServiceName = pflag.String("metrics-scraper-service-name", "kubernetes-dashboard-metrics-scraper", "name of the dashboard metrics scraper service")
-	argEnableCSRFProtection      = pflag.Bool("enable-csrf-protection", true, "enabled CSRF protection and makes sure that every non-idempotent action contains a valid CSRF token")
+	argDisableCSRFProtection     = pflag.Bool("disable-csrf-protection", false, "enabled CSRF protection and makes sure that every non-idempotent action contains a valid CSRF token")
 )
 
 func init() {
@@ -140,5 +140,5 @@ func Namespace() string {
 }
 
 func IsCSRFProtectionEnabled() bool {
-	return *argEnableCSRFProtection
+	return !*argDisableCSRFProtection
 }

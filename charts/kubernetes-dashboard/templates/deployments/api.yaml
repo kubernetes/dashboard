@@ -100,4 +100,4 @@ spec:
       {{ toYaml . | nindent 8 }}
       {{- end }}
 
-      serviceAccountName: {{ template "kubernetes-dashboard.fullname" . }}
+      serviceAccountName: {{ template "kubernetes-dashboard.fullname" . }}-{{ .Values.api.role }}

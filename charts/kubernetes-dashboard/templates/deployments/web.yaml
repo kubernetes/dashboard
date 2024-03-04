@@ -12,6 +12,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+{{- if eq .Values.app.mode "dashboard" -}}
+
 kind: Deployment
 apiVersion: apps/v1
 metadata:
@@ -99,4 +101,5 @@ spec:
       {{ toYaml . | nindent 8 }}
       {{- end }}
 
-      serviceAccountName: {{ template "kubernetes-dashboard.fullname" . }}
+      serviceAccountName: {{ template "kubernetes-dashboard.fullname" . }}-{{ .Values.web.role }}
+{{- end -}}

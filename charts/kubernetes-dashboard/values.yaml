@@ -14,6 +14,10 @@
 
 # General configuration shared across resources
 app:
+  # Mode determines if chart should deploy a full Dashboard with all containers or just the API.
+  # - dashboard - deploys all the containers
+  # - api - deploys just the API
+  mode: 'dashboard'
   image:
     pullPolicy: IfNotPresent
     pullSecrets: []
@@ -57,7 +61,6 @@ app:
   annotations: {}
   settings:
     ## Global dashboard settings
-    ## Note: Use all or none. Dashboard does not support default value merging currently.
     global:
     #  # Cluster name that appears in the browser window title if it is set
     #  clusterName: ""
@@ -98,7 +101,6 @@ app:
       scope: default
     labels: {}
     annotations: {}
-
   # Use the following toleration if Dashboard can be deployed on a tainted control-plane nodes
   # - key: node-role.kubernetes.io/control-plane
   #   effect: NoSchedule
