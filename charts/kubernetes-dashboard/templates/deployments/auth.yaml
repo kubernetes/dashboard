@@ -78,6 +78,12 @@ spec:
           resources:
           {{ toYaml . | nindent 12 }}
           {{- end }}
+
+      {{- with.Values.app.image.pullSecrets }}
+      imagePullSecrets:
+      {{ toYaml . | nindent 8 }}
+      {{- end }}
+
       {{- with .Values.app.security.securityContext }}
       securityContext:
       {{ toYaml . | nindent 8 }}

@@ -89,6 +89,9 @@ app:
     - localhost
     # - kubernetes.dashboard.domain.com
     ingressClassName: internal-nginx
+    # Use only if your ingress controllers support default ingress classes.
+    # If set to true ingressClassName will be ignored and not added to the Ingress resources.
+    # It should fall back to using IngressClass marked as the default.
     useDefaultIngressClass: false
     pathType: ImplementationSpecific
     secretName: kubernetes-dashboard-certs
