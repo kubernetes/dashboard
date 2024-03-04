@@ -24,8 +24,6 @@ on:
       - hack/gateway
     tags:
       - "web/v*.*.*"
-  pull_request:
-    branches: [master] # TODO: For tests only.
 permissions:
   contents: read
   id-token: write
