@@ -33,6 +33,32 @@ env:
   NODE_OPTIONS: "--max-old-space-size=8192"
   TERM: xterm
 jobs:
+  pull-request-size-label:
+    name: Pull request size label
+    runs-on: ubuntu-latest
+    steps:
+      - uses: pascalgn/size-label-action@v0.5.0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  pull-request-labels-check:
+    name: Pull request labels check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: mheap/github-action-required-labels@v2
+        with:
+          mode: exactly
+          count: 1
+          labels: "kind/bug, kind/cleanup, kind/feature, kind/i18n, dependencies"
+
+  pull-request-title-check:
+    name: Pull request title check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: amannn/action-semantic-pull-request@v5
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
   dependency-review:
     name: Dependency review
     permissions:
