@@ -22,7 +22,6 @@ on:
       - modules/common
       - hack/docker
       - hack/gateway
-  create:
     tags:
       - "api/v*.*.*"
 permissions:
@@ -46,7 +45,7 @@ jobs:
             ghcr.io/kubernetes/dashboard-api
             docker.io/kubernetesui/dashboard-api
           tags: |
-            type=semver,pattern={{version}}
+            type=semver,pattern={{module}}/{{version}}
             type=raw,value=latest,enable=${{ github.ref == format('refs/heads/{0}', 'master') }}
       - uses: docker/setup-qemu-action@v3.0.0
       - uses: docker/setup-buildx-action@v3.0.0
