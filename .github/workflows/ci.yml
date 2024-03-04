@@ -34,10 +34,10 @@ env:
   TERM: xterm
 jobs:
   pull-request-size-label:
+    name: Pull request size label
     runs-on: ubuntu-latest
     steps:
-      - name: Pull request size label
-        uses: pascalgn/size-label-action@v0.5.0
+      - uses: pascalgn/size-label-action@v0.5.0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
@@ -50,6 +50,14 @@ jobs:
           mode: exactly
           count: 1
           labels: "bug-fix, enhancement, breaking-change, dependencies, release"
+
+  pull-request-title-check:
+    name: Pull request title check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: amannn/action-semantic-pull-request@v5
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   dependency-review:
     name: Dependency review
