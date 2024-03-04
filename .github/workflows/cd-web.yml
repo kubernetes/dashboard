@@ -63,7 +63,7 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
       - uses: docker/build-push-action@v5
         with:
-          context: modules
+          context: .
           file: modules/web/Dockerfile
           push: false # TODO
           tags: ${{ steps.meta.outputs.tags }}
