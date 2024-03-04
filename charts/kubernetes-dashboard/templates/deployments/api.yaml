@@ -78,9 +78,11 @@ spec:
           {{ toYaml . | nindent 12 }}
           {{- end }}
 
-      {{- with.Values.app.image.pullSecrets }}
+      {{- with .Values.app.image.pullSecrets }}
       imagePullSecrets:
-      {{ toYaml . | nindent 8 }}
+      {{- range . }}
+        - name: {{ . }}
+      {{- end }}
       {{- end }}
 
       {{- with .Values.app.security.securityContext }}
