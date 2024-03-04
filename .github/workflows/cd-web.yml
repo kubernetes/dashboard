@@ -24,6 +24,8 @@ on:
       - hack/gateway
     tags:
       - "web/v*.*.*"
+  pull_request:
+    branches: [master] # TODO: For tests only.
 permissions:
   contents: read
   id-token: write
@@ -66,7 +68,7 @@ jobs:
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
-          platforms: linux/amd64,linux/arm64,linux/arm,linux/ppc64le,linux/s390x
+          # platforms: linux/amd64,linux/arm64,linux/arm,linux/ppc64le,linux/s390x # TODO: For tests only.
           cache-from: type=gha
           cache-to: type=gha,mode=max
           build-args: |
