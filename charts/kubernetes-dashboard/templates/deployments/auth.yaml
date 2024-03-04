@@ -13,7 +13,7 @@
 # limitations under the License.
 
 {{- include "kubernetes-dashboard.validate.mode" $ -}}
-{{- if eq .Values.app.mode "dashboard" -}}
+{{- if eq .Values.app.mode "dashboard" }}
 
 kind: Deployment
 apiVersion: apps/v1

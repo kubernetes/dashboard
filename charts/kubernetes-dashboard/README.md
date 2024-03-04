@@ -5,17 +5,6 @@
 [![GitHub release](https://img.shields.io/github/release/kubernetes/dashboard.svg)](https://github.com/kubernetes/dashboard/releases/latest)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://github.com/kubernetes/dashboard/blob/master/LICENSE)
 
-# ! Breaking change !
-Starting from the release `v7` for the Helm chart and `v3` for the Kubernetes Dashboard, underlying architecture has changed, and it requires a clean installation. Please remove previous installation first.
-
-Kubernetes Dashboard now uses `cert-manager` and `nginx-ingress-controller` by default to work properly. They will be automatically installed with the Helm chart. 
-In case you already have them installed, simply set `--set=nginx.enabled=false` and `--set=cert-manager.enabled=false` when installing the chart to disable installation of those dependencies.
-If you want to use different software in addition to disabling `nginx` and `cert-manager` you also need to set `--set=app.ingress.enabled=false` to make sure our default `Ingress` resource will not be installed.
-
-## Introduction
-
-[Kubernetes Dashboard](https://github.com/kubernetes/dashboard) is a general purpose, web-based UI for Kubernetes clusters. It allows users to manage applications running in the cluster and troubleshoot them, as well as manage the cluster itself.
-
 ## TL;DR
 
 ```console
@@ -25,7 +14,7 @@ helm repo add kubernetes-dashboard https://kubernetes.github.io/dashboard/
 helm upgrade --install kubernetes-dashboard kubernetes-dashboard/kubernetes-dashboard --create-namespace --namespace kubernetes-dashboard
 ```
 
-## Introduction
+# Introduction
 
 This chart bootstraps a [Kubernetes Dashboard](https://github.com/kubernetes/dashboard) deployment on
 a [Kubernetes](https://kubernetes.io) cluster using the [Helm](https://helm.sh) package manager.
@@ -109,6 +98,13 @@ kubectl label --overwrite ns kubernetes-dashboard pod-security.kubernetes.io/enf
 A major chart version change (like v1.2.3 -> v2.0.0) indicates that there is an
 incompatible breaking change needing manual actions.
 
+### Update from 7.x.x-alphaX to 7.x.x
+
+Due to further architecture changes do a clean installation of Kubernetes Dashboard when upgrading from alpha chart version.
+Default dependency on both `nginx-ingress-controller` and `cert-manager` have been removed in favor of using a single-container, DBless
+`kong` installation as a gateway that connects all our containers and exposes the UI. Users can then use any ingress controller or proxy
+in front of kong gateway.
+
 ### Upgrade from 6.x.x to 7.x.x
 
 We recommend doing a clean installation. Kubernetes Dashboard `v3` introduced a big architecture changes and now uses `cert-manager`, 
@@ -164,17 +160,3 @@ To do that you can follow the [guide](https://helm.sh/blog/migrate-from-helm-v2-
 
 For information about how to access, please read
 the [kubernetes-dashboard manual](https://github.com/kubernetes/dashboard)
-
-### Using the dashboard with 'kubectl proxy'
-
-When running 'kubectl proxy', the address `localhost:8001/ui` automatically expands to:
-
-- `http://localhost:8001/api/v1/namespaces/my-namespace/services/https:kubernetes-dashboard:https/proxy/`
-
-For this to reach the dashboard, the name of the service must be 'kubernetes-dashboard', not any other value as set by
-Helm.
-You can manually specify this using the value 'fullnameOverride':
-
-```yaml
-fullnameOverride: 'kubernetes-dashboard'
-```

@@ -89,6 +89,7 @@ app:
     - localhost
     # - kubernetes.dashboard.domain.com
     ingressClassName: internal-nginx
+    useDefaultIngressClass: false
     pathType: ImplementationSpecific
     secretName: kubernetes-dashboard-certs
     path: /
@@ -298,7 +299,6 @@ metricsScraper:
   labels: {}
   annotations: {}
 
-
 ## Optional Metrics Server sub-chart configuration
 ## Enable this if you don't already have metrics-server enabled on your cluster and
 ## want to use it with dashboard metrics-scraper
@@ -306,11 +306,13 @@ metricsScraper:
 ##  - https://github.com/kubernetes-sigs/metrics-server
 ##  - https://github.com/kubernetes-sigs/metrics-server/tree/master/charts/metrics-server
 metrics-server:
-  enabled: true
+  enabled: false
   args:
     - --kubelet-preferred-address-types=InternalIP
     - --kubelet-insecure-tls
 
+## Required Kong sub-chart with DBless configuration to act as a gateway
+## for our all containers.
 kong:
   enabled: true
   ingressController:

@@ -40,7 +40,9 @@ metadata:
     {{- end }}
   name: {{ template "kubernetes-dashboard.name" . }}
 spec:
+  {{- if not .Values.app.ingress.useDefaultIngressClass }}
   ingressClassName: {{ .Values.app.ingress.ingressClassName }}
+  {{- end }}
   {{- if .Values.app.ingress.hosts }}
   tls:
     - hosts:

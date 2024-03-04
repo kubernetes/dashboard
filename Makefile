@@ -117,7 +117,7 @@ image:
 #
 # Note: Requires kind to set up and run
 .PHONY: helm
-helm: --ensure-kind-cluster image --kind-load-images
+helm: # --ensure-kind-cluster image --kind-load-images
 	@helm upgrade \
 		--create-namespace \
 		--namespace kubernetes-dashboard \
@@ -130,10 +130,14 @@ helm: --ensure-kind-cluster image --kind-load-images
 		--set web.image.tag=latest \
 		--set metricsScraper.image.repository=dashboard-scraper \
 		--set metricsScraper.image.tag=latest \
-		--set app.mode=api \
+		--set metrics-server.enabled=true \
 		charts/kubernetes-dashboard
 
-#
+# To test API mode with helm below options can be used:
+#		--set app.mode=api \
+#		--set kong.enabled=false \
+#		--set api.containers.args={--metrics-provider=none} \
+
 .PHONY: helm-uninstall
 helm-uninstall: ## Uninstall helm dev installation of Kubernetes Dashboard
 	@helm uninstall -n kubernetes-dashboard kubernetes-dashboard
