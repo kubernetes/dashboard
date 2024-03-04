@@ -49,7 +49,7 @@ jobs:
         with:
           mode: exactly
           count: 1
-          labels: "bug-fix, enhancement, breaking-change, dependencies, release"
+          labels: "kind/bug, kind/cleanup, kind/feature, dependencies"
 
   pull-request-title-check:
     name: Pull request title check
