@@ -42,7 +42,7 @@ jobs:
         uses: docker/metadata-action@v5
         with:
           images: |
-            ghcr.io/kubernetes/dashboard-auth
+            ghcr.io/kubernetes/dashboard/dashboard-auth
             docker.io/kubernetesui/dashboard-auth
           tags: |
             type=raw,value=latest
