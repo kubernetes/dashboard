@@ -95,12 +95,14 @@ spec:
       {{ toYaml . | nindent 8 }}
       {{- end }}
 
-      {{- with .Values.api.nodeSelector }}
+      {{- if or .Values.api.nodeSelector .Values.app.scheduling.nodeSelector }}
       nodeSelector:
+      {{- with .Values.api.nodeSelector }}
       {{ toYaml . | nindent 8 }}
       {{- end }}
       {{- with .Values.app.scheduling.nodeSelector }}
       {{ toYaml . | nindent 8 }}
+      {{- end }}
       {{- end }}
 
       {{- with .Values.app.tolerations }}
