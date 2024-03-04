@@ -64,7 +64,11 @@ jobs:
       - uses: docker/build-push-action@v5
         with:
           context: modules
-          dockerfile: modules/api/Dockerfile
+          file: modules/api/Dockerfile
           push: false # TODO
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+          build-args: |
+            VERSION=${{ steps.meta.outputs.version }}
