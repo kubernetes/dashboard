@@ -45,7 +45,7 @@ jobs:
             ghcr.io/kubernetes/dashboard-auth
             docker.io/kubernetesui/dashboard-auth
           tags: |
-            type=semver,pattern={{module}}/{{version}}
+            type=semver,pattern=auth/{{version}}
             type=raw,value=latest,enable=${{ github.ref == format('refs/heads/{0}', 'master') }}
       - uses: docker/setup-qemu-action@v3.0.0
       - uses: docker/setup-buildx-action@v3.0.0
