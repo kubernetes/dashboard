@@ -109,6 +109,7 @@ app:
   # - key: node-role.kubernetes.io/control-plane
   #   effect: NoSchedule
   tolerations: []
+  affinity: {}
 
 auth:
   role: auth
