@@ -22,8 +22,6 @@ on:
       - modules/common
       - hack/docker
       - hack/gateway
-  pull_request:
-    branches: [ master ] # TODO: Remove before merging.
   create:
     tags:
       - "web/v*.*.*"
