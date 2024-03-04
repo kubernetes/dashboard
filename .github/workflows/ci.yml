@@ -33,6 +33,16 @@ env:
   NODE_OPTIONS: "--max-old-space-size=8192"
   TERM: xterm
 jobs:
+  pull-request-labels-check:
+    name: Pull request labels check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: mheap/github-action-required-labels@v2
+        with:
+          mode: exactly
+          count: 1
+          labels: "bug-fix, enhancement, breaking-change, dependencies, release"
+
   dependency-review:
     name: Dependency review
     permissions:
