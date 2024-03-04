@@ -52,6 +52,8 @@ jobs:
             type=raw,value=latest,enable=${{ github.ref == format('refs/heads/{0}', 'master') }}
       - uses: docker/setup-qemu-action@v3.0.0
       - uses: docker/setup-buildx-action@v3.0.0
+        with:
+          platforms: linux/amd64,linux/arm64,linux/arm,linux/ppc64le,linux/s390x,darwin/amd64,darwin/arm64,windows/amd64,windows/arm64
       - uses: docker/login-action@v3.0.0
         with:
           username: ${{ secrets.DOCKER_RELEASE_USER }}
@@ -68,7 +70,7 @@ jobs:
           push: false # TODO
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
-          platforms: linux/amd64,linux/arm64,linux/arm,linux/ppc64le,linux/s390x
+          platforms: linux/amd64,linux/arm64,linux/arm,linux/ppc64le,linux/s390x,darwin/amd64,darwin/arm64,windows/amd64,windows/arm64
           cache-from: type=gha
           cache-to: type=gha,mode=max
           build-args: |
