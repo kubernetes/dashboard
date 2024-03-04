@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-name: CD
+name: CD / Web
 on:
   push:
     branches: [master]
@@ -33,7 +33,7 @@ env:
   TERM: xterm
 jobs:
   release:
-    name: Release Web module
+    name: Release
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
