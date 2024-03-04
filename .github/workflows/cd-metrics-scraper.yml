@@ -17,8 +17,8 @@ on:
   push:
     branches: [master]
     paths:
-      - .github/workflows/cd-api.yml
-      - modules/api
+      - .github/workflows/cd-metrics-scraper.yml
+      - modules/metrics-scraper
       - modules/common
       - hack/docker
       - hack/gateway
@@ -26,7 +26,7 @@ on:
     branches: [ master ] # TODO: Remove before merging.
   create:
     tags:
-      - "api/v*.*.*"
+      - "metrics-scraper/v*.*.*"
 permissions:
   contents: read
   id-token: write
@@ -35,7 +35,7 @@ env:
   TERM: xterm
 jobs:
   release:
-    name: Release API module
+    name: Release Metrics Scraper module
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -45,8 +45,8 @@ jobs:
         uses: docker/metadata-action@v5
         with:
           images: |
-            ghcr.io/kubernetes/dashboard-api
-            docker.io/kubernetesui/dashboard-api
+            ghcr.io/kubernetes/dashboard-metrics-scraper
+            docker.io/kubernetesui/dashboard-metrics-scraper
           tags: |
             type=semver,pattern={{version}}
             type=raw,value=latest,enable=${{ github.ref == format('refs/heads/{0}', 'master') }}
@@ -64,7 +64,7 @@ jobs:
       - uses: docker/build-push-action@v5
         with:
           context: modules
-          file: modules/api/Dockerfile
+          file: modules/metrics-scraper/Dockerfile
           push: false # TODO
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
