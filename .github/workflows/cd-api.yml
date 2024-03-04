@@ -65,7 +65,7 @@ jobs:
         with:
           context: modules
           file: modules/api/Dockerfile
-          push: false # TODO
+          push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
           platforms: linux/amd64,linux/arm64,linux/arm,linux/ppc64le,linux/s390x
