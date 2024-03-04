@@ -93,6 +93,11 @@ app:
     # If set to true ingressClassName will be ignored and not added to the Ingress resources.
     # It should fall back to using IngressClass marked as the default.
     useDefaultIngressClass: false
+    # This will append our Ingress with annotations required by our default configuration.
+    #    nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
+    #    nginx.ingress.kubernetes.io/ssl-passthrough: "true"
+    #    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+    useDefaultAnnotations: true
     pathType: ImplementationSpecific
     secretName: kubernetes-dashboard-certs
     path: /

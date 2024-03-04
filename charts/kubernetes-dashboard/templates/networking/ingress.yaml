@@ -30,7 +30,7 @@ metadata:
     {{- if eq .Values.app.ingress.issuer.scope "cluster" }}
     cert-manager.io/cluster-issuer: {{ .Values.app.ingress.issuer.name }}
     {{- end }}
-    {{- if eq .Values.app.ingress.ingressClassName "internal-nginx" }}
+    {{- if and (eq .Values.app.ingress.ingressClassName "internal-nginx") .Values.app.ingress.useDefaultAnnotations }}
     nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
     nginx.ingress.kubernetes.io/ssl-passthrough: "true"
     nginx.ingress.kubernetes.io/ssl-redirect: "true"
