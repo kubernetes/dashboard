@@ -27,8 +27,8 @@ metadata:
     app.kubernetes.io/component: {{ .Values.metricsScraper.role }}
   name: {{ template "kubernetes-dashboard.metrics-scraper.name" . }}
 spec:
-  replicas: {{ .Values.app.scaling.replicas }}
-  revisionHistoryLimit: {{ .Values.app.scaling.revisionHistoryLimit }}
+  replicas: {{ .Values.metricsScraper.scaling.replicas }}
+  revisionHistoryLimit: {{ .Values.metricsScraper.scaling.revisionHistoryLimit }}
   selector:
     matchLabels:
       {{- include "kubernetes-dashboard.matchLabels" . | nindent 6 }}

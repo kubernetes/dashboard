@@ -93,7 +93,6 @@ run: $(PRE) --ensure-kind-cluster --ensure-metrics-server ## Starts production v
 	SIDECAR_HOST=$(SIDECAR_HOST) \
 	VERSION="v0.0.0-prod" \
 	docker compose -f $(DOCKER_COMPOSE_PATH) --project-name=$(PROJECT_NAME) up \
-		--build \
 		--remove-orphans \
 		--no-attach gateway \
 		--no-attach scraper \
@@ -116,8 +115,9 @@ image:
 # 3. Run helm install using loaded dev images
 #
 # Note: Requires kind to set up and run
+# Note #2: Make sure to run 'helm dependency update' inside 'charts/kubernetes-dashboard' first. TODO: Move to target
 .PHONY: helm
-helm: # --ensure-kind-cluster image --kind-load-images
+helm: #--ensure-kind-cluster image --kind-load-images --ensure-kind-ingress-nginx
 	@helm upgrade \
 		--create-namespace \
 		--namespace kubernetes-dashboard \
@@ -131,7 +131,13 @@ helm: # --ensure-kind-cluster image --kind-load-images
 		--set metricsScraper.image.repository=dashboard-scraper \
 		--set metricsScraper.image.tag=latest \
 		--set metrics-server.enabled=true \
+		--set app.ingress.enabled=true \
+		--set app.ingress.ingressClassName=nginx \
+		--set api.scaling.replicas=3 \
 		charts/kubernetes-dashboard
+
+# To serve Dashboard under a different path than root (/) use:
+#		--set app.ingress.path=/dashboard \
 
 # To test API mode with helm below options can be used:
 #		--set app.mode=api \

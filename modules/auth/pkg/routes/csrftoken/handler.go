@@ -25,10 +25,10 @@ import (
 )
 
 func init() {
-	router.V1().GET("/csrftoken/:action", handleLogin)
+	router.V1().GET("/csrftoken/:action", handleCSRFAction)
 }
 
-func handleLogin(c *gin.Context) {
+func handleCSRFAction(c *gin.Context) {
 	action := c.Param("action")
 	token := xsrftoken.Generate(csrf.Key(), "none", action)
 	c.JSON(http.StatusOK, csrf.Response{Token: token})

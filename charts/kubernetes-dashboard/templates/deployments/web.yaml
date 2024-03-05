@@ -27,8 +27,8 @@ metadata:
     app.kubernetes.io/component: {{ .Values.web.role }}
   name: {{ template "kubernetes-dashboard.fullname" . }}-{{ .Values.web.role }}
 spec:
-  replicas: {{ .Values.app.scaling.replicas }}
-  revisionHistoryLimit: {{ .Values.app.scaling.revisionHistoryLimit }}
+  replicas: {{ .Values.web.scaling.replicas }}
+  revisionHistoryLimit: {{ .Values.web.scaling.revisionHistoryLimit }}
   selector:
     matchLabels:
       {{- include "kubernetes-dashboard.matchLabels" . | nindent 6 }}

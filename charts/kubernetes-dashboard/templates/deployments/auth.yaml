@@ -28,8 +28,8 @@ metadata:
     app.kubernetes.io/component: {{ .Values.auth.role }}
   name: {{ template "kubernetes-dashboard.fullname" . }}-{{ .Values.auth.role }}
 spec:
-  replicas: {{ .Values.app.scaling.replicas }}
-  revisionHistoryLimit: {{ .Values.app.scaling.revisionHistoryLimit }}
+  replicas: {{ .Values.auth.scaling.replicas }}
+  revisionHistoryLimit: {{ .Values.auth.scaling.revisionHistoryLimit }}
   selector:
     matchLabels:
       {{- include "kubernetes-dashboard.matchLabels" . | nindent 6 }}
@@ -54,8 +54,13 @@ spec:
           {{ toYaml . | nindent 12 }}
           {{- end }}
 
-          {{- with .Values.auth.containers.env }}
           env:
+            - name: CSRF_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.app.csrf.secretName }}
+                  key: {{ .Values.app.csrf.secretKey }}
+          {{- with .Values.auth.containers.env }}
           {{ toYaml . | nindent 12 }}
           {{- end }}
 

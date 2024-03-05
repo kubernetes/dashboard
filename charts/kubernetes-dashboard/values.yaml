@@ -21,10 +21,6 @@ app:
   image:
     pullPolicy: IfNotPresent
     pullSecrets: []
-  scaling:
-    # Default number of replicas
-    replicas: 1
-    revisionHistoryLimit: 10
   scheduling:
     # Node labels for pod assignment
     # Ref: https://kubernetes.io/docs/user-guide/node-selection/
@@ -59,6 +55,9 @@ app:
   # Common labels & annotations shared across all deployed resources
   labels: {}
   annotations: {}
+  csrf:
+    secretName: kubernetes-dashboard-csrf
+    secretKey: private.key
   settings:
     ## Global dashboard settings
     global:
@@ -121,6 +120,9 @@ auth:
   image:
     repository: docker.io/kubernetesui/dashboard-auth
     tag: v1.0.0
+  scaling:
+    replicas: 1
+    revisionHistoryLimit: 10
   containers:
     ports:
       - name: auth
@@ -154,6 +156,9 @@ api:
   image:
     repository: docker.io/kubernetesui/dashboard-api
     tag: v1.0.0
+  scaling:
+    replicas: 3
+    revisionHistoryLimit: 10
   containers:
     ports:
       - name: api
@@ -205,6 +210,9 @@ web:
   image:
     repository: docker.io/kubernetesui/dashboard-web
     tag: v1.0.0
+  scaling:
+    replicas: 1
+    revisionHistoryLimit: 10
   settings:
     configMap: kubernetes-dashboard-settings
   containers:
@@ -261,6 +269,9 @@ metricsScraper:
   image:
     repository: docker.io/kubernetesui/metrics-scraper
     tag: v1.0.9
+  scaling:
+    replicas: 1
+    revisionHistoryLimit: 10
   containers:
     ports:
       - containerPort: 8000
@@ -329,6 +340,7 @@ kong:
   dblessConfig:
     configMap: kong-dbless-config
   proxy:
+    type: ClusterIP
     http:
       enabled: false
 

@@ -6,7 +6,7 @@ include $(PARTIALS_DIRECTORY)/config.mk
   	echo [kind] cluster already exists; \
   else \
     echo [kind] creating cluster $(KIND_CLUSTER_NAME); \
-    kind create cluster -q --name $(KIND_CLUSTER_NAME) --image=$(KIND_CLUSTER_IMAGE); \
+    kind create cluster -q --config=$(KIND_CONFIG_FILE) --name=$(KIND_CLUSTER_NAME) --image=$(KIND_CLUSTER_IMAGE); \
   fi; \
   echo [kind] exporting internal kubeconfig to $(TMP_DIRECTORY); \
   mkdir -p $(TMP_DIRECTORY); \
@@ -23,6 +23,11 @@ include $(PARTIALS_DIRECTORY)/config.mk
 		-n kube-system \
 		--type='json' \
 		-p='[{"op": "replace", "path": "/spec/template/spec/containers/0/args", "value": ["--cert-dir=/tmp", "--secure-port=10250", "--kubelet-preferred-address-types=InternalIP,ExternalIP,Hostname", "--kubelet-use-node-status-port", "--metric-resolution=15s", "--kubelet-insecure-tls"]}]'
+
+.PHONY: --ensure-kind-ingress-nginx
+--ensure-kind-ingress-nginx:
+	@echo [kind] installing ingress-nginx
+	@kubectl --context $(KIND_CLUSTER_KUBECONFIG_CONTEXT) apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-$(INGRESS_NGINX_VERSION)/deploy/static/provider/kind/deploy.yaml >/dev/null
 
 .PHONY: --kind-load-images
 --kind-load-images:
