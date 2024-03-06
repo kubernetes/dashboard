@@ -33,7 +33,8 @@ Kubernetes Dashboard supports two different ways of authenticating users:
 
 ### Login view
 
-In case you are using the latest recommended installation then login functionality will be enabled by default. In any other case and if you prefer to configure certificates manually you need to pass `--tls-cert-file` and `--tls-cert-key` flags to Dashboard. HTTPS endpoint will be exposed on port `8443` of Dashboard container. You can change it by providing `--port` flag.
+In case you are using the latest installation then login functionality will be enabled by default and exposed via our
+gateway.
 
 ![Sing in](../../images/signin.png)
 
@@ -45,7 +46,7 @@ To make Dashboard use authorization header you simply need to pass `Authorizatio
 
 To quickly test it check out [Requestly](https://chrome.google.com/webstore/detail/requestly-redirect-url-mo/mdnleldcmiljblolnjhpnblkcekpdkpa) Chrome browser plugin that allows to manually modify request headers.
 
-**IMPORTANT:** Authorization header will not work if Dashboard is accessed through API server proxy. Both `kubectl proxy` and `API Server` way of accessing Dashboard described in [Accessing Dashboard](../accessing-dashboard/README.md) guide will not work. It is due to the fact that once request reaches API server all additional headers are dropped.
+**IMPORTANT:** Authorization header will not work if Dashboard is accessed through API server proxy. `kubectl port-forward` described in [Accessing Dashboard](../accessing-dashboard/README.md) guide will not work. It is due to the fact that once request reaches API server all additional headers are dropped.
 
 ### Bearer Token
 
