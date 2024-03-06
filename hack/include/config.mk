@@ -1,11 +1,5 @@
 ### Common application/container details
 PROJECT_NAME := dashboard
-# Supported architectures
-ARCHITECTURES := linux/amd64 linux/arm64 linux/arm linux/ppc64le linux/s390x # darwin/amd64 darwin/arm64 <- TODO: enable once it is natively supported by docker
-BUILDX_ARCHITECTURES := linux/amd64,linux/arm64,linux/arm,linux/ppc64le,linux/s390x # ,darwin/amd64,darwin/arm64
-# Container registry details
-IMAGE_REGISTRIES := docker.io # ghcr.io <- TODO: uncomment when ghcr will be supported
-IMAGE_REPOSITORY := kubernetesui
 
 ### Dirs and paths
 # Base paths
@@ -38,6 +32,8 @@ METRICS_SERVER_VERSION := v0.7.0
 INGRESS_NGINX_VERSION := v1.10.0
 # Tools
 GOLANGCI_LINT_CONFIG := $(ROOT_DIRECTORY)/.golangci.yml
+# Chart
+CHART_DIRECTORY := $(ROOT_DIRECTORY)/charts/kubernetes-dashboard
 
 ### GOPATH check
 ifndef GOPATH

@@ -28,14 +28,20 @@ include $(PARTIALS_DIRECTORY)/config.mk
 --ensure-kind-ingress-nginx:
 	@echo [kind] installing ingress-nginx
 	@kubectl --context $(KIND_CLUSTER_KUBECONFIG_CONTEXT) apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-$(INGRESS_NGINX_VERSION)/deploy/static/provider/kind/deploy.yaml >/dev/null
+	@kubectl delete -A ValidatingWebhookConfiguration ingress-nginx-admission >/dev/null
+
+.PHONY: --ensure-helm-dependencies
+--ensure-helm-dependencies:
+	@echo [helm] updating helm dependencies
+	@helm dependency update $(CHART_DIRECTORY) >/dev/null
 
 .PHONY: --kind-load-images
 --kind-load-images:
 	@echo Loading dashboard-auth:latest into kind cluster
-	@kind load docker-image -n $(KIND_CLUSTER_NAME) dashboard-auth:latest
+	@kind load docker-image -n $(KIND_CLUSTER_NAME) dashboard-auth:latest >/dev/null
 	@echo Loading dashboard-api:latest into kind cluster
-	@kind load docker-image -n $(KIND_CLUSTER_NAME) dashboard-api:latest
+	@kind load docker-image -n $(KIND_CLUSTER_NAME) dashboard-api:latest >/dev/null
 	@echo Loading dashboard-web:latest into kind cluster
-	@kind load docker-image -n $(KIND_CLUSTER_NAME) dashboard-web:latest
+	@kind load docker-image -n $(KIND_CLUSTER_NAME) dashboard-web:latest >/dev/null
 	@echo Loading dashboard-scraper:latest into kind cluster
-	@kind load docker-image -n $(KIND_CLUSTER_NAME) dashboard-scraper:latest
+	@kind load docker-image -n $(KIND_CLUSTER_NAME) dashboard-scraper:latest >/dev/null

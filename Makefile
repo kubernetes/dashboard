@@ -93,6 +93,7 @@ run: $(PRE) --ensure-kind-cluster --ensure-metrics-server ## Starts production v
 	SIDECAR_HOST=$(SIDECAR_HOST) \
 	VERSION="v0.0.0-prod" \
 	docker compose -f $(DOCKER_COMPOSE_PATH) --project-name=$(PROJECT_NAME) up \
+		--build \
 		--remove-orphans \
 		--no-attach gateway \
 		--no-attach scraper \
@@ -100,13 +101,15 @@ run: $(PRE) --ensure-kind-cluster --ensure-metrics-server ## Starts production v
 
 .PHONY: image
 image:
+ifndef NO_BUILD
 		@KUBECONFIG=$(KIND_CLUSTER_INTERNAL_KUBECONFIG_PATH) \
-  	SYSTEM_BANNER=$(SYSTEM_BANNER) \
-  	SYSTEM_BANNER_SEVERITY=$(SYSTEM_BANNER_SEVERITY) \
-  	SIDECAR_HOST=$(SIDECAR_HOST) \
-  	VERSION="v0.0.0-prod" \
-  	docker compose -f $(DOCKER_COMPOSE_PATH) --project-name=$(PROJECT_NAME) build \
-  	--no-cache
+		SYSTEM_BANNER=$(SYSTEM_BANNER) \
+		SYSTEM_BANNER_SEVERITY=$(SYSTEM_BANNER_SEVERITY) \
+		SIDECAR_HOST=$(SIDECAR_HOST) \
+		VERSION="v0.0.0-prod" \
+		docker compose -f $(DOCKER_COMPOSE_PATH) --project-name=$(PROJECT_NAME) build \
+		--no-cache
+endif
 
 # Prepares and installs local dev version of Kubernetes Dashboard in our dedicated kind cluster.
 #
@@ -114,10 +117,14 @@ image:
 # 2. Load images into kind cluster
 # 3. Run helm install using loaded dev images
 #
-# Note: Requires kind to set up and run
-# Note #2: Make sure to run 'helm dependency update' inside 'charts/kubernetes-dashboard' first. TODO: Move to target
+# Run "NO_BUILD=true make helm" to skip building images.
+#
+# URL: https://localhost
+#
+# Note: Requires kind to set up and run.
+# Note #2: Make sure that the port 443 (HTTPS) is free on your localhost.
 .PHONY: helm
-helm: #--ensure-kind-cluster image --kind-load-images --ensure-kind-ingress-nginx
+helm: --ensure-kind-cluster --ensure-kind-ingress-nginx --ensure-helm-dependencies image --kind-load-images ## Install Kubernetes Dashboard helm chart in the dev kind cluster
 	@helm upgrade \
 		--create-namespace \
 		--namespace kubernetes-dashboard \
