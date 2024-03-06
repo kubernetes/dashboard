@@ -17,6 +17,7 @@ chart-repos:
   - metrics-server=https://kubernetes-sigs.github.io/metrics-server/
   - cert-manager=https://charts.jetstack.io
   - ingress-nginx=https://kubernetes.github.io/ingress-nginx
+  - kong=https://charts.konghq.com
 debug: false
 # additional-commands:
 #  - helm kubeconform {{ .Path }} --config charts/helm-chart/.kubeconform
