@@ -50,6 +50,8 @@ spec:
           imagePullPolicy: {{ .Values.app.image.pullPolicy }}
           args:
             - --settings-config-map-name={{ .Values.web.settings.configMap }}
+          {{/* TODO: Can be removed after updating default locale-config path in web container */}}
+            - --locale-config=/locale_conf.json
           {{- with .Values.web.containers.args }}
           {{ toYaml . | nindent 12 }}
           {{- end }}

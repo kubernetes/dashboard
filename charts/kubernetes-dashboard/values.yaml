@@ -270,7 +270,7 @@ metricsScraper:
   enabled: true
   role: metrics-scraper
   image:
-    repository: docker.io/kubernetesui/metrics-scraper
+    repository: docker.io/kubernetesui/dashboard-metrics-scraper
     tag: 1.1.1
   scaling:
     replicas: 1
