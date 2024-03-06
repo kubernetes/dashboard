@@ -25,7 +25,7 @@ services:
       - "KONG_ADMIN_ACCESS_LOG=/dev/stdout"
       - "KONG_PROXY_ERROR_LOG=/dev/stderr"
       - "KONG_ADMIN_ERROR_LOG=/dev/stderr"
-      - "KONG_DNS_ORDER=LAST,A,CNAME"
+      - "KONG_DNS_ORDER=LAST,A,SRV,CNAME"
     volumes:
       - ${PWD}/hack/gateway/dev.kong.yml:/kong/declarative/kong.yml
     ports:

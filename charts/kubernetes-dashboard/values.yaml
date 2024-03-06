@@ -122,7 +122,7 @@ auth:
   role: auth
   image:
     repository: docker.io/kubernetesui/dashboard-auth
-    tag: v1.0.0
+    tag: 1.1.0
   scaling:
     replicas: 1
     revisionHistoryLimit: 10
@@ -158,7 +158,7 @@ api:
   role: api
   image:
     repository: docker.io/kubernetesui/dashboard-api
-    tag: v1.0.0
+    tag: 1.2.0
   scaling:
     replicas: 3
     revisionHistoryLimit: 10
@@ -212,7 +212,7 @@ web:
   role: web
   image:
     repository: docker.io/kubernetesui/dashboard-web
-    tag: v1.0.0
+    tag: 1.2.0
   scaling:
     replicas: 1
     revisionHistoryLimit: 10
@@ -271,7 +271,7 @@ metricsScraper:
   role: metrics-scraper
   image:
     repository: docker.io/kubernetesui/metrics-scraper
-    tag: v1.0.9
+    tag: 1.1.1
   scaling:
     replicas: 1
     revisionHistoryLimit: 10
@@ -338,6 +338,8 @@ metrics-server:
 ## for our all containers.
 kong:
   enabled: true
+  env:
+    dns_order: LAST,A,SRV,CNAME
   ingressController:
     enabled: false
   dblessConfig:
