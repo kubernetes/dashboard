@@ -80,5 +80,5 @@ jobs:
             ### Image
 
             ```
-              docker.io/kubernetesui/dashboard-web:${{ steps.meta.outputs.version }}
+            docker.io/kubernetesui/dashboard-web:${{ steps.meta.outputs.version }}
             ```
