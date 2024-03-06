@@ -68,6 +68,7 @@ services:
       dockerfile: modules/web/Dockerfile
       args:
         VERSION: ${VERSION:?}
+        WEB_BUILDER_ARCH: ${WEB_BUILDER_ARCH:?}
     command:
       - "--kubeconfig=${KUBECONFIG:?}"
       - "--locale-config=/public/locale_conf.json"
