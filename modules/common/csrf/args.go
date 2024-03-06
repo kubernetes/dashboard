@@ -27,7 +27,7 @@ import (
 const keySizeBytes = 256
 
 var (
-	argCSRFKey     = pflag.String("csrf-key", helpers.GetEnv("CSRF_KEY", ""), "Base64 encoded random 256 bytes key. Can be loaded from 'CSRF_KEY' environment variable.")
+	argCSRFKey     = pflag.String("csrf-key", helpers.GetEnv("CSRF_KEY", helpers.Random64BaseEncodedBytes(256)), "Base64 encoded random 256 bytes key. Can be loaded from 'CSRF_KEY' environment variable.")
 	decodedCSRFKey = ""
 )
 
@@ -41,7 +41,7 @@ func Ensure() {
 	}
 
 	if len(decoded) != keySizeBytes {
-		klog.Fatalf("Could not validate CSRF key. Expected size %d, got %d.", keySizeBytes, len(decoded))
+		klog.Errorf("Could not validate CSRF key. Expected size %d, got %d", keySizeBytes, len(decoded))
 	}
 
 	decodedCSRFKey = string(decoded)

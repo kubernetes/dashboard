@@ -12,12 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package integration
+package integration_test
 
 import (
 	"strings"
 	"testing"
 
+	"k8s.io/dashboard/api/pkg/integration"
 	"k8s.io/dashboard/api/pkg/integration/api"
 	"k8s.io/dashboard/errors"
 )
@@ -34,7 +35,7 @@ func normalize(msg string) string {
 }
 
 func TestNewIntegrationManager(t *testing.T) {
-	iManager := NewIntegrationManager()
+	iManager := integration.NewIntegrationManager()
 	if iManager == nil {
 		t.Error("Failed to create integration manager.")
 	}
@@ -58,7 +59,7 @@ func TestIntegrationManager_GetState(t *testing.T) {
 	}
 
 	for _, c := range cases {
-		iManager := NewIntegrationManager()
+		iManager := integration.NewIntegrationManager()
 		iManager.Metric().ConfigureSidecar(c.sidecarHost)
 
 		state, err := iManager.GetState(api.SidecarIntegrationID)
@@ -79,7 +80,7 @@ func TestIntegrationManager_GetState(t *testing.T) {
 }
 
 func TestIntegrationManager_Metric(t *testing.T) {
-	metricManager := NewIntegrationManager().Metric()
+	metricManager := integration.NewIntegrationManager().Metric()
 	if metricManager == nil {
 		t.Error("Failed to get metric manager.")
 	}
