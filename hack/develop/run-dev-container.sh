@@ -14,7 +14,6 @@
 # limitations under the License.
 
 # This prepares development environment for Kubernetes Dashboard in Docker.
-# See `docs/developer/getting-started.md`.
 
 CD="$(pwd)"
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
