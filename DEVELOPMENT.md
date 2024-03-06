@@ -19,7 +19,7 @@ When writing new Go code, we try to follow conventions described in [Effective G
 
 For Angular, we try to follow conventions described in [Angular Style Guide](https://angular.io/guide/styleguide) and [Material Design Guidelines](https://material.io/guidelines/).
 
-We are running a set of checks for each pull request, all of them have to be successful before the change can be merged. You can run most of them locally using `make` targets, i.e. `make test` or `make check` (see [Makefile](Makefile) for more information).
+We are running a set of checks for each pull request, all of them have to be successful before the change can be merged. You can run most of them locally using `make` targets, i.e. `make test` or `make check` (see [`Makefile`](Makefile) for more information).
 
 Tools that we are using include [golangci-lint](https://github.com/golangci/golangci-lint), [eslint](https://eslint.org), [stylelint](https://github.com/stylelint/stylelint), [prettier](https://prettier.io/).
 
@@ -28,9 +28,9 @@ Tools that we are using include [golangci-lint](https://github.com/golangci/gola
 Make sure the following software is installed and added to your path:
 
 - [Docker](https://docs.docker.com/engine/install/) 
-- [Go](https://golang.org/dl/) (check the required version in [modules/go.work](modules/go.work))
-- [Node.js](https://nodejs.org/en/download) (check the required version in [modules/web/package.json](modules/web/package.json))
-- [Yarn](https://yarnpkg.com/getting-started/install) (check the required version in [modules/web/.yarnrc.yml](modules/web/.yarnrc.yml))
+- [Go](https://golang.org/dl/) (check the required version in [`modules/go.work`](modules/go.work))
+- [Node.js](https://nodejs.org/en/download) (check the required version in [`modules/web/package.json`](modules/web/package.json))
+- [Yarn](https://yarnpkg.com/getting-started/install) (check the required version in [`modules/web/.yarnrc.yml`](modules/web/.yarnrc.yml))
 
 ## Getting Started
 
@@ -52,7 +52,7 @@ Kubernetes Dashboard should be then available directly on your localhost: https:
 
 To create Docker images locally use `make image`.
 
-See [Makefile](Makefile) to get to know other targets useful during development. You can also run `make help` to quickly check the list of available commands.
+See [`Makefile`](Makefile) to get to know other targets useful during development. You can also run `make help` to quickly check the list of available commands.
 
 ## Dependency Management
 
