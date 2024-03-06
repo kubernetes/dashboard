@@ -2,10 +2,6 @@
 
 In case you did not find any answer here and in [closed issues](https://github.com/kubernetes/dashboard/issues?q=is%3Aissue+is%3Aclosed), [create new issue](https://github.com/kubernetes/dashboard/issues/new/choose).
 
-### I would like to use development environment on HTTPS, how to do it?
-
-Refer to our [Developer guide](../developer/getting-started.md).
-
 ### I cannot see any graphs in Dashboard, how to enable them?
 
 Make sure, that `metrics-server` and `dashboard-metrics-scraper` are up and running and Dashboard was able to connect with `dashboard-metrics-scraper`. You should check Dashboard logs and look for `metric` and `scraper` keywords. You can find more informations about Dashboard's Integrations [here](../user/integrations.md).
