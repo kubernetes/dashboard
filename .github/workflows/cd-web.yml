@@ -25,7 +25,7 @@ on:
     tags:
       - "web/v*.*.*"
 permissions:
-  contents: read
+  contents: write
   id-token: write
   packages: write
 env:
@@ -71,3 +71,12 @@ jobs:
           cache-to: type=gha,mode=max
           build-args: |
             VERSION=${{ steps.meta.outputs.version || 'latest' }}
+      - if: startsWith(github.ref, 'refs/tags/web/v')
+        uses: softprops/action-gh-release@v1
+        with:
+          body: |
+            ### Image
+
+            ```
+              docker.io/kubernetesui/dashboard-web:${{ steps.meta.outputs.version }}
+            ```
