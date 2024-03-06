@@ -17,6 +17,7 @@ name: CD / Helm
 on:
   push:
     paths:
+      - '.github/workflows/cd-helm.yml'
       - 'charts/**'
     branches:
       - master
@@ -69,6 +70,13 @@ jobs:
         uses: azure/setup-helm@v4.0.0
         with:
           version: v3.12.1
+
+      - name: Add Helm dependencies
+        run: |
+          helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
+          helm repo add cert-manager https://charts.jetstack.io
+          helm repo add metrics-server https://kubernetes-sigs.github.io/metrics-server/
+          helm repo add kong https://charts.konghq.com
 
       - name: Run chart-releaser
         uses: helm/chart-releaser-action@v1.6.0
