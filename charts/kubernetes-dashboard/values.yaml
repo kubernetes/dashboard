@@ -14,13 +14,13 @@
 
 # General configuration shared across resources
 app:
+  # Mode determines if chart should deploy a full Dashboard with all containers or just the API.
+  # - dashboard - deploys all the containers
+  # - api - deploys just the API
+  mode: 'dashboard'
   image:
     pullPolicy: IfNotPresent
     pullSecrets: []
-  scaling:
-    # Default number of replicas
-    replicas: 1
-    revisionHistoryLimit: 10
   scheduling:
     # Node labels for pod assignment
     # Ref: https://kubernetes.io/docs/user-guide/node-selection/
@@ -55,9 +55,11 @@ app:
   # Common labels & annotations shared across all deployed resources
   labels: {}
   annotations: {}
+  csrf:
+    secretName: kubernetes-dashboard-csrf
+    secretKey: private.key
   settings:
     ## Global dashboard settings
-    ## Note: Use all or none. Dashboard does not support default value merging currently.
     global:
     #  # Cluster name that appears in the browser window title if it is set
     #  clusterName: ""
@@ -79,15 +81,28 @@ app:
     #  #  Is this CRD namespaced?
     #  namespaced: true
   ingress:
-    enabled: true
+    enabled: false
     hosts:
     # Keep 'localhost' host only if you want to access Dashboard using 'kubectl port-forward ...' on:
     # https://localhost:8443
     - localhost
     # - kubernetes.dashboard.domain.com
     ingressClassName: internal-nginx
+    # Use only if your ingress controllers support default ingress classes.
+    # If set to true ingressClassName will be ignored and not added to the Ingress resources.
+    # It should fall back to using IngressClass marked as the default.
+    useDefaultIngressClass: false
+    # This will append our Ingress with annotations required by our default configuration.
+    #    nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
+    #    nginx.ingress.kubernetes.io/ssl-passthrough: "true"
+    #    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+    useDefaultAnnotations: true
     pathType: ImplementationSpecific
     secretName: kubernetes-dashboard-certs
+    # If path is not the default (/), rewrite-target annotation will be added to the Ingress.
+    # It allows serving Kubernetes Dashboard on a sub-path. Make sure that the configured path
+    # does not conflict with gateway route configuration.
+    path: /
     issuer:
       name: selfsigned
       # Scope determines what kind of issuer annotation will be used on ingress resource
@@ -97,13 +112,46 @@ app:
       scope: default
     labels: {}
     annotations: {}
-    paths:
-      web: /
-      api: /api
   # Use the following toleration if Dashboard can be deployed on a tainted control-plane nodes
   # - key: node-role.kubernetes.io/control-plane
   #   effect: NoSchedule
   tolerations: []
+  affinity: {}
+
+auth:
+  role: auth
+  image:
+    repository: docker.io/kubernetesui/dashboard-auth
+    tag: v1.0.0
+  scaling:
+    replicas: 1
+    revisionHistoryLimit: 10
+  containers:
+    ports:
+      - name: auth
+        containerPort: 8000
+        protocol: TCP
+    args: []
+    env: []
+    volumeMounts:
+      - mountPath: /tmp
+        name: tmp-volume
+    # TODO: Validate configuration
+    resources:
+      requests:
+        cpu: 100m
+        memory: 200Mi
+      limits:
+        cpu: 250m
+        memory: 400Mi
+  volumes:
+    # Create on-disk volume to store exec logs (required)
+    - name: tmp-volume
+      emptyDir: { }
+  nodeSelector: { }
+  # Labels & annotations shared between API related resources
+  labels: { }
+  annotations: { }
 
 # API deployment configuration
 api:
@@ -111,10 +159,13 @@ api:
   image:
     repository: docker.io/kubernetesui/dashboard-api
     tag: v1.0.0
+  scaling:
+    replicas: 3
+    revisionHistoryLimit: 10
   containers:
     ports:
       - name: api
-        containerPort: 9000
+        containerPort: 8000
         protocol: TCP
     # Additional container arguments
     # Full list of arguments: https://github.com/kubernetes/dashboard/blob/master/docs/common/arguments.md
@@ -162,6 +213,11 @@ web:
   image:
     repository: docker.io/kubernetesui/dashboard-web
     tag: v1.0.0
+  scaling:
+    replicas: 1
+    revisionHistoryLimit: 10
+  settings:
+    configMap: kubernetes-dashboard-settings
   containers:
     ports:
       - name: web
@@ -202,22 +258,23 @@ web:
     # Create on-disk volume to store exec logs (required)
     - name: tmp-volume
       emptyDir: {}
-  nodeSelector:
-    # TODO: check if it's really needed since we offer cross platform images for darwin/windows/linux
-    kubernetes.io/os: linux
+  nodeSelector: {}
   # Labels & annotations shared between WEB UI related resources
   labels: {}
   annotations: {}
 
 ### Metrics Scraper
 ### Container to scrape, store, and retrieve a window of time from the Metrics Server.
-### refs: https://github.com/kubernetes-sigs/dashboard-metrics-scraper
+### refs: https://github.com/kubernetes/dashboard/tree/master/modules/metrics-scraper
 metricsScraper:
   enabled: true
   role: metrics-scraper
   image:
     repository: docker.io/kubernetesui/metrics-scraper
     tag: v1.0.9
+  scaling:
+    replicas: 1
+    revisionHistoryLimit: 10
   containers:
     ports:
       - containerPort: 8000
@@ -260,13 +317,10 @@ metricsScraper:
     # Create on-disk volume to store exec logs (required)
     - name: tmp-volume
       emptyDir: {}
-  nodeSelector:
-    # TODO: check if it's really needed since we offer cross platform images for darwin/windows/linux
-    kubernetes.io/os: linux
+  nodeSelector: {}
   # Labels & annotations shared between WEB UI related resources
   labels: {}
   annotations: {}
-
 
 ## Optional Metrics Server sub-chart configuration
 ## Enable this if you don't already have metrics-server enabled on your cluster and
@@ -275,21 +329,34 @@ metricsScraper:
 ##  - https://github.com/kubernetes-sigs/metrics-server
 ##  - https://github.com/kubernetes-sigs/metrics-server/tree/master/charts/metrics-server
 metrics-server:
-  enabled: true
+  enabled: false
   args:
     - --kubelet-preferred-address-types=InternalIP
     - --kubelet-insecure-tls
 
+## Required Kong sub-chart with DBless configuration to act as a gateway
+## for our all containers.
+kong:
+  enabled: true
+  ingressController:
+    enabled: false
+  dblessConfig:
+    configMap: kong-dbless-config
+  proxy:
+    type: ClusterIP
+    http:
+      enabled: false
+
 ## Optional Cert Manager sub-chart configuration
 ## Enable this if you don't already have cert-manager enabled on your cluster.
 cert-manager:
-  enabled: true
+  enabled: false
   installCRDs: true
 
 ## Optional Nginx Ingress sub-chart configuration
 ## Enable this if you don't already have nginx-ingress enabled on your cluster.
 nginx:
-  enabled: true
+  enabled: false
   controller:
     electionID: ingress-controller-leader
     ingressClassResource:
@@ -314,21 +381,6 @@ extras:
   #   data:
   #     mykey: myvalue
   manifests: []
-  # Start in ReadOnly mode.
-  # Specifies whether cluster-wide RBAC resources (ClusterRole, ClusterRolebinding) with read only permissions to all resources listed inside the cluster should be created
-  # Only dashboard-related Secrets and ConfigMaps will still be available for writing.
-  #
-  # The basic idea of the clusterReadOnlyRole
-  # is not to hide all the secrets and sensitive data but more
-  # to avoid accidental changes in the cluster outside the standard CI/CD.
-  #
-  # It is NOT RECOMMENDED to use this version in production.
-  # Instead, you should review the role and remove all potentially sensitive parts such as
-  # access to persistentvolumes, pods/log etc.
-  clusterReadOnlyRole: false
-  # It is possible to add additional rules if read only role is enabled.
-  # This can be useful, for example, to show CRD resources.
-  clusterReadOnlyRoleAdditionalRules: []
   serviceMonitor:
     # Whether to create a Prometheus Operator service monitor.
     enabled: false

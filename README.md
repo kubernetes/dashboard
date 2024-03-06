@@ -16,17 +16,20 @@ Kubernetes Dashboard is a general purpose, web-based UI for Kubernetes clusters.
 
 ## Installation
 
-Kubernetes Dashboard supports both Helm and Manifest-based installation. Since release `v3.0.0` using Helm Chart should be faster and simpler in general as it will install
-dependencies such as `cert-manager`, `nginx-ingress-controller` and `metrics-server` for you. In case you are using different software to handle certificates, ingress/egress traffic, etc.
-it is possible to disable those dependencies by overriding [helm chart values](charts/kubernetes-dashboard/values.yaml).
+Kubernetes Dashboard supports only Helm-based installation currently as it is faster and gives us better control
+over all dependencies required by Dashboard to run. We now use a single-container, DBless [Kong](https://hub.docker.com/r/kong/kong-gateway) installation
+as a gateway that connects all our containers and exposes the UI. Users can then use any ingress controller or proxy
+in front of kong gateway. To find out more about ways to customize your installation check out [helm chart values](charts/kubernetes-dashboard/values.yaml).
 
-### Helm
+In order install Kubernetes Dashboard simply run:
+```console
+# Add kubernetes-dashboard repository
+helm repo add kubernetes-dashboard https://kubernetes.github.io/dashboard/
+# Deploy a Helm Release named "kubernetes-dashboard" using the kubernetes-dashboard chart
+helm upgrade --install kubernetes-dashboard kubernetes-dashboard/kubernetes-dashboard --create-namespace --namespace kubernetes-dashboard
+```
 
-You can install Dashboard using Helm as described [here](https://artifacthub.io/packages/helm/k8s-dashboard/kubernetes-dashboard).
-
-### Manifest
-
-You can install Dashboard using `kubectl` as described in the installation instructions that can be found in the [latest release](https://github.com/kubernetes/dashboard/releases/latest).
+For more information about our Helm chart visit [ArtifactHub](https://artifacthub.io/packages/helm/k8s-dashboard/kubernetes-dashboard).
 
 ## Access
 

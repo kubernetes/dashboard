@@ -28,6 +28,40 @@ limitations under the License.
       name="viewport"
       content="width=device-width"
     />
+
+    <!-- Dynamic base href -->
+    <script type="text/javascript">
+      function configExists(url) {
+        const req = new XMLHttpRequest();
+
+        req.open('GET', url, false);
+        req.send();
+
+        return req.status === 200;
+      }
+
+      const probePath = 'assets/config/config.json';
+      const origin = document.location.origin;
+      const pathSegments = document.location.pathname.split('/');
+
+      let basePath = '/';
+      let configFound = false;
+
+      for (let i = 0; i < pathSegments.length; i++) {
+        const segment = pathSegments[i];
+        if (segment.length > 0) {
+          basePath = basePath + segment + '/';
+        }
+
+        const fullPath = origin + basePath + probePath;
+        configFound = configExists(fullPath);
+        if (configFound) {
+          break;
+        }
+      }
+
+      document.write("<base href='" + (configFound ? basePath : '') + "' />");
+    </script>
   </head>
 
   <body>

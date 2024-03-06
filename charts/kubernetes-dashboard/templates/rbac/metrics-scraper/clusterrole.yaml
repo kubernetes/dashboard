@@ -14,22 +14,16 @@
 
 {{- if and .Values.metricsScraper.enabled (eq .Values.app.mode "dashboard") }}
 
-kind: Service
-apiVersion: v1
+kind: ClusterRole
+apiVersion: rbac.authorization.k8s.io/v1
 metadata:
   labels:
     {{- include "kubernetes-dashboard.labels" . | nindent 4 }}
-    app.kubernetes.io/name: {{ template "kubernetes-dashboard.name" . }}-{{ .Values.metricsScraper.role }}
-    app.kubernetes.io/version: {{ .Values.metricsScraper.image.tag }}
-    app.kubernetes.io/component: {{ .Values.metricsScraper.role }}
-  name: {{ template "kubernetes-dashboard.metrics-scraper.name" . }}
-spec:
-  ports:
-    {{- with (index .Values.metricsScraper.containers.ports 0) }}
-    - port: {{ .containerPort }}
-    {{- end }}
-  selector:
-    {{- include "kubernetes-dashboard.matchLabels" . | nindent 4 }}
-    app.kubernetes.io/name: {{ template "kubernetes-dashboard.name" . }}-{{ .Values.metricsScraper.role }}
+  name: {{ template "kubernetes-dashboard.fullname" . }}-{{ .Values.metricsScraper.role }}
+rules:
+  # Allow Metrics Scraper to get metrics from the Metrics server
+  - apiGroups: [ "metrics.k8s.io" ]
+    resources: [ "pods", "nodes" ]
+    verbs: [ "get", "list", "watch" ]
 
 {{- end -}}

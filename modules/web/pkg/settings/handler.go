@@ -21,6 +21,7 @@ import (
 
 	"github.com/gin-gonic/gin"
 	v1 "k8s.io/api/authorization/v1"
+
 	"k8s.io/dashboard/web/pkg/args"
 
 	"k8s.io/dashboard/client"
@@ -82,7 +83,12 @@ func handleGetSettingGlobal(c *gin.Context) {
 }
 
 func handleSettingsGlobalSave(c *gin.Context) {
-	k8sClient := client.InClusterClient()
+	k8sClient, err := client.Client(c.Request)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, err)
+		return
+	}
+
 	settings := new(Settings)
 	if err := c.Bind(settings); err != nil {
 		c.JSON(http.StatusBadRequest, err)

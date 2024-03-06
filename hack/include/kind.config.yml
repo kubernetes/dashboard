@@ -11,13 +11,18 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-#
 
-chart-repos:
-  - metrics-server=https://kubernetes-sigs.github.io/metrics-server/
-  - cert-manager=https://charts.jetstack.io
-  - ingress-nginx=https://kubernetes.github.io/ingress-nginx
-  - kong=https://charts.konghq.com
-debug: false
-# additional-commands:
-#  - helm kubeconform {{ .Path }} --config charts/helm-chart/.kubeconform
+kind: Cluster
+apiVersion: kind.x-k8s.io/v1alpha4
+nodes:
+  - role: control-plane
+    kubeadmConfigPatches:
+      - |
+        kind: InitConfiguration
+        nodeRegistration:
+          kubeletExtraArgs:
+            node-labels: "ingress-ready=true"
+    extraPortMappings:
+      - containerPort: 443
+        hostPort: 443
+        protocol: TCP

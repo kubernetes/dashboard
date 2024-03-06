@@ -62,3 +62,19 @@ Common label selectors
 app.kubernetes.io/instance: {{ .Release.Name }}
 app.kubernetes.io/part-of: {{ include "kubernetes-dashboard.name" . }}
 {{- end -}}
+
+{{- define "kubernetes-dashboard.metrics-scraper.name" -}}
+{{- printf "%s-%s" ( include "kubernetes-dashboard.fullname" . ) ( .Values.metricsScraper.role )}}
+{{- end -}}
+
+{{- define "kubernetes-dashboard.validate.mode" -}}
+{{- if not (or (eq .Values.app.mode "dashboard") (eq .Values.app.mode "api")) -}}
+{{- fail "value of .Values.app.mode must be one of [dashboard, api]"}}
+{{- end -}}
+{{- end -}}
+
+{{- define "kubernetes-dashboard.validate.ingressIssuerScope" -}}
+{{- if not (or (eq .Values.app.ingress.issuer.scope "disabled") (eq .Values.app.ingress.issuer.scope "default") (eq .Values.app.ingress.issuer.scope "cluster")) }}
+{{- fail "value of .Values.app.ingress.issuer.scope must be one of [default, cluster, disabled]"}}
+{{- end -}}
+{{- end -}}

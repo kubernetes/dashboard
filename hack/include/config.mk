@@ -1,11 +1,5 @@
 ### Common application/container details
 PROJECT_NAME := dashboard
-# Supported architectures
-ARCHITECTURES := linux/amd64 linux/arm64 linux/arm linux/ppc64le linux/s390x # darwin/amd64 darwin/arm64 <- TODO: enable once it is natively supported by docker
-BUILDX_ARCHITECTURES := linux/amd64,linux/arm64,linux/arm,linux/ppc64le,linux/s390x # ,darwin/amd64,darwin/arm64
-# Container registry details
-IMAGE_REGISTRIES := docker.io # ghcr.io <- TODO: uncomment when ghcr will be supported
-IMAGE_REPOSITORY := kubernetesui
 
 ### Dirs and paths
 # Base paths
@@ -30,8 +24,16 @@ KIND_CLUSTER_NAME := kubernetes-dashboard
 KIND_CLUSTER_VERSION := 1.29.0
 KIND_CLUSTER_IMAGE := docker.io/kindest/node:v${KIND_CLUSTER_VERSION}
 KIND_CLUSTER_INTERNAL_KUBECONFIG_PATH := $(TMP_DIRECTORY)/kubeconfig
+KIND_CLUSTER_KUBECONFIG_CONTEXT := kind-$(KIND_CLUSTER_NAME)
+KIND_CONFIG_FILE := $(PARTIALS_DIRECTORY)/kind.config.yml
+# Metrics server
+METRICS_SERVER_VERSION := v0.7.0
+# Ingress nginx (kind)
+INGRESS_NGINX_VERSION := v1.10.0
 # Tools
 GOLANGCI_LINT_CONFIG := $(ROOT_DIRECTORY)/.golangci.yml
+# Chart
+CHART_DIRECTORY := $(ROOT_DIRECTORY)/charts/kubernetes-dashboard
 
 ### GOPATH check
 ifndef GOPATH

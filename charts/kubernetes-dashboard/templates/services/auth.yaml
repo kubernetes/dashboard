@@ -12,24 +12,25 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-{{- if and .Values.metricsScraper.enabled (eq .Values.app.mode "dashboard") }}
+{{- if eq .Values.app.mode "dashboard" }}
 
 kind: Service
 apiVersion: v1
 metadata:
   labels:
     {{- include "kubernetes-dashboard.labels" . | nindent 4 }}
-    app.kubernetes.io/name: {{ template "kubernetes-dashboard.name" . }}-{{ .Values.metricsScraper.role }}
-    app.kubernetes.io/version: {{ .Values.metricsScraper.image.tag }}
-    app.kubernetes.io/component: {{ .Values.metricsScraper.role }}
-  name: {{ template "kubernetes-dashboard.metrics-scraper.name" . }}
+    app.kubernetes.io/name: {{ template "kubernetes-dashboard.name" . }}-{{ .Values.auth.role }}
+    app.kubernetes.io/version: {{ .Values.auth.image.tag }}
+    app.kubernetes.io/component: {{ .Values.auth.role }}
+  name: {{ template "kubernetes-dashboard.fullname" . }}-{{ .Values.auth.role }}
 spec:
   ports:
-    {{- with (index .Values.metricsScraper.containers.ports 0) }}
-    - port: {{ .containerPort }}
+    - name: {{ .Values.auth.role }}
+    {{- with (index .Values.auth.containers.ports 0) }}
+      port: {{ .containerPort }}
     {{- end }}
   selector:
     {{- include "kubernetes-dashboard.matchLabels" . | nindent 4 }}
-    app.kubernetes.io/name: {{ template "kubernetes-dashboard.name" . }}-{{ .Values.metricsScraper.role }}
+    app.kubernetes.io/name: {{ template "kubernetes-dashboard.name" . }}-{{ .Values.auth.role }}
 
 {{- end -}}

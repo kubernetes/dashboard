@@ -12,16 +12,20 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+{{- if eq .Values.app.mode "dashboard" }}
+
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
   labels:
     {{- include "kubernetes-dashboard.labels" . | nindent 4 }}
-  name: {{ template "kubernetes-dashboard.fullname" . }}
+  name: {{ template "kubernetes-dashboard.fullname" . }}-{{ .Values.web.role }}
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: Role
-  name: {{ template "kubernetes-dashboard.fullname" . }}
+  name: {{ template "kubernetes-dashboard.fullname" . }}-{{ .Values.web.role }}
 subjects:
   - kind: ServiceAccount
-    name: {{ template "kubernetes-dashboard.fullname" . }}
+    name: {{ template "kubernetes-dashboard.fullname" . }}-{{ .Values.web.role }}
+
+{{- end -}}

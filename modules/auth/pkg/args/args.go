@@ -21,6 +21,8 @@ import (
 
 	"github.com/spf13/pflag"
 	"k8s.io/klog/v2"
+
+	"k8s.io/dashboard/csrf"
 )
 
 var (
@@ -39,6 +41,8 @@ func init() {
 
 	pflag.CommandLine.AddGoFlagSet(fs)
 	pflag.Parse()
+
+	csrf.Ensure()
 }
 
 func KubeconfigPath() string {

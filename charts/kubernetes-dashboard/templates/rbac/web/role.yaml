@@ -14,23 +14,17 @@
 
 {{- if eq .Values.app.mode "dashboard" }}
 
-kind: Service
-apiVersion: v1
+kind: Role
+apiVersion: rbac.authorization.k8s.io/v1
 metadata:
   labels:
     {{- include "kubernetes-dashboard.labels" . | nindent 4 }}
-    app.kubernetes.io/name: {{ template "kubernetes-dashboard.name" . }}-{{ .Values.web.role }}
-    app.kubernetes.io/version: {{ .Values.web.image.tag }}
-    app.kubernetes.io/component: {{ .Values.web.role }}
   name: {{ template "kubernetes-dashboard.fullname" . }}-{{ .Values.web.role }}
-spec:
-  ports:
-    - name: {{ .Values.web.role }}
-    {{- with (index .Values.web.containers.ports 0) }}
-      port: {{ .containerPort }}
-    {{- end }}
-  selector:
-    {{- include "kubernetes-dashboard.matchLabels" . | nindent 4 }}
-    app.kubernetes.io/name: {{ template "kubernetes-dashboard.name" . }}-{{ .Values.web.role }}
+rules:
+    # Allow Dashboard Web to get and update 'kubernetes-dashboard-settings' config map.
+  - apiGroups: [ "" ]
+    resources: [ "configmaps" ]
+    resourceNames: [ "{{ .Values.web.settings.configMap }}" ]
+    verbs: [ "get", "update" ]
 
 {{- end -}}

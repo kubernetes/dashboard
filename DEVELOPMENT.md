@@ -38,7 +38,17 @@ After cloning the repository, install web dependencies with `cd modules/web && y
 
 Then you can start the development version of the application with `make serve` It will create local kind cluster and run all the modules with Docker compose.
 
-If you would like to run production version use `make run`
+If you would like to run production version of the application use `make run`.
+
+To run a full end-to-end test use `make helm`. It will:
+- spin up a local kind dev cluster and expose 443 port (make sure that this port is free on your host)
+- install ingress-nginx for kind
+- update local helm dependencies
+- build all production ready docker images
+- load built images into the kind dev cluster
+- install Kubernetes Dashboard via helm chart inside kind dev cluster
+
+Kubernetes Dashboard should be then available directly on your localhost: https://localhost
 
 To create Docker images locally use `make image`.
 

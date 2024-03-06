@@ -15,6 +15,8 @@
 package helpers
 
 import (
+	"crypto/rand"
+	"encoding/base64"
 	"os"
 	"strings"
 )
@@ -41,4 +43,16 @@ func GetResourceFromPath(path string) *string {
 	}
 
 	return &parts[3]
+}
+
+func RandomBytes(size int) []byte {
+	bytes := make([]byte, size)
+	_, _ = rand.Read(bytes)
+
+	return bytes
+}
+
+func Random64BaseEncodedBytes(size int) string {
+	bytes := RandomBytes(size)
+	return base64.StdEncoding.EncodeToString(bytes)
 }

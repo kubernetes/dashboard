@@ -12,16 +12,20 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-{{ if .Values.metricsScraper.enabled }}
-kind: ClusterRole
+{{- if eq .Values.app.mode "dashboard" }}
+
 apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
 metadata:
   labels:
     {{- include "kubernetes-dashboard.labels" . | nindent 4 }}
-  name: {{ template "kubernetes-dashboard.fullname" . }}
-rules:
-  # Allow Metrics Scraper to get metrics from the Metrics server
-  - apiGroups: [ "metrics.k8s.io" ]
-    resources: [ "pods", "nodes" ]
-    verbs: [ "get", "list", "watch" ]
-{{ end }}
+  name: {{ template "kubernetes-dashboard.fullname" . }}-{{ .Values.api.role }}
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: {{ template "kubernetes-dashboard.fullname" . }}-{{ .Values.api.role }}
+subjects:
+  - kind: ServiceAccount
+    name: {{ template "kubernetes-dashboard.fullname" . }}-{{ .Values.api.role }}
+
+{{- end -}}

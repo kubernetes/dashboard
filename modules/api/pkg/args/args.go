@@ -23,6 +23,7 @@ import (
 	"github.com/spf13/pflag"
 	"k8s.io/klog/v2"
 
+	"k8s.io/dashboard/csrf"
 	"k8s.io/dashboard/helpers"
 )
 
@@ -53,7 +54,7 @@ var (
 	argAutoGenerateCertificates  = pflag.Bool("auto-generate-certificates", false, "enables automatic certificates generation used to serve HTTPS")
 	argNamespace                 = pflag.String("namespace", helpers.GetEnv("POD_NAMESPACE", "kubernetes-dashboard"), "Namespace to use when accessing Dashboard specific resources, i.e. metrics scraper service")
 	argMetricsScraperServiceName = pflag.String("metrics-scraper-service-name", "kubernetes-dashboard-metrics-scraper", "name of the dashboard metrics scraper service")
-	argEnableCSRFProtection      = pflag.Bool("enable-csrf-protection", true, "enabled CSRF protection and makes sure that every non-idempotent action contains a valid CSRF token")
+	argDisableCSRFProtection     = pflag.Bool("disable-csrf-protection", false, "allows disabling CSRF protection")
 )
 
 func init() {
@@ -66,6 +67,10 @@ func init() {
 
 	pflag.CommandLine.AddGoFlagSet(fs)
 	pflag.Parse()
+
+	if IsCSRFProtectionEnabled() {
+		csrf.Ensure()
+	}
 }
 
 func Address() string {
@@ -140,5 +145,5 @@ func Namespace() string {
 }
 
 func IsCSRFProtectionEnabled() bool {
-	return *argEnableCSRFProtection
+	return !*argDisableCSRFProtection
 }

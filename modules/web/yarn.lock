@@ -209,9 +209,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@angular-devkit/core@npm:17.2.2, @angular-devkit/core@npm:^13.0.0 || ^14.0.0 || ^15.0.0 || ^16.0.0 || ^17.0.0":
-  version: 17.2.2
-  resolution: "@angular-devkit/core@npm:17.2.2"
+"@angular-devkit/core@npm:17.2.3, @angular-devkit/core@npm:^13.0.0 || ^14.0.0 || ^15.0.0 || ^16.0.0 || ^17.0.0":
+  version: 17.2.3
+  resolution: "@angular-devkit/core@npm:17.2.3"
   dependencies:
     ajv: 8.12.0
     ajv-formats: 2.1.1
@@ -224,7 +224,7 @@ __metadata:
   peerDependenciesMeta:
     chokidar:
       optional: true
-  checksum: 00e713a415a8784e89b3dbc8c2266e9c398483858461b27ec4eb997817de415239072de5844f9b57fdd8d1b49cef61715481fdbb2d00098ce4953f2c35799469
+  checksum: 53f6c0a419ba8cbdb35b589670cd2364fa40984cfd460e98be4628599267849dfe036c644115abd04e0e41448d8a4b8df7165e1d38f8daa9d954d246420459e5
   languageName: node
   linkType: hard
 
@@ -241,16 +241,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@angular-devkit/schematics@npm:17.2.2, @angular-devkit/schematics@npm:^13.0.0 || ^14.0.0 || ^15.0.0 || ^16.0.0 || ^17.0.0":
-  version: 17.2.2
-  resolution: "@angular-devkit/schematics@npm:17.2.2"
+"@angular-devkit/schematics@npm:17.2.3, @angular-devkit/schematics@npm:^13.0.0 || ^14.0.0 || ^15.0.0 || ^16.0.0 || ^17.0.0":
+  version: 17.2.3
+  resolution: "@angular-devkit/schematics@npm:17.2.3"
   dependencies:
-    "@angular-devkit/core": 17.2.2
+    "@angular-devkit/core": 17.2.3
     jsonc-parser: 3.2.1
     magic-string: 0.30.7
     ora: 5.4.1
     rxjs: 7.8.1
-  checksum: 74035b4b59be3adfa0da319d74c4e730aab0589f905218fc704d362938132505e458c444697f3b4f40c863c921d5680bf9f793e0cec94ef3900de9222ba89874
+  checksum: a005e992254e949f930cc0f58fee081ee328782f4583ef84105d9bcab6aa1bd77aaf5522025b8f317f2d249fe46ce693521c8e31ed470e4ec17f4dc04d1762ee
   languageName: node
   linkType: hard
 
@@ -3144,12 +3144,12 @@ __metadata:
   linkType: hard
 
 "@jridgewell/trace-mapping@npm:^0.3.12, @jridgewell/trace-mapping@npm:^0.3.17, @jridgewell/trace-mapping@npm:^0.3.18, @jridgewell/trace-mapping@npm:^0.3.20, @jridgewell/trace-mapping@npm:^0.3.24, @jridgewell/trace-mapping@npm:^0.3.9":
-  version: 0.3.24
-  resolution: "@jridgewell/trace-mapping@npm:0.3.24"
+  version: 0.3.25
+  resolution: "@jridgewell/trace-mapping@npm:0.3.25"
   dependencies:
     "@jridgewell/resolve-uri": ^3.1.0
     "@jridgewell/sourcemap-codec": ^1.4.14
-  checksum: 96f40a060a71a93b2f6c34dfc99370ed2078d6bf11b6b3c9077a0f81326f7fccc43ff5e2a08bf9de8b83431b9eee09706d2c54fd46150467659d2aa338406462
+  checksum: 9d3c40d225e139987b50c48988f8717a54a8c994d8a948ee42e1412e08988761d0754d7d10b803061cc3aebf35f92a5dbbab493bd0e1a9ef9e89a2130e83ba34
   languageName: node
   linkType: hard
 
@@ -3330,13 +3330,13 @@ __metadata:
   linkType: hard
 
 "@schematics/angular@npm:^13.0.0 || ^14.0.0 || ^15.0.0 || ^16.0.0 || ^17.0.0":
-  version: 17.2.2
-  resolution: "@schematics/angular@npm:17.2.2"
+  version: 17.2.3
+  resolution: "@schematics/angular@npm:17.2.3"
   dependencies:
-    "@angular-devkit/core": 17.2.2
-    "@angular-devkit/schematics": 17.2.2
+    "@angular-devkit/core": 17.2.3
+    "@angular-devkit/schematics": 17.2.3
     jsonc-parser: 3.2.1
-  checksum: 1643788bbd31280ebbbd139026e3524d5cf409b144cb96eaa183193fc749e9dd9f3623c85a6a297cdf00f3b4db60d141206442c323e6d089c66000d106878b32
+  checksum: 22e14c8655328b9dab8fbab640db7dd47e0972f141083435fcfabd53079aca1c8d6781084601147bf372a22b972c248b8c04d5c0d58e0ecd2fd658c4b363650c
   languageName: node
   linkType: hard
 
@@ -5716,9 +5716,9 @@ __metadata:
   linkType: hard
 
 "caniuse-lite@npm:^1.0.30001464, caniuse-lite@npm:^1.0.30001487, caniuse-lite@npm:^1.0.30001587":
-  version: 1.0.30001591
-  resolution: "caniuse-lite@npm:1.0.30001591"
-  checksum: e48f924cdefff86d29d38ee1bffe2cdb1ef55e179d08ae2f1f5546d9d563e030f13755a0096ea87a09498daffd18666d1fe0b2759aea8421bbf4c214b47d410d
+  version: 1.0.30001594
+  resolution: "caniuse-lite@npm:1.0.30001594"
+  checksum: 59e52b2213f34fa9317813037fbab4f9b163f9bfeaeeb53035a57046ee2366b69eafc257997eab22982dc061d0576d1f4ef97c29425e1989f6589a7b1d8ed2d5
   languageName: node
   linkType: hard
 
@@ -7216,9 +7216,9 @@ __metadata:
   linkType: hard
 
 "electron-to-chromium@npm:^1.4.668":
-  version: 1.4.689
-  resolution: "electron-to-chromium@npm:1.4.689"
-  checksum: b7f5242d8788132e8bf08f725c9711ff27474dc9f6b72cccf6b5ef22411f219d35747055fbc4e00c6286f4f8ddb3b625cd2724a0461b001e9832d212de2626d7
+  version: 1.4.693
+  resolution: "electron-to-chromium@npm:1.4.693"
+  checksum: 3a173467da27d6c82e0e645ee2de3b6aa9cdbd0a8f6b314ddeeadc5b18ebe3555644ed9a720d9b72b7b9ed0574e2617277b7d34e6ee9c5aa962fd55cf1b1a41c
   languageName: node
   linkType: hard
 
@@ -8409,13 +8409,12 @@ __metadata:
   linkType: hard
 
 "flat-cache@npm:^4.0.0":
-  version: 4.0.0
-  resolution: "flat-cache@npm:4.0.0"
+  version: 4.0.1
+  resolution: "flat-cache@npm:4.0.1"
   dependencies:
     flatted: ^3.2.9
     keyv: ^4.5.4
-    rimraf: ^5.0.5
-  checksum: 744d5f111aeecdfb963faab7089230c737a90c325137251b4fe144fd76932e19738a861e356c5ee828bb310592b42a1da667912d74d0403f1f4ef75be8bfdbac
+  checksum: 899fc86bf6df093547d76e7bfaeb900824b869d7d457d02e9b8aae24836f0a99fbad79328cfd6415ee8908f180699bf259dc7614f793447cb14f707caf5996f6
   languageName: node
   linkType: hard
 
@@ -9030,9 +9029,9 @@ __metadata:
   linkType: hard
 
 "html-entities@npm:^2.3.2, html-entities@npm:^2.4.0":
-  version: 2.4.0
-  resolution: "html-entities@npm:2.4.0"
-  checksum: 25bea32642ce9ebd0eedc4d24381883ecb0335ccb8ac26379a0958b9b16652fdbaa725d70207ce54a51db24103436a698a8e454397d3ba8ad81460224751f1dc
+  version: 2.5.2
+  resolution: "html-entities@npm:2.5.2"
+  checksum: b23f4a07d33d49ade1994069af4e13d31650e3fb62621e92ae10ecdf01d1a98065c78fd20fdc92b4c7881612210b37c275f2c9fba9777650ab0d6f2ceb3b99b6
   languageName: node
   linkType: hard
 
@@ -14462,8 +14461,8 @@ __metadata:
   linkType: hard
 
 "stylelint-scss@npm:^6.0.0":
-  version: 6.1.0
-  resolution: "stylelint-scss@npm:6.1.0"
+  version: 6.2.1
+  resolution: "stylelint-scss@npm:6.2.1"
   dependencies:
     known-css-properties: ^0.29.0
     postcss-media-query-parser: ^0.2.3
@@ -14472,7 +14471,7 @@ __metadata:
     postcss-value-parser: ^4.2.0
   peerDependencies:
     stylelint: ^16.0.2
-  checksum: ff3b1c97e8379e45acd1b5b28bafa11251539366f362ff6a674690fd9aef0c7da926b2445304699d48edd1c375acb51b5fcb8039a4106ef4a6f4e29b8515e00b
+  checksum: bd52ca2643d8443dbf1a3d7844d9bc640fe0989436619bc7229a725997ee5aa0b457554b0721611d83d9f1ffe6b3ba1848d87b6d92028a3829cd7b9a508057c8
   languageName: node
   linkType: hard
 
@@ -14687,8 +14686,8 @@ __metadata:
   linkType: hard
 
 "terser@npm:^5.26.0":
-  version: 5.28.1
-  resolution: "terser@npm:5.28.1"
+  version: 5.29.0
+  resolution: "terser@npm:5.29.0"
   dependencies:
     "@jridgewell/source-map": ^0.3.3
     acorn: ^8.8.2
@@ -14696,7 +14695,7 @@ __metadata:
     source-map-support: ~0.5.20
   bin:
     terser: bin/terser
-  checksum: 2668823cbdf8ae4c62d17a899614c849ddbfa932fce2309e600bd9ed6e6adb87b2c0aca30acb6cdf0d8e83a77ae3858af14cd357a2cb25b9f289fae98c7f7537
+  checksum: 66c80e721ad165473a206d82617f8e693dc269f59fbbb4908fa358e8419ad37c3982fd634c67f60e780bc4361353049d87b86804b1043ba0f5c4e58aba2cce64
   languageName: node
   linkType: hard
 

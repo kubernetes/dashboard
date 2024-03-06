@@ -12,6 +12,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+{{- if eq .Values.app.mode "dashboard" }}
+
 kind: Deployment
 apiVersion: apps/v1
 metadata:
@@ -25,8 +27,8 @@ metadata:
     app.kubernetes.io/component: {{ .Values.web.role }}
   name: {{ template "kubernetes-dashboard.fullname" . }}-{{ .Values.web.role }}
 spec:
-  replicas: {{ .Values.app.scaling.replicas }}
-  revisionHistoryLimit: {{ .Values.app.scaling.revisionHistoryLimit }}
+  replicas: {{ .Values.web.scaling.replicas }}
+  revisionHistoryLimit: {{ .Values.web.scaling.revisionHistoryLimit }}
   selector:
     matchLabels:
       {{- include "kubernetes-dashboard.matchLabels" . | nindent 6 }}
@@ -46,8 +48,9 @@ spec:
         - name: {{ template "kubernetes-dashboard.name" . }}-{{ .Values.web.role }}
           image: "{{ .Values.web.image.repository }}:{{ .Values.web.image.tag }}"
           imagePullPolicy: {{ .Values.app.image.pullPolicy }}
-          {{- with .Values.web.containers.args }}
           args:
+            - --settings-config-map-name={{ .Values.web.settings.configMap }}
+          {{- with .Values.web.containers.args }}
           {{ toYaml . | nindent 12 }}
           {{- end }}
 
@@ -75,6 +78,14 @@ spec:
           resources:
           {{ toYaml . | nindent 12 }}
           {{- end }}
+
+      {{- with .Values.app.image.pullSecrets }}
+      imagePullSecrets:
+      {{- range . }}
+        - name: {{ . }}
+      {{- end }}
+      {{- end }}
+
       {{- with .Values.app.security.securityContext }}
       securityContext:
       {{ toYaml . | nindent 8 }}
@@ -85,12 +96,14 @@ spec:
       {{ toYaml . | nindent 8 }}
       {{- end }}
 
-      {{- with .Values.web.nodeSelector }}
+      {{- if or .Values.web.nodeSelector .Values.app.scheduling.nodeSelector }}
       nodeSelector:
+      {{- with .Values.web.nodeSelector }}
       {{ toYaml . | nindent 8 }}
       {{- end }}
       {{- with .Values.app.scheduling.nodeSelector }}
       {{ toYaml . | nindent 8 }}
+      {{- end }}
       {{- end }}
 
       {{- with .Values.app.tolerations }}
@@ -98,4 +111,10 @@ spec:
       {{ toYaml . | nindent 8 }}
       {{- end }}
 
-      serviceAccountName: {{ template "kubernetes-dashboard.fullname" . }}
+      {{- with .Values.app.affinity }}
+      affinity:
+      {{ toYaml . | nindent 8 }}
+      {{- end }}
+
+      serviceAccountName: {{ template "kubernetes-dashboard.fullname" . }}-{{ .Values.web.role }}
+{{- end -}}

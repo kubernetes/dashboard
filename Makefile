@@ -2,6 +2,7 @@ ROOT_DIRECTORY := $(shell dirname $(realpath $(firstword $(MAKEFILE_LIST))))
 
 include $(ROOT_DIRECTORY)/hack/include/config.mk
 include $(ROOT_DIRECTORY)/hack/include/ensure.mk
+include $(ROOT_DIRECTORY)/hack/include/kind.mk
 
 include $(API_DIRECTORY)/hack/include/config.mk
 include $(WEB_DIRECTORY)/hack/include/config.mk
@@ -66,7 +67,7 @@ tools: $(PRE) ## Installs required tools
 #
 # Note: Make sure that the port 8080 (Web HTTP) is free on your localhost
 .PHONY: serve
-serve: $(PRE) --ensure-kind-cluster ## Starts development version of the application on http://localhost:8080
+serve: $(PRE) --ensure-kind-cluster --ensure-metrics-server ## Starts development version of the application on http://localhost:8080
 	@KUBECONFIG=$(KIND_CLUSTER_INTERNAL_KUBECONFIG_PATH) \
 	SYSTEM_BANNER=$(SYSTEM_BANNER) \
 	SYSTEM_BANNER_SEVERITY=$(SYSTEM_BANNER_SEVERITY) \
@@ -85,7 +86,7 @@ serve: $(PRE) --ensure-kind-cluster ## Starts development version of the applica
 #
 # Note: Make sure that the ports 8443 (Gateway HTTPS) and 8080 (Gateway HTTP) are free on your localhost
 .PHONY: run
-run: $(PRE) --ensure-kind-cluster ## Starts production version of the application on https://localhost:8443 and https://localhost:8000
+run: $(PRE) --ensure-kind-cluster --ensure-metrics-server ## Starts production version of the application on https://localhost:8443 and https://localhost:8000
 	@KUBECONFIG=$(KIND_CLUSTER_INTERNAL_KUBECONFIG_PATH) \
 	SYSTEM_BANNER=$(SYSTEM_BANNER) \
 	SYSTEM_BANNER_SEVERITY=$(SYSTEM_BANNER_SEVERITY) \
@@ -100,17 +101,63 @@ run: $(PRE) --ensure-kind-cluster ## Starts production version of the applicatio
 
 .PHONY: image
 image:
+ifndef NO_BUILD
 		@KUBECONFIG=$(KIND_CLUSTER_INTERNAL_KUBECONFIG_PATH) \
-  	SYSTEM_BANNER=$(SYSTEM_BANNER) \
-  	SYSTEM_BANNER_SEVERITY=$(SYSTEM_BANNER_SEVERITY) \
-  	SIDECAR_HOST=$(SIDECAR_HOST) \
-  	VERSION="v0.0.0-prod" \
-  	docker compose -f $(DOCKER_COMPOSE_PATH) --project-name=$(PROJECT_NAME) build \
-  	--no-cache
+		SYSTEM_BANNER=$(SYSTEM_BANNER) \
+		SYSTEM_BANNER_SEVERITY=$(SYSTEM_BANNER_SEVERITY) \
+		SIDECAR_HOST=$(SIDECAR_HOST) \
+		VERSION="v0.0.0-prod" \
+		docker compose -f $(DOCKER_COMPOSE_PATH) --project-name=$(PROJECT_NAME) build \
+		--no-cache
+endif
+
+# Prepares and installs local dev version of Kubernetes Dashboard in our dedicated kind cluster.
+#
+# 1. Build all docker images
+# 2. Load images into kind cluster
+# 3. Run helm install using loaded dev images
+#
+# Run "NO_BUILD=true make helm" to skip building images.
+#
+# URL: https://localhost
+#
+# Note: Requires kind to set up and run.
+# Note #2: Make sure that the port 443 (HTTPS) is free on your localhost.
+.PHONY: helm
+helm: --ensure-kind-cluster --ensure-kind-ingress-nginx --ensure-helm-dependencies image --kind-load-images ## Install Kubernetes Dashboard helm chart in the dev kind cluster
+	@helm upgrade \
+		--create-namespace \
+		--namespace kubernetes-dashboard \
+		--install kubernetes-dashboard \
+		--set auth.image.repository=dashboard-auth \
+		--set auth.image.tag=latest \
+		--set api.image.repository=dashboard-api \
+		--set api.image.tag=latest \
+		--set web.image.repository=dashboard-web \
+		--set web.image.tag=latest \
+		--set metricsScraper.image.repository=dashboard-scraper \
+		--set metricsScraper.image.tag=latest \
+		--set metrics-server.enabled=true \
+		--set app.ingress.enabled=true \
+		--set app.ingress.ingressClassName=nginx \
+		--set api.scaling.replicas=3 \
+		charts/kubernetes-dashboard
+
+# To serve Dashboard under a different path than root (/) use:
+#		--set app.ingress.path=/dashboard \
+
+# To test API mode with helm below options can be used:
+#		--set app.mode=api \
+#		--set kong.enabled=false \
+#		--set api.containers.args={--metrics-provider=none} \
+
+.PHONY: helm-uninstall
+helm-uninstall: ## Uninstall helm dev installation of Kubernetes Dashboard
+	@helm uninstall -n kubernetes-dashboard kubernetes-dashboard
 
 # ============================ Private ============================ #
 
 .PHONY: --clean
 --clean:
-	@echo "[Global] Cleaning up"
+	@echo "[root] Cleaning up"
 	@rm -rf $(TMP_DIRECTORY)
