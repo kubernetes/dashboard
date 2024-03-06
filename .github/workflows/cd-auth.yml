@@ -61,7 +61,8 @@ jobs:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
-      - uses: docker/build-push-action@v5
+      - id: push
+        uses: docker/build-push-action@v5
         with:
           context: modules
           file: modules/auth/Dockerfile
@@ -73,7 +74,7 @@ jobs:
           cache-to: type=gha,mode=max
           build-args: |
             VERSION=${{ steps.meta.outputs.version || 'latest' }}
-      - if: startsWith(github.ref, 'refs/tags/auth/v')
+      - if: steps.push.outcome == 'success' && startsWith(github.ref, 'refs/tags/auth/v')
         uses: softprops/action-gh-release@v1
         with:
           body: |
