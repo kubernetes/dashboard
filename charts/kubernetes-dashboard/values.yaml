@@ -81,7 +81,7 @@ app:
     #  #  Is this CRD namespaced?
     #  namespaced: true
   ingress:
-    enabled: true
+    enabled: false
     hosts:
     # Keep 'localhost' host only if you want to access Dashboard using 'kubectl port-forward ...' on:
     # https://localhost:8443
@@ -99,6 +99,9 @@ app:
     useDefaultAnnotations: true
     pathType: ImplementationSpecific
     secretName: kubernetes-dashboard-certs
+    # If path is not the default (/), rewrite-target annotation will be added to the Ingress.
+    # It allows serving Kubernetes Dashboard on a sub-path. Make sure that the configured path
+    # does not conflict with gateway route configuration.
     path: /
     issuer:
       name: selfsigned
