@@ -83,9 +83,9 @@ app:
   ingress:
     enabled: false
     hosts:
-    # Keep 'localhost' host only if you want to access Dashboard using 'kubectl port-forward ...' on:
-    # https://localhost:8443
-    - localhost
+      # Keep 'localhost' host only if you want to access Dashboard using 'kubectl port-forward ...' on:
+      # https://localhost:8443
+      - localhost
     # - kubernetes.dashboard.domain.com
     ingressClassName: internal-nginx
     # Use only if your ingress controllers support default ingress classes.
@@ -122,7 +122,7 @@ auth:
   role: auth
   image:
     repository: docker.io/kubernetesui/dashboard-auth
-    tag: v1.0.0
+    tag: 1.1.0
   scaling:
     replicas: 1
     revisionHistoryLimit: 10
@@ -147,18 +147,18 @@ auth:
   volumes:
     # Create on-disk volume to store exec logs (required)
     - name: tmp-volume
-      emptyDir: { }
-  nodeSelector: { }
+      emptyDir: {}
+  nodeSelector: {}
   # Labels & annotations shared between API related resources
-  labels: { }
-  annotations: { }
+  labels: {}
+  annotations: {}
 
 # API deployment configuration
 api:
   role: api
   image:
     repository: docker.io/kubernetesui/dashboard-api
-    tag: v1.0.0
+    tag: 1.2.0
   scaling:
     replicas: 3
     revisionHistoryLimit: 10
@@ -212,7 +212,7 @@ web:
   role: web
   image:
     repository: docker.io/kubernetesui/dashboard-web
-    tag: v1.0.0
+    tag: 1.2.0
   scaling:
     replicas: 1
     revisionHistoryLimit: 10
@@ -270,8 +270,8 @@ metricsScraper:
   enabled: true
   role: metrics-scraper
   image:
-    repository: docker.io/kubernetesui/metrics-scraper
-    tag: v1.0.9
+    repository: docker.io/kubernetesui/dashboard-metrics-scraper
+    tag: 1.1.1
   scaling:
     replicas: 1
     revisionHistoryLimit: 10
@@ -338,6 +338,8 @@ metrics-server:
 ## for our all containers.
 kong:
   enabled: true
+  env:
+    dns_order: LAST,A,SRV,CNAME
   ingressController:
     enabled: false
   dblessConfig:

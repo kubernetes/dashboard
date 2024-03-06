@@ -93,6 +93,7 @@ run: $(PRE) --ensure-kind-cluster --ensure-metrics-server ## Starts production v
 	SYSTEM_BANNER_SEVERITY=$(SYSTEM_BANNER_SEVERITY) \
 	SIDECAR_HOST=$(SIDECAR_HOST) \
 	VERSION="v0.0.0-prod" \
+	WEB_BUILDER_ARCH=$(ARCH) \
 	docker compose -f $(DOCKER_COMPOSE_PATH) --project-name=$(PROJECT_NAME) up \
 		--build \
 		--remove-orphans \
@@ -126,7 +127,7 @@ endif
 # Note: Requires kind to set up and run.
 # Note #2: Make sure that the port 443 (HTTPS) is free on your localhost.
 .PHONY: helm
-helm: --ensure-kind-cluster --ensure-kind-ingress-nginx --ensure-helm-dependencies image --kind-load-images ## Install Kubernetes Dashboard helm chart in the dev kind cluster
+helm: --ensure-kind-cluster --ensure-kind-ingress-nginx --ensure-helm-dependencies image --kind-load-images ## Install Kubernetes Dashboard dev helm chart in the dev kind cluster
 	@helm upgrade \
 		--create-namespace \
 		--namespace kubernetes-dashboard \
@@ -139,6 +140,28 @@ helm: --ensure-kind-cluster --ensure-kind-ingress-nginx --ensure-helm-dependenci
 		--set web.image.tag=latest \
 		--set metricsScraper.image.repository=dashboard-scraper \
 		--set metricsScraper.image.tag=latest \
+		--set metrics-server.enabled=true \
+		--set app.ingress.enabled=true \
+		--set app.ingress.ingressClassName=nginx \
+		--set api.scaling.replicas=3 \
+		charts/kubernetes-dashboard
+
+# Installs latest version of Kubernetes Dashboard in our dedicated kind cluster.
+#
+# 1. Run helm install
+#
+# Run "NO_BUILD=true make helm" to skip building images.
+#
+# URL: https://localhost
+#
+# Note: Requires kind to set up and run.
+# Note #2: Make sure that the port 443 (HTTPS) is free on your localhost.
+.PHONY: helm-release
+helm-release: --ensure-kind-cluster --ensure-kind-ingress-nginx --ensure-helm-dependencies ## Install Kubernetes Dashboard helm chart in the dev kind cluster
+	@helm upgrade \
+		--create-namespace \
+		--namespace kubernetes-dashboard \
+		--install kubernetes-dashboard \
 		--set metrics-server.enabled=true \
 		--set app.ingress.enabled=true \
 		--set app.ingress.ingressClassName=nginx \

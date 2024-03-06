@@ -10,10 +10,6 @@ Kubernetes Dashboard is a general purpose, web-based UI for Kubernetes clusters.
 
 ![Dashboard UI workloads page](docs/images/overview.png)
 
-## Getting Started
-
-**IMPORTANT:** Read the [Access Control](docs/user/access-control/README.md) guide before performing any further steps. The default Dashboard deployment contains a minimal set of RBAC privileges needed to run.
-
 ## Installation
 
 Kubernetes Dashboard supports only Helm-based installation currently as it is faster and gives us better control
@@ -21,7 +17,7 @@ over all dependencies required by Dashboard to run. We now use a single-containe
 as a gateway that connects all our containers and exposes the UI. Users can then use any ingress controller or proxy
 in front of kong gateway. To find out more about ways to customize your installation check out [helm chart values](charts/kubernetes-dashboard/values.yaml).
 
-In order install Kubernetes Dashboard simply run:
+In order to install Kubernetes Dashboard simply run:
 ```console
 # Add kubernetes-dashboard repository
 helm repo add kubernetes-dashboard https://kubernetes.github.io/dashboard/
@@ -31,19 +27,14 @@ helm upgrade --install kubernetes-dashboard kubernetes-dashboard/kubernetes-dash
 
 For more information about our Helm chart visit [ArtifactHub](https://artifacthub.io/packages/helm/k8s-dashboard/kubernetes-dashboard).
 
-## Access
-
-You can access the Dashboard as described in the instructions that can be found in the [access guide](docs/user/accessing-dashboard/README.md).
-
-## Create An Authentication Token (RBAC)
-To find out how to create sample user and log in follow [Creating sample user](docs/user/access-control/creating-sample-user.md) guide.
-
 ## Documentation
 
-Dashboard documentation can be found on [docs](docs/README.md) directory which contains:
+Dashboard documentation can be found in the [docs](docs/README.md) directory which contains:
 
 * [Common](docs/common/README.md): Entry-level overview.
-* [User Guide](docs/user/README.md): [Accessing Dashboard](docs/user/accessing-dashboard/README.md) and more for users.
+* [User Guide](docs/user/README.md): Helpful information for users.
+* [How to access Dashboard](docs/user/accessing-dashboard/README.md) - Everything you need to know to get access to you Kubernetes Dashboard instance after installation.
+* [Access Control](docs/user/access-control/README.md): Find out how to control access to your Kubernetes Dashboard and [create sample user](docs/user/access-control/creating-sample-user.md) that can be used to log in.
 * [Developer Guide](DEVELOPMENT.md): Important information for contributors that would like to test, run and work on Dashboard locally.
 
 ## Community, discussion, contribution, and support
