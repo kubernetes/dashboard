@@ -19,7 +19,7 @@ When writing new Go code, we try to follow conventions described in [Effective G
 
 For Angular, we try to follow conventions described in [Angular Style Guide](https://angular.io/guide/styleguide) and [Material Design Guidelines](https://material.io/guidelines/).
 
-We are running a set of checks for each pull request, all of them have to be successful before the change can be merged. You can run most of them locally using `make` targets, i.e. `make test` or `make check` (see `Makefile` for more information).
+We are running a set of checks for each pull request, all of them have to be successful before the change can be merged. You can run most of them locally using `make` targets, i.e. `make test` or `make check` (see [`Makefile`](Makefile) for more information).
 
 Tools that we are using include [golangci-lint](https://github.com/golangci/golangci-lint), [eslint](https://eslint.org), [stylelint](https://github.com/stylelint/stylelint), [prettier](https://prettier.io/).
 
