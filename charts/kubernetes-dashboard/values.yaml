@@ -83,9 +83,9 @@ app:
   ingress:
     enabled: false
     hosts:
-    # Keep 'localhost' host only if you want to access Dashboard using 'kubectl port-forward ...' on:
-    # https://localhost:8443
-    - localhost
+      # Keep 'localhost' host only if you want to access Dashboard using 'kubectl port-forward ...' on:
+      # https://localhost:8443
+      - localhost
     # - kubernetes.dashboard.domain.com
     ingressClassName: internal-nginx
     # Use only if your ingress controllers support default ingress classes.
@@ -147,11 +147,11 @@ auth:
   volumes:
     # Create on-disk volume to store exec logs (required)
     - name: tmp-volume
-      emptyDir: { }
-  nodeSelector: { }
+      emptyDir: {}
+  nodeSelector: {}
   # Labels & annotations shared between API related resources
-  labels: { }
-  annotations: { }
+  labels: {}
+  annotations: {}
 
 # API deployment configuration
 api:
