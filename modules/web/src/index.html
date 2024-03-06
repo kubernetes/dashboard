@@ -30,7 +30,7 @@ limitations under the License.
     />
 
     <!-- Dynamic base href -->
-    <script type='text/javascript'>
+    <script type="text/javascript">
       function configExists(url) {
         const req = new XMLHttpRequest();
 
@@ -44,7 +44,7 @@ limitations under the License.
       const origin = document.location.origin;
       const pathSegments = document.location.pathname.split('/');
 
-      let basePath = '/'
+      let basePath = '/';
       let configFound = false;
 
       for (let i = 0; i < pathSegments.length; i++) {

@@ -28,8 +28,8 @@ import {ResourceService} from '@common/services/resource/resource';
 import {SaveAnywayDialogComponent} from './saveanywaysdialog/dialog';
 import {SettingsHelperService} from './service';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
-import {AlertDialogComponent} from "@common/dialogs/alert/dialog";
-import {AsKdError} from "@common/errors/errors";
+import {AlertDialogComponent} from '@common/dialogs/alert/dialog';
+import {AsKdError} from '@common/errors/errors';
 
 enum Controls {
   ClusterName = 'clusterName',
@@ -65,8 +65,7 @@ export class GlobalSettingsComponent implements OnInit {
     private readonly dialog_: MatDialog,
     private readonly title_: TitleService,
     private readonly builder_: UntypedFormBuilder
-  ) {
-  }
+  ) {}
 
   private get externalSettings_(): GlobalSettings {
     const settings = {} as GlobalSettings;
@@ -139,19 +138,22 @@ export class GlobalSettingsComponent implements OnInit {
   }
 
   private onSaveError_(err: HttpErrorResponse): Observable<boolean> {
-    const kdError = AsKdError(err)
+    const kdError = AsKdError(err);
     if (kdError.message.indexOf(this.concurrentChangeErr_) !== -1) {
       return this.dialog_.open(SaveAnywayDialogComponent, {width: '420px'}).afterClosed();
     }
 
-    this.reload()
-    return this.dialog_.open(AlertDialogComponent, {
-      data: {
-        title: 'Could not save settings',
-        message: `${kdError.message}`,
-        confirmLabel: 'Close'
-      }
-    }).afterClosed().pipe(switchMap(_ => of(false)))
+    this.reload();
+    return this.dialog_
+      .open(AlertDialogComponent, {
+        data: {
+          title: 'Could not save settings',
+          message: `${kdError.message}`,
+          confirmLabel: 'Close',
+        },
+      })
+      .afterClosed()
+      .pipe(switchMap(_ => of(false)));
   }
 
   private load_(): void {
