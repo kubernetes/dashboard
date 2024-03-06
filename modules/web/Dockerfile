@@ -12,6 +12,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+ARG WEB_BUILDER_ARCH=amd64
+
 FROM alpine:3.19 as user
 
 ENV USER=nonroot
@@ -27,7 +29,7 @@ RUN adduser \
     --uid "${UID}" \
     "${USER}"
 
-FROM --platform=linux/amd64 node:20.11.1-alpine3.19  as web-builder
+FROM --platform=linux/${WEB_BUILDER_ARCH} node:20.11.1-alpine3.19  as web-builder
 
 RUN apk add --no-cache \
     make \

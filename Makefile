@@ -1,5 +1,6 @@
 ROOT_DIRECTORY := $(shell dirname $(realpath $(firstword $(MAKEFILE_LIST))))
 
+include $(ROOT_DIRECTORY)/hack/include/build.mk
 include $(ROOT_DIRECTORY)/hack/include/config.mk
 include $(ROOT_DIRECTORY)/hack/include/ensure.mk
 include $(ROOT_DIRECTORY)/hack/include/kind.mk
@@ -107,6 +108,7 @@ ifndef NO_BUILD
 		SYSTEM_BANNER_SEVERITY=$(SYSTEM_BANNER_SEVERITY) \
 		SIDECAR_HOST=$(SIDECAR_HOST) \
 		VERSION="v0.0.0-prod" \
+		WEB_BUILDER_ARCH=$(ARCH) \
 		docker compose -f $(DOCKER_COMPOSE_PATH) --project-name=$(PROJECT_NAME) build \
 		--no-cache
 endif
