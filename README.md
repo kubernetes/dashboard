@@ -2,7 +2,6 @@
 
 [![Go Report Card](https://goreportcard.com/badge/github.com/kubernetes/dashboard)](https://goreportcard.com/report/github.com/kubernetes/dashboard)
 [![Coverage Status](https://codecov.io/github/kubernetes/dashboard/coverage.svg?branch=master)](https://codecov.io/github/kubernetes/dashboard?branch=master)
-[![GitHub release](https://img.shields.io/github/release/kubernetes/dashboard.svg)](https://github.com/kubernetes/dashboard/releases/latest)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://github.com/kubernetes/dashboard/blob/master/LICENSE)
 
 ## Introduction
@@ -34,14 +33,10 @@ For more information about our Helm chart visit [ArtifactHub](https://artifacthu
 
 ## Access
 
-You can access Dashboard as described in the instructions that can be found in the [access guide](docs/user/accessing-dashboard/README.md).
+You can access the Dashboard as described in the instructions that can be found in the [access guide](docs/user/accessing-dashboard/README.md).
 
 ## Create An Authentication Token (RBAC)
 To find out how to create sample user and log in follow [Creating sample user](docs/user/access-control/creating-sample-user.md) guide.
-
-**NOTE:**
-* Kubeconfig Authentication method does not support external identity providers or certificate-based authentication.
-* [Metrics-Server](https://github.com/kubernetes-sigs/metrics-server) has to be running in the cluster for the metrics and graphs to be available. Read more about it in [Integrations](docs/user/integrations.md) guide.
 
 ## Documentation
 
@@ -49,7 +44,7 @@ Dashboard documentation can be found on [docs](docs/README.md) directory which c
 
 * [Common](docs/common/README.md): Entry-level overview.
 * [User Guide](docs/user/README.md): [Accessing Dashboard](docs/user/accessing-dashboard/README.md) and more for users.
-* [Developer Guide](docs/developer/README.md): Important information for contributors that would like to test, run and work on Dashboard locally.
+* [Developer Guide](DEVELOPMENT.md): Important information for contributors that would like to test, run and work on Dashboard locally.
 
 ## Community, discussion, contribution, and support
 
