@@ -33,15 +33,6 @@ env:
   NODE_OPTIONS: "--max-old-space-size=8192"
   TERM: xterm
 jobs:
-  pull-request-size-label:
-    name: Pull request size label
-    if: github.event_name == 'pull_request'
-    runs-on: ubuntu-latest
-    steps:
-      - uses: pascalgn/size-label-action@v0.5.0
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
   pull-request-labels-check:
     name: Pull request labels check
     if: github.event_name == 'pull_request'
