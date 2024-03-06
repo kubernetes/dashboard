@@ -16,6 +16,8 @@ name: CD / Helm
 
 on:
   push:
+    paths:
+      - 'charts/**'
     branches:
       - master
 
