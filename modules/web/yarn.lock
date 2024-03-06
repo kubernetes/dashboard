@@ -10781,7 +10781,7 @@ __metadata:
     material-design-icons: 3.0.1
     minimatch: 9.0.3
     minimist: 1.2.8
-    ng-extract-i18n-merge: 2.10.0
+    ng-extract-i18n-merge: 2.11.0
     ngx-cookie-service: 17.1.0
     ngx-pipes: 3.2.2
     node-gyp: 10.0.1
@@ -11737,9 +11737,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ng-extract-i18n-merge@npm:2.10.0":
-  version: 2.10.0
-  resolution: "ng-extract-i18n-merge@npm:2.10.0"
+"ng-extract-i18n-merge@npm:2.11.0":
+  version: 2.11.0
+  resolution: "ng-extract-i18n-merge@npm:2.11.0"
   dependencies:
     "@angular-devkit/architect": ^0.1301.0 || ^0.1401.0 || ^0.1501.0 || ^0.1601.0 || ^0.1700.0
     "@angular-devkit/core": ^13.0.0 || ^14.0.0 || ^15.0.0 || ^16.0.0 || ^17.0.0
@@ -11748,7 +11748,7 @@ __metadata:
     xmldoc: ^1.1.2
   peerDependencies:
     "@angular-devkit/build-angular": ^13.0.0 || ^14.0.0 || ^15.0.0 || ^16.0.0 || ^17.0.0
-  checksum: 0ad350ee973564e5cdfbcbf99734ec34d3eab7c684814ce6e543676d812e15be31bc19eea4312a78f377db976818601dc46cc3f8650ba5b79fa5226a35d162a9
+  checksum: 3871357a3356dc9ce33fcea6e99a10bac0794aee6c4a7be46c36c33bc0c5d2f1362bc152c531a5fd31bca60cffc280af85326d759f9306beeab41e02f5f0fa9a
   languageName: node
   linkType: hard
 
