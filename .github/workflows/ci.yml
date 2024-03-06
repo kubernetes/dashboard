@@ -42,7 +42,7 @@ jobs:
         with:
           mode: exactly
           count: 1
-          labels: "kind/bug, kind/cleanup, kind/feature, kind/i18n, dependencies"
+          labels: "kind/bug, kind/cleanup, kind/documentation, kind/feature, kind/i18n, dependencies"
 
   pull-request-title-check:
     name: Pull request title check
