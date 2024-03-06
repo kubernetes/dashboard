@@ -28,9 +28,9 @@ Tools that we are using include [golangci-lint](https://github.com/golangci/gola
 Make sure the following software is installed and added to your path:
 
 - [Docker](https://docs.docker.com/engine/install/) 
-- [Go](https://golang.org/dl/) (check the required version in `modules/go.work`)
-- [Node.js](https://nodejs.org/en/download) (check the required version in `modules/web/package.json`)
-- [Yarn](https://yarnpkg.com/getting-started/install) (check the required version in `modules/web/.yarnrc.yml`)
+- [Go](https://golang.org/dl/) (check the required version in [`modules/go.work`](modules/go.work))
+- [Node.js](https://nodejs.org/en/download) (check the required version in [`modules/web/package.json`](modules/web/package.json))
+- [Yarn](https://yarnpkg.com/getting-started/install) (check the required version in [`modules/web/.yarnrc.yml`](modules/web/.yarnrc.yml))
 
 ## Getting Started
 
@@ -42,7 +42,7 @@ If you would like to run production version use `make run`
 
 To create Docker images locally use `make image`.
 
-See `Makefile` to get to know other targets useful during development. You can also run `make help` to quickly check the list of available commands.
+See [`Makefile`](Makefile) to get to know other targets useful during development. You can also run `make help` to quickly check the list of available commands.
 
 ## Dependency Management
 
