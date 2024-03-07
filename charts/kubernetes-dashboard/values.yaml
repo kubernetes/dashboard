@@ -121,7 +121,7 @@ auth:
   role: auth
   image:
     repository: docker.io/kubernetesui/dashboard-auth
-    tag: 1.1.0
+    tag: 1.1.1
   scaling:
     replicas: 1
     revisionHistoryLimit: 10
@@ -211,7 +211,7 @@ web:
   role: web
   image:
     repository: docker.io/kubernetesui/dashboard-web
-    tag: 1.2.1
+    tag: 1.2.2
   scaling:
     replicas: 1
     revisionHistoryLimit: 10
