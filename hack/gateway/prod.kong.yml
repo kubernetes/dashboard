@@ -28,6 +28,10 @@ services:
         paths:
           - /api/v1/csrftoken/login
         strip_path: false
+      - name: authMe
+        paths:
+          - /api/v1/me
+        strip_path: false
   - name: api
     host: api # Internal name of docker service
     port: 8000
