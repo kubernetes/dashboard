@@ -130,7 +130,7 @@ endif
 helm: --ensure-kind-cluster --ensure-kind-ingress-nginx --ensure-helm-dependencies image --kind-load-images ## Install Kubernetes Dashboard dev helm chart in the dev kind cluster
 	@helm upgrade \
 		--create-namespace \
-		--namespace kubernetes-dashboard \
+		--namespace dashboard \
 		--install kubernetes-dashboard \
 		--set auth.image.repository=dashboard-auth \
 		--set auth.image.tag=latest \
@@ -141,6 +141,7 @@ helm: --ensure-kind-cluster --ensure-kind-ingress-nginx --ensure-helm-dependenci
 		--set metricsScraper.image.repository=dashboard-scraper \
 		--set metricsScraper.image.tag=latest \
 		--set metrics-server.enabled=true \
+		--set cert-manager.enabled=true \
 		--set app.ingress.enabled=true \
 		--set app.ingress.ingressClassName=nginx \
 		--set api.scaling.replicas=3 \
@@ -160,7 +161,7 @@ helm: --ensure-kind-cluster --ensure-kind-ingress-nginx --ensure-helm-dependenci
 helm-release: --ensure-kind-cluster --ensure-kind-ingress-nginx --ensure-helm-dependencies ## Install Kubernetes Dashboard helm chart in the dev kind cluster
 	@helm upgrade \
 		--create-namespace \
-		--namespace kubernetes-dashboard \
+		--namespace dashboard \
 		--install kubernetes-dashboard \
 		--set metrics-server.enabled=true \
 		--set app.ingress.enabled=true \
@@ -178,7 +179,7 @@ helm-release: --ensure-kind-cluster --ensure-kind-ingress-nginx --ensure-helm-de
 
 .PHONY: helm-uninstall
 helm-uninstall: ## Uninstall helm dev installation of Kubernetes Dashboard
-	@helm uninstall -n kubernetes-dashboard kubernetes-dashboard
+	@helm uninstall -n dashboard kubernetes-dashboard
 
 # ============================ Private ============================ #
 

@@ -26,6 +26,10 @@ metadata:
     app.kubernetes.io/name: {{ template "kubernetes-dashboard.name" . }}-{{ .Values.auth.role }}
     app.kubernetes.io/version: {{ .Values.api.image.tag }}
     app.kubernetes.io/component: {{ .Values.auth.role }}
+  annotations:
+    {{- with .Values.auth.annotations }}
+    {{ toYaml . | nindent 8 }}
+    {{- end }}
   name: {{ template "kubernetes-dashboard.fullname" . }}-{{ .Values.auth.role }}
 spec:
   replicas: {{ .Values.auth.scaling.replicas }}
@@ -44,6 +48,12 @@ spec:
         app.kubernetes.io/name: {{ template "kubernetes-dashboard.name" . }}-{{ .Values.auth.role }}
         app.kubernetes.io/version: {{ .Values.auth.image.tag }}
         app.kubernetes.io/component: {{ .Values.auth.role }}
+      annotations:
+        {{/* Ensure that the deployment is rolled on upgrade since CSRF key will be regenerated. */}}
+        rollme: {{ randAlphaNum 5 | quote }}
+        {{- with .Values.auth.annotations }}
+        {{ toYaml . | nindent 8 }}
+        {{- end }}
     spec:
       containers:
         - name: {{ template "kubernetes-dashboard.name" . }}-{{ .Values.auth.role }}
@@ -58,8 +68,8 @@ spec:
             - name: CSRF_KEY
               valueFrom:
                 secretKeyRef:
-                  name: {{ .Values.app.csrf.secretName }}
-                  key: {{ .Values.app.csrf.secretKey }}
+                  name: {{ template "kubernetes-dashboard.app.csrf.secret.name" . }}
+                  key: {{ template "kubernetes-dashboard.app.csrf.secret.key" . }}
           {{- with .Values.auth.containers.env }}
           {{ toYaml . | nindent 12 }}
           {{- end }}

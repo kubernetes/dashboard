@@ -55,9 +55,6 @@ app:
   # Common labels & annotations shared across all deployed resources
   labels: {}
   annotations: {}
-  csrf:
-    secretName: kubernetes-dashboard-csrf
-    secretKey: private.key
   settings:
     ## Global dashboard settings
     global:
@@ -98,7 +95,6 @@ app:
     #    nginx.ingress.kubernetes.io/ssl-redirect: "true"
     useDefaultAnnotations: true
     pathType: ImplementationSpecific
-    secretName: kubernetes-dashboard-certs
     # If path is not the default (/), rewrite-target annotation will be added to the Ingress.
     # It allows serving Kubernetes Dashboard on a sub-path. Make sure that the configured path
     # does not conflict with gateway route configuration.
@@ -212,12 +208,10 @@ web:
   role: web
   image:
     repository: docker.io/kubernetesui/dashboard-web
-    tag: 1.2.0
+    tag: 1.2.1
   scaling:
     replicas: 1
     revisionHistoryLimit: 10
-  settings:
-    configMap: kubernetes-dashboard-settings
   containers:
     ports:
       - name: web
