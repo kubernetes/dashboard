@@ -161,7 +161,7 @@ helm: --ensure-kind-cluster --ensure-kind-ingress-nginx --ensure-helm-dependenci
 helm-release: --ensure-kind-cluster --ensure-kind-ingress-nginx --ensure-helm-dependencies ## Install Kubernetes Dashboard helm chart in the dev kind cluster
 	@helm upgrade \
 		--create-namespace \
-		--namespace kubernetes-dashboard \
+		--namespace dashboard \
 		--install kubernetes-dashboard \
 		--set metrics-server.enabled=true \
 		--set app.ingress.enabled=true \
@@ -179,7 +179,7 @@ helm-release: --ensure-kind-cluster --ensure-kind-ingress-nginx --ensure-helm-de
 
 .PHONY: helm-uninstall
 helm-uninstall: ## Uninstall helm dev installation of Kubernetes Dashboard
-	@helm uninstall -n kubernetes-dashboard kubernetes-dashboard
+	@helm uninstall -n dashboard kubernetes-dashboard
 
 # ============================ Private ============================ #
 
