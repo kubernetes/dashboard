@@ -40,7 +40,7 @@ var (
 	argSystemBanner             = pflag.String("system-banner", "", "system banner message displayed in the app if non-empty, it accepts simple HTML")
 	argSystemBannerSeverity     = pflag.String("system-banner-severity", "INFO", "severity of system banner, should be one of 'INFO', 'WARNING' or 'ERROR'")
 	argAutoGenerateCertificates = pflag.Bool("auto-generate-certificates", false, "enables automatic certificates generation used to serve HTTPS")
-	argLocaleConfig             = pflag.String("locale-config", "./locale_conf.json", "path to file containing the locale configuration")
+	argLocaleConfig             = pflag.String("locale-config", "/locale_conf.json", "path to file containing the locale configuration")
 	argKubeconfig               = pflag.String("kubeconfig", "", "Path to kubeconfig file")
 )
 

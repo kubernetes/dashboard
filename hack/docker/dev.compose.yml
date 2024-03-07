@@ -72,7 +72,6 @@ services:
       dockerfile: web/dev.go.Dockerfile
     command:
       - "--kubeconfig=${KUBECONFIG:?}"
-      - "--locale-config=/public/locale_conf.json"
       - "--system-banner='Local\ dev\ environment'"
       - "--system-banner-severity=${SYSTEM_BANNER_SEVERITY:?}"
     volumes:

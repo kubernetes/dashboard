@@ -71,7 +71,6 @@ services:
         WEB_BUILDER_ARCH: ${WEB_BUILDER_ARCH:?}
     command:
       - "--kubeconfig=${KUBECONFIG:?}"
-      - "--locale-config=/public/locale_conf.json"
       - "--system-banner=${SYSTEM_BANNER:?}"
       - "--system-banner-severity=${SYSTEM_BANNER_SEVERITY:?}"
     volumes:
