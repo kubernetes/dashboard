@@ -24,7 +24,7 @@ rules:
     # Allow Dashboard Web to get and update 'kubernetes-dashboard-settings' config map.
   - apiGroups: [ "" ]
     resources: [ "configmaps" ]
-    resourceNames: [ "{{ .Values.web.settings.configMap }}" ]
+    resourceNames: [ "{{ template "kubernetes-dashboard.web.configMap.settings.name" . }}" ]
     verbs: [ "get", "update" ]
 
 {{- end -}}

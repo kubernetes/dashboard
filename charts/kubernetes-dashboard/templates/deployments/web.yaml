@@ -25,6 +25,10 @@ metadata:
     app.kubernetes.io/name: {{ template "kubernetes-dashboard.name" . }}-{{ .Values.web.role }}
     app.kubernetes.io/version: {{ .Values.web.image.tag }}
     app.kubernetes.io/component: {{ .Values.web.role }}
+  annotations:
+    {{- with .Values.web.annotations }}
+    {{ toYaml . | nindent 8 }}
+    {{- end }}
   name: {{ template "kubernetes-dashboard.fullname" . }}-{{ .Values.web.role }}
 spec:
   replicas: {{ .Values.web.scaling.replicas }}
@@ -43,15 +47,18 @@ spec:
         app.kubernetes.io/name: {{ template "kubernetes-dashboard.name" . }}-{{ .Values.web.role }}
         app.kubernetes.io/version: {{ .Values.web.image.tag }}
         app.kubernetes.io/component: {{ .Values.web.role }}
+      annotations:
+        {{- with .Values.web.annotations }}
+        {{ toYaml . | nindent 8 }}
+        {{- end }}
     spec:
       containers:
         - name: {{ template "kubernetes-dashboard.name" . }}-{{ .Values.web.role }}
           image: "{{ .Values.web.image.repository }}:{{ .Values.web.image.tag }}"
           imagePullPolicy: {{ .Values.app.image.pullPolicy }}
           args:
-            - --settings-config-map-name={{ .Values.web.settings.configMap }}
-          {{/* TODO: Can be removed after updating default locale-config path in web container */}}
-            - --locale-config=/locale_conf.json
+            - --namespace={{ .Release.Namespace }}
+            - --settings-config-map-name={{ template "kubernetes-dashboard.web.configMap.settings.name" . }}
           {{- with .Values.web.containers.args }}
           {{ toYaml . | nindent 12 }}
           {{- end }}

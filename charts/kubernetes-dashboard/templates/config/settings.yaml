@@ -19,7 +19,7 @@ kind: ConfigMap
 metadata:
   labels:
     {{- include "kubernetes-dashboard.labels" . | nindent 4 }}
-  name: {{ .Values.web.settings.configMap }}
+  name: {{ template "kubernetes-dashboard.web.configMap.settings.name" . }}
 data:
 {{- with .Values.app.settings.global }}
   settings: {{ toJson . | quote }}

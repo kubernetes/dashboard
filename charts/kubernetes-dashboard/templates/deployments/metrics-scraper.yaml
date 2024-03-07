@@ -25,6 +25,10 @@ metadata:
     app.kubernetes.io/name: {{ template "kubernetes-dashboard.name" . }}-{{ .Values.metricsScraper.role }}
     app.kubernetes.io/version: {{ .Values.metricsScraper.image.tag }}
     app.kubernetes.io/component: {{ .Values.metricsScraper.role }}
+  annotations:
+    {{- with .Values.metricsScraper.annotations }}
+    {{ toYaml . | nindent 8 }}
+    {{- end }}
   name: {{ template "kubernetes-dashboard.metrics-scraper.name" . }}
 spec:
   replicas: {{ .Values.metricsScraper.scaling.replicas }}
@@ -43,6 +47,10 @@ spec:
         app.kubernetes.io/name: {{ template "kubernetes-dashboard.name" . }}-{{ .Values.metricsScraper.role }}
         app.kubernetes.io/version: {{ .Values.metricsScraper.image.tag }}
         app.kubernetes.io/component: {{ .Values.metricsScraper.role }}
+      annotations:
+        {{- with .Values.metricsScraper.annotations }}
+        {{ toYaml . | nindent 8 }}
+        {{- end }}
     spec:
       containers:
         - name: {{ template "kubernetes-dashboard.name" . }}-{{ .Values.metricsScraper.role }}

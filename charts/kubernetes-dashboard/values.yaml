@@ -55,9 +55,6 @@ app:
   # Common labels & annotations shared across all deployed resources
   labels: {}
   annotations: {}
-  csrf:
-    secretName: kubernetes-dashboard-csrf
-    secretKey: private.key
   settings:
     ## Global dashboard settings
     global:
@@ -212,12 +209,10 @@ web:
   role: web
   image:
     repository: docker.io/kubernetesui/dashboard-web
-    tag: 1.2.0
+    tag: 1.2.1
   scaling:
     replicas: 1
     revisionHistoryLimit: 10
-  settings:
-    configMap: kubernetes-dashboard-settings
   containers:
     ports:
       - name: web

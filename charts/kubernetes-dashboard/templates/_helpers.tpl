@@ -63,8 +63,24 @@ app.kubernetes.io/instance: {{ .Release.Name }}
 app.kubernetes.io/part-of: {{ include "kubernetes-dashboard.name" . }}
 {{- end -}}
 
+{{- define "kubernetes-dashboard.app.csrf.secret.name" -}}
+{{- printf "%s-%s" ( include "kubernetes-dashboard.fullname" . ) "csrf"}}
+{{- end -}}
+
+{{- define "kubernetes-dashboard.app.ingress.secret.name" -}}
+{{- printf "%s-%s" ( include "kubernetes-dashboard.fullname" . ) "certs"}}
+{{- end -}}
+
+{{- define "kubernetes-dashboard.app.csrf.secret.key" -}}
+{{- printf "private.key" }}
+{{- end -}}
+
 {{- define "kubernetes-dashboard.metrics-scraper.name" -}}
 {{- printf "%s-%s" ( include "kubernetes-dashboard.fullname" . ) ( .Values.metricsScraper.role )}}
+{{- end -}}
+
+{{- define "kubernetes-dashboard.web.configMap.settings.name" -}}
+{{- printf "%s-%s-%s" ( include "kubernetes-dashboard.fullname" . ) ( .Values.web.role ) "settings" }}
 {{- end -}}
 
 {{- define "kubernetes-dashboard.validate.mode" -}}

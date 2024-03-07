@@ -50,7 +50,7 @@ spec:
   tls:
     - hosts:
       {{- toYaml .Values.app.ingress.hosts | nindent 6 }}
-      secretName: {{ .Values.app.ingress.secretName }}
+      secretName: {{ template "kubernetes-dashboard.app.ingress.secret.name" . }}
   {{- end }}
   rules:
     {{- if .Values.app.ingress.hosts }}
