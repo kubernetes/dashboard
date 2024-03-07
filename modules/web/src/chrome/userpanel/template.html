@@ -30,15 +30,8 @@ limitations under the License.
         fxFlex
         fxFlexAlign=" center"
         fxLayout="column"
-        class="method"
+        class="method kd-muted-light"
       >
-        <div
-          fxFlex
-          fxFlexAlign=" center"
-          class="username"
-        >
-          {{ username }}
-        </div>
         <ng-container
           *ngIf="hasAuthHeader()"
           i18n
@@ -49,6 +42,7 @@ limitations under the License.
           i18n
           >Logged in with token
         </ng-container>
+        <span class="username kd-muted">{{ username }}</span>
       </div>
 
       <button
@@ -72,7 +66,7 @@ limitations under the License.
   </button>
   <button
     mat-menu-item
-    *ngIf="isAuthenticated()"
+    *ngIf="isAuthenticated() && !hasAuthHeader()"
     (click)="logout()"
     i18n
   >

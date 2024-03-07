@@ -36,6 +36,7 @@ import {ThemeService} from './theme';
 import {TitleService} from './title';
 import {VerberService} from './verber';
 import {PinnerService} from './pinner';
+import {MeService} from "@common/services/global/me";
 
 @NgModule({
   providers: [
@@ -46,6 +47,7 @@ import {PinnerService} from './pinner';
     ConfigService,
     TitleService,
     AuthService,
+    MeService,
     CsrfTokenService,
     NotificationsService,
     ThemeService,
@@ -70,6 +72,7 @@ import {PinnerService} from './pinner';
         PinnerService,
         ThemeService,
         LocalConfigLoaderService,
+        MeService,
       ],
       multi: true,
     },
@@ -94,7 +97,8 @@ export function init(
   config: ConfigService,
   history: HistoryService,
   theme: ThemeService,
-  loader: LocalConfigLoaderService
+  loader: LocalConfigLoaderService,
+  me: MeService,
 ): Function {
   return () => {
     return loader.init().then(() => {
@@ -103,6 +107,7 @@ export function init(
       config.init();
       history.init();
       theme.init();
+      me.init();
       return globalSettings.init();
     });
   };

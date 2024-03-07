@@ -82,3 +82,8 @@ func APIMappingByKind(kind ResourceKind) (apiMapping APIMapping, exists bool) {
 	apiMapping, exists = kindToAPIMapping[kind]
 	return
 }
+
+type User struct {
+	Name          string `json:"name,omitempty"`
+	Authenticated bool   `json:"authenticated"`
+}

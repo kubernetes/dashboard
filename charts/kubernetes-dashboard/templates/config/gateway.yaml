@@ -37,6 +37,10 @@ data:
             paths:
               - /api/v1/csrftoken/login
             strip_path: false
+          - name: authMe
+            paths:
+              - /api/v1/me
+            strip_path: false
       - name: api
         host: {{ template "kubernetes-dashboard.fullname" . }}-{{ .Values.api.role }}
         port: 8000

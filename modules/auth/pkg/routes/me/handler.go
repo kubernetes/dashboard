@@ -20,29 +20,20 @@ import (
 	"github.com/gin-gonic/gin"
 	"k8s.io/klog/v2"
 
-	v1 "k8s.io/dashboard/auth/api/v1"
 	"k8s.io/dashboard/auth/pkg/router"
 )
 
 func init() {
-	router.V1().POST("/login", handleLogin)
+	router.V1().GET("/me", handleMe)
 }
 
-func handleLogin(c *gin.Context) {
-	loginRequest := new(v1.LoginRequest)
-	err := c.Bind(loginRequest)
+func handleMe(c *gin.Context) {
+	response, code, err := me(c.Request)
 	if err != nil {
-		klog.ErrorS(err, "Could not read login request")
-		c.JSON(http.StatusBadRequest, err)
-		return
-	}
-
-	response, code, err := login(loginRequest, c.Request)
-	if err != nil {
-		klog.ErrorS(err, "Could not log in")
+		klog.ErrorS(err, "Could not get user")
 		c.JSON(code, err)
 		return
 	}
 
-	c.JSON(code, response)
+	c.JSON(http.StatusOK, response)
 }

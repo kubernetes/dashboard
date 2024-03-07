@@ -15,6 +15,7 @@
 import {Component, ViewChild} from '@angular/core';
 import {MatMenuTrigger} from '@angular/material/menu';
 import {AuthService} from '@common/services/global/authentication';
+import {MeService} from "@common/services/global/me";
 
 @Component({
   selector: 'kd-user-panel',
@@ -25,17 +26,11 @@ export class UserPanelComponent /* implements OnInit */ {
   @ViewChild(MatMenuTrigger)
   private readonly trigger_: MatMenuTrigger;
 
-  constructor(private readonly authService_: AuthService) {}
+  constructor(private readonly authService_: AuthService, private readonly _meService: MeService) {}
 
   get username(): string {
-    return ''; // todo
+    return this._meService.getUserName()
   }
-
-  // ngOnInit(): void {
-  //   this.authService_.getLoginStatus().subscribe(status => {
-  //     this.loginStatus = status;
-  //   });
-  // }
 
   hasAuthHeader(): boolean {
     return this.authService_.hasAuthHeader();

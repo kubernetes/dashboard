@@ -1295,3 +1295,8 @@ export interface SJSCloseEvent extends SockJSSimpleEvent {
 export interface SJSMessageEvent extends SockJSSimpleEvent {
   data: string;
 }
+
+export interface User {
+  name: string;
+  authenticated: boolean;
+}

@@ -25,6 +25,7 @@ import {CONFIG_DI_TOKEN} from '../../../index.config';
 import {CsrfTokenService} from './csrftoken';
 import {KdStateService} from './state';
 import isEmpty from 'lodash-es/isEmpty';
+import {MeService} from "@common/services/global/me";
 
 @Injectable()
 export class AuthService {
@@ -36,6 +37,7 @@ export class AuthService {
     private readonly http_: HttpClient,
     private readonly csrfTokenService_: CsrfTokenService,
     private readonly stateService_: KdStateService,
+    private readonly _meService: MeService,
     @Inject(CONFIG_DI_TOKEN) private readonly config_: IConfig
   ) {
     this.stateService_.onBefore.subscribe(_ => this.refreshToken());
@@ -60,6 +62,7 @@ export class AuthService {
             this.setTokenCookie_(authResponse.token);
           }
 
+          this._meService.refresh();
           return of(void 0);
         })
       );
@@ -67,6 +70,7 @@ export class AuthService {
 
   logout(): void {
     this.removeTokenCookie();
+    this._meService.reset();
     this.router_.navigate(['login']);
   }
 
@@ -99,15 +103,11 @@ export class AuthService {
   }
 
   isAuthenticated(): boolean {
-    return this.hasAuthHeader() || this.hasTokenCookie();
+    return this._meService.getUser()?.authenticated || this.hasTokenCookie();
   }
 
   hasAuthHeader(): boolean {
-    return this._hasAuthHeader;
-  }
-
-  setHasAuthHeader(hasAuthHeader: boolean) {
-    this._hasAuthHeader = hasAuthHeader;
+    return this._meService.getUser()?.authenticated && !this.hasTokenCookie();
   }
 
   private getTokenCookie(): string {
