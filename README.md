@@ -8,6 +8,12 @@
 
 Kubernetes Dashboard is a general purpose, web-based UI for Kubernetes clusters. It allows users to manage applications running in the cluster and troubleshoot them, as well as manage the cluster itself.
 
+As of version 7.0.0, we have dropped support for Manifest-based installation. Only Helm-based installation is supported now. Due to multi-container setup and hard dependency on Kong gateway API proxy
+it would not be feasible to easily support Manifest-based installation.
+
+Additionally, we have changed the versioning scheme and dropped `appVersion` from Helm chart. It is because, with a multi-container setup, every module is now versioned separately. Helm chart version
+can be considered an app version now.
+
 ![Dashboard UI workloads page](docs/images/overview.png)
 
 ## Installation
