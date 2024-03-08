@@ -25,7 +25,7 @@ import {CONFIG_DI_TOKEN} from '../../../index.config';
 import {CsrfTokenService} from './csrftoken';
 import {KdStateService} from './state';
 import isEmpty from 'lodash-es/isEmpty';
-import {MeService} from "@common/services/global/me";
+import {MeService} from '@common/services/global/me';
 
 @Injectable()
 export class AuthService {
