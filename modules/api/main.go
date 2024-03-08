@@ -43,27 +43,19 @@ func main() {
 		client.WithInsecureTLSSkipVerify(args.ApiServerSkipTLSVerify()),
 	)
 
-	versionInfo, err := client.InClusterClient().Discovery().ServerVersion()
-	if err != nil {
-		handleFatalInitError(err)
+	if !args.IsProxyEnabled() {
+		ensureAPIServerConnectionOrDie()
+	} else {
+		klog.Info("Running in proxy mode. InClusterClient connections will be disabled.")
 	}
-
-	klog.InfoS("Successful initial request to the apiserver", "version", versionInfo.String())
 
 	// Init integrations
 	integrationManager := integration.NewIntegrationManager()
 
-	switch metricsProvider := args.MetricsProvider(); metricsProvider {
-	case "sidecar":
-		integrationManager.Metric().ConfigureSidecar(args.SidecarHost()).
-			EnableWithRetry(integrationapi.SidecarIntegrationID, time.Duration(args.MetricClientHealthCheckPeriod()))
-	case "none":
-		klog.Info("Metrics provider disabled")
-	default:
-		klog.InfoS("Invalid metrics provider", "provider", metricsProvider)
-		klog.Info("Using default metrics provider", "provider", "sidecar")
-		integrationManager.Metric().ConfigureSidecar(args.SidecarHost()).
-			EnableWithRetry(integrationapi.SidecarIntegrationID, time.Duration(args.MetricClientHealthCheckPeriod()))
+	if !args.IsProxyEnabled() {
+		configureMetricsProvider(integrationManager)
+	} else {
+		klog.Info("Skipping metrics configuration. Metrics not available in proxy mode.")
 	}
 
 	apiHandler, err := handler.CreateHTTPAPIHandler(integrationManager)
@@ -107,6 +99,30 @@ func serveTLS(certificates []tls.Certificate) {
 		},
 	}
 	go func() { klog.Fatal(server.ListenAndServeTLS("", "")) }()
+}
+
+func ensureAPIServerConnectionOrDie() {
+	versionInfo, err := client.InClusterClient().Discovery().ServerVersion()
+	if err != nil {
+		handleFatalInitError(err)
+	}
+
+	klog.InfoS("Successful initial request to the apiserver", "version", versionInfo.String())
+}
+
+func configureMetricsProvider(integrationManager integration.Manager) {
+	switch metricsProvider := args.MetricsProvider(); metricsProvider {
+	case "sidecar":
+		integrationManager.Metric().ConfigureSidecar(args.SidecarHost()).
+			EnableWithRetry(integrationapi.SidecarIntegrationID, time.Duration(args.MetricClientHealthCheckPeriod()))
+	case "none":
+		klog.Info("Metrics provider disabled")
+	default:
+		klog.InfoS("Invalid metrics provider", "provider", metricsProvider)
+		klog.Info("Using default metrics provider", "provider", "sidecar")
+		integrationManager.Metric().ConfigureSidecar(args.SidecarHost()).
+			EnableWithRetry(integrationapi.SidecarIntegrationID, time.Duration(args.MetricClientHealthCheckPeriod()))
+	}
 }
 
 /**

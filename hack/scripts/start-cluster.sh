@@ -17,30 +17,9 @@
 ROOT_DIR="$(cd $(dirname "${BASH_SOURCE}")/../.. && pwd -P)"
 . "${ROOT_DIR}/hack/scripts/conf.sh"
 
-function start-ci-heapster {
-  echo "\nRunning heapster in standalone mode"
-  docker run --net=host -d registry.k8s.io/heapster-amd64:${HEAPSTER_VERSION} \
-             --heapster-port ${HEAPSTER_PORT} \
-             --source=kubernetes:http://127.0.0.1:8080?inClusterConfig=false&auth=""
-
-  echo "\nWaiting for heapster to be started"
-  for i in {1..150}
-  do
-    HEAPSTER_STATUS=$(curl -sb -H "Accept: application/json" "127.0.0.1:${HEAPSTER_PORT}/healthz")
-    if [ "${HEAPSTER_STATUS}" == "ok" ]; then
-      break
-    fi
-    sleep 2
-  done
-  echo "\nHeapster is up and running"
-}
-
 function start-kind {
   ${KIND_BIN} create cluster --name="k8s-cluster-ci" --image="kindest/node:${K8S_VERSION}" --config="${ROOT_DIR}/hack/scripts/kind-config"
   ensure-kubeconfig
-  if [ "${CI}" = true ] ; then
-    start-ci-heapster
-  fi
   echo "\nKubernetes cluster is ready to use"
 }
 

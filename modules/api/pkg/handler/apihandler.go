@@ -78,7 +78,7 @@ const (
 	ResponseLogString = "[%s] Outcoming response to %s with %d status code"
 )
 
-// APIHandler is a representation of API handler. Structure contains clientapi, Heapster clientapi and clientapi configuration.
+// APIHandler is a representation of API handler. Structure contains clientapi and clientapi configuration.
 type APIHandler struct {
 	iManager integration.Manager
 }
