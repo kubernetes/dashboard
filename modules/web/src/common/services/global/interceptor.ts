@@ -19,7 +19,7 @@ import {CookieService} from 'ngx-cookie-service';
 import {Observable} from 'rxjs';
 import {CONFIG_DI_TOKEN} from '../../../index.config';
 import {AuthService} from '@common/services/global/authentication';
-import {MeService} from "@common/services/global/me";
+import {MeService} from '@common/services/global/me';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {

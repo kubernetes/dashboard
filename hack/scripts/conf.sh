@@ -26,8 +26,6 @@ RELEASE_VERSION=2.5.0
 ARCH=$(uname | awk '{print tolower($0)}')
 
 # Local cluster configuration (check start-cluster.sh script for more details).
-HEAPSTER_VERSION="v1.5.4"
-HEAPSTER_PORT=8082
 KIND_VERSION="v0.19.0"
 K8S_VERSION="v1.29.2"
 KIND_BIN=${CACHE_DIR}/kind-${KIND_VERSION}

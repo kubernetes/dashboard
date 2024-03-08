@@ -36,7 +36,7 @@ import {ThemeService} from './theme';
 import {TitleService} from './title';
 import {VerberService} from './verber';
 import {PinnerService} from './pinner';
-import {MeService} from "@common/services/global/me";
+import {MeService} from '@common/services/global/me';
 
 @NgModule({
   providers: [
@@ -98,7 +98,7 @@ export function init(
   history: HistoryService,
   theme: ThemeService,
   loader: LocalConfigLoaderService,
-  me: MeService,
+  me: MeService
 ): Function {
   return () => {
     return loader.init().then(() => {

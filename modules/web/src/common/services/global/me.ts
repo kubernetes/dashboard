@@ -14,25 +14,27 @@
  * limitations under the License.
  */
 
-import {Injectable} from "@angular/core";
-import {User} from "@api/root.api";
-import {HttpClient} from "@angular/common/http";
-import {interval, Observable} from "rxjs";
-import {startWith, switchMap} from "rxjs/operators";
+import {Injectable} from '@angular/core';
+import {User} from '@api/root.api';
+import {HttpClient} from '@angular/common/http';
+import {interval, Observable} from 'rxjs';
+import {startWith, switchMap} from 'rxjs/operators';
 
 @Injectable()
 export class MeService {
   private readonly _endpoint = 'api/v1/me';
   private _user: User;
-  private _interval = interval(30000)
+  private _interval = interval(30000);
 
   constructor(private readonly _http: HttpClient) {}
 
   init(): void {
-    this._interval.pipe(
-      startWith({} as User),
-      switchMap(() => this.me())
-    ).subscribe(user => this._user = user)
+    this._interval
+      .pipe(
+        startWith({} as User),
+        switchMap(() => this.me())
+      )
+      .subscribe(user => (this._user = user));
   }
 
   me(): Observable<User> {
@@ -40,11 +42,11 @@ export class MeService {
   }
 
   getUserName(): string {
-    return this._user?.name
+    return this._user?.name;
   }
 
   getUser(): User {
-    return this._user
+    return this._user;
   }
 
   reset(): void {
@@ -52,6 +54,6 @@ export class MeService {
   }
 
   refresh(): void {
-    this.me().subscribe(user => this._user = user)
+    this.me().subscribe(user => (this._user = user));
   }
 }

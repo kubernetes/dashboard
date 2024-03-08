@@ -26,7 +26,7 @@ clean:
 coverage: coverage-frontend coverage-go
 
 .PHONY: fix
-fix: fix-go
+fix: fix-frontend fix-go
 
 .PHONY: test
 test: test-go
@@ -61,6 +61,11 @@ coverage-go: DIR := $(TMP_DIRECTORY)
 coverage-go: --ensure-dir
 	@echo "[$(APP_NAME)] Running tests with coverage"
 	@go test -coverprofile=$(COVERAGE_FILE) -covermode=atomic $(PACKAGE_NAME)/...
+
+.PHONY: fix-frontend
+fix-frontend: $(PRE)
+	@echo "[$(APP_NAME)] Running yarn fix"
+	@yarn fix
 
 .PHONY: fix-go
 fix-go: $(PRE)

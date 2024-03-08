@@ -74,14 +74,13 @@ rules:
   resources: ["configmaps"]
   resourceNames: ["kubernetes-dashboard-settings"]
   verbs: ["get", "update"]
-  # Allow Dashboard to get metrics from heapster.
 - apiGroups: [""]
   resources: ["services"]
-  resourceNames: ["heapster", "dashboard-metrics-scraper"]
+  resourceNames: ["dashboard-metrics-scraper"]
   verbs: ["proxy"]
 - apiGroups: [""]
   resources: ["services/proxy"]
-  resourceNames: ["heapster", "http:heapster:", "https:heapster:", "dashboard-metrics-scraper", "http:dashboard-metrics-scraper"]
+  resourceNames: ["dashboard-metrics-scraper", "http:dashboard-metrics-scraper"]
   verbs: ["get"]
 ---
 kind: ClusterRole
