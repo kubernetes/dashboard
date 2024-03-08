@@ -101,14 +101,14 @@ incompatible breaking change needing manual actions.
 ### Update from 7.x.x-alphaX to 7.x.x
 
 Due to further architecture changes do a clean installation of Kubernetes Dashboard when upgrading from alpha chart version.
-Default dependency on both `nginx-ingress-controller` and `cert-manager` have been removed in favor of using a single-container, DBless
+Default dependency on both `ingress-nginx-controller` and `cert-manager` have been removed in favor of using a single-container, DBless
 `kong` installation as a gateway that connects all our containers and exposes the UI. Users can then use any ingress controller or proxy
 in front of kong gateway.
 
 ### Upgrade from 6.x.x to 7.x.x
 
 We recommend doing a clean installation. Kubernetes Dashboard `v3` introduced a big architecture changes and now uses `cert-manager`, 
-and `nginx-ingress-controller` by default to work properly. In case those are already installed in your cluster, simply set `--set=nginx.enabled=false` 
+and [ingress-nginx-controller](https://kubernetes.github.io/ingress-nginx/) by default to work properly. In case those are already installed in your cluster, simply set `--set=nginx.enabled=false` 
 and `--set=cert-manager.enabled=false` when upgrading. If you want to use different software in addition to disabling `nginx` and `cert-manager` you also 
 need to set `--set=app.ingress.enabled=false` to make sure our default `Ingress` resource will not be installed.
 
