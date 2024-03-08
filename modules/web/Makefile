@@ -26,7 +26,7 @@ clean:
 coverage: coverage-frontend coverage-go
 
 .PHONY: fix
-fix: fix-go
+fix: fix-frontend fix-go
 
 .PHONY: test
 test: test-go
