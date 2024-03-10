@@ -24,10 +24,12 @@ const (
 	authorizationHeader = "Authorization"
 	// authorizationTokenPrefix is the default bearer token prefix.
 	authorizationTokenPrefix = "Bearer "
+	// xAuthorizationHeader to support kubectl proxy stripping Authorization header
+	xAuthorizationHeader = "X-Dashboard-Authorization"
 )
 
 func HasAuthorizationHeader(req *http.Request) bool {
-	header := req.Header.Get(authorizationHeader)
+	header := getAuthorizationHeader(req)
 	if len(header) == 0 {
 		return false
 	}
@@ -37,7 +39,7 @@ func HasAuthorizationHeader(req *http.Request) bool {
 }
 
 func GetBearerToken(req *http.Request) string {
-	header := req.Header.Get(authorizationHeader)
+	header := getAuthorizationHeader(req)
 	return extractBearerToken(header)
 }
 
@@ -47,4 +49,17 @@ func SetAuthorizationHeader(req *http.Request, token string) {
 
 func extractBearerToken(header string) string {
 	return strings.TrimPrefix(header, authorizationTokenPrefix)
+}
+
+func getAuthorizationHeader(req *http.Request) string {
+	authHeader := req.Header.Get(authorizationHeader)
+	if len(authHeader) == 0 {
+		xAuthorization := req.Header.Get(xAuthorizationHeader)
+		if len(xAuthorization) != 0 {
+			authHeader := xAuthorization
+			req.Header.Set("Authorization", xAuthorization)
+			req.Header.Del(xAuthorizationHeader)
+		}
+	}
+	return authHeader
 }
