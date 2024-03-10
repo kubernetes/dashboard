@@ -44,6 +44,7 @@ func GetBearerToken(req *http.Request) string {
 }
 
 func SetAuthorizationHeader(req *http.Request, token string) {
+	req.Header.Set(xAuthorizationHeader, authorizationTokenPrefix+token)
 	req.Header.Set(authorizationHeader, authorizationTokenPrefix+token)
 }
 
@@ -56,7 +57,7 @@ func getAuthorizationHeader(req *http.Request) string {
 	if len(authHeader) == 0 {
 		xAuthorization := req.Header.Get(xAuthorizationHeader)
 		if len(xAuthorization) != 0 {
-			authHeader := xAuthorization
+			authHeader = xAuthorization
 			req.Header.Set("Authorization", xAuthorization)
 			req.Header.Del(xAuthorizationHeader)
 		}
