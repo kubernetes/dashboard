@@ -69,10 +69,19 @@ spec:
         {{- end }}
             pathType: {{ $.Values.app.ingress.pathType }}
             backend:
+              {{- if $.Values.kong.enabled }}
               service:
                 name: {{ template "kong.fullname" (index $.Subcharts "kong") }}-proxy
                 port:
                   number: {{ $.Values.kong.proxy.tls.servicePort }}
+              {{- else }}
+              service:
+                name: {{ template "kubernetes-dashboard.fullname" . }}-{{ .Values.web.role }}
+                port:
+                  {{- with (index .Values.web.containers.ports 0) }}
+                  number:  {{ .containerPort }}
+                  {{- end }}
+              {{- end }}
     {{- end }}
     {{- else }}
     - http:
@@ -80,9 +89,18 @@ spec:
           - path: {{ .Values.app.ingress.path }}
             pathType: {{ .Values.app.ingress.pathType }}
             backend:
+              {{- if $.Values.kong.enabled }}
               service:
                 name: {{ template "kong.fullname" (index $.Subcharts "kong") }}-proxy
                 port:
                   number: {{ $.Values.kong.proxy.tls.servicePort }}
+              {{- else }}
+              service:
+                name: {{ template "kubernetes-dashboard.fullname" . }}-{{ .Values.web.role }}
+                port:
+                  {{- with (index .Values.web.containers.ports 0) }}
+                  number:  {{ .containerPort }}
+                  {{- end }}
+              {{- end }}
     {{- end }}
 {{- end }}
