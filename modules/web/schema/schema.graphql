@@ -11,6 +11,7 @@ directive @transport(subgraph: String, kind: String, location: String, headers: 
 
 type Query {
   handleGetResource: JSON @httpOperation(subgraph: "api", path: "/api/v1/_raw/{kind}/name/{name}", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET) @httpOperation(subgraph: "api", path: "/api/v1/_raw/{kind}/namespace/{namespace}/name/{name}", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET)
+  """returns a list of available protocols for the service"""
   handleGetAvailableProtocols: deployment_Protocols @httpOperation(subgraph: "api", path: "/api/v1/appdeployment/protocols", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET)
   handleGetClusterRoleList: clusterrole_ClusterRoleList @httpOperation(subgraph: "api", path: "/api/v1/clusterrole", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET)
   handleGetClusterRoleDetail: clusterrole_ClusterRoleDetail @httpOperation(subgraph: "api", path: "/api/v1/clusterrole/{name}", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET)
@@ -27,7 +28,11 @@ type Query {
   handleGetCronJobDetail: cronjob_CronJobDetail @httpOperation(subgraph: "api", path: "/api/v1/cronjob/{namespace}/{name}", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET)
   handleGetCronJobEvents: common_EventList @httpOperation(subgraph: "api", path: "/api/v1/cronjob/{namespace}/{name}/event", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET)
   handleGetCronJobJobs: job_JobList @httpOperation(subgraph: "api", path: "/api/v1/cronjob/{namespace}/{name}/job", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET)
-  handleGetCsrfToken: csrf_Response @httpOperation(subgraph: "api", path: "/api/v1/csrftoken/{action}", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET)
+  """generates a one-time CSRF token that can be used by POST request"""
+  handleGetCsrfToken(
+    """action name to generate CSRF token for"""
+    action: String!
+  ): csrf_Response @httpOperation(subgraph: "api", path: "/api/v1/csrftoken/{args.action}", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET)
   handleGetDaemonSetList: daemonset_DaemonSetList @httpOperation(subgraph: "api", path: "/api/v1/daemonset", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET) @httpOperation(subgraph: "api", path: "/api/v1/daemonset/{namespace}", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET)
   handleGetDaemonSetDetail: daemonset_DaemonSetDetail @httpOperation(subgraph: "api", path: "/api/v1/daemonset/{namespace}/{daemonSet}", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET)
   handleGetDaemonSetEvents: common_EventList @httpOperation(subgraph: "api", path: "/api/v1/daemonset/{namespace}/{daemonSet}/event", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET)
@@ -77,16 +82,48 @@ type Query {
   handleGetPodEvents: common_EventList @httpOperation(subgraph: "api", path: "/api/v1/pod/{namespace}/{pod}/event", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET)
   handleGetPodPersistentVolumeClaims: persistentvolumeclaim_PersistentVolumeClaimList @httpOperation(subgraph: "api", path: "/api/v1/pod/{namespace}/{pod}/persistentvolumeclaim", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET)
   handleExecShell: handler_TerminalResponse @httpOperation(subgraph: "api", path: "/api/v1/pod/{namespace}/{pod}/shell/{container}", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET)
-  handleGetReplicaSets: replicaset_ReplicaSetList @httpOperation(subgraph: "api", path: "/api/v1/replicaset", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET) @httpOperation(subgraph: "api", path: "/api/v1/replicaset/{namespace}", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET)
+  """returns a list of Services for ReplicationController"""
+  handleGetReplicaSets(
+    """namespace of the ReplicationController"""
+    namespace: String!
+  ): replicaset_ReplicaSetList @httpOperation(subgraph: "api", path: "/api/v1/replicaset", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET) @httpOperation(subgraph: "api", path: "/api/v1/replicaset/{args.namespace}", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET)
   handleGetReplicaSetDetail: replicaset_ReplicaSetDetail @httpOperation(subgraph: "api", path: "/api/v1/replicaset/{namespace}/{replicaSet}", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET)
   handleGetReplicaSetEvents: common_EventList @httpOperation(subgraph: "api", path: "/api/v1/replicaset/{namespace}/{replicaSet}/event", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET)
   handleGetReplicaSetPods: pod_PodList @httpOperation(subgraph: "api", path: "/api/v1/replicaset/{namespace}/{replicaSet}/pod", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET)
   handleGetReplicaSetServices: pod_PodList @httpOperation(subgraph: "api", path: "/api/v1/replicaset/{namespace}/{replicaSet}/service", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET)
-  handleGetReplicationControllerList: replicationcontroller_ReplicationControllerList @httpOperation(subgraph: "api", path: "/api/v1/replicationcontroller", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET) @httpOperation(subgraph: "api", path: "/api/v1/replicationcontroller/{namespace}", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET)
-  handleGetReplicationControllerDetail: replicationcontroller_ReplicationControllerDetail @httpOperation(subgraph: "api", path: "/api/v1/replicationcontroller/{namespace}/{replicationController}", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET)
-  handleGetReplicationControllerEvents: common_EventList @httpOperation(subgraph: "api", path: "/api/v1/replicationcontroller/{namespace}/{replicationController}/event", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET)
-  handleGetReplicationControllerPods: pod_PodList @httpOperation(subgraph: "api", path: "/api/v1/replicationcontroller/{namespace}/{replicationController}/pod", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET)
-  handleGetReplicationControllerServices: service_ServiceList @httpOperation(subgraph: "api", path: "/api/v1/replicationcontroller/{namespace}/{replicationController}/service", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET)
+  """returns a list of ReplicationController in a namespace"""
+  handleGetReplicationControllerList(
+    """namespace to get a list of ReplicationController from"""
+    namespace: String!
+  ): replicationcontroller_ReplicationControllerList @httpOperation(subgraph: "api", path: "/api/v1/replicationcontroller", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET) @httpOperation(subgraph: "api", path: "/api/v1/replicationcontroller/{args.namespace}", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET)
+  """returns detailed information about ReplicationController"""
+  handleGetReplicationControllerDetail(
+    """namespace of the ReplicationController"""
+    namespace: String!
+    """name of the ReplicationController"""
+    replicationController: String!
+  ): replicationcontroller_ReplicationControllerDetail @httpOperation(subgraph: "api", path: "/api/v1/replicationcontroller/{args.namespace}/{args.replicationController}", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET)
+  """returns a list of Events for ReplicationController"""
+  handleGetReplicationControllerEvents(
+    """namespace of the ReplicationController"""
+    namespace: String!
+    """name of the ReplicationController"""
+    replicationController: String!
+  ): common_EventList @httpOperation(subgraph: "api", path: "/api/v1/replicationcontroller/{args.namespace}/{args.replicationController}/event", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET)
+  """returns a list of Pods for ReplicationController"""
+  handleGetReplicationControllerPods(
+    """namespace of the ReplicationController"""
+    namespace: String!
+    """name of the ReplicationController"""
+    replicationController: String!
+  ): pod_PodList @httpOperation(subgraph: "api", path: "/api/v1/replicationcontroller/{args.namespace}/{args.replicationController}/pod", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET)
+  """returns a list of Services for ReplicationController"""
+  handleGetReplicationControllerServices(
+    """namespace of the ReplicationController"""
+    namespace: String!
+    """name of the ReplicationController"""
+    replicationController: String!
+  ): service_ServiceList @httpOperation(subgraph: "api", path: "/api/v1/replicationcontroller/{args.namespace}/{args.replicationController}/service", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET)
   handleGetRoleList: role_RoleList @httpOperation(subgraph: "api", path: "/api/v1/role/{namespace}", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET)
   handleGetRoleDetail: role_RoleDetail @httpOperation(subgraph: "api", path: "/api/v1/role/{namespace}/{name}", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET)
   handleGetRoleBindingList: rolebinding_RoleBindingList @httpOperation(subgraph: "api", path: "/api/v1/rolebinding/{namespace}", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET)
@@ -3387,14 +3424,26 @@ type storageclass_StorageClass {
 type Mutation {
   handlePutResource: JSON @httpOperation(subgraph: "api", path: "/api/v1/_raw/{kind}/name/{name}", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: PUT) @httpOperation(subgraph: "api", path: "/api/v1/_raw/{kind}/namespace/{namespace}/name/{name}", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: PUT)
   handleDeleteResource: JSON @httpOperation(subgraph: "api", path: "/api/v1/_raw/{kind}/name/{name}", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: DELETE) @httpOperation(subgraph: "api", path: "/api/v1/_raw/{kind}/namespace/{namespace}/name/{name}", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: DELETE)
+  """creates an application based on provided deployment.AppDeploymentSpec"""
   handleDeploy(input: deployment_AppDeploymentSpec_Input!): deployment_AppDeploymentSpec! @httpOperation(subgraph: "api", path: "/api/v1/appdeployment", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: POST)
+  """checks if provided image is valid"""
   handleImageReferenceValidity(input: validation_ImageReferenceValiditySpec_Input!): validation_ImageReferenceValidity @httpOperation(subgraph: "api", path: "/api/v1/appdeployment/validate/imagereference", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: POST)
+  """checks if provided name is valid"""
   handleNameValidity(input: validation_AppNameValiditySpec_Input!): validation_AppNameValidity @httpOperation(subgraph: "api", path: "/api/v1/appdeployment/validate/name", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: POST)
+  """checks if provided service protocol is valid"""
   handleProtocolValidity(input: validation_ProtocolValiditySpec_Input!): validation_ProtocolValidity @httpOperation(subgraph: "api", path: "/api/v1/appdeployment/validate/protocol", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: POST)
+  """create an application from file"""
   handleDeployFromFile(input: deployment_AppDeploymentFromFileSpec_Input!): deployment_AppDeploymentFromFileResponse @httpOperation(subgraph: "api", path: "/api/v1/appdeploymentfromfile", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: POST)
   handleTriggerCronJob: JSON @httpOperation(subgraph: "api", path: "/api/v1/cronjob/{namespace}/{name}/trigger", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: PUT)
   handleCreateNamespace(input: namespace_NamespaceSpec_Input!): namespace_NamespaceSpec! @httpOperation(subgraph: "api", path: "/api/v1/namespace", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: POST)
-  handleUpdateReplicasCount(input: replicationcontroller_ReplicationControllerSpec_Input!): JSON @httpOperation(subgraph: "api", path: "/api/v1/replicationcontroller/{namespace}/{replicationController}/update/pod", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: POST)
+  """scales ReplicationController to a number of replicas"""
+  handleUpdateReplicasCount(
+    """namespace of the ReplicationController"""
+    namespace: String!
+    """name of the ReplicationController"""
+    replicationController: String!
+    input: replicationcontroller_ReplicationControllerSpec_Input!
+  ): JSON @httpOperation(subgraph: "api", path: "/api/v1/replicationcontroller/{args.namespace}/{args.replicationController}/update/pod", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: POST)
   handleScaleResource: scaling_ReplicaCounts @httpOperation(subgraph: "api", path: "/api/v1/scale/{kind}/{namespace}/{name}", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: PUT) @httpOperation(subgraph: "api", path: "/api/v1/scale/{kind}/{name}", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: PUT)
   handleCreateImagePullSecret(input: secret_ImagePullSecretSpec_Input!): secret_Secret @httpOperation(subgraph: "api", path: "/api/v1/secret", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: POST)
   handleDeploymentPause: deployment_DeploymentDetail @httpOperation(subgraph: "api", path: "/api/v1/{kind}/{namespace}/{deployment}/pause", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: PUT)

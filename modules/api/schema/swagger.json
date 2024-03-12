@@ -101,6 +101,7 @@
     "produces": [
      "application/json"
     ],
+    "summary": "creates an application based on provided deployment.AppDeploymentSpec",
     "operationId": "handleDeploy",
     "parameters": [
      {
@@ -130,6 +131,7 @@
     "produces": [
      "application/json"
     ],
+    "summary": "returns a list of available protocols for the service",
     "operationId": "handleGetAvailableProtocols",
     "responses": {
      "200": {
@@ -149,6 +151,7 @@
     "produces": [
      "application/json"
     ],
+    "summary": "checks if provided image is valid",
     "operationId": "handleImageReferenceValidity",
     "parameters": [
      {
@@ -178,6 +181,7 @@
     "produces": [
      "application/json"
     ],
+    "summary": "checks if provided name is valid",
     "operationId": "handleNameValidity",
     "parameters": [
      {
@@ -207,6 +211,7 @@
     "produces": [
      "application/json"
     ],
+    "summary": "checks if provided service protocol is valid",
     "operationId": "handleProtocolValidity",
     "parameters": [
      {
@@ -236,6 +241,7 @@
     "produces": [
      "application/json"
     ],
+    "summary": "create an application from file",
     "operationId": "handleDeployFromFile",
     "parameters": [
      {
@@ -604,7 +610,17 @@
     "produces": [
      "application/json"
     ],
+    "summary": "generates a one-time CSRF token that can be used by POST request",
     "operationId": "handleGetCsrfToken",
+    "parameters": [
+     {
+      "type": "string",
+      "description": "action name to generate CSRF token for",
+      "name": "action",
+      "in": "path",
+      "required": true
+     }
+    ],
     "responses": {
      "200": {
       "description": "OK",
@@ -1722,6 +1738,7 @@
     "produces": [
      "application/json"
     ],
+    "summary": "returns a list of ReplicaSets",
     "operationId": "handleGetReplicaSets",
     "responses": {
      "200": {
@@ -1741,7 +1758,24 @@
     "produces": [
      "application/json"
     ],
+    "summary": "returns a list of Services for ReplicationController",
     "operationId": "handleGetReplicaSets",
+    "parameters": [
+     {
+      "type": "string",
+      "description": "namespace of the ReplicationController",
+      "name": "namespace",
+      "in": "path",
+      "required": true
+     },
+     {
+      "type": "string",
+      "description": "name of the ReplicationController",
+      "name": "replicationController",
+      "in": "path",
+      "required": true
+     }
+    ],
     "responses": {
      "200": {
       "description": "OK",
@@ -1836,6 +1870,7 @@
     "produces": [
      "application/json"
     ],
+    "summary": "returns a list of ReplicationControllers from all namespaces",
     "operationId": "handleGetReplicationControllerList",
     "responses": {
      "200": {
@@ -1855,7 +1890,17 @@
     "produces": [
      "application/json"
     ],
+    "summary": "returns a list of ReplicationController in a namespace",
     "operationId": "handleGetReplicationControllerList",
+    "parameters": [
+     {
+      "type": "string",
+      "description": "namespace to get a list of ReplicationController from",
+      "name": "namespace",
+      "in": "path",
+      "required": true
+     }
+    ],
     "responses": {
      "200": {
       "description": "OK",
@@ -1874,7 +1919,24 @@
     "produces": [
      "application/json"
     ],
+    "summary": "returns detailed information about ReplicationController",
     "operationId": "handleGetReplicationControllerDetail",
+    "parameters": [
+     {
+      "type": "string",
+      "description": "namespace of the ReplicationController",
+      "name": "namespace",
+      "in": "path",
+      "required": true
+     },
+     {
+      "type": "string",
+      "description": "name of the ReplicationController",
+      "name": "replicationController",
+      "in": "path",
+      "required": true
+     }
+    ],
     "responses": {
      "200": {
       "description": "OK",
@@ -1893,7 +1955,24 @@
     "produces": [
      "application/json"
     ],
+    "summary": "returns a list of Events for ReplicationController",
     "operationId": "handleGetReplicationControllerEvents",
+    "parameters": [
+     {
+      "type": "string",
+      "description": "namespace of the ReplicationController",
+      "name": "namespace",
+      "in": "path",
+      "required": true
+     },
+     {
+      "type": "string",
+      "description": "name of the ReplicationController",
+      "name": "replicationController",
+      "in": "path",
+      "required": true
+     }
+    ],
     "responses": {
      "200": {
       "description": "OK",
@@ -1912,7 +1991,24 @@
     "produces": [
      "application/json"
     ],
+    "summary": "returns a list of Pods for ReplicationController",
     "operationId": "handleGetReplicationControllerPods",
+    "parameters": [
+     {
+      "type": "string",
+      "description": "namespace of the ReplicationController",
+      "name": "namespace",
+      "in": "path",
+      "required": true
+     },
+     {
+      "type": "string",
+      "description": "name of the ReplicationController",
+      "name": "replicationController",
+      "in": "path",
+      "required": true
+     }
+    ],
     "responses": {
      "200": {
       "description": "OK",
@@ -1931,7 +2027,24 @@
     "produces": [
      "application/json"
     ],
+    "summary": "returns a list of Services for ReplicationController",
     "operationId": "handleGetReplicationControllerServices",
+    "parameters": [
+     {
+      "type": "string",
+      "description": "namespace of the ReplicationController",
+      "name": "namespace",
+      "in": "path",
+      "required": true
+     },
+     {
+      "type": "string",
+      "description": "name of the ReplicationController",
+      "name": "replicationController",
+      "in": "path",
+      "required": true
+     }
+    ],
     "responses": {
      "200": {
       "description": "OK",
@@ -1950,8 +2063,23 @@
     "produces": [
      "application/json"
     ],
+    "summary": "scales ReplicationController to a number of replicas",
     "operationId": "handleUpdateReplicasCount",
     "parameters": [
+     {
+      "type": "string",
+      "description": "namespace of the ReplicationController",
+      "name": "namespace",
+      "in": "path",
+      "required": true
+     },
+     {
+      "type": "string",
+      "description": "name of the ReplicationController",
+      "name": "replicationController",
+      "in": "path",
+      "required": true
+     },
      {
       "name": "body",
       "in": "body",
@@ -3279,13 +3407,13 @@
   },
   "cronjob.CronJobDetail": {
    "required": [
+    "schedule",
+    "suspend",
+    "active",
     "lastSchedule",
     "containerImages",
     "objectMeta",
     "typeMeta",
-    "schedule",
-    "suspend",
-    "active",
     "concurrencyPolicy",
     "startingDeadlineSeconds",
     "errors"
@@ -3635,11 +3763,11 @@
   },
   "deployment.DeploymentDetail": {
    "required": [
+    "pods",
     "containerImages",
     "initContainerImages",
     "objectMeta",
     "typeMeta",
-    "pods",
     "selector",
     "statusInfo",
     "conditions",
@@ -3954,13 +4082,13 @@
   },
   "horizontalpodautoscaler.HorizontalPodAutoscalerDetail": {
    "required": [
-    "currentCPUUtilizationPercentage",
-    "targetCPUUtilizationPercentage",
-    "objectMeta",
     "typeMeta",
     "scaleTargetRef",
     "minReplicas",
     "maxReplicas",
+    "currentCPUUtilizationPercentage",
+    "targetCPUUtilizationPercentage",
+    "objectMeta",
     "currentReplicas",
     "desiredReplicas",
     "lastScaleTime"
@@ -4087,10 +4215,10 @@
   },
   "ingress.IngressDetail": {
    "required": [
+    "hosts",
     "objectMeta",
     "typeMeta",
     "endpoints",
-    "hosts",
     "spec",
     "status",
     "errors"
@@ -4237,13 +4365,13 @@
   },
   "job.JobDetail": {
    "required": [
-    "podInfo",
     "containerImages",
     "initContainerImages",
     "parallelism",
     "jobStatus",
     "objectMeta",
     "typeMeta",
+    "podInfo",
     "completions",
     "errors"
    ],
@@ -4493,9 +4621,9 @@
   },
   "namespace.NamespaceDetail": {
    "required": [
-    "objectMeta",
     "typeMeta",
     "phase",
+    "objectMeta",
     "resourceQuotaList",
     "resourceLimits",
     "errors"
@@ -4913,16 +5041,16 @@
   },
   "persistentvolume.PersistentVolumeDetail": {
    "required": [
-    "typeMeta",
+    "objectMeta",
     "capacity",
     "reclaimPolicy",
     "storageClass",
     "mountOptions",
     "status",
+    "typeMeta",
+    "accessModes",
     "claim",
     "reason",
-    "objectMeta",
-    "accessModes",
     "message",
     "persistentVolumeSource"
    ],
@@ -5040,13 +5168,13 @@
   },
   "persistentvolumeclaim.PersistentVolumeClaimDetail": {
    "required": [
-    "capacity",
     "accessModes",
     "storageClass",
     "objectMeta",
     "typeMeta",
     "status",
-    "volume"
+    "volume",
+    "capacity"
    ],
    "properties": {
     "accessModes": {
@@ -5564,11 +5692,11 @@
   },
   "replicationcontroller.ReplicationControllerDetail": {
    "required": [
-    "objectMeta",
-    "typeMeta",
     "podInfo",
     "containerImages",
     "initContainerImages",
+    "objectMeta",
+    "typeMeta",
     "labelSelector",
     "errors"
    ],
@@ -5944,9 +6072,9 @@
   },
   "secret.SecretDetail": {
    "required": [
+    "objectMeta",
     "typeMeta",
     "type",
-    "objectMeta",
     "data"
    ],
    "properties": {
@@ -6033,13 +6161,13 @@
   },
   "service.ServiceDetail": {
    "required": [
-    "typeMeta",
-    "internalEndpoint",
     "externalEndpoints",
     "selector",
     "type",
     "clusterIP",
     "objectMeta",
+    "typeMeta",
+    "internalEndpoint",
     "endpointList",
     "sessionAffinity",
     "errors"
