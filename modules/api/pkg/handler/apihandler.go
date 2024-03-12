@@ -107,6 +107,7 @@ func CreateHTTPAPIHandler(iManager integration.Manager) (*restful.Container, err
 	integrationHandler := integration.NewHandler(iManager)
 	integrationHandler.Install(apiV1Ws)
 
+	// CSRF protection
 	apiV1Ws.Route(
 		apiV1Ws.GET("csrftoken/{action}").To(apiHandler.handleGetCsrfToken).
 			// docs
@@ -115,6 +116,7 @@ func CreateHTTPAPIHandler(iManager integration.Manager) (*restful.Container, err
 			Writes(csrf.Response{}).
 			Returns(200, "OK", csrf.Response{}))
 
+	// App deployment
 	apiV1Ws.Route(
 		apiV1Ws.POST("/appdeployment").To(apiHandler.handleDeploy).
 			// docs
@@ -396,187 +398,262 @@ func CreateHTTPAPIHandler(iManager integration.Manager) (*restful.Container, err
 
 	// DaemonSet
 	apiV1Ws.Route(
-		apiV1Ws.GET("/daemonset").
-			To(apiHandler.handleGetDaemonSetList).
+		apiV1Ws.GET("/daemonset").To(apiHandler.handleGetDaemonSetList).
+			// docs
+			Doc("returns a list of DaemonSets from all namespaces").
 			Writes(daemonset.DaemonSetList{}).
 			Returns(200, "OK", daemonset.DaemonSetList{}))
 	apiV1Ws.Route(
-		apiV1Ws.GET("/daemonset/{namespace}").
-			To(apiHandler.handleGetDaemonSetList).
+		apiV1Ws.GET("/daemonset/{namespace}").To(apiHandler.handleGetDaemonSetList).
+			// docs
+			Doc("returns a list of DaemonSets in a namespaces").
+			Param(apiV1Ws.PathParameter("namespace", "namespace of the DaemonSet")).
 			Writes(daemonset.DaemonSetList{}).
 			Returns(200, "OK", daemonset.DaemonSetList{}))
 	apiV1Ws.Route(
-		apiV1Ws.GET("/daemonset/{namespace}/{daemonSet}").
-			To(apiHandler.handleGetDaemonSetDetail).
+		apiV1Ws.GET("/daemonset/{namespace}/{daemonSet}").To(apiHandler.handleGetDaemonSetDetail).
+			// docs
+			Doc("returns detailed information about DaemonSet").
+			Param(apiV1Ws.PathParameter("namespace", "namespace of the DaemonSet")).
+			Param(apiV1Ws.PathParameter("daemonSet", "name of the DaemonSet")).
 			Writes(daemonset.DaemonSetDetail{}).
 			Returns(200, "OK", daemonset.DaemonSetDetail{}))
 	apiV1Ws.Route(
-		apiV1Ws.GET("/daemonset/{namespace}/{daemonSet}/pod").
-			To(apiHandler.handleGetDaemonSetPods).
+		apiV1Ws.GET("/daemonset/{namespace}/{daemonSet}/pod").To(apiHandler.handleGetDaemonSetPods).
+			// docs
+			Doc("returns a list of Pods for DaemonSet").
+			Param(apiV1Ws.PathParameter("namespace", "namespace of the DaemonSet")).
+			Param(apiV1Ws.PathParameter("daemonSet", "name of the DaemonSet")).
 			Writes(pod.PodList{}).
 			Returns(200, "OK", pod.PodList{}))
 	apiV1Ws.Route(
-		apiV1Ws.GET("/daemonset/{namespace}/{daemonSet}/service").
-			To(apiHandler.handleGetDaemonSetServices).
+		apiV1Ws.GET("/daemonset/{namespace}/{daemonSet}/service").To(apiHandler.handleGetDaemonSetServices).
+			// docs
+			Doc("returns a list of Services for DaemonSet").
+			Param(apiV1Ws.PathParameter("namespace", "namespace of the DaemonSet")).
+			Param(apiV1Ws.PathParameter("daemonSet", "name of the DaemonSet")).
 			Writes(resourceService.ServiceList{}).
 			Returns(200, "OK", resourceService.ServiceList{}))
 	apiV1Ws.Route(
-		apiV1Ws.GET("/daemonset/{namespace}/{daemonSet}/event").
-			To(apiHandler.handleGetDaemonSetEvents).
+		apiV1Ws.GET("/daemonset/{namespace}/{daemonSet}/event").To(apiHandler.handleGetDaemonSetEvents).
+			// docs
+			Doc("returns a list of Events for DaemonSet").
+			Param(apiV1Ws.PathParameter("namespace", "namespace of the DaemonSet")).
+			Param(apiV1Ws.PathParameter("daemonSet", "name of the DaemonSet")).
 			Writes(common.EventList{}).
 			Returns(200, "OK", common.EventList{}))
 
 	// HorizontalPodAutoscaler
 	apiV1Ws.Route(
-		apiV1Ws.GET("/horizontalpodautoscaler").
-			To(apiHandler.handleGetHorizontalPodAutoscalerList).
+		apiV1Ws.GET("/horizontalpodautoscaler").To(apiHandler.handleGetHorizontalPodAutoscalerList).
+			// docs
+			Doc("returns a list of HorizontalPodAutoscalers from all namespaces").
 			Writes(horizontalpodautoscaler.HorizontalPodAutoscalerList{}).
 			Returns(200, "OK", horizontalpodautoscaler.HorizontalPodAutoscalerList{}))
 	apiV1Ws.Route(
-		apiV1Ws.GET("/horizontalpodautoscaler/{namespace}").
-			To(apiHandler.handleGetHorizontalPodAutoscalerList).
+		apiV1Ws.GET("/horizontalpodautoscaler/{namespace}").To(apiHandler.handleGetHorizontalPodAutoscalerList).
+			// docs
+			Doc("returns a list of HorizontalPodAutoscalers in a namespaces").
+			Param(apiV1Ws.PathParameter("namespace", "namespace of the HorizontalPodAutoscaler")).
 			Writes(horizontalpodautoscaler.HorizontalPodAutoscalerList{}).
 			Returns(200, "OK", horizontalpodautoscaler.HorizontalPodAutoscalerList{}))
 	apiV1Ws.Route(
-		apiV1Ws.GET("/{kind}/{namespace}/{name}/horizontalpodautoscaler").
-			To(apiHandler.handleGetHorizontalPodAutoscalerListForResource).
+		apiV1Ws.GET("/{kind}/{namespace}/{name}/horizontalpodautoscaler").To(apiHandler.handleGetHorizontalPodAutoscalerListForResource).
+			// docs
+			Doc("returns a list of HorizontalPodAutoscalers for resource").
+			Param(apiV1Ws.PathParameter("kind", "kind of the resource to get HorizontalPodAutoscalers for")).
+			Param(apiV1Ws.PathParameter("namespace", "namespace of the resource to get HorizontalPodAutoscalers for")).
+			Param(apiV1Ws.PathParameter("name", "name of the resource to get HorizontalPodAutoscalers for")).
 			Writes(horizontalpodautoscaler.HorizontalPodAutoscalerList{}).
 			Returns(200, "OK", horizontalpodautoscaler.HorizontalPodAutoscalerList{}))
 	apiV1Ws.Route(
-		apiV1Ws.GET("/horizontalpodautoscaler/{namespace}/{horizontalpodautoscaler}").
-			To(apiHandler.handleGetHorizontalPodAutoscalerDetail).
+		apiV1Ws.GET("/horizontalpodautoscaler/{namespace}/{horizontalpodautoscaler}").To(apiHandler.handleGetHorizontalPodAutoscalerDetail).
+			// docs
+			Doc("returns detailed information about HorizontalPodAutoscaler").
+			Param(apiV1Ws.PathParameter("namespace", "namespace of the HorizontalPodAutoscaler")).
+			Param(apiV1Ws.PathParameter("horizontalpodautoscaler", "name of the HorizontalPodAutoscaler")).
 			Writes(horizontalpodautoscaler.HorizontalPodAutoscalerDetail{}).
 			Returns(200, "OK", horizontalpodautoscaler.HorizontalPodAutoscalerDetail{}))
 
 	// Job
 	apiV1Ws.Route(
-		apiV1Ws.GET("/job").
-			To(apiHandler.handleGetJobList).
+		apiV1Ws.GET("/job").To(apiHandler.handleGetJobList).
+			// docs
+			Doc("returns a list of Jobs from all namespaces").
 			Writes(job.JobList{}).
 			Returns(200, "OK", job.JobList{}))
 	apiV1Ws.Route(
-		apiV1Ws.GET("/job/{namespace}").
-			To(apiHandler.handleGetJobList).
+		apiV1Ws.GET("/job/{namespace}").To(apiHandler.handleGetJobList).
+			// docs
+			Doc("returns a list of Jobs in a namespaces").
+			Param(apiV1Ws.PathParameter("namespace", "namespace of the Job")).
 			Writes(job.JobList{}).
 			Returns(200, "OK", job.JobList{}))
 	apiV1Ws.Route(
-		apiV1Ws.GET("/job/{namespace}/{name}").
-			To(apiHandler.handleGetJobDetail).
+		apiV1Ws.GET("/job/{namespace}/{name}").To(apiHandler.handleGetJobDetail).
+			// docs
+			Doc("returns detailed information about Job").
+			Param(apiV1Ws.PathParameter("namespace", "namespace of the Job")).
+			Param(apiV1Ws.PathParameter("name", "name of the Job")).
 			Writes(job.JobDetail{}).
 			Returns(200, "OK", job.JobDetail{}))
 	apiV1Ws.Route(
-		apiV1Ws.GET("/job/{namespace}/{name}/pod").
-			To(apiHandler.handleGetJobPods).
+		apiV1Ws.GET("/job/{namespace}/{name}/pod").To(apiHandler.handleGetJobPods).
+			// docs
+			Doc("returns a list of Pods for Job").
+			Param(apiV1Ws.PathParameter("namespace", "namespace of the Job")).
+			Param(apiV1Ws.PathParameter("name", "name of the Job")).
 			Writes(pod.PodList{}).
 			Returns(200, "OK", pod.PodList{}))
 	apiV1Ws.Route(
-		apiV1Ws.GET("/job/{namespace}/{name}/event").
-			To(apiHandler.handleGetJobEvents).
+		apiV1Ws.GET("/job/{namespace}/{name}/event").To(apiHandler.handleGetJobEvents).
+			// docs
+			Doc("returns a list of Events for Job").
+			Param(apiV1Ws.PathParameter("namespace", "namespace of the Job")).
+			Param(apiV1Ws.PathParameter("name", "name of the Job")).
 			Writes(common.EventList{}).
 			Returns(200, "OK", common.EventList{}))
 
 	// CronJob
 	apiV1Ws.Route(
-		apiV1Ws.GET("/cronjob").
-			To(apiHandler.handleGetCronJobList).
+		apiV1Ws.GET("/cronjob").To(apiHandler.handleGetCronJobList).
+			// docs
+			Doc("returns a list of CronJobs from all namespaces").
 			Writes(cronjob.CronJobList{}).
 			Returns(200, "OK", cronjob.CronJobList{}))
 	apiV1Ws.Route(
-		apiV1Ws.GET("/cronjob/{namespace}").
-			To(apiHandler.handleGetCronJobList).
+		apiV1Ws.GET("/cronjob/{namespace}").To(apiHandler.handleGetCronJobList).
+			// docs
+			Doc("returns a list of CronJobs in a namespaces").
+			Param(apiV1Ws.PathParameter("namespace", "namespace of the CronJob")).
 			Writes(cronjob.CronJobList{}).
 			Returns(200, "OK", cronjob.CronJobList{}))
 	apiV1Ws.Route(
-		apiV1Ws.GET("/cronjob/{namespace}/{name}").
-			To(apiHandler.handleGetCronJobDetail).
+		apiV1Ws.GET("/cronjob/{namespace}/{name}").To(apiHandler.handleGetCronJobDetail).
+			// docs
+			Doc("returns detailed information about CronJob").
+			Param(apiV1Ws.PathParameter("namespace", "namespace of the CronJob")).
+			Param(apiV1Ws.PathParameter("name", "name of the CronJob")).
 			Writes(cronjob.CronJobDetail{}).
 			Returns(200, "OK", cronjob.CronJobDetail{}))
 	apiV1Ws.Route(
-		apiV1Ws.GET("/cronjob/{namespace}/{name}/job").
-			To(apiHandler.handleGetCronJobJobs).
+		apiV1Ws.GET("/cronjob/{namespace}/{name}/job").To(apiHandler.handleGetCronJobJobs).
+			// docs
+			Doc("returns a list of Jobs for CronJob").
+			Param(apiV1Ws.PathParameter("namespace", "namespace of the CronJob")).
+			Param(apiV1Ws.PathParameter("name", "name of the CronJob")).
 			Writes(job.JobList{}).
 			Returns(200, "OK", job.JobList{}))
 	apiV1Ws.Route(
-		apiV1Ws.GET("/cronjob/{namespace}/{name}/event").
-			To(apiHandler.handleGetCronJobEvents).
+		apiV1Ws.GET("/cronjob/{namespace}/{name}/event").To(apiHandler.handleGetCronJobEvents).
+			// docs
+			Doc("returns a list of Events for CronJob").
+			Param(apiV1Ws.PathParameter("namespace", "namespace of the CronJob")).
+			Param(apiV1Ws.PathParameter("name", "name of the CronJob")).
 			Writes(common.EventList{}).
 			Returns(200, "OK", common.EventList{}))
 	apiV1Ws.Route(
-		apiV1Ws.PUT("/cronjob/{namespace}/{name}/trigger").
-			To(apiHandler.handleTriggerCronJob))
+		apiV1Ws.PUT("/cronjob/{namespace}/{name}/trigger").To(apiHandler.handleTriggerCronJob).
+			// docs
+			Doc("triggers a Job based on CronJob").
+			Param(apiV1Ws.PathParameter("namespace", "namespace of the CronJob")).
+			Param(apiV1Ws.PathParameter("name", "name of the CronJob")).
+			Returns(200, "OK", nil))
 
 	// Namespace
 	apiV1Ws.Route(
-		apiV1Ws.POST("/namespace").
-			To(apiHandler.handleCreateNamespace).
+		apiV1Ws.POST("/namespace").To(apiHandler.handleCreateNamespace).
+			// docs
+			Doc("create a Namespace").
 			Reads(ns.NamespaceSpec{}).
 			Writes(ns.NamespaceSpec{}).
 			Returns(200, "OK", ns.NamespaceSpec{}))
 	apiV1Ws.Route(
-		apiV1Ws.GET("/namespace").
-			To(apiHandler.handleGetNamespaces).
+		apiV1Ws.GET("/namespace").To(apiHandler.handleGetNamespaces).
+			// docs
+			Doc("returns a list of Namespaces").
 			Writes(ns.NamespaceList{}).
 			Returns(200, "OK", ns.NamespaceList{}))
 	apiV1Ws.Route(
-		apiV1Ws.GET("/namespace/{name}").
-			To(apiHandler.handleGetNamespaceDetail).
+		apiV1Ws.GET("/namespace/{name}").To(apiHandler.handleGetNamespaceDetail).
+			// docs
+			Doc("returns detailed information about Namespace").
+			Param(apiV1Ws.PathParameter("name", "name of the Namespace")).
 			Writes(ns.NamespaceDetail{}).
 			Returns(200, "OK", ns.NamespaceDetail{}))
 	apiV1Ws.Route(
-		apiV1Ws.GET("/namespace/{name}/event").
-			To(apiHandler.handleGetNamespaceEvents).
+		apiV1Ws.GET("/namespace/{name}/event").To(apiHandler.handleGetNamespaceEvents).
+			// docs
+			Doc("returns a list of Events for Namespace").
+			Param(apiV1Ws.PathParameter("name", "name of the Namespace")).
 			Writes(common.EventList{}).
 			Returns(200, "OK", common.EventList{}))
 
 	// Event
 	apiV1Ws.Route(
-		apiV1Ws.GET("/event").
-			To(apiHandler.handleGetEventList).
+		apiV1Ws.GET("/event").To(apiHandler.handleGetEventList).
+			// docs
+			Doc("returns a list of Events from all namespaces").
 			Writes(common.EventList{}).
 			Returns(200, "OK", common.EventList{}))
 	apiV1Ws.Route(
-		apiV1Ws.GET("/event/{namespace}").
-			To(apiHandler.handleGetEventList).
+		apiV1Ws.GET("/event/{namespace}").To(apiHandler.handleGetEventList).
+			// docs
+			Doc("returns a list of Events in a namespace").
+			Param(apiV1Ws.PathParameter("namespace", "namespace to get Events from")).
 			Writes(common.EventList{}).
 			Returns(200, "OK", common.EventList{}))
 
 	// Secret
 	apiV1Ws.Route(
-		apiV1Ws.GET("/secret").
-			To(apiHandler.handleGetSecretList).
+		apiV1Ws.GET("/secret").To(apiHandler.handleGetSecretList).
+			// docs
+			Doc("returns a list of Secrets from all namespaces").
 			Writes(secret.SecretList{}).
 			Returns(200, "OK", secret.SecretList{}))
 	apiV1Ws.Route(
-		apiV1Ws.GET("/secret/{namespace}").
-			To(apiHandler.handleGetSecretList).
+		apiV1Ws.GET("/secret/{namespace}").To(apiHandler.handleGetSecretList).
+			// docs
+			Doc("returns a list of Secrets in a namespace").
+			Param(apiV1Ws.PathParameter("namespace", "namespace of the Secret")).
 			Writes(secret.SecretList{}).
 			Returns(200, "OK", secret.SecretList{}))
 	apiV1Ws.Route(
-		apiV1Ws.GET("/secret/{namespace}/{name}").
-			To(apiHandler.handleGetSecretDetail).
+		apiV1Ws.GET("/secret/{namespace}/{name}").To(apiHandler.handleGetSecretDetail).
+			// docs
+			Doc("returns detailed information about Secret").
+			Param(apiV1Ws.PathParameter("namespace", "namespace of the Secret")).
+			Param(apiV1Ws.PathParameter("name", "name of the Secret")).
 			Writes(secret.SecretDetail{}).
 			Returns(200, "OK", secret.SecretDetail{}))
 	apiV1Ws.Route(
-		apiV1Ws.POST("/secret").
-			To(apiHandler.handleCreateImagePullSecret).
+		apiV1Ws.POST("/secret").To(apiHandler.handleCreateImagePullSecret).
+			// docs
+			Doc("stores ImagePullSecret in a Kubernetes Secret").
 			Reads(secret.ImagePullSecretSpec{}).
 			Writes(secret.Secret{}).
 			Returns(200, "OK", secret.Secret{}))
 
 	// ConfigMap
 	apiV1Ws.Route(
-		apiV1Ws.GET("/configmap").
-			To(apiHandler.handleGetConfigMapList).
+		apiV1Ws.GET("/configmap").To(apiHandler.handleGetConfigMapList).
+			// docs
+			Doc("returns a list of ConfigMaps from all namespaces").
 			Writes(configmap.ConfigMapList{}).
 			Returns(200, "OK", configmap.ConfigMapList{}))
 	apiV1Ws.Route(
-		apiV1Ws.GET("/configmap/{namespace}").
-			To(apiHandler.handleGetConfigMapList).
+		apiV1Ws.GET("/configmap/{namespace}").To(apiHandler.handleGetConfigMapList).
+			// docs
+			Doc("returns a list of ConfigMaps in a namespaces").
+			Param(apiV1Ws.PathParameter("namespace", "namespace of the ConfigMap")).
 			Writes(configmap.ConfigMapList{}).
 			Returns(200, "OK", configmap.ConfigMapList{}))
 	apiV1Ws.Route(
-		apiV1Ws.GET("/configmap/{namespace}/{configmap}").
-			To(apiHandler.handleGetConfigMapDetail).
+		apiV1Ws.GET("/configmap/{namespace}/{configmap}").To(apiHandler.handleGetConfigMapDetail).
+			// docs
+			Doc("returns detailed information about ConfigMap").
+			Param(apiV1Ws.PathParameter("namespace", "namespace of the ConfigMap")).
+			Param(apiV1Ws.PathParameter("configmap", "name of the ConfigMap")).
 			Writes(configmap.ConfigMapDetail{}).
 			Returns(200, "OK", configmap.ConfigMapDetail{}))
 
