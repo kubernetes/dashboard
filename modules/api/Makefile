@@ -2,6 +2,7 @@ ROOT_DIRECTORY = $(shell dirname $(realpath $(firstword $(MAKEFILE_LIST))))/../.
 
 # Global makefile partial config
 include $(ROOT_DIRECTORY)/hack/include/config.mk
+include $(ROOT_DIRECTORY)/hack/include/kind.mk
 
 # Local makefile partial config
 include hack/include/config.mk
@@ -59,9 +60,11 @@ fix-go: $(PRE)
 
 .PHONY: run
 run: build
-	@$(API_DIST_BINARY) --kubeconfig=$(KUBECONFIG) \
-		--sidecar-host=$(SIDECAR_HOST) \
-		--auto-generate-certificates=$(AUTO_GENERATE_CERTIFICATES)
+	@$(API_DIST_BINARY) \
+		--kubeconfig=$(KUBECONFIG)
+
+.PHONY: schema
+schema: --ensure-kind-cluster build --swagger
 
 # ==================== PRIVATE ==================== #
 
@@ -99,3 +102,12 @@ run: build
   	exit 1 ; \
   fi ; \
  	mkdir -p $(DIR) ; \
+
+.PHONY: --swagger
+--swagger:
+	@echo [$(APP_NAME)] Generating Swagger schema
+	@$(API_DIST_BINARY) \
+		--kubeconfig=$(KUBECONFIG) \
+		--metrics-provider=none \
+		--openapi-enabled >/dev/null 2>&1 & curl -s --retry 10 --retry-connrefused $(BIND_ADDRESS):$(PORT)/apidocs.json > $(SCHEMA_DIRECTORY)/swagger.json; pkill $(APP_NAME)
+	@echo [$(APP_NAME)] Swagger schema generated successfully

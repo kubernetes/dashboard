@@ -1,0 +1,5 @@
+sources:
+  - name: api
+    handler:
+      openapi:
+        source: ../api/schema/swagger.json

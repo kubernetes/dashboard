@@ -90,7 +90,7 @@ type TerminalResponse struct {
 }
 
 // CreateHTTPAPIHandler creates a new HTTP handler that handles all requests to the API of the backend.
-func CreateHTTPAPIHandler(iManager integration.Manager) (http.Handler, error) {
+func CreateHTTPAPIHandler(iManager integration.Manager) (*restful.Container, error) {
 	apiHandler := APIHandler{iManager: iManager}
 	wsContainer := restful.NewContainer()
 	wsContainer.EnableContentEncoding(true)
@@ -110,51 +110,60 @@ func CreateHTTPAPIHandler(iManager integration.Manager) (http.Handler, error) {
 	apiV1Ws.Route(
 		apiV1Ws.GET("csrftoken/{action}").
 			To(apiHandler.handleGetCsrfToken).
-			Writes(csrf.Response{}))
+			Writes(csrf.Response{}).
+			Returns(200, "OK", csrf.Response{}))
 
 	apiV1Ws.Route(
 		apiV1Ws.POST("/appdeployment").
 			To(apiHandler.handleDeploy).
 			Reads(deployment.AppDeploymentSpec{}).
-			Writes(deployment.AppDeploymentSpec{}))
+			Writes(deployment.AppDeploymentSpec{}).
+			Returns(200, "OK", deployment.AppDeploymentSpec{}))
 	apiV1Ws.Route(
 		apiV1Ws.POST("/appdeployment/validate/name").
 			To(apiHandler.handleNameValidity).
 			Reads(validation.AppNameValiditySpec{}).
-			Writes(validation.AppNameValidity{}))
+			Writes(validation.AppNameValidity{}).
+			Returns(200, "OK", validation.AppNameValidity{}))
 	apiV1Ws.Route(
 		apiV1Ws.POST("/appdeployment/validate/imagereference").
 			To(apiHandler.handleImageReferenceValidity).
 			Reads(validation.ImageReferenceValiditySpec{}).
-			Writes(validation.ImageReferenceValidity{}))
+			Writes(validation.ImageReferenceValidity{}).
+			Returns(200, "OK", validation.ImageReferenceValidity{}))
 	apiV1Ws.Route(
 		apiV1Ws.POST("/appdeployment/validate/protocol").
 			To(apiHandler.handleProtocolValidity).
 			Reads(validation.ProtocolValiditySpec{}).
-			Writes(validation.ProtocolValidity{}))
+			Writes(validation.ProtocolValidity{}).
+			Returns(200, "OK", validation.ProtocolValidity{}))
 	apiV1Ws.Route(
 		apiV1Ws.GET("/appdeployment/protocols").
 			To(apiHandler.handleGetAvailableProtocols).
-			Writes(deployment.Protocols{}))
-
+			Writes(deployment.Protocols{}).
+			Returns(200, "OK", deployment.Protocols{}))
 	apiV1Ws.Route(
 		apiV1Ws.POST("/appdeploymentfromfile").
 			To(apiHandler.handleDeployFromFile).
 			Reads(deployment.AppDeploymentFromFileSpec{}).
-			Writes(deployment.AppDeploymentFromFileResponse{}))
+			Writes(deployment.AppDeploymentFromFileResponse{}).
+			Returns(200, "OK", deployment.AppDeploymentFromFileResponse{}))
 
 	apiV1Ws.Route(
 		apiV1Ws.GET("/replicationcontroller").
 			To(apiHandler.handleGetReplicationControllerList).
-			Writes(replicationcontroller.ReplicationControllerList{}))
+			Writes(replicationcontroller.ReplicationControllerList{}).
+			Returns(200, "OK", replicationcontroller.ReplicationControllerList{}))
 	apiV1Ws.Route(
 		apiV1Ws.GET("/replicationcontroller/{namespace}").
 			To(apiHandler.handleGetReplicationControllerList).
-			Writes(replicationcontroller.ReplicationControllerList{}))
+			Writes(replicationcontroller.ReplicationControllerList{}).
+			Returns(200, "OK", replicationcontroller.ReplicationControllerList{}))
 	apiV1Ws.Route(
 		apiV1Ws.GET("/replicationcontroller/{namespace}/{replicationController}").
 			To(apiHandler.handleGetReplicationControllerDetail).
-			Writes(replicationcontroller.ReplicationControllerDetail{}))
+			Writes(replicationcontroller.ReplicationControllerDetail{}).
+			Returns(200, "OK", replicationcontroller.ReplicationControllerDetail{}))
 	apiV1Ws.Route(
 		apiV1Ws.POST("/replicationcontroller/{namespace}/{replicationController}/update/pod").
 			To(apiHandler.handleUpdateReplicasCount).
@@ -162,212 +171,262 @@ func CreateHTTPAPIHandler(iManager integration.Manager) (http.Handler, error) {
 	apiV1Ws.Route(
 		apiV1Ws.GET("/replicationcontroller/{namespace}/{replicationController}/pod").
 			To(apiHandler.handleGetReplicationControllerPods).
-			Writes(pod.PodList{}))
+			Writes(pod.PodList{}).
+			Returns(200, "OK", pod.PodList{}))
 	apiV1Ws.Route(
 		apiV1Ws.GET("/replicationcontroller/{namespace}/{replicationController}/event").
 			To(apiHandler.handleGetReplicationControllerEvents).
-			Writes(common.EventList{}))
+			Writes(common.EventList{}).
+			Returns(200, "OK", common.EventList{}))
 	apiV1Ws.Route(
 		apiV1Ws.GET("/replicationcontroller/{namespace}/{replicationController}/service").
 			To(apiHandler.handleGetReplicationControllerServices).
-			Writes(resourceService.ServiceList{}))
+			Writes(resourceService.ServiceList{}).
+			Returns(200, "OK", resourceService.ServiceList{}))
 
 	apiV1Ws.Route(
 		apiV1Ws.GET("/replicaset").
 			To(apiHandler.handleGetReplicaSets).
-			Writes(replicaset.ReplicaSetList{}))
+			Writes(replicaset.ReplicaSetList{}).
+			Returns(200, "OK", replicaset.ReplicaSetList{}))
 	apiV1Ws.Route(
 		apiV1Ws.GET("/replicaset/{namespace}").
 			To(apiHandler.handleGetReplicaSets).
-			Writes(replicaset.ReplicaSetList{}))
+			Writes(replicaset.ReplicaSetList{}).
+			Returns(200, "OK", replicaset.ReplicaSetList{}))
 	apiV1Ws.Route(
 		apiV1Ws.GET("/replicaset/{namespace}/{replicaSet}").
 			To(apiHandler.handleGetReplicaSetDetail).
-			Writes(replicaset.ReplicaSetDetail{}))
+			Writes(replicaset.ReplicaSetDetail{}).
+			Returns(200, "OK", replicaset.ReplicaSetDetail{}))
 	apiV1Ws.Route(
 		apiV1Ws.GET("/replicaset/{namespace}/{replicaSet}/pod").
 			To(apiHandler.handleGetReplicaSetPods).
-			Writes(pod.PodList{}))
+			Writes(pod.PodList{}).
+			Returns(200, "OK", pod.PodList{}))
 	apiV1Ws.Route(
 		apiV1Ws.GET("/replicaset/{namespace}/{replicaSet}/service").
 			To(apiHandler.handleGetReplicaSetServices).
-			Writes(pod.PodList{}))
+			Writes(pod.PodList{}).
+			Returns(200, "OK", pod.PodList{}))
 	apiV1Ws.Route(
 		apiV1Ws.GET("/replicaset/{namespace}/{replicaSet}/event").
 			To(apiHandler.handleGetReplicaSetEvents).
-			Writes(common.EventList{}))
+			Writes(common.EventList{}).
+			Returns(200, "OK", common.EventList{}))
 
 	apiV1Ws.Route(
 		apiV1Ws.GET("/pod").
 			To(apiHandler.handleGetPods).
-			Writes(pod.PodList{}))
+			Writes(pod.PodList{}).
+			Returns(200, "OK", pod.PodList{}))
 	apiV1Ws.Route(
 		apiV1Ws.GET("/pod/{namespace}").
 			To(apiHandler.handleGetPods).
-			Writes(pod.PodList{}))
+			Writes(pod.PodList{}).
+			Returns(200, "OK", pod.PodList{}))
 	apiV1Ws.Route(
 		apiV1Ws.GET("/pod/{namespace}/{pod}").
 			To(apiHandler.handleGetPodDetail).
-			Writes(pod.PodDetail{}))
+			Writes(pod.PodDetail{}).
+			Returns(200, "OK", pod.PodDetail{}))
 	apiV1Ws.Route(
 		apiV1Ws.GET("/pod/{namespace}/{pod}/container").
 			To(apiHandler.handleGetPodContainers).
-			Writes(pod.PodDetail{}))
+			Writes(pod.PodDetail{}).
+			Returns(200, "OK", pod.PodDetail{}))
 	apiV1Ws.Route(
 		apiV1Ws.GET("/pod/{namespace}/{pod}/event").
 			To(apiHandler.handleGetPodEvents).
-			Writes(common.EventList{}))
+			Writes(common.EventList{}).
+			Returns(200, "OK", common.EventList{}))
 	apiV1Ws.Route(
 		apiV1Ws.GET("/pod/{namespace}/{pod}/shell/{container}").
 			To(apiHandler.handleExecShell).
-			Writes(TerminalResponse{}))
+			Writes(TerminalResponse{}).
+			Returns(200, "OK", TerminalResponse{}))
 	apiV1Ws.Route(
 		apiV1Ws.GET("/pod/{namespace}/{pod}/persistentvolumeclaim").
 			To(apiHandler.handleGetPodPersistentVolumeClaims).
-			Writes(persistentvolumeclaim.PersistentVolumeClaimList{}))
+			Writes(persistentvolumeclaim.PersistentVolumeClaimList{}).
+			Returns(200, "OK", persistentvolumeclaim.PersistentVolumeClaimList{}))
 
 	apiV1Ws.Route(
 		apiV1Ws.GET("/deployment").
 			To(apiHandler.handleGetDeployments).
-			Writes(deployment.DeploymentList{}))
+			Writes(deployment.DeploymentList{}).
+			Returns(200, "OK", deployment.DeploymentList{}))
 	apiV1Ws.Route(
 		apiV1Ws.GET("/deployment/{namespace}").
 			To(apiHandler.handleGetDeployments).
-			Writes(deployment.DeploymentList{}))
+			Writes(deployment.DeploymentList{}).
+			Returns(200, "OK", deployment.DeploymentList{}))
 	apiV1Ws.Route(
 		apiV1Ws.GET("/deployment/{namespace}/{deployment}").
 			To(apiHandler.handleGetDeploymentDetail).
-			Writes(deployment.DeploymentDetail{}))
+			Writes(deployment.DeploymentDetail{}).
+			Returns(200, "OK", deployment.DeploymentDetail{}))
 	apiV1Ws.Route(
 		apiV1Ws.GET("/deployment/{namespace}/{deployment}/event").
 			To(apiHandler.handleGetDeploymentEvents).
-			Writes(common.EventList{}))
+			Writes(common.EventList{}).
+			Returns(200, "OK", common.EventList{}))
 	apiV1Ws.Route(
 		apiV1Ws.GET("/deployment/{namespace}/{deployment}/oldreplicaset").
 			To(apiHandler.handleGetDeploymentOldReplicaSets).
-			Writes(replicaset.ReplicaSetList{}))
+			Writes(replicaset.ReplicaSetList{}).
+			Returns(200, "OK", replicaset.ReplicaSetList{}))
 	apiV1Ws.Route(
 		apiV1Ws.GET("/deployment/{namespace}/{deployment}/newreplicaset").
 			To(apiHandler.handleGetDeploymentNewReplicaSet).
-			Writes(replicaset.ReplicaSet{}))
+			Writes(replicaset.ReplicaSet{}).
+			Returns(200, "OK", replicaset.ReplicaSet{}))
 	apiV1Ws.Route(
 		apiV1Ws.PUT("/{kind}/{namespace}/{deployment}/pause").
 			To(apiHandler.handleDeploymentPause).
-			Writes(deployment.DeploymentDetail{}))
+			Writes(deployment.DeploymentDetail{}).
+			Returns(200, "OK", deployment.DeploymentDetail{}))
 	apiV1Ws.Route(
 		apiV1Ws.PUT("/{kind}/{namespace}/{deployment}/rollback").
 			To(apiHandler.handleDeploymentRollback).
 			Reads(deployment.RolloutSpec{}).
-			Writes(deployment.RolloutSpec{}))
+			Writes(deployment.RolloutSpec{}).
+			Returns(200, "OK", deployment.RolloutSpec{}))
 	apiV1Ws.Route(
 		apiV1Ws.PUT("/{kind}/{namespace}/{deployment}/restart").
 			To(apiHandler.handleDeploymentRestart).
-			Writes(deployment.RolloutSpec{}))
+			Writes(deployment.RolloutSpec{}).
+			Returns(200, "OK", deployment.RolloutSpec{}))
 	apiV1Ws.Route(
 		apiV1Ws.PUT("/{kind}/{namespace}/{deployment}/resume").
 			To(apiHandler.handleDeploymentResume).
-			Writes(deployment.DeploymentDetail{}))
+			Writes(deployment.DeploymentDetail{}).
+			Returns(200, "OK", deployment.DeploymentDetail{}))
 
 	apiV1Ws.Route(
 		apiV1Ws.PUT("/scale/{kind}/{namespace}/{name}").
 			To(apiHandler.handleScaleResource).
-			Writes(scaling.ReplicaCounts{}))
+			Writes(scaling.ReplicaCounts{}).
+			Returns(200, "OK", scaling.ReplicaCounts{}))
 	apiV1Ws.Route(
 		apiV1Ws.PUT("/scale/{kind}/{name}").
 			To(apiHandler.handleScaleResource).
-			Writes(scaling.ReplicaCounts{}))
+			Writes(scaling.ReplicaCounts{}).
+			Returns(200, "OK", scaling.ReplicaCounts{}))
 	apiV1Ws.Route(
 		apiV1Ws.GET("/scale/{kind}/{namespace}/{name}").
 			To(apiHandler.handleGetReplicaCount).
-			Writes(scaling.ReplicaCounts{}))
+			Writes(scaling.ReplicaCounts{}).
+			Returns(200, "OK", scaling.ReplicaCounts{}))
 	apiV1Ws.Route(
 		apiV1Ws.GET("/scale/{kind}/{name}").
 			To(apiHandler.handleGetReplicaCount).
-			Writes(scaling.ReplicaCounts{}))
+			Writes(scaling.ReplicaCounts{}).
+			Returns(200, "OK", scaling.ReplicaCounts{}))
 
 	apiV1Ws.Route(
 		apiV1Ws.GET("/daemonset").
 			To(apiHandler.handleGetDaemonSetList).
-			Writes(daemonset.DaemonSetList{}))
+			Writes(daemonset.DaemonSetList{}).
+			Returns(200, "OK", daemonset.DaemonSetList{}))
 	apiV1Ws.Route(
 		apiV1Ws.GET("/daemonset/{namespace}").
 			To(apiHandler.handleGetDaemonSetList).
-			Writes(daemonset.DaemonSetList{}))
+			Writes(daemonset.DaemonSetList{}).
+			Returns(200, "OK", daemonset.DaemonSetList{}))
 	apiV1Ws.Route(
 		apiV1Ws.GET("/daemonset/{namespace}/{daemonSet}").
 			To(apiHandler.handleGetDaemonSetDetail).
-			Writes(daemonset.DaemonSetDetail{}))
+			Writes(daemonset.DaemonSetDetail{}).
+			Returns(200, "OK", daemonset.DaemonSetDetail{}))
 	apiV1Ws.Route(
 		apiV1Ws.GET("/daemonset/{namespace}/{daemonSet}/pod").
 			To(apiHandler.handleGetDaemonSetPods).
-			Writes(pod.PodList{}))
+			Writes(pod.PodList{}).
+			Returns(200, "OK", pod.PodList{}))
 	apiV1Ws.Route(
 		apiV1Ws.GET("/daemonset/{namespace}/{daemonSet}/service").
 			To(apiHandler.handleGetDaemonSetServices).
-			Writes(resourceService.ServiceList{}))
+			Writes(resourceService.ServiceList{}).
+			Returns(200, "OK", resourceService.ServiceList{}))
 	apiV1Ws.Route(
 		apiV1Ws.GET("/daemonset/{namespace}/{daemonSet}/event").
 			To(apiHandler.handleGetDaemonSetEvents).
-			Writes(common.EventList{}))
+			Writes(common.EventList{}).
+			Returns(200, "OK", common.EventList{}))
 
 	apiV1Ws.Route(
 		apiV1Ws.GET("/horizontalpodautoscaler").
 			To(apiHandler.handleGetHorizontalPodAutoscalerList).
-			Writes(horizontalpodautoscaler.HorizontalPodAutoscalerList{}))
+			Writes(horizontalpodautoscaler.HorizontalPodAutoscalerList{}).
+			Returns(200, "OK", horizontalpodautoscaler.HorizontalPodAutoscalerList{}))
 	apiV1Ws.Route(
 		apiV1Ws.GET("/horizontalpodautoscaler/{namespace}").
 			To(apiHandler.handleGetHorizontalPodAutoscalerList).
-			Writes(horizontalpodautoscaler.HorizontalPodAutoscalerList{}))
+			Writes(horizontalpodautoscaler.HorizontalPodAutoscalerList{}).
+			Returns(200, "OK", horizontalpodautoscaler.HorizontalPodAutoscalerList{}))
 	apiV1Ws.Route(
 		apiV1Ws.GET("/{kind}/{namespace}/{name}/horizontalpodautoscaler").
 			To(apiHandler.handleGetHorizontalPodAutoscalerListForResource).
-			Writes(horizontalpodautoscaler.HorizontalPodAutoscalerList{}))
+			Writes(horizontalpodautoscaler.HorizontalPodAutoscalerList{}).
+			Returns(200, "OK", horizontalpodautoscaler.HorizontalPodAutoscalerList{}))
 	apiV1Ws.Route(
 		apiV1Ws.GET("/horizontalpodautoscaler/{namespace}/{horizontalpodautoscaler}").
 			To(apiHandler.handleGetHorizontalPodAutoscalerDetail).
-			Writes(horizontalpodautoscaler.HorizontalPodAutoscalerDetail{}))
+			Writes(horizontalpodautoscaler.HorizontalPodAutoscalerDetail{}).
+			Returns(200, "OK", horizontalpodautoscaler.HorizontalPodAutoscalerDetail{}))
 
 	apiV1Ws.Route(
 		apiV1Ws.GET("/job").
 			To(apiHandler.handleGetJobList).
-			Writes(job.JobList{}))
+			Writes(job.JobList{}).
+			Returns(200, "OK", job.JobList{}))
 	apiV1Ws.Route(
 		apiV1Ws.GET("/job/{namespace}").
 			To(apiHandler.handleGetJobList).
-			Writes(job.JobList{}))
+			Writes(job.JobList{}).
+			Returns(200, "OK", job.JobList{}))
 	apiV1Ws.Route(
 		apiV1Ws.GET("/job/{namespace}/{name}").
 			To(apiHandler.handleGetJobDetail).
-			Writes(job.JobDetail{}))
+			Writes(job.JobDetail{}).
+			Returns(200, "OK", job.JobDetail{}))
 	apiV1Ws.Route(
 		apiV1Ws.GET("/job/{namespace}/{name}/pod").
 			To(apiHandler.handleGetJobPods).
-			Writes(pod.PodList{}))
+			Writes(pod.PodList{}).
+			Returns(200, "OK", pod.PodList{}))
 	apiV1Ws.Route(
 		apiV1Ws.GET("/job/{namespace}/{name}/event").
 			To(apiHandler.handleGetJobEvents).
-			Writes(common.EventList{}))
+			Writes(common.EventList{}).
+			Returns(200, "OK", common.EventList{}))
 
 	apiV1Ws.Route(
 		apiV1Ws.GET("/cronjob").
 			To(apiHandler.handleGetCronJobList).
-			Writes(cronjob.CronJobList{}))
+			Writes(cronjob.CronJobList{}).
+			Returns(200, "OK", cronjob.CronJobList{}))
 	apiV1Ws.Route(
 		apiV1Ws.GET("/cronjob/{namespace}").
 			To(apiHandler.handleGetCronJobList).
-			Writes(cronjob.CronJobList{}))
+			Writes(cronjob.CronJobList{}).
+			Returns(200, "OK", cronjob.CronJobList{}))
 	apiV1Ws.Route(
 		apiV1Ws.GET("/cronjob/{namespace}/{name}").
 			To(apiHandler.handleGetCronJobDetail).
-			Writes(cronjob.CronJobDetail{}))
+			Writes(cronjob.CronJobDetail{}).
+			Returns(200, "OK", cronjob.CronJobDetail{}))
 	apiV1Ws.Route(
 		apiV1Ws.GET("/cronjob/{namespace}/{name}/job").
 			To(apiHandler.handleGetCronJobJobs).
-			Writes(job.JobList{}))
+			Writes(job.JobList{}).
+			Returns(200, "OK", job.JobList{}))
 	apiV1Ws.Route(
 		apiV1Ws.GET("/cronjob/{namespace}/{name}/event").
 			To(apiHandler.handleGetCronJobEvents).
-			Writes(common.EventList{}))
+			Writes(common.EventList{}).
+			Returns(200, "OK", common.EventList{}))
 	apiV1Ws.Route(
 		apiV1Ws.PUT("/cronjob/{namespace}/{name}/trigger").
 			To(apiHandler.handleTriggerCronJob))
@@ -376,173 +435,214 @@ func CreateHTTPAPIHandler(iManager integration.Manager) (http.Handler, error) {
 		apiV1Ws.POST("/namespace").
 			To(apiHandler.handleCreateNamespace).
 			Reads(ns.NamespaceSpec{}).
-			Writes(ns.NamespaceSpec{}))
+			Writes(ns.NamespaceSpec{}).
+			Returns(200, "OK", ns.NamespaceSpec{}))
 	apiV1Ws.Route(
 		apiV1Ws.GET("/namespace").
 			To(apiHandler.handleGetNamespaces).
-			Writes(ns.NamespaceList{}))
+			Writes(ns.NamespaceList{}).
+			Returns(200, "OK", ns.NamespaceList{}))
 	apiV1Ws.Route(
 		apiV1Ws.GET("/namespace/{name}").
 			To(apiHandler.handleGetNamespaceDetail).
-			Writes(ns.NamespaceDetail{}))
+			Writes(ns.NamespaceDetail{}).
+			Returns(200, "OK", ns.NamespaceDetail{}))
 	apiV1Ws.Route(
 		apiV1Ws.GET("/namespace/{name}/event").
 			To(apiHandler.handleGetNamespaceEvents).
-			Writes(common.EventList{}))
+			Writes(common.EventList{}).
+			Returns(200, "OK", common.EventList{}))
 
 	apiV1Ws.Route(
 		apiV1Ws.GET("/event").
 			To(apiHandler.handleGetEventList).
-			Writes(common.EventList{}))
+			Writes(common.EventList{}).
+			Returns(200, "OK", common.EventList{}))
 	apiV1Ws.Route(
 		apiV1Ws.GET("/event/{namespace}").
 			To(apiHandler.handleGetEventList).
-			Writes(common.EventList{}))
+			Writes(common.EventList{}).
+			Returns(200, "OK", common.EventList{}))
 
 	apiV1Ws.Route(
 		apiV1Ws.GET("/secret").
 			To(apiHandler.handleGetSecretList).
-			Writes(secret.SecretList{}))
+			Writes(secret.SecretList{}).
+			Returns(200, "OK", secret.SecretList{}))
 	apiV1Ws.Route(
 		apiV1Ws.GET("/secret/{namespace}").
 			To(apiHandler.handleGetSecretList).
-			Writes(secret.SecretList{}))
+			Writes(secret.SecretList{}).
+			Returns(200, "OK", secret.SecretList{}))
 	apiV1Ws.Route(
 		apiV1Ws.GET("/secret/{namespace}/{name}").
 			To(apiHandler.handleGetSecretDetail).
-			Writes(secret.SecretDetail{}))
+			Writes(secret.SecretDetail{}).
+			Returns(200, "OK", secret.SecretDetail{}))
 	apiV1Ws.Route(
 		apiV1Ws.POST("/secret").
 			To(apiHandler.handleCreateImagePullSecret).
 			Reads(secret.ImagePullSecretSpec{}).
-			Writes(secret.Secret{}))
+			Writes(secret.Secret{}).
+			Returns(200, "OK", secret.Secret{}))
 
 	apiV1Ws.Route(
 		apiV1Ws.GET("/configmap").
 			To(apiHandler.handleGetConfigMapList).
-			Writes(configmap.ConfigMapList{}))
+			Writes(configmap.ConfigMapList{}).
+			Returns(200, "OK", configmap.ConfigMapList{}))
 	apiV1Ws.Route(
 		apiV1Ws.GET("/configmap/{namespace}").
 			To(apiHandler.handleGetConfigMapList).
-			Writes(configmap.ConfigMapList{}))
+			Writes(configmap.ConfigMapList{}).
+			Returns(200, "OK", configmap.ConfigMapList{}))
 	apiV1Ws.Route(
 		apiV1Ws.GET("/configmap/{namespace}/{configmap}").
 			To(apiHandler.handleGetConfigMapDetail).
-			Writes(configmap.ConfigMapDetail{}))
+			Writes(configmap.ConfigMapDetail{}).
+			Returns(200, "OK", configmap.ConfigMapDetail{}))
 
 	apiV1Ws.Route(
 		apiV1Ws.GET("/service").
 			To(apiHandler.handleGetServiceList).
-			Writes(resourceService.ServiceList{}))
+			Writes(resourceService.ServiceList{}).
+			Returns(200, "OK", resourceService.ServiceList{}))
 	apiV1Ws.Route(
 		apiV1Ws.GET("/service/{namespace}").
 			To(apiHandler.handleGetServiceList).
-			Writes(resourceService.ServiceList{}))
+			Writes(resourceService.ServiceList{}).
+			Returns(200, "OK", resourceService.ServiceList{}))
 	apiV1Ws.Route(
 		apiV1Ws.GET("/service/{namespace}/{service}").
 			To(apiHandler.handleGetServiceDetail).
-			Writes(resourceService.ServiceDetail{}))
+			Writes(resourceService.ServiceDetail{}).
+			Returns(200, "OK", resourceService.ServiceDetail{}))
 	apiV1Ws.Route(
 		apiV1Ws.GET("/service/{namespace}/{service}/event").
 			To(apiHandler.handleGetServiceEvent).
-			Writes(common.EventList{}))
+			Writes(common.EventList{}).
+			Returns(200, "OK", common.EventList{}))
 	apiV1Ws.Route(
 		apiV1Ws.GET("/service/{namespace}/{service}/pod").
 			To(apiHandler.handleGetServicePods).
-			Writes(pod.PodList{}))
+			Writes(pod.PodList{}).
+			Returns(200, "OK", pod.PodList{}))
 	apiV1Ws.Route(
 		apiV1Ws.GET("/service/{namespace}/{service}/ingress").
 			To(apiHandler.handleGetServiceIngressList).
-			Writes(ingress.IngressList{}))
+			Writes(ingress.IngressList{}).
+			Returns(200, "OK", ingress.IngressList{}))
 
 	apiV1Ws.Route(
 		apiV1Ws.GET("/serviceaccount").
 			To(apiHandler.handleGetServiceAccountList).
-			Writes(serviceaccount.ServiceAccountList{}))
+			Writes(serviceaccount.ServiceAccountList{}).
+			Returns(200, "OK", serviceaccount.ServiceAccountList{}))
 	apiV1Ws.Route(
 		apiV1Ws.GET("/serviceaccount/{namespace}").
 			To(apiHandler.handleGetServiceAccountList).
-			Writes(serviceaccount.ServiceAccountList{}))
+			Writes(serviceaccount.ServiceAccountList{}).
+			Returns(200, "OK", serviceaccount.ServiceAccountList{}))
 	apiV1Ws.Route(
 		apiV1Ws.GET("/serviceaccount/{namespace}/{serviceaccount}").
 			To(apiHandler.handleGetServiceAccountDetail).
-			Writes(serviceaccount.ServiceAccountDetail{}))
+			Writes(serviceaccount.ServiceAccountDetail{}).
+			Returns(200, "OK", serviceaccount.ServiceAccountDetail{}))
 	apiV1Ws.Route(
 		apiV1Ws.GET("/serviceaccount/{namespace}/{serviceaccount}/secret").
 			To(apiHandler.handleGetServiceAccountSecrets).
-			Writes(secret.SecretList{}))
+			Writes(secret.SecretList{}).
+			Returns(200, "OK", secret.SecretList{}))
 	apiV1Ws.Route(
 		apiV1Ws.GET("/serviceaccount/{namespace}/{serviceaccount}/imagepullsecret").
 			To(apiHandler.handleGetServiceAccountImagePullSecrets).
-			Writes(secret.SecretList{}))
+			Writes(secret.SecretList{}).
+			Returns(200, "OK", secret.SecretList{}))
 
-	apiV1Ws.Route(
-		apiV1Ws.GET("/ingress").
-			To(apiHandler.handleGetIngressList).
-			Writes(ingress.IngressList{}))
-	apiV1Ws.Route(
-		apiV1Ws.GET("/ingress/{namespace}").
-			To(apiHandler.handleGetIngressList).
-			Writes(ingress.IngressList{}))
+	apiV1Ws.Route(apiV1Ws.GET("/ingress").To(apiHandler.handleGetIngressList).
+		// docs
+		Doc("get ingresses for all namespaces").
+		Writes(ingress.IngressList{}).
+		Returns(200, "OK", ingress.IngressList{}))
+	apiV1Ws.Route(apiV1Ws.GET("/ingress/{namespace}").To(apiHandler.handleGetIngressList).
+		// docs
+		Doc("get ingresses for namespace").
+		Param(apiV1Ws.PathParameter("namespace", "namespace to get ingresses from")).
+		Writes(ingress.IngressList{}).
+		Returns(200, "OK", ingress.IngressList{}))
 	apiV1Ws.Route(
 		apiV1Ws.GET("/ingress/{namespace}/{name}").
 			To(apiHandler.handleGetIngressDetail).
-			Writes(ingress.IngressDetail{}))
+			Writes(ingress.IngressDetail{}).
+			Returns(200, "OK", ingress.IngressDetail{}))
 	apiV1Ws.Route(
 		apiV1Ws.GET("/ingress/{namespace}/{ingress}/event").
 			To(apiHandler.handleGetIngressEvent).
-			Writes(common.EventList{}))
+			Writes(common.EventList{}).
+			Returns(200, "OK", common.EventList{}))
 
 	apiV1Ws.Route(
 		apiV1Ws.GET("/networkpolicy").
 			To(apiHandler.handleGetNetworkPolicyList).
-			Writes(networkpolicy.NetworkPolicyList{}))
+			Writes(networkpolicy.NetworkPolicyList{}).
+			Returns(200, "OK", networkpolicy.NetworkPolicyList{}))
 	apiV1Ws.Route(
 		apiV1Ws.GET("/networkpolicy/{namespace}").
 			To(apiHandler.handleGetNetworkPolicyList).
-			Writes(networkpolicy.NetworkPolicyList{}))
+			Writes(networkpolicy.NetworkPolicyList{}).
+			Returns(200, "OK", networkpolicy.NetworkPolicyList{}))
 	apiV1Ws.Route(
 		apiV1Ws.GET("/networkpolicy/{namespace}/{networkpolicy}").
 			To(apiHandler.handleGetNetworkPolicyDetail).
-			Writes(networkpolicy.NetworkPolicyDetail{}))
+			Writes(networkpolicy.NetworkPolicyDetail{}).
+			Returns(200, "OK", networkpolicy.NetworkPolicyDetail{}))
 
 	apiV1Ws.Route(
 		apiV1Ws.GET("/statefulset").
 			To(apiHandler.handleGetStatefulSetList).
-			Writes(statefulset.StatefulSetList{}))
+			Writes(statefulset.StatefulSetList{}).
+			Returns(200, "OK", statefulset.StatefulSetList{}))
 	apiV1Ws.Route(
 		apiV1Ws.GET("/statefulset/{namespace}").
 			To(apiHandler.handleGetStatefulSetList).
-			Writes(statefulset.StatefulSetList{}))
+			Writes(statefulset.StatefulSetList{}).
+			Returns(200, "OK", statefulset.StatefulSetList{}))
 	apiV1Ws.Route(
 		apiV1Ws.GET("/statefulset/{namespace}/{statefulset}").
 			To(apiHandler.handleGetStatefulSetDetail).
-			Writes(statefulset.StatefulSetDetail{}))
+			Writes(statefulset.StatefulSetDetail{}).
+			Returns(200, "OK", statefulset.StatefulSetDetail{}))
 	apiV1Ws.Route(
 		apiV1Ws.GET("/statefulset/{namespace}/{statefulset}/pod").
 			To(apiHandler.handleGetStatefulSetPods).
-			Writes(pod.PodList{}))
+			Writes(pod.PodList{}).
+			Returns(200, "OK", pod.PodList{}))
 	apiV1Ws.Route(
 		apiV1Ws.GET("/statefulset/{namespace}/{statefulset}/event").
 			To(apiHandler.handleGetStatefulSetEvents).
-			Writes(common.EventList{}))
+			Writes(common.EventList{}).
+			Returns(200, "OK", common.EventList{}))
 
 	apiV1Ws.Route(
 		apiV1Ws.GET("/node").
 			To(apiHandler.handleGetNodeList).
-			Writes(node.NodeList{}))
+			Writes(node.NodeList{}).
+			Returns(200, "OK", node.NodeList{}))
 	apiV1Ws.Route(
 		apiV1Ws.GET("/node/{name}").
 			To(apiHandler.handleGetNodeDetail).
-			Writes(node.NodeDetail{}))
+			Writes(node.NodeDetail{}).
+			Returns(200, "OK", node.NodeDetail{}))
 	apiV1Ws.Route(
 		apiV1Ws.GET("/node/{name}/event").
 			To(apiHandler.handleGetNodeEvents).
-			Writes(common.EventList{}))
+			Writes(common.EventList{}).
+			Returns(200, "OK", common.EventList{}))
 	apiV1Ws.Route(
 		apiV1Ws.GET("/node/{name}/pod").
 			To(apiHandler.handleGetNodePods).
-			Writes(pod.PodList{}))
+			Writes(pod.PodList{}).
+			Returns(200, "OK", pod.PodList{}))
 
 	apiV1Ws.Route(
 		apiV1Ws.DELETE("/_raw/{kind}/namespace/{namespace}/name/{name}").
@@ -567,130 +667,158 @@ func CreateHTTPAPIHandler(iManager integration.Manager) (http.Handler, error) {
 	apiV1Ws.Route(
 		apiV1Ws.GET("/clusterrole").
 			To(apiHandler.handleGetClusterRoleList).
-			Writes(clusterrole.ClusterRoleList{}))
+			Writes(clusterrole.ClusterRoleList{}).
+			Returns(200, "OK", clusterrole.ClusterRoleList{}))
 	apiV1Ws.Route(
 		apiV1Ws.GET("/clusterrole/{name}").
 			To(apiHandler.handleGetClusterRoleDetail).
-			Writes(clusterrole.ClusterRoleDetail{}))
+			Writes(clusterrole.ClusterRoleDetail{}).
+			Returns(200, "OK", clusterrole.ClusterRoleDetail{}))
 
 	apiV1Ws.Route(
 		apiV1Ws.GET("/clusterrolebinding").
 			To(apiHandler.handleGetClusterRoleBindingList).
-			Writes(clusterrolebinding.ClusterRoleBindingList{}))
+			Writes(clusterrolebinding.ClusterRoleBindingList{}).
+			Returns(200, "OK", clusterrolebinding.ClusterRoleBindingList{}))
 	apiV1Ws.Route(
 		apiV1Ws.GET("/clusterrolebinding/{name}").
 			To(apiHandler.handleGetClusterRoleBindingDetail).
-			Writes(clusterrolebinding.ClusterRoleBindingDetail{}))
+			Writes(clusterrolebinding.ClusterRoleBindingDetail{}).
+			Returns(200, "OK", clusterrolebinding.ClusterRoleBindingDetail{}))
 
 	apiV1Ws.Route(
 		apiV1Ws.GET("/role/{namespace}").
 			To(apiHandler.handleGetRoleList).
-			Writes(role.RoleList{}))
+			Writes(role.RoleList{}).
+			Returns(200, "OK", role.RoleList{}))
 	apiV1Ws.Route(
 		apiV1Ws.GET("/role/{namespace}/{name}").
 			To(apiHandler.handleGetRoleDetail).
-			Writes(role.RoleDetail{}))
+			Writes(role.RoleDetail{}).
+			Returns(200, "OK", role.RoleDetail{}))
 
 	apiV1Ws.Route(
 		apiV1Ws.GET("/rolebinding/{namespace}").
 			To(apiHandler.handleGetRoleBindingList).
-			Writes(rolebinding.RoleBindingList{}))
+			Writes(rolebinding.RoleBindingList{}).
+			Returns(200, "OK", rolebinding.RoleBindingList{}))
 	apiV1Ws.Route(
 		apiV1Ws.GET("/rolebinding/{namespace}/{name}").
 			To(apiHandler.handleGetRoleBindingDetail).
-			Writes(rolebinding.RoleBindingDetail{}))
+			Writes(rolebinding.RoleBindingDetail{}).
+			Returns(200, "OK", rolebinding.RoleBindingDetail{}))
 
 	apiV1Ws.Route(
 		apiV1Ws.GET("/persistentvolume").
 			To(apiHandler.handleGetPersistentVolumeList).
-			Writes(persistentvolume.PersistentVolumeList{}))
+			Writes(persistentvolume.PersistentVolumeList{}).
+			Returns(200, "OK", persistentvolume.PersistentVolumeList{}))
 	apiV1Ws.Route(
 		apiV1Ws.GET("/persistentvolume/{persistentvolume}").
 			To(apiHandler.handleGetPersistentVolumeDetail).
-			Writes(persistentvolume.PersistentVolumeDetail{}))
+			Writes(persistentvolume.PersistentVolumeDetail{}).
+			Returns(200, "OK", persistentvolume.PersistentVolumeDetail{}))
 	apiV1Ws.Route(
 		apiV1Ws.GET("/persistentvolume/namespace/{namespace}/name/{persistentvolume}").
 			To(apiHandler.handleGetPersistentVolumeDetail).
-			Writes(persistentvolume.PersistentVolumeDetail{}))
+			Writes(persistentvolume.PersistentVolumeDetail{}).
+			Returns(200, "OK", persistentvolume.PersistentVolumeDetail{}))
 
 	apiV1Ws.Route(
 		apiV1Ws.GET("/persistentvolumeclaim/").
 			To(apiHandler.handleGetPersistentVolumeClaimList).
-			Writes(persistentvolumeclaim.PersistentVolumeClaimList{}))
+			Writes(persistentvolumeclaim.PersistentVolumeClaimList{}).
+			Returns(200, "OK", persistentvolumeclaim.PersistentVolumeClaimList{}))
 	apiV1Ws.Route(
 		apiV1Ws.GET("/persistentvolumeclaim/{namespace}").
 			To(apiHandler.handleGetPersistentVolumeClaimList).
-			Writes(persistentvolumeclaim.PersistentVolumeClaimList{}))
+			Writes(persistentvolumeclaim.PersistentVolumeClaimList{}).
+			Returns(200, "OK", persistentvolumeclaim.PersistentVolumeClaimList{}))
 	apiV1Ws.Route(
 		apiV1Ws.GET("/persistentvolumeclaim/{namespace}/{name}").
 			To(apiHandler.handleGetPersistentVolumeClaimDetail).
-			Writes(persistentvolumeclaim.PersistentVolumeClaimDetail{}))
+			Writes(persistentvolumeclaim.PersistentVolumeClaimDetail{}).
+			Returns(200, "OK", persistentvolumeclaim.PersistentVolumeClaimDetail{}))
 
 	apiV1Ws.Route(
 		apiV1Ws.GET("/crd").
 			To(apiHandler.handleGetCustomResourceDefinitionList).
-			Writes(types.CustomResourceDefinitionList{}))
+			Writes(types.CustomResourceDefinitionList{}).
+			Returns(200, "OK", types.CustomResourceDefinitionList{}))
 
 	apiV1Ws.Route(
 		apiV1Ws.GET("/crd/{crd}").
 			To(apiHandler.handleGetCustomResourceDefinitionDetail).
-			Writes(types.CustomResourceDefinitionDetail{}))
+			Writes(types.CustomResourceDefinitionDetail{}).
+			Returns(200, "OK", types.CustomResourceDefinitionDetail{}))
 
 	apiV1Ws.Route(
 		apiV1Ws.GET("/crd/{namespace}/{crd}/object").
 			To(apiHandler.handleGetCustomResourceObjectList).
-			Writes(types.CustomResourceObjectList{}))
+			Writes(types.CustomResourceObjectList{}).
+			Returns(200, "OK", types.CustomResourceObjectList{}))
 
 	apiV1Ws.Route(
 		apiV1Ws.GET("/crd/{namespace}/{crd}/{object}").
 			To(apiHandler.handleGetCustomResourceObjectDetail).
-			Writes(types.CustomResourceObjectDetail{}))
+			Writes(types.CustomResourceObjectDetail{}).
+			Returns(200, "OK", types.CustomResourceObjectDetail{}))
 
 	apiV1Ws.Route(
 		apiV1Ws.GET("/crd/{namespace}/{crd}/{object}/event").
 			To(apiHandler.handleGetCustomResourceObjectEvents).
-			Writes(common.EventList{}))
+			Writes(common.EventList{}).
+			Returns(200, "OK", common.EventList{}))
 
 	apiV1Ws.Route(
 		apiV1Ws.GET("/storageclass").
 			To(apiHandler.handleGetStorageClassList).
-			Writes(storageclass.StorageClassList{}))
+			Writes(storageclass.StorageClassList{}).
+			Returns(200, "OK", storageclass.StorageClassList{}))
 	apiV1Ws.Route(
 		apiV1Ws.GET("/storageclass/{storageclass}").
 			To(apiHandler.handleGetStorageClass).
-			Writes(storageclass.StorageClass{}))
+			Writes(storageclass.StorageClass{}).
+			Returns(200, "OK", storageclass.StorageClass{}))
 
 	apiV1Ws.Route(
 		apiV1Ws.GET("/storageclass/{storageclass}/persistentvolume").
 			To(apiHandler.handleGetStorageClassPersistentVolumes).
-			Writes(persistentvolume.PersistentVolumeList{}))
+			Writes(persistentvolume.PersistentVolumeList{}).
+			Returns(200, "OK", persistentvolume.PersistentVolumeList{}))
 
 	apiV1Ws.Route(
 		apiV1Ws.GET("/ingressclass").
 			To(apiHandler.handleGetIngressClassList).
-			Writes(ingressclass.IngressClassList{}))
+			Writes(ingressclass.IngressClassList{}).
+			Returns(200, "OK", ingressclass.IngressClassList{}))
 	apiV1Ws.Route(
 		apiV1Ws.GET("/ingressclass/{ingressclass}").
 			To(apiHandler.handleGetIngressClass).
-			Writes(ingressclass.IngressClass{}))
+			Writes(ingressclass.IngressClass{}).
+			Returns(200, "OK", ingressclass.IngressClass{}))
 
 	apiV1Ws.Route(
 		apiV1Ws.GET("/log/source/{namespace}/{resourceName}/{resourceType}").
 			To(apiHandler.handleLogSource).
-			Writes(controller.LogSources{}))
+			Writes(controller.LogSources{}).
+			Returns(200, "OK", controller.LogSources{}))
 	apiV1Ws.Route(
 		apiV1Ws.GET("/log/{namespace}/{pod}").
 			To(apiHandler.handleLogs).
-			Writes(logs.LogDetails{}))
+			Writes(logs.LogDetails{}).
+			Returns(200, "OK", logs.LogDetails{}))
 	apiV1Ws.Route(
 		apiV1Ws.GET("/log/{namespace}/{pod}/{container}").
 			To(apiHandler.handleLogs).
-			Writes(logs.LogDetails{}))
+			Writes(logs.LogDetails{}).
+			Returns(200, "OK", logs.LogDetails{}))
 
 	apiV1Ws.Route(
 		apiV1Ws.GET("/log/file/{namespace}/{pod}/{container}").
 			To(apiHandler.handleLogFile).
-			Writes(logs.LogDetails{}))
+			Writes(logs.LogDetails{}).
+			Returns(200, "OK", logs.LogDetails{}))
 
 	return wsContainer, nil
 }

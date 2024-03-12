@@ -20,6 +20,9 @@ import (
 	"net/http"
 	"time"
 
+	restfulspec "github.com/emicklei/go-restful-openapi/v2"
+	"github.com/emicklei/go-restful/v3"
+	"github.com/go-openapi/spec"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
 	"k8s.io/klog/v2"
 
@@ -63,6 +66,11 @@ func main() {
 		handleFatalInitError(err)
 	}
 
+	if args.IsOpenAPIEnabled() {
+		klog.Info("Enabling OpenAPI endpoint on /apidocs.json")
+		configureOpenAPI(apiHandler)
+	}
+
 	certCreator := ecdsa.NewECDSACreator(args.KeyFile(), args.CertFile(), elliptic.P256())
 	certManager := certificates.NewCertManager(certCreator, args.DefaultCertDir(), args.AutogenerateCertificates())
 	certs, err := certManager.GetCertificates()
@@ -70,7 +78,7 @@ func main() {
 		handleFatalInitServingCertError(err)
 	}
 
-	http.Handle("/api/", apiHandler)
+	http.Handle("/", apiHandler)
 	http.Handle("/api/sockjs/", handler.CreateAttachHandler("/api/sockjs"))
 	http.Handle("/metrics", promhttp.Handler())
 
@@ -122,6 +130,24 @@ func configureMetricsProvider(integrationManager integration.Manager) {
 		klog.Info("Using default metrics provider", "provider", "sidecar")
 		integrationManager.Metric().ConfigureSidecar(args.SidecarHost()).
 			EnableWithRetry(integrationapi.SidecarIntegrationID, time.Duration(args.MetricClientHealthCheckPeriod()))
+	}
+}
+
+func configureOpenAPI(container *restful.Container) {
+	config := restfulspec.Config{
+		WebServices:                   container.RegisteredWebServices(),
+		APIPath:                       "/apidocs.json",
+		PostBuildSwaggerObjectHandler: enrichOpenAPIObject,
+	}
+	container.Add(restfulspec.NewOpenAPIService(config))
+}
+
+func enrichOpenAPIObject(swo *spec.Swagger) {
+	swo.Info = &spec.Info{
+		InfoProps: spec.InfoProps{
+			Title:   "Kubernetes Dashboard API",
+			Version: environment.Version,
+		},
 	}
 }
 

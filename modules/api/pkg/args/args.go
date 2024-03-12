@@ -56,6 +56,7 @@ var (
 	argMetricsScraperServiceName = pflag.String("metrics-scraper-service-name", "kubernetes-dashboard-metrics-scraper", "name of the dashboard metrics scraper service")
 	argDisableCSRFProtection     = pflag.Bool("disable-csrf-protection", false, "allows disabling CSRF protection")
 	argIsProxyEnabled            = pflag.Bool("act-as-proxy", false, "forces dashboard to work in full proxy mode, meaning that any in-cluster calls are disabled")
+	argOpenAPIEnabled            = pflag.Bool("openapi-enabled", false, "enables OpenAPI v2 endpoint under '/apidocs.json'")
 )
 
 func init() {
@@ -151,4 +152,8 @@ func IsCSRFProtectionEnabled() bool {
 
 func IsProxyEnabled() bool {
 	return *argIsProxyEnabled
+}
+
+func IsOpenAPIEnabled() bool {
+	return *argOpenAPIEnabled
 }
