@@ -957,16 +957,25 @@ func CreateHTTPAPIHandler(iManager integration.Manager) (*restful.Container, err
 	apiV1Ws.Route(
 		apiV1Ws.GET("/persistentvolumeclaim/").
 			To(apiHandler.handleGetPersistentVolumeClaimList).
+			// docs
+			Doc("returns a list of PersistentVolumeClaim").
 			Writes(persistentvolumeclaim.PersistentVolumeClaimList{}).
 			Returns(200, "OK", persistentvolumeclaim.PersistentVolumeClaimList{}))
 	apiV1Ws.Route(
 		apiV1Ws.GET("/persistentvolumeclaim/{namespace}").
 			To(apiHandler.handleGetPersistentVolumeClaimList).
+			// docs
+			Doc("returns a list of PersistentVolumeClaim from specified namespace").
+			Param(apiV1Ws.PathParameter("namespace", "namespace of the PersistentVolumeClaim")).
 			Writes(persistentvolumeclaim.PersistentVolumeClaimList{}).
 			Returns(200, "OK", persistentvolumeclaim.PersistentVolumeClaimList{}))
 	apiV1Ws.Route(
 		apiV1Ws.GET("/persistentvolumeclaim/{namespace}/{name}").
 			To(apiHandler.handleGetPersistentVolumeClaimDetail).
+			// docs
+			Doc("returns detailed information about PersistentVolumeClaim").
+			Param(apiV1Ws.PathParameter("name", "name of the PersistentVolumeClaim")).
+			Param(apiV1Ws.PathParameter("namespace", "namespace of the PersistentVolumeClaim")).
 			Writes(persistentvolumeclaim.PersistentVolumeClaimDetail{}).
 			Returns(200, "OK", persistentvolumeclaim.PersistentVolumeClaimDetail{}))
 
