@@ -659,100 +659,139 @@ func CreateHTTPAPIHandler(iManager integration.Manager) (*restful.Container, err
 
 	// Service
 	apiV1Ws.Route(
-		apiV1Ws.GET("/service").
-			To(apiHandler.handleGetServiceList).
+		apiV1Ws.GET("/service").To(apiHandler.handleGetServiceList).
+			// docs
+			Doc("returns a list of Services from all namespaces").
 			Writes(resourceService.ServiceList{}).
 			Returns(200, "OK", resourceService.ServiceList{}))
 	apiV1Ws.Route(
-		apiV1Ws.GET("/service/{namespace}").
-			To(apiHandler.handleGetServiceList).
+		apiV1Ws.GET("/service/{namespace}").To(apiHandler.handleGetServiceList).
+			// docs
+			Doc("returns a list of Services in a namespace").
+			Param(apiV1Ws.PathParameter("namespace", "namespace of the Service")).
 			Writes(resourceService.ServiceList{}).
 			Returns(200, "OK", resourceService.ServiceList{}))
 	apiV1Ws.Route(
-		apiV1Ws.GET("/service/{namespace}/{service}").
-			To(apiHandler.handleGetServiceDetail).
+		apiV1Ws.GET("/service/{namespace}/{service}").To(apiHandler.handleGetServiceDetail).
+			// docs
+			Doc("returns detailed information about Service").
+			Param(apiV1Ws.PathParameter("namespace", "namespace of the Service")).
+			Param(apiV1Ws.PathParameter("service", "name of the Service")).
 			Writes(resourceService.ServiceDetail{}).
 			Returns(200, "OK", resourceService.ServiceDetail{}))
 	apiV1Ws.Route(
-		apiV1Ws.GET("/service/{namespace}/{service}/event").
-			To(apiHandler.handleGetServiceEvent).
+		apiV1Ws.GET("/service/{namespace}/{service}/event").To(apiHandler.handleGetServiceEvent).
+			// docs
+			Doc("returns a list of Events for Service").
+			Param(apiV1Ws.PathParameter("namespace", "namespace of the Service")).
+			Param(apiV1Ws.PathParameter("service", "name of the Service")).
 			Writes(common.EventList{}).
 			Returns(200, "OK", common.EventList{}))
 	apiV1Ws.Route(
-		apiV1Ws.GET("/service/{namespace}/{service}/pod").
-			To(apiHandler.handleGetServicePods).
+		apiV1Ws.GET("/service/{namespace}/{service}/pod").To(apiHandler.handleGetServicePods).
+			// docs
+			Doc("returns a list of Pods for Service").
+			Param(apiV1Ws.PathParameter("namespace", "namespace of the Service")).
+			Param(apiV1Ws.PathParameter("service", "name of the Service")).
 			Writes(pod.PodList{}).
 			Returns(200, "OK", pod.PodList{}))
 	apiV1Ws.Route(
-		apiV1Ws.GET("/service/{namespace}/{service}/ingress").
-			To(apiHandler.handleGetServiceIngressList).
+		apiV1Ws.GET("/service/{namespace}/{service}/ingress").To(apiHandler.handleGetServiceIngressList).
+			// docs
+			Doc("returns a list of Ingresses for Service").
+			Param(apiV1Ws.PathParameter("namespace", "namespace of the Service")).
+			Param(apiV1Ws.PathParameter("service", "name of the Service")).
 			Writes(ingress.IngressList{}).
 			Returns(200, "OK", ingress.IngressList{}))
 
 	// ServiceAccount
 	apiV1Ws.Route(
-		apiV1Ws.GET("/serviceaccount").
-			To(apiHandler.handleGetServiceAccountList).
+		apiV1Ws.GET("/serviceaccount").To(apiHandler.handleGetServiceAccountList).
+			// docs
+			Doc("returns a list of ServiceAccounts from all namespaces").
 			Writes(serviceaccount.ServiceAccountList{}).
 			Returns(200, "OK", serviceaccount.ServiceAccountList{}))
 	apiV1Ws.Route(
-		apiV1Ws.GET("/serviceaccount/{namespace}").
-			To(apiHandler.handleGetServiceAccountList).
+		apiV1Ws.GET("/serviceaccount/{namespace}").To(apiHandler.handleGetServiceAccountList).
+			// docs
+			Doc("returns a list of ServiceAccounts in a namespaces").
+			Param(apiV1Ws.PathParameter("namespace", "namespace of the ServiceAccount")).
 			Writes(serviceaccount.ServiceAccountList{}).
 			Returns(200, "OK", serviceaccount.ServiceAccountList{}))
 	apiV1Ws.Route(
-		apiV1Ws.GET("/serviceaccount/{namespace}/{serviceaccount}").
-			To(apiHandler.handleGetServiceAccountDetail).
+		apiV1Ws.GET("/serviceaccount/{namespace}/{serviceaccount}").To(apiHandler.handleGetServiceAccountDetail).
+			// docs
+			Doc("returns detailed information about ServiceAccount").
+			Param(apiV1Ws.PathParameter("namespace", "namespace of the ServiceAccount")).
+			Param(apiV1Ws.PathParameter("serviceaccount", "name of the ServiceAccount")).
 			Writes(serviceaccount.ServiceAccountDetail{}).
 			Returns(200, "OK", serviceaccount.ServiceAccountDetail{}))
 	apiV1Ws.Route(
-		apiV1Ws.GET("/serviceaccount/{namespace}/{serviceaccount}/secret").
-			To(apiHandler.handleGetServiceAccountSecrets).
+		apiV1Ws.GET("/serviceaccount/{namespace}/{serviceaccount}/secret").To(apiHandler.handleGetServiceAccountSecrets).
+			// docs
+			Doc("returns a list of Secrets for ServiceAccount").
+			Param(apiV1Ws.PathParameter("namespace", "namespace of the ServiceAccount")).
+			Param(apiV1Ws.PathParameter("serviceaccount", "name of the ServiceAccount")).
 			Writes(secret.SecretList{}).
 			Returns(200, "OK", secret.SecretList{}))
 	apiV1Ws.Route(
-		apiV1Ws.GET("/serviceaccount/{namespace}/{serviceaccount}/imagepullsecret").
-			To(apiHandler.handleGetServiceAccountImagePullSecrets).
+		apiV1Ws.GET("/serviceaccount/{namespace}/{serviceaccount}/imagepullsecret").To(apiHandler.handleGetServiceAccountImagePullSecrets).
+			// docs
+			Doc("returns a list of ImagePullSecret Secrets for ServiceAccount").
+			Param(apiV1Ws.PathParameter("namespace", "namespace of the ServiceAccount")).
+			Param(apiV1Ws.PathParameter("serviceaccount", "name of the ServiceAccount")).
 			Writes(secret.SecretList{}).
 			Returns(200, "OK", secret.SecretList{}))
 
 	// Ingress
 	apiV1Ws.Route(apiV1Ws.GET("/ingress").To(apiHandler.handleGetIngressList).
 		// docs
-		Doc("get ingresses for all namespaces").
+		Doc("returns a list of Ingresses from all namespaces").
 		Writes(ingress.IngressList{}).
 		Returns(200, "OK", ingress.IngressList{}))
 	apiV1Ws.Route(apiV1Ws.GET("/ingress/{namespace}").To(apiHandler.handleGetIngressList).
 		// docs
-		Doc("get ingresses for namespace").
-		Param(apiV1Ws.PathParameter("namespace", "namespace to get ingresses from")).
+		Doc("returns a list of Ingresses in a namespaces").
+		Param(apiV1Ws.PathParameter("namespace", "namespace of the Ingress")).
 		Writes(ingress.IngressList{}).
 		Returns(200, "OK", ingress.IngressList{}))
 	apiV1Ws.Route(
-		apiV1Ws.GET("/ingress/{namespace}/{name}").
-			To(apiHandler.handleGetIngressDetail).
+		apiV1Ws.GET("/ingress/{namespace}/{name}").To(apiHandler.handleGetIngressDetail).
+			// docs
+			Doc("returns detailed information about Ingress").
+			Param(apiV1Ws.PathParameter("namespace", "namespace of the Ingress")).
+			Param(apiV1Ws.PathParameter("name", "name of the Ingress")).
 			Writes(ingress.IngressDetail{}).
 			Returns(200, "OK", ingress.IngressDetail{}))
 	apiV1Ws.Route(
-		apiV1Ws.GET("/ingress/{namespace}/{ingress}/event").
-			To(apiHandler.handleGetIngressEvent).
+		apiV1Ws.GET("/ingress/{namespace}/{ingress}/event").To(apiHandler.handleGetIngressEvent).
+			// docs
+			Doc("returns a list of Events for Ingress").
+			Param(apiV1Ws.PathParameter("namespace", "namespace of the Ingress")).
+			Param(apiV1Ws.PathParameter("name", "name of the Ingress")).
 			Writes(common.EventList{}).
 			Returns(200, "OK", common.EventList{}))
 
 	// NetworkPolicy
 	apiV1Ws.Route(
-		apiV1Ws.GET("/networkpolicy").
-			To(apiHandler.handleGetNetworkPolicyList).
+		apiV1Ws.GET("/networkpolicy").To(apiHandler.handleGetNetworkPolicyList).
+			// docs
+			Doc("returns a list of NetworkPolicies from all namespaces").
 			Writes(networkpolicy.NetworkPolicyList{}).
 			Returns(200, "OK", networkpolicy.NetworkPolicyList{}))
 	apiV1Ws.Route(
-		apiV1Ws.GET("/networkpolicy/{namespace}").
-			To(apiHandler.handleGetNetworkPolicyList).
+		apiV1Ws.GET("/networkpolicy/{namespace}").To(apiHandler.handleGetNetworkPolicyList).
+			// docs
+			Doc("returns a list of NetworkPolicies in a namespaces").
+			Param(apiV1Ws.PathParameter("namespace", "namespace of the NetworkPolicy")).
 			Writes(networkpolicy.NetworkPolicyList{}).
 			Returns(200, "OK", networkpolicy.NetworkPolicyList{}))
 	apiV1Ws.Route(
-		apiV1Ws.GET("/networkpolicy/{namespace}/{networkpolicy}").
-			To(apiHandler.handleGetNetworkPolicyDetail).
+		apiV1Ws.GET("/networkpolicy/{namespace}/{networkpolicy}").To(apiHandler.handleGetNetworkPolicyDetail).
+			// docs
+			Doc("returns detailed information about NetworkPolicy").
+			Param(apiV1Ws.PathParameter("namespace", "namespace of the NetworkPolicy")).
+			Param(apiV1Ws.PathParameter("networkpolicy", "name of the NetworkPolicy")).
 			Writes(networkpolicy.NetworkPolicyDetail{}).
 			Returns(200, "OK", networkpolicy.NetworkPolicyDetail{}))
 
