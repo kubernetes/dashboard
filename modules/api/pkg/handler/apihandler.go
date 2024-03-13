@@ -974,26 +974,45 @@ func CreateHTTPAPIHandler(iManager integration.Manager) (*restful.Container, err
 	apiV1Ws.Route(
 		apiV1Ws.GET("/crd").
 			To(apiHandler.handleGetCustomResourceDefinitionList).
+			// docs
+			Doc("returns a list of CustomResourceDefinition").
 			Writes(types.CustomResourceDefinitionList{}).
 			Returns(200, "OK", types.CustomResourceDefinitionList{}))
 	apiV1Ws.Route(
 		apiV1Ws.GET("/crd/{crd}").
 			To(apiHandler.handleGetCustomResourceDefinitionDetail).
+			// docs
+			Doc("returns detailed information about CustomResourceDefinition").
+			Param(apiV1Ws.PathParameter("crd", "name of the CustomResourceDefinition")).
 			Writes(types.CustomResourceDefinitionDetail{}).
 			Returns(200, "OK", types.CustomResourceDefinitionDetail{}))
 	apiV1Ws.Route(
 		apiV1Ws.GET("/crd/{namespace}/{crd}/object").
 			To(apiHandler.handleGetCustomResourceObjectList).
+			// docs
+			Doc("returns a list of objects of CustomResourceDefinition").
+			Param(apiV1Ws.PathParameter("namespace", "namespace of the custom resource")).
+			Param(apiV1Ws.PathParameter("crd", "name of the CustomResourceDefinition")).
 			Writes(types.CustomResourceObjectList{}).
 			Returns(200, "OK", types.CustomResourceObjectList{}))
 	apiV1Ws.Route(
 		apiV1Ws.GET("/crd/{namespace}/{crd}/{object}").
 			To(apiHandler.handleGetCustomResourceObjectDetail).
+			// docs
+			Doc("returns detailed information about custom resource object").
+			Param(apiV1Ws.PathParameter("namespace", "namespace of the custom resource")).
+			Param(apiV1Ws.PathParameter("crd", "name of the CustomResourceDefinition")).
+			Param(apiV1Ws.PathParameter("object", "name of the custom resource object")).
 			Writes(types.CustomResourceObjectDetail{}).
 			Returns(200, "OK", types.CustomResourceObjectDetail{}))
 	apiV1Ws.Route(
 		apiV1Ws.GET("/crd/{namespace}/{crd}/{object}/event").
 			To(apiHandler.handleGetCustomResourceObjectEvents).
+			// docs
+			Doc("returns Events for custom resource object").
+			Param(apiV1Ws.PathParameter("namespace", "namespace of the custom resource")).
+			Param(apiV1Ws.PathParameter("crd", "name of the CustomResourceDefinition")).
+			Param(apiV1Ws.PathParameter("object", "name of the custom resource object")).
 			Writes(common.EventList{}).
 			Returns(200, "OK", common.EventList{}))
 
@@ -1001,16 +1020,24 @@ func CreateHTTPAPIHandler(iManager integration.Manager) (*restful.Container, err
 	apiV1Ws.Route(
 		apiV1Ws.GET("/storageclass").
 			To(apiHandler.handleGetStorageClassList).
+			// docs
+			Doc("returns a list of StorageClasses").
 			Writes(storageclass.StorageClassList{}).
 			Returns(200, "OK", storageclass.StorageClassList{}))
 	apiV1Ws.Route(
 		apiV1Ws.GET("/storageclass/{storageclass}").
+			// docs
+			Doc("returns detailed information about StorageClass").
+			Param(apiV1Ws.PathParameter("storageclass", "name of the StorageClass")).
 			To(apiHandler.handleGetStorageClass).
 			Writes(storageclass.StorageClass{}).
 			Returns(200, "OK", storageclass.StorageClass{}))
 	apiV1Ws.Route(
 		apiV1Ws.GET("/storageclass/{storageclass}/persistentvolume").
 			To(apiHandler.handleGetStorageClassPersistentVolumes).
+			// docs
+			Doc("returns a list of PersistentVolumes assigned to StorageClass").
+			Param(apiV1Ws.PathParameter("storageclass", "name of the StorageClass")).
 			Writes(persistentvolume.PersistentVolumeList{}).
 			Returns(200, "OK", persistentvolume.PersistentVolumeList{}))
 
@@ -1018,11 +1045,16 @@ func CreateHTTPAPIHandler(iManager integration.Manager) (*restful.Container, err
 	apiV1Ws.Route(
 		apiV1Ws.GET("/ingressclass").
 			To(apiHandler.handleGetIngressClassList).
+			// docs
+			Doc("returns a list of IngressClasses").
 			Writes(ingressclass.IngressClassList{}).
 			Returns(200, "OK", ingressclass.IngressClassList{}))
 	apiV1Ws.Route(
 		apiV1Ws.GET("/ingressclass/{ingressclass}").
 			To(apiHandler.handleGetIngressClass).
+			// docs
+			Doc("returns detailed information about IngressClass").
+			Param(apiV1Ws.PathParameter("ingressclass", "name of the IngressClass")).
 			Writes(ingressclass.IngressClass{}).
 			Returns(200, "OK", ingressclass.IngressClass{}))
 
@@ -1030,23 +1062,42 @@ func CreateHTTPAPIHandler(iManager integration.Manager) (*restful.Container, err
 	apiV1Ws.Route(
 		apiV1Ws.GET("/log/source/{namespace}/{resourceName}/{resourceType}").
 			To(apiHandler.handleLogSource).
+			// docs
+			Doc("returns log sources for a resource").
+			Param(apiV1Ws.PathParameter("namespace", "namespace of the resource")).
+			Param(apiV1Ws.PathParameter("resourceName", "name of the resource")).
+			Param(apiV1Ws.PathParameter("resourceType", "type of the resource")).
 			Writes(controller.LogSources{}).
 			Returns(200, "OK", controller.LogSources{}))
 	apiV1Ws.Route(
 		apiV1Ws.GET("/log/{namespace}/{pod}").
 			To(apiHandler.handleLogs).
+			// docs
+			Doc("returns logs from a Pod").
+			Param(apiV1Ws.PathParameter("namespace", "namespace of the Pod")).
+			Param(apiV1Ws.PathParameter("pod", "name of the Pod")).
 			Writes(logs.LogDetails{}).
 			Returns(200, "OK", logs.LogDetails{}))
 	apiV1Ws.Route(
 		apiV1Ws.GET("/log/{namespace}/{pod}/{container}").
 			To(apiHandler.handleLogs).
+			// docs
+			Doc("returns logs from a Container").
+			Param(apiV1Ws.PathParameter("namespace", "namespace of the Pod")).
+			Param(apiV1Ws.PathParameter("pod", "name of the Pod")).
+			Param(apiV1Ws.PathParameter("container", "name of container in the Pod")).
 			Writes(logs.LogDetails{}).
 			Returns(200, "OK", logs.LogDetails{}))
 	apiV1Ws.Route(
 		apiV1Ws.GET("/log/file/{namespace}/{pod}/{container}").
 			To(apiHandler.handleLogFile).
-			Writes(logs.LogDetails{}).
-			Returns(200, "OK", logs.LogDetails{}))
+			// docs
+			Doc("returns a text file with logs from a Container").
+			Param(apiV1Ws.PathParameter("namespace", "namespace of the Pod")).
+			Param(apiV1Ws.PathParameter("pod", "name of the Pod")).
+			Param(apiV1Ws.PathParameter("container", "name of container in the Pod")).
+			Writes([]byte{}).
+			Returns(200, "OK", []byte{}))
 
 	return wsContainer, nil
 }
