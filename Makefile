@@ -49,6 +49,13 @@ test: $(PRE) ## Runs all available test scripts
 
 # ============================ Local ============================ #
 
+.PHONY: schema
+schema: $(PRE)
+	@echo "[root] Regenerating schemas"
+	@(cd $(API_DIRECTORY) && make --no-print-directory schema)
+	@(cd $(WEB_DIRECTORY) && make --no-print-directory schema)
+	@echo "[root] Schema regenerated successfully"
+
 .PHONY: check-license
 check-license: $(PRE) ## Checks if repo files contain valid license header
 	@echo "Running license check"

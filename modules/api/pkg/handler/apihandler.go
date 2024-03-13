@@ -101,6 +101,14 @@ func CreateHTTPAPIHandler(iManager integration.Manager) (*restful.Container, err
 	InstallFilters(apiV1Ws)
 
 	apiV1Ws.Path("/api/v1").
+		// docs
+		Doc("API v1 container").
+		Param(apiV1Ws.QueryParameter("filterBy", "Comma delimited string used to apply filtering: 'propertyName,filterValue'")).
+		Param(apiV1Ws.QueryParameter("sortBy", "Name of the column to sort by")).
+		Param(apiV1Ws.QueryParameter("itemsPerPage", "Number of items to return when pagination is applied")).
+		Param(apiV1Ws.QueryParameter("page", "Page number to return items from")).
+		Param(apiV1Ws.QueryParameter("metricNames", "Metric names to download")).
+		Param(apiV1Ws.QueryParameter("aggregations", "Aggregations to be performed for each metric (default: sum)")).
 		Consumes(restful.MIME_JSON).
 		Produces(restful.MIME_JSON)
 	wsContainer.Add(apiV1Ws)

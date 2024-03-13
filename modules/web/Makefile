@@ -77,8 +77,8 @@ test-go:
 	@echo "[$(APP_NAME)] Running tests"
 	@go test $(PACKAGE_NAME)/...
 
-.PHONY: graphql-schema
-graphql-schema:
+.PHONY: schema
+schema:
 	@echo "[$(APP_NAME)] Generating GraphQL schema"
 	@npx graphql-mesh build --fileType json
 	@chmod +rwx .mesh/schema.graphql

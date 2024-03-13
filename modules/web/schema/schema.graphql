@@ -10,144 +10,1958 @@ directive @httpOperation(subgraph: String, path: String, operationSpecificHeader
 directive @transport(subgraph: String, kind: String, location: String, headers: ObjMap, queryStringOptions: ObjMap, queryParams: ObjMap) on OBJECT
 
 type Query {
-  handleGetResource: JSON @httpOperation(subgraph: "api", path: "/api/v1/_raw/{kind}/name/{name}", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET) @httpOperation(subgraph: "api", path: "/api/v1/_raw/{kind}/namespace/{namespace}/name/{name}", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET)
+  """returns unstructured resource from a namespace"""
+  handleGetResource(
+    """kind of the resource"""
+    kind: String!
+    """name of the resource"""
+    name: String!
+    """
+    Comma delimited string used to apply filtering: 'propertyName,filterValue'
+    """
+    filterBy: String
+    """Name of the column to sort by"""
+    sortBy: String
+    """Number of items to return when pagination is applied"""
+    itemsPerPage: String
+    """Page number to return items from"""
+    page: String
+    """Metric names to download"""
+    metricNames: String
+    """Aggregations to be performed for each metric (default: sum)"""
+    aggregations: String
+    """namespace of the resource"""
+    namespace: String!
+  ): unstructured_Unstructured @httpOperation(subgraph: "api", path: "/api/v1/_raw/{args.kind}/name/{args.name}", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET, queryParamArgMap: "{\"filterBy\":\"filterBy\",\"sortBy\":\"sortBy\",\"itemsPerPage\":\"itemsPerPage\",\"page\":\"page\",\"metricNames\":\"metricNames\",\"aggregations\":\"aggregations\"}") @httpOperation(subgraph: "api", path: "/api/v1/_raw/{args.kind}/namespace/{args.namespace}/name/{args.name}", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET, queryParamArgMap: "{\"filterBy\":\"filterBy\",\"sortBy\":\"sortBy\",\"itemsPerPage\":\"itemsPerPage\",\"page\":\"page\",\"metricNames\":\"metricNames\",\"aggregations\":\"aggregations\"}")
   """returns a list of available protocols for the service"""
-  handleGetAvailableProtocols: deployment_Protocols @httpOperation(subgraph: "api", path: "/api/v1/appdeployment/protocols", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET)
-  handleGetClusterRoleList: clusterrole_ClusterRoleList @httpOperation(subgraph: "api", path: "/api/v1/clusterrole", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET)
-  handleGetClusterRoleDetail: clusterrole_ClusterRoleDetail @httpOperation(subgraph: "api", path: "/api/v1/clusterrole/{name}", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET)
-  handleGetClusterRoleBindingList: clusterrolebinding_ClusterRoleBindingList @httpOperation(subgraph: "api", path: "/api/v1/clusterrolebinding", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET)
-  handleGetClusterRoleBindingDetail: clusterrolebinding_ClusterRoleBindingDetail @httpOperation(subgraph: "api", path: "/api/v1/clusterrolebinding/{name}", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET)
-  handleGetConfigMapList: configmap_ConfigMapList @httpOperation(subgraph: "api", path: "/api/v1/configmap", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET) @httpOperation(subgraph: "api", path: "/api/v1/configmap/{namespace}", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET)
-  handleGetConfigMapDetail: configmap_ConfigMapDetail @httpOperation(subgraph: "api", path: "/api/v1/configmap/{namespace}/{configmap}", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET)
-  handleGetCustomResourceDefinitionList: types_CustomResourceDefinitionList @httpOperation(subgraph: "api", path: "/api/v1/crd", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET)
-  handleGetCustomResourceDefinitionDetail: types_CustomResourceDefinitionDetail @httpOperation(subgraph: "api", path: "/api/v1/crd/{crd}", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET)
-  handleGetCustomResourceObjectList: types_CustomResourceObjectList @httpOperation(subgraph: "api", path: "/api/v1/crd/{namespace}/{crd}/object", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET)
-  handleGetCustomResourceObjectDetail: types_CustomResourceObjectDetail @httpOperation(subgraph: "api", path: "/api/v1/crd/{namespace}/{crd}/{object}", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET)
-  handleGetCustomResourceObjectEvents: common_EventList @httpOperation(subgraph: "api", path: "/api/v1/crd/{namespace}/{crd}/{object}/event", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET)
-  handleGetCronJobList: cronjob_CronJobList @httpOperation(subgraph: "api", path: "/api/v1/cronjob", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET) @httpOperation(subgraph: "api", path: "/api/v1/cronjob/{namespace}", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET)
-  handleGetCronJobDetail: cronjob_CronJobDetail @httpOperation(subgraph: "api", path: "/api/v1/cronjob/{namespace}/{name}", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET)
-  handleGetCronJobEvents: common_EventList @httpOperation(subgraph: "api", path: "/api/v1/cronjob/{namespace}/{name}/event", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET)
-  handleGetCronJobJobs: job_JobList @httpOperation(subgraph: "api", path: "/api/v1/cronjob/{namespace}/{name}/job", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET)
+  handleGetAvailableProtocols(
+    """
+    Comma delimited string used to apply filtering: 'propertyName,filterValue'
+    """
+    filterBy: String
+    """Name of the column to sort by"""
+    sortBy: String
+    """Number of items to return when pagination is applied"""
+    itemsPerPage: String
+    """Page number to return items from"""
+    page: String
+    """Metric names to download"""
+    metricNames: String
+    """Aggregations to be performed for each metric (default: sum)"""
+    aggregations: String
+  ): deployment_Protocols @httpOperation(subgraph: "api", path: "/api/v1/appdeployment/protocols", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET, queryParamArgMap: "{\"filterBy\":\"filterBy\",\"sortBy\":\"sortBy\",\"itemsPerPage\":\"itemsPerPage\",\"page\":\"page\",\"metricNames\":\"metricNames\",\"aggregations\":\"aggregations\"}")
+  """returns a list of ClusterRoles"""
+  handleGetClusterRoleList(
+    """
+    Comma delimited string used to apply filtering: 'propertyName,filterValue'
+    """
+    filterBy: String
+    """Name of the column to sort by"""
+    sortBy: String
+    """Number of items to return when pagination is applied"""
+    itemsPerPage: String
+    """Page number to return items from"""
+    page: String
+    """Metric names to download"""
+    metricNames: String
+    """Aggregations to be performed for each metric (default: sum)"""
+    aggregations: String
+  ): clusterrole_ClusterRoleList @httpOperation(subgraph: "api", path: "/api/v1/clusterrole", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET, queryParamArgMap: "{\"filterBy\":\"filterBy\",\"sortBy\":\"sortBy\",\"itemsPerPage\":\"itemsPerPage\",\"page\":\"page\",\"metricNames\":\"metricNames\",\"aggregations\":\"aggregations\"}")
+  """returns detailed information about ClusterRole"""
+  handleGetClusterRoleDetail(
+    """name of the ClusterRole"""
+    name: String!
+    """
+    Comma delimited string used to apply filtering: 'propertyName,filterValue'
+    """
+    filterBy: String
+    """Name of the column to sort by"""
+    sortBy: String
+    """Number of items to return when pagination is applied"""
+    itemsPerPage: String
+    """Page number to return items from"""
+    page: String
+    """Metric names to download"""
+    metricNames: String
+    """Aggregations to be performed for each metric (default: sum)"""
+    aggregations: String
+  ): clusterrole_ClusterRoleDetail @httpOperation(subgraph: "api", path: "/api/v1/clusterrole/{args.name}", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET, queryParamArgMap: "{\"filterBy\":\"filterBy\",\"sortBy\":\"sortBy\",\"itemsPerPage\":\"itemsPerPage\",\"page\":\"page\",\"metricNames\":\"metricNames\",\"aggregations\":\"aggregations\"}")
+  """returns a list of ClusterRoleBindings"""
+  handleGetClusterRoleBindingList(
+    """
+    Comma delimited string used to apply filtering: 'propertyName,filterValue'
+    """
+    filterBy: String
+    """Name of the column to sort by"""
+    sortBy: String
+    """Number of items to return when pagination is applied"""
+    itemsPerPage: String
+    """Page number to return items from"""
+    page: String
+    """Metric names to download"""
+    metricNames: String
+    """Aggregations to be performed for each metric (default: sum)"""
+    aggregations: String
+  ): clusterrolebinding_ClusterRoleBindingList @httpOperation(subgraph: "api", path: "/api/v1/clusterrolebinding", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET, queryParamArgMap: "{\"filterBy\":\"filterBy\",\"sortBy\":\"sortBy\",\"itemsPerPage\":\"itemsPerPage\",\"page\":\"page\",\"metricNames\":\"metricNames\",\"aggregations\":\"aggregations\"}")
+  """returns detailed information about ClusterRoleBinding"""
+  handleGetClusterRoleBindingDetail(
+    """name of the ClusterRoleBinding"""
+    name: String!
+    """
+    Comma delimited string used to apply filtering: 'propertyName,filterValue'
+    """
+    filterBy: String
+    """Name of the column to sort by"""
+    sortBy: String
+    """Number of items to return when pagination is applied"""
+    itemsPerPage: String
+    """Page number to return items from"""
+    page: String
+    """Metric names to download"""
+    metricNames: String
+    """Aggregations to be performed for each metric (default: sum)"""
+    aggregations: String
+  ): clusterrolebinding_ClusterRoleBindingDetail @httpOperation(subgraph: "api", path: "/api/v1/clusterrolebinding/{args.name}", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET, queryParamArgMap: "{\"filterBy\":\"filterBy\",\"sortBy\":\"sortBy\",\"itemsPerPage\":\"itemsPerPage\",\"page\":\"page\",\"metricNames\":\"metricNames\",\"aggregations\":\"aggregations\"}")
+  """returns a list of ConfigMaps in a namespaces"""
+  handleGetConfigMapList(
+    """
+    Comma delimited string used to apply filtering: 'propertyName,filterValue'
+    """
+    filterBy: String
+    """Name of the column to sort by"""
+    sortBy: String
+    """Number of items to return when pagination is applied"""
+    itemsPerPage: String
+    """Page number to return items from"""
+    page: String
+    """Metric names to download"""
+    metricNames: String
+    """Aggregations to be performed for each metric (default: sum)"""
+    aggregations: String
+    """namespace of the ConfigMap"""
+    namespace: String!
+  ): configmap_ConfigMapList @httpOperation(subgraph: "api", path: "/api/v1/configmap", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET, queryParamArgMap: "{\"filterBy\":\"filterBy\",\"sortBy\":\"sortBy\",\"itemsPerPage\":\"itemsPerPage\",\"page\":\"page\",\"metricNames\":\"metricNames\",\"aggregations\":\"aggregations\"}") @httpOperation(subgraph: "api", path: "/api/v1/configmap/{args.namespace}", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET, queryParamArgMap: "{\"filterBy\":\"filterBy\",\"sortBy\":\"sortBy\",\"itemsPerPage\":\"itemsPerPage\",\"page\":\"page\",\"metricNames\":\"metricNames\",\"aggregations\":\"aggregations\"}")
+  """returns detailed information about ConfigMap"""
+  handleGetConfigMapDetail(
+    """namespace of the ConfigMap"""
+    namespace: String!
+    """name of the ConfigMap"""
+    configmap: String!
+    """
+    Comma delimited string used to apply filtering: 'propertyName,filterValue'
+    """
+    filterBy: String
+    """Name of the column to sort by"""
+    sortBy: String
+    """Number of items to return when pagination is applied"""
+    itemsPerPage: String
+    """Page number to return items from"""
+    page: String
+    """Metric names to download"""
+    metricNames: String
+    """Aggregations to be performed for each metric (default: sum)"""
+    aggregations: String
+  ): configmap_ConfigMapDetail @httpOperation(subgraph: "api", path: "/api/v1/configmap/{args.namespace}/{args.configmap}", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET, queryParamArgMap: "{\"filterBy\":\"filterBy\",\"sortBy\":\"sortBy\",\"itemsPerPage\":\"itemsPerPage\",\"page\":\"page\",\"metricNames\":\"metricNames\",\"aggregations\":\"aggregations\"}")
+  """returns a list of CustomResourceDefinition"""
+  handleGetCustomResourceDefinitionList(
+    """
+    Comma delimited string used to apply filtering: 'propertyName,filterValue'
+    """
+    filterBy: String
+    """Name of the column to sort by"""
+    sortBy: String
+    """Number of items to return when pagination is applied"""
+    itemsPerPage: String
+    """Page number to return items from"""
+    page: String
+    """Metric names to download"""
+    metricNames: String
+    """Aggregations to be performed for each metric (default: sum)"""
+    aggregations: String
+  ): types_CustomResourceDefinitionList @httpOperation(subgraph: "api", path: "/api/v1/crd", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET, queryParamArgMap: "{\"filterBy\":\"filterBy\",\"sortBy\":\"sortBy\",\"itemsPerPage\":\"itemsPerPage\",\"page\":\"page\",\"metricNames\":\"metricNames\",\"aggregations\":\"aggregations\"}")
+  """returns detailed information about CustomResourceDefinition"""
+  handleGetCustomResourceDefinitionDetail(
+    """name of the CustomResourceDefinition"""
+    crd: String!
+    """
+    Comma delimited string used to apply filtering: 'propertyName,filterValue'
+    """
+    filterBy: String
+    """Name of the column to sort by"""
+    sortBy: String
+    """Number of items to return when pagination is applied"""
+    itemsPerPage: String
+    """Page number to return items from"""
+    page: String
+    """Metric names to download"""
+    metricNames: String
+    """Aggregations to be performed for each metric (default: sum)"""
+    aggregations: String
+  ): types_CustomResourceDefinitionDetail @httpOperation(subgraph: "api", path: "/api/v1/crd/{args.crd}", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET, queryParamArgMap: "{\"filterBy\":\"filterBy\",\"sortBy\":\"sortBy\",\"itemsPerPage\":\"itemsPerPage\",\"page\":\"page\",\"metricNames\":\"metricNames\",\"aggregations\":\"aggregations\"}")
+  """returns a list of objects of CustomResourceDefinition"""
+  handleGetCustomResourceObjectList(
+    """namespace of the custom resource"""
+    namespace: String!
+    """name of the CustomResourceDefinition"""
+    crd: String!
+    """
+    Comma delimited string used to apply filtering: 'propertyName,filterValue'
+    """
+    filterBy: String
+    """Name of the column to sort by"""
+    sortBy: String
+    """Number of items to return when pagination is applied"""
+    itemsPerPage: String
+    """Page number to return items from"""
+    page: String
+    """Metric names to download"""
+    metricNames: String
+    """Aggregations to be performed for each metric (default: sum)"""
+    aggregations: String
+  ): types_CustomResourceObjectList @httpOperation(subgraph: "api", path: "/api/v1/crd/{args.namespace}/{args.crd}/object", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET, queryParamArgMap: "{\"filterBy\":\"filterBy\",\"sortBy\":\"sortBy\",\"itemsPerPage\":\"itemsPerPage\",\"page\":\"page\",\"metricNames\":\"metricNames\",\"aggregations\":\"aggregations\"}")
+  """returns detailed information about custom resource object"""
+  handleGetCustomResourceObjectDetail(
+    """namespace of the custom resource"""
+    namespace: String!
+    """name of the CustomResourceDefinition"""
+    crd: String!
+    """name of the custom resource object"""
+    object: String!
+    """
+    Comma delimited string used to apply filtering: 'propertyName,filterValue'
+    """
+    filterBy: String
+    """Name of the column to sort by"""
+    sortBy: String
+    """Number of items to return when pagination is applied"""
+    itemsPerPage: String
+    """Page number to return items from"""
+    page: String
+    """Metric names to download"""
+    metricNames: String
+    """Aggregations to be performed for each metric (default: sum)"""
+    aggregations: String
+  ): types_CustomResourceObjectDetail @httpOperation(subgraph: "api", path: "/api/v1/crd/{args.namespace}/{args.crd}/{args.object}", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET, queryParamArgMap: "{\"filterBy\":\"filterBy\",\"sortBy\":\"sortBy\",\"itemsPerPage\":\"itemsPerPage\",\"page\":\"page\",\"metricNames\":\"metricNames\",\"aggregations\":\"aggregations\"}")
+  """returns Events for custom resource object"""
+  handleGetCustomResourceObjectEvents(
+    """namespace of the custom resource"""
+    namespace: String!
+    """name of the CustomResourceDefinition"""
+    crd: String!
+    """name of the custom resource object"""
+    object: String!
+    """
+    Comma delimited string used to apply filtering: 'propertyName,filterValue'
+    """
+    filterBy: String
+    """Name of the column to sort by"""
+    sortBy: String
+    """Number of items to return when pagination is applied"""
+    itemsPerPage: String
+    """Page number to return items from"""
+    page: String
+    """Metric names to download"""
+    metricNames: String
+    """Aggregations to be performed for each metric (default: sum)"""
+    aggregations: String
+  ): common_EventList @httpOperation(subgraph: "api", path: "/api/v1/crd/{args.namespace}/{args.crd}/{args.object}/event", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET, queryParamArgMap: "{\"filterBy\":\"filterBy\",\"sortBy\":\"sortBy\",\"itemsPerPage\":\"itemsPerPage\",\"page\":\"page\",\"metricNames\":\"metricNames\",\"aggregations\":\"aggregations\"}")
+  """returns a list of CronJobs in a namespaces"""
+  handleGetCronJobList(
+    """
+    Comma delimited string used to apply filtering: 'propertyName,filterValue'
+    """
+    filterBy: String
+    """Name of the column to sort by"""
+    sortBy: String
+    """Number of items to return when pagination is applied"""
+    itemsPerPage: String
+    """Page number to return items from"""
+    page: String
+    """Metric names to download"""
+    metricNames: String
+    """Aggregations to be performed for each metric (default: sum)"""
+    aggregations: String
+    """namespace of the CronJob"""
+    namespace: String!
+  ): cronjob_CronJobList @httpOperation(subgraph: "api", path: "/api/v1/cronjob", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET, queryParamArgMap: "{\"filterBy\":\"filterBy\",\"sortBy\":\"sortBy\",\"itemsPerPage\":\"itemsPerPage\",\"page\":\"page\",\"metricNames\":\"metricNames\",\"aggregations\":\"aggregations\"}") @httpOperation(subgraph: "api", path: "/api/v1/cronjob/{args.namespace}", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET, queryParamArgMap: "{\"filterBy\":\"filterBy\",\"sortBy\":\"sortBy\",\"itemsPerPage\":\"itemsPerPage\",\"page\":\"page\",\"metricNames\":\"metricNames\",\"aggregations\":\"aggregations\"}")
+  """returns detailed information about CronJob"""
+  handleGetCronJobDetail(
+    """namespace of the CronJob"""
+    namespace: String!
+    """name of the CronJob"""
+    name: String!
+    """
+    Comma delimited string used to apply filtering: 'propertyName,filterValue'
+    """
+    filterBy: String
+    """Name of the column to sort by"""
+    sortBy: String
+    """Number of items to return when pagination is applied"""
+    itemsPerPage: String
+    """Page number to return items from"""
+    page: String
+    """Metric names to download"""
+    metricNames: String
+    """Aggregations to be performed for each metric (default: sum)"""
+    aggregations: String
+  ): cronjob_CronJobDetail @httpOperation(subgraph: "api", path: "/api/v1/cronjob/{args.namespace}/{args.name}", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET, queryParamArgMap: "{\"filterBy\":\"filterBy\",\"sortBy\":\"sortBy\",\"itemsPerPage\":\"itemsPerPage\",\"page\":\"page\",\"metricNames\":\"metricNames\",\"aggregations\":\"aggregations\"}")
+  """returns a list of Events for CronJob"""
+  handleGetCronJobEvents(
+    """namespace of the CronJob"""
+    namespace: String!
+    """name of the CronJob"""
+    name: String!
+    """
+    Comma delimited string used to apply filtering: 'propertyName,filterValue'
+    """
+    filterBy: String
+    """Name of the column to sort by"""
+    sortBy: String
+    """Number of items to return when pagination is applied"""
+    itemsPerPage: String
+    """Page number to return items from"""
+    page: String
+    """Metric names to download"""
+    metricNames: String
+    """Aggregations to be performed for each metric (default: sum)"""
+    aggregations: String
+  ): common_EventList @httpOperation(subgraph: "api", path: "/api/v1/cronjob/{args.namespace}/{args.name}/event", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET, queryParamArgMap: "{\"filterBy\":\"filterBy\",\"sortBy\":\"sortBy\",\"itemsPerPage\":\"itemsPerPage\",\"page\":\"page\",\"metricNames\":\"metricNames\",\"aggregations\":\"aggregations\"}")
+  """returns a list of Jobs for CronJob"""
+  handleGetCronJobJobs(
+    """namespace of the CronJob"""
+    namespace: String!
+    """name of the CronJob"""
+    name: String!
+    """
+    Comma delimited string used to apply filtering: 'propertyName,filterValue'
+    """
+    filterBy: String
+    """Name of the column to sort by"""
+    sortBy: String
+    """Number of items to return when pagination is applied"""
+    itemsPerPage: String
+    """Page number to return items from"""
+    page: String
+    """Metric names to download"""
+    metricNames: String
+    """Aggregations to be performed for each metric (default: sum)"""
+    aggregations: String
+  ): job_JobList @httpOperation(subgraph: "api", path: "/api/v1/cronjob/{args.namespace}/{args.name}/job", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET, queryParamArgMap: "{\"filterBy\":\"filterBy\",\"sortBy\":\"sortBy\",\"itemsPerPage\":\"itemsPerPage\",\"page\":\"page\",\"metricNames\":\"metricNames\",\"aggregations\":\"aggregations\"}")
   """generates a one-time CSRF token that can be used by POST request"""
   handleGetCsrfToken(
     """action name to generate CSRF token for"""
     action: String!
-  ): csrf_Response @httpOperation(subgraph: "api", path: "/api/v1/csrftoken/{args.action}", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET)
-  handleGetDaemonSetList: daemonset_DaemonSetList @httpOperation(subgraph: "api", path: "/api/v1/daemonset", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET) @httpOperation(subgraph: "api", path: "/api/v1/daemonset/{namespace}", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET)
-  handleGetDaemonSetDetail: daemonset_DaemonSetDetail @httpOperation(subgraph: "api", path: "/api/v1/daemonset/{namespace}/{daemonSet}", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET)
-  handleGetDaemonSetEvents: common_EventList @httpOperation(subgraph: "api", path: "/api/v1/daemonset/{namespace}/{daemonSet}/event", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET)
-  handleGetDaemonSetPods: pod_PodList @httpOperation(subgraph: "api", path: "/api/v1/daemonset/{namespace}/{daemonSet}/pod", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET)
-  handleGetDaemonSetServices: service_ServiceList @httpOperation(subgraph: "api", path: "/api/v1/daemonset/{namespace}/{daemonSet}/service", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET)
-  handleGetDeployments: deployment_DeploymentList @httpOperation(subgraph: "api", path: "/api/v1/deployment", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET) @httpOperation(subgraph: "api", path: "/api/v1/deployment/{namespace}", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET)
-  handleGetDeploymentDetail: deployment_DeploymentDetail @httpOperation(subgraph: "api", path: "/api/v1/deployment/{namespace}/{deployment}", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET)
-  handleGetDeploymentEvents: common_EventList @httpOperation(subgraph: "api", path: "/api/v1/deployment/{namespace}/{deployment}/event", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET)
-  handleGetDeploymentNewReplicaSet: replicaset_ReplicaSet @httpOperation(subgraph: "api", path: "/api/v1/deployment/{namespace}/{deployment}/newreplicaset", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET)
-  handleGetDeploymentOldReplicaSets: replicaset_ReplicaSetList @httpOperation(subgraph: "api", path: "/api/v1/deployment/{namespace}/{deployment}/oldreplicaset", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET)
-  handleGetEventList: common_EventList @httpOperation(subgraph: "api", path: "/api/v1/event", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET) @httpOperation(subgraph: "api", path: "/api/v1/event/{namespace}", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET)
-  handleGetHorizontalPodAutoscalerList: horizontalpodautoscaler_HorizontalPodAutoscalerList @httpOperation(subgraph: "api", path: "/api/v1/horizontalpodautoscaler", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET) @httpOperation(subgraph: "api", path: "/api/v1/horizontalpodautoscaler/{namespace}", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET)
-  handleGetHorizontalPodAutoscalerDetail: horizontalpodautoscaler_HorizontalPodAutoscalerDetail @httpOperation(subgraph: "api", path: "/api/v1/horizontalpodautoscaler/{namespace}/{horizontalpodautoscaler}", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET)
-  """get ingresses for namespace"""
+    """
+    Comma delimited string used to apply filtering: 'propertyName,filterValue'
+    """
+    filterBy: String
+    """Name of the column to sort by"""
+    sortBy: String
+    """Number of items to return when pagination is applied"""
+    itemsPerPage: String
+    """Page number to return items from"""
+    page: String
+    """Metric names to download"""
+    metricNames: String
+    """Aggregations to be performed for each metric (default: sum)"""
+    aggregations: String
+  ): csrf_Response @httpOperation(subgraph: "api", path: "/api/v1/csrftoken/{args.action}", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET, queryParamArgMap: "{\"filterBy\":\"filterBy\",\"sortBy\":\"sortBy\",\"itemsPerPage\":\"itemsPerPage\",\"page\":\"page\",\"metricNames\":\"metricNames\",\"aggregations\":\"aggregations\"}")
+  """returns a list of DaemonSets in a namespaces"""
+  handleGetDaemonSetList(
+    """
+    Comma delimited string used to apply filtering: 'propertyName,filterValue'
+    """
+    filterBy: String
+    """Name of the column to sort by"""
+    sortBy: String
+    """Number of items to return when pagination is applied"""
+    itemsPerPage: String
+    """Page number to return items from"""
+    page: String
+    """Metric names to download"""
+    metricNames: String
+    """Aggregations to be performed for each metric (default: sum)"""
+    aggregations: String
+    """namespace of the DaemonSet"""
+    namespace: String!
+  ): daemonset_DaemonSetList @httpOperation(subgraph: "api", path: "/api/v1/daemonset", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET, queryParamArgMap: "{\"filterBy\":\"filterBy\",\"sortBy\":\"sortBy\",\"itemsPerPage\":\"itemsPerPage\",\"page\":\"page\",\"metricNames\":\"metricNames\",\"aggregations\":\"aggregations\"}") @httpOperation(subgraph: "api", path: "/api/v1/daemonset/{args.namespace}", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET, queryParamArgMap: "{\"filterBy\":\"filterBy\",\"sortBy\":\"sortBy\",\"itemsPerPage\":\"itemsPerPage\",\"page\":\"page\",\"metricNames\":\"metricNames\",\"aggregations\":\"aggregations\"}")
+  """returns detailed information about DaemonSet"""
+  handleGetDaemonSetDetail(
+    """namespace of the DaemonSet"""
+    namespace: String!
+    """name of the DaemonSet"""
+    daemonSet: String!
+    """
+    Comma delimited string used to apply filtering: 'propertyName,filterValue'
+    """
+    filterBy: String
+    """Name of the column to sort by"""
+    sortBy: String
+    """Number of items to return when pagination is applied"""
+    itemsPerPage: String
+    """Page number to return items from"""
+    page: String
+    """Metric names to download"""
+    metricNames: String
+    """Aggregations to be performed for each metric (default: sum)"""
+    aggregations: String
+  ): daemonset_DaemonSetDetail @httpOperation(subgraph: "api", path: "/api/v1/daemonset/{args.namespace}/{args.daemonSet}", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET, queryParamArgMap: "{\"filterBy\":\"filterBy\",\"sortBy\":\"sortBy\",\"itemsPerPage\":\"itemsPerPage\",\"page\":\"page\",\"metricNames\":\"metricNames\",\"aggregations\":\"aggregations\"}")
+  """returns a list of Events for DaemonSet"""
+  handleGetDaemonSetEvents(
+    """namespace of the DaemonSet"""
+    namespace: String!
+    """name of the DaemonSet"""
+    daemonSet: String!
+    """
+    Comma delimited string used to apply filtering: 'propertyName,filterValue'
+    """
+    filterBy: String
+    """Name of the column to sort by"""
+    sortBy: String
+    """Number of items to return when pagination is applied"""
+    itemsPerPage: String
+    """Page number to return items from"""
+    page: String
+    """Metric names to download"""
+    metricNames: String
+    """Aggregations to be performed for each metric (default: sum)"""
+    aggregations: String
+  ): common_EventList @httpOperation(subgraph: "api", path: "/api/v1/daemonset/{args.namespace}/{args.daemonSet}/event", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET, queryParamArgMap: "{\"filterBy\":\"filterBy\",\"sortBy\":\"sortBy\",\"itemsPerPage\":\"itemsPerPage\",\"page\":\"page\",\"metricNames\":\"metricNames\",\"aggregations\":\"aggregations\"}")
+  """returns a list of Pods for DaemonSet"""
+  handleGetDaemonSetPods(
+    """namespace of the DaemonSet"""
+    namespace: String!
+    """name of the DaemonSet"""
+    daemonSet: String!
+    """
+    Comma delimited string used to apply filtering: 'propertyName,filterValue'
+    """
+    filterBy: String
+    """Name of the column to sort by"""
+    sortBy: String
+    """Number of items to return when pagination is applied"""
+    itemsPerPage: String
+    """Page number to return items from"""
+    page: String
+    """Metric names to download"""
+    metricNames: String
+    """Aggregations to be performed for each metric (default: sum)"""
+    aggregations: String
+  ): pod_PodList @httpOperation(subgraph: "api", path: "/api/v1/daemonset/{args.namespace}/{args.daemonSet}/pod", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET, queryParamArgMap: "{\"filterBy\":\"filterBy\",\"sortBy\":\"sortBy\",\"itemsPerPage\":\"itemsPerPage\",\"page\":\"page\",\"metricNames\":\"metricNames\",\"aggregations\":\"aggregations\"}")
+  """returns a list of Services for DaemonSet"""
+  handleGetDaemonSetServices(
+    """namespace of the DaemonSet"""
+    namespace: String!
+    """name of the DaemonSet"""
+    daemonSet: String!
+    """
+    Comma delimited string used to apply filtering: 'propertyName,filterValue'
+    """
+    filterBy: String
+    """Name of the column to sort by"""
+    sortBy: String
+    """Number of items to return when pagination is applied"""
+    itemsPerPage: String
+    """Page number to return items from"""
+    page: String
+    """Metric names to download"""
+    metricNames: String
+    """Aggregations to be performed for each metric (default: sum)"""
+    aggregations: String
+  ): service_ServiceList @httpOperation(subgraph: "api", path: "/api/v1/daemonset/{args.namespace}/{args.daemonSet}/service", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET, queryParamArgMap: "{\"filterBy\":\"filterBy\",\"sortBy\":\"sortBy\",\"itemsPerPage\":\"itemsPerPage\",\"page\":\"page\",\"metricNames\":\"metricNames\",\"aggregations\":\"aggregations\"}")
+  """returns a list of Deployments in a namespaces"""
+  handleGetDeployments(
+    """
+    Comma delimited string used to apply filtering: 'propertyName,filterValue'
+    """
+    filterBy: String
+    """Name of the column to sort by"""
+    sortBy: String
+    """Number of items to return when pagination is applied"""
+    itemsPerPage: String
+    """Page number to return items from"""
+    page: String
+    """Metric names to download"""
+    metricNames: String
+    """Aggregations to be performed for each metric (default: sum)"""
+    aggregations: String
+    """namespace of the Deployment"""
+    namespace: String!
+  ): deployment_DeploymentList @httpOperation(subgraph: "api", path: "/api/v1/deployment", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET, queryParamArgMap: "{\"filterBy\":\"filterBy\",\"sortBy\":\"sortBy\",\"itemsPerPage\":\"itemsPerPage\",\"page\":\"page\",\"metricNames\":\"metricNames\",\"aggregations\":\"aggregations\"}") @httpOperation(subgraph: "api", path: "/api/v1/deployment/{args.namespace}", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET, queryParamArgMap: "{\"filterBy\":\"filterBy\",\"sortBy\":\"sortBy\",\"itemsPerPage\":\"itemsPerPage\",\"page\":\"page\",\"metricNames\":\"metricNames\",\"aggregations\":\"aggregations\"}")
+  """returns detailed information about Deployment"""
+  handleGetDeploymentDetail(
+    """namespace of the Deployment"""
+    namespace: String!
+    """name of the Deployment"""
+    deployment: String!
+    """
+    Comma delimited string used to apply filtering: 'propertyName,filterValue'
+    """
+    filterBy: String
+    """Name of the column to sort by"""
+    sortBy: String
+    """Number of items to return when pagination is applied"""
+    itemsPerPage: String
+    """Page number to return items from"""
+    page: String
+    """Metric names to download"""
+    metricNames: String
+    """Aggregations to be performed for each metric (default: sum)"""
+    aggregations: String
+  ): deployment_DeploymentDetail @httpOperation(subgraph: "api", path: "/api/v1/deployment/{args.namespace}/{args.deployment}", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET, queryParamArgMap: "{\"filterBy\":\"filterBy\",\"sortBy\":\"sortBy\",\"itemsPerPage\":\"itemsPerPage\",\"page\":\"page\",\"metricNames\":\"metricNames\",\"aggregations\":\"aggregations\"}")
+  """returns a list of Events for Deployment"""
+  handleGetDeploymentEvents(
+    """namespace of the Deployment"""
+    namespace: String!
+    """name of the Deployment"""
+    deployment: String!
+    """
+    Comma delimited string used to apply filtering: 'propertyName,filterValue'
+    """
+    filterBy: String
+    """Name of the column to sort by"""
+    sortBy: String
+    """Number of items to return when pagination is applied"""
+    itemsPerPage: String
+    """Page number to return items from"""
+    page: String
+    """Metric names to download"""
+    metricNames: String
+    """Aggregations to be performed for each metric (default: sum)"""
+    aggregations: String
+  ): common_EventList @httpOperation(subgraph: "api", path: "/api/v1/deployment/{args.namespace}/{args.deployment}/event", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET, queryParamArgMap: "{\"filterBy\":\"filterBy\",\"sortBy\":\"sortBy\",\"itemsPerPage\":\"itemsPerPage\",\"page\":\"page\",\"metricNames\":\"metricNames\",\"aggregations\":\"aggregations\"}")
+  """returns a list of new ReplicaSets for Deployment"""
+  handleGetDeploymentNewReplicaSet(
+    """namespace of the Deployment"""
+    namespace: String!
+    """name of the Deployment"""
+    deployment: String!
+    """
+    Comma delimited string used to apply filtering: 'propertyName,filterValue'
+    """
+    filterBy: String
+    """Name of the column to sort by"""
+    sortBy: String
+    """Number of items to return when pagination is applied"""
+    itemsPerPage: String
+    """Page number to return items from"""
+    page: String
+    """Metric names to download"""
+    metricNames: String
+    """Aggregations to be performed for each metric (default: sum)"""
+    aggregations: String
+  ): replicaset_ReplicaSet @httpOperation(subgraph: "api", path: "/api/v1/deployment/{args.namespace}/{args.deployment}/newreplicaset", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET, queryParamArgMap: "{\"filterBy\":\"filterBy\",\"sortBy\":\"sortBy\",\"itemsPerPage\":\"itemsPerPage\",\"page\":\"page\",\"metricNames\":\"metricNames\",\"aggregations\":\"aggregations\"}")
+  """returns a list of old ReplicaSets for Deployment"""
+  handleGetDeploymentOldReplicaSets(
+    """namespace of the Deployment"""
+    namespace: String!
+    """name of the Deployment"""
+    deployment: String!
+    """
+    Comma delimited string used to apply filtering: 'propertyName,filterValue'
+    """
+    filterBy: String
+    """Name of the column to sort by"""
+    sortBy: String
+    """Number of items to return when pagination is applied"""
+    itemsPerPage: String
+    """Page number to return items from"""
+    page: String
+    """Metric names to download"""
+    metricNames: String
+    """Aggregations to be performed for each metric (default: sum)"""
+    aggregations: String
+  ): replicaset_ReplicaSetList @httpOperation(subgraph: "api", path: "/api/v1/deployment/{args.namespace}/{args.deployment}/oldreplicaset", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET, queryParamArgMap: "{\"filterBy\":\"filterBy\",\"sortBy\":\"sortBy\",\"itemsPerPage\":\"itemsPerPage\",\"page\":\"page\",\"metricNames\":\"metricNames\",\"aggregations\":\"aggregations\"}")
+  """returns a list of Events in a namespace"""
+  handleGetEventList(
+    """
+    Comma delimited string used to apply filtering: 'propertyName,filterValue'
+    """
+    filterBy: String
+    """Name of the column to sort by"""
+    sortBy: String
+    """Number of items to return when pagination is applied"""
+    itemsPerPage: String
+    """Page number to return items from"""
+    page: String
+    """Metric names to download"""
+    metricNames: String
+    """Aggregations to be performed for each metric (default: sum)"""
+    aggregations: String
+    """namespace to get Events from"""
+    namespace: String!
+  ): common_EventList @httpOperation(subgraph: "api", path: "/api/v1/event", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET, queryParamArgMap: "{\"filterBy\":\"filterBy\",\"sortBy\":\"sortBy\",\"itemsPerPage\":\"itemsPerPage\",\"page\":\"page\",\"metricNames\":\"metricNames\",\"aggregations\":\"aggregations\"}") @httpOperation(subgraph: "api", path: "/api/v1/event/{args.namespace}", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET, queryParamArgMap: "{\"filterBy\":\"filterBy\",\"sortBy\":\"sortBy\",\"itemsPerPage\":\"itemsPerPage\",\"page\":\"page\",\"metricNames\":\"metricNames\",\"aggregations\":\"aggregations\"}")
+  """returns a list of HorizontalPodAutoscalers in a namespaces"""
+  handleGetHorizontalPodAutoscalerList(
+    """
+    Comma delimited string used to apply filtering: 'propertyName,filterValue'
+    """
+    filterBy: String
+    """Name of the column to sort by"""
+    sortBy: String
+    """Number of items to return when pagination is applied"""
+    itemsPerPage: String
+    """Page number to return items from"""
+    page: String
+    """Metric names to download"""
+    metricNames: String
+    """Aggregations to be performed for each metric (default: sum)"""
+    aggregations: String
+    """namespace of the HorizontalPodAutoscaler"""
+    namespace: String!
+  ): horizontalpodautoscaler_HorizontalPodAutoscalerList @httpOperation(subgraph: "api", path: "/api/v1/horizontalpodautoscaler", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET, queryParamArgMap: "{\"filterBy\":\"filterBy\",\"sortBy\":\"sortBy\",\"itemsPerPage\":\"itemsPerPage\",\"page\":\"page\",\"metricNames\":\"metricNames\",\"aggregations\":\"aggregations\"}") @httpOperation(subgraph: "api", path: "/api/v1/horizontalpodautoscaler/{args.namespace}", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET, queryParamArgMap: "{\"filterBy\":\"filterBy\",\"sortBy\":\"sortBy\",\"itemsPerPage\":\"itemsPerPage\",\"page\":\"page\",\"metricNames\":\"metricNames\",\"aggregations\":\"aggregations\"}")
+  """returns detailed information about HorizontalPodAutoscaler"""
+  handleGetHorizontalPodAutoscalerDetail(
+    """namespace of the HorizontalPodAutoscaler"""
+    namespace: String!
+    """name of the HorizontalPodAutoscaler"""
+    horizontalpodautoscaler: String!
+    """
+    Comma delimited string used to apply filtering: 'propertyName,filterValue'
+    """
+    filterBy: String
+    """Name of the column to sort by"""
+    sortBy: String
+    """Number of items to return when pagination is applied"""
+    itemsPerPage: String
+    """Page number to return items from"""
+    page: String
+    """Metric names to download"""
+    metricNames: String
+    """Aggregations to be performed for each metric (default: sum)"""
+    aggregations: String
+  ): horizontalpodautoscaler_HorizontalPodAutoscalerDetail @httpOperation(subgraph: "api", path: "/api/v1/horizontalpodautoscaler/{args.namespace}/{args.horizontalpodautoscaler}", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET, queryParamArgMap: "{\"filterBy\":\"filterBy\",\"sortBy\":\"sortBy\",\"itemsPerPage\":\"itemsPerPage\",\"page\":\"page\",\"metricNames\":\"metricNames\",\"aggregations\":\"aggregations\"}")
+  """returns a list of Ingresses in a namespaces"""
   handleGetIngressList(
-    """namespace to get ingresses from"""
+    """
+    Comma delimited string used to apply filtering: 'propertyName,filterValue'
+    """
+    filterBy: String
+    """Name of the column to sort by"""
+    sortBy: String
+    """Number of items to return when pagination is applied"""
+    itemsPerPage: String
+    """Page number to return items from"""
+    page: String
+    """Metric names to download"""
+    metricNames: String
+    """Aggregations to be performed for each metric (default: sum)"""
+    aggregations: String
+    """namespace of the Ingress"""
     namespace: String!
-  ): ingress_IngressList @httpOperation(subgraph: "api", path: "/api/v1/ingress", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET) @httpOperation(subgraph: "api", path: "/api/v1/ingress/{args.namespace}", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET)
-  handleGetIngressEvent: common_EventList @httpOperation(subgraph: "api", path: "/api/v1/ingress/{namespace}/{ingress}/event", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET)
-  handleGetIngressDetail: ingress_IngressDetail @httpOperation(subgraph: "api", path: "/api/v1/ingress/{namespace}/{name}", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET)
-  handleGetIngressClassList: ingressclass_IngressClassList @httpOperation(subgraph: "api", path: "/api/v1/ingressclass", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET)
-  handleGetIngressClass: ingressclass_IngressClass @httpOperation(subgraph: "api", path: "/api/v1/ingressclass/{ingressclass}", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET)
-  handleGetState: JSON @httpOperation(subgraph: "api", path: "/api/v1/integration/{name}/state", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET)
-  handleGetJobList: job_JobList @httpOperation(subgraph: "api", path: "/api/v1/job", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET) @httpOperation(subgraph: "api", path: "/api/v1/job/{namespace}", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET)
-  handleGetJobDetail: job_JobDetail @httpOperation(subgraph: "api", path: "/api/v1/job/{namespace}/{name}", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET)
-  handleGetJobEvents: common_EventList @httpOperation(subgraph: "api", path: "/api/v1/job/{namespace}/{name}/event", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET)
-  handleGetJobPods: pod_PodList @httpOperation(subgraph: "api", path: "/api/v1/job/{namespace}/{name}/pod", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET)
-  handleLogFile: logs_LogDetails @httpOperation(subgraph: "api", path: "/api/v1/log/file/{namespace}/{pod}/{container}", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET)
-  handleLogSource: controller_LogSources @httpOperation(subgraph: "api", path: "/api/v1/log/source/{namespace}/{resourceName}/{resourceType}", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET)
-  handleLogs: logs_LogDetails @httpOperation(subgraph: "api", path: "/api/v1/log/{namespace}/{pod}", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET) @httpOperation(subgraph: "api", path: "/api/v1/log/{namespace}/{pod}/{container}", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET)
-  handleGetNamespaces: namespace_NamespaceList @httpOperation(subgraph: "api", path: "/api/v1/namespace", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET)
-  handleGetNamespaceDetail: namespace_NamespaceDetail @httpOperation(subgraph: "api", path: "/api/v1/namespace/{name}", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET)
-  handleGetNamespaceEvents: common_EventList @httpOperation(subgraph: "api", path: "/api/v1/namespace/{name}/event", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET)
-  handleGetNetworkPolicyList: networkpolicy_NetworkPolicyList @httpOperation(subgraph: "api", path: "/api/v1/networkpolicy", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET) @httpOperation(subgraph: "api", path: "/api/v1/networkpolicy/{namespace}", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET)
-  handleGetNetworkPolicyDetail: networkpolicy_NetworkPolicyDetail @httpOperation(subgraph: "api", path: "/api/v1/networkpolicy/{namespace}/{networkpolicy}", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET)
-  handleGetNodeList: node_NodeList @httpOperation(subgraph: "api", path: "/api/v1/node", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET)
-  handleGetNodeDetail: node_NodeDetail @httpOperation(subgraph: "api", path: "/api/v1/node/{name}", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET)
-  handleGetNodeEvents: common_EventList @httpOperation(subgraph: "api", path: "/api/v1/node/{name}/event", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET)
-  handleGetNodePods: pod_PodList @httpOperation(subgraph: "api", path: "/api/v1/node/{name}/pod", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET)
-  handleGetPersistentVolumeList: persistentvolume_PersistentVolumeList @httpOperation(subgraph: "api", path: "/api/v1/persistentvolume", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET)
-  handleGetPersistentVolumeDetail: persistentvolume_PersistentVolumeDetail @httpOperation(subgraph: "api", path: "/api/v1/persistentvolume/namespace/{namespace}/name/{persistentvolume}", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET) @httpOperation(subgraph: "api", path: "/api/v1/persistentvolume/{persistentvolume}", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET)
-  handleGetPersistentVolumeClaimList: persistentvolumeclaim_PersistentVolumeClaimList @httpOperation(subgraph: "api", path: "/api/v1/persistentvolumeclaim", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET) @httpOperation(subgraph: "api", path: "/api/v1/persistentvolumeclaim/{namespace}", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET)
-  handleGetPersistentVolumeClaimDetail: persistentvolumeclaim_PersistentVolumeClaimDetail @httpOperation(subgraph: "api", path: "/api/v1/persistentvolumeclaim/{namespace}/{name}", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET)
-  handleGetPods: pod_PodList @httpOperation(subgraph: "api", path: "/api/v1/pod", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET) @httpOperation(subgraph: "api", path: "/api/v1/pod/{namespace}", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET)
-  handleGetPodDetail: pod_PodDetail @httpOperation(subgraph: "api", path: "/api/v1/pod/{namespace}/{pod}", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET)
-  handleGetPodContainers: pod_PodDetail @httpOperation(subgraph: "api", path: "/api/v1/pod/{namespace}/{pod}/container", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET)
-  handleGetPodEvents: common_EventList @httpOperation(subgraph: "api", path: "/api/v1/pod/{namespace}/{pod}/event", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET)
-  handleGetPodPersistentVolumeClaims: persistentvolumeclaim_PersistentVolumeClaimList @httpOperation(subgraph: "api", path: "/api/v1/pod/{namespace}/{pod}/persistentvolumeclaim", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET)
-  handleExecShell: handler_TerminalResponse @httpOperation(subgraph: "api", path: "/api/v1/pod/{namespace}/{pod}/shell/{container}", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET)
-  """returns a list of Services for ReplicationController"""
+  ): ingress_IngressList @httpOperation(subgraph: "api", path: "/api/v1/ingress", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET, queryParamArgMap: "{\"filterBy\":\"filterBy\",\"sortBy\":\"sortBy\",\"itemsPerPage\":\"itemsPerPage\",\"page\":\"page\",\"metricNames\":\"metricNames\",\"aggregations\":\"aggregations\"}") @httpOperation(subgraph: "api", path: "/api/v1/ingress/{args.namespace}", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET, queryParamArgMap: "{\"filterBy\":\"filterBy\",\"sortBy\":\"sortBy\",\"itemsPerPage\":\"itemsPerPage\",\"page\":\"page\",\"metricNames\":\"metricNames\",\"aggregations\":\"aggregations\"}")
+  """returns a list of Events for Ingress"""
+  handleGetIngressEvent(
+    """namespace of the Ingress"""
+    namespace: String!
+    """
+    Comma delimited string used to apply filtering: 'propertyName,filterValue'
+    """
+    filterBy: String
+    """Name of the column to sort by"""
+    sortBy: String
+    """Number of items to return when pagination is applied"""
+    itemsPerPage: String
+    """Page number to return items from"""
+    page: String
+    """Metric names to download"""
+    metricNames: String
+    """Aggregations to be performed for each metric (default: sum)"""
+    aggregations: String
+  ): common_EventList @httpOperation(subgraph: "api", path: "/api/v1/ingress/{args.namespace}/{ingress}/event", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET, queryParamArgMap: "{\"filterBy\":\"filterBy\",\"sortBy\":\"sortBy\",\"itemsPerPage\":\"itemsPerPage\",\"page\":\"page\",\"metricNames\":\"metricNames\",\"aggregations\":\"aggregations\"}")
+  """returns detailed information about Ingress"""
+  handleGetIngressDetail(
+    """namespace of the Ingress"""
+    namespace: String!
+    """name of the Ingress"""
+    name: String!
+    """
+    Comma delimited string used to apply filtering: 'propertyName,filterValue'
+    """
+    filterBy: String
+    """Name of the column to sort by"""
+    sortBy: String
+    """Number of items to return when pagination is applied"""
+    itemsPerPage: String
+    """Page number to return items from"""
+    page: String
+    """Metric names to download"""
+    metricNames: String
+    """Aggregations to be performed for each metric (default: sum)"""
+    aggregations: String
+  ): ingress_IngressDetail @httpOperation(subgraph: "api", path: "/api/v1/ingress/{args.namespace}/{args.name}", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET, queryParamArgMap: "{\"filterBy\":\"filterBy\",\"sortBy\":\"sortBy\",\"itemsPerPage\":\"itemsPerPage\",\"page\":\"page\",\"metricNames\":\"metricNames\",\"aggregations\":\"aggregations\"}")
+  """returns a list of IngressClasses"""
+  handleGetIngressClassList(
+    """
+    Comma delimited string used to apply filtering: 'propertyName,filterValue'
+    """
+    filterBy: String
+    """Name of the column to sort by"""
+    sortBy: String
+    """Number of items to return when pagination is applied"""
+    itemsPerPage: String
+    """Page number to return items from"""
+    page: String
+    """Metric names to download"""
+    metricNames: String
+    """Aggregations to be performed for each metric (default: sum)"""
+    aggregations: String
+  ): ingressclass_IngressClassList @httpOperation(subgraph: "api", path: "/api/v1/ingressclass", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET, queryParamArgMap: "{\"filterBy\":\"filterBy\",\"sortBy\":\"sortBy\",\"itemsPerPage\":\"itemsPerPage\",\"page\":\"page\",\"metricNames\":\"metricNames\",\"aggregations\":\"aggregations\"}")
+  """returns detailed information about IngressClass"""
+  handleGetIngressClass(
+    """name of the IngressClass"""
+    ingressclass: String!
+    """
+    Comma delimited string used to apply filtering: 'propertyName,filterValue'
+    """
+    filterBy: String
+    """Name of the column to sort by"""
+    sortBy: String
+    """Number of items to return when pagination is applied"""
+    itemsPerPage: String
+    """Page number to return items from"""
+    page: String
+    """Metric names to download"""
+    metricNames: String
+    """Aggregations to be performed for each metric (default: sum)"""
+    aggregations: String
+  ): ingressclass_IngressClass @httpOperation(subgraph: "api", path: "/api/v1/ingressclass/{args.ingressclass}", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET, queryParamArgMap: "{\"filterBy\":\"filterBy\",\"sortBy\":\"sortBy\",\"itemsPerPage\":\"itemsPerPage\",\"page\":\"page\",\"metricNames\":\"metricNames\",\"aggregations\":\"aggregations\"}")
+  handleGetState(
+    """
+    Comma delimited string used to apply filtering: 'propertyName,filterValue'
+    """
+    filterBy: String
+    """Name of the column to sort by"""
+    sortBy: String
+    """Number of items to return when pagination is applied"""
+    itemsPerPage: String
+    """Page number to return items from"""
+    page: String
+    """Metric names to download"""
+    metricNames: String
+    """Aggregations to be performed for each metric (default: sum)"""
+    aggregations: String
+  ): JSON @httpOperation(subgraph: "api", path: "/api/v1/integration/{name}/state", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET, queryParamArgMap: "{\"filterBy\":\"filterBy\",\"sortBy\":\"sortBy\",\"itemsPerPage\":\"itemsPerPage\",\"page\":\"page\",\"metricNames\":\"metricNames\",\"aggregations\":\"aggregations\"}")
+  """returns a list of Jobs in a namespaces"""
+  handleGetJobList(
+    """
+    Comma delimited string used to apply filtering: 'propertyName,filterValue'
+    """
+    filterBy: String
+    """Name of the column to sort by"""
+    sortBy: String
+    """Number of items to return when pagination is applied"""
+    itemsPerPage: String
+    """Page number to return items from"""
+    page: String
+    """Metric names to download"""
+    metricNames: String
+    """Aggregations to be performed for each metric (default: sum)"""
+    aggregations: String
+    """namespace of the Job"""
+    namespace: String!
+  ): job_JobList @httpOperation(subgraph: "api", path: "/api/v1/job", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET, queryParamArgMap: "{\"filterBy\":\"filterBy\",\"sortBy\":\"sortBy\",\"itemsPerPage\":\"itemsPerPage\",\"page\":\"page\",\"metricNames\":\"metricNames\",\"aggregations\":\"aggregations\"}") @httpOperation(subgraph: "api", path: "/api/v1/job/{args.namespace}", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET, queryParamArgMap: "{\"filterBy\":\"filterBy\",\"sortBy\":\"sortBy\",\"itemsPerPage\":\"itemsPerPage\",\"page\":\"page\",\"metricNames\":\"metricNames\",\"aggregations\":\"aggregations\"}")
+  """returns detailed information about Job"""
+  handleGetJobDetail(
+    """namespace of the Job"""
+    namespace: String!
+    """name of the Job"""
+    name: String!
+    """
+    Comma delimited string used to apply filtering: 'propertyName,filterValue'
+    """
+    filterBy: String
+    """Name of the column to sort by"""
+    sortBy: String
+    """Number of items to return when pagination is applied"""
+    itemsPerPage: String
+    """Page number to return items from"""
+    page: String
+    """Metric names to download"""
+    metricNames: String
+    """Aggregations to be performed for each metric (default: sum)"""
+    aggregations: String
+  ): job_JobDetail @httpOperation(subgraph: "api", path: "/api/v1/job/{args.namespace}/{args.name}", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET, queryParamArgMap: "{\"filterBy\":\"filterBy\",\"sortBy\":\"sortBy\",\"itemsPerPage\":\"itemsPerPage\",\"page\":\"page\",\"metricNames\":\"metricNames\",\"aggregations\":\"aggregations\"}")
+  """returns a list of Events for Job"""
+  handleGetJobEvents(
+    """namespace of the Job"""
+    namespace: String!
+    """name of the Job"""
+    name: String!
+    """
+    Comma delimited string used to apply filtering: 'propertyName,filterValue'
+    """
+    filterBy: String
+    """Name of the column to sort by"""
+    sortBy: String
+    """Number of items to return when pagination is applied"""
+    itemsPerPage: String
+    """Page number to return items from"""
+    page: String
+    """Metric names to download"""
+    metricNames: String
+    """Aggregations to be performed for each metric (default: sum)"""
+    aggregations: String
+  ): common_EventList @httpOperation(subgraph: "api", path: "/api/v1/job/{args.namespace}/{args.name}/event", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET, queryParamArgMap: "{\"filterBy\":\"filterBy\",\"sortBy\":\"sortBy\",\"itemsPerPage\":\"itemsPerPage\",\"page\":\"page\",\"metricNames\":\"metricNames\",\"aggregations\":\"aggregations\"}")
+  """returns a list of Pods for Job"""
+  handleGetJobPods(
+    """namespace of the Job"""
+    namespace: String!
+    """name of the Job"""
+    name: String!
+    """
+    Comma delimited string used to apply filtering: 'propertyName,filterValue'
+    """
+    filterBy: String
+    """Name of the column to sort by"""
+    sortBy: String
+    """Number of items to return when pagination is applied"""
+    itemsPerPage: String
+    """Page number to return items from"""
+    page: String
+    """Metric names to download"""
+    metricNames: String
+    """Aggregations to be performed for each metric (default: sum)"""
+    aggregations: String
+  ): pod_PodList @httpOperation(subgraph: "api", path: "/api/v1/job/{args.namespace}/{args.name}/pod", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET, queryParamArgMap: "{\"filterBy\":\"filterBy\",\"sortBy\":\"sortBy\",\"itemsPerPage\":\"itemsPerPage\",\"page\":\"page\",\"metricNames\":\"metricNames\",\"aggregations\":\"aggregations\"}")
+  """returns a text file with logs from a Container"""
+  handleLogFile(
+    """namespace of the Pod"""
+    namespace: String!
+    """name of the Pod"""
+    pod: String!
+    """name of container in the Pod"""
+    container: String!
+    """
+    Comma delimited string used to apply filtering: 'propertyName,filterValue'
+    """
+    filterBy: String
+    """Name of the column to sort by"""
+    sortBy: String
+    """Number of items to return when pagination is applied"""
+    itemsPerPage: String
+    """Page number to return items from"""
+    page: String
+    """Metric names to download"""
+    metricNames: String
+    """Aggregations to be performed for each metric (default: sum)"""
+    aggregations: String
+  ): [Int] @httpOperation(subgraph: "api", path: "/api/v1/log/file/{args.namespace}/{args.pod}/{args.container}", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET, queryParamArgMap: "{\"filterBy\":\"filterBy\",\"sortBy\":\"sortBy\",\"itemsPerPage\":\"itemsPerPage\",\"page\":\"page\",\"metricNames\":\"metricNames\",\"aggregations\":\"aggregations\"}")
+  """returns log sources for a resource"""
+  handleLogSource(
+    """namespace of the resource"""
+    namespace: String!
+    """name of the resource"""
+    resourceName: String!
+    """type of the resource"""
+    resourceType: String!
+    """
+    Comma delimited string used to apply filtering: 'propertyName,filterValue'
+    """
+    filterBy: String
+    """Name of the column to sort by"""
+    sortBy: String
+    """Number of items to return when pagination is applied"""
+    itemsPerPage: String
+    """Page number to return items from"""
+    page: String
+    """Metric names to download"""
+    metricNames: String
+    """Aggregations to be performed for each metric (default: sum)"""
+    aggregations: String
+  ): controller_LogSources @httpOperation(subgraph: "api", path: "/api/v1/log/source/{args.namespace}/{args.resourceName}/{args.resourceType}", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET, queryParamArgMap: "{\"filterBy\":\"filterBy\",\"sortBy\":\"sortBy\",\"itemsPerPage\":\"itemsPerPage\",\"page\":\"page\",\"metricNames\":\"metricNames\",\"aggregations\":\"aggregations\"}")
+  """returns logs from a Container"""
+  handleLogs(
+    """namespace of the Pod"""
+    namespace: String!
+    """name of the Pod"""
+    pod: String!
+    """
+    Comma delimited string used to apply filtering: 'propertyName,filterValue'
+    """
+    filterBy: String
+    """Name of the column to sort by"""
+    sortBy: String
+    """Number of items to return when pagination is applied"""
+    itemsPerPage: String
+    """Page number to return items from"""
+    page: String
+    """Metric names to download"""
+    metricNames: String
+    """Aggregations to be performed for each metric (default: sum)"""
+    aggregations: String
+    """name of container in the Pod"""
+    container: String!
+  ): logs_LogDetails @httpOperation(subgraph: "api", path: "/api/v1/log/{args.namespace}/{args.pod}", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET, queryParamArgMap: "{\"filterBy\":\"filterBy\",\"sortBy\":\"sortBy\",\"itemsPerPage\":\"itemsPerPage\",\"page\":\"page\",\"metricNames\":\"metricNames\",\"aggregations\":\"aggregations\"}") @httpOperation(subgraph: "api", path: "/api/v1/log/{args.namespace}/{args.pod}/{args.container}", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET, queryParamArgMap: "{\"filterBy\":\"filterBy\",\"sortBy\":\"sortBy\",\"itemsPerPage\":\"itemsPerPage\",\"page\":\"page\",\"metricNames\":\"metricNames\",\"aggregations\":\"aggregations\"}")
+  """returns a list of Namespaces"""
+  handleGetNamespaces(
+    """
+    Comma delimited string used to apply filtering: 'propertyName,filterValue'
+    """
+    filterBy: String
+    """Name of the column to sort by"""
+    sortBy: String
+    """Number of items to return when pagination is applied"""
+    itemsPerPage: String
+    """Page number to return items from"""
+    page: String
+    """Metric names to download"""
+    metricNames: String
+    """Aggregations to be performed for each metric (default: sum)"""
+    aggregations: String
+  ): namespace_NamespaceList @httpOperation(subgraph: "api", path: "/api/v1/namespace", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET, queryParamArgMap: "{\"filterBy\":\"filterBy\",\"sortBy\":\"sortBy\",\"itemsPerPage\":\"itemsPerPage\",\"page\":\"page\",\"metricNames\":\"metricNames\",\"aggregations\":\"aggregations\"}")
+  """returns detailed information about Namespace"""
+  handleGetNamespaceDetail(
+    """name of the Namespace"""
+    name: String!
+    """
+    Comma delimited string used to apply filtering: 'propertyName,filterValue'
+    """
+    filterBy: String
+    """Name of the column to sort by"""
+    sortBy: String
+    """Number of items to return when pagination is applied"""
+    itemsPerPage: String
+    """Page number to return items from"""
+    page: String
+    """Metric names to download"""
+    metricNames: String
+    """Aggregations to be performed for each metric (default: sum)"""
+    aggregations: String
+  ): namespace_NamespaceDetail @httpOperation(subgraph: "api", path: "/api/v1/namespace/{args.name}", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET, queryParamArgMap: "{\"filterBy\":\"filterBy\",\"sortBy\":\"sortBy\",\"itemsPerPage\":\"itemsPerPage\",\"page\":\"page\",\"metricNames\":\"metricNames\",\"aggregations\":\"aggregations\"}")
+  """returns a list of Events for Namespace"""
+  handleGetNamespaceEvents(
+    """name of the Namespace"""
+    name: String!
+    """
+    Comma delimited string used to apply filtering: 'propertyName,filterValue'
+    """
+    filterBy: String
+    """Name of the column to sort by"""
+    sortBy: String
+    """Number of items to return when pagination is applied"""
+    itemsPerPage: String
+    """Page number to return items from"""
+    page: String
+    """Metric names to download"""
+    metricNames: String
+    """Aggregations to be performed for each metric (default: sum)"""
+    aggregations: String
+  ): common_EventList @httpOperation(subgraph: "api", path: "/api/v1/namespace/{args.name}/event", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET, queryParamArgMap: "{\"filterBy\":\"filterBy\",\"sortBy\":\"sortBy\",\"itemsPerPage\":\"itemsPerPage\",\"page\":\"page\",\"metricNames\":\"metricNames\",\"aggregations\":\"aggregations\"}")
+  """returns a list of NetworkPolicies in a namespaces"""
+  handleGetNetworkPolicyList(
+    """
+    Comma delimited string used to apply filtering: 'propertyName,filterValue'
+    """
+    filterBy: String
+    """Name of the column to sort by"""
+    sortBy: String
+    """Number of items to return when pagination is applied"""
+    itemsPerPage: String
+    """Page number to return items from"""
+    page: String
+    """Metric names to download"""
+    metricNames: String
+    """Aggregations to be performed for each metric (default: sum)"""
+    aggregations: String
+    """namespace of the NetworkPolicy"""
+    namespace: String!
+  ): networkpolicy_NetworkPolicyList @httpOperation(subgraph: "api", path: "/api/v1/networkpolicy", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET, queryParamArgMap: "{\"filterBy\":\"filterBy\",\"sortBy\":\"sortBy\",\"itemsPerPage\":\"itemsPerPage\",\"page\":\"page\",\"metricNames\":\"metricNames\",\"aggregations\":\"aggregations\"}") @httpOperation(subgraph: "api", path: "/api/v1/networkpolicy/{args.namespace}", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET, queryParamArgMap: "{\"filterBy\":\"filterBy\",\"sortBy\":\"sortBy\",\"itemsPerPage\":\"itemsPerPage\",\"page\":\"page\",\"metricNames\":\"metricNames\",\"aggregations\":\"aggregations\"}")
+  """returns detailed information about NetworkPolicy"""
+  handleGetNetworkPolicyDetail(
+    """namespace of the NetworkPolicy"""
+    namespace: String!
+    """name of the NetworkPolicy"""
+    networkpolicy: String!
+    """
+    Comma delimited string used to apply filtering: 'propertyName,filterValue'
+    """
+    filterBy: String
+    """Name of the column to sort by"""
+    sortBy: String
+    """Number of items to return when pagination is applied"""
+    itemsPerPage: String
+    """Page number to return items from"""
+    page: String
+    """Metric names to download"""
+    metricNames: String
+    """Aggregations to be performed for each metric (default: sum)"""
+    aggregations: String
+  ): networkpolicy_NetworkPolicyDetail @httpOperation(subgraph: "api", path: "/api/v1/networkpolicy/{args.namespace}/{args.networkpolicy}", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET, queryParamArgMap: "{\"filterBy\":\"filterBy\",\"sortBy\":\"sortBy\",\"itemsPerPage\":\"itemsPerPage\",\"page\":\"page\",\"metricNames\":\"metricNames\",\"aggregations\":\"aggregations\"}")
+  """returns a list of Nodes"""
+  handleGetNodeList(
+    """
+    Comma delimited string used to apply filtering: 'propertyName,filterValue'
+    """
+    filterBy: String
+    """Name of the column to sort by"""
+    sortBy: String
+    """Number of items to return when pagination is applied"""
+    itemsPerPage: String
+    """Page number to return items from"""
+    page: String
+    """Metric names to download"""
+    metricNames: String
+    """Aggregations to be performed for each metric (default: sum)"""
+    aggregations: String
+  ): node_NodeList @httpOperation(subgraph: "api", path: "/api/v1/node", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET, queryParamArgMap: "{\"filterBy\":\"filterBy\",\"sortBy\":\"sortBy\",\"itemsPerPage\":\"itemsPerPage\",\"page\":\"page\",\"metricNames\":\"metricNames\",\"aggregations\":\"aggregations\"}")
+  """returns detailed information about Node"""
+  handleGetNodeDetail(
+    """name of the Node"""
+    name: String!
+    """
+    Comma delimited string used to apply filtering: 'propertyName,filterValue'
+    """
+    filterBy: String
+    """Name of the column to sort by"""
+    sortBy: String
+    """Number of items to return when pagination is applied"""
+    itemsPerPage: String
+    """Page number to return items from"""
+    page: String
+    """Metric names to download"""
+    metricNames: String
+    """Aggregations to be performed for each metric (default: sum)"""
+    aggregations: String
+  ): node_NodeDetail @httpOperation(subgraph: "api", path: "/api/v1/node/{args.name}", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET, queryParamArgMap: "{\"filterBy\":\"filterBy\",\"sortBy\":\"sortBy\",\"itemsPerPage\":\"itemsPerPage\",\"page\":\"page\",\"metricNames\":\"metricNames\",\"aggregations\":\"aggregations\"}")
+  """returns a list of Events for Node"""
+  handleGetNodeEvents(
+    """name of the Node"""
+    name: String!
+    """
+    Comma delimited string used to apply filtering: 'propertyName,filterValue'
+    """
+    filterBy: String
+    """Name of the column to sort by"""
+    sortBy: String
+    """Number of items to return when pagination is applied"""
+    itemsPerPage: String
+    """Page number to return items from"""
+    page: String
+    """Metric names to download"""
+    metricNames: String
+    """Aggregations to be performed for each metric (default: sum)"""
+    aggregations: String
+  ): common_EventList @httpOperation(subgraph: "api", path: "/api/v1/node/{args.name}/event", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET, queryParamArgMap: "{\"filterBy\":\"filterBy\",\"sortBy\":\"sortBy\",\"itemsPerPage\":\"itemsPerPage\",\"page\":\"page\",\"metricNames\":\"metricNames\",\"aggregations\":\"aggregations\"}")
+  """returns a list of Pods for Node"""
+  handleGetNodePods(
+    """name of the Node"""
+    name: String!
+    """
+    Comma delimited string used to apply filtering: 'propertyName,filterValue'
+    """
+    filterBy: String
+    """Name of the column to sort by"""
+    sortBy: String
+    """Number of items to return when pagination is applied"""
+    itemsPerPage: String
+    """Page number to return items from"""
+    page: String
+    """Metric names to download"""
+    metricNames: String
+    """Aggregations to be performed for each metric (default: sum)"""
+    aggregations: String
+  ): pod_PodList @httpOperation(subgraph: "api", path: "/api/v1/node/{args.name}/pod", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET, queryParamArgMap: "{\"filterBy\":\"filterBy\",\"sortBy\":\"sortBy\",\"itemsPerPage\":\"itemsPerPage\",\"page\":\"page\",\"metricNames\":\"metricNames\",\"aggregations\":\"aggregations\"}")
+  """returns a list of PersistentVolumes from all namespaces"""
+  handleGetPersistentVolumeList(
+    """
+    Comma delimited string used to apply filtering: 'propertyName,filterValue'
+    """
+    filterBy: String
+    """Name of the column to sort by"""
+    sortBy: String
+    """Number of items to return when pagination is applied"""
+    itemsPerPage: String
+    """Page number to return items from"""
+    page: String
+    """Metric names to download"""
+    metricNames: String
+    """Aggregations to be performed for each metric (default: sum)"""
+    aggregations: String
+  ): persistentvolume_PersistentVolumeList @httpOperation(subgraph: "api", path: "/api/v1/persistentvolume", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET, queryParamArgMap: "{\"filterBy\":\"filterBy\",\"sortBy\":\"sortBy\",\"itemsPerPage\":\"itemsPerPage\",\"page\":\"page\",\"metricNames\":\"metricNames\",\"aggregations\":\"aggregations\"}")
+  """returns detailed information about PersistentVolume"""
+  handleGetPersistentVolumeDetail(
+    """name of the PersistentVolume"""
+    persistentvolume: String!
+    """
+    Comma delimited string used to apply filtering: 'propertyName,filterValue'
+    """
+    filterBy: String
+    """Name of the column to sort by"""
+    sortBy: String
+    """Number of items to return when pagination is applied"""
+    itemsPerPage: String
+    """Page number to return items from"""
+    page: String
+    """Metric names to download"""
+    metricNames: String
+    """Aggregations to be performed for each metric (default: sum)"""
+    aggregations: String
+  ): persistentvolume_PersistentVolumeDetail @httpOperation(subgraph: "api", path: "/api/v1/persistentvolume/namespace/{namespace}/name/{args.persistentvolume}", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET, queryParamArgMap: "{\"filterBy\":\"filterBy\",\"sortBy\":\"sortBy\",\"itemsPerPage\":\"itemsPerPage\",\"page\":\"page\",\"metricNames\":\"metricNames\",\"aggregations\":\"aggregations\"}") @httpOperation(subgraph: "api", path: "/api/v1/persistentvolume/{args.persistentvolume}", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET, queryParamArgMap: "{\"filterBy\":\"filterBy\",\"sortBy\":\"sortBy\",\"itemsPerPage\":\"itemsPerPage\",\"page\":\"page\",\"metricNames\":\"metricNames\",\"aggregations\":\"aggregations\"}")
+  """returns a list of PersistentVolumeClaim from specified namespace"""
+  handleGetPersistentVolumeClaimList(
+    """
+    Comma delimited string used to apply filtering: 'propertyName,filterValue'
+    """
+    filterBy: String
+    """Name of the column to sort by"""
+    sortBy: String
+    """Number of items to return when pagination is applied"""
+    itemsPerPage: String
+    """Page number to return items from"""
+    page: String
+    """Metric names to download"""
+    metricNames: String
+    """Aggregations to be performed for each metric (default: sum)"""
+    aggregations: String
+    """namespace of the PersistentVolumeClaim"""
+    namespace: String!
+  ): persistentvolumeclaim_PersistentVolumeClaimList @httpOperation(subgraph: "api", path: "/api/v1/persistentvolumeclaim", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET, queryParamArgMap: "{\"filterBy\":\"filterBy\",\"sortBy\":\"sortBy\",\"itemsPerPage\":\"itemsPerPage\",\"page\":\"page\",\"metricNames\":\"metricNames\",\"aggregations\":\"aggregations\"}") @httpOperation(subgraph: "api", path: "/api/v1/persistentvolumeclaim/{args.namespace}", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET, queryParamArgMap: "{\"filterBy\":\"filterBy\",\"sortBy\":\"sortBy\",\"itemsPerPage\":\"itemsPerPage\",\"page\":\"page\",\"metricNames\":\"metricNames\",\"aggregations\":\"aggregations\"}")
+  """returns detailed information about PersistentVolumeClaim"""
+  handleGetPersistentVolumeClaimDetail(
+    """namespace of the PersistentVolumeClaim"""
+    namespace: String!
+    """name of the PersistentVolumeClaim"""
+    name: String!
+    """
+    Comma delimited string used to apply filtering: 'propertyName,filterValue'
+    """
+    filterBy: String
+    """Name of the column to sort by"""
+    sortBy: String
+    """Number of items to return when pagination is applied"""
+    itemsPerPage: String
+    """Page number to return items from"""
+    page: String
+    """Metric names to download"""
+    metricNames: String
+    """Aggregations to be performed for each metric (default: sum)"""
+    aggregations: String
+  ): persistentvolumeclaim_PersistentVolumeClaimDetail @httpOperation(subgraph: "api", path: "/api/v1/persistentvolumeclaim/{args.namespace}/{args.name}", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET, queryParamArgMap: "{\"filterBy\":\"filterBy\",\"sortBy\":\"sortBy\",\"itemsPerPage\":\"itemsPerPage\",\"page\":\"page\",\"metricNames\":\"metricNames\",\"aggregations\":\"aggregations\"}")
+  """returns a list of Pods in a namespaces"""
+  handleGetPods(
+    """
+    Comma delimited string used to apply filtering: 'propertyName,filterValue'
+    """
+    filterBy: String
+    """Name of the column to sort by"""
+    sortBy: String
+    """Number of items to return when pagination is applied"""
+    itemsPerPage: String
+    """Page number to return items from"""
+    page: String
+    """Metric names to download"""
+    metricNames: String
+    """Aggregations to be performed for each metric (default: sum)"""
+    aggregations: String
+    """namespace of the Pod"""
+    namespace: String!
+  ): pod_PodList @httpOperation(subgraph: "api", path: "/api/v1/pod", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET, queryParamArgMap: "{\"filterBy\":\"filterBy\",\"sortBy\":\"sortBy\",\"itemsPerPage\":\"itemsPerPage\",\"page\":\"page\",\"metricNames\":\"metricNames\",\"aggregations\":\"aggregations\"}") @httpOperation(subgraph: "api", path: "/api/v1/pod/{args.namespace}", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET, queryParamArgMap: "{\"filterBy\":\"filterBy\",\"sortBy\":\"sortBy\",\"itemsPerPage\":\"itemsPerPage\",\"page\":\"page\",\"metricNames\":\"metricNames\",\"aggregations\":\"aggregations\"}")
+  """returns detailed information about Pod"""
+  handleGetPodDetail(
+    """namespace of the Pod"""
+    namespace: String!
+    """name of the Pod"""
+    pod: String!
+    """
+    Comma delimited string used to apply filtering: 'propertyName,filterValue'
+    """
+    filterBy: String
+    """Name of the column to sort by"""
+    sortBy: String
+    """Number of items to return when pagination is applied"""
+    itemsPerPage: String
+    """Page number to return items from"""
+    page: String
+    """Metric names to download"""
+    metricNames: String
+    """Aggregations to be performed for each metric (default: sum)"""
+    aggregations: String
+  ): pod_PodDetail @httpOperation(subgraph: "api", path: "/api/v1/pod/{args.namespace}/{args.pod}", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET, queryParamArgMap: "{\"filterBy\":\"filterBy\",\"sortBy\":\"sortBy\",\"itemsPerPage\":\"itemsPerPage\",\"page\":\"page\",\"metricNames\":\"metricNames\",\"aggregations\":\"aggregations\"}")
+  """returns a list of containers for Pod"""
+  handleGetPodContainers(
+    """namespace of the Pod"""
+    namespace: String!
+    """name of the Pod"""
+    pod: String!
+    """
+    Comma delimited string used to apply filtering: 'propertyName,filterValue'
+    """
+    filterBy: String
+    """Name of the column to sort by"""
+    sortBy: String
+    """Number of items to return when pagination is applied"""
+    itemsPerPage: String
+    """Page number to return items from"""
+    page: String
+    """Metric names to download"""
+    metricNames: String
+    """Aggregations to be performed for each metric (default: sum)"""
+    aggregations: String
+  ): pod_PodDetail @httpOperation(subgraph: "api", path: "/api/v1/pod/{args.namespace}/{args.pod}/container", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET, queryParamArgMap: "{\"filterBy\":\"filterBy\",\"sortBy\":\"sortBy\",\"itemsPerPage\":\"itemsPerPage\",\"page\":\"page\",\"metricNames\":\"metricNames\",\"aggregations\":\"aggregations\"}")
+  """returns a list of Events for Pod"""
+  handleGetPodEvents(
+    """namespace of the Pod"""
+    namespace: String!
+    """name of the Pod"""
+    pod: String!
+    """
+    Comma delimited string used to apply filtering: 'propertyName,filterValue'
+    """
+    filterBy: String
+    """Name of the column to sort by"""
+    sortBy: String
+    """Number of items to return when pagination is applied"""
+    itemsPerPage: String
+    """Page number to return items from"""
+    page: String
+    """Metric names to download"""
+    metricNames: String
+    """Aggregations to be performed for each metric (default: sum)"""
+    aggregations: String
+  ): common_EventList @httpOperation(subgraph: "api", path: "/api/v1/pod/{args.namespace}/{args.pod}/event", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET, queryParamArgMap: "{\"filterBy\":\"filterBy\",\"sortBy\":\"sortBy\",\"itemsPerPage\":\"itemsPerPage\",\"page\":\"page\",\"metricNames\":\"metricNames\",\"aggregations\":\"aggregations\"}")
+  """returns a list of containers for Pod"""
+  handleGetPodPersistentVolumeClaims(
+    """namespace of the Pod"""
+    namespace: String!
+    """name of the Pod"""
+    pod: String!
+    """
+    Comma delimited string used to apply filtering: 'propertyName,filterValue'
+    """
+    filterBy: String
+    """Name of the column to sort by"""
+    sortBy: String
+    """Number of items to return when pagination is applied"""
+    itemsPerPage: String
+    """Page number to return items from"""
+    page: String
+    """Metric names to download"""
+    metricNames: String
+    """Aggregations to be performed for each metric (default: sum)"""
+    aggregations: String
+  ): persistentvolumeclaim_PersistentVolumeClaimList @httpOperation(subgraph: "api", path: "/api/v1/pod/{args.namespace}/{args.pod}/persistentvolumeclaim", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET, queryParamArgMap: "{\"filterBy\":\"filterBy\",\"sortBy\":\"sortBy\",\"itemsPerPage\":\"itemsPerPage\",\"page\":\"page\",\"metricNames\":\"metricNames\",\"aggregations\":\"aggregations\"}")
+  """handles exec into pod"""
+  handleExecShell(
+    """namespace of the Pod"""
+    namespace: String!
+    """name of the Pod"""
+    pod: String!
+    """name of container in the Pod"""
+    container: String!
+    """
+    Comma delimited string used to apply filtering: 'propertyName,filterValue'
+    """
+    filterBy: String
+    """Name of the column to sort by"""
+    sortBy: String
+    """Number of items to return when pagination is applied"""
+    itemsPerPage: String
+    """Page number to return items from"""
+    page: String
+    """Metric names to download"""
+    metricNames: String
+    """Aggregations to be performed for each metric (default: sum)"""
+    aggregations: String
+  ): handler_TerminalResponse @httpOperation(subgraph: "api", path: "/api/v1/pod/{args.namespace}/{args.pod}/shell/{args.container}", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET, queryParamArgMap: "{\"filterBy\":\"filterBy\",\"sortBy\":\"sortBy\",\"itemsPerPage\":\"itemsPerPage\",\"page\":\"page\",\"metricNames\":\"metricNames\",\"aggregations\":\"aggregations\"}")
+  """returns a list of ReplicaSets in a namespace"""
   handleGetReplicaSets(
-    """namespace of the ReplicationController"""
+    """
+    Comma delimited string used to apply filtering: 'propertyName,filterValue'
+    """
+    filterBy: String
+    """Name of the column to sort by"""
+    sortBy: String
+    """Number of items to return when pagination is applied"""
+    itemsPerPage: String
+    """Page number to return items from"""
+    page: String
+    """Metric names to download"""
+    metricNames: String
+    """Aggregations to be performed for each metric (default: sum)"""
+    aggregations: String
+    """namespace of the ReplicaSets"""
     namespace: String!
-  ): replicaset_ReplicaSetList @httpOperation(subgraph: "api", path: "/api/v1/replicaset", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET) @httpOperation(subgraph: "api", path: "/api/v1/replicaset/{args.namespace}", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET)
-  handleGetReplicaSetDetail: replicaset_ReplicaSetDetail @httpOperation(subgraph: "api", path: "/api/v1/replicaset/{namespace}/{replicaSet}", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET)
-  handleGetReplicaSetEvents: common_EventList @httpOperation(subgraph: "api", path: "/api/v1/replicaset/{namespace}/{replicaSet}/event", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET)
-  handleGetReplicaSetPods: pod_PodList @httpOperation(subgraph: "api", path: "/api/v1/replicaset/{namespace}/{replicaSet}/pod", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET)
-  handleGetReplicaSetServices: pod_PodList @httpOperation(subgraph: "api", path: "/api/v1/replicaset/{namespace}/{replicaSet}/service", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET)
+  ): replicaset_ReplicaSetList @httpOperation(subgraph: "api", path: "/api/v1/replicaset", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET, queryParamArgMap: "{\"filterBy\":\"filterBy\",\"sortBy\":\"sortBy\",\"itemsPerPage\":\"itemsPerPage\",\"page\":\"page\",\"metricNames\":\"metricNames\",\"aggregations\":\"aggregations\"}") @httpOperation(subgraph: "api", path: "/api/v1/replicaset/{args.namespace}", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET, queryParamArgMap: "{\"filterBy\":\"filterBy\",\"sortBy\":\"sortBy\",\"itemsPerPage\":\"itemsPerPage\",\"page\":\"page\",\"metricNames\":\"metricNames\",\"aggregations\":\"aggregations\"}")
+  """returns detailed information about ReplicaSet"""
+  handleGetReplicaSetDetail(
+    """namespace of the ReplicaSet"""
+    namespace: String!
+    """name of the ReplicaSets"""
+    replicaSet: String!
+    """
+    Comma delimited string used to apply filtering: 'propertyName,filterValue'
+    """
+    filterBy: String
+    """Name of the column to sort by"""
+    sortBy: String
+    """Number of items to return when pagination is applied"""
+    itemsPerPage: String
+    """Page number to return items from"""
+    page: String
+    """Metric names to download"""
+    metricNames: String
+    """Aggregations to be performed for each metric (default: sum)"""
+    aggregations: String
+  ): replicaset_ReplicaSetDetail @httpOperation(subgraph: "api", path: "/api/v1/replicaset/{args.namespace}/{args.replicaSet}", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET, queryParamArgMap: "{\"filterBy\":\"filterBy\",\"sortBy\":\"sortBy\",\"itemsPerPage\":\"itemsPerPage\",\"page\":\"page\",\"metricNames\":\"metricNames\",\"aggregations\":\"aggregations\"}")
+  """returns a list of Events for ReplicaSet"""
+  handleGetReplicaSetEvents(
+    """namespace of the ReplicaSet"""
+    namespace: String!
+    """name of the ReplicaSets"""
+    replicaSet: String!
+    """
+    Comma delimited string used to apply filtering: 'propertyName,filterValue'
+    """
+    filterBy: String
+    """Name of the column to sort by"""
+    sortBy: String
+    """Number of items to return when pagination is applied"""
+    itemsPerPage: String
+    """Page number to return items from"""
+    page: String
+    """Metric names to download"""
+    metricNames: String
+    """Aggregations to be performed for each metric (default: sum)"""
+    aggregations: String
+  ): common_EventList @httpOperation(subgraph: "api", path: "/api/v1/replicaset/{args.namespace}/{args.replicaSet}/event", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET, queryParamArgMap: "{\"filterBy\":\"filterBy\",\"sortBy\":\"sortBy\",\"itemsPerPage\":\"itemsPerPage\",\"page\":\"page\",\"metricNames\":\"metricNames\",\"aggregations\":\"aggregations\"}")
+  """returns a list of Pods for ReplicaSet"""
+  handleGetReplicaSetPods(
+    """namespace of the ReplicaSet"""
+    namespace: String!
+    """name of the ReplicaSets"""
+    replicaSet: String!
+    """
+    Comma delimited string used to apply filtering: 'propertyName,filterValue'
+    """
+    filterBy: String
+    """Name of the column to sort by"""
+    sortBy: String
+    """Number of items to return when pagination is applied"""
+    itemsPerPage: String
+    """Page number to return items from"""
+    page: String
+    """Metric names to download"""
+    metricNames: String
+    """Aggregations to be performed for each metric (default: sum)"""
+    aggregations: String
+  ): pod_PodList @httpOperation(subgraph: "api", path: "/api/v1/replicaset/{args.namespace}/{args.replicaSet}/pod", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET, queryParamArgMap: "{\"filterBy\":\"filterBy\",\"sortBy\":\"sortBy\",\"itemsPerPage\":\"itemsPerPage\",\"page\":\"page\",\"metricNames\":\"metricNames\",\"aggregations\":\"aggregations\"}")
+  """returns a list of Services for ReplicaSet"""
+  handleGetReplicaSetServices(
+    """namespace of the ReplicaSet"""
+    namespace: String!
+    """name of the ReplicaSets"""
+    replicaSet: String!
+    """
+    Comma delimited string used to apply filtering: 'propertyName,filterValue'
+    """
+    filterBy: String
+    """Name of the column to sort by"""
+    sortBy: String
+    """Number of items to return when pagination is applied"""
+    itemsPerPage: String
+    """Page number to return items from"""
+    page: String
+    """Metric names to download"""
+    metricNames: String
+    """Aggregations to be performed for each metric (default: sum)"""
+    aggregations: String
+  ): pod_PodList @httpOperation(subgraph: "api", path: "/api/v1/replicaset/{args.namespace}/{args.replicaSet}/service", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET, queryParamArgMap: "{\"filterBy\":\"filterBy\",\"sortBy\":\"sortBy\",\"itemsPerPage\":\"itemsPerPage\",\"page\":\"page\",\"metricNames\":\"metricNames\",\"aggregations\":\"aggregations\"}")
   """returns a list of ReplicationController in a namespace"""
   handleGetReplicationControllerList(
+    """
+    Comma delimited string used to apply filtering: 'propertyName,filterValue'
+    """
+    filterBy: String
+    """Name of the column to sort by"""
+    sortBy: String
+    """Number of items to return when pagination is applied"""
+    itemsPerPage: String
+    """Page number to return items from"""
+    page: String
+    """Metric names to download"""
+    metricNames: String
+    """Aggregations to be performed for each metric (default: sum)"""
+    aggregations: String
     """namespace to get a list of ReplicationController from"""
     namespace: String!
-  ): replicationcontroller_ReplicationControllerList @httpOperation(subgraph: "api", path: "/api/v1/replicationcontroller", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET) @httpOperation(subgraph: "api", path: "/api/v1/replicationcontroller/{args.namespace}", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET)
+  ): replicationcontroller_ReplicationControllerList @httpOperation(subgraph: "api", path: "/api/v1/replicationcontroller", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET, queryParamArgMap: "{\"filterBy\":\"filterBy\",\"sortBy\":\"sortBy\",\"itemsPerPage\":\"itemsPerPage\",\"page\":\"page\",\"metricNames\":\"metricNames\",\"aggregations\":\"aggregations\"}") @httpOperation(subgraph: "api", path: "/api/v1/replicationcontroller/{args.namespace}", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET, queryParamArgMap: "{\"filterBy\":\"filterBy\",\"sortBy\":\"sortBy\",\"itemsPerPage\":\"itemsPerPage\",\"page\":\"page\",\"metricNames\":\"metricNames\",\"aggregations\":\"aggregations\"}")
   """returns detailed information about ReplicationController"""
   handleGetReplicationControllerDetail(
     """namespace of the ReplicationController"""
     namespace: String!
     """name of the ReplicationController"""
     replicationController: String!
-  ): replicationcontroller_ReplicationControllerDetail @httpOperation(subgraph: "api", path: "/api/v1/replicationcontroller/{args.namespace}/{args.replicationController}", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET)
+    """
+    Comma delimited string used to apply filtering: 'propertyName,filterValue'
+    """
+    filterBy: String
+    """Name of the column to sort by"""
+    sortBy: String
+    """Number of items to return when pagination is applied"""
+    itemsPerPage: String
+    """Page number to return items from"""
+    page: String
+    """Metric names to download"""
+    metricNames: String
+    """Aggregations to be performed for each metric (default: sum)"""
+    aggregations: String
+  ): replicationcontroller_ReplicationControllerDetail @httpOperation(subgraph: "api", path: "/api/v1/replicationcontroller/{args.namespace}/{args.replicationController}", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET, queryParamArgMap: "{\"filterBy\":\"filterBy\",\"sortBy\":\"sortBy\",\"itemsPerPage\":\"itemsPerPage\",\"page\":\"page\",\"metricNames\":\"metricNames\",\"aggregations\":\"aggregations\"}")
   """returns a list of Events for ReplicationController"""
   handleGetReplicationControllerEvents(
     """namespace of the ReplicationController"""
     namespace: String!
     """name of the ReplicationController"""
     replicationController: String!
-  ): common_EventList @httpOperation(subgraph: "api", path: "/api/v1/replicationcontroller/{args.namespace}/{args.replicationController}/event", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET)
+    """
+    Comma delimited string used to apply filtering: 'propertyName,filterValue'
+    """
+    filterBy: String
+    """Name of the column to sort by"""
+    sortBy: String
+    """Number of items to return when pagination is applied"""
+    itemsPerPage: String
+    """Page number to return items from"""
+    page: String
+    """Metric names to download"""
+    metricNames: String
+    """Aggregations to be performed for each metric (default: sum)"""
+    aggregations: String
+  ): common_EventList @httpOperation(subgraph: "api", path: "/api/v1/replicationcontroller/{args.namespace}/{args.replicationController}/event", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET, queryParamArgMap: "{\"filterBy\":\"filterBy\",\"sortBy\":\"sortBy\",\"itemsPerPage\":\"itemsPerPage\",\"page\":\"page\",\"metricNames\":\"metricNames\",\"aggregations\":\"aggregations\"}")
   """returns a list of Pods for ReplicationController"""
   handleGetReplicationControllerPods(
     """namespace of the ReplicationController"""
     namespace: String!
     """name of the ReplicationController"""
     replicationController: String!
-  ): pod_PodList @httpOperation(subgraph: "api", path: "/api/v1/replicationcontroller/{args.namespace}/{args.replicationController}/pod", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET)
+    """
+    Comma delimited string used to apply filtering: 'propertyName,filterValue'
+    """
+    filterBy: String
+    """Name of the column to sort by"""
+    sortBy: String
+    """Number of items to return when pagination is applied"""
+    itemsPerPage: String
+    """Page number to return items from"""
+    page: String
+    """Metric names to download"""
+    metricNames: String
+    """Aggregations to be performed for each metric (default: sum)"""
+    aggregations: String
+  ): pod_PodList @httpOperation(subgraph: "api", path: "/api/v1/replicationcontroller/{args.namespace}/{args.replicationController}/pod", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET, queryParamArgMap: "{\"filterBy\":\"filterBy\",\"sortBy\":\"sortBy\",\"itemsPerPage\":\"itemsPerPage\",\"page\":\"page\",\"metricNames\":\"metricNames\",\"aggregations\":\"aggregations\"}")
   """returns a list of Services for ReplicationController"""
   handleGetReplicationControllerServices(
     """namespace of the ReplicationController"""
     namespace: String!
     """name of the ReplicationController"""
     replicationController: String!
-  ): service_ServiceList @httpOperation(subgraph: "api", path: "/api/v1/replicationcontroller/{args.namespace}/{args.replicationController}/service", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET)
-  handleGetRoleList: role_RoleList @httpOperation(subgraph: "api", path: "/api/v1/role/{namespace}", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET)
-  handleGetRoleDetail: role_RoleDetail @httpOperation(subgraph: "api", path: "/api/v1/role/{namespace}/{name}", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET)
-  handleGetRoleBindingList: rolebinding_RoleBindingList @httpOperation(subgraph: "api", path: "/api/v1/rolebinding/{namespace}", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET)
-  handleGetRoleBindingDetail: rolebinding_RoleBindingDetail @httpOperation(subgraph: "api", path: "/api/v1/rolebinding/{namespace}/{name}", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET)
-  handleGetReplicaCount: scaling_ReplicaCounts @httpOperation(subgraph: "api", path: "/api/v1/scale/{kind}/{namespace}/{name}", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET) @httpOperation(subgraph: "api", path: "/api/v1/scale/{kind}/{name}", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET)
-  handleGetSecretList: secret_SecretList @httpOperation(subgraph: "api", path: "/api/v1/secret", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET) @httpOperation(subgraph: "api", path: "/api/v1/secret/{namespace}", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET)
-  handleGetSecretDetail: secret_SecretDetail @httpOperation(subgraph: "api", path: "/api/v1/secret/{namespace}/{name}", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET)
-  handleGetServiceList: service_ServiceList @httpOperation(subgraph: "api", path: "/api/v1/service", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET) @httpOperation(subgraph: "api", path: "/api/v1/service/{namespace}", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET)
-  handleGetServiceDetail: service_ServiceDetail @httpOperation(subgraph: "api", path: "/api/v1/service/{namespace}/{service}", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET)
-  handleGetServiceEvent: common_EventList @httpOperation(subgraph: "api", path: "/api/v1/service/{namespace}/{service}/event", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET)
-  handleGetServiceIngressList: ingress_IngressList @httpOperation(subgraph: "api", path: "/api/v1/service/{namespace}/{service}/ingress", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET)
-  handleGetServicePods: pod_PodList @httpOperation(subgraph: "api", path: "/api/v1/service/{namespace}/{service}/pod", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET)
-  handleGetServiceAccountList: serviceaccount_ServiceAccountList @httpOperation(subgraph: "api", path: "/api/v1/serviceaccount", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET) @httpOperation(subgraph: "api", path: "/api/v1/serviceaccount/{namespace}", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET)
-  handleGetServiceAccountDetail: serviceaccount_ServiceAccountDetail @httpOperation(subgraph: "api", path: "/api/v1/serviceaccount/{namespace}/{serviceaccount}", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET)
-  handleGetServiceAccountImagePullSecrets: secret_SecretList @httpOperation(subgraph: "api", path: "/api/v1/serviceaccount/{namespace}/{serviceaccount}/imagepullsecret", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET)
-  handleGetServiceAccountSecrets: secret_SecretList @httpOperation(subgraph: "api", path: "/api/v1/serviceaccount/{namespace}/{serviceaccount}/secret", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET)
-  handleGetStatefulSetList: statefulset_StatefulSetList @httpOperation(subgraph: "api", path: "/api/v1/statefulset", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET) @httpOperation(subgraph: "api", path: "/api/v1/statefulset/{namespace}", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET)
-  handleGetStatefulSetDetail: statefulset_StatefulSetDetail @httpOperation(subgraph: "api", path: "/api/v1/statefulset/{namespace}/{statefulset}", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET)
-  handleGetStatefulSetEvents: common_EventList @httpOperation(subgraph: "api", path: "/api/v1/statefulset/{namespace}/{statefulset}/event", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET)
-  handleGetStatefulSetPods: pod_PodList @httpOperation(subgraph: "api", path: "/api/v1/statefulset/{namespace}/{statefulset}/pod", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET)
-  handleGetStorageClassList: storageclass_StorageClassList @httpOperation(subgraph: "api", path: "/api/v1/storageclass", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET)
-  handleGetStorageClass: storageclass_StorageClass @httpOperation(subgraph: "api", path: "/api/v1/storageclass/{storageclass}", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET)
-  handleGetStorageClassPersistentVolumes: persistentvolume_PersistentVolumeList @httpOperation(subgraph: "api", path: "/api/v1/storageclass/{storageclass}/persistentvolume", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET)
-  handleGetHorizontalPodAutoscalerListForResource: horizontalpodautoscaler_HorizontalPodAutoscalerList @httpOperation(subgraph: "api", path: "/api/v1/{kind}/{namespace}/{name}/horizontalpodautoscaler", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET)
+    """
+    Comma delimited string used to apply filtering: 'propertyName,filterValue'
+    """
+    filterBy: String
+    """Name of the column to sort by"""
+    sortBy: String
+    """Number of items to return when pagination is applied"""
+    itemsPerPage: String
+    """Page number to return items from"""
+    page: String
+    """Metric names to download"""
+    metricNames: String
+    """Aggregations to be performed for each metric (default: sum)"""
+    aggregations: String
+  ): service_ServiceList @httpOperation(subgraph: "api", path: "/api/v1/replicationcontroller/{args.namespace}/{args.replicationController}/service", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET, queryParamArgMap: "{\"filterBy\":\"filterBy\",\"sortBy\":\"sortBy\",\"itemsPerPage\":\"itemsPerPage\",\"page\":\"page\",\"metricNames\":\"metricNames\",\"aggregations\":\"aggregations\"}")
+  """returns a list of Roles in a namespace"""
+  handleGetRoleList(
+    """namespace of the Role"""
+    namespace: String!
+    """
+    Comma delimited string used to apply filtering: 'propertyName,filterValue'
+    """
+    filterBy: String
+    """Name of the column to sort by"""
+    sortBy: String
+    """Number of items to return when pagination is applied"""
+    itemsPerPage: String
+    """Page number to return items from"""
+    page: String
+    """Metric names to download"""
+    metricNames: String
+    """Aggregations to be performed for each metric (default: sum)"""
+    aggregations: String
+  ): role_RoleList @httpOperation(subgraph: "api", path: "/api/v1/role/{args.namespace}", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET, queryParamArgMap: "{\"filterBy\":\"filterBy\",\"sortBy\":\"sortBy\",\"itemsPerPage\":\"itemsPerPage\",\"page\":\"page\",\"metricNames\":\"metricNames\",\"aggregations\":\"aggregations\"}")
+  """returns detailed information about Role"""
+  handleGetRoleDetail(
+    """namespace of the Role"""
+    namespace: String!
+    """name of the Role"""
+    name: String!
+    """
+    Comma delimited string used to apply filtering: 'propertyName,filterValue'
+    """
+    filterBy: String
+    """Name of the column to sort by"""
+    sortBy: String
+    """Number of items to return when pagination is applied"""
+    itemsPerPage: String
+    """Page number to return items from"""
+    page: String
+    """Metric names to download"""
+    metricNames: String
+    """Aggregations to be performed for each metric (default: sum)"""
+    aggregations: String
+  ): role_RoleDetail @httpOperation(subgraph: "api", path: "/api/v1/role/{args.namespace}/{args.name}", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET, queryParamArgMap: "{\"filterBy\":\"filterBy\",\"sortBy\":\"sortBy\",\"itemsPerPage\":\"itemsPerPage\",\"page\":\"page\",\"metricNames\":\"metricNames\",\"aggregations\":\"aggregations\"}")
+  """returns a list of RoleBindings in a namespace"""
+  handleGetRoleBindingList(
+    """namespace of the RoleBinding"""
+    namespace: String!
+    """
+    Comma delimited string used to apply filtering: 'propertyName,filterValue'
+    """
+    filterBy: String
+    """Name of the column to sort by"""
+    sortBy: String
+    """Number of items to return when pagination is applied"""
+    itemsPerPage: String
+    """Page number to return items from"""
+    page: String
+    """Metric names to download"""
+    metricNames: String
+    """Aggregations to be performed for each metric (default: sum)"""
+    aggregations: String
+  ): rolebinding_RoleBindingList @httpOperation(subgraph: "api", path: "/api/v1/rolebinding/{args.namespace}", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET, queryParamArgMap: "{\"filterBy\":\"filterBy\",\"sortBy\":\"sortBy\",\"itemsPerPage\":\"itemsPerPage\",\"page\":\"page\",\"metricNames\":\"metricNames\",\"aggregations\":\"aggregations\"}")
+  """returns detailed information about RoleBinding"""
+  handleGetRoleBindingDetail(
+    """namespace of the RoleBinding"""
+    namespace: String!
+    """name of the RoleBinding"""
+    name: String!
+    """
+    Comma delimited string used to apply filtering: 'propertyName,filterValue'
+    """
+    filterBy: String
+    """Name of the column to sort by"""
+    sortBy: String
+    """Number of items to return when pagination is applied"""
+    itemsPerPage: String
+    """Page number to return items from"""
+    page: String
+    """Metric names to download"""
+    metricNames: String
+    """Aggregations to be performed for each metric (default: sum)"""
+    aggregations: String
+  ): rolebinding_RoleBindingDetail @httpOperation(subgraph: "api", path: "/api/v1/rolebinding/{args.namespace}/{args.name}", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET, queryParamArgMap: "{\"filterBy\":\"filterBy\",\"sortBy\":\"sortBy\",\"itemsPerPage\":\"itemsPerPage\",\"page\":\"page\",\"metricNames\":\"metricNames\",\"aggregations\":\"aggregations\"}")
+  """returns a number of replicas of non-namespaced resource"""
+  handleGetReplicaCount(
+    """kind of the resource"""
+    kind: String!
+    """namespace of the resource"""
+    namespace: String!
+    """name of the resource"""
+    name: String!
+    """
+    Comma delimited string used to apply filtering: 'propertyName,filterValue'
+    """
+    filterBy: String
+    """Name of the column to sort by"""
+    sortBy: String
+    """Number of items to return when pagination is applied"""
+    itemsPerPage: String
+    """Page number to return items from"""
+    page: String
+    """Metric names to download"""
+    metricNames: String
+    """Aggregations to be performed for each metric (default: sum)"""
+    aggregations: String
+  ): scaling_ReplicaCounts @httpOperation(subgraph: "api", path: "/api/v1/scale/{args.kind}/{args.namespace}/{args.name}", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET, queryParamArgMap: "{\"filterBy\":\"filterBy\",\"sortBy\":\"sortBy\",\"itemsPerPage\":\"itemsPerPage\",\"page\":\"page\",\"metricNames\":\"metricNames\",\"aggregations\":\"aggregations\"}") @httpOperation(subgraph: "api", path: "/api/v1/scale/{args.kind}/{args.name}", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET, queryParamArgMap: "{\"filterBy\":\"filterBy\",\"sortBy\":\"sortBy\",\"itemsPerPage\":\"itemsPerPage\",\"page\":\"page\",\"metricNames\":\"metricNames\",\"aggregations\":\"aggregations\"}")
+  """returns a list of Secrets in a namespace"""
+  handleGetSecretList(
+    """
+    Comma delimited string used to apply filtering: 'propertyName,filterValue'
+    """
+    filterBy: String
+    """Name of the column to sort by"""
+    sortBy: String
+    """Number of items to return when pagination is applied"""
+    itemsPerPage: String
+    """Page number to return items from"""
+    page: String
+    """Metric names to download"""
+    metricNames: String
+    """Aggregations to be performed for each metric (default: sum)"""
+    aggregations: String
+    """namespace of the Secret"""
+    namespace: String!
+  ): secret_SecretList @httpOperation(subgraph: "api", path: "/api/v1/secret", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET, queryParamArgMap: "{\"filterBy\":\"filterBy\",\"sortBy\":\"sortBy\",\"itemsPerPage\":\"itemsPerPage\",\"page\":\"page\",\"metricNames\":\"metricNames\",\"aggregations\":\"aggregations\"}") @httpOperation(subgraph: "api", path: "/api/v1/secret/{args.namespace}", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET, queryParamArgMap: "{\"filterBy\":\"filterBy\",\"sortBy\":\"sortBy\",\"itemsPerPage\":\"itemsPerPage\",\"page\":\"page\",\"metricNames\":\"metricNames\",\"aggregations\":\"aggregations\"}")
+  """returns detailed information about Secret"""
+  handleGetSecretDetail(
+    """namespace of the Secret"""
+    namespace: String!
+    """name of the Secret"""
+    name: String!
+    """
+    Comma delimited string used to apply filtering: 'propertyName,filterValue'
+    """
+    filterBy: String
+    """Name of the column to sort by"""
+    sortBy: String
+    """Number of items to return when pagination is applied"""
+    itemsPerPage: String
+    """Page number to return items from"""
+    page: String
+    """Metric names to download"""
+    metricNames: String
+    """Aggregations to be performed for each metric (default: sum)"""
+    aggregations: String
+  ): secret_SecretDetail @httpOperation(subgraph: "api", path: "/api/v1/secret/{args.namespace}/{args.name}", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET, queryParamArgMap: "{\"filterBy\":\"filterBy\",\"sortBy\":\"sortBy\",\"itemsPerPage\":\"itemsPerPage\",\"page\":\"page\",\"metricNames\":\"metricNames\",\"aggregations\":\"aggregations\"}")
+  """returns a list of Services in a namespace"""
+  handleGetServiceList(
+    """
+    Comma delimited string used to apply filtering: 'propertyName,filterValue'
+    """
+    filterBy: String
+    """Name of the column to sort by"""
+    sortBy: String
+    """Number of items to return when pagination is applied"""
+    itemsPerPage: String
+    """Page number to return items from"""
+    page: String
+    """Metric names to download"""
+    metricNames: String
+    """Aggregations to be performed for each metric (default: sum)"""
+    aggregations: String
+    """namespace of the Service"""
+    namespace: String!
+  ): service_ServiceList @httpOperation(subgraph: "api", path: "/api/v1/service", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET, queryParamArgMap: "{\"filterBy\":\"filterBy\",\"sortBy\":\"sortBy\",\"itemsPerPage\":\"itemsPerPage\",\"page\":\"page\",\"metricNames\":\"metricNames\",\"aggregations\":\"aggregations\"}") @httpOperation(subgraph: "api", path: "/api/v1/service/{args.namespace}", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET, queryParamArgMap: "{\"filterBy\":\"filterBy\",\"sortBy\":\"sortBy\",\"itemsPerPage\":\"itemsPerPage\",\"page\":\"page\",\"metricNames\":\"metricNames\",\"aggregations\":\"aggregations\"}")
+  """returns detailed information about Service"""
+  handleGetServiceDetail(
+    """namespace of the Service"""
+    namespace: String!
+    """name of the Service"""
+    service: String!
+    """
+    Comma delimited string used to apply filtering: 'propertyName,filterValue'
+    """
+    filterBy: String
+    """Name of the column to sort by"""
+    sortBy: String
+    """Number of items to return when pagination is applied"""
+    itemsPerPage: String
+    """Page number to return items from"""
+    page: String
+    """Metric names to download"""
+    metricNames: String
+    """Aggregations to be performed for each metric (default: sum)"""
+    aggregations: String
+  ): service_ServiceDetail @httpOperation(subgraph: "api", path: "/api/v1/service/{args.namespace}/{args.service}", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET, queryParamArgMap: "{\"filterBy\":\"filterBy\",\"sortBy\":\"sortBy\",\"itemsPerPage\":\"itemsPerPage\",\"page\":\"page\",\"metricNames\":\"metricNames\",\"aggregations\":\"aggregations\"}")
+  """returns a list of Events for Service"""
+  handleGetServiceEvent(
+    """namespace of the Service"""
+    namespace: String!
+    """name of the Service"""
+    service: String!
+    """
+    Comma delimited string used to apply filtering: 'propertyName,filterValue'
+    """
+    filterBy: String
+    """Name of the column to sort by"""
+    sortBy: String
+    """Number of items to return when pagination is applied"""
+    itemsPerPage: String
+    """Page number to return items from"""
+    page: String
+    """Metric names to download"""
+    metricNames: String
+    """Aggregations to be performed for each metric (default: sum)"""
+    aggregations: String
+  ): common_EventList @httpOperation(subgraph: "api", path: "/api/v1/service/{args.namespace}/{args.service}/event", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET, queryParamArgMap: "{\"filterBy\":\"filterBy\",\"sortBy\":\"sortBy\",\"itemsPerPage\":\"itemsPerPage\",\"page\":\"page\",\"metricNames\":\"metricNames\",\"aggregations\":\"aggregations\"}")
+  """returns a list of Ingresses for Service"""
+  handleGetServiceIngressList(
+    """namespace of the Service"""
+    namespace: String!
+    """name of the Service"""
+    service: String!
+    """
+    Comma delimited string used to apply filtering: 'propertyName,filterValue'
+    """
+    filterBy: String
+    """Name of the column to sort by"""
+    sortBy: String
+    """Number of items to return when pagination is applied"""
+    itemsPerPage: String
+    """Page number to return items from"""
+    page: String
+    """Metric names to download"""
+    metricNames: String
+    """Aggregations to be performed for each metric (default: sum)"""
+    aggregations: String
+  ): ingress_IngressList @httpOperation(subgraph: "api", path: "/api/v1/service/{args.namespace}/{args.service}/ingress", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET, queryParamArgMap: "{\"filterBy\":\"filterBy\",\"sortBy\":\"sortBy\",\"itemsPerPage\":\"itemsPerPage\",\"page\":\"page\",\"metricNames\":\"metricNames\",\"aggregations\":\"aggregations\"}")
+  """returns a list of Pods for Service"""
+  handleGetServicePods(
+    """namespace of the Service"""
+    namespace: String!
+    """name of the Service"""
+    service: String!
+    """
+    Comma delimited string used to apply filtering: 'propertyName,filterValue'
+    """
+    filterBy: String
+    """Name of the column to sort by"""
+    sortBy: String
+    """Number of items to return when pagination is applied"""
+    itemsPerPage: String
+    """Page number to return items from"""
+    page: String
+    """Metric names to download"""
+    metricNames: String
+    """Aggregations to be performed for each metric (default: sum)"""
+    aggregations: String
+  ): pod_PodList @httpOperation(subgraph: "api", path: "/api/v1/service/{args.namespace}/{args.service}/pod", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET, queryParamArgMap: "{\"filterBy\":\"filterBy\",\"sortBy\":\"sortBy\",\"itemsPerPage\":\"itemsPerPage\",\"page\":\"page\",\"metricNames\":\"metricNames\",\"aggregations\":\"aggregations\"}")
+  """returns a list of ServiceAccounts in a namespaces"""
+  handleGetServiceAccountList(
+    """
+    Comma delimited string used to apply filtering: 'propertyName,filterValue'
+    """
+    filterBy: String
+    """Name of the column to sort by"""
+    sortBy: String
+    """Number of items to return when pagination is applied"""
+    itemsPerPage: String
+    """Page number to return items from"""
+    page: String
+    """Metric names to download"""
+    metricNames: String
+    """Aggregations to be performed for each metric (default: sum)"""
+    aggregations: String
+    """namespace of the ServiceAccount"""
+    namespace: String!
+  ): serviceaccount_ServiceAccountList @httpOperation(subgraph: "api", path: "/api/v1/serviceaccount", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET, queryParamArgMap: "{\"filterBy\":\"filterBy\",\"sortBy\":\"sortBy\",\"itemsPerPage\":\"itemsPerPage\",\"page\":\"page\",\"metricNames\":\"metricNames\",\"aggregations\":\"aggregations\"}") @httpOperation(subgraph: "api", path: "/api/v1/serviceaccount/{args.namespace}", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET, queryParamArgMap: "{\"filterBy\":\"filterBy\",\"sortBy\":\"sortBy\",\"itemsPerPage\":\"itemsPerPage\",\"page\":\"page\",\"metricNames\":\"metricNames\",\"aggregations\":\"aggregations\"}")
+  """returns detailed information about ServiceAccount"""
+  handleGetServiceAccountDetail(
+    """namespace of the ServiceAccount"""
+    namespace: String!
+    """name of the ServiceAccount"""
+    serviceaccount: String!
+    """
+    Comma delimited string used to apply filtering: 'propertyName,filterValue'
+    """
+    filterBy: String
+    """Name of the column to sort by"""
+    sortBy: String
+    """Number of items to return when pagination is applied"""
+    itemsPerPage: String
+    """Page number to return items from"""
+    page: String
+    """Metric names to download"""
+    metricNames: String
+    """Aggregations to be performed for each metric (default: sum)"""
+    aggregations: String
+  ): serviceaccount_ServiceAccountDetail @httpOperation(subgraph: "api", path: "/api/v1/serviceaccount/{args.namespace}/{args.serviceaccount}", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET, queryParamArgMap: "{\"filterBy\":\"filterBy\",\"sortBy\":\"sortBy\",\"itemsPerPage\":\"itemsPerPage\",\"page\":\"page\",\"metricNames\":\"metricNames\",\"aggregations\":\"aggregations\"}")
+  """returns a list of ImagePullSecret Secrets for ServiceAccount"""
+  handleGetServiceAccountImagePullSecrets(
+    """namespace of the ServiceAccount"""
+    namespace: String!
+    """name of the ServiceAccount"""
+    serviceaccount: String!
+    """
+    Comma delimited string used to apply filtering: 'propertyName,filterValue'
+    """
+    filterBy: String
+    """Name of the column to sort by"""
+    sortBy: String
+    """Number of items to return when pagination is applied"""
+    itemsPerPage: String
+    """Page number to return items from"""
+    page: String
+    """Metric names to download"""
+    metricNames: String
+    """Aggregations to be performed for each metric (default: sum)"""
+    aggregations: String
+  ): secret_SecretList @httpOperation(subgraph: "api", path: "/api/v1/serviceaccount/{args.namespace}/{args.serviceaccount}/imagepullsecret", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET, queryParamArgMap: "{\"filterBy\":\"filterBy\",\"sortBy\":\"sortBy\",\"itemsPerPage\":\"itemsPerPage\",\"page\":\"page\",\"metricNames\":\"metricNames\",\"aggregations\":\"aggregations\"}")
+  """returns a list of Secrets for ServiceAccount"""
+  handleGetServiceAccountSecrets(
+    """namespace of the ServiceAccount"""
+    namespace: String!
+    """name of the ServiceAccount"""
+    serviceaccount: String!
+    """
+    Comma delimited string used to apply filtering: 'propertyName,filterValue'
+    """
+    filterBy: String
+    """Name of the column to sort by"""
+    sortBy: String
+    """Number of items to return when pagination is applied"""
+    itemsPerPage: String
+    """Page number to return items from"""
+    page: String
+    """Metric names to download"""
+    metricNames: String
+    """Aggregations to be performed for each metric (default: sum)"""
+    aggregations: String
+  ): secret_SecretList @httpOperation(subgraph: "api", path: "/api/v1/serviceaccount/{args.namespace}/{args.serviceaccount}/secret", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET, queryParamArgMap: "{\"filterBy\":\"filterBy\",\"sortBy\":\"sortBy\",\"itemsPerPage\":\"itemsPerPage\",\"page\":\"page\",\"metricNames\":\"metricNames\",\"aggregations\":\"aggregations\"}")
+  """returns a list of StatefulSets in a namespaces"""
+  handleGetStatefulSetList(
+    """
+    Comma delimited string used to apply filtering: 'propertyName,filterValue'
+    """
+    filterBy: String
+    """Name of the column to sort by"""
+    sortBy: String
+    """Number of items to return when pagination is applied"""
+    itemsPerPage: String
+    """Page number to return items from"""
+    page: String
+    """Metric names to download"""
+    metricNames: String
+    """Aggregations to be performed for each metric (default: sum)"""
+    aggregations: String
+    """namespace of the StatefulSet"""
+    namespace: String!
+  ): statefulset_StatefulSetList @httpOperation(subgraph: "api", path: "/api/v1/statefulset", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET, queryParamArgMap: "{\"filterBy\":\"filterBy\",\"sortBy\":\"sortBy\",\"itemsPerPage\":\"itemsPerPage\",\"page\":\"page\",\"metricNames\":\"metricNames\",\"aggregations\":\"aggregations\"}") @httpOperation(subgraph: "api", path: "/api/v1/statefulset/{args.namespace}", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET, queryParamArgMap: "{\"filterBy\":\"filterBy\",\"sortBy\":\"sortBy\",\"itemsPerPage\":\"itemsPerPage\",\"page\":\"page\",\"metricNames\":\"metricNames\",\"aggregations\":\"aggregations\"}")
+  """returns detailed information about StatefulSets"""
+  handleGetStatefulSetDetail(
+    """namespace of the StatefulSet"""
+    namespace: String!
+    """name of the StatefulSet"""
+    statefulset: String!
+    """
+    Comma delimited string used to apply filtering: 'propertyName,filterValue'
+    """
+    filterBy: String
+    """Name of the column to sort by"""
+    sortBy: String
+    """Number of items to return when pagination is applied"""
+    itemsPerPage: String
+    """Page number to return items from"""
+    page: String
+    """Metric names to download"""
+    metricNames: String
+    """Aggregations to be performed for each metric (default: sum)"""
+    aggregations: String
+  ): statefulset_StatefulSetDetail @httpOperation(subgraph: "api", path: "/api/v1/statefulset/{args.namespace}/{args.statefulset}", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET, queryParamArgMap: "{\"filterBy\":\"filterBy\",\"sortBy\":\"sortBy\",\"itemsPerPage\":\"itemsPerPage\",\"page\":\"page\",\"metricNames\":\"metricNames\",\"aggregations\":\"aggregations\"}")
+  """returns a list of Events for StatefulSets"""
+  handleGetStatefulSetEvents(
+    """namespace of the StatefulSet"""
+    namespace: String!
+    """name of the StatefulSet"""
+    statefulset: String!
+    """
+    Comma delimited string used to apply filtering: 'propertyName,filterValue'
+    """
+    filterBy: String
+    """Name of the column to sort by"""
+    sortBy: String
+    """Number of items to return when pagination is applied"""
+    itemsPerPage: String
+    """Page number to return items from"""
+    page: String
+    """Metric names to download"""
+    metricNames: String
+    """Aggregations to be performed for each metric (default: sum)"""
+    aggregations: String
+  ): common_EventList @httpOperation(subgraph: "api", path: "/api/v1/statefulset/{args.namespace}/{args.statefulset}/event", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET, queryParamArgMap: "{\"filterBy\":\"filterBy\",\"sortBy\":\"sortBy\",\"itemsPerPage\":\"itemsPerPage\",\"page\":\"page\",\"metricNames\":\"metricNames\",\"aggregations\":\"aggregations\"}")
+  """returns  a list of Pods for StatefulSets"""
+  handleGetStatefulSetPods(
+    """namespace of the StatefulSet"""
+    namespace: String!
+    """name of the StatefulSet"""
+    statefulset: String!
+    """
+    Comma delimited string used to apply filtering: 'propertyName,filterValue'
+    """
+    filterBy: String
+    """Name of the column to sort by"""
+    sortBy: String
+    """Number of items to return when pagination is applied"""
+    itemsPerPage: String
+    """Page number to return items from"""
+    page: String
+    """Metric names to download"""
+    metricNames: String
+    """Aggregations to be performed for each metric (default: sum)"""
+    aggregations: String
+  ): pod_PodList @httpOperation(subgraph: "api", path: "/api/v1/statefulset/{args.namespace}/{args.statefulset}/pod", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET, queryParamArgMap: "{\"filterBy\":\"filterBy\",\"sortBy\":\"sortBy\",\"itemsPerPage\":\"itemsPerPage\",\"page\":\"page\",\"metricNames\":\"metricNames\",\"aggregations\":\"aggregations\"}")
+  """returns a list of StorageClasses"""
+  handleGetStorageClassList(
+    """
+    Comma delimited string used to apply filtering: 'propertyName,filterValue'
+    """
+    filterBy: String
+    """Name of the column to sort by"""
+    sortBy: String
+    """Number of items to return when pagination is applied"""
+    itemsPerPage: String
+    """Page number to return items from"""
+    page: String
+    """Metric names to download"""
+    metricNames: String
+    """Aggregations to be performed for each metric (default: sum)"""
+    aggregations: String
+  ): storageclass_StorageClassList @httpOperation(subgraph: "api", path: "/api/v1/storageclass", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET, queryParamArgMap: "{\"filterBy\":\"filterBy\",\"sortBy\":\"sortBy\",\"itemsPerPage\":\"itemsPerPage\",\"page\":\"page\",\"metricNames\":\"metricNames\",\"aggregations\":\"aggregations\"}")
+  """returns detailed information about StorageClass"""
+  handleGetStorageClass(
+    """name of the StorageClass"""
+    storageclass: String!
+    """
+    Comma delimited string used to apply filtering: 'propertyName,filterValue'
+    """
+    filterBy: String
+    """Name of the column to sort by"""
+    sortBy: String
+    """Number of items to return when pagination is applied"""
+    itemsPerPage: String
+    """Page number to return items from"""
+    page: String
+    """Metric names to download"""
+    metricNames: String
+    """Aggregations to be performed for each metric (default: sum)"""
+    aggregations: String
+  ): storageclass_StorageClass @httpOperation(subgraph: "api", path: "/api/v1/storageclass/{args.storageclass}", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET, queryParamArgMap: "{\"filterBy\":\"filterBy\",\"sortBy\":\"sortBy\",\"itemsPerPage\":\"itemsPerPage\",\"page\":\"page\",\"metricNames\":\"metricNames\",\"aggregations\":\"aggregations\"}")
+  """returns a list of PersistentVolumes assigned to StorageClass"""
+  handleGetStorageClassPersistentVolumes(
+    """name of the StorageClass"""
+    storageclass: String!
+    """
+    Comma delimited string used to apply filtering: 'propertyName,filterValue'
+    """
+    filterBy: String
+    """Name of the column to sort by"""
+    sortBy: String
+    """Number of items to return when pagination is applied"""
+    itemsPerPage: String
+    """Page number to return items from"""
+    page: String
+    """Metric names to download"""
+    metricNames: String
+    """Aggregations to be performed for each metric (default: sum)"""
+    aggregations: String
+  ): persistentvolume_PersistentVolumeList @httpOperation(subgraph: "api", path: "/api/v1/storageclass/{args.storageclass}/persistentvolume", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET, queryParamArgMap: "{\"filterBy\":\"filterBy\",\"sortBy\":\"sortBy\",\"itemsPerPage\":\"itemsPerPage\",\"page\":\"page\",\"metricNames\":\"metricNames\",\"aggregations\":\"aggregations\"}")
+  """returns a list of HorizontalPodAutoscalers for resource"""
+  handleGetHorizontalPodAutoscalerListForResource(
+    """kind of the resource to get HorizontalPodAutoscalers for"""
+    kind: String!
+    """namespace of the resource to get HorizontalPodAutoscalers for"""
+    namespace: String!
+    """name of the resource to get HorizontalPodAutoscalers for"""
+    name: String!
+    """
+    Comma delimited string used to apply filtering: 'propertyName,filterValue'
+    """
+    filterBy: String
+    """Name of the column to sort by"""
+    sortBy: String
+    """Number of items to return when pagination is applied"""
+    itemsPerPage: String
+    """Page number to return items from"""
+    page: String
+    """Metric names to download"""
+    metricNames: String
+    """Aggregations to be performed for each metric (default: sum)"""
+    aggregations: String
+  ): horizontalpodautoscaler_HorizontalPodAutoscalerList @httpOperation(subgraph: "api", path: "/api/v1/{args.kind}/{args.namespace}/{args.name}/horizontalpodautoscaler", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET, queryParamArgMap: "{\"filterBy\":\"filterBy\",\"sortBy\":\"sortBy\",\"itemsPerPage\":\"itemsPerPage\",\"page\":\"page\",\"metricNames\":\"metricNames\",\"aggregations\":\"aggregations\"}")
+}
+
+type unstructured_Unstructured {
+  Object: JSON!
 }
 
 """
@@ -917,6 +2731,12 @@ type job_JobDetail {
   typeMeta: types_TypeMeta!
 }
 
+type controller_LogSources {
+  containerNames: [String]!
+  initContainerNames: [String]!
+  podNames: [String]!
+}
+
 type logs_LogDetails {
   info: logs_LogInfo!
   logs: [logs_LogLine]!
@@ -947,12 +2767,6 @@ type logs_Selection {
 type logs_LogLineId {
   lineNum: Int!
   timestamp: String!
-}
-
-type controller_LogSources {
-  containerNames: [String]!
-  initContainerNames: [String]!
-  podNames: [String]!
 }
 
 type namespace_NamespaceList {
@@ -3422,34 +5236,344 @@ type storageclass_StorageClass {
 }
 
 type Mutation {
-  handlePutResource: JSON @httpOperation(subgraph: "api", path: "/api/v1/_raw/{kind}/name/{name}", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: PUT) @httpOperation(subgraph: "api", path: "/api/v1/_raw/{kind}/namespace/{namespace}/name/{name}", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: PUT)
-  handleDeleteResource: JSON @httpOperation(subgraph: "api", path: "/api/v1/_raw/{kind}/name/{name}", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: DELETE) @httpOperation(subgraph: "api", path: "/api/v1/_raw/{kind}/namespace/{namespace}/name/{name}", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: DELETE)
+  """creates a resource in a namespace"""
+  handlePutResource(
+    """kind of the resource"""
+    kind: String!
+    """name of the resource"""
+    name: String!
+    """
+    Comma delimited string used to apply filtering: 'propertyName,filterValue'
+    """
+    filterBy: String
+    """Name of the column to sort by"""
+    sortBy: String
+    """Number of items to return when pagination is applied"""
+    itemsPerPage: String
+    """Page number to return items from"""
+    page: String
+    """Metric names to download"""
+    metricNames: String
+    """Aggregations to be performed for each metric (default: sum)"""
+    aggregations: String
+    input: runtime_Unknown_Input!
+    """namespace of the resource"""
+    namespace: String!
+  ): runtime_Unknown! @httpOperation(subgraph: "api", path: "/api/v1/_raw/{args.kind}/name/{args.name}", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: PUT, queryParamArgMap: "{\"filterBy\":\"filterBy\",\"sortBy\":\"sortBy\",\"itemsPerPage\":\"itemsPerPage\",\"page\":\"page\",\"metricNames\":\"metricNames\",\"aggregations\":\"aggregations\"}") @httpOperation(subgraph: "api", path: "/api/v1/_raw/{args.kind}/namespace/{args.namespace}/name/{args.name}", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: PUT, queryParamArgMap: "{\"filterBy\":\"filterBy\",\"sortBy\":\"sortBy\",\"itemsPerPage\":\"itemsPerPage\",\"page\":\"page\",\"metricNames\":\"metricNames\",\"aggregations\":\"aggregations\"}")
+  """deletes a resource from a namespace"""
+  handleDeleteResource(
+    """kind of the resource"""
+    kind: String!
+    """name of the resource"""
+    name: String!
+    """
+    Comma delimited string used to apply filtering: 'propertyName,filterValue'
+    """
+    filterBy: String
+    """Name of the column to sort by"""
+    sortBy: String
+    """Number of items to return when pagination is applied"""
+    itemsPerPage: String
+    """Page number to return items from"""
+    page: String
+    """Metric names to download"""
+    metricNames: String
+    """Aggregations to be performed for each metric (default: sum)"""
+    aggregations: String
+    """namespace of the resource"""
+    namespace: String!
+  ): JSON @httpOperation(subgraph: "api", path: "/api/v1/_raw/{args.kind}/name/{args.name}", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: DELETE, queryParamArgMap: "{\"filterBy\":\"filterBy\",\"sortBy\":\"sortBy\",\"itemsPerPage\":\"itemsPerPage\",\"page\":\"page\",\"metricNames\":\"metricNames\",\"aggregations\":\"aggregations\"}") @httpOperation(subgraph: "api", path: "/api/v1/_raw/{args.kind}/namespace/{args.namespace}/name/{args.name}", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: DELETE, queryParamArgMap: "{\"filterBy\":\"filterBy\",\"sortBy\":\"sortBy\",\"itemsPerPage\":\"itemsPerPage\",\"page\":\"page\",\"metricNames\":\"metricNames\",\"aggregations\":\"aggregations\"}")
   """creates an application based on provided deployment.AppDeploymentSpec"""
-  handleDeploy(input: deployment_AppDeploymentSpec_Input!): deployment_AppDeploymentSpec! @httpOperation(subgraph: "api", path: "/api/v1/appdeployment", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: POST)
+  handleDeploy(
+    """
+    Comma delimited string used to apply filtering: 'propertyName,filterValue'
+    """
+    filterBy: String
+    """Name of the column to sort by"""
+    sortBy: String
+    """Number of items to return when pagination is applied"""
+    itemsPerPage: String
+    """Page number to return items from"""
+    page: String
+    """Metric names to download"""
+    metricNames: String
+    """Aggregations to be performed for each metric (default: sum)"""
+    aggregations: String
+    input: deployment_AppDeploymentSpec_Input!
+  ): deployment_AppDeploymentSpec! @httpOperation(subgraph: "api", path: "/api/v1/appdeployment", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: POST, queryParamArgMap: "{\"filterBy\":\"filterBy\",\"sortBy\":\"sortBy\",\"itemsPerPage\":\"itemsPerPage\",\"page\":\"page\",\"metricNames\":\"metricNames\",\"aggregations\":\"aggregations\"}")
   """checks if provided image is valid"""
-  handleImageReferenceValidity(input: validation_ImageReferenceValiditySpec_Input!): validation_ImageReferenceValidity @httpOperation(subgraph: "api", path: "/api/v1/appdeployment/validate/imagereference", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: POST)
+  handleImageReferenceValidity(
+    """
+    Comma delimited string used to apply filtering: 'propertyName,filterValue'
+    """
+    filterBy: String
+    """Name of the column to sort by"""
+    sortBy: String
+    """Number of items to return when pagination is applied"""
+    itemsPerPage: String
+    """Page number to return items from"""
+    page: String
+    """Metric names to download"""
+    metricNames: String
+    """Aggregations to be performed for each metric (default: sum)"""
+    aggregations: String
+    input: validation_ImageReferenceValiditySpec_Input!
+  ): validation_ImageReferenceValidity @httpOperation(subgraph: "api", path: "/api/v1/appdeployment/validate/imagereference", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: POST, queryParamArgMap: "{\"filterBy\":\"filterBy\",\"sortBy\":\"sortBy\",\"itemsPerPage\":\"itemsPerPage\",\"page\":\"page\",\"metricNames\":\"metricNames\",\"aggregations\":\"aggregations\"}")
   """checks if provided name is valid"""
-  handleNameValidity(input: validation_AppNameValiditySpec_Input!): validation_AppNameValidity @httpOperation(subgraph: "api", path: "/api/v1/appdeployment/validate/name", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: POST)
+  handleNameValidity(
+    """
+    Comma delimited string used to apply filtering: 'propertyName,filterValue'
+    """
+    filterBy: String
+    """Name of the column to sort by"""
+    sortBy: String
+    """Number of items to return when pagination is applied"""
+    itemsPerPage: String
+    """Page number to return items from"""
+    page: String
+    """Metric names to download"""
+    metricNames: String
+    """Aggregations to be performed for each metric (default: sum)"""
+    aggregations: String
+    input: validation_AppNameValiditySpec_Input!
+  ): validation_AppNameValidity @httpOperation(subgraph: "api", path: "/api/v1/appdeployment/validate/name", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: POST, queryParamArgMap: "{\"filterBy\":\"filterBy\",\"sortBy\":\"sortBy\",\"itemsPerPage\":\"itemsPerPage\",\"page\":\"page\",\"metricNames\":\"metricNames\",\"aggregations\":\"aggregations\"}")
   """checks if provided service protocol is valid"""
-  handleProtocolValidity(input: validation_ProtocolValiditySpec_Input!): validation_ProtocolValidity @httpOperation(subgraph: "api", path: "/api/v1/appdeployment/validate/protocol", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: POST)
+  handleProtocolValidity(
+    """
+    Comma delimited string used to apply filtering: 'propertyName,filterValue'
+    """
+    filterBy: String
+    """Name of the column to sort by"""
+    sortBy: String
+    """Number of items to return when pagination is applied"""
+    itemsPerPage: String
+    """Page number to return items from"""
+    page: String
+    """Metric names to download"""
+    metricNames: String
+    """Aggregations to be performed for each metric (default: sum)"""
+    aggregations: String
+    input: validation_ProtocolValiditySpec_Input!
+  ): validation_ProtocolValidity @httpOperation(subgraph: "api", path: "/api/v1/appdeployment/validate/protocol", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: POST, queryParamArgMap: "{\"filterBy\":\"filterBy\",\"sortBy\":\"sortBy\",\"itemsPerPage\":\"itemsPerPage\",\"page\":\"page\",\"metricNames\":\"metricNames\",\"aggregations\":\"aggregations\"}")
   """create an application from file"""
-  handleDeployFromFile(input: deployment_AppDeploymentFromFileSpec_Input!): deployment_AppDeploymentFromFileResponse @httpOperation(subgraph: "api", path: "/api/v1/appdeploymentfromfile", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: POST)
-  handleTriggerCronJob: JSON @httpOperation(subgraph: "api", path: "/api/v1/cronjob/{namespace}/{name}/trigger", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: PUT)
-  handleCreateNamespace(input: namespace_NamespaceSpec_Input!): namespace_NamespaceSpec! @httpOperation(subgraph: "api", path: "/api/v1/namespace", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: POST)
+  handleDeployFromFile(
+    """
+    Comma delimited string used to apply filtering: 'propertyName,filterValue'
+    """
+    filterBy: String
+    """Name of the column to sort by"""
+    sortBy: String
+    """Number of items to return when pagination is applied"""
+    itemsPerPage: String
+    """Page number to return items from"""
+    page: String
+    """Metric names to download"""
+    metricNames: String
+    """Aggregations to be performed for each metric (default: sum)"""
+    aggregations: String
+    input: deployment_AppDeploymentFromFileSpec_Input!
+  ): deployment_AppDeploymentFromFileResponse @httpOperation(subgraph: "api", path: "/api/v1/appdeploymentfromfile", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: POST, queryParamArgMap: "{\"filterBy\":\"filterBy\",\"sortBy\":\"sortBy\",\"itemsPerPage\":\"itemsPerPage\",\"page\":\"page\",\"metricNames\":\"metricNames\",\"aggregations\":\"aggregations\"}")
+  """triggers a Job based on CronJob"""
+  handleTriggerCronJob(
+    """namespace of the CronJob"""
+    namespace: String!
+    """name of the CronJob"""
+    name: String!
+    """
+    Comma delimited string used to apply filtering: 'propertyName,filterValue'
+    """
+    filterBy: String
+    """Name of the column to sort by"""
+    sortBy: String
+    """Number of items to return when pagination is applied"""
+    itemsPerPage: String
+    """Page number to return items from"""
+    page: String
+    """Metric names to download"""
+    metricNames: String
+    """Aggregations to be performed for each metric (default: sum)"""
+    aggregations: String
+  ): JSON @httpOperation(subgraph: "api", path: "/api/v1/cronjob/{args.namespace}/{args.name}/trigger", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: PUT, queryParamArgMap: "{\"filterBy\":\"filterBy\",\"sortBy\":\"sortBy\",\"itemsPerPage\":\"itemsPerPage\",\"page\":\"page\",\"metricNames\":\"metricNames\",\"aggregations\":\"aggregations\"}")
+  """pauses the Deployment"""
+  handleDeploymentPause(
+    """namespace of the Deployment"""
+    namespace: String!
+    """name of the Deployment"""
+    deployment: String!
+    """
+    Comma delimited string used to apply filtering: 'propertyName,filterValue'
+    """
+    filterBy: String
+    """Name of the column to sort by"""
+    sortBy: String
+    """Number of items to return when pagination is applied"""
+    itemsPerPage: String
+    """Page number to return items from"""
+    page: String
+    """Metric names to download"""
+    metricNames: String
+    """Aggregations to be performed for each metric (default: sum)"""
+    aggregations: String
+  ): deployment_DeploymentDetail @httpOperation(subgraph: "api", path: "/api/v1/deployment/{args.namespace}/{args.deployment}/pause", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: PUT, queryParamArgMap: "{\"filterBy\":\"filterBy\",\"sortBy\":\"sortBy\",\"itemsPerPage\":\"itemsPerPage\",\"page\":\"page\",\"metricNames\":\"metricNames\",\"aggregations\":\"aggregations\"}")
+  """rollout restart of the Deployment"""
+  handleDeploymentRestart(
+    """namespace of the Deployment"""
+    namespace: String!
+    """name of the Deployment"""
+    deployment: String!
+    """
+    Comma delimited string used to apply filtering: 'propertyName,filterValue'
+    """
+    filterBy: String
+    """Name of the column to sort by"""
+    sortBy: String
+    """Number of items to return when pagination is applied"""
+    itemsPerPage: String
+    """Page number to return items from"""
+    page: String
+    """Metric names to download"""
+    metricNames: String
+    """Aggregations to be performed for each metric (default: sum)"""
+    aggregations: String
+  ): deployment_RolloutSpec! @httpOperation(subgraph: "api", path: "/api/v1/deployment/{args.namespace}/{args.deployment}/restart", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: PUT, queryParamArgMap: "{\"filterBy\":\"filterBy\",\"sortBy\":\"sortBy\",\"itemsPerPage\":\"itemsPerPage\",\"page\":\"page\",\"metricNames\":\"metricNames\",\"aggregations\":\"aggregations\"}")
+  """resumes the Deployment"""
+  handleDeploymentResume(
+    """namespace of the Deployment"""
+    namespace: String!
+    """name of the Deployment"""
+    deployment: String!
+    """
+    Comma delimited string used to apply filtering: 'propertyName,filterValue'
+    """
+    filterBy: String
+    """Name of the column to sort by"""
+    sortBy: String
+    """Number of items to return when pagination is applied"""
+    itemsPerPage: String
+    """Page number to return items from"""
+    page: String
+    """Metric names to download"""
+    metricNames: String
+    """Aggregations to be performed for each metric (default: sum)"""
+    aggregations: String
+  ): deployment_DeploymentDetail @httpOperation(subgraph: "api", path: "/api/v1/deployment/{args.namespace}/{args.deployment}/resume", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: PUT, queryParamArgMap: "{\"filterBy\":\"filterBy\",\"sortBy\":\"sortBy\",\"itemsPerPage\":\"itemsPerPage\",\"page\":\"page\",\"metricNames\":\"metricNames\",\"aggregations\":\"aggregations\"}")
+  """rolls back the Deployment to the target revision"""
+  handleDeploymentRollback(
+    """namespace of the Deployment"""
+    namespace: String!
+    """name of the Deployment"""
+    deployment: String!
+    """
+    Comma delimited string used to apply filtering: 'propertyName,filterValue'
+    """
+    filterBy: String
+    """Name of the column to sort by"""
+    sortBy: String
+    """Number of items to return when pagination is applied"""
+    itemsPerPage: String
+    """Page number to return items from"""
+    page: String
+    """Metric names to download"""
+    metricNames: String
+    """Aggregations to be performed for each metric (default: sum)"""
+    aggregations: String
+    input: deployment_RolloutSpec_Input!
+  ): deployment_RolloutSpec! @httpOperation(subgraph: "api", path: "/api/v1/deployment/{args.namespace}/{args.deployment}/rollback", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: PUT, queryParamArgMap: "{\"filterBy\":\"filterBy\",\"sortBy\":\"sortBy\",\"itemsPerPage\":\"itemsPerPage\",\"page\":\"page\",\"metricNames\":\"metricNames\",\"aggregations\":\"aggregations\"}")
+  """create a Namespace"""
+  handleCreateNamespace(
+    """
+    Comma delimited string used to apply filtering: 'propertyName,filterValue'
+    """
+    filterBy: String
+    """Name of the column to sort by"""
+    sortBy: String
+    """Number of items to return when pagination is applied"""
+    itemsPerPage: String
+    """Page number to return items from"""
+    page: String
+    """Metric names to download"""
+    metricNames: String
+    """Aggregations to be performed for each metric (default: sum)"""
+    aggregations: String
+    input: namespace_NamespaceSpec_Input!
+  ): namespace_NamespaceSpec! @httpOperation(subgraph: "api", path: "/api/v1/namespace", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: POST, queryParamArgMap: "{\"filterBy\":\"filterBy\",\"sortBy\":\"sortBy\",\"itemsPerPage\":\"itemsPerPage\",\"page\":\"page\",\"metricNames\":\"metricNames\",\"aggregations\":\"aggregations\"}")
   """scales ReplicationController to a number of replicas"""
   handleUpdateReplicasCount(
     """namespace of the ReplicationController"""
     namespace: String!
     """name of the ReplicationController"""
     replicationController: String!
+    """
+    Comma delimited string used to apply filtering: 'propertyName,filterValue'
+    """
+    filterBy: String
+    """Name of the column to sort by"""
+    sortBy: String
+    """Number of items to return when pagination is applied"""
+    itemsPerPage: String
+    """Page number to return items from"""
+    page: String
+    """Metric names to download"""
+    metricNames: String
+    """Aggregations to be performed for each metric (default: sum)"""
+    aggregations: String
     input: replicationcontroller_ReplicationControllerSpec_Input!
-  ): JSON @httpOperation(subgraph: "api", path: "/api/v1/replicationcontroller/{args.namespace}/{args.replicationController}/update/pod", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: POST)
-  handleScaleResource: scaling_ReplicaCounts @httpOperation(subgraph: "api", path: "/api/v1/scale/{kind}/{namespace}/{name}", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: PUT) @httpOperation(subgraph: "api", path: "/api/v1/scale/{kind}/{name}", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: PUT)
-  handleCreateImagePullSecret(input: secret_ImagePullSecretSpec_Input!): secret_Secret @httpOperation(subgraph: "api", path: "/api/v1/secret", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: POST)
-  handleDeploymentPause: deployment_DeploymentDetail @httpOperation(subgraph: "api", path: "/api/v1/{kind}/{namespace}/{deployment}/pause", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: PUT)
-  handleDeploymentRestart: deployment_RolloutSpec! @httpOperation(subgraph: "api", path: "/api/v1/{kind}/{namespace}/{deployment}/restart", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: PUT)
-  handleDeploymentResume: deployment_DeploymentDetail @httpOperation(subgraph: "api", path: "/api/v1/{kind}/{namespace}/{deployment}/resume", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: PUT)
-  handleDeploymentRollback(input: deployment_RolloutSpec_Input!): deployment_RolloutSpec! @httpOperation(subgraph: "api", path: "/api/v1/{kind}/{namespace}/{deployment}/rollback", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: PUT)
+  ): JSON @httpOperation(subgraph: "api", path: "/api/v1/replicationcontroller/{args.namespace}/{args.replicationController}/update/pod", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: POST, queryParamArgMap: "{\"filterBy\":\"filterBy\",\"sortBy\":\"sortBy\",\"itemsPerPage\":\"itemsPerPage\",\"page\":\"page\",\"metricNames\":\"metricNames\",\"aggregations\":\"aggregations\"}")
+  """scales a non-namespaced resource"""
+  handleScaleResource(
+    """kind of the resource"""
+    kind: String!
+    """namespace of the resource"""
+    namespace: String!
+    """name of the resource"""
+    name: String!
+    """
+    Comma delimited string used to apply filtering: 'propertyName,filterValue'
+    """
+    filterBy: String
+    """Name of the column to sort by"""
+    sortBy: String
+    """Number of items to return when pagination is applied"""
+    itemsPerPage: String
+    """Page number to return items from"""
+    page: String
+    """Metric names to download"""
+    metricNames: String
+    """Aggregations to be performed for each metric (default: sum)"""
+    aggregations: String
+  ): scaling_ReplicaCounts @httpOperation(subgraph: "api", path: "/api/v1/scale/{args.kind}/{args.namespace}/{args.name}", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: PUT, queryParamArgMap: "{\"filterBy\":\"filterBy\",\"sortBy\":\"sortBy\",\"itemsPerPage\":\"itemsPerPage\",\"page\":\"page\",\"metricNames\":\"metricNames\",\"aggregations\":\"aggregations\"}") @httpOperation(subgraph: "api", path: "/api/v1/scale/{args.kind}/{args.name}", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: PUT, queryParamArgMap: "{\"filterBy\":\"filterBy\",\"sortBy\":\"sortBy\",\"itemsPerPage\":\"itemsPerPage\",\"page\":\"page\",\"metricNames\":\"metricNames\",\"aggregations\":\"aggregations\"}")
+  """stores ImagePullSecret in a Kubernetes Secret"""
+  handleCreateImagePullSecret(
+    """
+    Comma delimited string used to apply filtering: 'propertyName,filterValue'
+    """
+    filterBy: String
+    """Name of the column to sort by"""
+    sortBy: String
+    """Number of items to return when pagination is applied"""
+    itemsPerPage: String
+    """Page number to return items from"""
+    page: String
+    """Metric names to download"""
+    metricNames: String
+    """Aggregations to be performed for each metric (default: sum)"""
+    aggregations: String
+    input: secret_ImagePullSecretSpec_Input!
+  ): secret_Secret @httpOperation(subgraph: "api", path: "/api/v1/secret", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: POST, queryParamArgMap: "{\"filterBy\":\"filterBy\",\"sortBy\":\"sortBy\",\"itemsPerPage\":\"itemsPerPage\",\"page\":\"page\",\"metricNames\":\"metricNames\",\"aggregations\":\"aggregations\"}")
+}
+
+type runtime_Unknown {
+  ContentEncoding: String!
+  ContentType: String!
+  apiVersion: String
+  kind: String
+}
+
+input runtime_Unknown_Input {
+  ContentEncoding: String!
+  ContentType: String!
+  apiVersion: String
+  kind: String
 }
 
 type deployment_AppDeploymentSpec {
@@ -3560,6 +5684,14 @@ input deployment_AppDeploymentFromFileSpec_Input {
   validate: Boolean!
 }
 
+type deployment_RolloutSpec {
+  revision: String!
+}
+
+input deployment_RolloutSpec_Input {
+  revision: String!
+}
+
 type namespace_NamespaceSpec {
   name: String!
 }
@@ -3576,14 +5708,6 @@ input secret_ImagePullSecretSpec_Input {
   data: String!
   name: String!
   namespace: String!
-}
-
-type deployment_RolloutSpec {
-  revision: String!
-}
-
-input deployment_RolloutSpec_Input {
-  revision: String!
 }
 
 scalar ObjMap
