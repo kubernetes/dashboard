@@ -12,25 +12,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# Angular
-.angular/
-
-# Coverage
-coverage/
-
-# Dependencies
-node_modules/
-
-# Dist
-.dist/
-
-# Yarn
-.yarn/*
-!.yarn/patches
-!.yarn/plugins
-!.yarn/releases
-!.yarn/sdks
-!.yarn/versions
-
-# GraphQL mesh
-.mesh/
+sources:
+  - name: api
+    handler:
+      openapi:
+        source: ../api/schema/swagger.json

@@ -77,6 +77,15 @@ test-go:
 	@echo "[$(APP_NAME)] Running tests"
 	@go test $(PACKAGE_NAME)/...
 
+.PHONY: schema
+schema:
+	@echo "[$(APP_NAME)] Generating GraphQL schema"
+	@npx graphql-mesh build --fileType json
+	@chmod +rwx .mesh/schema.graphql
+	@mv .mesh/schema.graphql $(SCHEMA_DIRECTORY)/schema.graphql
+	@rm -rf .mesh
+	@echo "[$(APP_NAME)] GraphQL schema generated successfully"
+
 # ==================== PRIVATE ==================== #
 
 # Avoid locale caching due to the same output file naming
