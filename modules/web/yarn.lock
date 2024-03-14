@@ -3314,9 +3314,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@graphql-mesh/runtime@npm:0.98.0":
-  version: 0.98.0
-  resolution: "@graphql-mesh/runtime@npm:0.98.0"
+"@graphql-mesh/runtime@npm:0.98.3":
+  version: 0.98.3
+  resolution: "@graphql-mesh/runtime@npm:0.98.3"
   dependencies:
     "@envelop/core": ^5.0.0
     "@envelop/extended-validation": ^4.0.0
@@ -3330,12 +3330,12 @@ __metadata:
     graphql-jit: 0.8.2
   peerDependencies:
     "@graphql-mesh/cross-helpers": ^0.4.1
-    "@graphql-mesh/types": ^0.97.0
-    "@graphql-mesh/utils": ^0.97.0
+    "@graphql-mesh/types": ^0.97.3
+    "@graphql-mesh/utils": ^0.97.3
     "@graphql-tools/utils": ^9.2.1 || ^10.0.0
     graphql: "*"
     tslib: ^2.4.0
-  checksum: e5142a717a60069da3ea4b1e352639edbf6f427892baf38bd76c950f59a3b189cd2d12e141f190df826394a044cdf362cf1a73d43381896cfb57d12ea71891d5
+  checksum: b009213dde6d5152ece006fea4a2f7c6273809984411546b080004d5ec26751895ba4fe3371b728fe2b06f5df6828dc188ba25a9c7dc079c387317947427bf10
   languageName: node
   linkType: hard
 
@@ -12476,7 +12476,7 @@ __metadata:
     "@cypress/webpack-preprocessor": 6.0.1
     "@graphql-mesh/cli": 0.89.0
     "@graphql-mesh/openapi": 0.99.2
-    "@graphql-mesh/runtime": 0.98.0
+    "@graphql-mesh/runtime": 0.98.3
     "@swimlane/ngx-charts": 20.5.0
     "@types/d3": 7.4.3
     "@types/d3-scale": 4.0.8
