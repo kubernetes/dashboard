@@ -43,7 +43,7 @@ docker network create ${KD_DEV_NETWORK} \
   -o com.docker.network.bridge.enable_ip_masquerade=true \
   -o com.docker.network.driver.mtu=1500
 
-# Bind addres for dashboard
+# Bind address for dashboard
 KD_DEV_BIND_ADDRESS=${KD_DEV_BIND_ADDRESS:-"127.0.0.1"}
 
 # Metrics Scraper sidecar host for dashboard

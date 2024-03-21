@@ -131,7 +131,7 @@ Version 2.0.0 of this chart is the first version hosted in the kubernetes/dashbo
 is hosted on https://github.com/helm/charts.
 
 - This version upgrades to kubernetes-dashboard v2.0.0 along with changes in RBAC management: all secrets are
-  explicitely created and ServiceAccount do not have permission to create any secret. On top of that, it completely
+  explicitly created and ServiceAccount do not have permission to create any secret. On top of that, it completely
   removes the `clusterAdminRole` parameter, being too dangerous. In order to upgrade, please update your configuration
   to remove `clusterAdminRole` parameter and uninstall/reinstall the chart.
 - It enables by default values for `podAnnotations` and `securityContext`, please disable them if you don't supoprt them
