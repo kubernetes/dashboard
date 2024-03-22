@@ -16,7 +16,7 @@
 ROOT_DIR="$(cd $(dirname "${BASH_SOURCE}")/../.. && pwd -P)"
 
 # Create `kind` cluster if kubeconfig for own cluster is not set.
-if [[ "${K8S_OWN_CLUSTER}" != true ]] ; then
+if [[ "${K8S_OWN_CLUSTER}" != "dummy" ]] ; then
   # Stop `kind` cluster.
   echo "Stop kind cluster"
   hack/scripts/stop-cluster.sh
@@ -26,7 +26,7 @@ if [[ "${K8S_OWN_CLUSTER}" != true ]] ; then
   # Copy kubeconfig from /home/user/.kube/config
   cat /home/user/.kube/config > /tmp/kind.kubeconfig
   # Edit kubeconfig for kind
-  KIND_CONTAINER_NAME="k8s-cluster-ci-control-plane"
+  KIND_CONTAINER_NAME="kubernetes-dashboard-control-plane"
   KIND_ADDR=$(sudo docker inspect -f='{{(index .NetworkSettings.Networks "kubernetes-dashboard").IPAddress}}' ${KIND_CONTAINER_NAME})
   sed -e "s/0.0.0.0:[0-9]\+/${KIND_ADDR}:6443/g" /tmp/kind.kubeconfig > /home/user/.kube/config
   # Copy kubeconfig from /home/user/.kube/config again.

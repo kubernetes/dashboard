@@ -21,10 +21,9 @@ DOCKER_COMPOSE_DEV_PATH := $(DOCKER_DIRECTORY)/dev.compose.yml
 TMP_DIRECTORY := $(ROOT_DIRECTORY)/.tmp
 # Kind
 KIND_CLUSTER_NAME := kubernetes-dashboard
-KIND_CLUSTER_VERSION := 1.29.0
-KIND_CLUSTER_IMAGE := docker.io/kindest/node:v${KIND_CLUSTER_VERSION}
+KIND_CLUSTER_VERSION := v1.29.0
+KIND_CLUSTER_IMAGE := docker.io/kindest/node:${KIND_CLUSTER_VERSION}
 KIND_CLUSTER_INTERNAL_KUBECONFIG_PATH := $(TMP_DIRECTORY)/kubeconfig
-KIND_CLUSTER_KUBECONFIG_CONTEXT := kind-$(KIND_CLUSTER_NAME)
 KIND_CONFIG_FILE := $(PARTIALS_DIRECTORY)/kind.config.yml
 # Metrics server
 METRICS_SERVER_VERSION := v0.7.0
@@ -42,4 +41,16 @@ endif
 
 ifeq (,$(findstring $(GOPATH)/bin,$(PATH)))
 $(warning $$GOPATH/bin directory is not in your $$PATH)
+endif
+
+### KUBECONFIG for docker compose
+KUBECONFIG_FOR_DOCKER_COMPOSE := $(KIND_CLUSTER_INTERNAL_KUBECONFIG_PATH)
+ifdef KD_DEV_SRC
+KUBECONFIG_FOR_DOCKER_COMPOSE := $(KD_DEV_SRC)/.tmp/kubeconfig
+endif
+
+### Dashboard source directory for docker compose
+SOURCE_DIR := $(PWD)
+ifdef KD_DEV_SRC
+SOURCE_DIR := $(KD_DEV_SRC)
 endif

@@ -26,15 +26,15 @@ DOCKER_GID=$(getent group docker|cut -d ":" -f 3)
 # kubeconfig for dashboard.
 # This will be mounted and certain npm command can modify it,
 # so this should not be set for original kubeconfig.
-if [[ -n "${KD_DEV_KUBECONFIG}" ]] ; then
+#if [[ -n "${KD_DEV_KUBECONFIG}" ]] ; then
   # Use your own kubernetes cluster.
-  K8S_OWN_CLUSTER=true
-else
+  #K8S_OWN_CLUSTER=true
+#else
   # Use the kind cluster that will be created later by the script.
   # Set defult as kubeconfig made by `hack/scripts/start-cluster.sh`.
-  touch /tmp/kind.kubeconfig
-  KD_DEV_KUBECONFIG=/tmp/kind.kubeconfig
-fi
+  #touch /tmp/kind.kubeconfig
+  #KD_DEV_KUBECONFIG=/tmp/kind.kubeconfig
+#fi
 
 # Create docker network to work with kind cluster
 KD_DEV_NETWORK="kubernetes-dashboard"
@@ -72,7 +72,7 @@ docker run \
   --network=${KD_DEV_NETWORK} \
   -v /var/run/docker.sock:/var/run/docker.sock \
   -v ${KD_DEV_SRC}:${KD_DEV_SRC_ON_CONTAINER} \
-  -v ${KD_DEV_KUBECONFIG}:/home/user/.kube/config \
+  -e KD_DEV_SRC="${KD_DEV_SRC}" \
   -e KD_DEV_CMD="${KD_DEV_CMD}" \
   -e K8S_OWN_CLUSTER=${K8S_OWN_CLUSTER} \
   -e BIND_ADDRESS=${KD_DEV_BIND_ADDRESS} \
@@ -82,6 +82,7 @@ docker run \
   -e LOCAL_UID="${LOCAL_UID}" \
   -e LOCAL_GID="${LOCAL_GID}" \
   -e DOCKER_GID="${DOCKER_GID}" \
-  -p 8080:8080 \
   ${DOCKER_RUN_OPTS} \
   ${KD_DEV_IMAGE_NAME}
+  #-p 8080:8080 \
+  #-v ${KD_DEV_KUBECONFIG}:/home/user/.kube/config \
