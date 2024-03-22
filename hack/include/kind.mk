@@ -15,11 +15,12 @@ include $(PARTIALS_DIRECTORY)/config.mk
 .PHONY: --ensure-metrics-server
 --ensure-metrics-server:
 	@echo [kind] installing metrics server $(METRICS_SERVER_VERSION)
-	@kubectl --context $(KIND_CLUSTER_KUBECONFIG_CONTEXT) apply -f https://github.com/kubernetes-sigs/metrics-server/releases/download/$(METRICS_SERVER_VERSION)/components.yaml >/dev/null
+	@KUBECONFIG=$(KIND_CLUSTER_INTERNAL_KUBECONFIG_PATH) \
+	kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/download/$(METRICS_SERVER_VERSION)/components.yaml >/dev/null
 	@echo [kind] patching metrics server arguments
-	@kubectl patch deployment \
+	@KUBECONFIG=$(KIND_CLUSTER_INTERNAL_KUBECONFIG_PATH) \
+	kubectl patch deployment \
 		metrics-server \
-		--context $(KIND_CLUSTER_KUBECONFIG_CONTEXT) \
 		-n kube-system \
 		--type='json' \
 		-p='[{"op": "replace", "path": "/spec/template/spec/containers/0/args", "value": ["--cert-dir=/tmp", "--secure-port=10250", "--kubelet-preferred-address-types=InternalIP,ExternalIP,Hostname", "--kubelet-use-node-status-port", "--metric-resolution=15s", "--kubelet-insecure-tls"]}]'
@@ -27,8 +28,10 @@ include $(PARTIALS_DIRECTORY)/config.mk
 .PHONY: --ensure-kind-ingress-nginx
 --ensure-kind-ingress-nginx:
 	@echo [kind] installing ingress-nginx
-	@kubectl --context $(KIND_CLUSTER_KUBECONFIG_CONTEXT) apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-$(INGRESS_NGINX_VERSION)/deploy/static/provider/kind/deploy.yaml >/dev/null
-	@kubectl delete -A ValidatingWebhookConfiguration ingress-nginx-admission >/dev/null
+	@KUBECONFIG=$(KIND_CLUSTER_INTERNAL_KUBECONFIG_PATH) \
+	kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-$(INGRESS_NGINX_VERSION)/deploy/static/provider/kind/deploy.yaml >/dev/null
+	@KUBECONFIG=$(KIND_CLUSTER_INTERNAL_KUBECONFIG_PATH) \
+	kubectl delete -A ValidatingWebhookConfiguration ingress-nginx-admission >/dev/null
 
 .PHONY: --ensure-helm-dependencies
 --ensure-helm-dependencies:
