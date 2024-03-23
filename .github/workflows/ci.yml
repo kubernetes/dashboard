@@ -136,7 +136,9 @@ jobs:
       - uses: codecov/codecov-action@v4.1.0
         with:
           directory: ./.tmp
-          fail_ci_if_error: true
+          #fail_ci_if_error: true
+          # PR from dependabot causes an error, so comment this out until the problem is resolved.
+          # See https://github.com/codecov/codecov-action/issues/1274
           token: ${{ secrets.CODECOV_TOKEN }}
 
 # TODO: needs to be fixed
