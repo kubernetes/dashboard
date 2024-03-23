@@ -27,7 +27,7 @@ Tools that we are using include [golangci-lint](https://github.com/golangci/gola
 
 Make sure the following software is installed and added to your path:
 
-- [Docker](https://docs.docker.com/engine/install/) 
+- [Docker](https://docs.docker.com/engine/install/) Docker Compose v2.15.0 or later is required (to use the --no-attach option). It is included in Docker v20.10.23 or later.
 - [Go](https://golang.org/dl/) (check the required version in [`modules/go.work`](modules/go.work))
 - [Node.js](https://nodejs.org/en/download) (check the required version in [`modules/web/package.json`](modules/web/package.json))
 - [Yarn](https://yarnpkg.com/getting-started/install) (check the required version in [`modules/web/.yarnrc.yml`](modules/web/.yarnrc.yml))
