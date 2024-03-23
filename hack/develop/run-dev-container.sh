@@ -55,6 +55,9 @@ KD_DEV_SRC=${KD_DEV_SRC:-"${CD}"}
 KD_DEV_CONTAINER_NAME=${KD_DEV_CONTAINER_NAME:-"k8s-dashboard-dev"}
 KD_DEV_SRC_ON_CONTAINER=/go/src/github.com/kubernetes/dashboard
 
+# Set command on development container
+KD_DEV_CMD=${KD_DEV_CMD:-$*}
+
 echo "Remove existing container ${KD_DEV_CONTAINER_NAME}"
 docker rm -f ${KD_DEV_CONTAINER_NAME}
 
@@ -84,5 +87,3 @@ docker run \
   -e DOCKER_GID="${DOCKER_GID}" \
   ${DOCKER_RUN_OPTS} \
   ${KD_DEV_IMAGE_NAME}
-  #-p 8080:8080 \
-  #-v ${KD_DEV_KUBECONFIG}:/home/user/.kube/config \
