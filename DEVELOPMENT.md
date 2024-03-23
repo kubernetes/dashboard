@@ -54,6 +54,11 @@ To create Docker images locally use `make image`.
 
 See [`Makefile`](Makefile) to get to know other targets useful during development. You can also run `make help` to quickly check the list of available commands.
 
+## To run dashboard using all in one development container
+
+Run `hack/develop/run-dev-container.sh`. It will build dashboard components from your local repository, will create also kubernetes cluster using kind, and will run dashboard using `make run`. Then you can see dashboard http://localhost:8443 with your browser. Please see `CAUTION!!` in output on your console to get access token for logging in.
+You can also run `hack/develop/run-dev-container.sh bash` and run any manual `make` commands to have a clean development environment at any time.
+
 ## Dependency Management
 
 We keep all the dependencies outside the repository and always try to avoid using suspicious, unknown dependencies as they may introduce vulnerabilities.
