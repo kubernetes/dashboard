@@ -27,7 +27,7 @@ Tools that we are using include [golangci-lint](https://github.com/golangci/gola
 
 Make sure the following software is installed and added to your path:
 
-- [Docker](https://docs.docker.com/engine/install/) 
+- [Docker](https://docs.docker.com/engine/install/) Docker Compose v2.15.0 or later is required (to use the --no-attach option). It is included in Docker v20.10.23 or later.
 - [Go](https://golang.org/dl/) (check the required version in [`modules/go.work`](modules/go.work))
 - [Node.js](https://nodejs.org/en/download) (check the required version in [`modules/web/package.json`](modules/web/package.json))
 - [Yarn](https://yarnpkg.com/getting-started/install) (check the required version in [`modules/web/.yarnrc.yml`](modules/web/.yarnrc.yml))
@@ -53,6 +53,11 @@ Kubernetes Dashboard should be then available directly on your localhost: https:
 To create Docker images locally use `make image`.
 
 See [`Makefile`](Makefile) to get to know other targets useful during development. You can also run `make help` to quickly check the list of available commands.
+
+## To run dashboard using all in one development container
+
+Run `hack/develop/run-dev-container.sh`. It will build dashboard components from your local repository, will create also kubernetes cluster using kind, and will run dashboard using `make run`. Then you can see dashboard http://localhost:8443 with your browser. Please see `CAUTION!!` in output on your console to get access token for logging in.
+You can also run `hack/develop/run-dev-container.sh bash` and run any manual `make` commands to have a clean development environment at any time.
 
 ## Dependency Management
 
