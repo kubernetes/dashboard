@@ -8,7 +8,7 @@ require (
 	github.com/apache/skywalking-eyes v0.5.0
 	github.com/cosmtrek/air v1.51.0
 	github.com/golangci/golangci-lint v1.56.2
-	k8s.io/code-generator v0.29.2
+	k8s.io/code-generator v0.29.3
 	sigs.k8s.io/kind v0.22.0
 )
 
@@ -95,7 +95,7 @@ require (
 	github.com/gofrs/flock v0.8.1 // indirect
 	github.com/gohugoio/hugo v0.123.3 // indirect
 	github.com/golang/groupcache v0.0.0-20210331224755-41bb18bfe9da // indirect
-	github.com/golang/protobuf v1.5.3 // indirect
+	github.com/golang/protobuf v1.5.4 // indirect
 	github.com/golangci/check v0.0.0-20180506172741-cfe4005ccda2 // indirect
 	github.com/golangci/dupl v0.0.0-20180902072040-3e9179ac440a // indirect
 	github.com/golangci/go-misc v0.0.0-20220329215616-d24fe342adfe // indirect
@@ -240,7 +240,7 @@ require (
 	golang.org/x/text v0.14.0 // indirect
 	golang.org/x/tools v0.18.0 // indirect
 	google.golang.org/appengine v1.6.8 // indirect
-	google.golang.org/protobuf v1.31.0 // indirect
+	google.golang.org/protobuf v1.33.0 // indirect
 	gopkg.in/ini.v1 v1.67.0 // indirect
 	gopkg.in/warnings.v0 v0.1.2 // indirect
 	gopkg.in/yaml.v2 v2.4.0 // indirect
