@@ -159,7 +159,7 @@ api:
     repository: docker.io/kubernetesui/dashboard-api
     tag: 1.4.0
   scaling:
-    replicas: 3
+    replicas: 1
     revisionHistoryLimit: 10
   containers:
     ports:
