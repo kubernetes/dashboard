@@ -53,6 +53,9 @@ func getPodStatus(pod v1.Pod) string {
 		switch {
 		case container.State.Terminated != nil && container.State.Terminated.ExitCode == 0:
 			continue
+		case container.Ready && container.State.Running != nil:
+			// Support kubernetes v1.28 Sidecar FeatureGate
+			continue
 		case container.State.Terminated != nil:
 			// initialization is failed
 			if len(container.State.Terminated.Reason) == 0 {
