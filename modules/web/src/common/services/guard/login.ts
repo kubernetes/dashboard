@@ -22,8 +22,7 @@ export class LoginGuard {
   constructor(
     private readonly _authService: AuthService,
     private readonly _router: Router
-  ) {
-  }
+  ) {}
 
   canActivate(): Observable<boolean | UrlTree> {
     // If user is already authenticated do not allow login view access.

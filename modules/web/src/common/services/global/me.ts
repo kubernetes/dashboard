@@ -25,31 +25,31 @@ export class MeService {
   private readonly _endpoint = 'api/v1/me';
   private _user: User = {authenticated: false} as User;
   private _interval = interval(30_000);
-  private _initialized = new EventEmitter<void>(true)
+  private _initialized = new EventEmitter<void>(true);
 
-  constructor(private readonly _http: HttpClient) {
-  }
+  constructor(private readonly _http: HttpClient) {}
 
   init(): Promise<void> {
     // Immediately check user
     this.me()
       .pipe(
         take(1),
-        catchError(_ => of({authenticated: false} as User)),
+        catchError(_ => of({authenticated: false} as User))
       )
       .subscribe(me => {
         this._user = me;
         this._initialized.emit();
-      })
+      });
 
     // Start interval refresh
     this._interval
       .pipe(
         switchMap(() => this.me()),
-        catchError(_ => of({authenticated: false} as User)),
-      ).subscribe(me => this._user = me)
+        catchError(_ => of({authenticated: false} as User))
+      )
+      .subscribe(me => (this._user = me));
 
-    return lastValueFrom(this._initialized.pipe(take(1)))
+    return lastValueFrom(this._initialized.pipe(take(1)));
   }
 
   me(): Observable<User> {
@@ -74,6 +74,6 @@ export class MeService {
         take(1),
         tap(user => (this._user = user))
       )
-    )
+    );
   }
 }

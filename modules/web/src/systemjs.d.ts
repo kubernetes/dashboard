@@ -16,7 +16,7 @@ interface Window {
   define: (name: string, deps: string[], definitionFn: () => any) => void;
 
   System: {
-    // @ts-ignore
+    // @ts-expect-error
     import: (path) => Promise<any>;
   };
 }

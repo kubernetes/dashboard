@@ -102,7 +102,7 @@ export function init(
   me: MeService
 ): Function {
   return async () => {
-    await loader.init()
+    await loader.init();
     localSettings.init();
     pinner.init();
     config.init();

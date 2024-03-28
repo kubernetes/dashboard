@@ -17,7 +17,6 @@ import {ActivatedRouteSnapshot, Router, UrlTree} from '@angular/router';
 import {Observable, of} from 'rxjs';
 import {AuthService} from '../global/authentication';
 import {HistoryService} from '../global/history';
-import {environment} from '@environments/environment';
 
 @Injectable()
 export class AuthGuard {

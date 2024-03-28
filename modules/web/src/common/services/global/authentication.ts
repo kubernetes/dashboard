@@ -17,7 +17,7 @@ import {Inject, Injectable} from '@angular/core';
 import {Router} from '@angular/router';
 import {IConfig} from '@api/root.ui';
 import {CookieService} from 'ngx-cookie-service';
-import {Observable, of} from 'rxjs';
+import {Observable} from 'rxjs';
 import {switchMap} from 'rxjs/operators';
 import {AuthResponse, CsrfToken, LoginSpec, User} from 'typings/root.api';
 import {CONFIG_DI_TOKEN} from '../../../index.config';
