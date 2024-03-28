@@ -129,7 +129,7 @@ jobs:
       - working-directory: modules/web
         run: yarn
       - run: PATH=$PATH:$GOPATH/bin make coverage
-      - uses: codecov/codecov-action@v4.1.0
+      - uses: codecov/codecov-action@v4.1.1
         with:
           directory: ./.tmp
           fail_ci_if_error: true
