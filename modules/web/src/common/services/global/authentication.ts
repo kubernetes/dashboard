@@ -17,10 +17,9 @@ import {Inject, Injectable} from '@angular/core';
 import {Router} from '@angular/router';
 import {IConfig} from '@api/root.ui';
 import {CookieService} from 'ngx-cookie-service';
-import {of} from 'rxjs';
 import {Observable} from 'rxjs';
 import {switchMap} from 'rxjs/operators';
-import {AuthResponse, CsrfToken, LoginSpec} from 'typings/root.api';
+import {AuthResponse, CsrfToken, LoginSpec, User} from 'typings/root.api';
 import {CONFIG_DI_TOKEN} from '../../../index.config';
 import {CsrfTokenService} from './csrftoken';
 import {KdStateService} from './state';
@@ -46,7 +45,7 @@ export class AuthService {
   /**
    * Sends a login request to the backend with filled in login spec structure.
    */
-  login(loginSpec: LoginSpec): Observable<void> {
+  login(loginSpec: LoginSpec): Observable<User> {
     return this.csrfTokenService_
       .getTokenForAction('login')
       .pipe(
@@ -62,8 +61,7 @@ export class AuthService {
             this.setTokenCookie_(authResponse.token);
           }
 
-          this._meService.refresh();
-          return of(void 0);
+          return this._meService.refresh();
         })
       );
   }
@@ -103,11 +101,11 @@ export class AuthService {
   }
 
   isAuthenticated(): boolean {
-    return this._meService.getUser()?.authenticated || this.hasTokenCookie();
+    return this._meService.getUser().authenticated || this.hasTokenCookie();
   }
 
   hasAuthHeader(): boolean {
-    return this._meService.getUser()?.authenticated && !this.hasTokenCookie();
+    return this._meService.getUser().authenticated && !this.hasTokenCookie();
   }
 
   private getTokenCookie(): string {

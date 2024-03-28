@@ -85,6 +85,7 @@ import {MeService} from '@common/services/global/me';
 })
 export class GlobalServicesModule {
   static injector: Injector;
+
   constructor(injector: Injector) {
     GlobalServicesModule.injector = injector;
   }
@@ -100,15 +101,14 @@ export function init(
   loader: LocalConfigLoaderService,
   me: MeService
 ): Function {
-  return () => {
-    return loader.init().then(() => {
-      localSettings.init();
-      pinner.init();
-      config.init();
-      history.init();
-      theme.init();
-      me.init();
-      return globalSettings.init();
-    });
+  return async () => {
+    await loader.init();
+    localSettings.init();
+    pinner.init();
+    config.init();
+    history.init();
+    theme.init();
+    await me.init();
+    return await globalSettings.init();
   };
 }

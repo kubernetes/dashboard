@@ -38,7 +38,8 @@ type ServiceAccount struct {
 func me(request *http.Request) (*types.User, int, error) {
 	k8sClient, err := client.Client(request)
 	if err != nil {
-		return nil, http.StatusInternalServerError, err
+		code, err := errors.HandleError(err)
+		return nil, code, err
 	}
 
 	// Make sure that authorization token is valid

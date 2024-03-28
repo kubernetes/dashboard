@@ -14,27 +14,42 @@
  * limitations under the License.
  */
 
-import {Injectable} from '@angular/core';
+import {EventEmitter, Injectable} from '@angular/core';
 import {User} from '@api/root.api';
 import {HttpClient} from '@angular/common/http';
-import {interval, Observable} from 'rxjs';
-import {startWith, switchMap} from 'rxjs/operators';
+import {interval, lastValueFrom, Observable, of} from 'rxjs';
+import {catchError, switchMap, take, tap} from 'rxjs/operators';
 
 @Injectable()
 export class MeService {
   private readonly _endpoint = 'api/v1/me';
-  private _user: User;
-  private _interval = interval(30000);
+  private _user: User = {authenticated: false} as User;
+  private _interval = interval(30_000);
+  private _initialized = new EventEmitter<void>(true);
 
   constructor(private readonly _http: HttpClient) {}
 
-  init(): void {
+  init(): Promise<void> {
+    // Immediately check user
+    this.me()
+      .pipe(
+        take(1),
+        catchError(_ => of({authenticated: false} as User))
+      )
+      .subscribe(me => {
+        this._user = me;
+        this._initialized.emit();
+      });
+
+    // Start interval refresh
     this._interval
       .pipe(
-        startWith({} as User),
-        switchMap(() => this.me())
+        switchMap(() => this.me()),
+        catchError(_ => of({authenticated: false} as User))
       )
-      .subscribe(user => (this._user = user));
+      .subscribe(me => (this._user = me));
+
+    return lastValueFrom(this._initialized.pipe(take(1)));
   }
 
   me(): Observable<User> {
@@ -53,7 +68,12 @@ export class MeService {
     this._user = {} as User;
   }
 
-  refresh(): void {
-    this.me().subscribe(user => (this._user = user));
+  refresh(): Promise<User> {
+    return lastValueFrom(
+      this.me().pipe(
+        take(1),
+        tap(user => (this._user = user))
+      )
+    );
   }
 }

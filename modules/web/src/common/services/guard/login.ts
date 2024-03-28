@@ -20,14 +20,14 @@ import {AuthService} from '../global/authentication';
 @Injectable()
 export class LoginGuard {
   constructor(
-    private readonly authService_: AuthService,
-    private readonly router_: Router
+    private readonly _authService: AuthService,
+    private readonly _router: Router
   ) {}
 
   canActivate(): Observable<boolean | UrlTree> {
     // If user is already authenticated do not allow login view access.
-    if (this.authService_.isAuthenticated()) {
-      return of(this.router_.parseUrl('workloads'));
+    if (this._authService.isAuthenticated()) {
+      return of(this._router.parseUrl('workloads'));
     }
 
     return of(true);

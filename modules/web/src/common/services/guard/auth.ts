@@ -17,7 +17,6 @@ import {ActivatedRouteSnapshot, Router, UrlTree} from '@angular/router';
 import {Observable, of} from 'rxjs';
 import {AuthService} from '../global/authentication';
 import {HistoryService} from '../global/history';
-import {environment} from '@environments/environment';
 
 @Injectable()
 export class AuthGuard {
@@ -28,11 +27,6 @@ export class AuthGuard {
   ) {}
 
   canActivate(_root: ActivatedRouteSnapshot): Observable<boolean | UrlTree> {
-    // Disable auth guard for dev mode
-    if (!environment.production) {
-      return of(true);
-    }
-
     if (!this.authService_.isAuthenticated()) {
       this.historyService_.pushState(this.router_.getCurrentNavigation());
       return of(this.router_.parseUrl('login'));
