@@ -5,7 +5,7 @@ go 1.22.0
 require (
 	github.com/docker/distribution v2.8.3+incompatible
 	github.com/emicklei/go-restful-openapi/v2 v2.9.1
-	github.com/emicklei/go-restful/v3 v3.11.3
+	github.com/emicklei/go-restful/v3 v3.12.0
 	github.com/go-openapi/spec v0.20.4
 	github.com/prometheus/client_golang v1.19.0
 	github.com/spf13/pflag v1.0.5
