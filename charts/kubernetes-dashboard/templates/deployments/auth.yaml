@@ -101,6 +101,8 @@ spec:
       {{- end }}
       {{- end }}
 
+      automountServiceAccountToken: {{ .Values.auth.automountServiceAccountToken }}
+
       {{- with .Values.app.security.securityContext }}
       securityContext:
       {{ toYaml . | nindent 8 }}

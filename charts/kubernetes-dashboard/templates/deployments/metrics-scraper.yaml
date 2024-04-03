@@ -98,6 +98,8 @@ spec:
       {{- end }}
       {{- end }}
 
+      automountServiceAccountToken: {{ .Values.metricsScraper.automountServiceAccountToken }}
+
       {{- with .Values.app.security.securityContext }}
       securityContext:
       {{ toYaml . | nindent 8 }}
