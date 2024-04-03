@@ -130,7 +130,7 @@
     "minimatch": "9.0.4",
     "minimist": "1.2.8",
     "ng-extract-i18n-merge": "2.11.0",
-    "node-gyp": "10.0.1",
+    "node-gyp": "10.1.0",
     "prettier": "3.2.5",
     "q": "1.5.1",
     "raw-loader": "4.0.2",
