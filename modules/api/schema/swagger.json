@@ -1969,6 +1969,12 @@
       "name": "name",
       "in": "path",
       "required": true
+     },
+     {
+      "type": "string",
+      "description": "filter related Jobs by active status",
+      "name": "active",
+      "in": "query"
      }
     ],
     "responses": {
@@ -3731,7 +3737,7 @@
      {
       "type": "string",
       "description": "name of the Ingress",
-      "name": "name",
+      "name": "ingress",
       "in": "path",
       "required": true
      }
@@ -6624,7 +6630,7 @@
      "200": {
       "description": "OK",
       "schema": {
-       "$ref": "#/definitions/pod.PodList"
+       "$ref": "#/definitions/service.ServiceList"
       }
      }
     }
@@ -9918,13 +9924,13 @@
   },
   "cronjob.CronJobDetail": {
    "required": [
-    "containerImages",
     "objectMeta",
     "typeMeta",
     "schedule",
     "suspend",
     "active",
     "lastSchedule",
+    "containerImages",
     "concurrencyPolicy",
     "startingDeadlineSeconds",
     "errors"
@@ -10049,11 +10055,11 @@
   },
   "daemonset.DaemonSetDetail": {
    "required": [
+    "objectMeta",
     "typeMeta",
     "podInfo",
     "containerImages",
     "initContainerImages",
-    "objectMeta",
     "errors"
    ],
    "properties": {
@@ -10593,13 +10599,13 @@
   },
   "horizontalpodautoscaler.HorizontalPodAutoscalerDetail": {
    "required": [
-    "objectMeta",
     "typeMeta",
     "scaleTargetRef",
     "minReplicas",
     "maxReplicas",
     "currentCPUUtilizationPercentage",
     "targetCPUUtilizationPercentage",
+    "objectMeta",
     "currentReplicas",
     "desiredReplicas",
     "lastScaleTime"
@@ -10876,13 +10882,13 @@
   },
   "job.JobDetail": {
    "required": [
-    "initContainerImages",
-    "parallelism",
-    "jobStatus",
     "objectMeta",
     "typeMeta",
     "podInfo",
     "containerImages",
+    "initContainerImages",
+    "parallelism",
+    "jobStatus",
     "completions",
     "errors"
    ],
@@ -11132,9 +11138,9 @@
   },
   "namespace.NamespaceDetail": {
    "required": [
+    "phase",
     "objectMeta",
     "typeMeta",
-    "phase",
     "resourceQuotaList",
     "resourceLimits",
     "errors"
@@ -11216,8 +11222,8 @@
   },
   "networkpolicy.NetworkPolicyDetail": {
    "required": [
-    "typeMeta",
     "objectMeta",
+    "typeMeta",
     "podSelector",
     "errors"
    ],
@@ -11552,16 +11558,16 @@
   },
   "persistentvolume.PersistentVolumeDetail": {
    "required": [
-    "objectMeta",
     "capacity",
-    "storageClass",
-    "status",
-    "reason",
-    "typeMeta",
     "accessModes",
-    "reclaimPolicy",
     "mountOptions",
+    "status",
+    "typeMeta",
+    "reclaimPolicy",
+    "storageClass",
     "claim",
+    "reason",
+    "objectMeta",
     "message",
     "persistentVolumeSource"
    ],
@@ -11679,13 +11685,13 @@
   },
   "persistentvolumeclaim.PersistentVolumeClaimDetail": {
    "required": [
-    "storageClass",
-    "objectMeta",
-    "typeMeta",
     "status",
     "volume",
     "capacity",
-    "accessModes"
+    "accessModes",
+    "storageClass",
+    "objectMeta",
+    "typeMeta"
    ],
    "properties": {
     "accessModes": {
@@ -12089,11 +12095,11 @@
   },
   "replicaset.ReplicaSetDetail": {
    "required": [
+    "initContainerImages",
     "objectMeta",
     "typeMeta",
     "podInfo",
     "containerImages",
-    "initContainerImages",
     "selector",
     "horizontalPodAutoscalerList",
     "errors"
@@ -12203,11 +12209,11 @@
   },
   "replicationcontroller.ReplicationControllerDetail": {
    "required": [
-    "containerImages",
-    "initContainerImages",
     "objectMeta",
     "typeMeta",
     "podInfo",
+    "containerImages",
+    "initContainerImages",
     "labelSelector",
     "errors"
    ],
@@ -12410,8 +12416,8 @@
   },
   "role.RoleDetail": {
    "required": [
-    "objectMeta",
     "typeMeta",
+    "objectMeta",
     "rules",
     "errors"
    ],
@@ -13028,12 +13034,12 @@
   },
   "types.CustomResourceDefinitionDetail": {
    "required": [
+    "objectMeta",
+    "typeMeta",
     "group",
     "scope",
     "names",
     "established",
-    "objectMeta",
-    "typeMeta",
     "conditions",
     "objects",
     "subresources",

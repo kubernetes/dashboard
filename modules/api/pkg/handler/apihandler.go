@@ -552,6 +552,7 @@ func CreateHTTPAPIHandler(iManager integration.Manager) (*restful.Container, err
 			Doc("returns a list of Jobs for CronJob").
 			Param(apiV1Ws.PathParameter("namespace", "namespace of the CronJob")).
 			Param(apiV1Ws.PathParameter("name", "name of the CronJob")).
+			Param(apiV1Ws.QueryParameter("active", "filter related Jobs by active status")).
 			Writes(job.JobList{}).
 			Returns(http.StatusOK, "OK", job.JobList{}))
 	apiV1Ws.Route(
@@ -778,7 +779,7 @@ func CreateHTTPAPIHandler(iManager integration.Manager) (*restful.Container, err
 			// docs
 			Doc("returns a list of Events for Ingress").
 			Param(apiV1Ws.PathParameter("namespace", "namespace of the Ingress")).
-			Param(apiV1Ws.PathParameter("name", "name of the Ingress")).
+			Param(apiV1Ws.PathParameter("ingress", "name of the Ingress")).
 			Writes(common.EventList{}).
 			Returns(http.StatusOK, "OK", common.EventList{}))
 
