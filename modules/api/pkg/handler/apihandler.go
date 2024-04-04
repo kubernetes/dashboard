@@ -63,6 +63,7 @@ import (
 	"k8s.io/dashboard/api/pkg/resource/role"
 	"k8s.io/dashboard/api/pkg/resource/rolebinding"
 	"k8s.io/dashboard/api/pkg/resource/secret"
+	"k8s.io/dashboard/api/pkg/resource/service"
 	resourceService "k8s.io/dashboard/api/pkg/resource/service"
 	"k8s.io/dashboard/api/pkg/resource/serviceaccount"
 	"k8s.io/dashboard/api/pkg/resource/statefulset"
@@ -258,8 +259,8 @@ func CreateHTTPAPIHandler(iManager integration.Manager) (*restful.Container, err
 			Doc("returns a list of Services for ReplicaSet").
 			Param(apiV1Ws.PathParameter("namespace", "namespace of the ReplicaSet")).
 			Param(apiV1Ws.PathParameter("replicaSet", "name of the ReplicaSets")).
-			Writes(pod.PodList{}).
-			Returns(http.StatusOK, "OK", pod.PodList{}))
+			Writes(service.ServiceList{}).
+			Returns(http.StatusOK, "OK", service.ServiceList{}))
 	apiV1Ws.Route(
 		apiV1Ws.GET("/replicaset/{namespace}/{replicaSet}/event").To(apiHandler.handleGetReplicaSetEvents).
 			// docs
@@ -551,6 +552,7 @@ func CreateHTTPAPIHandler(iManager integration.Manager) (*restful.Container, err
 			Doc("returns a list of Jobs for CronJob").
 			Param(apiV1Ws.PathParameter("namespace", "namespace of the CronJob")).
 			Param(apiV1Ws.PathParameter("name", "name of the CronJob")).
+			Param(apiV1Ws.QueryParameter("active", "filter related Jobs by active status")).
 			Writes(job.JobList{}).
 			Returns(http.StatusOK, "OK", job.JobList{}))
 	apiV1Ws.Route(
@@ -777,7 +779,7 @@ func CreateHTTPAPIHandler(iManager integration.Manager) (*restful.Container, err
 			// docs
 			Doc("returns a list of Events for Ingress").
 			Param(apiV1Ws.PathParameter("namespace", "namespace of the Ingress")).
-			Param(apiV1Ws.PathParameter("name", "name of the Ingress")).
+			Param(apiV1Ws.PathParameter("ingress", "name of the Ingress")).
 			Writes(common.EventList{}).
 			Returns(http.StatusOK, "OK", common.EventList{}))
 

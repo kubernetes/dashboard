@@ -335,8 +335,11 @@ metrics-server:
 ## for our all containers.
 kong:
   enabled: true
+  ## Configuration reference: https://docs.konghq.com/gateway/3.6.x/reference/configuration
   env:
     dns_order: A,CNAME,LAST,SRV
+    plugins: 'off'
+    nginx_worker_processes: 1
   ingressController:
     enabled: false
   dblessConfig:

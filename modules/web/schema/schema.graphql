@@ -346,7 +346,9 @@ type Query {
     metricNames: String
     """Aggregations to be performed for each metric (default: sum)"""
     aggregations: String
-  ): job_JobList @httpOperation(subgraph: "api", path: "/api/v1/cronjob/{args.namespace}/{args.name}/job", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET, queryParamArgMap: "{\"filterBy\":\"filterBy\",\"sortBy\":\"sortBy\",\"itemsPerPage\":\"itemsPerPage\",\"page\":\"page\",\"metricNames\":\"metricNames\",\"aggregations\":\"aggregations\"}")
+    """filter related Jobs by active status"""
+    active: String
+  ): job_JobList @httpOperation(subgraph: "api", path: "/api/v1/cronjob/{args.namespace}/{args.name}/job", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET, queryParamArgMap: "{\"filterBy\":\"filterBy\",\"sortBy\":\"sortBy\",\"itemsPerPage\":\"itemsPerPage\",\"page\":\"page\",\"metricNames\":\"metricNames\",\"aggregations\":\"aggregations\",\"active\":\"active\"}")
   """generates a one-time CSRF token that can be used by POST request"""
   handleGetCsrfToken(
     """action name to generate CSRF token for"""
@@ -654,6 +656,8 @@ type Query {
   handleGetIngressEvent(
     """namespace of the Ingress"""
     namespace: String!
+    """name of the Ingress"""
+    ingress: String!
     """
     Comma delimited string used to apply filtering: 'propertyName,filterValue'
     """
@@ -668,7 +672,7 @@ type Query {
     metricNames: String
     """Aggregations to be performed for each metric (default: sum)"""
     aggregations: String
-  ): common_EventList @httpOperation(subgraph: "api", path: "/api/v1/ingress/{args.namespace}/{ingress}/event", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET, queryParamArgMap: "{\"filterBy\":\"filterBy\",\"sortBy\":\"sortBy\",\"itemsPerPage\":\"itemsPerPage\",\"page\":\"page\",\"metricNames\":\"metricNames\",\"aggregations\":\"aggregations\"}")
+  ): common_EventList @httpOperation(subgraph: "api", path: "/api/v1/ingress/{args.namespace}/{args.ingress}/event", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET, queryParamArgMap: "{\"filterBy\":\"filterBy\",\"sortBy\":\"sortBy\",\"itemsPerPage\":\"itemsPerPage\",\"page\":\"page\",\"metricNames\":\"metricNames\",\"aggregations\":\"aggregations\"}")
   """returns detailed information about Ingress"""
   handleGetIngressDetail(
     """namespace of the Ingress"""
@@ -1366,7 +1370,7 @@ type Query {
     metricNames: String
     """Aggregations to be performed for each metric (default: sum)"""
     aggregations: String
-  ): pod_PodList @httpOperation(subgraph: "api", path: "/api/v1/replicaset/{args.namespace}/{args.replicaSet}/service", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET, queryParamArgMap: "{\"filterBy\":\"filterBy\",\"sortBy\":\"sortBy\",\"itemsPerPage\":\"itemsPerPage\",\"page\":\"page\",\"metricNames\":\"metricNames\",\"aggregations\":\"aggregations\"}")
+  ): service_ServiceList @httpOperation(subgraph: "api", path: "/api/v1/replicaset/{args.namespace}/{args.replicaSet}/service", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET, queryParamArgMap: "{\"filterBy\":\"filterBy\",\"sortBy\":\"sortBy\",\"itemsPerPage\":\"itemsPerPage\",\"page\":\"page\",\"metricNames\":\"metricNames\",\"aggregations\":\"aggregations\"}")
   """returns a list of ReplicationController in a namespace"""
   handleGetReplicationControllerList(
     """
