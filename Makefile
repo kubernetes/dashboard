@@ -134,7 +134,7 @@ endif
 # Note: Requires kind to set up and run.
 # Note #2: Make sure that the port 443 (HTTPS) is free on your localhost.
 .PHONY: helm
-helm: # --ensure-kind-cluster --ensure-kind-ingress-nginx --ensure-helm-dependencies image --kind-load-images ## Install Kubernetes Dashboard dev helm chart in the dev kind cluster
+helm: --ensure-kind-cluster --ensure-kind-ingress-nginx --ensure-helm-dependencies image --kind-load-images ## Install Kubernetes Dashboard dev helm chart in the dev kind cluster
 	@helm upgrade \
 		--create-namespace \
 		--namespace dashboard \
