@@ -49,8 +49,7 @@ spec:
         app.kubernetes.io/version: {{ .Values.auth.image.tag }}
         app.kubernetes.io/component: {{ .Values.auth.role }}
       annotations:
-        {{/* Ensure that the deployment is rolled on upgrade since CSRF key will be regenerated. */}}
-        rollme: {{ randAlphaNum 5 | quote }}
+        checksum/config: {{ include (print $.Template.BasePath "/secrets/csrf.yaml") . | sha256sum }}
         {{- with .Values.auth.annotations }}
         {{ toYaml . | nindent 8 }}
         {{- end }}
@@ -111,6 +110,10 @@ spec:
       {{- with .Values.auth.volumes }}
       volumes:
       {{ toYaml . | nindent 8 }}
+      {{- end }}
+
+      {{- with .Values.app.priorityClassName }}
+      priorityClassName: {{ . }}
       {{- end }}
 
       {{- if or .Values.auth.nodeSelector .Values.app.scheduling.nodeSelector }}
