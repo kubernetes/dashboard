@@ -440,7 +440,9 @@ func extractContainerResourceValue(fs *v1.ResourceFieldSelector, container *v1.C
 }
 
 func extractContainerStatus(pod *v1.Pod, container *v1.Container) *v1.ContainerStatus {
-	for _, status := range pod.Status.ContainerStatuses {
+	statuses := append(pod.Status.ContainerStatuses, pod.Status.InitContainerStatuses...)
+
+	for _, status := range statuses {
 		if status.Name == container.Name {
 			return &status
 		}
