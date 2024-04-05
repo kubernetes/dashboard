@@ -46,8 +46,7 @@ spec:
         app.kubernetes.io/version: {{ .Values.api.image.tag }}
         app.kubernetes.io/component: {{ .Values.api.role }}
       annotations:
-        {{/* Ensure that the deployment is rolled on upgrade since CSRF key will be regenerated. */}}
-        rollme: {{ randAlphaNum 5 | quote }}
+        checksum/config: {{ include (print $.Template.BasePath "/secrets/csrf.yaml") . | sha256sum }}
         {{- with .Values.api.annotations }}
         {{ toYaml . | nindent 8 }}
         {{- end }}

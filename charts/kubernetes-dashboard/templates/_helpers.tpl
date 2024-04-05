@@ -75,6 +75,16 @@ app.kubernetes.io/part-of: {{ include "kubernetes-dashboard.name" . }}
 {{- printf "private.key" }}
 {{- end -}}
 
+{{- define "kubernetes-dashboard.app.csrf.secret.value" -}}
+{{- $secretName := (include "kubernetes-dashboard.app.csrf.secret.name" .) -}}
+{{- $secret := lookup "v1" "Secret" .Release.Namespace $secretName -}}
+{{- if and $secret (hasKey $secret "data") (hasKey $secret.data "private.key") (index $secret.data "private.key") -}}
+private.key: {{ index $secret.data "private.key" }}
+{{- else -}}
+private.key: {{ randBytes 256 | b64enc | quote }}
+{{- end -}}
+{{- end -}}
+
 {{- define "kubernetes-dashboard.metrics-scraper.name" -}}
 {{- printf "%s-%s" ( include "kubernetes-dashboard.fullname" . ) ( .Values.metricsScraper.role )}}
 {{- end -}}
