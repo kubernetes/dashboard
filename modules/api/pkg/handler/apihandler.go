@@ -995,6 +995,12 @@ func CreateHTTPAPIHandler(iManager integration.Manager) (*restful.Container, err
 
 	// Role
 	apiV1Ws.Route(
+		apiV1Ws.GET("/role").To(apiHandler.handleGetRoleList).
+			// docs
+			Doc("returns a list of Roles from all namespace").
+			Writes(role.RoleList{}).
+			Returns(http.StatusOK, "OK", role.RoleList{}))
+	apiV1Ws.Route(
 		apiV1Ws.GET("/role/{namespace}").To(apiHandler.handleGetRoleList).
 			// docs
 			Doc("returns a list of Roles in a namespace").
@@ -1011,6 +1017,12 @@ func CreateHTTPAPIHandler(iManager integration.Manager) (*restful.Container, err
 			Returns(http.StatusOK, "OK", role.RoleDetail{}))
 
 	// RoleBinding
+	apiV1Ws.Route(
+		apiV1Ws.GET("/rolebinding").To(apiHandler.handleGetRoleBindingList).
+			// docs
+			Doc("returns a list of RoleBindings from all namespace").
+			Writes(rolebinding.RoleBindingList{}).
+			Returns(http.StatusOK, "OK", rolebinding.RoleBindingList{}))
 	apiV1Ws.Route(
 		apiV1Ws.GET("/rolebinding/{namespace}").To(apiHandler.handleGetRoleBindingList).
 			// docs

@@ -73,6 +73,8 @@ type Pod struct {
 
 	// ContainerImages holds a list of the Pod images.
 	ContainerImages []string `json:"containerImages"`
+
+	ContainerStatuses []ContainerStatus `json:"containerStatuses"`
 }
 
 var EmptyPodList = &PodList{
@@ -155,13 +157,14 @@ func ToPodList(pods []v1.Pod, events []v1.Event, nonCriticalErrors []error, dsQu
 
 func toPod(pod *v1.Pod, metrics *MetricsByPod, warnings []common.Event) Pod {
 	podDetail := Pod{
-		ObjectMeta:      types.NewObjectMeta(pod.ObjectMeta),
-		TypeMeta:        types.NewTypeMeta(types.ResourceKindPod),
-		Warnings:        warnings,
-		Status:          getPodStatus(*pod),
-		RestartCount:    getRestartCount(*pod),
-		NodeName:        pod.Spec.NodeName,
-		ContainerImages: common.GetContainerImages(&pod.Spec),
+		ObjectMeta:        types.NewObjectMeta(pod.ObjectMeta),
+		TypeMeta:          types.NewTypeMeta(types.ResourceKindPod),
+		Warnings:          warnings,
+		Status:            getPodStatus(*pod),
+		RestartCount:      getRestartCount(*pod),
+		NodeName:          pod.Spec.NodeName,
+		ContainerImages:   common.GetContainerImages(&pod.Spec),
+		ContainerStatuses: ToContainerStatuses(append(pod.Status.InitContainerStatuses, pod.Status.ContainerStatuses...)),
 	}
 
 	if m, exists := metrics.MetricsMap[pod.UID]; exists {

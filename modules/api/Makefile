@@ -61,7 +61,8 @@ fix-go: $(PRE)
 .PHONY: run
 run: build
 	@$(API_DIST_BINARY) \
-		--kubeconfig=$(KUBECONFIG)
+		--kubeconfig=$(KUBECONFIG) \
+		--metrics-provider=none
 
 .PHONY: schema
 schema: --ensure-kind-cluster build --swagger

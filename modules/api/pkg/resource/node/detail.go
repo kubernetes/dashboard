@@ -84,6 +84,7 @@ type NodeDetail struct {
 	Node `json:",inline"`
 
 	// NodePhase is the current lifecycle phase of the node.
+	// Deprecated
 	Phase v1.NodePhase `json:"phase"`
 
 	// PodCIDR represents the pod IP range assigned to the node.
@@ -339,8 +340,10 @@ func toNodeDetail(node v1.Node, pods *pod.PodList, eventList *common.EventList,
 		Node: Node{
 			ObjectMeta:         types.NewObjectMeta(node.ObjectMeta),
 			TypeMeta:           types.NewTypeMeta(types.ResourceKindNode),
+			Ready:              getNodeConditionStatus(node, v1.NodeReady),
 			AllocatedResources: allocatedResources,
 		},
+		// TODO: Remove deprecated field
 		Phase:           node.Status.Phase,
 		ProviderID:      node.Spec.ProviderID,
 		PodCIDR:         node.Spec.PodCIDR,
