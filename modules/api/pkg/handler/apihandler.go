@@ -775,7 +775,7 @@ func CreateHTTPAPIHandler(iManager integration.Manager) (*restful.Container, err
 			Writes(ingress.IngressDetail{}).
 			Returns(http.StatusOK, "OK", ingress.IngressDetail{}))
 	apiV1Ws.Route(
-		apiV1Ws.GET("/ingress/{namespace}/{name}/event").To(apiHandler.handleGetIngressEvent).
+		apiV1Ws.GET("/ingress/{namespace}/{ingress}/event").To(apiHandler.handleGetIngressEvent).
 			// docs
 			Doc("returns a list of Events for Ingress").
 			Param(apiV1Ws.PathParameter("namespace", "namespace of the Ingress")).
