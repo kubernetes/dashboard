@@ -143,6 +143,7 @@ auth:
       limits:
         cpu: 250m
         memory: 400Mi
+  automountServiceAccountToken: false
   volumes:
     # Create on-disk volume to store exec logs (required)
     - name: tmp-volume
@@ -192,6 +193,7 @@ api:
       limits:
         cpu: 250m
         memory: 400Mi
+  automountServiceAccountToken: true
   # Additional volumes
   # - name: dashboard-kubeconfig
   #   secret:
@@ -246,6 +248,7 @@ web:
       limits:
         cpu: 250m
         memory: 400Mi
+  automountServiceAccountToken: true
   # Additional volumes
   # - name: dashboard-kubeconfig
   #   secret:
@@ -305,6 +308,7 @@ metricsScraper:
         port: 8000
       initialDelaySeconds: 30
       timeoutSeconds: 30
+  automountServiceAccountToken: true
   # Additional volumes
   # - name: dashboard-kubeconfig
   #   secret:
