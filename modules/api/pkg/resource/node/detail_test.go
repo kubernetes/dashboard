@@ -64,6 +64,7 @@ func TestGetNodeDetail(t *testing.T) {
 						PodCapacity:            0,
 						PodFraction:            0,
 					},
+					Ready: v1.ConditionUnknown,
 				},
 				PodCIDR:       "127.0.0.1",
 				ProviderID:    "ID-1",

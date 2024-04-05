@@ -1,3 +1,17 @@
+# Copyright 2017 The Kubernetes Authors.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+# http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
 schema @transport(subgraph: "api", kind: "rest") {
   query: Query
   mutation: Mutation
@@ -652,27 +666,6 @@ type Query {
     """namespace of the Ingress"""
     namespace: String!
   ): ingress_IngressList @httpOperation(subgraph: "api", path: "/api/v1/ingress", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET, queryParamArgMap: "{\"filterBy\":\"filterBy\",\"sortBy\":\"sortBy\",\"itemsPerPage\":\"itemsPerPage\",\"page\":\"page\",\"metricNames\":\"metricNames\",\"aggregations\":\"aggregations\"}") @httpOperation(subgraph: "api", path: "/api/v1/ingress/{args.namespace}", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET, queryParamArgMap: "{\"filterBy\":\"filterBy\",\"sortBy\":\"sortBy\",\"itemsPerPage\":\"itemsPerPage\",\"page\":\"page\",\"metricNames\":\"metricNames\",\"aggregations\":\"aggregations\"}")
-  """returns a list of Events for Ingress"""
-  handleGetIngressEvent(
-    """namespace of the Ingress"""
-    namespace: String!
-    """name of the Ingress"""
-    ingress: String!
-    """
-    Comma delimited string used to apply filtering: 'propertyName,filterValue'
-    """
-    filterBy: String
-    """Name of the column to sort by"""
-    sortBy: String
-    """Number of items to return when pagination is applied"""
-    itemsPerPage: String
-    """Page number to return items from"""
-    page: String
-    """Metric names to download"""
-    metricNames: String
-    """Aggregations to be performed for each metric (default: sum)"""
-    aggregations: String
-  ): common_EventList @httpOperation(subgraph: "api", path: "/api/v1/ingress/{args.namespace}/{args.ingress}/event", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET, queryParamArgMap: "{\"filterBy\":\"filterBy\",\"sortBy\":\"sortBy\",\"itemsPerPage\":\"itemsPerPage\",\"page\":\"page\",\"metricNames\":\"metricNames\",\"aggregations\":\"aggregations\"}")
   """returns detailed information about Ingress"""
   handleGetIngressDetail(
     """namespace of the Ingress"""
@@ -694,6 +687,25 @@ type Query {
     """Aggregations to be performed for each metric (default: sum)"""
     aggregations: String
   ): ingress_IngressDetail @httpOperation(subgraph: "api", path: "/api/v1/ingress/{args.namespace}/{args.name}", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET, queryParamArgMap: "{\"filterBy\":\"filterBy\",\"sortBy\":\"sortBy\",\"itemsPerPage\":\"itemsPerPage\",\"page\":\"page\",\"metricNames\":\"metricNames\",\"aggregations\":\"aggregations\"}")
+  """returns a list of Events for Ingress"""
+  handleGetIngressEvent(
+    """namespace of the Ingress"""
+    namespace: String!
+    """
+    Comma delimited string used to apply filtering: 'propertyName,filterValue'
+    """
+    filterBy: String
+    """Name of the column to sort by"""
+    sortBy: String
+    """Number of items to return when pagination is applied"""
+    itemsPerPage: String
+    """Page number to return items from"""
+    page: String
+    """Metric names to download"""
+    metricNames: String
+    """Aggregations to be performed for each metric (default: sum)"""
+    aggregations: String
+  ): common_EventList @httpOperation(subgraph: "api", path: "/api/v1/ingress/{args.namespace}/{name}/event", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET, queryParamArgMap: "{\"filterBy\":\"filterBy\",\"sortBy\":\"sortBy\",\"itemsPerPage\":\"itemsPerPage\",\"page\":\"page\",\"metricNames\":\"metricNames\",\"aggregations\":\"aggregations\"}")
   """returns a list of IngressClasses"""
   handleGetIngressClassList(
     """
@@ -1476,8 +1488,6 @@ type Query {
   ): service_ServiceList @httpOperation(subgraph: "api", path: "/api/v1/replicationcontroller/{args.namespace}/{args.replicationController}/service", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET, queryParamArgMap: "{\"filterBy\":\"filterBy\",\"sortBy\":\"sortBy\",\"itemsPerPage\":\"itemsPerPage\",\"page\":\"page\",\"metricNames\":\"metricNames\",\"aggregations\":\"aggregations\"}")
   """returns a list of Roles in a namespace"""
   handleGetRoleList(
-    """namespace of the Role"""
-    namespace: String!
     """
     Comma delimited string used to apply filtering: 'propertyName,filterValue'
     """
@@ -1492,7 +1502,9 @@ type Query {
     metricNames: String
     """Aggregations to be performed for each metric (default: sum)"""
     aggregations: String
-  ): role_RoleList @httpOperation(subgraph: "api", path: "/api/v1/role/{args.namespace}", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET, queryParamArgMap: "{\"filterBy\":\"filterBy\",\"sortBy\":\"sortBy\",\"itemsPerPage\":\"itemsPerPage\",\"page\":\"page\",\"metricNames\":\"metricNames\",\"aggregations\":\"aggregations\"}")
+    """namespace of the Role"""
+    namespace: String!
+  ): role_RoleList @httpOperation(subgraph: "api", path: "/api/v1/role", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET, queryParamArgMap: "{\"filterBy\":\"filterBy\",\"sortBy\":\"sortBy\",\"itemsPerPage\":\"itemsPerPage\",\"page\":\"page\",\"metricNames\":\"metricNames\",\"aggregations\":\"aggregations\"}") @httpOperation(subgraph: "api", path: "/api/v1/role/{args.namespace}", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET, queryParamArgMap: "{\"filterBy\":\"filterBy\",\"sortBy\":\"sortBy\",\"itemsPerPage\":\"itemsPerPage\",\"page\":\"page\",\"metricNames\":\"metricNames\",\"aggregations\":\"aggregations\"}")
   """returns detailed information about Role"""
   handleGetRoleDetail(
     """namespace of the Role"""
@@ -1516,8 +1528,6 @@ type Query {
   ): role_RoleDetail @httpOperation(subgraph: "api", path: "/api/v1/role/{args.namespace}/{args.name}", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET, queryParamArgMap: "{\"filterBy\":\"filterBy\",\"sortBy\":\"sortBy\",\"itemsPerPage\":\"itemsPerPage\",\"page\":\"page\",\"metricNames\":\"metricNames\",\"aggregations\":\"aggregations\"}")
   """returns a list of RoleBindings in a namespace"""
   handleGetRoleBindingList(
-    """namespace of the RoleBinding"""
-    namespace: String!
     """
     Comma delimited string used to apply filtering: 'propertyName,filterValue'
     """
@@ -1532,7 +1542,9 @@ type Query {
     metricNames: String
     """Aggregations to be performed for each metric (default: sum)"""
     aggregations: String
-  ): rolebinding_RoleBindingList @httpOperation(subgraph: "api", path: "/api/v1/rolebinding/{args.namespace}", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET, queryParamArgMap: "{\"filterBy\":\"filterBy\",\"sortBy\":\"sortBy\",\"itemsPerPage\":\"itemsPerPage\",\"page\":\"page\",\"metricNames\":\"metricNames\",\"aggregations\":\"aggregations\"}")
+    """namespace of the RoleBinding"""
+    namespace: String!
+  ): rolebinding_RoleBindingList @httpOperation(subgraph: "api", path: "/api/v1/rolebinding", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET, queryParamArgMap: "{\"filterBy\":\"filterBy\",\"sortBy\":\"sortBy\",\"itemsPerPage\":\"itemsPerPage\",\"page\":\"page\",\"metricNames\":\"metricNames\",\"aggregations\":\"aggregations\"}") @httpOperation(subgraph: "api", path: "/api/v1/rolebinding/{args.namespace}", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET, queryParamArgMap: "{\"filterBy\":\"filterBy\",\"sortBy\":\"sortBy\",\"itemsPerPage\":\"itemsPerPage\",\"page\":\"page\",\"metricNames\":\"metricNames\",\"aggregations\":\"aggregations\"}")
   """returns detailed information about RoleBinding"""
   handleGetRoleBindingDetail(
     """namespace of the RoleBinding"""
@@ -2386,6 +2398,7 @@ type pod_PodList {
 
 type pod_Pod {
   containerImages: [String]!
+  containerStatuses: [pod_ContainerStatus]!
   metrics: pod_PodMetrics!
   nodeName: String!
   objectMeta: types_ObjectMeta!
@@ -2393,6 +2406,12 @@ type pod_Pod {
   status: String!
   typeMeta: types_TypeMeta!
   warnings: [common_Event]!
+}
+
+type pod_ContainerStatus {
+  name: String!
+  ready: Boolean!
+  state: String!
 }
 
 type pod_PodMetrics {

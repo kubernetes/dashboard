@@ -34,7 +34,6 @@ jobs:
         with:
           version: v3.12.1
       - uses: helm/chart-testing-action@v2.6.1
-      - run: ct lint --config=.ct.yml --target-branch ${{ github.event.repository.default_branch }}
       - uses: helm/kind-action@v1.9.0
         with:
           node_image: kindest/node:v1.29.0

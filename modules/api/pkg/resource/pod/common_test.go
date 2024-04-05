@@ -40,9 +40,10 @@ func TestToPodPodStatusFailed(t *testing.T) {
 	}
 
 	expected := Pod{
-		TypeMeta: types.TypeMeta{Kind: types.ResourceKindPod},
-		Status:   string(v1.PodFailed),
-		Warnings: []common.Event{},
+		TypeMeta:          types.TypeMeta{Kind: types.ResourceKindPod},
+		Status:            string(v1.PodFailed),
+		Warnings:          []common.Event{},
+		ContainerStatuses: make([]ContainerStatus, 0),
 	}
 
 	actual := toPod(pod, &MetricsByPod{}, []common.Event{})
@@ -67,9 +68,10 @@ func TestToPodPodStatusSucceeded(t *testing.T) {
 	}
 
 	expected := Pod{
-		TypeMeta: types.TypeMeta{Kind: types.ResourceKindPod},
-		Status:   string(v1.PodSucceeded),
-		Warnings: []common.Event{},
+		TypeMeta:          types.TypeMeta{Kind: types.ResourceKindPod},
+		Status:            string(v1.PodSucceeded),
+		Warnings:          []common.Event{},
+		ContainerStatuses: make([]ContainerStatus, 0),
 	}
 
 	actual := toPod(pod, &MetricsByPod{}, []common.Event{})
@@ -98,9 +100,10 @@ func TestToPodPodStatusRunning(t *testing.T) {
 	}
 
 	expected := Pod{
-		TypeMeta: types.TypeMeta{Kind: types.ResourceKindPod},
-		Status:   string(v1.PodRunning),
-		Warnings: []common.Event{},
+		TypeMeta:          types.TypeMeta{Kind: types.ResourceKindPod},
+		Status:            string(v1.PodRunning),
+		Warnings:          []common.Event{},
+		ContainerStatuses: make([]ContainerStatus, 0),
 	}
 
 	actual := toPod(pod, &MetricsByPod{}, []common.Event{})
@@ -125,9 +128,10 @@ func TestToPodPodStatusPending(t *testing.T) {
 	}
 
 	expected := Pod{
-		TypeMeta: types.TypeMeta{Kind: types.ResourceKindPod},
-		Status:   string(v1.PodPending),
-		Warnings: []common.Event{},
+		TypeMeta:          types.TypeMeta{Kind: types.ResourceKindPod},
+		Status:            string(v1.PodPending),
+		Warnings:          []common.Event{},
+		ContainerStatuses: make([]ContainerStatus, 0),
 	}
 
 	actual := toPod(pod, &MetricsByPod{}, []common.Event{})
@@ -165,6 +169,14 @@ func TestToPodContainerStates(t *testing.T) {
 		TypeMeta: types.TypeMeta{Kind: types.ResourceKindPod},
 		Status:   "Terminated",
 		Warnings: []common.Event{},
+		ContainerStatuses: []ContainerStatus{
+			{
+				State: Terminated,
+			},
+			{
+				State: Waiting,
+			},
+		},
 	}
 
 	actual := toPod(pod, &MetricsByPod{}, []common.Event{})
@@ -184,8 +196,9 @@ func TestToPod(t *testing.T) {
 		{
 			pod: &v1.Pod{}, metrics: &MetricsByPod{},
 			expected: Pod{
-				TypeMeta: types.TypeMeta{Kind: types.ResourceKindPod},
-				Warnings: []common.Event{},
+				TypeMeta:          types.TypeMeta{Kind: types.ResourceKindPod},
+				Warnings:          []common.Event{},
+				ContainerStatuses: make([]ContainerStatus, 0),
 			},
 		}, {
 			pod: &v1.Pod{
@@ -199,7 +212,8 @@ func TestToPod(t *testing.T) {
 					Name:      "test-pod",
 					Namespace: "test-namespace",
 				},
-				Warnings: []common.Event{},
+				Warnings:          []common.Event{},
+				ContainerStatuses: make([]ContainerStatus, 0),
 			},
 		},
 	}

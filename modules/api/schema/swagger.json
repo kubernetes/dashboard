@@ -3680,78 +3680,6 @@
     }
    }
   },
-  "/api/v1/ingress/{namespace}/{ingress}/event": {
-   "get": {
-    "consumes": [
-     "application/json"
-    ],
-    "produces": [
-     "application/json"
-    ],
-    "summary": "returns a list of Events for Ingress",
-    "operationId": "handleGetIngressEvent",
-    "parameters": [
-     {
-      "type": "string",
-      "description": "Comma delimited string used to apply filtering: 'propertyName,filterValue'",
-      "name": "filterBy",
-      "in": "query"
-     },
-     {
-      "type": "string",
-      "description": "Name of the column to sort by",
-      "name": "sortBy",
-      "in": "query"
-     },
-     {
-      "type": "string",
-      "description": "Number of items to return when pagination is applied",
-      "name": "itemsPerPage",
-      "in": "query"
-     },
-     {
-      "type": "string",
-      "description": "Page number to return items from",
-      "name": "page",
-      "in": "query"
-     },
-     {
-      "type": "string",
-      "description": "Metric names to download",
-      "name": "metricNames",
-      "in": "query"
-     },
-     {
-      "type": "string",
-      "description": "Aggregations to be performed for each metric (default: sum)",
-      "name": "aggregations",
-      "in": "query"
-     },
-     {
-      "type": "string",
-      "description": "namespace of the Ingress",
-      "name": "namespace",
-      "in": "path",
-      "required": true
-     },
-     {
-      "type": "string",
-      "description": "name of the Ingress",
-      "name": "ingress",
-      "in": "path",
-      "required": true
-     }
-    ],
-    "responses": {
-     "200": {
-      "description": "OK",
-      "schema": {
-       "$ref": "#/definitions/common.EventList"
-      }
-     }
-    }
-   }
-  },
   "/api/v1/ingress/{namespace}/{name}": {
    "get": {
     "consumes": [
@@ -3819,6 +3747,78 @@
       "description": "OK",
       "schema": {
        "$ref": "#/definitions/ingress.IngressDetail"
+      }
+     }
+    }
+   }
+  },
+  "/api/v1/ingress/{namespace}/{name}/event": {
+   "get": {
+    "consumes": [
+     "application/json"
+    ],
+    "produces": [
+     "application/json"
+    ],
+    "summary": "returns a list of Events for Ingress",
+    "operationId": "handleGetIngressEvent",
+    "parameters": [
+     {
+      "type": "string",
+      "description": "Comma delimited string used to apply filtering: 'propertyName,filterValue'",
+      "name": "filterBy",
+      "in": "query"
+     },
+     {
+      "type": "string",
+      "description": "Name of the column to sort by",
+      "name": "sortBy",
+      "in": "query"
+     },
+     {
+      "type": "string",
+      "description": "Number of items to return when pagination is applied",
+      "name": "itemsPerPage",
+      "in": "query"
+     },
+     {
+      "type": "string",
+      "description": "Page number to return items from",
+      "name": "page",
+      "in": "query"
+     },
+     {
+      "type": "string",
+      "description": "Metric names to download",
+      "name": "metricNames",
+      "in": "query"
+     },
+     {
+      "type": "string",
+      "description": "Aggregations to be performed for each metric (default: sum)",
+      "name": "aggregations",
+      "in": "query"
+     },
+     {
+      "type": "string",
+      "description": "namespace of the Ingress",
+      "name": "namespace",
+      "in": "path",
+      "required": true
+     },
+     {
+      "type": "string",
+      "description": "name of the Ingress",
+      "name": "ingress",
+      "in": "path",
+      "required": true
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "OK",
+      "schema": {
+       "$ref": "#/definitions/common.EventList"
       }
      }
     }
@@ -7124,6 +7124,64 @@
     }
    }
   },
+  "/api/v1/role": {
+   "get": {
+    "consumes": [
+     "application/json"
+    ],
+    "produces": [
+     "application/json"
+    ],
+    "summary": "returns a list of Roles from all namespace",
+    "operationId": "handleGetRoleList",
+    "parameters": [
+     {
+      "type": "string",
+      "description": "Comma delimited string used to apply filtering: 'propertyName,filterValue'",
+      "name": "filterBy",
+      "in": "query"
+     },
+     {
+      "type": "string",
+      "description": "Name of the column to sort by",
+      "name": "sortBy",
+      "in": "query"
+     },
+     {
+      "type": "string",
+      "description": "Number of items to return when pagination is applied",
+      "name": "itemsPerPage",
+      "in": "query"
+     },
+     {
+      "type": "string",
+      "description": "Page number to return items from",
+      "name": "page",
+      "in": "query"
+     },
+     {
+      "type": "string",
+      "description": "Metric names to download",
+      "name": "metricNames",
+      "in": "query"
+     },
+     {
+      "type": "string",
+      "description": "Aggregations to be performed for each metric (default: sum)",
+      "name": "aggregations",
+      "in": "query"
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "OK",
+      "schema": {
+       "$ref": "#/definitions/role.RoleList"
+      }
+     }
+    }
+   }
+  },
   "/api/v1/role/{namespace}": {
    "get": {
     "consumes": [
@@ -7256,6 +7314,64 @@
       "description": "OK",
       "schema": {
        "$ref": "#/definitions/role.RoleDetail"
+      }
+     }
+    }
+   }
+  },
+  "/api/v1/rolebinding": {
+   "get": {
+    "consumes": [
+     "application/json"
+    ],
+    "produces": [
+     "application/json"
+    ],
+    "summary": "returns a list of RoleBindings from all namespace",
+    "operationId": "handleGetRoleBindingList",
+    "parameters": [
+     {
+      "type": "string",
+      "description": "Comma delimited string used to apply filtering: 'propertyName,filterValue'",
+      "name": "filterBy",
+      "in": "query"
+     },
+     {
+      "type": "string",
+      "description": "Name of the column to sort by",
+      "name": "sortBy",
+      "in": "query"
+     },
+     {
+      "type": "string",
+      "description": "Number of items to return when pagination is applied",
+      "name": "itemsPerPage",
+      "in": "query"
+     },
+     {
+      "type": "string",
+      "description": "Page number to return items from",
+      "name": "page",
+      "in": "query"
+     },
+     {
+      "type": "string",
+      "description": "Metric names to download",
+      "name": "metricNames",
+      "in": "query"
+     },
+     {
+      "type": "string",
+      "description": "Aggregations to be performed for each metric (default: sum)",
+      "name": "aggregations",
+      "in": "query"
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "OK",
+      "schema": {
+       "$ref": "#/definitions/rolebinding.RoleBindingList"
       }
      }
     }
@@ -10280,11 +10396,11 @@
   },
   "deployment.DeploymentDetail": {
    "required": [
+    "containerImages",
     "initContainerImages",
     "objectMeta",
     "typeMeta",
     "pods",
-    "containerImages",
     "selector",
     "statusInfo",
     "conditions",
@@ -10599,13 +10715,13 @@
   },
   "horizontalpodautoscaler.HorizontalPodAutoscalerDetail": {
    "required": [
+    "targetCPUUtilizationPercentage",
+    "objectMeta",
     "typeMeta",
     "scaleTargetRef",
     "minReplicas",
     "maxReplicas",
     "currentCPUUtilizationPercentage",
-    "targetCPUUtilizationPercentage",
-    "objectMeta",
     "currentReplicas",
     "desiredReplicas",
     "lastScaleTime"
@@ -10732,10 +10848,10 @@
   },
   "ingress.IngressDetail": {
    "required": [
-    "hosts",
     "objectMeta",
     "typeMeta",
     "endpoints",
+    "hosts",
     "spec",
     "status",
     "errors"
@@ -10882,13 +10998,13 @@
   },
   "job.JobDetail": {
    "required": [
+    "initContainerImages",
+    "parallelism",
+    "jobStatus",
     "objectMeta",
     "typeMeta",
     "podInfo",
     "containerImages",
-    "initContainerImages",
-    "parallelism",
-    "jobStatus",
     "completions",
     "errors"
    ],
@@ -11138,9 +11254,9 @@
   },
   "namespace.NamespaceDetail": {
    "required": [
+    "typeMeta",
     "phase",
     "objectMeta",
-    "typeMeta",
     "resourceQuotaList",
     "resourceLimits",
     "errors"
@@ -11382,10 +11498,10 @@
   },
   "node.NodeDetail": {
    "required": [
-    "objectMeta",
-    "typeMeta",
     "ready",
     "allocatedResources",
+    "objectMeta",
+    "typeMeta",
     "phase",
     "podCIDR",
     "providerID",
@@ -11558,16 +11674,16 @@
   },
   "persistentvolume.PersistentVolumeDetail": {
    "required": [
+    "claim",
+    "objectMeta",
     "capacity",
-    "accessModes",
+    "reclaimPolicy",
+    "storageClass",
     "mountOptions",
     "status",
     "typeMeta",
-    "reclaimPolicy",
-    "storageClass",
-    "claim",
+    "accessModes",
     "reason",
-    "objectMeta",
     "message",
     "persistentVolumeSource"
    ],
@@ -11685,13 +11801,13 @@
   },
   "persistentvolumeclaim.PersistentVolumeClaimDetail": {
    "required": [
+    "storageClass",
+    "objectMeta",
+    "typeMeta",
     "status",
     "volume",
     "capacity",
-    "accessModes",
-    "storageClass",
-    "objectMeta",
-    "typeMeta"
+    "accessModes"
    ],
    "properties": {
     "accessModes": {
@@ -11812,6 +11928,24 @@
     }
    }
   },
+  "pod.ContainerStatus": {
+   "required": [
+    "name",
+    "state",
+    "ready"
+   ],
+   "properties": {
+    "name": {
+     "type": "string"
+    },
+    "ready": {
+     "type": "boolean"
+    },
+    "state": {
+     "type": "string"
+    }
+   }
+  },
   "pod.EnvVar": {
    "required": [
     "name",
@@ -11839,13 +11973,20 @@
     "metrics",
     "warnings",
     "nodeName",
-    "containerImages"
+    "containerImages",
+    "containerStatuses"
    ],
    "properties": {
     "containerImages": {
      "type": "array",
      "items": {
       "type": "string"
+     }
+    },
+    "containerStatuses": {
+     "type": "array",
+     "items": {
+      "$ref": "#/definitions/pod.ContainerStatus"
      }
     },
     "metrics": {
@@ -12095,11 +12236,11 @@
   },
   "replicaset.ReplicaSetDetail": {
    "required": [
-    "initContainerImages",
     "objectMeta",
     "typeMeta",
     "podInfo",
     "containerImages",
+    "initContainerImages",
     "selector",
     "horizontalPodAutoscalerList",
     "errors"
@@ -12209,11 +12350,11 @@
   },
   "replicationcontroller.ReplicationControllerDetail": {
    "required": [
+    "containerImages",
+    "initContainerImages",
     "objectMeta",
     "typeMeta",
     "podInfo",
-    "containerImages",
-    "initContainerImages",
     "labelSelector",
     "errors"
    ],
@@ -12416,8 +12557,8 @@
   },
   "role.RoleDetail": {
    "required": [
-    "typeMeta",
     "objectMeta",
+    "typeMeta",
     "rules",
     "errors"
    ],
@@ -12878,11 +13019,11 @@
   },
   "statefulset.StatefulSetDetail": {
    "required": [
+    "initContainerImages",
     "objectMeta",
     "typeMeta",
     "podInfo",
     "containerImages",
-    "initContainerImages",
     "errors"
    ],
    "properties": {
@@ -13034,12 +13175,12 @@
   },
   "types.CustomResourceDefinitionDetail": {
    "required": [
+    "established",
     "objectMeta",
     "typeMeta",
     "group",
     "scope",
     "names",
-    "established",
     "conditions",
     "objects",
     "subresources",

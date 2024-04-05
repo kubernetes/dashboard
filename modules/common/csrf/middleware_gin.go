@@ -15,7 +15,6 @@
 package csrf
 
 import (
-	"fmt"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -36,7 +35,6 @@ func Gin() *GinMiddlewares {
 type GinMiddlewares struct{}
 
 func (in *GinMiddlewares) CSRF(options ...GinCSRFOption) gin.HandlerFunc {
-	fmt.Println("registering new middleware")
 	middleware := &GinCSRFMiddleware{
 		actionGetter: defaultGinCSRFActionGetter,
 		runCondition: defaultGinCSRFRunCondition,

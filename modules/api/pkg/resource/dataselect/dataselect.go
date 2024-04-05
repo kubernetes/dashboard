@@ -15,8 +15,9 @@
 package dataselect
 
 import (
-	"log"
 	"sort"
+
+	"k8s.io/klog/v2"
 
 	metricapi "k8s.io/dashboard/api/pkg/integration/metric/api"
 	"k8s.io/dashboard/errors"
@@ -129,7 +130,7 @@ func (self *DataSelector) getMetrics(metricClient metricapi.MetricClient) (
 	metricPromises := make([]metricapi.MetricPromises, 0)
 
 	if metricClient == nil {
-		return metricPromises, errors.NewInternal("No metric client provided. Skipping metrics.")
+		return metricPromises, nil
 	}
 
 	metricNames := self.DataSelectQuery.MetricQuery.MetricNames
@@ -142,7 +143,7 @@ func (self *DataSelector) getMetrics(metricClient metricapi.MetricClient) (
 		// make sure data cells support metrics
 		metricDataCell, ok := dataCell.(MetricDataCell)
 		if !ok {
-			log.Printf("Data cell does not implement MetricDataCell. Skipping. %v", dataCell)
+			klog.V(0).InfoS("Data cell does not implement MetricDataCell. Skipping.", "dataCell", dataCell)
 			continue
 		}
 
@@ -162,7 +163,11 @@ func (self *DataSelector) getMetrics(metricClient metricapi.MetricClient) (
 func (self *DataSelector) GetMetrics(metricClient metricapi.MetricClient) *DataSelector {
 	metricPromisesList, err := self.getMetrics(metricClient)
 	if err != nil {
-		log.Print(err)
+		klog.ErrorS(err, "error during getting metrics")
+		return self
+	}
+
+	if len(metricPromisesList) == 0 {
 		return self
 	}
 
@@ -180,13 +185,17 @@ func (self *DataSelector) GetMetrics(metricClient metricapi.MetricClient) *DataS
 func (self *DataSelector) GetCumulativeMetrics(metricClient metricapi.MetricClient) *DataSelector {
 	metricPromisesList, err := self.getMetrics(metricClient)
 	if err != nil {
-		log.Print(err)
+		klog.ErrorS(err, "error during getting metrics")
+		return self
+	}
+
+	if len(metricPromisesList) == 0 {
 		return self
 	}
 
 	metricNames := self.DataSelectQuery.MetricQuery.MetricNames
 	if metricNames == nil {
-		log.Print("No metrics specified. Skipping metrics.")
+		klog.V(1).Info("Metrics names not provided. Skipping.")
 		return self
 	}
 
