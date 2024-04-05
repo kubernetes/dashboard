@@ -107,6 +107,10 @@ spec:
       {{ toYaml . | nindent 8 }}
       {{- end }}
 
+      {{- with .Values.app.priorityClassName }}
+      priorityClassName: {{ . }}
+      {{- end }}
+
       {{- if or .Values.web.nodeSelector .Values.app.scheduling.nodeSelector }}
       nodeSelector:
       {{- with .Values.web.nodeSelector }}

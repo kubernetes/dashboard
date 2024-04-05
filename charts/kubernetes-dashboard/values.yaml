@@ -55,6 +55,8 @@ app:
   # Common labels & annotations shared across all deployed resources
   labels: {}
   annotations: {}
+  # Common priority class used for all deployed resources
+  priorityClassName: null
   settings:
     ## Global dashboard settings
     global:
