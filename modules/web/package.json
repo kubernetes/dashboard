@@ -129,7 +129,7 @@
     "lodash-es": "4.17.21",
     "minimatch": "9.0.4",
     "minimist": "1.2.8",
-    "ng-extract-i18n-merge": "2.11.1",
+    "ng-extract-i18n-merge": "2.11.2",
     "node-gyp": "10.1.0",
     "prettier": "3.2.5",
     "q": "1.5.1",
