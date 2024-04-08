@@ -141,16 +141,13 @@
       "in": "body",
       "required": true,
       "schema": {
-       "$ref": "#/definitions/runtime.Unknown"
+       "$ref": "#/definitions/handler.JSON"
       }
      }
     ],
     "responses": {
-     "200": {
-      "description": "OK",
-      "schema": {
-       "$ref": "#/definitions/runtime.Unknown"
-      }
+     "204": {
+      "description": ""
      }
     }
    },
@@ -216,8 +213,8 @@
      }
     ],
     "responses": {
-     "200": {
-      "description": "OK"
+     "204": {
+      "description": ""
      }
     }
    }
@@ -372,16 +369,13 @@
       "in": "body",
       "required": true,
       "schema": {
-       "$ref": "#/definitions/runtime.Unknown"
+       "$ref": "#/definitions/handler.JSON"
       }
      }
     ],
     "responses": {
-     "200": {
-      "description": "OK",
-      "schema": {
-       "$ref": "#/definitions/runtime.Unknown"
-      }
+     "204": {
+      "description": ""
      }
     }
    },
@@ -454,8 +448,8 @@
      }
     ],
     "responses": {
-     "200": {
-      "description": "OK"
+     "204": {
+      "description": ""
      }
     }
    }
@@ -9540,8 +9534,8 @@
   },
   "clusterrole.ClusterRoleDetail": {
    "required": [
-    "typeMeta",
     "objectMeta",
+    "typeMeta",
     "rules",
     "errors"
    ],
@@ -10040,13 +10034,13 @@
   },
   "cronjob.CronJobDetail": {
    "required": [
-    "suspend",
-    "active",
-    "lastSchedule",
     "containerImages",
     "objectMeta",
     "typeMeta",
     "schedule",
+    "suspend",
+    "active",
+    "lastSchedule",
     "concurrencyPolicy",
     "startingDeadlineSeconds",
     "errors"
@@ -10396,11 +10390,11 @@
   },
   "deployment.DeploymentDetail": {
    "required": [
+    "objectMeta",
+    "typeMeta",
     "pods",
     "containerImages",
     "initContainerImages",
-    "objectMeta",
-    "typeMeta",
     "selector",
     "statusInfo",
     "conditions",
@@ -10715,13 +10709,13 @@
   },
   "horizontalpodautoscaler.HorizontalPodAutoscalerDetail": {
    "required": [
-    "objectMeta",
     "typeMeta",
     "scaleTargetRef",
     "minReplicas",
     "maxReplicas",
     "currentCPUUtilizationPercentage",
     "targetCPUUtilizationPercentage",
+    "objectMeta",
     "currentReplicas",
     "desiredReplicas",
     "lastScaleTime"
@@ -10848,10 +10842,10 @@
   },
   "ingress.IngressDetail": {
    "required": [
+    "hosts",
     "objectMeta",
     "typeMeta",
     "endpoints",
-    "hosts",
     "spec",
     "status",
     "errors"
@@ -10998,13 +10992,13 @@
   },
   "job.JobDetail": {
    "required": [
+    "podInfo",
+    "containerImages",
+    "initContainerImages",
     "parallelism",
     "jobStatus",
     "objectMeta",
     "typeMeta",
-    "podInfo",
-    "containerImages",
-    "initContainerImages",
     "completions",
     "errors"
    ],
@@ -11254,9 +11248,9 @@
   },
   "namespace.NamespaceDetail": {
    "required": [
+    "phase",
     "objectMeta",
     "typeMeta",
-    "phase",
     "resourceQuotaList",
     "resourceLimits",
     "errors"
@@ -11338,8 +11332,8 @@
   },
   "networkpolicy.NetworkPolicyDetail": {
    "required": [
-    "objectMeta",
     "typeMeta",
+    "objectMeta",
     "podSelector",
     "errors"
    ],
@@ -11674,16 +11668,16 @@
   },
   "persistentvolume.PersistentVolumeDetail": {
    "required": [
-    "capacity",
+    "storageClass",
+    "claim",
+    "reason",
     "accessModes",
+    "reclaimPolicy",
+    "capacity",
     "mountOptions",
     "status",
     "objectMeta",
     "typeMeta",
-    "reclaimPolicy",
-    "storageClass",
-    "claim",
-    "reason",
     "message",
     "persistentVolumeSource"
    ],
@@ -11801,13 +11795,13 @@
   },
   "persistentvolumeclaim.PersistentVolumeClaimDetail": {
    "required": [
+    "storageClass",
+    "objectMeta",
+    "typeMeta",
     "status",
     "volume",
     "capacity",
-    "accessModes",
-    "storageClass",
-    "objectMeta",
-    "typeMeta"
+    "accessModes"
    ],
    "properties": {
     "accessModes": {
@@ -12350,11 +12344,11 @@
   },
   "replicationcontroller.ReplicationControllerDetail": {
    "required": [
-    "initContainerImages",
-    "objectMeta",
     "typeMeta",
     "podInfo",
     "containerImages",
+    "initContainerImages",
+    "objectMeta",
     "labelSelector",
     "errors"
    ],
@@ -12623,8 +12617,8 @@
   },
   "rolebinding.RoleBindingDetail": {
    "required": [
-    "typeMeta",
     "objectMeta",
+    "typeMeta",
     "roleRef",
     "errors"
    ],
@@ -12673,36 +12667,6 @@
     },
     "listMeta": {
      "$ref": "#/definitions/types.ListMeta"
-    }
-   }
-  },
-  "runtime.TypeMeta": {
-   "properties": {
-    "apiVersion": {
-     "type": "string"
-    },
-    "kind": {
-     "type": "string"
-    }
-   }
-  },
-  "runtime.Unknown": {
-   "required": [
-    "ContentEncoding",
-    "ContentType"
-   ],
-   "properties": {
-    "ContentEncoding": {
-     "type": "string"
-    },
-    "ContentType": {
-     "type": "string"
-    },
-    "apiVersion": {
-     "type": "string"
-    },
-    "kind": {
-     "type": "string"
     }
    }
   },
@@ -12849,13 +12813,13 @@
   },
   "service.ServiceDetail": {
    "required": [
-    "objectMeta",
-    "typeMeta",
-    "internalEndpoint",
     "externalEndpoints",
     "selector",
     "type",
     "clusterIP",
+    "objectMeta",
+    "typeMeta",
+    "internalEndpoint",
     "endpointList",
     "sessionAffinity",
     "errors"
@@ -13019,11 +12983,11 @@
   },
   "statefulset.StatefulSetDetail": {
    "required": [
-    "initContainerImages",
-    "objectMeta",
     "typeMeta",
     "podInfo",
     "containerImages",
+    "initContainerImages",
+    "objectMeta",
     "errors"
    ],
    "properties": {
@@ -13175,12 +13139,12 @@
   },
   "types.CustomResourceDefinitionDetail": {
    "required": [
+    "established",
     "objectMeta",
     "typeMeta",
     "group",
     "scope",
     "names",
-    "established",
     "conditions",
     "objects",
     "subresources",

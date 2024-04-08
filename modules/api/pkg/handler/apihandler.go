@@ -91,6 +91,8 @@ type TerminalResponse struct {
 	ID string `json:"id"`
 }
 
+type JSON string
+
 // CreateHTTPAPIHandler creates a new HTTP handler that handles all requests to the API of the backend.
 func CreateHTTPAPIHandler(iManager integration.Manager) (*restful.Container, error) {
 	apiHandler := APIHandler{iManager: iManager}
@@ -882,7 +884,7 @@ func CreateHTTPAPIHandler(iManager integration.Manager) (*restful.Container, err
 			Param(apiV1Ws.PathParameter("kind", "kind of the resource")).
 			Param(apiV1Ws.PathParameter("namespace", "namespace of the resource")).
 			Param(apiV1Ws.PathParameter("name", "name of the resource")).
-			Returns(http.StatusOK, "OK", nil))
+			Returns(http.StatusNoContent, "", nil))
 	apiV1Ws.Route(
 		apiV1Ws.GET("/_raw/{kind}/namespace/{namespace}/name/{name}").To(apiHandler.handleGetResource).
 			// docs
@@ -899,8 +901,8 @@ func CreateHTTPAPIHandler(iManager integration.Manager) (*restful.Container, err
 			Param(apiV1Ws.PathParameter("kind", "kind of the resource")).
 			Param(apiV1Ws.PathParameter("namespace", "namespace of the resource")).
 			Param(apiV1Ws.PathParameter("name", "name of the resource")).
-			Reads(runtime.Unknown{}).
-			Returns(http.StatusOK, "OK", runtime.Unknown{}))
+			Reads(JSON("")).
+			Returns(http.StatusNoContent, "", nil))
 
 	// Verber (non-namespaced)
 	apiV1Ws.Route(
@@ -909,7 +911,7 @@ func CreateHTTPAPIHandler(iManager integration.Manager) (*restful.Container, err
 			Doc("deletes a non-namespaced resource").
 			Param(apiV1Ws.PathParameter("kind", "kind of the resource")).
 			Param(apiV1Ws.PathParameter("name", "name of the resource")).
-			Returns(http.StatusOK, "OK", nil))
+			Returns(http.StatusNoContent, "", nil))
 	apiV1Ws.Route(
 		apiV1Ws.GET("/_raw/{kind}/name/{name}").To(apiHandler.handleGetResource).
 			// docs
@@ -924,8 +926,8 @@ func CreateHTTPAPIHandler(iManager integration.Manager) (*restful.Container, err
 			Doc("creates a non-namespaced resource").
 			Param(apiV1Ws.PathParameter("kind", "kind of the resource")).
 			Param(apiV1Ws.PathParameter("name", "name of the resource")).
-			Reads(runtime.Unknown{}).
-			Returns(http.StatusOK, "OK", runtime.Unknown{}))
+			Reads(JSON("")).
+			Returns(http.StatusNoContent, "", nil))
 
 	// Generic resource scaling
 	apiV1Ws.Route(
@@ -2332,7 +2334,7 @@ func (apiHandler *APIHandler) handlePutResource(
 		return
 	}
 
-	response.WriteHeader(http.StatusCreated)
+	response.WriteHeader(http.StatusNoContent)
 }
 
 func (apiHandler *APIHandler) handleDeleteResource(
@@ -2353,7 +2355,7 @@ func (apiHandler *APIHandler) handleDeleteResource(
 		return
 	}
 
-	response.WriteHeader(http.StatusOK)
+	response.WriteHeader(http.StatusNoContent)
 }
 
 func (apiHandler *APIHandler) handleGetReplicationControllerPods(request *restful.Request, response *restful.Response) {
