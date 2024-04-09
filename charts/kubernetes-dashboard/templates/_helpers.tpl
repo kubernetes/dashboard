@@ -78,7 +78,9 @@ app.kubernetes.io/part-of: {{ include "kubernetes-dashboard.name" . }}
 {{- define "kubernetes-dashboard.app.csrf.secret.value" -}}
 {{- $secretName := (include "kubernetes-dashboard.app.csrf.secret.name" .) -}}
 {{- $secret := lookup "v1" "Secret" .Release.Namespace $secretName -}}
-{{- if and $secret (hasKey $secret "data") (hasKey $secret.data "private.key") (index $secret.data "private.key") -}}
+{{- if .Values.app.security.csrfKey -}}
+private.key: {{ .Values.app.security.csrfKey | b64enc | quote }}
+{{- else if and $secret (hasKey $secret "data") (hasKey $secret.data "private.key") (index $secret.data "private.key") -}}
 private.key: {{ index $secret.data "private.key" }}
 {{- else -}}
 private.key: {{ randBytes 256 | b64enc | quote }}
