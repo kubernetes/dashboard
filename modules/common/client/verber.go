@@ -20,9 +20,16 @@ import (
 	"net/http"
 
 	apiextensionsv1 "k8s.io/apiextensions-apiserver/pkg/apis/apiextensions/v1"
-	v1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	"k8s.io/apimachinery/pkg/apis/meta/v1/unstructured"
 	"k8s.io/apimachinery/pkg/runtime"
+	"k8s.io/apimachinery/pkg/runtime/schema"
+	k8stypes "k8s.io/apimachinery/pkg/types"
+	"k8s.io/apimachinery/pkg/util/jsonmergepatch"
+	"k8s.io/client-go/dynamic"
 	restclient "k8s.io/client-go/rest"
+	"k8s.io/client-go/util/retry"
+	"k8s.io/klog/v2"
 
 	"k8s.io/dashboard/errors"
 	"k8s.io/dashboard/types"
@@ -32,6 +39,7 @@ import (
 type restClient interface {
 	Delete() *restclient.Request
 	Put() *restclient.Request
+	Patch(pt k8stypes.PatchType) *restclient.Request
 	Get() *restclient.Request
 }
 
@@ -54,6 +62,7 @@ type resourceVerber struct {
 	networkingClient    restClient
 	apiExtensionsClient restClient
 	config              *restclient.Config
+	dynamic             *dynamic.DynamicClient
 }
 
 func (verber *resourceVerber) getRESTClientByType(clientType types.ClientType) restClient {
@@ -146,8 +155,8 @@ func (verber *resourceVerber) Delete(kind string, namespaceSet bool, namespace s
 	}
 
 	// Do cascade delete by default, as this is what users typically expect.
-	defaultPropagationPolicy := v1.DeletePropagationForeground
-	defaultDeleteOptions := &v1.DeleteOptions{
+	defaultPropagationPolicy := metav1.DeletePropagationForeground
+	defaultDeleteOptions := &metav1.DeleteOptions{
 		PropagationPolicy: &defaultPropagationPolicy,
 	}
 
@@ -165,26 +174,49 @@ func (verber *resourceVerber) Delete(kind string, namespaceSet bool, namespace s
 	return req.Do(context.TODO()).Error()
 }
 
-// Put puts new resource version of the given kind in the given namespace with the given name.
-func (verber *resourceVerber) Put(kind string, namespaceSet bool, namespace string, name string,
-	object *runtime.Unknown) error {
-
-	client, resourceSpec, err := verber.getResourceSpecFromKind(kind, namespaceSet)
+// Update patches resource of the given kind in the given namespace with the given name.
+func (verber *resourceVerber) Update(kind string, namespaceSet bool, namespace string, name string,
+	object *unstructured.Unstructured) error {
+	_, resourceSpec, err := verber.getResourceSpecFromKind(kind, namespaceSet)
 	if err != nil {
 		return err
 	}
 
-	req := client.Put().
-		Resource(resourceSpec.Resource).
-		Name(name).
-		SetHeader("Content-Type", "application/json").
-		Body(object.Raw)
-
-	if resourceSpec.Namespaced {
-		req.Namespace(namespace)
+	gvk := object.GetObjectKind().GroupVersionKind()
+	client := verber.dynamic
+	gvr := schema.GroupVersionResource{
+		Group:    gvk.Group,
+		Version:  gvk.Version,
+		Resource: resourceSpec.Resource,
 	}
 
-	return req.Do(context.TODO()).Error()
+	return retry.RetryOnConflict(retry.DefaultRetry, func() error {
+		klog.InfoS("fetching latest resource version", "group", gvr.Group, "version", gvr.Version, "resource", gvr.Resource, "name", name, "namespace", namespace)
+		result, getErr := client.Resource(gvr).Namespace(namespace).Get(context.TODO(), name, metav1.GetOptions{})
+		if getErr != nil {
+			return fmt.Errorf("failed to get latest %s version: %v", kind, getErr)
+		}
+
+		origData, err := result.MarshalJSON()
+		if err != nil {
+			return fmt.Errorf("failed to marshal original data: %+v", err)
+		}
+
+		// Ignore resource version from modified object as we want to reuse latest one.
+		object.SetResourceVersion("")
+		modifiedData, err := object.MarshalJSON()
+		if err != nil {
+			return fmt.Errorf("failed to marshal modified data: %+v", err)
+		}
+
+		patchBytes, err := jsonmergepatch.CreateThreeWayJSONMergePatch(origData, modifiedData, origData)
+		if err != nil {
+			return fmt.Errorf("failed creating merge patch: %+v", err)
+		}
+
+		_, updateErr := client.Resource(gvr).Namespace(namespace).Patch(context.TODO(), name, k8stypes.StrategicMergePatchType, patchBytes, metav1.PatchOptions{})
+		return updateErr
+	})
 }
 
 // Get gets the resource of the given kind in the given namespace with the given name.
@@ -221,6 +253,13 @@ func VerberClient(request *http.Request) (ResourceVerber, error) {
 		return nil, err
 	}
 
+	dynamicConfig := dynamic.ConfigFor(config)
+
+	dynamic, err := dynamic.NewForConfig(dynamicConfig)
+	if err != nil {
+		return nil, err
+	}
+
 	return &resourceVerber{
 		k8sClient.CoreV1().RESTClient(),
 		k8sClient.AppsV1().RESTClient(),
@@ -230,5 +269,6 @@ func VerberClient(request *http.Request) (ResourceVerber, error) {
 		k8sClient.RbacV1().RESTClient(),
 		k8sClient.NetworkingV1().RESTClient(),
 		extensionsClient.ApiextensionsV1().RESTClient(),
-		config}, nil
+		config,
+		dynamic}, nil
 }

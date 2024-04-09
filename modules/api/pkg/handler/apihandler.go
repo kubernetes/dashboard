@@ -15,6 +15,7 @@
 package handler
 
 import (
+	"io"
 	"log"
 	"net/http"
 	"strconv"
@@ -30,7 +31,6 @@ import (
 
 	"github.com/emicklei/go-restful/v3"
 	"golang.org/x/net/xsrftoken"
-	"k8s.io/apimachinery/pkg/runtime"
 	"k8s.io/client-go/tools/remotecommand"
 
 	"k8s.io/dashboard/api/pkg/handler/parser"
@@ -2323,13 +2323,20 @@ func (apiHandler *APIHandler) handlePutResource(
 	kind := request.PathParameter("kind")
 	namespace, ok := request.PathParameters()["namespace"]
 	name := request.PathParameter("name")
-	putSpec := &runtime.Unknown{}
-	if err := request.ReadEntity(putSpec); err != nil {
+	raw := &unstructured.Unstructured{}
+	bytes, err := io.ReadAll(request.Request.Body)
+	if err != nil {
 		errors.HandleInternalError(response, err)
 		return
 	}
 
-	if err := verber.Put(kind, ok, namespace, name, putSpec); err != nil {
+	err = raw.UnmarshalJSON(bytes)
+	if err != nil {
+		errors.HandleInternalError(response, err)
+		return
+	}
+
+	if err = verber.Update(kind, ok, namespace, name, raw); err != nil {
 		errors.HandleInternalError(response, err)
 		return
 	}
