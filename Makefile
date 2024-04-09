@@ -151,7 +151,6 @@ helm: --ensure-kind-cluster --ensure-kind-ingress-nginx --ensure-helm-dependenci
 		--set cert-manager.enabled=true \
 		--set app.ingress.enabled=true \
 		--set app.ingress.ingressClassName=nginx \
-		--set api.scaling.replicas=3 \
 		charts/kubernetes-dashboard
 
 # Installs latest version of Kubernetes Dashboard in our dedicated kind cluster.
@@ -173,7 +172,6 @@ helm-release: --ensure-kind-cluster --ensure-kind-ingress-nginx --ensure-helm-de
 		--set metrics-server.enabled=true \
 		--set app.ingress.enabled=true \
 		--set app.ingress.ingressClassName=nginx \
-		--set api.scaling.replicas=3 \
 		charts/kubernetes-dashboard
 
 # To serve Dashboard under a different path than root (/) use:

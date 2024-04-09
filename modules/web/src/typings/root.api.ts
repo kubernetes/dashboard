@@ -185,6 +185,7 @@ export interface ReplicaSetList extends ResourceList {
 }
 
 export interface ReplicationControllerList extends ResourceList {
+  cumulativeMetrics: Metric[] | null;
   replicationControllers: ReplicationController[];
   status: Status;
 }

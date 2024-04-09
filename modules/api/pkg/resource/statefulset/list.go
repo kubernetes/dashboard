@@ -53,7 +53,7 @@ type StatefulSet struct {
 // GetStatefulSetList returns a list of all Stateful Sets in the cluster.
 func GetStatefulSetList(client kubernetes.Interface, nsQuery *common.NamespaceQuery,
 	dsQuery *dataselect.DataSelectQuery, metricClient metricapi.MetricClient) (*StatefulSetList, error) {
-	log.Print("Getting list of all pet sets in the cluster")
+	log.Print("Getting list of all stateful sets in the cluster")
 
 	channels := &common.ResourceChannels{
 		StatefulSetList: common.GetStatefulSetListChannel(client, nsQuery, 1),

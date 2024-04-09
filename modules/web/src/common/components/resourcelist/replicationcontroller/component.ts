@@ -14,7 +14,7 @@
 
 import {HttpParams} from '@angular/common/http';
 import {ChangeDetectionStrategy, ChangeDetectorRef, Component, Input} from '@angular/core';
-import {Event, ReplicationController, ReplicationControllerList} from '@api/root.api';
+import {Event, Metric, ReplicationController, ReplicationControllerList} from '@api/root.api';
 import {Observable} from 'rxjs';
 
 import {ResourceListWithStatuses} from '@common/resources/list';
@@ -35,6 +35,8 @@ export class ReplicationControllerListComponent extends ResourceListWithStatuses
   ReplicationController
 > {
   @Input() endpoint = EndpointManager.resource(Resource.replicationController, true).list();
+  @Input() showMetrics = false;
+  cumulativeMetrics: Metric[];
 
   constructor(
     private readonly replicationController_: NamespacedResourceService<ReplicationControllerList>,
@@ -62,6 +64,7 @@ export class ReplicationControllerListComponent extends ResourceListWithStatuses
   }
 
   map(rcList: ReplicationControllerList): ReplicationController[] {
+    this.cumulativeMetrics = rcList.cumulativeMetrics;
     return rcList.replicationControllers;
   }
 

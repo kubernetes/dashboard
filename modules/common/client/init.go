@@ -23,6 +23,7 @@ import (
 	"k8s.io/client-go/rest"
 	"k8s.io/client-go/tools/clientcmd"
 	"k8s.io/client-go/tools/clientcmd/api"
+	"k8s.io/client-go/util/flowcontrol"
 	"k8s.io/klog/v2"
 
 	"k8s.io/dashboard/errors"
@@ -61,6 +62,7 @@ func (in *configBuilder) buildBaseConfig() (*rest.Config, error) {
 		return nil, err
 	}
 
+	config.RateLimiter = flowcontrol.NewFakeAlwaysRateLimiter()
 	config.QPS = DefaultQPS
 	config.Burst = DefaultBurst
 	config.ContentType = DefaultContentType

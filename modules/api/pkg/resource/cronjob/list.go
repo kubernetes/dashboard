@@ -21,7 +21,6 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	client "k8s.io/client-go/kubernetes"
 
-	metricapi "k8s.io/dashboard/api/pkg/integration/metric/api"
 	"k8s.io/dashboard/api/pkg/resource/common"
 	"k8s.io/dashboard/api/pkg/resource/dataselect"
 	"k8s.io/dashboard/errors"
@@ -30,9 +29,8 @@ import (
 
 // CronJobList contains a list of CronJobs in the cluster.
 type CronJobList struct {
-	ListMeta          types.ListMeta     `json:"listMeta"`
-	CumulativeMetrics []metricapi.Metric `json:"cumulativeMetrics"`
-	Items             []CronJob          `json:"items"`
+	ListMeta types.ListMeta `json:"listMeta"`
+	Items    []CronJob      `json:"items"`
 
 	// Basic information about resources status on the list.
 	Status common.ResourceStatus `json:"status"`
@@ -56,20 +54,19 @@ type CronJob struct {
 
 // GetCronJobList returns a list of all CronJobs in the cluster.
 func GetCronJobList(client client.Interface, nsQuery *common.NamespaceQuery,
-	dsQuery *dataselect.DataSelectQuery, metricClient metricapi.MetricClient) (*CronJobList, error) {
+	dsQuery *dataselect.DataSelectQuery) (*CronJobList, error) {
 	log.Print("Getting list of all cron jobs in the cluster")
 
 	channels := &common.ResourceChannels{
 		CronJobList: common.GetCronJobListChannel(client, nsQuery, 1),
 	}
 
-	return GetCronJobListFromChannels(channels, dsQuery, metricClient)
+	return GetCronJobListFromChannels(channels, dsQuery)
 }
 
 // GetCronJobListFromChannels returns a list of all CronJobs in the cluster reading required resource
 // list once from the channels.
-func GetCronJobListFromChannels(channels *common.ResourceChannels, dsQuery *dataselect.DataSelectQuery,
-	metricClient metricapi.MetricClient) (*CronJobList, error) {
+func GetCronJobListFromChannels(channels *common.ResourceChannels, dsQuery *dataselect.DataSelectQuery) (*CronJobList, error) {
 
 	cronJobs := <-channels.CronJobList.List
 	err := <-channels.CronJobList.Error
@@ -78,13 +75,12 @@ func GetCronJobListFromChannels(channels *common.ResourceChannels, dsQuery *data
 		return nil, criticalError
 	}
 
-	cronJobList := toCronJobList(cronJobs.Items, nonCriticalErrors, dsQuery, metricClient)
+	cronJobList := toCronJobList(cronJobs.Items, nonCriticalErrors, dsQuery)
 	cronJobList.Status = getStatus(cronJobs)
 	return cronJobList, nil
 }
 
-func toCronJobList(cronJobs []batch.CronJob, nonCriticalErrors []error, dsQuery *dataselect.DataSelectQuery,
-	metricClient metricapi.MetricClient) *CronJobList {
+func toCronJobList(cronJobs []batch.CronJob, nonCriticalErrors []error, dsQuery *dataselect.DataSelectQuery) *CronJobList {
 
 	list := &CronJobList{
 		Items:    make([]CronJob, 0),
@@ -92,22 +88,12 @@ func toCronJobList(cronJobs []batch.CronJob, nonCriticalErrors []error, dsQuery 
 		Errors:   nonCriticalErrors,
 	}
 
-	cachedResources := &metricapi.CachedResources{}
-
-	cronJobCells, metricPromises, filteredTotal := dataselect.GenericDataSelectWithFilterAndMetrics(ToCells(cronJobs),
-		dsQuery, cachedResources, metricClient)
+	cronJobCells, filteredTotal := dataselect.GenericDataSelectWithFilter(ToCells(cronJobs), dsQuery)
 	cronJobs = FromCells(cronJobCells)
 	list.ListMeta = types.ListMeta{TotalItems: filteredTotal}
 
 	for _, cronJob := range cronJobs {
 		list.Items = append(list.Items, toCronJob(&cronJob))
-	}
-
-	cumulativeMetrics, err := metricPromises.GetMetrics()
-	if err != nil {
-		list.CumulativeMetrics = make([]metricapi.Metric, 0)
-	} else {
-		list.CumulativeMetrics = cumulativeMetrics
 	}
 
 	return list
