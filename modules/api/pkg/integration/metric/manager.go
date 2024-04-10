@@ -116,8 +116,8 @@ func (self *metricManager) List() []integrationapi.Integration {
 
 // ConfigureSidecar implements metric manager interface. See MetricManager for more information.
 func (self *metricManager) ConfigureSidecar(host string) MetricManager {
-	kubeClient := client.InClusterClient()
-	metricClient, err := sidecar.CreateSidecarClient(host, kubeClient)
+	inClusterClient := client.InClusterClient()
+	metricClient, err := sidecar.CreateSidecarClient(host, inClusterClient)
 	if err != nil {
 		klog.Errorf("There was an error during sidecar client creation: %s", err.Error())
 		return self

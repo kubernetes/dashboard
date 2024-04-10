@@ -23,9 +23,7 @@ import (
 	v1 "k8s.io/api/authorization/v1"
 	apiextensionsclientset "k8s.io/apiextensions-apiserver/pkg/client/clientset/clientset"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
-	"k8s.io/apimachinery/pkg/runtime"
-	"k8s.io/apimachinery/pkg/runtime/schema"
-	"k8s.io/apimachinery/pkg/runtime/serializer"
+	"k8s.io/client-go/kubernetes"
 	client "k8s.io/client-go/kubernetes"
 	"k8s.io/client-go/rest"
 	"k8s.io/klog/v2"
@@ -60,7 +58,7 @@ func Client(request *http.Request) (client.Interface, error) {
 	return clientFromRequest(request)
 }
 
-func APIExtensionsClient(request *http.Request) (*apiextensionsclientset.Clientset, error) {
+func APIExtensionsClient(request *http.Request) (apiextensionsclientset.Interface, error) {
 	if !isInitialized() {
 		return nil, fmt.Errorf("client package not initialized")
 	}
@@ -81,6 +79,16 @@ func Config(request *http.Request) (*rest.Config, error) {
 	return configFromRequest(request)
 }
 
+func RestClientForHost(host string) (rest.Interface, error) {
+	config := setConfigRateLimitDefaults(&rest.Config{Host: host})
+	restClient, err := kubernetes.NewForConfig(config)
+	if err != nil {
+		return nil, err
+	}
+
+	return restClient.RESTClient(), nil
+}
+
 func CanI(request *http.Request, ssar *v1.SelfSubjectAccessReview) bool {
 	k8sClient, err := Client(request)
 	if err != nil {
@@ -95,32 +103,4 @@ func CanI(request *http.Request, ssar *v1.SelfSubjectAccessReview) bool {
 	}
 
 	return response.Status.Allowed
-}
-
-func RESTClient(config *rest.Config, group, version string) (*rest.RESTClient, error) {
-	groupVersion := schema.GroupVersion{
-		Group:   group,
-		Version: version,
-	}
-
-	scheme := runtime.NewScheme()
-	schemeBuilder := runtime.NewSchemeBuilder(
-		func(scheme *runtime.Scheme) error {
-			scheme.AddKnownTypes(
-				groupVersion,
-				&metaV1.ListOptions{},
-				&metaV1.DeleteOptions{},
-			)
-			return nil
-		})
-	if err := schemeBuilder.AddToScheme(scheme); err != nil {
-		return nil, err
-	}
-
-	config.GroupVersion = &groupVersion
-	config.APIPath = "/apis"
-	config.ContentType = runtime.ContentTypeJSON
-	config.NegotiatedSerializer = serializer.WithoutConversionCodecFactory{CodecFactory: serializer.NewCodecFactory(scheme)}
-
-	return rest.RESTClientFor(config)
 }

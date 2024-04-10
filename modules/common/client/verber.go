@@ -18,136 +18,107 @@ import (
 	"context"
 	"fmt"
 	"net/http"
+	"strings"
 
-	apiextensionsv1 "k8s.io/apiextensions-apiserver/pkg/apis/apiextensions/v1"
-	v1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	"github.com/gobuffalo/flect"
+	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	"k8s.io/apimachinery/pkg/apis/meta/v1/unstructured"
 	"k8s.io/apimachinery/pkg/runtime"
-	restclient "k8s.io/client-go/rest"
-
-	"k8s.io/dashboard/errors"
-	"k8s.io/dashboard/types"
+	"k8s.io/apimachinery/pkg/runtime/schema"
+	k8stypes "k8s.io/apimachinery/pkg/types"
+	"k8s.io/apimachinery/pkg/util/jsonmergepatch"
+	"k8s.io/client-go/discovery"
+	"k8s.io/client-go/dynamic"
+	"k8s.io/client-go/util/retry"
+	"k8s.io/klog/v2"
 )
 
-// restClient is an interface for REST operations used in this file.
-type restClient interface {
-	Delete() *restclient.Request
-	Put() *restclient.Request
-	Get() *restclient.Request
-}
-
-type crdInfo struct {
-	version    string
-	group      string
-	pluralName string
-	namespaced bool
-}
+var (
+	kindToGroupVersionResource = map[string]schema.GroupVersionResource{}
+)
 
 // resourceVerber is a struct responsible for doing common verb operations on resources, like
 // DELETE, PUT, UPDATE.
 type resourceVerber struct {
-	client              restClient
-	appsClient          restClient
-	batchClient         restClient
-	autoscalingClient   restClient
-	storageClient       restClient
-	rbacClient          restClient
-	networkingClient    restClient
-	apiExtensionsClient restClient
-	config              *restclient.Config
+	client    dynamic.Interface
+	discovery discovery.DiscoveryInterface
 }
 
-func (verber *resourceVerber) getRESTClientByType(clientType types.ClientType) restClient {
-	switch clientType {
-	case types.ClientTypeAppsClient:
-		return verber.appsClient
-	case types.ClientTypeBatchClient:
-		return verber.batchClient
-	case types.ClientTypeAutoscalingClient:
-		return verber.autoscalingClient
-	case types.ClientTypeStorageClient:
-		return verber.storageClient
-	case types.ClientTypeRbacClient:
-		return verber.rbacClient
-	case types.ClientTypeNetworkingClient:
-		return verber.networkingClient
-	case types.ClientTypeAPIExtensionsClient:
-		return verber.apiExtensionsClient
-	default:
-		return verber.client
+func (v *resourceVerber) groupVersionResourceFromUnstructured(object *unstructured.Unstructured) schema.GroupVersionResource {
+	gvk := object.GetObjectKind().GroupVersionKind()
+
+	return schema.GroupVersionResource{
+		Group:    gvk.Group,
+		Version:  gvk.Version,
+		Resource: flect.Pluralize(strings.ToLower(gvk.Kind)),
 	}
 }
 
-func (verber *resourceVerber) getResourceSpecFromKind(kind string, namespaceSet bool) (client restClient, resourceSpec types.APIMapping, err error) {
-	resourceSpec, ok := types.APIMappingByKind(types.ResourceKind(kind))
-	if !ok {
-		var crdInfo crdInfo
-
-		// check if kind is CRD
-		crdInfo, err = verber.getCRDGroupAndVersion(kind)
-		if err != nil {
-			return
-		}
-
-		client, err = RESTClient(verber.config, crdInfo.group, crdInfo.version)
-		if err != nil {
-			return
-		}
-
-		resourceSpec = types.APIMapping{
-			Resource:   crdInfo.pluralName,
-			Namespaced: crdInfo.namespaced,
-		}
+func (v *resourceVerber) groupVersionResourceFromKind(kind string) (schema.GroupVersionResource, error) {
+	if gvr, exists := kindToGroupVersionResource[kind]; exists {
+		klog.V(3).InfoS("GroupVersionResource cache hit", "kind", kind)
+		return gvr, nil
 	}
 
-	if namespaceSet != resourceSpec.Namespaced {
-		if namespaceSet {
-			err = errors.NewInvalid(fmt.Sprintf("Set namespace for not-namespaced resource kind: %s", kind))
-			return
-		}
-		err = errors.NewInvalid(fmt.Sprintf("Set no namespace for namespaced resource kind: %s", kind))
-		return
-	}
-
-	if client == nil {
-		client = verber.getRESTClientByType(resourceSpec.ClientType)
-	}
-	return
-}
-
-func (verber *resourceVerber) getCRDGroupAndVersion(kind string) (info crdInfo, err error) {
-	var crdv1 apiextensionsv1.CustomResourceDefinition
-
-	err = verber.apiExtensionsClient.Get().Resource("customresourcedefinitions").Name(kind).Do(context.TODO()).Into(&crdv1)
+	klog.V(3).InfoS("GroupVersionResource cache miss", "kind", kind)
+	_, resourceList, err := v.discovery.ServerGroupsAndResources()
 	if err != nil {
-		if errors.IsNotFound(err) {
-			return info, errors.NewInvalid(fmt.Sprintf("Unknown resource kind: %s", kind))
+		return schema.GroupVersionResource{}, err
+	}
+
+	// Update cache
+	if err = v.buildGroupVersionResourceCache(resourceList); err != nil {
+		return schema.GroupVersionResource{}, err
+	}
+
+	if gvr, exists := kindToGroupVersionResource[kind]; exists {
+		return gvr, nil
+	}
+
+	return schema.GroupVersionResource{}, fmt.Errorf("could not find GVR for kind %s", kind)
+}
+
+func (v *resourceVerber) buildGroupVersionResourceCache(resourceList []*metav1.APIResourceList) error {
+	for _, resource := range resourceList {
+		gv, err := schema.ParseGroupVersion(resource.GroupVersion)
+		if err != nil {
+			return err
 		}
 
-		return
+		for _, apiResource := range resource.APIResources {
+			crdKind := fmt.Sprintf("%s.%s", apiResource.Name, gv.Group)
+			gvr := schema.GroupVersionResource{
+				Group:    gv.Group,
+				Version:  gv.Version,
+				Resource: apiResource.Name,
+			}
+
+			// Ignore sub-resources. Top level resource names should not contain slash
+			if strings.Contains(apiResource.Name, "/") {
+				continue
+			}
+
+			// Mapping for core resources
+			kindToGroupVersionResource[strings.ToLower(apiResource.Kind)] = gvr
+
+			// Mapping for CRD resources with custom kind
+			kindToGroupVersionResource[crdKind] = gvr
+		}
 	}
 
-	if len(crdv1.Spec.Versions) > 0 {
-		info.group = crdv1.Spec.Group
-		info.version = crdv1.Spec.Versions[0].Name
-		info.pluralName = crdv1.Status.AcceptedNames.Plural
-		info.namespaced = crdv1.Spec.Scope == apiextensionsv1.NamespaceScoped
-
-		return
-	}
-
-	return
+	return nil
 }
 
 // Delete deletes the resource of the given kind in the given namespace with the given name.
-func (verber *resourceVerber) Delete(kind string, namespaceSet bool, namespace string, name string, deleteNow bool) error {
-	client, resourceSpec, err := verber.getResourceSpecFromKind(kind, namespaceSet)
+func (v *resourceVerber) Delete(kind string, namespace string, name string, deleteNow bool) error {
+	gvr, err := v.groupVersionResourceFromKind(kind)
 	if err != nil {
 		return err
 	}
 
 	// Do cascade delete by default, as this is what users typically expect.
-	defaultPropagationPolicy := v1.DeletePropagationForeground
-	defaultDeleteOptions := &v1.DeleteOptions{
+	defaultPropagationPolicy := metav1.DeletePropagationForeground
+	defaultDeleteOptions := metav1.DeleteOptions{
 		PropagationPolicy: &defaultPropagationPolicy,
 	}
 
@@ -156,79 +127,75 @@ func (verber *resourceVerber) Delete(kind string, namespaceSet bool, namespace s
 		defaultDeleteOptions.GracePeriodSeconds = &gracePeriodSeconds
 	}
 
-	req := client.Delete().Resource(resourceSpec.Resource).Name(name).Body(defaultDeleteOptions)
-
-	if resourceSpec.Namespaced {
-		req.Namespace(namespace)
-	}
-
-	return req.Do(context.TODO()).Error()
+	return v.client.Resource(gvr).Namespace(namespace).Delete(context.TODO(), name, defaultDeleteOptions)
 }
 
-// Put puts new resource version of the given kind in the given namespace with the given name.
-func (verber *resourceVerber) Put(kind string, namespaceSet bool, namespace string, name string,
-	object *runtime.Unknown) error {
+// Update patches resource of the given kind in the given namespace with the given name.
+func (v *resourceVerber) Update(object *unstructured.Unstructured) error {
+	name := object.GetName()
+	namespace := object.GetNamespace()
+	gvr := v.groupVersionResourceFromUnstructured(object)
 
-	client, resourceSpec, err := verber.getResourceSpecFromKind(kind, namespaceSet)
-	if err != nil {
-		return err
-	}
+	return retry.RetryOnConflict(retry.DefaultRetry, func() error {
+		klog.V(2).InfoS("fetching latest resource version", "group", gvr.Group, "version", gvr.Version, "resource", gvr.Resource, "name", name, "namespace", namespace)
+		result, getErr := v.client.Resource(gvr).Namespace(namespace).Get(context.TODO(), name, metav1.GetOptions{})
+		if getErr != nil {
+			return fmt.Errorf("failed to get latest %s version: %v", gvr.Resource, getErr)
+		}
 
-	req := client.Put().
-		Resource(resourceSpec.Resource).
-		Name(name).
-		SetHeader("Content-Type", "application/json").
-		Body(object.Raw)
+		origData, err := result.MarshalJSON()
+		if err != nil {
+			return fmt.Errorf("failed to marshal original data: %+v", err)
+		}
 
-	if resourceSpec.Namespaced {
-		req.Namespace(namespace)
-	}
+		// Update resource version from latest object to not end up with resource version conflict.
+		object.SetResourceVersion(result.GetResourceVersion())
+		modifiedData, err := object.MarshalJSON()
+		if err != nil {
+			return fmt.Errorf("failed to marshal modified data: %+v", err)
+		}
 
-	return req.Do(context.TODO()).Error()
+		patchBytes, err := jsonmergepatch.CreateThreeWayJSONMergePatch(origData, modifiedData, origData)
+		if err != nil {
+			return fmt.Errorf("failed creating merge patch: %+v", err)
+		}
+
+		klog.V(3).InfoS("patching resource", "group", gvr.Group, "version", gvr.Version, "resource", gvr.Resource, "name", name, "namespace", namespace, "patch", string(patchBytes))
+		_, updateErr := v.client.Resource(gvr).Namespace(namespace).Patch(context.TODO(), name, k8stypes.MergePatchType, patchBytes, metav1.PatchOptions{})
+		return updateErr
+	})
 }
 
 // Get gets the resource of the given kind in the given namespace with the given name.
-func (verber *resourceVerber) Get(kind string, namespaceSet bool, namespace string, name string) (runtime.Object, error) {
-	client, resourceSpec, err := verber.getResourceSpecFromKind(kind, namespaceSet)
+func (v *resourceVerber) Get(kind string, namespace string, name string) (runtime.Object, error) {
+	gvr, err := v.groupVersionResourceFromKind(kind)
 	if err != nil {
 		return nil, err
 	}
 
-	result := &runtime.Unknown{}
-	req := client.Get().Resource(resourceSpec.Resource).Name(name).SetHeader("Accept", "application/json")
-
-	if resourceSpec.Namespaced {
-		req.Namespace(namespace)
-	}
-
-	err = req.Do(context.TODO()).Into(result)
-	return result, err
+	return v.client.Resource(gvr).Namespace(namespace).Get(context.TODO(), name, metav1.GetOptions{})
 }
 
 func VerberClient(request *http.Request) (ResourceVerber, error) {
-	k8sClient, err := clientFromRequest(request)
-	if err != nil {
-		return nil, err
-	}
-
 	config, err := configFromRequest(request)
 	if err != nil {
 		return nil, err
 	}
 
-	extensionsClient, err := APIExtensionsClient(request)
+	discoveryClient, err := discovery.NewDiscoveryClientForConfig(config)
+	if err != nil {
+		return nil, err
+	}
+
+	dynamicConfig := dynamic.ConfigFor(config)
+
+	dynamicClient, err := dynamic.NewForConfig(dynamicConfig)
 	if err != nil {
 		return nil, err
 	}
 
 	return &resourceVerber{
-		k8sClient.CoreV1().RESTClient(),
-		k8sClient.AppsV1().RESTClient(),
-		k8sClient.BatchV1().RESTClient(),
-		k8sClient.AutoscalingV1().RESTClient(),
-		k8sClient.StorageV1().RESTClient(),
-		k8sClient.RbacV1().RESTClient(),
-		k8sClient.NetworkingV1().RESTClient(),
-		extensionsClient.ApiextensionsV1().RESTClient(),
-		config}, nil
+		client:    dynamicClient,
+		discovery: discoveryClient,
+	}, nil
 }

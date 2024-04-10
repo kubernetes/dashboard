@@ -15,6 +15,7 @@
 package client
 
 import (
+	"k8s.io/apimachinery/pkg/apis/meta/v1/unstructured"
 	"k8s.io/apimachinery/pkg/runtime"
 )
 
@@ -43,8 +44,7 @@ const (
 
 // ResourceVerber is responsible for performing generic CRUD operations on all supported resources.
 type ResourceVerber interface {
-	Put(kind string, namespaceSet bool, namespace string, name string,
-		object *runtime.Unknown) error
-	Get(kind string, namespaceSet bool, namespace string, name string) (runtime.Object, error)
-	Delete(kind string, namespaceSet bool, namespace string, name string, deleteNow bool) error
+	Update(object *unstructured.Unstructured) error
+	Get(kind string, namespace string, name string) (runtime.Object, error)
+	Delete(kind string, namespace string, name string, deleteNow bool) error
 }

@@ -24,8 +24,9 @@ import (
 
 	"k8s.io/apimachinery/pkg/types"
 	"k8s.io/client-go/kubernetes"
-	"k8s.io/client-go/rest"
+	"k8s.io/klog/v2"
 
+	"k8s.io/dashboard/api/pkg/args"
 	integrationapi "k8s.io/dashboard/api/pkg/integration/api"
 	metricapi "k8s.io/dashboard/api/pkg/integration/metric/api"
 	"k8s.io/dashboard/api/pkg/integration/metric/common"
@@ -262,20 +263,17 @@ func (self sidecarClient) unmarshalType(path string, v interface{}) error {
 // string the function assumes that it is running inside a Kubernetes cluster and connects via
 // service proxy. sidecarHost param is in the format of protocol://address:port,
 // e.g., http://localhost:8002.
-func CreateSidecarClient(host string, k8sClient kubernetes.Interface) (
-	metricapi.MetricClient, error) {
-	if host == "" && k8sClient != nil {
-		log.Print("Creating in-cluster Sidecar client")
-		c := inClusterSidecarClient{client: k8sClient.CoreV1().RESTClient()}
-		return sidecarClient{client: c}, nil
+func CreateSidecarClient(host string, inClusterClient kubernetes.Interface) (metricapi.MetricClient, error) {
+	if host == "" && inClusterClient != nil {
+		klog.V(args.LogLevelInfo).Info("Creating in-cluster Sidecar client")
+		return sidecarClient{client: inClusterSidecarClient{client: inClusterClient.CoreV1().RESTClient()}}, nil
 	}
 
-	cfg := &rest.Config{Host: host, QPS: client.DefaultQPS, Burst: client.DefaultBurst}
-	restClient, err := kubernetes.NewForConfig(cfg)
+	klog.V(args.LogLevelInfo).InfoS("Creating remote Sidecar client", "host", host)
+	restClient, err := client.RestClientForHost(host)
 	if err != nil {
 		return sidecarClient{}, err
 	}
-	log.Printf("Creating remote Sidecar client for %s", host)
-	c := remoteSidecarClient{client: restClient.RESTClient()}
-	return sidecarClient{client: c}, nil
+
+	return sidecarClient{client: remoteSidecarClient{client: restClient}}, nil
 }

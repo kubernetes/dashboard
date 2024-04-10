@@ -15,6 +15,7 @@
 package handler
 
 import (
+	"io"
 	"log"
 	"net/http"
 	"strconv"
@@ -30,7 +31,6 @@ import (
 
 	"github.com/emicklei/go-restful/v3"
 	"golang.org/x/net/xsrftoken"
-	"k8s.io/apimachinery/pkg/runtime"
 	"k8s.io/client-go/tools/remotecommand"
 
 	"k8s.io/dashboard/api/pkg/handler/parser"
@@ -897,7 +897,7 @@ func CreateHTTPAPIHandler(iManager integration.Manager) (*restful.Container, err
 	apiV1Ws.Route(
 		apiV1Ws.PUT("/_raw/{kind}/namespace/{namespace}/name/{name}").To(apiHandler.handlePutResource).
 			// docs
-			Doc("creates a resource in a namespace").
+			Doc("creates or updates a resource in a namespace").
 			Param(apiV1Ws.PathParameter("kind", "kind of the resource")).
 			Param(apiV1Ws.PathParameter("namespace", "namespace of the resource")).
 			Param(apiV1Ws.PathParameter("name", "name of the resource")).
@@ -923,7 +923,7 @@ func CreateHTTPAPIHandler(iManager integration.Manager) (*restful.Container, err
 	apiV1Ws.Route(
 		apiV1Ws.PUT("/_raw/{kind}/name/{name}").To(apiHandler.handlePutResource).
 			// docs
-			Doc("creates a non-namespaced resource").
+			Doc("creates or updates a non-namespaced resource").
 			Param(apiV1Ws.PathParameter("kind", "kind of the resource")).
 			Param(apiV1Ws.PathParameter("name", "name of the resource")).
 			Reads(JSON("")).
@@ -2301,9 +2301,9 @@ func (apiHandler *APIHandler) handleGetResource(request *restful.Request, respon
 	}
 
 	kind := request.PathParameter("kind")
-	namespace, ok := request.PathParameters()["namespace"]
+	namespace := request.PathParameters()["namespace"]
 	name := request.PathParameter("name")
-	result, err := verber.Get(kind, ok, namespace, name)
+	result, err := verber.Get(kind, namespace, name)
 	if err != nil {
 		errors.HandleInternalError(response, err)
 		return
@@ -2320,16 +2320,20 @@ func (apiHandler *APIHandler) handlePutResource(
 		return
 	}
 
-	kind := request.PathParameter("kind")
-	namespace, ok := request.PathParameters()["namespace"]
-	name := request.PathParameter("name")
-	putSpec := &runtime.Unknown{}
-	if err := request.ReadEntity(putSpec); err != nil {
+	raw := &unstructured.Unstructured{}
+	bytes, err := io.ReadAll(request.Request.Body)
+	if err != nil {
 		errors.HandleInternalError(response, err)
 		return
 	}
 
-	if err := verber.Put(kind, ok, namespace, name, putSpec); err != nil {
+	err = raw.UnmarshalJSON(bytes)
+	if err != nil {
+		errors.HandleInternalError(response, err)
+		return
+	}
+
+	if err = verber.Update(raw); err != nil {
 		errors.HandleInternalError(response, err)
 		return
 	}
@@ -2346,11 +2350,11 @@ func (apiHandler *APIHandler) handleDeleteResource(
 	}
 
 	kind := request.PathParameter("kind")
-	namespace, ok := request.PathParameters()["namespace"]
+	namespace := request.PathParameters()["namespace"]
 	name := request.PathParameter("name")
 	deleteNow := request.QueryParameter("deleteNow") == "true"
 
-	if err := verber.Delete(kind, ok, namespace, name, deleteNow); err != nil {
+	if err := verber.Delete(kind, namespace, name, deleteNow); err != nil {
 		errors.HandleInternalError(response, err)
 		return
 	}
@@ -2896,8 +2900,8 @@ func (apiHandler *APIHandler) handleGetCronJobList(request *restful.Request, res
 
 	namespace := parseNamespacePathParameter(request)
 	dataSelect := parser.ParseDataSelectPathParameter(request)
-	dataSelect.MetricQuery = dataselect.StandardMetrics
-	result, err := cronjob.GetCronJobList(k8sClient, namespace, dataSelect, apiHandler.iManager.Metric().Client())
+	dataSelect.MetricQuery = dataselect.NoMetrics
+	result, err := cronjob.GetCronJobList(k8sClient, namespace, dataSelect)
 	if err != nil {
 		errors.HandleInternalError(response, err)
 		return

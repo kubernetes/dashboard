@@ -42,10 +42,11 @@ type configBuilder struct {
 	insecure       bool
 }
 
-func (in *configBuilder) buildBaseConfig() (*rest.Config, error) {
+func (in *configBuilder) buildBaseConfig() (config *rest.Config, err error) {
 	if len(in.kubeconfigPath) == 0 && len(in.masterUrl) == 0 {
 		klog.Info("Using in-cluster config")
-		return rest.InClusterConfig()
+		config, err = rest.InClusterConfig()
+		return in.setConfigDefaults(config), err
 	}
 
 	if len(in.kubeconfigPath) > 0 {
@@ -56,18 +57,35 @@ func (in *configBuilder) buildBaseConfig() (*rest.Config, error) {
 		klog.InfoS("Using apiserver-host location", "masterUrl", in.masterUrl)
 	}
 
-	config, err := clientcmd.BuildConfigFromFlags(in.masterUrl, in.kubeconfigPath)
+	config, err = clientcmd.BuildConfigFromFlags(in.masterUrl, in.kubeconfigPath)
 	if err != nil {
 		return nil, err
 	}
 
-	config.QPS = DefaultQPS
-	config.Burst = DefaultBurst
+	return in.setConfigDefaults(config), nil
+}
+
+func (in *configBuilder) setConfigDefaults(config *rest.Config) *rest.Config {
+	if config == nil {
+		return nil
+	}
+
 	config.ContentType = DefaultContentType
 	config.UserAgent = DefaultUserAgent + "/" + in.userAgent
 	config.TLSClientConfig.Insecure = in.insecure
 
-	return config, nil
+	return setConfigRateLimitDefaults(config)
+}
+
+func setConfigRateLimitDefaults(config *rest.Config) *rest.Config {
+	if config == nil {
+		return nil
+	}
+
+	config.QPS = DefaultQPS
+	config.Burst = DefaultBurst
+
+	return config
 }
 
 func newConfigBuilder(options ...Option) *configBuilder {
