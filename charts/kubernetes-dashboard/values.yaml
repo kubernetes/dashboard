@@ -127,7 +127,7 @@ auth:
   role: auth
   image:
     repository: docker.io/kubernetesui/dashboard-auth
-    tag: 1.1.2
+    tag: 1.1.3
   scaling:
     replicas: 1
     revisionHistoryLimit: 10
@@ -164,7 +164,7 @@ api:
   role: api
   image:
     repository: docker.io/kubernetesui/dashboard-api
-    tag: 1.4.1
+    tag: 1.4.3
   scaling:
     replicas: 1
     revisionHistoryLimit: 10
@@ -219,7 +219,7 @@ web:
   role: web
   image:
     repository: docker.io/kubernetesui/dashboard-web
-    tag: 1.2.3
+    tag: 1.3.0
   scaling:
     replicas: 1
     revisionHistoryLimit: 10
@@ -347,7 +347,7 @@ kong:
   enabled: true
   ## Configuration reference: https://docs.konghq.com/gateway/3.6.x/reference/configuration
   env:
-    dns_order: A,CNAME,LAST,AAAA,SRV
+    dns_order: LAST,A,CNAME,AAAA,SRV
     plugins: 'off'
     nginx_worker_processes: 1
   ingressController:
