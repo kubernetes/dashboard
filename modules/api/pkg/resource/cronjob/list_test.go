@@ -21,7 +21,6 @@ import (
 	batch "k8s.io/api/batch/v1"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 
-	metricapi "k8s.io/dashboard/api/pkg/integration/metric/api"
 	"k8s.io/dashboard/api/pkg/resource/common"
 	"k8s.io/dashboard/api/pkg/resource/cronjob"
 	"k8s.io/dashboard/api/pkg/resource/dataselect"
@@ -39,11 +38,10 @@ func TestGetCronJobListFromChannels(t *testing.T) {
 			batch.CronJobList{},
 			nil,
 			&cronjob.CronJobList{
-				ListMeta:          types.ListMeta{},
-				CumulativeMetrics: make([]metricapi.Metric, 0),
-				Status:            common.ResourceStatus{},
-				Items:             []cronjob.CronJob{},
-				Errors:            []error{},
+				ListMeta: types.ListMeta{},
+				Status:   common.ResourceStatus{},
+				Items:    []cronjob.CronJob{},
+				Errors:   []error{},
 			},
 			nil,
 		},
@@ -74,9 +72,8 @@ func TestGetCronJobListFromChannels(t *testing.T) {
 			},
 			nil,
 			&cronjob.CronJobList{
-				ListMeta:          types.ListMeta{TotalItems: 2},
-				CumulativeMetrics: make([]metricapi.Metric, 0),
-				Status:            common.ResourceStatus{Failed: 2},
+				ListMeta: types.ListMeta{TotalItems: 2},
+				Status:   common.ResourceStatus{Failed: 2},
 				Items: []cronjob.CronJob{{
 					ObjectMeta: types.ObjectMeta{
 						Name:      name,
@@ -111,7 +108,7 @@ func TestGetCronJobListFromChannels(t *testing.T) {
 		channels.CronJobList.Error <- c.rawError
 		channels.CronJobList.List <- &c.raw
 
-		actual, err := cronjob.GetCronJobListFromChannels(channels, dataselect.NoDataSelect, nil)
+		actual, err := cronjob.GetCronJobListFromChannels(channels, dataselect.NoDataSelect)
 		if !reflect.DeepEqual(actual, c.expected) {
 			t.Errorf("GetCronJobListFromChannels() ==\n %#v\nExpected: %#v", actual, c.expected)
 		}
