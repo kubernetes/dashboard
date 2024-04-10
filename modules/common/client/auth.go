@@ -17,6 +17,8 @@ package client
 import (
 	"net/http"
 	"strings"
+
+	"k8s.io/klog/v2"
 )
 
 const (
@@ -33,6 +35,7 @@ func HasAuthorizationHeader(req *http.Request) bool {
 	}
 
 	token := extractBearerToken(header)
+	klog.V(5).InfoS("Bearer token", "size", len(token))
 	return strings.HasPrefix(header, authorizationTokenPrefix) && len(token) > 0
 }
 

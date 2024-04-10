@@ -19,12 +19,12 @@ import (
 	"time"
 
 	"k8s.io/apimachinery/pkg/util/wait"
-	"k8s.io/client-go/rest"
 	"k8s.io/klog/v2"
 
 	integrationapi "k8s.io/dashboard/api/pkg/integration/api"
 	metricapi "k8s.io/dashboard/api/pkg/integration/metric/api"
 	"k8s.io/dashboard/api/pkg/integration/metric/sidecar"
+	"k8s.io/dashboard/client"
 )
 
 // MetricManager is responsible for management of all integrated applications related to metrics.
@@ -116,8 +116,8 @@ func (self *metricManager) List() []integrationapi.Integration {
 
 // ConfigureSidecar implements metric manager interface. See MetricManager for more information.
 func (self *metricManager) ConfigureSidecar(host string) MetricManager {
-	config, _ := rest.InClusterConfig()
-	metricClient, err := sidecar.CreateSidecarClient(host, config)
+	inClusterClient := client.InClusterClient()
+	metricClient, err := sidecar.CreateSidecarClient(host, inClusterClient)
 	if err != nil {
 		klog.Errorf("There was an error during sidecar client creation: %s", err.Error())
 		return self

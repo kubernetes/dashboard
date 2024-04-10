@@ -24,9 +24,6 @@ import (
 
 	"k8s.io/apimachinery/pkg/types"
 	"k8s.io/client-go/kubernetes"
-	corev1 "k8s.io/client-go/kubernetes/typed/core/v1"
-	"k8s.io/client-go/rest"
-	"k8s.io/client-go/util/flowcontrol"
 	"k8s.io/klog/v2"
 
 	"k8s.io/dashboard/api/pkg/args"
@@ -266,26 +263,17 @@ func (self sidecarClient) unmarshalType(path string, v interface{}) error {
 // string the function assumes that it is running inside a Kubernetes cluster and connects via
 // service proxy. sidecarHost param is in the format of protocol://address:port,
 // e.g., http://localhost:8002.
-func CreateSidecarClient(host string, config *rest.Config) (
-	metricapi.MetricClient, error) {
-	if host == "" && config != nil {
+func CreateSidecarClient(host string, inClusterClient kubernetes.Interface) (metricapi.MetricClient, error) {
+	if host == "" && inClusterClient != nil {
 		klog.V(args.LogLevelInfo).Info("Creating in-cluster Sidecar client")
-		config.RateLimiter = flowcontrol.NewFakeAlwaysRateLimiter()
-		coreV1Client, err := corev1.NewForConfig(config)
-		if err != nil {
-			return sidecarClient{}, err
-		}
-
-		c := inClusterSidecarClient{client: coreV1Client.RESTClient()}
-		return sidecarClient{client: c}, nil
+		return sidecarClient{client: inClusterSidecarClient{client: inClusterClient.CoreV1().RESTClient()}}, nil
 	}
 
-	cfg := &rest.Config{Host: host, QPS: client.DefaultQPS, Burst: client.DefaultBurst}
-	restClient, err := kubernetes.NewForConfig(cfg)
+	klog.V(args.LogLevelInfo).InfoS("Creating remote Sidecar client", "host", host)
+	restClient, err := client.RestClientForHost(host)
 	if err != nil {
 		return sidecarClient{}, err
 	}
-	klog.V(args.LogLevelInfo).InfoS("Creating remote Sidecar client", "host", host)
-	c := remoteSidecarClient{client: restClient.RESTClient()}
-	return sidecarClient{client: c}, nil
+
+	return sidecarClient{client: remoteSidecarClient{client: restClient}}, nil
 }

@@ -21,13 +21,13 @@ import (
 	"strings"
 
 	"github.com/gobuffalo/flect"
-	"k8s.io/apiextensions-apiserver/pkg/client/clientset/clientset"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/apis/meta/v1/unstructured"
 	"k8s.io/apimachinery/pkg/runtime"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 	k8stypes "k8s.io/apimachinery/pkg/types"
 	"k8s.io/apimachinery/pkg/util/jsonmergepatch"
+	"k8s.io/client-go/discovery"
 	"k8s.io/client-go/dynamic"
 	"k8s.io/client-go/util/retry"
 	"k8s.io/klog/v2"
@@ -40,8 +40,8 @@ var (
 // resourceVerber is a struct responsible for doing common verb operations on resources, like
 // DELETE, PUT, UPDATE.
 type resourceVerber struct {
-	client     dynamic.Interface
-	extensions clientset.Interface
+	client    dynamic.Interface
+	discovery discovery.DiscoveryInterface
 }
 
 func (v *resourceVerber) groupVersionResourceFromUnstructured(object *unstructured.Unstructured) schema.GroupVersionResource {
@@ -61,7 +61,7 @@ func (v *resourceVerber) groupVersionResourceFromKind(kind string) (schema.Group
 	}
 
 	klog.V(3).InfoS("GroupVersionResource cache miss", "kind", kind)
-	_, resourceList, err := v.extensions.Discovery().ServerGroupsAndResources()
+	_, resourceList, err := v.discovery.ServerGroupsAndResources()
 	if err != nil {
 		return schema.GroupVersionResource{}, err
 	}
@@ -182,7 +182,7 @@ func VerberClient(request *http.Request) (ResourceVerber, error) {
 		return nil, err
 	}
 
-	extensionsClient, err := APIExtensionsClient(request)
+	discoveryClient, err := discovery.NewDiscoveryClientForConfig(config)
 	if err != nil {
 		return nil, err
 	}
@@ -195,7 +195,7 @@ func VerberClient(request *http.Request) (ResourceVerber, error) {
 	}
 
 	return &resourceVerber{
-		client:     dynamicClient,
-		extensions: extensionsClient,
+		client:    dynamicClient,
+		discovery: discoveryClient,
 	}, nil
 }
