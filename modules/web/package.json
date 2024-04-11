@@ -144,7 +144,7 @@
     "stylelint-no-unsupported-browser-features": "8.0.1",
     "stylelint-order": "6.0.4",
     "stylelint-prettier": "5.0.0",
-    "tar": "6.2.1",
+    "tar": "7.0.0",
     "through2": "4.0.2",
     "ts-jest": "29.1.2",
     "ts-loader": "9.5.1",
