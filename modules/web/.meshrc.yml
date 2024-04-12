@@ -17,3 +17,70 @@ sources:
     handler:
       openapi:
         source: ../api/schema/swagger.json
+    transforms:
+      - replaceField:
+          typeDefs: |
+            type Map {
+              map: ObjMap!
+            }
+          replacements:
+            - from:
+                type: persistentvolume_PersistentVolume
+                field: capacity
+              to:
+                type: Map
+                field: map
+            - from:
+                type: persistentvolume_PersistentVolumeDetail
+                field: capacity
+              to:
+                type: Map
+                field: map
+            - from:
+                type: persistentvolumeclaim_PersistentVolumeClaim
+                field: capacity
+              to:
+                type: Map
+                field: map
+            - from:
+                type: persistentvolumeclaim_PersistentVolumeClaimDetail
+                field: capacity
+              to:
+                type: Map
+                field: map
+            - from:
+                type: v1_ResourceRequirements
+                field: limits
+              to:
+                type: Map
+                field: map
+            - from:
+                type: v1_ResourceRequirements
+                field: requests
+              to:
+                type: Map
+                field: map
+            - from:
+                type: v1_VolumeResourceRequirements
+                field: limits
+              to:
+                type: Map
+                field: map
+            - from:
+                type: v1_VolumeResourceRequirements
+                field: requests
+              to:
+                type: Map
+                field: map
+            - from:
+                type: resourcequota_ResourceQuotaDetail
+                field: statusList
+              to:
+                type: Map
+                field: map
+            - from:
+                type: v1_ContainerStatus
+                field: allocatedResources
+              to:
+                type: Map
+                field: map
