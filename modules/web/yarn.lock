@@ -13339,7 +13339,7 @@ __metadata:
     rxjs: 7.8.1
     rxjs-compat: 6.6.7
     sass: 1.75.0
-    sass-loader: 14.1.1
+    sass-loader: 14.2.0
     semver: 7.6.0
     sockjs-client: 1.6.1
     source-map-explorer: 2.5.3
@@ -16472,9 +16472,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"sass-loader@npm:14.1.1":
-  version: 14.1.1
-  resolution: "sass-loader@npm:14.1.1"
+"sass-loader@npm:14.2.0":
+  version: 14.2.0
+  resolution: "sass-loader@npm:14.2.0"
   dependencies:
     neo-async: ^2.6.2
   peerDependencies:
@@ -16494,7 +16494,7 @@ __metadata:
       optional: true
     webpack:
       optional: true
-  checksum: 56b2d1018d33c91d1c62b195ba62e31a2c03e1e304403ac69e3434413f601400a009e238e3d2d2b705949bd559cd537ba3d165c9ab338950f6e8d83dd92d3d60
+  checksum: ef64aa02cb014164c082cfee14a6f572b3b822f18690fd362f3dcbea7f6cda25df92a396abf6b90a51b2483611d2f4689fd009dfd4a19859c8668cd9aeae7753
   languageName: node
   linkType: hard
 
