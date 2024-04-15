@@ -30,6 +30,7 @@ const (
 	Waiting    ContainerState = "Waiting"
 	Running    ContainerState = "Running"
 	Terminated ContainerState = "Terminated"
+	Failed     ContainerState = "Failed"
 	Unknown    ContainerState = "Unknown"
 )
 
@@ -52,6 +53,10 @@ func toContainerState(state v1.ContainerState) ContainerState {
 	}
 
 	if state.Terminated != nil {
+		if state.Terminated.ExitCode > 0 {
+			return Failed
+		}
+
 		return Terminated
 	}
 
