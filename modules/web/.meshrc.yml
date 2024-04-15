@@ -20,8 +20,18 @@ sources:
     transforms:
       - replaceField:
           typeDefs: |
+            enum ContainerState {
+              Waiting
+              Running
+              Terminated
+              Failed
+              Unknown
+            }
             type Map {
               map: ObjMap!
+            }
+            type StateWrapper {
+              state: ContainerState!
             }
           replacements:
             - from:
@@ -84,3 +94,15 @@ sources:
               to:
                 type: Map
                 field: map
+            - from:
+                type: pod_ContainerStatus
+                field: state
+              to:
+                type: StateWrapper
+                field: state
+            - from:
+                type: pod_Container
+                field: state
+              to:
+                type: StateWrapper
+                field: state
