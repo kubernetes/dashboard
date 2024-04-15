@@ -9534,8 +9534,8 @@
   },
   "clusterrole.ClusterRoleDetail": {
    "required": [
-    "typeMeta",
     "objectMeta",
+    "typeMeta",
     "rules",
     "errors"
    ],
@@ -10034,13 +10034,13 @@
   },
   "cronjob.CronJobDetail": {
    "required": [
-    "objectMeta",
-    "typeMeta",
-    "schedule",
     "suspend",
     "active",
     "lastSchedule",
     "containerImages",
+    "objectMeta",
+    "typeMeta",
+    "schedule",
     "concurrencyPolicy",
     "startingDeadlineSeconds",
     "errors"
@@ -10158,11 +10158,11 @@
   },
   "daemonset.DaemonSetDetail": {
    "required": [
+    "containerImages",
+    "initContainerImages",
     "objectMeta",
     "typeMeta",
     "podInfo",
-    "containerImages",
-    "initContainerImages",
     "errors"
    ],
    "properties": {
@@ -10702,13 +10702,13 @@
   },
   "horizontalpodautoscaler.HorizontalPodAutoscalerDetail": {
    "required": [
-    "scaleTargetRef",
-    "minReplicas",
     "maxReplicas",
     "currentCPUUtilizationPercentage",
     "targetCPUUtilizationPercentage",
     "objectMeta",
     "typeMeta",
+    "scaleTargetRef",
+    "minReplicas",
     "currentReplicas",
     "desiredReplicas",
     "lastScaleTime"
@@ -10985,13 +10985,13 @@
   },
   "job.JobDetail": {
    "required": [
+    "objectMeta",
     "typeMeta",
     "podInfo",
     "containerImages",
     "initContainerImages",
     "parallelism",
     "jobStatus",
-    "objectMeta",
     "completions",
     "errors"
    ],
@@ -11241,9 +11241,9 @@
   },
   "namespace.NamespaceDetail": {
    "required": [
+    "objectMeta",
     "typeMeta",
     "phase",
-    "objectMeta",
     "resourceQuotaList",
     "resourceLimits",
     "errors"
@@ -11325,8 +11325,8 @@
   },
   "networkpolicy.NetworkPolicyDetail": {
    "required": [
-    "typeMeta",
     "objectMeta",
+    "typeMeta",
     "podSelector",
     "errors"
    ],
@@ -11485,10 +11485,10 @@
   },
   "node.NodeDetail": {
    "required": [
-    "objectMeta",
     "typeMeta",
     "ready",
     "allocatedResources",
+    "objectMeta",
     "phase",
     "podCIDR",
     "providerID",
@@ -11661,14 +11661,14 @@
   },
   "persistentvolume.PersistentVolumeDetail": {
    "required": [
-    "typeMeta",
+    "objectMeta",
+    "reclaimPolicy",
     "reason",
     "status",
     "claim",
-    "objectMeta",
+    "typeMeta",
     "capacity",
     "accessModes",
-    "reclaimPolicy",
     "storageClass",
     "mountOptions",
     "message",
@@ -12227,11 +12227,11 @@
   },
   "replicaset.ReplicaSetDetail": {
    "required": [
+    "initContainerImages",
     "objectMeta",
     "typeMeta",
     "podInfo",
     "containerImages",
-    "initContainerImages",
     "selector",
     "horizontalPodAutoscalerList",
     "errors"
@@ -12341,11 +12341,11 @@
   },
   "replicationcontroller.ReplicationControllerDetail": {
    "required": [
-    "initContainerImages",
     "objectMeta",
     "typeMeta",
     "podInfo",
     "containerImages",
+    "initContainerImages",
     "labelSelector",
     "errors"
    ],
@@ -12614,8 +12614,8 @@
   },
   "rolebinding.RoleBindingDetail": {
    "required": [
-    "typeMeta",
     "objectMeta",
+    "typeMeta",
     "roleRef",
     "errors"
    ],
@@ -12721,9 +12721,9 @@
   },
   "secret.SecretDetail": {
    "required": [
+    "type",
     "objectMeta",
     "typeMeta",
-    "type",
     "data"
    ],
    "properties": {
@@ -12810,13 +12810,13 @@
   },
   "service.ServiceDetail": {
    "required": [
+    "selector",
     "type",
     "clusterIP",
     "objectMeta",
     "typeMeta",
     "internalEndpoint",
     "externalEndpoints",
-    "selector",
     "endpointList",
     "sessionAffinity",
     "errors"
@@ -12980,11 +12980,11 @@
   },
   "statefulset.StatefulSetDetail": {
    "required": [
-    "initContainerImages",
     "objectMeta",
     "typeMeta",
     "podInfo",
     "containerImages",
+    "initContainerImages",
     "errors"
    ],
    "properties": {
@@ -13136,12 +13136,12 @@
   },
   "types.CustomResourceDefinitionDetail": {
    "required": [
-    "established",
-    "objectMeta",
     "typeMeta",
     "group",
     "scope",
     "names",
+    "established",
+    "objectMeta",
     "conditions",
     "objects",
     "subresources",

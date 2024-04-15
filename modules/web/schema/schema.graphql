@@ -3787,7 +3787,7 @@ type pod_Container {
   resources: v1_ResourceRequirements
   securityContext: v1_SecurityContext!
   startupProbe: v1_Probe!
-  state: String!
+  state: ContainerState!
   status: v1_ContainerStatus!
   volumeMounts: [pod_VolumeMount]!
 }

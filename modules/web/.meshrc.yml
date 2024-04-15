@@ -100,3 +100,9 @@ sources:
               to:
                 type: StateWrapper
                 field: state
+            - from:
+                type: pod_Container
+                field: state
+              to:
+                type: StateWrapper
+                field: state
