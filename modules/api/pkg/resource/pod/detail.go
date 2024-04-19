@@ -103,7 +103,7 @@ type Container struct {
 	ReadinessProbe *v1.Probe `json:"readinessProbe"`
 	StartupProbe   *v1.Probe `json:"startupProbe"`
 
-	// Resource Requirments
+	// Resource Requirements
 	Resources v1.ResourceRequirements `json:"resources,omitempty"`
 }
 
