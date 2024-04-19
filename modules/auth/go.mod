@@ -6,7 +6,7 @@ require (
 	github.com/gin-gonic/gin v1.9.1
 	github.com/golang-jwt/jwt/v4 v4.5.0
 	github.com/spf13/pflag v1.0.5
-	golang.org/x/net v0.22.0
+	golang.org/x/net v0.23.0
 	k8s.io/dashboard/client v0.0.0-00010101000000-000000000000
 	k8s.io/dashboard/csrf v0.0.0-00010101000000-000000000000
 	k8s.io/dashboard/errors v0.0.0-00010101000000-000000000000
