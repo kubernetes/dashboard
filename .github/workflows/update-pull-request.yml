@@ -1,0 +1,26 @@
+name: Actualización del repo oficial sobre la customización
+on:
+  pull-request:
+    branches: 
+      - 'release/*'
+env:
+  kube-dash: https://github.com/kubernetes/dashboard
+
+jobs:
+  actualizar-sobre-ultimo-repo:
+    name: update
+    runs-on: ubuntu-latest
+    steps: 
+      - name: Clonar última versión repo banco
+        uses: actions/checkout@v4
+        with:
+          repository: bancolombia/kubernetes-dashboard
+          ref: ${GITHUB_REF}
+      - name: Actualizar rama respecto a repo oficial
+        run: |
+          git remote add kube-dash ${env.kube-dash}
+          git pull kube-dash ${GITHUB_REF}
+          git push origin ${GITHUB_REF}
+      
+          
+  
