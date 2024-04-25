@@ -16,7 +16,7 @@ can be considered an app version now.
 
 ![Dashboard UI workloads page](docs/images/overview.png)
 
-## Installation
+## Installation to eks
 
 Kubernetes Dashboard supports only Helm-based installation currently as it is faster and gives us better control
 over all dependencies required by Dashboard to run. We now use a single-container, DBless [Kong](https://hub.docker.com/r/kong/kong-gateway) installation
