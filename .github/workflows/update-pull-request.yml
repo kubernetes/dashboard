@@ -16,7 +16,7 @@ jobs:
       - name: Agregar remoto del repo oficial
         run: git remote add kube-dash ${{ env.kube_dash_url }}
       - name: Obtener cambios del repo oficial
-        run: git fetch kube-dash ${GITHUB_REF}
+        run: git fetch kube-dash ${{ github.head_ref }}
       - name: Actualizar rama local
         run: git merge kube-dash/${GITHUB_REF}
       - name: Empujar cambios a la rama
