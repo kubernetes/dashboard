@@ -11,16 +11,16 @@ jobs:
     name: update
     runs-on: ubuntu-latest
     steps: 
-      - name: Clonar última versión repo banco
+      - name: Clonar última versión del repo oficial
         uses: actions/checkout@v4
-        with:
-          repository: bancolombia/kubernetes-dashboard
-          ref: ${GITHUB_REF}
-      - name: Actualizar rama respecto a repo oficial
-        run: |
-          git remote add kube-dash ${env.kube-dash}
-          git pull kube-dash ${GITHUB_REF}
-          git push origin ${GITHUB_REF}
+      - name: Agregar remoto del repo oficial
+        run: git remote add kube-dash ${{ env.kube_dash_url }}
+      - name: Obtener cambios del repo oficial
+        run: git fetch kube-dash ${GITHUB_REF}
+      - name: Actualizar rama local
+        run: git merge kube-dash/${GITHUB_REF}
+      - name: Empujar cambios a la rama
+        run: git push origin ${GITHUB_REF}
       
           
   
