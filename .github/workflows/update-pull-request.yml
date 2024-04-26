@@ -26,7 +26,6 @@ jobs:
       - name: Actualizar rama local desde el repositorio oficial
         run: |
             git checkout release/7.3.2
-            git merge FETCH_HEAD --allow-unrelated-histories
             git pull kube-dash release/7.3.2 --allow-unrelated-histories
       - name: Empujar cambios a la rama
         run: git push origin HEAD
