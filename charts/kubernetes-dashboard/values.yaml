@@ -352,6 +352,8 @@ kong:
     nginx_worker_processes: 1
   ingressController:
     enabled: false
+  manager:
+    enabled: false
   dblessConfig:
     configMap: kong-dbless-config
   proxy:
