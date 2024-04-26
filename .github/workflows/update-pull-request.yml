@@ -25,7 +25,6 @@ jobs:
           git config --global user.name "${{ github.event.pull_request.user.login }}"
       - name: Actualizar rama local desde el repositorio oficial
         run: |
-            git checkout release/7.3.2
-            git pull kube-dash release/7.3.2 --allow-unrelated-histories
+            git checkout -B release/7.3.2 origin/release/7.3.2
       - name: Empujar cambios a la rama
         run: git push origin HEAD
