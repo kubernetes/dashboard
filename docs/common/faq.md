@@ -31,7 +31,7 @@ sudo mount --bind /var/lib/kubelet /var/lib/kubelet && sudo mount --make-shared 
 ```
 You can find more information [here](https://github.com/kubernetes/kubernetes/issues/4869#issuecomment-193640483).
 
-### I am seeing 404 errors when trying to access Dashbord. Dashboard resources can not be loaded.
+### I am seeing 404 errors when trying to access Dashboard. Dashboard resources can not be loaded.
 
 ```
 GET https://<IP>/api/v1/namespaces/kube-system/services/kubernetes-dashboard/static/vendor.9aa0b786.css

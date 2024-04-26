@@ -219,7 +219,7 @@ func Init(options ...Option) {
 
 func isInitialized() bool {
 	if baseConfig == nil {
-		klog.Errorf(`k8s.io/dasboard/client' package has not been initialized properly. Run 'client.Init(...)' to initialize it. `)
+		klog.Errorf(`k8s.io/dashboard/client' package has not been initialized properly. Run 'client.Init(...)' to initialize it. `)
 		return false
 	}
 
