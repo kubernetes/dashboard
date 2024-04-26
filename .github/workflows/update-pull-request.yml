@@ -19,6 +19,10 @@ jobs:
         run: git remote add kube-dash ${{ env.kube_dash_url }}
       - name: Obtener cambios del repo oficial
         run: git fetch kube-dash "refs/heads/${{ github.event.pull_request.base.ref }}"
+      - name: Configurar identidad de usuario de Git
+        run: |
+          git config --global user.email "${{ github.event.pull_request.user.email }}"
+          git config --global user.name "${{ github.event.pull_request.user.login }}"
       - name: Actualizar rama local
         run: git merge FETCH_HEAD --allow-unrelated-histories
       - name: Empujar cambios a la rama
