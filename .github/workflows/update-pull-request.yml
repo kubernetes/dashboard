@@ -18,7 +18,7 @@ jobs:
       - name: Agregar remoto del repo oficial
         run: git remote add kube-dash ${{ env.kube_dash_url }}
       - name: Obtener cambios del repo oficial
-        run: git fetch kube-dash master
+        run: git fetch kube-dash release/7.3.2
       - name: Configurar identidad de usuario de Git
         run: |
           git config --global user.email "${{ github.event.pull_request.user.email }}"
