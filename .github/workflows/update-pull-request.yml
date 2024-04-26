@@ -1,11 +1,13 @@
 name: Actualización del repo oficial sobre la customización
 on:
   pull_request:
+    types:
+      - opened
     branches: 
-      - 'release/*'
+      - 'release/**'
+      - 'action/**'
 env:
   kube_dash_url: https://github.com/kubernetes/dashboard
-
 jobs:
   actualizar-sobre-ultimo-repo:
     name: update
@@ -16,11 +18,8 @@ jobs:
       - name: Agregar remoto del repo oficial
         run: git remote add kube-dash ${{ env.kube_dash_url }}
       - name: Obtener cambios del repo oficial
-        run: git fetch kube-dash ${{ github.head_ref }}
+        run: git fetch kube-dash "refs/pull/${{ github.event.pull_request.number }}/head"
       - name: Actualizar rama local
         run: git merge kube-dash/${GITHUB_REF}
       - name: Empujar cambios a la rama
         run: git push origin ${GITHUB_REF}
-      
-          
-  
