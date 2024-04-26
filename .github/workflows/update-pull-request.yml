@@ -20,6 +20,6 @@ jobs:
       - name: Obtener cambios del repo oficial
         run: git fetch kube-dash "refs/pull/${{ github.event.pull_request.number }}/head"
       - name: Actualizar rama local
-        run: git merge kube-dash/"refs/pull/${{ github.event.pull_request.number }}/head"
+        run: git merge FETCH_HEAD
       - name: Empujar cambios a la rama
-        run: git push origin "refs/pull/${{ github.event.pull_request.number }}/head"
+        run: git push origin HEAD
