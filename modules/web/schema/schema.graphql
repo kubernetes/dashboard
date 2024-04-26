@@ -5307,7 +5307,9 @@ type Mutation {
     aggregations: String
     """namespace of the resource"""
     namespace: String!
-  ): Void @httpOperation(subgraph: "api", path: "/api/v1/_raw/{args.kind}/name/{args.name}", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: DELETE, queryParamArgMap: "{\"filterBy\":\"filterBy\",\"sortBy\":\"sortBy\",\"itemsPerPage\":\"itemsPerPage\",\"page\":\"page\",\"metricNames\":\"metricNames\",\"aggregations\":\"aggregations\"}") @httpOperation(subgraph: "api", path: "/api/v1/_raw/{args.kind}/namespace/{args.namespace}/name/{args.name}", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: DELETE, queryParamArgMap: "{\"filterBy\":\"filterBy\",\"sortBy\":\"sortBy\",\"itemsPerPage\":\"itemsPerPage\",\"page\":\"page\",\"metricNames\":\"metricNames\",\"aggregations\":\"aggregations\"}")
+    """override graceful delete options and enforce immediate deletion"""
+    deleteNow: String
+  ): Void @httpOperation(subgraph: "api", path: "/api/v1/_raw/{args.kind}/name/{args.name}", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: DELETE, queryParamArgMap: "{\"filterBy\":\"filterBy\",\"sortBy\":\"sortBy\",\"itemsPerPage\":\"itemsPerPage\",\"page\":\"page\",\"metricNames\":\"metricNames\",\"aggregations\":\"aggregations\"}") @httpOperation(subgraph: "api", path: "/api/v1/_raw/{args.kind}/namespace/{args.namespace}/name/{args.name}", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: DELETE, queryParamArgMap: "{\"filterBy\":\"filterBy\",\"sortBy\":\"sortBy\",\"itemsPerPage\":\"itemsPerPage\",\"page\":\"page\",\"metricNames\":\"metricNames\",\"aggregations\":\"aggregations\",\"deleteNow\":\"deleteNow\"}")
   """creates an application based on provided deployment.AppDeploymentSpec"""
   handleDeploy(
     """
@@ -5566,7 +5568,9 @@ type Mutation {
     metricNames: String
     """Aggregations to be performed for each metric (default: sum)"""
     aggregations: String
-  ): scaling_ReplicaCounts @httpOperation(subgraph: "api", path: "/api/v1/scale/{args.kind}/{args.namespace}/{args.name}", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: PUT, queryParamArgMap: "{\"filterBy\":\"filterBy\",\"sortBy\":\"sortBy\",\"itemsPerPage\":\"itemsPerPage\",\"page\":\"page\",\"metricNames\":\"metricNames\",\"aggregations\":\"aggregations\"}") @httpOperation(subgraph: "api", path: "/api/v1/scale/{args.kind}/{args.name}", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: PUT, queryParamArgMap: "{\"filterBy\":\"filterBy\",\"sortBy\":\"sortBy\",\"itemsPerPage\":\"itemsPerPage\",\"page\":\"page\",\"metricNames\":\"metricNames\",\"aggregations\":\"aggregations\"}")
+    """desired number of replicas"""
+    scaleBy: String
+  ): scaling_ReplicaCounts @httpOperation(subgraph: "api", path: "/api/v1/scale/{args.kind}/{args.namespace}/{args.name}", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: PUT, queryParamArgMap: "{\"filterBy\":\"filterBy\",\"sortBy\":\"sortBy\",\"itemsPerPage\":\"itemsPerPage\",\"page\":\"page\",\"metricNames\":\"metricNames\",\"aggregations\":\"aggregations\",\"scaleBy\":\"scaleBy\"}") @httpOperation(subgraph: "api", path: "/api/v1/scale/{args.kind}/{args.name}", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: PUT, queryParamArgMap: "{\"filterBy\":\"filterBy\",\"sortBy\":\"sortBy\",\"itemsPerPage\":\"itemsPerPage\",\"page\":\"page\",\"metricNames\":\"metricNames\",\"aggregations\":\"aggregations\",\"scaleBy\":\"scaleBy\"}")
   """stores ImagePullSecret in a Kubernetes Secret"""
   handleCreateImagePullSecret(
     """

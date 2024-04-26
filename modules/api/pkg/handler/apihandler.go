@@ -884,6 +884,7 @@ func CreateHTTPAPIHandler(iManager integration.Manager) (*restful.Container, err
 			Param(apiV1Ws.PathParameter("kind", "kind of the resource")).
 			Param(apiV1Ws.PathParameter("namespace", "namespace of the resource")).
 			Param(apiV1Ws.PathParameter("name", "name of the resource")).
+			Param(apiV1Ws.QueryParameter("deleteNow", "override graceful delete options and enforce immediate deletion")).
 			Returns(http.StatusNoContent, "", nil))
 	apiV1Ws.Route(
 		apiV1Ws.GET("/_raw/{kind}/namespace/{namespace}/name/{name}").To(apiHandler.handleGetResource).
@@ -937,6 +938,7 @@ func CreateHTTPAPIHandler(iManager integration.Manager) (*restful.Container, err
 			Param(apiV1Ws.PathParameter("kind", "kind of the resource")).
 			Param(apiV1Ws.PathParameter("namespace", "namespace of the resource")).
 			Param(apiV1Ws.PathParameter("name", "name of the resource")).
+			Param(apiV1Ws.QueryParameter("scaleBy", "desired number of replicas")).
 			Writes(scaling.ReplicaCounts{}).
 			Returns(http.StatusOK, "OK", scaling.ReplicaCounts{}))
 	apiV1Ws.Route(
@@ -945,6 +947,7 @@ func CreateHTTPAPIHandler(iManager integration.Manager) (*restful.Container, err
 			Doc("scales a non-namespaced resource").
 			Param(apiV1Ws.PathParameter("kind", "kind of the resource")).
 			Param(apiV1Ws.PathParameter("name", "name of the resource")).
+			Param(apiV1Ws.QueryParameter("scaleBy", "desired number of replicas")).
 			Writes(scaling.ReplicaCounts{}).
 			Returns(http.StatusOK, "OK", scaling.ReplicaCounts{}))
 	apiV1Ws.Route(
