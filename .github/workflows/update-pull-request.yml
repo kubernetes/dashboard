@@ -25,7 +25,7 @@ jobs:
           git config --global user.name "${{ github.event.pull_request.user.login }}"
       - name: Actualizar rama local desde el repositorio oficial
         run: |
-            git checkout master
+            git checkout release/7.3.2
             git merge FETCH_HEAD --allow-unrelated-histories
       - name: Empujar cambios a la rama
         run: git push origin HEAD
