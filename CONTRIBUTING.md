@@ -4,7 +4,7 @@ Welcome to Kubernetes. We are excited about the prospect of you joining our [com
 
 _As contributors and maintainers of this project, and in the interest of fostering an open and welcoming community, we pledge to respect all people who contribute through reporting issues, posting feature requests, updating documentation, submitting pull requests or patches, and other activities._
 
-## Getting Started
+## Getting Started EKS
 
 To learn more about the project, please read through the following documents:
 

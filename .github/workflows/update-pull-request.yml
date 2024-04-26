@@ -1,4 +1,4 @@
-name: Actualización del repo oficial sobre la customización
+name: Actualización del repo oficial sobre la customización de bancolombia
 on:
   pull_request:
     branches: 
