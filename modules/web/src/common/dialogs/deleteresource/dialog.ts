@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {Component, Inject} from '@angular/core';
+import {Component, Inject, OnInit} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {ResourceMeta} from '../../services/global/actionbar';
 
@@ -20,7 +20,7 @@ import {ResourceMeta} from '../../services/global/actionbar';
   selector: 'kd-delete-resource-dialog',
   templateUrl: 'template.html',
 })
-export class DeleteResourceDialogComponent {
+export class DeleteResourceDialogComponent implements OnInit {
   isDeleteNowChecked = false;
   cancelDelete = 'cancelDelete';
 
@@ -28,6 +28,18 @@ export class DeleteResourceDialogComponent {
     public dialogRef: MatDialogRef<DeleteResourceDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: ResourceMeta
   ) {}
+
+  ngOnInit(): void {
+    this.dialogRef.keydownEvents().subscribe(event => {
+      if (event.key === 'Escape') {
+        this.dialogRef.close(this.cancelDelete);
+      }
+    });
+
+    this.dialogRef.backdropClick().subscribe(_ => {
+      this.dialogRef.close(this.cancelDelete);
+    });
+  }
 
   onNoClick(): void {
     this.dialogRef.close();
