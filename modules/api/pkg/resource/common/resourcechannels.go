@@ -841,7 +841,7 @@ func GetPersistentVolumeClaimListChannel(client client.Interface, nsQuery *Names
 	return channel
 }
 
-// CustomResourceDefinitionChannel is a list and error channels to CustomResourceDefinition.
+// CustomResourceDefinitionChannelV1 is a list and error channels to CustomResourceDefinition.
 type CustomResourceDefinitionChannelV1 struct {
 	List  chan *apiextensions.CustomResourceDefinitionList
 	Error chan error
