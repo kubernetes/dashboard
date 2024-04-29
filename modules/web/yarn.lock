@@ -13367,7 +13367,7 @@ __metadata:
     stylelint-no-unsupported-browser-features: 8.0.1
     stylelint-order: 6.0.4
     stylelint-prettier: 5.0.0
-    systemjs: 6.14.3
+    systemjs: 6.15.1
     tar: 7.0.1
     through2: 4.0.2
     ts-jest: 29.1.2
@@ -17652,10 +17652,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"systemjs@npm:6.14.3":
-  version: 6.14.3
-  resolution: "systemjs@npm:6.14.3"
-  checksum: 887044d6e74e1af209de5f8e41f94d17c76665336474b4ea5038dac33d324be9d1190e720a5efb63599e26432984d3916d1650d6d446f4913774c6e1167dae10
+"systemjs@npm:6.15.1":
+  version: 6.15.1
+  resolution: "systemjs@npm:6.15.1"
+  checksum: 238d99938cc47bc761a97caeec3f7fceb5fe0c5a8a4a29bb8d6f55c250dfa20ce1c3623c7194c738f01ca1805d2ceb9b57acdc3a6e9b382b434ab60baa893bd7
   languageName: node
   linkType: hard
 
