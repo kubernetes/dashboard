@@ -3,22 +3,22 @@ include $(PARTIALS_DIRECTORY)/config.mk
 .PHONY: --ensure-kind-cluster
 --ensure-kind-cluster:
 	@if test -n "$(shell kind get clusters 2>/dev/null | grep $(KIND_CLUSTER_NAME))"; then \
-  	echo [kind] cluster already exists; \
-  else \
-    echo [kind] creating cluster $(KIND_CLUSTER_NAME); \
-    kind create cluster -q --config=$(KIND_CONFIG_FILE) --name=$(KIND_CLUSTER_NAME) --image=$(KIND_CLUSTER_IMAGE); \
-  fi; \
-  echo [kind] exporting internal kubeconfig to $(TMP_DIRECTORY); \
-  mkdir -p $(TMP_DIRECTORY); \
-  kind get kubeconfig --name $(KIND_CLUSTER_NAME) --internal > $(KIND_CLUSTER_INTERNAL_KUBECONFIG_PATH)
+		echo [kind] cluster already exists; \
+	else \
+		echo [kind] creating cluster $(KIND_CLUSTER_NAME); \
+		kind create cluster -q --config=$(KIND_CONFIG_FILE) --name=$(KIND_CLUSTER_NAME) --image=$(KIND_CLUSTER_IMAGE); \
+	fi; \
+	echo [kind] exporting internal kubeconfig to $(TMP_DIRECTORY); \
+	mkdir -p $(TMP_DIRECTORY); \
+	kind get kubeconfig --name $(KIND_CLUSTER_NAME) --internal > $(KIND_CLUSTER_INTERNAL_KUBECONFIG_PATH)
 
 .PHONY: --ensure-metrics-server
 --ensure-metrics-server:
 	@echo [kind] installing metrics server $(METRICS_SERVER_VERSION)
-	@KUBECONFIG=$(KIND_CLUSTER_INTERNAL_KUBECONFIG_PATH) \
+	@KUBECONFIG=$(KIND_CLUSTER_DEPLOY_KUBECONFIG) \
 	kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/download/$(METRICS_SERVER_VERSION)/components.yaml >/dev/null
 	@echo [kind] patching metrics server arguments
-	@KUBECONFIG=$(KIND_CLUSTER_INTERNAL_KUBECONFIG_PATH) \
+	@KUBECONFIG=$(KIND_CLUSTER_DEPLOY_KUBECONFIG) \
 	kubectl patch deployment \
 		metrics-server \
 		-n kube-system \
@@ -28,9 +28,9 @@ include $(PARTIALS_DIRECTORY)/config.mk
 .PHONY: --ensure-kind-ingress-nginx
 --ensure-kind-ingress-nginx:
 	@echo [kind] installing ingress-nginx
-	@KUBECONFIG=$(KIND_CLUSTER_INTERNAL_KUBECONFIG_PATH) \
+	@KUBECONFIG=$(KIND_CLUSTER_DEPLOY_KUBECONFIG) \
 	kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-$(INGRESS_NGINX_VERSION)/deploy/static/provider/kind/deploy.yaml >/dev/null
-	@KUBECONFIG=$(KIND_CLUSTER_INTERNAL_KUBECONFIG_PATH) \
+	@KUBECONFIG=$(KIND_CLUSTER_DEPLOY_KUBECONFIG) \
 	kubectl delete -A ValidatingWebhookConfiguration ingress-nginx-admission >/dev/null
 
 .PHONY: --ensure-helm-dependencies

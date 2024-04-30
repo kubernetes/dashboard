@@ -113,5 +113,5 @@ services:
 
 networks:
   default:
-    name: kubernetes-dashboard
+    name: kind
     external: true

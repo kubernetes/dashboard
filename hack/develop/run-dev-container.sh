@@ -24,7 +24,7 @@ LOCAL_GID=$(id -g)
 DOCKER_GID=$(getent group docker|cut -d ":" -f 3)
 
 # Create docker network to work with kind cluster
-KD_DEV_NETWORK="kubernetes-dashboard"
+KD_DEV_NETWORK="kind"
 docker network create ${KD_DEV_NETWORK} \
   -d=bridge \
   -o com.docker.network.bridge.enable_ip_masquerade=true \
@@ -67,7 +67,6 @@ docker run \
   -e K8S_OWN_CLUSTER=${K8S_OWN_CLUSTER} \
   -e BIND_ADDRESS=${KD_DEV_BIND_ADDRESS} \
   -e KUBECONFIG=${KD_DEV_KUBECONFIG} \
-  -e KIND_EXPERIMENTAL_DOCKER_NETWORK=${KD_DEV_NETWORK} \
   -e SIDECAR_HOST=${KD_DEV_SIDECAR_HOST} \
   -e LOCAL_UID="${LOCAL_UID}" \
   -e LOCAL_GID="${LOCAL_GID}" \

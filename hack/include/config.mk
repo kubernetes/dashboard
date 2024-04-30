@@ -2,6 +2,11 @@
 PROJECT_NAME := dashboard
 
 ### Dirs and paths
+# Dashboard source directory
+SOURCE_DIR := $(ROOT_DIRECTORY)
+ifdef KD_DEV_SRC
+SOURCE_DIR := $(KD_DEV_SRC)
+endif
 # Base paths
 PARTIALS_DIRECTORY := $(ROOT_DIRECTORY)/hack/include
 # Modules
@@ -23,8 +28,18 @@ TMP_DIRECTORY := $(ROOT_DIRECTORY)/.tmp
 KIND_CLUSTER_NAME := kubernetes-dashboard
 KIND_CLUSTER_VERSION := v1.29.0
 KIND_CLUSTER_IMAGE := docker.io/kindest/node:${KIND_CLUSTER_VERSION}
-KIND_CLUSTER_INTERNAL_KUBECONFIG_PATH := $(TMP_DIRECTORY)/kubeconfig
 KIND_CONFIG_FILE := $(PARTIALS_DIRECTORY)/kind.config.yml
+KIND_CLUSTER_INTERNAL_KUBECONFIG_PATH := $(TMP_DIRECTORY)/kubeconfig
+# Kubectl
+KIND_CLUSTER_DEPLOY_KUBECONFIG := $(HOME)/.kube/config
+ifdef KD_DEV_SRC
+KIND_CLUSTER_DEPLOY_KUBECONFIG := $(KIND_CLUSTER_INTERNAL_KUBECONFIG_PATH)
+endif
+# Kubeconfig to mount into docker compose
+DOCKER_COMPOSE_KUBECONFIG := $(KIND_CLUSTER_INTERNAL_KUBECONFIG_PATH)
+ifdef KD_DEV_SRC
+DOCKER_COMPOSE_KUBECONFIG := $(SOURCE_DIR)/.tmp/kubeconfig
+endif
 # Metrics server
 METRICS_SERVER_VERSION := v0.7.0
 # Ingress nginx (kind)
@@ -41,16 +56,4 @@ endif
 
 ifeq (,$(findstring $(GOPATH)/bin,$(PATH)))
 $(warning $$GOPATH/bin directory is not in your $$PATH)
-endif
-
-### KUBECONFIG for docker compose
-KUBECONFIG_FOR_DOCKER_COMPOSE := $(KIND_CLUSTER_INTERNAL_KUBECONFIG_PATH)
-ifdef KD_DEV_SRC
-KUBECONFIG_FOR_DOCKER_COMPOSE := $(KD_DEV_SRC)/.tmp/kubeconfig
-endif
-
-### Dashboard source directory for docker compose
-SOURCE_DIR := $(PWD)
-ifdef KD_DEV_SRC
-SOURCE_DIR := $(KD_DEV_SRC)
 endif
