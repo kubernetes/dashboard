@@ -64,7 +64,7 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
-      - uses: actions/setup-go@v5
+      - uses: actions/setup-go@v5.0.1
         with:
           go-version-file: modules/api/go.mod
           check-latest: true
@@ -81,7 +81,7 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
-      - uses: actions/setup-go@v5
+      - uses: actions/setup-go@v5.0.1
         with:
           go-version-file: modules/api/go.mod
           check-latest: true
@@ -99,7 +99,7 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
-      - uses: actions/setup-go@v5
+      - uses: actions/setup-go@v5.0.1
         with:
           go-version-file: modules/api/go.mod
           check-latest: true
@@ -123,7 +123,7 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
-      - uses: actions/setup-go@v5.0.0
+      - uses: actions/setup-go@v5.0.1
         with:
           go-version-file: modules/go.work
           check-latest: true
@@ -149,7 +149,7 @@ jobs:
 #      - uses: helm/kind-action@v1.9.0
 #        with:
 #          node_image: kindest/node:v1.29.2
-#      - uses: actions/setup-go@v5
+#      - uses: actions/setup-go@v5.0.1
 #        with:
 #          go-version-file: modules/api/go.mod
 #          check-latest: true
