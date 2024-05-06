@@ -8,7 +8,7 @@ require (
 	github.com/gin-gonic/gin v1.9.1
 	github.com/samber/lo v1.39.0
 	github.com/spf13/pflag v1.0.5
-	golang.org/x/text v0.14.0
+	golang.org/x/text v0.15.0
 	k8s.io/api v0.30.0
 	k8s.io/apimachinery v0.30.0
 	k8s.io/client-go v0.30.0
