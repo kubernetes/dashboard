@@ -4207,28 +4207,28 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@graphql-mesh/runtime@npm:0.99.2":
-  version: 0.99.2
-  resolution: "@graphql-mesh/runtime@npm:0.99.2"
+"@graphql-mesh/runtime@npm:0.99.3":
+  version: 0.99.3
+  resolution: "@graphql-mesh/runtime@npm:0.99.3"
   dependencies:
     "@envelop/core": ^5.0.0
     "@envelop/extended-validation": ^4.0.0
     "@envelop/graphql-jit": ^8.0.0
     "@graphql-mesh/string-interpolation": ^0.5.4
     "@graphql-tools/batch-delegate": ^9.0.2
-    "@graphql-tools/delegate": ^10.0.6
+    "@graphql-tools/delegate": ^10.0.7
     "@graphql-tools/executor": ^1.2.0
     "@graphql-tools/wrap": ^10.0.5
     "@whatwg-node/fetch": ^0.9.0
     graphql-jit: 0.8.2
   peerDependencies:
     "@graphql-mesh/cross-helpers": ^0.4.2
-    "@graphql-mesh/types": ^0.98.2
-    "@graphql-mesh/utils": ^0.98.2
+    "@graphql-mesh/types": ^0.98.3
+    "@graphql-mesh/utils": ^0.98.3
     "@graphql-tools/utils": ^10.2.0
     graphql: "*"
     tslib: ^2.4.0
-  checksum: d2bed5ce1b0d1177706d6f83a192cf2c769a27146328081b0fa7a345cdbf9a569e7d3469dac451f4af3ec8b9d41ded3ab6015a05f07f4626802f42138920a2ce
+  checksum: 2d2c6f54eff7fc86e4d912ede5a6ed434127b4ce41ef47137fbcd49b8eb0f70d42b9b1e020a1887672d91bb0c54b031dc44da0986d2b61a6888922bdc76fedd7
   languageName: node
   linkType: hard
 
@@ -4481,6 +4481,22 @@ __metadata:
   peerDependencies:
     graphql: ^14.0.0 || ^15.0.0 || ^16.0.0 || ^17.0.0
   checksum: b8625b282fd843a67ab0d7bde17a112d1f7fa4fed0d16a46cf94b10e514a289e4f95f698158e3aee51da893fec5dac4863575b429164f3f4c15c0a586dab469d
+  languageName: node
+  linkType: hard
+
+"@graphql-tools/delegate@npm:^10.0.7":
+  version: 10.0.7
+  resolution: "@graphql-tools/delegate@npm:10.0.7"
+  dependencies:
+    "@graphql-tools/batch-execute": ^9.0.4
+    "@graphql-tools/executor": ^1.2.1
+    "@graphql-tools/schema": ^10.0.3
+    "@graphql-tools/utils": ^10.0.13
+    dataloader: ^2.2.2
+    tslib: ^2.5.0
+  peerDependencies:
+    graphql: ^14.0.0 || ^15.0.0 || ^16.0.0 || ^17.0.0
+  checksum: b262aa5f524b142c95d862089481aa356306d97f9692e350c04f76229fbabdfb5a59ab8cab2bdffae00de01d621d3125fc6d32fbac4336826bbb9381c6338d57
   languageName: node
   linkType: hard
 
@@ -13561,7 +13577,7 @@ __metadata:
     "@cypress/webpack-preprocessor": 6.0.1
     "@graphql-mesh/cli": 0.90.0
     "@graphql-mesh/openapi": 0.100.3
-    "@graphql-mesh/runtime": 0.99.2
+    "@graphql-mesh/runtime": 0.99.3
     "@graphql-mesh/transform-replace-field": 0.98.2
     "@swimlane/ngx-charts": 20.5.0
     "@types/d3": 7.4.3
