@@ -4,7 +4,7 @@ go 1.22.0
 
 require (
 	github.com/emicklei/go-restful/v3 v3.12.0
-	k8s.io/apimachinery v0.29.2
+	k8s.io/apimachinery v0.30.0
 )
 
 require (
@@ -17,7 +17,7 @@ require (
 	github.com/modern-go/reflect2 v1.0.2 // indirect
 	github.com/rogpeppe/go-internal v1.12.0 // indirect
 	github.com/stretchr/testify v1.9.0 // indirect
-	golang.org/x/net v0.22.0 // indirect
+	golang.org/x/net v0.23.0 // indirect
 	golang.org/x/text v0.14.0 // indirect
 	gopkg.in/check.v1 v1.0.0-20201130134442-10cb98267c6c // indirect
 	gopkg.in/inf.v0 v0.9.1 // indirect

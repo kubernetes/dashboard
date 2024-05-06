@@ -1,14 +1,14 @@
 module k8s.io/dashboard/tools
 
-go 1.22
+go 1.22.0
 
-toolchain go1.22.0
+toolchain go1.22.2
 
 require (
 	github.com/apache/skywalking-eyes v0.6.0
 	github.com/cosmtrek/air v1.52.0
 	github.com/golangci/golangci-lint v1.58.0
-	k8s.io/code-generator v0.29.2
+	k8s.io/code-generator v0.30.0
 	sigs.k8s.io/kind v0.22.0
 )
 
@@ -64,7 +64,6 @@ require (
 	github.com/daixiang0/gci v0.13.4 // indirect
 	github.com/davecgh/go-spew v1.1.1 // indirect
 	github.com/denis-tingaikin/go-header v0.5.0 // indirect
-	github.com/emicklei/go-restful/v3 v3.12.0 // indirect
 	github.com/emirpasic/gods v1.18.1 // indirect
 	github.com/ettle/strcase v0.2.0 // indirect
 	github.com/evanphx/json-patch/v5 v5.6.0 // indirect
@@ -95,7 +94,7 @@ require (
 	github.com/gofrs/flock v0.8.1 // indirect
 	github.com/gohugoio/hugo v0.123.3 // indirect
 	github.com/golang/groupcache v0.0.0-20210331224755-41bb18bfe9da // indirect
-	github.com/golang/protobuf v1.5.3 // indirect
+	github.com/golang/protobuf v1.5.4 // indirect
 	github.com/golangci/dupl v0.0.0-20180902072040-3e9179ac440a // indirect
 	github.com/golangci/gofmt v0.0.0-20231018234816-f50ced29576e // indirect
 	github.com/golangci/misspell v0.5.1 // indirect
@@ -107,7 +106,6 @@ require (
 	github.com/google/go-cmp v0.6.0 // indirect
 	github.com/google/go-github/v33 v33.0.0 // indirect
 	github.com/google/go-querystring v1.1.0 // indirect
-	github.com/google/gofuzz v1.2.0 // indirect
 	github.com/google/licensecheck v0.3.1 // indirect
 	github.com/google/pprof v0.0.0-20221118152302-e6195bd50e26 // indirect
 	github.com/google/safetext v0.0.0-20220905092116-b49f7bc46da2 // indirect
@@ -245,9 +243,9 @@ require (
 	gopkg.in/yaml.v2 v2.4.0 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 	honnef.co/go/tools v0.4.7 // indirect
-	k8s.io/gengo v0.0.0-20230829151522-9cce18d56c01 // indirect
+	k8s.io/gengo/v2 v2.0.0-20240228010128-51d4e06bde70 // indirect
 	k8s.io/klog/v2 v2.120.1 // indirect
-	k8s.io/kube-openapi v0.0.0-20231010175941-2dd684a91f00 // indirect
+	k8s.io/kube-openapi v0.0.0-20240228011516-70dd3763d340 // indirect
 	mvdan.cc/gofumpt v0.6.0 // indirect
 	mvdan.cc/unparam v0.0.0-20240427195214-063aff900ca1 // indirect
 	sigs.k8s.io/structured-merge-diff/v4 v4.4.1 // indirect
