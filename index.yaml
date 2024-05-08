@@ -2,6 +2,45 @@ apiVersion: v1
 entries:
   kubernetes-dashboard:
   - apiVersion: v2
+    created: "2024-05-08T12:33:27.478831402Z"
+    dependencies:
+    - alias: nginx
+      condition: nginx.enabled
+      name: ingress-nginx
+      repository: https://kubernetes.github.io/ingress-nginx
+      version: 4.10.0
+    - condition: cert-manager.enabled
+      name: cert-manager
+      repository: https://charts.jetstack.io
+      version: v1.14.3
+    - condition: metrics-server.enabled
+      name: metrics-server
+      repository: https://kubernetes-sigs.github.io/metrics-server/
+      version: 3.12.0
+    - condition: kong.enabled
+      name: kong
+      repository: https://charts.konghq.com
+      version: 2.38.0
+    description: General-purpose web UI for Kubernetes clusters
+    digest: e4afe73468302afacd0a896be9c82149e3d65d2eca1d0c09cdaa2f6c75eec738
+    home: https://github.com/kubernetes/dashboard
+    icon: https://raw.githubusercontent.com/kubernetes/kubernetes/master/logo/logo.svg
+    keywords:
+    - kubernetes
+    - dashboard
+    kubeVersion: '>=1.21.0-0'
+    maintainers:
+    - email: cdesaintmartin@wiremind.fr
+      name: desaintmartin
+    - email: s.florek91@gmail.com
+      name: floreks
+    name: kubernetes-dashboard
+    sources:
+    - https://github.com/kubernetes/dashboard
+    urls:
+    - https://github.com/kubernetes/dashboard/releases/download/kubernetes-dashboard-7.4.0/kubernetes-dashboard-7.4.0.tgz
+    version: 7.4.0
+  - apiVersion: v2
     created: "2024-04-15T15:01:29.041570957Z"
     dependencies:
     - alias: nginx
@@ -1763,4 +1802,4 @@ entries:
     urls:
     - kubernetes-dashboard-2.0.1.tgz
     version: 2.0.1
-generated: "2024-04-15T15:01:29.041760501Z"
+generated: "2024-05-08T12:33:27.479025623Z"
