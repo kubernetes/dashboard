@@ -10052,13 +10052,13 @@
   },
   "cronjob.CronJobDetail": {
    "required": [
-    "objectMeta",
-    "typeMeta",
     "schedule",
     "suspend",
     "active",
     "lastSchedule",
     "containerImages",
+    "objectMeta",
+    "typeMeta",
     "concurrencyPolicy",
     "startingDeadlineSeconds",
     "errors"
@@ -10176,11 +10176,11 @@
   },
   "daemonset.DaemonSetDetail": {
    "required": [
+    "initContainerImages",
+    "objectMeta",
     "typeMeta",
     "podInfo",
     "containerImages",
-    "initContainerImages",
-    "objectMeta",
     "errors"
    ],
    "properties": {
@@ -10720,13 +10720,13 @@
   },
   "horizontalpodautoscaler.HorizontalPodAutoscalerDetail": {
    "required": [
+    "objectMeta",
     "typeMeta",
     "scaleTargetRef",
     "minReplicas",
     "maxReplicas",
     "currentCPUUtilizationPercentage",
     "targetCPUUtilizationPercentage",
-    "objectMeta",
     "currentReplicas",
     "desiredReplicas",
     "lastScaleTime"
@@ -10853,10 +10853,10 @@
   },
   "ingress.IngressDetail": {
    "required": [
+    "hosts",
     "objectMeta",
     "typeMeta",
     "endpoints",
-    "hosts",
     "spec",
     "status",
     "errors"
@@ -11003,13 +11003,13 @@
   },
   "job.JobDetail": {
    "required": [
+    "initContainerImages",
     "parallelism",
     "jobStatus",
     "objectMeta",
     "typeMeta",
     "podInfo",
     "containerImages",
-    "initContainerImages",
     "completions",
     "errors"
    ],
@@ -11343,8 +11343,8 @@
   },
   "networkpolicy.NetworkPolicyDetail": {
    "required": [
-    "objectMeta",
     "typeMeta",
+    "objectMeta",
     "podSelector",
     "errors"
    ],
@@ -11503,10 +11503,10 @@
   },
   "node.NodeDetail": {
    "required": [
-    "objectMeta",
     "typeMeta",
     "ready",
     "allocatedResources",
+    "objectMeta",
     "phase",
     "podCIDR",
     "providerID",
@@ -11679,16 +11679,16 @@
   },
   "persistentvolume.PersistentVolumeDetail": {
    "required": [
-    "mountOptions",
-    "claim",
     "objectMeta",
+    "capacity",
+    "reason",
     "typeMeta",
+    "accessModes",
     "reclaimPolicy",
     "storageClass",
-    "capacity",
-    "accessModes",
+    "mountOptions",
     "status",
-    "reason",
+    "claim",
     "message",
     "persistentVolumeSource"
    ],
@@ -11806,13 +11806,13 @@
   },
   "persistentvolumeclaim.PersistentVolumeClaimDetail": {
    "required": [
-    "typeMeta",
-    "status",
-    "volume",
     "capacity",
     "accessModes",
     "storageClass",
-    "objectMeta"
+    "objectMeta",
+    "typeMeta",
+    "status",
+    "volume"
    ],
    "properties": {
     "accessModes": {
@@ -11983,9 +11983,13 @@
     "warnings",
     "nodeName",
     "containerImages",
-    "containerStatuses"
+    "containerStatuses",
+    "allocatedResources"
    ],
    "properties": {
+    "allocatedResources": {
+     "$ref": "#/definitions/pod.PodAllocatedResources"
+    },
     "containerImages": {
      "type": "array",
      "items": {
@@ -12022,6 +12026,32 @@
      "items": {
       "$ref": "#/definitions/common.Event"
      }
+    }
+   }
+  },
+  "pod.PodAllocatedResources": {
+   "required": [
+    "cpuRequests",
+    "cpuLimits",
+    "memoryRequests",
+    "memoryLimits"
+   ],
+   "properties": {
+    "cpuLimits": {
+     "type": "integer",
+     "format": "int64"
+    },
+    "cpuRequests": {
+     "type": "integer",
+     "format": "int64"
+    },
+    "memoryLimits": {
+     "type": "integer",
+     "format": "int64"
+    },
+    "memoryRequests": {
+     "type": "integer",
+     "format": "int64"
     }
    }
   },
@@ -12359,11 +12389,11 @@
   },
   "replicationcontroller.ReplicationControllerDetail": {
    "required": [
-    "initContainerImages",
-    "objectMeta",
     "typeMeta",
     "podInfo",
     "containerImages",
+    "initContainerImages",
+    "objectMeta",
     "labelSelector",
     "errors"
    ],
@@ -12998,11 +13028,11 @@
   },
   "statefulset.StatefulSetDetail": {
    "required": [
+    "objectMeta",
     "typeMeta",
     "podInfo",
     "containerImages",
     "initContainerImages",
-    "objectMeta",
     "errors"
    ],
    "properties": {
@@ -13154,12 +13184,12 @@
   },
   "types.CustomResourceDefinitionDetail": {
    "required": [
-    "typeMeta",
     "group",
     "scope",
     "names",
     "established",
     "objectMeta",
+    "typeMeta",
     "conditions",
     "objects",
     "subresources",

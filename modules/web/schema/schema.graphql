@@ -2398,6 +2398,7 @@ type pod_PodList {
 }
 
 type pod_Pod {
+  allocatedResources: pod_PodAllocatedResources!
   containerImages: [String]!
   containerStatuses: [pod_ContainerStatus]!
   metrics: pod_PodMetrics!
@@ -2407,6 +2408,13 @@ type pod_Pod {
   status: String!
   typeMeta: types_TypeMeta!
   warnings: [common_Event]!
+}
+
+type pod_PodAllocatedResources {
+  cpuLimits: BigInt!
+  cpuRequests: BigInt!
+  memoryLimits: BigInt!
+  memoryRequests: BigInt!
 }
 
 type pod_ContainerStatus {
@@ -2635,7 +2643,7 @@ type v1_IngressRule {
   	  Currently the port of an Ingress is implicitly :80 for http and
   	  :443 for https.
   Both these may change in the future. Incoming requests are matched against the host before the IngressRuleValue. If the host is unspecified, the Ingress routes all traffic based on the specified IngressRuleValue.
-
+  
   host can be "precise" which is a domain name without the terminating dot of a network host (e.g. "foo.bar.com") or "wildcard", which is a domain name prefixed with a single wildcard label (e.g. "*.foo.com"). The wildcard character '*' must appear by itself as the first DNS label and matches only a single label. You cannot have a wildcard label by itself (e.g. Host == "*"). Requests will be matched against the Host field in the following way: 1. If host is precise, the request matches this rule if the http host header is equal to Host. 2. If host is a wildcard, then the request matches this rule if the http host header is to equal to the suffix (removing the first label) of the wildcard rule.
   """
   host: String
@@ -3903,7 +3911,7 @@ type v1_GRPCAction {
   port: Int!
   """
   Service is the name of the service to place in the gRPC HealthCheckRequest (see https://github.com/grpc/grpc/blob/master/doc/health-checking.md).
-
+  
   If this is not specified, the default behavior is defined by gRPC.
   """
   service: String!
@@ -3951,9 +3959,9 @@ type v1_TCPSocketAction {
 type v1_ResourceRequirements {
   """
   Claims lists the names of resources, defined in spec.resourceClaims, that are used by this container.
-
+  
   This is an alpha field and requires enabling the DynamicResourceAllocation feature gate.
-
+  
   This field is immutable. It can only be set for containers.
   """
   claims: [v1_ResourceClaim]
@@ -4075,7 +4083,7 @@ type v1_SeccompProfile {
   localhostProfile: String
   """
   type indicates which kind of seccomp profile will be applied. Valid options are:
-
+  
   Localhost - a profile defined in a file on the node should be used. RuntimeDefault - the container runtime default profile should be used. Unconfined - no profile should be applied.
   """
   type: String!
@@ -4125,7 +4133,7 @@ type v1_ContainerStatus {
   name: String!
   """
   Ready specifies whether the container is currently passing its readiness check. The value will change as readiness probes keep executing. If no readiness probes are specified, this field defaults to true once the container is fully started (see Started field).
-
+  
   The value is typically used to determine whether a container is ready to accept traffic.
   """
   ready: Boolean!
@@ -4446,7 +4454,7 @@ type v1_ObjectMeta {
   annotations: JSON
   """
   CreationTimestamp is a timestamp representing the server time when this object was created. It is not guaranteed to be set in happens-before order across separate operations. Clients may not set this value. It is represented in RFC3339 form and is in UTC.
-
+  
   Populated by the system. Read-only. Null for lists. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
   """
   creationTimestamp: String
@@ -4456,7 +4464,7 @@ type v1_ObjectMeta {
   deletionGracePeriodSeconds: BigInt
   """
   DeletionTimestamp is RFC 3339 date and time at which this resource will be deleted. This field is set by the server when a graceful deletion is requested by the user, and is not directly settable by a client. The resource is expected to be deleted (no longer visible from resource lists, and not reachable by name) after the time in this field, once the finalizers list is empty. As long as the finalizers list contains items, deletion is blocked. Once the deletionTimestamp is set, this value may not be unset or be set further into the future, although it may be shortened or the resource may be deleted prior to this time. For example, a user may request that a pod is deleted in 30 seconds. The Kubelet will react by sending a graceful termination signal to the containers in the pod. After that 30 seconds, the Kubelet will send a hard termination signal (SIGKILL) to the container and after cleanup, remove the pod from the API. In the presence of network partitions, this object may still exist after this timestamp, until an administrator or automated process can determine the resource is fully terminated. If not set, graceful deletion of the object has not been requested.
-
+  
   Populated by the system when a graceful deletion is requested. Read-only. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
   """
   deletionTimestamp: String
@@ -4466,9 +4474,9 @@ type v1_ObjectMeta {
   finalizers: [String]
   """
   GenerateName is an optional prefix, used by the server, to generate a unique name ONLY IF the Name field has not been provided. If this field is used, the name returned to the client will be different than the name passed. This value will also be combined with a unique suffix. The provided value has the same validation rules as the Name field, and may be truncated by the length of the suffix required to make the value unique on the server.
-
+  
   If this field is specified and the generated name exists, the server will return a 409.
-
+  
   Applied only if Name is not specified. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#idempotency
   """
   generateName: String
@@ -4490,7 +4498,7 @@ type v1_ObjectMeta {
   name: String
   """
   Namespace defines the space within which each name must be unique. An empty namespace is equivalent to the "default" namespace, but "default" is the canonical representation. Not all objects are required to be scoped to a namespace - the value of this field for those objects will be empty.
-
+  
   Must be a DNS_LABEL. Cannot be updated. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces
   """
   namespace: String
@@ -4500,7 +4508,7 @@ type v1_ObjectMeta {
   ownerReferences: [v1_OwnerReference]
   """
   An opaque value that represents the internal version of this object that can be used by clients to determine when objects have changed. May be used for optimistic concurrency, change detection, and the watch operation on a resource or set of resources. Clients must treat these values as opaque and passed unmodified back to the server. They may only be valid for a particular resource or set of resources.
-
+  
   Populated by the system. Read-only. Value must be treated as opaque by clients and . More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#concurrency-control-and-consistency
   """
   resourceVersion: String
@@ -4510,7 +4518,7 @@ type v1_ObjectMeta {
   selfLink: String
   """
   UID is the unique in time and space value for this object. It is typically generated by the server on successful creation of a resource and is not allowed to change on PUT operations.
-
+  
   Populated by the system. Read-only. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names#uids
   """
   uid: String
@@ -5008,7 +5016,7 @@ PodSecurityContext holds pod-level security attributes and common container sett
 type v1_PodSecurityContext {
   """
   A special supplemental group that applies to all containers in a pod. Some volume types allow the Kubelet to change the ownership of that volume to be owned by the pod:
-
+  
   1. The owning GID will be the FSGroup 2. The setgid bit is set (new files created in the volume will be owned by FSGroup) 3. The permission bits are OR'd with rw-rw
   """
   fsGroup: BigInt
@@ -5182,14 +5190,14 @@ type endpoint_Endpoint {
 type v1_EndpointPort {
   """
   The application protocol for this port. This is used as a hint for implementations to offer richer behavior for protocols that they understand. This field follows standard Kubernetes label syntax. Valid values are either:
-
+  
   * Un-prefixed protocol names - reserved for IANA standard service names (as per RFC-6335 and https://www.iana.org/assignments/service-names).
-
+  
   * Kubernetes-defined prefixed names:
     * 'kubernetes.io/h2c' - HTTP/2 prior knowledge over cleartext as described in https://www.rfc-editor.org/rfc/rfc9113.html#name-starting-http-2-with-prior-
     * 'kubernetes.io/ws'  - WebSocket over cleartext as described in https://www.rfc-editor.org/rfc/rfc6455
     * 'kubernetes.io/wss' - WebSocket over TLS as described in https://www.rfc-editor.org/rfc/rfc6455
-
+  
   * Other protocols should use implementation-defined prefixed names such as mycompany.com/my-custom-protocol.
   """
   appProtocol: String
