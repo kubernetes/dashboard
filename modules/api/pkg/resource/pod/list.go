@@ -20,7 +20,6 @@ import (
 	v1 "k8s.io/api/core/v1"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	k8sClient "k8s.io/client-go/kubernetes"
-
 	metricapi "k8s.io/dashboard/api/pkg/integration/metric/api"
 	"k8s.io/dashboard/api/pkg/resource/common"
 	"k8s.io/dashboard/api/pkg/resource/dataselect"
@@ -75,6 +74,23 @@ type Pod struct {
 	ContainerImages []string `json:"containerImages"`
 
 	ContainerStatuses []ContainerStatus `json:"containerStatuses"`
+
+	AllocatedResources PodAllocatedResources `json:"allocatedResources"`
+}
+
+// PodAllocatedResources describes pod allocated resources.
+type PodAllocatedResources struct {
+	// CPURequests is number of allocated milicores.
+	CPURequests int64 `json:"cpuRequests"`
+
+	// CPULimits is defined CPU limit.
+	CPULimits int64 `json:"cpuLimits"`
+
+	// MemoryRequests is a fraction of memory, that is allocated.
+	MemoryRequests int64 `json:"memoryRequests"`
+
+	// MemoryLimits is defined memory limit.
+	MemoryLimits int64 `json:"memoryLimits"`
 }
 
 var EmptyPodList = &PodList{
@@ -156,15 +172,21 @@ func ToPodList(pods []v1.Pod, events []v1.Event, nonCriticalErrors []error, dsQu
 }
 
 func toPod(pod *v1.Pod, metrics *MetricsByPod, warnings []common.Event) Pod {
+	allocatedResources, err := getPodAllocatedResources(pod)
+	if err != nil {
+		log.Printf("Couldn't get allocated resources of %s pod: %s\n", pod.Name, err)
+	}
+
 	podDetail := Pod{
-		ObjectMeta:        types.NewObjectMeta(pod.ObjectMeta),
-		TypeMeta:          types.NewTypeMeta(types.ResourceKindPod),
-		Warnings:          warnings,
-		Status:            getPodStatus(*pod),
-		RestartCount:      getRestartCount(*pod),
-		NodeName:          pod.Spec.NodeName,
-		ContainerImages:   common.GetContainerImages(&pod.Spec),
-		ContainerStatuses: ToContainerStatuses(append(pod.Status.InitContainerStatuses, pod.Status.ContainerStatuses...)),
+		ObjectMeta:         types.NewObjectMeta(pod.ObjectMeta),
+		TypeMeta:           types.NewTypeMeta(types.ResourceKindPod),
+		Warnings:           warnings,
+		Status:             getPodStatus(*pod),
+		RestartCount:       getRestartCount(*pod),
+		NodeName:           pod.Spec.NodeName,
+		ContainerImages:    common.GetContainerImages(&pod.Spec),
+		ContainerStatuses:  ToContainerStatuses(append(pod.Status.InitContainerStatuses, pod.Status.ContainerStatuses...)),
+		AllocatedResources: allocatedResources,
 	}
 
 	if m, exists := metrics.MetricsMap[pod.UID]; exists {

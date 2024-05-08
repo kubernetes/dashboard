@@ -18,7 +18,6 @@ import (
 	"fmt"
 
 	v1 "k8s.io/api/core/v1"
-
 	metricapi "k8s.io/dashboard/api/pkg/integration/metric/api"
 	"k8s.io/dashboard/api/pkg/resource/common"
 	"k8s.io/dashboard/api/pkg/resource/dataselect"
@@ -246,4 +245,95 @@ func getStatus(list *v1.PodList, events []v1.Event) common.ResourceStatus {
 	}
 
 	return info
+}
+
+// addResourceList adds the resources in newList to list
+func addResourceList(list, new v1.ResourceList) {
+	for name, quantity := range new {
+		if value, ok := list[name]; !ok {
+			list[name] = quantity.DeepCopy()
+		} else {
+			value.Add(quantity)
+			list[name] = value
+		}
+	}
+}
+
+// maxResourceList sets list to the greater of list/newList for every resource
+// either list
+func maxResourceList(list, new v1.ResourceList) {
+	for name, quantity := range new {
+		if value, ok := list[name]; !ok {
+			list[name] = quantity.DeepCopy()
+			continue
+		} else {
+			if quantity.Cmp(value) > 0 {
+				list[name] = quantity.DeepCopy()
+			}
+		}
+	}
+}
+
+// PodRequestsAndLimits returns a dictionary of all defined resources summed up for all
+// containers of the pod. If pod overhead is non-nil, the pod overhead is added to the
+// total container resource requests and to the total container limits which have a
+// non-zero quantity.
+func PodRequestsAndLimits(pod *v1.Pod) (reqs, limits v1.ResourceList, err error) {
+	reqs, limits = v1.ResourceList{}, v1.ResourceList{}
+	for _, container := range pod.Spec.Containers {
+		addResourceList(reqs, container.Resources.Requests)
+		addResourceList(limits, container.Resources.Limits)
+	}
+	// init containers define the minimum of any resource
+	for _, container := range pod.Spec.InitContainers {
+		maxResourceList(reqs, container.Resources.Requests)
+		maxResourceList(limits, container.Resources.Limits)
+	}
+
+	// Add overhead for running a pod to the sum of requests and to non-zero limits:
+	if pod.Spec.Overhead != nil {
+		addResourceList(reqs, pod.Spec.Overhead)
+
+		for name, quantity := range pod.Spec.Overhead {
+			if value, ok := limits[name]; ok && !value.IsZero() {
+				value.Add(quantity)
+				limits[name] = value
+			}
+		}
+	}
+	return
+}
+
+func getPodAllocatedResources(pod *v1.Pod) (PodAllocatedResources, error) {
+	reqs, limits, err := PodRequestsAndLimits(pod)
+	if err != nil {
+		return PodAllocatedResources{}, err
+	}
+
+	for podReqName, podReqValue := range reqs {
+		if value, ok := reqs[podReqName]; !ok {
+			reqs[podReqName] = podReqValue.DeepCopy()
+		} else {
+			value.Add(podReqValue)
+			reqs[podReqName] = value
+		}
+	}
+
+	for podLimitName, podLimitValue := range limits {
+		if value, ok := limits[podLimitName]; !ok {
+			limits[podLimitName] = podLimitValue.DeepCopy()
+		} else {
+			value.Add(podLimitValue)
+			limits[podLimitName] = value
+		}
+	}
+
+	cpuRequests, cpuLimits, memoryRequests, memoryLimits := reqs[v1.ResourceCPU], limits[v1.ResourceCPU], reqs[v1.ResourceMemory], limits[v1.ResourceMemory]
+
+	return PodAllocatedResources{
+		CPURequests:    cpuRequests.MilliValue(),
+		CPULimits:      cpuLimits.MilliValue(),
+		MemoryRequests: memoryRequests.Value(),
+		MemoryLimits:   memoryLimits.Value(),
+	}, nil
 }
