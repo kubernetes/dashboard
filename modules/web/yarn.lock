@@ -13600,7 +13600,7 @@ __metadata:
     rxjs-compat: 6.6.7
     sass: 1.77.0
     sass-loader: 14.2.1
-    semver: 7.6.1
+    semver: 7.6.2
     sockjs-client: 1.6.1
     source-map-explorer: 2.5.3
     strip-ansi: 7.1.0
@@ -16876,12 +16876,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"semver@npm:7.6.1":
-  version: 7.6.1
-  resolution: "semver@npm:7.6.1"
+"semver@npm:7.6.2":
+  version: 7.6.2
+  resolution: "semver@npm:7.6.2"
   bin:
     semver: bin/semver.js
-  checksum: 2c9c89b985230c0fcf02c96ae6a3ca40c474f2f4e838634394691e6e10c347a0c6def0f14fc355d82f90f1744a073b8b9c45457b108aa728280b5d68ed7961cd
+  checksum: 40f6a95101e8d854357a644da1b8dd9d93ce786d5c6a77227bc69dbb17bea83d0d1d1d7c4cd5920a6df909f48e8bd8a5909869535007f90278289f2451d0292d
   languageName: node
   linkType: hard
 
