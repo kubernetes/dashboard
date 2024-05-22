@@ -63,8 +63,21 @@ spec:
           {{ toYaml . | nindent 12 }}
           {{- end }}
 
-          {{- with .Values.web.containers.env }}
           env:
+            {{- if .Values.web.containers.resources.limits.cpu }}
+            - name: GOMAXPROCS
+              valueFrom:
+                resourceFieldRef:
+                  resource: limits.cpu
+            {{- end }}
+            {{- if .Values.web.containers.resources.limits.memory }}
+            - name: GOMEMLIMIT
+              valueFrom:
+                resourceFieldRef:
+                  resource: limits.memory
+            {{- end }}
+
+          {{- with .Values.web.containers.env }}
           {{ toYaml . | nindent 12 }}
           {{- end }}
 
