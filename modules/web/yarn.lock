@@ -4071,9 +4071,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@graphql-mesh/cli@npm:0.90.5":
-  version: 0.90.5
-  resolution: "@graphql-mesh/cli@npm:0.90.5"
+"@graphql-mesh/cli@npm:0.90.6":
+  version: 0.90.6
+  resolution: "@graphql-mesh/cli@npm:0.90.6"
   dependencies:
     "@graphql-codegen/core": ^4.0.0
     "@graphql-codegen/typed-document-node": ^5.0.0
@@ -4118,7 +4118,7 @@ __metadata:
     graphql-mesh: cjs/bin.js
     graphql-mesh-esm: esm/bin.js
     mesh: cjs/bin.js
-  checksum: 2cf82db4a21ec1f01a1c7a9ef5150551c60b0c9ed24bcec6592a8742f3abd6bfe6bf49112258a17c5b0a1b59734d998b85e13c9115ee31a479bb74bdd4b235c7
+  checksum: 0f5a1ade80681a8785d8a33364c7538fe5d8f88a6dc70db2eb66ae2a3f8cd152875b1c1059483ac3c6d765c03f2b124faf0b92e1c097ac9f00401bc18fa6c90b
   languageName: node
   linkType: hard
 
@@ -13563,7 +13563,7 @@ __metadata:
     "@babel/preset-env": 7.24.5
     "@babel/register": 7.23.7
     "@cypress/webpack-preprocessor": 6.0.1
-    "@graphql-mesh/cli": 0.90.5
+    "@graphql-mesh/cli": 0.90.6
     "@graphql-mesh/openapi": 0.100.8
     "@graphql-mesh/runtime": 0.99.5
     "@graphql-mesh/transform-replace-field": 0.98.4
