@@ -91,7 +91,7 @@
     "@angular/language-service": "16.2.1",
     "@babel/core": "7.24.5",
     "@babel/preset-env": "7.24.5",
-    "@babel/register": "7.23.7",
+    "@babel/register": "7.24.6",
     "@cypress/webpack-preprocessor": "6.0.1",
     "@graphql-mesh/cli": "0.90.7",
     "@graphql-mesh/openapi": "0.100.8",

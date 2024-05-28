@@ -3045,9 +3045,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/register@npm:7.23.7":
-  version: 7.23.7
-  resolution: "@babel/register@npm:7.23.7"
+"@babel/register@npm:7.24.6":
+  version: 7.24.6
+  resolution: "@babel/register@npm:7.24.6"
   dependencies:
     clone-deep: ^4.0.1
     find-cache-dir: ^2.0.0
@@ -3056,7 +3056,7 @@ __metadata:
     source-map-support: ^0.5.16
   peerDependencies:
     "@babel/core": ^7.0.0-0
-  checksum: c72a6d4856ef04f13490370d805854d2d98a77786bfaec7d85e2c585e1217011c4f3df18197a890e14520906c9111bef95551ba1a9b59c88df4dfc2dfe2c8d1b
+  checksum: 446316c80969df89ad3515576937ddf746cd4927810f226101a8d7f476b399c14c26847e77637e09355399c645fbf413d6e53ac6987b8cf240de7932a9372cb5
   languageName: node
   linkType: hard
 
@@ -13561,7 +13561,7 @@ __metadata:
     "@angular/router": 16.2.1
     "@babel/core": 7.24.5
     "@babel/preset-env": 7.24.5
-    "@babel/register": 7.23.7
+    "@babel/register": 7.24.6
     "@cypress/webpack-preprocessor": 6.0.1
     "@graphql-mesh/cli": 0.90.7
     "@graphql-mesh/openapi": 0.100.8
