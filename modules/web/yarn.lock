@@ -4321,32 +4321,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@graphql-mesh/runtime@npm:0.99.5":
-  version: 0.99.5
-  resolution: "@graphql-mesh/runtime@npm:0.99.5"
-  dependencies:
-    "@envelop/core": ^5.0.0
-    "@envelop/extended-validation": ^4.0.0
-    "@envelop/graphql-jit": ^8.0.0
-    "@graphql-mesh/string-interpolation": ^0.5.4
-    "@graphql-tools/batch-delegate": ^9.0.2
-    "@graphql-tools/delegate": ^10.0.10
-    "@graphql-tools/executor": ^1.2.0
-    "@graphql-tools/wrap": ^10.0.5
-    "@whatwg-node/fetch": ^0.9.0
-    graphql-jit: 0.8.2
-  peerDependencies:
-    "@graphql-mesh/cross-helpers": ^0.4.2
-    "@graphql-mesh/types": ^0.98.4
-    "@graphql-mesh/utils": ^0.98.4
-    "@graphql-tools/utils": ^10.2.0
-    graphql: "*"
-    tslib: ^2.4.0
-  checksum: 46b57384e6e778b3edaadc758878b780afd00033dc568f65e54da33180b6d6cb89789df34f53ae7a3cf85325af7d4e683bfd0f6d05950310d14c17aa72e66a63
-  languageName: node
-  linkType: hard
-
-"@graphql-mesh/runtime@npm:^0.99.7":
+"@graphql-mesh/runtime@npm:0.99.7, @graphql-mesh/runtime@npm:^0.99.7":
   version: 0.99.7
   resolution: "@graphql-mesh/runtime@npm:0.99.7"
   dependencies:
@@ -4493,21 +4468,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@graphql-tools/batch-delegate@npm:^9.0.2":
-  version: 9.0.2
-  resolution: "@graphql-tools/batch-delegate@npm:9.0.2"
-  dependencies:
-    "@graphql-tools/delegate": ^10.0.4
-    "@graphql-tools/utils": ^10.0.13
-    dataloader: 2.2.2
-    tslib: ^2.4.0
-    value-or-promise: ^1.0.12
-  peerDependencies:
-    graphql: ^14.0.0 || ^15.0.0 || ^16.0.0 || ^17.0.0
-  checksum: d00ee4f9bceec8da66259968758079b48701503218cab1a1582796063bb7a99438a37a2c63137953b2736437cdab197db9501a6d00d71a292dc531b91a472dd5
-  languageName: node
-  linkType: hard
-
 "@graphql-tools/batch-delegate@npm:^9.0.3":
   version: 9.0.3
   resolution: "@graphql-tools/batch-delegate@npm:9.0.3"
@@ -4549,22 +4509,6 @@ __metadata:
   peerDependencies:
     graphql: ^14.0.0 || ^15.0.0 || ^16.0.0 || ^17.0.0
   checksum: 22965854f07d841281bcacba160031ba4e721f21f114c39f122e621c9dbae317e69252d8bf7b154079e640ff8505adcb573d3ca67e64a69caa81383d688956ee
-  languageName: node
-  linkType: hard
-
-"@graphql-tools/delegate@npm:^10.0.10":
-  version: 10.0.10
-  resolution: "@graphql-tools/delegate@npm:10.0.10"
-  dependencies:
-    "@graphql-tools/batch-execute": ^9.0.4
-    "@graphql-tools/executor": ^1.2.1
-    "@graphql-tools/schema": ^10.0.3
-    "@graphql-tools/utils": ^10.0.13
-    dataloader: ^2.2.2
-    tslib: ^2.5.0
-  peerDependencies:
-    graphql: ^14.0.0 || ^15.0.0 || ^16.0.0 || ^17.0.0
-  checksum: 0dcbdda4a8d7cc51a52429449e5c122f1848cff4f6741aac2c362a666c006b76002b252197294dcad9bbf94cf4df9979055dac813edeb42c7b068004594faa63
   languageName: node
   linkType: hard
 
@@ -13708,7 +13652,7 @@ __metadata:
     "@cypress/webpack-preprocessor": 6.0.1
     "@graphql-mesh/cli": 0.90.9
     "@graphql-mesh/openapi": 0.100.10
-    "@graphql-mesh/runtime": 0.99.5
+    "@graphql-mesh/runtime": 0.99.7
     "@graphql-mesh/transform-replace-field": 0.98.6
     "@swimlane/ngx-charts": 20.5.0
     "@types/d3": 7.4.3
