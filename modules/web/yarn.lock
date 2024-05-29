@@ -42,13 +42,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@angular-devkit/architect@npm:^0.1301.0 || ^0.1401.0 || ^0.1501.0 || ^0.1601.0 || ^0.1700.0":
-  version: 0.1700.10
-  resolution: "@angular-devkit/architect@npm:0.1700.10"
+"@angular-devkit/architect@npm:^0.1301.0 || ^0.1401.0 || ^0.1501.0 || ^0.1601.0 || ^0.1700.0 || ^0.1800.0":
+  version: 0.1800.1
+  resolution: "@angular-devkit/architect@npm:0.1800.1"
   dependencies:
-    "@angular-devkit/core": 17.0.10
+    "@angular-devkit/core": 18.0.1
     rxjs: 7.8.1
-  checksum: f3d7da0a7189eeba9dcc808a72b0df206199a5ef57c06c0cc8ca1cbb374840bfc4fd29ae956ceb96ecad6cf41cdd384d59c6368fa6811fa504326783632a7296
+  checksum: caaddd18722c7b7a63cc733dd151eea9eb63d7422eac6249d0600c8529988bfe653210b9c97616f828a4ad8a944ed9e05043139dc11d25d9cf3770239a48c414
   languageName: node
   linkType: hard
 
@@ -190,33 +190,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@angular-devkit/core@npm:17.0.10":
-  version: 17.0.10
-  resolution: "@angular-devkit/core@npm:17.0.10"
+"@angular-devkit/core@npm:18.0.1, @angular-devkit/core@npm:^13.0.0 || ^14.0.0 || ^15.0.0 || ^16.0.0 || ^17.0.0 || ^18.0.0":
+  version: 18.0.1
+  resolution: "@angular-devkit/core@npm:18.0.1"
   dependencies:
-    ajv: 8.12.0
-    ajv-formats: 2.1.1
-    jsonc-parser: 3.2.0
-    picomatch: 3.0.1
-    rxjs: 7.8.1
-    source-map: 0.7.4
-  peerDependencies:
-    chokidar: ^3.5.2
-  peerDependenciesMeta:
-    chokidar:
-      optional: true
-  checksum: 909c113dc0bfe1c2ff74509089bce3ee508eba8f3948011b3ef3f7f9903add48b09edb3c2da48fe502eb50377cd7c1a1b6507bb89d2ed7d8e8b5d1d12353442e
-  languageName: node
-  linkType: hard
-
-"@angular-devkit/core@npm:17.2.3, @angular-devkit/core@npm:^13.0.0 || ^14.0.0 || ^15.0.0 || ^16.0.0 || ^17.0.0":
-  version: 17.2.3
-  resolution: "@angular-devkit/core@npm:17.2.3"
-  dependencies:
-    ajv: 8.12.0
-    ajv-formats: 2.1.1
+    ajv: 8.13.0
+    ajv-formats: 3.0.1
     jsonc-parser: 3.2.1
-    picomatch: 4.0.1
+    picomatch: 4.0.2
     rxjs: 7.8.1
     source-map: 0.7.4
   peerDependencies:
@@ -224,7 +205,7 @@ __metadata:
   peerDependenciesMeta:
     chokidar:
       optional: true
-  checksum: 53f6c0a419ba8cbdb35b589670cd2364fa40984cfd460e98be4628599267849dfe036c644115abd04e0e41448d8a4b8df7165e1d38f8daa9d954d246420459e5
+  checksum: 01e1385e88a188dc8cdcf8cfd486c2a825c02d50ab3dfb5293bf7c1a2cb6e0717e61a7c25049fe832c37cca02a0cd5abda3a441b874202769c9e8f15d544e9c9
   languageName: node
   linkType: hard
 
@@ -241,16 +222,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@angular-devkit/schematics@npm:17.2.3, @angular-devkit/schematics@npm:^13.0.0 || ^14.0.0 || ^15.0.0 || ^16.0.0 || ^17.0.0":
-  version: 17.2.3
-  resolution: "@angular-devkit/schematics@npm:17.2.3"
+"@angular-devkit/schematics@npm:18.0.1, @angular-devkit/schematics@npm:^13.0.0 || ^14.0.0 || ^15.0.0 || ^16.0.0 || ^17.0.0 || ^18.0.0":
+  version: 18.0.1
+  resolution: "@angular-devkit/schematics@npm:18.0.1"
   dependencies:
-    "@angular-devkit/core": 17.2.3
+    "@angular-devkit/core": 18.0.1
     jsonc-parser: 3.2.1
-    magic-string: 0.30.7
+    magic-string: 0.30.10
     ora: 5.4.1
     rxjs: 7.8.1
-  checksum: a005e992254e949f930cc0f58fee081ee328782f4583ef84105d9bcab6aa1bd77aaf5522025b8f317f2d249fe46ce693521c8e31ed470e4ec17f4dc04d1762ee
+  checksum: 9edd0e342716c6c43b3debd624e922efe4622d9e1714818a31fa3a39e267ee7ccfbadbd4ce5873ae74f06d89a170db9f52776e8ba8ede1819cc1e2cae7d00241
   languageName: node
   linkType: hard
 
@@ -5587,14 +5568,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@schematics/angular@npm:^13.0.0 || ^14.0.0 || ^15.0.0 || ^16.0.0 || ^17.0.0":
-  version: 17.2.3
-  resolution: "@schematics/angular@npm:17.2.3"
+"@schematics/angular@npm:^13.0.0 || ^14.0.0 || ^15.0.0 || ^16.0.0 || ^17.0.0 || ^18.0.0":
+  version: 18.0.1
+  resolution: "@schematics/angular@npm:18.0.1"
   dependencies:
-    "@angular-devkit/core": 17.2.3
-    "@angular-devkit/schematics": 17.2.3
+    "@angular-devkit/core": 18.0.1
+    "@angular-devkit/schematics": 18.0.1
     jsonc-parser: 3.2.1
-  checksum: 22e14c8655328b9dab8fbab640db7dd47e0972f141083435fcfabd53079aca1c8d6781084601147bf372a22b972c248b8c04d5c0d58e0ecd2fd658c4b363650c
+  checksum: 88a80459e979af0f0625fab630381ccfcde41dd17a367e85f04821ca06d37ecfd5067b3fbb5d9d44633015c65fbe058a976c3ba1dd20b9492efea92752c894e0
   languageName: node
   linkType: hard
 
@@ -7118,6 +7099,20 @@ __metadata:
     ajv:
       optional: true
   checksum: 4a287d937f1ebaad4683249a4c40c0fa3beed30d9ddc0adba04859026a622da0d317851316ea64b3680dc60f5c3c708105ddd5d5db8fe595d9d0207fd19f90b7
+  languageName: node
+  linkType: hard
+
+"ajv-formats@npm:3.0.1":
+  version: 3.0.1
+  resolution: "ajv-formats@npm:3.0.1"
+  dependencies:
+    ajv: ^8.0.0
+  peerDependencies:
+    ajv: ^8.0.0
+  peerDependenciesMeta:
+    ajv:
+      optional: true
+  checksum: f4e1fe232d67fcafc02eafe373a7a9962351e0439dd0736647ca75c93c3da23b430b6502c255ab4315410ae330d4f3013ac9fe226c40b2524ca93a58e786d086
   languageName: node
   linkType: hard
 
@@ -13717,7 +13712,7 @@ __metadata:
     material-design-icons: 3.0.1
     minimatch: 9.0.4
     minimist: 1.2.8
-    ng-extract-i18n-merge: 2.11.2
+    ng-extract-i18n-merge: 2.12.0
     ngx-cookie-service: 18.0.0
     ngx-pipes: 3.2.2
     node-gyp: 10.1.0
@@ -14237,12 +14232,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"magic-string@npm:0.30.7":
-  version: 0.30.7
-  resolution: "magic-string@npm:0.30.7"
+"magic-string@npm:0.30.10":
+  version: 0.30.10
+  resolution: "magic-string@npm:0.30.10"
   dependencies:
     "@jridgewell/sourcemap-codec": ^1.4.15
-  checksum: bdf102e36a44d1728ec61b69d655caba3f66ca58898e292f6debe57dc30896bd37908bfe3464a7464a435831a9e44aa905cebd681e21c2f44bbe4dddf225619f
+  checksum: 456fd47c39b296c47dff967e1965121ace35417eab7f45a99e681e725b8661b48e1573c366ee67a27715025b3740773c46b088f115421c7365ea4ea6fa10d399
   languageName: node
   linkType: hard
 
@@ -14846,18 +14841,18 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ng-extract-i18n-merge@npm:2.11.2":
-  version: 2.11.2
-  resolution: "ng-extract-i18n-merge@npm:2.11.2"
+"ng-extract-i18n-merge@npm:2.12.0":
+  version: 2.12.0
+  resolution: "ng-extract-i18n-merge@npm:2.12.0"
   dependencies:
-    "@angular-devkit/architect": ^0.1301.0 || ^0.1401.0 || ^0.1501.0 || ^0.1601.0 || ^0.1700.0
-    "@angular-devkit/core": ^13.0.0 || ^14.0.0 || ^15.0.0 || ^16.0.0 || ^17.0.0
-    "@angular-devkit/schematics": ^13.0.0 || ^14.0.0 || ^15.0.0 || ^16.0.0 || ^17.0.0
-    "@schematics/angular": ^13.0.0 || ^14.0.0 || ^15.0.0 || ^16.0.0 || ^17.0.0
+    "@angular-devkit/architect": ^0.1301.0 || ^0.1401.0 || ^0.1501.0 || ^0.1601.0 || ^0.1700.0 || ^0.1800.0
+    "@angular-devkit/core": ^13.0.0 || ^14.0.0 || ^15.0.0 || ^16.0.0 || ^17.0.0 || ^18.0.0
+    "@angular-devkit/schematics": ^13.0.0 || ^14.0.0 || ^15.0.0 || ^16.0.0 || ^17.0.0 || ^18.0.0
+    "@schematics/angular": ^13.0.0 || ^14.0.0 || ^15.0.0 || ^16.0.0 || ^17.0.0 || ^18.0.0
     xmldoc: ^1.1.3
   peerDependencies:
-    "@angular-devkit/build-angular": ^13.0.0 || ^14.0.0 || ^15.0.0 || ^16.0.0 || ^17.0.0
-  checksum: 52fa1bbea4bc9da6d01106fca3cd6bc1751de0aec750d805c24193933e1d1d462f2d4589544c66e28420780da1c3cb5b35bb2e53a818ee9b45828c1a4670512e
+    "@angular-devkit/build-angular": ^13.0.0 || ^14.0.0 || ^15.0.0 || ^16.0.0 || ^17.0.0 || ^18.0.0
+  checksum: 2f64367a4bba586df0a5736242e43f541663da5e6a3ca18c3126fd0da0399f2f6bf1adc1fede6de762f43b237053203e84ac7925daa99b8ab79f4134b76d87ee
   languageName: node
   linkType: hard
 
@@ -15841,21 +15836,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"picomatch@npm:3.0.1":
-  version: 3.0.1
-  resolution: "picomatch@npm:3.0.1"
-  checksum: b7fe18174bcc05bbf0ea09cc85623ae395676b3e6bc25636d4c20db79a948586237e429905453bf1ba385bc7a7aa5b56f1b351680e650d2b5c305ceb98dfc914
-  languageName: node
-  linkType: hard
-
-"picomatch@npm:4.0.1":
-  version: 4.0.1
-  resolution: "picomatch@npm:4.0.1"
-  checksum: f135d38bb7d190186907714cf2f3abe043de9c66b1c5e5687ae7ae63fd9693a51634aa3662ac1dcd79e1209e02edcaa0740c4f3edda2ffed03f1a0bee38d8f67
-  languageName: node
-  linkType: hard
-
-"picomatch@npm:^4.0.2":
+"picomatch@npm:4.0.2, picomatch@npm:^4.0.2":
   version: 4.0.2
   resolution: "picomatch@npm:4.0.2"
   checksum: a7a5188c954f82c6585720e9143297ccd0e35ad8072231608086ca950bee672d51b0ef676254af0788205e59bd4e4deb4e7708769226bed725bf13370a7d1464
