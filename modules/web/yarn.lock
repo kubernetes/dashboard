@@ -13754,7 +13754,7 @@ __metadata:
     systemjs: 6.15.1
     tar: 7.2.0
     through2: 4.0.2
-    ts-jest: 29.1.3
+    ts-jest: 29.1.4
     ts-loader: 9.5.1
     ts-node: 10.9.2
     tslib: 2.6.2
@@ -18376,9 +18376,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ts-jest@npm:29.1.3":
-  version: 29.1.3
-  resolution: "ts-jest@npm:29.1.3"
+"ts-jest@npm:29.1.4":
+  version: 29.1.4
+  resolution: "ts-jest@npm:29.1.4"
   dependencies:
     bs-logger: 0.x
     fast-json-stable-stringify: 2.x
@@ -18408,7 +18408,7 @@ __metadata:
       optional: true
   bin:
     ts-jest: cli.js
-  checksum: c5b2c0501680a9056c50541a3315de7b3b85a611056b978062b4defc96fb0066d12bf1e15715021799a3779723343fb98a9a4ba01dc01709f274899b6c28453d
+  checksum: e36cba389adbb3700b46422e883c8d25e76febcc01c4a39c801ef15e6edbd6da1695bdd144100153e992f98a754aea4099906955b1b9a83c3c72d77009c3d7e2
   languageName: node
   linkType: hard
 
