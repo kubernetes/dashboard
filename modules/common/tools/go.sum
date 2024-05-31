@@ -134,8 +134,8 @@ github.com/client9/misspell v0.3.4/go.mod h1:qj6jICC3Q7zFZvVWo7KLAzC3yx5G7kyvSDk
 github.com/cloudflare/circl v1.3.3/go.mod h1:5XYMA4rFBvNIrhs50XuiBJ15vF2pZn4nnUKZrLbUZFA=
 github.com/cloudflare/circl v1.3.7 h1:qlCDlTPz2n9fu58M0Nh1J/JzcFpfgkFHHX3O35r5vcU=
 github.com/cloudflare/circl v1.3.7/go.mod h1:sRTcRWXGLrKw6yIGJ+l7amYJFfAXbZG0kBSc8r4zxgA=
-github.com/cosmtrek/air v1.52.0 h1:fCMADJfEdcBE84oyhChPXv2XS5A1jUN/uLo49ivCnlI=
-github.com/cosmtrek/air v1.52.0/go.mod h1:xILtq8JGIYwe++r/ib4PdhubiuKBmE1vutC49E+5A78=
+github.com/cosmtrek/air v1.52.1 h1:R+BiGX9tWJ36ENM0ZroaRkagKgIlCmy+8IGTvMyoDV4=
+github.com/cosmtrek/air v1.52.1/go.mod h1:xILtq8JGIYwe++r/ib4PdhubiuKBmE1vutC49E+5A78=
 github.com/cpuguy83/go-md2man/v2 v2.0.1/go.mod h1:tgQtvFlXSQOSOSIRvRPT7W67SCa46tRHOmNcaadrF8o=
 github.com/cpuguy83/go-md2man/v2 v2.0.3/go.mod h1:tgQtvFlXSQOSOSIRvRPT7W67SCa46tRHOmNcaadrF8o=
 github.com/creack/pty v1.1.9/go.mod h1:oKZEueFk5CKHvIhNR5MUki03XCEU+Q6VDXinZuGJ33E=

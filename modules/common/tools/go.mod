@@ -6,7 +6,7 @@ toolchain go1.22.2
 
 require (
 	github.com/apache/skywalking-eyes v0.6.0
-	github.com/cosmtrek/air v1.52.0
+	github.com/cosmtrek/air v1.52.1
 	github.com/golangci/golangci-lint v1.59.0
 	k8s.io/code-generator v0.30.0
 	sigs.k8s.io/kind v0.22.0
