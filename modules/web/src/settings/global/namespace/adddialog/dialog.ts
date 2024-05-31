@@ -14,6 +14,7 @@
 
 import {Component, Inject} from '@angular/core';
 import {MAT_DIALOG_DATA} from '@angular/material/dialog';
+import {MAT_FORM_FIELD_DEFAULT_OPTIONS} from '@angular/material/form-field';
 
 export interface AddFallbackNamespaceDialogData {
   namespaces: string[];
@@ -22,6 +23,15 @@ export interface AddFallbackNamespaceDialogData {
 @Component({
   selector: 'kd-namespace-settings-add-dialog',
   templateUrl: 'template.html',
+  providers: [
+    {
+      provide: MAT_FORM_FIELD_DEFAULT_OPTIONS,
+      useValue: {
+        appearance: 'outline',
+        subscriptSizing: 'dynamic',
+      },
+    },
+  ],
 })
 export class AddFallbackNamespaceDialogComponent {
   constructor(@Inject(MAT_DIALOG_DATA) public data: AddFallbackNamespaceDialogData) {}

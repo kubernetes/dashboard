@@ -14,27 +14,21 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<form
-  [formGroup]="form"
-  novalidate
->
-  <kd-help-section>
+<form [formGroup]="form"
+      novalidate>
+  <kd-help-section class="kd-standard-form-field">
     <mat-form-field>
-      <input
-        matInput
-        formControlName="name"
-        placeholder="App name"
-        i18n-placeholder
-        [maxlength]="nameMaxLength"
-        [namespace]="namespace.value"
-        kdUniqueName
-        required
-      />
-      <mat-progress-bar
-        class="kd-deploy-form-progress"
-        [ngClass]="{'kd-deploy-form-progress-show': name.pending}"
-        mode="indeterminate"
-      >
+      <mat-label label="App name"
+                 i18n-label>App name</mat-label>
+      <input matInput
+             formControlName="name"
+             [maxlength]="nameMaxLength"
+             [namespace]="namespace.value"
+             kdUniqueName
+             required />
+      <mat-progress-bar class="kd-deploy-form-progress"
+                        [ngClass]="{'kd-deploy-form-progress-show': name.pending}"
+                        mode="indeterminate">
       </mat-progress-bar>
       <mat-hint align="end">{{ name.value?.length }} / {{ nameMaxLength }}</mat-hint>
       <mat-error
@@ -74,7 +68,7 @@ limitations under the License.
     </kd-user-help>
   </kd-help-section>
 
-  <kd-help-section>
+  <kd-help-section class="kd-standard-form-field">
     <mat-form-field>
       <input
         matInput
@@ -115,7 +109,7 @@ limitations under the License.
     </kd-user-help>
   </kd-help-section>
 
-  <kd-help-section>
+  <kd-help-section class="kd-standard-form-field">
     <mat-form-field>
       <input
         matInput
@@ -190,7 +184,7 @@ limitations under the License.
     </kd-user-help>
   </kd-help-section>
 
-  <kd-help-section>
+  <kd-help-section class="kd-standard-form-field">
     <mat-form-field>
       <mat-select
         formControlName="namespace"
@@ -229,7 +223,7 @@ limitations under the License.
 
   <!-- advanced options -->
   <div [hidden]="!isMoreOptionsEnabled()">
-    <kd-help-section>
+    <kd-help-section class="kd-standard-form-field">
       <mat-form-field>
         <textarea
           formControlName="description"
@@ -273,7 +267,7 @@ limitations under the License.
       </kd-user-help>
     </kd-help-section>
 
-    <kd-help-section>
+    <kd-help-section class="kd-standard-form-field">
       <mat-form-field>
         <mat-select
           formControlName="imagePullSecret"
@@ -313,7 +307,8 @@ limitations under the License.
     </kd-help-section>
 
     <kd-help-section>
-      <div fxLayout="row">
+      <div fxLayout="row"
+           class="kd-standard-form-field">
         <mat-form-field fxFlex="auto">
           <input
             matInput
@@ -377,7 +372,7 @@ limitations under the License.
     </kd-help-section>
 
     <kd-help-section>
-      <div>
+      <div class="kd-standard-form-field">
         <mat-form-field class="kd-block">
           <input
             matInput
