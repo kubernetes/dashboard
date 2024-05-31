@@ -4,7 +4,7 @@ go 1.22.0
 
 require (
 	github.com/emicklei/go-restful/v3 v3.12.0
-	k8s.io/apimachinery v0.30.0
+	k8s.io/apimachinery v0.30.1
 )
 
 require (

@@ -2,7 +2,7 @@ module k8s.io/dashboard/helpers
 
 go 1.22.0
 
-require k8s.io/apimachinery v0.30.0
+require k8s.io/apimachinery v0.30.1
 
 require (
 	github.com/go-logr/logr v1.4.1 // indirect
