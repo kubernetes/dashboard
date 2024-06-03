@@ -885,6 +885,7 @@ func CreateHTTPAPIHandler(iManager integration.Manager) (*restful.Container, err
 			Param(apiV1Ws.PathParameter("namespace", "namespace of the resource")).
 			Param(apiV1Ws.PathParameter("name", "name of the resource")).
 			Param(apiV1Ws.QueryParameter("deleteNow", "override graceful delete options and enforce immediate deletion")).
+			Param(apiV1Ws.QueryParameter("propagation", "override default delete propagation policy")).
 			Returns(http.StatusNoContent, "", nil))
 	apiV1Ws.Route(
 		apiV1Ws.GET("/_raw/{kind}/namespace/{namespace}/name/{name}").To(apiHandler.handleGetResource).
@@ -912,6 +913,8 @@ func CreateHTTPAPIHandler(iManager integration.Manager) (*restful.Container, err
 			Doc("deletes a non-namespaced resource").
 			Param(apiV1Ws.PathParameter("kind", "kind of the resource")).
 			Param(apiV1Ws.PathParameter("name", "name of the resource")).
+			Param(apiV1Ws.QueryParameter("deleteNow", "override graceful delete options and enforce immediate deletion")).
+			Param(apiV1Ws.QueryParameter("propagation", "override default delete propagation policy")).
 			Returns(http.StatusNoContent, "", nil))
 	apiV1Ws.Route(
 		apiV1Ws.GET("/_raw/{kind}/name/{name}").To(apiHandler.handleGetResource).
@@ -2355,9 +2358,10 @@ func (apiHandler *APIHandler) handleDeleteResource(
 	kind := request.PathParameter("kind")
 	namespace := request.PathParameters()["namespace"]
 	name := request.PathParameter("name")
+	propagation := request.QueryParameter("propagation")
 	deleteNow := request.QueryParameter("deleteNow") == "true"
 
-	if err := verber.Delete(kind, namespace, name, deleteNow); err != nil {
+	if err := verber.Delete(kind, namespace, name, propagation, deleteNow); err != nil {
 		errors.HandleInternalError(response, err)
 		return
 	}

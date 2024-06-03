@@ -16,20 +16,34 @@ import {Component, Inject} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {ResourceMeta} from '../../services/global/actionbar';
 
+enum DeletionPropagation {
+  DeletePropagationBackground = 'Background',
+  DeletePropagationForeground = 'Foreground',
+  DeletePropagationOrphan = 'Orphan',
+}
+
+export interface DeleteOptions {
+  deleteNow: boolean;
+  propagation: DeletionPropagation;
+}
+
 @Component({
   selector: 'kd-delete-resource-dialog',
   templateUrl: 'template.html',
+  styleUrls: ['./styles.scss'],
 })
 export class DeleteResourceDialogComponent {
-  isDeleteNowChecked = false;
-  cancelDelete = 'cancelDelete';
+  options: DeleteOptions;
 
   constructor(
     public dialogRef: MatDialogRef<DeleteResourceDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: ResourceMeta
-  ) {}
-
-  onNoClick(): void {
-    this.dialogRef.close();
+  ) {
+    this.options = {
+      deleteNow: false,
+      propagation: DeletionPropagation.DeletePropagationBackground,
+    };
   }
+
+  protected readonly DeletionPropagation = DeletionPropagation;
 }

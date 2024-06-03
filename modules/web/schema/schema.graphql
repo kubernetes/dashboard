@@ -2004,12 +2004,21 @@ type clusterrole_ClusterRole {
 
 type types_ObjectMeta {
   annotations: JSON
-  creationTimestamp: String
+  creationTimestamp: v1_Time
   labels: JSON
   name: String
   namespace: String
   uid: String
 }
+
+type v1_Time {
+  Time: DateTime!
+}
+
+"""
+A date-time string at UTC, such as 2007-12-03T10:15:30Z, compliant with the `date-time` format outlined in section 5.6 of the RFC 3339 profile of the ISO 8601 standard for representation of dates and times using the Gregorian calendar.
+"""
+scalar DateTime
 
 type types_TypeMeta {
   kind: String
@@ -2161,8 +2170,8 @@ type types_CustomResourceDefinitionDetail {
 }
 
 type common_Condition {
-  lastProbeTime: String!
-  lastTransitionTime: String!
+  lastProbeTime: v1_Time!
+  lastTransitionTime: v1_Time!
   message: String!
   reason: String!
   status: String!
@@ -2215,8 +2224,8 @@ type common_EventList {
 
 type common_Event {
   count: Int!
-  firstSeen: String!
-  lastSeen: String!
+  firstSeen: v1_Time!
+  lastSeen: v1_Time!
   message: String!
   object: String!
   objectKind: String
@@ -2240,7 +2249,7 @@ type cronjob_CronJobList {
 type cronjob_CronJob {
   active: Int!
   containerImages: [String]!
-  lastSchedule: String!
+  lastSchedule: v1_Time!
   objectMeta: types_ObjectMeta!
   schedule: String!
   suspend: Boolean!
@@ -2260,7 +2269,7 @@ type cronjob_CronJobDetail {
   concurrencyPolicy: String!
   containerImages: [String]!
   errors: [JSON]!
-  lastSchedule: String!
+  lastSchedule: v1_Time!
   objectMeta: types_ObjectMeta!
   schedule: String!
   startingDeadlineSeconds: BigInt!
@@ -2297,11 +2306,6 @@ type api_MetricPoint {
   timestamp: DateTime!
   value: Int!
 }
-
-"""
-A date-time string at UTC, such as 2007-12-03T10:15:30Z, compliant with the `date-time` format outlined in section 5.6 of the RFC 3339 profile of the ISO 8601 standard for representation of dates and times using the Gregorian calendar.
-"""
-scalar DateTime
 
 type job_Job {
   containerImages: [String]!
@@ -2490,8 +2494,14 @@ type deployment_DeploymentDetail {
 }
 
 type deployment_RollingUpdateStrategy {
-  maxSurge: String!
-  maxUnavailable: String!
+  maxSurge: intstr_IntOrString!
+  maxUnavailable: intstr_IntOrString!
+}
+
+type intstr_IntOrString {
+  IntVal: Int!
+  StrVal: String!
+  Type: BigInt!
 }
 
 type deployment_StatusInfo {
@@ -2542,7 +2552,7 @@ type horizontalpodautoscaler_HorizontalPodAutoscalerDetail {
   currentCPUUtilizationPercentage: Int!
   currentReplicas: Int!
   desiredReplicas: Int!
-  lastScaleTime: String!
+  lastScaleTime: v1_Time!
   maxReplicas: Int!
   minReplicas: Int!
   objectMeta: types_ObjectMeta!
@@ -2643,7 +2653,7 @@ type v1_IngressRule {
   	  Currently the port of an Ingress is implicitly :80 for http and
   	  :443 for https.
   Both these may change in the future. Incoming requests are matched against the host before the IngressRuleValue. If the host is unspecified, the Ingress routes all traffic based on the specified IngressRuleValue.
-  
+
   host can be "precise" which is a domain name without the terminating dot of a network host (e.g. "foo.bar.com") or "wildcard", which is a domain name prefixed with a single wildcard label (e.g. "*.foo.com"). The wildcard character '*' must appear by itself as the first DNS label and matches only a single label. You cannot have a wildcard label by itself (e.g. Host == "*"). Requests will be matched against the Host field in the following way: 1. If host is precise, the request matches this rule if the http host header is equal to Host. 2. If host is a wildcard, then the request matches this rule if the http host header is to equal to the suffix (removing the first label) of the wildcard rule.
   """
   host: String
@@ -2899,10 +2909,7 @@ type v1_NetworkPolicyPort {
   endPort indicates that the range of ports from port to endPort if set, inclusive, should be allowed by the policy. This field cannot be defined if the port field is not defined or if the port field is defined as a named (string) port. The endPort must be equal or greater than port.
   """
   endPort: Int
-  """
-  port represents the port on the given protocol. This can either be a numerical or named port on a pod. If this field is not provided, this matches all port names and numbers. If present, only traffic on the specified protocol AND port will be matched.
-  """
-  port: String
+  port: intstr_IntOrString
   """
   protocol represents the protocol (TCP, UDP, or SCTP) which traffic must match. If not specified, this field defaults to TCP.
   """
@@ -3048,10 +3055,7 @@ type v1_Taint {
   effect: String!
   """Required. The taint key to be applied to a node."""
   key: String!
-  """
-  TimeAdded represents the time at which the taint was added. It is only written for NoExecute taints.
-  """
-  timeAdded: String
+  timeAdded: v1_Time
   """The taint value corresponding to the taint key."""
   value: String
 }
@@ -3842,12 +3846,16 @@ ResourceFieldSelector represents container resources (cpu, memory) and their out
 type v1_ResourceFieldSelector {
   """Container name: required for volumes, optional for env vars"""
   containerName: String
-  """
-  Specifies the output format of the exposed resources, defaults to "1"
-  """
   divisor: String
   """Required: resource to select"""
   resource: String!
+}
+
+type resource_Quantity5 {
+  Format: String!
+  d: resource_infDecAmount!
+  i: resource_int64Amount!
+  s: String!
 }
 
 """SecretKeySelector selects a key of a Secret."""
@@ -3911,7 +3919,7 @@ type v1_GRPCAction {
   port: Int!
   """
   Service is the name of the service to place in the gRPC HealthCheckRequest (see https://github.com/grpc/grpc/blob/master/doc/health-checking.md).
-  
+
   If this is not specified, the default behavior is defined by gRPC.
   """
   service: String!
@@ -3927,10 +3935,7 @@ type v1_HTTPGetAction {
   httpHeaders: [v1_HTTPHeader]
   """Path to access on the HTTP server."""
   path: String
-  """
-  Name or number of the port to access on the container. Number must be in the range 1 to 65535. Name must be an IANA_SVC_NAME.
-  """
-  port: String!
+  port: intstr_IntOrString!
   """Scheme to use for connecting to the host. Defaults to HTTP."""
   scheme: String
 }
@@ -3949,19 +3954,16 @@ type v1_HTTPHeader {
 type v1_TCPSocketAction {
   """Optional: Host name to connect to, defaults to the pod IP."""
   host: String
-  """
-  Number or name of the port to access on the container. Number must be in the range 1 to 65535. Name must be an IANA_SVC_NAME.
-  """
-  port: String!
+  port: intstr_IntOrString!
 }
 
 """ResourceRequirements describes the compute resource requirements."""
 type v1_ResourceRequirements {
   """
   Claims lists the names of resources, defined in spec.resourceClaims, that are used by this container.
-  
+
   This is an alpha field and requires enabling the DynamicResourceAllocation feature gate.
-  
+
   This field is immutable. It can only be set for containers.
   """
   claims: [v1_ResourceClaim]
@@ -3981,25 +3983,6 @@ type v1_ResourceClaim {
 Limits describes the maximum amount of compute resources allowed. More info: https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/
 """
 type query_handleGetPodDetail_containers_items_resources_limits {
-  additionalProperties: [resource_Quantity5_entry] @dictionary(subgraph: "api")
-}
-
-type resource_Quantity5_entry {
-  key: ID!
-  value: resource_Quantity5
-}
-
-type resource_Quantity5 {
-  Format: String!
-  d: resource_infDecAmount!
-  i: resource_int64Amount!
-  s: String!
-}
-
-"""
-Requests describes the minimum amount of compute resources required. If Requests is omitted for a container, it defaults to Limits if that is explicitly specified, otherwise to an implementation-defined value. Requests cannot exceed Limits. More info: https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/
-"""
-type query_handleGetPodDetail_containers_items_resources_requests {
   additionalProperties: [resource_Quantity6_entry] @dictionary(subgraph: "api")
 }
 
@@ -4016,6 +3999,25 @@ type resource_Quantity6 {
 }
 
 """
+Requests describes the minimum amount of compute resources required. If Requests is omitted for a container, it defaults to Limits if that is explicitly specified, otherwise to an implementation-defined value. Requests cannot exceed Limits. More info: https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/
+"""
+type query_handleGetPodDetail_containers_items_resources_requests {
+  additionalProperties: [resource_Quantity7_entry] @dictionary(subgraph: "api")
+}
+
+type resource_Quantity7_entry {
+  key: ID!
+  value: resource_Quantity7
+}
+
+type resource_Quantity7 {
+  Format: String!
+  d: resource_infDecAmount!
+  i: resource_int64Amount!
+  s: String!
+}
+
+"""
 SecurityContext holds security configuration that will be applied to a container. Some fields are present in both SecurityContext and PodSecurityContext.  When both are set, the values in SecurityContext take precedence.
 """
 type v1_SecurityContext {
@@ -4023,6 +4025,7 @@ type v1_SecurityContext {
   AllowPrivilegeEscalation controls whether a process can gain more privileges than its parent process. This bool directly controls if the no_new_privs flag will be set on the container process. AllowPrivilegeEscalation is true always when the container is: 1) run as Privileged 2) has CAP_SYS_ADMIN Note that this field cannot be set when spec.os.name is windows.
   """
   allowPrivilegeEscalation: Boolean
+  appArmorProfile: v1_AppArmorProfile
   capabilities: v1_Capabilities
   """
   Run container in privileged mode. Processes in privileged containers are essentially equivalent to root on the host. Defaults to false. Note that this field cannot be set when spec.os.name is windows.
@@ -4051,6 +4054,21 @@ type v1_SecurityContext {
   seLinuxOptions: v1_SELinuxOptions
   seccompProfile: v1_SeccompProfile
   windowsOptions: v1_WindowsSecurityContextOptions
+}
+
+"""AppArmorProfile defines a pod or container's AppArmor settings."""
+type v1_AppArmorProfile {
+  """
+  localhostProfile indicates a profile loaded on the node that should be used. The profile must be preconfigured on the node to work. Must match the loaded name of the profile. Must be set if and only if type is "Localhost".
+  """
+  localhostProfile: String
+  """
+  type indicates which kind of AppArmor profile will be applied. Valid options are:
+    Localhost - a profile pre-loaded on the node.
+    RuntimeDefault - the container runtime's default profile.
+    Unconfined - no AppArmor enforcement.
+  """
+  type: String!
 }
 
 """Adds and removes POSIX capabilities from running containers."""
@@ -4083,7 +4101,7 @@ type v1_SeccompProfile {
   localhostProfile: String
   """
   type indicates which kind of seccomp profile will be applied. Valid options are:
-  
+
   Localhost - a profile defined in a file on the node should be used. RuntimeDefault - the container runtime default profile should be used. Unconfined - no profile should be applied.
   """
   type: String!
@@ -4133,7 +4151,7 @@ type v1_ContainerStatus {
   name: String!
   """
   Ready specifies whether the container is currently passing its readiness check. The value will change as readiness probes keep executing. If no readiness probes are specified, this field defaults to true once the container is fully started (see Started field).
-  
+
   The value is typically used to determine whether a container is ready to accept traffic.
   """
   ready: Boolean!
@@ -4147,21 +4165,23 @@ type v1_ContainerStatus {
   """
   started: Boolean
   state: v1_ContainerState
+  """Status of volume mounts."""
+  volumeMounts: [v1_VolumeMountStatus]
 }
 
 """
 AllocatedResources represents the compute resources allocated for this container by the node. Kubelet sets this value to Container.Resources.Requests upon successful pod admission and after successfully admitting desired pod resize.
 """
 type query_handleGetPodDetail_containers_items_status_allocatedResources {
-  additionalProperties: [resource_Quantity7_entry] @dictionary(subgraph: "api")
+  additionalProperties: [resource_Quantity8_entry] @dictionary(subgraph: "api")
 }
 
-type resource_Quantity7_entry {
+type resource_Quantity8_entry {
   key: ID!
-  value: resource_Quantity7
+  value: resource_Quantity8
 }
 
-type resource_Quantity7 {
+type resource_Quantity8 {
   Format: String!
   d: resource_infDecAmount!
   i: resource_int64Amount!
@@ -4179,8 +4199,7 @@ type v1_ContainerState {
 
 """ContainerStateRunning is a running state of a container."""
 type v1_ContainerStateRunning {
-  """Time at which the container was last (re-)started"""
-  startedAt: String
+  startedAt: v1_Time
 }
 
 """ContainerStateTerminated is a terminated state of a container."""
@@ -4189,16 +4208,14 @@ type v1_ContainerStateTerminated {
   containerID: String
   """Exit status from the last termination of the container"""
   exitCode: Int!
-  """Time at which the container last terminated"""
-  finishedAt: String
+  finishedAt: v1_Time
   """Message regarding the last termination of the container"""
   message: String
   """(brief) reason from the last termination of the container"""
   reason: String
   """Signal from the last termination of the container"""
   signal: Int
-  """Time at which previous execution of the container started"""
-  startedAt: String
+  startedAt: v1_Time
 }
 
 """ContainerStateWaiting is a waiting state of a container."""
@@ -4207,6 +4224,20 @@ type v1_ContainerStateWaiting {
   message: String
   """(brief) reason the container is not yet running."""
   reason: String
+}
+
+"""VolumeMountStatus shows status of volume mounts."""
+type v1_VolumeMountStatus {
+  """MountPath corresponds to the original VolumeMount."""
+  mountPath: String!
+  """Name corresponds to the name of the original VolumeMount."""
+  name: String!
+  """ReadOnly corresponds to the original VolumeMount."""
+  readOnly: Boolean
+  """
+  RecursiveReadOnly must be set to Disabled, Enabled, or unspecified (for non-readonly mounts). An IfPossible value in the original VolumeMount must be translated to Disabled or Enabled, depending on the mount result.
+  """
+  recursiveReadOnly: String
 }
 
 type pod_VolumeMount {
@@ -4423,9 +4454,6 @@ type v1_EmptyDirVolumeSource {
   medium represents what type of storage medium should back this directory. The default is "" which means to use the node's default medium. Must be an empty string (default) or Memory. More info: https://kubernetes.io/docs/concepts/storage/volumes#emptydir
   """
   medium: String
-  """
-  sizeLimit is the total amount of local storage required for this EmptyDir volume. The size limit is also applicable for memory medium. The maximum usage on memory medium EmptyDir would be the minimum value between the SizeLimit specified here and the sum of memory limits of all containers in a pod. The default is nil which means that the limit is undefined. More info: https://kubernetes.io/docs/concepts/storage/volumes#emptydir
-  """
   sizeLimit: String
 }
 
@@ -4452,31 +4480,21 @@ type v1_ObjectMeta {
   Annotations is an unstructured key value map stored with a resource that may be set by external tools to store and retrieve arbitrary metadata. They are not queryable and should be preserved when modifying objects. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations
   """
   annotations: JSON
-  """
-  CreationTimestamp is a timestamp representing the server time when this object was created. It is not guaranteed to be set in happens-before order across separate operations. Clients may not set this value. It is represented in RFC3339 form and is in UTC.
-  
-  Populated by the system. Read-only. Null for lists. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
-  """
-  creationTimestamp: String
+  creationTimestamp: v1_Time
   """
   Number of seconds allowed for this object to gracefully terminate before it will be removed from the system. Only set when deletionTimestamp is also set. May only be shortened. Read-only.
   """
   deletionGracePeriodSeconds: BigInt
-  """
-  DeletionTimestamp is RFC 3339 date and time at which this resource will be deleted. This field is set by the server when a graceful deletion is requested by the user, and is not directly settable by a client. The resource is expected to be deleted (no longer visible from resource lists, and not reachable by name) after the time in this field, once the finalizers list is empty. As long as the finalizers list contains items, deletion is blocked. Once the deletionTimestamp is set, this value may not be unset or be set further into the future, although it may be shortened or the resource may be deleted prior to this time. For example, a user may request that a pod is deleted in 30 seconds. The Kubelet will react by sending a graceful termination signal to the containers in the pod. After that 30 seconds, the Kubelet will send a hard termination signal (SIGKILL) to the container and after cleanup, remove the pod from the API. In the presence of network partitions, this object may still exist after this timestamp, until an administrator or automated process can determine the resource is fully terminated. If not set, graceful deletion of the object has not been requested.
-  
-  Populated by the system when a graceful deletion is requested. Read-only. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
-  """
-  deletionTimestamp: String
+  deletionTimestamp: v1_Time
   """
   Must be empty before the object is deleted from the registry. Each entry is an identifier for the responsible component that will remove the entry from the list. If the deletionTimestamp of the object is non-nil, entries in this list can only be removed. Finalizers may be processed and removed in any order.  Order is NOT enforced because it introduces significant risk of stuck finalizers. finalizers is a shared field, any actor with permission can reorder it. If the finalizer list is processed in order, then this can lead to a situation in which the component responsible for the first finalizer in the list is waiting for a signal (field value, external system, or other) produced by a component responsible for a finalizer later in the list, resulting in a deadlock. Without enforced ordering finalizers are free to order amongst themselves and are not vulnerable to ordering changes in the list.
   """
   finalizers: [String]
   """
   GenerateName is an optional prefix, used by the server, to generate a unique name ONLY IF the Name field has not been provided. If this field is used, the name returned to the client will be different than the name passed. This value will also be combined with a unique suffix. The provided value has the same validation rules as the Name field, and may be truncated by the length of the suffix required to make the value unique on the server.
-  
+
   If this field is specified and the generated name exists, the server will return a 409.
-  
+
   Applied only if Name is not specified. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#idempotency
   """
   generateName: String
@@ -4498,7 +4516,7 @@ type v1_ObjectMeta {
   name: String
   """
   Namespace defines the space within which each name must be unique. An empty namespace is equivalent to the "default" namespace, but "default" is the canonical representation. Not all objects are required to be scoped to a namespace - the value of this field for those objects will be empty.
-  
+
   Must be a DNS_LABEL. Cannot be updated. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces
   """
   namespace: String
@@ -4508,7 +4526,7 @@ type v1_ObjectMeta {
   ownerReferences: [v1_OwnerReference]
   """
   An opaque value that represents the internal version of this object that can be used by clients to determine when objects have changed. May be used for optimistic concurrency, change detection, and the watch operation on a resource or set of resources. Clients must treat these values as opaque and passed unmodified back to the server. They may only be valid for a particular resource or set of resources.
-  
+
   Populated by the system. Read-only. Value must be treated as opaque by clients and . More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#concurrency-control-and-consistency
   """
   resourceVersion: String
@@ -4518,7 +4536,7 @@ type v1_ObjectMeta {
   selfLink: String
   """
   UID is the unique in time and space value for this object. It is typically generated by the server on successful creation of a resource and is not allowed to change on PUT operations.
-  
+
   Populated by the system. Read-only. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names#uids
   """
   uid: String
@@ -4537,9 +4555,13 @@ type v1_ManagedFieldsEntry {
   """
   fieldsType: String
   """
-  FieldsV1 holds the first JSON version format as described in the "FieldsV1" type.
+  FieldsV1 stores a set of fields in a data structure like a Trie, in JSON format.
+
+  Each key is either a '.' representing the field itself, and will always map to an empty set, or a string representing a sub-field or item. The string will follow one of these four formats: 'f:<name>', where <name> is the name of a field in a struct, or key in a map 'v:<value>', where <value> is the exact json formatted value of a list item 'i:<index>', where <index> is position of a item in a list 'k:<keys>', where <keys> is a map of  a list item's key fields to their unique values If a key maps to an empty Fields value, the field that key represents is part of the set.
+
+  The exact format is defined in sigs.k8s.io/structured-merge-diff
   """
-  fieldsV1: String
+  fieldsV1: JSON
   """Manager is an identifier of the workflow managing these fields."""
   manager: String
   """
@@ -4550,10 +4572,7 @@ type v1_ManagedFieldsEntry {
   Subresource is the name of the subresource used to update that object, or empty string if the object was updated through the main resource. The value of this field is used to distinguish between managers, even if they share the same name. For example, a status update will be distinct from a regular update using the same manager name. Note that the APIVersion field is not related to the Subresource field and it always corresponds to the version of the main resource.
   """
   subresource: String
-  """
-  Time is the timestamp of when the ManagedFields entry was added. The timestamp will also be updated if a field is added, the manager changes any of the owned fields value or removes a field. The timestamp does not update when a field is removed from the entry because another manager took it over.
-  """
-  time: String
+  time: v1_Time
 }
 
 """
@@ -4599,7 +4618,7 @@ type v1_PersistentVolumeClaimSpec {
   """
   storageClassName: String
   """
-  volumeAttributesClassName may be used to set the VolumeAttributesClass used by this claim. If specified, the CSI driver will create or update the volume with the attributes defined in the corresponding VolumeAttributesClass. This has a different purpose than storageClassName, it can be changed after the claim is created. An empty string value means that no VolumeAttributesClass will be applied to the claim but it's not allowed to reset this field to empty string once it is set. If unspecified and the PersistentVolumeClaim is unbound, the default VolumeAttributesClass will be set by the persistentvolume controller if it exists. If the resource referred to by volumeAttributesClass does not exist, this PersistentVolumeClaim will be set to a Pending state, as reflected by the modifyVolumeStatus field, until such as a resource exists. More info: https://kubernetes.io/docs/concepts/storage/persistent-volumes#volumeattributesclass (Alpha) Using this field requires the VolumeAttributesClass feature gate to be enabled.
+  volumeAttributesClassName may be used to set the VolumeAttributesClass used by this claim. If specified, the CSI driver will create or update the volume with the attributes defined in the corresponding VolumeAttributesClass. This has a different purpose than storageClassName, it can be changed after the claim is created. An empty string value means that no VolumeAttributesClass will be applied to the claim but it's not allowed to reset this field to empty string once it is set. If unspecified and the PersistentVolumeClaim is unbound, the default VolumeAttributesClass will be set by the persistentvolume controller if it exists. If the resource referred to by volumeAttributesClass does not exist, this PersistentVolumeClaim will be set to a Pending state, as reflected by the modifyVolumeStatus field, until such as a resource exists. More info: https://kubernetes.io/docs/concepts/storage/volume-attributes-classes/ (Alpha) Using this field requires the VolumeAttributesClass feature gate to be enabled.
   """
   volumeAttributesClassName: String
   """
@@ -4639,15 +4658,15 @@ type v1_VolumeResourceRequirements {
 Limits describes the maximum amount of compute resources allowed. More info: https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/
 """
 type query_handleGetPodDetail_containers_items_volumeMounts_items_volume_ephemeral_volumeClaimTemplate_spec_resources_limits {
-  additionalProperties: [resource_Quantity8_entry] @dictionary(subgraph: "api")
+  additionalProperties: [resource_Quantity9_entry] @dictionary(subgraph: "api")
 }
 
-type resource_Quantity8_entry {
+type resource_Quantity9_entry {
   key: ID!
-  value: resource_Quantity8
+  value: resource_Quantity9
 }
 
-type resource_Quantity8 {
+type resource_Quantity9 {
   Format: String!
   d: resource_infDecAmount!
   i: resource_int64Amount!
@@ -4658,15 +4677,15 @@ type resource_Quantity8 {
 Requests describes the minimum amount of compute resources required. If Requests is omitted for a container, it defaults to Limits if that is explicitly specified, otherwise to an implementation-defined value. Requests cannot exceed Limits. More info: https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/
 """
 type query_handleGetPodDetail_containers_items_volumeMounts_items_volume_ephemeral_volumeClaimTemplate_spec_resources_requests {
-  additionalProperties: [resource_Quantity9_entry] @dictionary(subgraph: "api")
+  additionalProperties: [resource_Quantity10_entry] @dictionary(subgraph: "api")
 }
 
-type resource_Quantity9_entry {
+type resource_Quantity10_entry {
   key: ID!
-  value: resource_Quantity9
+  value: resource_Quantity10
 }
 
-type resource_Quantity9 {
+type resource_Quantity10 {
   Format: String!
   d: resource_infDecAmount!
   i: resource_int64Amount!
@@ -5014,9 +5033,10 @@ type controller_ResourceOwner {
 PodSecurityContext holds pod-level security attributes and common container settings. Some fields are also present in container.securityContext.  Field values of container.securityContext take precedence over field values of PodSecurityContext.
 """
 type v1_PodSecurityContext {
+  appArmorProfile: v1_AppArmorProfile
   """
   A special supplemental group that applies to all containers in a pod. Some volume types allow the Kubelet to change the ownership of that volume to be owned by the pod:
-  
+
   1. The owning GID will be the FSGroup 2. The setgid bit is set (new files created in the volume will be owned by FSGroup) 3. The permission bits are OR'd with rw-rw
   """
   fsGroup: BigInt
@@ -5190,14 +5210,14 @@ type endpoint_Endpoint {
 type v1_EndpointPort {
   """
   The application protocol for this port. This is used as a hint for implementations to offer richer behavior for protocols that they understand. This field follows standard Kubernetes label syntax. Valid values are either:
-  
+
   * Un-prefixed protocol names - reserved for IANA standard service names (as per RFC-6335 and https://www.iana.org/assignments/service-names).
-  
+
   * Kubernetes-defined prefixed names:
     * 'kubernetes.io/h2c' - HTTP/2 prior knowledge over cleartext as described in https://www.rfc-editor.org/rfc/rfc9113.html#name-starting-http-2-with-prior-
     * 'kubernetes.io/ws'  - WebSocket over cleartext as described in https://www.rfc-editor.org/rfc/rfc6455
     * 'kubernetes.io/wss' - WebSocket over TLS as described in https://www.rfc-editor.org/rfc/rfc6455
-  
+
   * Other protocols should use implementation-defined prefixed names such as mycompany.com/my-custom-protocol.
   """
   appProtocol: String
@@ -5313,11 +5333,13 @@ type Mutation {
     metricNames: String
     """Aggregations to be performed for each metric (default: sum)"""
     aggregations: String
-    """namespace of the resource"""
-    namespace: String!
     """override graceful delete options and enforce immediate deletion"""
     deleteNow: String
-  ): Void @httpOperation(subgraph: "api", path: "/api/v1/_raw/{args.kind}/name/{args.name}", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: DELETE, queryParamArgMap: "{\"filterBy\":\"filterBy\",\"sortBy\":\"sortBy\",\"itemsPerPage\":\"itemsPerPage\",\"page\":\"page\",\"metricNames\":\"metricNames\",\"aggregations\":\"aggregations\"}") @httpOperation(subgraph: "api", path: "/api/v1/_raw/{args.kind}/namespace/{args.namespace}/name/{args.name}", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: DELETE, queryParamArgMap: "{\"filterBy\":\"filterBy\",\"sortBy\":\"sortBy\",\"itemsPerPage\":\"itemsPerPage\",\"page\":\"page\",\"metricNames\":\"metricNames\",\"aggregations\":\"aggregations\",\"deleteNow\":\"deleteNow\"}")
+    """override default delete propagation policy"""
+    propagation: String
+    """namespace of the resource"""
+    namespace: String!
+  ): Void @httpOperation(subgraph: "api", path: "/api/v1/_raw/{args.kind}/name/{args.name}", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: DELETE, queryParamArgMap: "{\"filterBy\":\"filterBy\",\"sortBy\":\"sortBy\",\"itemsPerPage\":\"itemsPerPage\",\"page\":\"page\",\"metricNames\":\"metricNames\",\"aggregations\":\"aggregations\",\"deleteNow\":\"deleteNow\",\"propagation\":\"propagation\"}") @httpOperation(subgraph: "api", path: "/api/v1/_raw/{args.kind}/namespace/{args.namespace}/name/{args.name}", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: DELETE, queryParamArgMap: "{\"filterBy\":\"filterBy\",\"sortBy\":\"sortBy\",\"itemsPerPage\":\"itemsPerPage\",\"page\":\"page\",\"metricNames\":\"metricNames\",\"aggregations\":\"aggregations\",\"deleteNow\":\"deleteNow\",\"propagation\":\"propagation\"}")
   """creates an application based on provided deployment.AppDeploymentSpec"""
   handleDeploy(
     """
@@ -5640,18 +5662,44 @@ input deployment_AppDeploymentSpec_Input {
   containerCommand: String!
   containerCommandArgs: String!
   containerImage: String!
-  cpuRequirement: String!
+  cpuRequirement: resource_Quantity_Input5!
   description: String!
   imagePullSecret: String!
   isExternal: Boolean!
   labels: [deployment_Label_Input]!
-  memoryRequirement: String!
+  memoryRequirement: resource_Quantity_Input5!
   name: String!
   namespace: String!
   portMappings: [deployment_PortMapping_Input]!
   replicas: Int!
   runAsPrivileged: Boolean!
   variables: [deployment_EnvironmentVariable_Input]!
+}
+
+input resource_Quantity_Input5 {
+  Format: String!
+  d: resource_infDecAmount_Input!
+  i: resource_int64Amount_Input!
+  s: String!
+}
+
+input resource_infDecAmount_Input {
+  Dec: inf_Dec_Input!
+}
+
+input inf_Dec_Input {
+  scale: Int!
+  unscaled: big_Int_Input!
+}
+
+input big_Int_Input {
+  abs: [Int]!
+  neg: Boolean!
+}
+
+input resource_int64Amount_Input {
+  scale: Int!
+  value: BigInt!
 }
 
 input deployment_Label_Input {
@@ -5760,6 +5808,11 @@ enum ContainerState {
 
 type Map {
   map: ObjMap!
+}
+
+type StringWrapper {
+  string: String!
+  optionalString: String
 }
 
 type StateWrapper {
