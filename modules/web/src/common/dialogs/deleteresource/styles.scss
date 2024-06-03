@@ -1,0 +1,27 @@
+@use '../../../variables' as *;
+
+@mixin option {
+  display: block;
+  font-size: $body-font-size-base;
+  margin-top: $baseline-grid;
+  padding-left: $baseline-grid;
+}
+
+.kd-dialog-propagation-select-container {
+  padding-top: $baseline-grid;
+  @include option
+}
+
+.kd-dialog-propagation-select {
+  margin-left: $baseline-grid;
+  width: fit-content;
+
+  .md-select-value {
+    font-size: $title-font-size-base;
+    min-width: 20 * $baseline-grid;
+  }
+}
+
+.kd-dialog-delete-checkbox {
+  @include option
+}

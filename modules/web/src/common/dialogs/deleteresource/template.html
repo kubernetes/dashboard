@@ -27,11 +27,27 @@ limitations under the License.
     <span>?</span>
   </ng-container>
   <ng-container>
-    <div class="kd-equivalent-block">
+    <div
+      class="kd-dialog-propagation-select-container"
+      i18n
+    >
+      Propagation policy
+    <mat-select [(ngModel)]="options.propagation" class="kd-dialog-propagation-select">
+      <mat-option
+        *ngFor="let propagation of DeletionPropagation | values"
+        [value]="propagation"
+      >
+        {{ propagation }}
+      </mat-option>
+    </mat-select>
+    </div>
+  </ng-container>
+  <ng-container>
+    <div class="kd-dialog-delete-checkbox">
       <mat-checkbox
         color="primary"
-        [(ngModel)]="isDeleteNowChecked"
-        name="isDeleteNowChecked"
+        [(ngModel)]="options.deleteNow"
+        name="deleteNow"
         matInput
         i18n
         >Delete now (sets delete grace period to 1 second instead of the default, which is usually 30
@@ -49,8 +65,9 @@ limitations under the License.
       <code>
         <ng-container>kubectl delete </ng-container>
         <ng-container *ngIf="data.objectMeta.namespace">-n {{ data.objectMeta.namespace }} </ng-container>
-        <ng-container *ngIf="isDeleteNowChecked">--now </ng-container>
-        <ng-container>{{ data.typeMeta.kind }} {{ data.objectMeta.name }}</ng-container>
+        <ng-container *ngIf="options.deleteNow">--now </ng-container>
+        <ng-container>{{ data.typeMeta.kind }} {{ data.objectMeta.name }} </ng-container>
+        <ng-container>--cascade={{ options.propagation.toLocaleLowerCase() }}</ng-container>
       </code>
     </div>
   </div>
@@ -60,7 +77,7 @@ limitations under the License.
     mat-button
     color="primary"
     id="confirm-delete"
-    [mat-dialog-close]="isDeleteNowChecked"
+    [mat-dialog-close]="options"
     i18n
   >
     Delete
@@ -68,7 +85,7 @@ limitations under the License.
   <button
     mat-button
     color="primary"
-    [mat-dialog-close]="cancelDelete"
+    [mat-dialog-close]="undefined"
     i18n
   >
     Cancel

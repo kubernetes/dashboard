@@ -19,7 +19,7 @@ import {ObjectMeta, TypeMeta} from '@api/root.api';
 import {filter, switchMap} from 'rxjs/operators';
 
 import {AlertDialogComponent, AlertDialogConfig} from '../../dialogs/alert/dialog';
-import {DeleteResourceDialogComponent} from '../../dialogs/deleteresource/dialog';
+import {DeleteOptions, DeleteResourceDialogComponent} from '../../dialogs/deleteresource/dialog';
 import {EditResourceDialogComponent} from '../../dialogs/editresource/dialog';
 import {RestartResourceDialogComponent} from '../../dialogs/restartresource/dialog';
 import {ScaleResourceDialogComponent} from '../../dialogs/scaleresource/dialog';
@@ -46,11 +46,11 @@ export class VerberService {
     this.dialog_
       .open(DeleteResourceDialogComponent, dialogConfig)
       .afterClosed()
-      .pipe(filter(doDelete => doDelete !== 'cancelDelete'))
+      .pipe(filter(doDelete => !!doDelete))
       .pipe(
-        switchMap(result => {
+        switchMap((options: DeleteOptions) => {
           const url = RawResource.getUrl(typeMeta, objectMeta);
-          return this.http_.delete(url, {params: {deleteNow: result}, responseType: 'text'});
+          return this.http_.delete(url, {params: {deleteNow: options.deleteNow, propagation: options.propagation}, responseType: 'text'});
         })
       )
       .subscribe(_ => this.onDelete.emit(true), this.handleErrorResponse_.bind(this));
