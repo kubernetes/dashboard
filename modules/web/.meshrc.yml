@@ -32,6 +32,7 @@ sources:
             }
             type StringWrapper {
               string: String!
+              optionalString: String
             }
             type StateWrapper {
               state: ContainerState!
@@ -67,6 +68,12 @@ sources:
               to:
                 type: Map
                 field: map
+            - from:
+                type: v1_ResourceFieldSelector
+                field: divisor
+              to:
+                type: StringWrapper
+                field: optionalString
             - from:
                 type: v1_ResourceRequirements
                 field: requests
@@ -121,3 +128,21 @@ sources:
               to:
                 type: StringWrapper
                 field: string
+            - from:
+                type: deployment_AppDeploymentSpec_Input
+                field: cpuRequirement
+              to:
+                type: StringWrapper
+                field: string
+            - from:
+                type: deployment_AppDeploymentSpec_Input
+                field: memoryRequirement
+              to:
+                type: StringWrapper
+                field: string
+            - from:
+                type: v1_EmptyDirVolumeSource
+                field: sizeLimit
+              to:
+                type: StringWrapper
+                field: optionalString
