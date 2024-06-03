@@ -30,6 +30,9 @@ sources:
             type Map {
               map: ObjMap!
             }
+            type StringWrapper {
+              string: String!
+            }
             type StateWrapper {
               state: ContainerState!
             }
@@ -106,3 +109,15 @@ sources:
               to:
                 type: StateWrapper
                 field: state
+            - from:
+                type: deployment_AppDeploymentSpec
+                field: cpuRequirement
+              to:
+                type: StringWrapper
+                field: string
+            - from:
+                type: deployment_AppDeploymentSpec
+                field: memoryRequirement
+              to:
+                type: StringWrapper
+                field: string
