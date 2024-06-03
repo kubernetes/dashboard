@@ -39,5 +39,7 @@ spec:
         protocol: TCP
       - port: {{ $.Values.api.role }}
         protocol: TCP
+      - port: {{ $.Values.auth.role }}
+        protocol: TCP
   {{ end }}
 {{ end }}
