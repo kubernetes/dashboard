@@ -22,8 +22,9 @@
 }
 
 .kd-dialog-propagation-select-container {
-  padding-top: $baseline-grid;
   @include option;
+
+  padding-top: $baseline-grid;
 }
 
 .kd-dialog-propagation-select {
