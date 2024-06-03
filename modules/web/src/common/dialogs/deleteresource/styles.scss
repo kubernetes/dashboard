@@ -23,7 +23,7 @@
 
 .kd-dialog-propagation-select-container {
   padding-top: $baseline-grid;
-  @include option
+  @include option;
 }
 
 .kd-dialog-propagation-select {
@@ -37,5 +37,5 @@
 }
 
 .kd-dialog-delete-checkbox {
-  @include option
+  @include option;
 }

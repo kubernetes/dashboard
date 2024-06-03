@@ -50,7 +50,10 @@ export class VerberService {
       .pipe(
         switchMap((options: DeleteOptions) => {
           const url = RawResource.getUrl(typeMeta, objectMeta);
-          return this.http_.delete(url, {params: {deleteNow: options.deleteNow, propagation: options.propagation}, responseType: 'text'});
+          return this.http_.delete(url, {
+            params: {deleteNow: options.deleteNow, propagation: options.propagation},
+            responseType: 'text',
+          });
         })
       )
       .subscribe(_ => this.onDelete.emit(true), this.handleErrorResponse_.bind(this));

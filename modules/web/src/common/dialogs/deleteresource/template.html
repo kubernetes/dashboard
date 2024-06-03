@@ -32,14 +32,17 @@ limitations under the License.
       i18n
     >
       Propagation policy
-    <mat-select [(ngModel)]="options.propagation" class="kd-dialog-propagation-select">
-      <mat-option
-        *ngFor="let propagation of DeletionPropagation | values"
-        [value]="propagation"
+      <mat-select
+        [(ngModel)]="options.propagation"
+        class="kd-dialog-propagation-select"
       >
-        {{ propagation }}
-      </mat-option>
-    </mat-select>
+        <mat-option
+          *ngFor="let propagation of DeletionPropagation | values"
+          [value]="propagation"
+        >
+          {{ propagation }}
+        </mat-option>
+      </mat-select>
     </div>
   </ng-container>
   <ng-container>

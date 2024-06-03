@@ -23,8 +23,8 @@ enum DeletionPropagation {
 }
 
 export interface DeleteOptions {
-  deleteNow: boolean
-  propagation: DeletionPropagation
+  deleteNow: boolean;
+  propagation: DeletionPropagation;
 }
 
 @Component({
@@ -33,7 +33,7 @@ export interface DeleteOptions {
   styleUrls: ['./styles.scss'],
 })
 export class DeleteResourceDialogComponent {
-  options: DeleteOptions
+  options: DeleteOptions;
 
   constructor(
     public dialogRef: MatDialogRef<DeleteResourceDialogComponent>,
@@ -42,7 +42,7 @@ export class DeleteResourceDialogComponent {
     this.options = {
       deleteNow: false,
       propagation: DeletionPropagation.DeletePropagationBackground,
-    }
+    };
   }
 
   protected readonly DeletionPropagation = DeletionPropagation;
