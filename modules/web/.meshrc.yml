@@ -129,18 +129,6 @@ sources:
                 type: StringWrapper
                 field: string
             - from:
-                type: deployment_AppDeploymentSpec_Input
-                field: cpuRequirement
-              to:
-                type: StringWrapper
-                field: string
-            - from:
-                type: deployment_AppDeploymentSpec_Input
-                field: memoryRequirement
-              to:
-                type: StringWrapper
-                field: string
-            - from:
                 type: v1_EmptyDirVolumeSource
                 field: sizeLimit
               to:
