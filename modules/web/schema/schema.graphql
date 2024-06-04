@@ -1,17 +1,3 @@
-# Copyright 2017 The Kubernetes Authors.
-#
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
-#
-# http://www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
-
 schema {
   query: Query
   mutation: Mutation
@@ -2004,7 +1990,7 @@ type clusterrole_ClusterRole {
 
 type types_ObjectMeta {
   annotations: JSON
-  creationTimestamp: v1_Time
+  creationTimestamp: String
   labels: JSON
   name: String
   namespace: String
@@ -2170,8 +2156,8 @@ type types_CustomResourceDefinitionDetail {
 }
 
 type common_Condition {
-  lastProbeTime: v1_Time!
-  lastTransitionTime: v1_Time!
+  lastProbeTime: String!
+  lastTransitionTime: String!
   message: String!
   reason: String!
   status: String!
@@ -2224,8 +2210,8 @@ type common_EventList {
 
 type common_Event {
   count: Int!
-  firstSeen: v1_Time!
-  lastSeen: v1_Time!
+  firstSeen: String!
+  lastSeen: String!
   message: String!
   object: String!
   objectKind: String
@@ -2249,7 +2235,7 @@ type cronjob_CronJobList {
 type cronjob_CronJob {
   active: Int!
   containerImages: [String]!
-  lastSchedule: v1_Time!
+  lastSchedule: String!
   objectMeta: types_ObjectMeta!
   schedule: String!
   suspend: Boolean!
@@ -2269,7 +2255,7 @@ type cronjob_CronJobDetail {
   concurrencyPolicy: String!
   containerImages: [String]!
   errors: [JSON]!
-  lastSchedule: v1_Time!
+  lastSchedule: String!
   objectMeta: types_ObjectMeta!
   schedule: String!
   startingDeadlineSeconds: BigInt!
@@ -2494,8 +2480,8 @@ type deployment_DeploymentDetail {
 }
 
 type deployment_RollingUpdateStrategy {
-  maxSurge: intstr_IntOrString!
-  maxUnavailable: intstr_IntOrString!
+  maxSurge: String!
+  maxUnavailable: String!
 }
 
 type intstr_IntOrString {
@@ -2552,7 +2538,7 @@ type horizontalpodautoscaler_HorizontalPodAutoscalerDetail {
   currentCPUUtilizationPercentage: Int!
   currentReplicas: Int!
   desiredReplicas: Int!
-  lastScaleTime: v1_Time!
+  lastScaleTime: String!
   maxReplicas: Int!
   minReplicas: Int!
   objectMeta: types_ObjectMeta!
@@ -2653,7 +2639,7 @@ type v1_IngressRule {
   	  Currently the port of an Ingress is implicitly :80 for http and
   	  :443 for https.
   Both these may change in the future. Incoming requests are matched against the host before the IngressRuleValue. If the host is unspecified, the Ingress routes all traffic based on the specified IngressRuleValue.
-
+  
   host can be "precise" which is a domain name without the terminating dot of a network host (e.g. "foo.bar.com") or "wildcard", which is a domain name prefixed with a single wildcard label (e.g. "*.foo.com"). The wildcard character '*' must appear by itself as the first DNS label and matches only a single label. You cannot have a wildcard label by itself (e.g. Host == "*"). Requests will be matched against the Host field in the following way: 1. If host is precise, the request matches this rule if the http host header is equal to Host. 2. If host is a wildcard, then the request matches this rule if the http host header is to equal to the suffix (removing the first label) of the wildcard rule.
   """
   host: String
@@ -2909,7 +2895,7 @@ type v1_NetworkPolicyPort {
   endPort indicates that the range of ports from port to endPort if set, inclusive, should be allowed by the policy. This field cannot be defined if the port field is not defined or if the port field is defined as a named (string) port. The endPort must be equal or greater than port.
   """
   endPort: Int
-  port: intstr_IntOrString
+  port: String
   """
   protocol represents the protocol (TCP, UDP, or SCTP) which traffic must match. If not specified, this field defaults to TCP.
   """
@@ -3055,7 +3041,7 @@ type v1_Taint {
   effect: String!
   """Required. The taint key to be applied to a node."""
   key: String!
-  timeAdded: v1_Time
+  timeAdded: String
   """The taint value corresponding to the taint key."""
   value: String
 }
@@ -3919,7 +3905,7 @@ type v1_GRPCAction {
   port: Int!
   """
   Service is the name of the service to place in the gRPC HealthCheckRequest (see https://github.com/grpc/grpc/blob/master/doc/health-checking.md).
-
+  
   If this is not specified, the default behavior is defined by gRPC.
   """
   service: String!
@@ -3935,7 +3921,7 @@ type v1_HTTPGetAction {
   httpHeaders: [v1_HTTPHeader]
   """Path to access on the HTTP server."""
   path: String
-  port: intstr_IntOrString!
+  port: String!
   """Scheme to use for connecting to the host. Defaults to HTTP."""
   scheme: String
 }
@@ -3954,16 +3940,16 @@ type v1_HTTPHeader {
 type v1_TCPSocketAction {
   """Optional: Host name to connect to, defaults to the pod IP."""
   host: String
-  port: intstr_IntOrString!
+  port: String!
 }
 
 """ResourceRequirements describes the compute resource requirements."""
 type v1_ResourceRequirements {
   """
   Claims lists the names of resources, defined in spec.resourceClaims, that are used by this container.
-
+  
   This is an alpha field and requires enabling the DynamicResourceAllocation feature gate.
-
+  
   This field is immutable. It can only be set for containers.
   """
   claims: [v1_ResourceClaim]
@@ -4101,7 +4087,7 @@ type v1_SeccompProfile {
   localhostProfile: String
   """
   type indicates which kind of seccomp profile will be applied. Valid options are:
-
+  
   Localhost - a profile defined in a file on the node should be used. RuntimeDefault - the container runtime default profile should be used. Unconfined - no profile should be applied.
   """
   type: String!
@@ -4151,7 +4137,7 @@ type v1_ContainerStatus {
   name: String!
   """
   Ready specifies whether the container is currently passing its readiness check. The value will change as readiness probes keep executing. If no readiness probes are specified, this field defaults to true once the container is fully started (see Started field).
-
+  
   The value is typically used to determine whether a container is ready to accept traffic.
   """
   ready: Boolean!
@@ -4199,7 +4185,7 @@ type v1_ContainerState {
 
 """ContainerStateRunning is a running state of a container."""
 type v1_ContainerStateRunning {
-  startedAt: v1_Time
+  startedAt: String
 }
 
 """ContainerStateTerminated is a terminated state of a container."""
@@ -4208,14 +4194,14 @@ type v1_ContainerStateTerminated {
   containerID: String
   """Exit status from the last termination of the container"""
   exitCode: Int!
-  finishedAt: v1_Time
+  finishedAt: String
   """Message regarding the last termination of the container"""
   message: String
   """(brief) reason from the last termination of the container"""
   reason: String
   """Signal from the last termination of the container"""
   signal: Int
-  startedAt: v1_Time
+  startedAt: String
 }
 
 """ContainerStateWaiting is a waiting state of a container."""
@@ -4480,21 +4466,21 @@ type v1_ObjectMeta {
   Annotations is an unstructured key value map stored with a resource that may be set by external tools to store and retrieve arbitrary metadata. They are not queryable and should be preserved when modifying objects. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations
   """
   annotations: JSON
-  creationTimestamp: v1_Time
+  creationTimestamp: String
   """
   Number of seconds allowed for this object to gracefully terminate before it will be removed from the system. Only set when deletionTimestamp is also set. May only be shortened. Read-only.
   """
   deletionGracePeriodSeconds: BigInt
-  deletionTimestamp: v1_Time
+  deletionTimestamp: String
   """
   Must be empty before the object is deleted from the registry. Each entry is an identifier for the responsible component that will remove the entry from the list. If the deletionTimestamp of the object is non-nil, entries in this list can only be removed. Finalizers may be processed and removed in any order.  Order is NOT enforced because it introduces significant risk of stuck finalizers. finalizers is a shared field, any actor with permission can reorder it. If the finalizer list is processed in order, then this can lead to a situation in which the component responsible for the first finalizer in the list is waiting for a signal (field value, external system, or other) produced by a component responsible for a finalizer later in the list, resulting in a deadlock. Without enforced ordering finalizers are free to order amongst themselves and are not vulnerable to ordering changes in the list.
   """
   finalizers: [String]
   """
   GenerateName is an optional prefix, used by the server, to generate a unique name ONLY IF the Name field has not been provided. If this field is used, the name returned to the client will be different than the name passed. This value will also be combined with a unique suffix. The provided value has the same validation rules as the Name field, and may be truncated by the length of the suffix required to make the value unique on the server.
-
+  
   If this field is specified and the generated name exists, the server will return a 409.
-
+  
   Applied only if Name is not specified. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#idempotency
   """
   generateName: String
@@ -4516,7 +4502,7 @@ type v1_ObjectMeta {
   name: String
   """
   Namespace defines the space within which each name must be unique. An empty namespace is equivalent to the "default" namespace, but "default" is the canonical representation. Not all objects are required to be scoped to a namespace - the value of this field for those objects will be empty.
-
+  
   Must be a DNS_LABEL. Cannot be updated. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces
   """
   namespace: String
@@ -4526,7 +4512,7 @@ type v1_ObjectMeta {
   ownerReferences: [v1_OwnerReference]
   """
   An opaque value that represents the internal version of this object that can be used by clients to determine when objects have changed. May be used for optimistic concurrency, change detection, and the watch operation on a resource or set of resources. Clients must treat these values as opaque and passed unmodified back to the server. They may only be valid for a particular resource or set of resources.
-
+  
   Populated by the system. Read-only. Value must be treated as opaque by clients and . More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#concurrency-control-and-consistency
   """
   resourceVersion: String
@@ -4536,7 +4522,7 @@ type v1_ObjectMeta {
   selfLink: String
   """
   UID is the unique in time and space value for this object. It is typically generated by the server on successful creation of a resource and is not allowed to change on PUT operations.
-
+  
   Populated by the system. Read-only. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names#uids
   """
   uid: String
@@ -4556,9 +4542,9 @@ type v1_ManagedFieldsEntry {
   fieldsType: String
   """
   FieldsV1 stores a set of fields in a data structure like a Trie, in JSON format.
-
+  
   Each key is either a '.' representing the field itself, and will always map to an empty set, or a string representing a sub-field or item. The string will follow one of these four formats: 'f:<name>', where <name> is the name of a field in a struct, or key in a map 'v:<value>', where <value> is the exact json formatted value of a list item 'i:<index>', where <index> is position of a item in a list 'k:<keys>', where <keys> is a map of  a list item's key fields to their unique values If a key maps to an empty Fields value, the field that key represents is part of the set.
-
+  
   The exact format is defined in sigs.k8s.io/structured-merge-diff
   """
   fieldsV1: JSON
@@ -4572,7 +4558,7 @@ type v1_ManagedFieldsEntry {
   Subresource is the name of the subresource used to update that object, or empty string if the object was updated through the main resource. The value of this field is used to distinguish between managers, even if they share the same name. For example, a status update will be distinct from a regular update using the same manager name. Note that the APIVersion field is not related to the Subresource field and it always corresponds to the version of the main resource.
   """
   subresource: String
-  time: v1_Time
+  time: String
 }
 
 """
@@ -5036,7 +5022,7 @@ type v1_PodSecurityContext {
   appArmorProfile: v1_AppArmorProfile
   """
   A special supplemental group that applies to all containers in a pod. Some volume types allow the Kubelet to change the ownership of that volume to be owned by the pod:
-
+  
   1. The owning GID will be the FSGroup 2. The setgid bit is set (new files created in the volume will be owned by FSGroup) 3. The permission bits are OR'd with rw-rw
   """
   fsGroup: BigInt
@@ -5210,14 +5196,14 @@ type endpoint_Endpoint {
 type v1_EndpointPort {
   """
   The application protocol for this port. This is used as a hint for implementations to offer richer behavior for protocols that they understand. This field follows standard Kubernetes label syntax. Valid values are either:
-
+  
   * Un-prefixed protocol names - reserved for IANA standard service names (as per RFC-6335 and https://www.iana.org/assignments/service-names).
-
+  
   * Kubernetes-defined prefixed names:
     * 'kubernetes.io/h2c' - HTTP/2 prior knowledge over cleartext as described in https://www.rfc-editor.org/rfc/rfc9113.html#name-starting-http-2-with-prior-
     * 'kubernetes.io/ws'  - WebSocket over cleartext as described in https://www.rfc-editor.org/rfc/rfc6455
     * 'kubernetes.io/wss' - WebSocket over TLS as described in https://www.rfc-editor.org/rfc/rfc6455
-
+  
   * Other protocols should use implementation-defined prefixed names such as mycompany.com/my-custom-protocol.
   """
   appProtocol: String

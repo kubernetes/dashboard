@@ -134,3 +134,123 @@ sources:
               to:
                 type: StringWrapper
                 field: optionalString
+            - from:
+                type: common_Condition
+                field: lastProbeTime
+              to:
+                type: StringWrapper
+                field: string
+            - from:
+                type: common_Condition
+                field: lastTransitionTime
+              to:
+                type: StringWrapper
+                field: string
+            - from:
+                type: common_Event
+                field: firstSeen
+              to:
+                type: StringWrapper
+                field: string
+            - from:
+                type: common_Event
+                field: lastSeen
+              to:
+                type: StringWrapper
+                field: string
+            - from:
+                type: cronjob_CronJob
+                field: lastSchedule
+              to:
+                type: StringWrapper
+                field: string
+            - from:
+                type: cronjob_CronJobDetail
+                field: lastSchedule
+              to:
+                type: StringWrapper
+                field: string
+            - from:
+                type: horizontalpodautoscaler_HorizontalPodAutoscalerDetail
+                field: lastScaleTime
+              to:
+                type: StringWrapper
+                field: string
+            - from:
+                type: v1_Taint
+                field: timeAdded
+              to:
+                type: StringWrapper
+                field: optionalString
+            - from:
+                type: v1_ContainerStateRunning
+                field: startedAt
+              to:
+                type: StringWrapper
+                field: optionalString
+            - from:
+                type: v1_ContainerStateTerminated
+                field: finishedAt
+              to:
+                type: StringWrapper
+                field: optionalString
+            - from:
+                type: v1_ContainerStateTerminated
+                field: startedAt
+              to:
+                type: StringWrapper
+                field: optionalString
+            - from:
+                type: v1_ObjectMeta
+                field: creationTimestamp
+              to:
+                type: StringWrapper
+                field: optionalString
+            - from:
+                type: v1_ObjectMeta
+                field: deletionTimestamp
+              to:
+                type: StringWrapper
+                field: optionalString
+            - from:
+                type: v1_ManagedFieldsEntry
+                field: time
+              to:
+                type: StringWrapper
+                field: optionalString
+            - from:
+                type: types_ObjectMeta
+                field: creationTimestamp
+              to:
+                type: StringWrapper
+                field: optionalString
+            - from:
+                type: deployment_RollingUpdateStrategy
+                field: maxSurge
+              to:
+                type: StringWrapper
+                field: string
+            - from:
+                type: deployment_RollingUpdateStrategy
+                field: maxUnavailable
+              to:
+                type: StringWrapper
+                field: string
+            - from:
+                type: v1_NetworkPolicyPort
+                field: port
+              to:
+                type: StringWrapper
+                field: optionalString
+            - from:
+                type: v1_HTTPGetAction
+                field: port
+              to:
+                type: StringWrapper
+                field: string
+            - from:
+                type: v1_TCPSocketAction
+                field: port
+              to:
+                type: StringWrapper
+                field: string
