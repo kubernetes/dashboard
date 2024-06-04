@@ -29,8 +29,13 @@ metadata:
 spec:
   podSelector:
     matchLabels:
-    {{ include "kubernetes-dashboard.matchLabels" . | nindent 6 }}
-  {{ if .Values.app.security.networkPolicy.ingressDenyAll }}
+    {{- include "kubernetes-dashboard.matchLabels" . | nindent 6 -}}
+  {{- if .Values.app.security.networkPolicy.spec }}
+    {{- with .Values.app.security.networkPolicy.spec }}
+    {{- toYaml . | nindent 2 }}
+    {{- end }}
+  {{ else }}
+    {{- if .Values.app.security.networkPolicy.ingressDenyAll }}
   ingress: [ ]
     {{ else }}
   ingress:
@@ -39,5 +44,6 @@ spec:
         protocol: TCP
       - port: {{ $.Values.api.role }}
         protocol: TCP
+    {{ end }}
   {{ end }}
 {{ end }}
