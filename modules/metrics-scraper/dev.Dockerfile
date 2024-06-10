@@ -14,7 +14,7 @@
 
 FROM golang:1.22-alpine3.19 as AIR
 
-RUN go install github.com/cosmtrek/air@latest
+RUN go install github.com/air-verse/air@latest
 
 FROM golang:1.22-alpine3.19
 
