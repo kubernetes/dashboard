@@ -83,6 +83,8 @@ Now copy the token and paste it into the `Enter token` field on the login screen
 
 Click the `Sign in` button and that's it. You are now logged in as an admin.
 
+**Note** Token login is ONLY allowed when the browser is accessing the UI over https.  If your networking path to the UI is via http, the login will fail with an invalid token error.
+
 ![Overview](../../images/overview.png)
 
 ## Clean up and next steps
