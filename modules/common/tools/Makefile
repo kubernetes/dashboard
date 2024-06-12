@@ -78,7 +78,7 @@ endif
 install-air:
 ifndef AIR_BINARY
 	@echo "[tools] downloading air..."
-	@go install github.com/cosmtrek/air
+	@go install github.com/air-verse/air
 else
 	@echo "[tools] air already exists"
 endif
