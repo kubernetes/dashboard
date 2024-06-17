@@ -92,7 +92,7 @@
     "@babel/core": "7.24.7",
     "@babel/preset-env": "7.24.7",
     "@babel/register": "7.24.6",
-    "@cypress/webpack-preprocessor": "6.0.1",
+    "@cypress/webpack-preprocessor": "6.0.2",
     "@graphql-mesh/cli": "0.90.10",
     "@graphql-mesh/openapi": "0.100.12",
     "@graphql-mesh/runtime": "0.99.8",
