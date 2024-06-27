@@ -19,5 +19,15 @@ kubectl -n kubernetes-dashboard port-forward svc/kubernetes-dashboard-kong-proxy
 
 Now access Dashboard at: [https://localhost:8443](https://localhost:8443).
 
+## `kubectl proxy`
+
+Use `kubectl proxy` and access Dashboard with a simple URL.
+
+```shell
+kubectl proxy --port=8001
+```
+
+Now access Dashboard at: [http://localhost:8001/api/v1/namespaces/kubernetes-dashboard/services/https:kubernetes-dashboard-kong-proxy:443/proxy/](http://localhost:8001/api/v1/namespaces/kubernetes-dashboard/services/https:kubernetes-dashboard-kong-proxy:443/proxy/)
+
 ----
 _Copyright 2019 [The Kubernetes Dashboard Authors](https://github.com/kubernetes/dashboard/graphs/contributors)_
