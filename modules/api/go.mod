@@ -21,7 +21,7 @@ require (
 	k8s.io/dashboard/errors v0.0.0-00010101000000-000000000000
 	k8s.io/dashboard/helpers v0.0.0-00010101000000-000000000000
 	k8s.io/dashboard/types v0.0.0-00010101000000-000000000000
-	k8s.io/klog/v2 v2.120.1
+	k8s.io/klog/v2 v2.130.1
 )
 
 require (
