@@ -8,12 +8,12 @@ require (
 	github.com/onsi/ginkgo v1.16.4
 	github.com/onsi/gomega v1.31.1
 	github.com/spf13/pflag v1.0.5
-	k8s.io/api v0.30.0
-	k8s.io/apimachinery v0.30.0
-	k8s.io/client-go v0.30.0
+	k8s.io/api v0.30.2
+	k8s.io/apimachinery v0.30.2
+	k8s.io/client-go v0.30.2
 	k8s.io/dashboard/helpers v0.0.0-00010101000000-000000000000
-	k8s.io/klog/v2 v2.120.1
-	k8s.io/metrics v0.30.0
+	k8s.io/klog/v2 v2.130.0
+	k8s.io/metrics v0.30.2
 	modernc.org/sqlite v1.29.1
 )
 
