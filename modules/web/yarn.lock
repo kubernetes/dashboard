@@ -14382,7 +14382,7 @@ __metadata:
     lint-staged: 15.2.7
     lodash-es: 4.17.21
     material-design-icons: 3.0.1
-    minimatch: 9.0.5
+    minimatch: 10.0.1
     minimist: 1.2.8
     ng-extract-i18n-merge: 2.12.0
     ngx-cookie-service: 18.0.0
@@ -15188,12 +15188,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"minimatch@npm:9.0.5":
-  version: 9.0.5
-  resolution: "minimatch@npm:9.0.5"
+"minimatch@npm:10.0.1":
+  version: 10.0.1
+  resolution: "minimatch@npm:10.0.1"
   dependencies:
     brace-expansion: ^2.0.1
-  checksum: 2c035575eda1e50623c731ec6c14f65a85296268f749b9337005210bb2b34e2705f8ef1a358b188f69892286ab99dc42c8fb98a57bde55c8d81b3023c19cea28
+  checksum: f5b63c2f30606091a057c5f679b067f84a2cd0ffbd2dbc9143bda850afd353c7be81949ff11ae0c86988f07390eeca64efd7143ee05a0dab37f6c6b38a2ebb6c
   languageName: node
   linkType: hard
 
