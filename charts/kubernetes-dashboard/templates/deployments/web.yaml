@@ -69,7 +69,7 @@ spec:
               valueFrom:
                 resourceFieldRef:
                   resource: limits.cpu
-                  divisor: 1m
+                  divisor: 1Mi
             {{- end }}
             {{- if .Values.web.containers.resources.limits.memory }}
             - name: GOMEMLIMIT
