@@ -11,15 +11,32 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-//
-//go:build tools
 
-package tools
+@use '../../../variables' as *;
 
-import (
-	_ "github.com/apache/skywalking-eyes/cmd/license-eye"
-	_ "github.com/air-verse/air"
-	_ "github.com/golangci/golangci-lint/cmd/golangci-lint"
-	_ "k8s.io/code-generator"
-	_ "sigs.k8s.io/kind"
-)
+@mixin option {
+  display: block;
+  font-size: $body-font-size-base;
+  margin-top: $baseline-grid;
+  padding-left: $baseline-grid;
+}
+
+.kd-dialog-propagation-select-container {
+  @include option;
+
+  padding-top: $baseline-grid;
+}
+
+.kd-dialog-propagation-select {
+  margin-left: $baseline-grid;
+  width: fit-content;
+
+  .md-select-value {
+    font-size: $title-font-size-base;
+    min-width: 20 * $baseline-grid;
+  }
+}
+
+.kd-dialog-delete-checkbox {
+  @include option;
+}

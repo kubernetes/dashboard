@@ -46,5 +46,5 @@ const (
 type ResourceVerber interface {
 	Update(object *unstructured.Unstructured) error
 	Get(kind string, namespace string, name string) (runtime.Object, error)
-	Delete(kind string, namespace string, name string, deleteNow bool) error
+	Delete(kind string, namespace string, name string, propagationPolicy string, deleteNow bool) error
 }

@@ -68,6 +68,20 @@ spec:
                 secretKeyRef:
                   name: {{ template "kubernetes-dashboard.app.csrf.secret.name" . }}
                   key: {{ template "kubernetes-dashboard.app.csrf.secret.key" . }}
+
+            {{- if .Values.api.containers.resources.limits.cpu }}
+            - name: GOMAXPROCS
+              valueFrom:
+                resourceFieldRef:
+                  resource: limits.cpu
+            {{- end }}
+            {{- if .Values.api.containers.resources.limits.memory }}
+            - name: GOMEMLIMIT
+              valueFrom:
+                resourceFieldRef:
+                  resource: limits.memory
+            {{- end }}
+
           {{- with .Values.api.containers.env }}
           {{ toYaml . | nindent 12 }}
           {{- end }}

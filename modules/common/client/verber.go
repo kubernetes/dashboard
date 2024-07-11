@@ -109,15 +109,28 @@ func (v *resourceVerber) buildGroupVersionResourceCache(resourceList []*metav1.A
 	return nil
 }
 
+func (v *resourceVerber) toDeletePropagationPolicy(propagation string) metav1.DeletionPropagation {
+	switch metav1.DeletionPropagation(propagation) {
+	case metav1.DeletePropagationBackground:
+		return metav1.DeletePropagationBackground
+	case metav1.DeletePropagationForeground:
+		return metav1.DeletePropagationForeground
+	case metav1.DeletePropagationOrphan:
+		return metav1.DeletePropagationOrphan
+	}
+
+	// Do cascade delete by default, as this is what users typically expect.
+	return metav1.DeletePropagationForeground
+}
+
 // Delete deletes the resource of the given kind in the given namespace with the given name.
-func (v *resourceVerber) Delete(kind string, namespace string, name string, deleteNow bool) error {
+func (v *resourceVerber) Delete(kind string, namespace string, name string, propagationPolicy string, deleteNow bool) error {
 	gvr, err := v.groupVersionResourceFromKind(kind)
 	if err != nil {
 		return err
 	}
 
-	// Do cascade delete by default, as this is what users typically expect.
-	defaultPropagationPolicy := metav1.DeletePropagationForeground
+	defaultPropagationPolicy := v.toDeletePropagationPolicy(propagationPolicy)
 	defaultDeleteOptions := metav1.DeleteOptions{
 		PropagationPolicy: &defaultPropagationPolicy,
 	}
@@ -127,6 +140,7 @@ func (v *resourceVerber) Delete(kind string, namespace string, name string, dele
 		defaultDeleteOptions.GracePeriodSeconds = &gracePeriodSeconds
 	}
 
+	klog.V(1).InfoS("deleting resource", "kind", kind, "namespace", namespace, "name", name, "propagationPolicy", propagationPolicy, "deleteNow", deleteNow)
 	return v.client.Resource(gvr).Namespace(namespace).Delete(context.TODO(), name, defaultDeleteOptions)
 }
 
