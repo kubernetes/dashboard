@@ -14410,7 +14410,7 @@ __metadata:
     systemjs: 6.15.1
     tar: 7.4.0
     through2: 4.0.2
-    ts-jest: 29.2.1
+    ts-jest: 29.2.2
     ts-loader: 9.5.1
     ts-node: 10.9.2
     tslib: 2.6.3
@@ -19154,9 +19154,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ts-jest@npm:29.2.1":
-  version: 29.2.1
-  resolution: "ts-jest@npm:29.2.1"
+"ts-jest@npm:29.2.2":
+  version: 29.2.2
+  resolution: "ts-jest@npm:29.2.2"
   dependencies:
     bs-logger: 0.x
     ejs: ^3.0.0
@@ -19187,7 +19187,7 @@ __metadata:
       optional: true
   bin:
     ts-jest: cli.js
-  checksum: d440aca1243c64291a382f07916a22ec6d9e159a14222fab03581b89abdfa2d9dc059ce515cb331c7ed3f0cf063930196449763eafc12939fdf87d960df46d25
+  checksum: e8e20167ecab9d164215691ea60e946774519fd602809599d1f2abf8321a767310e9ee2cf377a346a3d6de7b8a8ac619180bb0ab06f3813e51f82973f5a94b82
   languageName: node
   linkType: hard
 
