@@ -14294,7 +14294,7 @@ __metadata:
     run-node: 2.0.0
     rxjs: 7.8.1
     rxjs-compat: 6.6.7
-    sass: 1.77.7
+    sass: 1.77.8
     sass-loader: 14.2.1
     semver: 7.6.2
     sockjs-client: 1.6.1
@@ -17590,16 +17590,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"sass@npm:1.77.7":
-  version: 1.77.7
-  resolution: "sass@npm:1.77.7"
+"sass@npm:1.77.8":
+  version: 1.77.8
+  resolution: "sass@npm:1.77.8"
   dependencies:
     chokidar: ">=3.0.0 <4.0.0"
     immutable: ^4.0.0
     source-map-js: ">=0.6.2 <2.0.0"
   bin:
     sass: sass.js
-  checksum: 64c98cbeb24fb42fb5f29137740a812747e0cfebc2f02b0b03108456930f2058b17b2cf78ddf3df3c958c4a6b6fef765e34a202e6e93670752970bf5a0dbe222
+  checksum: 6b5dce17faa1bd1e349b4825bf7f76559a32f3f95d789cd2847623c88ee9635e1485d3458532a05fa5b9134cfbce79a4bad3f13dc63c2433632347674db0abae
   languageName: node
   linkType: hard
 
