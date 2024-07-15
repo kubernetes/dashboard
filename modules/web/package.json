@@ -132,7 +132,7 @@
     "minimist": "1.2.8",
     "ng-extract-i18n-merge": "2.12.0",
     "node-gyp": "10.2.0",
-    "prettier": "3.3.2",
+    "prettier": "3.3.3",
     "q": "1.5.1",
     "raw-loader": "4.0.2",
     "run-node": "2.0.0",
