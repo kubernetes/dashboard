@@ -11,17 +11,17 @@ require (
 	github.com/spf13/pflag v1.0.5
 	golang.org/x/net v0.26.0
 	gopkg.in/igm/sockjs-go.v2 v2.1.0
-	k8s.io/api v0.30.0
-	k8s.io/apiextensions-apiserver v0.30.0
-	k8s.io/apimachinery v0.30.0
-	k8s.io/client-go v0.30.0
+	k8s.io/api v0.30.2
+	k8s.io/apiextensions-apiserver v0.30.2
+	k8s.io/apimachinery v0.30.2
+	k8s.io/client-go v0.30.2
 	k8s.io/dashboard/certificates v0.0.0-00010101000000-000000000000
 	k8s.io/dashboard/client v0.0.0-00010101000000-000000000000
 	k8s.io/dashboard/csrf v0.0.0-00010101000000-000000000000
 	k8s.io/dashboard/errors v0.0.0-00010101000000-000000000000
 	k8s.io/dashboard/helpers v0.0.0-00010101000000-000000000000
 	k8s.io/dashboard/types v0.0.0-00010101000000-000000000000
-	k8s.io/klog/v2 v2.120.1
+	k8s.io/klog/v2 v2.130.0
 )
 
 require (
