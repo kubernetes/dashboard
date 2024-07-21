@@ -148,7 +148,7 @@ jobs:
 #          fetch-depth: 0
 #      - uses: helm/kind-action@v1.9.0
 #        with:
-#          node_image: kindest/node:v1.29.2
+#          node_image: kindest/node:v1.30.2
 #      - uses: actions/setup-go@v5.0.2
 #        with:
 #          go-version-file: modules/api/go.mod

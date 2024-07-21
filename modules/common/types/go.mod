@@ -2,7 +2,7 @@ module k8s.io/dashboard/types
 
 go 1.22.0
 
-require k8s.io/apimachinery v0.30.2
+require k8s.io/apimachinery v0.30.3
 
 require (
 	github.com/go-logr/logr v1.4.1 // indirect
