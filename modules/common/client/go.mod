@@ -4,10 +4,10 @@ go 1.22.0
 
 require (
 	github.com/gobuffalo/flect v1.0.2
-	k8s.io/api v0.30.2
-	k8s.io/apiextensions-apiserver v0.30.2
-	k8s.io/apimachinery v0.30.2
-	k8s.io/client-go v0.30.2
+	k8s.io/api v0.30.3
+	k8s.io/apiextensions-apiserver v0.30.3
+	k8s.io/apimachinery v0.30.3
+	k8s.io/client-go v0.30.3
 	k8s.io/dashboard/errors v0.0.0-00010101000000-000000000000
 	k8s.io/klog/v2 v2.130.0
 )
