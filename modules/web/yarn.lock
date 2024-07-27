@@ -14451,7 +14451,7 @@ __metadata:
     stylelint-order: 6.0.4
     stylelint-prettier: 5.0.2
     systemjs: 6.15.1
-    tar: 7.4.2
+    tar: 7.4.3
     through2: 4.0.2
     ts-jest: 29.2.3
     ts-loader: 9.5.1
@@ -18949,9 +18949,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tar@npm:7.4.2":
-  version: 7.4.2
-  resolution: "tar@npm:7.4.2"
+"tar@npm:7.4.3":
+  version: 7.4.3
+  resolution: "tar@npm:7.4.3"
   dependencies:
     "@isaacs/fs-minipass": ^4.0.0
     chownr: ^3.0.0
@@ -18959,7 +18959,7 @@ __metadata:
     minizlib: ^3.0.1
     mkdirp: ^3.0.1
     yallist: ^5.0.0
-  checksum: 024bc57a5673d330352b3ab5314fce1a51cfd1476b3500a35d394a590f1cc0bf3659a98f459c1525c499108562d62a050003d5dfd4d17a982b34583991f11183
+  checksum: 8485350c0688331c94493031f417df069b778aadb25598abdad51862e007c39d1dd5310702c7be4a6784731a174799d8885d2fde0484269aea205b724d7b2ffa
   languageName: node
   linkType: hard
 
