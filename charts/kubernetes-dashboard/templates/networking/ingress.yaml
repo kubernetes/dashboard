@@ -61,6 +61,7 @@ spec:
     {{- range $host := .Values.app.ingress.hosts }}
     - host: {{ $host }}
       http:
+        {{- if $.Values.kong.enabled }}
         paths:
         {{- if not (eq $.Values.app.ingress.path "/") }}
           - path: {{ $.Values.app.ingress.path }}(/|$)(.*)
@@ -73,9 +74,13 @@ spec:
                 name: {{ template "kong.fullname" (index $.Subcharts "kong") }}-proxy
                 port:
                   number: {{ $.Values.kong.proxy.tls.servicePort }}
+        {{- else }}
+        {{- include  "kubernetes-dashboard.ingress.paths" $ | nindent 9 }}
+        {{- end }}
     {{- end }}
     {{- else }}
     - http:
+        {{- if .Values.kong.enabled }}
         paths:
           - path: {{ .Values.app.ingress.path }}
             pathType: {{ .Values.app.ingress.pathType }}
@@ -84,5 +89,8 @@ spec:
                 name: {{ template "kong.fullname" (index $.Subcharts "kong") }}-proxy
                 port:
                   number: {{ $.Values.kong.proxy.tls.servicePort }}
+        {{- else }}
+        {{- include  "kubernetes-dashboard.ingress.paths" $ | nindent 9 }}
+        {{- end }}
     {{- end }}
 {{- end }}
