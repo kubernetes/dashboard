@@ -4479,7 +4479,32 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@graphql-mesh/runtime@npm:0.100.3, @graphql-mesh/runtime@npm:^0.100.3":
+"@graphql-mesh/runtime@npm:0.100.5":
+  version: 0.100.5
+  resolution: "@graphql-mesh/runtime@npm:0.100.5"
+  dependencies:
+    "@envelop/core": ^5.0.0
+    "@envelop/extended-validation": ^4.0.0
+    "@envelop/graphql-jit": ^8.0.0
+    "@graphql-mesh/string-interpolation": ^0.5.5
+    "@graphql-tools/batch-delegate": ^9.0.3
+    "@graphql-tools/delegate": ^10.0.16
+    "@graphql-tools/executor": ^1.3.0
+    "@graphql-tools/wrap": ^10.0.5
+    "@whatwg-node/fetch": ^0.9.0
+    graphql-jit: 0.8.2
+  peerDependencies:
+    "@graphql-mesh/cross-helpers": ^0.4.4
+    "@graphql-mesh/types": ^0.99.5
+    "@graphql-mesh/utils": ^0.99.5
+    "@graphql-tools/utils": ^10.2.3
+    graphql: "*"
+    tslib: ^2.4.0
+  checksum: d5e159881b013cf47b5746699499b0299b7b851dd9de097957d8f3fc5907b18a2711e846965b4d56df85ee380a52c1e7f3c35e1a515d8260645c78cd7b200056
+  languageName: node
+  linkType: hard
+
+"@graphql-mesh/runtime@npm:^0.100.3":
   version: 0.100.3
   resolution: "@graphql-mesh/runtime@npm:0.100.3"
   dependencies:
@@ -14381,7 +14406,7 @@ __metadata:
     "@cypress/webpack-preprocessor": 6.0.2
     "@graphql-mesh/cli": 0.92.3
     "@graphql-mesh/openapi": 0.102.4
-    "@graphql-mesh/runtime": 0.100.3
+    "@graphql-mesh/runtime": 0.100.5
     "@graphql-mesh/transform-replace-field": 0.99.3
     "@swimlane/ngx-charts": 20.5.0
     "@types/d3": 7.4.3
