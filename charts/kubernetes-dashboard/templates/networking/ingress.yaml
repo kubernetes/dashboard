@@ -31,8 +31,10 @@ metadata:
     cert-manager.io/cluster-issuer: {{ .Values.app.ingress.issuer.name }}
     {{- end }}
     {{- if .Values.app.ingress.useDefaultAnnotations }}
+    {{- if .Values.kong.enabled }}
     nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
     nginx.ingress.kubernetes.io/ssl-passthrough: "true"
+    {{- end }}
     nginx.ingress.kubernetes.io/ssl-redirect: "true"
     {{- end }}
     {{- if not (eq .Values.app.ingress.path "/") }}
