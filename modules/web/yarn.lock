@@ -13600,9 +13600,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"jest-preset-angular@npm:14.2.0":
-  version: 14.2.0
-  resolution: "jest-preset-angular@npm:14.2.0"
+"jest-preset-angular@npm:14.2.2":
+  version: 14.2.2
+  resolution: "jest-preset-angular@npm:14.2.2"
   dependencies:
     bs-logger: ^0.2.6
     esbuild: ">=0.15.13"
@@ -13621,7 +13621,7 @@ __metadata:
   dependenciesMeta:
     esbuild:
       optional: true
-  checksum: 155b9bd927b23a37b2994af4dce066594b639992e1f06caa741715650a7e7ea06e4d77c8f07943fed2bb9fee7505cbf9fc9df6a3aa65a1f8767d64a0607f19b1
+  checksum: 53ce9492a7d3350f50701fd0098d2b9d2cccb73ed034f6d157f0c40f0e1a29be5d2f3950e460d0165aaf1d0a405f7b59e0b072b5de103b3228abbf8d01352465
   languageName: node
   linkType: hard
 
@@ -14297,7 +14297,7 @@ __metadata:
     jasmine-core: 5.2.0
     jasmine-spec-reporter: 7.0.0
     jest: 29.7.0
-    jest-preset-angular: 14.2.0
+    jest-preset-angular: 14.2.2
     js-base64: 3.7.7
     js-yaml: 4.1.0
     jwt-decode: 4.0.0
