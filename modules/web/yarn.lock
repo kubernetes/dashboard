@@ -9858,19 +9858,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"debug@npm:^4.3.5":
-  version: 4.3.5
-  resolution: "debug@npm:4.3.5"
-  dependencies:
-    ms: 2.1.2
-  peerDependenciesMeta:
-    supports-color:
-      optional: true
-  checksum: 7c002b51e256257f936dda09eb37167df952758c57badf6bf44bdc40b89a4bcb8e5a0a2e4c7b53f97c69e2970dd5272d33a757378a12c8f8e64ea7bf99e8e86e
-  languageName: node
-  linkType: hard
-
-"debug@npm:~4.3.6":
+"debug@npm:^4.3.6, debug@npm:~4.3.6":
   version: 4.3.6
   resolution: "debug@npm:4.3.6"
   dependencies:
@@ -14325,7 +14313,7 @@ __metadata:
     sockjs-client: 1.6.1
     source-map-explorer: 2.5.3
     strip-ansi: 7.1.0
-    stylelint: 16.7.0
+    stylelint: 16.8.1
     stylelint-config-standard-scss: 13.1.0
     stylelint-no-unsupported-browser-features: 8.0.1
     stylelint-order: 6.0.4
@@ -16624,6 +16612,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"postcss-resolve-nested-selector@npm:^0.1.4":
+  version: 0.1.4
+  resolution: "postcss-resolve-nested-selector@npm:0.1.4"
+  checksum: 8de7abd1ae129233480ac123be243e2a722a4bb73fa54fb09cbbe6f10074fac960b9caadad8bc658982b96934080bd7b7f01b622ca7d5d78a25dc9c0532b17cb
+  languageName: node
+  linkType: hard
+
 "postcss-safe-parser@npm:^7.0.0":
   version: 7.0.0
   resolution: "postcss-safe-parser@npm:7.0.0"
@@ -16652,13 +16647,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"postcss-selector-parser@npm:^6.1.0":
-  version: 6.1.0
-  resolution: "postcss-selector-parser@npm:6.1.0"
+"postcss-selector-parser@npm:^6.1.1":
+  version: 6.1.1
+  resolution: "postcss-selector-parser@npm:6.1.1"
   dependencies:
     cssesc: ^3.0.0
     util-deprecate: ^1.0.2
-  checksum: 449f614e6706421be307d8638183c61ba45bc3b460fe3815df8971dbb4d59c4087181940d879daee4a7a2daf3d86e915db1cce0c006dd68ca75b4087079273bd
+  checksum: 1c6a5adfc3c19c6e1e7d94f8addb89a5166fcca72c41f11713043d381ecbe82ce66360c5524e904e17b54f7fc9e6a077994ff31238a456bc7320c3e02e88d92e
   languageName: node
   linkType: hard
 
@@ -16700,14 +16695,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"postcss@npm:^8.4.39":
-  version: 8.4.39
-  resolution: "postcss@npm:8.4.39"
+"postcss@npm:^8.4.40":
+  version: 8.4.40
+  resolution: "postcss@npm:8.4.40"
   dependencies:
     nanoid: ^3.3.7
     picocolors: ^1.0.1
     source-map-js: ^1.2.0
-  checksum: 14b130c90f165961772bdaf99c67f907f3d16494adf0868e57ef68baa67e0d1f6762db9d41ab0f4d09bab6fb7888588dba3596afd1a235fd5c2d43fba7006ac6
+  checksum: afd0cc49d2169dcd96c0f17e155c5d75de048956306a3017f1cfa6a7d66b941592245bed20f7796ceeccb2d8967749b623be2c7b010a74f67ea10fb5bdb8ba28
   languageName: node
   linkType: hard
 
@@ -18576,9 +18571,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"stylelint@npm:16.7.0":
-  version: 16.7.0
-  resolution: "stylelint@npm:16.7.0"
+"stylelint@npm:16.8.1":
+  version: 16.8.1
+  resolution: "stylelint@npm:16.8.1"
   dependencies:
     "@csstools/css-parser-algorithms": ^2.7.1
     "@csstools/css-tokenizer": ^2.4.1
@@ -18590,7 +18585,7 @@ __metadata:
     cosmiconfig: ^9.0.0
     css-functions-list: ^3.2.2
     css-tree: ^2.3.1
-    debug: ^4.3.5
+    debug: ^4.3.6
     fast-glob: ^3.3.2
     fastest-levenshtein: ^1.0.16
     file-entry-cache: ^9.0.0
@@ -18607,10 +18602,10 @@ __metadata:
     micromatch: ^4.0.7
     normalize-path: ^3.0.0
     picocolors: ^1.0.1
-    postcss: ^8.4.39
-    postcss-resolve-nested-selector: ^0.1.1
+    postcss: ^8.4.40
+    postcss-resolve-nested-selector: ^0.1.4
     postcss-safe-parser: ^7.0.0
-    postcss-selector-parser: ^6.1.0
+    postcss-selector-parser: ^6.1.1
     postcss-value-parser: ^4.2.0
     resolve-from: ^5.0.0
     string-width: ^4.2.3
@@ -18621,7 +18616,7 @@ __metadata:
     write-file-atomic: ^5.0.1
   bin:
     stylelint: bin/stylelint.mjs
-  checksum: b6b3b2772abbdbff02ed9357eb355c6b3056c806301fba0aa62a45eebb93d3e87ea969f03cc8f802de3a50b3b3b008de70536cff91edc09287e640960dd8b5d9
+  checksum: 4fe1695901b15b04b25b038835901803e2b0af5cd79c516f99c69c7bb2904807c1a6d4824a677c2a89b75a7a318e82348aa29bd2ddd855696f5ea35acb77c3c1
   languageName: node
   linkType: hard
 
