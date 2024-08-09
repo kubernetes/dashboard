@@ -106,3 +106,63 @@ private.key: {{ randBytes 256 | b64enc | quote }}
 {{- fail "value of .Values.app.ingress.issuer.scope must be one of [default, cluster, disabled]"}}
 {{- end -}}
 {{- end -}}
+
+{{- define "kubernetes-dashboard.ingress.paths" -}}
+paths:
+{{- if eq .Values.app.mode "dashboard" }}
+  - pathType: Exact
+    path: {{ .Values.app.ingress.path }}api/v1/login
+    backend:
+      service:
+        name: {{ template "kubernetes-dashboard.name" . }}-{{ .Values.auth.role }}
+        port:
+        {{- with (index .Values.auth.containers.ports 0) }}
+          number: {{ .containerPort }}
+        {{- end }}
+  - pathType: Exact
+    path: {{ .Values.app.ingress.path }}api/v1/csrftoken/login
+    backend:
+      service:
+        name: {{ template "kubernetes-dashboard.name" . }}-{{ .Values.auth.role }}
+        port:
+        {{- with (index .Values.auth.containers.ports 0) }}
+          number: {{ .containerPort }}
+        {{- end }}
+  - pathType: Exact
+    path: {{ .Values.app.ingress.path }}api/v1/me
+    backend:
+      service:
+        name: {{ template "kubernetes-dashboard.name" . }}-{{ .Values.auth.role }}
+        port:
+        {{- with (index .Values.auth.containers.ports 0) }}
+          number: {{ .containerPort }}
+        {{- end }}
+  - pathType: Prefix
+    path: {{ .Values.app.ingress.path }}
+    backend:
+      service:
+        name: {{ template "kubernetes-dashboard.name" . }}-{{ .Values.web.role }}
+        port:
+        {{- with (index .Values.web.containers.ports 0) }}
+          number: {{ .containerPort }}
+        {{- end }}
+{{- end }}
+  - pathType: Prefix
+    path: {{ .Values.app.ingress.path }}api
+    backend:
+      service:
+        name: {{ template "kubernetes-dashboard.name" . }}-{{ .Values.api.role }}
+        port:
+        {{- with (index .Values.api.containers.ports 0) }}
+          number: {{ .containerPort }}
+        {{- end }}
+  - pathType: Prefix
+    path: {{ .Values.app.ingress.path }}metrics
+    backend:
+      service:
+        name: {{ template "kubernetes-dashboard.name" . }}-{{ .Values.api.role }}
+        port:
+        {{- with (index .Values.api.containers.ports 0) }}
+          number: {{ .containerPort }}
+        {{- end }}
+{{- end -}}
