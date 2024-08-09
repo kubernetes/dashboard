@@ -67,12 +67,14 @@ spec:
               valueFrom:
                 resourceFieldRef:
                   resource: limits.cpu
+                  divisor: 1m
             {{- end }}
             {{- if .Values.metricsScraper.containers.resources.limits.memory }}
             - name: GOMEMLIMIT
               valueFrom:
                 resourceFieldRef:
                   resource: limits.memory
+                  divisor: 1Mi
             {{- end }}
 
           {{- with .Values.metricsScraper.containers.env }}
