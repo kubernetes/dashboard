@@ -96,7 +96,7 @@
     "@graphql-mesh/cli": "0.92.8",
     "@graphql-mesh/openapi": "0.103.2",
     "@graphql-mesh/runtime": "0.100.8",
-    "@graphql-mesh/transform-replace-field": "0.99.7",
+    "@graphql-mesh/transform-replace-field": "0.100.0",
     "@types/d3": "7.4.3",
     "@types/d3-scale": "4.0.8",
     "@types/file-saver": "2.0.7",
