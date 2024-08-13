@@ -49,7 +49,10 @@ func getPodStatus(pod v1.Pod) string {
 	for i := range pod.Status.InitContainerStatuses {
 		container := pod.Status.InitContainerStatuses[i]
 		restarts += int(container.RestartCount)
+		containerSpec := pod.Spec.InitContainers[i]
 		switch {
+		case container.State.Terminated == nil && *containerSpec.RestartPolicy == v1.ContainerRestartPolicyAlways:
+			continue;
 		case container.State.Terminated != nil && container.State.Terminated.ExitCode == 0:
 			continue
 		case container.State.Terminated != nil:
