@@ -95,7 +95,7 @@
     "@cypress/webpack-preprocessor": "6.0.2",
     "@graphql-mesh/cli": "0.93.0",
     "@graphql-mesh/openapi": "0.104.0",
-    "@graphql-mesh/runtime": "0.101.0",
+    "@graphql-mesh/runtime": "0.102.0",
     "@graphql-mesh/transform-replace-field": "0.100.0",
     "@types/d3": "7.4.3",
     "@types/d3-scale": "4.0.8",
