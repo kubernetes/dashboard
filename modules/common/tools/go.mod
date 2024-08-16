@@ -9,7 +9,7 @@ require (
 	github.com/apache/skywalking-eyes v0.6.0
 	github.com/golangci/golangci-lint v1.59.1
 	k8s.io/code-generator v0.30.3
-	sigs.k8s.io/kind v0.23.0
+	sigs.k8s.io/kind v0.24.0
 )
 
 require (
@@ -33,7 +33,7 @@ require (
 	github.com/ProtonMail/go-crypto v0.0.0-20230828082145-3c4c8a2d2371 // indirect
 	github.com/alecthomas/assert/v2 v2.6.0 // indirect
 	github.com/alecthomas/go-check-sumtype v0.1.4 // indirect
-	github.com/alessio/shellescape v1.4.1 // indirect
+	github.com/alessio/shellescape v1.4.2 // indirect
 	github.com/alexkohler/nakedret/v2 v2.0.4 // indirect
 	github.com/alexkohler/prealloc v1.0.0 // indirect
 	github.com/alingse/asasalint v0.0.11 // indirect
@@ -248,5 +248,5 @@ require (
 	mvdan.cc/gofumpt v0.6.0 // indirect
 	mvdan.cc/unparam v0.0.0-20240528143540-8a5130ca722f // indirect
 	sigs.k8s.io/structured-merge-diff/v4 v4.4.1 // indirect
-	sigs.k8s.io/yaml v1.3.0 // indirect
+	sigs.k8s.io/yaml v1.4.0 // indirect
 )
