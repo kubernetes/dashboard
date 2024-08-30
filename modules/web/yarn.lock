@@ -9486,9 +9486,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"cypress@npm:13.13.2":
-  version: 13.13.2
-  resolution: "cypress@npm:13.13.2"
+"cypress@npm:13.14.1":
+  version: 13.14.1
+  resolution: "cypress@npm:13.14.1"
   dependencies:
     "@cypress/request": ^3.0.1
     "@cypress/xvfb": ^1.2.4
@@ -9534,7 +9534,7 @@ __metadata:
     yauzl: ^2.10.0
   bin:
     cypress: bin/cypress
-  checksum: 3f70e7a8cb1d5c6929ef29367d5c1f488c42c832f828d794564097cdb23dab4aa5c02e0ba91c17390467c3f09db3af77a59727c867f222e804215f8eb0e74356
+  checksum: b6ff6c7ccc6cca19cad7cddbfa2df86d465899dfd41e491acd8a2724e6dc552d93274665aa1531c33a2ca62549f07c3b5e0fdf1331c381631c8858a39d216d8d
   languageName: node
   linkType: hard
 
@@ -14258,7 +14258,7 @@ __metadata:
     concurrently: 8.2.2
     core-js: 3.38.0
     crop-url: 4.0.1
-    cypress: 13.13.2
+    cypress: 13.14.1
     cypress-fail-fast: 7.1.1
     d3-shape: 3.2.0
     d3-time-format: 4.1.0
