@@ -62,11 +62,7 @@ spec:
     - host: {{ $host }}
       http:
         paths:
-        {{- if not (eq $.Values.app.ingress.path "/") }}
-          - path: {{ $.Values.app.ingress.path }}(/|$)(.*)
-        {{- else }}
           - path: {{ $.Values.app.ingress.path }}
-        {{- end }}
             pathType: {{ $.Values.app.ingress.pathType }}
             backend:
               service:
