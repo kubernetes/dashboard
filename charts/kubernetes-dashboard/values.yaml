@@ -355,7 +355,7 @@ kong:
   enabled: true
   ## Configuration reference: https://docs.konghq.com/gateway/3.6.x/reference/configuration
   env:
-    dns_order: LAST,A,CNAME,AAAA,SRV
+    dns_order: LAST,A,CNAME,SRV
     plugins: 'off'
     nginx_worker_processes: 1
   ingressController:
