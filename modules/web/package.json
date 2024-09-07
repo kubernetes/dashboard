@@ -147,7 +147,7 @@
     "stylelint-prettier": "5.0.2",
     "tar": "7.4.3",
     "through2": "4.0.2",
-    "ts-jest": "29.2.4",
+    "ts-jest": "29.2.5",
     "ts-loader": "9.5.1",
     "ts-node": "10.9.2",
     "typescript": "5.1.6",
