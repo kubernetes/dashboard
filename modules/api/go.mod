@@ -7,7 +7,7 @@ require (
 	github.com/emicklei/go-restful-openapi/v2 v2.10.2
 	github.com/emicklei/go-restful/v3 v3.12.1
 	github.com/go-openapi/spec v0.21.0
-	github.com/prometheus/client_golang v1.19.1
+	github.com/prometheus/client_golang v1.20.3
 	github.com/spf13/pflag v1.0.5
 	golang.org/x/net v0.29.0
 	gopkg.in/igm/sockjs-go.v2 v2.1.0
@@ -54,6 +54,7 @@ require (
 	github.com/imdario/mergo v0.3.16 // indirect
 	github.com/josharian/intern v1.0.0 // indirect
 	github.com/json-iterator/go v1.1.12 // indirect
+	github.com/klauspost/compress v1.17.9 // indirect
 	github.com/klauspost/cpuid/v2 v2.2.4 // indirect
 	github.com/leodido/go-urn v1.2.4 // indirect
 	github.com/mailru/easyjson v0.7.7 // indirect
