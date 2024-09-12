@@ -875,6 +875,13 @@ func CreateHTTPAPIHandler(iManager integration.Manager) (*restful.Container, err
 			Param(apiV1Ws.PathParameter("name", "name of the Node")).
 			Writes(pod.PodList{}).
 			Returns(http.StatusOK, "OK", pod.PodList{}))
+	apiV1Ws.Route(
+		apiV1Ws.POST("/node/{name}/drain").To(apiHandler.handleNodeDrain).
+			// docs
+			Doc("drain Node").
+			Param(apiV1Ws.PathParameter("name", "name of the Node")).
+			Writes(node.NodeDetail{}).
+			Returns(http.StatusOK, "OK", node.NodeDetail{}))
 
 	// Verber (namespaced)
 	apiV1Ws.Route(
@@ -1756,6 +1763,22 @@ func (apiHandler *APIHandler) handleGetNodePods(request *restful.Request, respon
 		return
 	}
 	response.WriteHeaderAndEntity(http.StatusOK, result)
+}
+
+func (apiHandler *APIHandler) handleNodeDrain(request *restful.Request, response *restful.Response) {
+	k8sClient, err := client.Client(request.Request)
+	if err != nil {
+		errors.HandleInternalError(response, err)
+		return
+	}
+
+	name := request.PathParameter("name")
+	if err := node.DrainNode(k8sClient, name); err != nil {
+		errors.HandleInternalError(response, err)
+		return
+	}
+
+	response.WriteHeader(http.StatusAccepted)
 }
 
 func (apiHandler *APIHandler) handleDeploy(request *restful.Request, response *restful.Response) {
