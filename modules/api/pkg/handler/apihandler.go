@@ -878,10 +878,10 @@ func CreateHTTPAPIHandler(iManager integration.Manager) (*restful.Container, err
 	apiV1Ws.Route(
 		apiV1Ws.POST("/node/{name}/drain").To(apiHandler.handleNodeDrain).
 			// docs
-			Doc("drain Node").
+			Doc("drains Node").
 			Param(apiV1Ws.PathParameter("name", "name of the Node")).
-			Writes(node.NodeDetail{}).
-			Returns(http.StatusOK, "OK", node.NodeDetail{}))
+			Reads(node.NodeDrainSpec{}).
+			Returns(http.StatusOK, "OK", nil))
 
 	// Verber (namespaced)
 	apiV1Ws.Route(
@@ -1773,7 +1773,13 @@ func (apiHandler *APIHandler) handleNodeDrain(request *restful.Request, response
 	}
 
 	name := request.PathParameter("name")
-	if err := node.DrainNode(k8sClient, name); err != nil {
+	spec := new(node.NodeDrainSpec)
+	if err := request.ReadEntity(spec); err != nil {
+		errors.HandleInternalError(response, err)
+		return
+	}
+
+	if err := node.DrainNode(k8sClient, name, spec); err != nil {
 		errors.HandleInternalError(response, err)
 		return
 	}
