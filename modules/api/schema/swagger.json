@@ -5240,6 +5240,76 @@
     }
    }
   },
+  "/api/v1/node/{name}/drain": {
+   "post": {
+    "consumes": [
+     "application/json"
+    ],
+    "produces": [
+     "application/json"
+    ],
+    "summary": "drains Node",
+    "operationId": "handleNodeDrain",
+    "parameters": [
+     {
+      "type": "string",
+      "description": "Comma delimited string used to apply filtering: 'propertyName,filterValue'",
+      "name": "filterBy",
+      "in": "query"
+     },
+     {
+      "type": "string",
+      "description": "Name of the column to sort by",
+      "name": "sortBy",
+      "in": "query"
+     },
+     {
+      "type": "string",
+      "description": "Number of items to return when pagination is applied",
+      "name": "itemsPerPage",
+      "in": "query"
+     },
+     {
+      "type": "string",
+      "description": "Page number to return items from",
+      "name": "page",
+      "in": "query"
+     },
+     {
+      "type": "string",
+      "description": "Metric names to download",
+      "name": "metricNames",
+      "in": "query"
+     },
+     {
+      "type": "string",
+      "description": "Aggregations to be performed for each metric (default: sum)",
+      "name": "aggregations",
+      "in": "query"
+     },
+     {
+      "type": "string",
+      "description": "name of the Node",
+      "name": "name",
+      "in": "path",
+      "required": true
+     },
+     {
+      "name": "body",
+      "in": "body",
+      "required": true,
+      "schema": {
+       "$ref": "#/definitions/node.NodeDrainSpec"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "OK"
+     }
+    }
+   }
+  },
   "/api/v1/node/{name}/event": {
    "get": {
     "consumes": [
@@ -10070,13 +10140,13 @@
   },
   "cronjob.CronJobDetail": {
    "required": [
-    "lastSchedule",
-    "containerImages",
     "objectMeta",
     "typeMeta",
     "schedule",
     "suspend",
     "active",
+    "lastSchedule",
+    "containerImages",
     "concurrencyPolicy",
     "startingDeadlineSeconds",
     "errors"
@@ -10194,11 +10264,11 @@
   },
   "daemonset.DaemonSetDetail": {
    "required": [
+    "podInfo",
     "containerImages",
     "initContainerImages",
     "objectMeta",
     "typeMeta",
-    "podInfo",
     "errors"
    ],
    "properties": {
@@ -10419,11 +10489,11 @@
   },
   "deployment.DeploymentDetail": {
    "required": [
+    "objectMeta",
+    "typeMeta",
     "pods",
     "containerImages",
     "initContainerImages",
-    "objectMeta",
-    "typeMeta",
     "selector",
     "statusInfo",
     "conditions",
@@ -11041,13 +11111,13 @@
   },
   "job.JobDetail": {
    "required": [
-    "jobStatus",
     "objectMeta",
     "typeMeta",
     "podInfo",
     "containerImages",
     "initContainerImages",
     "parallelism",
+    "jobStatus",
     "completions",
     "errors"
    ],
@@ -11629,6 +11699,34 @@
     }
    }
   },
+  "node.NodeDrainSpec": {
+   "required": [
+    "force",
+    "timeout",
+    "gracePeriodSeconds",
+    "ignoreAllDaemonSets",
+    "deleteEmptyDirData"
+   ],
+   "properties": {
+    "deleteEmptyDirData": {
+     "type": "boolean"
+    },
+    "force": {
+     "type": "boolean"
+    },
+    "gracePeriodSeconds": {
+     "type": "integer",
+     "format": "int32"
+    },
+    "ignoreAllDaemonSets": {
+     "type": "boolean"
+    },
+    "timeout": {
+     "type": "integer",
+     "format": "int64"
+    }
+   }
+  },
   "node.NodeList": {
    "required": [
     "listMeta",
@@ -11717,16 +11815,16 @@
   },
   "persistentvolume.PersistentVolumeDetail": {
    "required": [
-    "typeMeta",
-    "capacity",
     "accessModes",
-    "reclaimPolicy",
     "status",
     "claim",
-    "objectMeta",
+    "capacity",
+    "typeMeta",
+    "reclaimPolicy",
     "storageClass",
     "mountOptions",
     "reason",
+    "objectMeta",
     "message",
     "persistentVolumeSource"
    ],
@@ -11844,13 +11942,13 @@
   },
   "persistentvolumeclaim.PersistentVolumeClaimDetail": {
    "required": [
+    "typeMeta",
     "status",
     "volume",
     "capacity",
     "accessModes",
     "storageClass",
-    "objectMeta",
-    "typeMeta"
+    "objectMeta"
    ],
    "properties": {
     "accessModes": {
@@ -12313,11 +12411,11 @@
   },
   "replicaset.ReplicaSetDetail": {
    "required": [
+    "initContainerImages",
     "objectMeta",
     "typeMeta",
     "podInfo",
     "containerImages",
-    "initContainerImages",
     "selector",
     "horizontalPodAutoscalerList",
     "errors"
@@ -12807,9 +12905,9 @@
   },
   "secret.SecretDetail": {
    "required": [
+    "objectMeta",
     "typeMeta",
     "type",
-    "objectMeta",
     "data"
    ],
    "properties": {
@@ -12896,13 +12994,13 @@
   },
   "service.ServiceDetail": {
    "required": [
+    "selector",
+    "type",
+    "clusterIP",
     "objectMeta",
     "typeMeta",
     "internalEndpoint",
     "externalEndpoints",
-    "selector",
-    "type",
-    "clusterIP",
     "endpointList",
     "sessionAffinity",
     "errors"
@@ -13066,11 +13164,11 @@
   },
   "statefulset.StatefulSetDetail": {
    "required": [
+    "initContainerImages",
+    "objectMeta",
     "typeMeta",
     "podInfo",
     "containerImages",
-    "initContainerImages",
-    "objectMeta",
     "errors"
    ],
    "properties": {
@@ -13222,12 +13320,12 @@
   },
   "types.CustomResourceDefinitionDetail": {
    "required": [
-    "established",
     "objectMeta",
     "typeMeta",
     "group",
     "scope",
     "names",
+    "established",
     "conditions",
     "objects",
     "subresources",
@@ -13863,7 +13961,7 @@
      "type": "string"
     },
     "name": {
-     "description": "Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names",
+     "description": "Name of the referent. This field is effectively required, but due to backwards compatibility is allowed to be empty. Instances of this type with an empty value here are almost certainly wrong. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names",
      "type": "string"
     },
     "optional": {
@@ -13883,7 +13981,7 @@
      }
     },
     "name": {
-     "description": "Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names",
+     "description": "Name of the referent. This field is effectively required, but due to backwards compatibility is allowed to be empty. Instances of this type with an empty value here are almost certainly wrong. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names",
      "type": "string"
     },
     "optional": {
@@ -13908,7 +14006,7 @@
      }
     },
     "name": {
-     "description": "Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names",
+     "description": "Name of the referent. This field is effectively required, but due to backwards compatibility is allowed to be empty. Instances of this type with an empty value here are almost certainly wrong. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names",
      "type": "string"
     },
     "optional": {
@@ -14864,7 +14962,7 @@
    "description": "LocalObjectReference contains enough information to let you locate the referenced object inside the same namespace.",
    "properties": {
     "name": {
-     "description": "Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names",
+     "description": "Name of the referent. This field is effectively required, but due to backwards compatibility is allowed to be empty. Instances of this type with an empty value here are almost certainly wrong. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names",
      "type": "string"
     }
    }
@@ -15979,7 +16077,7 @@
      "type": "string"
     },
     "name": {
-     "description": "Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names",
+     "description": "Name of the referent. This field is effectively required, but due to backwards compatibility is allowed to be empty. Instances of this type with an empty value here are almost certainly wrong. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names",
      "type": "string"
     },
     "optional": {
@@ -15999,7 +16097,7 @@
      }
     },
     "name": {
-     "description": "Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names",
+     "description": "Name of the referent. This field is effectively required, but due to backwards compatibility is allowed to be empty. Instances of this type with an empty value here are almost certainly wrong. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names",
      "type": "string"
     },
     "optional": {
