@@ -29,22 +29,22 @@ import (
 // NodeDrainSpec is a specification to control the behavior of drainer.
 type NodeDrainSpec struct {
 	// Defaulted to true.
-	Force *bool `json:"force"`
+	Force *bool `json:"force,omitempty"`
 
 	// Defaulted to 2 minutes.
-	Timeout *time.Duration `json:"timeout"`
+	Timeout *time.Duration `json:"timeout,omitempty"`
 
 	// GracePeriodSeconds is how long to wait for a pod to terminate.
 	// 0 means "delete immediately".
 	// Set negative value to use pod's terminationGracePeriodSeconds.
 	// Defaulted to -1.
-	GracePeriodSeconds *int `json:"gracePeriodSeconds"`
+	GracePeriodSeconds *int `json:"gracePeriodSeconds,omitempty"`
 
 	// Defaulted to true.
-	IgnoreAllDaemonSets *bool `json:"ignoreAllDaemonSets"`
+	IgnoreAllDaemonSets *bool `json:"ignoreAllDaemonSets,omitempty"`
 
 	// Defaulted to true to proceed even when pods are using emptyDir volumes.
-	DeleteEmptyDirData *bool `json:"deleteEmptyDirData"`
+	DeleteEmptyDirData *bool `json:"deleteEmptyDirData,omitempty"`
 }
 
 func newHelper(ctx context.Context, client k8sClient.Interface, spec *NodeDrainSpec) *drain.Helper {
