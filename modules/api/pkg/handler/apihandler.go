@@ -876,7 +876,7 @@ func CreateHTTPAPIHandler(iManager integration.Manager) (*restful.Container, err
 			Writes(pod.PodList{}).
 			Returns(http.StatusOK, "OK", pod.PodList{}))
 	apiV1Ws.Route(
-		apiV1Ws.POST("/node/{name}/drain").To(apiHandler.handleNodeDrain).
+		apiV1Ws.PUT("/node/{name}/drain").To(apiHandler.handleNodeDrain).
 			// docs
 			Doc("drains Node").
 			Param(apiV1Ws.PathParameter("name", "name of the Node")).

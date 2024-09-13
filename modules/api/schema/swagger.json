@@ -5241,7 +5241,7 @@
    }
   },
   "/api/v1/node/{name}/drain": {
-   "post": {
+   "put": {
     "consumes": [
      "application/json"
     ],
@@ -9999,8 +9999,8 @@
   },
   "configmap.ConfigMapDetail": {
    "required": [
-    "objectMeta",
-    "typeMeta"
+    "typeMeta",
+    "objectMeta"
    ],
    "properties": {
     "data": {
@@ -10140,13 +10140,13 @@
   },
   "cronjob.CronJobDetail": {
    "required": [
-    "typeMeta",
-    "schedule",
-    "suspend",
     "active",
     "lastSchedule",
     "containerImages",
     "objectMeta",
+    "typeMeta",
+    "schedule",
+    "suspend",
     "concurrencyPolicy",
     "startingDeadlineSeconds",
     "errors"
@@ -10489,11 +10489,11 @@
   },
   "deployment.DeploymentDetail": {
    "required": [
-    "containerImages",
-    "initContainerImages",
     "objectMeta",
     "typeMeta",
     "pods",
+    "containerImages",
+    "initContainerImages",
     "selector",
     "statusInfo",
     "conditions",
@@ -11111,13 +11111,13 @@
   },
   "job.JobDetail": {
    "required": [
+    "parallelism",
     "jobStatus",
     "objectMeta",
     "typeMeta",
     "podInfo",
     "containerImages",
     "initContainerImages",
-    "parallelism",
     "completions",
     "errors"
    ],
@@ -11611,10 +11611,10 @@
   },
   "node.NodeDetail": {
    "required": [
+    "allocatedResources",
     "objectMeta",
     "typeMeta",
     "ready",
-    "allocatedResources",
     "phase",
     "podCIDR",
     "providerID",
@@ -11810,14 +11810,14 @@
    "required": [
     "objectMeta",
     "typeMeta",
+    "accessModes",
+    "mountOptions",
     "capacity",
     "reclaimPolicy",
+    "storageClass",
+    "status",
     "claim",
     "reason",
-    "accessModes",
-    "storageClass",
-    "mountOptions",
-    "status",
     "message",
     "persistentVolumeSource"
    ],
@@ -11935,13 +11935,13 @@
   },
   "persistentvolumeclaim.PersistentVolumeClaimDetail": {
    "required": [
-    "capacity",
-    "accessModes",
     "storageClass",
     "objectMeta",
     "typeMeta",
     "status",
-    "volume"
+    "volume",
+    "capacity",
+    "accessModes"
    ],
    "properties": {
     "accessModes": {
@@ -12404,11 +12404,11 @@
   },
   "replicaset.ReplicaSetDetail": {
    "required": [
-    "podInfo",
-    "containerImages",
     "initContainerImages",
     "objectMeta",
     "typeMeta",
+    "podInfo",
+    "containerImages",
     "selector",
     "horizontalPodAutoscalerList",
     "errors"
@@ -12518,11 +12518,11 @@
   },
   "replicationcontroller.ReplicationControllerDetail": {
    "required": [
-    "containerImages",
-    "initContainerImages",
     "objectMeta",
     "typeMeta",
     "podInfo",
+    "containerImages",
+    "initContainerImages",
     "labelSelector",
     "errors"
    ],
@@ -12987,13 +12987,13 @@
   },
   "service.ServiceDetail": {
    "required": [
-    "externalEndpoints",
-    "selector",
-    "type",
     "clusterIP",
     "objectMeta",
     "typeMeta",
     "internalEndpoint",
+    "externalEndpoints",
+    "selector",
+    "type",
     "endpointList",
     "sessionAffinity",
     "errors"
@@ -13157,11 +13157,11 @@
   },
   "statefulset.StatefulSetDetail": {
    "required": [
-    "objectMeta",
     "typeMeta",
     "podInfo",
     "containerImages",
     "initContainerImages",
+    "objectMeta",
     "errors"
    ],
    "properties": {
@@ -13313,12 +13313,12 @@
   },
   "types.CustomResourceDefinitionDetail": {
    "required": [
+    "scope",
     "names",
     "established",
     "objectMeta",
     "typeMeta",
     "group",
-    "scope",
     "conditions",
     "objects",
     "subresources",
