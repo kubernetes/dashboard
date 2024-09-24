@@ -22,6 +22,7 @@ import (
 	api "k8s.io/api/core/v1"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	client "k8s.io/client-go/kubernetes"
+
 	"k8s.io/dashboard/api/pkg/resource/common"
 	"k8s.io/dashboard/api/pkg/resource/dataselect"
 	"k8s.io/dashboard/errors"
@@ -41,7 +42,7 @@ func GetPodPersistentVolumeClaims(client client.Interface, namespace string, pod
 	}
 
 	claimNames := make([]string, 0)
-	if pod.Spec.Volumes != nil && len(pod.Spec.Volumes) > 0 {
+	if len(pod.Spec.Volumes) > 0 {
 		for _, v := range pod.Spec.Volumes {
 			persistentVolumeClaim := v.PersistentVolumeClaim
 			if persistentVolumeClaim != nil {

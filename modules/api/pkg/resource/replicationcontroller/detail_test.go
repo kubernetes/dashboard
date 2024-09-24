@@ -44,9 +44,9 @@ func TestUpdateReplicasCount(t *testing.T) {
 	}
 
 	for _, c := range cases {
-		fakeClient := fake.NewSimpleClientset(c.replicationController)
+		fakeClient := fake.NewClientset(c.replicationController)
 
-		UpdateReplicasCount(fakeClient, c.namespace, c.replicationControllerName, c.replicationControllerSpec)
+		_ = UpdateReplicasCount(fakeClient, c.namespace, c.replicationControllerName, c.replicationControllerSpec)
 
 		actual := fakeClient.Actions()[1].(core.UpdateActionImpl).GetObject().(*v1.ReplicationController)
 		if *actual.Spec.Replicas != *c.expected {

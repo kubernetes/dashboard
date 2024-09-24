@@ -128,7 +128,7 @@ func TestGetServicesForDeletion(t *testing.T) {
 	for _, c := range cases {
 		fakeClient := fake.NewSimpleClientset(c.replicationControllerList, c.expected)
 
-		getServicesForDeletion(fakeClient, c.labelSelector, "ns-1")
+		_, _ = getServicesForDeletion(fakeClient, c.labelSelector, "ns-1")
 
 		actions := fakeClient.Actions()
 		if len(actions) != len(c.expectedActions) {

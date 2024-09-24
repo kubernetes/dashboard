@@ -37,6 +37,8 @@ func getRestartCount(pod v1.Pod) int32 {
 
 // getPodStatus returns status string calculated based on the same logic as kubectl
 // Base code: https://github.com/kubernetes/kubernetes/blob/v1.31.1/pkg/printers/internalversion/printers.go
+//
+// nolint:gocyclo // disable cyclo check as this function is copied from kubectl
 func getPodStatus(pod v1.Pod) string {
 	podPhase := pod.Status.Phase
 	reason := string(podPhase)

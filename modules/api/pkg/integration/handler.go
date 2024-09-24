@@ -45,10 +45,10 @@ func (self Handler) handleGetState(request *restful.Request, response *restful.R
 	state, err := self.manager.GetState(api.IntegrationID(integrationName))
 	if err != nil {
 		response.AddHeader("Content-Type", "text/plain")
-		response.WriteErrorString(http.StatusInternalServerError, err.Error()+"\n")
+		_ = response.WriteErrorString(http.StatusInternalServerError, err.Error()+"\n")
 		return
 	}
-	response.WriteHeaderAndEntity(http.StatusOK, state)
+	_ = response.WriteHeaderAndEntity(http.StatusOK, state)
 }
 
 // NewHandler creates Handler.

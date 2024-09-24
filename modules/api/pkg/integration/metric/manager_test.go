@@ -80,7 +80,7 @@ func TestMetricManager_Client(t *testing.T) {
 	for _, c := range cases {
 		metricManager := NewMetricManager()
 		metricManager.AddClient(c.client)
-		metricManager.Enable(fakeMetricClientID)
+		_ = metricManager.Enable(fakeMetricClientID)
 		client := metricManager.Client()
 
 		if !reflect.DeepEqual(client, c.expected) {

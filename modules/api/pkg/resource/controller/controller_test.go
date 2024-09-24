@@ -60,7 +60,7 @@ func TestNewResourceController(t *testing.T) {
 			Name:      "test-name",
 			Namespace: "default",
 		}}
-	cli := fake.NewSimpleClientset(&pod)
+	cli := fake.NewClientset(&pod)
 
 	ctrl, err := NewResourceController(
 		meta.OwnerReference{
@@ -78,11 +78,11 @@ func TestNewResourceController(t *testing.T) {
 	if podCtrl.Name != "test-name" {
 		t.Fatal("Returned invalid pod name")
 	}
-	NewResourceController(
+	_, _ = NewResourceController(
 		meta.OwnerReference{
 			Kind: types.ResourceKindPod,
 			Name: "test-name",
-		}, "default", fake.NewSimpleClientset())
+		}, "default", fake.NewClientset())
 	podCtrl.Get([]v1.Pod{pod}, []v1.Event{})
 	podCtrl.UID()
 	podCtrl.GetLogSources([]v1.Pod{pod})
