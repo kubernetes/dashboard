@@ -76,12 +76,19 @@ app:
     #  clusterName: ""
     #  # Max number of items that can be displayed on each list page
     #  itemsPerPage: 10
+    #  # Max number of labels that are displayed by default on most views.
+    #  labelsLimit: 3
     #  # Number of seconds between every auto-refresh of logs
     #  logsAutoRefreshTimeInterval: 5
     #  # Number of seconds between every auto-refresh of every resource. Set 0 to disable
-    #  resourceAutoRefreshTimeInterval: 5
+    #  resourceAutoRefreshTimeInterval: 10
     #  # Hide all access denied warnings in the notification panel
     #  disableAccessDeniedNotifications: false
+    #  # Namespace that should be selected by default after logging in.
+    #  defaultNamespace: default
+    #  # List of namespaces that should be presented to user without namespace list privileges.
+    #  namespaceFallbackList:
+    #  - default
     ## Pinned resources that will be displayed in dashboard's menu
     pinnedResources: []
     # - kind: customresourcedefinition
