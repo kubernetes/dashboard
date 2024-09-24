@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import {HttpClientTestingModule, HttpTestingController} from '@angular/common/http/testing';
-import {Component, CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
+import {Component, CUSTOM_ELEMENTS_SCHEMA, InjectionToken} from '@angular/core';
 import {TestBed, waitForAsync} from '@angular/core/testing';
 import {MatCardModule} from '@angular/material/card';
 import {MatChipsModule} from '@angular/material/chips';
@@ -31,11 +31,16 @@ import {PropertyComponent} from '@common/components/property/component';
 import {PipesModule} from '@common/pipes/module';
 import {ConfigService} from '@common/services/global/config';
 import {MESSAGES, MESSAGES_DI_TOKEN} from '../../../../index.messages';
+import {KdStateService} from '@common/services/global/state';
 
 import {IngressDetailComponent} from './component';
+import {GlobalServicesModule} from '@common/services/global/module';
+import {CONFIG_DI_TOKEN} from '../../../../index.config';
+import {IConfig} from '@api/root.ui';
 
 const miniName = 'my-mini-ingress';
 const maxiName = 'my-maxi-ingress';
+const MOCK_CONFIG_DI_TOKEN = new InjectionToken<IConfig>('kd.config');
 
 @Component({selector: 'test', templateUrl: './template.html'})
 class MiniTestComponent {
@@ -182,8 +187,14 @@ describe('IngressDetailComponent', () => {
         HttpClientTestingModule,
         MatIconModule,
         RouterModule,
+        GlobalServicesModule,
       ],
-      providers: [ConfigService, {provide: MESSAGES_DI_TOKEN, useValue: MESSAGES}],
+      providers: [
+        ConfigService,
+        KdStateService,
+        {provide: MESSAGES_DI_TOKEN, useValue: MESSAGES},
+        {provide: CONFIG_DI_TOKEN, useValue: MOCK_CONFIG_DI_TOKEN},
+      ],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
     }).compileComponents();
     httpMock = TestBed.inject(HttpTestingController);
