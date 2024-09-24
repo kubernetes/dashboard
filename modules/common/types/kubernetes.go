@@ -103,6 +103,10 @@ type ListMeta struct {
 }
 
 func toOwnerReferences(ownerReferences []metav1.OwnerReference) []OwnerReference {
+	if len(ownerReferences) == 0 {
+		return nil
+	}
+
 	return lo.Map(ownerReferences, func(ref metav1.OwnerReference, _ int) OwnerReference {
 		return OwnerReference{
 			Kind: ref.Kind,
