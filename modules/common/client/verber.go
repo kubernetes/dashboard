@@ -154,24 +154,24 @@ func (v *resourceVerber) Update(object *unstructured.Unstructured) error {
 		klog.V(2).InfoS("fetching latest resource version", "group", gvr.Group, "version", gvr.Version, "resource", gvr.Resource, "name", name, "namespace", namespace)
 		result, getErr := v.client.Resource(gvr).Namespace(namespace).Get(context.TODO(), name, metav1.GetOptions{})
 		if getErr != nil {
-			return fmt.Errorf("failed to get latest %s version: %v", gvr.Resource, getErr)
+			return fmt.Errorf("failed to get latest %s version: %w", gvr.Resource, getErr)
 		}
 
 		origData, err := result.MarshalJSON()
 		if err != nil {
-			return fmt.Errorf("failed to marshal original data: %+v", err)
+			return fmt.Errorf("failed to marshal original data: %w", err)
 		}
 
 		// Update resource version from latest object to not end up with resource version conflict.
 		object.SetResourceVersion(result.GetResourceVersion())
 		modifiedData, err := object.MarshalJSON()
 		if err != nil {
-			return fmt.Errorf("failed to marshal modified data: %+v", err)
+			return fmt.Errorf("failed to marshal modified data: %w", err)
 		}
 
 		patchBytes, err := jsonmergepatch.CreateThreeWayJSONMergePatch(origData, modifiedData, origData)
 		if err != nil {
-			return fmt.Errorf("failed creating merge patch: %+v", err)
+			return fmt.Errorf("failed creating merge patch: %w", err)
 		}
 
 		klog.V(3).InfoS("patching resource", "group", gvr.Group, "version", gvr.Version, "resource", gvr.Resource, "name", name, "namespace", namespace, "patch", string(patchBytes))

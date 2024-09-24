@@ -88,7 +88,7 @@ func getMyPodsFromCache(selector metricapi.ResourceSelector, cachedPods []v1.Pod
 		for _, pod := range cachedPods {
 			if pod.Namespace == selector.Namespace {
 				for _, ownerRef := range pod.OwnerReferences {
-					if ownerRef.Controller != nil && *ownerRef.Controller == true &&
+					if ownerRef.Controller != nil && *ownerRef.Controller &&
 						ownerRef.UID == selector.UID {
 						matchingPods = append(matchingPods, pod)
 					}

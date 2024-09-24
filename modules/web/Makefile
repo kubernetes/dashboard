@@ -29,7 +29,7 @@ coverage: coverage-frontend coverage-go
 fix: fix-frontend fix-go
 
 .PHONY: test
-test: test-go
+test: test-frontend test-go
 
 # ==================== LOCAL ==================== #
 
@@ -71,6 +71,11 @@ fix-frontend: $(PRE)
 fix-go: $(PRE)
 	@echo "[$(APP_NAME)] Running lint --fix"
 	@golangci-lint run -c $(GOLANGCI_LINT_CONFIG) --fix ./...
+
+.PHONY: test-frontend
+test-frontend:
+	@echo "[$(APP_NAME)] Running frontend tests"
+	@yarn test
 
 .PHONY: test-go
 test-go:

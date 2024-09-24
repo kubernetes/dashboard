@@ -185,7 +185,7 @@
         "extract-i18n-merge": {
           "builder": "ng-extract-i18n-merge:ng-extract-i18n-merge",
           "options": {
-            "browserTarget": "kubernetes-dashboard:build",
+            "buildTarget": "kubernetes-dashboard:build",
             "format": "xlf",
             "outputPath": "i18n",
             "targetFiles": [

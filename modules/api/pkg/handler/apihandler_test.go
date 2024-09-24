@@ -120,7 +120,7 @@ func TestFormatRequestLog(t *testing.T) {
 			t.Error("Cannot mockup request")
 		}
 
-		pflag.Set("v", c.apiLogLevel.String())
+		_ = pflag.Set("v", c.apiLogLevel.String())
 
 		var restfulRequest restful.Request
 		restfulRequest.Request = req

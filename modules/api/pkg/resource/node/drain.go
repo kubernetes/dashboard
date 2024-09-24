@@ -93,17 +93,17 @@ func DrainNode(client k8sClient.Interface, name string, spec *NodeDrainSpec) err
 
 	node, err := client.CoreV1().Nodes().Get(context.Background(), name, metaV1.GetOptions{})
 	if err != nil {
-		return fmt.Errorf("error getting node: %v", err)
+		return fmt.Errorf("error getting node: %w", err)
 	}
 
 	helper := newHelper(context.Background(), client, spec)
 
 	if err := drain.RunCordonOrUncordon(helper, node, true); err != nil {
-		return fmt.Errorf("error cordoning node: %v", err)
+		return fmt.Errorf("error cordoning node: %w", err)
 	}
 
 	if err := drain.RunNodeDrain(helper, name); err != nil {
-		return fmt.Errorf("error draining node: %v", err)
+		return fmt.Errorf("error draining node: %w", err)
 	}
 
 	log.Printf("Successfully drained %s node", name)

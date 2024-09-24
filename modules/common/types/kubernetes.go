@@ -15,8 +15,15 @@
 package types
 
 import (
-	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	"github.com/samber/lo"
+	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/types"
+)
+
+const (
+	// NodeUnreachablePodReason is the reason on a pod when its state cannot be confirmed as kubelet is unresponsive
+	// on the node it is (was) running.
+	NodeUnreachablePodReason = "NodeLost"
 )
 
 // ObjectMeta is metadata about an instance of a resource.
@@ -50,12 +57,27 @@ type ObjectMeta struct {
 	// CreationTimestamp is a timestamp representing the server time when this object was
 	// created. It is not guaranteed to be set in happens-before order across separate operations.
 	// Clients may not set this value. It is represented in RFC3339 form and is in UTC.
-	CreationTimestamp metaV1.Time `json:"creationTimestamp,omitempty"`
+	CreationTimestamp metav1.Time `json:"creationTimestamp,omitempty"`
 
 	// UID is a type that holds unique ID values, including UUIDs.  Because we
 	// don't ONLY use UUIDs, this is an alias to string.  Being a type captures
 	// intent and helps make sure that UIDs and names do not get conflated.
 	UID types.UID `json:"uid,omitempty"`
+
+	// OwnerReference contains enough information to let you identify an owning
+	// object. See [OwnerReference] for more information.
+	OwnerReferences []OwnerReference `json:"ownerReferences,omitempty"`
+}
+
+// OwnerReference contains enough information to let you identify an owning
+// object. An owning object must be in the same namespace as the dependent, or
+// be cluster-scoped, so there is no namespace field.
+type OwnerReference struct {
+	// Kind of the referent.
+	Kind string `json:"kind"`
+
+	// Name of the referent.
+	Name string `json:"name"`
 }
 
 // TypeMeta describes an individual object in an API response or request with strings representing
@@ -80,9 +102,22 @@ type ListMeta struct {
 	TotalItems int `json:"totalItems"`
 }
 
+func toOwnerReferences(ownerReferences []metav1.OwnerReference) []OwnerReference {
+	if len(ownerReferences) == 0 {
+		return nil
+	}
+
+	return lo.Map(ownerReferences, func(ref metav1.OwnerReference, _ int) OwnerReference {
+		return OwnerReference{
+			Kind: ref.Kind,
+			Name: ref.Name,
+		}
+	})
+}
+
 // NewObjectMeta returns internal endpoint name for the given service properties, e.g.,
 // NewObjectMeta creates a new instance of ObjectMeta struct based on K8s object meta.
-func NewObjectMeta(k8SObjectMeta metaV1.ObjectMeta) ObjectMeta {
+func NewObjectMeta(k8SObjectMeta metav1.ObjectMeta) ObjectMeta {
 	return ObjectMeta{
 		Name:              k8SObjectMeta.Name,
 		Namespace:         k8SObjectMeta.Namespace,
@@ -90,6 +125,7 @@ func NewObjectMeta(k8SObjectMeta metaV1.ObjectMeta) ObjectMeta {
 		CreationTimestamp: k8SObjectMeta.CreationTimestamp,
 		Annotations:       k8SObjectMeta.Annotations,
 		UID:               k8SObjectMeta.UID,
+		OwnerReferences:   toOwnerReferences(k8SObjectMeta.OwnerReferences),
 	}
 }
 

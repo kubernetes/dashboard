@@ -16,6 +16,7 @@ package deployment
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"io"
 	"log"
@@ -35,7 +36,7 @@ import (
 	client "k8s.io/client-go/kubernetes"
 	"k8s.io/client-go/rest"
 
-	"k8s.io/dashboard/errors"
+	derrors "k8s.io/dashboard/errors"
 )
 
 const (
@@ -308,7 +309,7 @@ func DeployAppFromFile(cfg *rest.Config, spec *AppDeploymentFromFileSpec) (bool,
 	for {
 		data := &unstructured.Unstructured{}
 		if err := d.Decode(data); err != nil {
-			if err == io.EOF {
+			if errors.Is(err, io.EOF) {
 				return true, nil
 			}
 			return false, err
@@ -362,7 +363,7 @@ func DeployAppFromFile(cfg *rest.Config, spec *AppDeploymentFromFileSpec) (bool,
 		}
 
 		if err != nil {
-			return false, errors.LocalizeError(err)
+			return false, derrors.LocalizeError(err)
 		}
 	}
 }

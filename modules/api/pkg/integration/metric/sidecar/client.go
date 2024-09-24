@@ -182,7 +182,6 @@ func (self sidecarClient) ithResourceDownload(selector sidecarSelector, metricNa
 			},
 		}
 		result.Error <- nil
-		return
 	}()
 	return result
 }
@@ -243,7 +242,6 @@ func (self sidecarClient) allInOneDownload(selector sidecarSelector, metricName 
 			}
 			result[i].Error <- nil
 		}
-		return
 
 	}()
 	return result

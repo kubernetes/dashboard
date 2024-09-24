@@ -14,11 +14,11 @@
 
 # ! Context expected to be set to "modules" dir !
 
-FROM golang:1.22-alpine3.19 as AIR
+FROM golang:1.23-alpine3.19 as AIR
 
 RUN go install github.com/air-verse/air@latest
 
-FROM golang:1.22-alpine3.19
+FROM golang:1.23-alpine3.19
 
 # Copy air binary
 COPY --from=AIR $GOPATH/bin/air $GOPATH/bin/air

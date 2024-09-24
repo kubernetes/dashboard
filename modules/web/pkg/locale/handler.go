@@ -177,7 +177,7 @@ func getLocaleMap() map[string]struct{} {
 func dirExists(name string) bool {
 	if _, err := os.Stat(name); err != nil {
 		if os.IsNotExist(err) {
-			klog.Warningf(name)
+			klog.Warning(name)
 			return false
 		}
 	}

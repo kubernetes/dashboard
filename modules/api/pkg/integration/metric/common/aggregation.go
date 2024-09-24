@@ -94,7 +94,7 @@ func AggregatingMapFromDataList(metricList []metricapi.Metric, metricName string
 // with name aggregateName.
 func AggregateMetricPromises(metricPromises metricapi.MetricPromises, metricName string,
 	aggregations metricapi.AggregationModes, forceLabel metricapi.Label) metricapi.MetricPromises {
-	if aggregations == nil || len(aggregations) == 0 {
+	if len(aggregations) == 0 {
 		aggregations = metricapi.OnlyDefaultAggregation
 	}
 	result := metricapi.NewMetricPromises(len(aggregations))
