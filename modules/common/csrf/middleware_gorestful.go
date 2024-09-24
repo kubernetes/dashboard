@@ -88,7 +88,7 @@ func (in *GoRestfulCSRFMiddleware) build() restful.FilterFunction {
 			klog.Errorf("CSRF validation failed, actionID: %s", *actionID)
 
 			resp.AddHeader("Content-Type", "text/plain")
-			resp.WriteError(http.StatusUnauthorized, errors.NewCSRFValidationFailed())
+			_ = resp.WriteError(http.StatusUnauthorized, errors.NewCSRFValidationFailed())
 			return
 		}
 
