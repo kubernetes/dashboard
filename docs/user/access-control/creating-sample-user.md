@@ -67,7 +67,7 @@ metadata:
 type: kubernetes.io/service-account-token  
 ```
 
-After Secret is created, we can execute the following command to get the token which saved in the Secret:
+After Secret is created, we can execute the following command to get the token which is saved in the Secret:
 
 ```shell
 kubectl get secret admin-user -n kubernetes-dashboard -o jsonpath={".data.token"} | base64 -d
