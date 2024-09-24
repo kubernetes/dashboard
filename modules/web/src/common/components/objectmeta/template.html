@@ -116,6 +116,27 @@ limitations under the License.
         </div>
         <div value>{{ objectMeta?.uid }}</div>
       </kd-property>
+      <kd-property *ngIf="objectMeta?.ownerReferences">
+        <div
+          key
+          i18n
+        >
+          Owner
+        </div>
+        <div
+          value
+          *ngFor="let ownerReference of objectMeta?.ownerReferences"
+        >
+          <a
+            *ngIf="getOwnerHref(ownerReference.kind, ownerReference.name); else unsupportedObject"
+            [routerLink]="getOwnerHref(ownerReference.kind, ownerReference.name)"
+            queryParamsHandling="preserve"
+          >
+            {{ownerReference.kind?.toLowerCase()}}/{{ownerReference.name}}
+          </a>
+          <ng-template #unsupportedObject>{{ownerReference.kind?.toLowerCase()}}/{{ownerReference.name}}</ng-template>
+        </div>
+      </kd-property>
       <kd-property
         *ngIf="objectMeta?.labels"
         fxFlex="100"

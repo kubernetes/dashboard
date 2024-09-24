@@ -23,7 +23,7 @@ import {
 } from '@angular/core';
 import {MatDialog, MatDialogConfig} from '@angular/material/dialog';
 import {StringMap} from '@api/root.shared';
-// @ts-expect-error
+// @ts-expect-error as crop-url uses old style module declaration
 import cropUrl from 'crop-url';
 
 import {GlobalSettingsService} from '../../services/global/globalsettings';

@@ -53,7 +53,7 @@ RUN SKIP_POSTINSTALL=true yarn workspaces focus
 # Build prod version of web app
 RUN make build-frontend
 
-FROM golang:1.22-alpine3.19 as go-builder
+FROM golang:1.23-alpine3.19 as go-builder
 
 ARG TARGETARCH
 ARG TARGETOS
