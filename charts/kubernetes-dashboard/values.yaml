@@ -171,9 +171,11 @@ auth:
     - name: tmp-volume
       emptyDir: {}
   nodeSelector: {}
-  # Labels & annotations shared between API related resources
+  # Labels & annotations for Auth related resources
   labels: {}
   annotations: {}
+  serviceLabels: {}
+  serviceAnnotations: {}
 
 # API deployment configuration
 api:
@@ -226,9 +228,11 @@ api:
     - name: tmp-volume
       emptyDir: {}
   nodeSelector: {}
-  # Labels & annotations shared between API related resources
+  # Labels & annotations for API related resources
   labels: {}
   annotations: {}
+  serviceLabels: {}
+  serviceAnnotations: {}
 
 # WEB UI deployment configuration
 web:
@@ -281,9 +285,11 @@ web:
     - name: tmp-volume
       emptyDir: {}
   nodeSelector: {}
-  # Labels & annotations shared between WEB UI related resources
+  # Labels & annotations for WEB UI related resources
   labels: {}
   annotations: {}
+  serviceLabels: {}
+  serviceAnnotations: {}
 
 ### Metrics Scraper
 ### Container to scrape, store, and retrieve a window of time from the Metrics Server.
@@ -340,9 +346,11 @@ metricsScraper:
     - name: tmp-volume
       emptyDir: {}
   nodeSelector: {}
-  # Labels & annotations shared between WEB UI related resources
+  # Labels & annotations for Metrics Scraper related resources
   labels: {}
   annotations: {}
+  serviceLabels: {}
+  serviceAnnotations: {}
 
 ## Optional Metrics Server sub-chart configuration
 ## Enable this if you don't already have metrics-server enabled on your cluster and

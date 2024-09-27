@@ -17,9 +17,17 @@ apiVersion: v1
 metadata:
   labels:
     {{- include "kubernetes-dashboard.labels" . | nindent 4 }}
+    {{- with .Values.api.serviceLabels }}
+    {{- toYaml . | nindent 4 }}
+    {{- end }}
     app.kubernetes.io/name: {{ template "kubernetes-dashboard.name" . }}-{{ .Values.api.role }}
     app.kubernetes.io/version: {{ .Values.api.image.tag }}
     app.kubernetes.io/component: {{ .Values.api.role }}
+  annotations:
+    {{- include "kubernetes-dashboard.annotations" . | nindent 4 }}
+    {{- with .Values.api.serviceAnnotations }}
+    {{- toYaml . | nindent 4 }}
+    {{- end }}
   name: {{ template "kubernetes-dashboard.fullname" . }}-{{ .Values.api.role }}
 spec:
   ports:
