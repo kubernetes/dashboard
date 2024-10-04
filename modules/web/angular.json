@@ -49,15 +49,18 @@
       },
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-angular:browser",
+          "builder": "@angular-devkit/build-angular:application",
           "options": {
             "optimization": false,
             "progress": true,
             "outputPath": "dist",
             "index": "src/index.html",
-            "main": "src/index.ts",
+            "browser": "src/index.ts",
             "tsConfig": "tsconfig.app.json",
-            "polyfills": "src/polyfills.ts",
+            "polyfills": [
+              "src/polyfills.ts",
+              "@angular/localize/init"
+            ],
             "i18nMissingTranslation": "error",
             "allowedCommonJsDependencies": [
               "truncate-url",
@@ -113,8 +116,6 @@
               "namedChunks": false,
               "localize": true,
               "extractLicenses": true,
-              "vendorChunk": false,
-              "buildOptimizer": true,
               "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",
@@ -124,61 +125,10 @@
             }
           }
         },
-        "esbuild": {
-          "builder": "@angular-devkit/build-angular:browser-esbuild",
-          "options": {
-            "optimization": false,
-            "progress": true,
-            "outputPath": "dist",
-            "index": "src/index.html",
-            "main": "src/index.ts",
-            "tsConfig": "tsconfig.app.json",
-            "polyfills": "polyfills.ts",
-            "i18nMissingTranslation": "error",
-            "allowedCommonJsDependencies": [
-              "truncate-url",
-              "strip-ansi"
-            ],
-            "assets": [
-              {
-                "glob": "**/*",
-                "input": "src/assets",
-                "output": "/assets"
-              },
-              {
-                "glob": "robots.txt",
-                "input": "src/assets",
-                "output": "/"
-              },
-              {
-                "glob": "**/*",
-                "input": "node_modules/ace-builds/src-min-noconflict",
-                "output": "/ace"
-              }
-            ],
-            "stylePreprocessorOptions": {
-              "includePaths": [
-                "src"
-              ]
-            },
-            "styles": [
-              "node_modules/material-design-icons/iconfont/material-icons.css",
-              "node_modules/roboto-fontface/css/roboto/roboto-fontface.css",
-              "node_modules/xterm/css/xterm.css",
-              "src/index.scss"
-            ],
-            "scripts": [
-              "node_modules/sockjs-client/dist/sockjs.min.js",
-              "node_modules/systemjs/dist/s.js",
-              "node_modules/systemjs/dist/extras/named-register.js",
-              "node_modules/systemjs/dist/extras/amd.js"
-            ]
-          }
-        },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "kubernetes-dashboard:esbuild",
+            "buildTarget": "kubernetes-dashboard:build",
             "port": 8080
           }
         },

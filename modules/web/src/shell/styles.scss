@@ -40,6 +40,8 @@ $shell-background-color: #000;
 
   // Some hacks are required to make the terminal takes full page
   ::ng-deep {
+    /* TODO(mdc-migration): The following rule targets internal classes of card that may no longer apply for the MDC version.*/
+    /* TODO(mdc-migration): The following rule targets internal classes of card that may no longer apply for the MDC version.*/
     mat-card {
       display: flex;
       flex-flow: column;
@@ -48,7 +50,7 @@ $shell-background-color: #000;
       > mat-card-title + div {
         @include flex-full-height;
       }
-
+      /* TODO(mdc-migration): The following rule targets internal classes of card that may no longer apply for the MDC version.*/
       mat-card-content {
         @include flex-full-height;
 

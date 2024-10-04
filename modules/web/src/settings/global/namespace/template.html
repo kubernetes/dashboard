@@ -54,13 +54,13 @@ limitations under the License.
         fxFlex="100"
         fxLayout="row"
       >
-        <mat-chip-list
+        <mat-chip-listbox
           [formArrayName]="Controls.FallbackList"
           fxFlex="80"
           fxLayoutAlign=" center"
           class="kd-namespace-chip-list"
         >
-          <mat-chip
+          <mat-chip-option
             *ngFor="let namespace of form.get(Controls.FallbackList).value | slice: 0:visibleNamespaces"
             style="max-width: 100px; text-overflow: ellipsis; white-space: nowrap; overflow: hidden; display: block"
             [matTooltip]="namespace"
@@ -68,21 +68,21 @@ limitations under the License.
             [removable]="false"
           >
             {{ namespace }}
-          </mat-chip>
-          <mat-chip
+          </mat-chip-option>
+          <mat-chip-option
             *ngIf="form.get(Controls.FallbackList).value.length === 0"
             [disabled]="true"
             i18n
-            >Add namespaces...</mat-chip
+            >Add namespaces...</mat-chip-option
           >
-          <mat-chip
+          <mat-chip-option
             *ngIf="invisibleCount > 0"
             [disabled]="true"
             fxFlex
             fxLayoutAlign=" center"
-            >+ {{ invisibleCount }}</mat-chip
+            >+ {{ invisibleCount }}</mat-chip-option
           >
-        </mat-chip-list>
+        </mat-chip-listbox>
         <div
           fxFlex="20"
           fxLayoutAlign="end"

@@ -14,9 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<mat-chip-list>
+<mat-chip-listbox>
   <ng-container *ngFor="let key of keys; let i = index">
-    <mat-chip
+    <mat-chip-option
       *ngIf="isVisible(i)"
       [disableRipple]="true"
     >
@@ -56,7 +56,7 @@ limitations under the License.
         </ng-container>
       </ng-container>
       <!-- beautify ignore:end -->
-    </mat-chip>
+    </mat-chip-option>
   </ng-container>
   <div
     *ngIf="isAnythingHidden()"
@@ -75,4 +75,4 @@ limitations under the License.
     >
   </div>
   <ng-container *ngIf="keys.length === 0">-</ng-container>
-</mat-chip-list>
+</mat-chip-listbox>

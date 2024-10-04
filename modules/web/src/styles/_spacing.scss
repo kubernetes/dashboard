@@ -1,4 +1,4 @@
-// Copyright 2017 The Kubernetes Authors.
+// Copyright 2024 The Kubernetes Authors.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -12,15 +12,18 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-@use '../../../variables' as *;
-@use '../../../mixins' as *;
-
-.kd-download-progress-bar {
-  margin-bottom: 2.5 * $baseline-grid;
-  margin-top: 2.5 * $baseline-grid;
-}
-
-/* TODO(mdc-migration): The following rule targets internal classes of dialog that may no longer apply for the MDC version.*/
-mat-dialog-actions {
-  margin-top: $baseline-grid;
-}
+// Variables for layout and spacing elements
+$spacing: (
+  xxxsmall: 2, //      1/8 * 16
+  xxsmall: 4, //       1/4 * 16
+  xsmall: 8, //        1/2 * 16
+  small: 12, //        3/4 * 16
+  medium: 16, //       1   * 16
+  large: 24, //        1.5 * 16
+  xlarge: 32, //       2   * 16
+  xxlarge: 48, //      3   * 16
+  xxxlarge: 64, //     4   * 16
+  xxxxlarge: 96, //    6   * 16
+  xxxxxlarge: 128, //  8   * 16
+  xxxxxxlarge: 192, // 12  * 16
+)

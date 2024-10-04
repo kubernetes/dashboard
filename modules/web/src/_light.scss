@@ -13,7 +13,7 @@
 // limitations under the License.
 
 @use 'sass:map';
-@use '@angular/material/theming' as mat-theming;
+@use '@angular/material' as mat-theming;
 @use './theming';
 
 $colors-light: (
@@ -31,45 +31,45 @@ $colors-light: (
   log-viewer-scrollbar: rgb(200 200 200 / 0.66),
   scrollbar: rgb(100 100 100 / 0.33),
 );
-$kd-blue: map_merge(
-  mat-theming.$mat-blue,
-  (
-    500: #326de6,
-  )
-);
-$theme-light: mat-theming.mat-light-theme(
-  mat-theming.mat-palette($kd-blue),
-  mat-theming.mat-palette($kd-blue),
-  mat-theming.mat-palette($kd-blue)
-);
-$background: map.get($theme-light, background);
-$background: map_merge(
-  $background,
-  (
-    background: #edeff0,
-  )
-);
-$theme-light: map_merge(
-  $theme-light,
-  (
-    background: $background,
-  )
-);
+//$kd-blue: map_merge(
+//  mat-theming.$mat-blue,
+//  (
+//    500: #326de6,
+//  )
+//);
+////$theme-light: mat-theming.mat-light-theme(
+////  mat-theming.mat-palette($kd-blue),
+////  mat-theming.mat-palette($kd-blue),
+////  mat-theming.mat-palette($kd-blue)
+////);
+//$background: map.get($theme-light, background);
+//$background: map_merge(
+//  $background,
+//  (
+//    background: #edeff0,
+//  )
+//);
+//$theme-light: map_merge(
+//  $theme-light,
+//  (
+//    background: $background,
+//  )
+//);
 
-.kd-light-theme {
-  @include mat-theming.angular-material-theme($theme-light);
-  @include theming.kd-theme($theme-light, $colors-light);
-
-  .kd-toolbar-logo-text,
-  .kd-primary-toolbar-icon {
-    color: #326de6;
-  }
-
-  .kd-actionbar .mat-icon {
-    color: #fff;
-  }
-
-  .kd-primary-toolbar {
-    background-color: #fafafa;
-  }
-}
+//.kd-light-theme {
+//  @include mat-theming.angular-material-theme($theme-light);
+//  @include theming.kd-theme($theme-light, $colors-light);
+//
+//  .kd-toolbar-logo-text,
+//  .kd-primary-toolbar-icon {
+//    color: #326de6;
+//  }
+//
+//  .kd-actionbar .mat-icon {
+//    color: #fff;
+//  }
+//
+//  .kd-primary-toolbar {
+//    background-color: #fafafa;
+//  }
+//}
