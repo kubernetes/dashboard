@@ -19,6 +19,8 @@ kind: ConfigMap
 metadata:
   labels:
     {{- include "kubernetes-dashboard.labels" . | nindent 4 }}
+  annotations:
+    {{- include "kubernetes-dashboard.annotations" . | nindent 4 }}
   name: {{ .Values.kong.dblessConfig.configMap }}
 data:
   kong.yml: |

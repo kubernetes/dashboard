@@ -18,17 +18,15 @@ kind: ServiceMonitor
 metadata:
   name: {{ template "kubernetes-dashboard.fullname" . }}
   labels:
-  {{- include "kubernetes-dashboard.labels" . | nindent 4 }}
-  {{- if .Values.app.labels }}
-  {{- include "common.tplvalues.render" ( dict "value" .Values.app.labels "context" $ ) | nindent 4 }}
-  {{- end }}
-  {{- if .Values.extras.serviceMonitor.labels }}
-  {{- include "common.tplvalues.render" ( dict "value" .Values.extras.serviceMonitor.labels "context" $ ) | nindent 4 }}
-  {{- end }}
+    {{- include "kubernetes-dashboard.labels" . | nindent 4 }}
+    {{- with .Values.extras.serviceMonitor.labels }}
+    {{- toYaml . | nindent 4 }}
+    {{- end }}
   annotations:
-  {{- if .Values.extras.serviceMonitor.annotations }}
-  {{- include "common.tplvalues.render" ( dict "value" .Values.extras.serviceMonitor.annotations "context" $ ) | nindent 4 }}
-  {{- end }}
+    {{- include "kubernetes-dashboard.annotations" . | nindent 4 }}
+    {{- with .Values.extras.serviceMonitor.annotations }}
+    {{- toYaml . | nindent 4 }}
+    {{- end }}
 spec:
   endpoints:
     - port: https

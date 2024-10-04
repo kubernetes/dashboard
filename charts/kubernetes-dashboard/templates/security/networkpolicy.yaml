@@ -16,16 +16,11 @@
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
-  name: {{ template "kubernetes-dashboard.fullname" . }}
   labels:
-  {{- include "kubernetes-dashboard.labels" . | nindent 4 }}
-  {{- if .Values.app.labels }}
-  {{- include "common.tplvalues.render" ( dict "value" .Values.app.labels "context" $ ) | nindent 4 }}
-  {{- end }}
+    {{- include "kubernetes-dashboard.labels" . | nindent 4 }}
   annotations:
-  {{- if .Values.app.annotations }}
-  {{- include "common.tplvalues.render" ( dict "value" .Values.app.annotations "context" $ ) | nindent 4 }}
-  {{- end }}
+    {{- include "kubernetes-dashboard.annotations" . | nindent 4 }}
+  name: {{ template "kubernetes-dashboard.fullname" . }}
 spec:
   podSelector:
     matchLabels:

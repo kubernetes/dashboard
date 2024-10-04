@@ -19,6 +19,8 @@ kind: RoleBinding
 metadata:
   labels:
     {{- include "kubernetes-dashboard.labels" . | nindent 4 }}
+  annotations:
+    {{- include "kubernetes-dashboard.annotations" . | nindent 4 }}
   name: {{ template "kubernetes-dashboard.fullname" . }}-{{ .Values.web.role }}
 roleRef:
   apiGroup: rbac.authorization.k8s.io

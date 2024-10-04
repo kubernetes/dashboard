@@ -19,6 +19,8 @@ apiVersion: rbac.authorization.k8s.io/v1
 metadata:
   labels:
     {{- include "kubernetes-dashboard.labels" . | nindent 4 }}
+  annotations:
+    {{- include "kubernetes-dashboard.annotations" . | nindent 4 }}
   name: {{ template "kubernetes-dashboard.fullname" . }}-{{ .Values.web.role }}
 rules:
     # Allow Dashboard Web to get and update 'kubernetes-dashboard-settings' config map.

@@ -19,6 +19,14 @@ kind: ClusterRoleBinding
 metadata:
   labels:
     {{- include "kubernetes-dashboard.labels" . | nindent 4 }}
+    {{- with .Values.metricsScraper.labels }}
+    {{- toYaml . | nindent 4 }}
+    {{- end }}
+  annotations:
+    {{- include "kubernetes-dashboard.annotations" . | nindent 4 }}
+    {{- with .Values.metricsScraper.annotations }}
+    {{- toYaml . | nindent 4 }}
+    {{- end }}
   name: {{ template "kubernetes-dashboard.fullname" . }}-{{ .Values.metricsScraper.role }}
 roleRef:
   apiGroup: rbac.authorization.k8s.io
