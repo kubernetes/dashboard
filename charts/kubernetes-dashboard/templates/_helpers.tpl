@@ -54,7 +54,7 @@ app.kubernetes.io/instance: {{ .Release.Name }}
 app.kubernetes.io/managed-by: {{ .Release.Service }}
 app.kubernetes.io/part-of: {{ include "kubernetes-dashboard.name" . }}
 {{- with .Values.app.labels }}
-{{- toYaml . }}
+{{ toYaml . }}
 {{- end }}
 {{- end -}}
 
