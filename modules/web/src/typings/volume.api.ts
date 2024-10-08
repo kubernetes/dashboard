@@ -86,7 +86,7 @@ export class EphemeralVolumeSource implements IVolumeSource {
   // TODO: Populate this with the ephemeral volume's PVC details
   displayName = '-';
   name: string;
-  volumeClaimTemplate?: {};
+  volumeClaimTemplate?: object;
 }
 
 export class HostPathVolumeSource implements IVolumeSource {

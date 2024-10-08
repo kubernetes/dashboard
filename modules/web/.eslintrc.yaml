@@ -35,6 +35,11 @@ rules:
   "@typescript-eslint/no-unused-vars":
     - error
     - argsIgnorePattern: "^_"
+      caughtErrors: none
+  "@typescript-eslint/no-unused-expressions":
+    - error
+    - allowTernary: true
+  "@typescript-eslint/no-unsafe-function-type": off
   "@typescript-eslint/ban-ts-comment": warn
   "@typescript-eslint/no-non-null-assertion": off
   "@typescript-eslint/no-use-before-define": off

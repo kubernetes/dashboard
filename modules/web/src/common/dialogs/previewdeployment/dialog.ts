@@ -138,7 +138,7 @@ export class PreviewDeploymentDialogComponent implements OnInit {
     };
   }
 
-  private toRawJSON(object: {}): string {
+  private toRawJSON(object: unknown): string {
     return JSON.stringify(object, null, '\t');
   }
 }
