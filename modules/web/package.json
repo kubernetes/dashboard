@@ -90,7 +90,7 @@
     "@angular/compiler-cli": "16.2.1",
     "@angular/language-service": "16.2.1",
     "@babel/core": "7.25.2",
-    "@babel/preset-env": "7.25.3",
+    "@babel/preset-env": "7.25.7",
     "@babel/register": "7.24.6",
     "@cypress/webpack-preprocessor": "6.0.2",
     "@graphql-mesh/cli": "0.93.0",
