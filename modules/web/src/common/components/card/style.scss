@@ -34,7 +34,7 @@
     }
   }
 
-  .mat-card {
+  .mat-mdc-card {
     min-width: $min-content-width;
     padding: 0;
 
@@ -46,7 +46,7 @@
       height: auto;
       width: 100%;
 
-      .mat-card-content {
+      .mat-mdc-card-content {
         flex-grow: 1;
         overflow: auto;
         padding: 0;
@@ -57,7 +57,7 @@
       box-shadow: none;
       margin: 0;
 
-      .mat-card-content {
+      .mat-mdc-card-content {
         padding: 0;
       }
     }
@@ -67,11 +67,11 @@
     }
   }
 
-  .mat-card-title {
+  .mat-mdc-card-title {
     margin: 0;
   }
 
-  .mat-card-footer {
+  .mat-mdc-card-footer {
     display: inline;
     margin: 0;
   }

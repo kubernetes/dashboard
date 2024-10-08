@@ -32,17 +32,28 @@ import {EndpointManager, Resource} from '../../services/resource/endpoint';
 import {ResourceService} from '../../services/resource/resource';
 import {NamespaceChangeDialogComponent} from './changedialog/dialog';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
+import {MAT_FORM_FIELD_DEFAULT_OPTIONS} from '@angular/material/form-field';
+import {FormControl} from '@angular/forms';
 
 @Component({
   selector: 'kd-namespace-selector',
   templateUrl: './template.html',
   styleUrls: ['style.scss'],
+  providers: [
+    {
+      provide: MAT_FORM_FIELD_DEFAULT_OPTIONS,
+      useValue: {
+        appearance: 'outline',
+        subscriptSizing: 'dynamic',
+      },
+    },
+  ],
 })
 export class NamespaceSelectorComponent implements OnInit {
   namespaces: string[] = [];
   selectNamespaceInput = '';
   allNamespacesKey: string;
-  selectedNamespace: string;
+  selectedNamespace: FormControl = new FormControl();
   resourceNamespaceParam: string;
   usingFallbackNamespaces = false;
 
@@ -80,7 +91,7 @@ export class NamespaceSelectorComponent implements OnInit {
 
       this.namespaceService_.setCurrent(namespace);
       this.namespaceService_.onNamespaceChangeEvent.emit(namespace);
-      this.selectedNamespace = namespace;
+      this.selectedNamespace.setValue(namespace);
     });
 
     this.resourceNamespaceParam = this._getCurrentResourceNamespaceParam();
@@ -97,8 +108,8 @@ export class NamespaceSelectorComponent implements OnInit {
       });
 
     this.allNamespacesKey = this.namespaceService_.getAllNamespacesKey();
-    this.selectedNamespace = this.namespaceService_.current();
-    this.select_.value = this.selectedNamespace;
+    this.selectedNamespace.setValue(this.namespaceService_.current());
+    this.select_.value = this.selectedNamespace.value;
     this.loadNamespaces_();
   }
 
@@ -107,9 +118,9 @@ export class NamespaceSelectorComponent implements OnInit {
       return;
     }
 
-    this.selectedNamespace = this.selectNamespaceInput;
+    this.selectedNamespace.setValue(this.selectNamespaceInput);
     this.select_.close();
-    this.changeNamespace_(this.selectedNamespace);
+    this.changeNamespace_(this.selectedNamespace.value);
   }
 
   onNamespaceToggle(opened: boolean): void {
@@ -119,7 +130,7 @@ export class NamespaceSelectorComponent implements OnInit {
       return;
     }
 
-    this.changeNamespace_(this.selectedNamespace);
+    this.changeNamespace_(this.selectedNamespace.value);
   }
 
   formatNamespaceName(namespace: string): string {
@@ -143,7 +154,7 @@ export class NamespaceSelectorComponent implements OnInit {
    */
   private onNamespaceLoaded_(): void {
     let newNamespace = this.namespaceService_.getDefaultNamespace();
-    const targetNamespace = this.selectedNamespace;
+    const targetNamespace = this.selectedNamespace.value;
 
     if (
       targetNamespace &&
@@ -154,7 +165,7 @@ export class NamespaceSelectorComponent implements OnInit {
       newNamespace = targetNamespace;
     }
 
-    if (newNamespace !== this.selectedNamespace) {
+    if (newNamespace !== this.selectedNamespace.value) {
       this.changeNamespace_(newNamespace);
     }
   }
@@ -193,17 +204,17 @@ export class NamespaceSelectorComponent implements OnInit {
     this.dialog_
       .open(NamespaceChangeDialogComponent, {
         data: {
-          namespace: this.selectedNamespace,
+          namespace: this.selectedNamespace.value,
           newNamespace: this._getCurrentResourceNamespaceParam(),
         },
       })
       .afterClosed()
       .subscribe(confirmed => {
         if (confirmed) {
-          this.selectedNamespace = this._getCurrentResourceNamespaceParam();
+          this.selectedNamespace.setValue(this._getCurrentResourceNamespaceParam());
           this.router_.navigate([], {
             relativeTo: this.activatedRoute_,
-            queryParams: {[NAMESPACE_STATE_PARAM]: this.selectedNamespace},
+            queryParams: {[NAMESPACE_STATE_PARAM]: this.selectedNamespace.value},
             queryParamsHandling: 'merge',
           });
           return;
