@@ -3,7 +3,7 @@ module k8s.io/dashboard/tools
 go 1.23.0
 
 require (
-	github.com/air-verse/air v1.60.0
+	github.com/air-verse/air v1.61.0
 	github.com/apache/skywalking-eyes v0.6.0
 	github.com/golangci/golangci-lint v1.61.0
 	k8s.io/code-generator v0.31.1
@@ -29,7 +29,6 @@ require (
 	github.com/Microsoft/go-winio v0.6.1 // indirect
 	github.com/OpenPeeDeeP/depguard/v2 v2.2.0 // indirect
 	github.com/ProtonMail/go-crypto v1.0.0 // indirect
-	github.com/acomagu/bufpipe v1.0.4 // indirect
 	github.com/alecthomas/go-check-sumtype v0.1.4 // indirect
 	github.com/alessio/shellescape v1.4.2 // indirect
 	github.com/alexkohler/nakedret/v2 v2.0.4 // indirect
