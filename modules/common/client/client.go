@@ -27,6 +27,9 @@ import (
 	client "k8s.io/client-go/kubernetes"
 	"k8s.io/client-go/rest"
 	"k8s.io/klog/v2"
+
+	"k8s.io/dashboard/client/args"
+	cacheclient "k8s.io/dashboard/client/cache/client"
 )
 
 func InClusterClient() client.Interface {
@@ -53,6 +56,15 @@ func InClusterClient() client.Interface {
 func Client(request *http.Request) (client.Interface, error) {
 	if !isInitialized() {
 		return nil, fmt.Errorf("client package not initialized")
+	}
+
+	c, err := configFromRequest(request)
+	if err != nil {
+		return nil, err
+	}
+
+	if args.CacheEnabled() {
+		return cacheclient.New(c, GetClusterContextHeader(request))
 	}
 
 	return clientFromRequest(request)

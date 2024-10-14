@@ -5,7 +5,7 @@
 Congratulations! You have just installed Kubernetes Dashboard in your cluster.
 {{ if not (.Values.nginx.enabled) }}
 To access Dashboard run:
-  kubectl -n kubernetes-dashboard port-forward svc/kubernetes-dashboard-kong-proxy 8443:443
+  kubectl -n {{ .Release.Namespace }} port-forward svc/{{ .Release.Name }}-kong-proxy 8443:443
 
 NOTE: In case port-forward command does not work, make sure that kong service name is correct.
       Check the services in Kubernetes Dashboard namespace using:
@@ -17,7 +17,7 @@ Dashboard will be available at:
 
 {{ if and (has "localhost" .Values.app.ingress.hosts) (eq .Values.app.ingress.ingressClassName "internal-nginx") (.Values.nginx.enabled) }}
 To access Dashboard run:
-    kubectl -n kubernetes-dashboard port-forward svc/kubernetes-dashboard-nginx-controller 8443:443
+    kubectl -n {{ .Release.Namespace }} port-forward svc/{{ .Release.Name }}-nginx-controller 8443:443
 
 NOTE: In case port-forward command does not work, make sure that nginx service name is correct.
       Check the services in Kubernetes Dashboard namespace using:

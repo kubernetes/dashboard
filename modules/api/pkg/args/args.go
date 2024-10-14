@@ -23,6 +23,8 @@ import (
 	"github.com/spf13/pflag"
 	"k8s.io/klog/v2"
 
+	// Load client args
+	_ "k8s.io/dashboard/client/args"
 	"k8s.io/dashboard/csrf"
 	"k8s.io/dashboard/helpers"
 )

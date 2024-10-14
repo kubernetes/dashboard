@@ -131,7 +131,7 @@ func configFromRequest(request *http.Request) (*rest.Config, error) {
 	return buildConfigFromAuthInfo(authInfo)
 }
 
-func clientFromRequest(request *http.Request) (client.Interface, error) {
+func clientFromRequest(request *http.Request) (*client.Clientset, error) {
 	config, err := configFromRequest(request)
 	if err != nil {
 		return nil, err
