@@ -25,7 +25,7 @@ type pods struct {
 }
 
 func (in *pods) List(ctx context.Context, opts metav1.ListOptions) (*corev1.PodList, error) {
-	cachedList, found, err := cache.FromCache[*corev1.PodList](in.clusterContext, in.cacheKey())
+	cachedList, found, err := cache.Get[*corev1.PodList](in.clusterContext, in.cacheKey())
 	if err != nil {
 		return nil, err
 	}
@@ -37,7 +37,7 @@ func (in *pods) List(ctx context.Context, opts metav1.ListOptions) (*corev1.PodL
 		}
 
 		klog.V(3).InfoS("pods not found in cache, initializing", "context", in.clusterContext, "cache-key", in.cacheKey())
-		return list, cache.SetCacheValue[*corev1.PodList](in.clusterContext, in.cacheKey(), list)
+		return list, cache.Set[*corev1.PodList](in.clusterContext, in.cacheKey(), list)
 	}
 
 	review, err := in.authorizationV1.SelfSubjectAccessReviews().Create(ctx, in.selfSubjectAccessReview(), metav1.CreateOptions{})
@@ -47,7 +47,7 @@ func (in *pods) List(ctx context.Context, opts metav1.ListOptions) (*corev1.PodL
 
 	if review.Status.Allowed {
 		klog.V(3).InfoS("pods found in cache, updating in background", "context", in.clusterContext, "cache-key", in.cacheKey())
-		cache.DeferredCacheLoad[*corev1.PodList](in.clusterContext, in.cacheKey(), func() (*corev1.PodList, error) {
+		cache.DeferredLoad[*corev1.PodList](in.clusterContext, in.cacheKey(), func() (*corev1.PodList, error) {
 			return in.PodInterface.List(ctx, opts)
 		})
 		return cachedList, nil
