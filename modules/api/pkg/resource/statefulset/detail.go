@@ -16,11 +16,12 @@ package statefulset
 
 import (
 	"context"
-	"log"
 
 	apps "k8s.io/api/apps/v1"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/client-go/kubernetes"
+	"k8s.io/klog/v2"
+
 	metricapi "k8s.io/dashboard/api/pkg/integration/metric/api"
 	"k8s.io/dashboard/api/pkg/resource/common"
 	"k8s.io/dashboard/errors"
@@ -38,7 +39,7 @@ type StatefulSetDetail struct {
 // GetStatefulSetDetail gets Stateful Set details.
 func GetStatefulSetDetail(client kubernetes.Interface, metricClient metricapi.MetricClient, namespace,
 	name string) (*StatefulSetDetail, error) {
-	log.Printf("Getting details of %s statefulset in %s namespace", name, namespace)
+	klog.V(4).Infof("Getting details of %s statefulset in %s namespace", name, namespace)
 
 	ss, err := client.AppsV1().StatefulSets(namespace).Get(context.TODO(), name, metaV1.GetOptions{})
 	if err != nil {

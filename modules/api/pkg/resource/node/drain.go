@@ -17,12 +17,12 @@ package node
 import (
 	"context"
 	"fmt"
-	"log"
 	"os"
 	"time"
 
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	k8sClient "k8s.io/client-go/kubernetes"
+	"k8s.io/klog/v2"
 	"k8s.io/kubectl/pkg/drain"
 )
 
@@ -89,7 +89,7 @@ func newHelper(ctx context.Context, client k8sClient.Interface, spec *NodeDrainS
 
 // DrainNode drains the Node.
 func DrainNode(client k8sClient.Interface, name string, spec *NodeDrainSpec) error {
-	log.Printf("Draining %s node", name)
+	klog.V(1).Infof("Draining %s node", name)
 
 	node, err := client.CoreV1().Nodes().Get(context.Background(), name, metaV1.GetOptions{})
 	if err != nil {
@@ -106,7 +106,7 @@ func DrainNode(client k8sClient.Interface, name string, spec *NodeDrainSpec) err
 		return fmt.Errorf("error draining node: %w", err)
 	}
 
-	log.Printf("Successfully drained %s node", name)
+	klog.V(1).Infof("Successfully drained %s node", name)
 
 	return nil
 }

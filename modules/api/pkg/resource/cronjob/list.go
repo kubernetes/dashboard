@@ -15,11 +15,10 @@
 package cronjob
 
 import (
-	"log"
-
 	batch "k8s.io/api/batch/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	client "k8s.io/client-go/kubernetes"
+	"k8s.io/klog/v2"
 
 	"k8s.io/dashboard/api/pkg/resource/common"
 	"k8s.io/dashboard/api/pkg/resource/dataselect"
@@ -55,7 +54,7 @@ type CronJob struct {
 // GetCronJobList returns a list of all CronJobs in the cluster.
 func GetCronJobList(client client.Interface, nsQuery *common.NamespaceQuery,
 	dsQuery *dataselect.DataSelectQuery) (*CronJobList, error) {
-	log.Print("Getting list of all cron jobs in the cluster")
+	klog.V(4).Infof("Getting list of all cron jobs in the cluster")
 
 	channels := &common.ResourceChannels{
 		CronJobList: common.GetCronJobListChannel(client, nsQuery, 1),

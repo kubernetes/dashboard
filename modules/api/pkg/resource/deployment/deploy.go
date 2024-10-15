@@ -19,7 +19,6 @@ import (
 	"errors"
 	"fmt"
 	"io"
-	"log"
 	"strings"
 
 	apps "k8s.io/api/apps/v1"
@@ -35,6 +34,7 @@ import (
 	"k8s.io/client-go/dynamic"
 	client "k8s.io/client-go/kubernetes"
 	"k8s.io/client-go/rest"
+	"k8s.io/klog/v2"
 
 	derrors "k8s.io/dashboard/errors"
 )
@@ -161,7 +161,7 @@ type Protocols struct {
 // client. App deployment consists of a deployment and an optional service. Both of them
 // share common labels.
 func DeployApp(spec *AppDeploymentSpec, client client.Interface) error {
-	log.Printf("Deploying %s application into %s namespace", spec.Name, spec.Namespace)
+	klog.V(1).Infof("Deploying %s application into %s namespace", spec.Name, spec.Namespace)
 
 	annotations := map[string]string{}
 	if spec.Description != nil {
@@ -304,7 +304,7 @@ func getLabelsMap(labels []Label) map[string]string {
 // DeployAppFromFile deploys an app based on the given yaml or json file.
 func DeployAppFromFile(cfg *rest.Config, spec *AppDeploymentFromFileSpec) (bool, error) {
 	reader := strings.NewReader(spec.Content)
-	log.Printf("Namespace for deploy from file: %s\n", spec.Namespace)
+	klog.V(1).Infof("Namespace for deploy from file: %s\n", spec.Namespace)
 	d := yaml.NewYAMLOrJSONDecoder(reader, 4096)
 	for {
 		data := &unstructured.Unstructured{}

@@ -16,11 +16,12 @@ package replicationcontroller
 
 import (
 	"context"
-	"log"
 
 	v1 "k8s.io/api/core/v1"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	k8sClient "k8s.io/client-go/kubernetes"
+	"k8s.io/klog/v2"
+
 	metricapi "k8s.io/dashboard/api/pkg/integration/metric/api"
 	"k8s.io/dashboard/api/pkg/resource/common"
 	"k8s.io/dashboard/api/pkg/resource/dataselect"
@@ -34,7 +35,7 @@ import (
 func GetReplicationControllerPods(client k8sClient.Interface,
 	metricClient metricapi.MetricClient,
 	dsQuery *dataselect.DataSelectQuery, rcName, namespace string) (*pod.PodList, error) {
-	log.Printf("Getting replication controller %s pods in namespace %s", rcName, namespace)
+	klog.V(4).Infof("Getting replication controller %s pods in namespace %s", rcName, namespace)
 
 	pods, err := getRawReplicationControllerPods(client, rcName, namespace)
 	if err != nil {

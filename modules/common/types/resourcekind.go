@@ -85,3 +85,13 @@ func (k ResourceKind) Restartable() bool {
 
 	return false
 }
+
+func (k ResourceKind) String() string {
+	return string(k)
+}
+
+type Verb string
+
+const (
+	VerbList = "list"
+)

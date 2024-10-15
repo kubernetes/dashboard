@@ -17,6 +17,10 @@ func (in *Client) Pods(namespace string) corev1.PodInterface {
 	return newPods(in, namespace, in.token)
 }
 
+func (in *Client) ConfigMaps(namespace string) corev1.ConfigMapInterface {
+	return newConfigMaps(in, namespace, in.token)
+}
+
 func NewClient(c *rest.Config, authorizationV1 authorizationv1.AuthorizationV1Interface, token string) (corev1.CoreV1Interface, error) {
 	httpClient, err := rest.HTTPClientFor(c)
 	if err != nil {

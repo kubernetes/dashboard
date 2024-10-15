@@ -15,9 +15,8 @@
 package service
 
 import (
-	"log"
-
 	client "k8s.io/client-go/kubernetes"
+	"k8s.io/klog/v2"
 
 	"k8s.io/dashboard/api/pkg/resource/common"
 	"k8s.io/dashboard/api/pkg/resource/dataselect"
@@ -39,6 +38,6 @@ func GetServiceEvents(client client.Interface, dsQuery *dataselect.DataSelectQue
 	}
 
 	eventList = event.CreateEventList(event.FillEventsType(serviceEvents), dsQuery)
-	log.Printf("Found %d events related to %s service in %s namespace", len(eventList.Events), name, namespace)
+	klog.V(1).Infof("Found %d events related to %s service in %s namespace", len(eventList.Events), name, namespace)
 	return &eventList, nil
 }

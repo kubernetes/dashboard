@@ -16,10 +16,10 @@ package validation
 
 import (
 	"context"
-	"log"
 
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	client "k8s.io/client-go/kubernetes"
+	"k8s.io/klog/v2"
 
 	"k8s.io/dashboard/errors"
 )
@@ -39,7 +39,7 @@ type AppNameValidity struct {
 // ValidateAppName validates application name. When error is returned, name validity could not be
 // determined.
 func ValidateAppName(spec *AppNameValiditySpec, client client.Interface) (*AppNameValidity, error) {
-	log.Printf("Validating %s application name in %s namespace", spec.Name, spec.Namespace)
+	klog.V(1).Infof("Validating %s application name in %s namespace", spec.Name, spec.Namespace)
 
 	isValidDeployment := false
 	isValidService := false
@@ -64,7 +64,7 @@ func ValidateAppName(spec *AppNameValiditySpec, client client.Interface) (*AppNa
 
 	isValid := isValidDeployment && isValidService
 
-	log.Printf("Validation result for %s application name in %s namespace is %t", spec.Name,
+	klog.V(1).Infof("Validation result for %s application name in %s namespace is %t", spec.Name,
 		spec.Namespace, isValid)
 
 	return &AppNameValidity{Valid: isValid}, nil
