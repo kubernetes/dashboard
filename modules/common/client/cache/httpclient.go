@@ -4,21 +4,23 @@ import (
 	"io"
 	"net/http"
 
+	"k8s.io/klog/v2"
+
 	"k8s.io/dashboard/client/args"
 )
 
-type TokenExchangeTransport struct {
+type tokenExchangeTransport struct {
 	token     string
 	transport http.RoundTripper
 }
 
-func (in *TokenExchangeTransport) RoundTrip(req *http.Request) (*http.Response, error) {
+func (in *tokenExchangeTransport) RoundTrip(req *http.Request) (*http.Response, error) {
 	req.Header.Set("Authorization", "Bearer "+in.token)
 	return in.transport.RoundTrip(req)
 }
 
 func exchangeToken(token string) (string, error) {
-	client := &http.Client{Transport: &TokenExchangeTransport{
+	client := &http.Client{Transport: &tokenExchangeTransport{
 		token:     token,
 		transport: http.DefaultTransport,
 	}}
@@ -34,5 +36,6 @@ func exchangeToken(token string) (string, error) {
 		return "", err
 	}
 
+	klog.V(3).InfoS("token exchange successful", "context", contextKey)
 	return string(contextKey), nil
 }

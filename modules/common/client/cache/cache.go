@@ -32,6 +32,7 @@ func getCacheKey(token, key string) (string, error) {
 
 	contextKey, exists := contextCache.Get(token)
 	if exists {
+		klog.V(4).InfoS("context key found in cache", "key", contextKey)
 		return fmt.Sprintf("%s:%s", contextKey, key), nil
 	}
 
@@ -79,13 +80,14 @@ func DeferredLoad[T any](token, key string, loadFunc func() (T, error)) {
 
 		_, locked := cacheLocks.Load(cacheKey)
 		if locked {
-			// Skip.
+			klog.V(4).InfoS("cache is already being updated, skipping")
 			return
 		}
 
 		cacheLocks.Store(cacheKey, struct{}{})
 		defer time.AfterFunc(args.CacheRefreshDebounce(), func() {
 			cacheLocks.Delete(cacheKey)
+			klog.V(4).InfoS("released cache update lock")
 		})
 
 		cacheValue, err := loadFunc()
@@ -95,5 +97,6 @@ func DeferredLoad[T any](token, key string, loadFunc func() (T, error)) {
 		}
 
 		_ = cache.SetWithTTL(cacheKey, cacheValue, 1, args.CacheTTL())
+		klog.V(4).InfoS("cache updated successfully")
 	}()
 }
