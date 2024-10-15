@@ -2,6 +2,8 @@ package cache
 
 import (
 	"fmt"
+	"sync"
+	"time"
 
 	"github.com/Yiling-J/theine-go"
 	"github.com/samber/lo"
@@ -13,6 +15,7 @@ import (
 var (
 	cache        *theine.Cache[string, any]
 	contextCache *theine.Cache[string, string]
+	cacheLocks   sync.Map
 )
 
 func init() {
@@ -73,6 +76,17 @@ func DeferredLoad[T any](token, key string, loadFunc func() (T, error)) {
 			klog.ErrorS(err, "failed loading cache key")
 			return
 		}
+
+		_, locked := cacheLocks.Load(cacheKey)
+		if locked {
+			// Skip.
+			return
+		}
+
+		cacheLocks.Store(cacheKey, struct{}{})
+		defer time.AfterFunc(10*time.Second, func() {
+			cacheLocks.Delete(cacheKey)
+		})
 
 		cacheValue, err := loadFunc()
 		if err != nil {
