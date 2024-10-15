@@ -1,7 +1,6 @@
 package cache
 
 import (
-	"fmt"
 	"sync"
 	"time"
 
@@ -13,9 +12,8 @@ import (
 )
 
 var (
-	cache        *theine.Cache[string, any]
-	contextCache *theine.Cache[string, string]
-	cacheLocks   sync.Map
+	cache      *theine.Cache[string, any]
+	cacheLocks sync.Map
 )
 
 func init() {
@@ -25,30 +23,10 @@ func init() {
 	}
 }
 
-func getCacheKey(token, key string) (string, error) {
-	if !args.ClusterContextEnabled() {
-		return key, nil
-	}
-
-	contextKey, exists := contextCache.Get(token)
-	if exists {
-		klog.V(4).InfoS("context key found in cache", "key", contextKey)
-		return fmt.Sprintf("%s:%s", contextKey, key), nil
-	}
-
-	contextKey, err := exchangeToken(token)
-	if err != nil {
-		return "", err
-	}
-
-	contextCache.SetWithTTL(token, contextKey, 1, args.CacheTTL())
-	return fmt.Sprintf("%s:%s", contextKey, key), nil
-}
-
-func Get[T any](token, key string) (T, bool, error) {
+func Get[T any](key Key) (T, bool, error) {
 	typedValue := lo.Empty[T]()
 
-	cacheKey, err := getCacheKey(token, key)
+	cacheKey, err := key.SHA()
 	if err != nil {
 		return typedValue, false, err
 	}
@@ -61,18 +39,19 @@ func Get[T any](token, key string) (T, bool, error) {
 	return typedValue, exists, nil
 }
 
-func Set[T any](token, key string, value T) error {
-	cacheKey, err := getCacheKey(token, key)
+func Set[T any](key Key, value T) error {
+	cacheKey, err := key.SHA()
 	if err != nil {
 		return err
 	}
+
 	_ = cache.SetWithTTL(cacheKey, value, 1, args.CacheTTL())
 	return nil
 }
 
-func DeferredLoad[T any](token, key string, loadFunc func() (T, error)) {
+func DeferredLoad[T any](key Key, loadFunc func() (T, error)) {
 	go func() {
-		cacheKey, err := getCacheKey(token, key)
+		cacheKey, err := key.SHA()
 		if err != nil {
 			klog.ErrorS(err, "failed loading cache key", "key", cacheKey)
 			return
