@@ -19,6 +19,10 @@ func CacheEnabled() bool {
 }
 
 func ClusterContextEnabled() bool {
+	if *argClusterContextEnabled && len(*argTokenExchangeEndpoint) == 0 {
+		panic("token-exchange-endpoint must be set when cluster-context-enabled is set to true")
+	}
+
 	return *argClusterContextEnabled
 }
 
