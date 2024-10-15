@@ -84,7 +84,7 @@ func DeferredLoad[T any](token, key string, loadFunc func() (T, error)) {
 		}
 
 		cacheLocks.Store(cacheKey, struct{}{})
-		defer time.AfterFunc(10*time.Second, func() {
+		defer time.AfterFunc(args.CacheRefreshDebounce(), func() {
 			cacheLocks.Delete(cacheKey)
 		})
 

@@ -12,6 +12,7 @@ var (
 	argTokenExchangeEndpoint = pflag.String("token-exchange-endpoint", "", "endpoint used in multi-cluster cache to exchange tokens for context identifiers")
 	argCacheSize             = pflag.Int("cache-size", 1000, "max number of cache entries")
 	argCacheTTL              = pflag.Duration("cache-ttl", 10*time.Minute, "cache entry TTL")
+	argCacheRefreshDebounce  = pflag.Duration("cache-refresh-debounce", 5*time.Second, "minimal time between cache refreshes in the background")
 )
 
 func CacheEnabled() bool {
@@ -36,4 +37,8 @@ func CacheSize() int {
 
 func CacheTTL() time.Duration {
 	return *argCacheTTL
+}
+
+func CacheRefreshDebounce() time.Duration {
+	return *argCacheRefreshDebounce
 }
