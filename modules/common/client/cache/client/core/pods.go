@@ -33,7 +33,7 @@ func (in *pods) List(ctx context.Context, opts metav1.ListOptions) (*corev1.PodL
 	if !found {
 		list, err := in.PodInterface.List(ctx, opts)
 		if err != nil {
-			return nil, err
+			return list, err
 		}
 
 		klog.V(3).InfoS("pods not found in cache, initializing", "cache-key", in.cacheKey())

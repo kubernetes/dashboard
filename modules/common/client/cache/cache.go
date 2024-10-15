@@ -74,29 +74,29 @@ func DeferredLoad[T any](token, key string, loadFunc func() (T, error)) {
 	go func() {
 		cacheKey, err := getCacheKey(token, key)
 		if err != nil {
-			klog.ErrorS(err, "failed loading cache key")
+			klog.ErrorS(err, "failed loading cache key", "key", cacheKey)
 			return
 		}
 
 		_, locked := cacheLocks.Load(cacheKey)
 		if locked {
-			klog.V(4).InfoS("cache is already being updated, skipping")
+			klog.V(4).InfoS("cache is already being updated, skipping", "key", cacheKey)
 			return
 		}
 
 		cacheLocks.Store(cacheKey, struct{}{})
 		defer time.AfterFunc(args.CacheRefreshDebounce(), func() {
 			cacheLocks.Delete(cacheKey)
-			klog.V(4).InfoS("released cache update lock")
+			klog.V(4).InfoS("released cache update lock", "key", cacheKey)
 		})
 
 		cacheValue, err := loadFunc()
 		if err != nil {
-			klog.ErrorS(err, "failed loading cache data")
+			klog.ErrorS(err, "failed loading cache data", "key", cacheKey)
 			return
 		}
 
 		_ = cache.SetWithTTL(cacheKey, cacheValue, 1, args.CacheTTL())
-		klog.V(4).InfoS("cache updated successfully")
+		klog.V(4).InfoS("cache updated successfully", "key", cacheKey)
 	}()
 }
