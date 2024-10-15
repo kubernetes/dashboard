@@ -26,7 +26,7 @@ func (in *cachedClientset) CoreV1() v1.CoreV1Interface {
 	return in.coreV1
 }
 
-func New(config *rest.Config, clusterContext string) (CachedInterface, error) {
+func New(config *rest.Config, token string) (CachedInterface, error) {
 	var cs cachedClientset
 	var err error
 
@@ -40,7 +40,7 @@ func New(config *rest.Config, clusterContext string) (CachedInterface, error) {
 		return nil, err
 	}
 
-	cs.coreV1, err = core.NewClient(&configShallowCopy, clientset.AuthorizationV1(), clusterContext)
+	cs.coreV1, err = core.NewClient(&configShallowCopy, clientset.AuthorizationV1(), token)
 	if err != nil {
 		return nil, err
 	}

@@ -64,7 +64,7 @@ func Client(request *http.Request) (client.Interface, error) {
 	}
 
 	if args.CacheEnabled() {
-		return cacheclient.New(c, GetClusterContextHeader(request))
+		return cacheclient.New(c, GetBearerToken(request))
 	}
 
 	return clientFromRequest(request)

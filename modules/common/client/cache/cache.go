@@ -11,7 +11,8 @@ import (
 )
 
 var (
-	cache *theine.Cache[string, any]
+	cache        *theine.Cache[string, any]
+	contextCache *theine.Cache[string, string]
 )
 
 func init() {
@@ -21,16 +22,34 @@ func init() {
 	}
 }
 
-func cacheKey(contextKey, key string) string {
-	return fmt.Sprintf("%s:%s", contextKey, key)
+func getCacheKey(token, key string) (string, error) {
+	if !args.ClusterContextEnabled() {
+		return key, nil
+	}
+
+	contextKey, exists := contextCache.Get(token)
+	if exists {
+		return fmt.Sprintf("%s:%s", contextKey, key), nil
+	}
+
+	contextKey, err := exchangeToken(token)
+	if err != nil {
+		return "", err
+	}
+
+	contextCache.SetWithTTL(token, contextKey, 1, args.CacheTTL())
+	return fmt.Sprintf("%s:%s", contextKey, key), nil
 }
 
-// FromCache returns cached value...
-func Get[T any](contextKey, key string) (T, bool, error) {
-	// todo ensure/callback
-
-	value, exists := cache.Get(cacheKey(contextKey, key))
+func Get[T any](token, key string) (T, bool, error) {
 	typedValue := lo.Empty[T]()
+
+	cacheKey, err := getCacheKey(token, key)
+	if err != nil {
+		return typedValue, false, err
+	}
+
+	value, exists := cache.Get(cacheKey)
 	if exists {
 		typedValue = value.(T)
 	}
@@ -38,16 +57,22 @@ func Get[T any](contextKey, key string) (T, bool, error) {
 	return typedValue, exists, nil
 }
 
-func Set[T any](contextKey, key string, value T) error {
-	// todo ensure/callback
-
-	_ = cache.SetWithTTL(cacheKey(contextKey, key), value, 1, args.CacheTTL())
+func Set[T any](token, key string, value T) error {
+	cacheKey, err := getCacheKey(token, key)
+	if err != nil {
+		return err
+	}
+	_ = cache.SetWithTTL(cacheKey, value, 1, args.CacheTTL())
 	return nil
 }
 
-func DeferredLoad[T any](contextKey, key string, loadFunc func() (T, error)) {
+func DeferredLoad[T any](token, key string, loadFunc func() (T, error)) {
 	go func() {
-		// todo ensure/callback
+		cacheKey, err := getCacheKey(token, key)
+		if err != nil {
+			klog.ErrorS(err, "failed loading cache key")
+			return
+		}
 
 		cacheValue, err := loadFunc()
 		if err != nil {
@@ -55,6 +80,6 @@ func DeferredLoad[T any](contextKey, key string, loadFunc func() (T, error)) {
 			return
 		}
 
-		_ = cache.SetWithTTL(cacheKey(contextKey, key), cacheValue, 1, args.CacheTTL())
+		_ = cache.SetWithTTL(cacheKey, cacheValue, 1, args.CacheTTL())
 	}()
 }

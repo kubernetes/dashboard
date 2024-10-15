@@ -21,11 +21,11 @@ type pods struct {
 
 	authorizationV1 authorizationv1.AuthorizationV1Interface
 	namespace       string
-	clusterContext  string
+	token           string
 }
 
 func (in *pods) List(ctx context.Context, opts metav1.ListOptions) (*corev1.PodList, error) {
-	cachedList, found, err := cache.Get[*corev1.PodList](in.clusterContext, in.cacheKey())
+	cachedList, found, err := cache.Get[*corev1.PodList](in.token, in.cacheKey())
 	if err != nil {
 		return nil, err
 	}
@@ -36,8 +36,8 @@ func (in *pods) List(ctx context.Context, opts metav1.ListOptions) (*corev1.PodL
 			return nil, err
 		}
 
-		klog.V(3).InfoS("pods not found in cache, initializing", "context", in.clusterContext, "cache-key", in.cacheKey())
-		return list, cache.Set[*corev1.PodList](in.clusterContext, in.cacheKey(), list)
+		klog.V(3).InfoS("pods not found in cache, initializing", "cache-key", in.cacheKey())
+		return list, cache.Set[*corev1.PodList](in.token, in.cacheKey(), list)
 	}
 
 	review, err := in.authorizationV1.SelfSubjectAccessReviews().Create(ctx, in.selfSubjectAccessReview(), metav1.CreateOptions{})
@@ -46,8 +46,8 @@ func (in *pods) List(ctx context.Context, opts metav1.ListOptions) (*corev1.PodL
 	}
 
 	if review.Status.Allowed {
-		klog.V(3).InfoS("pods found in cache, updating in background", "context", in.clusterContext, "cache-key", in.cacheKey())
-		cache.DeferredLoad[*corev1.PodList](in.clusterContext, in.cacheKey(), func() (*corev1.PodList, error) {
+		klog.V(3).InfoS("pods found in cache, updating in background", "cache-key", in.cacheKey())
+		cache.DeferredLoad[*corev1.PodList](in.token, in.cacheKey(), func() (*corev1.PodList, error) {
 			return in.PodInterface.List(ctx, opts)
 		})
 		return cachedList, nil
@@ -79,6 +79,6 @@ func (in *pods) cacheKey() string {
 	return fmt.Sprintf("%s/%s", in.namespace, types.ResourceKindPod)
 }
 
-func newPods(c *Client, namespace, clusterContext string) v1.PodInterface {
-	return &pods{c.CoreV1Client.Pods(namespace), c.authorizationV1, namespace, clusterContext}
+func newPods(c *Client, namespace, token string) v1.PodInterface {
+	return &pods{c.CoreV1Client.Pods(namespace), c.authorizationV1, namespace, token}
 }

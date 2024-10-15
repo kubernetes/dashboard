@@ -48,14 +48,6 @@ func SetAuthorizationHeader(req *http.Request, token string) {
 	req.Header.Set(authorizationHeader, authorizationTokenPrefix+token)
 }
 
-func HasClusterContextHeader(req *http.Request) bool {
-	return len(req.Header.Get(ClusterContextHeader)) > 0
-}
-
-func GetClusterContextHeader(req *http.Request) string {
-	return req.Header.Get(ClusterContextHeader)
-}
-
 func extractBearerToken(header string) string {
 	return strings.TrimPrefix(header, authorizationTokenPrefix)
 }

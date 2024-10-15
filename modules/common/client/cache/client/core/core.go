@@ -10,14 +10,14 @@ type Client struct {
 	*corev1.CoreV1Client
 
 	authorizationV1 authorizationv1.AuthorizationV1Interface
-	clusterContext  string
+	token           string
 }
 
 func (in *Client) Pods(namespace string) corev1.PodInterface {
-	return newPods(in, namespace, in.clusterContext)
+	return newPods(in, namespace, in.token)
 }
 
-func NewClient(c *rest.Config, authorizationV1 authorizationv1.AuthorizationV1Interface, clusterContext string) (corev1.CoreV1Interface, error) {
+func NewClient(c *rest.Config, authorizationV1 authorizationv1.AuthorizationV1Interface, token string) (corev1.CoreV1Interface, error) {
 	httpClient, err := rest.HTTPClientFor(c)
 	if err != nil {
 		return nil, err
@@ -31,6 +31,6 @@ func NewClient(c *rest.Config, authorizationV1 authorizationv1.AuthorizationV1In
 	return &Client{
 		client,
 		authorizationV1,
-		clusterContext,
+		token,
 	}, nil
 }
