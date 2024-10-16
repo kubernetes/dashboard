@@ -15,15 +15,17 @@ var (
 	argCacheRefreshDebounce  = pflag.Duration("cache-refresh-debounce", 5*time.Second, "minimal time between cache refreshes in the background")
 )
 
+func Ensure() {
+	if *argClusterContextEnabled && len(*argTokenExchangeEndpoint) == 0 {
+		panic("token-exchange-endpoint must be set when cluster-context-enabled is set to true")
+	}
+}
+
 func CacheEnabled() bool {
 	return *argCacheEnabled
 }
 
 func ClusterContextEnabled() bool {
-	if *argClusterContextEnabled && len(*argTokenExchangeEndpoint) == 0 {
-		panic("token-exchange-endpoint must be set when cluster-context-enabled is set to true")
-	}
-
 	return *argClusterContextEnabled
 }
 

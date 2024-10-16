@@ -1,6 +1,8 @@
 package cache
 
 import (
+	"encoding/json"
+	"fmt"
 	"io"
 	"net/http"
 
@@ -9,6 +11,7 @@ import (
 	"k8s.io/klog/v2"
 
 	"k8s.io/dashboard/client/args"
+	"k8s.io/dashboard/errors"
 	"k8s.io/dashboard/helpers"
 	"k8s.io/dashboard/types"
 )
@@ -17,6 +20,13 @@ import (
 // a token to the context ID. It is used only when client needs to cache
 // multi-cluster resources.
 var contextCache *theine.Cache[string, string]
+
+func init() {
+	var err error
+	if contextCache, err = theine.NewBuilder[string, string](int64(args.CacheSize())).Build(); err != nil {
+		panic(err)
+	}
+}
 
 // key is an internal structure used for creating
 // a unique cache key SHA. It is used when
@@ -34,8 +44,19 @@ type key struct {
 
 // SHA calculates sha based on the internal key fields.
 func (k key) SHA() (string, error) {
-	k.opts = metav1.ListOptions{LabelSelector: k.opts.LabelSelector, FieldSelector: k.opts.FieldSelector}
 	return helpers.HashObject(k)
+}
+
+func (k key) MarshalJSON() ([]byte, error) {
+	return json.Marshal(struct {
+		Kind      types.ResourceKind
+		Namespace string
+		Opts      metav1.ListOptions
+	}{
+		Kind:      k.kind,
+		Namespace: k.namespace,
+		Opts:      metav1.ListOptions{LabelSelector: k.opts.LabelSelector, FieldSelector: k.opts.FieldSelector},
+	})
 }
 
 // Key embeds an internal key structure and extends it with the support
@@ -51,6 +72,16 @@ type Key struct {
 	// structure fields to create a cache key SHA that will be unique across
 	// all clusters.
 	context string
+}
+
+func (k Key) MarshalJSON() ([]byte, error) {
+	return json.Marshal(struct {
+		K       key
+		Context string
+	}{
+		K:       k.key,
+		Context: k.context,
+	})
 }
 
 // SHA calculates sha based on the internal struct fields.
@@ -72,8 +103,6 @@ func (k Key) SHA() (sha string, err error) {
 		contextCache.SetWithTTL(k.token, contextKey, 1, args.CacheTTL())
 	}
 
-	k.opts = metav1.ListOptions{LabelSelector: k.opts.LabelSelector, FieldSelector: k.opts.FieldSelector}
-	k.token = ""
 	k.context = contextKey
 	return helpers.HashObject(k)
 }
@@ -98,6 +127,15 @@ func exchangeToken(token string) (string, error) {
 	response, err := client.Get(args.TokenExchangeEndpoint())
 	if err != nil {
 		return "", err
+	}
+
+	if response.StatusCode == http.StatusUnauthorized || response.StatusCode == http.StatusForbidden {
+		return "", errors.NewUnauthorized(fmt.Sprintf("could not exchange token: %s", response.Status))
+	}
+
+	if response.StatusCode != http.StatusOK {
+		klog.ErrorS(errors.NewBadRequest(response.Status), "could not exchange token", "url", args.TokenExchangeEndpoint())
+		return "", errors.NewBadRequest(response.Status)
 	}
 
 	defer func(body io.ReadCloser) {

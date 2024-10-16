@@ -4,11 +4,13 @@ import (
 	"context"
 	"fmt"
 
+	"github.com/samber/lo"
 	authorizationapiv1 "k8s.io/api/authorization/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	authorizationv1 "k8s.io/client-go/kubernetes/typed/authorization/v1"
-	"k8s.io/dashboard/client/cache"
 	"k8s.io/klog/v2"
+
+	"k8s.io/dashboard/client/cache"
 
 	"k8s.io/dashboard/errors"
 	"k8s.io/dashboard/types"
@@ -29,13 +31,13 @@ func (in CachedResourceLister[T]) List(ctx context.Context, lister ResourceListe
 	cacheKey := in.cacheKey(opts)
 	cachedList, found, err := cache.Get[*T](cacheKey)
 	if err != nil {
-		return nil, err
+		return new(T), err
 	}
 
 	if !found {
 		list, err := lister.List(ctx, opts)
 		if err != nil {
-			return list, err
+			return new(T), err
 		}
 
 		klog.V(3).InfoS("resource not found in cache, initializing")
@@ -44,7 +46,7 @@ func (in CachedResourceLister[T]) List(ctx context.Context, lister ResourceListe
 
 	review, err := in.authorizationV1.SelfSubjectAccessReviews().Create(ctx, in.selfSubjectAccessReview(), metav1.CreateOptions{})
 	if err != nil {
-		return nil, err
+		return new(T), err
 	}
 
 	if review.Status.Allowed {
@@ -55,7 +57,7 @@ func (in CachedResourceLister[T]) List(ctx context.Context, lister ResourceListe
 		return cachedList, nil
 	}
 
-	return nil, errors.NewForbidden(
+	return lo.Empty[*T](), errors.NewForbidden(
 		errors.MsgForbiddenError,
 		fmt.Errorf("%s: %s", review.Status.Reason, review.Status.EvaluationError),
 	)
