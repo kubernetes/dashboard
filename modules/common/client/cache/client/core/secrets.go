@@ -24,7 +24,7 @@ func (in *secrets) List(ctx context.Context, opts metav1.ListOptions) (*corev1.S
 		in.authorizationV1,
 		in.namespace,
 		in.token,
-		types.ResourceKindConfigMap,
+		types.ResourceKindSecret,
 	).List(ctx, in.SecretInterface, opts)
 }
 
