@@ -25,6 +25,10 @@ func (in *Client) Secrets(namespace string) corev1.SecretInterface {
 	return newSecrets(in, namespace, in.token)
 }
 
+func (in *Client) Namespaces() corev1.NamespaceInterface {
+	return newNamespaces(in, in.token)
+}
+
 func (in *Client) Nodes() corev1.NodeInterface {
 	return newNodes(in, in.token)
 }
