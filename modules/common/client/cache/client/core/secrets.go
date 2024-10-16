@@ -7,6 +7,7 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	authorizationv1 "k8s.io/client-go/kubernetes/typed/authorization/v1"
 	v1 "k8s.io/client-go/kubernetes/typed/core/v1"
+	"k8s.io/dashboard/client/cache/client"
 
 	"k8s.io/dashboard/types"
 )
@@ -20,7 +21,7 @@ type secrets struct {
 }
 
 func (in *secrets) List(ctx context.Context, opts metav1.ListOptions) (*corev1.SecretList, error) {
-	return NewCachedResourceLister[corev1.SecretList](
+	return client.NewCachedResourceLister[corev1.SecretList](
 		in.authorizationV1,
 		in.namespace,
 		in.token,
