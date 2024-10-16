@@ -37,6 +37,10 @@ func (in *Client) PersistentVolumes() corev1.PersistentVolumeInterface {
 	return newPersistentVolumes(in, in.token)
 }
 
+func (in *Client) PersistentVolumeClaims(namespace string) corev1.PersistentVolumeClaimInterface {
+	return newPersistentVolumeClaims(in, namespace, in.token)
+}
+
 func NewClient(c *rest.Config, authorizationV1 authorizationv1.AuthorizationV1Interface, token string) (corev1.CoreV1Interface, error) {
 	httpClient, err := rest.HTTPClientFor(c)
 	if err != nil {
