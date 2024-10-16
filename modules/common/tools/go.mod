@@ -3,7 +3,7 @@ module k8s.io/dashboard/tools
 go 1.23.0
 
 require (
-	github.com/air-verse/air v1.61.0
+	github.com/air-verse/air v1.61.1
 	github.com/apache/skywalking-eyes v0.6.0
 	github.com/golangci/golangci-lint v1.61.0
 	k8s.io/code-generator v0.31.1
