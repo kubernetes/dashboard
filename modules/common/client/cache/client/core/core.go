@@ -25,6 +25,10 @@ func (in *Client) Secrets(namespace string) corev1.SecretInterface {
 	return newSecrets(in, namespace, in.token)
 }
 
+func (in *Client) Nodes() corev1.NodeInterface {
+	return newNodes(in, in.token)
+}
+
 func NewClient(c *rest.Config, authorizationV1 authorizationv1.AuthorizationV1Interface, token string) (corev1.CoreV1Interface, error) {
 	httpClient, err := rest.HTTPClientFor(c)
 	if err != nil {

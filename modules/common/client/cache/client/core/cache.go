@@ -90,3 +90,16 @@ func NewCachedResourceLister[T any](
 		resourceKind:    resourceKind,
 	}
 }
+
+func NewCachedClusterScopedResourceLister[T any](
+	authorization authorizationv1.AuthorizationV1Interface,
+	token string,
+	resourceKind types.ResourceKind,
+) CachedResourceLister[T] {
+	return CachedResourceLister[T]{
+		authorizationV1: authorization,
+		namespace:       "",
+		token:           token,
+		resourceKind:    resourceKind,
+	}
+}
