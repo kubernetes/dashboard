@@ -22,13 +22,13 @@ var contextCache *theine.Cache[string, string]
 // a unique cache key SHA. It is used when
 // `cluster-context-enabled=false`.
 type key struct {
-	// kind is a kubernetes resource kind
+	// kind is a Kubernetes resource kind.
 	kind types.ResourceKind
 
-	// namespace is a kubernetes resource namespace
+	// namespace is a Kubernetes resource namespace.
 	namespace string
 
-	// Opts is a list options object used by the kubernetes client.
+	// opts is a list options object used by the Kubernetes client.
 	opts metav1.ListOptions
 }
 
@@ -94,17 +94,18 @@ func (in *tokenExchangeTransport) RoundTrip(req *http.Request) (*http.Response, 
 }
 
 func exchangeToken(token string) (string, error) {
-	client := &http.Client{Transport: &tokenExchangeTransport{
-		token:     token,
-		transport: http.DefaultTransport,
-	}}
-
+	client := &http.Client{Transport: &tokenExchangeTransport{token, http.DefaultTransport}}
 	response, err := client.Get(args.TokenExchangeEndpoint())
 	if err != nil {
 		return "", err
 	}
 
-	defer response.Body.Close()
+	defer func(body io.ReadCloser) {
+		if err := body.Close(); err != nil {
+			klog.V(3).ErrorS(err, "could not close response body writer")
+		}
+	}(response.Body)
+
 	contextKey, err := io.ReadAll(response.Body)
 	if err != nil {
 		return "", err
