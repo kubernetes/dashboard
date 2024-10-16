@@ -7,7 +7,7 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	authorizationv1 "k8s.io/client-go/kubernetes/typed/authorization/v1"
 	v1 "k8s.io/client-go/kubernetes/typed/core/v1"
-	"k8s.io/dashboard/client/cache/client"
+	"k8s.io/dashboard/client/cache/client/common"
 
 	"k8s.io/dashboard/types"
 )
@@ -20,7 +20,7 @@ type namespaces struct {
 }
 
 func (in *namespaces) List(ctx context.Context, opts metav1.ListOptions) (*corev1.NamespaceList, error) {
-	return client.NewCachedClusterScopedResourceLister[corev1.NamespaceList](
+	return common.NewCachedClusterScopedResourceLister[corev1.NamespaceList](
 		in.authorizationV1,
 		in.token,
 		types.ResourceKindNamespace,

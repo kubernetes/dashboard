@@ -1,4 +1,4 @@
-package client
+package common
 
 import (
 	"context"
@@ -7,9 +7,9 @@ import (
 	authorizationapiv1 "k8s.io/api/authorization/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	authorizationv1 "k8s.io/client-go/kubernetes/typed/authorization/v1"
+	"k8s.io/dashboard/client/cache"
 	"k8s.io/klog/v2"
 
-	"k8s.io/dashboard/client/cache"
 	"k8s.io/dashboard/errors"
 	"k8s.io/dashboard/types"
 )
