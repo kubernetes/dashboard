@@ -14,14 +14,15 @@ import (
 var (
 	// cache is a global resource cache that maps our custom keys
 	// created based on information provided by the specific resource client.
-	// It stores resource lists in order to speed up the client response times.
+	// It stores resource lists to speed up the client response times.
 	cache *theine.Cache[string, any]
 
 	// cacheLocks is used as a set that holds information about
 	// cache keys that are currently fetching the latest data from the
-	// kubernetes API server in background. It allows us to avoid
-	// multiple concurrent update calls being sent to the K8S API.
-	// Once lock is removed, next update call can be initiated.
+	// kubernetes API server in the background.
+	// It allows us to avoid multiple concurrent update calls being sent
+	// to the Kubernetes API.
+	// Once the lock is removed, the next update call can be initiated.
 	cacheLocks sync.Map
 )
 
@@ -33,7 +34,7 @@ func init() {
 }
 
 // Get gives access to cache entries. It requires Key structure
-// to be provided which is used to calculate cache key sha.
+// to be provided which is used to calculate cache key SHA.
 func Get[T any](key Key) (T, bool, error) {
 	typedValue := lo.Empty[T]()
 
@@ -51,7 +52,7 @@ func Get[T any](key Key) (T, bool, error) {
 }
 
 // Set allows updating cache with specific values.
-// It requires Key structure to be provided which is used to calculate cache key sha.
+// It requires Key structure to be provided which is used to calculate cache key SHA.
 func Set[T any](key Key, value T) error {
 	cacheKey, err := key.SHA()
 	if err != nil {
@@ -62,7 +63,7 @@ func Set[T any](key Key, value T) error {
 	return nil
 }
 
-// DeferredLoad updates cache in background with the data fetched using the loadFunc.
+// DeferredLoad updates cache in the background with the data fetched using the loadFunc.
 func DeferredLoad[T any](key Key, loadFunc func() (T, error)) {
 	go func() {
 		cacheKey, err := key.SHA()

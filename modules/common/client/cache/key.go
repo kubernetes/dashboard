@@ -22,19 +22,19 @@ var contextCache *theine.Cache[string, string]
 // a unique cache key SHA. It is used when
 // `cluster-context-enabled=false`.
 type key struct {
-	// Kind is a kubernetes resource kind
-	Kind types.ResourceKind
+	// kind is a kubernetes resource kind
+	kind types.ResourceKind
 
-	// Namespaces is a kubernetes resource namespace
-	Namespace string
+	// namespace is a kubernetes resource namespace
+	namespace string
 
 	// Opts is a list options object used by the kubernetes client.
-	Opts metav1.ListOptions
+	opts metav1.ListOptions
 }
 
 // SHA calculates sha based on the internal key fields.
 func (k key) SHA() (string, error) {
-	k.Opts = metav1.ListOptions{LabelSelector: k.Opts.LabelSelector, FieldSelector: k.Opts.FieldSelector}
+	k.opts = metav1.ListOptions{LabelSelector: k.opts.LabelSelector, FieldSelector: k.opts.FieldSelector}
 	return helpers.HashObject(k)
 }
 
@@ -44,8 +44,8 @@ func (k key) SHA() (string, error) {
 type Key struct {
 	key
 
-	// Token is an auth token used to exchange it for the context ID.
-	Token string
+	// token is an auth token used to exchange it for the context ID.
+	token string
 
 	// context is an internal identifier used in conjunction with the key
 	// structure fields to create a cache key SHA that will be unique across
@@ -62,28 +62,25 @@ func (k Key) SHA() (sha string, err error) {
 		return k.key.SHA()
 	}
 
-	contextKey, exists := contextCache.Get(k.Token)
+	contextKey, exists := contextCache.Get(k.token)
 	if !exists {
-		contextKey, err = exchangeToken(k.Token)
+		contextKey, err = exchangeToken(k.token)
 		if err != nil {
 			return "", err
 		}
 
-		contextCache.SetWithTTL(k.Token, contextKey, 1, args.CacheTTL())
+		contextCache.SetWithTTL(k.token, contextKey, 1, args.CacheTTL())
 	}
 
-	k.Opts = metav1.ListOptions{LabelSelector: k.Opts.LabelSelector, FieldSelector: k.Opts.FieldSelector}
-	k.Token = ""
+	k.opts = metav1.ListOptions{LabelSelector: k.opts.LabelSelector, FieldSelector: k.opts.FieldSelector}
+	k.token = ""
 	k.context = contextKey
 	return helpers.HashObject(k)
 }
 
 // NewKey creates a new cache Key.
 func NewKey(kind types.ResourceKind, namespace, token string, opts metav1.ListOptions) Key {
-	return Key{
-		key:   key{Kind: kind, Namespace: namespace, Opts: opts},
-		Token: token,
-	}
+	return Key{key: key{kind, namespace, opts}, token: token}
 }
 
 type tokenExchangeTransport struct {
