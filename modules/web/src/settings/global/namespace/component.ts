@@ -30,6 +30,7 @@ import {SettingsHelperService} from '../service';
 import {AddFallbackNamespaceDialogComponent, AddFallbackNamespaceDialogData} from './adddialog/dialog';
 import {EditFallbackNamespaceDialogComponent, EditFallbackNamespaceDialogData} from './editdialog/dialog';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
+import {MAT_FORM_FIELD_DEFAULT_OPTIONS} from '@angular/material/form-field';
 
 enum BreakpointElementCount {
   XLarge = 5,
@@ -56,6 +57,13 @@ interface NamespaceSettings {
       provide: NG_VALUE_ACCESSOR,
       useExisting: forwardRef(() => NamespaceSettingsComponent),
       multi: true,
+    },
+    {
+      provide: MAT_FORM_FIELD_DEFAULT_OPTIONS,
+      useValue: {
+        appearance: 'outline',
+        subscriptSizing: 'dynamic',
+      },
     },
   ],
 })
