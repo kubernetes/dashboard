@@ -84,6 +84,8 @@ app:
     #  resourceAutoRefreshTimeInterval: 10
     #  # Hide all access denied warnings in the notification panel
     #  disableAccessDeniedNotifications: false
+    #  # Hide all namespaces option in namespace selection dropdown to avoid accidental selection in large clusters thus preventing OOM errors
+    #  hideAllNamespaces: false
     #  # Namespace that should be selected by default after logging in.
     #  defaultNamespace: default
     #  # List of namespaces that should be presented to user without namespace list privileges.
