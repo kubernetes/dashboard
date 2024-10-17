@@ -102,6 +102,10 @@ export class NamespaceSelectorComponent implements OnInit {
     this.loadNamespaces_();
   }
 
+  showAllNamespaces(): boolean {
+    return !this.settingsService_.getHideAllNamespaces();
+  }
+
   selectNamespace(): void {
     if (this.selectNamespaceInput.length === 0) {
       return;

@@ -162,6 +162,24 @@ limitations under the License.
           </mat-slide-toggle>
         </div>
       </kd-settings-entry>
+      <kd-settings-entry
+        key="Hide All Namespaces option"
+        i18n-key
+        desc="Hides all-namespaces option from the namespaces dropdown list in UI."
+        i18n-desc
+      >
+        <div
+          fxFlex
+          fxLayoutAlign=" center"
+        >
+          <mat-slide-toggle
+            color="primary"
+            name="hideAllNamespaces"
+            [formControlName]="Controls.HideAllNamespaces"
+          >
+          </mat-slide-toggle>
+        </div>
+      </kd-settings-entry>
       <br /><br />
       <button
         [disabled]="!canSave()"

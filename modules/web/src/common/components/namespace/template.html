@@ -33,7 +33,7 @@ limitations under the License.
       />
     </div>
     <mat-option
-      *ngIf="namespaces.length && !usingFallbackNamespaces"
+      *ngIf="showAllNamespaces() && namespaces.length && !usingFallbackNamespaces"
       [value]="allNamespacesKey"
       i18n
       >All namespaces</mat-option

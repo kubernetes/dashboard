@@ -1973,6 +1973,12 @@
       <trans-unit id="9193001935256028830" datatype="html">
         <source> Owner </source>
       </trans-unit>
+      <trans-unit id="5883804203832913220" datatype="html">
+        <source>Hide All Namespaces option</source>
+      </trans-unit>
+      <trans-unit id="8967487471439603323" datatype="html">
+        <source>Hides all-namespaces option from the namespaces dropdown list in UI.</source>
+      </trans-unit>
     </body>
   </file>
 </xliff>
