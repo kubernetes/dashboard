@@ -12,6 +12,7 @@ require (
 	k8s.io/apimachinery v0.31.1
 	k8s.io/client-go v0.31.1
 	k8s.io/dashboard/errors v0.0.0-00010101000000-000000000000
+	k8s.io/dashboard/helpers v0.0.0-00010101000000-000000000000
 	k8s.io/dashboard/types v0.0.0-00010101000000-000000000000
 	k8s.io/klog/v2 v2.130.1
 )
@@ -62,5 +63,6 @@ require (
 
 replace (
 	k8s.io/dashboard/errors => ../errors
+	k8s.io/dashboard/helpers => ../helpers
 	k8s.io/dashboard/types => ../types
 )
