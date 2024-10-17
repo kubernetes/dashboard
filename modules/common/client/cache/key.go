@@ -85,7 +85,7 @@ func (k Key) MarshalJSON() ([]byte, error) {
 }
 
 // SHA calculates sha based on the internal struct fields.
-// It is also responsible for exchanging the [Key.Token] for
+// It is also responsible for exchanging the token for
 // the context identifier with the external source of truth
 // configured via `token-exchange-endpoint` flag.
 func (k Key) SHA() (sha string, err error) {
@@ -95,7 +95,7 @@ func (k Key) SHA() (sha string, err error) {
 
 	contextKey, exists := contextCache.Get(k.token)
 	if !exists {
-		contextKey, err = exchangeToken(k.token)
+		contextKey, err = k.exchangeToken(k.token)
 		if err != nil {
 			return "", err
 		}
@@ -107,22 +107,7 @@ func (k Key) SHA() (sha string, err error) {
 	return helpers.HashObject(k)
 }
 
-// NewKey creates a new cache Key.
-func NewKey(kind types.ResourceKind, namespace, token string, opts metav1.ListOptions) Key {
-	return Key{key: key{kind, namespace, opts}, token: token}
-}
-
-type tokenExchangeTransport struct {
-	token     string
-	transport http.RoundTripper
-}
-
-func (in *tokenExchangeTransport) RoundTrip(req *http.Request) (*http.Response, error) {
-	req.Header.Set("Authorization", "Bearer "+in.token)
-	return in.transport.RoundTrip(req)
-}
-
-func exchangeToken(token string) (string, error) {
+func (k Key) exchangeToken(token string) (string, error) {
 	client := &http.Client{Transport: &tokenExchangeTransport{token, http.DefaultTransport}}
 	response, err := client.Get(args.TokenExchangeEndpoint())
 	if err != nil {
@@ -140,7 +125,7 @@ func exchangeToken(token string) (string, error) {
 
 	defer func(body io.ReadCloser) {
 		if err := body.Close(); err != nil {
-			klog.V(3).ErrorS(err, "could not close response body writer")
+			klog.ErrorS(err, "could not close response body writer")
 		}
 	}(response.Body)
 
@@ -151,4 +136,19 @@ func exchangeToken(token string) (string, error) {
 
 	klog.V(3).InfoS("token exchange successful", "context", contextKey)
 	return string(contextKey), nil
+}
+
+// NewKey creates a new cache Key.
+func NewKey(kind types.ResourceKind, namespace, token string, opts metav1.ListOptions) Key {
+	return Key{key: key{kind, namespace, opts}, token: token}
+}
+
+type tokenExchangeTransport struct {
+	token     string
+	transport http.RoundTripper
+}
+
+func (in *tokenExchangeTransport) RoundTrip(req *http.Request) (*http.Response, error) {
+	req.Header.Set("Authorization", "Bearer "+in.token)
+	return in.transport.RoundTrip(req)
 }

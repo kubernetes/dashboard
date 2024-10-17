@@ -40,7 +40,7 @@ func (in CachedResourceLister[T]) List(ctx context.Context, lister ResourceListe
 			return new(T), err
 		}
 
-		klog.V(3).InfoS("resource not found in cache, initializing")
+		klog.V(3).InfoS("resource not found in cache, initializing", "kind", in.resourceKind, "namespace", in.namespace)
 		return list, cache.Set[*T](cacheKey, list)
 	}
 
@@ -50,7 +50,7 @@ func (in CachedResourceLister[T]) List(ctx context.Context, lister ResourceListe
 	}
 
 	if review.Status.Allowed {
-		klog.V(3).InfoS("resource found in cache, updating in background")
+		klog.V(3).InfoS("resource found in cache, updating in background", "kind", in.resourceKind, "namespace", in.namespace)
 		cache.DeferredLoad[*T](cacheKey, func() (*T, error) {
 			return lister.List(ctx, opts)
 		})
