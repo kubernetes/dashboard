@@ -24,6 +24,9 @@ var (
 	// to the Kubernetes API.
 	// Once the lock is removed, the next update call can be initiated.
 	cacheLocks sync.Map
+
+	// syncLoadLock ...
+	syncLoadLock sync.Mutex
 )
 
 func init() {
@@ -93,4 +96,35 @@ func DeferredLoad[T any](key Key, loadFunc func() (T, error)) {
 		_ = cache.SetWithTTL(cacheKey, cacheValue, 1, args.CacheTTL())
 		klog.V(4).InfoS("cache updated successfully", "key", cacheKey)
 	}()
+}
+
+// SyncedLoad initializes the cache using the [loadFunc]. It ensures that there will be no concurrent
+// calls to the [loadFunc]. First call will call the [loadFunc] and initialize the cache while
+// concurrent calls will be waiting for the first call to finish. Once cache is updated and lock is freed
+// other routines will return the value from cache without making any extra calls to the [loadFunc].
+func SyncedLoad[T any](key Key, loadFunc func() (*T, error)) (*T, error) {
+	cacheKey, err := key.SHA()
+	if err != nil {
+		klog.ErrorS(err, "failed loading cache key", "key", cacheKey)
+		return new(T), err
+	}
+
+	syncLoadLock.Lock()
+	defer syncLoadLock.Unlock()
+
+	if value, exists := cache.Get(cacheKey); exists {
+		klog.V(4).InfoS("synced from the cache", "key", cacheKey)
+		return value.(*T), nil
+	}
+
+	cacheValue, err := loadFunc()
+	if err != nil {
+		klog.ErrorS(err, "failed loading cache data", "key", cacheKey)
+		return new(T), err
+	}
+
+	_ = cache.SetWithTTL(cacheKey, cacheValue, 1, args.CacheTTL())
+	klog.V(4).InfoS("cache initialized successfully", "key", cacheKey)
+
+	return cacheValue, nil
 }

@@ -58,16 +58,16 @@ func Client(request *http.Request) (client.Interface, error) {
 		return nil, fmt.Errorf("client package not initialized")
 	}
 
-	c, err := configFromRequest(request)
+	config, err := configFromRequest(request)
 	if err != nil {
 		return nil, err
 	}
 
 	if args.CacheEnabled() {
-		return cacheclient.New(c, GetBearerToken(request))
+		return cacheclient.New(config, GetBearerToken(request))
 	}
 
-	return clientFromRequest(request)
+	return client.NewForConfig(config)
 }
 
 func APIExtensionsClient(request *http.Request) (apiextensionsclientset.Interface, error) {
@@ -78,6 +78,15 @@ func APIExtensionsClient(request *http.Request) (apiextensionsclientset.Interfac
 	config, err := configFromRequest(request)
 	if err != nil {
 		return nil, err
+	}
+
+	kubeClient, err := client.NewForConfig(config)
+	if err != nil {
+		return nil, err
+	}
+
+	if args.CacheEnabled() {
+		return cacheclient.NewCachedExtensionsClient(config, kubeClient.AuthorizationV1(), GetBearerToken(request))
 	}
 
 	return apiextensionsclientset.NewForConfig(config)

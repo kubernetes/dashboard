@@ -92,6 +92,10 @@ func (k ResourceKind) String() string {
 
 type Verb string
 
+func (in Verb) String() string {
+	return string(in)
+}
+
 const (
 	VerbList = "list"
 )

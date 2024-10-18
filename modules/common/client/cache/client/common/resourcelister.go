@@ -22,9 +22,8 @@ type ResourceListerInterface[T any] interface {
 
 type CachedResourceLister[T any] struct {
 	authorizationV1 authorizationv1.AuthorizationV1Interface
-	namespace       string
 	token           string
-	resourceKind    types.ResourceKind
+	ssar            *authorizationapiv1.SelfSubjectAccessReview
 }
 
 func (in CachedResourceLister[T]) List(ctx context.Context, lister ResourceListerInterface[T], opts metav1.ListOptions) (*T, error) {
@@ -35,22 +34,19 @@ func (in CachedResourceLister[T]) List(ctx context.Context, lister ResourceListe
 	}
 
 	if !found {
-		list, err := lister.List(ctx, opts)
-		if err != nil {
-			return new(T), err
-		}
-
-		klog.V(3).InfoS("resource not found in cache, initializing", "kind", in.resourceKind, "namespace", in.namespace)
-		return list, cache.Set[*T](cacheKey, list)
+		klog.V(3).InfoS("resource not found in cache, initializing", "kind", in.kind(), "namespace", in.namespace())
+		return cache.SyncedLoad(cacheKey, func() (*T, error) {
+			return lister.List(ctx, opts)
+		})
 	}
 
-	review, err := in.authorizationV1.SelfSubjectAccessReviews().Create(ctx, in.selfSubjectAccessReview(), metav1.CreateOptions{})
+	review, err := in.authorizationV1.SelfSubjectAccessReviews().Create(ctx, in.selfSubjectAccessReview(types.VerbList), metav1.CreateOptions{})
 	if err != nil {
 		return new(T), err
 	}
 
 	if review.Status.Allowed {
-		klog.V(3).InfoS("resource found in cache, updating in background", "kind", in.resourceKind, "namespace", in.namespace)
+		klog.V(3).InfoS("resource found in cache, updating in background", "kind", in.kind(), "namespace", in.namespace())
 		cache.DeferredLoad[*T](cacheKey, func() (*T, error) {
 			return lister.List(ctx, opts)
 		})
@@ -63,45 +59,50 @@ func (in CachedResourceLister[T]) List(ctx context.Context, lister ResourceListe
 	)
 }
 
-func (in CachedResourceLister[_]) selfSubjectAccessReview() *authorizationapiv1.SelfSubjectAccessReview {
-	return &authorizationapiv1.SelfSubjectAccessReview{
-		Spec: authorizationapiv1.SelfSubjectAccessReviewSpec{
-			ResourceAttributes: &authorizationapiv1.ResourceAttributes{
-				Namespace: in.namespace,
-				Verb:      types.VerbList,
-				Resource:  in.resourceKind.String(),
-			},
-		},
-	}
+func (in CachedResourceLister[_]) selfSubjectAccessReview(verb types.Verb) *authorizationapiv1.SelfSubjectAccessReview {
+	in.ssar.Spec.ResourceAttributes.Verb = verb.String()
+	return in.ssar
 }
 
 func (in CachedResourceLister[_]) cacheKey(opts metav1.ListOptions) cache.Key {
-	return cache.NewKey(in.resourceKind, in.namespace, in.token, opts)
+	return cache.NewKey(in.kind(), in.namespace(), in.token, opts)
+}
+
+func (in CachedResourceLister[T]) ensure() {
+	if len(in.token) == 0 {
+		panic("token arg is required when creating CachedResourceLister")
+	}
+
+	if len(in.ssar.Spec.ResourceAttributes.Resource) == 0 {
+		panic("resource kind arg is required when creating CachedResourceLister")
+	}
+}
+
+func (in CachedResourceLister[_]) namespace() string {
+	return in.ssar.Spec.ResourceAttributes.Namespace
+}
+
+func (in CachedResourceLister[T]) kind() types.ResourceKind {
+	return types.ResourceKind(in.ssar.Spec.ResourceAttributes.Resource)
 }
 
 func NewCachedResourceLister[T any](
 	authorization authorizationv1.AuthorizationV1Interface,
-	namespace string,
-	token string,
-	resourceKind types.ResourceKind,
+	options ...Option[T],
 ) CachedResourceLister[T] {
-	return CachedResourceLister[T]{
+	result := CachedResourceLister[T]{
 		authorizationV1: authorization,
-		namespace:       namespace,
-		token:           token,
-		resourceKind:    resourceKind,
+		ssar: &authorizationapiv1.SelfSubjectAccessReview{
+			Spec: authorizationapiv1.SelfSubjectAccessReviewSpec{
+				ResourceAttributes: &authorizationapiv1.ResourceAttributes{},
+			},
+		},
 	}
-}
 
-func NewCachedClusterScopedResourceLister[T any](
-	authorization authorizationv1.AuthorizationV1Interface,
-	token string,
-	resourceKind types.ResourceKind,
-) CachedResourceLister[T] {
-	return CachedResourceLister[T]{
-		authorizationV1: authorization,
-		namespace:       "",
-		token:           token,
-		resourceKind:    resourceKind,
+	for _, opt := range options {
+		opt(&result)
 	}
+
+	result.ensure()
+	return result
 }
