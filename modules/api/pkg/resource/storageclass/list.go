@@ -15,10 +15,9 @@
 package storageclass
 
 import (
-	"log"
-
 	storage "k8s.io/api/storage/v1"
 	"k8s.io/client-go/kubernetes"
+	"k8s.io/klog/v2"
 
 	"k8s.io/dashboard/api/pkg/resource/common"
 	"k8s.io/dashboard/api/pkg/resource/dataselect"
@@ -46,7 +45,7 @@ type StorageClass struct {
 // GetStorageClassList returns a list of all storage class objects in the cluster.
 func GetStorageClassList(client kubernetes.Interface, dsQuery *dataselect.DataSelectQuery) (
 	*StorageClassList, error) {
-	log.Print("Getting list of storage classes in the cluster")
+	klog.V(4).Infof("Getting list of storage classes in the cluster")
 
 	channels := &common.ResourceChannels{
 		StorageClassList: common.GetStorageClassListChannel(client, 1),

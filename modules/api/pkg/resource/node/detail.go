@@ -16,13 +16,13 @@ package node
 
 import (
 	"context"
-	"log"
 
 	v1 "k8s.io/api/core/v1"
 	"k8s.io/apimachinery/pkg/api/resource"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/fields"
 	k8sClient "k8s.io/client-go/kubernetes"
+	"k8s.io/klog/v2"
 
 	metricapi "k8s.io/dashboard/api/pkg/integration/metric/api"
 	"k8s.io/dashboard/api/pkg/resource/common"
@@ -127,7 +127,7 @@ type NodeDetail struct {
 // GetNodeDetail gets node details.
 func GetNodeDetail(client k8sClient.Interface, metricClient metricapi.MetricClient, name string,
 	dsQuery *dataselect.DataSelectQuery) (*NodeDetail, error) {
-	log.Printf("Getting details of %s node", name)
+	klog.V(4).Infof("Getting details of %s node", name)
 
 	node, err := client.CoreV1().Nodes().Get(context.TODO(), name, metaV1.GetOptions{})
 	if err != nil {

@@ -16,10 +16,11 @@ package daemonset
 
 import (
 	"context"
-	"log"
 
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	k8sClient "k8s.io/client-go/kubernetes"
+	"k8s.io/klog/v2"
+
 	metricapi "k8s.io/dashboard/api/pkg/integration/metric/api"
 	"k8s.io/dashboard/api/pkg/resource/common"
 )
@@ -39,7 +40,7 @@ type DaemonSetDetail struct {
 func GetDaemonSetDetail(client k8sClient.Interface, metricClient metricapi.MetricClient,
 	namespace, name string) (*DaemonSetDetail, error) {
 
-	log.Printf("Getting details of %s daemon set in %s namespace", name, namespace)
+	klog.V(4).Infof("Getting details of %s daemon set in %s namespace", name, namespace)
 	daemonSet, err := client.AppsV1().DaemonSets(namespace).Get(context.TODO(), name, metaV1.GetOptions{})
 	if err != nil {
 		return nil, err

@@ -16,11 +16,11 @@ package secret
 
 import (
 	"context"
-	"log"
 
 	v1 "k8s.io/api/core/v1"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/client-go/kubernetes"
+	"k8s.io/klog/v2"
 
 	"k8s.io/dashboard/api/pkg/resource/common"
 	"k8s.io/dashboard/api/pkg/resource/dataselect"
@@ -87,7 +87,7 @@ type SecretList struct {
 // GetSecretList returns all secrets in the given namespace.
 func GetSecretList(client kubernetes.Interface, namespace *common.NamespaceQuery,
 	dsQuery *dataselect.DataSelectQuery) (*SecretList, error) {
-	log.Printf("Getting list of secrets in %s namespace\n", namespace)
+	klog.V(4).Infof("Getting list of secrets in %s namespace\n", namespace)
 	secretList, err := client.CoreV1().Secrets(namespace.ToRequestParam()).List(context.TODO(), helpers.ListEverything)
 
 	nonCriticalErrors, criticalError := errors.ExtractErrors(err)

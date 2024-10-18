@@ -16,11 +16,11 @@ package namespace
 
 import (
 	"context"
-	"log"
 
 	v1 "k8s.io/api/core/v1"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	k8sClient "k8s.io/client-go/kubernetes"
+	"k8s.io/klog/v2"
 
 	"k8s.io/dashboard/api/pkg/resource/limitrange"
 	rq "k8s.io/dashboard/api/pkg/resource/resourcequota"
@@ -47,7 +47,7 @@ type NamespaceDetail struct {
 
 // GetNamespaceDetail gets namespace details.
 func GetNamespaceDetail(client k8sClient.Interface, name string) (*NamespaceDetail, error) {
-	log.Printf("Getting details of %s namespace\n", name)
+	klog.V(4).Infof("Getting details of %s namespace\n", name)
 
 	namespace, err := client.CoreV1().Namespaces().Get(context.TODO(), name, metaV1.GetOptions{})
 	if err != nil {

@@ -15,10 +15,9 @@
 package replicationcontroller
 
 import (
-	"log"
-
 	v1 "k8s.io/api/core/v1"
 	client "k8s.io/client-go/kubernetes"
+	"k8s.io/klog/v2"
 
 	metricapi "k8s.io/dashboard/api/pkg/integration/metric/api"
 	"k8s.io/dashboard/api/pkg/resource/common"
@@ -62,7 +61,7 @@ type ReplicationController struct {
 // GetReplicationControllerList returns a list of all Replication Controllers in the cluster.
 func GetReplicationControllerList(client client.Interface, nsQuery *common.NamespaceQuery,
 	dsQuery *dataselect.DataSelectQuery, metricClient metricapi.MetricClient) (*ReplicationControllerList, error) {
-	log.Print("Getting list of all replication controllers in the cluster")
+	klog.V(4).Infof("Getting list of all replication controllers in the cluster")
 
 	channels := &common.ResourceChannels{
 		ReplicationControllerList: common.GetReplicationControllerListChannel(client, nsQuery, 1),

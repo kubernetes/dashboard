@@ -77,14 +77,23 @@ func formatRequestLog(request *restful.Request) string {
 		content = "{ content hidden }"
 	}
 
-	return fmt.Sprintf(RequestLogString, time.Now().Format(time.RFC3339), request.Request.Proto,
-		request.Request.Method, uri, getRemoteAddr(request.Request), content)
+	return fmt.Sprintf(
+		RequestLogString,
+		request.Request.Proto,
+		request.Request.Method,
+		uri,
+		getRemoteAddr(request.Request),
+		content,
+	)
 }
 
 // formatResponseLog formats response log string.
 func formatResponseLog(response *restful.Response, request *restful.Request) string {
-	return fmt.Sprintf(ResponseLogString, time.Now().Format(time.RFC3339),
-		getRemoteAddr(request.Request), response.StatusCode())
+	return fmt.Sprintf(
+		ResponseLogString,
+		getRemoteAddr(request.Request),
+		response.StatusCode(),
+	)
 }
 
 // checkSensitiveUrl checks if a string matches against a sensitive URL

@@ -15,11 +15,10 @@
 package job
 
 import (
-	"log"
-
 	batch "k8s.io/api/batch/v1"
 	v1 "k8s.io/api/core/v1"
 	client "k8s.io/client-go/kubernetes"
+	"k8s.io/klog/v2"
 
 	metricapi "k8s.io/dashboard/api/pkg/integration/metric/api"
 	"k8s.io/dashboard/api/pkg/resource/common"
@@ -89,7 +88,7 @@ type Job struct {
 // GetJobList returns a list of all Jobs in the cluster.
 func GetJobList(client client.Interface, nsQuery *common.NamespaceQuery,
 	dsQuery *dataselect.DataSelectQuery, metricClient metricapi.MetricClient) (*JobList, error) {
-	log.Print("Getting list of all jobs in the cluster")
+	klog.V(4).Infof("Getting list of all jobs in the cluster")
 
 	channels := &common.ResourceChannels{
 		JobList:   common.GetJobListChannel(client, nsQuery, 1),

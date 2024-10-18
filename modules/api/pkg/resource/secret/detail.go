@@ -16,11 +16,11 @@ package secret
 
 import (
 	"context"
-	"log"
 
 	v1 "k8s.io/api/core/v1"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/client-go/kubernetes"
+	"k8s.io/klog/v2"
 )
 
 // SecretDetail API resource provides mechanisms to inject containers with configuration data while keeping
@@ -38,7 +38,7 @@ type SecretDetail struct {
 
 // GetSecretDetail returns detailed information about a secret
 func GetSecretDetail(client kubernetes.Interface, namespace, name string) (*SecretDetail, error) {
-	log.Printf("Getting details of %s secret in %s namespace\n", name, namespace)
+	klog.V(4).Infof("Getting details of %s secret in %s namespace\n", name, namespace)
 
 	rawSecret, err := client.CoreV1().Secrets(namespace).Get(context.TODO(), name, metaV1.GetOptions{})
 	if err != nil {

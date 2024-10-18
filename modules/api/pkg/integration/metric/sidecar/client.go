@@ -19,7 +19,6 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"log"
 	"strings"
 
 	"k8s.io/apimachinery/pkg/types"
@@ -204,7 +203,7 @@ func (self sidecarClient) allInOneDownload(selector sidecarSelector, metricName 
 		}
 
 		if len(result) != len(rawResults.Items) {
-			log.Printf(`received %d resources from sidecar instead of %d`, len(rawResults.Items), len(result))
+			klog.V(1).Infof(`received %d resources from sidecar instead of %d`, len(rawResults.Items), len(result))
 		}
 
 		// rawResult.Items have indefinite order.

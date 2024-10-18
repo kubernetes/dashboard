@@ -56,11 +56,11 @@ func (v *resourceVerber) groupVersionResourceFromUnstructured(object *unstructur
 
 func (v *resourceVerber) groupVersionResourceFromKind(kind string) (schema.GroupVersionResource, error) {
 	if gvr, exists := kindToGroupVersionResource[kind]; exists {
-		klog.V(3).InfoS("GroupVersionResource cache hit", "kind", kind)
+		klog.V(4).InfoS("GroupVersionResource cache hit", "kind", kind)
 		return gvr, nil
 	}
 
-	klog.V(3).InfoS("GroupVersionResource cache miss", "kind", kind)
+	klog.V(4).InfoS("GroupVersionResource cache miss", "kind", kind)
 	_, resourceList, err := v.discovery.ServerGroupsAndResources()
 	if err != nil {
 		return schema.GroupVersionResource{}, err
@@ -151,7 +151,7 @@ func (v *resourceVerber) Update(object *unstructured.Unstructured) error {
 	gvr := v.groupVersionResourceFromUnstructured(object)
 
 	return retry.RetryOnConflict(retry.DefaultRetry, func() error {
-		klog.V(2).InfoS("fetching latest resource version", "group", gvr.Group, "version", gvr.Version, "resource", gvr.Resource, "name", name, "namespace", namespace)
+		klog.V(4).InfoS("fetching latest resource version", "group", gvr.Group, "version", gvr.Version, "resource", gvr.Resource, "name", name, "namespace", namespace)
 		result, getErr := v.client.Resource(gvr).Namespace(namespace).Get(context.TODO(), name, metav1.GetOptions{})
 		if getErr != nil {
 			return fmt.Errorf("failed to get latest %s version: %w", gvr.Resource, getErr)
@@ -174,7 +174,7 @@ func (v *resourceVerber) Update(object *unstructured.Unstructured) error {
 			return fmt.Errorf("failed creating merge patch: %w", err)
 		}
 
-		klog.V(3).InfoS("patching resource", "group", gvr.Group, "version", gvr.Version, "resource", gvr.Resource, "name", name, "namespace", namespace, "patch", string(patchBytes))
+		klog.V(2).InfoS("patching resource", "group", gvr.Group, "version", gvr.Version, "resource", gvr.Resource, "name", name, "namespace", namespace, "patch", string(patchBytes))
 		_, updateErr := v.client.Resource(gvr).Namespace(namespace).Patch(context.TODO(), name, k8stypes.MergePatchType, patchBytes, metav1.PatchOptions{})
 		return updateErr
 	})

@@ -15,11 +15,10 @@
 package replicaset
 
 import (
-	"log"
-
 	apps "k8s.io/api/apps/v1"
 	v1 "k8s.io/api/core/v1"
 	client "k8s.io/client-go/kubernetes"
+	"k8s.io/klog/v2"
 
 	metricapi "k8s.io/dashboard/api/pkg/integration/metric/api"
 	"k8s.io/dashboard/api/pkg/resource/common"
@@ -73,7 +72,7 @@ func ToReplicaSet(replicaSet *apps.ReplicaSet, podInfo *common.PodInfo) ReplicaS
 // GetReplicaSetList returns a list of all Replica Sets in the cluster.
 func GetReplicaSetList(client client.Interface, nsQuery *common.NamespaceQuery,
 	dsQuery *dataselect.DataSelectQuery, metricClient metricapi.MetricClient) (*ReplicaSetList, error) {
-	log.Print("Getting list of all replica sets in the cluster")
+	klog.V(4).Infof("Getting list of all replica sets in the cluster")
 
 	channels := &common.ResourceChannels{
 		ReplicaSetList: common.GetReplicaSetListChannel(client, nsQuery, 1),

@@ -16,11 +16,11 @@ package storageclass
 
 import (
 	"context"
-	"log"
 
 	storage "k8s.io/api/storage/v1"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/client-go/kubernetes"
+	"k8s.io/klog/v2"
 )
 
 // StorageClassDetail provides the presentation layer view of Storage Class resource.
@@ -31,7 +31,7 @@ type StorageClassDetail struct {
 
 // GetStorageClass returns Storage Class resource.
 func GetStorageClass(client kubernetes.Interface, name string) (*StorageClassDetail, error) {
-	log.Printf("Getting details of %s storage class", name)
+	klog.V(4).Infof("Getting details of %s storage class", name)
 
 	sc, err := client.StorageV1().StorageClasses().Get(context.TODO(), name, metaV1.GetOptions{})
 	if err != nil {

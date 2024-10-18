@@ -15,10 +15,9 @@
 package rolebinding
 
 import (
-	"log"
-
 	rbac "k8s.io/api/rbac/v1"
 	"k8s.io/client-go/kubernetes"
+	"k8s.io/klog/v2"
 
 	"k8s.io/dashboard/api/pkg/resource/common"
 	"k8s.io/dashboard/api/pkg/resource/dataselect"
@@ -44,7 +43,7 @@ type RoleBinding struct {
 
 // GetRoleBindingList returns a list of all RoleBindings in the cluster.
 func GetRoleBindingList(client kubernetes.Interface, nsQuery *common.NamespaceQuery, dsQuery *dataselect.DataSelectQuery) (*RoleBindingList, error) {
-	log.Print("Getting list of all roleBindings in the cluster")
+	klog.V(4).Infof("Getting list of all roleBindings in the cluster")
 	channels := &common.ResourceChannels{
 		RoleBindingList: common.GetRoleBindingListChannel(client, nsQuery, 1),
 	}

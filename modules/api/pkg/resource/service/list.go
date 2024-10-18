@@ -15,10 +15,9 @@
 package service
 
 import (
-	"log"
-
 	v1 "k8s.io/api/core/v1"
 	client "k8s.io/client-go/kubernetes"
+	"k8s.io/klog/v2"
 
 	"k8s.io/dashboard/api/pkg/resource/common"
 	"k8s.io/dashboard/api/pkg/resource/dataselect"
@@ -64,7 +63,7 @@ type ServiceList struct {
 // GetServiceList returns a list of all services in the cluster.
 func GetServiceList(client client.Interface, nsQuery *common.NamespaceQuery,
 	dsQuery *dataselect.DataSelectQuery) (*ServiceList, error) {
-	log.Print("Getting list of all services in the cluster")
+	klog.V(4).Infof("Getting list of all services in the cluster")
 
 	channels := &common.ResourceChannels{
 		ServiceList: common.GetServiceListChannel(client, nsQuery, 1),

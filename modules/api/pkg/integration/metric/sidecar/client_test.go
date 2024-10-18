@@ -19,7 +19,6 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"log"
 	"reflect"
 	"regexp"
 	"strings"
@@ -97,7 +96,6 @@ func (self FakeSidecar) ID() integrationapi.IntegrationID {
 
 func (self FakeRequest) DoRaw(ctx context.Context) ([]byte, error) {
 	_NumRequests.increment()
-	log.Println("Performing req...")
 	path := self.Path
 	time.Sleep(50 * time.Millisecond) // simulate response delay of 0.05 seconds
 	if strings.Contains(path, "/pod-list/") {
@@ -120,7 +118,6 @@ func (self FakeRequest) DoRaw(ctx context.Context) ([]byte, error) {
 			items.Items = append(items.Items, metricapi.SidecarMetric{MetricPoints: self.PodData[pod+"/"+namespace], UIDs: []string{pod}})
 		}
 		x, err := json.Marshal(items)
-		log.Println("Got you:", string(x))
 		return x, err
 
 	} else if strings.Contains(path, "/nodes/") {
@@ -135,7 +132,6 @@ func (self FakeRequest) DoRaw(ctx context.Context) ([]byte, error) {
 		items.Items = append(items.Items, metricapi.SidecarMetric{MetricPoints: self.NodeData[requestedNode], UIDs: []string{requestedNode}})
 
 		x, err := json.Marshal(items)
-		log.Println("Got you:", string(x))
 		return x, err
 	} else {
 		return nil, fmt.Errorf("Invalid request url %s", path)
@@ -294,7 +290,6 @@ func TestDownloadMetric(t *testing.T) {
 		},
 	}
 	for _, testCase := range testCases {
-		log.Println("-----------\n\n\n", testCase.Info, int(_NumRequests.get()))
 		hClient := sidecarClient{fakeSidecarClient}
 		promises := hClient.DownloadMetric(testCase.Selectors, "",
 			&metricapi.CachedResources{})

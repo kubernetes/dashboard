@@ -16,13 +16,13 @@ package handler
 
 import (
 	"io"
-	"log"
 	"net/http"
 	"strconv"
 	"strings"
 
 	v1 "k8s.io/api/core/v1"
 	"k8s.io/apimachinery/pkg/apis/meta/v1/unstructured"
+	"k8s.io/klog/v2"
 
 	"k8s.io/dashboard/api/pkg/resource/networkpolicy"
 	"k8s.io/dashboard/client"
@@ -74,10 +74,10 @@ import (
 
 const (
 	// RequestLogString is a template for request log message.
-	RequestLogString = "[%s] Incoming %s %s %s request from %s: %s"
+	RequestLogString = "Incoming %s %s %s request from %s: %s"
 
 	// ResponseLogString is a template for response log message.
-	ResponseLogString = "[%s] Outcoming response to %s with %d status code"
+	ResponseLogString = "Outgoing response to %s with %d status code"
 )
 
 // APIHandler is a representation of API handler. Structure contains clientapi and clientapi configuration.
@@ -2119,7 +2119,7 @@ func (apiHandler *APIHandler) handleGetPodEvents(request *restful.Request, respo
 		return
 	}
 
-	log.Println("Getting events related to a pod in namespace")
+	klog.V(4).Info("Getting events related to a pod in namespace")
 	namespace := request.PathParameter("namespace")
 	name := request.PathParameter("pod")
 	dataSelect := parser.ParseDataSelectPathParameter(request)
@@ -3214,7 +3214,7 @@ func (apiHandler *APIHandler) handleGetCustomResourceObjectDetail(request *restf
 }
 
 func (apiHandler *APIHandler) handleGetCustomResourceObjectEvents(request *restful.Request, response *restful.Response) {
-	log.Println("Getting events related to a custom resource object in namespace")
+	klog.V(4).Info("Getting events related to a custom resource object in namespace")
 
 	k8sClient, err := client.Client(request.Request)
 	if err != nil {
