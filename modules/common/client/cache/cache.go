@@ -25,9 +25,9 @@ var (
 	// Once the lock is removed, the next update call can be initiated.
 	cacheLocks sync.Map
 
-	// syncedLoadLock is used to synchronize the initial cache hydration phase
+	// syncedLoadLocks is used to synchronize the initial cache hydration phase
 	// and avoid putting extra pressure on the API server.
-	syncedLoadLock sync.Mutex
+	syncedLoadLocks sync.Map
 )
 
 func init() {
@@ -110,8 +110,14 @@ func SyncedLoad[T any](key Key, loadFunc func() (*T, error)) (*T, error) {
 		return new(T), err
 	}
 
-	syncedLoadLock.Lock()
-	defer syncedLoadLock.Unlock()
+	v, _ := syncedLoadLocks.LoadOrStore(cacheKey, &sync.Mutex{})
+	lock := v.(*sync.Mutex)
+	lock.Lock()
+
+	defer func() {
+		lock.Unlock()
+		syncedLoadLocks.Delete(cacheKey)
+	}()
 
 	if value, exists := cache.Get(cacheKey); exists {
 		klog.V(4).InfoS("synced from the cache", "key", cacheKey)
