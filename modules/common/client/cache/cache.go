@@ -62,8 +62,12 @@ func Set[T any](key Key, value T) error {
 		return err
 	}
 
-	_ = cache.SetWithTTL(cacheKey, value, 1, args.CacheTTL())
+	set(cacheKey, value)
 	return nil
+}
+
+func set[T any](key string, value T) bool {
+	return cache.SetWithTTL(key, value, 1, args.CacheTTL())
 }
 
 // DeferredLoad updates cache in the background with the data fetched using the loadFunc.
@@ -93,7 +97,7 @@ func DeferredLoad[T any](key Key, loadFunc func() (T, error)) {
 			return
 		}
 
-		_ = cache.SetWithTTL(cacheKey, cacheValue, 1, args.CacheTTL())
+		set(cacheKey, cacheValue)
 		klog.V(4).InfoS("cache updated successfully", "key", cacheKey)
 	}()
 }
@@ -129,7 +133,7 @@ func SyncedLoad[T any](key Key, loadFunc func() (*T, error)) (*T, error) {
 		return new(T), err
 	}
 
-	_ = cache.SetWithTTL(cacheKey, cacheValue, 1, args.CacheTTL())
+	set(cacheKey, cacheValue)
 	klog.V(4).InfoS("cache initialized successfully", "key", cacheKey)
 
 	return cacheValue, nil
