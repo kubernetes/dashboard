@@ -4,7 +4,6 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/samber/lo"
 	authorizationapiv1 "k8s.io/api/authorization/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	authorizationv1 "k8s.io/client-go/kubernetes/typed/authorization/v1"
@@ -53,7 +52,7 @@ func (in CachedResourceLister[T]) List(ctx context.Context, lister ResourceListe
 		return cachedList, nil
 	}
 
-	return lo.Empty[*T](), errors.NewForbidden(
+	return new(T), errors.NewForbidden(
 		errors.MsgForbiddenError,
 		fmt.Errorf("%s: %s", review.Status.Reason, review.Status.EvaluationError),
 	)
