@@ -28,7 +28,7 @@ type CachedResourceLister[T any] struct {
 
 func (in CachedResourceLister[T]) List(ctx context.Context, lister ResourceListerInterface[T], opts metav1.ListOptions) (*T, error) {
 	cacheKey := in.cacheKey(opts)
-	cachedList, found, err := cache.Get[*T](cacheKey)
+	cachedList, found, err := cache.Get[T](cacheKey)
 	if err != nil {
 		return new(T), err
 	}

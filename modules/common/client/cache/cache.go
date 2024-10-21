@@ -5,7 +5,6 @@ import (
 	"time"
 
 	"github.com/Yiling-J/theine-go"
-	"github.com/samber/lo"
 	"k8s.io/klog/v2"
 
 	"k8s.io/dashboard/client/args"
@@ -39,8 +38,8 @@ func init() {
 
 // Get gives access to cache entries. It requires Key structure
 // to be provided which is used to calculate cache key SHA.
-func Get[T any](key Key) (T, bool, error) {
-	typedValue := lo.Empty[T]()
+func Get[T any](key Key) (*T, bool, error) {
+	typedValue := new(T)
 
 	cacheKey, err := key.SHA()
 	if err != nil {
@@ -49,7 +48,7 @@ func Get[T any](key Key) (T, bool, error) {
 
 	value, exists := cache.Get(cacheKey)
 	if exists {
-		typedValue = value.(T)
+		typedValue = value.(*T)
 	}
 
 	return typedValue, exists, nil
