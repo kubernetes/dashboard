@@ -24,6 +24,8 @@ import (
 	k8sClient "k8s.io/client-go/kubernetes"
 	"k8s.io/klog/v2"
 	"k8s.io/kubectl/pkg/drain"
+
+	"k8s.io/dashboard/api/pkg/args"
 )
 
 // NodeDrainSpec is a specification to control the behavior of drainer.
@@ -89,7 +91,7 @@ func newHelper(ctx context.Context, client k8sClient.Interface, spec *NodeDrainS
 
 // DrainNode drains the Node.
 func DrainNode(client k8sClient.Interface, name string, spec *NodeDrainSpec) error {
-	klog.V(1).Infof("Draining %s node", name)
+	klog.V(args.LogLevelVerbose).Infof("Draining %s node", name)
 
 	node, err := client.CoreV1().Nodes().Get(context.Background(), name, metaV1.GetOptions{})
 	if err != nil {
@@ -106,7 +108,7 @@ func DrainNode(client k8sClient.Interface, name string, spec *NodeDrainSpec) err
 		return fmt.Errorf("error draining node: %w", err)
 	}
 
-	klog.V(1).Infof("Successfully drained %s node", name)
+	klog.V(args.LogLevelVerbose).Infof("Successfully drained %s node", name)
 
 	return nil
 }

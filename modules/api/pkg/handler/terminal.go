@@ -33,6 +33,8 @@ import (
 	"k8s.io/client-go/rest"
 	"k8s.io/client-go/tools/remotecommand"
 	"k8s.io/klog/v2"
+
+	"k8s.io/dashboard/api/pkg/args"
 )
 
 const END_OF_TRANSMISSION = "\u0004"
@@ -192,12 +194,12 @@ func handleTerminalSession(session sockjs.Session) {
 	}
 
 	if msg.Op != "bind" {
-		klog.V(1).Infof("handleTerminalSession: expected 'bind' message, got: %s", buf)
+		klog.V(args.LogLevelVerbose).Infof("handleTerminalSession: expected 'bind' message, got: %s", buf)
 		return
 	}
 
 	if terminalSession = terminalSessions.Get(msg.SessionID); terminalSession.id == "" {
-		klog.V(1).Infof("handleTerminalSession: can't find session '%s'", msg.SessionID)
+		klog.V(args.LogLevelVerbose).Infof("handleTerminalSession: can't find session '%s'", msg.SessionID)
 		return
 	}
 

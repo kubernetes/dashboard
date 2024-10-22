@@ -23,6 +23,7 @@ import (
 	client "k8s.io/client-go/kubernetes"
 	"k8s.io/klog/v2"
 
+	"k8s.io/dashboard/api/pkg/args"
 	"k8s.io/dashboard/api/pkg/resource/common"
 	"k8s.io/dashboard/api/pkg/resource/dataselect"
 	"k8s.io/dashboard/errors"
@@ -75,14 +76,14 @@ func GetPodPersistentVolumeClaims(client client.Interface, namespace string, pod
 			}
 		}
 
-		klog.V(1).Infof("Found %d persistentvolumeclaims related to %s pod",
+		klog.V(args.LogLevelExtended).Infof("Found %d persistentvolumeclaims related to %s pod",
 			len(podPersistentVolumeClaims), podName)
 
 		return toPersistentVolumeClaimList(podPersistentVolumeClaims,
 			nonCriticalErrors, dsQuery), nil
 	}
 
-	klog.V(1).Infof("No persistentvolumeclaims found related to %s pod", podName)
+	klog.V(args.LogLevelExtended).Infof("No persistentvolumeclaims found related to %s pod", podName)
 
 	// No ClaimNames found in Pod details, return empty response.
 	return &PersistentVolumeClaimList{}, nil
