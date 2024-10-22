@@ -64,3 +64,22 @@ SHA should be created based on the above key structure and used as an internal c
 ![Cache Sequence Diagram](../images/cache-sequence-diagram.png)
 
 ## Implementation
+Cache is implemented with the help of [Theine](Yiling-J/theine-go) package. It provides in-memory cache that has good performance, supports generics and keeps its API simple.
+
+Cache is a global variable initialized during application startup. It maps internal key SHAs to the resource lists.
+
+It can be configured via the following arguments:
+
+- `cache-enabled` - Enables the cache. Enabled by default.
+- `cache-size` - Maximum number of items in the cache. Set to 1000 by default.
+- `cache-ttl` - Cache entry time-to-live. Set to 10 minutes by default.
+- `cache-refresh-debounce` - Minimal time that has to pass between consecutive cache refreshes in the background. Set to 5 seconds by default.
+- `cluster-context-enabled` - Enables multi-context cache. Disabled by default. Requires `token-exchange-endpoint` to be set if enabled.
+- `token-exchange-endpoint` - Endpoint used when multi-context cache is enabled. It exchanges tokens for a context identifiers. It has to be HTTP(s) `GET` that returns raw string with context identifier and accepts `Authorization: Bearer <token>` header.
+
+Cache package provides following interface:
+
+- `Get` - fetches item from the cache.
+- `Set` - stores item in the cache.
+- `DefferedLoad` - updates cache in the background. Used after cache is read to refresh items.
+- `SyncedLoad` - initializes the cache ensuring that there will be no concurrent calls to the Kubernetes API for the same resources.
