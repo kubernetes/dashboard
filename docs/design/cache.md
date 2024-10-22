@@ -8,18 +8,15 @@
 - [Implementation](#implementation)
 
 ## Motivation
-The Kubernetes Dashboard has been around for a long time now and one of its pain points have always been the performance and responsiveness when running in clusters with a large number of resources. Given that, we have been thinking about implementing a proper API caching solution to enhance overall responsiveness and user experience. As clusters grow in size and complexity, user often face latency issues when interacting with the Dashboard, which can lead to inefficiencies in managing and troubleshooting applications. By implementing a proper caching solution, we can significantly reduce time it takes to retrieve resource data, decrease peak memory usage and optimize overall resource consumption, thereby minimizing delays and improving the fluidity of the user interface.
+The Kubernetes Dashboard has been around for a long time now, and one of its pain points have always been the performance and responsiveness when running in clusters with a large number of resources. Given that, we have been thinking about implementing a proper API caching solution to enhance overall responsiveness and user experience. As clusters grow in size and complexity, users often face latency issues when interacting with the Dashboard, which can lead to inefficiencies in managing and troubleshooting applications. By implementing a proper caching solution, we can significantly reduce the time it takes to retrieve resource data, decrease peak memory usage and optimize overall resource consumption, thereby minimizing delays and improving the fluidity of the user interface.
 
 ### Goals
 The primary goals of implementing the API caching solution are to:
-- **Reduce Latency**:  Minimize the time required to retrieve data from the API, enabling faster access to information.
+- **Reduce Latency**: Minimize the time required to retrieve data from the Dashboard API during consecutive requests, enabling faster access to information.
 - **Enhance User Experience**: Provide a smoother, more responsive interface for users managing complex clusters.
-- **Optimize Resource Utilization**: Decrease the load on the API server by caching frequently accessed data, thus improving overall cluster performance.
-- **Support Scalability**: Ensure the solution can accommodate clusters of varying sizes and complexities without degrading performance.
-- Reduce load times during consecutive requests
-- Reduce pressure on Kubernetes API server
-- Provide opt-out and other configuration options
-- Allow cache to be running in a multi-cluster setup 
+- **Optimize Resource Utilization**: Decrease the pressure on the Kubernetes API server by caching frequently accessed data, thus improving overall cluster performance.
+- **Support Scalability**: Ensure the solution can accommodate clusters of varying sizes and complexities without degrading performance. Cache should be running in multi-cluster as well as in the single-cluster setup.
+- **Configurability**: Provide opt-out and other configuration options.
 
 ### Non-Goals
 This proposal does not aim to:
