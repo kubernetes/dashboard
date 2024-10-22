@@ -15,11 +15,10 @@
 package configmap
 
 import (
-	"log"
-
 	v1 "k8s.io/api/core/v1"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/client-go/kubernetes"
+	"k8s.io/klog/v2"
 
 	"k8s.io/dashboard/api/pkg/resource/common"
 	"k8s.io/dashboard/api/pkg/resource/dataselect"
@@ -47,7 +46,7 @@ type ConfigMap struct {
 
 // GetConfigMapList returns a list of all ConfigMaps in the cluster.
 func GetConfigMapList(client kubernetes.Interface, nsQuery *common.NamespaceQuery, dsQuery *dataselect.DataSelectQuery) (*ConfigMapList, error) {
-	log.Printf("Getting list config maps in the namespace %s", nsQuery.ToRequestParam())
+	klog.V(4).Infof("Getting list config maps in the namespace %s", nsQuery.ToRequestParam())
 	channels := &common.ResourceChannels{
 		ConfigMapList: common.GetConfigMapListChannel(client, nsQuery, 1),
 	}

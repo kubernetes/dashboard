@@ -21,7 +21,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"io"
-	"log"
 	"net/http"
 	"sync"
 	"time"
@@ -33,6 +32,9 @@ import (
 	"k8s.io/client-go/kubernetes/scheme"
 	"k8s.io/client-go/rest"
 	"k8s.io/client-go/tools/remotecommand"
+	"k8s.io/klog/v2"
+
+	"k8s.io/dashboard/api/pkg/args"
 )
 
 const END_OF_TRANSMISSION = "\u0004"
@@ -164,7 +166,7 @@ func (sm *SessionMap) Close(sessionId string, status uint32, reason string) {
 	ses := sm.Sessions[sessionId]
 	err := ses.sockJSSession.Close(status, reason)
 	if err != nil {
-		log.Println(err)
+		klog.Error(err)
 	}
 	close(ses.sizeChan)
 	delete(sm.Sessions, sessionId)
@@ -182,22 +184,22 @@ func handleTerminalSession(session sockjs.Session) {
 	)
 
 	if buf, err = session.Recv(); err != nil {
-		log.Printf("handleTerminalSession: can't Recv: %v", err)
+		klog.Errorf("handleTerminalSession: can't Recv: %v", err)
 		return
 	}
 
 	if err = json.Unmarshal([]byte(buf), &msg); err != nil {
-		log.Printf("handleTerminalSession: can't UnMarshal (%v): %s", err, buf)
+		klog.Errorf("handleTerminalSession: can't UnMarshal (%v): %s", err, buf)
 		return
 	}
 
 	if msg.Op != "bind" {
-		log.Printf("handleTerminalSession: expected 'bind' message, got: %s", buf)
+		klog.V(args.LogLevelVerbose).Infof("handleTerminalSession: expected 'bind' message, got: %s", buf)
 		return
 	}
 
 	if terminalSession = terminalSessions.Get(msg.SessionID); terminalSession.id == "" {
-		log.Printf("handleTerminalSession: can't find session '%s'", msg.SessionID)
+		klog.V(args.LogLevelVerbose).Infof("handleTerminalSession: can't find session '%s'", msg.SessionID)
 		return
 	}
 

@@ -16,11 +16,11 @@ package horizontalpodautoscaler
 
 import (
 	"context"
-	"log"
 
 	autoscaling "k8s.io/api/autoscaling/v1"
 	v1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	client "k8s.io/client-go/kubernetes"
+	"k8s.io/klog/v2"
 )
 
 // HorizontalPodAutoscalerDetail provides the presentation layer view of Kubernetes Horizontal Pod Autoscaler resource.
@@ -35,7 +35,7 @@ type HorizontalPodAutoscalerDetail struct {
 
 // GetHorizontalPodAutoscalerDetail returns detailed information about a horizontal pod autoscaler
 func GetHorizontalPodAutoscalerDetail(client client.Interface, namespace string, name string) (*HorizontalPodAutoscalerDetail, error) {
-	log.Printf("Getting details of %s horizontal pod autoscaler", name)
+	klog.V(4).Infof("Getting details of %s horizontal pod autoscaler", name)
 
 	rawHorizontalPodAutoscaler, err := client.AutoscalingV1().HorizontalPodAutoscalers(namespace).Get(context.TODO(), name, v1.GetOptions{})
 	if err != nil {

@@ -16,11 +16,11 @@ package serviceaccount
 
 import (
 	"context"
-	"log"
 
 	v1 "k8s.io/api/core/v1"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	client "k8s.io/client-go/kubernetes"
+	"k8s.io/klog/v2"
 )
 
 // ServiceAccountDetail contains detailed information about a service account.
@@ -31,7 +31,7 @@ type ServiceAccountDetail struct {
 
 // GetServiceAccountDetail returns detailed information about a service account.
 func GetServiceAccountDetail(client client.Interface, namespace, name string) (*ServiceAccountDetail, error) {
-	log.Printf("Getting details of %s service account in %s namespace", name, namespace)
+	klog.V(4).Infof("Getting details of %s service account in %s namespace", name, namespace)
 
 	raw, err := client.CoreV1().ServiceAccounts(namespace).Get(context.TODO(), name, metaV1.GetOptions{})
 	if err != nil {

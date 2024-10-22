@@ -15,10 +15,9 @@
 package clusterrole
 
 import (
-	"log"
-
 	rbac "k8s.io/api/rbac/v1"
 	"k8s.io/client-go/kubernetes"
+	"k8s.io/klog/v2"
 
 	"k8s.io/dashboard/api/pkg/resource/common"
 	"k8s.io/dashboard/api/pkg/resource/dataselect"
@@ -40,7 +39,7 @@ type ClusterRole struct {
 }
 
 func GetClusterRoleList(client kubernetes.Interface, dsQuery *dataselect.DataSelectQuery) (*ClusterRoleList, error) {
-	log.Println("Getting list of RBAC roles")
+	klog.V(4).Info("Getting list of RBAC roles")
 	channels := &common.ResourceChannels{
 		ClusterRoleList: common.GetClusterRoleListChannel(client, 1),
 	}

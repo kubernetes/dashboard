@@ -15,14 +15,14 @@
 package endpoint
 
 import (
-	"log"
-
 	v1 "k8s.io/api/core/v1"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/fields"
 	"k8s.io/apimachinery/pkg/labels"
 	k8sClient "k8s.io/client-go/kubernetes"
+	"k8s.io/klog/v2"
 
+	"k8s.io/dashboard/api/pkg/args"
 	"k8s.io/dashboard/api/pkg/resource/common"
 	"k8s.io/dashboard/types"
 )
@@ -57,7 +57,7 @@ func GetServiceEndpoints(client k8sClient.Interface, namespace, name string) (*E
 	}
 
 	endpointList = toEndpointList(serviceEndpoints)
-	log.Printf("Found %d endpoints related to %s service in %s namespace", len(endpointList.Endpoints), name, namespace)
+	klog.V(args.LogLevelVerbose).Infof("Found %d endpoints related to %s service in %s namespace", len(endpointList.Endpoints), name, namespace)
 	return endpointList, nil
 }
 

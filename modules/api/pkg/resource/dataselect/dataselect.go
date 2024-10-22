@@ -19,6 +19,7 @@ import (
 
 	"k8s.io/klog/v2"
 
+	"k8s.io/dashboard/api/pkg/args"
 	metricapi "k8s.io/dashboard/api/pkg/integration/metric/api"
 	"k8s.io/dashboard/errors"
 )
@@ -195,7 +196,7 @@ func (self *DataSelector) GetCumulativeMetrics(metricClient metricapi.MetricClie
 
 	metricNames := self.DataSelectQuery.MetricQuery.MetricNames
 	if metricNames == nil {
-		klog.V(1).Info("Metrics names not provided. Skipping.")
+		klog.V(args.LogLevelVerbose).Info("Metrics names not provided. Skipping.")
 		return self
 	}
 

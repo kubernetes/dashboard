@@ -18,11 +18,11 @@ import (
 	"context"
 	"encoding/base64"
 	"fmt"
-	"log"
 	"math"
 	"strconv"
 
 	"k8s.io/apimachinery/pkg/runtime/schema"
+	"k8s.io/klog/v2"
 
 	v1 "k8s.io/api/core/v1"
 	res "k8s.io/apimachinery/pkg/api/resource"
@@ -141,7 +141,7 @@ type VolumeMount struct {
 // GetPodDetail returns the details of a named Pod from a particular namespace.
 func GetPodDetail(client kubernetes.Interface, metricClient metricapi.MetricClient, namespace, name string) (
 	*PodDetail, error) {
-	log.Printf("Getting details of %s pod in %s namespace", name, namespace)
+	klog.V(4).Infof("Getting details of %s pod in %s namespace", name, namespace)
 
 	channels := &common.ResourceChannels{
 		ConfigMapList: common.GetConfigMapListChannel(client, common.NewSameNamespaceQuery(namespace), 1),
@@ -403,18 +403,18 @@ func evalValueFrom(src *v1.EnvVarSource, container *v1.Container, pod *v1.Pod,
 	case src.FieldRef != nil:
 		gv, err := schema.ParseGroupVersion(src.FieldRef.APIVersion)
 		if err != nil {
-			log.Println(err)
+			klog.Error(err)
 			return ""
 		}
 		gvk := gv.WithKind("Pod")
 		internalFieldPath, _, err := runtime.NewScheme().ConvertFieldLabel(gvk, src.FieldRef.FieldPath, "")
 		if err != nil {
-			log.Println(err)
+			klog.Error(err)
 			return ""
 		}
 		valueFrom, err := ExtractFieldPathAsString(pod, internalFieldPath)
 		if err != nil {
-			log.Println(err)
+			klog.Error(err)
 			return ""
 		}
 		return valueFrom

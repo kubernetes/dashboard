@@ -16,11 +16,11 @@ package ingress
 
 import (
 	"context"
-	"log"
 
 	v1 "k8s.io/api/networking/v1"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	client "k8s.io/client-go/kubernetes"
+	"k8s.io/klog/v2"
 )
 
 // IngressDetail API resource provides mechanisms to inject containers with configuration data while keeping
@@ -41,7 +41,7 @@ type IngressDetail struct {
 
 // GetIngressDetail returns detailed information about an ingress
 func GetIngressDetail(client client.Interface, namespace, name string) (*IngressDetail, error) {
-	log.Printf("Getting details of %s ingress in %s namespace", name, namespace)
+	klog.V(4).Infof("Getting details of %s ingress in %s namespace", name, namespace)
 
 	rawIngress, err := client.NetworkingV1().Ingresses(namespace).Get(context.TODO(), name, metaV1.GetOptions{})
 

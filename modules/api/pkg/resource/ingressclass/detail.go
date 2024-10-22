@@ -16,11 +16,11 @@ package ingressclass
 
 import (
 	"context"
-	"log"
 
 	networkingv1 "k8s.io/api/networking/v1"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/client-go/kubernetes"
+	"k8s.io/klog/v2"
 )
 
 // IngressClassDetail provides the presentation layer view of Ingress Class resource.
@@ -32,7 +32,7 @@ type IngressClassDetail struct {
 
 // GetIngressClass returns Storage Class resource.
 func GetIngressClass(client kubernetes.Interface, name string) (*IngressClassDetail, error) {
-	log.Printf("Getting details of %s ingress class", name)
+	klog.V(4).Infof("Getting details of %s ingress class", name)
 
 	ic, err := client.NetworkingV1().IngressClasses().Get(context.TODO(), name, metaV1.GetOptions{})
 	if err != nil {

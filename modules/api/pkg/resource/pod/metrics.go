@@ -15,11 +15,11 @@
 package pod
 
 import (
-	"log"
-
 	v1 "k8s.io/api/core/v1"
 	apimachinery "k8s.io/apimachinery/pkg/types"
+	"k8s.io/klog/v2"
 
+	"k8s.io/dashboard/api/pkg/args"
 	metricapi "k8s.io/dashboard/api/pkg/integration/metric/api"
 	"k8s.io/dashboard/api/pkg/resource/dataselect"
 	"k8s.io/dashboard/errors"
@@ -47,7 +47,7 @@ type PodMetrics struct {
 
 func getMetricsPerPod(pods []v1.Pod, metricClient metricapi.MetricClient, dsQuery *dataselect.DataSelectQuery) (
 	*MetricsByPod, error) {
-	log.Println("Getting pod metrics")
+	klog.V(args.LogLevelDebug).Info("Getting pod metrics")
 
 	result := &MetricsByPod{MetricsMap: make(map[apimachinery.UID]PodMetrics)}
 
@@ -60,7 +60,7 @@ func getMetricsPerPod(pods []v1.Pod, metricClient metricapi.MetricClient, dsQuer
 	for _, m := range metrics {
 		uid, err := getPodUIDFromMetric(m)
 		if err != nil {
-			log.Printf("Skipping metric because of error: %s", err.Error())
+			continue
 		}
 
 		podMetrics := PodMetrics{}

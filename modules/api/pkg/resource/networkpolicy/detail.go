@@ -16,11 +16,11 @@ package networkpolicy
 
 import (
 	"context"
-	"log"
 
 	v1 "k8s.io/api/networking/v1"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	client "k8s.io/client-go/kubernetes"
+	"k8s.io/klog/v2"
 )
 
 // NetworkPolicyDetail contains detailed information about a network policy.
@@ -35,7 +35,7 @@ type NetworkPolicyDetail struct {
 
 // GetNetworkPolicyDetail returns detailed information about a network policy.
 func GetNetworkPolicyDetail(client client.Interface, namespace, name string) (*NetworkPolicyDetail, error) {
-	log.Printf("Getting details of %s network policy in %s namespace", name, namespace)
+	klog.V(4).Infof("Getting details of %s network policy in %s namespace", name, namespace)
 
 	raw, err := client.NetworkingV1().NetworkPolicies(namespace).Get(context.TODO(), name, metaV1.GetOptions{})
 	if err != nil {
