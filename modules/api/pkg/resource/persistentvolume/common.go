@@ -23,6 +23,7 @@ import (
 	client "k8s.io/client-go/kubernetes"
 	"k8s.io/klog/v2"
 
+	"k8s.io/dashboard/api/pkg/args"
 	"k8s.io/dashboard/api/pkg/resource/common"
 	"k8s.io/dashboard/api/pkg/resource/dataselect"
 	"k8s.io/dashboard/errors"
@@ -58,7 +59,7 @@ func GetStorageClassPersistentVolumes(client client.Interface, storageClassName 
 		}
 	}
 
-	klog.V(1).Infof("Found %d persistentvolumes related to %s storageclass",
+	klog.V(args.LogLevelVerbose).Infof("Found %d persistentvolumes related to %s storageclass",
 		len(storagePersistentVolumes), storageClassName)
 
 	return toPersistentVolumeList(storagePersistentVolumes, nonCriticalErrors, dsQuery), nil

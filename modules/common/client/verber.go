@@ -140,7 +140,7 @@ func (v *resourceVerber) Delete(kind string, namespace string, name string, prop
 		defaultDeleteOptions.GracePeriodSeconds = &gracePeriodSeconds
 	}
 
-	klog.V(1).InfoS("deleting resource", "kind", kind, "namespace", namespace, "name", name, "propagationPolicy", propagationPolicy, "deleteNow", deleteNow)
+	klog.V(2).InfoS("deleting resource", "kind", kind, "namespace", namespace, "name", name, "propagationPolicy", propagationPolicy, "deleteNow", deleteNow)
 	return v.client.Resource(gvr).Namespace(namespace).Delete(context.TODO(), name, defaultDeleteOptions)
 }
 

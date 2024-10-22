@@ -81,7 +81,7 @@ func (sm *SettingsManager) load(client kubernetes.Interface) (changed bool) {
 	configMap, err := client.CoreV1().ConfigMaps(args.Namespace()).
 		Get(context.Background(), args.SettingsConfigMapName(), metav1.GetOptions{})
 	if err != nil {
-		klog.V(1).Infof("Could not get settings config map: %s", err.Error())
+		klog.ErrorS(err, "could not get settings config map")
 		return
 	}
 
@@ -95,7 +95,7 @@ func (sm *SettingsManager) load(client kubernetes.Interface) (changed bool) {
 
 		if pinnedResources, ok := sm.rawSettings[PinnedResourcesKey]; ok {
 			if p, err := UnmarshalPinnedResources(pinnedResources); err != nil {
-				klog.InfoS("Cannot unmarshal pinned resources", "pinnedResources", pinnedResources, "error", err)
+				klog.ErrorS(err, "cannot unmarshal pinned resources", "pinnedResources", pinnedResources)
 			} else {
 				sm.pinnedResources = *p
 			}
@@ -103,7 +103,7 @@ func (sm *SettingsManager) load(client kubernetes.Interface) (changed bool) {
 
 		if settings, ok := sm.rawSettings[ConfigMapSettingsKey]; ok {
 			if s, err := UnmarshalSettings(settings); err != nil {
-				klog.InfoS("Cannot unmarshal settings", "settings", settings, "error", err)
+				klog.ErrorS(err, "cannot unmarshal settings", "settings", settings)
 			} else {
 				sm.settings = s
 			}

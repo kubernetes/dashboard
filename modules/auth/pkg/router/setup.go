@@ -32,12 +32,13 @@ func init() {
 		gin.SetMode(gin.ReleaseMode)
 	}
 
-	router = gin.Default()
+	router = gin.New()
+	router.Use(gin.Recovery())
 	_ = router.SetTrustedProxies(nil)
 	v1 = router.Group("/api/v1")
 	v1.Use(csrf.Gin().CSRF(
-		csrf.Gin().WithCSRFActionGetter(helpers.GetResourceFromPath)),
-	)
+		csrf.Gin().WithCSRFActionGetter(helpers.GetResourceFromPath),
+	))
 }
 
 func V1() *gin.RouterGroup {

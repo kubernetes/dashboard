@@ -16,6 +16,7 @@ package router
 
 import (
 	"github.com/gin-gonic/gin"
+
 	"k8s.io/dashboard/web/pkg/environment"
 )
 
@@ -29,7 +30,8 @@ func init() {
 		gin.SetMode(gin.ReleaseMode)
 	}
 
-	router = gin.Default()
+	router = gin.New()
+	router.Use(gin.Recovery())
 	_ = router.SetTrustedProxies(nil)
 	root = router.Group("/")
 }

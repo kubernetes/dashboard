@@ -152,7 +152,7 @@ func ToPodList(pods []v1.Pod, events []v1.Event, nonCriticalErrors []error, dsQu
 
 	metrics, err := getMetricsPerPod(pods, metricClient, dsQuery)
 	if err != nil {
-		klog.Errorf("Skipping metrics because of error: %s\n", err)
+		klog.ErrorS(err, "skipping metrics")
 	}
 
 	for _, pod := range pods {
@@ -163,7 +163,7 @@ func ToPodList(pods []v1.Pod, events []v1.Event, nonCriticalErrors []error, dsQu
 
 	cumulativeMetrics, err := cumulativeMetricsPromises.GetMetrics()
 	if err != nil {
-		klog.Errorf("Skipping metrics because of error: %s\n", err)
+		klog.ErrorS(err, "skipping metrics")
 		cumulativeMetrics = make([]metricapi.Metric, 0)
 	}
 
@@ -174,7 +174,7 @@ func ToPodList(pods []v1.Pod, events []v1.Event, nonCriticalErrors []error, dsQu
 func toPod(pod *v1.Pod, metrics *MetricsByPod, warnings []common.Event) Pod {
 	allocatedResources, err := getPodAllocatedResources(pod)
 	if err != nil {
-		klog.Errorf("Couldn't get allocated resources of %s pod: %s\n", pod.Name, err)
+		klog.ErrorS(err, "couldn't get allocated resources", "pod", pod.Name)
 	}
 
 	podDetail := Pod{
