@@ -12,14 +12,12 @@ The Kubernetes Dashboard has been around for a long time now and one of its pain
 
 ### Goals
 The primary goals of implementing the API caching solution are to:
-- **Reduce Latency**:  Minimize the time required to retrieve data from the API, enabling faster access to information.
+- **Reduce Latency**: Minimize the time required to retrieve data from the Dashboard API during consecutive requests, enabling faster access to information.
 - **Enhance User Experience**: Provide a smoother, more responsive interface for users managing complex clusters.
-- **Optimize Resource Utilization**: Decrease the load on the API server by caching frequently accessed data, thus improving overall cluster performance.
+- **Optimize Resource Utilization**: Decrease the pressure on the Kubernetes API server by caching frequently accessed data, thus improving overall cluster performance.
 - **Support Scalability**: Ensure the solution can accommodate clusters of varying sizes and complexities without degrading performance.
-- Reduce load times during consecutive requests
-- Reduce pressure on Kubernetes API server
-- Provide opt-out and other configuration options
-- Allow cache to be running in a multi-cluster setup 
+- **Configurability**: Provide opt-out and other configuration options.
+- **Flexibility**: Ensure cache is running in multi-cluster as well as in the single-cluster setup.
 
 ### Non-Goals
 This proposal does not aim to:
