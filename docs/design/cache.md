@@ -83,3 +83,22 @@ Cache package provides following interface:
 - `Set` - stores item in the cache.
 - `DefferedLoad` - updates cache in the background. Used after cache is read to refresh items.
 - `SyncedLoad` - initializes the cache ensuring that there will be no concurrent calls to the Kubernetes API for the same resources.
+
+In order to minimize the amount of code, we have created custom interfaces similar to the `client-go` interfaces where we could override only a single `List` method and still use their generic `client.Interface`. This way our internal implementation and usage of kubernetes client did not have to change at all and we were able to inject cached client globally.
+
+The initial implementation supports caching of the following resources:
+1. Core
+   1. Pod
+   2. Node
+   3. ConfigMap
+   4. Secret
+   5. Namespace
+   6. PVC
+   7. PV
+2. Extensions
+   1. Custom Resource Definitions 
+
+Whole cache implementation lives under [modules/common/client/cache](../../modules/common/client/cache).
+- **Generic ResourceLister**: [resourcelister.go](../../modules/common/client/cache/client/common/resourcelister.go)
+- **Core Client**: [core.go](../../modules/common/client/cache/client/core/core.go)
+- **Extensions Client**: [extensions.go](../../modules/common/client/cache/client/extensions/extensions.go)
