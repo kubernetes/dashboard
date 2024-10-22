@@ -30,9 +30,8 @@ import (
 	"k8s.io/dashboard/types"
 )
 
-// contextCache is used when `cluster-context-enabled=true`. It maps
-// a token to the context ID. It is used only when client needs to cache
-// multi-cluster resources.
+// contextCache is used in multi-cluster setup to map tokens to context (cluster) identifiers.
+// Multi-cluster setup is enabled by providing `cluster-context-enabled=true` argument.
 var contextCache *theine.Cache[string, string]
 
 func init() {
@@ -42,9 +41,8 @@ func init() {
 	}
 }
 
-// key is an internal structure used for creating
-// a unique cache key SHA. It is used when
-// `cluster-context-enabled=false`.
+// key used in cache as request identifier in single-cluster setup.
+// In multi-cluster setup Key is used instead.
 type key struct {
 	// kind is a Kubernetes resource kind.
 	kind types.ResourceKind
@@ -56,11 +54,13 @@ type key struct {
 	opts metav1.ListOptions
 }
 
-// SHA calculates sha based on the internal key fields.
+// SHA calculates key SHA based on its internal fields.
 func (k key) SHA() (string, error) {
 	return helpers.HashObject(k)
 }
 
+// MarshalJSON is a custom marshall implementation that allows to marshall internal key fields.
+// It is required during SHA calculation.
 func (k key) MarshalJSON() ([]byte, error) {
 	return json.Marshal(struct {
 		Kind      types.ResourceKind
@@ -74,8 +74,7 @@ func (k key) MarshalJSON() ([]byte, error) {
 }
 
 // Key embeds an internal key structure and extends it with the support
-// for the multi-cluster cache key creation. It is used when
-// `cluster-context-enabled=true`.
+// for the multi-cluster cache key creation.
 type Key struct {
 	key
 
@@ -88,6 +87,8 @@ type Key struct {
 	context string
 }
 
+// MarshalJSON is a custom marshall implementation that allows to marshall internal Key fields.
+// It is required during SHA calculation.
 func (k Key) MarshalJSON() ([]byte, error) {
 	return json.Marshal(struct {
 		K       key
@@ -98,9 +99,8 @@ func (k Key) MarshalJSON() ([]byte, error) {
 	})
 }
 
-// SHA calculates sha based on the internal struct fields.
-// It is also responsible for exchanging the token for
-// the context identifier with the external source of truth
+// SHA calculates Key SHA based on its internal fields.
+// It is also responsible for exchanging the token for the context identifier with the external source of truth
 // configured via `token-exchange-endpoint` flag.
 func (k Key) SHA() (sha string, err error) {
 	if !args.ClusterContextEnabled() {
@@ -121,6 +121,8 @@ func (k Key) SHA() (sha string, err error) {
 	return helpers.HashObject(k)
 }
 
+// exchangeToken exchanges the token for context identifier using the external source of truth
+// configured via `token-exchange-endpoint` flag.
 func (k Key) exchangeToken(token string) (string, error) {
 	client := &http.Client{Transport: &tokenExchangeTransport{token, http.DefaultTransport}}
 	response, err := client.Get(args.TokenExchangeEndpoint())
@@ -157,11 +159,14 @@ func NewKey(kind types.ResourceKind, namespace, token string, opts metav1.ListOp
 	return Key{key: key{kind, namespace, opts}, token: token}
 }
 
+// tokenExchangeTransport implements the mechanism
+// by which individual HTTP requests to token exchange endpoint are made.
 type tokenExchangeTransport struct {
 	token     string
 	transport http.RoundTripper
 }
 
+// RoundTrip executes a single HTTP transaction.
 func (in *tokenExchangeTransport) RoundTrip(req *http.Request) (*http.Response, error) {
 	req.Header.Set("Authorization", "Bearer "+in.token)
 	return in.transport.RoundTrip(req)
