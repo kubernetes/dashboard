@@ -50,4 +50,6 @@ This proposal does not aim to:
 
 [//]: # (By implementing this design, the Kubernetes Dashboard can significantly improve its responsiveness, leading to a more efficient and enjoyable user experience.)
 
+![Cache Sequence Diagram](../images/cache-sequence-diagram.png)
+
 ## Implementation
