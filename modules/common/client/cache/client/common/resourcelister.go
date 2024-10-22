@@ -45,7 +45,6 @@ func (in CachedResourceLister[T]) List(ctx context.Context, lister ResourceListe
 	if err != nil {
 		return new(T), err
 	}
-
 	if !found {
 		klog.V(3).InfoS("resource not found in cache, initializing", "kind", in.kind(), "namespace", in.namespace())
 		return cache.SyncedLoad(cacheKey, func() (*T, error) {

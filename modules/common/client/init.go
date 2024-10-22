@@ -132,15 +132,6 @@ func configFromRequest(request *http.Request) (*rest.Config, error) {
 	return buildConfigFromAuthInfo(authInfo)
 }
 
-func clientFromRequest(request *http.Request) (*client.Clientset, error) {
-	config, err := configFromRequest(request)
-	if err != nil {
-		return nil, err
-	}
-
-	return client.NewForConfig(config)
-}
-
 func buildConfigFromAuthInfo(authInfo *api.AuthInfo) (*rest.Config, error) {
 	cmdCfg := api.NewConfig()
 
