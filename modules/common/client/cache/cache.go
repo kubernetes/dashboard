@@ -93,13 +93,11 @@ func DeferredLoad[T any](key Key, loadFunc func() (T, error)) {
 			return
 		}
 
-		_, locked := cacheLocks.Load(cacheKey)
-		if locked {
+		if _, locked := cacheLocks.LoadOrStore(cacheKey, struct{}{}); locked {
 			klog.V(4).InfoS("cache is already being updated, skipping", "key", cacheKey)
 			return
 		}
 
-		cacheLocks.Store(cacheKey, struct{}{})
 		defer time.AfterFunc(args.CacheRefreshDebounce(), func() {
 			cacheLocks.Delete(cacheKey)
 			klog.V(4).InfoS("released cache update lock", "key", cacheKey)
@@ -127,8 +125,8 @@ func SyncedLoad[T any](key Key, loadFunc func() (*T, error)) (*T, error) {
 		return new(T), err
 	}
 
-	v, _ := syncedLoadLocks.LoadOrStore(cacheKey, &sync.Mutex{})
-	lock := v.(*sync.Mutex)
+	l, _ := syncedLoadLocks.LoadOrStore(cacheKey, &sync.Mutex{})
+	lock := l.(*sync.Mutex)
 	lock.Lock()
 
 	defer func() {
