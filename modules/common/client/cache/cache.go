@@ -32,7 +32,7 @@ var (
 
 	// cacheLocks is used as a set that holds information about
 	// cache keys that are currently fetching the latest data from the
-	// kubernetes API server in the background.
+	// Kubernetes API server in the background.
 	// It allows us to avoid multiple concurrent update calls being sent
 	// to the Kubernetes API.
 	// Once the lock is removed, the next update call can be initiated.
@@ -40,6 +40,7 @@ var (
 
 	// syncedLoadLocks is used to synchronize the initial cache hydration phase
 	// and avoid putting extra pressure on the API server.
+	// It maps cache keys to mutexes.
 	syncedLoadLocks sync.Map
 )
 
@@ -50,8 +51,8 @@ func init() {
 	}
 }
 
-// Get gives access to cache entries. It requires Key structure
-// to be provided which is used to calculate cache key SHA.
+// Get gives access to cache entries.
+// It requires a Key to be provided which is used to calculate cache key SHA.
 func Get[T any](key Key) (*T, bool, error) {
 	typedValue := new(T)
 
@@ -69,7 +70,7 @@ func Get[T any](key Key) (*T, bool, error) {
 }
 
 // Set allows updating cache with specific values.
-// It requires Key structure to be provided which is used to calculate cache key SHA.
+// It requires a Key to be provided which is used to calculate cache key SHA.
 func Set[T any](key Key, value T) error {
 	cacheKey, err := key.SHA()
 	if err != nil {
@@ -115,7 +116,7 @@ func DeferredLoad[T any](key Key, loadFunc func() (T, error)) {
 }
 
 // SyncedLoad initializes the cache using the [loadFunc]. It ensures that there will be no concurrent
-// calls to the [loadFunc]. First call will call the [loadFunc] and initialize the cache while
+// calls to the [loadFunc]. The first call will call the [loadFunc] and initialize the cache while
 // concurrent calls will be waiting for the first call to finish. Once cache is updated and lock is freed
 // other routines will return the value from cache without making any extra calls to the [loadFunc].
 func SyncedLoad[T any](key Key, loadFunc func() (*T, error)) (*T, error) {
