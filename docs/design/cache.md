@@ -48,19 +48,19 @@ Cache key should consist of the below fields:
 SHA should be created based on the above key structure and used as an internal cache key.
 
 ## Design
-[//]: # (The design of the API caching solution consists of the following components:)
+These sequence diagrams show simplified way of how cache works.
 
-[//]: # ()
-[//]: # (Cache Layer: A memory-based or distributed caching solution that stores API responses for quick retrieval.)
-
-[//]: # (Request Interception: Middleware to intercept API requests and determine whether to serve cached data or make a fresh API call.)
-
-[//]: # (Cache Configuration: Settings to define caching policies, including expiration times, resource types to cache, and invalidation triggers.)
-
-[//]: # (Monitoring and Metrics: Tools to track cache hit/miss ratios, response times, and overall performance, enabling ongoing optimization.)
-
-[//]: # (By implementing this design, the Kubernetes Dashboard can significantly improve its responsiveness, leading to a more efficient and enjoyable user experience.)
-
+### Standard Caching
 ![Cache Sequence Diagram](../images/cache-sequence-diagram.png)
+
+1. User requests to see a cached resource view
+2. API checks if unique key generated based on the request has a corresponding value in the cache
+   1. In case value is not cached, return the data directly from K8S API and cache it.
+   2. In case value is cached, create a Self Subject Access Review to check user permissions, return cached data and in background request latest data from K8S API to update cache.
+
+### Multi-Context Caching
+![Multi-Context Cache Sequence Diagram](../images/multi-context-cache-sequence-diagram.png)
+
+The flow is very similar to the standard caching with the difference being that provided user authorization token has to be able to be exchanged for the unique context ID using configured `token-exchange-endpoint`. It is then used to create unique cache key.
 
 ## Implementation
