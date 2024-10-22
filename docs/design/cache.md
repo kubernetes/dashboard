@@ -31,7 +31,21 @@ This proposal does not aim to:
 - **Latency**: The time delay between a user action and the corresponding response from the system.
 
 ## Proposal
-[//]: # (The proposed solution involves implementing a caching layer within the Kubernetes Dashboard that stores API responses for a configurable duration. This caching layer will intercept API requests and serve cached data when available, falling back to the API server only when necessary. The solution will leverage techniques such as time-based expiration and cache invalidation strategies to ensure data freshness while balancing performance.)
+The proposed solution involves implementing a caching layer within the Kubernetes Dashboard that stores a configurable amount of API responses for a configurable duration. This caching layer will hook into Kubernetes client interfaces and serve cached data when available, falling back to the API server only when necessary. The solution will leverage techniques such as time and cost based expiration and cache invalidation strategies to ensure data freshness while balancing performance. 
+
+In general, it will resemble the "cache-and-network" type of caching due to the nature of Dashboard auth layer. Since Dashboard does not require any permissions on its own, it has to rely on the user permissions and the only time when it can act as a user is the time from receiving a request to sending a response. Such an architecture requires an on-the-fly client creation as well as background cache updates.
+
+In order to ensure that cached data will not be served to unauthorized entities, every time before API returns data from the cache, it will first create a Self Subject Access Review request to the API server in order to validate user permissions. 
+
+It is especially important in a multi-cluster scenarios where Dashboard API is used to access multiple clusters. To avoid the situation where path stored in cache could be served from the wrong cluster context, multi-cluster cache context needs to have a way to exchange user authorization token for a unique context ID and it has to be a part of the cache key.
+
+Cache key should consist of the below fields:
+- **Kind**: a resource kind
+- **Namespace**: optional namespace name
+- **List Options**: `v1.ListOptions` should also be part of the key to ensure that filtered API requests are stored under a separate cache key
+- **Context ID**: optional context id, used only in multi-context caching, controlled by dedicated argument
+
+SHA should be created based on the above key structure and used as an internal cache key.
 
 ## Design
 [//]: # (The design of the API caching solution consists of the following components:)
