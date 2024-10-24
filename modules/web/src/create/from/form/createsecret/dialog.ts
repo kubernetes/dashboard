@@ -21,6 +21,7 @@ import {switchMap} from 'rxjs/operators';
 import {AlertDialogComponent, AlertDialogConfig} from '@common/dialogs/alert/dialog';
 import {CsrfTokenService} from '@common/services/global/csrftoken';
 import {CONFIG_DI_TOKEN} from '../../../../index.config';
+import {MAT_FORM_FIELD_DEFAULT_OPTIONS} from '@angular/material/form-field';
 
 export interface CreateSecretDialogMeta {
   namespace: string;
@@ -29,6 +30,15 @@ export interface CreateSecretDialogMeta {
 @Component({
   selector: 'kd-create-secret-dialog',
   templateUrl: 'template.html',
+  providers: [
+    {
+      provide: MAT_FORM_FIELD_DEFAULT_OPTIONS,
+      useValue: {
+        appearance: 'outline',
+        subscriptSizing: 'fixed',
+      },
+    },
+  ],
 })
 export class CreateSecretDialogComponent implements OnInit {
   form: UntypedFormGroup;
