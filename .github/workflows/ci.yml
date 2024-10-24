@@ -118,6 +118,7 @@ jobs:
 
   publish:
     name: Build and push API container
+    if: github.event.pull_request.head.repo.full_name == github.repository # not a fork
     runs-on: ubuntu-latest
     permissions:
       contents: read
