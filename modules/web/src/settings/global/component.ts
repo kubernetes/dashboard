@@ -39,6 +39,7 @@ enum Controls {
   ResourceAutorefreshInterval = 'resourceAutorefreshInterval',
   DisableAccessDeniedNotification = 'disableAccessDeniedNotification',
   NamespaceSettings = 'namespaceSettings',
+  HideAllNamespaces = 'hideAllNamespaces',
 }
 
 @Component({
@@ -76,6 +77,7 @@ export class GlobalSettingsComponent implements OnInit {
     settings.logsAutoRefreshTimeInterval = this.settingsService_.getLogsAutoRefreshTimeInterval();
     settings.resourceAutoRefreshTimeInterval = this.settingsService_.getResourceAutoRefreshTimeInterval();
     settings.disableAccessDeniedNotifications = this.settingsService_.getDisableAccessDeniedNotifications();
+    settings.hideAllNamespaces = this.settingsService_.getHideAllNamespaces();
     settings.defaultNamespace = this.settingsService_.getDefaultNamespace();
     settings.namespaceFallbackList = this.settingsService_.getNamespaceFallbackList();
 
@@ -90,6 +92,7 @@ export class GlobalSettingsComponent implements OnInit {
       [Controls.LogsAutorefreshInterval]: this.builder_.control(0),
       [Controls.ResourceAutorefreshInterval]: this.builder_.control(0),
       [Controls.DisableAccessDeniedNotification]: this.builder_.control(false),
+      [Controls.HideAllNamespaces]: this.builder_.control(false),
       [Controls.NamespaceSettings]: this.builder_.control(''),
     });
 
@@ -180,6 +183,7 @@ export class GlobalSettingsComponent implements OnInit {
     this.form
       .get(Controls.DisableAccessDeniedNotification)
       .setValue(this.settings.disableAccessDeniedNotifications, {emitEvent: false});
+    this.form.get(Controls.HideAllNamespaces).setValue(this.settings.hideAllNamespaces, {emitEvent: false});
   }
 
   private onLoadError_(): void {
@@ -191,6 +195,7 @@ export class GlobalSettingsComponent implements OnInit {
       itemsPerPage: this.form.get(Controls.ItemsPerPage).value,
       clusterName: this.form.get(Controls.ClusterName).value,
       disableAccessDeniedNotifications: this.form.get(Controls.DisableAccessDeniedNotification).value,
+      hideAllNamespaces: this.form.get(Controls.HideAllNamespaces).value,
       labelsLimit: this.form.get(Controls.LabelsLimit).value,
       logsAutoRefreshTimeInterval: this.form.get(Controls.LogsAutorefreshInterval).value,
       resourceAutoRefreshTimeInterval: this.form.get(Controls.ResourceAutorefreshInterval).value,
