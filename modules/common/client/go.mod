@@ -4,6 +4,7 @@ go 1.23.0
 
 require (
 	github.com/Yiling-J/theine-go v0.5.0
+	github.com/evanphx/json-patch/v5 v5.9.0
 	github.com/gobuffalo/flect v1.0.3
 	github.com/spf13/pflag v1.0.5
 	k8s.io/api v0.31.1
@@ -50,7 +51,6 @@ require (
 	golang.org/x/text v0.18.0 // indirect
 	golang.org/x/time v0.3.0 // indirect
 	google.golang.org/protobuf v1.34.2 // indirect
-	gopkg.in/evanphx/json-patch.v4 v4.12.0 // indirect
 	gopkg.in/inf.v0 v0.9.1 // indirect
 	gopkg.in/yaml.v2 v2.4.0 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
