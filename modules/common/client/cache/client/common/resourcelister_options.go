@@ -15,6 +15,10 @@
 package common
 
 import (
+	"strings"
+
+	"github.com/gobuffalo/flect"
+
 	"k8s.io/dashboard/types"
 )
 
@@ -28,7 +32,7 @@ func WithNamespace[T any](namespace string) Option[T] {
 
 func WithResourceKind[T any](kind types.ResourceKind) Option[T] {
 	return func(lister *CachedResourceLister[T]) {
-		lister.ssar.Spec.ResourceAttributes.Resource = kind.String()
+		lister.ssar.Spec.ResourceAttributes.Resource = flect.Pluralize(strings.ToLower(kind.String()))
 	}
 }
 
