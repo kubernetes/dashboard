@@ -32,6 +32,10 @@ type ConfigMapDetail struct {
 	// Data contains the configuration data.
 	// Each key must be a valid DNS_SUBDOMAIN with an optional leading dot.
 	Data map[string]string `json:"data,omitempty"`
+
+	// BinaryData contains the configuration binary data.
+	// Each key must be a valid DNS_SUBDOMAIN with an optional leading dot.
+	BinaryData map[string][]byte `json:"binaryData,omitempty"`
 }
 
 // GetConfigMapDetail returns detailed information about a config map
@@ -49,7 +53,8 @@ func GetConfigMapDetail(client kubernetes.Interface, namespace, name string) (*C
 
 func getConfigMapDetail(rawConfigMap *v1.ConfigMap) *ConfigMapDetail {
 	return &ConfigMapDetail{
-		ConfigMap: toConfigMap(rawConfigMap.ObjectMeta),
-		Data:      rawConfigMap.Data,
+		ConfigMap:  toConfigMap(rawConfigMap.ObjectMeta),
+		Data:       rawConfigMap.Data,
+		BinaryData: rawConfigMap.BinaryData,
 	}
 }

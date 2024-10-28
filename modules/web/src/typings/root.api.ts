@@ -603,6 +603,7 @@ export interface IngressClassDetail extends ResourceDetail {
 
 export interface ConfigMapDetail extends ResourceDetail {
   data: StringMap;
+  binaryData: StringMap;
 }
 
 export interface CRDDetail extends ResourceDetail {
