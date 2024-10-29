@@ -35,7 +35,7 @@ type ConfigMapDetail struct {
 
 	// BinaryData contains the configuration binary data.
 	// Each key must be a valid DNS_SUBDOMAIN with an optional leading dot.
-	BinaryData map[string][]byte `json:"binaryData,omitempty"`
+	BinaryData map[string]int `json:"binaryData,omitempty"`
 }
 
 // GetConfigMapDetail returns detailed information about a config map
@@ -55,6 +55,16 @@ func getConfigMapDetail(rawConfigMap *v1.ConfigMap) *ConfigMapDetail {
 	return &ConfigMapDetail{
 		ConfigMap:  toConfigMap(rawConfigMap.ObjectMeta),
 		Data:       rawConfigMap.Data,
-		BinaryData: rawConfigMap.BinaryData,
+		BinaryData: getBinaryDataKeySize(rawConfigMap.BinaryData),
 	}
+}
+
+func getBinaryDataKeySize(binaryData map[string][]byte) map[string]int {
+	converted := make(map[string]int)
+
+	for key, value := range binaryData {
+		converted[key] = len(string(value))
+	}
+
+	return converted
 }

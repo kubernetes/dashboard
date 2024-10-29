@@ -10006,7 +10006,7 @@
     "binaryData": {
      "type": "object",
      "additionalProperties": {
-      "type": "string"
+      "type": "integer"
      }
     },
     "data": {

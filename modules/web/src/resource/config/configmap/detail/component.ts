@@ -75,9 +75,9 @@ export class ConfigMapDetailComponent implements OnInit, OnDestroy {
       return [];
     }
 
-    return Object.entries(cm.binaryData).map(([name, value]) => ({
+    return Object.entries(cm.binaryData).map(([name, size]) => ({
       name,
-      size: atob(value).length,
+      size,
     }));
   }
 
