@@ -454,6 +454,15 @@ func CreateHTTPAPIHandler(iManager integration.Manager) (*restful.Container, err
 			Param(apiV1Ws.PathParameter("daemonSet", "name of the DaemonSet")).
 			Writes(common.EventList{}).
 			Returns(http.StatusOK, "OK", common.EventList{}))
+	apiV1Ws.Route(
+		apiV1Ws.PUT("/daemonset/{namespace}/{daemonSet}/restart").To(apiHandler.handleDaemonSetRestart).
+			// docs
+			Doc("rollout restart of the Daemon Set").
+			Param(apiV1Ws.PathParameter("namespace", "namespace of the Daemon Set")).
+			Param(apiV1Ws.PathParameter("daemonSet", "name of the Daemon Set")).
+			Writes(deployment.RolloutSpec{}).
+			Returns(http.StatusOK, "OK", daemonset.DaemonSetDetail{}),
+	)
 
 	// HorizontalPodAutoscaler
 	apiV1Ws.Route(
@@ -2794,6 +2803,23 @@ func (apiHandler *APIHandler) handleGetDaemonSetEvents(request *restful.Request,
 	name := request.PathParameter("daemonSet")
 	dataSelect := parser.ParseDataSelectPathParameter(request)
 	result, err := event.GetResourceEvents(k8sClient, dataSelect, namespace, name)
+	if err != nil {
+		errors.HandleInternalError(response, err)
+		return
+	}
+	_ = response.WriteHeaderAndEntity(http.StatusOK, result)
+}
+
+func (apiHandle *APIHandler) handleDaemonSetRestart(request *restful.Request, response *restful.Response) {
+	k8sClient, err := client.Client(request.Request)
+	if err != nil {
+		errors.HandleInternalError(response, err)
+		return
+	}
+
+	namespace := request.PathParameter("namespace")
+	name := request.PathParameter("daemonSet")
+	result, err := daemonset.RestartDaemonSet(k8sClient, namespace, name)
 	if err != nil {
 		errors.HandleInternalError(response, err)
 		return
