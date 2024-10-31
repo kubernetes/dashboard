@@ -153,7 +153,7 @@ describe('LoginComponent', () => {
       // set inputs and fire change events to trigger onChange()
       const token = fixture.debugElement.query(By.css(queries.token)).nativeElement;
       token.value = loginToken;
-      token.dispatchEvent(new Event('keyup'));
+      token.dispatchEvent(new Event('input'));
 
       submit();
 
