@@ -14455,7 +14455,7 @@ __metadata:
     ts-jest: 29.2.5
     ts-loader: 9.5.1
     ts-node: 10.9.2
-    tslib: 2.8.0
+    tslib: 2.8.1
     typescript: 5.1.6
     wait-on: 8.0.1
     web-animations-js: 2.3.2
@@ -19346,10 +19346,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tslib@npm:2.8.0":
-  version: 2.8.0
-  resolution: "tslib@npm:2.8.0"
-  checksum: de852ecd81adfdb4870927e250763345f07dc13fe7f395ce261424966bb122a0992ad844c3ec875c9e63e72afe2220a150712984e44dfd1a8a7e538a064e3d46
+"tslib@npm:2.8.1":
+  version: 2.8.1
+  resolution: "tslib@npm:2.8.1"
+  checksum: e4aba30e632b8c8902b47587fd13345e2827fa639e7c3121074d5ee0880723282411a8838f830b55100cbe4517672f84a2472667d355b81e8af165a55dc6203a
   languageName: node
   linkType: hard
 
