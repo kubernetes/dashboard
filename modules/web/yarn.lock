@@ -9157,9 +9157,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"concurrently@npm:9.0.1":
-  version: 9.0.1
-  resolution: "concurrently@npm:9.0.1"
+"concurrently@npm:9.1.0":
+  version: 9.1.0
+  resolution: "concurrently@npm:9.1.0"
   dependencies:
     chalk: ^4.1.2
     lodash: ^4.17.21
@@ -9171,7 +9171,7 @@ __metadata:
   bin:
     conc: dist/bin/concurrently.js
     concurrently: dist/bin/concurrently.js
-  checksum: c29b9cb1d88e36259df3ba926f327e4a6816634e446f1cd59139e7e63656a4ba454023a4622f8d32b4420289936fd1b1911ab3143f1735a2976833f76ce92cff
+  checksum: 17d554f7e8f839fe023f673b63847d7b4895c6917e29d161ba17e3335a73dc66e1469486e5cfc3e90890ac2ba8c951a0d1dc297cf7b589c0cd9a89689a8ab6fb
   languageName: node
   linkType: hard
 
@@ -14420,7 +14420,7 @@ __metadata:
     "@typescript-eslint/parser": 8.12.2
     ace-builds: 1.36.3
     codelyzer: 6.0.2
-    concurrently: 9.0.1
+    concurrently: 9.1.0
     core-js: 3.39.0
     crop-url: 4.0.1
     cypress: 13.15.1
