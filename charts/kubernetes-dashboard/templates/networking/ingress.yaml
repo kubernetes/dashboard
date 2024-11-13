@@ -84,6 +84,6 @@ spec:
               service:
                 name: {{ template "kong.fullname" (index $.Subcharts "kong") }}-proxy
                 port:
-                  number: {{ $.Values.kong.proxy.tls.servicePort }}
+                  number: {{ $.Values.kong.proxy.http.servicePort }}
     {{- end }}
 {{- end }}
