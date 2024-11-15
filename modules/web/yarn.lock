@@ -5865,35 +5865,34 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@swimlane/ngx-charts@npm:20.5.0":
-  version: 20.5.0
-  resolution: "@swimlane/ngx-charts@npm:20.5.0"
+"@swimlane/ngx-charts@npm:21.0.0":
+  version: 21.0.0
+  resolution: "@swimlane/ngx-charts@npm:21.0.0"
   dependencies:
-    d3-array: ^3.1.1
+    d3-array: ^3.2.0
     d3-brush: ^3.0.0
     d3-color: ^3.1.0
     d3-ease: ^3.0.1
     d3-format: ^3.1.0
-    d3-hierarchy: ^3.1.0
+    d3-hierarchy: ^3.1.2
     d3-interpolate: ^3.0.1
     d3-sankey: ^0.12.3
     d3-scale: ^4.0.2
     d3-selection: ^3.0.0
     d3-shape: ^3.2.0
-    d3-time-format: ^3.0.0
+    d3-time-format: ^4.1.0
     d3-transition: ^3.0.1
-    rfdc: ^1.3.0
-    tslib: ^2.0.0
+    tslib: ^2.3.1
   peerDependencies:
-    "@angular/animations": ">=12.0.0"
-    "@angular/cdk": ">=12.0.0"
-    "@angular/common": ">=12.0.0"
-    "@angular/core": ">=12.0.0"
-    "@angular/forms": ">=12.0.0"
-    "@angular/platform-browser": ">=12.0.0"
-    "@angular/platform-browser-dynamic": ">=12.0.0"
-    rxjs: ^6.5.3 || ^7.4.0
-  checksum: 4b124e528f9fefa77bb6edac612cc40c64ec401ee547881f561279e92010d6c623e0f0f8d488ae862acf7bccf4116645ea374a42dc7a9ffa125c712d58ec9701
+    "@angular/animations": 17.x || 18.x
+    "@angular/cdk": 17.x || 18.x
+    "@angular/common": 17.x || 18.x
+    "@angular/core": 17.x || 18.x
+    "@angular/forms": 17.x || 18.x
+    "@angular/platform-browser": 17.x || 18.x
+    "@angular/platform-browser-dynamic": 17.x || 18.x
+    rxjs: 7.x
+  checksum: a88b64a8ed09de16dd644825e910efb19f4c5fa2fed03823711b25a69f6ff01da14451653f71893dea2e781f8223cb17a68b98d0dcd7b2f4a72c2f7a4fa2bb28
   languageName: node
   linkType: hard
 
@@ -9391,7 +9390,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"d3-array@npm:1 - 2, d3-array@npm:2":
+"d3-array@npm:1 - 2":
   version: 2.12.1
   resolution: "d3-array@npm:2.12.1"
   dependencies:
@@ -9400,7 +9399,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"d3-array@npm:2 - 3, d3-array@npm:2.10.0 - 3, d3-array@npm:^3.1.1":
+"d3-array@npm:2 - 3, d3-array@npm:2.10.0 - 3, d3-array@npm:^3.2.0":
   version: 3.2.4
   resolution: "d3-array@npm:3.2.4"
   dependencies:
@@ -9460,7 +9459,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"d3-hierarchy@npm:^3.1.0":
+"d3-hierarchy@npm:^3.1.2":
   version: 3.1.2
   resolution: "d3-hierarchy@npm:3.1.2"
   checksum: 0fd946a8c5fd4686d43d3e11bbfc2037a145fda29d2261ccd0e36f70b66af6d7638e2c0c7112124d63fc3d3127197a00a6aecf676bd5bd392a94d7235a214263
@@ -9538,30 +9537,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"d3-time-format@npm:2 - 4, d3-time-format@npm:4.1.0":
+"d3-time-format@npm:2 - 4, d3-time-format@npm:4.1.0, d3-time-format@npm:^4.1.0":
   version: 4.1.0
   resolution: "d3-time-format@npm:4.1.0"
   dependencies:
     d3-time: 1 - 3
   checksum: 7342bce28355378152bbd4db4e275405439cabba082d9cd01946d40581140481c8328456d91740b0fe513c51ec4a467f4471ffa390c7e0e30ea30e9ec98fcdf4
-  languageName: node
-  linkType: hard
-
-"d3-time-format@npm:^3.0.0":
-  version: 3.0.0
-  resolution: "d3-time-format@npm:3.0.0"
-  dependencies:
-    d3-time: 1 - 2
-  checksum: c20c1667dbea653f81d923e741f84c23e4b966002ba0d6ed94cbc70692105566e55e89d18d175404534a879383fd1123300bd12885a3c924fe924032bb0060db
-  languageName: node
-  linkType: hard
-
-"d3-time@npm:1 - 2":
-  version: 2.1.1
-  resolution: "d3-time@npm:2.1.1"
-  dependencies:
-    d3-array: 2
-  checksum: d1c7b9658c20646e46c3dd19e11c38e02dec098e8baa7d2cd868af8eb01953668f5da499fa33dc63541cf74a26e788786f8828c4381dbbf475a76b95972979a6
   languageName: node
   linkType: hard
 
@@ -14103,7 +14084,7 @@ __metadata:
     "@graphql-mesh/openapi": 0.107.6
     "@graphql-mesh/runtime": 0.104.1
     "@graphql-mesh/transform-replace-field": 0.102.11
-    "@swimlane/ngx-charts": 20.5.0
+    "@swimlane/ngx-charts": 21.0.0
     "@types/d3": 7.4.3
     "@types/d3-scale": 4.0.8
     "@types/file-saver": 2.0.7
@@ -19042,7 +19023,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tslib@npm:2.8.1":
+"tslib@npm:2.8.1, tslib@npm:^2.3.1":
   version: 2.8.1
   resolution: "tslib@npm:2.8.1"
   checksum: e4aba30e632b8c8902b47587fd13345e2827fa639e7c3121074d5ee0880723282411a8838f830b55100cbe4517672f84a2472667d355b81e8af165a55dc6203a
