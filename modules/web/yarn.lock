@@ -14200,7 +14200,7 @@ __metadata:
     ngx-pipes: 3.2.2
     node-gyp: 10.2.0
     normalize.css: 8.0.1
-    prettier: 3.3.3
+    prettier: 3.4.1
     q: 1.5.1
     raw-loader: 4.0.2
     roboto-fontface: 0.10.0
@@ -16580,12 +16580,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"prettier@npm:3.3.3":
-  version: 3.3.3
-  resolution: "prettier@npm:3.3.3"
+"prettier@npm:3.4.1":
+  version: 3.4.1
+  resolution: "prettier@npm:3.4.1"
   bin:
     prettier: bin/prettier.cjs
-  checksum: bc8604354805acfdde6106852d14b045bb20827ad76a5ffc2455b71a8257f94de93f17f14e463fe844808d2ccc87248364a5691488a3304f1031326e62d9276e
+  checksum: f83ae83e38ae38f42c0b174833f58f820ed6eb063abfc5aa6725e8f9c1d626b54b1cb9d595cace525f8d59de89e186285f6bbcb460dc644ea9d8a7823cc54aca
   languageName: node
   linkType: hard
 
