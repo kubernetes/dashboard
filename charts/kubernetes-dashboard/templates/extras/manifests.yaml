@@ -14,5 +14,9 @@
 
 {{ range .Values.extras.manifests }}
 ---
-{{ tpl (toYaml .) $ }}
+{{ if typeIs "string" . }}
+    {{- tpl . $ }}
+{{- else }}
+    {{- tpl (toYaml .) $ }}
+{{- end }}
 {{ end }}
