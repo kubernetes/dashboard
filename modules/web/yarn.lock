@@ -6222,9 +6222,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@swimlane/ngx-charts@npm:21.0.0":
-  version: 21.0.0
-  resolution: "@swimlane/ngx-charts@npm:21.0.0"
+"@swimlane/ngx-charts@npm:21.1.0":
+  version: 21.1.0
+  resolution: "@swimlane/ngx-charts@npm:21.1.0"
   dependencies:
     d3-array: ^3.2.0
     d3-brush: ^3.0.0
@@ -6239,6 +6239,7 @@ __metadata:
     d3-shape: ^3.2.0
     d3-time-format: ^4.1.0
     d3-transition: ^3.0.1
+    gradient-path: ^2.3.0
     tslib: ^2.3.1
   peerDependencies:
     "@angular/animations": 17.x || 18.x
@@ -6249,7 +6250,7 @@ __metadata:
     "@angular/platform-browser": 17.x || 18.x
     "@angular/platform-browser-dynamic": 17.x || 18.x
     rxjs: 7.x
-  checksum: a88b64a8ed09de16dd644825e910efb19f4c5fa2fed03823711b25a69f6ff01da14451653f71893dea2e781f8223cb17a68b98d0dcd7b2f4a72c2f7a4fa2bb28
+  checksum: 2a06b9ac64be795cd1d86d304b7a6bfc226e40e238c6d55bc746593603bfb0f6f458f0907b4342dec4e6b18c39c3d9a7fd597874a57660a481c89279a509483a
   languageName: node
   linkType: hard
 
@@ -7023,6 +7024,13 @@ __metadata:
   version: 2.0.3
   resolution: "@types/stack-utils@npm:2.0.3"
   checksum: 72576cc1522090fe497337c2b99d9838e320659ac57fa5560fcbdcbafcf5d0216c6b3a0a8a4ee4fdb3b1f5e3420aa4f6223ab57b82fef3578bec3206425c6cf5
+  languageName: node
+  linkType: hard
+
+"@types/tinycolor2@npm:^1.4.0":
+  version: 1.4.6
+  resolution: "@types/tinycolor2@npm:1.4.6"
+  checksum: 50179851b32dcf78e0b4b691350a61043d8a00c3a8176d8155a257b34bb937136ff5d7950c814dca3c832673c7b6dc835f89dd154e85ccec3a4d4eac3993ed84
   languageName: node
   linkType: hard
 
@@ -12330,6 +12338,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"gradient-path@npm:^2.3.0":
+  version: 2.3.0
+  resolution: "gradient-path@npm:2.3.0"
+  dependencies:
+    tinygradient: ^1.0.0
+  checksum: 983568e5e7a2f156f99feb06185550f66e15703201c6ad29e04b3140cf860e31924361ec5d81df4b0f900d9dfd22a18f01bf2f06fbbb6477f87ba597f6ef0507
+  languageName: node
+  linkType: hard
+
 "graphemer@npm:^1.4.0":
   version: 1.4.0
   resolution: "graphemer@npm:1.4.0"
@@ -14489,7 +14506,7 @@ __metadata:
     "@graphql-mesh/openapi": 0.108.11
     "@graphql-mesh/runtime": 0.105.9
     "@graphql-mesh/transform-replace-field": 0.103.10
-    "@swimlane/ngx-charts": 21.0.0
+    "@swimlane/ngx-charts": 21.1.0
     "@types/d3": 7.4.3
     "@types/d3-scale": 4.0.8
     "@types/file-saver": 2.0.7
@@ -19248,6 +19265,23 @@ __metadata:
   version: 11.2.5
   resolution: "tiny-lru@npm:11.2.5"
   checksum: faced7e5b11936d83b40fb743d1630a52da9f7f7341d6656c139bdea76726bff2318f9b30a722140eec2885ea8bc5ed6507ed5a1acba0fbbe88f2b8fa3660dd3
+  languageName: node
+  linkType: hard
+
+"tinycolor2@npm:^1.0.0":
+  version: 1.6.0
+  resolution: "tinycolor2@npm:1.6.0"
+  checksum: 6df4d07fceeedc0a878d7bac47e2cd47c1ceeb1078340a9eb8a295bc0651e17c750f73d47b3028d829f30b85c15e0572c0fd4142083e4c21a30a597e47f47230
+  languageName: node
+  linkType: hard
+
+"tinygradient@npm:^1.0.0":
+  version: 1.1.5
+  resolution: "tinygradient@npm:1.1.5"
+  dependencies:
+    "@types/tinycolor2": ^1.4.0
+    tinycolor2: ^1.0.0
+  checksum: d41771d553fff884830f60029ba32163066221f1c6ea28ddf9751b10d54015fa47597bdefa164e20434ba3018e499dbd17b465fd43a095c587cac28bb7de5a0e
   languageName: node
   linkType: hard
 
