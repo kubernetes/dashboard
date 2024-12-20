@@ -15,9 +15,9 @@
 package event
 
 import (
-	"log"
-
 	k8sClient "k8s.io/client-go/kubernetes"
+	"k8s.io/klog/v2"
+
 	"k8s.io/dashboard/api/pkg/resource/common"
 	"k8s.io/dashboard/api/pkg/resource/dataselect"
 	"k8s.io/dashboard/errors"
@@ -25,7 +25,7 @@ import (
 
 func GetEventList(client k8sClient.Interface, nsQuery *common.NamespaceQuery,
 	dsQuery *dataselect.DataSelectQuery) (*common.EventList, error) {
-	log.Printf("Getting list of events in namespace: %s", nsQuery.ToRequestParam())
+	klog.V(4).Infof("Getting list of events in namespace: %s", nsQuery.ToRequestParam())
 
 	channels := &common.ResourceChannels{
 		EventList: common.GetEventListChannel(client, nsQuery, 2),

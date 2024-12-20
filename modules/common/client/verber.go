@@ -18,17 +18,20 @@ import (
 	"context"
 	"fmt"
 	"net/http"
+	"reflect"
 	"strings"
 
+	jsonpatch "github.com/evanphx/json-patch/v5"
 	"github.com/gobuffalo/flect"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/apis/meta/v1/unstructured"
 	"k8s.io/apimachinery/pkg/runtime"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 	k8stypes "k8s.io/apimachinery/pkg/types"
-	"k8s.io/apimachinery/pkg/util/jsonmergepatch"
+	"k8s.io/apimachinery/pkg/util/strategicpatch"
 	"k8s.io/client-go/discovery"
 	"k8s.io/client-go/dynamic"
+	"k8s.io/client-go/kubernetes/scheme"
 	"k8s.io/client-go/util/retry"
 	"k8s.io/klog/v2"
 )
@@ -56,11 +59,11 @@ func (v *resourceVerber) groupVersionResourceFromUnstructured(object *unstructur
 
 func (v *resourceVerber) groupVersionResourceFromKind(kind string) (schema.GroupVersionResource, error) {
 	if gvr, exists := kindToGroupVersionResource[kind]; exists {
-		klog.V(3).InfoS("GroupVersionResource cache hit", "kind", kind)
+		klog.V(4).InfoS("GroupVersionResource cache hit", "kind", kind)
 		return gvr, nil
 	}
 
-	klog.V(3).InfoS("GroupVersionResource cache miss", "kind", kind)
+	klog.V(4).InfoS("GroupVersionResource cache miss", "kind", kind)
 	_, resourceList, err := v.discovery.ServerGroupsAndResources()
 	if err != nil {
 		return schema.GroupVersionResource{}, err
@@ -140,7 +143,7 @@ func (v *resourceVerber) Delete(kind string, namespace string, name string, prop
 		defaultDeleteOptions.GracePeriodSeconds = &gracePeriodSeconds
 	}
 
-	klog.V(1).InfoS("deleting resource", "kind", kind, "namespace", namespace, "name", name, "propagationPolicy", propagationPolicy, "deleteNow", deleteNow)
+	klog.V(2).InfoS("deleting resource", "kind", kind, "namespace", namespace, "name", name, "propagationPolicy", propagationPolicy, "deleteNow", deleteNow)
 	return v.client.Resource(gvr).Namespace(namespace).Delete(context.TODO(), name, defaultDeleteOptions)
 }
 
@@ -151,32 +154,57 @@ func (v *resourceVerber) Update(object *unstructured.Unstructured) error {
 	gvr := v.groupVersionResourceFromUnstructured(object)
 
 	return retry.RetryOnConflict(retry.DefaultRetry, func() error {
-		klog.V(2).InfoS("fetching latest resource version", "group", gvr.Group, "version", gvr.Version, "resource", gvr.Resource, "name", name, "namespace", namespace)
+		klog.V(4).InfoS("fetching latest resource version", "group", gvr.Group, "version", gvr.Version, "resource", gvr.Resource, "name", name, "namespace", namespace)
 		result, getErr := v.client.Resource(gvr).Namespace(namespace).Get(context.TODO(), name, metav1.GetOptions{})
 		if getErr != nil {
-			return fmt.Errorf("failed to get latest %s version: %v", gvr.Resource, getErr)
+			return fmt.Errorf("failed to get latest %s version: %w", gvr.Resource, getErr)
 		}
 
 		origData, err := result.MarshalJSON()
 		if err != nil {
-			return fmt.Errorf("failed to marshal original data: %+v", err)
+			return fmt.Errorf("failed to marshal original data: %w", err)
 		}
 
 		// Update resource version from latest object to not end up with resource version conflict.
 		object.SetResourceVersion(result.GetResourceVersion())
 		modifiedData, err := object.MarshalJSON()
 		if err != nil {
-			return fmt.Errorf("failed to marshal modified data: %+v", err)
+			return fmt.Errorf("failed to marshal modified data: %w", err)
 		}
 
-		patchBytes, err := jsonmergepatch.CreateThreeWayJSONMergePatch(origData, modifiedData, origData)
-		if err != nil {
-			return fmt.Errorf("failed creating merge patch: %+v", err)
+		if reflect.DeepEqual(result, object) {
+			klog.V(3).InfoS("original and updated objects are the same, skipping")
+			return nil
 		}
 
-		klog.V(3).InfoS("patching resource", "group", gvr.Group, "version", gvr.Version, "resource", gvr.Resource, "name", name, "namespace", namespace, "patch", string(patchBytes))
-		_, updateErr := v.client.Resource(gvr).Namespace(namespace).Patch(context.TODO(), name, k8stypes.MergePatchType, patchBytes, metav1.PatchOptions{})
-		return updateErr
+		versionedObject, err := scheme.Scheme.New(schema.GroupVersionKind{
+			Group:   gvr.Group,
+			Version: gvr.Version,
+			Kind:    object.GetKind(),
+		})
+
+		switch {
+		case runtime.IsNotRegisteredError(err):
+			patchBytes, err := jsonpatch.CreateMergePatch(origData, modifiedData)
+			if err != nil {
+				return fmt.Errorf("failed creating merge patch: %w", err)
+			}
+
+			klog.V(2).InfoS("patching resource", "group", gvr.Group, "version", gvr.Version, "resource", gvr.Resource, "name", name, "namespace", namespace, "patch", string(patchBytes))
+			_, updateErr := v.client.Resource(gvr).Namespace(namespace).Patch(context.TODO(), name, k8stypes.MergePatchType, patchBytes, metav1.PatchOptions{})
+			return updateErr
+		case err != nil:
+			return err
+		default:
+			patchBytes, err := strategicpatch.CreateTwoWayMergePatch(origData, modifiedData, versionedObject)
+			if err != nil {
+				return fmt.Errorf("failed creating two way merge patch: %w", err)
+			}
+
+			klog.V(2).InfoS("patching resource", "group", gvr.Group, "version", gvr.Version, "resource", gvr.Resource, "name", name, "namespace", namespace, "patch", string(patchBytes))
+			_, updateErr := v.client.Resource(gvr).Namespace(namespace).Patch(context.TODO(), name, k8stypes.StrategicMergePatchType, patchBytes, metav1.PatchOptions{})
+			return updateErr
+		}
 	})
 }
 

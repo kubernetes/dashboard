@@ -18,14 +18,15 @@ metadata:
   labels:
     {{- include "kubernetes-dashboard.labels" . | nindent 4 }}
     {{- with .Values.api.labels }}
-    {{ toYaml . | nindent 4 }}
+    {{- toYaml . | nindent 4 }}
     {{- end }}
     app.kubernetes.io/name: {{ template "kubernetes-dashboard.name" . }}-{{ .Values.api.role }}
     app.kubernetes.io/version: {{ .Values.api.image.tag }}
     app.kubernetes.io/component: {{ .Values.api.role }}
   annotations:
+    {{- include "kubernetes-dashboard.annotations" . | nindent 4 }}
     {{- with .Values.api.annotations }}
-    {{ toYaml . | nindent 8 }}
+    {{- toYaml . | nindent 4 }}
     {{- end }}
   name: {{ template "kubernetes-dashboard.fullname" . }}-{{ .Values.api.role }}
 spec:
@@ -74,12 +75,14 @@ spec:
               valueFrom:
                 resourceFieldRef:
                   resource: limits.cpu
+                  divisor: "1"
             {{- end }}
             {{- if .Values.api.containers.resources.limits.memory }}
             - name: GOMEMLIMIT
               valueFrom:
                 resourceFieldRef:
                   resource: limits.memory
+                  divisor: "1"
             {{- end }}
 
           {{- with .Values.api.containers.env }}

@@ -32,6 +32,12 @@ export interface ObjectMeta {
   annotations?: StringMap;
   creationTimestamp?: string;
   uid?: string;
+  ownerReferences?: Array<OwnerReference>;
+}
+
+export interface OwnerReference {
+  kind?: string;
+  name?: string;
 }
 
 export interface JobStatus {
@@ -1223,6 +1229,7 @@ export interface GlobalSettings {
   logsAutoRefreshTimeInterval: number;
   resourceAutoRefreshTimeInterval: number;
   disableAccessDeniedNotifications: boolean;
+  hideAllNamespaces: boolean;
   defaultNamespace: string;
   namespaceFallbackList: string[];
 }

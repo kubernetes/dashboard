@@ -82,6 +82,7 @@ serve: $(PRE) --ensure-kind-cluster --ensure-metrics-server ## Starts developmen
 	SIDECAR_HOST=$(SIDECAR_HOST) \
 	docker compose -f $(DOCKER_COMPOSE_DEV_PATH) --project-name=$(PROJECT_NAME) up \
 		--build \
+		--force-recreate \
 		--remove-orphans \
 		--no-attach gateway \
 		--no-attach scraper \
@@ -90,7 +91,7 @@ serve: $(PRE) --ensure-kind-cluster --ensure-metrics-server ## Starts developmen
 # Starts production version of the application.
 #
 # HTTPS: https://localhost:8443
-# HTTP: https://localhost:8080
+# HTTP: http://localhost:8080
 #
 # Note: Make sure that the ports 8443 (Gateway HTTPS) and 8080 (Gateway HTTP) are free on your localhost
 .PHONY: run

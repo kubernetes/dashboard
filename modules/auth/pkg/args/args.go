@@ -26,9 +26,11 @@ import (
 )
 
 var (
-	argPort       = pflag.Int("port", 8000, "The port for auth service to listen on.")
-	argAddress    = pflag.IP("address", net.IPv4(0, 0, 0, 0), "The IP address for auth service to serve on. Set 0.0.0.0 for listening on all interfaces.")
-	argKubeconfig = pflag.String("kubeconfig", "", "path to kubeconfig file")
+	argPort                   = pflag.Int("port", 8000, "The port for auth service to listen on.")
+	argAddress                = pflag.IP("address", net.IPv4(0, 0, 0, 0), "The IP address for auth service to serve on. Set 0.0.0.0 for listening on all interfaces.")
+	argKubeconfig             = pflag.String("kubeconfig", "", "path to kubeconfig file")
+	argApiServerHost          = pflag.String("apiserver-host", "", "address of the Kubernetes API server to connect to in the format of protocol://address:port, leave it empty if the binary runs inside cluster for local discovery attempt")
+	argApiServerSkipTLSVerify = pflag.Bool("apiserver-skip-tls-verify", false, "enable if connection with remote Kubernetes API server should skip TLS verify")
 )
 
 func init() {
@@ -47,6 +49,14 @@ func init() {
 
 func KubeconfigPath() string {
 	return *argKubeconfig
+}
+
+func ApiServerHost() string {
+	return *argApiServerHost
+}
+
+func ApiServerSkipTLSVerify() bool {
+	return *argApiServerSkipTLSVerify
 }
 
 func Address() string {

@@ -27,6 +27,9 @@ import (
 	client "k8s.io/client-go/kubernetes"
 	"k8s.io/client-go/rest"
 	"k8s.io/klog/v2"
+
+	"k8s.io/dashboard/client/args"
+	cacheclient "k8s.io/dashboard/client/cache/client"
 )
 
 func InClusterClient() client.Interface {
@@ -55,7 +58,16 @@ func Client(request *http.Request) (client.Interface, error) {
 		return nil, fmt.Errorf("client package not initialized")
 	}
 
-	return clientFromRequest(request)
+	config, err := configFromRequest(request)
+	if err != nil {
+		return nil, err
+	}
+
+	if args.CacheEnabled() {
+		return cacheclient.New(config, GetBearerToken(request))
+	}
+
+	return client.NewForConfig(config)
 }
 
 func APIExtensionsClient(request *http.Request) (apiextensionsclientset.Interface, error) {
@@ -66,6 +78,15 @@ func APIExtensionsClient(request *http.Request) (apiextensionsclientset.Interfac
 	config, err := configFromRequest(request)
 	if err != nil {
 		return nil, err
+	}
+
+	kubeClient, err := client.NewForConfig(config)
+	if err != nil {
+		return nil, err
+	}
+
+	if args.CacheEnabled() {
+		return cacheclient.NewCachedExtensionsClient(config, kubeClient.AuthorizationV1(), GetBearerToken(request))
 	}
 
 	return apiextensionsclientset.NewForConfig(config)

@@ -16,13 +16,13 @@ package handler
 
 import (
 	"io"
-	"log"
 	"net/http"
 	"strconv"
 	"strings"
 
 	v1 "k8s.io/api/core/v1"
 	"k8s.io/apimachinery/pkg/apis/meta/v1/unstructured"
+	"k8s.io/klog/v2"
 
 	"k8s.io/dashboard/api/pkg/resource/networkpolicy"
 	"k8s.io/dashboard/client"
@@ -74,10 +74,10 @@ import (
 
 const (
 	// RequestLogString is a template for request log message.
-	RequestLogString = "[%s] Incoming %s %s %s request from %s: %s"
+	RequestLogString = "Incoming %s %s %s request from %s: %s"
 
 	// ResponseLogString is a template for response log message.
-	ResponseLogString = "[%s] Outcoming response to %s with %d status code"
+	ResponseLogString = "Outgoing response to %s with %d status code"
 )
 
 // APIHandler is a representation of API handler. Structure contains clientapi and clientapi configuration.
@@ -875,6 +875,13 @@ func CreateHTTPAPIHandler(iManager integration.Manager) (*restful.Container, err
 			Param(apiV1Ws.PathParameter("name", "name of the Node")).
 			Writes(pod.PodList{}).
 			Returns(http.StatusOK, "OK", pod.PodList{}))
+	apiV1Ws.Route(
+		apiV1Ws.PUT("/node/{name}/drain").To(apiHandler.handleNodeDrain).
+			// docs
+			Doc("drains Node").
+			Param(apiV1Ws.PathParameter("name", "name of the Node")).
+			Reads(node.NodeDrainSpec{}).
+			Returns(http.StatusOK, "OK", nil))
 
 	// Verber (namespaced)
 	apiV1Ws.Route(
@@ -1240,7 +1247,7 @@ func (apiHandler *APIHandler) handleGetClusterRoleList(request *restful.Request,
 		errors.HandleInternalError(response, err)
 		return
 	}
-	response.WriteHeaderAndEntity(http.StatusOK, result)
+	_ = response.WriteHeaderAndEntity(http.StatusOK, result)
 }
 
 func (apiHandler *APIHandler) handleGetClusterRoleDetail(request *restful.Request, response *restful.Response) {
@@ -1256,7 +1263,7 @@ func (apiHandler *APIHandler) handleGetClusterRoleDetail(request *restful.Reques
 		errors.HandleInternalError(response, err)
 		return
 	}
-	response.WriteHeaderAndEntity(http.StatusOK, result)
+	_ = response.WriteHeaderAndEntity(http.StatusOK, result)
 }
 
 func (apiHandler *APIHandler) handleGetClusterRoleBindingList(request *restful.Request, response *restful.Response) {
@@ -1272,7 +1279,7 @@ func (apiHandler *APIHandler) handleGetClusterRoleBindingList(request *restful.R
 		errors.HandleInternalError(response, err)
 		return
 	}
-	response.WriteHeaderAndEntity(http.StatusOK, result)
+	_ = response.WriteHeaderAndEntity(http.StatusOK, result)
 }
 
 func (apiHandler *APIHandler) handleGetClusterRoleBindingDetail(request *restful.Request, response *restful.Response) {
@@ -1288,7 +1295,7 @@ func (apiHandler *APIHandler) handleGetClusterRoleBindingDetail(request *restful
 		errors.HandleInternalError(response, err)
 		return
 	}
-	response.WriteHeaderAndEntity(http.StatusOK, result)
+	_ = response.WriteHeaderAndEntity(http.StatusOK, result)
 }
 
 func (apiHandler *APIHandler) handleGetRoleList(request *restful.Request, response *restful.Response) {
@@ -1305,7 +1312,7 @@ func (apiHandler *APIHandler) handleGetRoleList(request *restful.Request, respon
 		errors.HandleInternalError(response, err)
 		return
 	}
-	response.WriteHeaderAndEntity(http.StatusOK, result)
+	_ = response.WriteHeaderAndEntity(http.StatusOK, result)
 }
 
 func (apiHandler *APIHandler) handleGetRoleDetail(request *restful.Request, response *restful.Response) {
@@ -1322,7 +1329,7 @@ func (apiHandler *APIHandler) handleGetRoleDetail(request *restful.Request, resp
 		errors.HandleInternalError(response, err)
 		return
 	}
-	response.WriteHeaderAndEntity(http.StatusOK, result)
+	_ = response.WriteHeaderAndEntity(http.StatusOK, result)
 }
 
 func (apiHandler *APIHandler) handleGetRoleBindingList(request *restful.Request, response *restful.Response) {
@@ -1339,7 +1346,7 @@ func (apiHandler *APIHandler) handleGetRoleBindingList(request *restful.Request,
 		errors.HandleInternalError(response, err)
 		return
 	}
-	response.WriteHeaderAndEntity(http.StatusOK, result)
+	_ = response.WriteHeaderAndEntity(http.StatusOK, result)
 }
 
 func (apiHandler *APIHandler) handleGetRoleBindingDetail(request *restful.Request, response *restful.Response) {
@@ -1356,13 +1363,13 @@ func (apiHandler *APIHandler) handleGetRoleBindingDetail(request *restful.Reques
 		errors.HandleInternalError(response, err)
 		return
 	}
-	response.WriteHeaderAndEntity(http.StatusOK, result)
+	_ = response.WriteHeaderAndEntity(http.StatusOK, result)
 }
 
 func (apiHandler *APIHandler) handleGetCsrfToken(request *restful.Request, response *restful.Response) {
 	action := request.PathParameter("action")
 	token := xsrftoken.Generate(csrf.Key(), "none", action)
-	response.WriteHeaderAndEntity(http.StatusOK, csrf.Response{Token: token})
+	_ = response.WriteHeaderAndEntity(http.StatusOK, csrf.Response{Token: token})
 }
 
 func (apiHandler *APIHandler) handleGetStatefulSetList(request *restful.Request, response *restful.Response) {
@@ -1381,7 +1388,7 @@ func (apiHandler *APIHandler) handleGetStatefulSetList(request *restful.Request,
 		errors.HandleInternalError(response, err)
 		return
 	}
-	response.WriteHeaderAndEntity(http.StatusOK, result)
+	_ = response.WriteHeaderAndEntity(http.StatusOK, result)
 }
 
 func (apiHandler *APIHandler) handleGetStatefulSetDetail(request *restful.Request, response *restful.Response) {
@@ -1399,7 +1406,7 @@ func (apiHandler *APIHandler) handleGetStatefulSetDetail(request *restful.Reques
 		errors.HandleInternalError(response, err)
 		return
 	}
-	response.WriteHeaderAndEntity(http.StatusOK, result)
+	_ = response.WriteHeaderAndEntity(http.StatusOK, result)
 }
 
 func (apiHandler *APIHandler) handleGetStatefulSetPods(request *restful.Request, response *restful.Response) {
@@ -1418,7 +1425,7 @@ func (apiHandler *APIHandler) handleGetStatefulSetPods(request *restful.Request,
 		errors.HandleInternalError(response, err)
 		return
 	}
-	response.WriteHeaderAndEntity(http.StatusOK, result)
+	_ = response.WriteHeaderAndEntity(http.StatusOK, result)
 }
 
 func (apiHandler *APIHandler) handleGetStatefulSetEvents(request *restful.Request, response *restful.Response) {
@@ -1436,7 +1443,7 @@ func (apiHandler *APIHandler) handleGetStatefulSetEvents(request *restful.Reques
 		errors.HandleInternalError(response, err)
 		return
 	}
-	response.WriteHeaderAndEntity(http.StatusOK, result)
+	_ = response.WriteHeaderAndEntity(http.StatusOK, result)
 }
 
 func (apiHandler *APIHandler) handleGetServiceList(request *restful.Request, response *restful.Response) {
@@ -1453,7 +1460,7 @@ func (apiHandler *APIHandler) handleGetServiceList(request *restful.Request, res
 		errors.HandleInternalError(response, err)
 		return
 	}
-	response.WriteHeaderAndEntity(http.StatusOK, result)
+	_ = response.WriteHeaderAndEntity(http.StatusOK, result)
 }
 
 func (apiHandler *APIHandler) handleGetServiceDetail(request *restful.Request, response *restful.Response) {
@@ -1470,7 +1477,7 @@ func (apiHandler *APIHandler) handleGetServiceDetail(request *restful.Request, r
 		errors.HandleInternalError(response, err)
 		return
 	}
-	response.WriteHeaderAndEntity(http.StatusOK, result)
+	_ = response.WriteHeaderAndEntity(http.StatusOK, result)
 }
 
 func (apiHandler *APIHandler) handleGetServiceEvent(request *restful.Request, response *restful.Response) {
@@ -1489,7 +1496,7 @@ func (apiHandler *APIHandler) handleGetServiceEvent(request *restful.Request, re
 		errors.HandleInternalError(response, err)
 		return
 	}
-	response.WriteHeaderAndEntity(http.StatusOK, result)
+	_ = response.WriteHeaderAndEntity(http.StatusOK, result)
 }
 
 func (apiHandler *APIHandler) handleGetServiceAccountList(request *restful.Request, response *restful.Response) {
@@ -1506,7 +1513,7 @@ func (apiHandler *APIHandler) handleGetServiceAccountList(request *restful.Reque
 		errors.HandleInternalError(response, err)
 		return
 	}
-	response.WriteHeaderAndEntity(http.StatusOK, result)
+	_ = response.WriteHeaderAndEntity(http.StatusOK, result)
 }
 
 func (apiHandler *APIHandler) handleGetServiceAccountDetail(request *restful.Request, response *restful.Response) {
@@ -1523,7 +1530,7 @@ func (apiHandler *APIHandler) handleGetServiceAccountDetail(request *restful.Req
 		errors.HandleInternalError(response, err)
 		return
 	}
-	response.WriteHeaderAndEntity(http.StatusOK, result)
+	_ = response.WriteHeaderAndEntity(http.StatusOK, result)
 }
 
 func (apiHandler *APIHandler) handleGetServiceAccountImagePullSecrets(request *restful.Request, response *restful.Response) {
@@ -1541,7 +1548,7 @@ func (apiHandler *APIHandler) handleGetServiceAccountImagePullSecrets(request *r
 		errors.HandleInternalError(response, err)
 		return
 	}
-	response.WriteHeaderAndEntity(http.StatusOK, result)
+	_ = response.WriteHeaderAndEntity(http.StatusOK, result)
 }
 
 func (apiHandler *APIHandler) handleGetServiceAccountSecrets(request *restful.Request, response *restful.Response) {
@@ -1559,7 +1566,7 @@ func (apiHandler *APIHandler) handleGetServiceAccountSecrets(request *restful.Re
 		errors.HandleInternalError(response, err)
 		return
 	}
-	response.WriteHeaderAndEntity(http.StatusOK, result)
+	_ = response.WriteHeaderAndEntity(http.StatusOK, result)
 }
 
 func (apiHandler *APIHandler) handleGetIngressDetail(request *restful.Request, response *restful.Response) {
@@ -1576,7 +1583,7 @@ func (apiHandler *APIHandler) handleGetIngressDetail(request *restful.Request, r
 		errors.HandleInternalError(response, err)
 		return
 	}
-	response.WriteHeaderAndEntity(http.StatusOK, result)
+	_ = response.WriteHeaderAndEntity(http.StatusOK, result)
 }
 
 func (apiHandler *APIHandler) handleGetIngressEvent(request *restful.Request, response *restful.Response) {
@@ -1595,7 +1602,7 @@ func (apiHandler *APIHandler) handleGetIngressEvent(request *restful.Request, re
 		errors.HandleInternalError(response, err)
 		return
 	}
-	response.WriteHeaderAndEntity(http.StatusOK, result)
+	_ = response.WriteHeaderAndEntity(http.StatusOK, result)
 }
 
 func (apiHandler *APIHandler) handleGetIngressList(request *restful.Request, response *restful.Response) {
@@ -1612,7 +1619,7 @@ func (apiHandler *APIHandler) handleGetIngressList(request *restful.Request, res
 		errors.HandleInternalError(response, err)
 		return
 	}
-	response.WriteHeaderAndEntity(http.StatusOK, result)
+	_ = response.WriteHeaderAndEntity(http.StatusOK, result)
 }
 
 func (apiHandler *APIHandler) handleGetServicePods(request *restful.Request, response *restful.Response) {
@@ -1631,7 +1638,7 @@ func (apiHandler *APIHandler) handleGetServicePods(request *restful.Request, res
 		errors.HandleInternalError(response, err)
 		return
 	}
-	response.WriteHeaderAndEntity(http.StatusOK, result)
+	_ = response.WriteHeaderAndEntity(http.StatusOK, result)
 }
 
 func (apiHandler *APIHandler) handleGetServiceIngressList(request *restful.Request, response *restful.Response) {
@@ -1650,7 +1657,7 @@ func (apiHandler *APIHandler) handleGetServiceIngressList(request *restful.Reque
 		errors.HandleInternalError(response, err)
 		return
 	}
-	response.WriteHeaderAndEntity(http.StatusOK, result)
+	_ = response.WriteHeaderAndEntity(http.StatusOK, result)
 }
 
 func (apiHandler *APIHandler) handleGetNetworkPolicyList(request *restful.Request, response *restful.Response) {
@@ -1667,7 +1674,7 @@ func (apiHandler *APIHandler) handleGetNetworkPolicyList(request *restful.Reques
 		errors.HandleInternalError(response, err)
 		return
 	}
-	response.WriteHeaderAndEntity(http.StatusOK, result)
+	_ = response.WriteHeaderAndEntity(http.StatusOK, result)
 }
 
 func (apiHandler *APIHandler) handleGetNetworkPolicyDetail(request *restful.Request, response *restful.Response) {
@@ -1684,7 +1691,7 @@ func (apiHandler *APIHandler) handleGetNetworkPolicyDetail(request *restful.Requ
 		errors.HandleInternalError(response, err)
 		return
 	}
-	response.WriteHeaderAndEntity(http.StatusOK, result)
+	_ = response.WriteHeaderAndEntity(http.StatusOK, result)
 }
 
 func (apiHandler *APIHandler) handleGetNodeList(request *restful.Request, response *restful.Response) {
@@ -1701,7 +1708,7 @@ func (apiHandler *APIHandler) handleGetNodeList(request *restful.Request, respon
 		errors.HandleInternalError(response, err)
 		return
 	}
-	response.WriteHeaderAndEntity(http.StatusOK, result)
+	_ = response.WriteHeaderAndEntity(http.StatusOK, result)
 }
 
 func (apiHandler *APIHandler) handleGetNodeDetail(request *restful.Request, response *restful.Response) {
@@ -1719,7 +1726,7 @@ func (apiHandler *APIHandler) handleGetNodeDetail(request *restful.Request, resp
 		errors.HandleInternalError(response, err)
 		return
 	}
-	response.WriteHeaderAndEntity(http.StatusOK, result)
+	_ = response.WriteHeaderAndEntity(http.StatusOK, result)
 }
 
 func (apiHandler *APIHandler) handleGetNodeEvents(request *restful.Request, response *restful.Response) {
@@ -1737,7 +1744,7 @@ func (apiHandler *APIHandler) handleGetNodeEvents(request *restful.Request, resp
 		errors.HandleInternalError(response, err)
 		return
 	}
-	response.WriteHeaderAndEntity(http.StatusOK, result)
+	_ = response.WriteHeaderAndEntity(http.StatusOK, result)
 }
 
 func (apiHandler *APIHandler) handleGetNodePods(request *restful.Request, response *restful.Response) {
@@ -1755,7 +1762,29 @@ func (apiHandler *APIHandler) handleGetNodePods(request *restful.Request, respon
 		errors.HandleInternalError(response, err)
 		return
 	}
-	response.WriteHeaderAndEntity(http.StatusOK, result)
+	_ = response.WriteHeaderAndEntity(http.StatusOK, result)
+}
+
+func (apiHandler *APIHandler) handleNodeDrain(request *restful.Request, response *restful.Response) {
+	k8sClient, err := client.Client(request.Request)
+	if err != nil {
+		errors.HandleInternalError(response, err)
+		return
+	}
+
+	name := request.PathParameter("name")
+	spec := new(node.NodeDrainSpec)
+	if err := request.ReadEntity(spec); err != nil {
+		errors.HandleInternalError(response, err)
+		return
+	}
+
+	if err := node.DrainNode(k8sClient, name, spec); err != nil {
+		errors.HandleInternalError(response, err)
+		return
+	}
+
+	response.WriteHeader(http.StatusAccepted)
 }
 
 func (apiHandler *APIHandler) handleDeploy(request *restful.Request, response *restful.Response) {
@@ -1774,7 +1803,7 @@ func (apiHandler *APIHandler) handleDeploy(request *restful.Request, response *r
 		errors.HandleInternalError(response, err)
 		return
 	}
-	response.WriteHeaderAndEntity(http.StatusCreated, appDeploymentSpec)
+	_ = response.WriteHeaderAndEntity(http.StatusCreated, appDeploymentSpec)
 }
 
 func (apiHandler *APIHandler) handleScaleResource(request *restful.Request, response *restful.Response) {
@@ -1793,7 +1822,7 @@ func (apiHandler *APIHandler) handleScaleResource(request *restful.Request, resp
 		errors.HandleInternalError(response, err)
 		return
 	}
-	response.WriteHeaderAndEntity(http.StatusOK, replicaCountSpec)
+	_ = response.WriteHeaderAndEntity(http.StatusOK, replicaCountSpec)
 }
 
 func (apiHandler *APIHandler) handleGetReplicaCount(request *restful.Request, response *restful.Response) {
@@ -1811,7 +1840,7 @@ func (apiHandler *APIHandler) handleGetReplicaCount(request *restful.Request, re
 		errors.HandleInternalError(response, err)
 		return
 	}
-	response.WriteHeaderAndEntity(http.StatusOK, replicaCounts)
+	_ = response.WriteHeaderAndEntity(http.StatusOK, replicaCounts)
 }
 
 func (apiHandler *APIHandler) handleDeployFromFile(request *restful.Request, response *restful.Response) {
@@ -1838,7 +1867,7 @@ func (apiHandler *APIHandler) handleDeployFromFile(request *restful.Request, res
 		errorMessage = err.Error()
 	}
 
-	response.WriteHeaderAndEntity(http.StatusCreated, deployment.AppDeploymentFromFileResponse{
+	_ = response.WriteHeaderAndEntity(http.StatusCreated, deployment.AppDeploymentFromFileResponse{
 		Name:    deploymentSpec.Name,
 		Content: deploymentSpec.Content,
 		Error:   errorMessage,
@@ -1859,7 +1888,7 @@ func (apiHandler *APIHandler) handleDeploymentPause(request *restful.Request, re
 		errors.HandleInternalError(response, err)
 		return
 	}
-	response.WriteHeaderAndEntity(http.StatusOK, deploymentSpec)
+	_ = response.WriteHeaderAndEntity(http.StatusOK, deploymentSpec)
 }
 
 func (apiHandler *APIHandler) handleDeploymentRollback(request *restful.Request, response *restful.Response) {
@@ -1881,7 +1910,7 @@ func (apiHandler *APIHandler) handleDeploymentRollback(request *restful.Request,
 		errors.HandleInternalError(response, err)
 		return
 	}
-	response.WriteHeaderAndEntity(http.StatusOK, rolloutSpec)
+	_ = response.WriteHeaderAndEntity(http.StatusOK, rolloutSpec)
 }
 
 func (apiHandler *APIHandler) handleDeploymentRestart(request *restful.Request, response *restful.Response) {
@@ -1898,7 +1927,7 @@ func (apiHandler *APIHandler) handleDeploymentRestart(request *restful.Request, 
 		errors.HandleInternalError(response, err)
 		return
 	}
-	response.WriteHeaderAndEntity(http.StatusOK, rolloutSpec)
+	_ = response.WriteHeaderAndEntity(http.StatusOK, rolloutSpec)
 }
 
 func (apiHandler *APIHandler) handleDeploymentResume(request *restful.Request, response *restful.Response) {
@@ -1915,7 +1944,7 @@ func (apiHandler *APIHandler) handleDeploymentResume(request *restful.Request, r
 		errors.HandleInternalError(response, err)
 		return
 	}
-	response.WriteHeaderAndEntity(http.StatusOK, deploymentSpec)
+	_ = response.WriteHeaderAndEntity(http.StatusOK, deploymentSpec)
 }
 
 func (apiHandler *APIHandler) handleNameValidity(request *restful.Request, response *restful.Response) {
@@ -1937,7 +1966,7 @@ func (apiHandler *APIHandler) handleNameValidity(request *restful.Request, respo
 		return
 	}
 
-	response.WriteHeaderAndEntity(http.StatusOK, validity)
+	_ = response.WriteHeaderAndEntity(http.StatusOK, validity)
 }
 
 func (apiHandler *APIHandler) handleImageReferenceValidity(request *restful.Request, response *restful.Response) {
@@ -1952,7 +1981,7 @@ func (apiHandler *APIHandler) handleImageReferenceValidity(request *restful.Requ
 		errors.HandleInternalError(response, err)
 		return
 	}
-	response.WriteHeaderAndEntity(http.StatusOK, validity)
+	_ = response.WriteHeaderAndEntity(http.StatusOK, validity)
 }
 
 func (apiHandler *APIHandler) handleProtocolValidity(request *restful.Request, response *restful.Response) {
@@ -1961,11 +1990,11 @@ func (apiHandler *APIHandler) handleProtocolValidity(request *restful.Request, r
 		errors.HandleInternalError(response, err)
 		return
 	}
-	response.WriteHeaderAndEntity(http.StatusOK, validation.ValidateProtocol(spec))
+	_ = response.WriteHeaderAndEntity(http.StatusOK, validation.ValidateProtocol(spec))
 }
 
 func (apiHandler *APIHandler) handleGetAvailableProtocols(request *restful.Request, response *restful.Response) {
-	response.WriteHeaderAndEntity(http.StatusOK, deployment.GetAvailableProtocols())
+	_ = response.WriteHeaderAndEntity(http.StatusOK, deployment.GetAvailableProtocols())
 }
 
 func (apiHandler *APIHandler) handleGetReplicationControllerList(request *restful.Request, response *restful.Response) {
@@ -1983,7 +2012,7 @@ func (apiHandler *APIHandler) handleGetReplicationControllerList(request *restfu
 		errors.HandleInternalError(response, err)
 		return
 	}
-	response.WriteHeaderAndEntity(http.StatusOK, result)
+	_ = response.WriteHeaderAndEntity(http.StatusOK, result)
 }
 
 func (apiHandler *APIHandler) handleGetReplicaSets(request *restful.Request, response *restful.Response) {
@@ -2001,7 +2030,7 @@ func (apiHandler *APIHandler) handleGetReplicaSets(request *restful.Request, res
 		errors.HandleInternalError(response, err)
 		return
 	}
-	response.WriteHeaderAndEntity(http.StatusOK, result)
+	_ = response.WriteHeaderAndEntity(http.StatusOK, result)
 }
 
 func (apiHandler *APIHandler) handleGetReplicaSetDetail(request *restful.Request, response *restful.Response) {
@@ -2020,7 +2049,7 @@ func (apiHandler *APIHandler) handleGetReplicaSetDetail(request *restful.Request
 		return
 	}
 
-	response.WriteHeaderAndEntity(http.StatusOK, result)
+	_ = response.WriteHeaderAndEntity(http.StatusOK, result)
 }
 
 func (apiHandler *APIHandler) handleGetReplicaSetPods(request *restful.Request, response *restful.Response) {
@@ -2040,7 +2069,7 @@ func (apiHandler *APIHandler) handleGetReplicaSetPods(request *restful.Request, 
 		return
 	}
 
-	response.WriteHeaderAndEntity(http.StatusOK, result)
+	_ = response.WriteHeaderAndEntity(http.StatusOK, result)
 }
 
 func (apiHandler *APIHandler) handleGetReplicaSetServices(request *restful.Request, response *restful.Response) {
@@ -2060,7 +2089,7 @@ func (apiHandler *APIHandler) handleGetReplicaSetServices(request *restful.Reque
 		return
 	}
 
-	response.WriteHeaderAndEntity(http.StatusOK, result)
+	_ = response.WriteHeaderAndEntity(http.StatusOK, result)
 }
 
 func (apiHandler *APIHandler) handleGetReplicaSetEvents(request *restful.Request, response *restful.Response) {
@@ -2079,7 +2108,7 @@ func (apiHandler *APIHandler) handleGetReplicaSetEvents(request *restful.Request
 		errors.HandleInternalError(response, err)
 		return
 	}
-	response.WriteHeaderAndEntity(http.StatusOK, result)
+	_ = response.WriteHeaderAndEntity(http.StatusOK, result)
 
 }
 
@@ -2090,7 +2119,7 @@ func (apiHandler *APIHandler) handleGetPodEvents(request *restful.Request, respo
 		return
 	}
 
-	log.Println("Getting events related to a pod in namespace")
+	klog.V(4).Info("Getting events related to a pod in namespace")
 	namespace := request.PathParameter("namespace")
 	name := request.PathParameter("pod")
 	dataSelect := parser.ParseDataSelectPathParameter(request)
@@ -2100,7 +2129,7 @@ func (apiHandler *APIHandler) handleGetPodEvents(request *restful.Request, respo
 		errors.HandleInternalError(response, err)
 		return
 	}
-	response.WriteHeaderAndEntity(http.StatusOK, result)
+	_ = response.WriteHeaderAndEntity(http.StatusOK, result)
 }
 
 // Handles execute shell API call
@@ -2129,7 +2158,7 @@ func (apiHandler *APIHandler) handleExecShell(request *restful.Request, response
 		sizeChan: make(chan remotecommand.TerminalSize),
 	})
 	go WaitForTerminal(k8sClient, cfg, request, sessionID)
-	response.WriteHeaderAndEntity(http.StatusOK, TerminalResponse{ID: sessionID})
+	_ = response.WriteHeaderAndEntity(http.StatusOK, TerminalResponse{ID: sessionID})
 }
 
 func (apiHandler *APIHandler) handleGetDeployments(request *restful.Request, response *restful.Response) {
@@ -2147,7 +2176,7 @@ func (apiHandler *APIHandler) handleGetDeployments(request *restful.Request, res
 		errors.HandleInternalError(response, err)
 		return
 	}
-	response.WriteHeaderAndEntity(http.StatusOK, result)
+	_ = response.WriteHeaderAndEntity(http.StatusOK, result)
 }
 
 func (apiHandler *APIHandler) handleGetDeploymentDetail(request *restful.Request, response *restful.Response) {
@@ -2165,7 +2194,7 @@ func (apiHandler *APIHandler) handleGetDeploymentDetail(request *restful.Request
 		return
 	}
 
-	response.WriteHeaderAndEntity(http.StatusOK, result)
+	_ = response.WriteHeaderAndEntity(http.StatusOK, result)
 }
 
 func (apiHandler *APIHandler) handleGetDeploymentEvents(request *restful.Request, response *restful.Response) {
@@ -2183,7 +2212,7 @@ func (apiHandler *APIHandler) handleGetDeploymentEvents(request *restful.Request
 		errors.HandleInternalError(response, err)
 		return
 	}
-	response.WriteHeaderAndEntity(http.StatusOK, result)
+	_ = response.WriteHeaderAndEntity(http.StatusOK, result)
 }
 
 func (apiHandler *APIHandler) handleGetDeploymentOldReplicaSets(request *restful.Request, response *restful.Response) {
@@ -2202,7 +2231,7 @@ func (apiHandler *APIHandler) handleGetDeploymentOldReplicaSets(request *restful
 		errors.HandleInternalError(response, err)
 		return
 	}
-	response.WriteHeaderAndEntity(http.StatusOK, result)
+	_ = response.WriteHeaderAndEntity(http.StatusOK, result)
 }
 
 func (apiHandler *APIHandler) handleGetDeploymentNewReplicaSet(request *restful.Request, response *restful.Response) {
@@ -2221,7 +2250,7 @@ func (apiHandler *APIHandler) handleGetDeploymentNewReplicaSet(request *restful.
 		errors.HandleInternalError(response, err)
 		return
 	}
-	response.WriteHeaderAndEntity(http.StatusOK, result)
+	_ = response.WriteHeaderAndEntity(http.StatusOK, result)
 }
 
 func (apiHandler *APIHandler) handleGetPods(request *restful.Request, response *restful.Response) {
@@ -2239,7 +2268,7 @@ func (apiHandler *APIHandler) handleGetPods(request *restful.Request, response *
 		errors.HandleInternalError(response, err)
 		return
 	}
-	response.WriteHeaderAndEntity(http.StatusOK, result)
+	_ = response.WriteHeaderAndEntity(http.StatusOK, result)
 }
 
 func (apiHandler *APIHandler) handleGetPodDetail(request *restful.Request, response *restful.Response) {
@@ -2256,7 +2285,7 @@ func (apiHandler *APIHandler) handleGetPodDetail(request *restful.Request, respo
 		errors.HandleInternalError(response, err)
 		return
 	}
-	response.WriteHeaderAndEntity(http.StatusOK, result)
+	_ = response.WriteHeaderAndEntity(http.StatusOK, result)
 }
 
 func (apiHandler *APIHandler) handleGetReplicationControllerDetail(request *restful.Request, response *restful.Response) {
@@ -2273,7 +2302,7 @@ func (apiHandler *APIHandler) handleGetReplicationControllerDetail(request *rest
 		errors.HandleInternalError(response, err)
 		return
 	}
-	response.WriteHeaderAndEntity(http.StatusOK, result)
+	_ = response.WriteHeaderAndEntity(http.StatusOK, result)
 }
 
 func (apiHandler *APIHandler) handleUpdateReplicasCount(request *restful.Request, response *restful.Response) {
@@ -2315,7 +2344,7 @@ func (apiHandler *APIHandler) handleGetResource(request *restful.Request, respon
 		return
 	}
 
-	response.WriteHeaderAndEntity(http.StatusOK, result)
+	_ = response.WriteHeaderAndEntity(http.StatusOK, result)
 }
 
 func (apiHandler *APIHandler) handlePutResource(
@@ -2385,7 +2414,7 @@ func (apiHandler *APIHandler) handleGetReplicationControllerPods(request *restfu
 		errors.HandleInternalError(response, err)
 		return
 	}
-	response.WriteHeaderAndEntity(http.StatusOK, result)
+	_ = response.WriteHeaderAndEntity(http.StatusOK, result)
 }
 
 func (apiHandler *APIHandler) handleCreateNamespace(request *restful.Request, response *restful.Response) {
@@ -2404,7 +2433,7 @@ func (apiHandler *APIHandler) handleCreateNamespace(request *restful.Request, re
 		errors.HandleInternalError(response, err)
 		return
 	}
-	response.WriteHeaderAndEntity(http.StatusCreated, namespaceSpec)
+	_ = response.WriteHeaderAndEntity(http.StatusCreated, namespaceSpec)
 }
 
 func (apiHandler *APIHandler) handleGetNamespaces(request *restful.Request, response *restful.Response) {
@@ -2420,7 +2449,7 @@ func (apiHandler *APIHandler) handleGetNamespaces(request *restful.Request, resp
 		errors.HandleInternalError(response, err)
 		return
 	}
-	response.WriteHeaderAndEntity(http.StatusOK, result)
+	_ = response.WriteHeaderAndEntity(http.StatusOK, result)
 }
 
 func (apiHandler *APIHandler) handleGetNamespaceDetail(request *restful.Request, response *restful.Response) {
@@ -2436,7 +2465,7 @@ func (apiHandler *APIHandler) handleGetNamespaceDetail(request *restful.Request,
 		errors.HandleInternalError(response, err)
 		return
 	}
-	response.WriteHeaderAndEntity(http.StatusOK, result)
+	_ = response.WriteHeaderAndEntity(http.StatusOK, result)
 }
 
 func (apiHandler *APIHandler) handleGetNamespaceEvents(request *restful.Request, response *restful.Response) {
@@ -2453,7 +2482,7 @@ func (apiHandler *APIHandler) handleGetNamespaceEvents(request *restful.Request,
 		errors.HandleInternalError(response, err)
 		return
 	}
-	response.WriteHeaderAndEntity(http.StatusOK, result)
+	_ = response.WriteHeaderAndEntity(http.StatusOK, result)
 }
 
 func (apiHandler *APIHandler) handleGetEventList(request *restful.Request, response *restful.Response) {
@@ -2470,7 +2499,7 @@ func (apiHandler *APIHandler) handleGetEventList(request *restful.Request, respo
 		errors.HandleInternalError(response, err)
 		return
 	}
-	response.WriteHeaderAndEntity(http.StatusOK, result)
+	_ = response.WriteHeaderAndEntity(http.StatusOK, result)
 }
 
 func (apiHandler *APIHandler) handleCreateImagePullSecret(request *restful.Request, response *restful.Response) {
@@ -2490,7 +2519,7 @@ func (apiHandler *APIHandler) handleCreateImagePullSecret(request *restful.Reque
 		errors.HandleInternalError(response, err)
 		return
 	}
-	response.WriteHeaderAndEntity(http.StatusCreated, result)
+	_ = response.WriteHeaderAndEntity(http.StatusCreated, result)
 }
 
 func (apiHandler *APIHandler) handleGetSecretDetail(request *restful.Request, response *restful.Response) {
@@ -2507,7 +2536,7 @@ func (apiHandler *APIHandler) handleGetSecretDetail(request *restful.Request, re
 		errors.HandleInternalError(response, err)
 		return
 	}
-	response.WriteHeaderAndEntity(http.StatusOK, result)
+	_ = response.WriteHeaderAndEntity(http.StatusOK, result)
 }
 
 func (apiHandler *APIHandler) handleGetSecretList(request *restful.Request, response *restful.Response) {
@@ -2524,7 +2553,7 @@ func (apiHandler *APIHandler) handleGetSecretList(request *restful.Request, resp
 		errors.HandleInternalError(response, err)
 		return
 	}
-	response.WriteHeaderAndEntity(http.StatusOK, result)
+	_ = response.WriteHeaderAndEntity(http.StatusOK, result)
 }
 
 func (apiHandler *APIHandler) handleGetConfigMapList(request *restful.Request, response *restful.Response) {
@@ -2541,7 +2570,7 @@ func (apiHandler *APIHandler) handleGetConfigMapList(request *restful.Request, r
 		errors.HandleInternalError(response, err)
 		return
 	}
-	response.WriteHeaderAndEntity(http.StatusOK, result)
+	_ = response.WriteHeaderAndEntity(http.StatusOK, result)
 }
 
 func (apiHandler *APIHandler) handleGetConfigMapDetail(request *restful.Request, response *restful.Response) {
@@ -2558,7 +2587,7 @@ func (apiHandler *APIHandler) handleGetConfigMapDetail(request *restful.Request,
 		errors.HandleInternalError(response, err)
 		return
 	}
-	response.WriteHeaderAndEntity(http.StatusOK, result)
+	_ = response.WriteHeaderAndEntity(http.StatusOK, result)
 }
 
 func (apiHandler *APIHandler) handleGetPersistentVolumeList(request *restful.Request, response *restful.Response) {
@@ -2574,7 +2603,7 @@ func (apiHandler *APIHandler) handleGetPersistentVolumeList(request *restful.Req
 		errors.HandleInternalError(response, err)
 		return
 	}
-	response.WriteHeaderAndEntity(http.StatusOK, result)
+	_ = response.WriteHeaderAndEntity(http.StatusOK, result)
 }
 
 func (apiHandler *APIHandler) handleGetPersistentVolumeDetail(request *restful.Request, response *restful.Response) {
@@ -2590,7 +2619,7 @@ func (apiHandler *APIHandler) handleGetPersistentVolumeDetail(request *restful.R
 		errors.HandleInternalError(response, err)
 		return
 	}
-	response.WriteHeaderAndEntity(http.StatusOK, result)
+	_ = response.WriteHeaderAndEntity(http.StatusOK, result)
 }
 
 func (apiHandler *APIHandler) handleGetPersistentVolumeClaimList(request *restful.Request, response *restful.Response) {
@@ -2607,7 +2636,7 @@ func (apiHandler *APIHandler) handleGetPersistentVolumeClaimList(request *restfu
 		errors.HandleInternalError(response, err)
 		return
 	}
-	response.WriteHeaderAndEntity(http.StatusOK, result)
+	_ = response.WriteHeaderAndEntity(http.StatusOK, result)
 }
 
 func (apiHandler *APIHandler) handleGetPersistentVolumeClaimDetail(request *restful.Request, response *restful.Response) {
@@ -2624,7 +2653,7 @@ func (apiHandler *APIHandler) handleGetPersistentVolumeClaimDetail(request *rest
 		errors.HandleInternalError(response, err)
 		return
 	}
-	response.WriteHeaderAndEntity(http.StatusOK, result)
+	_ = response.WriteHeaderAndEntity(http.StatusOK, result)
 }
 
 func (apiHandler *APIHandler) handleGetPodContainers(request *restful.Request, response *restful.Response) {
@@ -2641,7 +2670,7 @@ func (apiHandler *APIHandler) handleGetPodContainers(request *restful.Request, r
 		errors.HandleInternalError(response, err)
 		return
 	}
-	response.WriteHeaderAndEntity(http.StatusOK, result)
+	_ = response.WriteHeaderAndEntity(http.StatusOK, result)
 }
 
 func (apiHandler *APIHandler) handleGetReplicationControllerEvents(request *restful.Request, response *restful.Response) {
@@ -2659,7 +2688,7 @@ func (apiHandler *APIHandler) handleGetReplicationControllerEvents(request *rest
 		errors.HandleInternalError(response, err)
 		return
 	}
-	response.WriteHeaderAndEntity(http.StatusOK, result)
+	_ = response.WriteHeaderAndEntity(http.StatusOK, result)
 }
 
 func (apiHandler *APIHandler) handleGetReplicationControllerServices(request *restful.Request,
@@ -2678,7 +2707,7 @@ func (apiHandler *APIHandler) handleGetReplicationControllerServices(request *re
 		errors.HandleInternalError(response, err)
 		return
 	}
-	response.WriteHeaderAndEntity(http.StatusOK, result)
+	_ = response.WriteHeaderAndEntity(http.StatusOK, result)
 }
 
 func (apiHandler *APIHandler) handleGetDaemonSetList(request *restful.Request, response *restful.Response) {
@@ -2696,7 +2725,7 @@ func (apiHandler *APIHandler) handleGetDaemonSetList(request *restful.Request, r
 		errors.HandleInternalError(response, err)
 		return
 	}
-	response.WriteHeaderAndEntity(http.StatusOK, result)
+	_ = response.WriteHeaderAndEntity(http.StatusOK, result)
 }
 
 func (apiHandler *APIHandler) handleGetDaemonSetDetail(
@@ -2714,7 +2743,7 @@ func (apiHandler *APIHandler) handleGetDaemonSetDetail(
 		errors.HandleInternalError(response, err)
 		return
 	}
-	response.WriteHeaderAndEntity(http.StatusOK, result)
+	_ = response.WriteHeaderAndEntity(http.StatusOK, result)
 }
 
 func (apiHandler *APIHandler) handleGetDaemonSetPods(request *restful.Request, response *restful.Response) {
@@ -2733,7 +2762,7 @@ func (apiHandler *APIHandler) handleGetDaemonSetPods(request *restful.Request, r
 		errors.HandleInternalError(response, err)
 		return
 	}
-	response.WriteHeaderAndEntity(http.StatusOK, result)
+	_ = response.WriteHeaderAndEntity(http.StatusOK, result)
 }
 
 func (apiHandler *APIHandler) handleGetDaemonSetServices(request *restful.Request, response *restful.Response) {
@@ -2751,7 +2780,7 @@ func (apiHandler *APIHandler) handleGetDaemonSetServices(request *restful.Reques
 		errors.HandleInternalError(response, err)
 		return
 	}
-	response.WriteHeaderAndEntity(http.StatusOK, result)
+	_ = response.WriteHeaderAndEntity(http.StatusOK, result)
 }
 
 func (apiHandler *APIHandler) handleGetDaemonSetEvents(request *restful.Request, response *restful.Response) {
@@ -2769,7 +2798,7 @@ func (apiHandler *APIHandler) handleGetDaemonSetEvents(request *restful.Request,
 		errors.HandleInternalError(response, err)
 		return
 	}
-	response.WriteHeaderAndEntity(http.StatusOK, result)
+	_ = response.WriteHeaderAndEntity(http.StatusOK, result)
 }
 
 func (apiHandler *APIHandler) handleGetHorizontalPodAutoscalerList(request *restful.Request,
@@ -2787,7 +2816,7 @@ func (apiHandler *APIHandler) handleGetHorizontalPodAutoscalerList(request *rest
 		errors.HandleInternalError(response, err)
 		return
 	}
-	response.WriteHeaderAndEntity(http.StatusOK, result)
+	_ = response.WriteHeaderAndEntity(http.StatusOK, result)
 }
 
 func (apiHandler *APIHandler) handleGetHorizontalPodAutoscalerListForResource(request *restful.Request,
@@ -2806,7 +2835,7 @@ func (apiHandler *APIHandler) handleGetHorizontalPodAutoscalerListForResource(re
 		errors.HandleInternalError(response, err)
 		return
 	}
-	response.WriteHeaderAndEntity(http.StatusOK, result)
+	_ = response.WriteHeaderAndEntity(http.StatusOK, result)
 }
 
 func (apiHandler *APIHandler) handleGetHorizontalPodAutoscalerDetail(request *restful.Request, response *restful.Response) {
@@ -2823,7 +2852,7 @@ func (apiHandler *APIHandler) handleGetHorizontalPodAutoscalerDetail(request *re
 		errors.HandleInternalError(response, err)
 		return
 	}
-	response.WriteHeaderAndEntity(http.StatusOK, result)
+	_ = response.WriteHeaderAndEntity(http.StatusOK, result)
 }
 
 func (apiHandler *APIHandler) handleGetJobList(request *restful.Request, response *restful.Response) {
@@ -2841,7 +2870,7 @@ func (apiHandler *APIHandler) handleGetJobList(request *restful.Request, respons
 		errors.HandleInternalError(response, err)
 		return
 	}
-	response.WriteHeaderAndEntity(http.StatusOK, result)
+	_ = response.WriteHeaderAndEntity(http.StatusOK, result)
 }
 
 func (apiHandler *APIHandler) handleGetJobDetail(request *restful.Request, response *restful.Response) {
@@ -2858,7 +2887,7 @@ func (apiHandler *APIHandler) handleGetJobDetail(request *restful.Request, respo
 		errors.HandleInternalError(response, err)
 		return
 	}
-	response.WriteHeaderAndEntity(http.StatusOK, result)
+	_ = response.WriteHeaderAndEntity(http.StatusOK, result)
 }
 
 func (apiHandler *APIHandler) handleGetJobPods(request *restful.Request, response *restful.Response) {
@@ -2877,7 +2906,7 @@ func (apiHandler *APIHandler) handleGetJobPods(request *restful.Request, respons
 		errors.HandleInternalError(response, err)
 		return
 	}
-	response.WriteHeaderAndEntity(http.StatusOK, result)
+	_ = response.WriteHeaderAndEntity(http.StatusOK, result)
 }
 
 func (apiHandler *APIHandler) handleGetJobEvents(request *restful.Request, response *restful.Response) {
@@ -2895,7 +2924,7 @@ func (apiHandler *APIHandler) handleGetJobEvents(request *restful.Request, respo
 		errors.HandleInternalError(response, err)
 		return
 	}
-	response.WriteHeaderAndEntity(http.StatusOK, result)
+	_ = response.WriteHeaderAndEntity(http.StatusOK, result)
 }
 
 func (apiHandler *APIHandler) handleGetCronJobList(request *restful.Request, response *restful.Response) {
@@ -2913,7 +2942,7 @@ func (apiHandler *APIHandler) handleGetCronJobList(request *restful.Request, res
 		errors.HandleInternalError(response, err)
 		return
 	}
-	response.WriteHeaderAndEntity(http.StatusOK, result)
+	_ = response.WriteHeaderAndEntity(http.StatusOK, result)
 }
 
 func (apiHandler *APIHandler) handleGetCronJobDetail(request *restful.Request, response *restful.Response) {
@@ -2930,7 +2959,7 @@ func (apiHandler *APIHandler) handleGetCronJobDetail(request *restful.Request, r
 		errors.HandleInternalError(response, err)
 		return
 	}
-	response.WriteHeaderAndEntity(http.StatusOK, result)
+	_ = response.WriteHeaderAndEntity(http.StatusOK, result)
 }
 
 func (apiHandler *APIHandler) handleGetCronJobJobs(request *restful.Request, response *restful.Response) {
@@ -2953,7 +2982,7 @@ func (apiHandler *APIHandler) handleGetCronJobJobs(request *restful.Request, res
 		errors.HandleInternalError(response, err)
 		return
 	}
-	response.WriteHeaderAndEntity(http.StatusOK, result)
+	_ = response.WriteHeaderAndEntity(http.StatusOK, result)
 }
 
 func (apiHandler *APIHandler) handleGetCronJobEvents(request *restful.Request, response *restful.Response) {
@@ -2971,7 +3000,7 @@ func (apiHandler *APIHandler) handleGetCronJobEvents(request *restful.Request, r
 		errors.HandleInternalError(response, err)
 		return
 	}
-	response.WriteHeaderAndEntity(http.StatusOK, result)
+	_ = response.WriteHeaderAndEntity(http.StatusOK, result)
 }
 
 func (apiHandler *APIHandler) handleTriggerCronJob(request *restful.Request, response *restful.Response) {
@@ -3004,7 +3033,7 @@ func (apiHandler *APIHandler) handleGetStorageClassList(request *restful.Request
 		errors.HandleInternalError(response, err)
 		return
 	}
-	response.WriteHeaderAndEntity(http.StatusOK, result)
+	_ = response.WriteHeaderAndEntity(http.StatusOK, result)
 }
 
 func (apiHandler *APIHandler) handleGetStorageClass(request *restful.Request, response *restful.Response) {
@@ -3020,7 +3049,7 @@ func (apiHandler *APIHandler) handleGetStorageClass(request *restful.Request, re
 		errors.HandleInternalError(response, err)
 		return
 	}
-	response.WriteHeaderAndEntity(http.StatusOK, result)
+	_ = response.WriteHeaderAndEntity(http.StatusOK, result)
 }
 
 func (apiHandler *APIHandler) handleGetStorageClassPersistentVolumes(request *restful.Request,
@@ -3039,7 +3068,7 @@ func (apiHandler *APIHandler) handleGetStorageClassPersistentVolumes(request *re
 		errors.HandleInternalError(response, err)
 		return
 	}
-	response.WriteHeaderAndEntity(http.StatusOK, result)
+	_ = response.WriteHeaderAndEntity(http.StatusOK, result)
 }
 
 func (apiHandler *APIHandler) handleGetIngressClassList(request *restful.Request, response *restful.Response) {
@@ -3055,7 +3084,7 @@ func (apiHandler *APIHandler) handleGetIngressClassList(request *restful.Request
 		errors.HandleInternalError(response, err)
 		return
 	}
-	response.WriteHeaderAndEntity(http.StatusOK, result)
+	_ = response.WriteHeaderAndEntity(http.StatusOK, result)
 }
 
 func (apiHandler *APIHandler) handleGetIngressClass(request *restful.Request, response *restful.Response) {
@@ -3071,7 +3100,7 @@ func (apiHandler *APIHandler) handleGetIngressClass(request *restful.Request, re
 		errors.HandleInternalError(response, err)
 		return
 	}
-	response.WriteHeaderAndEntity(http.StatusOK, result)
+	_ = response.WriteHeaderAndEntity(http.StatusOK, result)
 }
 
 func (apiHandler *APIHandler) handleGetPodPersistentVolumeClaims(request *restful.Request,
@@ -3091,7 +3120,7 @@ func (apiHandler *APIHandler) handleGetPodPersistentVolumeClaims(request *restfu
 		errors.HandleInternalError(response, err)
 		return
 	}
-	response.WriteHeaderAndEntity(http.StatusOK, result)
+	_ = response.WriteHeaderAndEntity(http.StatusOK, result)
 }
 
 func (apiHandler *APIHandler) handleGetCustomResourceDefinitionList(request *restful.Request, response *restful.Response) {
@@ -3108,7 +3137,7 @@ func (apiHandler *APIHandler) handleGetCustomResourceDefinitionList(request *res
 		return
 	}
 
-	response.WriteHeaderAndEntity(http.StatusOK, result)
+	_ = response.WriteHeaderAndEntity(http.StatusOK, result)
 }
 
 func (apiHandler *APIHandler) handleGetCustomResourceDefinitionDetail(request *restful.Request, response *restful.Response) {
@@ -3131,7 +3160,7 @@ func (apiHandler *APIHandler) handleGetCustomResourceDefinitionDetail(request *r
 		return
 	}
 
-	response.WriteHeaderAndEntity(http.StatusOK, result)
+	_ = response.WriteHeaderAndEntity(http.StatusOK, result)
 }
 
 func (apiHandler *APIHandler) handleGetCustomResourceObjectList(request *restful.Request, response *restful.Response) {
@@ -3156,7 +3185,7 @@ func (apiHandler *APIHandler) handleGetCustomResourceObjectList(request *restful
 		return
 	}
 
-	response.WriteHeaderAndEntity(http.StatusOK, result)
+	_ = response.WriteHeaderAndEntity(http.StatusOK, result)
 }
 
 func (apiHandler *APIHandler) handleGetCustomResourceObjectDetail(request *restful.Request, response *restful.Response) {
@@ -3181,11 +3210,11 @@ func (apiHandler *APIHandler) handleGetCustomResourceObjectDetail(request *restf
 		return
 	}
 
-	response.WriteHeaderAndEntity(http.StatusOK, result)
+	_ = response.WriteHeaderAndEntity(http.StatusOK, result)
 }
 
 func (apiHandler *APIHandler) handleGetCustomResourceObjectEvents(request *restful.Request, response *restful.Response) {
-	log.Println("Getting events related to a custom resource object in namespace")
+	klog.V(4).Info("Getting events related to a custom resource object in namespace")
 
 	k8sClient, err := client.Client(request.Request)
 	if err != nil {
@@ -3203,7 +3232,7 @@ func (apiHandler *APIHandler) handleGetCustomResourceObjectEvents(request *restf
 		return
 	}
 
-	response.WriteHeaderAndEntity(http.StatusOK, result)
+	_ = response.WriteHeaderAndEntity(http.StatusOK, result)
 }
 
 func (apiHandler *APIHandler) handleLogSource(request *restful.Request, response *restful.Response) {
@@ -3221,7 +3250,7 @@ func (apiHandler *APIHandler) handleLogSource(request *restful.Request, response
 		errors.HandleInternalError(response, err)
 		return
 	}
-	response.WriteHeaderAndEntity(http.StatusOK, logSources)
+	_ = response.WriteHeaderAndEntity(http.StatusOK, logSources)
 }
 
 func (apiHandler *APIHandler) handleLogs(request *restful.Request, response *restful.Response) {
@@ -3267,7 +3296,7 @@ func (apiHandler *APIHandler) handleLogs(request *restful.Request, response *res
 		errors.HandleInternalError(response, err)
 		return
 	}
-	response.WriteHeaderAndEntity(http.StatusOK, result)
+	_ = response.WriteHeaderAndEntity(http.StatusOK, result)
 }
 
 func (apiHandler *APIHandler) handleLogFile(request *restful.Request, response *restful.Response) {

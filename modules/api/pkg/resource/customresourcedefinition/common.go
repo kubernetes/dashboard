@@ -48,20 +48,6 @@ func GetExtensionsAPIVersion(client apiextensionsclientset.Interface) (string, e
 	return "", errors.NewNotFound("supported version for extensions api not found")
 }
 
-func GetExtensionsAPIRestClient(client apiextensionsclientset.Interface) (rest.Interface, error) {
-	version, err := GetExtensionsAPIVersion(client)
-	if err != nil {
-		return nil, err
-	}
-
-	switch version {
-	case v1:
-		return client.ApiextensionsV1().RESTClient(), nil
-	}
-
-	return nil, errors.NewNotFound(fmt.Sprintf("unsupported extensions api version: %s", version))
-}
-
 func GetCustomResourceDefinitionList(client apiextensionsclientset.Interface, dsQuery *dataselect.DataSelectQuery) (*types.CustomResourceDefinitionList, error) {
 	version, err := GetExtensionsAPIVersion(client)
 	if err != nil {

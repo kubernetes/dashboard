@@ -20,14 +20,15 @@ metadata:
   labels:
     {{- include "kubernetes-dashboard.labels" . | nindent 4 }}
     {{- with .Values.metricsScraper.labels }}
-    {{ toYaml . | nindent 4 }}
+    {{- toYaml . | nindent 4 }}
     {{- end }}
     app.kubernetes.io/name: {{ template "kubernetes-dashboard.name" . }}-{{ .Values.metricsScraper.role }}
     app.kubernetes.io/version: {{ .Values.metricsScraper.image.tag }}
     app.kubernetes.io/component: {{ .Values.metricsScraper.role }}
   annotations:
+    {{- include "kubernetes-dashboard.annotations" . | nindent 4 }}
     {{- with .Values.metricsScraper.annotations }}
-    {{ toYaml . | nindent 8 }}
+    {{- toYaml . | nindent 4 }}
     {{- end }}
   name: {{ template "kubernetes-dashboard.metrics-scraper.name" . }}
 spec:
@@ -67,12 +68,14 @@ spec:
               valueFrom:
                 resourceFieldRef:
                   resource: limits.cpu
+                  divisor: "1"
             {{- end }}
             {{- if .Values.metricsScraper.containers.resources.limits.memory }}
             - name: GOMEMLIMIT
               valueFrom:
                 resourceFieldRef:
                   resource: limits.memory
+                  divisor: "1"
             {{- end }}
 
           {{- with .Values.metricsScraper.containers.env }}

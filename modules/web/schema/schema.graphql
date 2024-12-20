@@ -3823,7 +3823,7 @@ type v1_ConfigMapKeySelector {
   """The key to select."""
   key: String!
   """
-  Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names
+  Name of the referent. This field is effectively required, but due to backwards compatibility is allowed to be empty. Instances of this type with an empty value here are almost certainly wrong. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names
   """
   name: String
   """Specify whether the ConfigMap or its key must be defined"""
@@ -3863,7 +3863,7 @@ type v1_SecretKeySelector {
   """The key of the secret to select from.  Must be a valid secret key."""
   key: String!
   """
-  Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names
+  Name of the referent. This field is effectively required, but due to backwards compatibility is allowed to be empty. Instances of this type with an empty value here are almost certainly wrong. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names
   """
   name: String
   """Specify whether the Secret or its key must be defined"""
@@ -4335,7 +4335,7 @@ LocalObjectReference contains enough information to let you locate the reference
 """
 type v1_LocalObjectReference {
   """
-  Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names
+  Name of the referent. This field is effectively required, but due to backwards compatibility is allowed to be empty. Instances of this type with an empty value here are almost certainly wrong. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names
   """
   name: String
 }
@@ -4374,7 +4374,7 @@ type v1_ConfigMapVolumeSource {
   """
   items: [v1_KeyToPath]
   """
-  Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names
+  Name of the referent. This field is effectively required, but due to backwards compatibility is allowed to be empty. Instances of this type with an empty value here are almost certainly wrong. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names
   """
   name: String
   """optional specify whether the ConfigMap or its keys must be defined"""
@@ -4855,7 +4855,7 @@ type v1_ConfigMapProjection {
   """
   items: [v1_KeyToPath]
   """
-  Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names
+  Name of the referent. This field is effectively required, but due to backwards compatibility is allowed to be empty. Instances of this type with an empty value here are almost certainly wrong. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names
   """
   name: String
   """optional specify whether the ConfigMap or its keys must be defined"""
@@ -4881,7 +4881,7 @@ type v1_SecretProjection {
   """
   items: [v1_KeyToPath]
   """
-  Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names
+  Name of the referent. This field is effectively required, but due to backwards compatibility is allowed to be empty. Instances of this type with an empty value here are almost certainly wrong. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names
   """
   name: String
   """optional field specify whether the Secret or its key must be defined"""
@@ -5554,6 +5554,26 @@ type Mutation {
     aggregations: String
     input: namespace_NamespaceSpec_Input!
   ): namespace_NamespaceSpec! @httpOperation(subgraph: "api", path: "/api/v1/namespace", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: POST, queryParamArgMap: "{\"filterBy\":\"filterBy\",\"sortBy\":\"sortBy\",\"itemsPerPage\":\"itemsPerPage\",\"page\":\"page\",\"metricNames\":\"metricNames\",\"aggregations\":\"aggregations\"}")
+  """drains Node"""
+  handleNodeDrain(
+    """name of the Node"""
+    name: String!
+    """
+    Comma delimited string used to apply filtering: 'propertyName,filterValue'
+    """
+    filterBy: String
+    """Name of the column to sort by"""
+    sortBy: String
+    """Number of items to return when pagination is applied"""
+    itemsPerPage: String
+    """Page number to return items from"""
+    page: String
+    """Metric names to download"""
+    metricNames: String
+    """Aggregations to be performed for each metric (default: sum)"""
+    aggregations: String
+    input: node_NodeDrainSpec_Input!
+  ): JSON @httpOperation(subgraph: "api", path: "/api/v1/node/{args.name}/drain", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: PUT, queryParamArgMap: "{\"filterBy\":\"filterBy\",\"sortBy\":\"sortBy\",\"itemsPerPage\":\"itemsPerPage\",\"page\":\"page\",\"metricNames\":\"metricNames\",\"aggregations\":\"aggregations\"}")
   """scales ReplicationController to a number of replicas"""
   handleUpdateReplicasCount(
     """namespace of the ReplicationController"""
@@ -5772,6 +5792,14 @@ type namespace_NamespaceSpec {
 
 input namespace_NamespaceSpec_Input {
   name: String!
+}
+
+input node_NodeDrainSpec_Input {
+  deleteEmptyDirData: Boolean
+  force: Boolean
+  gracePeriodSeconds: Int
+  ignoreAllDaemonSets: Boolean
+  timeout: BigInt
 }
 
 input replicationcontroller_ReplicationControllerSpec_Input {

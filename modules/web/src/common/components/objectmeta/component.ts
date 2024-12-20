@@ -14,6 +14,8 @@
 
 import {Component, Input} from '@angular/core';
 import {ObjectMeta} from '@api/root.api';
+import {KdStateService} from '@common/services/global/state';
+import {Resource} from '@common/services/resource/endpoint';
 
 @Component({
   selector: 'kd-object-meta',
@@ -23,8 +25,21 @@ export class ObjectMetaComponent {
   @Input() initialized = false;
 
   private objectMeta_: ObjectMeta;
+
+  constructor(private readonly stateService_: KdStateService) {}
+
   get objectMeta(): ObjectMeta {
     return this.objectMeta_;
+  }
+
+  getOwnerHref(kind: string, name: string): string {
+    const normalizedKind = kind.toLowerCase();
+
+    if (!Object.values(Resource).includes(normalizedKind as Resource)) {
+      return '';
+    }
+
+    return this.stateService_?.href(normalizedKind, name, this.objectMeta_.namespace);
   }
 
   @Input()

@@ -15,10 +15,9 @@
 package role
 
 import (
-	"log"
-
 	rbac "k8s.io/api/rbac/v1"
 	"k8s.io/client-go/kubernetes"
+	"k8s.io/klog/v2"
 
 	"k8s.io/dashboard/api/pkg/resource/common"
 	"k8s.io/dashboard/api/pkg/resource/dataselect"
@@ -44,7 +43,7 @@ type Role struct {
 
 // GetRoleList returns a list of all Roles in the cluster.
 func GetRoleList(client kubernetes.Interface, nsQuery *common.NamespaceQuery, dsQuery *dataselect.DataSelectQuery) (*RoleList, error) {
-	log.Print("Getting list of all roles in the cluster")
+	klog.V(4).Infof("Getting list of all roles in the cluster")
 	channels := &common.ResourceChannels{
 		RoleList: common.GetRoleListChannel(client, nsQuery, 1),
 	}

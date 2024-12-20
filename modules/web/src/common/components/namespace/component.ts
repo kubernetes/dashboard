@@ -53,6 +53,7 @@ export class NamespaceSelectorComponent implements OnInit {
   @ViewChild('namespaceInput', {static: true}) private readonly namespaceInputEl_: ElementRef;
 
   private destroyRef = inject(DestroyRef);
+
   constructor(
     private readonly router_: Router,
     private readonly namespaceService_: NamespaceService,
@@ -100,6 +101,10 @@ export class NamespaceSelectorComponent implements OnInit {
     this.selectedNamespace = this.namespaceService_.current();
     this.select_.value = this.selectedNamespace;
     this.loadNamespaces_();
+  }
+
+  showAllNamespaces(): boolean {
+    return !this.settingsService_.getHideAllNamespaces();
   }
 
   selectNamespace(): void {
@@ -164,8 +169,8 @@ export class NamespaceSelectorComponent implements OnInit {
       .pipe(startWith({}))
       .pipe(switchMap(() => this.namespace_.get(this.endpoint_.list())))
       .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe(
-        namespaceList => {
+      .subscribe({
+        next: namespaceList => {
           this.usingFallbackNamespaces = false;
           this.namespaces = namespaceList.namespaces.map(n => n.objectMeta.name);
 
@@ -182,11 +187,11 @@ export class NamespaceSelectorComponent implements OnInit {
             }
           }
         },
-        () => {},
-        () => {
+        error: () => {},
+        complete: () => {
           this.onNamespaceLoaded_();
-        }
-      );
+        },
+      });
   }
 
   private handleNamespaceChangeDialog_(): void {

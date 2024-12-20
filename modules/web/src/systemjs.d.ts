@@ -16,7 +16,7 @@ interface Window {
   define: (name: string, deps: string[], definitionFn: () => any) => void;
 
   System: {
-    // @ts-expect-error
+    // @ts-expect-error as path implicitly has any type
     import: (path) => Promise<any>;
   };
 }

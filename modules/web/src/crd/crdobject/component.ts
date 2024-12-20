@@ -102,7 +102,7 @@ export class CRDObjectDetailComponent implements OnInit, OnDestroy {
     }
   }
 
-  private toRawJSON_(object: {}): string {
+  private toRawJSON_(object: unknown): string {
     return JSON.stringify(object, null, '\t');
   }
 }

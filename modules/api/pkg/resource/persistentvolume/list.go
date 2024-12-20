@@ -15,10 +15,9 @@
 package persistentvolume
 
 import (
-	"log"
-
 	v1 "k8s.io/api/core/v1"
 	"k8s.io/client-go/kubernetes"
+	"k8s.io/klog/v2"
 
 	"k8s.io/dashboard/api/pkg/resource/common"
 	"k8s.io/dashboard/api/pkg/resource/dataselect"
@@ -51,7 +50,7 @@ type PersistentVolume struct {
 
 // GetPersistentVolumeList returns a list of all Persistent Volumes in the cluster.
 func GetPersistentVolumeList(client kubernetes.Interface, dsQuery *dataselect.DataSelectQuery) (*PersistentVolumeList, error) {
-	log.Print("Getting list persistent volumes")
+	klog.V(4).Infof("Getting list persistent volumes")
 	channels := &common.ResourceChannels{
 		PersistentVolumeList: common.GetPersistentVolumeListChannel(client, 1),
 	}

@@ -15,10 +15,9 @@
 package ingressclass
 
 import (
-	"log"
-
 	networkingv1 "k8s.io/api/networking/v1"
 	"k8s.io/client-go/kubernetes"
+	"k8s.io/klog/v2"
 
 	"k8s.io/dashboard/api/pkg/resource/common"
 	"k8s.io/dashboard/api/pkg/resource/dataselect"
@@ -45,7 +44,7 @@ type IngressClass struct {
 // GetIngressClassList returns a list of all Ingress class objects in the cluster.
 func GetIngressClassList(client kubernetes.Interface, dsQuery *dataselect.DataSelectQuery) (
 	*IngressClassList, error) {
-	log.Print("Getting list of ingress classes in the cluster")
+	klog.V(4).Infof("Getting list of ingress classes in the cluster")
 
 	channels := &common.ResourceChannels{
 		IngressClassList: common.GetIngressClassListChannel(client, 1),

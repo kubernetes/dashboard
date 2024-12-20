@@ -2,7 +2,6 @@
 This guide is for anyone interested in contributing design work themselves or contributing in a way that is impacted by design.
 
 ## Resources:
-* Get in touch with Dan Romlein (@danielromlein) for general Dashboard UX questions or suggestions of tasks that need design work.
 * Follow the [Getting started guide](https://github.com/kubernetes/dashboard/wiki/Getting-started) to get the most recent version of Dashboard up and running.
 * Dashboard is based on Google’s [Material](https://material.io/guidelines/) design system. Refer to their spec for guidance. 
 

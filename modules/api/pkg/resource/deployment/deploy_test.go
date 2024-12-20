@@ -71,7 +71,7 @@ func TestDeployApp(t *testing.T) {
 
 	testClient := fake.NewSimpleClientset()
 
-	DeployApp(spec, testClient)
+	_ = DeployApp(spec, testClient)
 
 	createAction := testClient.Actions()[0].(core.CreateActionImpl)
 	if len(testClient.Actions()) != 1 {
@@ -98,9 +98,9 @@ func TestDeployAppContainerCommands(t *testing.T) {
 		ContainerCommand:     &command,
 		ContainerCommandArgs: &commandArgs,
 	}
-	testClient := fake.NewSimpleClientset()
+	testClient := fake.NewClientset()
 
-	DeployApp(spec, testClient)
+	_ = DeployApp(spec, testClient)
 	createAction := testClient.Actions()[0].(core.CreateActionImpl)
 
 	rc := createAction.GetObject().(*apps.Deployment)
@@ -128,7 +128,7 @@ func TestDeployShouldPopulateEnvVars(t *testing.T) {
 	}
 	testClient := fake.NewSimpleClientset()
 
-	DeployApp(spec, testClient)
+	_ = DeployApp(spec, testClient)
 
 	createAction := testClient.Actions()[0].(core.CreateActionImpl)
 
@@ -168,9 +168,9 @@ func TestDeployWithResourceRequirements(t *testing.T) {
 			api.ResourceCPU:    cpuRequirement,
 		},
 	}
-	testClient := fake.NewSimpleClientset()
+	testClient := fake.NewClientset()
 
-	DeployApp(spec, testClient)
+	_ = DeployApp(spec, testClient)
 
 	createAction := testClient.Actions()[0].(core.CreateActionImpl)
 

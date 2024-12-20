@@ -18,6 +18,7 @@ import (
 	"fmt"
 
 	v1 "k8s.io/api/core/v1"
+
 	metricapi "k8s.io/dashboard/api/pkg/integration/metric/api"
 	"k8s.io/dashboard/api/pkg/resource/common"
 	"k8s.io/dashboard/api/pkg/resource/dataselect"
@@ -35,22 +36,36 @@ func getRestartCount(pod v1.Pod) int32 {
 }
 
 // getPodStatus returns status string calculated based on the same logic as kubectl
-// Base code: https://github.com/kubernetes/kubernetes/blob/master/pkg/printers/internalversion/printers.go#L734
+// Base code: https://github.com/kubernetes/kubernetes/blob/v1.31.1/pkg/printers/internalversion/printers.go
+//
+// nolint:gocyclo // disable cyclo check as this function is copied from kubectl
 func getPodStatus(pod v1.Pod) string {
-	restarts := 0
-	readyContainers := 0
-
-	reason := string(pod.Status.Phase)
+	podPhase := pod.Status.Phase
+	reason := string(podPhase)
 	if pod.Status.Reason != "" {
 		reason = pod.Status.Reason
+	}
+
+	// If the Pod carries {type:PodScheduled, reason:SchedulingGated}, set reason to 'SchedulingGated'.
+	for _, condition := range pod.Status.Conditions {
+		if condition.Type == v1.PodScheduled && condition.Reason == v1.PodReasonSchedulingGated {
+			reason = v1.PodReasonSchedulingGated
+		}
+	}
+
+	initContainers := make(map[string]*v1.Container)
+	for i := range pod.Spec.InitContainers {
+		initContainers[pod.Spec.InitContainers[i].Name] = &pod.Spec.InitContainers[i]
 	}
 
 	initializing := false
 	for i := range pod.Status.InitContainerStatuses {
 		container := pod.Status.InitContainerStatuses[i]
-		restarts += int(container.RestartCount)
 		switch {
 		case container.State.Terminated != nil && container.State.Terminated.ExitCode == 0:
+			continue
+		case isRestartableInitContainer(initContainers[container.Name]) &&
+			container.Started != nil && *container.Started:
 			continue
 		case container.State.Terminated != nil:
 			// initialization is failed
@@ -73,13 +88,12 @@ func getPodStatus(pod v1.Pod) string {
 		}
 		break
 	}
-	if !initializing {
-		restarts = 0
+
+	if !initializing || isPodInitializedConditionTrue(&pod.Status) {
 		hasRunning := false
 		for i := len(pod.Status.ContainerStatuses) - 1; i >= 0; i-- {
 			container := pod.Status.ContainerStatuses[i]
 
-			restarts += int(container.RestartCount)
 			if container.State.Waiting != nil && container.State.Waiting.Reason != "" {
 				reason = container.State.Waiting.Reason
 			} else if container.State.Terminated != nil && container.State.Terminated.Reason != "" {
@@ -92,7 +106,6 @@ func getPodStatus(pod v1.Pod) string {
 				}
 			} else if container.Ready && container.State.Running != nil {
 				hasRunning = true
-				readyContainers++
 			}
 		}
 
@@ -106,7 +119,9 @@ func getPodStatus(pod v1.Pod) string {
 		}
 	}
 
-	if pod.DeletionTimestamp != nil {
+	if pod.DeletionTimestamp != nil && pod.Status.Reason == types.NodeUnreachablePodReason {
+		reason = string(v1.PodUnknown)
+	} else if pod.DeletionTimestamp != nil && !IsPodPhaseTerminal(podPhase) {
 		reason = "Terminating"
 	}
 
@@ -336,4 +351,31 @@ func getPodAllocatedResources(pod *v1.Pod) (PodAllocatedResources, error) {
 		MemoryRequests: memoryRequests.Value(),
 		MemoryLimits:   memoryLimits.Value(),
 	}, nil
+}
+
+func isPodInitializedConditionTrue(status *v1.PodStatus) bool {
+	for _, condition := range status.Conditions {
+		if condition.Type != v1.PodInitialized {
+			continue
+		}
+
+		return condition.Status == v1.ConditionTrue
+	}
+	return false
+}
+
+func isRestartableInitContainer(initContainer *v1.Container) bool {
+	if initContainer == nil {
+		return false
+	}
+	if initContainer.RestartPolicy == nil {
+		return false
+	}
+
+	return *initContainer.RestartPolicy == v1.ContainerRestartPolicyAlways
+}
+
+// IsPodPhaseTerminal returns true if the pod's phase is terminal.
+func IsPodPhaseTerminal(phase v1.PodPhase) bool {
+	return phase == v1.PodFailed || phase == v1.PodSucceeded
 }

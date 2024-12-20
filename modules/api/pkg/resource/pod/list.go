@@ -15,11 +15,11 @@
 package pod
 
 import (
-	"log"
-
 	v1 "k8s.io/api/core/v1"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	k8sClient "k8s.io/client-go/kubernetes"
+	"k8s.io/klog/v2"
+
 	metricapi "k8s.io/dashboard/api/pkg/integration/metric/api"
 	"k8s.io/dashboard/api/pkg/resource/common"
 	"k8s.io/dashboard/api/pkg/resource/dataselect"
@@ -104,7 +104,7 @@ var EmptyPodList = &PodList{
 // GetPodList returns a list of all Pods in the cluster.
 func GetPodList(client k8sClient.Interface, metricClient metricapi.MetricClient, nsQuery *common.NamespaceQuery,
 	dsQuery *dataselect.DataSelectQuery) (*PodList, error) {
-	log.Print("Getting list of all pods in the cluster")
+	klog.V(4).Infof("Getting list of all pods in the cluster")
 
 	channels := &common.ResourceChannels{
 		PodList:   common.GetPodListChannelWithOptions(client, nsQuery, metaV1.ListOptions{}, 1),
@@ -152,7 +152,7 @@ func ToPodList(pods []v1.Pod, events []v1.Event, nonCriticalErrors []error, dsQu
 
 	metrics, err := getMetricsPerPod(pods, metricClient, dsQuery)
 	if err != nil {
-		log.Printf("Skipping metrics because of error: %s\n", err)
+		klog.ErrorS(err, "skipping metrics")
 	}
 
 	for _, pod := range pods {
@@ -163,7 +163,7 @@ func ToPodList(pods []v1.Pod, events []v1.Event, nonCriticalErrors []error, dsQu
 
 	cumulativeMetrics, err := cumulativeMetricsPromises.GetMetrics()
 	if err != nil {
-		log.Printf("Skipping metrics because of error: %s\n", err)
+		klog.ErrorS(err, "skipping metrics")
 		cumulativeMetrics = make([]metricapi.Metric, 0)
 	}
 
@@ -174,7 +174,7 @@ func ToPodList(pods []v1.Pod, events []v1.Event, nonCriticalErrors []error, dsQu
 func toPod(pod *v1.Pod, metrics *MetricsByPod, warnings []common.Event) Pod {
 	allocatedResources, err := getPodAllocatedResources(pod)
 	if err != nil {
-		log.Printf("Couldn't get allocated resources of %s pod: %s\n", pod.Name, err)
+		klog.ErrorS(err, "couldn't get allocated resources", "pod", pod.Name)
 	}
 
 	podDetail := Pod{

@@ -16,10 +16,10 @@ package node
 
 import (
 	"context"
-	"log"
 
 	v1 "k8s.io/api/core/v1"
 	client "k8s.io/client-go/kubernetes"
+	"k8s.io/klog/v2"
 
 	metricapi "k8s.io/dashboard/api/pkg/integration/metric/api"
 	"k8s.io/dashboard/api/pkg/resource/dataselect"
@@ -75,7 +75,7 @@ func toNodeList(client client.Interface, nodes []v1.Node, nonCriticalErrors []er
 	for _, node := range nodes {
 		pods, err := getNodePods(client, node)
 		if err != nil {
-			log.Printf("Couldn't get pods of %s node: %s\n", node.Name, err)
+			klog.Errorf("Couldn't get pods of %s node: %s\n", node.Name, err)
 		}
 
 		nodeList.Nodes = append(nodeList.Nodes, toNode(node, pods))
@@ -93,7 +93,7 @@ func toNodeList(client client.Interface, nodes []v1.Node, nonCriticalErrors []er
 func toNode(node v1.Node, pods *v1.PodList) Node {
 	allocatedResources, err := getNodeAllocatedResources(node, pods)
 	if err != nil {
-		log.Printf("Couldn't get allocated resources of %s node: %s\n", node.Name, err)
+		klog.Errorf("Couldn't get allocated resources of %s node: %s\n", node.Name, err)
 	}
 
 	return Node{

@@ -16,11 +16,13 @@ package namespace
 
 import (
 	"context"
-	"log"
 
 	api "k8s.io/api/core/v1"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/client-go/kubernetes"
+	"k8s.io/klog/v2"
+
+	"k8s.io/dashboard/api/pkg/args"
 	"k8s.io/dashboard/api/pkg/resource/dataselect"
 )
 
@@ -32,7 +34,7 @@ type NamespaceSpec struct {
 
 // CreateNamespace creates namespace based on given specification.
 func CreateNamespace(spec *NamespaceSpec, client kubernetes.Interface) error {
-	log.Printf("Creating namespace %s", spec.Name)
+	klog.V(args.LogLevelVerbose).Infof("Creating namespace %s", spec.Name)
 
 	namespace := &api.Namespace{
 		ObjectMeta: metaV1.ObjectMeta{

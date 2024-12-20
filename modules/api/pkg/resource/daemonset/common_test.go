@@ -44,7 +44,7 @@ const TestNamespace = "test-namespace"
 
 var TestLabel = map[string]string{"app": "test"}
 
-func TestGetServicesForDeletionforDS(t *testing.T) {
+func TestGetServicesForDeletionForDS(t *testing.T) {
 	cases := []struct {
 		labelSelector   labels.Selector
 		DaemonSetList   *apps.DaemonSetList
@@ -93,9 +93,9 @@ func TestGetServicesForDeletionforDS(t *testing.T) {
 	}
 
 	for _, c := range cases {
-		fakeClient := fake.NewSimpleClientset(c.DaemonSetList, c.expected)
+		fakeClient := fake.NewClientset(c.DaemonSetList, c.expected)
 
-		GetServicesForDSDeletion(fakeClient, c.labelSelector, TestNamespace)
+		_, _ = GetServicesForDSDeletion(fakeClient, c.labelSelector, TestNamespace)
 
 		actions := fakeClient.Actions()
 		if len(actions) != len(c.expectedActions) {

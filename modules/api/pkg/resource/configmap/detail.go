@@ -16,11 +16,11 @@ package configmap
 
 import (
 	"context"
-	"log"
 
 	v1 "k8s.io/api/core/v1"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/client-go/kubernetes"
+	"k8s.io/klog/v2"
 )
 
 // ConfigMapDetail API resource provides mechanisms to inject containers with configuration data while keeping
@@ -36,7 +36,7 @@ type ConfigMapDetail struct {
 
 // GetConfigMapDetail returns detailed information about a config map
 func GetConfigMapDetail(client kubernetes.Interface, namespace, name string) (*ConfigMapDetail, error) {
-	log.Printf("Getting details of %s config map in %s namespace", name, namespace)
+	klog.V(4).Infof("Getting details of %s config map in %s namespace", name, namespace)
 
 	rawConfigMap, err := client.CoreV1().ConfigMaps(namespace).Get(context.TODO(), name, metaV1.GetOptions{})
 

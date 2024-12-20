@@ -15,10 +15,9 @@
 package clusterrolebinding
 
 import (
-	"log"
-
 	rbac "k8s.io/api/rbac/v1"
 	"k8s.io/client-go/kubernetes"
+	"k8s.io/klog/v2"
 
 	"k8s.io/dashboard/api/pkg/resource/common"
 	"k8s.io/dashboard/api/pkg/resource/dataselect"
@@ -44,7 +43,7 @@ type ClusterRoleBinding struct {
 
 // GetClusterRoleBindingList returns a list of all ClusterRoleBindings in the cluster.
 func GetClusterRoleBindingList(client kubernetes.Interface, dsQuery *dataselect.DataSelectQuery) (*ClusterRoleBindingList, error) {
-	log.Print("Getting list of all clusterRoleBindings in the cluster")
+	klog.V(4).Infof("Getting list of all clusterRoleBindings in the cluster")
 	channels := &common.ResourceChannels{
 		ClusterRoleBindingList: common.GetClusterRoleBindingListChannel(client, 1),
 	}

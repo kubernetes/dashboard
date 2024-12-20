@@ -51,7 +51,7 @@ func HandleInternalError(response *restful.Response, err error) {
 	code, err := HandleError(err)
 
 	response.AddHeader("Content-Type", "text/plain")
-	response.WriteError(code, err)
+	_ = response.WriteError(code, err)
 }
 
 // AppendError handles single error, that occurred during API GET call. If it is not critical, then it will be

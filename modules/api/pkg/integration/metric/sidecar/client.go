@@ -19,7 +19,6 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"log"
 	"strings"
 
 	"k8s.io/apimachinery/pkg/types"
@@ -43,7 +42,7 @@ type sidecarClient struct {
 // HealthCheck implements integration app interface. See Integration interface for more information.
 func (self sidecarClient) HealthCheck() error {
 	if self.client == nil {
-		return errors.New("Sidecar not configured")
+		return errors.New("sidecar not configured")
 	}
 
 	return self.client.HealthCheck()
@@ -182,7 +181,6 @@ func (self sidecarClient) ithResourceDownload(selector sidecarSelector, metricNa
 			},
 		}
 		result.Error <- nil
-		return
 	}()
 	return result
 }
@@ -205,7 +203,7 @@ func (self sidecarClient) allInOneDownload(selector sidecarSelector, metricName 
 		}
 
 		if len(result) != len(rawResults.Items) {
-			log.Printf(`received %d resources from sidecar instead of %d`, len(rawResults.Items), len(result))
+			klog.V(args.LogLevelVerbose).Infof(`received %d resources from sidecar instead of %d`, len(rawResults.Items), len(result))
 		}
 
 		// rawResult.Items have indefinite order.
@@ -243,7 +241,6 @@ func (self sidecarClient) allInOneDownload(selector sidecarSelector, metricName 
 			}
 			result[i].Error <- nil
 		}
-		return
 
 	}()
 	return result

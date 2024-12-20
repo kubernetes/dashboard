@@ -40,6 +40,11 @@ const (
 	// ImpersonateUserExtraHeader is the header name used to associate extra fields with the user.
 	// It is optional, and it requires ImpersonateUserHeader to be set.
 	ImpersonateUserExtraHeader = "Impersonate-Extra-"
+	// ClusterContextHeader is the header name used to associate client request with specific cluster.
+	// It can be used in environments that use a proxy between Dashboard and API server to
+	// forward requests to the specific cluster. Internally it ensures that the client cache
+	// always matches the correct cluster.
+	ClusterContextHeader = "Cluster-Context"
 )
 
 // ResourceVerber is responsible for performing generic CRUD operations on all supported resources.

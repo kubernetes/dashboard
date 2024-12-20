@@ -15,11 +15,10 @@
 package deployment
 
 import (
-	"log"
-
 	apps "k8s.io/api/apps/v1"
 	v1 "k8s.io/api/core/v1"
 	client "k8s.io/client-go/kubernetes"
+	"k8s.io/klog/v2"
 
 	metricapi "k8s.io/dashboard/api/pkg/integration/metric/api"
 	"k8s.io/dashboard/api/pkg/resource/common"
@@ -64,7 +63,7 @@ type Deployment struct {
 // GetDeploymentList returns a list of all Deployments in the cluster.
 func GetDeploymentList(client client.Interface, nsQuery *common.NamespaceQuery, dsQuery *dataselect.DataSelectQuery,
 	metricClient metricapi.MetricClient) (*DeploymentList, error) {
-	log.Print("Getting list of all deployments in the cluster")
+	klog.V(4).Infof("Getting list of all deployments in the cluster")
 
 	channels := &common.ResourceChannels{
 		DeploymentList: common.GetDeploymentListChannel(client, nsQuery, 1),

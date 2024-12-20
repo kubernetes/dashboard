@@ -15,10 +15,9 @@
 package persistentvolumeclaim
 
 import (
-	"log"
-
 	v1 "k8s.io/api/core/v1"
 	"k8s.io/client-go/kubernetes"
+	"k8s.io/klog/v2"
 
 	"k8s.io/dashboard/api/pkg/resource/common"
 	"k8s.io/dashboard/api/pkg/resource/dataselect"
@@ -52,7 +51,7 @@ type PersistentVolumeClaim struct {
 func GetPersistentVolumeClaimList(client kubernetes.Interface, nsQuery *common.NamespaceQuery,
 	dsQuery *dataselect.DataSelectQuery) (*PersistentVolumeClaimList, error) {
 
-	log.Print("Getting list persistent volumes claims")
+	klog.V(4).Infof("Getting list persistent volumes claims")
 	channels := &common.ResourceChannels{
 		PersistentVolumeClaimList: common.GetPersistentVolumeClaimListChannel(client, nsQuery, 1),
 	}

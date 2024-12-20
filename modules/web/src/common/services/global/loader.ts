@@ -28,7 +28,7 @@ export class LocalConfigLoaderService {
     return this.appConfig_;
   }
 
-  init(): Promise<{}> {
+  init(): Promise<object> {
     return lastValueFrom(
       this.http_.get('assets/config/config.json').pipe(tap(response => (this.appConfig_ = response as AppConfig)))
     );

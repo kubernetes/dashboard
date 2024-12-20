@@ -17,9 +17,9 @@ package sidecar
 import (
 	"fmt"
 
-	"github.com/emicklei/go-restful/v3/log"
 	v1 "k8s.io/api/core/v1"
 	apimachinery "k8s.io/apimachinery/pkg/types"
+	"k8s.io/klog/v2"
 
 	metricapi "k8s.io/dashboard/api/pkg/integration/metric/api"
 	"k8s.io/dashboard/helpers"
@@ -39,7 +39,7 @@ func getSidecarSelectors(selectors []metricapi.ResourceSelector,
 	for i, selector := range selectors {
 		sidecarSelector, err := getSidecarSelector(selector, cachedResources)
 		if err != nil {
-			log.Printf("There was an error during transformation to sidecar selector: %s", err.Error())
+			klog.Errorf("There was an error during transformation to sidecar selector: %s", err.Error())
 			continue
 		}
 
@@ -88,7 +88,7 @@ func getMyPodsFromCache(selector metricapi.ResourceSelector, cachedPods []v1.Pod
 		for _, pod := range cachedPods {
 			if pod.Namespace == selector.Namespace {
 				for _, ownerRef := range pod.OwnerReferences {
-					if ownerRef.Controller != nil && *ownerRef.Controller == true &&
+					if ownerRef.Controller != nil && *ownerRef.Controller &&
 						ownerRef.UID == selector.UID {
 						matchingPods = append(matchingPods, pod)
 					}

@@ -15,7 +15,7 @@
 package validation
 
 import (
-	"github.com/docker/distribution/reference"
+	"github.com/distribution/reference"
 )
 
 // ImageReferenceValiditySpec is a specification of an image reference validation request.

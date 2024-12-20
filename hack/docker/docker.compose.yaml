@@ -12,12 +12,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-version: "3.8"
-
 services:
   gateway:
     container_name: kong-gateway
-    image: kong/kong-gateway:3.6
+    image: kong/kong-gateway:3.8
     environment:
       - "KONG_DATABASE=off"
       - "KONG_PROXY_ACCESS_LOG=/dev/stdout"
@@ -42,7 +40,7 @@ services:
     command:
       - "--kubeconfig=${KUBECONFIG:?}"
     volumes:
-      - ${KUBECONFIG:?}:${KUBECONFIG:?} # Required - local kubeconfig path resolves to $HOME/<user>/.kube/config
+      - ${KUBECONFIG:?}:${KUBECONFIG:?} # Required - tmp kubeconfig path resolves to $DASHBOARD_DIR/.tmp/kubeconfig
     tmpfs:
       - /tmp
 
@@ -57,7 +55,7 @@ services:
       --kubeconfig=${KUBECONFIG:?}
       --sidecar-host=${SIDECAR_HOST:?}
     volumes:
-      - ${KUBECONFIG:?}:${KUBECONFIG:?} # Required - local kubeconfig path resolves to $HOME/<user>/.kube/config
+      - ${KUBECONFIG:?}:${KUBECONFIG:?} # Required - tmp kubeconfig path resolves to $DASHBOARD_DIR/.tmp/kubeconfig
     tmpfs:
       - /tmp
 
@@ -74,7 +72,7 @@ services:
       - "--system-banner=${SYSTEM_BANNER:?}"
       - "--system-banner-severity=${SYSTEM_BANNER_SEVERITY:?}"
     volumes:
-      - ${KUBECONFIG:?}:${KUBECONFIG:?} # Required - local kubeconfig path resolves to $HOME/<user>/.kube/config
+      - ${KUBECONFIG:?}:${KUBECONFIG:?} # Required - tmp kubeconfig path resolves to $DASHBOARD_DIR/.tmp/kubeconfig
     tmpfs:
       - /tmp
 
@@ -90,7 +88,7 @@ services:
       --metric-resolution=5s
       --metric-duration=10m
     volumes:
-      - ${KUBECONFIG:?}:${KUBECONFIG:?}
+      - ${KUBECONFIG:?}:${KUBECONFIG:?} # Required - tmp kubeconfig path resolves to $DASHBOARD_DIR/.tmp/kubeconfig
     shm_size: 1G
     tmpfs:
       - /tmp

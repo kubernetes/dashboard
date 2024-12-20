@@ -53,6 +53,9 @@ helm.sh/chart: {{ include "kubernetes-dashboard.chart" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
 app.kubernetes.io/managed-by: {{ .Release.Service }}
 app.kubernetes.io/part-of: {{ include "kubernetes-dashboard.name" . }}
+{{- with .Values.app.labels }}
+{{ toYaml . }}
+{{- end }}
 {{- end -}}
 
 {{/*
@@ -61,6 +64,15 @@ Common label selectors
 {{- define "kubernetes-dashboard.matchLabels" -}}
 app.kubernetes.io/instance: {{ .Release.Name }}
 app.kubernetes.io/part-of: {{ include "kubernetes-dashboard.name" . }}
+{{- end -}}
+
+{{/*
+Common annotations
+*/}}
+{{- define "kubernetes-dashboard.annotations" -}}
+{{- with .Values.app.annotations }}
+{{- toYaml . }}
+{{- end }}
 {{- end -}}
 
 {{- define "kubernetes-dashboard.app.csrf.secret.name" -}}

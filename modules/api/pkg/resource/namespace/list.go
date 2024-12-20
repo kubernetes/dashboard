@@ -16,10 +16,10 @@ package namespace
 
 import (
 	"context"
-	"log"
 
 	v1 "k8s.io/api/core/v1"
 	"k8s.io/client-go/kubernetes"
+	"k8s.io/klog/v2"
 
 	"k8s.io/dashboard/api/pkg/resource/common"
 	"k8s.io/dashboard/api/pkg/resource/dataselect"
@@ -64,7 +64,7 @@ func GetNamespaceListFromChannels(channels *common.ResourceChannels, dsQuery *da
 
 // GetNamespaceList returns a list of all namespaces in the cluster.
 func GetNamespaceList(client kubernetes.Interface, dsQuery *dataselect.DataSelectQuery) (*NamespaceList, error) {
-	log.Println("Getting list of namespaces")
+	klog.V(4).Info("Getting list of namespaces")
 	namespaces, err := client.CoreV1().Namespaces().List(context.TODO(), helpers.ListEverything)
 
 	nonCriticalErrors, criticalError := errors.ExtractErrors(err)

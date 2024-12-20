@@ -27,9 +27,7 @@ import (
 func getContainerImages(node v1.Node) []string {
 	var containerImages []string
 	for _, image := range node.Status.Images {
-		for _, name := range image.Names {
-			containerImages = append(containerImages, name)
-		}
+		containerImages = append(containerImages, image.Names...)
 	}
 	return containerImages
 }

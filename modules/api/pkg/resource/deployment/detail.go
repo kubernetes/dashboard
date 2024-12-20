@@ -16,12 +16,13 @@ package deployment
 
 import (
 	"context"
-	"log"
 
 	apps "k8s.io/api/apps/v1"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/util/intstr"
 	client "k8s.io/client-go/kubernetes"
+	"k8s.io/klog/v2"
+
 	"k8s.io/dashboard/api/pkg/resource/common"
 	"k8s.io/dashboard/errors"
 )
@@ -82,7 +83,7 @@ type DeploymentDetail struct {
 // GetDeploymentDetail returns model object of deployment and error, if any.
 func GetDeploymentDetail(client client.Interface, namespace string, deploymentName string) (*DeploymentDetail, error) {
 
-	log.Printf("Getting details of %s deployment in %s namespace", deploymentName, namespace)
+	klog.V(4).Infof("Getting details of %s deployment in %s namespace", deploymentName, namespace)
 
 	deployment, err := client.AppsV1().Deployments(namespace).Get(context.TODO(), deploymentName, metaV1.GetOptions{})
 	if err != nil {

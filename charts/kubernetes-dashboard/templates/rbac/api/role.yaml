@@ -19,6 +19,14 @@ apiVersion: rbac.authorization.k8s.io/v1
 metadata:
   labels:
     {{- include "kubernetes-dashboard.labels" . | nindent 4 }}
+    {{- with .Values.api.labels }}
+    {{- toYaml . | nindent 4 }}
+    {{- end }}
+  annotations:
+    {{- include "kubernetes-dashboard.annotations" . | nindent 4 }}
+    {{- with .Values.api.annotations }}
+    {{- toYaml . | nindent 4 }}
+    {{- end }}
   name: {{ template "kubernetes-dashboard.fullname" . }}-{{ .Values.api.role }}
 rules:
     # Allow Dashboard API to get metrics from metrics-scraper.

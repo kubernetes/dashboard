@@ -36,7 +36,7 @@ jobs:
       - uses: helm/chart-testing-action@v2.6.1
       - uses: helm/kind-action@v1.10.0
         with:
-          node_image: kindest/node:v1.29.0
+          node_image: kindest/node:v1.30.2
       - run: ct install --target-branch ${{ github.event.repository.default_branch }}
 
   release:
