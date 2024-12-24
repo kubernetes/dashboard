@@ -25,7 +25,7 @@ services:
       - "KONG_ADMIN_ERROR_LOG=/dev/stderr"
       - "KONG_DNS_ORDER=LAST,A,SRV,CNAME"
     volumes:
-      - ${PWD}/hack/gateway/dev.kong.yml:/kong/declarative/kong.yml
+      - ${SOURCE_DIR}/hack/gateway/dev.kong.yml:/kong/declarative/kong.yml
     ports:
       - "9000:8000"
 
@@ -37,12 +37,12 @@ services:
     command:
       - "--kubeconfig=${KUBECONFIG:?}"
     volumes:
-      - ${PWD}/modules/common:/workspace/common # Required - Common dir watched by AIR
-      - ${PWD}/modules/auth/pkg:/workspace/auth/pkg # Required - Source dir watched by AIR
-      - ${PWD}/modules/auth/api:/workspace/auth/api # Required - Source dir watched by AIR
-      - ${PWD}/modules/auth/main.go:/workspace/auth/main.go # Required - Entry file watched by AIR
-      - ${PWD}/modules/auth/.air.toml:/workspace/auth/.air.toml # Required - AIR configuration
-      - ${KUBECONFIG:?}:${KUBECONFIG:?} # Required - tmp kubeconfig path resolves to $DASHBOARD_DIR/.tmp/kubeconfig
+      - ${SOURCE_DIR}/modules/common:/workspace/common # Required - Common dir watched by AIR
+      - ${SOURCE_DIR}/modules/auth/pkg:/workspace/auth/pkg # Required - Source dir watched by AIR
+      - ${SOURCE_DIR}/modules/auth/api:/workspace/auth/api # Required - Source dir watched by AIR
+      - ${SOURCE_DIR}/modules/auth/main.go:/workspace/auth/main.go # Required - Entry file watched by AIR
+      - ${SOURCE_DIR}/modules/auth/.air.toml:/workspace/auth/.air.toml # Required - AIR configuration
+      - ${KUBECONFIG:?}:${KUBECONFIG:?} # Required - local kubeconfig path resolves to $HOME/<user>/.kube/config
     tmpfs:
       - /tmp
 
@@ -56,11 +56,11 @@ services:
       --sidecar-host=${SIDECAR_HOST:?}
       --v=4
     volumes:
-      - ${PWD}/modules/common:/workspace/common # Required - Common dir watched by AIR
-      - ${PWD}/modules/api/pkg:/workspace/api/pkg # Required - Source dir watched by AIR
-      - ${PWD}/modules/api/main.go:/workspace/api/main.go # Required - Entry file watched by AIR
-      - ${PWD}/modules/api/.air.toml:/workspace/api/.air.toml # Required - AIR configuration
-      - ${KUBECONFIG:?}:${KUBECONFIG:?} # Required - tmp kubeconfig path resolves to $DASHBOARD_DIR/.tmp/kubeconfig
+      - ${SOURCE_DIR}/modules/common:/workspace/common # Required - Common dir watched by AIR
+      - ${SOURCE_DIR}/modules/api/pkg:/workspace/api/pkg # Required - Source dir watched by AIR
+      - ${SOURCE_DIR}/modules/api/main.go:/workspace/api/main.go # Required - Entry file watched by AIR
+      - ${SOURCE_DIR}/modules/api/.air.toml:/workspace/api/.air.toml # Required - AIR configuration
+      - ${KUBECONFIG:?}:${KUBECONFIG:?} # Required - local kubeconfig path resolves to $HOME/<user>/.kube/config
     tmpfs:
       - /tmp
 
@@ -74,11 +74,11 @@ services:
       - "--system-banner='Local\ dev\ environment'"
       - "--system-banner-severity=${SYSTEM_BANNER_SEVERITY:?}"
     volumes:
-      - ${PWD}/modules/common:/workspace/common # Required - Common dir watched by AIR
-      - ${PWD}/modules/web/pkg:/workspace/web/pkg # Required - Source dir watched by AIR
-      - ${PWD}/modules/web/main.go:/workspace/web/main.go # Required - Entry file watched by AIR
-      - ${PWD}/modules/web/.air.toml:/workspace/web/.air.toml # Required - AIR configuration
-      - ${KUBECONFIG:?}:${KUBECONFIG:?} # Required - tmp kubeconfig path resolves to $DASHBOARD_DIR/.tmp/kubeconfig
+      - ${SOURCE_DIR}/modules/common:/workspace/common # Required - Common dir watched by AIR
+      - ${SOURCE_DIR}/modules/web/pkg:/workspace/web/pkg # Required - Source dir watched by AIR
+      - ${SOURCE_DIR}/modules/web/main.go:/workspace/web/main.go # Required - Entry file watched by AIR
+      - ${SOURCE_DIR}/modules/web/.air.toml:/workspace/web/.air.toml # Required - AIR configuration
+      - ${KUBECONFIG:?}:${KUBECONFIG:?} # Required - local kubeconfig path resolves to $HOME/<user>/.kube/config
     tmpfs:
       - /tmp
 
@@ -88,7 +88,7 @@ services:
       context: ../../modules/web
       dockerfile: dev.web.Dockerfile
     volumes:
-      - ${PWD}/modules/web:/workspace
+      - ${SOURCE_DIR}/modules/web:/workspace
     ports:
       - "8080:8080"
 
@@ -102,11 +102,11 @@ services:
       --metric-resolution=5s
       --metric-duration=10m
     volumes:
-      - ${PWD}/modules/common:/workspace/common # Required - Common dir watched by AIR
-      - ${PWD}/modules/metrics-scraper/pkg:/workspace/metrics-scraper/pkg # Required - Source dir watched by AIR
-      - ${PWD}/modules/metrics-scraper/main.go:/workspace/metrics-scraper/main.go # Required - Entry file watched by AIR
-      - ${PWD}/modules/metrics-scraper/.air.toml:/workspace/metrics-scraper/.air.toml # Required - AIR configuration
-      - ${KUBECONFIG:?}:${KUBECONFIG:?} # Required - tmp kubeconfig path resolves to $DASHBOARD_DIR/.tmp/kubeconfig
+      - ${SOURCE_DIR}/modules/common:/workspace/common # Required - Common dir watched by AIR
+      - ${SOURCE_DIR}/modules/metrics-scraper/pkg:/workspace/metrics-scraper/pkg # Required - Source dir watched by AIR
+      - ${SOURCE_DIR}/modules/metrics-scraper/main.go:/workspace/metrics-scraper/main.go # Required - Entry file watched by AIR
+      - ${SOURCE_DIR}/modules/metrics-scraper/.air.toml:/workspace/metrics-scraper/.air.toml # Required - AIR configuration
+      - ${KUBECONFIG:?}:${KUBECONFIG:?}
     shm_size: 1G
     tmpfs:
       - /tmp

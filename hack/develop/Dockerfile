@@ -18,7 +18,7 @@
 
 # golang is based on debian:jessie
 # Specify version to clarify which version we use.
-FROM golang:1.20-bullseye
+FROM golang:1.23-bullseye
 
 # Install Node.js. Go is already installed.
 # A small tweak, apt-get update is already run by the nodejs setup script,
@@ -27,7 +27,7 @@ RUN apt-get update && apt-get install -y ca-certificates --no-install-recommends
 RUN mkdir -p /etc/apt/keyrings
 RUN curl -fsSL https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key | \
   gpg --dearmor -o /etc/apt/keyrings/nodesource.gpg
-ENV NODE_MAJOR=18
+ENV NODE_MAJOR=20
 RUN echo "deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesource.com/node_$NODE_MAJOR.x nodistro main" | \
   tee /etc/apt/sources.list.d/nodesource.list
 RUN apt-get update && apt-get install -y --no-install-recommends \
@@ -72,7 +72,7 @@ ENV NG_CLI_ANALYTICS=false
 
 # Download a statically linked docker client,
 # so the container is able to build images on the host.
-RUN curl -sSL https://download.docker.com/linux/static/stable/x86_64/docker-23.0.1.tgz > /tmp/docker.tgz && \
+RUN curl -sSL https://download.docker.com/linux/static/stable/x86_64/docker-25.0.5.tgz > /tmp/docker.tgz && \
 	cd /tmp/ && \
 	tar xzvf docker.tgz && \
 	rm docker.tgz && \
@@ -82,7 +82,7 @@ RUN curl -sSL https://download.docker.com/linux/static/stable/x86_64/docker-23.0
 
 # Install docker compose plugin
 RUN mkdir -p /usr/local/lib/docker/cli-plugins
-RUN curl -SL https://github.com/docker/compose/releases/download/v2.14.0/docker-compose-linux-x86_64 \
+RUN curl -SL https://github.com/docker/compose/releases/download/v2.25.0/docker-compose-linux-x86_64 \
   -o /usr/local/lib/docker/cli-plugins/docker-compose
 RUN chmod +x /usr/local/lib/docker/cli-plugins/docker-compose
 
@@ -91,12 +91,15 @@ RUN curl -LO https://dl.k8s.io/release/$(curl -sL https://dl.k8s.io/release/stab
 RUN chmod +x ./kubectl
 RUN mv ./kubectl /usr/local/bin/kubectl
 
-# Install golangci for ckecking or fixing go format.
-# `npm ci` installs golangci, but this installation is needed
-# for running `npm run check` singlely, like
-# `hack/develop/run-dev-container.sh run check`.
-RUN curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | \
-  sh -s -- -b $(go env GOPATH)/bin v1.52.2
+# Install helm
+ENV HELM_DOWNLOAD="/tmp/helm.tar.gz"
+ENV HELM_TMP="/tmp/helm"
+RUN curl -SsL https://get.helm.sh/helm-$(curl -Ls https://github.com/helm/helm/releases | grep 'href="/helm/helm/releases/tag/v3.[0-9]*.[0-9]*\"' | sed -E 's/.*\/helm\/helm\/releases\/tag\/(v[0-9\.]+)".*/\1/g' | head -1)-linux-amd64.tar.gz -o ${HELM_DOWNLOAD}
+RUN mkdir -p ${HELM_TMP}
+RUN tar -xf ${HELM_DOWNLOAD} -C ${HELM_TMP}
+RUN mv ${HELM_TMP}/linux-amd64/helm /usr/bin/helm
+RUN rm -fr ${HELM_DOWNLOAD}
+RUN rm -fr ${HELM_TMP}
 
 # Enable go mod.
 ENV GO111MODULE=on
