@@ -25,7 +25,7 @@ services:
       - "KONG_ADMIN_ERROR_LOG=/dev/stderr"
       - "KONG_DNS_ORDER=LAST,A,CNAME"
     volumes:
-      - ${PWD}/hack/gateway/prod.kong.yml:/kong/declarative/kong.yml
+      - ${SOURCE_DIR}/hack/gateway/prod.kong.yml:/kong/declarative/kong.yml
     ports:
       - "8080:8000"
       - "8443:8443"
