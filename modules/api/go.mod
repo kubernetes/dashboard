@@ -9,7 +9,7 @@ require (
 	github.com/go-openapi/spec v0.21.0
 	github.com/prometheus/client_golang v1.20.5
 	github.com/spf13/pflag v1.0.5
-	golang.org/x/net v0.30.0
+	golang.org/x/net v0.34.0
 	gopkg.in/igm/sockjs-go.v2 v2.1.0
 	k8s.io/api v0.32.0
 	k8s.io/apiextensions-apiserver v0.32.0
@@ -98,11 +98,11 @@ require (
 	github.com/xlab/treeprint v1.2.0 // indirect
 	github.com/zeebo/xxh3 v1.0.2 // indirect
 	golang.org/x/arch v0.8.0 // indirect
-	golang.org/x/crypto v0.31.0 // indirect
+	golang.org/x/crypto v0.32.0 // indirect
 	golang.org/x/oauth2 v0.23.0 // indirect
 	golang.org/x/sync v0.10.0 // indirect
-	golang.org/x/sys v0.28.0 // indirect
-	golang.org/x/term v0.27.0 // indirect
+	golang.org/x/sys v0.29.0 // indirect
+	golang.org/x/term v0.28.0 // indirect
 	golang.org/x/text v0.21.0 // indirect
 	golang.org/x/time v0.7.0 // indirect
 	google.golang.org/protobuf v1.35.1 // indirect
