@@ -145,7 +145,7 @@ auth:
   role: auth
   image:
     repository: docker.io/kubernetesui/dashboard-auth
-    tag: 1.2.2
+    tag: 1.2.3
   scaling:
     replicas: 1
     revisionHistoryLimit: 10
@@ -184,7 +184,7 @@ api:
   role: api
   image:
     repository: docker.io/kubernetesui/dashboard-api
-    tag: 1.10.1
+    tag: 1.10.2
   scaling:
     replicas: 1
     revisionHistoryLimit: 10
@@ -241,7 +241,7 @@ web:
   role: web
   image:
     repository: docker.io/kubernetesui/dashboard-web
-    tag: 1.6.0
+    tag: 1.6.1
   scaling:
     replicas: 1
     revisionHistoryLimit: 10
@@ -301,7 +301,7 @@ metricsScraper:
   role: metrics-scraper
   image:
     repository: docker.io/kubernetesui/dashboard-metrics-scraper
-    tag: 1.2.1
+    tag: 1.2.2
   scaling:
     replicas: 1
     revisionHistoryLimit: 10
