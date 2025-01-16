@@ -2660,6 +2660,14 @@
         <source> Owner </source>
         <target state="new"> Owner </target>
       </trans-unit>
+      <trans-unit id="5883804203832913220" datatype="html">
+        <source>Hide All Namespaces option</source>
+        <target state="new">Hide All Namespaces option</target>
+      </trans-unit>
+      <trans-unit id="8967487471439603323" datatype="html">
+        <source>Hides all-namespaces option from the namespaces dropdown list in UI.</source>
+        <target state="new">Hides all-namespaces option from the namespaces dropdown list in UI.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

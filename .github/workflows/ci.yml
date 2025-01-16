@@ -64,7 +64,7 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
-      - uses: actions/setup-go@v5.0.2
+      - uses: actions/setup-go@v5.2.0
         with:
           go-version-file: modules/api/go.mod
           check-latest: true
@@ -81,7 +81,7 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
-      - uses: actions/setup-go@v5.0.2
+      - uses: actions/setup-go@v5.2.0
         with:
           go-version-file: modules/api/go.mod
           check-latest: true
@@ -99,7 +99,7 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
-      - uses: actions/setup-go@v5.0.2
+      - uses: actions/setup-go@v5.2.0
         with:
           go-version-file: modules/api/go.mod
           check-latest: true
@@ -144,7 +144,7 @@ jobs:
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3.2.0
       - name: set up Docker Buildx
-        uses: docker/setup-buildx-action@v3.7.1
+        uses: docker/setup-buildx-action@v3.8.0
         with:
           config: .github/buildkitd.toml
       - name: Login to Docker
@@ -180,7 +180,7 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
-      - uses: actions/setup-go@v5.0.2
+      - uses: actions/setup-go@v5.2.0
         with:
           go-version-file: modules/go.work
           check-latest: true
@@ -190,7 +190,7 @@ jobs:
       - working-directory: modules/web
         run: yarn
       - run: PATH=$PATH:$GOPATH/bin make coverage
-      - uses: codecov/codecov-action@v4.6.0
+      - uses: codecov/codecov-action@v5.1.2
         with:
           directory: ./.tmp
           token: ${{ secrets.CODECOV_TOKEN }}
@@ -205,8 +205,8 @@ jobs:
 #          fetch-depth: 0
 #      - uses: helm/kind-action@v1.9.0
 #        with:
-#          node_image: kindest/node:v1.30.2
-#      - uses: actions/setup-go@v5.0.2
+#          node_image: kindest/node:v1.32.0
+#      - uses: actions/setup-go@v5.2.0
 #        with:
 #          go-version-file: modules/api/go.mod
 #          check-latest: true

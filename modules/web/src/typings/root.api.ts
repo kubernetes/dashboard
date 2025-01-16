@@ -1229,6 +1229,7 @@ export interface GlobalSettings {
   logsAutoRefreshTimeInterval: number;
   resourceAutoRefreshTimeInterval: number;
   disableAccessDeniedNotifications: boolean;
+  hideAllNamespaces: boolean;
   defaultNamespace: string;
   namespaceFallbackList: string[];
 }

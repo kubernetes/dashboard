@@ -33,6 +33,5 @@ linters:
 
     # additional linters
     - errorlint
-    - errname
     - goimports
     - misspell
