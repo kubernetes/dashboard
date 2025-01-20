@@ -76,6 +76,7 @@ func (k ResourceKind) Restartable() bool {
 	restartable := []ResourceKind{
 		ResourceKindDeployment,
 		ResourceKindDaemonSet,
+		ResourceKindStatefulSet,
 	}
 
 	for _, kind := range restartable {

@@ -855,6 +855,15 @@ func CreateHTTPAPIHandler(iManager integration.Manager) (*restful.Container, err
 			Param(apiV1Ws.PathParameter("statefulset", "name of the StatefulSet")).
 			Writes(common.EventList{}).
 			Returns(http.StatusOK, "OK", common.EventList{}))
+	apiV1Ws.Route(
+		apiV1Ws.PUT("/statefulset/{namespace}/{statefulset}/restart").To(apiHandler.handleStatefulSetRestart).
+			// docs
+			Doc("rollout restart of the Daemon Set").
+			Param(apiV1Ws.PathParameter("namespace", "namespace of the StatefulSet")).
+			Param(apiV1Ws.PathParameter("statefulset", "name of the StatefulSet")).
+			Writes(deployment.RolloutSpec{}).
+			Returns(http.StatusOK, "OK", statefulset.StatefulSetDetail{}),
+	)
 
 	// Node
 	apiV1Ws.Route(
@@ -2820,6 +2829,23 @@ func (apiHandle *APIHandler) handleDaemonSetRestart(request *restful.Request, re
 	namespace := request.PathParameter("namespace")
 	name := request.PathParameter("daemonSet")
 	result, err := daemonset.RestartDaemonSet(k8sClient, namespace, name)
+	if err != nil {
+		errors.HandleInternalError(response, err)
+		return
+	}
+	_ = response.WriteHeaderAndEntity(http.StatusOK, result)
+}
+
+func (apiHandle *APIHandler) handleStatefulSetRestart(request *restful.Request, response *restful.Response) {
+	k8sClient, err := client.Client(request.Request)
+	if err != nil {
+		errors.HandleInternalError(response, err)
+		return
+	}
+
+	namespace := request.PathParameter("namespace")
+	name := request.PathParameter("daemonSet")
+	result, err := statefulset.RestartStatefulSet(k8sClient, namespace, name)
 	if err != nil {
 		errors.HandleInternalError(response, err)
 		return
