@@ -14634,7 +14634,7 @@ __metadata:
     tar: 7.4.3
     through2: 4.0.2
     ts-jest: 29.2.5
-    ts-loader: 9.5.1
+    ts-loader: 9.5.2
     ts-node: 10.9.2
     tslib: 2.8.1
     typescript: 5.1.6
@@ -19577,9 +19577,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ts-loader@npm:9.5.1":
-  version: 9.5.1
-  resolution: "ts-loader@npm:9.5.1"
+"ts-loader@npm:9.5.2":
+  version: 9.5.2
+  resolution: "ts-loader@npm:9.5.2"
   dependencies:
     chalk: ^4.1.0
     enhanced-resolve: ^5.0.0
@@ -19589,7 +19589,7 @@ __metadata:
   peerDependencies:
     typescript: "*"
     webpack: ^5.0.0
-  checksum: 7cf396e656d905388ea2a9b5e82f16d3c955fda8d3df2fbf219f4bee16ff50a3c995c44ae3e584634e9443f056cec70bb3151add3917ffb4588ecd7394bac0ec
+  checksum: f4c117042e25434e733c4b70873adaa9a79b14c2b3d8e5db53bbfd42060289f8a3eb97cfff64c83123b735d954f0eaa0f60f093afb0682cd2d1d7fa17f81e223
   languageName: node
   linkType: hard
 
