@@ -8161,14 +8161,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"axios@npm:^1.7.7":
-  version: 1.7.7
-  resolution: "axios@npm:1.7.7"
+"axios@npm:^1.7.9":
+  version: 1.7.9
+  resolution: "axios@npm:1.7.9"
   dependencies:
     follow-redirects: ^1.15.6
     form-data: ^4.0.0
     proxy-from-env: ^1.1.0
-  checksum: 882d4fe0ec694a07c7f5c1f68205eb6dc5a62aecdb632cc7a4a3d0985188ce3030e0b277e1a8260ac3f194d314ae342117660a151fabffdc5081ca0b5a8b47fe
+  checksum: cb8ce291818effda09240cb60f114d5625909b345e10f389a945320e06acf0bc949d0f8422d25720f5dd421362abee302c99f5e97edec4c156c8939814b23d19
   languageName: node
   linkType: hard
 
@@ -14638,7 +14638,7 @@ __metadata:
     ts-node: 10.9.2
     tslib: 2.8.1
     typescript: 5.1.6
-    wait-on: 8.0.1
+    wait-on: 8.0.2
     web-animations-js: 2.3.2
     webpack-bundle-analyzer: 4.10.2
     webpack-dev-server: 5.2.0
@@ -20209,18 +20209,18 @@ __metadata:
   languageName: node
   linkType: hard
 
-"wait-on@npm:8.0.1":
-  version: 8.0.1
-  resolution: "wait-on@npm:8.0.1"
+"wait-on@npm:8.0.2":
+  version: 8.0.2
+  resolution: "wait-on@npm:8.0.2"
   dependencies:
-    axios: ^1.7.7
+    axios: ^1.7.9
     joi: ^17.13.3
     lodash: ^4.17.21
     minimist: ^1.2.8
     rxjs: ^7.8.1
   bin:
     wait-on: bin/wait-on
-  checksum: 20e670a7c7ef8959a859c27d269297e11a6be0324f4f0d0b494dfc2d43582f66a70f5a6ead158ed47a840632706ff2b9c939284bea7856bf283e9de9e33d84f3
+  checksum: 3b6388f991faec8d5226f7a1c0dbcf9852f536632f987dd65f27e7a070d03bfc67f051a4d208009e6dbbdb095a6f9109394c2dc88fec191a798983e0c8469471
   languageName: node
   linkType: hard
 
