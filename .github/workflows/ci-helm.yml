@@ -32,7 +32,7 @@ jobs:
         with:
           version: v3.12.1
       - name: Set up Chart Testing CLI
-        uses: helm/chart-testing-action@v2.6.1
+        uses: helm/chart-testing-action@v2.7.0
       - name: Change Detection
         id: list-changed
         run: |
