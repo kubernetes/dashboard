@@ -69,7 +69,7 @@ jobs:
           helm repo add kong https://charts.konghq.com
 
       - name: Run chart-releaser
-        uses: helm/chart-releaser-action@v1.6.0
+        uses: helm/chart-releaser-action@v1.7.0
         with:
           skip_existing: true
           mark_as_latest: true
