@@ -24,9 +24,5 @@ func RestartStatefulSet(client client.Interface, namespace, name string) (*v1.St
 		statefulSet.Spec.Template.ObjectMeta.Annotations = map[string]string{}
 	}
 	statefulSet.Spec.Template.ObjectMeta.Annotations[RestartedAtAnnotationKey] = time.Now().Format(time.RFC3339)
-	_, err = client.AppsV1().StatefulSets(namespace).Update(context.TODO(), statefulSet, metaV1.UpdateOptions{})
-	if err != nil {
-		return nil, err
-	}
-	return statefulSet, nil
+	return client.AppsV1().StatefulSets(namespace).Update(context.TODO(), statefulSet, metaV1.UpdateOptions{})
 }
