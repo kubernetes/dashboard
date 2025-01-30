@@ -32,15 +32,19 @@ metadata:
     {{- end }}
   name: {{ template "kubernetes-dashboard.fullname" . }}-{{ .Values.web.role }}
 spec:
+  type: {{ .Values.web.service.type }}
   ports:
-    {{- with (index .Values.web.containers.ports 0) }}
-    - name: {{ .name }}
-      port: {{ .containerPort }}
-      {{ if .protocol }}protocol: {{ .protocol }}{{- end }}
-      {{ if .appProtocol }}appProtocol: {{ .appProtocol }}{{- end }}
-      {{ if .nodePort }}nodePort: {{ .nodePort }}{{- end }}
-      {{ if .targetPort }}targetPort: {{ .targetPort }}{{- end }}
+    {{- range $port := .Values.web.containers.ports }}
+    - name: {{ $port.name }}
+      port: {{ $port.containerPort }}
+      {{ if $port.protocol }}protocol: {{ $port.protocol }}{{- end }}
+      {{ if $port.appProtocol }}appProtocol: {{ $port.appProtocol }}{{- end }}
+      {{ if $port.nodePort }}nodePort: {{ $port.nodePort }}{{- end }}
+      {{ if $port.targetPort }}targetPort: {{ $port.targetPort }}{{- end }}
     {{- end }}
+  {{ with .Values.web.service.extraSpec }}
+  {{ . | toYaml | nindent 2 }}
+  {{- end }}
   selector:
     {{- include "kubernetes-dashboard.matchLabels" . | nindent 4 }}
     app.kubernetes.io/name: {{ template "kubernetes-dashboard.name" . }}-{{ .Values.web.role }}

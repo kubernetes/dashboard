@@ -32,16 +32,20 @@ metadata:
     {{- end }}
   name: {{ template "kubernetes-dashboard.metrics-scraper.name" . }}
 spec:
+  type: {{ .Values.metricsScraper.service.type }}
   ports:
-    {{- with (index .Values.metricsScraper.containers.ports 0) }}
+    {{- range $port := .Values.metricsScraper.containers.ports }}
     # Name is intentionally not used here as it breaks the connection between API <-> Scraper
     # Named ports have an issue when trying to connect through in-cluster service proxy.
-    - port: {{ .containerPort }}
-      {{ if .protocol }}protocol: {{ .protocol }}{{- end }}
-      {{ if .appProtocol }}appProtocol: {{ .appProtocol }}{{- end }}
-      {{ if .nodePort }}nodePort: {{ .nodePort }}{{- end }}
-      {{ if .targetPort }}targetPort: {{ .targetPort }}{{- end }}
+    - port: {{ $port.containerPort }}
+      {{ if $port.protocol }}protocol: {{ $port.protocol }}{{- end }}
+      {{ if $port.appProtocol }}appProtocol: {{ $port.appProtocol }}{{- end }}
+      {{ if $port.nodePort }}nodePort: {{ $port.nodePort }}{{- end }}
+      {{ if $port.targetPort }}targetPort: {{ $port.targetPort }}{{- end }}
     {{- end }}
+  {{ with .Values.metricsScraper.service.extraSpec }}
+  {{ . | toYaml | nindent 2 }}
+  {{- end }}
   selector:
     {{- include "kubernetes-dashboard.matchLabels" . | nindent 4 }}
     app.kubernetes.io/name: {{ template "kubernetes-dashboard.name" . }}-{{ .Values.metricsScraper.role }}

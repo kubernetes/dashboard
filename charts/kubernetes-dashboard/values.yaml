@@ -149,6 +149,9 @@ auth:
   scaling:
     replicas: 1
     revisionHistoryLimit: 10
+  service:
+    type: ClusterIP
+    extraSpec: ~
   containers:
     ports:
       - name: auth
@@ -188,6 +191,9 @@ api:
   scaling:
     replicas: 1
     revisionHistoryLimit: 10
+  service:
+    type: ClusterIP
+    extraSpec: ~
   containers:
     ports:
       - name: api
@@ -245,6 +251,9 @@ web:
   scaling:
     replicas: 1
     revisionHistoryLimit: 10
+  service:
+    type: ClusterIP
+    extraSpec: ~
   containers:
     ports:
       - name: web
@@ -305,6 +314,9 @@ metricsScraper:
   scaling:
     replicas: 1
     revisionHistoryLimit: 10
+  service:
+    type: ClusterIP
+    extraSpec: ~
   containers:
     ports:
       - containerPort: 8000
