@@ -16,10 +16,11 @@ package daemonset
 
 import (
 	"context"
+	"time"
+
 	v1 "k8s.io/api/apps/v1"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	client "k8s.io/client-go/kubernetes"
-	"time"
 )
 
 const (
