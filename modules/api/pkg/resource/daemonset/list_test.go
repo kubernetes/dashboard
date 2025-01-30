@@ -106,7 +106,7 @@ func TestGetDaemonSetListFromChannels(t *testing.T) {
 						Labels:            map[string]string{"key": "value"},
 						CreationTimestamp: metaV1.Unix(111, 222),
 					},
-					TypeMeta: types.TypeMeta{Kind: types.ResourceKindDaemonSet},
+					TypeMeta: types.TypeMeta{Kind: types.ResourceKindDaemonSet, Restartable: true},
 					Pods: common.PodInfo{
 						Current:  0,
 						Failed:   0,
