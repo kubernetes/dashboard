@@ -34,7 +34,13 @@ metadata:
 spec:
   ports:
     {{- with (index .Values.metricsScraper.containers.ports 0) }}
+    # Name is intentionally not used here as it breaks the connection between API <-> Scraper
+    # Named ports have an issue when trying to connect through in-cluster service proxy.
     - port: {{ .containerPort }}
+      {{ if .protocol }}protocol: {{ .protocol }}{{- end }}
+      {{ if .appProtocol }}appProtocol: {{ .appProtocol }}{{- end }}
+      {{ if .nodePort }}nodePort: {{ .nodePort }}{{- end }}
+      {{ if .targetPort }}targetPort: {{ .targetPort }}{{- end }}
     {{- end }}
   selector:
     {{- include "kubernetes-dashboard.matchLabels" . | nindent 4 }}
