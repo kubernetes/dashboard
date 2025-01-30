@@ -31,9 +31,13 @@ metadata:
   name: {{ template "kubernetes-dashboard.fullname" . }}-{{ .Values.api.role }}
 spec:
   ports:
-    - name: {{ .Values.api.role }}
     {{- with (index .Values.api.containers.ports 0) }}
+    - name: {{ .name }}
       port: {{ .containerPort }}
+      {{ if .protocol }}protocol: {{ .protocol }}{{- end }}
+      {{ if .appProtocol }}appProtocol: {{ .appProtocol }}{{- end }}
+      {{ if .nodePort }}nodePort: {{ .nodePort }}{{- end }}
+      {{ if .targetPort }}targetPort: {{ .targetPort }}{{- end }}
     {{- end }}
   selector:
     {{- include "kubernetes-dashboard.matchLabels" . | nindent 4 }}
