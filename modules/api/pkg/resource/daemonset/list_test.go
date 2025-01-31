@@ -351,7 +351,7 @@ func TestToDaemonSetList(t *testing.T) {
 							Namespace: "namespace-1",
 							UID:       "uid-1",
 						},
-						TypeMeta:            types.TypeMeta{Kind: types.ResourceKindDaemonSet},
+						TypeMeta:            types.TypeMeta{Kind: types.ResourceKindDaemonSet, Restartable: true},
 						ContainerImages:     []string{"my-container-image-1"},
 						InitContainerImages: []string{"my-init-container-image-1"},
 						Pods: common.PodInfo{
@@ -367,7 +367,7 @@ func TestToDaemonSetList(t *testing.T) {
 							Name:      "my-app-2",
 							Namespace: "namespace-2",
 						},
-						TypeMeta:            types.TypeMeta{Kind: types.ResourceKindDaemonSet},
+						TypeMeta:            types.TypeMeta{Kind: types.ResourceKindDaemonSet, Restartable: true},
 						ContainerImages:     []string{"my-container-image-2"},
 						InitContainerImages: []string{"my-init-container-image-2"},
 						Pods: common.PodInfo{
@@ -379,7 +379,7 @@ func TestToDaemonSetList(t *testing.T) {
 							Name:      "my-app-3",
 							Namespace: "namespace-3",
 						},
-						TypeMeta:            types.TypeMeta{Kind: types.ResourceKindDaemonSet},
+						TypeMeta:            types.TypeMeta{Kind: types.ResourceKindDaemonSet, Restartable: true},
 						ContainerImages:     []string{"my-container-image-3"},
 						InitContainerImages: []string{"my-init-container-image-3"},
 						Pods: common.PodInfo{
