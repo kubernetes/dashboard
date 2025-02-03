@@ -13,6 +13,8 @@
 # limitations under the License.
 
 name: CD / Helm
+env:
+  GCR_IMAGE: ghcr.io/${{ github.repository_owner }}
 
 on:
   push:
@@ -45,6 +47,7 @@ jobs:
     needs: [ 'lint-test' ]
     permissions:
       contents: write
+      packages: write
     steps:
       - name: Check out repository
         uses: actions/checkout@v4.1.1
@@ -75,3 +78,11 @@ jobs:
           mark_as_latest: true
         env:
           CR_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+
+      - name: Publish to OCI registry
+        run: |
+          echo ${{ secrets.GITHUB_TOKEN }} | helm registry login ghcr.io --username ${{ github.repository_owner }} --password-stdin
+          helm dependency build charts/kubernetes-dashboard/
+          helm package charts/kubernetes-dashboard/
+          package=`ls -t kubernetes-dashboard*.tgz | head -n 1`
+          helm push "${package}" oci://${{ env.GCR_IMAGE }}
