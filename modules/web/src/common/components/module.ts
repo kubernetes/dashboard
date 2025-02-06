@@ -105,6 +105,7 @@ import {UploadFileComponent} from './uploadfile/component';
 import {VolumeMountComponent} from './volumemount/component';
 import {WorkloadStatusComponent} from './workloadstatus/component';
 import {ZeroStateComponent} from './zerostate/component';
+import { EnvironmentVariablesComponent } from './environmentvariables/component';
 
 const components = [
   ActionbarDetailActionsComponent,
@@ -138,6 +139,7 @@ const components = [
   DeploymentListComponent,
   DefaultActionbarComponent,
   EndpointListComponent,
+  EnvironmentVariablesComponent,
   ExternalEndpointComponent,
   EventListComponent,
   GraphComponent,
