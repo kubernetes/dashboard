@@ -4,7 +4,7 @@ go 1.23.0
 
 require (
 	github.com/air-verse/air v1.61.7
-	github.com/apache/skywalking-eyes v0.6.0
+	github.com/apache/skywalking-eyes v0.7.0
 	github.com/golangci/golangci-lint v1.63.4
 	k8s.io/code-generator v0.32.0
 	sigs.k8s.io/kind v0.26.0
@@ -242,7 +242,7 @@ require (
 	golang.org/x/sys v0.29.0 // indirect
 	golang.org/x/text v0.21.0 // indirect
 	golang.org/x/tools v0.29.0 // indirect
-	google.golang.org/protobuf v1.36.2 // indirect
+	google.golang.org/protobuf v1.36.5 // indirect
 	gopkg.in/ini.v1 v1.67.0 // indirect
 	gopkg.in/warnings.v0 v0.1.2 // indirect
 	gopkg.in/yaml.v2 v2.4.0 // indirect
