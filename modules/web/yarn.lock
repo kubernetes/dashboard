@@ -15047,7 +15047,7 @@ __metadata:
     ng-extract-i18n-merge: 2.14.1
     ngx-cookie-service: 19.1.0
     ngx-pipes: 3.2.2
-    node-gyp: 11.0.0
+    node-gyp: 11.1.0
     normalize.css: 8.0.1
     prettier: 3.5.0
     q: 1.5.1
@@ -16342,9 +16342,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"node-gyp@npm:11.0.0":
-  version: 11.0.0
-  resolution: "node-gyp@npm:11.0.0"
+"node-gyp@npm:11.1.0":
+  version: 11.1.0
+  resolution: "node-gyp@npm:11.1.0"
   dependencies:
     env-paths: ^2.2.0
     exponential-backoff: ^3.1.1
@@ -16358,7 +16358,7 @@ __metadata:
     which: ^5.0.0
   bin:
     node-gyp: bin/node-gyp.js
-  checksum: d7d5055ccc88177f721c7cd4f8f9440c29a0eb40e7b79dba89ef882ec957975dfc1dcb8225e79ab32481a02016eb13bbc051a913ea88d482d3cbdf2131156af4
+  checksum: b196da39a7a45f302d6e03cfdb579eeecbfffa1ab3796de45652c2c0dcbf46b83fde715b054e4d00aa53da5f33033ac5791e20cbb7cc11267dac4f8975ef276c
   languageName: node
   linkType: hard
 
