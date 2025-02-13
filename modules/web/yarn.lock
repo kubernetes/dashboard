@@ -4582,12 +4582,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@graphql-mesh/transform-replace-field@npm:0.103.16":
-  version: 0.103.16
-  resolution: "@graphql-mesh/transform-replace-field@npm:0.103.16"
+"@graphql-mesh/transform-replace-field@npm:0.103.17":
+  version: 0.103.17
+  resolution: "@graphql-mesh/transform-replace-field@npm:0.103.17"
   dependencies:
-    "@graphql-mesh/types": ^0.103.15
-    "@graphql-mesh/utils": ^0.103.15
+    "@graphql-mesh/types": ^0.103.16
+    "@graphql-mesh/utils": ^0.103.16
     "@graphql-tools/code-file-loader": ^8.0.0
     "@graphql-tools/graphql-file-loader": ^8.0.0
     "@graphql-tools/load": ^8.0.0
@@ -4595,7 +4595,7 @@ __metadata:
     tslib: ^2.4.0
   peerDependencies:
     graphql: "*"
-  checksum: 505e29a07592a7a0dd944a981b597ca427a908f40e10f3b35f7da0ecfa8fa1cda399b164745c85019666b8a2336ce26296cc3ca07e87765936c3f12fe346c042
+  checksum: 075592b232ec4eccb06f582f41d7f820d3adef58a8606d47057faf30b9cd12bb1a37b0122027ff90986992b76bf5839824935227ef53f69e8b1bcec307492232
   languageName: node
   linkType: hard
 
@@ -14930,7 +14930,7 @@ __metadata:
     "@graphql-mesh/cli": 0.98.21
     "@graphql-mesh/openapi": 0.108.19
     "@graphql-mesh/runtime": 0.105.17
-    "@graphql-mesh/transform-replace-field": 0.103.16
+    "@graphql-mesh/transform-replace-field": 0.103.17
     "@swimlane/ngx-charts": 21.1.3
     "@types/d3": 7.4.3
     "@types/d3-scale": 4.0.9
