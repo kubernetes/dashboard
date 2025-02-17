@@ -4568,6 +4568,22 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@graphql-mesh/store@npm:^0.103.17":
+  version: 0.103.17
+  resolution: "@graphql-mesh/store@npm:0.103.17"
+  dependencies:
+    "@graphql-inspector/core": 6.2.1
+    "@graphql-mesh/cross-helpers": ^0.4.10
+    "@graphql-mesh/types": ^0.103.17
+    "@graphql-mesh/utils": ^0.103.17
+    "@graphql-tools/utils": ^10.8.0
+    tslib: ^2.4.0
+  peerDependencies:
+    graphql: "*"
+  checksum: 8f36e532e6bd7f9f99f4ce41fd0fcbd0d322da2fe2147f2ef3260c6de0580d1377525b49518cdee725ef9f3ef72af078f760692188daaf654be7a13a668e9229
+  languageName: node
+  linkType: hard
+
 "@graphql-mesh/string-interpolation@npm:0.5.8, @graphql-mesh/string-interpolation@npm:^0.5.8":
   version: 0.5.8
   resolution: "@graphql-mesh/string-interpolation@npm:0.5.8"
@@ -4582,12 +4598,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@graphql-mesh/transform-replace-field@npm:0.103.16":
-  version: 0.103.16
-  resolution: "@graphql-mesh/transform-replace-field@npm:0.103.16"
+"@graphql-mesh/transform-replace-field@npm:0.103.18":
+  version: 0.103.18
+  resolution: "@graphql-mesh/transform-replace-field@npm:0.103.18"
   dependencies:
-    "@graphql-mesh/types": ^0.103.15
-    "@graphql-mesh/utils": ^0.103.15
+    "@graphql-mesh/types": ^0.103.17
+    "@graphql-mesh/utils": ^0.103.17
     "@graphql-tools/code-file-loader": ^8.0.0
     "@graphql-tools/graphql-file-loader": ^8.0.0
     "@graphql-tools/load": ^8.0.0
@@ -4595,7 +4611,7 @@ __metadata:
     tslib: ^2.4.0
   peerDependencies:
     graphql: "*"
-  checksum: 505e29a07592a7a0dd944a981b597ca427a908f40e10f3b35f7da0ecfa8fa1cda399b164745c85019666b8a2336ce26296cc3ca07e87765936c3f12fe346c042
+  checksum: 502eb7d590bb2f918bed56e3f35583dc821e8cbb6d4827c7216b5556cb449bc90b1bacac9fc1a69468cea8d30393d3ecad2a638cf114432b9d4e55576aff6bc5
   languageName: node
   linkType: hard
 
@@ -4669,6 +4685,22 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@graphql-mesh/types@npm:^0.103.17":
+  version: 0.103.17
+  resolution: "@graphql-mesh/types@npm:0.103.17"
+  dependencies:
+    "@graphql-mesh/store": ^0.103.17
+    "@graphql-tools/batch-delegate": ^9.0.10
+    "@graphql-tools/delegate": ^10.0.28
+    "@graphql-tools/utils": ^10.8.0
+    "@graphql-typed-document-node/core": ^3.2.0
+    tslib: ^2.4.0
+  peerDependencies:
+    graphql: "*"
+  checksum: da19d002bcfd978ffd7456d8defb1c5af4b3362352e579255f608475f50dc2e4ee615499bd12df8d56146b8fdf6214521b205c12aedeed6ea24f8c7a26523410
+  languageName: node
+  linkType: hard
+
 "@graphql-mesh/utils@npm:^0.103.15":
   version: 0.103.15
   resolution: "@graphql-mesh/utils@npm:0.103.15"
@@ -4716,6 +4748,31 @@ __metadata:
   peerDependencies:
     graphql: "*"
   checksum: 82e9cf93684edd5c7d0fb9f70279638a34e1fbcb6f319e71023ff64aa148a3f37542468b81fc50478261d5dd356cb149fa5fb11b5701878b5accc99d978c61ad
+  languageName: node
+  linkType: hard
+
+"@graphql-mesh/utils@npm:^0.103.17":
+  version: 0.103.17
+  resolution: "@graphql-mesh/utils@npm:0.103.17"
+  dependencies:
+    "@graphql-mesh/cross-helpers": ^0.4.10
+    "@graphql-mesh/string-interpolation": ^0.5.8
+    "@graphql-mesh/types": ^0.103.17
+    "@graphql-tools/batch-delegate": ^9.0.16
+    "@graphql-tools/delegate": ^10.0.28
+    "@graphql-tools/utils": ^10.8.0
+    "@graphql-tools/wrap": ^10.0.28
+    "@whatwg-node/disposablestack": ^0.0.5
+    "@whatwg-node/fetch": ^0.10.0
+    dset: ^3.1.2
+    js-yaml: ^4.1.0
+    lodash.get: ^4.4.2
+    lodash.topath: ^4.5.2
+    tiny-lru: ^11.0.0
+    tslib: ^2.4.0
+  peerDependencies:
+    graphql: "*"
+  checksum: a7f348c951ea3c1f6b8f4dde9ad93b280aeeef619eea8f0cdcb2e36517c651b31234ab88b4bcc18a2c84175108dccaa7d322085741b91f54162568b2cd001293
   languageName: node
   linkType: hard
 
@@ -14930,7 +14987,7 @@ __metadata:
     "@graphql-mesh/cli": 0.98.21
     "@graphql-mesh/openapi": 0.108.19
     "@graphql-mesh/runtime": 0.105.17
-    "@graphql-mesh/transform-replace-field": 0.103.16
+    "@graphql-mesh/transform-replace-field": 0.103.18
     "@swimlane/ngx-charts": 21.1.3
     "@types/d3": 7.4.3
     "@types/d3-scale": 4.0.9
