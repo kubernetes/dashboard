@@ -28,7 +28,7 @@ jobs:
         with:
           fetch-depth: 0
       - name: Set up Helm
-        uses: azure/setup-helm@v4.2.0
+        uses: azure/setup-helm@v4.3.0
         with:
           version: v3.12.1
       - name: Set up Chart Testing CLI
