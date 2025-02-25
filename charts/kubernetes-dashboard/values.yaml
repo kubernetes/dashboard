@@ -187,7 +187,7 @@ api:
   role: api
   image:
     repository: docker.io/kubernetesui/dashboard-api
-    tag: 1.10.2
+    tag: 1.10.3
   scaling:
     replicas: 1
     revisionHistoryLimit: 10
@@ -247,7 +247,7 @@ web:
   role: web
   image:
     repository: docker.io/kubernetesui/dashboard-web
-    tag: 1.6.1
+    tag: 1.6.2
   scaling:
     replicas: 1
     revisionHistoryLimit: 10
