@@ -137,7 +137,7 @@
     "raw-loader": "4.0.2",
     "run-node": "2.0.0",
     "sass": "1.85.0",
-    "sass-loader": "16.0.4",
+    "sass-loader": "16.0.5",
     "semver": "7.7.1",
     "source-map-explorer": "2.5.3",
     "stylelint": "16.14.1",
