@@ -15135,7 +15135,7 @@ __metadata:
     raw-loader: 4.0.2
     roboto-fontface: 0.10.0
     run-node: 2.0.0
-    rxjs: 7.8.1
+    rxjs: 7.8.2
     rxjs-compat: 6.6.7
     sass: 1.85.0
     sass-loader: 16.0.4
@@ -18419,6 +18419,15 @@ __metadata:
   dependencies:
     tslib: ^2.1.0
   checksum: de4b53db1063e618ec2eca0f7965d9137cabe98cf6be9272efe6c86b47c17b987383df8574861bcced18ebd590764125a901d5506082be84a8b8e364bf05f119
+  languageName: node
+  linkType: hard
+
+"rxjs@npm:7.8.2":
+  version: 7.8.2
+  resolution: "rxjs@npm:7.8.2"
+  dependencies:
+    tslib: ^2.1.0
+  checksum: 2f233d7c832a6c255dabe0759014d7d9b1c9f1cb2f2f0d59690fd11c883c9826ea35a51740c06ab45b6ade0d9087bde9192f165cba20b6730d344b831ef80744
   languageName: node
   linkType: hard
 
