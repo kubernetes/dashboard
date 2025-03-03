@@ -18,38 +18,54 @@ import (
 	"reflect"
 	"testing"
 
-	v1 "k8s.io/api/core/v1"
+	"github.com/samber/lo"
 	policyv1 "k8s.io/api/policy/v1"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	"k8s.io/apimachinery/pkg/util/intstr"
 
 	"k8s.io/dashboard/api/pkg/resource/dataselect"
 	"k8s.io/dashboard/types"
 )
 
-func TestGetPersistentVolumeClaimList(t *testing.T) {
+func TestList(t *testing.T) {
 	cases := []struct {
 		persistentVolumeClaims []policyv1.PodDisruptionBudget
 		expected               *PodDisruptionBudgetList
 	}{
 		{
 			nil,
-			&PersistentVolumeClaimList{
-				Items: []PersistentVolumeClaim{},
+			&PodDisruptionBudgetList{
+				Items: []PodDisruptionBudget{},
 			},
 		},
 		{
 			[]policyv1.PodDisruptionBudget{{
 				ObjectMeta: metaV1.ObjectMeta{Name: "foo"},
-				Spec:       policyv1.PodDisruptionBudgetSpec{VolumeName: "my-volume"},
-				Status:     policyv1.PodDisruptionBudgetStatus{Phase: v1.ClaimBound},
+				Spec: policyv1.PodDisruptionBudgetSpec{
+					MinAvailable:               &intstr.IntOrString{Type: intstr.Int, IntVal: 1},
+					MaxUnavailable:             &intstr.IntOrString{Type: intstr.Int, IntVal: 3},
+					UnhealthyPodEvictionPolicy: lo.ToPtr(policyv1.IfHealthyBudget),
+				},
+				Status: policyv1.PodDisruptionBudgetStatus{
+					CurrentHealthy:     10,
+					DesiredHealthy:     10,
+					ExpectedPods:       10,
+					DisruptedPods:      make(map[string]metaV1.Time),
+					DisruptionsAllowed: 0,
+				},
 			}},
 			&PodDisruptionBudgetList{
 				ListMeta: types.ListMeta{TotalItems: 1},
 				Items: []PodDisruptionBudget{{
-					TypeMeta:   types.TypeMeta{Kind: "persistentvolumeclaim"},
-					ObjectMeta: types.ObjectMeta{Name: "foo"},
-					Status:     "Bound",
-					Volume:     "my-volume",
+					ObjectMeta:                 types.ObjectMeta{Name: "foo", Namespace: "bar"},
+					TypeMeta:                   types.TypeMeta{Kind: types.ResourceKindPodDisruptionBudget},
+					MinAvailable:               &intstr.IntOrString{Type: intstr.Int, IntVal: 1},
+					MaxUnavailable:             &intstr.IntOrString{Type: intstr.Int, IntVal: 3},
+					UnhealthyPodEvictionPolicy: lo.ToPtr(policyv1.IfHealthyBudget),
+					CurrentHealthy:             10,
+					DesiredHealthy:             10,
+					ExpectedPods:               10,
+					DisruptionsAllowed:         0,
 				}},
 			},
 		},

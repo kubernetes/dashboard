@@ -38,7 +38,6 @@ func Get(client kubernetes.Interface, namespace string, name string) (*PodDisrup
 }
 
 func toDetails(pdb policyv1.PodDisruptionBudget) *PodDisruptionBudgetDetail {
-
 	return &PodDisruptionBudgetDetail{
 		PodDisruptionBudget: toListItem(pdb),
 		DisruptedPods:       pdb.Status.DisruptedPods,

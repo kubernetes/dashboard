@@ -18,10 +18,10 @@ import (
 	"reflect"
 	"testing"
 
-	v1 "k8s.io/api/core/v1"
+	"github.com/samber/lo"
 	policyv1 "k8s.io/api/policy/v1"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
-
+	"k8s.io/apimachinery/pkg/util/intstr"
 	"k8s.io/dashboard/types"
 )
 
@@ -32,28 +32,34 @@ func TestGet(t *testing.T) {
 	}{
 		{
 			&policyv1.PodDisruptionBudget{
-				TypeMeta:   metaV1.TypeMeta{Kind: "persistentvolumeclaim"},
 				ObjectMeta: metaV1.ObjectMeta{Name: "foo", Namespace: "bar"},
+				TypeMeta:   metaV1.TypeMeta{Kind: types.ResourceKindPodDisruptionBudget},
 				Spec: policyv1.PodDisruptionBudgetSpec{
-					AccessModes: []v1.PersistentVolumeAccessMode{v1.ReadWriteOnce},
-					Resources:   v1.VolumeResourceRequirements{},
-					VolumeName:  "volume",
+					MinAvailable:               &intstr.IntOrString{Type: intstr.Int, IntVal: 1},
+					MaxUnavailable:             &intstr.IntOrString{Type: intstr.Int, IntVal: 3},
+					UnhealthyPodEvictionPolicy: lo.ToPtr(policyv1.IfHealthyBudget),
 				},
 				Status: policyv1.PodDisruptionBudgetStatus{
-					Phase:       v1.PersistentVolumeClaimPhase(v1.ClaimPending),
-					AccessModes: []v1.PersistentVolumeAccessMode{v1.ReadWriteOnce},
-					Capacity:    nil,
+					CurrentHealthy:     10,
+					DesiredHealthy:     10,
+					ExpectedPods:       10,
+					DisruptedPods:      make(map[string]metaV1.Time),
+					DisruptionsAllowed: 0,
 				},
 			},
 			&PodDisruptionBudgetDetail{
 				PodDisruptionBudget: PodDisruptionBudget{
-					ObjectMeta:  types.ObjectMeta{Name: "foo", Namespace: "bar"},
-					TypeMeta:    types.TypeMeta{Kind: "persistentvolumeclaim"},
-					Status:      string(v1.ClaimPending),
-					Volume:      "volume",
-					Capacity:    nil,
-					AccessModes: []v1.PersistentVolumeAccessMode{v1.ReadWriteOnce},
+					ObjectMeta:                 types.ObjectMeta{Name: "foo", Namespace: "bar"},
+					TypeMeta:                   types.TypeMeta{Kind: types.ResourceKindPodDisruptionBudget},
+					MinAvailable:               &intstr.IntOrString{Type: intstr.Int, IntVal: 1},
+					MaxUnavailable:             &intstr.IntOrString{Type: intstr.Int, IntVal: 3},
+					UnhealthyPodEvictionPolicy: lo.ToPtr(policyv1.IfHealthyBudget),
+					CurrentHealthy:             10,
+					DesiredHealthy:             10,
+					ExpectedPods:               10,
+					DisruptionsAllowed:         0,
 				},
+				DisruptedPods: make(map[string]metaV1.Time),
 			},
 		},
 	}
