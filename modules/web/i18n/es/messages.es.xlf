@@ -491,7 +491,7 @@
         <target>Los espacios de nombre te permiten particionar recursos en grupos lógicos con nombres.</target>
       </trans-unit>
       <trans-unit id="2782107425695587228" datatype="html">
-        <source>Pending: <x id="PH" equiv-text="status.pending"/></source>
+        <source>Pending: <x id="PH" equiv-text="&apos;&apos;"/></source>
         <target state="new">Pendiente: <x id="PH" equiv-text="status.pending"/></target>
       </trans-unit>
       <trans-unit id="8096554128118112010" datatype="html">
@@ -509,10 +509,6 @@
       <trans-unit id="2803293796008679153" datatype="html">
         <source>Ingress Classes</source>
         <target state="new">Clases de Ingress</target>
-      </trans-unit>
-      <trans-unit id="2807689216255894412" datatype="html">
-        <source>Succeeded</source>
-        <target>Exitosos</target>
       </trans-unit>
       <trans-unit id="8708028741679746582" datatype="html">
         <source> Parallelism </source>
@@ -553,10 +549,6 @@
       <trans-unit id="2946624699882754313" datatype="html">
         <source>Show all</source>
         <target>Ver más</target>
-      </trans-unit>
-      <trans-unit id="2956098160626271284" datatype="html">
-        <source>Running</source>
-        <target>En ejecución</target>
       </trans-unit>
       <trans-unit id="2968503433962940653" datatype="html">
         <source>Last transition time</source>
@@ -958,10 +950,6 @@
         <source>Volume</source>
         <target>Volumen</target>
       </trans-unit>
-      <trans-unit id="4416413576346763682" datatype="html">
-        <source>Pending</source>
-        <target>Pendiente</target>
-      </trans-unit>
       <trans-unit id="4439126314764642092" datatype="html">
         <source>Memory requests (bytes)</source>
         <target>Peticiones de memoria (octetos)</target>
@@ -1361,7 +1349,7 @@
         <target state="new">Sub-recursos</target>
       </trans-unit>
       <trans-unit id="6142861985741036386" datatype="html">
-        <source>Succeeded: <x id="PH" equiv-text="status.succeeded"/></source>
+        <source>Succeeded: <x id="PH" equiv-text="&apos;&apos;"/></source>
         <target state="new">Exitoso: <x id="PH" equiv-text="status.succeeded"/></target>
       </trans-unit>
       <trans-unit id="940093336423648340" datatype="html">
@@ -1648,10 +1636,6 @@
         <source>Settings </source>
         <target state="new">Ajustes </target>
       </trans-unit>
-      <trans-unit id="7256395947475975935" datatype="html">
-        <source>Failed</source>
-        <target>Fallidos</target>
-      </trans-unit>
       <trans-unit id="728108318392658678" datatype="html">
         <source> Shell in <x id="START_TAG_MAT_SELECT" ctype="x-mat_select" equiv-text="&quot;\uFFFD*3:1\uFFFD\uFFFD#1:1\uFFFD&quot;"/><x id="START_TAG_MAT_OPTION" ctype="x-mat_option" equiv-text="&quot;\uFFFD*2:2\uFFFD\uFFFD#1:2\uFFFD&quot;"/> <x id="INTERPOLATION" equiv-text="&quot;\uFFFD0:2\uFFFD&quot;"/> <x id="CLOSE_TAG_MAT_OPTION" ctype="x-mat_option" equiv-text="&quot;\uFFFD/#1:2\uFFFD\uFFFD/*2:2\uFFFD&quot;"/><x id="CLOSE_TAG_MAT_SELECT" ctype="x-mat_select" equiv-text="&quot;\uFFFD/#1:1\uFFFD\uFFFD/*3:1\uFFFD&quot;"/> in <x id="INTERPOLATION_1" equiv-text="&quot;\uFFFD0\uFFFD&quot;"/> </source>
         <target state="new">Shell en <x id="START_TAG_MAT-SELECT" ctype="x-mat-select" equiv-text="&lt;mat-select&gt;"/> <x id="START_TAG_MAT-OPTION" ctype="x-mat-option" equiv-text="&lt;mat-option&gt;"/> <x id="INTERPOLATION" equiv-text="{{ item }}"/> <x id="CLOSE_TAG_MAT-OPTION" ctype="x-mat-option" equiv-text="&lt;/mat-option&gt;"/> <x id="CLOSE_TAG_MAT-SELECT" ctype="x-mat-select" equiv-text="&lt;/mat-select&gt;"/> en <x id="INTERPOLATION_1" equiv-text="{{ podName }}"/> </target>
@@ -1801,7 +1785,7 @@
         <target state="new"> Los datos deben estar codificados en Base64. </target>
       </trans-unit>
       <trans-unit id="7873445996550708978" datatype="html">
-        <source>Running: <x id="PH" equiv-text="status.running"/></source>
+        <source>Running: <x id="PH" equiv-text="&apos;&apos;"/></source>
         <target state="new">Ejecutando: <x id="PH" equiv-text="status.running"/></target>
       </trans-unit>
       <trans-unit id="7875452846514729865" datatype="html">
@@ -2149,7 +2133,7 @@
         <target state="new"> El prefijo no debe exceder 253 caracteres. </target>
       </trans-unit>
       <trans-unit id="9182918211699394982" datatype="html">
-        <source>Failed: <x id="PH" equiv-text="status.failed"/></source>
+        <source>Failed: <x id="PH" equiv-text="&apos;&apos;"/></source>
         <target state="new">Fallido: <x id="PH" equiv-text="status.failed"/></target>
       </trans-unit>
       <trans-unit id="2851593975347923435" datatype="html">

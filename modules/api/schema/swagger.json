@@ -2478,6 +2478,78 @@
     }
    }
   },
+  "/api/v1/daemonset/{namespace}/{daemonSet}/restart": {
+   "put": {
+    "consumes": [
+     "application/json"
+    ],
+    "produces": [
+     "application/json"
+    ],
+    "summary": "rollout restart of the Daemon Set",
+    "operationId": "handleDaemonSetRestart",
+    "parameters": [
+     {
+      "type": "string",
+      "description": "Comma delimited string used to apply filtering: 'propertyName,filterValue'",
+      "name": "filterBy",
+      "in": "query"
+     },
+     {
+      "type": "string",
+      "description": "Name of the column to sort by",
+      "name": "sortBy",
+      "in": "query"
+     },
+     {
+      "type": "string",
+      "description": "Number of items to return when pagination is applied",
+      "name": "itemsPerPage",
+      "in": "query"
+     },
+     {
+      "type": "string",
+      "description": "Page number to return items from",
+      "name": "page",
+      "in": "query"
+     },
+     {
+      "type": "string",
+      "description": "Metric names to download",
+      "name": "metricNames",
+      "in": "query"
+     },
+     {
+      "type": "string",
+      "description": "Aggregations to be performed for each metric (default: sum)",
+      "name": "aggregations",
+      "in": "query"
+     },
+     {
+      "type": "string",
+      "description": "namespace of the Daemon Set",
+      "name": "namespace",
+      "in": "path",
+      "required": true
+     },
+     {
+      "type": "string",
+      "description": "name of the Daemon Set",
+      "name": "daemonSet",
+      "in": "path",
+      "required": true
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "OK",
+      "schema": {
+       "$ref": "#/definitions/daemonset.DaemonSetDetail"
+      }
+     }
+    }
+   }
+  },
   "/api/v1/daemonset/{namespace}/{daemonSet}/service": {
    "get": {
     "consumes": [
@@ -6313,6 +6385,201 @@
     }
    }
   },
+  "/api/v1/poddisruptionbudget": {
+   "get": {
+    "consumes": [
+     "application/json"
+    ],
+    "produces": [
+     "application/json"
+    ],
+    "summary": "returns a list of PodDisruptionBudget",
+    "operationId": "handleGetPodDisruptionBudgetList",
+    "parameters": [
+     {
+      "type": "string",
+      "description": "Comma delimited string used to apply filtering: 'propertyName,filterValue'",
+      "name": "filterBy",
+      "in": "query"
+     },
+     {
+      "type": "string",
+      "description": "Name of the column to sort by",
+      "name": "sortBy",
+      "in": "query"
+     },
+     {
+      "type": "string",
+      "description": "Number of items to return when pagination is applied",
+      "name": "itemsPerPage",
+      "in": "query"
+     },
+     {
+      "type": "string",
+      "description": "Page number to return items from",
+      "name": "page",
+      "in": "query"
+     },
+     {
+      "type": "string",
+      "description": "Metric names to download",
+      "name": "metricNames",
+      "in": "query"
+     },
+     {
+      "type": "string",
+      "description": "Aggregations to be performed for each metric (default: sum)",
+      "name": "aggregations",
+      "in": "query"
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "OK",
+      "schema": {
+       "$ref": "#/definitions/poddisruptionbudget.PodDisruptionBudgetList"
+      }
+     }
+    }
+   }
+  },
+  "/api/v1/poddisruptionbudget/{namespace}": {
+   "get": {
+    "consumes": [
+     "application/json"
+    ],
+    "produces": [
+     "application/json"
+    ],
+    "summary": "returns a list of PodDisruptionBudget from specified namespace",
+    "operationId": "handleGetPodDisruptionBudgetList",
+    "parameters": [
+     {
+      "type": "string",
+      "description": "Comma delimited string used to apply filtering: 'propertyName,filterValue'",
+      "name": "filterBy",
+      "in": "query"
+     },
+     {
+      "type": "string",
+      "description": "Name of the column to sort by",
+      "name": "sortBy",
+      "in": "query"
+     },
+     {
+      "type": "string",
+      "description": "Number of items to return when pagination is applied",
+      "name": "itemsPerPage",
+      "in": "query"
+     },
+     {
+      "type": "string",
+      "description": "Page number to return items from",
+      "name": "page",
+      "in": "query"
+     },
+     {
+      "type": "string",
+      "description": "Metric names to download",
+      "name": "metricNames",
+      "in": "query"
+     },
+     {
+      "type": "string",
+      "description": "Aggregations to be performed for each metric (default: sum)",
+      "name": "aggregations",
+      "in": "query"
+     },
+     {
+      "type": "string",
+      "description": "namespace of the PodDisruptionBudget",
+      "name": "namespace",
+      "in": "path",
+      "required": true
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "OK",
+      "schema": {
+       "$ref": "#/definitions/poddisruptionbudget.PodDisruptionBudgetList"
+      }
+     }
+    }
+   }
+  },
+  "/api/v1/poddisruptionbudget/{namespace}/{name}": {
+   "get": {
+    "consumes": [
+     "application/json"
+    ],
+    "produces": [
+     "application/json"
+    ],
+    "summary": "returns detailed information about PodDisruptionBudget",
+    "operationId": "handleGetPodDisruptionBudgetDetail",
+    "parameters": [
+     {
+      "type": "string",
+      "description": "Comma delimited string used to apply filtering: 'propertyName,filterValue'",
+      "name": "filterBy",
+      "in": "query"
+     },
+     {
+      "type": "string",
+      "description": "Name of the column to sort by",
+      "name": "sortBy",
+      "in": "query"
+     },
+     {
+      "type": "string",
+      "description": "Number of items to return when pagination is applied",
+      "name": "itemsPerPage",
+      "in": "query"
+     },
+     {
+      "type": "string",
+      "description": "Page number to return items from",
+      "name": "page",
+      "in": "query"
+     },
+     {
+      "type": "string",
+      "description": "Metric names to download",
+      "name": "metricNames",
+      "in": "query"
+     },
+     {
+      "type": "string",
+      "description": "Aggregations to be performed for each metric (default: sum)",
+      "name": "aggregations",
+      "in": "query"
+     },
+     {
+      "type": "string",
+      "description": "name of the PodDisruptionBudget",
+      "name": "name",
+      "in": "path",
+      "required": true
+     },
+     {
+      "type": "string",
+      "description": "namespace of the PodDisruptionBudget",
+      "name": "namespace",
+      "in": "path",
+      "required": true
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "OK",
+      "schema": {
+       "$ref": "#/definitions/poddisruptionbudget.PodDisruptionBudgetDetail"
+      }
+     }
+    }
+   }
+  },
   "/api/v1/replicaset": {
    "get": {
     "consumes": [
@@ -9260,6 +9527,78 @@
     }
    }
   },
+  "/api/v1/statefulset/{namespace}/{statefulset}/restart": {
+   "put": {
+    "consumes": [
+     "application/json"
+    ],
+    "produces": [
+     "application/json"
+    ],
+    "summary": "rollout restart of the Daemon Set",
+    "operationId": "handleStatefulSetRestart",
+    "parameters": [
+     {
+      "type": "string",
+      "description": "Comma delimited string used to apply filtering: 'propertyName,filterValue'",
+      "name": "filterBy",
+      "in": "query"
+     },
+     {
+      "type": "string",
+      "description": "Name of the column to sort by",
+      "name": "sortBy",
+      "in": "query"
+     },
+     {
+      "type": "string",
+      "description": "Number of items to return when pagination is applied",
+      "name": "itemsPerPage",
+      "in": "query"
+     },
+     {
+      "type": "string",
+      "description": "Page number to return items from",
+      "name": "page",
+      "in": "query"
+     },
+     {
+      "type": "string",
+      "description": "Metric names to download",
+      "name": "metricNames",
+      "in": "query"
+     },
+     {
+      "type": "string",
+      "description": "Aggregations to be performed for each metric (default: sum)",
+      "name": "aggregations",
+      "in": "query"
+     },
+     {
+      "type": "string",
+      "description": "namespace of the StatefulSet",
+      "name": "namespace",
+      "in": "path",
+      "required": true
+     },
+     {
+      "type": "string",
+      "description": "name of the StatefulSet",
+      "name": "statefulset",
+      "in": "path",
+      "required": true
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "OK",
+      "schema": {
+       "$ref": "#/definitions/statefulset.StatefulSetDetail"
+      }
+     }
+    }
+   }
+  },
   "/api/v1/storageclass": {
    "get": {
     "consumes": [
@@ -9999,8 +10338,8 @@
   },
   "configmap.ConfigMapDetail": {
    "required": [
-    "typeMeta",
-    "objectMeta"
+    "objectMeta",
+    "typeMeta"
    ],
    "properties": {
     "data": {
@@ -10808,13 +11147,13 @@
   },
   "horizontalpodautoscaler.HorizontalPodAutoscalerDetail": {
    "required": [
+    "typeMeta",
+    "scaleTargetRef",
+    "minReplicas",
     "maxReplicas",
     "currentCPUUtilizationPercentage",
     "targetCPUUtilizationPercentage",
     "objectMeta",
-    "typeMeta",
-    "scaleTargetRef",
-    "minReplicas",
     "currentReplicas",
     "desiredReplicas",
     "lastScaleTime"
@@ -11111,13 +11450,13 @@
   },
   "job.JobDetail": {
    "required": [
-    "parallelism",
     "jobStatus",
     "objectMeta",
     "typeMeta",
     "podInfo",
     "containerImages",
     "initContainerImages",
+    "parallelism",
     "completions",
     "errors"
    ],
@@ -11611,10 +11950,10 @@
   },
   "node.NodeDetail": {
    "required": [
-    "allocatedResources",
     "objectMeta",
     "typeMeta",
     "ready",
+    "allocatedResources",
     "phase",
     "podCIDR",
     "providerID",
@@ -11809,15 +12148,15 @@
   "persistentvolume.PersistentVolumeDetail": {
    "required": [
     "objectMeta",
-    "typeMeta",
-    "accessModes",
-    "mountOptions",
     "capacity",
-    "reclaimPolicy",
     "storageClass",
-    "status",
     "claim",
     "reason",
+    "typeMeta",
+    "accessModes",
+    "reclaimPolicy",
+    "mountOptions",
+    "status",
     "message",
     "persistentVolumeSource"
    ],
@@ -11935,13 +12274,13 @@
   },
   "persistentvolumeclaim.PersistentVolumeClaimDetail": {
    "required": [
-    "storageClass",
     "objectMeta",
     "typeMeta",
     "status",
     "volume",
     "capacity",
-    "accessModes"
+    "accessModes",
+    "storageClass"
    ],
    "properties": {
     "accessModes": {
@@ -12370,6 +12709,135 @@
     }
    }
   },
+  "poddisruptionbudget.PodDisruptionBudget": {
+   "required": [
+    "objectMeta",
+    "typeMeta",
+    "minAvailable",
+    "maxUnavailable",
+    "unhealthyPodEvictionPolicy",
+    "currentHealthy",
+    "desiredHealthy",
+    "disruptionsAllowed",
+    "expectedPods"
+   ],
+   "properties": {
+    "currentHealthy": {
+     "type": "integer",
+     "format": "int32"
+    },
+    "desiredHealthy": {
+     "type": "integer",
+     "format": "int32"
+    },
+    "disruptionsAllowed": {
+     "type": "integer",
+     "format": "int32"
+    },
+    "expectedPods": {
+     "type": "integer",
+     "format": "int32"
+    },
+    "labelSelector": {
+     "$ref": "#/definitions/v1.LabelSelector"
+    },
+    "maxUnavailable": {
+     "$ref": "#/definitions/intstr.IntOrString"
+    },
+    "minAvailable": {
+     "$ref": "#/definitions/intstr.IntOrString"
+    },
+    "objectMeta": {
+     "$ref": "#/definitions/types.ObjectMeta"
+    },
+    "typeMeta": {
+     "$ref": "#/definitions/types.TypeMeta"
+    },
+    "unhealthyPodEvictionPolicy": {
+     "type": "string"
+    }
+   }
+  },
+  "poddisruptionbudget.PodDisruptionBudgetDetail": {
+   "required": [
+    "minAvailable",
+    "maxUnavailable",
+    "unhealthyPodEvictionPolicy",
+    "currentHealthy",
+    "objectMeta",
+    "typeMeta",
+    "desiredHealthy",
+    "disruptionsAllowed",
+    "expectedPods",
+    "disruptedPods"
+   ],
+   "properties": {
+    "currentHealthy": {
+     "type": "integer",
+     "format": "int32"
+    },
+    "desiredHealthy": {
+     "type": "integer",
+     "format": "int32"
+    },
+    "disruptedPods": {
+     "type": "object",
+     "additionalProperties": {
+      "type": "v1.Time"
+     }
+    },
+    "disruptionsAllowed": {
+     "type": "integer",
+     "format": "int32"
+    },
+    "expectedPods": {
+     "type": "integer",
+     "format": "int32"
+    },
+    "labelSelector": {
+     "$ref": "#/definitions/v1.LabelSelector"
+    },
+    "maxUnavailable": {
+     "$ref": "#/definitions/intstr.IntOrString"
+    },
+    "minAvailable": {
+     "$ref": "#/definitions/intstr.IntOrString"
+    },
+    "objectMeta": {
+     "$ref": "#/definitions/types.ObjectMeta"
+    },
+    "typeMeta": {
+     "$ref": "#/definitions/types.TypeMeta"
+    },
+    "unhealthyPodEvictionPolicy": {
+     "type": "string"
+    }
+   }
+  },
+  "poddisruptionbudget.PodDisruptionBudgetList": {
+   "required": [
+    "listMeta",
+    "items",
+    "errors"
+   ],
+   "properties": {
+    "errors": {
+     "type": "array",
+     "items": {
+      "$ref": "#/definitions/error"
+     }
+    },
+    "items": {
+     "type": "array",
+     "items": {
+      "$ref": "#/definitions/poddisruptionbudget.PodDisruptionBudget"
+     }
+    },
+    "listMeta": {
+     "$ref": "#/definitions/types.ListMeta"
+    }
+   }
+  },
   "replicaset.ReplicaSet": {
    "required": [
     "objectMeta",
@@ -12404,11 +12872,11 @@
   },
   "replicaset.ReplicaSetDetail": {
    "required": [
+    "podInfo",
+    "containerImages",
     "initContainerImages",
     "objectMeta",
     "typeMeta",
-    "podInfo",
-    "containerImages",
     "selector",
     "horizontalPodAutoscalerList",
     "errors"
@@ -12518,11 +12986,11 @@
   },
   "replicationcontroller.ReplicationControllerDetail": {
    "required": [
-    "objectMeta",
     "typeMeta",
     "podInfo",
     "containerImages",
     "initContainerImages",
+    "objectMeta",
     "labelSelector",
     "errors"
    ],
@@ -12898,9 +13366,9 @@
   },
   "secret.SecretDetail": {
    "required": [
-    "objectMeta",
     "typeMeta",
     "type",
+    "objectMeta",
     "data"
    ],
    "properties": {
@@ -12987,13 +13455,13 @@
   },
   "service.ServiceDetail": {
    "required": [
-    "clusterIP",
-    "objectMeta",
-    "typeMeta",
     "internalEndpoint",
     "externalEndpoints",
     "selector",
     "type",
+    "clusterIP",
+    "objectMeta",
+    "typeMeta",
     "endpointList",
     "sessionAffinity",
     "errors"
@@ -13157,11 +13625,11 @@
   },
   "statefulset.StatefulSetDetail": {
    "required": [
-    "typeMeta",
-    "podInfo",
     "containerImages",
     "initContainerImages",
     "objectMeta",
+    "typeMeta",
+    "podInfo",
     "errors"
    ],
    "properties": {
@@ -13465,8 +13933,8 @@
   },
   "types.CustomResourceObjectDetail": {
    "required": [
-    "objectMeta",
     "typeMeta",
+    "objectMeta",
     "errors"
    ],
    "properties": {
@@ -13546,7 +14014,27 @@
     "namespace": {
      "type": "string"
     },
+    "ownerReferences": {
+     "type": "array",
+     "items": {
+      "$ref": "#/definitions/types.OwnerReference"
+     }
+    },
     "uid": {
+     "type": "string"
+    }
+   }
+  },
+  "types.OwnerReference": {
+   "required": [
+    "kind",
+    "name"
+   ],
+   "properties": {
+    "kind": {
+     "type": "string"
+    },
+    "name": {
      "type": "string"
     }
    }
@@ -13696,7 +14184,7 @@
    }
   },
   "v1.CSIPersistentVolumeSource": {
-   "description": "Represents storage that is managed by an external CSI volume driver (Beta feature)",
+   "description": "Represents storage that is managed by an external CSI volume driver",
    "required": [
     "driver",
     "volumeHandle"
@@ -14102,6 +14590,13 @@
       "$ref": "#/definitions/resource.Quantity"
      }
     },
+    "allocatedResourcesStatus": {
+     "description": "AllocatedResourcesStatus represents the status of various resources allocated for this Pod.",
+     "type": "array",
+     "items": {
+      "$ref": "#/definitions/v1.ResourceStatus"
+     }
+    },
     "containerID": {
      "description": "ContainerID is the ID of the container in the format '\u003ctype\u003e://\u003ccontainer_id\u003e'. Where type is a container runtime identifier, returned from Version call of CRI API (for example \"containerd\").",
      "type": "string"
@@ -14143,12 +14638,25 @@
      "description": "State holds details about the container's current condition.",
      "$ref": "#/definitions/v1.ContainerState"
     },
+    "user": {
+     "description": "User represents user identity information initially attached to the first process of the container",
+     "$ref": "#/definitions/v1.ContainerUser"
+    },
     "volumeMounts": {
      "description": "Status of volume mounts.",
      "type": "array",
      "items": {
       "$ref": "#/definitions/v1.VolumeMountStatus"
      }
+    }
+   }
+  },
+  "v1.ContainerUser": {
+   "description": "ContainerUser represents user identity information",
+   "properties": {
+    "linux": {
+     "description": "Linux holds user identity information initially attached to the first process of the containers in Linux. Note that the actual running identity can be changed if the process has enough privilege to do so.",
+     "$ref": "#/definitions/v1.LinuxContainerUser"
     }
    }
   },
@@ -14422,6 +14930,7 @@
    }
   },
   "v1.GRPCAction": {
+   "description": "GRPCAction specifies an action involving a GRPC service.",
    "required": [
     "port",
     "service"
@@ -14739,6 +15248,19 @@
     }
    }
   },
+  "v1.ImageVolumeSource": {
+   "description": "ImageVolumeSource represents a image volume resource.",
+   "properties": {
+    "pullPolicy": {
+     "description": "Policy for pulling OCI objects. Possible values are: Always: the kubelet always attempts to pull the reference. Container creation will fail If the pull fails. Never: the kubelet never pulls the reference and only uses a local image or artifact. Container creation will fail if the reference isn't present. IfNotPresent: the kubelet pulls if the reference isn't already present on disk. Container creation will fail if the reference isn't present and the pull fails. Defaults to Always if :latest tag is specified, or IfNotPresent otherwise.",
+     "type": "string"
+    },
+    "reference": {
+     "description": "Required: Image or artifact reference to be used. Behaves in the same way as pod.spec.containers[*].image. Pull secrets will be assembled in the same way as for the container image by looking up node credentials, SA image pull secrets, and pod spec image pull secrets. More info: https://kubernetes.io/docs/concepts/containers/images This field is optional to allow higher level config management to default or override container images in workload controllers like Deployments and StatefulSets.",
+     "type": "string"
+    }
+   }
+  },
   "v1.IngressBackend": {
    "description": "IngressBackend describes all endpoints for a given service and port.",
    "properties": {
@@ -14951,6 +15473,33 @@
     }
    }
   },
+  "v1.LinuxContainerUser": {
+   "description": "LinuxContainerUser represents user identity information in Linux containers",
+   "required": [
+    "uid",
+    "gid"
+   ],
+   "properties": {
+    "gid": {
+     "description": "GID is the primary gid initially attached to the first process in the container",
+     "type": "integer",
+     "format": "int64"
+    },
+    "supplementalGroups": {
+     "description": "SupplementalGroups are the supplemental groups initially attached to the first process in the container",
+     "type": "array",
+     "items": {
+      "type": "integer",
+      "format": "int64"
+     }
+    },
+    "uid": {
+     "description": "UID is the primary uid initially attached to the first process in the container",
+     "type": "integer",
+     "format": "int64"
+    }
+   }
+  },
   "v1.LocalObjectReference": {
    "description": "LocalObjectReference contains enough information to let you locate the referenced object inside the same namespace.",
    "properties": {
@@ -14961,7 +15510,7 @@
    }
   },
   "v1.LocalVolumeSource": {
-   "description": "Local represents directly-attached storage with node affinity (Beta feature)",
+   "description": "Local represents directly-attached storage with node affinity",
    "required": [
     "path"
    ],
@@ -15152,7 +15701,7 @@
      "type": "string"
     },
     "kubeProxyVersion": {
-     "description": "KubeProxy Version reported by the node.",
+     "description": "Deprecated: KubeProxy Version reported by the node.",
      "type": "string"
     },
     "kubeletVersion": {
@@ -15374,7 +15923,7 @@
      "type": "string"
     },
     "volumeAttributesClassName": {
-     "description": "volumeAttributesClassName may be used to set the VolumeAttributesClass used by this claim. If specified, the CSI driver will create or update the volume with the attributes defined in the corresponding VolumeAttributesClass. This has a different purpose than storageClassName, it can be changed after the claim is created. An empty string value means that no VolumeAttributesClass will be applied to the claim but it's not allowed to reset this field to empty string once it is set. If unspecified and the PersistentVolumeClaim is unbound, the default VolumeAttributesClass will be set by the persistentvolume controller if it exists. If the resource referred to by volumeAttributesClass does not exist, this PersistentVolumeClaim will be set to a Pending state, as reflected by the modifyVolumeStatus field, until such as a resource exists. More info: https://kubernetes.io/docs/concepts/storage/volume-attributes-classes/ (Alpha) Using this field requires the VolumeAttributesClass feature gate to be enabled.",
+     "description": "volumeAttributesClassName may be used to set the VolumeAttributesClass used by this claim. If specified, the CSI driver will create or update the volume with the attributes defined in the corresponding VolumeAttributesClass. This has a different purpose than storageClassName, it can be changed after the claim is created. An empty string value means that no VolumeAttributesClass will be applied to the claim but it's not allowed to reset this field to empty string once it is set. If unspecified and the PersistentVolumeClaim is unbound, the default VolumeAttributesClass will be set by the persistentvolume controller if it exists. If the resource referred to by volumeAttributesClass does not exist, this PersistentVolumeClaim will be set to a Pending state, as reflected by the modifyVolumeStatus field, until such as a resource exists. More info: https://kubernetes.io/docs/concepts/storage/volume-attributes-classes/ (Beta) Using this field requires the VolumeAttributesClass feature gate to be enabled (off by default).",
      "type": "string"
     },
     "volumeMode": {
@@ -15423,27 +15972,27 @@
    "description": "PersistentVolumeSource is similar to VolumeSource but meant for the administrator who creates PVs. Exactly one of its members must be set.",
    "properties": {
     "awsElasticBlockStore": {
-     "description": "awsElasticBlockStore represents an AWS Disk resource that is attached to a kubelet's host machine and then exposed to the pod. More info: https://kubernetes.io/docs/concepts/storage/volumes#awselasticblockstore",
+     "description": "awsElasticBlockStore represents an AWS Disk resource that is attached to a kubelet's host machine and then exposed to the pod. Deprecated: AWSElasticBlockStore is deprecated. All operations for the in-tree awsElasticBlockStore type are redirected to the ebs.csi.aws.com CSI driver. More info: https://kubernetes.io/docs/concepts/storage/volumes#awselasticblockstore",
      "$ref": "#/definitions/v1.AWSElasticBlockStoreVolumeSource"
     },
     "azureDisk": {
-     "description": "azureDisk represents an Azure Data Disk mount on the host and bind mount to the pod.",
+     "description": "azureDisk represents an Azure Data Disk mount on the host and bind mount to the pod. Deprecated: AzureDisk is deprecated. All operations for the in-tree azureDisk type are redirected to the disk.csi.azure.com CSI driver.",
      "$ref": "#/definitions/v1.AzureDiskVolumeSource"
     },
     "azureFile": {
-     "description": "azureFile represents an Azure File Service mount on the host and bind mount to the pod.",
+     "description": "azureFile represents an Azure File Service mount on the host and bind mount to the pod. Deprecated: AzureFile is deprecated. All operations for the in-tree azureFile type are redirected to the file.csi.azure.com CSI driver.",
      "$ref": "#/definitions/v1.AzureFilePersistentVolumeSource"
     },
     "cephfs": {
-     "description": "cephFS represents a Ceph FS mount on the host that shares a pod's lifetime",
+     "description": "cephFS represents a Ceph FS mount on the host that shares a pod's lifetime. Deprecated: CephFS is deprecated and the in-tree cephfs type is no longer supported.",
      "$ref": "#/definitions/v1.CephFSPersistentVolumeSource"
     },
     "cinder": {
-     "description": "cinder represents a cinder volume attached and mounted on kubelets host machine. More info: https://examples.k8s.io/mysql-cinder-pd/README.md",
+     "description": "cinder represents a cinder volume attached and mounted on kubelets host machine. Deprecated: Cinder is deprecated. All operations for the in-tree cinder type are redirected to the cinder.csi.openstack.org CSI driver. More info: https://examples.k8s.io/mysql-cinder-pd/README.md",
      "$ref": "#/definitions/v1.CinderPersistentVolumeSource"
     },
     "csi": {
-     "description": "csi represents storage that is handled by an external CSI driver (Beta feature).",
+     "description": "csi represents storage that is handled by an external CSI driver.",
      "$ref": "#/definitions/v1.CSIPersistentVolumeSource"
     },
     "fc": {
@@ -15451,19 +16000,19 @@
      "$ref": "#/definitions/v1.FCVolumeSource"
     },
     "flexVolume": {
-     "description": "flexVolume represents a generic volume resource that is provisioned/attached using an exec based plugin.",
+     "description": "flexVolume represents a generic volume resource that is provisioned/attached using an exec based plugin. Deprecated: FlexVolume is deprecated. Consider using a CSIDriver instead.",
      "$ref": "#/definitions/v1.FlexPersistentVolumeSource"
     },
     "flocker": {
-     "description": "flocker represents a Flocker volume attached to a kubelet's host machine and exposed to the pod for its usage. This depends on the Flocker control service being running",
+     "description": "flocker represents a Flocker volume attached to a kubelet's host machine and exposed to the pod for its usage. This depends on the Flocker control service being running. Deprecated: Flocker is deprecated and the in-tree flocker type is no longer supported.",
      "$ref": "#/definitions/v1.FlockerVolumeSource"
     },
     "gcePersistentDisk": {
-     "description": "gcePersistentDisk represents a GCE Disk resource that is attached to a kubelet's host machine and then exposed to the pod. Provisioned by an admin. More info: https://kubernetes.io/docs/concepts/storage/volumes#gcepersistentdisk",
+     "description": "gcePersistentDisk represents a GCE Disk resource that is attached to a kubelet's host machine and then exposed to the pod. Provisioned by an admin. Deprecated: GCEPersistentDisk is deprecated. All operations for the in-tree gcePersistentDisk type are redirected to the pd.csi.storage.gke.io CSI driver. More info: https://kubernetes.io/docs/concepts/storage/volumes#gcepersistentdisk",
      "$ref": "#/definitions/v1.GCEPersistentDiskVolumeSource"
     },
     "glusterfs": {
-     "description": "glusterfs represents a Glusterfs volume that is attached to a host and exposed to the pod. Provisioned by an admin. More info: https://examples.k8s.io/volumes/glusterfs/README.md",
+     "description": "glusterfs represents a Glusterfs volume that is attached to a host and exposed to the pod. Provisioned by an admin. Deprecated: Glusterfs is deprecated and the in-tree glusterfs type is no longer supported. More info: https://examples.k8s.io/volumes/glusterfs/README.md",
      "$ref": "#/definitions/v1.GlusterfsPersistentVolumeSource"
     },
     "hostPath": {
@@ -15483,31 +16032,31 @@
      "$ref": "#/definitions/v1.NFSVolumeSource"
     },
     "photonPersistentDisk": {
-     "description": "photonPersistentDisk represents a PhotonController persistent disk attached and mounted on kubelets host machine",
+     "description": "photonPersistentDisk represents a PhotonController persistent disk attached and mounted on kubelets host machine. Deprecated: PhotonPersistentDisk is deprecated and the in-tree photonPersistentDisk type is no longer supported.",
      "$ref": "#/definitions/v1.PhotonPersistentDiskVolumeSource"
     },
     "portworxVolume": {
-     "description": "portworxVolume represents a portworx volume attached and mounted on kubelets host machine",
+     "description": "portworxVolume represents a portworx volume attached and mounted on kubelets host machine. Deprecated: PortworxVolume is deprecated. All operations for the in-tree portworxVolume type are redirected to the pxd.portworx.com CSI driver when the CSIMigrationPortworx feature-gate is on.",
      "$ref": "#/definitions/v1.PortworxVolumeSource"
     },
     "quobyte": {
-     "description": "quobyte represents a Quobyte mount on the host that shares a pod's lifetime",
+     "description": "quobyte represents a Quobyte mount on the host that shares a pod's lifetime. Deprecated: Quobyte is deprecated and the in-tree quobyte type is no longer supported.",
      "$ref": "#/definitions/v1.QuobyteVolumeSource"
     },
     "rbd": {
-     "description": "rbd represents a Rados Block Device mount on the host that shares a pod's lifetime. More info: https://examples.k8s.io/volumes/rbd/README.md",
+     "description": "rbd represents a Rados Block Device mount on the host that shares a pod's lifetime. Deprecated: RBD is deprecated and the in-tree rbd type is no longer supported. More info: https://examples.k8s.io/volumes/rbd/README.md",
      "$ref": "#/definitions/v1.RBDPersistentVolumeSource"
     },
     "scaleIO": {
-     "description": "scaleIO represents a ScaleIO persistent volume attached and mounted on Kubernetes nodes.",
+     "description": "scaleIO represents a ScaleIO persistent volume attached and mounted on Kubernetes nodes. Deprecated: ScaleIO is deprecated and the in-tree scaleIO type is no longer supported.",
      "$ref": "#/definitions/v1.ScaleIOPersistentVolumeSource"
     },
     "storageos": {
-     "description": "storageOS represents a StorageOS volume that is attached to the kubelet's host machine and mounted into the pod More info: https://examples.k8s.io/volumes/storageos/README.md",
+     "description": "storageOS represents a StorageOS volume that is attached to the kubelet's host machine and mounted into the pod. Deprecated: StorageOS is deprecated and the in-tree storageos type is no longer supported. More info: https://examples.k8s.io/volumes/storageos/README.md",
      "$ref": "#/definitions/v1.StorageOSPersistentVolumeSource"
     },
     "vsphereVolume": {
-     "description": "vsphereVolume represents a vSphere volume attached and mounted on kubelets host machine",
+     "description": "vsphereVolume represents a vSphere volume attached and mounted on kubelets host machine. Deprecated: VsphereVolume is deprecated. All operations for the in-tree vsphereVolume type are redirected to the csi.vsphere.vmware.com CSI driver.",
      "$ref": "#/definitions/v1.VsphereVirtualDiskVolumeSource"
     }
    }
@@ -15558,6 +16107,10 @@
      "type": "integer",
      "format": "int64"
     },
+    "seLinuxChangePolicy": {
+     "description": "seLinuxChangePolicy defines how the container's SELinux label is applied to all volumes used by the Pod. It has no effect on nodes that do not support SELinux or to volumes does not support SELinux. Valid values are \"MountOption\" and \"Recursive\".\n\n\"Recursive\" means relabeling of all files on all Pod volumes by the container runtime. This may be slow for large volumes, but allows mixing privileged and unprivileged Pods sharing the same volume on the same node.\n\n\"MountOption\" mounts all eligible Pod volumes with `-o context` mount option. This requires all Pods that share the same volume to use the same SELinux label. It is not possible to share the same volume among privileged and unprivileged Pods. Eligible volumes are in-tree FibreChannel and iSCSI volumes, and all CSI volumes whose CSI driver announces SELinux support by setting spec.seLinuxMount: true in their CSIDriver instance. Other volumes are always re-labelled recursively. \"MountOption\" value is allowed only when SELinuxMount feature gate is enabled.\n\nIf not specified and SELinuxMount feature gate is enabled, \"MountOption\" is used. If not specified and SELinuxMount feature gate is disabled, \"MountOption\" is used for ReadWriteOncePod volumes and \"Recursive\" for all other volumes.\n\nThis field affects only Pods that have SELinux label set, either in PodSecurityContext or in SecurityContext of all containers.\n\nAll Pods that use the same volume should use the same seLinuxChangePolicy, otherwise some pods can get stuck in ContainerCreating state. Note that this field cannot be set when spec.os.name is windows.",
+     "type": "string"
+    },
     "seLinuxOptions": {
      "description": "The SELinux context to be applied to all containers. If unspecified, the container runtime will allocate a random SELinux context for each container.  May also be set in SecurityContext.  If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence for that container. Note that this field cannot be set when spec.os.name is windows.",
      "$ref": "#/definitions/v1.SELinuxOptions"
@@ -15567,12 +16120,16 @@
      "$ref": "#/definitions/v1.SeccompProfile"
     },
     "supplementalGroups": {
-     "description": "A list of groups applied to the first process run in each container, in addition to the container's primary GID, the fsGroup (if specified), and group memberships defined in the container image for the uid of the container process. If unspecified, no additional groups are added to any container. Note that group memberships defined in the container image for the uid of the container process are still effective, even if they are not included in this list. Note that this field cannot be set when spec.os.name is windows.",
+     "description": "A list of groups applied to the first process run in each container, in addition to the container's primary GID and fsGroup (if specified).  If the SupplementalGroupsPolicy feature is enabled, the supplementalGroupsPolicy field determines whether these are in addition to or instead of any group memberships defined in the container image. If unspecified, no additional groups are added, though group memberships defined in the container image may still be used, depending on the supplementalGroupsPolicy field. Note that this field cannot be set when spec.os.name is windows.",
      "type": "array",
      "items": {
       "type": "integer",
       "format": "int64"
      }
+    },
+    "supplementalGroupsPolicy": {
+     "description": "Defines how supplemental groups of the first container processes are calculated. Valid values are \"Merge\" and \"Strict\". If not specified, \"Merge\" is used. (Alpha) Using the field requires the SupplementalGroupsPolicy feature gate to be enabled and the container runtime must implement support for this feature. Note that this field cannot be set when spec.os.name is windows.",
+     "type": "string"
     },
     "sysctls": {
      "description": "Sysctls hold a list of namespaced sysctls used for the pod. Pods with unsupported sysctls (by the container runtime) might fail to launch. Note that this field cannot be set when spec.os.name is windows.",
@@ -15654,7 +16211,7 @@
    "description": "Probe describes a health check to be performed against a container to determine whether it is alive or ready to receive traffic.",
    "properties": {
     "exec": {
-     "description": "Exec specifies the action to take.",
+     "description": "Exec specifies a command to execute in the container.",
      "$ref": "#/definitions/v1.ExecAction"
     },
     "failureThreshold": {
@@ -15663,11 +16220,11 @@
      "format": "int32"
     },
     "grpc": {
-     "description": "GRPC specifies an action involving a GRPC port.",
+     "description": "GRPC specifies a GRPC HealthCheckRequest.",
      "$ref": "#/definitions/v1.GRPCAction"
     },
     "httpGet": {
-     "description": "HTTPGet specifies the http request to perform.",
+     "description": "HTTPGet specifies an HTTP GET request to perform.",
      "$ref": "#/definitions/v1.HTTPGetAction"
     },
     "initialDelaySeconds": {
@@ -15686,7 +16243,7 @@
      "format": "int32"
     },
     "tcpSocket": {
-     "description": "TCPSocket specifies an action involving a TCP port.",
+     "description": "TCPSocket specifies a connection to a TCP port.",
      "$ref": "#/definitions/v1.TCPSocketAction"
     },
     "terminationGracePeriodSeconds": {
@@ -15713,7 +16270,7 @@
      "format": "int32"
     },
     "sources": {
-     "description": "sources is the list of volume projections",
+     "description": "sources is the list of volume projections. Each entry in this list handles one source.",
      "type": "array",
      "items": {
       "$ref": "#/definitions/v1.VolumeProjection"
@@ -15851,6 +16408,10 @@
     "name": {
      "description": "Name must match the name of one entry in pod.spec.resourceClaims of the Pod where this field is used. It makes that resource available inside a container.",
      "type": "string"
+    },
+    "request": {
+     "description": "Request is the name chosen for a request in the referenced claim. If empty, everything from the claim is made available, otherwise only the result of this request.",
+     "type": "string"
     }
    }
   },
@@ -15870,6 +16431,22 @@
     },
     "resource": {
      "description": "Required: resource to select",
+     "type": "string"
+    }
+   }
+  },
+  "v1.ResourceHealth": {
+   "description": "ResourceHealth represents the health of a resource. It has the latest device health information. This is a part of KEP https://kep.k8s.io/4680.",
+   "required": [
+    "resourceID"
+   ],
+   "properties": {
+    "health": {
+     "description": "Health of the resource. can be one of:\n - Healthy: operates as normal\n - Unhealthy: reported unhealthy. We consider this a temporary health issue\n              since we do not have a mechanism today to distinguish\n              temporary and permanent issues.\n - Unknown: The status cannot be determined.\n            For example, Device Plugin got unregistered and hasn't been re-registered since.\n\nIn future we may want to introduce the PermanentlyUnhealthy Status.",
+     "type": "string"
+    },
+    "resourceID": {
+     "description": "ResourceID is the unique identifier of the resource. See the ResourceID type for more information.",
      "type": "string"
     }
    }
@@ -15896,6 +16473,25 @@
      "type": "object",
      "additionalProperties": {
       "$ref": "#/definitions/resource.Quantity"
+     }
+    }
+   }
+  },
+  "v1.ResourceStatus": {
+   "description": "ResourceStatus represents the status of a single resource allocated to a Pod.",
+   "required": [
+    "name"
+   ],
+   "properties": {
+    "name": {
+     "description": "Name of the resource. Must be unique within the pod and in case of non-DRA resource, match one of the resources from the pod spec. For DRA resources, the value must be \"claim:\u003cclaim_name\u003e/\u003crequest\u003e\". When this status is reported about a container, the \"claim_name\" and \"request\" must match one of the claims of this container.",
+     "type": "string"
+    },
+    "resources": {
+     "description": "List of unique resources health. Each element in the list contains an unique resource ID and its health. At a minimum, for the lifetime of a Pod, resource ID must uniquely identify the resource allocated to the Pod on the Node. If other Pod on the same Node reports the status with the same resource ID, it must be the same resource they share. See ResourceID type definition for a specific format it has in various use cases.",
+     "type": "array",
+     "items": {
+      "$ref": "#/definitions/v1.ResourceHealth"
      }
     }
    }
@@ -16157,7 +16753,7 @@
      "type": "boolean"
     },
     "procMount": {
-     "description": "procMount denotes the type of proc mount to use for the containers. The default is DefaultProcMount which uses the container runtime defaults for readonly paths and masked paths. This requires the ProcMountType feature flag to be enabled. Note that this field cannot be set when spec.os.name is windows.",
+     "description": "procMount denotes the type of proc mount to use for the containers. The default value is Default which uses the container runtime defaults for readonly paths and masked paths. This requires the ProcMountType feature flag to be enabled. Note that this field cannot be set when spec.os.name is windows.",
      "type": "string"
     },
     "readOnlyRootFilesystem": {
@@ -16407,6 +17003,7 @@
    }
   },
   "v1.TypedObjectReference": {
+   "description": "TypedObjectReference contains enough information to let you locate the typed referenced object",
    "required": [
     "apiGroup",
     "kind",
@@ -16438,23 +17035,23 @@
    ],
    "properties": {
     "awsElasticBlockStore": {
-     "description": "awsElasticBlockStore represents an AWS Disk resource that is attached to a kubelet's host machine and then exposed to the pod. More info: https://kubernetes.io/docs/concepts/storage/volumes#awselasticblockstore",
+     "description": "awsElasticBlockStore represents an AWS Disk resource that is attached to a kubelet's host machine and then exposed to the pod. Deprecated: AWSElasticBlockStore is deprecated. All operations for the in-tree awsElasticBlockStore type are redirected to the ebs.csi.aws.com CSI driver. More info: https://kubernetes.io/docs/concepts/storage/volumes#awselasticblockstore",
      "$ref": "#/definitions/v1.AWSElasticBlockStoreVolumeSource"
     },
     "azureDisk": {
-     "description": "azureDisk represents an Azure Data Disk mount on the host and bind mount to the pod.",
+     "description": "azureDisk represents an Azure Data Disk mount on the host and bind mount to the pod. Deprecated: AzureDisk is deprecated. All operations for the in-tree azureDisk type are redirected to the disk.csi.azure.com CSI driver.",
      "$ref": "#/definitions/v1.AzureDiskVolumeSource"
     },
     "azureFile": {
-     "description": "azureFile represents an Azure File Service mount on the host and bind mount to the pod.",
+     "description": "azureFile represents an Azure File Service mount on the host and bind mount to the pod. Deprecated: AzureFile is deprecated. All operations for the in-tree azureFile type are redirected to the file.csi.azure.com CSI driver.",
      "$ref": "#/definitions/v1.AzureFileVolumeSource"
     },
     "cephfs": {
-     "description": "cephFS represents a Ceph FS mount on the host that shares a pod's lifetime",
+     "description": "cephFS represents a Ceph FS mount on the host that shares a pod's lifetime. Deprecated: CephFS is deprecated and the in-tree cephfs type is no longer supported.",
      "$ref": "#/definitions/v1.CephFSVolumeSource"
     },
     "cinder": {
-     "description": "cinder represents a cinder volume attached and mounted on kubelets host machine. More info: https://examples.k8s.io/mysql-cinder-pd/README.md",
+     "description": "cinder represents a cinder volume attached and mounted on kubelets host machine. Deprecated: Cinder is deprecated. All operations for the in-tree cinder type are redirected to the cinder.csi.openstack.org CSI driver. More info: https://examples.k8s.io/mysql-cinder-pd/README.md",
      "$ref": "#/definitions/v1.CinderVolumeSource"
     },
     "configMap": {
@@ -16462,7 +17059,7 @@
      "$ref": "#/definitions/v1.ConfigMapVolumeSource"
     },
     "csi": {
-     "description": "csi (Container Storage Interface) represents ephemeral storage that is handled by certain external CSI drivers (Beta feature).",
+     "description": "csi (Container Storage Interface) represents ephemeral storage that is handled by certain external CSI drivers.",
      "$ref": "#/definitions/v1.CSIVolumeSource"
     },
     "downwardAPI": {
@@ -16482,28 +17079,32 @@
      "$ref": "#/definitions/v1.FCVolumeSource"
     },
     "flexVolume": {
-     "description": "flexVolume represents a generic volume resource that is provisioned/attached using an exec based plugin.",
+     "description": "flexVolume represents a generic volume resource that is provisioned/attached using an exec based plugin. Deprecated: FlexVolume is deprecated. Consider using a CSIDriver instead.",
      "$ref": "#/definitions/v1.FlexVolumeSource"
     },
     "flocker": {
-     "description": "flocker represents a Flocker volume attached to a kubelet's host machine. This depends on the Flocker control service being running",
+     "description": "flocker represents a Flocker volume attached to a kubelet's host machine. This depends on the Flocker control service being running. Deprecated: Flocker is deprecated and the in-tree flocker type is no longer supported.",
      "$ref": "#/definitions/v1.FlockerVolumeSource"
     },
     "gcePersistentDisk": {
-     "description": "gcePersistentDisk represents a GCE Disk resource that is attached to a kubelet's host machine and then exposed to the pod. More info: https://kubernetes.io/docs/concepts/storage/volumes#gcepersistentdisk",
+     "description": "gcePersistentDisk represents a GCE Disk resource that is attached to a kubelet's host machine and then exposed to the pod. Deprecated: GCEPersistentDisk is deprecated. All operations for the in-tree gcePersistentDisk type are redirected to the pd.csi.storage.gke.io CSI driver. More info: https://kubernetes.io/docs/concepts/storage/volumes#gcepersistentdisk",
      "$ref": "#/definitions/v1.GCEPersistentDiskVolumeSource"
     },
     "gitRepo": {
-     "description": "gitRepo represents a git repository at a particular revision. DEPRECATED: GitRepo is deprecated. To provision a container with a git repo, mount an EmptyDir into an InitContainer that clones the repo using git, then mount the EmptyDir into the Pod's container.",
+     "description": "gitRepo represents a git repository at a particular revision. Deprecated: GitRepo is deprecated. To provision a container with a git repo, mount an EmptyDir into an InitContainer that clones the repo using git, then mount the EmptyDir into the Pod's container.",
      "$ref": "#/definitions/v1.GitRepoVolumeSource"
     },
     "glusterfs": {
-     "description": "glusterfs represents a Glusterfs mount on the host that shares a pod's lifetime. More info: https://examples.k8s.io/volumes/glusterfs/README.md",
+     "description": "glusterfs represents a Glusterfs mount on the host that shares a pod's lifetime. Deprecated: Glusterfs is deprecated and the in-tree glusterfs type is no longer supported. More info: https://examples.k8s.io/volumes/glusterfs/README.md",
      "$ref": "#/definitions/v1.GlusterfsVolumeSource"
     },
     "hostPath": {
      "description": "hostPath represents a pre-existing file or directory on the host machine that is directly exposed to the container. This is generally used for system agents or other privileged things that are allowed to see the host machine. Most containers will NOT need this. More info: https://kubernetes.io/docs/concepts/storage/volumes#hostpath",
      "$ref": "#/definitions/v1.HostPathVolumeSource"
+    },
+    "image": {
+     "description": "image represents an OCI object (a container image or artifact) pulled and mounted on the kubelet's host machine. The volume is resolved at pod startup depending on which PullPolicy value is provided:\n\n- Always: the kubelet always attempts to pull the reference. Container creation will fail If the pull fails. - Never: the kubelet never pulls the reference and only uses a local image or artifact. Container creation will fail if the reference isn't present. - IfNotPresent: the kubelet pulls if the reference isn't already present on disk. Container creation will fail if the reference isn't present and the pull fails.\n\nThe volume gets re-resolved if the pod gets deleted and recreated, which means that new remote content will become available on pod recreation. A failure to resolve or pull the image during pod startup will block containers from starting and may add significant latency. Failures will be retried using normal volume backoff and will be reported on the pod reason and message. The types of objects that may be mounted by this volume are defined by the container runtime implementation on a host machine and at minimum must include all valid types supported by the container image field. The OCI object gets mounted in a single directory (spec.containers[*].volumeMounts.mountPath) by merging the manifest layers in the same way as for container images. The volume will be mounted read-only (ro) and non-executable files (noexec). Sub path mounts for containers are not supported (spec.containers[*].volumeMounts.subpath). The field spec.securityContext.fsGroupChangePolicy has no effect on this volume type.",
+     "$ref": "#/definitions/v1.ImageVolumeSource"
     },
     "iscsi": {
      "description": "iscsi represents an ISCSI Disk resource that is attached to a kubelet's host machine and then exposed to the pod. More info: https://examples.k8s.io/volumes/iscsi/README.md",
@@ -16522,11 +17123,11 @@
      "$ref": "#/definitions/v1.PersistentVolumeClaimVolumeSource"
     },
     "photonPersistentDisk": {
-     "description": "photonPersistentDisk represents a PhotonController persistent disk attached and mounted on kubelets host machine",
+     "description": "photonPersistentDisk represents a PhotonController persistent disk attached and mounted on kubelets host machine. Deprecated: PhotonPersistentDisk is deprecated and the in-tree photonPersistentDisk type is no longer supported.",
      "$ref": "#/definitions/v1.PhotonPersistentDiskVolumeSource"
     },
     "portworxVolume": {
-     "description": "portworxVolume represents a portworx volume attached and mounted on kubelets host machine",
+     "description": "portworxVolume represents a portworx volume attached and mounted on kubelets host machine. Deprecated: PortworxVolume is deprecated. All operations for the in-tree portworxVolume type are redirected to the pxd.portworx.com CSI driver when the CSIMigrationPortworx feature-gate is on.",
      "$ref": "#/definitions/v1.PortworxVolumeSource"
     },
     "projected": {
@@ -16534,15 +17135,15 @@
      "$ref": "#/definitions/v1.ProjectedVolumeSource"
     },
     "quobyte": {
-     "description": "quobyte represents a Quobyte mount on the host that shares a pod's lifetime",
+     "description": "quobyte represents a Quobyte mount on the host that shares a pod's lifetime. Deprecated: Quobyte is deprecated and the in-tree quobyte type is no longer supported.",
      "$ref": "#/definitions/v1.QuobyteVolumeSource"
     },
     "rbd": {
-     "description": "rbd represents a Rados Block Device mount on the host that shares a pod's lifetime. More info: https://examples.k8s.io/volumes/rbd/README.md",
+     "description": "rbd represents a Rados Block Device mount on the host that shares a pod's lifetime. Deprecated: RBD is deprecated and the in-tree rbd type is no longer supported. More info: https://examples.k8s.io/volumes/rbd/README.md",
      "$ref": "#/definitions/v1.RBDVolumeSource"
     },
     "scaleIO": {
-     "description": "scaleIO represents a ScaleIO persistent volume attached and mounted on Kubernetes nodes.",
+     "description": "scaleIO represents a ScaleIO persistent volume attached and mounted on Kubernetes nodes. Deprecated: ScaleIO is deprecated and the in-tree scaleIO type is no longer supported.",
      "$ref": "#/definitions/v1.ScaleIOVolumeSource"
     },
     "secret": {
@@ -16550,11 +17151,11 @@
      "$ref": "#/definitions/v1.SecretVolumeSource"
     },
     "storageos": {
-     "description": "storageOS represents a StorageOS volume attached and mounted on Kubernetes nodes.",
+     "description": "storageOS represents a StorageOS volume attached and mounted on Kubernetes nodes. Deprecated: StorageOS is deprecated and the in-tree storageos type is no longer supported.",
      "$ref": "#/definitions/v1.StorageOSVolumeSource"
     },
     "vsphereVolume": {
-     "description": "vsphereVolume represents a vSphere volume attached and mounted on kubelets host machine",
+     "description": "vsphereVolume represents a vSphere volume attached and mounted on kubelets host machine. Deprecated: VsphereVolume is deprecated. All operations for the in-tree vsphereVolume type are redirected to the csi.vsphere.vmware.com CSI driver.",
      "$ref": "#/definitions/v1.VsphereVirtualDiskVolumeSource"
     }
    }
@@ -16585,7 +17186,7 @@
    }
   },
   "v1.VolumeProjection": {
-   "description": "Projection that may be projected along with other supported volume types",
+   "description": "Projection that may be projected along with other supported volume types. Exactly one of these fields must be set.",
    "properties": {
     "clusterTrustBundle": {
      "description": "ClusterTrustBundle allows a pod to access the `.spec.trustBundle` field of ClusterTrustBundle objects in an auto-updating file.\n\nAlpha, gated by the ClusterTrustBundleProjection feature gate.\n\nClusterTrustBundle objects can either be selected by name, or by the combination of signer name and a label selector.\n\nKubelet performs aggressive normalization of the PEM contents written into the pod filesystem.  Esoteric PEM features such as inter-block comments and block headers are stripped.  Certificates are deduplicated. The ordering of certificates within the file is arbitrary, and Kubelet may change the order over time.",

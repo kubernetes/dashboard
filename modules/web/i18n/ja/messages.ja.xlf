@@ -495,8 +495,8 @@
         <target>ネームスペースは、リソースを論理的に命名されたグループに分けます。</target>
       </trans-unit>
       <trans-unit id="2782107425695587228" datatype="html">
-        <source>Pending: <x id="PH" equiv-text="status.pending"/></source>
-        <target>待機中: <x id="PH" equiv-text="status.pending"/></target>
+        <source>Pending: <x id="PH" equiv-text="&apos;&apos;"/></source>
+        <target state="new">待機中: <x id="PH" equiv-text="status.pending"/></target>
       </trans-unit>
       <trans-unit id="8096554128118112010" datatype="html">
         <source> Concurrency policy </source>
@@ -513,10 +513,6 @@
       <trans-unit id="2803293796008679153" datatype="html">
         <source>Ingress Classes</source>
         <target>イングレスクラス</target>
-      </trans-unit>
-      <trans-unit id="2807689216255894412" datatype="html">
-        <source>Succeeded</source>
-        <target>成功</target>
       </trans-unit>
       <trans-unit id="8708028741679746582" datatype="html">
         <source> Parallelism </source>
@@ -557,10 +553,6 @@
       <trans-unit id="2946624699882754313" datatype="html">
         <source>Show all</source>
         <target>すべて表示</target>
-      </trans-unit>
-      <trans-unit id="2956098160626271284" datatype="html">
-        <source>Running</source>
-        <target>稼働中</target>
       </trans-unit>
       <trans-unit id="2968503433962940653" datatype="html">
         <source>Last transition time</source>
@@ -962,10 +954,6 @@
         <source>Volume</source>
         <target>ボリューム</target>
       </trans-unit>
-      <trans-unit id="4416413576346763682" datatype="html">
-        <source>Pending</source>
-        <target>待機中</target>
-      </trans-unit>
       <trans-unit id="4439126314764642092" datatype="html">
         <source>Memory requests (bytes)</source>
         <target>メモリー要件 (バイト)</target>
@@ -1365,8 +1353,8 @@
         <target state="new">サブリソース</target>
       </trans-unit>
       <trans-unit id="6142861985741036386" datatype="html">
-        <source>Succeeded: <x id="PH" equiv-text="status.succeeded"/></source>
-        <target>成功: <x id="PH" equiv-text="status.succeeded"/></target>
+        <source>Succeeded: <x id="PH" equiv-text="&apos;&apos;"/></source>
+        <target state="new">成功: <x id="PH" equiv-text="status.succeeded"/></target>
       </trans-unit>
       <trans-unit id="940093336423648340" datatype="html">
         <source> Horizontal Pod Autoscalers </source>
@@ -1652,10 +1640,6 @@
         <source>Settings </source>
         <target>設定</target>
       </trans-unit>
-      <trans-unit id="7256395947475975935" datatype="html">
-        <source>Failed</source>
-        <target>失敗</target>
-      </trans-unit>
       <trans-unit id="728108318392658678" datatype="html">
         <source> Shell in <x id="START_TAG_MAT_SELECT" ctype="x-mat_select" equiv-text="&quot;\uFFFD*3:1\uFFFD\uFFFD#1:1\uFFFD&quot;"/><x id="START_TAG_MAT_OPTION" ctype="x-mat_option" equiv-text="&quot;\uFFFD*2:2\uFFFD\uFFFD#1:2\uFFFD&quot;"/> <x id="INTERPOLATION" equiv-text="&quot;\uFFFD0:2\uFFFD&quot;"/> <x id="CLOSE_TAG_MAT_OPTION" ctype="x-mat_option" equiv-text="&quot;\uFFFD/#1:2\uFFFD\uFFFD/*2:2\uFFFD&quot;"/><x id="CLOSE_TAG_MAT_SELECT" ctype="x-mat_select" equiv-text="&quot;\uFFFD/#1:1\uFFFD\uFFFD/*3:1\uFFFD&quot;"/> in <x id="INTERPOLATION_1" equiv-text="&quot;\uFFFD0\uFFFD&quot;"/> </source>
         <target><x id="INTERPOLATION_1" equiv-text="{{ podName }}"/> の <x id="START_TAG_MAT-SELECT" ctype="x-mat-select" equiv-text="&lt;mat-select&gt;"/> <x id="START_TAG_MAT-OPTION" ctype="x-mat-option" equiv-text="&lt;mat-option&gt;"/> <x id="INTERPOLATION" equiv-text="{{ item }}"/> <x id="CLOSE_TAG_MAT-OPTION" ctype="x-mat-option" equiv-text="&lt;/mat-option&gt;"/> <x id="CLOSE_TAG_MAT-SELECT" ctype="x-mat-select" equiv-text="&lt;/mat-select&gt;"/> のシェル</target>
@@ -1805,8 +1789,8 @@
         <target>データは Base64 エンコードされている必要があります。</target>
       </trans-unit>
       <trans-unit id="7873445996550708978" datatype="html">
-        <source>Running: <x id="PH" equiv-text="status.running"/></source>
-        <target>稼働中: <x id="PH" equiv-text="status.running"/></target>
+        <source>Running: <x id="PH" equiv-text="&apos;&apos;"/></source>
+        <target state="new">稼働中: <x id="PH" equiv-text="status.running"/></target>
       </trans-unit>
       <trans-unit id="7875452846514729865" datatype="html">
         <source>CPU capacity (cores)</source>
@@ -2149,8 +2133,8 @@
         <target>プレフィックスは 253 文字を超えてはいけません。</target>
       </trans-unit>
       <trans-unit id="9182918211699394982" datatype="html">
-        <source>Failed: <x id="PH" equiv-text="status.failed"/></source>
-        <target>失敗: <x id="PH" equiv-text="status.failed"/></target>
+        <source>Failed: <x id="PH" equiv-text="&apos;&apos;"/></source>
+        <target state="new">失敗: <x id="PH" equiv-text="status.failed"/></target>
       </trans-unit>
       <trans-unit id="2851593975347923435" datatype="html">
         <source> Read only </source>

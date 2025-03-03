@@ -22,6 +22,7 @@ import (
 
 	v1 "k8s.io/api/core/v1"
 	"k8s.io/apimachinery/pkg/apis/meta/v1/unstructured"
+	"k8s.io/dashboard/api/pkg/resource/poddisruptionbudget"
 	"k8s.io/klog/v2"
 
 	"k8s.io/dashboard/api/pkg/resource/networkpolicy"
@@ -1119,6 +1120,32 @@ func CreateHTTPAPIHandler(iManager integration.Manager) (*restful.Container, err
 			Param(apiV1Ws.PathParameter("namespace", "namespace of the PersistentVolumeClaim")).
 			Writes(persistentvolumeclaim.PersistentVolumeClaimDetail{}).
 			Returns(http.StatusOK, "OK", persistentvolumeclaim.PersistentVolumeClaimDetail{}))
+
+	// PodDisruptionBudget
+	apiV1Ws.Route(
+		apiV1Ws.GET("/poddisruptionbudget/").
+			To(apiHandler.handleGetPodDisruptionBudgetList).
+			// docs
+			Doc("returns a list of PodDisruptionBudget").
+			Writes(poddisruptionbudget.PodDisruptionBudgetList{}).
+			Returns(http.StatusOK, "OK", poddisruptionbudget.PodDisruptionBudgetList{}))
+	apiV1Ws.Route(
+		apiV1Ws.GET("/poddisruptionbudget/{namespace}").
+			To(apiHandler.handleGetPodDisruptionBudgetList).
+			// docs
+			Doc("returns a list of PodDisruptionBudget from specified namespace").
+			Param(apiV1Ws.PathParameter("namespace", "namespace of the PodDisruptionBudget")).
+			Writes(poddisruptionbudget.PodDisruptionBudgetList{}).
+			Returns(http.StatusOK, "OK", poddisruptionbudget.PodDisruptionBudgetList{}))
+	apiV1Ws.Route(
+		apiV1Ws.GET("/poddisruptionbudget/{namespace}/{name}").
+			To(apiHandler.handleGetPodDisruptionBudgetDetail).
+			// docs
+			Doc("returns detailed information about PodDisruptionBudget").
+			Param(apiV1Ws.PathParameter("name", "name of the PodDisruptionBudget")).
+			Param(apiV1Ws.PathParameter("namespace", "namespace of the PodDisruptionBudget")).
+			Writes(poddisruptionbudget.PodDisruptionBudgetDetail{}).
+			Returns(http.StatusOK, "OK", poddisruptionbudget.PodDisruptionBudgetDetail{}))
 
 	// CRD
 	apiV1Ws.Route(
@@ -2667,6 +2694,40 @@ func (apiHandler *APIHandler) handleGetPersistentVolumeClaimDetail(request *rest
 	namespace := request.PathParameter("namespace")
 	name := request.PathParameter("name")
 	result, err := persistentvolumeclaim.GetPersistentVolumeClaimDetail(k8sClient, namespace, name)
+	if err != nil {
+		errors.HandleInternalError(response, err)
+		return
+	}
+	_ = response.WriteHeaderAndEntity(http.StatusOK, result)
+}
+
+func (apiHandler *APIHandler) handleGetPodDisruptionBudgetList(request *restful.Request, response *restful.Response) {
+	k8sClient, err := client.Client(request.Request)
+	if err != nil {
+		errors.HandleInternalError(response, err)
+		return
+	}
+
+	namespace := parseNamespacePathParameter(request)
+	dataSelect := parser.ParseDataSelectPathParameter(request)
+	result, err := poddisruptionbudget.List(k8sClient, namespace, dataSelect)
+	if err != nil {
+		errors.HandleInternalError(response, err)
+		return
+	}
+	_ = response.WriteHeaderAndEntity(http.StatusOK, result)
+}
+
+func (apiHandler *APIHandler) handleGetPodDisruptionBudgetDetail(request *restful.Request, response *restful.Response) {
+	k8sClient, err := client.Client(request.Request)
+	if err != nil {
+		errors.HandleInternalError(response, err)
+		return
+	}
+
+	namespace := request.PathParameter("namespace")
+	name := request.PathParameter("name")
+	result, err := poddisruptionbudget.Get(k8sClient, namespace, name)
 	if err != nil {
 		errors.HandleInternalError(response, err)
 		return

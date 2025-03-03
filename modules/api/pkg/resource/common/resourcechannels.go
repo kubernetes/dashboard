@@ -22,6 +22,7 @@ import (
 	batch "k8s.io/api/batch/v1"
 	v1 "k8s.io/api/core/v1"
 	networkingv1 "k8s.io/api/networking/v1"
+	policyv1 "k8s.io/api/policy/v1"
 	rbac "k8s.io/api/rbac/v1"
 	storage "k8s.io/api/storage/v1"
 	apiextensions "k8s.io/apiextensions-apiserver/pkg/apis/apiextensions/v1"
@@ -124,6 +125,8 @@ type ResourceChannels struct {
 
 	// List and error channels to ClusterRoleBindings
 	ClusterRoleBindingList ClusterRoleBindingListChannel
+
+	PodDisruptionBudget PodDisruptionBudgetListChannel
 }
 
 // ServiceListChannel is a list and error channels to Services.
@@ -832,6 +835,30 @@ func GetPersistentVolumeClaimListChannel(client client.Interface, nsQuery *Names
 
 	go func() {
 		list, err := client.CoreV1().PersistentVolumeClaims(nsQuery.ToRequestParam()).List(context.TODO(), helpers.ListEverything)
+		for i := 0; i < numReads; i++ {
+			channel.List <- list
+			channel.Error <- err
+		}
+	}()
+
+	return channel
+}
+
+type PodDisruptionBudgetListChannel struct {
+	List  chan *policyv1.PodDisruptionBudgetList
+	Error chan error
+}
+
+func GetPodDisruptionBudgetListChannel(client client.Interface, nsQuery *NamespaceQuery,
+	numReads int) PodDisruptionBudgetListChannel {
+
+	channel := PodDisruptionBudgetListChannel{
+		List:  make(chan *policyv1.PodDisruptionBudgetList, numReads),
+		Error: make(chan error, numReads),
+	}
+
+	go func() {
+		list, err := client.PolicyV1().PodDisruptionBudgets(nsQuery.ToRequestParam()).List(context.TODO(), helpers.ListEverything)
 		for i := 0; i < numReads; i++ {
 			channel.List <- list
 			channel.Error <- err

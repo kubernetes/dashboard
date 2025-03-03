@@ -34,6 +34,7 @@ const (
 	ResourceKindNamespace                = "namespace"
 	ResourceKindNode                     = "node"
 	ResourceKindPersistentVolumeClaim    = "persistentvolumeclaim"
+	ResourceKindPodDisruptionBudget      = "poddisruptionbudget"
 	ResourceKindPersistentVolume         = "persistentvolume"
 	ResourceKindCustomResourceDefinition = "customresourcedefinition"
 	ResourceKindPod                      = "pod"

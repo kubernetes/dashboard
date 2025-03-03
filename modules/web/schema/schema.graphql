@@ -1282,6 +1282,46 @@ type Query {
     """Aggregations to be performed for each metric (default: sum)"""
     aggregations: String
   ): handler_TerminalResponse @httpOperation(subgraph: "api", path: "/api/v1/pod/{args.namespace}/{args.pod}/shell/{args.container}", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET, queryParamArgMap: "{\"filterBy\":\"filterBy\",\"sortBy\":\"sortBy\",\"itemsPerPage\":\"itemsPerPage\",\"page\":\"page\",\"metricNames\":\"metricNames\",\"aggregations\":\"aggregations\"}")
+  """returns a list of PodDisruptionBudget from specified namespace"""
+  handleGetPodDisruptionBudgetList(
+    """
+    Comma delimited string used to apply filtering: 'propertyName,filterValue'
+    """
+    filterBy: String
+    """Name of the column to sort by"""
+    sortBy: String
+    """Number of items to return when pagination is applied"""
+    itemsPerPage: String
+    """Page number to return items from"""
+    page: String
+    """Metric names to download"""
+    metricNames: String
+    """Aggregations to be performed for each metric (default: sum)"""
+    aggregations: String
+    """namespace of the PodDisruptionBudget"""
+    namespace: String!
+  ): poddisruptionbudget_PodDisruptionBudgetList @httpOperation(subgraph: "api", path: "/api/v1/poddisruptionbudget", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET, queryParamArgMap: "{\"filterBy\":\"filterBy\",\"sortBy\":\"sortBy\",\"itemsPerPage\":\"itemsPerPage\",\"page\":\"page\",\"metricNames\":\"metricNames\",\"aggregations\":\"aggregations\"}") @httpOperation(subgraph: "api", path: "/api/v1/poddisruptionbudget/{args.namespace}", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET, queryParamArgMap: "{\"filterBy\":\"filterBy\",\"sortBy\":\"sortBy\",\"itemsPerPage\":\"itemsPerPage\",\"page\":\"page\",\"metricNames\":\"metricNames\",\"aggregations\":\"aggregations\"}")
+  """returns detailed information about PodDisruptionBudget"""
+  handleGetPodDisruptionBudgetDetail(
+    """namespace of the PodDisruptionBudget"""
+    namespace: String!
+    """name of the PodDisruptionBudget"""
+    name: String!
+    """
+    Comma delimited string used to apply filtering: 'propertyName,filterValue'
+    """
+    filterBy: String
+    """Name of the column to sort by"""
+    sortBy: String
+    """Number of items to return when pagination is applied"""
+    itemsPerPage: String
+    """Page number to return items from"""
+    page: String
+    """Metric names to download"""
+    metricNames: String
+    """Aggregations to be performed for each metric (default: sum)"""
+    aggregations: String
+  ): poddisruptionbudget_PodDisruptionBudgetDetail @httpOperation(subgraph: "api", path: "/api/v1/poddisruptionbudget/{args.namespace}/{args.name}", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: GET, queryParamArgMap: "{\"filterBy\":\"filterBy\",\"sortBy\":\"sortBy\",\"itemsPerPage\":\"itemsPerPage\",\"page\":\"page\",\"metricNames\":\"metricNames\",\"aggregations\":\"aggregations\"}")
   """returns a list of ReplicaSets in a namespace"""
   handleGetReplicaSets(
     """
@@ -2008,6 +2048,7 @@ type types_ObjectMeta {
   labels: JSON
   name: String
   namespace: String
+  ownerReferences: [types_OwnerReference]
   uid: String
 }
 
@@ -2019,6 +2060,11 @@ type v1_Time {
 A date-time string at UTC, such as 2007-12-03T10:15:30Z, compliant with the `date-time` format outlined in section 5.6 of the RFC 3339 profile of the ISO 8601 standard for representation of dates and times using the Gregorian calendar.
 """
 scalar DateTime
+
+type types_OwnerReference {
+  kind: String!
+  name: String!
+}
 
 type types_TypeMeta {
   kind: String
@@ -3025,7 +3071,7 @@ type v1_NodeSystemInfo {
   Kernel Version reported by the node from 'uname -r' (e.g. 3.16.0-0.bpo.4-amd64).
   """
   kernelVersion: String!
-  """KubeProxy Version reported by the node."""
+  """Deprecated: KubeProxy Version reported by the node."""
   kubeProxyVersion: String!
   """Kubelet Version reported by the node."""
   kubeletVersion: String!
@@ -3299,9 +3345,7 @@ type v1_CinderPersistentVolumeSource {
   volumeID: String!
 }
 
-"""
-Represents storage that is managed by an external CSI volume driver (Beta feature)
-"""
+"""Represents storage that is managed by an external CSI volume driver"""
 type v1_CSIPersistentVolumeSource {
   controllerExpandSecretRef: v1_SecretReference
   controllerPublishSecretRef: v1_SecretReference
@@ -3484,9 +3528,7 @@ type v1_ISCSIPersistentVolumeSource {
   targetPortal: String!
 }
 
-"""
-Local represents directly-attached storage with node affinity (Beta feature)
-"""
+"""Local represents directly-attached storage with node affinity"""
 type v1_LocalVolumeSource {
   """
   fsType is the filesystem type to mount. It applies only when the Path is a block device. Must be a filesystem type supported by the host operating system. Ex. "ext4", "xfs", "ntfs". The default value is to auto-select a filesystem if unspecified.
@@ -3912,6 +3954,7 @@ type v1_ExecAction {
   command: [String]
 }
 
+"""GRPCAction specifies an action involving a GRPC service."""
 type v1_GRPCAction {
   """
   Port number of the gRPC service. Number must be in the range 1 to 65535.
@@ -3977,6 +4020,10 @@ type v1_ResourceClaim {
   Name must match the name of one entry in pod.spec.resourceClaims of the Pod where this field is used. It makes that resource available inside a container.
   """
   name: String!
+  """
+  Request is the name chosen for a request in the referenced claim. If empty, everything from the claim is made available, otherwise only the result of this request.
+  """
+  request: String
 }
 
 """
@@ -4032,7 +4079,7 @@ type v1_SecurityContext {
   """
   privileged: Boolean
   """
-  procMount denotes the type of proc mount to use for the containers. The default is DefaultProcMount which uses the container runtime defaults for readonly paths and masked paths. This requires the ProcMountType feature flag to be enabled. Note that this field cannot be set when spec.os.name is windows.
+  procMount denotes the type of proc mount to use for the containers. The default value is Default which uses the container runtime defaults for readonly paths and masked paths. This requires the ProcMountType feature flag to be enabled. Note that this field cannot be set when spec.os.name is windows.
   """
   procMount: String
   """
@@ -4133,6 +4180,10 @@ ContainerStatus contains details for the current status of this container.
 type v1_ContainerStatus {
   allocatedResources: ObjMap!
   """
+  AllocatedResourcesStatus represents the status of various resources allocated for this Pod.
+  """
+  allocatedResourcesStatus: [v1_ResourceStatus]
+  """
   ContainerID is the ID of the container in the format '<type>://<container_id>'. Where type is a container runtime identifier, returned from Version call of CRI API (for example "containerd").
   """
   containerID: String
@@ -4165,6 +4216,7 @@ type v1_ContainerStatus {
   """
   started: Boolean
   state: v1_ContainerState
+  user: v1_ContainerUser
   """Status of volume mounts."""
   volumeMounts: [v1_VolumeMountStatus]
 }
@@ -4186,6 +4238,42 @@ type resource_Quantity8 {
   d: resource_infDecAmount!
   i: resource_int64Amount!
   s: String!
+}
+
+"""
+ResourceStatus represents the status of a single resource allocated to a Pod.
+"""
+type v1_ResourceStatus {
+  """
+  Name of the resource. Must be unique within the pod and in case of non-DRA resource, match one of the resources from the pod spec. For DRA resources, the value must be "claim:<claim_name>/<request>". When this status is reported about a container, the "claim_name" and "request" must match one of the claims of this container.
+  """
+  name: String!
+  """
+  List of unique resources health. Each element in the list contains an unique resource ID and its health. At a minimum, for the lifetime of a Pod, resource ID must uniquely identify the resource allocated to the Pod on the Node. If other Pod on the same Node reports the status with the same resource ID, it must be the same resource they share. See ResourceID type definition for a specific format it has in various use cases.
+  """
+  resources: [v1_ResourceHealth]
+}
+
+"""
+ResourceHealth represents the health of a resource. It has the latest device health information. This is a part of KEP https://kep.k8s.io/4680.
+"""
+type v1_ResourceHealth {
+  """
+  Health of the resource. can be one of:
+   - Healthy: operates as normal
+   - Unhealthy: reported unhealthy. We consider this a temporary health issue
+                since we do not have a mechanism today to distinguish
+                temporary and permanent issues.
+   - Unknown: The status cannot be determined.
+              For example, Device Plugin got unregistered and hasn't been re-registered since.
+  
+  In future we may want to introduce the PermanentlyUnhealthy Status.
+  """
+  health: String
+  """
+  ResourceID is the unique identifier of the resource. See the ResourceID type for more information.
+  """
+  resourceID: String!
 }
 
 """
@@ -4224,6 +4312,29 @@ type v1_ContainerStateWaiting {
   message: String
   """(brief) reason the container is not yet running."""
   reason: String
+}
+
+"""ContainerUser represents user identity information"""
+type v1_ContainerUser {
+  linux: v1_LinuxContainerUser
+}
+
+"""
+LinuxContainerUser represents user identity information in Linux containers
+"""
+type v1_LinuxContainerUser {
+  """
+  GID is the primary gid initially attached to the first process in the container
+  """
+  gid: BigInt!
+  """
+  SupplementalGroups are the supplemental groups initially attached to the first process in the container
+  """
+  supplementalGroups: [BigInt]
+  """
+  UID is the primary uid initially attached to the first process in the container
+  """
+  uid: BigInt!
 }
 
 """VolumeMountStatus shows status of volume mounts."""
@@ -4269,6 +4380,7 @@ type v1_Volume {
   gitRepo: v1_GitRepoVolumeSource
   glusterfs: v1_GlusterfsVolumeSource
   hostPath: v1_HostPathVolumeSource
+  image: v1_ImageVolumeSource
   iscsi: v1_ISCSIVolumeSource
   """
   name of the volume. Must be a DNS_LABEL and unique within the pod. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names
@@ -4618,7 +4730,7 @@ type v1_PersistentVolumeClaimSpec {
   """
   storageClassName: String
   """
-  volumeAttributesClassName may be used to set the VolumeAttributesClass used by this claim. If specified, the CSI driver will create or update the volume with the attributes defined in the corresponding VolumeAttributesClass. This has a different purpose than storageClassName, it can be changed after the claim is created. An empty string value means that no VolumeAttributesClass will be applied to the claim but it's not allowed to reset this field to empty string once it is set. If unspecified and the PersistentVolumeClaim is unbound, the default VolumeAttributesClass will be set by the persistentvolume controller if it exists. If the resource referred to by volumeAttributesClass does not exist, this PersistentVolumeClaim will be set to a Pending state, as reflected by the modifyVolumeStatus field, until such as a resource exists. More info: https://kubernetes.io/docs/concepts/storage/volume-attributes-classes/ (Alpha) Using this field requires the VolumeAttributesClass feature gate to be enabled.
+  volumeAttributesClassName may be used to set the VolumeAttributesClass used by this claim. If specified, the CSI driver will create or update the volume with the attributes defined in the corresponding VolumeAttributesClass. This has a different purpose than storageClassName, it can be changed after the claim is created. An empty string value means that no VolumeAttributesClass will be applied to the claim but it's not allowed to reset this field to empty string once it is set. If unspecified and the PersistentVolumeClaim is unbound, the default VolumeAttributesClass will be set by the persistentvolume controller if it exists. If the resource referred to by volumeAttributesClass does not exist, this PersistentVolumeClaim will be set to a Pending state, as reflected by the modifyVolumeStatus field, until such as a resource exists. More info: https://kubernetes.io/docs/concepts/storage/volume-attributes-classes/ (Beta) Using this field requires the VolumeAttributesClass feature gate to be enabled (off by default).
   """
   volumeAttributesClassName: String
   """
@@ -4631,6 +4743,9 @@ type v1_PersistentVolumeClaimSpec {
   volumeName: String
 }
 
+"""
+TypedObjectReference contains enough information to let you locate the typed referenced object
+"""
 type v1_TypedObjectReference {
   """
   APIGroup is the group for the resource being referenced. If APIGroup is not specified, the specified Kind must be in the core API group. For any other third-party types, APIGroup is required.
@@ -4745,6 +4860,18 @@ type v1_GlusterfsVolumeSource {
   readOnly: Boolean
 }
 
+"""ImageVolumeSource represents a image volume resource."""
+type v1_ImageVolumeSource {
+  """
+  Policy for pulling OCI objects. Possible values are: Always: the kubelet always attempts to pull the reference. Container creation will fail If the pull fails. Never: the kubelet never pulls the reference and only uses a local image or artifact. Container creation will fail if the reference isn't present. IfNotPresent: the kubelet pulls if the reference isn't already present on disk. Container creation will fail if the reference isn't present and the pull fails. Defaults to Always if :latest tag is specified, or IfNotPresent otherwise.
+  """
+  pullPolicy: String
+  """
+  Required: Image or artifact reference to be used. Behaves in the same way as pod.spec.containers[*].image. Pull secrets will be assembled in the same way as for the container image by looking up node credentials, SA image pull secrets, and pod spec image pull secrets. More info: https://kubernetes.io/docs/concepts/containers/images This field is optional to allow higher level config management to default or override container images in workload controllers like Deployments and StatefulSets.
+  """
+  reference: String
+}
+
 """
 Represents an ISCSI disk. ISCSI volumes can only be mounted as read/write once. ISCSI volumes support ownership management and SELinux relabeling.
 """
@@ -4808,12 +4935,14 @@ type v1_ProjectedVolumeSource {
   defaultMode are the mode bits used to set permissions on created files by default. Must be an octal value between 0000 and 0777 or a decimal value between 0 and 511. YAML accepts both octal and decimal values, JSON requires decimal values for mode bits. Directories within the path are not affected by this setting. This might be in conflict with other options that affect the file mode, like fsGroup, and the result can be other mode bits set.
   """
   defaultMode: Int
-  """sources is the list of volume projections"""
+  """
+  sources is the list of volume projections. Each entry in this list handles one source.
+  """
   sources: [v1_VolumeProjection]!
 }
 
 """
-Projection that may be projected along with other supported volume types
+Projection that may be projected along with other supported volume types. Exactly one of these fields must be set.
 """
 type v1_VolumeProjection {
   clusterTrustBundle: v1_ClusterTrustBundleProjection
@@ -5056,12 +5185,30 @@ type v1_PodSecurityContext {
   The UID to run the entrypoint of the container process. Defaults to user specified in image metadata if unspecified. May also be set in SecurityContext.  If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence for that container. Note that this field cannot be set when spec.os.name is windows.
   """
   runAsUser: BigInt
+  """
+  seLinuxChangePolicy defines how the container's SELinux label is applied to all volumes used by the Pod. It has no effect on nodes that do not support SELinux or to volumes does not support SELinux. Valid values are "MountOption" and "Recursive".
+  
+  "Recursive" means relabeling of all files on all Pod volumes by the container runtime. This may be slow for large volumes, but allows mixing privileged and unprivileged Pods sharing the same volume on the same node.
+  
+  "MountOption" mounts all eligible Pod volumes with `-o context` mount option. This requires all Pods that share the same volume to use the same SELinux label. It is not possible to share the same volume among privileged and unprivileged Pods. Eligible volumes are in-tree FibreChannel and iSCSI volumes, and all CSI volumes whose CSI driver announces SELinux support by setting spec.seLinuxMount: true in their CSIDriver instance. Other volumes are always re-labelled recursively. "MountOption" value is allowed only when SELinuxMount feature gate is enabled.
+  
+  If not specified and SELinuxMount feature gate is enabled, "MountOption" is used. If not specified and SELinuxMount feature gate is disabled, "MountOption" is used for ReadWriteOncePod volumes and "Recursive" for all other volumes.
+  
+  This field affects only Pods that have SELinux label set, either in PodSecurityContext or in SecurityContext of all containers.
+  
+  All Pods that use the same volume should use the same seLinuxChangePolicy, otherwise some pods can get stuck in ContainerCreating state. Note that this field cannot be set when spec.os.name is windows.
+  """
+  seLinuxChangePolicy: String
   seLinuxOptions: v1_SELinuxOptions
   seccompProfile: v1_SeccompProfile
   """
-  A list of groups applied to the first process run in each container, in addition to the container's primary GID, the fsGroup (if specified), and group memberships defined in the container image for the uid of the container process. If unspecified, no additional groups are added to any container. Note that group memberships defined in the container image for the uid of the container process are still effective, even if they are not included in this list. Note that this field cannot be set when spec.os.name is windows.
+  A list of groups applied to the first process run in each container, in addition to the container's primary GID and fsGroup (if specified).  If the SupplementalGroupsPolicy feature is enabled, the supplementalGroupsPolicy field determines whether these are in addition to or instead of any group memberships defined in the container image. If unspecified, no additional groups are added, though group memberships defined in the container image may still be used, depending on the supplementalGroupsPolicy field. Note that this field cannot be set when spec.os.name is windows.
   """
   supplementalGroups: [BigInt]
+  """
+  Defines how supplemental groups of the first container processes are calculated. Valid values are "Merge" and "Strict". If not specified, "Merge" is used. (Alpha) Using the field requires the SupplementalGroupsPolicy feature gate to be enabled and the container runtime must implement support for this feature. Note that this field cannot be set when spec.os.name is windows.
+  """
+  supplementalGroupsPolicy: String
   """
   Sysctls hold a list of namespaced sysctls used for the pod. Pods with unsupported sysctls (by the container runtime) might fail to launch. Note that this field cannot be set when spec.os.name is windows.
   """
@@ -5079,6 +5226,39 @@ type v1_Sysctl {
 
 type handler_TerminalResponse {
   id: String!
+}
+
+type poddisruptionbudget_PodDisruptionBudgetList {
+  errors: [JSON]!
+  items: [poddisruptionbudget_PodDisruptionBudget]!
+  listMeta: types_ListMeta!
+}
+
+type poddisruptionbudget_PodDisruptionBudget {
+  currentHealthy: Int!
+  desiredHealthy: Int!
+  disruptionsAllowed: Int!
+  expectedPods: Int!
+  labelSelector: v1_LabelSelector
+  maxUnavailable: intstr_IntOrString!
+  minAvailable: intstr_IntOrString!
+  objectMeta: types_ObjectMeta!
+  typeMeta: types_TypeMeta!
+  unhealthyPodEvictionPolicy: String!
+}
+
+type poddisruptionbudget_PodDisruptionBudgetDetail {
+  currentHealthy: Int!
+  desiredHealthy: Int!
+  disruptedPods: JSON!
+  disruptionsAllowed: Int!
+  expectedPods: Int!
+  labelSelector: v1_LabelSelector
+  maxUnavailable: intstr_IntOrString!
+  minAvailable: intstr_IntOrString!
+  objectMeta: types_ObjectMeta!
+  typeMeta: types_TypeMeta!
+  unhealthyPodEvictionPolicy: String!
 }
 
 type replicaset_ReplicaSetDetail {
@@ -5451,6 +5631,27 @@ type Mutation {
     """Aggregations to be performed for each metric (default: sum)"""
     aggregations: String
   ): JSON @httpOperation(subgraph: "api", path: "/api/v1/cronjob/{args.namespace}/{args.name}/trigger", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: PUT, queryParamArgMap: "{\"filterBy\":\"filterBy\",\"sortBy\":\"sortBy\",\"itemsPerPage\":\"itemsPerPage\",\"page\":\"page\",\"metricNames\":\"metricNames\",\"aggregations\":\"aggregations\"}")
+  """rollout restart of the Daemon Set"""
+  handleDaemonSetRestart(
+    """namespace of the Daemon Set"""
+    namespace: String!
+    """name of the Daemon Set"""
+    daemonSet: String!
+    """
+    Comma delimited string used to apply filtering: 'propertyName,filterValue'
+    """
+    filterBy: String
+    """Name of the column to sort by"""
+    sortBy: String
+    """Number of items to return when pagination is applied"""
+    itemsPerPage: String
+    """Page number to return items from"""
+    page: String
+    """Metric names to download"""
+    metricNames: String
+    """Aggregations to be performed for each metric (default: sum)"""
+    aggregations: String
+  ): daemonset_DaemonSetDetail @httpOperation(subgraph: "api", path: "/api/v1/daemonset/{args.namespace}/{args.daemonSet}/restart", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: PUT, queryParamArgMap: "{\"filterBy\":\"filterBy\",\"sortBy\":\"sortBy\",\"itemsPerPage\":\"itemsPerPage\",\"page\":\"page\",\"metricNames\":\"metricNames\",\"aggregations\":\"aggregations\"}")
   """pauses the Deployment"""
   handleDeploymentPause(
     """namespace of the Deployment"""
@@ -5639,6 +5840,27 @@ type Mutation {
     aggregations: String
     input: secret_ImagePullSecretSpec_Input!
   ): secret_Secret @httpOperation(subgraph: "api", path: "/api/v1/secret", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: POST, queryParamArgMap: "{\"filterBy\":\"filterBy\",\"sortBy\":\"sortBy\",\"itemsPerPage\":\"itemsPerPage\",\"page\":\"page\",\"metricNames\":\"metricNames\",\"aggregations\":\"aggregations\"}")
+  """rollout restart of the Daemon Set"""
+  handleStatefulSetRestart(
+    """namespace of the StatefulSet"""
+    namespace: String!
+    """name of the StatefulSet"""
+    statefulset: String!
+    """
+    Comma delimited string used to apply filtering: 'propertyName,filterValue'
+    """
+    filterBy: String
+    """Name of the column to sort by"""
+    sortBy: String
+    """Number of items to return when pagination is applied"""
+    itemsPerPage: String
+    """Page number to return items from"""
+    page: String
+    """Metric names to download"""
+    metricNames: String
+    """Aggregations to be performed for each metric (default: sum)"""
+    aggregations: String
+  ): statefulset_StatefulSetDetail @httpOperation(subgraph: "api", path: "/api/v1/statefulset/{args.namespace}/{args.statefulset}/restart", operationSpecificHeaders: "{\"Content-Type\":\"application/json\",\"Accept\":\"application/json\"}", httpMethod: PUT, queryParamArgMap: "{\"filterBy\":\"filterBy\",\"sortBy\":\"sortBy\",\"itemsPerPage\":\"itemsPerPage\",\"page\":\"page\",\"metricNames\":\"metricNames\",\"aggregations\":\"aggregations\"}")
 }
 
 """Represents empty values"""
