@@ -25,10 +25,10 @@ import (
 	"k8s.io/dashboard/types"
 )
 
-func TestGet(t *testing.T) {
+func TestToDetails(t *testing.T) {
 	cases := []struct {
-		persistentVolumeClaims *policyv1.PodDisruptionBudget
-		expected               *PodDisruptionBudgetDetail
+		resource *policyv1.PodDisruptionBudget
+		expected *PodDisruptionBudgetDetail
 	}{
 		{
 			&policyv1.PodDisruptionBudget{
@@ -64,10 +64,10 @@ func TestGet(t *testing.T) {
 		},
 	}
 	for _, c := range cases {
-		actual := toDetails(*c.persistentVolumeClaims)
+		actual := toDetails(*c.resource)
 		if !reflect.DeepEqual(actual, c.expected) {
 			t.Errorf("toDetails(%#v) == \n%#v\nexpected \n%#v\n",
-				c.persistentVolumeClaims, actual, c.expected)
+				c.resource, actual, c.expected)
 		}
 	}
 }

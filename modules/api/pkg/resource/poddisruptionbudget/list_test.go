@@ -27,10 +27,10 @@ import (
 	"k8s.io/dashboard/types"
 )
 
-func TestList(t *testing.T) {
+func TestToList(t *testing.T) {
 	cases := []struct {
-		persistentVolumeClaims []policyv1.PodDisruptionBudget
-		expected               *PodDisruptionBudgetList
+		resources []policyv1.PodDisruptionBudget
+		expected  *PodDisruptionBudgetList
 	}{
 		{
 			nil,
@@ -40,7 +40,7 @@ func TestList(t *testing.T) {
 		},
 		{
 			[]policyv1.PodDisruptionBudget{{
-				ObjectMeta: metaV1.ObjectMeta{Name: "foo"},
+				ObjectMeta: metaV1.ObjectMeta{Name: "foo", Namespace: "bar"},
 				Spec: policyv1.PodDisruptionBudgetSpec{
 					MinAvailable:               &intstr.IntOrString{Type: intstr.Int, IntVal: 1},
 					MaxUnavailable:             &intstr.IntOrString{Type: intstr.Int, IntVal: 3},
@@ -71,10 +71,10 @@ func TestList(t *testing.T) {
 		},
 	}
 	for _, c := range cases {
-		actual := toList(c.persistentVolumeClaims, nil, dataselect.NoDataSelect)
+		actual := toList(c.resources, nil, dataselect.NoDataSelect)
 		if !reflect.DeepEqual(actual, c.expected) {
-			t.Errorf("getPersistentVolumeClaimList(%#v) == \n%#v\nexpected \n%#v\n",
-				c.persistentVolumeClaims, actual, c.expected)
+			t.Errorf("toList(%#v) == \n%#v\nexpected \n%#v\n",
+				c.resources, actual, c.expected)
 		}
 	}
 }
