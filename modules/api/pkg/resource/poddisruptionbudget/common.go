@@ -15,82 +15,14 @@
 package poddisruptionbudget
 
 import (
-	"context"
-	"strings"
-
-	api "k8s.io/api/core/v1"
 	policyv1 "k8s.io/api/policy/v1"
-	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
-	client "k8s.io/client-go/kubernetes"
-	"k8s.io/klog/v2"
 
-	"k8s.io/dashboard/api/pkg/args"
-	"k8s.io/dashboard/api/pkg/resource/common"
 	"k8s.io/dashboard/api/pkg/resource/dataselect"
-	"k8s.io/dashboard/errors"
 )
 
-// The code below allows to perform complex data section on []api.PersistentVolumeClaim
+type PodDisruptionBudgetCell policyv1.PodDisruptionBudget
 
-type PersistentVolumeClaimCell policyv1.PodDisruptionBudget
-
-// GetPodPersistentVolumeClaims gets persistentvolumeclaims that are associated with this pod.
-func GetPodPersistentVolumeClaims(client client.Interface, namespace string, podName string,
-	dsQuery *dataselect.DataSelectQuery) (*PodDisruptionBudgetList, error) {
-
-	pod, err := client.CoreV1().Pods(namespace).Get(context.TODO(), podName, metaV1.GetOptions{})
-	if err != nil {
-		return nil, err
-	}
-
-	claimNames := make([]string, 0)
-	if len(pod.Spec.Volumes) > 0 {
-		for _, v := range pod.Spec.Volumes {
-			persistentVolumeClaim := v.PersistentVolumeClaim
-			if persistentVolumeClaim != nil {
-				claimNames = append(claimNames, persistentVolumeClaim.ClaimName)
-			}
-		}
-	}
-
-	if len(claimNames) > 0 {
-		channels := &common.ResourceChannels{
-			PersistentVolumeClaimList: common.GetPersistentVolumeClaimListChannel(
-				client, common.NewSameNamespaceQuery(namespace), 1),
-		}
-
-		persistentVolumeClaimList := <-channels.PersistentVolumeClaimList.List
-
-		err = <-channels.PersistentVolumeClaimList.Error
-		nonCriticalErrors, criticalError := errors.ExtractErrors(err)
-		if criticalError != nil {
-			return nil, criticalError
-		}
-
-		podPersistentVolumeClaims := make([]api.PersistentVolumeClaim, 0)
-		for _, pvc := range persistentVolumeClaimList.Items {
-			for _, claimName := range claimNames {
-				if strings.Compare(claimName, pvc.Name) == 0 {
-					podPersistentVolumeClaims = append(podPersistentVolumeClaims, pvc)
-					break
-				}
-			}
-		}
-
-		klog.V(args.LogLevelExtended).Infof("Found %d persistentvolumeclaims related to %s pod",
-			len(podPersistentVolumeClaims), podName)
-
-		return toPersistentVolumeClaimList(podPersistentVolumeClaims,
-			nonCriticalErrors, dsQuery), nil
-	}
-
-	klog.V(args.LogLevelExtended).Infof("No persistentvolumeclaims found related to %s pod", podName)
-
-	// No ClaimNames found in Pod details, return empty response.
-	return &PodDisruptionBudgetList{}, nil
-}
-
-func (self PersistentVolumeClaimCell) GetProperty(name dataselect.PropertyName) dataselect.ComparableValue {
+func (self PodDisruptionBudgetCell) GetProperty(name dataselect.PropertyName) dataselect.ComparableValue {
 	switch name {
 	case dataselect.NameProperty:
 		return dataselect.StdComparableString(self.ObjectMeta.Name)
@@ -107,15 +39,15 @@ func (self PersistentVolumeClaimCell) GetProperty(name dataselect.PropertyName) 
 func toCells(std []policyv1.PodDisruptionBudget) []dataselect.DataCell {
 	cells := make([]dataselect.DataCell, len(std))
 	for i := range std {
-		cells[i] = PersistentVolumeClaimCell(std[i])
+		cells[i] = PodDisruptionBudgetCell(std[i])
 	}
 	return cells
 }
 
-func fromCells(cells []dataselect.DataCell) []api.PersistentVolumeClaim {
-	std := make([]api.PersistentVolumeClaim, len(cells))
+func fromCells(cells []dataselect.DataCell) []policyv1.PodDisruptionBudget {
+	std := make([]policyv1.PodDisruptionBudget, len(cells))
 	for i := range std {
-		std[i] = api.PersistentVolumeClaim(cells[i].(PersistentVolumeClaimCell))
+		std[i] = policyv1.PodDisruptionBudget(cells[i].(PodDisruptionBudgetCell))
 	}
 	return std
 }
