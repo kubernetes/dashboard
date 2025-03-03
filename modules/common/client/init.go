@@ -61,7 +61,7 @@ func (in *configBuilder) buildBaseConfig() (config *rest.Config, err error) {
 
 	if len(in.caBundlePath) > 0 {
 		klog.InfoS("Using custom CA Bundle", "caBundle", in.caBundlePath)
-		config.TLSClientConfig.CertificateAuthority = in.caBundlePath
+		config.TLSClientConfig.CAFile = in.caBundlePath
 	}
 
 	config, err = clientcmd.BuildConfigFromFlags(in.masterUrl, in.kubeconfigPath)
