@@ -19,6 +19,7 @@ import (
 	"testing"
 
 	v1 "k8s.io/api/core/v1"
+	policyv1 "k8s.io/api/policy/v1"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 
 	"k8s.io/dashboard/api/pkg/resource/dataselect"
@@ -27,8 +28,8 @@ import (
 
 func TestGetPersistentVolumeClaimList(t *testing.T) {
 	cases := []struct {
-		persistentVolumeClaims []v1.PersistentVolumeClaim
-		expected               *PersistentVolumeClaimList
+		persistentVolumeClaims []policyv1.PodDisruptionBudget
+		expected               *PodDisruptionBudgetList
 	}{
 		{
 			nil,
@@ -37,14 +38,14 @@ func TestGetPersistentVolumeClaimList(t *testing.T) {
 			},
 		},
 		{
-			[]v1.PersistentVolumeClaim{{
+			[]policyv1.PodDisruptionBudget{{
 				ObjectMeta: metaV1.ObjectMeta{Name: "foo"},
-				Spec:       v1.PersistentVolumeClaimSpec{VolumeName: "my-volume"},
-				Status:     v1.PersistentVolumeClaimStatus{Phase: v1.ClaimBound},
+				Spec:       policyv1.PodDisruptionBudgetSpec{VolumeName: "my-volume"},
+				Status:     policyv1.PodDisruptionBudgetStatus{Phase: v1.ClaimBound},
 			}},
-			&PersistentVolumeClaimList{
+			&PodDisruptionBudgetList{
 				ListMeta: types.ListMeta{TotalItems: 1},
-				Items: []PersistentVolumeClaim{{
+				Items: []PodDisruptionBudget{{
 					TypeMeta:   types.TypeMeta{Kind: "persistentvolumeclaim"},
 					ObjectMeta: types.ObjectMeta{Name: "foo"},
 					Status:     "Bound",
@@ -54,7 +55,7 @@ func TestGetPersistentVolumeClaimList(t *testing.T) {
 		},
 	}
 	for _, c := range cases {
-		actual := toPersistentVolumeClaimList(c.persistentVolumeClaims, nil, dataselect.NoDataSelect)
+		actual := toList(c.persistentVolumeClaims, nil, dataselect.NoDataSelect)
 		if !reflect.DeepEqual(actual, c.expected) {
 			t.Errorf("getPersistentVolumeClaimList(%#v) == \n%#v\nexpected \n%#v\n",
 				c.persistentVolumeClaims, actual, c.expected)

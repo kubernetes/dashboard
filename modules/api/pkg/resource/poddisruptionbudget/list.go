@@ -15,12 +15,10 @@
 package poddisruptionbudget
 
 import (
-	v1 "k8s.io/api/core/v1"
 	policyv1 "k8s.io/api/policy/v1"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/util/intstr"
 	"k8s.io/client-go/kubernetes"
-	"k8s.io/klog/v2"
 
 	"k8s.io/dashboard/api/pkg/resource/common"
 	"k8s.io/dashboard/api/pkg/resource/dataselect"
@@ -28,71 +26,52 @@ import (
 	"k8s.io/dashboard/types"
 )
 
-// PodDisruptionBudgetList contains a list of Pod Disruption Budgets.
 type PodDisruptionBudgetList struct {
-	ListMeta types.ListMeta `json:"listMeta"`
-
-	Items []PodDisruptionBudget `json:"items"`
+	ListMeta types.ListMeta        `json:"listMeta"`
+	Items    []PodDisruptionBudget `json:"items"`
 
 	// List of non-critical errors, that occurred during resource retrieval.
 	Errors []error `json:"errors"`
 }
 
-// PodDisruptionBudget provides the simplified presentation layer view of Pod Disruption Budget resource.
 type PodDisruptionBudget struct {
 	ObjectMeta types.ObjectMeta `json:"objectMeta"`
 	TypeMeta   types.TypeMeta   `json:"typeMeta"`
 	Status     string           `json:"status"`
 
-	MinAvailable   *intstr.IntOrString `json:"minAvailable"`
+	// MinAvailable is the minimum number or percentage of available pods this budget requires.
+	MinAvailable *intstr.IntOrString `json:"minAvailable"`
+
+	// MaxUnavailable is the maximum number or percentage of unavailable pods this budget requires.
 	MaxUnavailable *intstr.IntOrString `json:"maxUnavailable"`
 
 	// UnhealthyPodEvictionPolicy defines the criteria for when unhealthy pods should be considered for eviction.
 	UnhealthyPodEvictionPolicy *policyv1.UnhealthyPodEvictionPolicyType `json:"unhealthyPodEvictionPolicy"`
 
-	// LabelSelector is a label query over pods whose evictions are managed by the disruption budget.
+	// LabelSelector is the label query over pods whose evictions are managed by the disruption budget.
 	LabelSelector *metaV1.LabelSelector `json:"labelSelector,omitempty"`
 }
 
-// GetPersistentVolumeClaimList returns a list of all Persistent Volume Claims in the cluster.
-func GetPersistentVolumeClaimList(client kubernetes.Interface, nsQuery *common.NamespaceQuery,
-	dsQuery *dataselect.DataSelectQuery) (*PodDisruptionBudgetList, error) {
-
-	klog.V(4).Infof("Getting list persistent volumes claims")
+func List(client kubernetes.Interface, nsQuery *common.NamespaceQuery, dsQuery *dataselect.DataSelectQuery) (*PodDisruptionBudgetList, error) {
 	channels := &common.ResourceChannels{
-		PersistentVolumeClaimList: common.GetPersistentVolumeClaimListChannel(client, nsQuery, 1),
+		PodDisruptionBudget: common.GetPodDisruptionBudgetListChannel(client, nsQuery, 1),
 	}
 
-	return GetPersistentVolumeClaimListFromChannels(channels, nsQuery, dsQuery)
+	return getListFromChannels(channels, dsQuery)
 }
 
-// GetPersistentVolumeClaimListFromChannels returns a list of all Persistent Volume Claims in the cluster
-// reading required resource list once from the channels.
-func GetPersistentVolumeClaimListFromChannels(channels *common.ResourceChannels, nsQuery *common.NamespaceQuery,
-	dsQuery *dataselect.DataSelectQuery) (*PodDisruptionBudgetList, error) {
-
-	persistentVolumeClaims := <-channels.PersistentVolumeClaimList.List
-	err := <-channels.PersistentVolumeClaimList.Error
+func getListFromChannels(channels *common.ResourceChannels, dsQuery *dataselect.DataSelectQuery) (*PodDisruptionBudgetList, error) {
+	list := <-channels.PodDisruptionBudget.List
+	err := <-channels.PodDisruptionBudget.Error
 	nonCriticalErrors, criticalError := errors.ExtractErrors(err)
 	if criticalError != nil {
 		return nil, criticalError
 	}
 
-	return toPersistentVolumeClaimList(persistentVolumeClaims.Items, nonCriticalErrors, dsQuery), nil
+	return toList(list.Items, nonCriticalErrors, dsQuery), nil
 }
 
-func toPodDisruptionBudget(pdb policyv1.PodDisruptionBudget) PodDisruptionBudget {
-	return PodDisruptionBudget{
-		ObjectMeta:                 types.NewObjectMeta(pdb.ObjectMeta),
-		TypeMeta:                   types.NewTypeMeta(types.ResourceKindPersistentVolumeClaim),
-		MinAvailable:               pdb.Spec.MinAvailable,
-		MaxUnavailable:             pdb.Spec.MaxUnavailable,
-		UnhealthyPodEvictionPolicy: pdb.Spec.UnhealthyPodEvictionPolicy,
-		LabelSelector:              pdb.Spec.Selector,
-	}
-}
-
-func toPersistentVolumeClaimList(podDisruptionBudgets []policyv1.PodDisruptionBudget, nonCriticalErrors []error,
+func toList(podDisruptionBudgets []policyv1.PodDisruptionBudget, nonCriticalErrors []error,
 	dsQuery *dataselect.DataSelectQuery) *PodDisruptionBudgetList {
 
 	result := &PodDisruptionBudgetList{
@@ -101,13 +80,24 @@ func toPersistentVolumeClaimList(podDisruptionBudgets []policyv1.PodDisruptionBu
 		Errors:   nonCriticalErrors,
 	}
 
-	pvcCells, filteredTotal := dataselect.GenericDataSelectWithFilter(toCells(podDisruptionBudgets), dsQuery)
-	podDisruptionBudgets = fromCells(pvcCells)
+	cells, filteredTotal := dataselect.GenericDataSelectWithFilter(toCells(podDisruptionBudgets), dsQuery)
+	podDisruptionBudgets = fromCells(cells)
 	result.ListMeta = types.ListMeta{TotalItems: filteredTotal}
 
 	for _, item := range podDisruptionBudgets {
-		result.Items = append(result.Items, toPodDisruptionBudget(item))
+		result.Items = append(result.Items, toListItem(item))
 	}
 
 	return result
+}
+
+func toListItem(pdb policyv1.PodDisruptionBudget) PodDisruptionBudget {
+	return PodDisruptionBudget{
+		ObjectMeta:                 types.NewObjectMeta(pdb.ObjectMeta),
+		TypeMeta:                   types.NewTypeMeta(types.ResourceKindPodDisruptionBudget),
+		MinAvailable:               pdb.Spec.MinAvailable,
+		MaxUnavailable:             pdb.Spec.MaxUnavailable,
+		UnhealthyPodEvictionPolicy: pdb.Spec.UnhealthyPodEvictionPolicy,
+		LabelSelector:              pdb.Spec.Selector,
+	}
 }

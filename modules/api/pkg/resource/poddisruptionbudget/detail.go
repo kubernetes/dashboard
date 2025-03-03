@@ -26,17 +26,17 @@ type PodDisruptionBudgetDetail struct {
 	PodDisruptionBudget `json:",inline"`
 }
 
-func GetPodDisruptionBudgetDetail(client kubernetes.Interface, namespace string, name string) (*PodDisruptionBudgetDetail, error) {
+func Get(client kubernetes.Interface, namespace string, name string) (*PodDisruptionBudgetDetail, error) {
 	pdb, err := client.PolicyV1().PodDisruptionBudgets(namespace).Get(context.TODO(), name, metaV1.GetOptions{})
 	if err != nil {
 		return nil, err
 	}
 
-	return getPodDisruptionBudgetDetail(*pdb), nil
+	return toDetails(*pdb), nil
 }
 
-func getPodDisruptionBudgetDetail(pdb policyv1.PodDisruptionBudget) *PodDisruptionBudgetDetail {
+func toDetails(pdb policyv1.PodDisruptionBudget) *PodDisruptionBudgetDetail {
 	return &PodDisruptionBudgetDetail{
-		PodDisruptionBudget: toPodDisruptionBudget(pdb),
+		PodDisruptionBudget: toListItem(pdb),
 	}
 }

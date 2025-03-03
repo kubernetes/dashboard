@@ -19,34 +19,34 @@ import (
 	"testing"
 
 	v1 "k8s.io/api/core/v1"
+	policyv1 "k8s.io/api/policy/v1"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 
 	"k8s.io/dashboard/types"
 )
 
-func TestGetPersistentVolumeClaimDetail(t *testing.T) {
-
+func TestGet(t *testing.T) {
 	cases := []struct {
-		persistentVolumeClaims *v1.PersistentVolumeClaim
-		expected               *PersistentVolumeClaimDetail
+		persistentVolumeClaims *policyv1.PodDisruptionBudget
+		expected               *PodDisruptionBudgetDetail
 	}{
 		{
-			&v1.PersistentVolumeClaim{
+			&policyv1.PodDisruptionBudget{
 				TypeMeta:   metaV1.TypeMeta{Kind: "persistentvolumeclaim"},
 				ObjectMeta: metaV1.ObjectMeta{Name: "foo", Namespace: "bar"},
-				Spec: v1.PersistentVolumeClaimSpec{
+				Spec: policyv1.PodDisruptionBudgetSpec{
 					AccessModes: []v1.PersistentVolumeAccessMode{v1.ReadWriteOnce},
 					Resources:   v1.VolumeResourceRequirements{},
 					VolumeName:  "volume",
 				},
-				Status: v1.PersistentVolumeClaimStatus{
+				Status: policyv1.PodDisruptionBudgetStatus{
 					Phase:       v1.PersistentVolumeClaimPhase(v1.ClaimPending),
 					AccessModes: []v1.PersistentVolumeAccessMode{v1.ReadWriteOnce},
 					Capacity:    nil,
 				},
 			},
-			&PersistentVolumeClaimDetail{
-				PersistentVolumeClaim: PersistentVolumeClaim{
+			&PodDisruptionBudgetDetail{
+				PodDisruptionBudget: PodDisruptionBudget{
 					ObjectMeta:  types.ObjectMeta{Name: "foo", Namespace: "bar"},
 					TypeMeta:    types.TypeMeta{Kind: "persistentvolumeclaim"},
 					Status:      string(v1.ClaimPending),
@@ -58,9 +58,9 @@ func TestGetPersistentVolumeClaimDetail(t *testing.T) {
 		},
 	}
 	for _, c := range cases {
-		actual := getPersistentVolumeClaimDetail(*c.persistentVolumeClaims)
+		actual := toDetails(*c.persistentVolumeClaims)
 		if !reflect.DeepEqual(actual, c.expected) {
-			t.Errorf("getPersistentVolumeClaimDetail(%#v) == \n%#v\nexpected \n%#v\n",
+			t.Errorf("toDetails(%#v) == \n%#v\nexpected \n%#v\n",
 				c.persistentVolumeClaims, actual, c.expected)
 		}
 	}
