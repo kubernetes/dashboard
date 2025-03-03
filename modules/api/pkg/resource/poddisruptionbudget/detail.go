@@ -18,16 +18,18 @@ import (
 	"context"
 
 	policyv1 "k8s.io/api/policy/v1"
-	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+
 	"k8s.io/client-go/kubernetes"
 )
 
 type PodDisruptionBudgetDetail struct {
 	PodDisruptionBudget `json:",inline"`
+	DisruptedPods       map[string]metav1.Time `json:"disruptedPods"`
 }
 
 func Get(client kubernetes.Interface, namespace string, name string) (*PodDisruptionBudgetDetail, error) {
-	pdb, err := client.PolicyV1().PodDisruptionBudgets(namespace).Get(context.TODO(), name, metaV1.GetOptions{})
+	pdb, err := client.PolicyV1().PodDisruptionBudgets(namespace).Get(context.TODO(), name, metav1.GetOptions{})
 	if err != nil {
 		return nil, err
 	}
@@ -36,7 +38,9 @@ func Get(client kubernetes.Interface, namespace string, name string) (*PodDisrup
 }
 
 func toDetails(pdb policyv1.PodDisruptionBudget) *PodDisruptionBudgetDetail {
+
 	return &PodDisruptionBudgetDetail{
 		PodDisruptionBudget: toListItem(pdb),
+		DisruptedPods:       pdb.Status.DisruptedPods,
 	}
 }

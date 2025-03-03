@@ -37,7 +37,6 @@ type PodDisruptionBudgetList struct {
 type PodDisruptionBudget struct {
 	ObjectMeta types.ObjectMeta `json:"objectMeta"`
 	TypeMeta   types.TypeMeta   `json:"typeMeta"`
-	Status     string           `json:"status"`
 
 	// MinAvailable is the minimum number or percentage of available pods this budget requires.
 	MinAvailable *intstr.IntOrString `json:"minAvailable"`
@@ -50,6 +49,18 @@ type PodDisruptionBudget struct {
 
 	// LabelSelector is the label query over pods whose evictions are managed by the disruption budget.
 	LabelSelector *metaV1.LabelSelector `json:"labelSelector,omitempty"`
+
+	// CurrentHealthy is the current number of healthy pods.
+	CurrentHealthy int32 `json:"currentHealthy"`
+
+	// DesiredHealthy is the minimum desired number of healthy pods.
+	DesiredHealthy int32 `json:"desiredHealthy"`
+
+	// DisruptionsAllowed is the number of pod disruptions that are currently allowed.
+	DisruptionsAllowed int32 `json:"disruptionsAllowed"`
+
+	// ExpectedPods is the total number of pods counted by this disruption budget.
+	ExpectedPods int32 `json:"expectedPods"`
 }
 
 func List(client kubernetes.Interface, nsQuery *common.NamespaceQuery, dsQuery *dataselect.DataSelectQuery) (*PodDisruptionBudgetList, error) {
@@ -99,5 +110,9 @@ func toListItem(pdb policyv1.PodDisruptionBudget) PodDisruptionBudget {
 		MaxUnavailable:             pdb.Spec.MaxUnavailable,
 		UnhealthyPodEvictionPolicy: pdb.Spec.UnhealthyPodEvictionPolicy,
 		LabelSelector:              pdb.Spec.Selector,
+		CurrentHealthy:             pdb.Status.CurrentHealthy,
+		DesiredHealthy:             pdb.Status.DesiredHealthy,
+		DisruptionsAllowed:         pdb.Status.DisruptionsAllowed,
+		ExpectedPods:               pdb.Status.ExpectedPods,
 	}
 }
