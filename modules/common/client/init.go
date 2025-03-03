@@ -59,12 +59,13 @@ func (in *configBuilder) buildBaseConfig() (config *rest.Config, err error) {
 		klog.InfoS("Using apiserver-host location", "masterUrl", in.masterUrl)
 	}
 
+	config, err = clientcmd.BuildConfigFromFlags(in.masterUrl, in.kubeconfigPath)
+
 	if len(in.caBundlePath) > 0 {
 		klog.InfoS("Using custom CA Bundle", "caBundle", in.caBundlePath)
 		config.TLSClientConfig.CAFile = in.caBundlePath
 	}
 
-	config, err = clientcmd.BuildConfigFromFlags(in.masterUrl, in.kubeconfigPath)
 	if err != nil {
 		return nil, err
 	}
