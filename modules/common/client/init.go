@@ -41,7 +41,7 @@ type configBuilder struct {
 	kubeconfigPath string
 	masterUrl      string
 	insecure       bool
-	caBundlePath   			 string
+	caBundlePath   string
 }
 
 func (in *configBuilder) buildBaseConfig() (config *rest.Config, err error) {
