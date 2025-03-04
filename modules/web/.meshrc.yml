@@ -237,6 +237,18 @@ sources:
                 type: StringWrapper
                 field: string
             - from:
+                type: poddisruptionbudget_PodDisruptionBudget
+                field: minAvailable
+              to:
+                type: StringWrapper
+                field: string
+            - from:
+                type: poddisruptionbudget_PodDisruptionBudget
+                field: maxUnavailable
+              to:
+                type: StringWrapper
+                field: string
+            - from:
                 type: v1_NetworkPolicyPort
                 field: port
               to:
