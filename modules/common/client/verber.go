@@ -102,12 +102,16 @@ func (v *resourceVerber) buildGroupVersionResourceCache(resourceList []*metav1.A
 			}
 
 			// Mapping for core resources
-			kindToGroupVersionResource[strings.ToLower(apiResource.Kind)] = gvr
+			if len(apiResource.Group) == 0 {
+				kindToGroupVersionResource[strings.ToLower(apiResource.Kind)] = gvr
+			}
 
 			// Mapping for CRD resources with custom kind
 			kindToGroupVersionResource[crdKind] = gvr
 		}
 	}
+
+	fmt.Printf("%+v\n", kindToGroupVersionResource)
 
 	return nil
 }
