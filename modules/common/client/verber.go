@@ -111,8 +111,6 @@ func (v *resourceVerber) buildGroupVersionResourceCache(resourceList []*metav1.A
 		}
 	}
 
-	fmt.Printf("%+v\n", kindToGroupVersionResource)
-
 	return nil
 }
 
