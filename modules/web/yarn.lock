@@ -9373,10 +9373,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ci-info@npm:^4.0.0":
-  version: 4.0.0
-  resolution: "ci-info@npm:4.0.0"
-  checksum: 122fe41c5eb8d0b5fa0ab6fd674c5ddcf2dc59766528b062a0144ff0d913cfb210ef925ec52110e7c2a7f4e603d5f0e8b91cfe68867e196e9212fa0b94d0a08a
+"ci-info@npm:^4.1.0":
+  version: 4.2.0
+  resolution: "ci-info@npm:4.2.0"
+  checksum: 0e3726721526f54c5b17cf44ab2ed69b842c756bcb4d2b26ce279e595a80a856aec9fb38a2986a2baca3de73d15895f3a01d2771c4aad93c898aae7e3ca0ceb1
   languageName: node
   linkType: hard
 
@@ -10129,9 +10129,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"cypress@npm:14.0.3":
-  version: 14.0.3
-  resolution: "cypress@npm:14.0.3"
+"cypress@npm:14.1.0":
+  version: 14.1.0
+  resolution: "cypress@npm:14.1.0"
   dependencies:
     "@cypress/request": ^3.0.7
     "@cypress/xvfb": ^1.2.4
@@ -10144,7 +10144,7 @@ __metadata:
     cachedir: ^2.3.0
     chalk: ^4.1.0
     check-more-types: ^2.24.0
-    ci-info: ^4.0.0
+    ci-info: ^4.1.0
     cli-cursor: ^3.1.0
     cli-table3: ~0.6.1
     commander: ^6.2.1
@@ -10178,7 +10178,7 @@ __metadata:
     yauzl: ^2.10.0
   bin:
     cypress: bin/cypress
-  checksum: f09eda40b2fe3786dc31d06205d0ee73dd05de0f67b68324b2549a99b24b42681017e93899ee53a3f4cba44d140019eaef9e50b7bb593732f46cbb5138987ff1
+  checksum: bb0c2897ed2709b90aebea81879dc77dd58283ffc9ad2a8f0c105b14c41ee6dd2eab8ca34793daea991e7e26171aec20221202af6ccb277d54ad3a30aa774f8c
   languageName: node
   linkType: hard
 
@@ -15019,7 +15019,7 @@ __metadata:
     concurrently: 9.1.2
     core-js: 3.40.0
     crop-url: 4.0.1
-    cypress: 14.0.3
+    cypress: 14.1.0
     cypress-fail-fast: 7.1.1
     d3-shape: 3.2.0
     d3-time-format: 4.1.0
