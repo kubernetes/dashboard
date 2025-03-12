@@ -16,6 +16,7 @@ package dataselect
 
 import (
 	metricapi "k8s.io/dashboard/api/pkg/integration/metric/api"
+	"time"
 )
 
 // DataSelectQuery is options for GenericDataSelect which takes []GenericDataCell and returns selected data.
@@ -157,6 +158,16 @@ func NewFilterQuery(filterByListRaw []string) *FilterQuery {
 			Property: PropertyName(propertyName),
 			Value:    StdComparableString(propertyValue),
 		}
+
+		// transform propertyValue into StdComparableTime for time-related propertyName.
+		if filterBy.Property == CreationTimestampProperty || filterBy.Property == FirstSeenProperty || filterBy.Property == LastSeenProperty {
+			parsedTime, err := time.Parse(time.RFC3339, propertyValue)
+			if err != nil {
+				continue
+			}
+			filterBy.Value = StdComparableTime(parsedTime)
+		}
+
 		// Add to the filter options.
 		filterByList = append(filterByList, filterBy)
 	}
