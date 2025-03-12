@@ -10342,6 +10342,12 @@
     "typeMeta"
    ],
    "properties": {
+    "binaryData": {
+     "type": "object",
+     "additionalProperties": {
+      "type": "integer"
+     }
+    },
     "data": {
      "type": "object",
      "additionalProperties": {
