@@ -12019,7 +12019,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"file-entry-cache@npm:^10.0.6":
+"file-entry-cache@npm:^10.0.7":
   version: 10.0.7
   resolution: "file-entry-cache@npm:10.0.7"
   dependencies:
@@ -14972,7 +14972,7 @@ __metadata:
     sockjs-client: 1.6.1
     source-map-explorer: 2.5.3
     strip-ansi: 7.1.0
-    stylelint: 16.15.0
+    stylelint: 16.16.0
     stylelint-config-standard-scss: 14.0.0
     stylelint-no-unsupported-browser-features: 8.0.4
     stylelint-order: 6.0.4
@@ -19424,9 +19424,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"stylelint@npm:16.15.0":
-  version: 16.15.0
-  resolution: "stylelint@npm:16.15.0"
+"stylelint@npm:16.16.0":
+  version: 16.16.0
+  resolution: "stylelint@npm:16.16.0"
   dependencies:
     "@csstools/css-parser-algorithms": ^3.0.4
     "@csstools/css-tokenizer": ^3.0.3
@@ -19441,7 +19441,7 @@ __metadata:
     debug: ^4.3.7
     fast-glob: ^3.3.3
     fastest-levenshtein: ^1.0.16
-    file-entry-cache: ^10.0.6
+    file-entry-cache: ^10.0.7
     global-modules: ^2.0.0
     globby: ^11.1.0
     globjoin: ^0.1.4
@@ -19468,7 +19468,7 @@ __metadata:
     write-file-atomic: ^5.0.1
   bin:
     stylelint: bin/stylelint.mjs
-  checksum: 61fcda3f5d7d3c5597b0d7cba86e70e30c377d53eebf3d938e6cc0788c37185333774aefb7f1b8d416bfa7e84be1131df2c19005939b7ffde26968b6abb8c00a
+  checksum: 2261cdaf4283859535020078e15b5b9f726c36c864e2f8dbd62a78df70d6b551bb7c60bdf4557aa78d539364835f952a09b952eb04a09fd9fda00cd2e67010fd
   languageName: node
   linkType: hard
 
