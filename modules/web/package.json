@@ -105,7 +105,7 @@
     "@types/jest": "29.5.14",
     "@types/js-yaml": "4.0.9",
     "@types/lodash-es": "4.17.12",
-    "@types/node": "22.13.5",
+    "@types/node": "22.13.10",
     "@typescript-eslint/eslint-plugin": "8.25.0",
     "@typescript-eslint/parser": "8.24.0",
     "codelyzer": "6.0.2",
