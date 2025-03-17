@@ -151,7 +151,7 @@
     "ts-loader": "9.5.2",
     "ts-node": "10.9.2",
     "typescript": "5.1.6",
-    "wait-on": "8.0.2",
+    "wait-on": "8.0.3",
     "webpack-bundle-analyzer": "4.10.2",
     "webpack-dev-server": "5.2.0"
   },
