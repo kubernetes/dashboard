@@ -2,11 +2,13 @@ module k8s.io/dashboard/web
 
 go 1.23.0
 
+toolchain go1.24.1
+
 require (
 	dario.cat/mergo v1.0.1
 	github.com/gin-gonic/contrib v0.0.0-20241229022435-d12709533de6
 	github.com/gin-gonic/gin v1.10.0
-	github.com/samber/lo v1.47.0
+	github.com/samber/lo v1.49.1
 	github.com/spf13/pflag v1.0.6
 	golang.org/x/text v0.21.0
 	k8s.io/api v0.32.0
