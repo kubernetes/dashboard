@@ -66,6 +66,7 @@ var (
 	argBindAddress         = pflag.IP("bind-address", net.IPv4(0, 0, 0, 0), "IP address on which to serve the --port, set to 0.0.0.0 for all interfaces")
 
 	argDefaultCertDir            = pflag.String("default-cert-dir", "/certs", "directory path containing files from --tls-cert-file and --tls-key-file, used also when auto-generating certificates flag is set")
+	argApiServerCaBundle				 = pflag.String("apiserver-ca-bundle", "", "file containing the x509 certificates used for HTTPS connection to the API Server")
 	argCertFile                  = pflag.String("tls-cert-file", "", "file containing the default x509 certificate for HTTPS")
 	argKeyFile                   = pflag.String("tls-key-file", "", "file containing the default x509 private key matching --tls-cert-file")
 	argApiServerHost             = pflag.String("apiserver-host", "", "address of the Kubernetes API server to connect to in the format of protocol://address:port, leave it empty if the binary runs inside cluster for local discovery attempt")
@@ -110,6 +111,10 @@ func InsecureAddress() string {
 
 func DefaultCertDir() string {
 	return *argDefaultCertDir
+}
+
+func ApiServerCaBundle() string {
+	return *argApiServerCaBundle
 }
 
 func CertFile() string {
