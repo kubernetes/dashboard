@@ -14,7 +14,7 @@
 
 ARG WEB_BUILDER_ARCH=amd64
 
-FROM alpine:3.19 as user
+FROM alpine:3.21 as user
 
 ENV USER=nonroot
 ENV UID=10001
@@ -29,7 +29,7 @@ RUN adduser \
     --uid "${UID}" \
     "${USER}"
 
-FROM --platform=linux/${WEB_BUILDER_ARCH} node:20.11.1-alpine3.19  as web-builder
+FROM --platform=linux/${WEB_BUILDER_ARCH} node:20.11.1-alpine3.21  as web-builder
 
 RUN apk add --no-cache \
     make \
@@ -53,7 +53,7 @@ RUN SKIP_POSTINSTALL=true yarn workspaces focus
 # Build prod version of web app
 RUN make build-frontend
 
-FROM golang:1.23-alpine3.19 as go-builder
+FROM golang:1.23-alpine3.21 as go-builder
 
 ARG TARGETARCH
 ARG TARGETOS
