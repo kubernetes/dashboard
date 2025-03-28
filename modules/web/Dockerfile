@@ -29,7 +29,7 @@ RUN adduser \
     --uid "${UID}" \
     "${USER}"
 
-FROM --platform=linux/${WEB_BUILDER_ARCH} node:20.11.1-alpine3.21 AS web-builder
+FROM --platform=linux/${WEB_BUILDER_ARCH} node:20-alpine3.21 AS web-builder
 
 RUN apk add --no-cache \
     make \
