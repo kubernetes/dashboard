@@ -2905,7 +2905,7 @@ func (apiHandle *APIHandler) handleStatefulSetRestart(request *restful.Request, 
 	}
 
 	namespace := request.PathParameter("namespace")
-	name := request.PathParameter("daemonSet")
+	name := request.PathParameter("statefulset")
 	result, err := statefulset.RestartStatefulSet(k8sClient, namespace, name)
 	if err != nil {
 		errors.HandleInternalError(response, err)
