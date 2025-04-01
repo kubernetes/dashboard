@@ -112,14 +112,21 @@ func serve() {
 func serveTLS(certificates []tls.Certificate) {
 	klog.V(1).InfoS("Listening and serving on", "address", args.Address())
 	server := &http.Server{
-		Addr:    args.Address(),
-		Handler: http.DefaultServeMux,
+		Addr:         args.Address(),
+		Handler:      http.DefaultServeMux,
+		ReadTimeout:  10 * time.Second,
+		WriteTimeout: 10 * time.Second,
+		IdleTimeout:  60 * time.Second,
 		TLSConfig: &tls.Config{
 			Certificates: certificates,
 			MinVersion:   tls.VersionTLS12,
 		},
 	}
-	go func() { klog.Fatal(server.ListenAndServeTLS("", "")) }()
+	go func() {
+		if err := server.ListenAndServeTLS("", ""); err != nil && err != http.ErrServerClosed {
+			klog.Fatal(err)
+		}
+	}()
 }
 
 func ensureAPIServerConnectionOrDie() {
