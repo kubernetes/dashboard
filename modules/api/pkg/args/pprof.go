@@ -19,6 +19,8 @@ import (
 	"net/http"
 	"net/http/pprof"
 
+	"time"
+
 	"k8s.io/klog/v2"
 )
 
@@ -28,7 +30,14 @@ func initProfiler() {
 	mux := http.NewServeMux()
 	mux.HandleFunc(defaultProfilerPath, pprof.Index)
 	go func() {
-		if err := http.ListenAndServe(fmt.Sprintf(":%d", defaultProfilerPort), mux); err != nil {
+		server := &http.Server{
+			Addr:         fmt.Sprintf(":%d", defaultPrometheusPort),
+			Handler:      mux,
+			ReadTimeout:  10 * time.Second,
+			WriteTimeout: 10 * time.Second,
+			IdleTimeout:  60 * time.Second,
+		}
+		if err := server.ListenAndServe(); err != nil && err != http.ErrServerClosed {
 			klog.Fatal(err)
 		}
 	}()
