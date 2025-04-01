@@ -2,10 +2,10 @@ name: Run Gosec
 on:
   push:
     branches:
-      - sec-project
+      - master
   pull_request:
     branches:
-      - sec-project
+      - master
 jobs:
   tests:
     runs-on: ubuntu-latest
