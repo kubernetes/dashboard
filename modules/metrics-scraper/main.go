@@ -75,7 +75,17 @@ func main() {
 
 		api.Manager(r, db)
 		// Bind to a port and pass our router in
-		klog.Fatal(http.ListenAndServe(":8000", handlers.CombinedLoggingHandler(os.Stdout, r)))
+
+		server := &http.Server{
+			Addr:         ":8000",
+			Handler:      handlers.CombinedLoggingHandler(os.Stdout, r),
+			ReadTimeout:  10 * time.Second,
+			WriteTimeout: 10 * time.Second,
+			IdleTimeout:  60 * time.Second,
+		}
+		if err := server.ListenAndServe(); err != nil && err != http.ErrServerClosed {
+			klog.Fatal(err)
+		}
 	}()
 
 	// Start the machine. Scrape every metricResolution
