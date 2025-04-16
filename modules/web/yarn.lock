@@ -14921,7 +14921,7 @@ __metadata:
     run-node: 2.0.0
     rxjs: 7.8.2
     rxjs-compat: 6.6.7
-    sass: 1.85.1
+    sass: 1.86.3
     sass-loader: 16.0.5
     semver: 7.7.1
     sockjs-client: 1.6.1
@@ -18318,9 +18318,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"sass@npm:1.85.1":
-  version: 1.85.1
-  resolution: "sass@npm:1.85.1"
+"sass@npm:1.86.3":
+  version: 1.86.3
+  resolution: "sass@npm:1.86.3"
   dependencies:
     "@parcel/watcher": ^2.4.1
     chokidar: ^4.0.0
@@ -18331,7 +18331,7 @@ __metadata:
       optional: true
   bin:
     sass: sass.js
-  checksum: e38fa3992c99aa0270cc7577c9b38f576907a11ea01571d8e4ff2cb11b00606b33f650344d21082aba1c9ef6588ca088a5b84f82a8f8c32f9865c3159161ab89
+  checksum: 743091217d4f72d261177409d2aa592ca6be49e95c84c8bd06c3ff06ee0113b8532ad6b30c95d923cc1b3470241989983bdeb3b0710b1570ffed0768aa4e5227
   languageName: node
   linkType: hard
 
