@@ -96,9 +96,6 @@ type NodeDetail struct {
 	// Unschedulable controls node schedulability of new pods. By default node is schedulable.
 	Unschedulable bool `json:"unschedulable"`
 
-	// Set of ids/uuids to uniquely identify the node.
-	NodeInfo v1.NodeSystemInfo `json:"nodeInfo"`
-
 	// Conditions is an array of current node conditions.
 	Conditions []common.Condition `json:"conditions"`
 
@@ -285,13 +282,13 @@ func toNodeDetail(node v1.Node, pods *pod.PodList, eventList *common.EventList,
 			TypeMeta:           types.NewTypeMeta(types.ResourceKindNode),
 			Ready:              getNodeConditionStatus(node, v1.NodeReady),
 			AllocatedResources: allocatedResources,
+			NodeInfo:           node.Status.NodeInfo,
 		},
 		// TODO: Remove deprecated field
 		Phase:           node.Status.Phase,
 		ProviderID:      node.Spec.ProviderID,
 		PodCIDR:         node.Spec.PodCIDR,
 		Unschedulable:   node.Spec.Unschedulable,
-		NodeInfo:        node.Status.NodeInfo,
 		Conditions:      getNodeConditions(node),
 		ContainerImages: getContainerImages(node),
 		PodList:         *pods,

@@ -45,6 +45,9 @@ type Node struct {
 	TypeMeta           types.TypeMeta         `json:"typeMeta"`
 	Ready              v1.ConditionStatus     `json:"ready"`
 	AllocatedResources NodeAllocatedResources `json:"allocatedResources"`
+
+	// Set of ids/uuids to uniquely identify the node.
+	NodeInfo v1.NodeSystemInfo `json:"nodeInfo"`
 }
 
 // GetNodeList returns a list of all Nodes in the cluster.
@@ -101,6 +104,7 @@ func toNode(node v1.Node, pods *v1.PodList) Node {
 		TypeMeta:           types.NewTypeMeta(types.ResourceKindNode),
 		Ready:              getNodeConditionStatus(node, v1.NodeReady),
 		AllocatedResources: allocatedResources,
+		NodeInfo:           node.Status.NodeInfo,
 	}
 }
 
