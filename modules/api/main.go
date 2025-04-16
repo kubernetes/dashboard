@@ -93,20 +93,40 @@ func main() {
 
 func serve() {
 	klog.V(1).InfoS("Listening and serving on", "address", args.InsecureAddress())
-	go func() { klog.Fatal(http.ListenAndServe(args.InsecureAddress(), nil)) }()
+
+	server := &http.Server{
+		Addr:         args.InsecureAddress(),
+		Handler:      http.DefaultServeMux,
+		ReadTimeout:  10 * time.Second,
+		WriteTimeout: 10 * time.Second,
+		IdleTimeout:  60 * time.Second,
+	}
+
+	go func() {
+		if err := server.ListenAndServe(); err != nil && err != http.ErrServerClosed {
+			klog.Fatal(err)
+		}
+	}()
 }
 
 func serveTLS(certificates []tls.Certificate) {
 	klog.V(1).InfoS("Listening and serving on", "address", args.Address())
 	server := &http.Server{
-		Addr:    args.Address(),
-		Handler: http.DefaultServeMux,
+		Addr:         args.Address(),
+		Handler:      http.DefaultServeMux,
+		ReadTimeout:  10 * time.Second,
+		WriteTimeout: 10 * time.Second,
+		IdleTimeout:  60 * time.Second,
 		TLSConfig: &tls.Config{
 			Certificates: certificates,
 			MinVersion:   tls.VersionTLS12,
 		},
 	}
-	go func() { klog.Fatal(server.ListenAndServeTLS("", "")) }()
+	go func() {
+		if err := server.ListenAndServeTLS("", ""); err != nil && err != http.ErrServerClosed {
+			klog.Fatal(err)
+		}
+	}()
 }
 
 func ensureAPIServerConnectionOrDie() {
