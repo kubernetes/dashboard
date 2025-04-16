@@ -38,6 +38,7 @@ func main() {
 		client.WithKubeconfig(args.KubeconfigPath()),
 		client.WithMasterUrl(args.ApiServerHost()),
 		client.WithInsecureTLSSkipVerify(args.ApiServerSkipTLSVerify()),
+		client.WithCaBundle(args.ApiServerCaBundle()),
 	)
 
 	klog.V(1).InfoS("Listening and serving insecurely on", "address", args.Address())
