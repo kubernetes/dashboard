@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-FROM alpine:3.19 as user
+FROM alpine:3.21 AS user
 
 ENV USER=nonroot
 ENV UID=10001
@@ -27,7 +27,7 @@ RUN adduser \
     --uid "${UID}" \
     "${USER}"
 
-FROM golang:1.23-alpine3.19 as builder
+FROM golang:1.23-alpine3.21 AS builder
 
 ARG TARGETARCH
 ARG TARGETOS
@@ -52,7 +52,7 @@ COPY metrics-scraper/main.go ./
 RUN CGO_ENABLED=0 GOOS=${TARGETOS} GOARCH=${TARGETARCH} go build -trimpath -ldflags="-s -w -X k8s.io/dashboard/metrics-scraper/pkg/environment.Version=${VERSION}" -o dashboard-metrics-scraper .
 
 # Scratch can be used as the base image because the binary is compiled to include all dependencies.
-FROM scratch as final
+FROM scratch AS final
 
 COPY --from=builder /workspace/metrics-scraper/dashboard-metrics-scraper /dashboard-metrics-scraper
 
