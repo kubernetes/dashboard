@@ -116,7 +116,7 @@
     "eslint": "8.57.0",
     "eslint-config-prettier": "10.1.1",
     "eslint-plugin-node": "11.1.0",
-    "eslint-plugin-prettier": "5.2.3",
+    "eslint-plugin-prettier": "5.2.6",
     "eslint-plugin-rxjs": "5.0.3",
     "git-describe": "4.1.1",
     "graphql": "16.10.0",
