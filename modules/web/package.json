@@ -107,7 +107,7 @@
     "@types/lodash-es": "4.17.12",
     "@types/node": "22.13.10",
     "@typescript-eslint/eslint-plugin": "8.26.1",
-    "@typescript-eslint/parser": "8.26.1",
+    "@typescript-eslint/parser": "8.31.0",
     "codelyzer": "6.0.2",
     "concurrently": "9.1.2",
     "cypress": "14.2.0",
