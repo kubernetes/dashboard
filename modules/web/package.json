@@ -140,7 +140,7 @@
     "sass-loader": "16.0.5",
     "semver": "7.7.1",
     "source-map-explorer": "2.5.3",
-    "stylelint": "16.16.0",
+    "stylelint": "16.19.1",
     "stylelint-config-standard-scss": "14.0.0",
     "stylelint-no-unsupported-browser-features": "8.0.4",
     "stylelint-order": "6.0.4",
