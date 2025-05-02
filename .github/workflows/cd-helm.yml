@@ -16,50 +16,62 @@ name: CD / Helm
 
 on:
   push:
-    branches: [ master ]
     paths:
-    - 'charts/helm-chart/**'
-    - 'hack/scripts/helm-release-chart.sh'
-    - '.github/workflows/cd-helm.yml'
-
-permissions:
-  contents: write
-  pull-requests: write
+      - '.github/workflows/cd-helm.yml'
+      - 'charts/**'
+    branches:
+      - master
 
 jobs:
-
-  release:
-    name: Helm Chart Release
+  lint-test:
+    name: Lint and test
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
+      - uses: actions/checkout@v4.1.1
         with:
           fetch-depth: 0
-      - name: Configure Git
+      - uses: azure/setup-helm@v4.3.0
+        with:
+          version: v3.12.1
+      - uses: helm/chart-testing-action@v2.7.0
+      - uses: helm/kind-action@v1.12.0
+        with:
+          node_image: kindest/node:v1.32.0
+      - run: ct install --target-branch ${{ github.event.repository.default_branch }}
+
+  release:
+    name: Helm chart release
+    runs-on: ubuntu-latest
+    needs: [ 'lint-test' ]
+    permissions:
+      contents: write
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4.1.1
+        with:
+          fetch-depth: 0
+
+      - name: Set up Git user
         run: |
           git config user.name "$GITHUB_ACTOR"
           git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
-      - name: Package
-        shell: bash
-        run: hack/scripts/helm-release-chart.sh
-        env:
-          TERM: xterm-256color
-      - name: Create Pull Request branch
+
+      - name: Set up Helm
+        uses: azure/setup-helm@v4.3.0
+        with:
+          version: v3.12.1
+
+      - name: Add Helm dependencies
         run: |
-          git checkout -b gh-pages-pull-request
-      # Note that will fail if branch already exists.
-      - name: Push Git Branch
-        uses: ad-m/github-push-action@v0.6.0
+          helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
+          helm repo add cert-manager https://charts.jetstack.io
+          helm repo add metrics-server https://kubernetes-sigs.github.io/metrics-server/
+          helm repo add kong https://charts.konghq.com
+
+      - name: Run chart-releaser
+        uses: helm/chart-releaser-action@v1.7.0
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          branch: gh-pages-pull-request
-      # Note that will silently fail if PR already exists.
-      - name: Create Pull Request
-        uses: repo-sync/pull-request@v2
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          source_branch: gh-pages-pull-request
-          destination_branch: gh-pages
-          pr_title: "Helm Chart: Update Helm repository"
-          pr_body: "Automatically created from Helm CD workflow."
+          skip_existing: true
+          mark_as_latest: true
+        env:
+          CR_TOKEN: "${{ secrets.GITHUB_TOKEN }}"

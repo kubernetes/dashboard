@@ -9,7 +9,7 @@ Labels used to determine issue kind.
 * `kind/bug` - bugs, that need to be fixed. Assigned when something is not working as it was expected.
 * `kind/cleanup` - issues created in order to enhance code quality without changing application functionality.
 * `kind/documentation` - documentation, that need to be improved or updated.
-* `kind/failing-test` - blocker of CI jobs, that should be fixed as soon as posible.
+* `kind/failing-test` - blocker of CI jobs, that should be fixed as soon as possible.
 * `kind/feature` - new features, that could be added to the application.
 * `kind/support` - issue that is a support question.
 

@@ -1,0 +1,95 @@
+# Copyright 2017 The Kubernetes Authors.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+{{- if and .Values.app.ingress.enabled (eq .Values.app.mode "dashboard")}}
+{{- include "kubernetes-dashboard.validate.ingressIssuerScope" $ }}
+
+
+# Determine the service port to use for the ingress configuration
+# If TLS is enabled in the ingress configuration, use the TLS service port.
+# Otherwise, fall back to the HTTP service port.
+{{- $servicePort := (ternary $.Values.kong.proxy.tls.servicePort $.Values.kong.proxy.http.servicePort $.Values.app.ingress.tls.enabled) }}
+
+kind: Ingress
+apiVersion: networking.k8s.io/v1
+metadata:
+  labels:
+    {{- include "kubernetes-dashboard.labels" . | nindent 4 }}
+    {{- with .Values.app.ingress.labels }}
+    {{- toYaml . | nindent 4 }}
+    {{- end }}
+  annotations:
+    {{- include "kubernetes-dashboard.annotations" . | nindent 4 }}
+    {{- if eq .Values.app.ingress.issuer.scope "default" }}
+    cert-manager.io/issuer: {{ .Values.app.ingress.issuer.name }}
+    {{- end }}
+    {{- if eq .Values.app.ingress.issuer.scope "cluster" }}
+    cert-manager.io/cluster-issuer: {{ .Values.app.ingress.issuer.name }}
+    {{- end }}
+    {{- if .Values.app.ingress.useDefaultAnnotations }}
+    nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
+    nginx.ingress.kubernetes.io/ssl-passthrough: "true"
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+    {{- end }}
+    {{- if not (eq .Values.app.ingress.path "/") }}
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+    {{- end }}
+    {{- with .Values.app.ingress.annotations }}
+    {{- toYaml . | nindent 4 }}
+    {{- end }}
+  name: {{ template "kubernetes-dashboard.name" . }}
+spec:
+  {{- if not .Values.app.ingress.useDefaultIngressClass }}
+  ingressClassName: {{ .Values.app.ingress.ingressClassName }}
+  {{- end }}
+  {{- if and .Values.app.ingress.hosts .Values.app.ingress.tls.enabled }}
+  tls:
+    - hosts:
+      {{- toYaml .Values.app.ingress.hosts | nindent 6 }}
+      {{- if .Values.app.ingress.tls.secretName }}
+      secretName: {{ .Values.app.ingress.tls.secretName }}
+      {{- else }}
+      secretName: {{ template "kubernetes-dashboard.app.ingress.secret.name" . }}
+      {{- end }}
+  {{- end }}
+  rules:
+    {{- if .Values.app.ingress.hosts }}
+    {{- range $host := .Values.app.ingress.hosts }}
+    - host: {{ $host }}
+      http:
+        paths:
+        {{- if not (eq $.Values.app.ingress.path "/") }}
+          - path: {{ $.Values.app.ingress.path }}(/|$)(.*)
+        {{- else }}
+          - path: {{ $.Values.app.ingress.path }}
+        {{- end }}
+            pathType: {{ $.Values.app.ingress.pathType }}
+            backend:
+              service:
+                name: {{ template "kong.fullname" (index $.Subcharts "kong") }}-proxy
+                port:
+                  number: {{ $servicePort }}
+    {{- end }}
+    {{- else }}
+    - http:
+        paths:
+          - path: {{ .Values.app.ingress.path }}
+            pathType: {{ .Values.app.ingress.pathType }}
+            backend:
+              service:
+                name: {{ template "kong.fullname" (index $.Subcharts "kong") }}-proxy
+                port:
+                  number: {{ $servicePort }}
+    {{- end }}
+{{- end }}

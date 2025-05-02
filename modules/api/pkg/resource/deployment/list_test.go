@@ -23,12 +23,11 @@ import (
 	k8serrors "k8s.io/apimachinery/pkg/api/errors"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 
-	"k8s.io/dashboard/api/pkg/api"
 	metricapi "k8s.io/dashboard/api/pkg/integration/metric/api"
 	"k8s.io/dashboard/api/pkg/resource/common"
 	"k8s.io/dashboard/api/pkg/resource/dataselect"
-
-	"k8s.io/dashboard/api/pkg/errors"
+	"k8s.io/dashboard/errors"
+	"k8s.io/dashboard/types"
 )
 
 func getReplicasPointer(replicas int32) *int32 {
@@ -48,7 +47,7 @@ func TestGetDeploymentListFromChannels(t *testing.T) {
 			nil,
 			&v1.PodList{},
 			&DeploymentList{
-				ListMeta:          api.ListMeta{},
+				ListMeta:          types.ListMeta{},
 				Deployments:       []Deployment{},
 				CumulativeMetrics: make([]metricapi.Metric, 0),
 				Errors:            []error{},
@@ -104,18 +103,18 @@ func TestGetDeploymentListFromChannels(t *testing.T) {
 			nil,
 			&v1.PodList{},
 			&DeploymentList{
-				ListMeta:          api.ListMeta{TotalItems: 1},
+				ListMeta:          types.ListMeta{TotalItems: 1},
 				CumulativeMetrics: make([]metricapi.Metric, 0),
 				Status:            common.ResourceStatus{Running: 1},
 				Deployments: []Deployment{{
-					ObjectMeta: api.ObjectMeta{
+					ObjectMeta: types.ObjectMeta{
 						Name:              "rs-name",
 						Namespace:         "rs-namespace",
 						Labels:            map[string]string{"key": "value"},
 						CreationTimestamp: metaV1.Unix(111, 222),
 					},
-					TypeMeta: api.TypeMeta{
-						Kind:        api.ResourceKindDeployment,
+					TypeMeta: types.TypeMeta{
+						Kind:        types.ResourceKindDeployment,
 						Scalable:    true,
 						Restartable: true,
 					},

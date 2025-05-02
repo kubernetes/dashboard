@@ -20,8 +20,11 @@ import {Chip} from '../component';
   selector: 'kd-chip-dialog',
   templateUrl: 'template.html',
 })
-export class ChipDialog {
-  constructor(public dialogRef: MatDialogRef<ChipDialog>, @Inject(MAT_DIALOG_DATA) public data: Chip) {}
+export class ChipDialogComponent {
+  constructor(
+    public dialogRef: MatDialogRef<ChipDialogComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: Chip
+  ) {}
 
   onNoClick(): void {
     this.dialogRef.close();

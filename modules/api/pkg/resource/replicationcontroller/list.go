@@ -15,21 +15,21 @@
 package replicationcontroller
 
 import (
-	"log"
-
 	v1 "k8s.io/api/core/v1"
 	client "k8s.io/client-go/kubernetes"
-	"k8s.io/dashboard/api/pkg/api"
-	"k8s.io/dashboard/api/pkg/errors"
+	"k8s.io/klog/v2"
+
 	metricapi "k8s.io/dashboard/api/pkg/integration/metric/api"
 	"k8s.io/dashboard/api/pkg/resource/common"
 	"k8s.io/dashboard/api/pkg/resource/dataselect"
 	"k8s.io/dashboard/api/pkg/resource/event"
+	"k8s.io/dashboard/errors"
+	"k8s.io/dashboard/types"
 )
 
 // ReplicationControllerList contains a list of Replication Controllers in the cluster.
 type ReplicationControllerList struct {
-	ListMeta          api.ListMeta       `json:"listMeta"`
+	ListMeta          types.ListMeta     `json:"listMeta"`
 	CumulativeMetrics []metricapi.Metric `json:"cumulativeMetrics"`
 
 	// Basic information about resources status on the list.
@@ -45,8 +45,8 @@ type ReplicationControllerList struct {
 // ReplicationController (aka. Replication Controller) plus zero or more Kubernetes services that
 // target the Replication Controller.
 type ReplicationController struct {
-	ObjectMeta api.ObjectMeta `json:"objectMeta"`
-	TypeMeta   api.TypeMeta   `json:"typeMeta"`
+	ObjectMeta types.ObjectMeta `json:"objectMeta"`
+	TypeMeta   types.TypeMeta   `json:"typeMeta"`
 
 	// Aggregate information about pods belonging to this Replication Controller.
 	Pods common.PodInfo `json:"podInfo"`
@@ -61,7 +61,7 @@ type ReplicationController struct {
 // GetReplicationControllerList returns a list of all Replication Controllers in the cluster.
 func GetReplicationControllerList(client client.Interface, nsQuery *common.NamespaceQuery,
 	dsQuery *dataselect.DataSelectQuery, metricClient metricapi.MetricClient) (*ReplicationControllerList, error) {
-	log.Print("Getting list of all replication controllers in the cluster")
+	klog.V(4).Infof("Getting list of all replication controllers in the cluster")
 
 	channels := &common.ResourceChannels{
 		ReplicationControllerList: common.GetReplicationControllerListChannel(client, nsQuery, 1),
@@ -79,7 +79,7 @@ func GetReplicationControllerListFromChannels(channels *common.ResourceChannels,
 
 	rcList := <-channels.ReplicationControllerList.List
 	err := <-channels.ReplicationControllerList.Error
-	nonCriticalErrors, criticalError := errors.HandleError(err)
+	nonCriticalErrors, criticalError := errors.ExtractErrors(err)
 	if criticalError != nil {
 		return nil, criticalError
 	}
@@ -109,7 +109,7 @@ func toReplicationControllerList(replicationControllers []v1.ReplicationControll
 
 	rcList := &ReplicationControllerList{
 		ReplicationControllers: make([]ReplicationController, 0),
-		ListMeta:               api.ListMeta{TotalItems: len(replicationControllers)},
+		ListMeta:               types.ListMeta{TotalItems: len(replicationControllers)},
 		Errors:                 nonCriticalErrors,
 	}
 	cachedResources := &metricapi.CachedResources{
@@ -118,7 +118,7 @@ func toReplicationControllerList(replicationControllers []v1.ReplicationControll
 	rcCells, metricPromises, filteredTotal := dataselect.GenericDataSelectWithFilterAndMetrics(
 		toCells(replicationControllers), dsQuery, cachedResources, metricClient)
 	replicationControllers = fromCells(rcCells)
-	rcList.ListMeta = api.ListMeta{TotalItems: filteredTotal}
+	rcList.ListMeta = types.ListMeta{TotalItems: filteredTotal}
 
 	for _, rc := range replicationControllers {
 		matchingPods := common.FilterPodsByControllerRef(&rc, pods)

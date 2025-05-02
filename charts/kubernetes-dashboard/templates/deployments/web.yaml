@@ -1,0 +1,151 @@
+# Copyright 2017 The Kubernetes Authors.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+{{- if eq .Values.app.mode "dashboard" }}
+
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  labels:
+    {{- include "kubernetes-dashboard.labels" . | nindent 4 }}
+    {{- with .Values.web.labels }}
+    {{- toYaml . | nindent 4 }}
+    {{- end }}
+    app.kubernetes.io/name: {{ template "kubernetes-dashboard.name" . }}-{{ .Values.web.role }}
+    app.kubernetes.io/version: {{ .Values.web.image.tag }}
+    app.kubernetes.io/component: {{ .Values.web.role }}
+  annotations:
+    {{- include "kubernetes-dashboard.annotations" . | nindent 4 }}
+    {{- with .Values.web.annotations }}
+    {{- toYaml . | nindent 4 }}
+    {{- end }}
+  name: {{ template "kubernetes-dashboard.fullname" . }}-{{ .Values.web.role }}
+spec:
+  replicas: {{ .Values.web.scaling.replicas }}
+  revisionHistoryLimit: {{ .Values.web.scaling.revisionHistoryLimit }}
+  selector:
+    matchLabels:
+      {{- include "kubernetes-dashboard.matchLabels" . | nindent 6 }}
+      app.kubernetes.io/name: {{ template "kubernetes-dashboard.name" . }}-{{ .Values.web.role }}
+  template:
+    metadata:
+      labels:
+        {{- include "kubernetes-dashboard.labels" . | nindent 8 }}
+        {{- with .Values.web.labels }}
+        {{ toYaml . | nindent 8 }}
+        {{- end }}
+        app.kubernetes.io/name: {{ template "kubernetes-dashboard.name" . }}-{{ .Values.web.role }}
+        app.kubernetes.io/version: {{ .Values.web.image.tag }}
+        app.kubernetes.io/component: {{ .Values.web.role }}
+      annotations:
+        {{- with .Values.web.annotations }}
+        {{ toYaml . | nindent 8 }}
+        {{- end }}
+    spec:
+      containers:
+        - name: {{ template "kubernetes-dashboard.name" . }}-{{ .Values.web.role }}
+          image: "{{ .Values.web.image.repository }}:{{ .Values.web.image.tag }}"
+          imagePullPolicy: {{ .Values.app.image.pullPolicy }}
+          args:
+            - --namespace={{ .Release.Namespace }}
+            - --settings-config-map-name={{ template "kubernetes-dashboard.web.configMap.settings.name" . }}
+          {{- with .Values.web.containers.args }}
+          {{ toYaml . | nindent 12 }}
+          {{- end }}
+
+          env:
+            {{- if .Values.web.containers.resources.limits.cpu }}
+            - name: GOMAXPROCS
+              valueFrom:
+                resourceFieldRef:
+                  resource: limits.cpu
+                  divisor: "1"
+            {{- end }}
+            {{- if .Values.web.containers.resources.limits.memory }}
+            - name: GOMEMLIMIT
+              valueFrom:
+                resourceFieldRef:
+                  resource: limits.memory
+                  divisor: "1"
+            {{- end }}
+
+          {{- with .Values.web.containers.env }}
+          {{ toYaml . | nindent 12 }}
+          {{- end }}
+
+          {{- with .Values.web.containers.ports }}
+          ports:
+          {{ toYaml . | nindent 12 }}
+          {{- end }}
+
+          {{- with .Values.web.containers.volumeMounts }}
+          volumeMounts:
+          {{ toYaml . | nindent 12 }}
+          {{- end }}
+
+          {{- with .Values.app.security.containerSecurityContext }}
+          securityContext:
+          {{ toYaml . | nindent 12 }}
+          {{- end }}
+
+          {{- with .Values.web.containers.resources }}
+          resources:
+          {{ toYaml . | nindent 12 }}
+          {{- end }}
+
+      {{- with .Values.app.image.pullSecrets }}
+      imagePullSecrets:
+      {{- range . }}
+        - name: {{ . }}
+      {{- end }}
+      {{- end }}
+
+      automountServiceAccountToken: {{ .Values.web.automountServiceAccountToken }}
+
+      {{- with .Values.app.security.securityContext }}
+      securityContext:
+      {{ toYaml . | nindent 8 }}
+      {{- end }}
+
+      {{- with .Values.web.volumes }}
+      volumes:
+      {{ toYaml . | nindent 8 }}
+      {{- end }}
+
+      {{- with .Values.app.priorityClassName }}
+      priorityClassName: {{ . }}
+      {{- end }}
+
+      {{- if or .Values.web.nodeSelector .Values.app.scheduling.nodeSelector }}
+      nodeSelector:
+      {{- with .Values.web.nodeSelector }}
+      {{ toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.app.scheduling.nodeSelector }}
+      {{ toYaml . | nindent 8 }}
+      {{- end }}
+      {{- end }}
+
+      {{- with .Values.app.tolerations }}
+      tolerations:
+      {{ toYaml . | nindent 8 }}
+      {{- end }}
+
+      {{- with .Values.app.affinity }}
+      affinity:
+      {{ toYaml . | nindent 8 }}
+      {{- end }}
+
+      serviceAccountName: {{ template "kubernetes-dashboard.fullname" . }}-{{ .Values.web.role }}
+{{- end -}}

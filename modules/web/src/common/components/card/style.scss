@@ -38,6 +38,10 @@
     min-width: $min-content-width;
     padding: 0;
 
+    &.kd-flex {
+      min-width: fit-content;
+    }
+
     &.kd-inner-content {
       height: auto;
       width: 100%;

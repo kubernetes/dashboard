@@ -23,9 +23,9 @@ import (
 	"k8s.io/apiextensions-apiserver/pkg/client/clientset/clientset/fake"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 
-	"k8s.io/dashboard/api/pkg/api"
 	"k8s.io/dashboard/api/pkg/resource/customresourcedefinition/types"
 	"k8s.io/dashboard/api/pkg/resource/dataselect"
+	commontypes "k8s.io/dashboard/types"
 )
 
 func TestGetCustomResourceDefinition(t *testing.T) {
@@ -56,11 +56,11 @@ func TestGetCustomResourceDefinition(t *testing.T) {
 				},
 			},
 			&types.CustomResourceDefinitionList{
-				ListMeta: api.ListMeta{TotalItems: 1},
+				ListMeta: commontypes.ListMeta{TotalItems: 1},
 				Items: []types.CustomResourceDefinition{
 					{
-						ObjectMeta:  api.ObjectMeta{Name: "foos.samplecontroller.k8s.io"},
-						TypeMeta:    api.TypeMeta{Kind: api.ResourceKindCustomResourceDefinition},
+						ObjectMeta:  commontypes.ObjectMeta{Name: "foos.samplecontroller.k8s.io"},
+						TypeMeta:    commontypes.TypeMeta{Kind: commontypes.ResourceKindCustomResourceDefinition},
 						Version:     "v1alpha1",
 						Established: apiextensions.ConditionUnknown,
 					},
@@ -101,11 +101,11 @@ func TestGetCustomResourceDefinition(t *testing.T) {
 				},
 			},
 			&types.CustomResourceDefinitionList{
-				ListMeta: api.ListMeta{TotalItems: 1},
+				ListMeta: commontypes.ListMeta{TotalItems: 1},
 				Items: []types.CustomResourceDefinition{
 					{
-						ObjectMeta:  api.ObjectMeta{Name: "foos.samplecontroller.k8s.io"},
-						TypeMeta:    api.TypeMeta{Kind: api.ResourceKindCustomResourceDefinition},
+						ObjectMeta:  commontypes.ObjectMeta{Name: "foos.samplecontroller.k8s.io"},
+						TypeMeta:    commontypes.TypeMeta{Kind: commontypes.ResourceKindCustomResourceDefinition},
 						Version:     "v1alpha1",
 						Established: apiextensions.ConditionUnknown,
 					},

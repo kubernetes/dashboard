@@ -16,15 +16,16 @@ package replicaset
 
 import (
 	"context"
-	"log"
 
 	apps "k8s.io/api/apps/v1"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	k8sClient "k8s.io/client-go/kubernetes"
-	"k8s.io/dashboard/api/pkg/errors"
+	"k8s.io/klog/v2"
+
 	metricapi "k8s.io/dashboard/api/pkg/integration/metric/api"
 	"k8s.io/dashboard/api/pkg/resource/common"
 	hpa "k8s.io/dashboard/api/pkg/resource/horizontalpodautoscaler"
+	"k8s.io/dashboard/errors"
 )
 
 // ReplicaSetDetail is a presentation layer view of Kubernetes Replica Set resource. This means
@@ -47,7 +48,7 @@ type ReplicaSetDetail struct {
 // GetReplicaSetDetail gets replica set details.
 func GetReplicaSetDetail(client k8sClient.Interface, metricClient metricapi.MetricClient,
 	namespace, name string) (*ReplicaSetDetail, error) {
-	log.Printf("Getting details of %s service in %s namespace", name, namespace)
+	klog.V(4).Infof("Getting details of %s service in %s namespace", name, namespace)
 
 	rs, err := client.AppsV1().ReplicaSets(namespace).Get(context.TODO(), name, metaV1.GetOptions{})
 	if err != nil {
@@ -55,7 +56,7 @@ func GetReplicaSetDetail(client k8sClient.Interface, metricClient metricapi.Metr
 	}
 
 	podInfo, err := getReplicaSetPodInfo(client, rs)
-	nonCriticalErrors, criticalError := errors.HandleError(err)
+	nonCriticalErrors, criticalError := errors.ExtractErrors(err)
 	if criticalError != nil {
 		return nil, criticalError
 	}

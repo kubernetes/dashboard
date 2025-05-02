@@ -28,6 +28,8 @@ const (
 type Manager interface {
 	// GetCertificates loads existing certificates or generates self-signed certificates.
 	GetCertificates() ([]tls.Certificate, error)
+
+	GetCertificatePaths() (string, string, error)
 }
 
 // Creator is responsible for preparing and generating certificates.
@@ -37,7 +39,7 @@ type Creator interface {
 	// GenerateCertificate generates certificate
 	GenerateCertificate(key interface{}) []byte
 	// StoreCertificates saves certificates in a given path
-	StoreCertificates(path string, key interface{}, certBytes []byte)
+	StoreCertificates(path string, key interface{}, certBytes []byte) (string, string)
 	// KeyCertPEMBytes converts the key and cert to PEM format
 	KeyCertPEMBytes(key interface{}, certBytes []byte) (keyPEM []byte, certPEM []byte, err error)
 	// GetKeyFileName returns certificate key file name

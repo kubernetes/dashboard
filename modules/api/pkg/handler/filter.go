@@ -18,19 +18,17 @@ import (
 	"bytes"
 	"fmt"
 	"io"
-	"log"
 	"net/http"
 	"strings"
 	"time"
 
 	"github.com/emicklei/go-restful/v3"
-	"golang.org/x/net/xsrftoken"
 	utilnet "k8s.io/apimachinery/pkg/util/net"
+	"k8s.io/klog/v2"
 
 	"k8s.io/dashboard/api/pkg/args"
-	authApi "k8s.io/dashboard/api/pkg/auth/api"
-	clientapi "k8s.io/dashboard/api/pkg/client/api"
-	"k8s.io/dashboard/api/pkg/errors"
+	"k8s.io/dashboard/csrf"
+	"k8s.io/dashboard/helpers"
 )
 
 const (
@@ -40,36 +38,21 @@ const (
 )
 
 // InstallFilters installs defined filter for given web service
-func InstallFilters(ws *restful.WebService, manager clientapi.ClientManager) {
+func InstallFilters(ws *restful.WebService) {
 	ws.Filter(requestAndResponseLogger)
 	ws.Filter(metricsFilter)
-	ws.Filter(validateXSRFFilter(manager.CSRFKey()))
-	ws.Filter(restrictedResourcesFilter)
-}
-
-// Filter used to restrict access to dashboard exclusive resource, i.e. secret used to store dashboard encryption key.
-func restrictedResourcesFilter(request *restful.Request, response *restful.Response, chain *restful.FilterChain) {
-	if !authApi.ShouldRejectRequest(request.Request.URL.String()) {
-		chain.ProcessFilter(request, response)
-		return
-	}
-
-	err := errors.NewUnauthorized(errors.MsgDashboardExclusiveResourceError)
-	response.WriteHeaderAndEntity(int(err.ErrStatus.Code), err.Error())
+	ws.Filter(csrf.GoRestful().CSRF(
+		csrf.GoRestful().WithCSRFActionGetter(helpers.GetResourceFromPath),
+		csrf.GoRestful().WithCSRFRunCondition(shouldDoCsrfValidation),
+	))
 }
 
 // web-service filter function used for request and response logging.
 func requestAndResponseLogger(request *restful.Request, response *restful.Response,
 	chain *restful.FilterChain) {
-	if args.Holder.GetAPILogLevel() != "NONE" {
-		log.Printf(formatRequestLog(request))
-	}
-
+	klog.V(args.LogLevelVerbose).Info(formatRequestLog(request))
 	chain.ProcessFilter(request, response)
-
-	if args.Holder.GetAPILogLevel() != "NONE" {
-		log.Printf(formatResponseLog(response, request))
-	}
+	klog.V(args.LogLevelVerbose).Info(formatResponseLog(response, request))
 }
 
 // formatRequestLog formats request log string.
@@ -89,20 +72,28 @@ func formatRequestLog(request *restful.Request) string {
 	// Restore request body so we can read it again in regular request handlers
 	request.Request.Body = io.NopCloser(bytes.NewReader(byteArr))
 
-	// Is DEBUG level logging enabled? Yes?
-	// Great now let's filter out any content from sensitive URLs
-	if args.Holder.GetAPILogLevel() != "DEBUG" && checkSensitiveURL(&uri) {
-		content = "{ contents hidden }"
+	// Hide sensitive url content for log level lower than debug
+	if args.APILogLevel() < args.LogLevelDebug && checkSensitiveURL(&uri) {
+		content = "{ content hidden }"
 	}
 
-	return fmt.Sprintf(RequestLogString, time.Now().Format(time.RFC3339), request.Request.Proto,
-		request.Request.Method, uri, getRemoteAddr(request.Request), content)
+	return fmt.Sprintf(
+		RequestLogString,
+		request.Request.Proto,
+		request.Request.Method,
+		uri,
+		getRemoteAddr(request.Request),
+		content,
+	)
 }
 
 // formatResponseLog formats response log string.
 func formatResponseLog(response *restful.Response, request *restful.Request) string {
-	return fmt.Sprintf(ResponseLogString, time.Now().Format(time.RFC3339),
-		getRemoteAddr(request.Request), response.StatusCode())
+	return fmt.Sprintf(
+		ResponseLogString,
+		getRemoteAddr(request.Request),
+		response.StatusCode(),
+	)
 }
 
 // checkSensitiveUrl checks if a string matches against a sensitive URL
@@ -112,18 +103,14 @@ func checkSensitiveURL(url *string) bool {
 	var sensitiveUrls = make(map[string]struct{})
 	sensitiveUrls["/api/v1/login"] = s
 	sensitiveUrls["/api/v1/csrftoken/login"] = s
-	sensitiveUrls["/api/v1/token/refresh"] = s
 
-	if _, ok := sensitiveUrls[*url]; ok {
-		return true
-	}
-	return false
-
+	_, ok := sensitiveUrls[*url]
+	return ok
 }
 
 func metricsFilter(req *restful.Request, resp *restful.Response,
 	chain *restful.FilterChain) {
-	resource := mapUrlToResource(req.SelectedRoutePath())
+	resource := helpers.GetResourceFromPath(req.SelectedRoutePath())
 	httpClient := utilnet.GetHTTPClient(req.Request)
 
 	chain.ProcessFilter(req, resp)
@@ -139,28 +126,14 @@ func metricsFilter(req *restful.Request, resp *restful.Response,
 	}
 }
 
-func validateXSRFFilter(csrfKey string) restful.FilterFunction {
-	return func(req *restful.Request, resp *restful.Response, chain *restful.FilterChain) {
-		resource := mapUrlToResource(req.SelectedRoutePath())
-
-		if resource == nil || (shouldDoCsrfValidation(req) &&
-			!xsrftoken.Valid(req.HeaderParameter("X-CSRF-TOKEN"), csrfKey, "none",
-				*resource)) {
-			err := errors.NewInvalid("CSRF validation failed")
-			log.Print(err)
-			resp.AddHeader("Content-Type", "text/plain")
-			resp.WriteErrorString(http.StatusUnauthorized, err.Error()+"\n")
-			return
-		}
-
-		chain.ProcessFilter(req, resp)
-	}
-}
-
 // Post requests should set correct X-CSRF-TOKEN header, all other requests
 // should either not edit anything or be already safe to CSRF attacks (PUT
 // and DELETE)
 func shouldDoCsrfValidation(req *restful.Request) bool {
+	if !args.IsCSRFProtectionEnabled() {
+		return false
+	}
+
 	if req.Request.Method != http.MethodPost {
 		return false
 	}
@@ -174,19 +147,14 @@ func shouldDoCsrfValidation(req *restful.Request) bool {
 	return true
 }
 
-// mapUrlToResource extracts the resource from the URL path /api/v1/<resource>.
-// Ignores potential subresources.
-func mapUrlToResource(url string) *string {
-	parts := strings.Split(url, "/")
-	if len(parts) < 3 {
-		return nil
-	}
-	return &parts[3]
-}
-
 // getRemoteAddr extracts the remote address of the request, taking into
 // account proxy headers.
 func getRemoteAddr(r *http.Request) string {
+	// Hide sensitive content for log level lower than debug
+	if args.APILogLevel() < args.LogLevelDebug {
+		return "{ content hidden }"
+	}
+
 	if ip := getRemoteIPFromForwardHeader(r, originalForwardedForHeader); ip != "" {
 		return ip
 	}

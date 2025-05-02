@@ -15,21 +15,21 @@
 package pod
 
 import (
-	"log"
-
 	v1 "k8s.io/api/core/v1"
-	"k8s.io/apimachinery/pkg/types"
+	apimachinery "k8s.io/apimachinery/pkg/types"
+	"k8s.io/klog/v2"
 
-	"k8s.io/dashboard/api/pkg/api"
-	"k8s.io/dashboard/api/pkg/errors"
+	"k8s.io/dashboard/api/pkg/args"
 	metricapi "k8s.io/dashboard/api/pkg/integration/metric/api"
 	"k8s.io/dashboard/api/pkg/resource/dataselect"
+	"k8s.io/dashboard/errors"
+	"k8s.io/dashboard/types"
 )
 
 // MetricsByPod is a metrics map by pod name.
 type MetricsByPod struct {
 	// Metrics by namespace and name of a pod.
-	MetricsMap map[types.UID]PodMetrics `json:"metricsMap"`
+	MetricsMap map[apimachinery.UID]PodMetrics `json:"metricsMap"`
 }
 
 // PodMetrics is a structure representing pods metrics, contains information about CPU and memory
@@ -47,9 +47,9 @@ type PodMetrics struct {
 
 func getMetricsPerPod(pods []v1.Pod, metricClient metricapi.MetricClient, dsQuery *dataselect.DataSelectQuery) (
 	*MetricsByPod, error) {
-	log.Println("Getting pod metrics")
+	klog.V(args.LogLevelDebug).Info("Getting pod metrics")
 
-	result := &MetricsByPod{MetricsMap: make(map[types.UID]PodMetrics)}
+	result := &MetricsByPod{MetricsMap: make(map[apimachinery.UID]PodMetrics)}
 
 	metricPromises := dataselect.PodListMetrics(toCells(pods), dsQuery, metricClient)
 	metrics, err := metricPromises.GetMetrics()
@@ -60,7 +60,7 @@ func getMetricsPerPod(pods []v1.Pod, metricClient metricapi.MetricClient, dsQuer
 	for _, m := range metrics {
 		uid, err := getPodUIDFromMetric(m)
 		if err != nil {
-			log.Printf("Skipping metric because of error: %s", err.Error())
+			continue
 		}
 
 		podMetrics := PodMetrics{}
@@ -84,9 +84,9 @@ func getMetricsPerPod(pods []v1.Pod, metricClient metricapi.MetricClient, dsQuer
 	return result, nil
 }
 
-func getPodUIDFromMetric(metric metricapi.Metric) (types.UID, error) {
+func getPodUIDFromMetric(metric metricapi.Metric) (apimachinery.UID, error) {
 	// Check is metric label contains required resource UID
-	uidList, exists := metric.Label[api.ResourceKindPod]
+	uidList, exists := metric.Label[types.ResourceKindPod]
 	if !exists {
 		return "", errors.NewInvalid("Metric label not set.")
 	}

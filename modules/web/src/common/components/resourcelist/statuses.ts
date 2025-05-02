@@ -28,7 +28,6 @@ export enum Status {
   Released = 'Released',
   Running = 'Running',
   Succeeded = 'Succeeded',
-  Success = 'Succeeded',
   Suspended = 'Suspended',
   Terminating = 'Terminating',
   Terminated = 'Terminated',

@@ -21,13 +21,13 @@ import (
 
 	"k8s.io/apiextensions-apiserver/pkg/apis/apiextensions"
 
-	"k8s.io/dashboard/api/pkg/api"
 	"k8s.io/dashboard/api/pkg/resource/common"
+	"k8s.io/dashboard/types"
 )
 
 // CustomResourceDefinitionList contains a list of Custom Resource Definitions in the cluster.
 type CustomResourceDefinitionList struct {
-	ListMeta api.ListMeta `json:"listMeta"`
+	ListMeta types.ListMeta `json:"listMeta"`
 
 	// Unordered list of custom resource definitions
 	Items []CustomResourceDefinition `json:"items"`
@@ -38,8 +38,8 @@ type CustomResourceDefinitionList struct {
 
 // CustomResourceDefinition represents a custom resource definition.
 type CustomResourceDefinition struct {
-	ObjectMeta  api.ObjectMeta                `json:"objectMeta"`
-	TypeMeta    api.TypeMeta                  `json:"typeMeta"`
+	ObjectMeta  types.ObjectMeta              `json:"objectMeta"`
+	TypeMeta    types.TypeMeta                `json:"typeMeta"`
 	Version     string                        `json:"version,omitempty"`
 	Group       string                        `json:"group"`
 	Scope       apiextensions.ResourceScope   `json:"scope"`
@@ -67,8 +67,8 @@ type CustomResourceDefinitionVersion struct {
 
 // CustomResourceObject represents a custom resource object.
 type CustomResourceObject struct {
-	TypeMeta   api.TypeMeta   `json:"typeMeta"`
-	ObjectMeta api.ObjectMeta `json:"objectMeta"`
+	TypeMeta   types.TypeMeta   `json:"typeMeta"`
+	ObjectMeta types.ObjectMeta `json:"objectMeta"`
 }
 
 func (r *CustomResourceObject) UnmarshalJSON(data []byte) error {
@@ -82,8 +82,8 @@ func (r *CustomResourceObject) UnmarshalJSON(data []byte) error {
 		return err
 	}
 
-	r.TypeMeta = api.NewTypeMeta(api.ResourceKind(tempStruct.TypeMeta.Kind))
-	r.ObjectMeta = api.NewObjectMeta(tempStruct.ObjectMeta)
+	r.TypeMeta = types.NewTypeMeta(types.ResourceKind(tempStruct.TypeMeta.Kind))
+	r.ObjectMeta = types.NewObjectMeta(tempStruct.ObjectMeta)
 	return nil
 }
 
@@ -97,7 +97,7 @@ type CustomResourceObjectDetail struct {
 // CustomResourceObjectList represents crd objects in a namespace.
 type CustomResourceObjectList struct {
 	TypeMeta metav1.TypeMeta `json:"typeMeta"`
-	ListMeta api.ListMeta    `json:"listMeta"`
+	ListMeta types.ListMeta  `json:"listMeta"`
 
 	// Unordered list of custom resource definitions
 	Items []CustomResourceObject `json:"items"`

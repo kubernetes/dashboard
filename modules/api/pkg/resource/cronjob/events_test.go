@@ -22,10 +22,10 @@ import (
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/client-go/kubernetes/fake"
 
-	"k8s.io/dashboard/api/pkg/api"
 	"k8s.io/dashboard/api/pkg/resource/common"
 	"k8s.io/dashboard/api/pkg/resource/cronjob"
 	"k8s.io/dashboard/api/pkg/resource/dataselect"
+	"k8s.io/dashboard/types"
 )
 
 func TestGetJobEvents(t *testing.T) {
@@ -49,14 +49,14 @@ func TestGetJobEvents(t *testing.T) {
 				}},
 			[]string{"list"},
 			&common.EventList{
-				ListMeta: api.ListMeta{
+				ListMeta: types.ListMeta{
 					TotalItems: 1,
 				},
 				Events: []common.Event{{
-					TypeMeta: api.TypeMeta{
-						Kind: api.ResourceKindEvent,
+					TypeMeta: types.TypeMeta{
+						Kind: types.ResourceKindEvent,
 					},
-					ObjectMeta: api.ObjectMeta{
+					ObjectMeta: types.ObjectMeta{
 						Name:      name,
 						Namespace: namespace,
 						Labels:    labels,

@@ -16,23 +16,24 @@ package daemonset
 
 import (
 	"context"
-	"log"
 
 	api "k8s.io/api/core/v1"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	k8sClient "k8s.io/client-go/kubernetes"
-	"k8s.io/dashboard/api/pkg/errors"
+	"k8s.io/klog/v2"
+
 	metricapi "k8s.io/dashboard/api/pkg/integration/metric/api"
 	"k8s.io/dashboard/api/pkg/resource/common"
 	"k8s.io/dashboard/api/pkg/resource/dataselect"
 	"k8s.io/dashboard/api/pkg/resource/event"
 	"k8s.io/dashboard/api/pkg/resource/pod"
+	"k8s.io/dashboard/errors"
 )
 
 // GetDaemonSetPods return list of pods targeting daemon set.
 func GetDaemonSetPods(client k8sClient.Interface, metricClient metricapi.MetricClient,
 	dsQuery *dataselect.DataSelectQuery, daemonSetName, namespace string) (*pod.PodList, error) {
-	log.Printf("Getting replication controller %s pods in namespace %s", daemonSetName, namespace)
+	klog.V(4).Infof("Getting replication controller %s pods in namespace %s", daemonSetName, namespace)
 
 	pods, err := getRawDaemonSetPods(client, daemonSetName, namespace)
 	if err != nil {
@@ -40,7 +41,7 @@ func GetDaemonSetPods(client k8sClient.Interface, metricClient metricapi.MetricC
 	}
 
 	events, err := event.GetPodsEvents(client, namespace, pods)
-	nonCriticalErrors, criticalError := errors.HandleError(err)
+	nonCriticalErrors, criticalError := errors.ExtractErrors(err)
 	if criticalError != nil {
 		return nil, criticalError
 	}

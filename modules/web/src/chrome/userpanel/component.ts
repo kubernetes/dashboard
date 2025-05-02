@@ -12,60 +12,39 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {Component, Inject, OnInit, ViewChild} from '@angular/core';
+import {Component, ViewChild} from '@angular/core';
 import {MatMenuTrigger} from '@angular/material/menu';
-import {LoginStatus} from '@api/root.api';
-import {IConfig} from '@api/root.ui';
 import {AuthService} from '@common/services/global/authentication';
-import {CookieService} from 'ngx-cookie-service';
-import {CONFIG_DI_TOKEN} from '../../index.config';
+import {MeService} from '@common/services/global/me';
 
 @Component({
   selector: 'kd-user-panel',
   templateUrl: './template.html',
   styleUrls: ['./style.scss'],
-  host: {
-    '[class.kd-hidden]': 'this.isAuthEnabled() === false',
-  },
 })
-export class UserPanelComponent implements OnInit {
+export class UserPanelComponent /* implements OnInit */ {
   @ViewChild(MatMenuTrigger)
   private readonly trigger_: MatMenuTrigger;
 
-  loginStatus: LoginStatus;
-  isLoginStatusInitialized = false;
-
   constructor(
     private readonly authService_: AuthService,
-    private readonly cookieService_: CookieService,
-    @Inject(CONFIG_DI_TOKEN) private readonly config_: IConfig
+    private readonly _meService: MeService
   ) {}
 
-  get hasUsername(): boolean {
-    return !!this.cookieService_.get(this.config_.usernameCookieName);
-  }
-
   get username(): string {
-    return this.cookieService_.get(this.config_.usernameCookieName);
+    return this._meService.getUserName();
   }
 
-  ngOnInit(): void {
-    this.authService_.getLoginStatus().subscribe(status => {
-      this.loginStatus = status;
-      this.isLoginStatusInitialized = true;
-    });
+  hasAuthHeader(): boolean {
+    return this.authService_.hasAuthHeader();
   }
 
-  isAuthSkipped(): boolean {
-    return this.loginStatus && !this.authService_.isLoginPageEnabled() && !this.loginStatus.headerPresent;
+  hasTokenCookie(): boolean {
+    return this.authService_.hasTokenCookie();
   }
 
-  isLoggedIn(): boolean {
-    return this.loginStatus && !this.loginStatus.headerPresent && this.loginStatus.tokenPresent;
-  }
-
-  isAuthEnabled(): boolean {
-    return this.loginStatus ? this.loginStatus.httpsMode : false;
+  isAuthenticated(): boolean {
+    return this.authService_.isAuthenticated();
   }
 
   logout(): void {

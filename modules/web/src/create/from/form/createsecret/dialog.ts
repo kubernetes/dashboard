@@ -18,7 +18,7 @@ import {AbstractControl, UntypedFormBuilder, UntypedFormGroup, Validators} from 
 import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material/dialog';
 import {IConfig} from '@api/root.ui';
 import {switchMap} from 'rxjs/operators';
-import {AlertDialog, AlertDialogConfig} from '@common/dialogs/alert/dialog';
+import {AlertDialogComponent, AlertDialogConfig} from '@common/dialogs/alert/dialog';
 import {CsrfTokenService} from '@common/services/global/csrftoken';
 import {CONFIG_DI_TOKEN} from '../../../../index.config';
 
@@ -30,7 +30,7 @@ export interface CreateSecretDialogMeta {
   selector: 'kd-create-secret-dialog',
   templateUrl: 'template.html',
 })
-export class CreateSecretDialog implements OnInit {
+export class CreateSecretDialogComponent implements OnInit {
   form: UntypedFormGroup;
 
   /**
@@ -49,7 +49,7 @@ export class CreateSecretDialog implements OnInit {
   dataPattern = new RegExp('^([0-9a-zA-Z+/]{4})*(([0-9a-zA-Z+/]{2}==)|([0-9a-zA-Z+/]{3}=))?$');
 
   constructor(
-    public dialogRef: MatDialogRef<CreateSecretDialog>,
+    public dialogRef: MatDialogRef<CreateSecretDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data_: CreateSecretDialogMeta,
     private readonly http_: HttpClient,
     private readonly csrfToken_: CsrfTokenService,
@@ -113,7 +113,7 @@ export class CreateSecretDialog implements OnInit {
             message: error.data,
             confirmLabel: 'OK',
           };
-          this.matDialog_.open(AlertDialog, {data: configData});
+          this.matDialog_.open(AlertDialogComponent, {data: configData});
         }
       );
   }

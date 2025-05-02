@@ -15,22 +15,22 @@
 package deployment
 
 import (
-	"log"
-
 	apps "k8s.io/api/apps/v1"
 	v1 "k8s.io/api/core/v1"
 	client "k8s.io/client-go/kubernetes"
-	"k8s.io/dashboard/api/pkg/api"
-	"k8s.io/dashboard/api/pkg/errors"
+	"k8s.io/klog/v2"
+
 	metricapi "k8s.io/dashboard/api/pkg/integration/metric/api"
 	"k8s.io/dashboard/api/pkg/resource/common"
 	"k8s.io/dashboard/api/pkg/resource/dataselect"
 	"k8s.io/dashboard/api/pkg/resource/event"
+	"k8s.io/dashboard/errors"
+	"k8s.io/dashboard/types"
 )
 
 // DeploymentList contains a list of Deployments in the cluster.
 type DeploymentList struct {
-	ListMeta          api.ListMeta       `json:"listMeta"`
+	ListMeta          types.ListMeta     `json:"listMeta"`
 	CumulativeMetrics []metricapi.Metric `json:"cumulativeMetrics"`
 
 	// Basic information about resources status on the list.
@@ -47,8 +47,8 @@ type DeploymentList struct {
 // it is Deployment plus additional augmented data we can get from other sources
 // (like services that target the same pods).
 type Deployment struct {
-	ObjectMeta api.ObjectMeta `json:"objectMeta"`
-	TypeMeta   api.TypeMeta   `json:"typeMeta"`
+	ObjectMeta types.ObjectMeta `json:"objectMeta"`
+	TypeMeta   types.TypeMeta   `json:"typeMeta"`
 
 	// Aggregate information about pods belonging to this Deployment.
 	Pods common.PodInfo `json:"pods"`
@@ -63,7 +63,7 @@ type Deployment struct {
 // GetDeploymentList returns a list of all Deployments in the cluster.
 func GetDeploymentList(client client.Interface, nsQuery *common.NamespaceQuery, dsQuery *dataselect.DataSelectQuery,
 	metricClient metricapi.MetricClient) (*DeploymentList, error) {
-	log.Print("Getting list of all deployments in the cluster")
+	klog.V(4).Infof("Getting list of all deployments in the cluster")
 
 	channels := &common.ResourceChannels{
 		DeploymentList: common.GetDeploymentListChannel(client, nsQuery, 1),
@@ -82,7 +82,7 @@ func GetDeploymentListFromChannels(channels *common.ResourceChannels, dsQuery *d
 
 	deployments := <-channels.DeploymentList.List
 	err := <-channels.DeploymentList.Error
-	nonCriticalErrors, criticalError := errors.HandleError(err)
+	nonCriticalErrors, criticalError := errors.ExtractErrors(err)
 	if criticalError != nil {
 		return nil, criticalError
 	}
@@ -119,7 +119,7 @@ func toDeploymentList(deployments []apps.Deployment, pods []v1.Pod, events []v1.
 
 	deploymentList := &DeploymentList{
 		Deployments: make([]Deployment, 0),
-		ListMeta:    api.ListMeta{TotalItems: len(deployments)},
+		ListMeta:    types.ListMeta{TotalItems: len(deployments)},
 		Errors:      nonCriticalErrors,
 	}
 
@@ -129,7 +129,7 @@ func toDeploymentList(deployments []apps.Deployment, pods []v1.Pod, events []v1.
 	deploymentCells, metricPromises, filteredTotal := dataselect.GenericDataSelectWithFilterAndMetrics(
 		toCells(deployments), dsQuery, cachedResources, metricClient)
 	deployments = fromCells(deploymentCells)
-	deploymentList.ListMeta = api.ListMeta{TotalItems: filteredTotal}
+	deploymentList.ListMeta = types.ListMeta{TotalItems: filteredTotal}
 
 	for _, deployment := range deployments {
 		deploymentList.Deployments = append(deploymentList.Deployments, toDeployment(&deployment, rs, pods, events))
@@ -150,8 +150,8 @@ func toDeployment(deployment *apps.Deployment, rs []apps.ReplicaSet, pods []v1.P
 	podInfo.Warnings = event.GetPodsEventWarnings(events, matchingPods)
 
 	return Deployment{
-		ObjectMeta:          api.NewObjectMeta(deployment.ObjectMeta),
-		TypeMeta:            api.NewTypeMeta(api.ResourceKindDeployment),
+		ObjectMeta:          types.NewObjectMeta(deployment.ObjectMeta),
+		TypeMeta:            types.NewTypeMeta(types.ResourceKindDeployment),
 		Pods:                podInfo,
 		ContainerImages:     common.GetContainerImages(&deployment.Spec.Template.Spec),
 		InitContainerImages: common.GetInitContainerImages(&deployment.Spec.Template.Spec),

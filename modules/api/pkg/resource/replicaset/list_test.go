@@ -24,12 +24,11 @@ import (
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/client-go/kubernetes/fake"
 
-	"k8s.io/dashboard/api/pkg/api"
 	metricapi "k8s.io/dashboard/api/pkg/integration/metric/api"
 	"k8s.io/dashboard/api/pkg/resource/common"
 	"k8s.io/dashboard/api/pkg/resource/dataselect"
-
-	"k8s.io/dashboard/api/pkg/errors"
+	"k8s.io/dashboard/errors"
+	"k8s.io/dashboard/types"
 )
 
 func TestGetReplicaSetListFromChannels(t *testing.T) {
@@ -47,7 +46,7 @@ func TestGetReplicaSetListFromChannels(t *testing.T) {
 			nil,
 			&v1.PodList{},
 			&ReplicaSetList{
-				ListMeta:          api.ListMeta{},
+				ListMeta:          types.ListMeta{},
 				CumulativeMetrics: make([]metricapi.Metric, 0),
 				ReplicaSets:       []ReplicaSet{},
 				Errors:            []error{},
@@ -133,18 +132,18 @@ func TestGetReplicaSetListFromChannels(t *testing.T) {
 				},
 			},
 			&ReplicaSetList{
-				ListMeta:          api.ListMeta{TotalItems: 1},
+				ListMeta:          types.ListMeta{TotalItems: 1},
 				CumulativeMetrics: make([]metricapi.Metric, 0),
 				Status:            common.ResourceStatus{Running: 1},
 				ReplicaSets: []ReplicaSet{{
-					ObjectMeta: api.ObjectMeta{
+					ObjectMeta: types.ObjectMeta{
 						Name:              "rs-name",
 						Namespace:         "rs-namespace",
 						UID:               "uid",
 						Labels:            map[string]string{"key": "value"},
 						CreationTimestamp: metaV1.Unix(111, 222),
 					},
-					TypeMeta: api.TypeMeta{Kind: api.ResourceKindReplicaSet, Scalable: true},
+					TypeMeta: types.TypeMeta{Kind: types.ResourceKindReplicaSet, Scalable: true},
 					Pods: common.PodInfo{
 						Current:  7,
 						Desired:  &replicas,
@@ -229,12 +228,12 @@ func TestToReplicaSetList(t *testing.T) {
 			[]v1.Pod{},
 			[]v1.Event{},
 			&ReplicaSetList{
-				ListMeta:          api.ListMeta{TotalItems: 1},
+				ListMeta:          types.ListMeta{TotalItems: 1},
 				CumulativeMetrics: make([]metricapi.Metric, 0),
 				ReplicaSets: []ReplicaSet{
 					{
-						ObjectMeta: api.ObjectMeta{Name: "replica-set", Namespace: "ns-1"},
-						TypeMeta:   api.TypeMeta{Kind: api.ResourceKindReplicaSet, Scalable: true},
+						ObjectMeta: types.ObjectMeta{Name: "replica-set", Namespace: "ns-1"},
+						TypeMeta:   types.TypeMeta{Kind: types.ResourceKindReplicaSet, Scalable: true},
 						Pods: common.PodInfo{
 							Warnings: []common.Event{},
 							Desired:  &replicas,
@@ -277,15 +276,15 @@ func TestGetReplicaSetList(t *testing.T) {
 				}},
 			expectedActions: []string{"list", "list", "list"},
 			expected: &ReplicaSetList{
-				ListMeta: api.ListMeta{TotalItems: 1},
+				ListMeta: types.ListMeta{TotalItems: 1},
 				Status:   common.ResourceStatus{Running: 1},
 				ReplicaSets: []ReplicaSet{
 					{
-						ObjectMeta: api.ObjectMeta{
+						ObjectMeta: types.ObjectMeta{
 							Name:   "rs-1",
 							Labels: map[string]string{},
 						},
-						TypeMeta: api.TypeMeta{Kind: api.ResourceKindReplicaSet, Scalable: true},
+						TypeMeta: types.TypeMeta{Kind: types.ResourceKindReplicaSet, Scalable: true},
 						Pods: common.PodInfo{
 							Desired:  &replicas,
 							Warnings: make([]common.Event, 0),

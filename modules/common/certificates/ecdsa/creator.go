@@ -88,17 +88,22 @@ func (self *ecdsaCreator) GenerateCertificate(key interface{}) []byte {
 }
 
 // StoreCertificates implements certificate Creator interface. See Creator for more information.
-func (self *ecdsaCreator) StoreCertificates(path string, key interface{}, certBytes []byte) {
+func (self *ecdsaCreator) StoreCertificates(path string, key interface{}, certBytes []byte) (string, string) {
 	keyPEM, certPEM, err := self.KeyCertPEMBytes(key, certBytes)
 	if err != nil {
 		log.Fatalf("[ECDSAManager] Failed to marshal cert/key pair: %v", err)
 	}
-	if err := os.WriteFile(path+string(os.PathSeparator)+self.GetCertFileName(), certPEM, os.FileMode(0644)); err != nil {
+	certPath := path + string(os.PathSeparator) + self.GetCertFileName()
+	if err := os.WriteFile(certPath, certPEM, os.FileMode(0644)); err != nil {
 		log.Fatalf("[ECDSAManager] Failed to open %s for writing: %s", self.GetCertFileName(), err)
 	}
-	if err := os.WriteFile(path+string(os.PathSeparator)+self.GetKeyFileName(), keyPEM, os.FileMode(0600)); err != nil {
+
+	keyPath := path + string(os.PathSeparator) + self.GetKeyFileName()
+	if err := os.WriteFile(keyPath, keyPEM, os.FileMode(0600)); err != nil {
 		log.Fatalf("[ECDSAManager] Failed to open %s for writing: %s", self.GetKeyFileName(), err)
 	}
+
+	return certPath, keyPath
 }
 
 func (self *ecdsaCreator) KeyCertPEMBytes(key interface{}, certBytes []byte) ([]byte, []byte, error) {

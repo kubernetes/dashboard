@@ -12,18 +12,19 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
+
 root = "."
-tmp_dir = "../../.dist/"
+tmp_dir = ".tmp"
 
 [build]
-  cmd = "make build"
+  cmd = "go build -o .tmp/dashboard-api ."
+  bin = ".tmp/dashboard-api"
   delay = 2000
-  exclude_dir = ["hack"]
-  exclude_file = []
-  exclude_regex = []
   exclude_unchanged = false
+  include_dir = ["pkg", "../common"]
+  include_file = ["main.go"]
   follow_symlink = false
-  full_bin = "make run-air"
+  full_bin = ""
   include_ext = ["go"]
   kill_delay = "1s"
   log = "build-errors.log"

@@ -21,11 +21,12 @@ import (
 	v1 "k8s.io/api/core/v1"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/client-go/kubernetes/fake"
-	"k8s.io/dashboard/api/pkg/api"
+
 	metricapi "k8s.io/dashboard/api/pkg/integration/metric/api"
 	"k8s.io/dashboard/api/pkg/resource/common"
 	"k8s.io/dashboard/api/pkg/resource/dataselect"
 	"k8s.io/dashboard/api/pkg/resource/pod"
+	"k8s.io/dashboard/types"
 )
 
 func TestGetServicePods(t *testing.T) {
@@ -49,17 +50,17 @@ func TestGetServicePods(t *testing.T) {
 				}},
 			}},
 			&pod.PodList{
-				ListMeta:          api.ListMeta{TotalItems: 1},
+				ListMeta:          types.ListMeta{TotalItems: 1},
 				CumulativeMetrics: make([]metricapi.Metric, 0),
 				Pods: []pod.Pod{
 					{
-						ObjectMeta: api.ObjectMeta{
+						ObjectMeta: types.ObjectMeta{
 							Name:      "pod-1",
 							UID:       "test-uid",
 							Namespace: "ns-1"},
-						TypeMeta: api.TypeMeta{Kind: api.ResourceKindPod},
-						Status:   string(v1.PodUnknown),
-						Warnings: []common.Event{},
+						TypeMeta:          types.TypeMeta{Kind: types.ResourceKindPod},
+						Warnings:          []common.Event{},
+						ContainerStatuses: make([]pod.ContainerStatus, 0),
 					},
 				},
 				Errors: []error{},

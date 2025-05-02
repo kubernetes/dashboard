@@ -43,7 +43,7 @@ export class ServiceListComponent extends ResourceListWithStatuses<ServiceList, 
     this.groupId = ListGroupIdentifier.discovery;
 
     // Register status icon handlers
-    this.registerBinding(StatusClass.Success, r => this.isInSuccessState(r), Status.Success);
+    this.registerBinding(StatusClass.Success, r => this.isInSuccessState(r), Status.Succeeded);
     this.registerBinding(StatusClass.Warning, r => !this.isInSuccessState(r), Status.Pending);
 
     // Register action columns.

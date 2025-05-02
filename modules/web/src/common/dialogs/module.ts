@@ -13,42 +13,42 @@
 // limitations under the License.
 
 import {NgModule} from '@angular/core';
-import {ConfirmDialog} from '@common/dialogs/config/dialog';
+import {ConfirmDialogComponent} from '@common/dialogs/config/dialog';
 
 import {SharedModule} from '../../shared.module';
 import {ComponentsModule} from '../components/module';
 
-import {AlertDialog} from './alert/dialog';
-import {DeleteResourceDialog} from './deleteresource/dialog';
-import {LogsDownloadDialog} from './download/dialog';
-import {EditResourceDialog} from './editresource/dialog';
-import {RestartResourceDialog} from './restartresource/dialog';
-import {ScaleResourceDialog} from './scaleresource/dialog';
-import {TriggerResourceDialog} from './triggerresource/dialog';
-import {PreviewDeploymentDialog} from './previewdeployment/dialog';
+import {AlertDialogComponent} from './alert/dialog';
+import {DeleteResourceDialogComponent} from './deleteresource/dialog';
+import {LogsDownloadDialogComponent} from './download/dialog';
+import {EditResourceDialogComponent} from './editresource/dialog';
+import {RestartResourceDialogComponent} from './restartresource/dialog';
+import {ScaleResourceDialogComponent} from './scaleresource/dialog';
+import {TriggerResourceDialogComponent} from './triggerresource/dialog';
+import {PreviewDeploymentDialogComponent} from './previewdeployment/dialog';
 
 @NgModule({
   imports: [SharedModule, ComponentsModule],
   declarations: [
-    AlertDialog,
-    EditResourceDialog,
-    DeleteResourceDialog,
-    LogsDownloadDialog,
-    RestartResourceDialog,
-    ScaleResourceDialog,
-    TriggerResourceDialog,
-    ConfirmDialog,
-    PreviewDeploymentDialog,
+    AlertDialogComponent,
+    EditResourceDialogComponent,
+    DeleteResourceDialogComponent,
+    LogsDownloadDialogComponent,
+    RestartResourceDialogComponent,
+    ScaleResourceDialogComponent,
+    TriggerResourceDialogComponent,
+    ConfirmDialogComponent,
+    PreviewDeploymentDialogComponent,
   ],
   exports: [
-    AlertDialog,
-    EditResourceDialog,
-    DeleteResourceDialog,
-    LogsDownloadDialog,
-    RestartResourceDialog,
-    ScaleResourceDialog,
-    TriggerResourceDialog,
-    PreviewDeploymentDialog,
+    AlertDialogComponent,
+    EditResourceDialogComponent,
+    DeleteResourceDialogComponent,
+    LogsDownloadDialogComponent,
+    RestartResourceDialogComponent,
+    ScaleResourceDialogComponent,
+    TriggerResourceDialogComponent,
+    PreviewDeploymentDialogComponent,
   ],
 })
 export class DialogsModule {}

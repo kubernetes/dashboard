@@ -18,9 +18,9 @@ import (
 	"reflect"
 	"testing"
 
-	"k8s.io/dashboard/api/pkg/errors"
 	integrationapi "k8s.io/dashboard/api/pkg/integration/api"
 	"k8s.io/dashboard/api/pkg/integration/metric/api"
+	"k8s.io/dashboard/errors"
 )
 
 const fakeMetricClientID integrationapi.IntegrationID = "test-id"
@@ -62,7 +62,7 @@ func areErrorsEqual(err1, err2 error) bool {
 }
 
 func TestNewMetricManager(t *testing.T) {
-	metricManager := NewMetricManager(nil)
+	metricManager := NewMetricManager()
 	if metricManager == nil {
 		t.Error("Failed to create metric manager.")
 	}
@@ -78,9 +78,9 @@ func TestMetricManager_Client(t *testing.T) {
 	}
 
 	for _, c := range cases {
-		metricManager := NewMetricManager(nil)
+		metricManager := NewMetricManager()
 		metricManager.AddClient(c.client)
-		metricManager.Enable(fakeMetricClientID)
+		_ = metricManager.Enable(fakeMetricClientID)
 		client := metricManager.Client()
 
 		if !reflect.DeepEqual(client, c.expected) {
@@ -100,7 +100,7 @@ func TestMetricManager_Enable(t *testing.T) {
 	}
 
 	for _, c := range cases {
-		metricManager := NewMetricManager(nil)
+		metricManager := NewMetricManager()
 		metricManager.AddClient(c.client)
 		err := metricManager.Enable(fakeMetricClientID)
 
@@ -121,7 +121,7 @@ func TestMetricManager_List(t *testing.T) {
 	}
 
 	for _, c := range cases {
-		metricManager := NewMetricManager(nil)
+		metricManager := NewMetricManager()
 		metricManager.AddClient(c.client)
 		list := metricManager.List()
 

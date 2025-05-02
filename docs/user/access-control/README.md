@@ -11,25 +11,30 @@ Dashboard only acts as a proxy and passes all auth information to it. In case of
 
 ## Default Dashboard privileges
 
-* `get`, `update` and `delete` permissions for Secrets named `kubernetes-dashboard-key-holder`, `kubernetes-dashboard-certs` and `kubernetes-dashboard-csrf` in `kubernetes-dashboard` namespace.
-* `get` and `update` permissions for the Config Map named `kubernetes-dashboard-settings` in `kubernetes-dashboard` namespace.
-* `get` permission for `services/proxy` in order to allow `heapster` and `dashboard-metrics-scraper` services in `kubernetes-dashboard` namespace required to gather metrics.
-* `get`, `list` and `watch` permissions for `metrics.k8s.io` API in order to allow `dashboard-metrics-scraper` to gather metrics from the `metrics-server`.
+### Web container
+* `get` and `update` permissions to the Config Map used as settings storage.
+  * Default name: `kubernetes-dashboard-settings`. Can be changed via `--settings-config-map-name` argument.
+  * Default namespace: `kubernetes-dashboard`. Can be changed via `--namespace` argument.
+
+### API container
+* `get` permission for `services/proxy` in order to allow dashboard metrics scraper to gather metrics.
+  * Default service name: `kubernetes-dashboard-metrics-scraper`. Can be changed via `--metrics-scraper-service-name` argument.
+  * Default namespace `kubernetes-dashboard`. Can be changed via `--namespace` argument.
+
+### Metrics scraper container
+* `get`, `list` and `watch` permissions for `metrics.k8s.io` API in order to allow dashboard metrics scraper to gather metrics from the `metrics-server`.
 
 ## Authentication
 
-Kubernetes Dashboard supports a few different ways of authenticating users:
+Kubernetes Dashboard supports two different ways of authenticating users:
 
 * [Authorization header](#authorization-header) passed in every request to Dashboard. Supported from release 1.6. Has the highest priority. If present, login view will be skipped.
 * [Bearer Token](#bearer-token) that can be used on Dashboard [login view](#login-view).
-* [Username/password](#basic) that can be used on Dashboard [login view](#login-view).
-* [Kubeconfig](#kubeconfig) file that can be used on Dashboard [login view](#login-view).
 
 ### Login view
 
-In case you are using the latest recommended installation then login functionality will be enabled by default. In any other case and if you prefer to configure certificates manually you need to pass `--tls-cert-file` and `--tls-cert-key` flags to Dashboard. HTTPS endpoint will be exposed on port `8443` of Dashboard container. You can change it by providing `--port` flag.
-
-Using `Skip` option will make Dashboard use privileges of Service Account used by Dashboard. `Skip` button is disabled by default since 1.10.1. Use `--enable-skip-login` dashboard flag to display it.
+In case you are using the latest installation then login functionality will be enabled by default and exposed via our
+gateway.
 
 ![Sing in](../../images/signin.png)
 
@@ -41,7 +46,7 @@ To make Dashboard use authorization header you simply need to pass `Authorizatio
 
 To quickly test it check out [Requestly](https://chrome.google.com/webstore/detail/requestly-redirect-url-mo/mdnleldcmiljblolnjhpnblkcekpdkpa) Chrome browser plugin that allows to manually modify request headers.
 
-**IMPORTANT:** Authorization header will not work if Dashboard is accessed through API server proxy. Both `kubectl proxy` and `API Server` way of accessing Dashboard described in [Accessing Dashboard](../accessing-dashboard/README.md) guide will not work. It is due to the fact that once request reaches API server all additional headers are dropped.
+**IMPORTANT:** Authorization header will not work if Dashboard is accessed through API server proxy. `kubectl port-forward` described in [Accessing Dashboard](../accessing-dashboard/README.md) guide will not work. It is due to the fact that once request reaches API server all additional headers are dropped.
 
 ### Bearer Token
 
@@ -54,61 +59,6 @@ Recommended lecture to find out how to create Service Account and grant it privi
 * [Service Account Permissions](https://kubernetes.io/docs/reference/access-authn-authz/rbac/#service-account-permissions)
 
 To create sample user and to get its token, see [Creating sample user](./creating-sample-user.md) guide.
-
-### Basic
-Basic authentication is disabled by default. The reason is that Kubernetes API server needs to be configured with authorization mode ABAC and `--basic-auth-file` flag provided. Without that API server automatically falls back to [anonymous user](https://kubernetes.io/docs/reference/access-authn-authz/authentication/#anonymous-requests) and there is no way to check if provided credentials are valid.
-
-In order to enable basic auth in Dashboard `--authentication-mode=basic` flag has to be provided. By default it is set to `--authentication-mode=token`.
-
-Note: Basic authentication with `--basic-auth-file` has been deprecated since Kubernetes v1.19. For similar functionality to `--basic-auth-file` flag, use `--token-auth-file`  with [Static Token File](https://kubernetes.io/docs/reference/access-authn-authz/authentication/#static-token-file).
-
-### Kubeconfig
-
-This method of logging in is provided for convenience. Only authentication options specified by `--authentication-mode` flag are supported in kubeconfig file. In case it is configured to use any other way, error will be shown in Dashboard. External identity providers or certificate-based authentication are not supported at this time.
-
-![Sign in with kubeconfig](../../images/signin-with-kubeconfig.png)
-
-## Admin privileges
-
-**IMPORTANT:** Make sure that you know what you are doing before proceeding. Granting admin privileges to Dashboard's Service Account might be a security risk.
-
-You can grant full admin privileges to Dashboard's Service Account by creating below `ClusterRoleBinding`. Copy the YAML file based on chosen installation method and save as, i.e. `dashboard-admin.yaml`. Use `kubectl create -f dashboard-admin.yaml` to deploy it. Afterwards you can use `Skip` option on login page to access Dashboard.
-
-### Official release
-
-```yaml
-apiVersion: rbac.authorization.k8s.io/v1
-kind: ClusterRoleBinding
-metadata:
-  name: kubernetes-dashboard
-  namespace: kubernetes-dashboard
-roleRef:
-  apiGroup: rbac.authorization.k8s.io
-  kind: ClusterRole
-  name: cluster-admin
-subjects:
-  - kind: ServiceAccount
-    name: kubernetes-dashboard
-    namespace: kubernetes-dashboard
-```
-
-### Development release
-
-```yaml
-apiVersion: rbac.authorization.k8s.io/v1
-kind: ClusterRoleBinding
-metadata:
-  name: kubernetes-dashboard-head
-  namespace: kubernetes-dashboard-head
-roleRef:
-  apiGroup: rbac.authorization.k8s.io
-  kind: ClusterRole
-  name: cluster-admin
-subjects:
-  - kind: ServiceAccount
-    name: kubernetes-dashboard-head
-    namespace: kubernetes-dashboard-head
-```
 
 ----
 _Copyright 2019 [The Kubernetes Dashboard Authors](https://github.com/kubernetes/dashboard/graphs/contributors)_

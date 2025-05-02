@@ -23,18 +23,20 @@ import (
 	"k8s.io/apimachinery/pkg/labels"
 	"k8s.io/apimachinery/pkg/runtime"
 	"k8s.io/apimachinery/pkg/runtime/schema"
-	"k8s.io/apimachinery/pkg/types"
+	apimachinery "k8s.io/apimachinery/pkg/types"
 	"k8s.io/client-go/kubernetes"
-	"k8s.io/dashboard/api/pkg/api"
-	"k8s.io/dashboard/api/pkg/errors"
+
 	"k8s.io/dashboard/api/pkg/resource/common"
 	"k8s.io/dashboard/api/pkg/resource/dataselect"
+	"k8s.io/dashboard/errors"
+	"k8s.io/dashboard/helpers"
+	"k8s.io/dashboard/types"
 )
 
 // EmptyEventList is a empty list of events.
 var EmptyEventList = &common.EventList{
 	Events: make([]common.Event, 0),
-	ListMeta: api.ListMeta{
+	ListMeta: types.ListMeta{
 		TotalItems: 0,
 	},
 }
@@ -137,14 +139,14 @@ func GetNodeEvents(client kubernetes.Interface, dsQuery *dataselect.DataSelectQu
 	}
 
 	eventsInvUID, err := client.CoreV1().Events(v1.NamespaceAll).Search(scheme, node)
-	_, criticalError := errors.HandleError(err)
+	_, criticalError := errors.ExtractErrors(err)
 	if criticalError != nil {
 		return &eventList, criticalError
 	}
 
-	node.UID = types.UID(node.Name)
+	node.UID = apimachinery.UID(node.Name)
 	eventsInvName, err := client.CoreV1().Events(v1.NamespaceAll).Search(scheme, node)
-	_, criticalError = errors.HandleError(err)
+	_, criticalError = errors.ExtractErrors(err)
 	if criticalError != nil {
 		return &eventList, criticalError
 	}
@@ -155,7 +157,7 @@ func GetNodeEvents(client kubernetes.Interface, dsQuery *dataselect.DataSelectQu
 
 // GetNamespaceEvents gets events associated to a namespace with given name.
 func GetNamespaceEvents(client kubernetes.Interface, dsQuery *dataselect.DataSelectQuery, namespace string) (common.EventList, error) {
-	events, _ := client.CoreV1().Events(namespace).List(context.TODO(), api.ListEverything)
+	events, _ := client.CoreV1().Events(namespace).List(context.TODO(), helpers.ListEverything)
 	return CreateEventList(FillEventsType(events.Items), dsQuery), nil
 }
 
@@ -189,8 +191,8 @@ func ToEvent(event v1.Event) common.Event {
 	}
 
 	result := common.Event{
-		ObjectMeta:         api.NewObjectMeta(event.ObjectMeta),
-		TypeMeta:           api.NewTypeMeta(api.ResourceKindEvent),
+		ObjectMeta:         types.NewObjectMeta(event.ObjectMeta),
+		TypeMeta:           types.NewTypeMeta(types.ResourceKindEvent),
 		Message:            event.Message,
 		SourceComponent:    event.Source.Component,
 		SourceHost:         event.Source.Host,
@@ -212,7 +214,7 @@ func ToEvent(event v1.Event) common.Event {
 func GetResourceEvents(client kubernetes.Interface, dsQuery *dataselect.DataSelectQuery, namespace, name string) (
 	*common.EventList, error) {
 	resourceEvents, err := GetEvents(client, namespace, name)
-	nonCriticalErrors, criticalError := errors.HandleError(err)
+	nonCriticalErrors, criticalError := errors.ExtractErrors(err)
 	if criticalError != nil {
 		return EmptyEventList, err
 	}
@@ -226,7 +228,7 @@ func GetResourceEvents(client kubernetes.Interface, dsQuery *dataselect.DataSele
 func CreateEventList(events []v1.Event, dsQuery *dataselect.DataSelectQuery) common.EventList {
 	eventList := common.EventList{
 		Events:   make([]common.Event, 0),
-		ListMeta: api.ListMeta{TotalItems: len(events)},
+		ListMeta: types.ListMeta{TotalItems: len(events)},
 	}
 
 	events = fromCells(dataselect.GenericDataSelect(toCells(events), dsQuery))

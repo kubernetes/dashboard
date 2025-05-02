@@ -20,8 +20,9 @@ import (
 
 	v1 "k8s.io/api/core/v1"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
-	"k8s.io/dashboard/api/pkg/api"
+
 	"k8s.io/dashboard/api/pkg/resource/dataselect"
+	"k8s.io/dashboard/types"
 )
 
 func TestToConfigMapList(t *testing.T) {
@@ -35,10 +36,10 @@ func TestToConfigMapList(t *testing.T) {
 				{Data: map[string]string{"app": "my-name"}, ObjectMeta: metaV1.ObjectMeta{Name: "foo"}},
 			},
 			&ConfigMapList{
-				ListMeta: api.ListMeta{TotalItems: 1},
+				ListMeta: types.ListMeta{TotalItems: 1},
 				Items: []ConfigMap{{
-					TypeMeta:   api.TypeMeta{Kind: "configmap"},
-					ObjectMeta: api.ObjectMeta{Name: "foo"},
+					TypeMeta:   types.TypeMeta{Kind: "configmap"},
+					ObjectMeta: types.ObjectMeta{Name: "foo"},
 				}},
 			},
 		},

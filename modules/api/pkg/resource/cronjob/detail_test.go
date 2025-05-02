@@ -22,9 +22,9 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/client-go/kubernetes/fake"
 
-	"k8s.io/dashboard/api/pkg/api"
 	"k8s.io/dashboard/api/pkg/resource/cronjob"
 	"k8s.io/dashboard/api/pkg/resource/dataselect"
+	"k8s.io/dashboard/types"
 )
 
 func TestGetCronJobDetail(t *testing.T) {
@@ -50,12 +50,12 @@ func TestGetCronJobDetail(t *testing.T) {
 			},
 			&cronjob.CronJobDetail{
 				CronJob: cronjob.CronJob{
-					ObjectMeta: api.ObjectMeta{
+					ObjectMeta: types.ObjectMeta{
 						Name:      name,
 						Namespace: namespace,
 						Labels:    labels,
 					},
-					TypeMeta:        api.TypeMeta{Kind: api.ResourceKindCronJob},
+					TypeMeta:        types.TypeMeta{Kind: types.ResourceKindCronJob},
 					Suspend:         &suspend,
 					ContainerImages: []string{},
 				},

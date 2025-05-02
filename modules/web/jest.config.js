@@ -14,13 +14,17 @@
 
 const config = {
   rootDir: './src',
-  coverageDirectory: './coverage',
+  coverageDirectory: '../../../.tmp',
   preset: "jest-preset-angular/presets/defaults",
   setupFilesAfterEnv: ["<rootDir>/test.base.ts"],
-  globals: {
-    'ts-jest': {
-      tsconfig: './tsconfig.spec.json',
-    },
+  transform: {
+    '^.+\\.(ts|tsx|js|html|svg|mjs)$': [
+      'jest-preset-angular', {
+        tsconfig: 'tsconfig.spec.json',
+        useESM: true,
+        stringifyContentPathRegex: '\\.(html|svg)$',
+      }
+    ]
   },
   moduleNameMapper: {
     "^@api/(.*)$": "<rootDir>/typings/$1",

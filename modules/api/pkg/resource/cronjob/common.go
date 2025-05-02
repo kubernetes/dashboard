@@ -17,10 +17,10 @@ package cronjob
 import (
 	batch "k8s.io/api/batch/v1"
 
-	"k8s.io/dashboard/api/pkg/api"
 	metricapi "k8s.io/dashboard/api/pkg/integration/metric/api"
 	"k8s.io/dashboard/api/pkg/resource/common"
 	"k8s.io/dashboard/api/pkg/resource/dataselect"
+	"k8s.io/dashboard/types"
 )
 
 // The code below allows to perform complex data section on []batch.CronJob
@@ -44,7 +44,7 @@ func (self CronJobCell) GetProperty(name dataselect.PropertyName) dataselect.Com
 func (self CronJobCell) GetResourceSelector() *metricapi.ResourceSelector {
 	return &metricapi.ResourceSelector{
 		Namespace:    self.ObjectMeta.Namespace,
-		ResourceType: api.ResourceKindCronJob,
+		ResourceType: types.ResourceKindCronJob,
 		ResourceName: self.ObjectMeta.Name,
 		UID:          self.UID,
 	}

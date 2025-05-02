@@ -321,7 +321,7 @@ func TestGetLogs(t *testing.T) {
 					LineNum:      1,
 				},
 				OffsetFrom:      -10,
-				OffsetTo:        -8, // request indices ouside (beginning) of available log lines
+				OffsetTo:        -8, // request indices outside (beginning) of available log lines
 				LogFilePosition: "end",
 			},
 			&logs.LogDetails{

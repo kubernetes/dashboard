@@ -15,9 +15,10 @@
 package validation
 
 import (
-	"log"
-
 	api "k8s.io/api/core/v1"
+	"k8s.io/klog/v2"
+
+	"k8s.io/dashboard/api/pkg/args"
 )
 
 // ProtocolValiditySpec is a specification of protocol validation request.
@@ -37,13 +38,13 @@ type ProtocolValidity struct {
 
 // ValidateProtocol validates protocol based on whether created service is set to NodePort or NodeBalancer type.
 func ValidateProtocol(spec *ProtocolValiditySpec) *ProtocolValidity {
-	log.Printf("Validating %s protocol for service with external set to %v", spec.Protocol, spec.IsExternal)
+	klog.V(args.LogLevelVerbose).Infof("Validating %s protocol for service with external set to %v", spec.Protocol, spec.IsExternal)
 
 	isValid := true
 	if spec.Protocol == api.ProtocolUDP && spec.IsExternal {
 		isValid = false
 	}
 
-	log.Printf("Validation result for %s protocol is %v", spec.Protocol, isValid)
+	klog.V(args.LogLevelVerbose).Infof("Validation result for %s protocol is %v", spec.Protocol, isValid)
 	return &ProtocolValidity{Valid: isValid}
 }

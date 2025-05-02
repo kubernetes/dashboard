@@ -18,34 +18,18 @@ import (
 	"bytes"
 	"encoding/json"
 	"net/http"
-	"reflect"
 	"strings"
 	"testing"
 
 	"github.com/emicklei/go-restful/v3"
-	"k8s.io/client-go/kubernetes/fake"
+	"github.com/spf13/pflag"
+	"k8s.io/klog/v2"
 
 	"k8s.io/dashboard/api/pkg/args"
-	"k8s.io/dashboard/api/pkg/auth"
-	authApi "k8s.io/dashboard/api/pkg/auth/api"
-	"k8s.io/dashboard/api/pkg/auth/jwe"
-	"k8s.io/dashboard/api/pkg/client"
-	"k8s.io/dashboard/api/pkg/settings"
-	"k8s.io/dashboard/api/pkg/sync"
 )
 
-func getTokenManager() authApi.TokenManager {
-	c := fake.NewSimpleClientset()
-	syncManager := sync.NewSynchronizerManager(c)
-	holder := jwe.NewRSAKeyHolder(syncManager.Secret("", ""))
-	return jwe.NewJWETokenManager(holder)
-}
-
 func TestCreateHTTPAPIHandler(t *testing.T) {
-	cManager := client.NewClientManager("", "http://localhost:8080")
-	authManager := auth.NewAuthManager(cManager, getTokenManager(), authApi.AuthenticationModes{}, true)
-	sManager := settings.NewSettingsManager()
-	_, err := CreateHTTPAPIHandler(nil, cManager, authManager, sManager)
+	_, err := CreateHTTPAPIHandler(nil)
 	if err != nil {
 		t.Fatal("CreateHTTPAPIHandler() cannot create HTTP API handler")
 	}
@@ -81,69 +65,48 @@ func TestShouldDoCsrfValidation(t *testing.T) {
 	}
 }
 
-func TestMapUrlToResource(t *testing.T) {
-	cases := []struct {
-		url, expected string
-	}{
-		{
-			"/api/v1/pod",
-			"pod",
-		},
-		{
-			"/api/v1/node",
-			"node",
-		},
-	}
-	for _, c := range cases {
-		actual := mapUrlToResource(c.url)
-		if !reflect.DeepEqual(actual, &c.expected) {
-			t.Errorf("mapUrlToResource(%#v) returns %#v, expected %#v", c.url, actual, c.expected)
-		}
-	}
-}
-
 func TestFormatRequestLog(t *testing.T) {
 	cases := []struct {
 		method      string
 		uri         string
 		content     map[string]string
 		expected    string
-		apiLogLevel string
+		apiLogLevel klog.Level
 	}{
 		{
 			"PUT",
 			"/api/v1/pod",
 			map[string]string{},
 			"Incoming HTTP/1.1 PUT /api/v1/pod request",
-			"DEFAULT",
+			args.LogLevelDefault,
 		},
 		{
 			"PUT",
 			"/api/v1/pod",
 			map[string]string{},
 			"",
-			"NONE",
+			args.LogLevelMinimal,
 		},
 		{
 			"POST",
 			"/api/v1/login",
 			map[string]string{"password": "abc123"},
-			"Incoming HTTP/1.1 POST /api/v1/login request from : { contents hidden }",
-			"DEFAULT",
+			"Incoming HTTP/1.1 POST /api/v1/login request from { content hidden }: { content hidden }",
+			args.LogLevelDefault,
 		},
 		{
 			"POST",
 			"/api/v1/login",
 			map[string]string{},
 			"",
-			"NONE",
+			args.LogLevelMinimal,
 		},
 		{
 			"POST",
 			"/api/v1/login",
 			map[string]string{"password": "abc123"},
 			"Incoming HTTP/1.1 POST /api/v1/login request from : {\"password\":\"abc123\"}",
-			"DEBUG",
+			args.LogLevelDebug,
 		},
 	}
 
@@ -157,8 +120,7 @@ func TestFormatRequestLog(t *testing.T) {
 			t.Error("Cannot mockup request")
 		}
 
-		builder := args.GetHolderBuilder()
-		builder.SetAPILogLevel(c.apiLogLevel)
+		_ = pflag.Set("v", c.apiLogLevel.String())
 
 		var restfulRequest restful.Request
 		restfulRequest.Request = req

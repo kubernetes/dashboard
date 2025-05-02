@@ -13,29 +13,23 @@
 // limitations under the License.
 
 import {Injectable} from '@angular/core';
-import {CanActivate, Router, UrlTree} from '@angular/router';
-import {LoginStatus} from '@api/root.api';
+import {Router, UrlTree} from '@angular/router';
 import {Observable, of} from 'rxjs';
-import {catchError, switchMap, take} from 'rxjs/operators';
 import {AuthService} from '../global/authentication';
 
 @Injectable()
-export class LoginGuard implements CanActivate {
-  constructor(private readonly authService_: AuthService, private readonly router_: Router) {}
+export class LoginGuard {
+  constructor(
+    private readonly _authService: AuthService,
+    private readonly _router: Router
+  ) {}
 
   canActivate(): Observable<boolean | UrlTree> {
-    return this.authService_
-      .getLoginStatus()
-      .pipe(take(1))
-      .pipe(
-        switchMap((loginStatus: LoginStatus) => {
-          if (!this.authService_.isAuthenticationEnabled(loginStatus)) {
-            return this.router_.navigate(['workloads']);
-          }
+    // If user is already authenticated do not allow login view access.
+    if (this._authService.isAuthenticated()) {
+      return of(this._router.parseUrl('workloads'));
+    }
 
-          return of(true);
-        })
-      )
-      .pipe(catchError(_ => this.router_.navigate(['workloads'])));
+    return of(true);
   }
 }

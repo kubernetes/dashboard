@@ -16,25 +16,26 @@ package statefulset
 
 import (
 	"context"
-	"log"
 
 	apps "k8s.io/api/apps/v1"
 	v1 "k8s.io/api/core/v1"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/client-go/kubernetes"
-	"k8s.io/dashboard/api/pkg/errors"
+	"k8s.io/klog/v2"
+
 	metricapi "k8s.io/dashboard/api/pkg/integration/metric/api"
 	"k8s.io/dashboard/api/pkg/resource/common"
 	"k8s.io/dashboard/api/pkg/resource/dataselect"
 	"k8s.io/dashboard/api/pkg/resource/event"
 	"k8s.io/dashboard/api/pkg/resource/pod"
+	"k8s.io/dashboard/errors"
 )
 
 // GetStatefulSetPods return list of pods targeting pet set.
 func GetStatefulSetPods(client kubernetes.Interface, metricClient metricapi.MetricClient,
 	dsQuery *dataselect.DataSelectQuery, name, namespace string) (*pod.PodList, error) {
 
-	log.Printf("Getting replication controller %s pods in namespace %s", name, namespace)
+	klog.V(4).Infof("Getting replication controller %s pods in namespace %s", name, namespace)
 
 	pods, err := getRawStatefulSetPods(client, name, namespace)
 	if err != nil {
@@ -42,7 +43,7 @@ func GetStatefulSetPods(client kubernetes.Interface, metricClient metricapi.Metr
 	}
 
 	events, err := event.GetPodsEvents(client, namespace, pods)
-	nonCriticalErrors, criticalError := errors.HandleError(err)
+	nonCriticalErrors, criticalError := errors.ExtractErrors(err)
 	if criticalError != nil {
 		return nil, criticalError
 	}

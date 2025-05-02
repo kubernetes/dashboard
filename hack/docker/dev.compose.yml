@@ -1,0 +1,117 @@
+# Copyright 2017 The Kubernetes Authors.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+# http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+services:
+  gateway:
+    container_name: kong-gateway
+    image: kong/kong-gateway:3.8
+    environment:
+      - "KONG_DATABASE=off"
+      - "KONG_PROXY_ACCESS_LOG=/dev/stdout"
+      - "KONG_DECLARATIVE_CONFIG=/kong/declarative/kong.yml"
+      - "KONG_ADMIN_ACCESS_LOG=/dev/stdout"
+      - "KONG_PROXY_ERROR_LOG=/dev/stderr"
+      - "KONG_ADMIN_ERROR_LOG=/dev/stderr"
+      - "KONG_DNS_ORDER=LAST,A,SRV,CNAME"
+    volumes:
+      - ${PWD}/hack/gateway/dev.kong.yml:/kong/declarative/kong.yml
+    ports:
+      - "9000:8000"
+
+  auth:
+    container_name: dashboard-auth
+    build:
+      context: ../../modules
+      dockerfile: auth/dev.Dockerfile
+    command:
+      - "--kubeconfig=${KUBECONFIG:?}"
+    volumes:
+      - ${PWD}/modules/common:/workspace/common # Required - Common dir watched by AIR
+      - ${PWD}/modules/auth/pkg:/workspace/auth/pkg # Required - Source dir watched by AIR
+      - ${PWD}/modules/auth/api:/workspace/auth/api # Required - Source dir watched by AIR
+      - ${PWD}/modules/auth/main.go:/workspace/auth/main.go # Required - Entry file watched by AIR
+      - ${PWD}/modules/auth/.air.toml:/workspace/auth/.air.toml # Required - AIR configuration
+      - ${KUBECONFIG:?}:${KUBECONFIG:?} # Required - tmp kubeconfig path resolves to $DASHBOARD_DIR/.tmp/kubeconfig
+    tmpfs:
+      - /tmp
+
+  api:
+    container_name: dashboard-api
+    build:
+      context: ../../modules
+      dockerfile: api/dev.Dockerfile
+    command:
+      --kubeconfig=${KUBECONFIG:?}
+      --sidecar-host=${SIDECAR_HOST:?}
+      --v=4
+    volumes:
+      - ${PWD}/modules/common:/workspace/common # Required - Common dir watched by AIR
+      - ${PWD}/modules/api/pkg:/workspace/api/pkg # Required - Source dir watched by AIR
+      - ${PWD}/modules/api/main.go:/workspace/api/main.go # Required - Entry file watched by AIR
+      - ${PWD}/modules/api/.air.toml:/workspace/api/.air.toml # Required - AIR configuration
+      - ${KUBECONFIG:?}:${KUBECONFIG:?} # Required - tmp kubeconfig path resolves to $DASHBOARD_DIR/.tmp/kubeconfig
+    tmpfs:
+      - /tmp
+
+  web-go:
+    container_name: dashboard-web-go
+    build:
+      context: ../../modules
+      dockerfile: web/dev.go.Dockerfile
+    command:
+      - "--kubeconfig=${KUBECONFIG:?}"
+      - "--system-banner='Local\ dev\ environment'"
+      - "--system-banner-severity=${SYSTEM_BANNER_SEVERITY:?}"
+    volumes:
+      - ${PWD}/modules/common:/workspace/common # Required - Common dir watched by AIR
+      - ${PWD}/modules/web/pkg:/workspace/web/pkg # Required - Source dir watched by AIR
+      - ${PWD}/modules/web/main.go:/workspace/web/main.go # Required - Entry file watched by AIR
+      - ${PWD}/modules/web/.air.toml:/workspace/web/.air.toml # Required - AIR configuration
+      - ${KUBECONFIG:?}:${KUBECONFIG:?} # Required - tmp kubeconfig path resolves to $DASHBOARD_DIR/.tmp/kubeconfig
+    tmpfs:
+      - /tmp
+
+  web-angular:
+    container_name: dashboard-web-angular
+    build:
+      context: ../../modules/web
+      dockerfile: dev.web.Dockerfile
+    volumes:
+      - ${PWD}/modules/web:/workspace
+    ports:
+      - "8080:8080"
+
+  scraper:
+    container_name: metrics-scraper
+    build:
+      context: ../../modules
+      dockerfile: metrics-scraper/dev.Dockerfile
+    command:
+      --kubeconfig=${KUBECONFIG:?}
+      --metric-resolution=5s
+      --metric-duration=10m
+    volumes:
+      - ${PWD}/modules/common:/workspace/common # Required - Common dir watched by AIR
+      - ${PWD}/modules/metrics-scraper/pkg:/workspace/metrics-scraper/pkg # Required - Source dir watched by AIR
+      - ${PWD}/modules/metrics-scraper/main.go:/workspace/metrics-scraper/main.go # Required - Entry file watched by AIR
+      - ${PWD}/modules/metrics-scraper/.air.toml:/workspace/metrics-scraper/.air.toml # Required - AIR configuration
+      - ${KUBECONFIG:?}:${KUBECONFIG:?} # Required - tmp kubeconfig path resolves to $DASHBOARD_DIR/.tmp/kubeconfig
+    shm_size: 1G
+    tmpfs:
+      - /tmp
+
+networks:
+  default:
+    name: kind
+    external: true

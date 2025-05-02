@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import {HttpClientTestingModule, HttpTestingController} from '@angular/common/http/testing';
-import {Component, CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
+import {Component, CUSTOM_ELEMENTS_SCHEMA, InjectionToken} from '@angular/core';
 import {TestBed, waitForAsync} from '@angular/core/testing';
 import {MatCardModule} from '@angular/material/card';
 import {MatChipsModule} from '@angular/material/chips';
@@ -33,8 +33,12 @@ import {ConfigService} from '@common/services/global/config';
 import {MESSAGES, MESSAGES_DI_TOKEN} from '../../../../index.messages';
 
 import {ServiceDetailComponent} from './component';
+import {KdStateService} from '@common/services/global/state';
+import {CONFIG_DI_TOKEN} from '../../../../index.config';
+import {IConfig} from '@api/root.ui';
 
 const maxiName = 'my-maxi-service';
+const MOCK_CONFIG_DI_TOKEN = new InjectionToken<IConfig>('kd.config');
 
 @Component({selector: 'test', templateUrl: './template.html'})
 class MaxiTestComponent {
@@ -149,7 +153,12 @@ describe('ServiceDetailComponent', () => {
         HttpClientTestingModule,
         RouterModule,
       ],
-      providers: [ConfigService, {provide: MESSAGES_DI_TOKEN, useValue: MESSAGES}],
+      providers: [
+        ConfigService,
+        KdStateService,
+        {provide: MESSAGES_DI_TOKEN, useValue: MESSAGES},
+        {provide: CONFIG_DI_TOKEN, useValue: MOCK_CONFIG_DI_TOKEN},
+      ],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
     }).compileComponents();
     httpMock = TestBed.inject(HttpTestingController);
@@ -159,7 +168,11 @@ describe('ServiceDetailComponent', () => {
   beforeEach(() => {
     configService.init();
     const configRequest = httpMock.expectOne('config');
-    const config: AppConfig = {serverTime: new Date().getTime()};
+    const config: AppConfig = {
+      serverTime: new Date().getTime(),
+      version: '0.0.0-dev',
+      userAgent: 'dashboard-web-go:0.0.0-dev',
+    };
     configRequest.flush(config);
   });
 

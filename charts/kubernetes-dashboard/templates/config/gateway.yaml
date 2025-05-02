@@ -1,0 +1,69 @@
+# Copyright 2017 The Kubernetes Authors.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+{{- if and (eq .Values.app.mode "dashboard") (.Values.kong.enabled) }}
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  labels:
+    {{- include "kubernetes-dashboard.labels" . | nindent 4 }}
+  annotations:
+    {{- include "kubernetes-dashboard.annotations" . | nindent 4 }}
+  name: {{ .Values.kong.dblessConfig.configMap }}
+data:
+  kong.yml: |
+    _format_version: "3.0"
+    services:
+      - name: auth
+        host: {{ template "kubernetes-dashboard.fullname" . }}-{{ .Values.auth.role }}
+        port: 8000
+        protocol: http
+        routes:
+          - name: authLogin
+            paths:
+              - /api/v1/login
+            strip_path: false
+          - name: authCsrf
+            paths:
+              - /api/v1/csrftoken/login
+            strip_path: false
+          - name: authMe
+            paths:
+              - /api/v1/me
+            strip_path: false
+      - name: api
+        host: {{ template "kubernetes-dashboard.fullname" . }}-{{ .Values.api.role }}
+        port: 8000
+        protocol: http
+        routes:
+          - name: api
+            paths:
+              - /api
+            strip_path: false
+          - name: metrics
+            paths:
+              - /metrics
+            strip_path: false
+      - name: web
+        host: {{ template "kubernetes-dashboard.fullname" . }}-{{ .Values.web.role }}
+        port: 8000
+        protocol: http
+        routes:
+          - name: root
+            paths:
+              - /
+            strip_path: false
+
+{{- end -}}

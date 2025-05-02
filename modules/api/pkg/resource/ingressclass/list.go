@@ -15,19 +15,19 @@
 package ingressclass
 
 import (
-	"log"
-
 	networkingv1 "k8s.io/api/networking/v1"
 	"k8s.io/client-go/kubernetes"
-	"k8s.io/dashboard/api/pkg/api"
-	"k8s.io/dashboard/api/pkg/errors"
+	"k8s.io/klog/v2"
+
 	"k8s.io/dashboard/api/pkg/resource/common"
 	"k8s.io/dashboard/api/pkg/resource/dataselect"
+	"k8s.io/dashboard/errors"
+	"k8s.io/dashboard/types"
 )
 
 // IngressClassList holds a list of Ingress Class objects in the cluster.
 type IngressClassList struct {
-	ListMeta api.ListMeta   `json:"listMeta"`
+	ListMeta types.ListMeta `json:"listMeta"`
 	Items    []IngressClass `json:"items"`
 
 	// List of non-critical errors, that occurred during resource retrieval.
@@ -36,15 +36,15 @@ type IngressClassList struct {
 
 // IngressClass is a representation of a Kubernetes Ingress Class object.
 type IngressClass struct {
-	ObjectMeta api.ObjectMeta `json:"objectMeta"`
-	TypeMeta   api.TypeMeta   `json:"typeMeta"`
-	Controller string         `json:"controller"`
+	ObjectMeta types.ObjectMeta `json:"objectMeta"`
+	TypeMeta   types.TypeMeta   `json:"typeMeta"`
+	Controller string           `json:"controller"`
 }
 
 // GetIngressClassList returns a list of all Ingress class objects in the cluster.
 func GetIngressClassList(client kubernetes.Interface, dsQuery *dataselect.DataSelectQuery) (
 	*IngressClassList, error) {
-	log.Print("Getting list of ingress classes in the cluster")
+	klog.V(4).Infof("Getting list of ingress classes in the cluster")
 
 	channels := &common.ResourceChannels{
 		IngressClassList: common.GetIngressClassListChannel(client, 1),
@@ -58,7 +58,7 @@ func GetIngressClassListFromChannels(channels *common.ResourceChannels,
 	dsQuery *dataselect.DataSelectQuery) (*IngressClassList, error) {
 	ingressClasses := <-channels.IngressClassList.List
 	err := <-channels.IngressClassList.Error
-	nonCriticalErrors, criticalError := errors.HandleError(err)
+	nonCriticalErrors, criticalError := errors.ExtractErrors(err)
 	if criticalError != nil {
 		return nil, criticalError
 	}
@@ -71,13 +71,13 @@ func toIngressClassList(ingressClasses []networkingv1.IngressClass, nonCriticalE
 
 	ingressClassList := &IngressClassList{
 		Items:    make([]IngressClass, 0),
-		ListMeta: api.ListMeta{TotalItems: len(ingressClasses)},
+		ListMeta: types.ListMeta{TotalItems: len(ingressClasses)},
 		Errors:   nonCriticalErrors,
 	}
 
 	ingressClassCells, filteredTotal := dataselect.GenericDataSelectWithFilter(toCells(ingressClasses), dsQuery)
 	ingressClasses = fromCells(ingressClassCells)
-	ingressClassList.ListMeta = api.ListMeta{TotalItems: filteredTotal}
+	ingressClassList.ListMeta = types.ListMeta{TotalItems: filteredTotal}
 
 	for _, ingressClass := range ingressClasses {
 		ingressClassList.Items = append(ingressClassList.Items, toIngressClass(&ingressClass))
@@ -88,8 +88,8 @@ func toIngressClassList(ingressClasses []networkingv1.IngressClass, nonCriticalE
 
 func toIngressClass(ingressClass *networkingv1.IngressClass) IngressClass {
 	return IngressClass{
-		ObjectMeta: api.NewObjectMeta(ingressClass.ObjectMeta),
-		TypeMeta:   api.NewTypeMeta(api.ResourceKindIngressClass),
+		ObjectMeta: types.NewObjectMeta(ingressClass.ObjectMeta),
+		TypeMeta:   types.NewTypeMeta(types.ResourceKindIngressClass),
 		Controller: ingressClass.Spec.Controller,
 	}
 }

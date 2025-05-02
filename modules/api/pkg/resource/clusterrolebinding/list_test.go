@@ -20,8 +20,9 @@ import (
 
 	rbac "k8s.io/api/rbac/v1"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
-	"k8s.io/dashboard/api/pkg/api"
+
 	"k8s.io/dashboard/api/pkg/resource/dataselect"
+	"k8s.io/dashboard/types"
 )
 
 func TestToRbacClusterRoleBindingLists(t *testing.T) {
@@ -47,10 +48,10 @@ func TestToRbacClusterRoleBindingLists(t *testing.T) {
 				},
 			},
 			&ClusterRoleBindingList{
-				ListMeta: api.ListMeta{TotalItems: 1},
+				ListMeta: types.ListMeta{TotalItems: 1},
 				Items: []ClusterRoleBinding{{
-					ObjectMeta: api.ObjectMeta{Name: "clusterRoleBinding", Namespace: ""},
-					TypeMeta:   api.TypeMeta{Kind: api.ResourceKindClusterRoleBinding},
+					ObjectMeta: types.ObjectMeta{Name: "clusterRoleBinding", Namespace: ""},
+					TypeMeta:   types.TypeMeta{Kind: types.ResourceKindClusterRoleBinding},
 				}},
 			},
 		},

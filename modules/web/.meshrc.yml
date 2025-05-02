@@ -1,0 +1,280 @@
+# Copyright 2017 The Kubernetes Authors.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+# http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+sources:
+  - name: api
+    handler:
+      openapi:
+        source: ../api/schema/swagger.json
+    transforms:
+      - replaceField:
+          typeDefs: |
+            enum ContainerState {
+              Waiting
+              Running
+              Terminated
+              Failed
+              Unknown
+            }
+            type Map {
+              map: ObjMap!
+            }
+            type StringWrapper {
+              string: String!
+              optionalString: String
+            }
+            type StateWrapper {
+              state: ContainerState!
+            }
+          replacements:
+            - from:
+                type: persistentvolume_PersistentVolume
+                field: capacity
+              to:
+                type: Map
+                field: map
+            - from:
+                type: persistentvolume_PersistentVolumeDetail
+                field: capacity
+              to:
+                type: Map
+                field: map
+            - from:
+                type: persistentvolumeclaim_PersistentVolumeClaim
+                field: capacity
+              to:
+                type: Map
+                field: map
+            - from:
+                type: persistentvolumeclaim_PersistentVolumeClaimDetail
+                field: capacity
+              to:
+                type: Map
+                field: map
+            - from:
+                type: v1_ResourceRequirements
+                field: limits
+              to:
+                type: Map
+                field: map
+            - from:
+                type: v1_ResourceFieldSelector
+                field: divisor
+              to:
+                type: StringWrapper
+                field: optionalString
+            - from:
+                type: v1_ResourceRequirements
+                field: requests
+              to:
+                type: Map
+                field: map
+            - from:
+                type: v1_VolumeResourceRequirements
+                field: limits
+              to:
+                type: Map
+                field: map
+            - from:
+                type: v1_VolumeResourceRequirements
+                field: requests
+              to:
+                type: Map
+                field: map
+            - from:
+                type: resourcequota_ResourceQuotaDetail
+                field: statusList
+              to:
+                type: Map
+                field: map
+            - from:
+                type: v1_ContainerStatus
+                field: allocatedResources
+              to:
+                type: Map
+                field: map
+            - from:
+                type: pod_ContainerStatus
+                field: state
+              to:
+                type: StateWrapper
+                field: state
+            - from:
+                type: pod_Container
+                field: state
+              to:
+                type: StateWrapper
+                field: state
+            - from:
+                type: deployment_AppDeploymentSpec
+                field: cpuRequirement
+              to:
+                type: StringWrapper
+                field: string
+            - from:
+                type: deployment_AppDeploymentSpec
+                field: memoryRequirement
+              to:
+                type: StringWrapper
+                field: string
+            - from:
+                type: v1_EmptyDirVolumeSource
+                field: sizeLimit
+              to:
+                type: StringWrapper
+                field: optionalString
+            - from:
+                type: common_Condition
+                field: lastProbeTime
+              to:
+                type: StringWrapper
+                field: string
+            - from:
+                type: common_Condition
+                field: lastTransitionTime
+              to:
+                type: StringWrapper
+                field: string
+            - from:
+                type: common_Event
+                field: firstSeen
+              to:
+                type: StringWrapper
+                field: string
+            - from:
+                type: common_Event
+                field: lastSeen
+              to:
+                type: StringWrapper
+                field: string
+            - from:
+                type: cronjob_CronJob
+                field: lastSchedule
+              to:
+                type: StringWrapper
+                field: string
+            - from:
+                type: cronjob_CronJobDetail
+                field: lastSchedule
+              to:
+                type: StringWrapper
+                field: string
+            - from:
+                type: horizontalpodautoscaler_HorizontalPodAutoscalerDetail
+                field: lastScaleTime
+              to:
+                type: StringWrapper
+                field: string
+            - from:
+                type: v1_Taint
+                field: timeAdded
+              to:
+                type: StringWrapper
+                field: optionalString
+            - from:
+                type: v1_ContainerStateRunning
+                field: startedAt
+              to:
+                type: StringWrapper
+                field: optionalString
+            - from:
+                type: v1_ContainerStateTerminated
+                field: finishedAt
+              to:
+                type: StringWrapper
+                field: optionalString
+            - from:
+                type: v1_ContainerStateTerminated
+                field: startedAt
+              to:
+                type: StringWrapper
+                field: optionalString
+            - from:
+                type: v1_ObjectMeta
+                field: creationTimestamp
+              to:
+                type: StringWrapper
+                field: optionalString
+            - from:
+                type: v1_ObjectMeta
+                field: deletionTimestamp
+              to:
+                type: StringWrapper
+                field: optionalString
+            - from:
+                type: v1_ManagedFieldsEntry
+                field: time
+              to:
+                type: StringWrapper
+                field: optionalString
+            - from:
+                type: types_ObjectMeta
+                field: creationTimestamp
+              to:
+                type: StringWrapper
+                field: optionalString
+            - from:
+                type: deployment_RollingUpdateStrategy
+                field: maxSurge
+              to:
+                type: StringWrapper
+                field: string
+            - from:
+                type: deployment_RollingUpdateStrategy
+                field: maxUnavailable
+              to:
+                type: StringWrapper
+                field: string
+            - from:
+                type: poddisruptionbudget_PodDisruptionBudget
+                field: minAvailable
+              to:
+                type: StringWrapper
+                field: string
+            - from:
+                type: poddisruptionbudget_PodDisruptionBudget
+                field: maxUnavailable
+              to:
+                type: StringWrapper
+                field: string
+            - from:
+                type: poddisruptionbudget_PodDisruptionBudgetDetail
+                field: minAvailable
+              to:
+                type: StringWrapper
+                field: string
+            - from:
+                type: poddisruptionbudget_PodDisruptionBudgetDetail
+                field: maxUnavailable
+              to:
+                type: StringWrapper
+                field: string
+            - from:
+                type: v1_NetworkPolicyPort
+                field: port
+              to:
+                type: StringWrapper
+                field: optionalString
+            - from:
+                type: v1_HTTPGetAction
+                field: port
+              to:
+                type: StringWrapper
+                field: string
+            - from:
+                type: v1_TCPSocketAction
+                field: port
+              to:
+                type: StringWrapper
+                field: string

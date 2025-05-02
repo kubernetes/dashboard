@@ -16,10 +16,10 @@ package service
 
 import (
 	client "k8s.io/client-go/kubernetes"
-	"k8s.io/dashboard/api/pkg/errors"
 	"k8s.io/dashboard/api/pkg/resource/common"
 	"k8s.io/dashboard/api/pkg/resource/dataselect"
 	"k8s.io/dashboard/api/pkg/resource/ingress"
+	"k8s.io/dashboard/errors"
 )
 
 func GetServiceIngressList(client client.Interface, dsQuery *dataselect.DataSelectQuery,
@@ -31,7 +31,7 @@ func GetServiceIngressList(client client.Interface, dsQuery *dataselect.DataSele
 
 	ingressList := <-channels.IngressList.List
 	err := <-channels.IngressList.Error
-	nonCriticalErrors, criticalError := errors.HandleError(err)
+	nonCriticalErrors, criticalError := errors.ExtractErrors(err)
 	if criticalError != nil {
 		return nil, criticalError
 	}

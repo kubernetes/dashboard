@@ -15,19 +15,19 @@
 package persistentvolume
 
 import (
-	"log"
-
 	v1 "k8s.io/api/core/v1"
 	"k8s.io/client-go/kubernetes"
-	"k8s.io/dashboard/api/pkg/api"
-	"k8s.io/dashboard/api/pkg/errors"
+	"k8s.io/klog/v2"
+
 	"k8s.io/dashboard/api/pkg/resource/common"
 	"k8s.io/dashboard/api/pkg/resource/dataselect"
+	"k8s.io/dashboard/errors"
+	"k8s.io/dashboard/types"
 )
 
 // PersistentVolumeList contains a list of Persistent Volumes in the cluster.
 type PersistentVolumeList struct {
-	ListMeta api.ListMeta       `json:"listMeta"`
+	ListMeta types.ListMeta     `json:"listMeta"`
 	Items    []PersistentVolume `json:"items"`
 
 	// List of non-critical errors, that occurred during resource retrieval.
@@ -36,8 +36,8 @@ type PersistentVolumeList struct {
 
 // PersistentVolume provides the simplified presentation layer view of Kubernetes Persistent Volume resource.
 type PersistentVolume struct {
-	ObjectMeta    api.ObjectMeta                   `json:"objectMeta"`
-	TypeMeta      api.TypeMeta                     `json:"typeMeta"`
+	ObjectMeta    types.ObjectMeta                 `json:"objectMeta"`
+	TypeMeta      types.TypeMeta                   `json:"typeMeta"`
 	Capacity      v1.ResourceList                  `json:"capacity"`
 	AccessModes   []v1.PersistentVolumeAccessMode  `json:"accessModes"`
 	ReclaimPolicy v1.PersistentVolumeReclaimPolicy `json:"reclaimPolicy"`
@@ -50,7 +50,7 @@ type PersistentVolume struct {
 
 // GetPersistentVolumeList returns a list of all Persistent Volumes in the cluster.
 func GetPersistentVolumeList(client kubernetes.Interface, dsQuery *dataselect.DataSelectQuery) (*PersistentVolumeList, error) {
-	log.Print("Getting list persistent volumes")
+	klog.V(4).Infof("Getting list persistent volumes")
 	channels := &common.ResourceChannels{
 		PersistentVolumeList: common.GetPersistentVolumeListChannel(client, 1),
 	}
@@ -64,7 +64,7 @@ func GetPersistentVolumeListFromChannels(channels *common.ResourceChannels, dsQu
 	persistentVolumes := <-channels.PersistentVolumeList.List
 	err := <-channels.PersistentVolumeList.Error
 
-	nonCriticalErrors, criticalError := errors.HandleError(err)
+	nonCriticalErrors, criticalError := errors.ExtractErrors(err)
 	if criticalError != nil {
 		return nil, criticalError
 	}
@@ -77,13 +77,13 @@ func toPersistentVolumeList(persistentVolumes []v1.PersistentVolume, nonCritical
 
 	result := &PersistentVolumeList{
 		Items:    make([]PersistentVolume, 0),
-		ListMeta: api.ListMeta{TotalItems: len(persistentVolumes)},
+		ListMeta: types.ListMeta{TotalItems: len(persistentVolumes)},
 		Errors:   nonCriticalErrors,
 	}
 
 	pvCells, filteredTotal := dataselect.GenericDataSelectWithFilter(toCells(persistentVolumes), dsQuery)
 	persistentVolumes = fromCells(pvCells)
-	result.ListMeta = api.ListMeta{TotalItems: filteredTotal}
+	result.ListMeta = types.ListMeta{TotalItems: filteredTotal}
 
 	for _, item := range persistentVolumes {
 		result.Items = append(result.Items, toPersistentVolume(item))
@@ -94,8 +94,8 @@ func toPersistentVolumeList(persistentVolumes []v1.PersistentVolume, nonCritical
 
 func toPersistentVolume(pv v1.PersistentVolume) PersistentVolume {
 	return PersistentVolume{
-		ObjectMeta:    api.NewObjectMeta(pv.ObjectMeta),
-		TypeMeta:      api.NewTypeMeta(api.ResourceKindPersistentVolume),
+		ObjectMeta:    types.NewObjectMeta(pv.ObjectMeta),
+		TypeMeta:      types.NewTypeMeta(types.ResourceKindPersistentVolume),
 		Capacity:      pv.Spec.Capacity,
 		AccessModes:   pv.Spec.AccessModes,
 		ReclaimPolicy: pv.Spec.PersistentVolumeReclaimPolicy,

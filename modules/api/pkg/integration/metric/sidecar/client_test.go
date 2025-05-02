@@ -17,8 +17,8 @@ package sidecar
 import (
 	"context"
 	"encoding/json"
+	"errors"
 	"fmt"
-	"log"
 	"reflect"
 	"regexp"
 	"strings"
@@ -26,15 +26,13 @@ import (
 	"testing"
 	"time"
 
-	"errors"
-
-	"k8s.io/apimachinery/pkg/types"
+	apimachinery "k8s.io/apimachinery/pkg/types"
 	"k8s.io/client-go/kubernetes"
 	"k8s.io/client-go/rest"
-	"k8s.io/dashboard/api/pkg/api"
-	"k8s.io/dashboard/api/pkg/client"
+
 	integrationapi "k8s.io/dashboard/api/pkg/integration/api"
 	metricapi "k8s.io/dashboard/api/pkg/integration/metric/api"
+	"k8s.io/dashboard/types"
 )
 
 func areErrorsEqual(err1, err2 error) bool {
@@ -98,7 +96,6 @@ func (self FakeSidecar) ID() integrationapi.IntegrationID {
 
 func (self FakeRequest) DoRaw(ctx context.Context) ([]byte, error) {
 	_NumRequests.increment()
-	log.Println("Performing req...")
 	path := self.Path
 	time.Sleep(50 * time.Millisecond) // simulate response delay of 0.05 seconds
 	if strings.Contains(path, "/pod-list/") {
@@ -121,7 +118,6 @@ func (self FakeRequest) DoRaw(ctx context.Context) ([]byte, error) {
 			items.Items = append(items.Items, metricapi.SidecarMetric{MetricPoints: self.PodData[pod+"/"+namespace], UIDs: []string{pod}})
 		}
 		x, err := json.Marshal(items)
-		log.Println("Got you:", string(x))
 		return x, err
 
 	} else if strings.Contains(path, "/nodes/") {
@@ -136,7 +132,6 @@ func (self FakeRequest) DoRaw(ctx context.Context) ([]byte, error) {
 		items.Items = append(items.Items, metricapi.SidecarMetric{MetricPoints: self.NodeData[requestedNode], UIDs: []string{requestedNode}})
 
 		x, err := json.Marshal(items)
-		log.Println("Got you:", string(x))
 		return x, err
 	} else {
 		return nil, fmt.Errorf("Invalid request url %s", path)
@@ -192,13 +187,13 @@ var fakeSidecarClient = FakeSidecar{
 	NodeData: fakeNodeData,
 }
 
-func getResourceSelector(namespace string, resourceType api.ResourceKind,
+func getResourceSelector(namespace string, resourceType types.ResourceKind,
 	resourceName, uid string) metricapi.ResourceSelector {
 	return metricapi.ResourceSelector{
 		Namespace:    namespace,
 		ResourceType: resourceType,
 		ResourceName: resourceName,
-		UID:          types.UID(uid),
+		UID:          apimachinery.UID(uid),
 	}
 }
 
@@ -213,7 +208,7 @@ func TestDownloadMetric(t *testing.T) {
 		{
 			"get data for single pod",
 			[]metricapi.ResourceSelector{
-				getResourceSelector("a", api.ResourceKindPod, "P1", "U1"),
+				getResourceSelector("a", types.ResourceKindPod, "P1", "U1"),
 			},
 			newDps([]int64{0, 5, 10}, 0),
 			1,
@@ -221,9 +216,9 @@ func TestDownloadMetric(t *testing.T) {
 		{
 			"get data for 3 pods",
 			[]metricapi.ResourceSelector{
-				getResourceSelector("a", api.ResourceKindPod, "P1", "U1"),
-				getResourceSelector("a", api.ResourceKindPod, "P2", "U2"),
-				getResourceSelector("a", api.ResourceKindPod, "P3", "U3"),
+				getResourceSelector("a", types.ResourceKindPod, "P1", "U1"),
+				getResourceSelector("a", types.ResourceKindPod, "P2", "U2"),
+				getResourceSelector("a", types.ResourceKindPod, "P3", "U3"),
 			},
 			newDps([]int64{45, 60, 75}, 0),
 			1,
@@ -231,10 +226,10 @@ func TestDownloadMetric(t *testing.T) {
 		{
 			"get data for 4 pods where 1 pod does not exist - ignore non existing pod",
 			[]metricapi.ResourceSelector{
-				getResourceSelector("a", api.ResourceKindPod, "P1", "U1"),
-				getResourceSelector("a", api.ResourceKindPod, "P2", "U2"),
-				getResourceSelector("a", api.ResourceKindPod, "P3", "U3"),
-				getResourceSelector("a", api.ResourceKindPod, "NON_EXISTING", "NA"),
+				getResourceSelector("a", types.ResourceKindPod, "P1", "U1"),
+				getResourceSelector("a", types.ResourceKindPod, "P2", "U2"),
+				getResourceSelector("a", types.ResourceKindPod, "P3", "U3"),
+				getResourceSelector("a", types.ResourceKindPod, "NON_EXISTING", "NA"),
 			},
 			newDps([]int64{45, 60, 75}, 0),
 			1,
@@ -242,10 +237,10 @@ func TestDownloadMetric(t *testing.T) {
 		{
 			"get data for 4 pods where pods have different X timestams available",
 			[]metricapi.ResourceSelector{
-				getResourceSelector("b", api.ResourceKindPod, "P1", "U1"),
-				getResourceSelector("b", api.ResourceKindPod, "P2", "U2"),
-				getResourceSelector("b", api.ResourceKindPod, "P3", "U3"),
-				getResourceSelector("b", api.ResourceKindPod, "P4", "U4"),
+				getResourceSelector("b", types.ResourceKindPod, "P1", "U1"),
+				getResourceSelector("b", types.ResourceKindPod, "P2", "U2"),
+				getResourceSelector("b", types.ResourceKindPod, "P3", "U3"),
+				getResourceSelector("b", types.ResourceKindPod, "P4", "U4"),
 			},
 			newDps([]int64{1000, 2300, 2700, 1500}, 0),
 			1,
@@ -253,7 +248,7 @@ func TestDownloadMetric(t *testing.T) {
 		{
 			"ask for non existing namespace - return no data points",
 			[]metricapi.ResourceSelector{
-				getResourceSelector("NON_EXISTING_NAMESPACE", api.ResourceKindPod,
+				getResourceSelector("NON_EXISTING_NAMESPACE", types.ResourceKindPod,
 					"P1", "U1"),
 			},
 			newDps([]int64{}, 0),
@@ -274,7 +269,7 @@ func TestDownloadMetric(t *testing.T) {
 		{
 			"ask for 1 node",
 			[]metricapi.ResourceSelector{
-				getResourceSelector("NO_NAMESPACE", api.ResourceKindNode, "N1",
+				getResourceSelector("NO_NAMESPACE", types.ResourceKindNode, "N1",
 					"U11"),
 			},
 			newDps([]int64{0, 5, 10}, 0),
@@ -283,11 +278,11 @@ func TestDownloadMetric(t *testing.T) {
 		{
 			"ask for 3 nodes",
 			[]metricapi.ResourceSelector{
-				getResourceSelector("NO_NAMESPACE", api.ResourceKindNode, "N1",
+				getResourceSelector("NO_NAMESPACE", types.ResourceKindNode, "N1",
 					"U11"),
-				getResourceSelector("NO_NAMESPACE", api.ResourceKindNode, "N2",
+				getResourceSelector("NO_NAMESPACE", types.ResourceKindNode, "N2",
 					"U12"),
-				getResourceSelector("NO_NAMESPACE", api.ResourceKindNode, "N3",
+				getResourceSelector("NO_NAMESPACE", types.ResourceKindNode, "N3",
 					"U13"),
 			},
 			newDps([]int64{45, 60, 75}, 0),
@@ -295,7 +290,6 @@ func TestDownloadMetric(t *testing.T) {
 		},
 	}
 	for _, testCase := range testCases {
-		log.Println("-----------\n\n\n", testCase.Info, int(_NumRequests.get()))
 		hClient := sidecarClient{fakeSidecarClient}
 		promises := hClient.DownloadMetric(testCase.Selectors, "",
 			&metricapi.CachedResources{})
@@ -319,16 +313,16 @@ func TestDownloadMetric(t *testing.T) {
 }
 
 var selectorPool = []metricapi.ResourceSelector{
-	getResourceSelector("a", api.ResourceKindPod, "P1", "U1"),
-	getResourceSelector("a", api.ResourceKindPod, "P2", "U2"),
-	getResourceSelector("a", api.ResourceKindPod, "P3", "U3"),
-	getResourceSelector("b", api.ResourceKindPod, "P1", "Z1"),
-	getResourceSelector("b", api.ResourceKindPod, "P2", "Z2"),
-	getResourceSelector("b", api.ResourceKindPod, "P3", "Z3"),
-	getResourceSelector("NO_NAMESPACE", api.ResourceKindNode, "N1", "U11"),
-	getResourceSelector("NO_NAMESPACE", api.ResourceKindNode, "N2", "U12"),
-	getResourceSelector("NO_NAMESPACE", api.ResourceKindNode, "N3", "U13"),
-	getResourceSelector("NO_NAMESPACE", api.ResourceKindNode, "N4", "U14"),
+	getResourceSelector("a", types.ResourceKindPod, "P1", "U1"),
+	getResourceSelector("a", types.ResourceKindPod, "P2", "U2"),
+	getResourceSelector("a", types.ResourceKindPod, "P3", "U3"),
+	getResourceSelector("b", types.ResourceKindPod, "P1", "Z1"),
+	getResourceSelector("b", types.ResourceKindPod, "P2", "Z2"),
+	getResourceSelector("b", types.ResourceKindPod, "P3", "Z3"),
+	getResourceSelector("NO_NAMESPACE", types.ResourceKindNode, "N1", "U11"),
+	getResourceSelector("NO_NAMESPACE", types.ResourceKindNode, "N2", "U12"),
+	getResourceSelector("NO_NAMESPACE", types.ResourceKindNode, "N3", "U13"),
+	getResourceSelector("NO_NAMESPACE", types.ResourceKindNode, "N4", "U14"),
 }
 
 func TestDownloadMetrics(t *testing.T) {
@@ -451,7 +445,6 @@ func TestDownloadMetrics(t *testing.T) {
 }
 
 func TestCreateSidecarClient(t *testing.T) {
-	k8sClient := client.NewClientManager("", "http://localhost:8080").InsecureClient()
 	cases := []struct {
 		info        string
 		sidecarHost string
@@ -459,13 +452,6 @@ func TestCreateSidecarClient(t *testing.T) {
 		expected    SidecarRESTClient
 		expectedErr error
 	}{
-		{
-			"should create in-cluster sidecar client",
-			"",
-			k8sClient,
-			inClusterSidecarClient{},
-			nil,
-		},
 		{
 			"should create remote sidecar client",
 			"http://localhost:80801",

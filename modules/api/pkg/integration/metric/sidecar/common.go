@@ -15,8 +15,8 @@
 package sidecar
 
 import (
-	"k8s.io/dashboard/api/pkg/api"
 	metricapi "k8s.io/dashboard/api/pkg/integration/metric/api"
+	"k8s.io/dashboard/types"
 )
 
 // compress compresses list of SidecarSelectors to equivalent, shorter one in order to perform smaller number of requests.
@@ -25,7 +25,7 @@ import (
 // a mapping between indices from new compressed list to the list of children indices from original list.
 func compress(selectors []sidecarSelector) ([]sidecarSelector, map[string][]int) {
 	reverseMapping := map[string][]int{}
-	resourceTypeMap := map[string]api.ResourceKind{}
+	resourceTypeMap := map[string]types.ResourceKind{}
 	resourceMap := map[string][]string{}
 	labelMap := map[string]metricapi.Label{}
 	for i, selector := range selectors {

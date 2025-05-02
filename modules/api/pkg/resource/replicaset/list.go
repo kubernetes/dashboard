@@ -15,22 +15,22 @@
 package replicaset
 
 import (
-	"log"
-
 	apps "k8s.io/api/apps/v1"
 	v1 "k8s.io/api/core/v1"
 	client "k8s.io/client-go/kubernetes"
-	"k8s.io/dashboard/api/pkg/api"
-	"k8s.io/dashboard/api/pkg/errors"
+	"k8s.io/klog/v2"
+
 	metricapi "k8s.io/dashboard/api/pkg/integration/metric/api"
 	"k8s.io/dashboard/api/pkg/resource/common"
 	"k8s.io/dashboard/api/pkg/resource/dataselect"
 	"k8s.io/dashboard/api/pkg/resource/event"
+	"k8s.io/dashboard/errors"
+	"k8s.io/dashboard/types"
 )
 
 // ReplicaSetList contains a list of Replica Sets in the cluster.
 type ReplicaSetList struct {
-	ListMeta          api.ListMeta       `json:"listMeta"`
+	ListMeta          types.ListMeta     `json:"listMeta"`
 	CumulativeMetrics []metricapi.Metric `json:"cumulativeMetrics"`
 
 	// Basic information about resources status on the list.
@@ -45,8 +45,8 @@ type ReplicaSetList struct {
 
 // ReplicaSet is a presentation layer view of Kubernetes Replica Set resource.
 type ReplicaSet struct {
-	ObjectMeta api.ObjectMeta `json:"objectMeta"`
-	TypeMeta   api.TypeMeta   `json:"typeMeta"`
+	ObjectMeta types.ObjectMeta `json:"objectMeta"`
+	TypeMeta   types.TypeMeta   `json:"typeMeta"`
 
 	// Aggregate information about pods belonging to this Replica Set.
 	Pods common.PodInfo `json:"podInfo"`
@@ -61,8 +61,8 @@ type ReplicaSet struct {
 // ToReplicaSet converts replica set api object to replica set model object.
 func ToReplicaSet(replicaSet *apps.ReplicaSet, podInfo *common.PodInfo) ReplicaSet {
 	return ReplicaSet{
-		ObjectMeta:          api.NewObjectMeta(replicaSet.ObjectMeta),
-		TypeMeta:            api.NewTypeMeta(api.ResourceKindReplicaSet),
+		ObjectMeta:          types.NewObjectMeta(replicaSet.ObjectMeta),
+		TypeMeta:            types.NewTypeMeta(types.ResourceKindReplicaSet),
 		ContainerImages:     common.GetContainerImages(&replicaSet.Spec.Template.Spec),
 		InitContainerImages: common.GetInitContainerImages(&replicaSet.Spec.Template.Spec),
 		Pods:                *podInfo,
@@ -72,7 +72,7 @@ func ToReplicaSet(replicaSet *apps.ReplicaSet, podInfo *common.PodInfo) ReplicaS
 // GetReplicaSetList returns a list of all Replica Sets in the cluster.
 func GetReplicaSetList(client client.Interface, nsQuery *common.NamespaceQuery,
 	dsQuery *dataselect.DataSelectQuery, metricClient metricapi.MetricClient) (*ReplicaSetList, error) {
-	log.Print("Getting list of all replica sets in the cluster")
+	klog.V(4).Infof("Getting list of all replica sets in the cluster")
 
 	channels := &common.ResourceChannels{
 		ReplicaSetList: common.GetReplicaSetListChannel(client, nsQuery, 1),
@@ -90,7 +90,7 @@ func GetReplicaSetListFromChannels(channels *common.ResourceChannels,
 
 	replicaSets := <-channels.ReplicaSetList.List
 	err := <-channels.ReplicaSetList.Error
-	nonCriticalErrors, criticalError := errors.HandleError(err)
+	nonCriticalErrors, criticalError := errors.ExtractErrors(err)
 	if criticalError != nil {
 		return nil, criticalError
 	}
@@ -121,7 +121,7 @@ func ToReplicaSetList(replicaSets []apps.ReplicaSet, pods []v1.Pod, events []v1.
 
 	replicaSetList := &ReplicaSetList{
 		ReplicaSets: make([]ReplicaSet, 0),
-		ListMeta:    api.ListMeta{TotalItems: len(replicaSets)},
+		ListMeta:    types.ListMeta{TotalItems: len(replicaSets)},
 		Errors:      nonCriticalErrors,
 	}
 
@@ -132,7 +132,7 @@ func ToReplicaSetList(replicaSets []apps.ReplicaSet, pods []v1.Pod, events []v1.
 		GenericDataSelectWithFilterAndMetrics(
 			ToCells(replicaSets), dsQuery, cachedResources, metricClient)
 	replicaSets = FromCells(rsCells)
-	replicaSetList.ListMeta = api.ListMeta{TotalItems: filteredTotal}
+	replicaSetList.ListMeta = types.ListMeta{TotalItems: filteredTotal}
 
 	for _, replicaSet := range replicaSets {
 		matchingPods := common.FilterPodsByControllerRef(&replicaSet, pods)

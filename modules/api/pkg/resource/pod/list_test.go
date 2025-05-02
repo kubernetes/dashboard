@@ -22,12 +22,12 @@ import (
 	k8serrors "k8s.io/apimachinery/pkg/api/errors"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 
-	"k8s.io/dashboard/api/pkg/api"
-	"k8s.io/dashboard/api/pkg/errors"
 	metricapi "k8s.io/dashboard/api/pkg/integration/metric/api"
 	"k8s.io/dashboard/api/pkg/resource/common"
 	"k8s.io/dashboard/api/pkg/resource/dataselect"
 	"k8s.io/dashboard/api/pkg/resource/pod"
+	"k8s.io/dashboard/errors"
+	"k8s.io/dashboard/types"
 )
 
 func TestGetPodListFromChannels(t *testing.T) {
@@ -43,7 +43,7 @@ func TestGetPodListFromChannels(t *testing.T) {
 			nil,
 			&v1.PodList{},
 			&pod.PodList{
-				ListMeta:          api.ListMeta{},
+				ListMeta:          types.ListMeta{},
 				Pods:              []pod.Pod{},
 				CumulativeMetrics: make([]metricapi.Metric, 0),
 				Errors:            []error{},
@@ -92,19 +92,19 @@ func TestGetPodListFromChannels(t *testing.T) {
 			nil,
 			&v1.PodList{},
 			&pod.PodList{
-				ListMeta:          api.ListMeta{TotalItems: 1},
+				ListMeta:          types.ListMeta{TotalItems: 1},
 				CumulativeMetrics: make([]metricapi.Metric, 0),
-				Status:            common.ResourceStatus{Pending: 1},
+				Status:            common.ResourceStatus{},
 				Pods: []pod.Pod{{
-					ObjectMeta: api.ObjectMeta{
+					ObjectMeta: types.ObjectMeta{
 						Name:              "pod-name",
 						Namespace:         "pod-namespace",
 						Labels:            map[string]string{"key": "value"},
 						CreationTimestamp: metav1.Unix(111, 222),
 					},
-					TypeMeta: api.TypeMeta{Kind: api.ResourceKindPod},
-					Status:   string(v1.PodUnknown),
-					Warnings: []common.Event{},
+					TypeMeta:          types.TypeMeta{Kind: types.ResourceKindPod},
+					Warnings:          []common.Event{},
+					ContainerStatuses: make([]pod.ContainerStatus, 0),
 				}},
 				Errors: []error{},
 			},

@@ -19,7 +19,7 @@ import (
 
 	restful "github.com/emicklei/go-restful/v3"
 
-	"k8s.io/dashboard/api/pkg/errors"
+	"k8s.io/dashboard/errors"
 )
 
 func handleDownload(response *restful.Response, result io.ReadCloser) {

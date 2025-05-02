@@ -23,11 +23,12 @@ import (
 	"k8s.io/apimachinery/pkg/fields"
 	"k8s.io/apimachinery/pkg/labels"
 	client "k8s.io/client-go/kubernetes"
-	"k8s.io/dashboard/api/pkg/api"
+
 	metricapi "k8s.io/dashboard/api/pkg/integration/metric/api"
 	"k8s.io/dashboard/api/pkg/resource/common"
 	"k8s.io/dashboard/api/pkg/resource/dataselect"
 	"k8s.io/dashboard/api/pkg/resource/event"
+	"k8s.io/dashboard/types"
 )
 
 // GetServicesForDSDeletion is based on given selector returns list of services that are candidates for deletion.
@@ -83,7 +84,7 @@ func (self DaemonSetCell) GetProperty(name dataselect.PropertyName) dataselect.C
 func (self DaemonSetCell) GetResourceSelector() *metricapi.ResourceSelector {
 	return &metricapi.ResourceSelector{
 		Namespace:    self.ObjectMeta.Namespace,
-		ResourceType: api.ResourceKindDaemonSet,
+		ResourceType: types.ResourceKindDaemonSet,
 		ResourceName: self.ObjectMeta.Name,
 		UID:          self.UID,
 	}

@@ -16,15 +16,17 @@ package secret
 
 import (
 	"context"
-	"log"
 
 	v1 "k8s.io/api/core/v1"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/client-go/kubernetes"
-	"k8s.io/dashboard/api/pkg/api"
-	"k8s.io/dashboard/api/pkg/errors"
+	"k8s.io/klog/v2"
+
 	"k8s.io/dashboard/api/pkg/resource/common"
 	"k8s.io/dashboard/api/pkg/resource/dataselect"
+	"k8s.io/dashboard/errors"
+	"k8s.io/dashboard/helpers"
+	"k8s.io/dashboard/types"
 )
 
 // SecretSpec is a common interface for the specification of different secrets.
@@ -66,14 +68,14 @@ func (spec *ImagePullSecretSpec) GetData() map[string][]byte {
 
 // Secret is a single secret returned to the frontend.
 type Secret struct {
-	ObjectMeta api.ObjectMeta `json:"objectMeta"`
-	TypeMeta   api.TypeMeta   `json:"typeMeta"`
-	Type       v1.SecretType  `json:"type"`
+	ObjectMeta types.ObjectMeta `json:"objectMeta"`
+	TypeMeta   types.TypeMeta   `json:"typeMeta"`
+	Type       v1.SecretType    `json:"type"`
 }
 
 // SecretList is a response structure for a queried secrets list.
 type SecretList struct {
-	api.ListMeta `json:"listMeta"`
+	types.ListMeta `json:"listMeta"`
 
 	// Unordered list of Secrets.
 	Secrets []Secret `json:"secrets"`
@@ -85,10 +87,10 @@ type SecretList struct {
 // GetSecretList returns all secrets in the given namespace.
 func GetSecretList(client kubernetes.Interface, namespace *common.NamespaceQuery,
 	dsQuery *dataselect.DataSelectQuery) (*SecretList, error) {
-	log.Printf("Getting list of secrets in %s namespace\n", namespace)
-	secretList, err := client.CoreV1().Secrets(namespace.ToRequestParam()).List(context.TODO(), api.ListEverything)
+	klog.V(4).Infof("Getting list of secrets in %s namespace\n", namespace)
+	secretList, err := client.CoreV1().Secrets(namespace.ToRequestParam()).List(context.TODO(), helpers.ListEverything)
 
-	nonCriticalErrors, criticalError := errors.HandleError(err)
+	nonCriticalErrors, criticalError := errors.ExtractErrors(err)
 	if criticalError != nil {
 		return nil, criticalError
 	}
@@ -114,22 +116,22 @@ func CreateSecret(client kubernetes.Interface, spec SecretSpec) (*Secret, error)
 
 func toSecret(secret *v1.Secret) Secret {
 	return Secret{
-		ObjectMeta: api.NewObjectMeta(secret.ObjectMeta),
-		TypeMeta:   api.NewTypeMeta(api.ResourceKindSecret),
+		ObjectMeta: types.NewObjectMeta(secret.ObjectMeta),
+		TypeMeta:   types.NewTypeMeta(types.ResourceKindSecret),
 		Type:       secret.Type,
 	}
 }
 
 func ToSecretList(secrets []v1.Secret, nonCriticalErrors []error, dsQuery *dataselect.DataSelectQuery) *SecretList {
 	newSecretList := &SecretList{
-		ListMeta: api.ListMeta{TotalItems: len(secrets)},
+		ListMeta: types.ListMeta{TotalItems: len(secrets)},
 		Secrets:  make([]Secret, 0),
 		Errors:   nonCriticalErrors,
 	}
 
 	secretCells, filteredTotal := dataselect.GenericDataSelectWithFilter(toCells(secrets), dsQuery)
 	secrets = fromCells(secretCells)
-	newSecretList.ListMeta = api.ListMeta{TotalItems: filteredTotal}
+	newSecretList.ListMeta = types.ListMeta{TotalItems: filteredTotal}
 
 	for _, secret := range secrets {
 		newSecretList.Secrets = append(newSecretList.Secrets, toSecret(&secret))

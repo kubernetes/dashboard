@@ -16,25 +16,26 @@ package replicaset
 
 import (
 	"context"
-	"log"
 
 	apps "k8s.io/api/apps/v1"
 	v1 "k8s.io/api/core/v1"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/labels"
 	k8sClient "k8s.io/client-go/kubernetes"
-	"k8s.io/dashboard/api/pkg/errors"
+	"k8s.io/klog/v2"
+
 	metricapi "k8s.io/dashboard/api/pkg/integration/metric/api"
 	"k8s.io/dashboard/api/pkg/resource/common"
 	"k8s.io/dashboard/api/pkg/resource/dataselect"
 	"k8s.io/dashboard/api/pkg/resource/event"
 	"k8s.io/dashboard/api/pkg/resource/pod"
+	"k8s.io/dashboard/errors"
 )
 
 // GetReplicaSetPods return list of pods targeting replica set.
 func GetReplicaSetPods(client k8sClient.Interface, metricClient metricapi.MetricClient,
 	dsQuery *dataselect.DataSelectQuery, replicaSetName, namespace string) (*pod.PodList, error) {
-	log.Printf("Getting replication controller %s pods in namespace %s", replicaSetName, namespace)
+	klog.V(4).Infof("Getting replication controller %s pods in namespace %s", replicaSetName, namespace)
 
 	pods, err := getRawReplicaSetPods(client, replicaSetName, namespace)
 	if err != nil {
@@ -42,7 +43,7 @@ func GetReplicaSetPods(client k8sClient.Interface, metricClient metricapi.Metric
 	}
 
 	events, err := event.GetPodsEvents(client, namespace, pods)
-	nonCriticalErrors, criticalError := errors.HandleError(err)
+	nonCriticalErrors, criticalError := errors.ExtractErrors(err)
 	if criticalError != nil {
 		return nil, criticalError
 	}

@@ -32,6 +32,12 @@ export interface ObjectMeta {
   annotations?: StringMap;
   creationTimestamp?: string;
   uid?: string;
+  ownerReferences?: Array<OwnerReference>;
+}
+
+export interface OwnerReference {
+  kind?: string;
+  name?: string;
 }
 
 export interface JobStatus {
@@ -185,6 +191,7 @@ export interface ReplicaSetList extends ResourceList {
 }
 
 export interface ReplicationControllerList extends ResourceList {
+  cumulativeMetrics: Metric[] | null;
   replicationControllers: ReplicationController[];
   status: Status;
 }
@@ -731,9 +738,7 @@ export interface ProtocolValiditySpec {
 
 // Auth related types
 export interface AuthResponse {
-  name?: string;
-  jweToken: string;
-  errors: K8sError[];
+  token: string;
 }
 
 export interface CanIResponse {
@@ -787,6 +792,8 @@ export interface Theme {
 
 export interface AppConfig {
   serverTime: number;
+  userAgent: string;
+  version: string;
 }
 
 export interface ErrStatus {
@@ -1222,6 +1229,7 @@ export interface GlobalSettings {
   logsAutoRefreshTimeInterval: number;
   resourceAutoRefreshTimeInterval: number;
   disableAccessDeniedNotifications: boolean;
+  hideAllNamespaces: boolean;
   defaultNamespace: string;
   namespaceFallbackList: string[];
 }
@@ -1243,14 +1251,6 @@ export interface LoginSpec {
   password: string;
   token: string;
   kubeConfig: string;
-}
-
-export interface LoginStatus {
-  tokenPresent: boolean;
-  headerPresent: boolean;
-  httpsMode: boolean;
-  impersonationPresent?: boolean;
-  impersonatedUser?: string;
 }
 
 export type AuthenticationMode = string;
@@ -1304,12 +1304,7 @@ export interface SJSMessageEvent extends SockJSSimpleEvent {
   data: string;
 }
 
-export interface Plugin extends Resource {
+export interface User {
   name: string;
-  path: string;
-  dependencies: string[];
-}
-
-export interface PluginList extends ResourceList {
-  items?: Plugin[];
+  authenticated: boolean;
 }

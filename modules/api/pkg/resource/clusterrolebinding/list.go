@@ -15,19 +15,19 @@
 package clusterrolebinding
 
 import (
-	"log"
-
 	rbac "k8s.io/api/rbac/v1"
 	"k8s.io/client-go/kubernetes"
-	"k8s.io/dashboard/api/pkg/api"
-	"k8s.io/dashboard/api/pkg/errors"
+	"k8s.io/klog/v2"
+
 	"k8s.io/dashboard/api/pkg/resource/common"
 	"k8s.io/dashboard/api/pkg/resource/dataselect"
+	"k8s.io/dashboard/errors"
+	"k8s.io/dashboard/types"
 )
 
 // ClusterRoleBindingList contains a list of clusterRoleBindings in the cluster.
 type ClusterRoleBindingList struct {
-	ListMeta api.ListMeta         `json:"listMeta"`
+	ListMeta types.ListMeta       `json:"listMeta"`
 	Items    []ClusterRoleBinding `json:"items"`
 
 	// List of non-critical errors, that occurred during resource retrieval.
@@ -37,13 +37,13 @@ type ClusterRoleBindingList struct {
 // ClusterRoleBindingList is a presentation layer view of Kubernetes clusterRoleBindingList. This means it is clusterRoleBindingList plus additional
 // augmented data we can get from other sources.
 type ClusterRoleBinding struct {
-	ObjectMeta api.ObjectMeta `json:"objectMeta"`
-	TypeMeta   api.TypeMeta   `json:"typeMeta"`
+	ObjectMeta types.ObjectMeta `json:"objectMeta"`
+	TypeMeta   types.TypeMeta   `json:"typeMeta"`
 }
 
 // GetClusterRoleBindingList returns a list of all ClusterRoleBindings in the cluster.
 func GetClusterRoleBindingList(client kubernetes.Interface, dsQuery *dataselect.DataSelectQuery) (*ClusterRoleBindingList, error) {
-	log.Print("Getting list of all clusterRoleBindings in the cluster")
+	klog.V(4).Infof("Getting list of all clusterRoleBindings in the cluster")
 	channels := &common.ResourceChannels{
 		ClusterRoleBindingList: common.GetClusterRoleBindingListChannel(client, 1),
 	}
@@ -56,7 +56,7 @@ func GetClusterRoleBindingList(client kubernetes.Interface, dsQuery *dataselect.
 func GetClusterRoleBindingListFromChannels(channels *common.ResourceChannels, dsQuery *dataselect.DataSelectQuery) (*ClusterRoleBindingList, error) {
 	clusterRoleBindings := <-channels.ClusterRoleBindingList.List
 	err := <-channels.ClusterRoleBindingList.Error
-	nonCriticalErrors, criticalError := errors.HandleError(err)
+	nonCriticalErrors, criticalError := errors.ExtractErrors(err)
 	if criticalError != nil {
 		return nil, criticalError
 	}
@@ -66,14 +66,14 @@ func GetClusterRoleBindingListFromChannels(channels *common.ResourceChannels, ds
 
 func toClusterRoleBinding(clusterRoleBinding rbac.ClusterRoleBinding) ClusterRoleBinding {
 	return ClusterRoleBinding{
-		ObjectMeta: api.NewObjectMeta(clusterRoleBinding.ObjectMeta),
-		TypeMeta:   api.NewTypeMeta(api.ResourceKindClusterRoleBinding),
+		ObjectMeta: types.NewObjectMeta(clusterRoleBinding.ObjectMeta),
+		TypeMeta:   types.NewTypeMeta(types.ResourceKindClusterRoleBinding),
 	}
 }
 
 func toClusterRoleBindingList(clusterRoleBindings []rbac.ClusterRoleBinding, nonCriticalErrors []error, dsQuery *dataselect.DataSelectQuery) *ClusterRoleBindingList {
 	result := &ClusterRoleBindingList{
-		ListMeta: api.ListMeta{TotalItems: len(clusterRoleBindings)},
+		ListMeta: types.ListMeta{TotalItems: len(clusterRoleBindings)},
 		Errors:   nonCriticalErrors,
 	}
 
@@ -83,7 +83,7 @@ func toClusterRoleBindingList(clusterRoleBindings []rbac.ClusterRoleBinding, non
 	}
 
 	clusterRoleBindingCells, filteredTotal := dataselect.GenericDataSelectWithFilter(toCells(items), dsQuery)
-	result.ListMeta = api.ListMeta{TotalItems: filteredTotal}
+	result.ListMeta = types.ListMeta{TotalItems: filteredTotal}
 	result.Items = fromCells(clusterRoleBindingCells)
 	return result
 }

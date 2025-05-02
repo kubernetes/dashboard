@@ -16,13 +16,15 @@ package replicationcontroller
 
 import (
 	"context"
-	"log"
 
 	v1 "k8s.io/api/core/v1"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	k8sClient "k8s.io/client-go/kubernetes"
-	"k8s.io/dashboard/api/pkg/errors"
+	"k8s.io/klog/v2"
+
+	"k8s.io/dashboard/api/pkg/args"
 	"k8s.io/dashboard/api/pkg/resource/common"
+	"k8s.io/dashboard/errors"
 )
 
 // ReplicationControllerDetail represents detailed information about a Replication Controller.
@@ -45,7 +47,7 @@ type ReplicationControllerSpec struct {
 // GetReplicationControllerDetail returns detailed information about the given replication controller
 // in the given namespace.
 func GetReplicationControllerDetail(client k8sClient.Interface, namespace, name string) (*ReplicationControllerDetail, error) {
-	log.Printf("Getting details of %s replication controller in %s namespace", name, namespace)
+	klog.V(4).Infof("Getting details of %s replication controller in %s namespace", name, namespace)
 
 	replicationController, err := client.CoreV1().ReplicationControllers(namespace).Get(context.TODO(), name, metaV1.GetOptions{})
 	if err != nil {
@@ -53,7 +55,7 @@ func GetReplicationControllerDetail(client k8sClient.Interface, namespace, name 
 	}
 
 	podInfo, err := getReplicationControllerPodInfo(client, replicationController, namespace)
-	nonCriticalErrors, criticalError := errors.HandleError(err)
+	nonCriticalErrors, criticalError := errors.ExtractErrors(err)
 	if criticalError != nil {
 		return nil, criticalError
 	}
@@ -64,7 +66,7 @@ func GetReplicationControllerDetail(client k8sClient.Interface, namespace, name 
 
 // UpdateReplicasCount updates number of replicas in Replication Controller based on Replication Controller Spec
 func UpdateReplicasCount(client k8sClient.Interface, namespace, name string, spec *ReplicationControllerSpec) error {
-	log.Printf("Updating replicas count to %d for %s replication controller from %s namespace",
+	klog.V(args.LogLevelVerbose).Infof("Updating replicas count to %d for %s replication controller from %s namespace",
 		spec.Replicas, name, namespace)
 
 	replicationController, err := client.CoreV1().ReplicationControllers(namespace).Get(context.TODO(), name, metaV1.GetOptions{})
@@ -79,7 +81,7 @@ func UpdateReplicasCount(client k8sClient.Interface, namespace, name string, spe
 		return err
 	}
 
-	log.Printf("Successfully updated replicas count to %d for %s replication controller from %s namespace",
+	klog.V(args.LogLevelVerbose).Infof("Successfully updated replicas count to %d for %s replication controller from %s namespace",
 		spec.Replicas, name, namespace)
 
 	return nil

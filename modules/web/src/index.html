@@ -14,21 +14,57 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<!DOCTYPE html>
+<!doctype html>
 <html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Kubernetes Dashboard</title>
+    <link
+      rel="icon"
+      type="image/png"
+      href="assets/images/kubernetes-logo.png"
+    />
+    <meta
+      name="viewport"
+      content="width=device-width"
+    />
 
-<head>
-  <meta charset="utf-8" />
-  <title>Kubernetes Dashboard</title>
-  <link rel="icon"
-        type="image/png"
-        href="assets/images/kubernetes-logo.png" />
-  <meta name="viewport"
-        content="width=device-width" />
-</head>
+    <!-- Dynamic base href -->
+    <script type="text/javascript">
+      function configExists(url) {
+        const req = new XMLHttpRequest();
 
-<body>
-  <kd-root></kd-root>
-</body>
+        req.open('GET', url, false);
+        req.send();
 
+        return req.status === 200;
+      }
+
+      const probePath = 'assets/config/config.json';
+      const origin = document.location.origin;
+      const pathSegments = document.location.pathname.split('/');
+
+      let basePath = '/';
+      let configFound = false;
+
+      for (let i = 0; i < pathSegments.length; i++) {
+        const segment = pathSegments[i];
+        if (segment.length > 0) {
+          basePath = basePath + segment + '/';
+        }
+
+        const fullPath = origin + basePath + probePath;
+        configFound = configExists(fullPath);
+        if (configFound) {
+          break;
+        }
+      }
+
+      document.write("<base href='" + (configFound ? basePath : '') + "' />");
+    </script>
+  </head>
+
+  <body>
+    <kd-root></kd-root>
+  </body>
 </html>

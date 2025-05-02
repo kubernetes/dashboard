@@ -15,13 +15,14 @@
 package service
 
 import (
-	"log"
-
 	client "k8s.io/client-go/kubernetes"
-	"k8s.io/dashboard/api/pkg/api"
+	"k8s.io/klog/v2"
+
+	"k8s.io/dashboard/api/pkg/args"
 	"k8s.io/dashboard/api/pkg/resource/common"
 	"k8s.io/dashboard/api/pkg/resource/dataselect"
 	"k8s.io/dashboard/api/pkg/resource/event"
+	"k8s.io/dashboard/types"
 )
 
 // GetServiceEvents returns model events for a service with the given name in the given namespace.
@@ -29,7 +30,7 @@ func GetServiceEvents(client client.Interface, dsQuery *dataselect.DataSelectQue
 	*common.EventList, error) {
 	eventList := common.EventList{
 		Events:   make([]common.Event, 0),
-		ListMeta: api.ListMeta{TotalItems: 0},
+		ListMeta: types.ListMeta{TotalItems: 0},
 	}
 
 	serviceEvents, err := event.GetEvents(client, namespace, name)
@@ -38,6 +39,6 @@ func GetServiceEvents(client client.Interface, dsQuery *dataselect.DataSelectQue
 	}
 
 	eventList = event.CreateEventList(event.FillEventsType(serviceEvents), dsQuery)
-	log.Printf("Found %d events related to %s service in %s namespace", len(eventList.Events), name, namespace)
+	klog.V(args.LogLevelVerbose).Infof("Found %d events related to %s service in %s namespace", len(eventList.Events), name, namespace)
 	return &eventList, nil
 }

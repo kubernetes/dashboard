@@ -198,7 +198,7 @@ func TestGetInitContainerNames(t *testing.T) {
 
 func TestGetNonduplicateContainerImages(t *testing.T) {
 	expected := []string{"Container1", "Container2", "Container3"}
-	pods := make([]api.Pod, 2, 2)
+	pods := make([]api.Pod, 2)
 
 	pods[0] = api.Pod{
 		Spec: api.PodSpec{
@@ -220,7 +220,7 @@ func TestGetNonduplicateContainerImages(t *testing.T) {
 
 func TestGetNonduplicateInitContainerImages(t *testing.T) {
 	expected := []string{"initContainer1", "initContainer2", "initContainer3"}
-	pods := make([]api.Pod, 2, 2)
+	pods := make([]api.Pod, 2)
 
 	pods[0] = api.Pod{
 		Spec: api.PodSpec{
@@ -242,7 +242,7 @@ func TestGetNonduplicateInitContainerImages(t *testing.T) {
 
 func TestGetNonduplicateContainerNames(t *testing.T) {
 	expected := []string{"Container1", "Container2", "Container3"}
-	pods := make([]api.Pod, 2, 2)
+	pods := make([]api.Pod, 2)
 
 	pods[0] = api.Pod{
 		Spec: api.PodSpec{
@@ -264,7 +264,7 @@ func TestGetNonduplicateContainerNames(t *testing.T) {
 
 func TestGetNonduplicateInitContainerNames(t *testing.T) {
 	expected := []string{"initContainer1", "initContainer2", "initContainer3"}
-	pods := make([]api.Pod, 2, 2)
+	pods := make([]api.Pod, 2)
 
 	pods[0] = api.Pod{
 		Spec: api.PodSpec{

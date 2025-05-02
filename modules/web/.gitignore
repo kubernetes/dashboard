@@ -21,11 +21,8 @@ coverage/
 # Dependencies
 node_modules/
 
-# Generated version file
-src/environments/version.ts
-
 # Dist
-dist/
+.dist/
 
 # Yarn
 .yarn/*
@@ -34,3 +31,6 @@ dist/
 !.yarn/releases
 !.yarn/sdks
 !.yarn/versions
+
+# GraphQL mesh
+.mesh/

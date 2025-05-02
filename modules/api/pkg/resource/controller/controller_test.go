@@ -21,7 +21,8 @@ import (
 	v1 "k8s.io/api/core/v1"
 	meta "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/client-go/kubernetes/fake"
-	"k8s.io/dashboard/api/pkg/api"
+
+	"k8s.io/dashboard/types"
 )
 
 func TestGetPodNames(t *testing.T) {
@@ -59,11 +60,11 @@ func TestNewResourceController(t *testing.T) {
 			Name:      "test-name",
 			Namespace: "default",
 		}}
-	cli := fake.NewSimpleClientset(&pod)
+	cli := fake.NewClientset(&pod)
 
 	ctrl, err := NewResourceController(
 		meta.OwnerReference{
-			Kind: api.ResourceKindPod,
+			Kind: types.ResourceKindPod,
 			Name: "test-name",
 		}, "default", cli)
 
@@ -77,11 +78,11 @@ func TestNewResourceController(t *testing.T) {
 	if podCtrl.Name != "test-name" {
 		t.Fatal("Returned invalid pod name")
 	}
-	NewResourceController(
+	_, _ = NewResourceController(
 		meta.OwnerReference{
-			Kind: api.ResourceKindPod,
+			Kind: types.ResourceKindPod,
 			Name: "test-name",
-		}, "default", fake.NewSimpleClientset())
+		}, "default", fake.NewClientset())
 	podCtrl.Get([]v1.Pod{pod}, []v1.Event{})
 	podCtrl.UID()
 	podCtrl.GetLogSources([]v1.Pod{pod})

@@ -15,22 +15,22 @@
 package pod
 
 import (
-	"log"
-
 	v1 "k8s.io/api/core/v1"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	k8sClient "k8s.io/client-go/kubernetes"
-	"k8s.io/dashboard/api/pkg/api"
-	"k8s.io/dashboard/api/pkg/errors"
+	"k8s.io/klog/v2"
+
 	metricapi "k8s.io/dashboard/api/pkg/integration/metric/api"
 	"k8s.io/dashboard/api/pkg/resource/common"
 	"k8s.io/dashboard/api/pkg/resource/dataselect"
 	"k8s.io/dashboard/api/pkg/resource/event"
+	"k8s.io/dashboard/errors"
+	"k8s.io/dashboard/types"
 )
 
 // PodList contains a list of Pods in the cluster.
 type PodList struct {
-	ListMeta          api.ListMeta       `json:"listMeta"`
+	ListMeta          types.ListMeta     `json:"listMeta"`
 	CumulativeMetrics []metricapi.Metric `json:"cumulativeMetrics"`
 
 	// Basic information about resources status on the list.
@@ -52,8 +52,8 @@ type PodStatus struct {
 // Pod is a presentation layer view of Kubernetes Pod resource. This means it is Pod plus additional augmented data
 // we can get from other sources (like services that target it).
 type Pod struct {
-	ObjectMeta api.ObjectMeta `json:"objectMeta"`
-	TypeMeta   api.TypeMeta   `json:"typeMeta"`
+	ObjectMeta types.ObjectMeta `json:"objectMeta"`
+	TypeMeta   types.TypeMeta   `json:"typeMeta"`
 
 	// Status determined based on the same logic as kubectl.
 	Status string `json:"status"`
@@ -72,12 +72,31 @@ type Pod struct {
 
 	// ContainerImages holds a list of the Pod images.
 	ContainerImages []string `json:"containerImages"`
+
+	ContainerStatuses []ContainerStatus `json:"containerStatuses"`
+
+	AllocatedResources PodAllocatedResources `json:"allocatedResources"`
+}
+
+// PodAllocatedResources describes pod allocated resources.
+type PodAllocatedResources struct {
+	// CPURequests is number of allocated milicores.
+	CPURequests int64 `json:"cpuRequests"`
+
+	// CPULimits is defined CPU limit.
+	CPULimits int64 `json:"cpuLimits"`
+
+	// MemoryRequests is a fraction of memory, that is allocated.
+	MemoryRequests int64 `json:"memoryRequests"`
+
+	// MemoryLimits is defined memory limit.
+	MemoryLimits int64 `json:"memoryLimits"`
 }
 
 var EmptyPodList = &PodList{
 	Pods:   make([]Pod, 0),
 	Errors: make([]error, 0),
-	ListMeta: api.ListMeta{
+	ListMeta: types.ListMeta{
 		TotalItems: 0,
 	},
 }
@@ -85,7 +104,7 @@ var EmptyPodList = &PodList{
 // GetPodList returns a list of all Pods in the cluster.
 func GetPodList(client k8sClient.Interface, metricClient metricapi.MetricClient, nsQuery *common.NamespaceQuery,
 	dsQuery *dataselect.DataSelectQuery) (*PodList, error) {
-	log.Print("Getting list of all pods in the cluster")
+	klog.V(4).Infof("Getting list of all pods in the cluster")
 
 	channels := &common.ResourceChannels{
 		PodList:   common.GetPodListChannelWithOptions(client, nsQuery, metaV1.ListOptions{}, 1),
@@ -102,7 +121,7 @@ func GetPodListFromChannels(channels *common.ResourceChannels, dsQuery *datasele
 
 	pods := <-channels.PodList.List
 	err := <-channels.PodList.Error
-	nonCriticalErrors, criticalError := errors.HandleError(err)
+	nonCriticalErrors, criticalError := errors.ExtractErrors(err)
 	if criticalError != nil {
 		return nil, criticalError
 	}
@@ -129,11 +148,11 @@ func ToPodList(pods []v1.Pod, events []v1.Event, nonCriticalErrors []error, dsQu
 	podCells, cumulativeMetricsPromises, filteredTotal := dataselect.
 		GenericDataSelectWithFilterAndMetrics(toCells(pods), dsQuery, metricapi.NoResourceCache, metricClient)
 	pods = fromCells(podCells)
-	podList.ListMeta = api.ListMeta{TotalItems: filteredTotal}
+	podList.ListMeta = types.ListMeta{TotalItems: filteredTotal}
 
 	metrics, err := getMetricsPerPod(pods, metricClient, dsQuery)
 	if err != nil {
-		log.Printf("Skipping metrics because of error: %s\n", err)
+		klog.ErrorS(err, "skipping metrics")
 	}
 
 	for _, pod := range pods {
@@ -144,7 +163,7 @@ func ToPodList(pods []v1.Pod, events []v1.Event, nonCriticalErrors []error, dsQu
 
 	cumulativeMetrics, err := cumulativeMetricsPromises.GetMetrics()
 	if err != nil {
-		log.Printf("Skipping metrics because of error: %s\n", err)
+		klog.ErrorS(err, "skipping metrics")
 		cumulativeMetrics = make([]metricapi.Metric, 0)
 	}
 
@@ -153,14 +172,21 @@ func ToPodList(pods []v1.Pod, events []v1.Event, nonCriticalErrors []error, dsQu
 }
 
 func toPod(pod *v1.Pod, metrics *MetricsByPod, warnings []common.Event) Pod {
+	allocatedResources, err := getPodAllocatedResources(pod)
+	if err != nil {
+		klog.ErrorS(err, "couldn't get allocated resources", "pod", pod.Name)
+	}
+
 	podDetail := Pod{
-		ObjectMeta:      api.NewObjectMeta(pod.ObjectMeta),
-		TypeMeta:        api.NewTypeMeta(api.ResourceKindPod),
-		Warnings:        warnings,
-		Status:          getPodStatus(*pod),
-		RestartCount:    getRestartCount(*pod),
-		NodeName:        pod.Spec.NodeName,
-		ContainerImages: common.GetContainerImages(&pod.Spec),
+		ObjectMeta:         types.NewObjectMeta(pod.ObjectMeta),
+		TypeMeta:           types.NewTypeMeta(types.ResourceKindPod),
+		Warnings:           warnings,
+		Status:             getPodStatus(*pod),
+		RestartCount:       getRestartCount(*pod),
+		NodeName:           pod.Spec.NodeName,
+		ContainerImages:    common.GetContainerImages(&pod.Spec),
+		ContainerStatuses:  ToContainerStatuses(append(pod.Status.InitContainerStatuses, pod.Status.ContainerStatuses...)),
+		AllocatedResources: allocatedResources,
 	}
 
 	if m, exists := metrics.MetricsMap[pod.UID]; exists {

@@ -25,8 +25,11 @@ export interface AlertDialogConfig {
   selector: 'kd-alert-dialog',
   templateUrl: 'template.html',
 })
-export class AlertDialog {
-  constructor(public dialogRef: MatDialogRef<AlertDialog>, @Inject(MAT_DIALOG_DATA) public data: AlertDialogConfig) {}
+export class AlertDialogComponent {
+  constructor(
+    public dialogRef: MatDialogRef<AlertDialogComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: AlertDialogConfig
+  ) {}
 
   onNoClick(): void {
     this.dialogRef.close();

@@ -19,11 +19,11 @@ import (
 
 	v1 "k8s.io/api/core/v1"
 
-	"k8s.io/dashboard/api/pkg/api"
 	metricapi "k8s.io/dashboard/api/pkg/integration/metric/api"
 	"k8s.io/dashboard/api/pkg/resource/common"
 	"k8s.io/dashboard/api/pkg/resource/dataselect"
 	"k8s.io/dashboard/api/pkg/resource/event"
+	"k8s.io/dashboard/types"
 )
 
 // getRestartCount return the restart count of given pod (total number of its containers restarts).
@@ -36,22 +36,36 @@ func getRestartCount(pod v1.Pod) int32 {
 }
 
 // getPodStatus returns status string calculated based on the same logic as kubectl
-// Base code: https://github.com/kubernetes/kubernetes/blob/master/pkg/printers/internalversion/printers.go#L734
+// Base code: https://github.com/kubernetes/kubernetes/blob/v1.31.1/pkg/printers/internalversion/printers.go
+//
+// nolint:gocyclo // disable cyclo check as this function is copied from kubectl
 func getPodStatus(pod v1.Pod) string {
-	restarts := 0
-	readyContainers := 0
-
-	reason := string(pod.Status.Phase)
+	podPhase := pod.Status.Phase
+	reason := string(podPhase)
 	if pod.Status.Reason != "" {
 		reason = pod.Status.Reason
+	}
+
+	// If the Pod carries {type:PodScheduled, reason:SchedulingGated}, set reason to 'SchedulingGated'.
+	for _, condition := range pod.Status.Conditions {
+		if condition.Type == v1.PodScheduled && condition.Reason == v1.PodReasonSchedulingGated {
+			reason = v1.PodReasonSchedulingGated
+		}
+	}
+
+	initContainers := make(map[string]*v1.Container)
+	for i := range pod.Spec.InitContainers {
+		initContainers[pod.Spec.InitContainers[i].Name] = &pod.Spec.InitContainers[i]
 	}
 
 	initializing := false
 	for i := range pod.Status.InitContainerStatuses {
 		container := pod.Status.InitContainerStatuses[i]
-		restarts += int(container.RestartCount)
 		switch {
 		case container.State.Terminated != nil && container.State.Terminated.ExitCode == 0:
+			continue
+		case isRestartableInitContainer(initContainers[container.Name]) &&
+			container.Started != nil && *container.Started:
 			continue
 		case container.State.Terminated != nil:
 			// initialization is failed
@@ -74,13 +88,12 @@ func getPodStatus(pod v1.Pod) string {
 		}
 		break
 	}
-	if !initializing {
-		restarts = 0
+
+	if !initializing || isPodInitializedConditionTrue(&pod.Status) {
 		hasRunning := false
 		for i := len(pod.Status.ContainerStatuses) - 1; i >= 0; i-- {
 			container := pod.Status.ContainerStatuses[i]
 
-			restarts += int(container.RestartCount)
 			if container.State.Waiting != nil && container.State.Waiting.Reason != "" {
 				reason = container.State.Waiting.Reason
 			} else if container.State.Terminated != nil && container.State.Terminated.Reason != "" {
@@ -93,7 +106,6 @@ func getPodStatus(pod v1.Pod) string {
 				}
 			} else if container.Ready && container.State.Running != nil {
 				hasRunning = true
-				readyContainers++
 			}
 		}
 
@@ -107,14 +119,10 @@ func getPodStatus(pod v1.Pod) string {
 		}
 	}
 
-	if pod.DeletionTimestamp != nil && pod.Status.Reason == "NodeLost" {
+	if pod.DeletionTimestamp != nil && pod.Status.Reason == types.NodeUnreachablePodReason {
 		reason = string(v1.PodUnknown)
-	} else if pod.DeletionTimestamp != nil {
+	} else if pod.DeletionTimestamp != nil && !IsPodPhaseTerminal(podPhase) {
 		reason = "Terminating"
-	}
-
-	if len(reason) == 0 {
-		reason = string(v1.PodUnknown)
 	}
 
 	return reason
@@ -162,14 +170,11 @@ func getPodStatusPhase(pod v1.Pod, warnings []common.Event) v1.PodPhase {
 		return v1.PodFailed
 	}
 
-	if pod.DeletionTimestamp != nil && pod.Status.Reason == "NodeLost" {
-		return v1.PodUnknown
-	} else if pod.DeletionTimestamp != nil {
+	if pod.DeletionTimestamp != nil {
 		return "Terminating"
 	}
 
-	// pending
-	return v1.PodPending
+	return ""
 }
 
 // The code below allows to perform complex data section on []api.Pod
@@ -195,7 +200,7 @@ func (self PodCell) GetProperty(name dataselect.PropertyName) dataselect.Compara
 func (self PodCell) GetResourceSelector() *metricapi.ResourceSelector {
 	return &metricapi.ResourceSelector{
 		Namespace:    self.ObjectMeta.Namespace,
-		ResourceType: api.ResourceKindPod,
+		ResourceType: types.ResourceKindPod,
 		ResourceName: self.ObjectMeta.Name,
 		UID:          self.ObjectMeta.UID,
 	}
@@ -249,12 +254,128 @@ func getStatus(list *v1.PodList, events []v1.Event) common.ResourceStatus {
 			info.Running++
 		case v1.PodPending:
 			info.Pending++
-		case v1.PodUnknown:
-			info.Unknown++
 		case "Terminating":
 			info.Terminating++
 		}
 	}
 
 	return info
+}
+
+// addResourceList adds the resources in newList to list
+func addResourceList(list, new v1.ResourceList) {
+	for name, quantity := range new {
+		if value, ok := list[name]; !ok {
+			list[name] = quantity.DeepCopy()
+		} else {
+			value.Add(quantity)
+			list[name] = value
+		}
+	}
+}
+
+// maxResourceList sets list to the greater of list/newList for every resource
+// either list
+func maxResourceList(list, new v1.ResourceList) {
+	for name, quantity := range new {
+		if value, ok := list[name]; !ok {
+			list[name] = quantity.DeepCopy()
+			continue
+		} else {
+			if quantity.Cmp(value) > 0 {
+				list[name] = quantity.DeepCopy()
+			}
+		}
+	}
+}
+
+// PodRequestsAndLimits returns a dictionary of all defined resources summed up for all
+// containers of the pod. If pod overhead is non-nil, the pod overhead is added to the
+// total container resource requests and to the total container limits which have a
+// non-zero quantity.
+func PodRequestsAndLimits(pod *v1.Pod) (reqs, limits v1.ResourceList, err error) {
+	reqs, limits = v1.ResourceList{}, v1.ResourceList{}
+	for _, container := range pod.Spec.Containers {
+		addResourceList(reqs, container.Resources.Requests)
+		addResourceList(limits, container.Resources.Limits)
+	}
+	// init containers define the minimum of any resource
+	for _, container := range pod.Spec.InitContainers {
+		maxResourceList(reqs, container.Resources.Requests)
+		maxResourceList(limits, container.Resources.Limits)
+	}
+
+	// Add overhead for running a pod to the sum of requests and to non-zero limits:
+	if pod.Spec.Overhead != nil {
+		addResourceList(reqs, pod.Spec.Overhead)
+
+		for name, quantity := range pod.Spec.Overhead {
+			if value, ok := limits[name]; ok && !value.IsZero() {
+				value.Add(quantity)
+				limits[name] = value
+			}
+		}
+	}
+	return
+}
+
+func getPodAllocatedResources(pod *v1.Pod) (PodAllocatedResources, error) {
+	reqs, limits, err := PodRequestsAndLimits(pod)
+	if err != nil {
+		return PodAllocatedResources{}, err
+	}
+
+	for podReqName, podReqValue := range reqs {
+		if value, ok := reqs[podReqName]; !ok {
+			reqs[podReqName] = podReqValue.DeepCopy()
+		} else {
+			value.Add(podReqValue)
+			reqs[podReqName] = value
+		}
+	}
+
+	for podLimitName, podLimitValue := range limits {
+		if value, ok := limits[podLimitName]; !ok {
+			limits[podLimitName] = podLimitValue.DeepCopy()
+		} else {
+			value.Add(podLimitValue)
+			limits[podLimitName] = value
+		}
+	}
+
+	cpuRequests, cpuLimits, memoryRequests, memoryLimits := reqs[v1.ResourceCPU], limits[v1.ResourceCPU], reqs[v1.ResourceMemory], limits[v1.ResourceMemory]
+
+	return PodAllocatedResources{
+		CPURequests:    cpuRequests.MilliValue(),
+		CPULimits:      cpuLimits.MilliValue(),
+		MemoryRequests: memoryRequests.Value(),
+		MemoryLimits:   memoryLimits.Value(),
+	}, nil
+}
+
+func isPodInitializedConditionTrue(status *v1.PodStatus) bool {
+	for _, condition := range status.Conditions {
+		if condition.Type != v1.PodInitialized {
+			continue
+		}
+
+		return condition.Status == v1.ConditionTrue
+	}
+	return false
+}
+
+func isRestartableInitContainer(initContainer *v1.Container) bool {
+	if initContainer == nil {
+		return false
+	}
+	if initContainer.RestartPolicy == nil {
+		return false
+	}
+
+	return *initContainer.RestartPolicy == v1.ContainerRestartPolicyAlways
+}
+
+// IsPodPhaseTerminal returns true if the pod's phase is terminal.
+func IsPodPhaseTerminal(phase v1.PodPhase) bool {
+	return phase == v1.PodFailed || phase == v1.PodSucceeded
 }

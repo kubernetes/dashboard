@@ -16,113 +16,47 @@ package main
 
 import (
 	"crypto/elliptic"
-	"crypto/tls"
-	"flag"
-	"fmt"
-	"log"
-	"net"
-	"net/http"
-	"os"
 
-	"github.com/spf13/pflag"
+	"k8s.io/klog/v2"
 
 	"k8s.io/dashboard/certificates"
 	"k8s.io/dashboard/certificates/ecdsa"
+	"k8s.io/dashboard/client"
 	"k8s.io/dashboard/web/pkg/args"
-	"k8s.io/dashboard/web/pkg/handler"
-	"k8s.io/dashboard/web/pkg/systembanner"
-)
+	"k8s.io/dashboard/web/pkg/environment"
+	"k8s.io/dashboard/web/pkg/router"
 
-var (
-	argInsecurePort             = pflag.Int("insecure-port", 8000, "port to listen to for incoming HTTP requests")
-	argPort                     = pflag.Int("port", 8001, "secure port to listen to for incoming HTTPS requests")
-	argInsecureBindAddress      = pflag.IP("insecure-bind-address", net.IPv4(127, 0, 0, 1), "IP address on which to serve the --insecure-port, set to 127.0.0.1 for all interfaces")
-	argBindAddress              = pflag.IP("bind-address", net.IPv4(0, 0, 0, 0), "IP address on which to serve the --port, set to 0.0.0.0 for all interfaces")
-	argDefaultCertDir           = pflag.String("default-cert-dir", "/certs", "directory path containing files from --tls-cert-file and --tls-key-file, used also when auto-generating certificates flag is set")
-	argCertFile                 = pflag.String("tls-cert-file", "", "file containing the default x509 certificate for HTTPS")
-	argKeyFile                  = pflag.String("tls-key-file", "", "file containing the default x509 private key matching --tls-cert-file")
-	argSystemBanner             = pflag.String("system-banner", "", "system banner message displayed in the app if non-empty, it accepts simple HTML")
-	argSystemBannerSeverity     = pflag.String("system-banner-severity", "INFO", "severity of system banner, should be one of 'INFO', 'WARNING' or 'ERROR'")
-	argAutoGenerateCertificates = pflag.Bool("auto-generate-certificates", false, "enables automatic certificates generation used to serve HTTPS")
-	localeConfig                = pflag.String("locale-config", "./locale_conf.json", "path to file containing the locale configuration")
+	// Importing route packages forces route registration
+	_ "k8s.io/dashboard/web/pkg/config"
+	_ "k8s.io/dashboard/web/pkg/locale"
+	_ "k8s.io/dashboard/web/pkg/settings"
+	_ "k8s.io/dashboard/web/pkg/systembanner"
 )
 
 func main() {
-	// TODO: use klog instead?
-	// Set logging output to standard console out
-	log.SetOutput(os.Stdout)
+	klog.InfoS("Starting Kubernetes Dashboard Web", "version", environment.Version)
 
-	pflag.CommandLine.AddGoFlagSet(flag.CommandLine)
-	pflag.Parse()
-	_ = flag.CommandLine.Parse(make([]string, 0)) // Init for glog calls in kubernetes packages
+	client.Init(
+		client.WithUserAgent(environment.UserAgent()),
+		client.WithKubeconfig(args.KubeconfigPath()),
+	)
 
-	// Initializes dashboard arguments holder, so we can read them in other packages
-	initArgHolder()
-
-	// Init system banner manager
-	systemBannerManager := systembanner.NewSystemBannerManager(args.Holder.GetSystemBanner(),
-		args.Holder.GetSystemBannerSeverity())
-	systembanner.NewSystemBannerHandler(systemBannerManager).Install()
-
-	certCreator := ecdsa.NewECDSACreator(args.Holder.GetKeyFile(), args.Holder.GetCertFile(), elliptic.P256())
-	certManager := certificates.NewCertManager(certCreator, args.Holder.GetDefaultCertDir(), args.Holder.GetAutoGenerateCertificates())
-	certs, err := certManager.GetCertificates()
+	certCreator := ecdsa.NewECDSACreator(args.KeyFile(), args.CertFile(), elliptic.P256())
+	certManager := certificates.NewCertManager(certCreator, args.DefaultCertDir(), args.AutoGenerateCertificates())
+	certPath, keyPath, err := certManager.GetCertificatePaths()
 	if err != nil {
-		handleFatalInitServingCertError(err)
+		klog.Fatalf("Error while loading dashboard server certificates. Reason: %s", err)
 	}
 
-	// Run HTTP server that serves static public files from './public' and handles API calls.
-	http.Handle("/", handler.MakeGzipHandler(handler.CreateLocaleHandler()))
-	http.Handle("/config", handler.AppHandler(handler.ConfigHandler))
-
-	// Listen for http or https
-	if certs != nil {
-		serveTLS(certs)
+	if len(certPath) != 0 && len(keyPath) != 0 {
+		klog.V(1).InfoS("Listening and serving securely on", "address", args.Address())
+		if err := router.Router().RunTLS(args.Address(), certPath, keyPath); err != nil {
+			klog.Fatalf("Router error: %s", err)
+		}
 	} else {
-		serve()
+		klog.V(1).InfoS("Listening and serving insecurely on", "address", args.InsecureAddress())
+		if err := router.Router().Run(args.InsecureAddress()); err != nil {
+			klog.Fatalf("Router error: %s", err)
+		}
 	}
-
-	select {}
-}
-
-func serve() {
-	log.Printf("Serving insecurely on HTTP port: %d", args.Holder.GetInsecurePort())
-	addr := fmt.Sprintf("%s:%d", args.Holder.GetInsecureBindAddress(), args.Holder.GetInsecurePort())
-	go func() { log.Fatal(http.ListenAndServe(addr, nil)) }()
-}
-
-func serveTLS(certificates []tls.Certificate) {
-	log.Printf("Serving securely on HTTPS port: %d", args.Holder.GetPort())
-	secureAddr := fmt.Sprintf("%s:%d", args.Holder.GetBindAddress(), args.Holder.GetPort())
-	server := &http.Server{
-		Addr:    secureAddr,
-		Handler: http.DefaultServeMux,
-		TLSConfig: &tls.Config{
-			Certificates: certificates,
-			MinVersion:   tls.VersionTLS12,
-		},
-	}
-	go func() { log.Fatal(server.ListenAndServeTLS("", "")) }()
-}
-
-func initArgHolder() {
-	builder := args.GetHolderBuilder()
-	builder.SetInsecurePort(*argInsecurePort)
-	builder.SetPort(*argPort)
-	builder.SetInsecureBindAddress(*argInsecureBindAddress)
-	builder.SetBindAddress(*argBindAddress)
-	builder.SetDefaultCertDir(*argDefaultCertDir)
-	builder.SetCertFile(*argCertFile)
-	builder.SetKeyFile(*argKeyFile)
-	builder.SetSystemBanner(*argSystemBanner)
-	builder.SetSystemBannerSeverity(*argSystemBannerSeverity)
-	builder.SetAutoGenerateCertificates(*argAutoGenerateCertificates)
-	builder.SetLocaleConfig(*localeConfig)
-}
-
-/**
- * Handles fatal init errors encountered during service cert loading.
- */
-func handleFatalInitServingCertError(err error) {
-	log.Fatalf("Error while loading dashboard server certificates. Reason: %s", err)
 }

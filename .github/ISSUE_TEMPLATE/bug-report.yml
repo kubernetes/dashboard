@@ -64,4 +64,4 @@ body:
       label: Dev environment
       description: |
         Provide outputs of 'go version' and 'node --version' commands.
-        It's needed only if using development version of Kubernetes Dashboard.
+        It's needed only if you are running Kubernetes Dashboard locally.

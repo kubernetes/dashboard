@@ -35,10 +35,8 @@ import {KdStateService} from './state';
 import {ThemeService} from './theme';
 import {TitleService} from './title';
 import {VerberService} from './verber';
-import {PluginsConfigService} from './plugin';
-import {PluginLoaderService} from '../pluginloader/pluginloader.service';
-import {ClientPluginLoaderService} from '../pluginloader/clientloader.service';
 import {PinnerService} from './pinner';
+import {MeService} from '@common/services/global/me';
 
 @NgModule({
   providers: [
@@ -47,9 +45,9 @@ import {PinnerService} from './pinner';
     LocalSettingsService,
     GlobalSettingsService,
     ConfigService,
-    PluginsConfigService,
     TitleService,
     AuthService,
+    MeService,
     CsrfTokenService,
     NotificationsService,
     ThemeService,
@@ -71,10 +69,10 @@ import {PinnerService} from './pinner';
         LocalSettingsService,
         ConfigService,
         HistoryService,
-        PluginsConfigService,
         PinnerService,
         ThemeService,
         LocalConfigLoaderService,
+        MeService,
       ],
       multi: true,
     },
@@ -83,11 +81,11 @@ import {PinnerService} from './pinner';
       useClass: AuthInterceptor,
       multi: true,
     },
-    {provide: PluginLoaderService, useClass: ClientPluginLoaderService},
   ],
 })
 export class GlobalServicesModule {
   static injector: Injector;
+
   constructor(injector: Injector) {
     GlobalServicesModule.injector = injector;
   }
@@ -99,18 +97,18 @@ export function init(
   pinner: PinnerService,
   config: ConfigService,
   history: HistoryService,
-  pluginsConfig: PluginsConfigService,
   theme: ThemeService,
-  loader: LocalConfigLoaderService
+  loader: LocalConfigLoaderService,
+  me: MeService
 ): Function {
-  return () => {
-    return loader.init().then(() => {
-      localSettings.init();
-      pinner.init();
-      config.init();
-      history.init();
-      theme.init();
-      return globalSettings.init().then(() => pluginsConfig.init());
-    });
+  return async () => {
+    await loader.init();
+    localSettings.init();
+    pinner.init();
+    config.init();
+    history.init();
+    theme.init();
+    await me.init();
+    return await globalSettings.init();
   };
 }

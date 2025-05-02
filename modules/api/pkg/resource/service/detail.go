@@ -16,13 +16,14 @@ package service
 
 import (
 	"context"
-	"log"
 
 	v1 "k8s.io/api/core/v1"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	k8sClient "k8s.io/client-go/kubernetes"
-	"k8s.io/dashboard/api/pkg/errors"
+	"k8s.io/klog/v2"
+
 	"k8s.io/dashboard/api/pkg/resource/endpoint"
+	"k8s.io/dashboard/errors"
 )
 
 // Service is a representation of a service.
@@ -42,14 +43,14 @@ type ServiceDetail struct {
 
 // GetServiceDetail gets service details.
 func GetServiceDetail(client k8sClient.Interface, namespace, name string) (*ServiceDetail, error) {
-	log.Printf("Getting details of %s service in %s namespace", name, namespace)
+	klog.V(4).Infof("Getting details of %s service in %s namespace", name, namespace)
 	serviceData, err := client.CoreV1().Services(namespace).Get(context.TODO(), name, metaV1.GetOptions{})
 	if err != nil {
 		return nil, err
 	}
 
 	endpointList, err := endpoint.GetServiceEndpoints(client, namespace, name)
-	nonCriticalErrors, criticalError := errors.HandleError(err)
+	nonCriticalErrors, criticalError := errors.ExtractErrors(err)
 	if criticalError != nil {
 		return nil, criticalError
 	}

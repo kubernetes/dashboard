@@ -23,12 +23,12 @@ import {ResourceMeta} from '../../services/global/actionbar';
   selector: 'kd-delete-resource-dialog',
   templateUrl: 'template.html',
 })
-export class ScaleResourceDialog implements OnInit {
+export class ScaleResourceDialogComponent implements OnInit {
   actual = 0;
   desired = 0;
 
   constructor(
-    public dialogRef: MatDialogRef<ScaleResourceDialog>,
+    public dialogRef: MatDialogRef<ScaleResourceDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: ResourceMeta,
     private readonly http_: HttpClient
   ) {}
@@ -37,7 +37,7 @@ export class ScaleResourceDialog implements OnInit {
     const url =
       `api/v1/scale/${this.data.typeMeta.kind}` +
       (this.data.objectMeta.namespace ? `/${this.data.objectMeta.namespace}` : '') +
-      `/${this.data.objectMeta.name}/`;
+      `/${this.data.objectMeta.name}`;
 
     this.http_
       .get<ReplicaCounts>(url)

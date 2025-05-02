@@ -21,9 +21,10 @@ import (
 	v1 "k8s.io/api/core/v1"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/client-go/kubernetes/fake"
-	"k8s.io/dashboard/api/pkg/api"
+
 	"k8s.io/dashboard/api/pkg/resource/common"
 	"k8s.io/dashboard/api/pkg/resource/dataselect"
+	"k8s.io/dashboard/types"
 )
 
 func TestServiceEvents(t *testing.T) {
@@ -46,10 +47,10 @@ func TestServiceEvents(t *testing.T) {
 			}},
 			expectedActions: []string{"list"},
 			expected: &common.EventList{
-				ListMeta: api.ListMeta{TotalItems: 1},
+				ListMeta: types.ListMeta{TotalItems: 1},
 				Events: []common.Event{{
-					TypeMeta: api.TypeMeta{Kind: api.ResourceKindEvent},
-					ObjectMeta: api.ObjectMeta{Name: "ev-1", Namespace: "ns-1",
+					TypeMeta: types.TypeMeta{Kind: types.ResourceKindEvent},
+					ObjectMeta: types.ObjectMeta{Name: "ev-1", Namespace: "ns-1",
 						Labels: map[string]string{"app": "test"}},
 					Message: "test-message",
 					Type:    v1.EventTypeNormal,

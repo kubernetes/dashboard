@@ -16,15 +16,17 @@ package persistentvolume
 
 import (
 	"context"
-	"log"
 	"strings"
 
 	v1 "k8s.io/api/core/v1"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	client "k8s.io/client-go/kubernetes"
-	"k8s.io/dashboard/api/pkg/errors"
+	"k8s.io/klog/v2"
+
+	"k8s.io/dashboard/api/pkg/args"
 	"k8s.io/dashboard/api/pkg/resource/common"
 	"k8s.io/dashboard/api/pkg/resource/dataselect"
+	"k8s.io/dashboard/errors"
 )
 
 // GetStorageClassPersistentVolumes gets persistentvolumes that are associated with this storageclass.
@@ -45,7 +47,7 @@ func GetStorageClassPersistentVolumes(client client.Interface, storageClassName 
 	persistentVolumeList := <-channels.PersistentVolumeList.List
 
 	err = <-channels.PersistentVolumeList.Error
-	nonCriticalErrors, criticalError := errors.HandleError(err)
+	nonCriticalErrors, criticalError := errors.ExtractErrors(err)
 	if criticalError != nil {
 		return nil, criticalError
 	}
@@ -57,7 +59,7 @@ func GetStorageClassPersistentVolumes(client client.Interface, storageClassName 
 		}
 	}
 
-	log.Printf("Found %d persistentvolumes related to %s storageclass",
+	klog.V(args.LogLevelVerbose).Infof("Found %d persistentvolumes related to %s storageclass",
 		len(storagePersistentVolumes), storageClassName)
 
 	return toPersistentVolumeList(storagePersistentVolumes, nonCriticalErrors, dsQuery), nil
@@ -86,6 +88,8 @@ func (self PersistentVolumeCell) GetProperty(name dataselect.PropertyName) datas
 		return dataselect.StdComparableTime(self.ObjectMeta.CreationTimestamp.Time)
 	case dataselect.NamespaceProperty:
 		return dataselect.StdComparableString(self.ObjectMeta.Namespace)
+	case dataselect.StatusProperty:
+		return dataselect.StdComparableString(self.Status.Phase)
 	default:
 		// if name is not supported then just return a constant dummy value, sort will have no effect.
 		return nil

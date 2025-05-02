@@ -1,7 +1,5 @@
 # User guide
 
-* [Installation](installation.md)
-* [Certificate management](certificate-management.md)
 * [Accessing Dashboard](accessing-dashboard/README.md)
 * [Access control](access-control/README.md)
   * [Creating sample user](access-control/creating-sample-user.md)

@@ -15,22 +15,22 @@
 package statefulset
 
 import (
-	"log"
-
 	apps "k8s.io/api/apps/v1"
 	v1 "k8s.io/api/core/v1"
 	"k8s.io/client-go/kubernetes"
-	"k8s.io/dashboard/api/pkg/api"
-	"k8s.io/dashboard/api/pkg/errors"
+	"k8s.io/klog/v2"
+
 	metricapi "k8s.io/dashboard/api/pkg/integration/metric/api"
 	"k8s.io/dashboard/api/pkg/resource/common"
 	"k8s.io/dashboard/api/pkg/resource/dataselect"
 	"k8s.io/dashboard/api/pkg/resource/event"
+	"k8s.io/dashboard/errors"
+	"k8s.io/dashboard/types"
 )
 
 // StatefulSetList contains a list of Stateful Sets in the cluster.
 type StatefulSetList struct {
-	ListMeta api.ListMeta `json:"listMeta"`
+	ListMeta types.ListMeta `json:"listMeta"`
 
 	Status            common.ResourceStatus `json:"status"`
 	StatefulSets      []StatefulSet         `json:"statefulSets"`
@@ -42,17 +42,17 @@ type StatefulSetList struct {
 
 // StatefulSet is a presentation layer view of Kubernetes Stateful Set resource.
 type StatefulSet struct {
-	ObjectMeta          api.ObjectMeta `json:"objectMeta"`
-	TypeMeta            api.TypeMeta   `json:"typeMeta"`
-	Pods                common.PodInfo `json:"podInfo"`
-	ContainerImages     []string       `json:"containerImages"`
-	InitContainerImages []string       `json:"initContainerImages"`
+	ObjectMeta          types.ObjectMeta `json:"objectMeta"`
+	TypeMeta            types.TypeMeta   `json:"typeMeta"`
+	Pods                common.PodInfo   `json:"podInfo"`
+	ContainerImages     []string         `json:"containerImages"`
+	InitContainerImages []string         `json:"initContainerImages"`
 }
 
 // GetStatefulSetList returns a list of all Stateful Sets in the cluster.
 func GetStatefulSetList(client kubernetes.Interface, nsQuery *common.NamespaceQuery,
 	dsQuery *dataselect.DataSelectQuery, metricClient metricapi.MetricClient) (*StatefulSetList, error) {
-	log.Print("Getting list of all pet sets in the cluster")
+	klog.V(4).Infof("Getting list of all stateful sets in the cluster")
 
 	channels := &common.ResourceChannels{
 		StatefulSetList: common.GetStatefulSetListChannel(client, nsQuery, 1),
@@ -70,7 +70,7 @@ func GetStatefulSetListFromChannels(channels *common.ResourceChannels, dsQuery *
 
 	statefulSets := <-channels.StatefulSetList.List
 	err := <-channels.StatefulSetList.Error
-	nonCriticalErrors, criticalError := errors.HandleError(err)
+	nonCriticalErrors, criticalError := errors.ExtractErrors(err)
 	if criticalError != nil {
 		return nil, criticalError
 	}
@@ -99,7 +99,7 @@ func toStatefulSetList(statefulSets []apps.StatefulSet, pods []v1.Pod, events []
 
 	statefulSetList := &StatefulSetList{
 		StatefulSets: make([]StatefulSet, 0),
-		ListMeta:     api.ListMeta{TotalItems: len(statefulSets)},
+		ListMeta:     types.ListMeta{TotalItems: len(statefulSets)},
 		Errors:       nonCriticalErrors,
 	}
 
@@ -109,7 +109,7 @@ func toStatefulSetList(statefulSets []apps.StatefulSet, pods []v1.Pod, events []
 	ssCells, metricPromises, filteredTotal := dataselect.GenericDataSelectWithFilterAndMetrics(
 		toCells(statefulSets), dsQuery, cachedResources, metricClient)
 	statefulSets = fromCells(ssCells)
-	statefulSetList.ListMeta = api.ListMeta{TotalItems: filteredTotal}
+	statefulSetList.ListMeta = types.ListMeta{TotalItems: filteredTotal}
 
 	for _, statefulSet := range statefulSets {
 		matchingPods := common.FilterPodsByControllerRef(&statefulSet, pods)
@@ -129,8 +129,8 @@ func toStatefulSetList(statefulSets []apps.StatefulSet, pods []v1.Pod, events []
 
 func toStatefulSet(statefulSet *apps.StatefulSet, podInfo *common.PodInfo) StatefulSet {
 	return StatefulSet{
-		ObjectMeta:          api.NewObjectMeta(statefulSet.ObjectMeta),
-		TypeMeta:            api.NewTypeMeta(api.ResourceKindStatefulSet),
+		ObjectMeta:          types.NewObjectMeta(statefulSet.ObjectMeta),
+		TypeMeta:            types.NewTypeMeta(types.ResourceKindStatefulSet),
 		ContainerImages:     common.GetContainerImages(&statefulSet.Spec.Template.Spec),
 		InitContainerImages: common.GetInitContainerImages(&statefulSet.Spec.Template.Spec),
 		Pods:                *podInfo,

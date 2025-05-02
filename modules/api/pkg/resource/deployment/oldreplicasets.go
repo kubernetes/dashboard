@@ -20,11 +20,12 @@ import (
 	apps "k8s.io/api/apps/v1"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	client "k8s.io/client-go/kubernetes"
-	"k8s.io/dashboard/api/pkg/api"
-	"k8s.io/dashboard/api/pkg/errors"
+
 	"k8s.io/dashboard/api/pkg/resource/common"
 	"k8s.io/dashboard/api/pkg/resource/dataselect"
 	"k8s.io/dashboard/api/pkg/resource/replicaset"
+	"k8s.io/dashboard/errors"
+	"k8s.io/dashboard/types"
 )
 
 // GetDeploymentOldReplicaSets returns old replica sets targeting Deployment with given name
@@ -33,7 +34,7 @@ func GetDeploymentOldReplicaSets(client client.Interface, dsQuery *dataselect.Da
 
 	oldReplicaSetList := &replicaset.ReplicaSetList{
 		ReplicaSets: make([]replicaset.ReplicaSet, 0),
-		ListMeta:    api.ListMeta{TotalItems: 0},
+		ListMeta:    types.ListMeta{TotalItems: 0},
 	}
 
 	deployment, err := client.AppsV1().Deployments(namespace).Get(context.TODO(), deploymentName, metaV1.GetOptions{})
@@ -68,7 +69,7 @@ func GetDeploymentOldReplicaSets(client client.Interface, dsQuery *dataselect.Da
 
 	rawEvents := <-channels.EventList.List
 	err = <-channels.EventList.Error
-	nonCriticalErrors, criticalError := errors.HandleError(err)
+	nonCriticalErrors, criticalError := errors.ExtractErrors(err)
 	if criticalError != nil {
 		return oldReplicaSetList, criticalError
 	}

@@ -17,79 +17,35 @@ import {Inject, Injectable} from '@angular/core';
 import {Router} from '@angular/router';
 import {IConfig} from '@api/root.ui';
 import {CookieService} from 'ngx-cookie-service';
-import {of} from 'rxjs';
 import {Observable} from 'rxjs';
-import {switchMap, take} from 'rxjs/operators';
-import {AuthResponse, CsrfToken, LoginSpec, LoginStatus} from 'typings/root.api';
+import {switchMap} from 'rxjs/operators';
+import {AuthResponse, CsrfToken, LoginSpec, User} from 'typings/root.api';
 import {CONFIG_DI_TOKEN} from '../../../index.config';
-
-import {K8SError} from '../../errors/errors';
-
 import {CsrfTokenService} from './csrftoken';
 import {KdStateService} from './state';
+import isEmpty from 'lodash-es/isEmpty';
+import {MeService} from '@common/services/global/me';
 
 @Injectable()
 export class AuthService {
+  private _hasAuthHeader = false;
+
   constructor(
     private readonly cookies_: CookieService,
     private readonly router_: Router,
     private readonly http_: HttpClient,
     private readonly csrfTokenService_: CsrfTokenService,
     private readonly stateService_: KdStateService,
+    private readonly _meService: MeService,
     @Inject(CONFIG_DI_TOKEN) private readonly config_: IConfig
   ) {
-    this.init_();
-  }
-
-  private init_() {
-    this.stateService_.onBefore.pipe(switchMap(() => this.getLoginStatus())).subscribe(status => {
-      if (this.isAuthenticationEnabled(status)) {
-        this.refreshToken();
-      }
-    });
-  }
-
-  private setTokenCookie_(token: string): void {
-    if (!this.isLoginEnabled()) {
-      return;
-    }
-
-    if (this.isCurrentProtocolSecure_()) {
-      this.cookies_.set(this.config_.authTokenCookieName, token, null, null, null, true, 'Strict');
-      return;
-    }
-
-    if (this.isCurrentDomainSecure_()) {
-      this.cookies_.set(this.config_.authTokenCookieName, token, null, null, location.hostname, false, 'Strict');
-    }
-  }
-
-  private setUsernameCookie_(name: string): void {
-    this.cookies_.set(this.config_.usernameCookieName, name);
-  }
-
-  private getTokenCookie_(): string {
-    return this.cookies_.get(this.config_.authTokenCookieName) || '';
-  }
-
-  private isCurrentDomainSecure_(): boolean {
-    return ['localhost', '127.0.0.1'].indexOf(location.hostname) > -1;
-  }
-
-  private isCurrentProtocolSecure_(): boolean {
-    return location.protocol.includes('https');
-  }
-
-  removeAuthCookies(): void {
-    this.cookies_.delete(this.config_.authTokenCookieName);
-    this.cookies_.delete(this.config_.skipLoginPageCookieName);
-    this.cookies_.delete(this.config_.usernameCookieName);
+    this.stateService_.onBefore.subscribe(_ => this.refreshToken());
   }
 
   /**
    * Sends a login request to the backend with filled in login spec structure.
    */
-  login(loginSpec: LoginSpec): Observable<K8SError[]> {
+  login(loginSpec: LoginSpec): Observable<User> {
     return this.csrfTokenService_
       .getTokenForAction('login')
       .pipe(
@@ -101,89 +57,92 @@ export class AuthService {
       )
       .pipe(
         switchMap((authResponse: AuthResponse) => {
-          if (authResponse.jweToken.length !== 0 && authResponse.errors.length === 0) {
-            this.setTokenCookie_(authResponse.jweToken);
-            this.setUsernameCookie_(authResponse.name);
+          if (authResponse.token.length !== 0) {
+            this.setTokenCookie_(authResponse.token);
           }
 
-          return of(authResponse.errors);
+          return this._meService.refresh();
         })
       );
   }
 
   logout(): void {
-    this.removeAuthCookies();
+    this.removeTokenCookie();
+    this._meService.reset();
     this.router_.navigate(['login']);
   }
 
   /**
-   * Sends a token refresh request to the backend. In case user is not logged in
-   * with token nothing will happen.
+   * Sends a token refresh request to the backend. In case a user is not logged in with token, nothing will happen.
    */
   refreshToken(): void {
-    const token = this.getTokenCookie_();
-    if (token.length === 0) return;
-
-    this.csrfTokenService_
-      .getTokenForAction('token')
-      .pipe(
-        switchMap(csrfToken => {
-          return this.http_.post<AuthResponse>(
-            'api/v1/token/refresh',
-            {jweToken: token},
-            {
-              headers: new HttpHeaders().set(this.config_.csrfHeaderName, csrfToken.token),
-            }
-          );
-        })
-      )
-      .pipe(take(1))
-      .subscribe((authResponse: AuthResponse) => {
-        if (authResponse.jweToken.length !== 0 && authResponse.errors.length === 0) {
-          this.setTokenCookie_(authResponse.jweToken);
-          return authResponse.jweToken;
-        }
-
-        return authResponse.errors;
-      });
+    // const token = this.getTokenCookie_();
+    // if (token.length === 0) return;
+    //
+    // this.csrfTokenService_
+    //   .getTokenForAction('token')
+    //   .pipe(
+    //     switchMap(csrfToken => {
+    //       return this.http_.post<AuthResponse>(
+    //         'api/v1/token/refresh',
+    //         {jweToken: token},
+    //         {
+    //           headers: new HttpHeaders().set(this.config_.csrfHeaderName, csrfToken.token),
+    //         }
+    //       );
+    //     })
+    //   )
+    //   .pipe(take(1))
+    //   .subscribe((authResponse: AuthResponse) => {
+    //     if (authResponse.token.length !== 0) {
+    //       this.setTokenCookie_(authResponse.token);
+    //     }
+    //   });
   }
 
-  /** Checks if user is authenticated. */
-  isAuthenticated(loginStatus: LoginStatus): boolean {
-    return loginStatus.headerPresent || loginStatus.tokenPresent || !this.isLoginPageEnabled();
+  isAuthenticated(): boolean {
+    return this._meService.getUser().authenticated || this.hasTokenCookie();
   }
 
-  /**
-   * Checks authentication is enabled. It is enabled only on HTTPS. Can be
-   * overridden by 'enable-insecure-login' flag passed to dashboard.
-   */
-  isAuthenticationEnabled(loginStatus: LoginStatus): boolean {
-    return loginStatus.httpsMode;
+  hasAuthHeader(): boolean {
+    return this._meService.getUser().authenticated && !this.hasTokenCookie();
   }
 
-  getLoginStatus(): Observable<LoginStatus> {
-    return this.http_.get<LoginStatus>('api/v1/login/status');
+  private getTokenCookie(): string {
+    return this.cookies_.get(this.config_.authTokenCookieName) || '';
   }
 
-  skipLoginPage(skip: boolean): void {
-    this.removeAuthCookies();
-    this.cookies_.set(this.config_.skipLoginPageCookieName, skip.toString(), null, null, null, false, 'Strict');
+  hasTokenCookie(): boolean {
+    return !isEmpty(this.getTokenCookie());
   }
 
-  /**
-   * Returns true if user has selected to skip page, false otherwise.
-   * As cookie returns string or undefined we have to check for a string match.
-   * In case cookie is not set login page will also be visible.
-   */
-  isLoginPageEnabled(): boolean {
-    return !(this.cookies_.get(this.config_.skipLoginPageCookieName) === 'true');
+  private setTokenCookie_(token: string): void {
+    if (this.isCurrentProtocolSecure_()) {
+      this.cookies_.set(this.config_.authTokenCookieName, token, null, null, null, true, 'Strict');
+      return;
+    }
+
+    if (this.isCurrentDomainSecure_()) {
+      this.cookies_.set(this.config_.authTokenCookieName, token, null, null, location.hostname, false, 'Strict');
+    }
   }
 
-  /**
-   * Returns true if domain is localhost/127.0.0.1 or if the connection
-   * protocol is HTTPS, false otherwise.
-   */
-  isLoginEnabled(): boolean {
-    return this.isCurrentDomainSecure_() || this.isCurrentProtocolSecure_();
+  removeTokenCookie(): void {
+    if (this.isCurrentProtocolSecure_()) {
+      this.cookies_.delete(this.config_.authTokenCookieName, null, null, true, 'Strict');
+      return;
+    }
+
+    if (this.isCurrentDomainSecure_()) {
+      this.cookies_.delete(this.config_.authTokenCookieName, null, location.hostname, false, 'Strict');
+    }
+  }
+
+  private isCurrentDomainSecure_(): boolean {
+    return ['localhost', '127.0.0.1'].indexOf(location.hostname) > -1;
+  }
+
+  private isCurrentProtocolSecure_(): boolean {
+    return location.protocol.includes('https');
   }
 }

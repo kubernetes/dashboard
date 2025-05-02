@@ -20,9 +20,10 @@ import (
 
 	v1 "k8s.io/api/core/v1"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
-	"k8s.io/dashboard/api/pkg/api"
+
 	"k8s.io/dashboard/api/pkg/resource/common"
 	"k8s.io/dashboard/api/pkg/resource/dataselect"
+	"k8s.io/dashboard/types"
 )
 
 func TestToSecretList(t *testing.T) {
@@ -51,23 +52,23 @@ func TestToSecretList(t *testing.T) {
 			&SecretList{
 				Secrets: []Secret{
 					{
-						ObjectMeta: api.ObjectMeta{
+						ObjectMeta: types.ObjectMeta{
 							Name:              "user1",
 							Namespace:         "foo",
 							CreationTimestamp: metaV1.Unix(111, 222),
 						},
-						TypeMeta: api.NewTypeMeta(api.ResourceKindSecret),
+						TypeMeta: types.NewTypeMeta(types.ResourceKindSecret),
 					},
 					{
-						ObjectMeta: api.ObjectMeta{
+						ObjectMeta: types.ObjectMeta{
 							Name:              "user2",
 							Namespace:         "foo",
 							CreationTimestamp: metaV1.Unix(111, 222),
 						},
-						TypeMeta: api.NewTypeMeta(api.ResourceKindSecret),
+						TypeMeta: types.NewTypeMeta(types.ResourceKindSecret),
 					},
 				},
-				ListMeta: api.ListMeta{
+				ListMeta: types.ListMeta{
 					TotalItems: 2,
 				},
 			},

@@ -19,16 +19,16 @@ import (
 
 	batch "k8s.io/api/batch/v1"
 	meta "k8s.io/apimachinery/pkg/apis/meta/v1"
-	"k8s.io/apimachinery/pkg/types"
+	apimachinery "k8s.io/apimachinery/pkg/types"
 	"k8s.io/apimachinery/pkg/util/rand"
 	client "k8s.io/client-go/kubernetes"
 
-	"k8s.io/dashboard/api/pkg/api"
-	"k8s.io/dashboard/api/pkg/errors"
 	metricapi "k8s.io/dashboard/api/pkg/integration/metric/api"
 	"k8s.io/dashboard/api/pkg/resource/common"
 	"k8s.io/dashboard/api/pkg/resource/dataselect"
 	"k8s.io/dashboard/api/pkg/resource/job"
+	"k8s.io/dashboard/errors"
+	"k8s.io/dashboard/types"
 )
 
 const (
@@ -39,7 +39,7 @@ const (
 var emptyJobList = &job.JobList{
 	Jobs:   make([]job.Job, 0),
 	Errors: make([]error, 0),
-	ListMeta: api.ListMeta{
+	ListMeta: types.ListMeta{
 		TotalItems: 0,
 	},
 }
@@ -61,7 +61,7 @@ func GetCronJobJobs(client client.Interface, metricClient metricapi.MetricClient
 
 	jobs := <-channels.JobList.List
 	err = <-channels.JobList.Error
-	nonCriticalErrors, criticalError := errors.HandleError(err)
+	nonCriticalErrors, criticalError := errors.ExtractErrors(err)
 	if criticalError != nil {
 		return emptyJobList, nil
 	}
@@ -114,16 +114,11 @@ func TriggerCronJob(client client.Interface,
 
 	jobToCreate := &batch.Job{
 		ObjectMeta: meta.ObjectMeta{
-			Name:        newJobName,
-			Namespace:   namespace,
-			Annotations: annotations,
-			Labels:      labels,
-			OwnerReferences: []meta.OwnerReference{{
-				APIVersion: CronJobAPIVersion,
-				Kind:       CronJobKindName,
-				Name:       cronJob.Name,
-				UID:        cronJob.UID,
-			}},
+			Name:            newJobName,
+			Namespace:       namespace,
+			Annotations:     annotations,
+			Labels:          labels,
+			OwnerReferences: []meta.OwnerReference{*meta.NewControllerRef(cronJob, batch.SchemeGroupVersion.WithKind("CronJob"))},
 		},
 		Spec: cronJob.Spec.JobTemplate.Spec,
 	}
@@ -137,7 +132,7 @@ func TriggerCronJob(client client.Interface,
 	return nil
 }
 
-func filterJobsByOwnerUID(UID types.UID, jobs []batch.Job) (matchingJobs []batch.Job) {
+func filterJobsByOwnerUID(UID apimachinery.UID, jobs []batch.Job) (matchingJobs []batch.Job) {
 	for _, j := range jobs {
 		for _, i := range j.OwnerReferences {
 			if i.UID == UID {
@@ -155,8 +150,6 @@ func filterJobsByState(active bool, jobs []batch.Job) (matchingJobs []batch.Job)
 			matchingJobs = append(matchingJobs, j)
 		} else if !active && j.Status.Active == 0 {
 			matchingJobs = append(matchingJobs, j)
-		} else {
-			//sup
 		}
 	}
 	return

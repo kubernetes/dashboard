@@ -21,3 +21,8 @@ export const NAMESPACE_STATE_PARAM = 'namespace';
  * Parameter name of the search query.
  */
 export const SEARCH_QUERY_STATE_PARAM = 'q';
+
+/**
+ * Parameter name of auto skipping login page.
+ */
+export const SKIP_LOGIN_PAGE_QUERY_STATE_PARAM = 'skipLoginPage';

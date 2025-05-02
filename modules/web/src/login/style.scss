@@ -15,7 +15,8 @@
 @use '../variables' as *;
 
 .kd-login-mode-description {
-  padding: $baseline-grid (3.5 * $baseline-grid) (2 * $baseline-grid);
+  gap: $baseline-grid;
+  padding: 0 (3.5 * $baseline-grid) (4 * $baseline-grid);
 }
 
 .kd-login-input {
@@ -23,7 +24,7 @@
 }
 
 .kd-login-button {
-  margin: (4 * $baseline-grid) $baseline-grid $baseline-grid 0;
+  margin-right: 3.5 * $baseline-grid;
 }
 
 .kd-error-text {

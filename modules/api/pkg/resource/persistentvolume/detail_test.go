@@ -18,11 +18,11 @@ import (
 	"reflect"
 	"testing"
 
-	"k8s.io/dashboard/api/pkg/api"
-
 	v1 "k8s.io/api/core/v1"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/client-go/kubernetes/fake"
+
+	"k8s.io/dashboard/types"
 )
 
 func TestGetPersistentVolumeDetail(t *testing.T) {
@@ -56,8 +56,8 @@ func TestGetPersistentVolumeDetail(t *testing.T) {
 			},
 			&PersistentVolumeDetail{
 				PersistentVolume: PersistentVolume{
-					TypeMeta:      api.TypeMeta{Kind: "persistentvolume"},
-					ObjectMeta:    api.ObjectMeta{Name: "foo"},
+					TypeMeta:      types.TypeMeta{Kind: "persistentvolume"},
+					ObjectMeta:    types.ObjectMeta{Name: "foo"},
 					Status:        v1.VolumePending,
 					ReclaimPolicy: v1.PersistentVolumeReclaimRecycle,
 					AccessModes:   []v1.PersistentVolumeAccessMode{v1.ReadWriteOnce},

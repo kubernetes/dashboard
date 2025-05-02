@@ -18,17 +18,18 @@ import (
 	apps "k8s.io/api/apps/v1"
 	v1 "k8s.io/api/core/v1"
 	"k8s.io/client-go/kubernetes"
-	"k8s.io/dashboard/api/pkg/api"
-	"k8s.io/dashboard/api/pkg/errors"
+
 	metricapi "k8s.io/dashboard/api/pkg/integration/metric/api"
 	"k8s.io/dashboard/api/pkg/resource/common"
 	"k8s.io/dashboard/api/pkg/resource/dataselect"
 	"k8s.io/dashboard/api/pkg/resource/event"
+	"k8s.io/dashboard/errors"
+	"k8s.io/dashboard/types"
 )
 
 // DaemonSetList contains a list of Daemon Sets in the cluster.
 type DaemonSetList struct {
-	ListMeta          api.ListMeta          `json:"listMeta"`
+	ListMeta          types.ListMeta        `json:"listMeta"`
 	DaemonSets        []DaemonSet           `json:"daemonSets"`
 	CumulativeMetrics []metricapi.Metric    `json:"cumulativeMetrics"`
 	Status            common.ResourceStatus `json:"status"`
@@ -39,11 +40,11 @@ type DaemonSetList struct {
 
 // DaemonSet plus zero or more Kubernetes services that target the Daemon Set.
 type DaemonSet struct {
-	ObjectMeta          api.ObjectMeta `json:"objectMeta"`
-	TypeMeta            api.TypeMeta   `json:"typeMeta"`
-	Pods                common.PodInfo `json:"podInfo"`
-	ContainerImages     []string       `json:"containerImages"`
-	InitContainerImages []string       `json:"initContainerImages"`
+	ObjectMeta          types.ObjectMeta `json:"objectMeta"`
+	TypeMeta            types.TypeMeta   `json:"typeMeta"`
+	Pods                common.PodInfo   `json:"podInfo"`
+	ContainerImages     []string         `json:"containerImages"`
+	InitContainerImages []string         `json:"initContainerImages"`
 }
 
 // GetDaemonSetList returns a list of all Daemon Set in the cluster.
@@ -66,7 +67,7 @@ func GetDaemonSetListFromChannels(channels *common.ResourceChannels, dsQuery *da
 
 	daemonSets := <-channels.DaemonSetList.List
 	err := <-channels.DaemonSetList.Error
-	nonCriticalErrors, criticalError := errors.HandleError(err)
+	nonCriticalErrors, criticalError := errors.ExtractErrors(err)
 	if criticalError != nil {
 		return nil, criticalError
 	}
@@ -95,7 +96,7 @@ func toDaemonSetList(daemonSets []apps.DaemonSet, pods []v1.Pod, events []v1.Eve
 
 	daemonSetList := &DaemonSetList{
 		DaemonSets: make([]DaemonSet, 0),
-		ListMeta:   api.ListMeta{TotalItems: len(daemonSets)},
+		ListMeta:   types.ListMeta{TotalItems: len(daemonSets)},
 		Errors:     nonCriticalErrors,
 	}
 
@@ -106,7 +107,7 @@ func toDaemonSetList(daemonSets []apps.DaemonSet, pods []v1.Pod, events []v1.Eve
 	dsCells, metricPromises, filteredTotal := dataselect.GenericDataSelectWithFilterAndMetrics(ToCells(daemonSets),
 		dsQuery, cachedResources, metricClient)
 	daemonSets = FromCells(dsCells)
-	daemonSetList.ListMeta = api.ListMeta{TotalItems: filteredTotal}
+	daemonSetList.ListMeta = types.ListMeta{TotalItems: filteredTotal}
 
 	for _, daemonSet := range daemonSets {
 		daemonSetList.DaemonSets = append(daemonSetList.DaemonSets, toDaemonSet(daemonSet, pods, events))
@@ -127,8 +128,8 @@ func toDaemonSet(daemonSet apps.DaemonSet, pods []v1.Pod, events []v1.Event) Dae
 	podInfo.Warnings = event.GetPodsEventWarnings(events, matchingPods)
 
 	return DaemonSet{
-		ObjectMeta:          api.NewObjectMeta(daemonSet.ObjectMeta),
-		TypeMeta:            api.NewTypeMeta(api.ResourceKindDaemonSet),
+		ObjectMeta:          types.NewObjectMeta(daemonSet.ObjectMeta),
+		TypeMeta:            types.NewTypeMeta(types.ResourceKindDaemonSet),
 		Pods:                podInfo,
 		ContainerImages:     common.GetContainerImages(&daemonSet.Spec.Template.Spec),
 		InitContainerImages: common.GetInitContainerImages(&daemonSet.Spec.Template.Spec),

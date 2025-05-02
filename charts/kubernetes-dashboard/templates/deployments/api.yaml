@@ -1,0 +1,157 @@
+# Copyright 2017 The Kubernetes Authors.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  labels:
+    {{- include "kubernetes-dashboard.labels" . | nindent 4 }}
+    {{- with .Values.api.labels }}
+    {{- toYaml . | nindent 4 }}
+    {{- end }}
+    app.kubernetes.io/name: {{ template "kubernetes-dashboard.name" . }}-{{ .Values.api.role }}
+    app.kubernetes.io/version: {{ .Values.api.image.tag }}
+    app.kubernetes.io/component: {{ .Values.api.role }}
+  annotations:
+    {{- include "kubernetes-dashboard.annotations" . | nindent 4 }}
+    {{- with .Values.api.annotations }}
+    {{- toYaml . | nindent 4 }}
+    {{- end }}
+  name: {{ template "kubernetes-dashboard.fullname" . }}-{{ .Values.api.role }}
+spec:
+  replicas: {{ .Values.api.scaling.replicas }}
+  revisionHistoryLimit: {{ .Values.api.scaling.revisionHistoryLimit }}
+  selector:
+    matchLabels:
+      {{- include "kubernetes-dashboard.matchLabels" . | nindent 6 }}
+      app.kubernetes.io/name: {{ template "kubernetes-dashboard.name" . }}-{{ .Values.api.role }}
+  template:
+    metadata:
+      labels:
+        {{- include "kubernetes-dashboard.labels" . | nindent 8 }}
+        {{- with .Values.api.labels }}
+        {{ toYaml . | nindent 8 }}
+        {{- end }}
+        app.kubernetes.io/name: {{ template "kubernetes-dashboard.name" . }}-{{ .Values.api.role }}
+        app.kubernetes.io/version: {{ .Values.api.image.tag }}
+        app.kubernetes.io/component: {{ .Values.api.role }}
+      annotations:
+        checksum/config: {{ include (print $.Template.BasePath "/secrets/csrf.yaml") . | sha256sum }}
+        {{- with .Values.api.annotations }}
+        {{ toYaml . | nindent 8 }}
+        {{- end }}
+    spec:
+      containers:
+        - name: {{ template "kubernetes-dashboard.name" . }}-{{ .Values.api.role }}
+          image: "{{ .Values.api.image.repository }}:{{ .Values.api.image.tag }}"
+          imagePullPolicy: {{ .Values.app.image.pullPolicy }}
+          args:
+            - --namespace={{ .Release.Namespace }}
+            - --metrics-scraper-service-name={{ template "kubernetes-dashboard.metrics-scraper.name" . }}
+          {{- with .Values.api.containers.args }}
+          {{ toYaml . | nindent 12 }}
+          {{- end }}
+
+          env:
+            - name: CSRF_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: {{ template "kubernetes-dashboard.app.csrf.secret.name" . }}
+                  key: {{ template "kubernetes-dashboard.app.csrf.secret.key" . }}
+
+            {{- if .Values.api.containers.resources.limits.cpu }}
+            - name: GOMAXPROCS
+              valueFrom:
+                resourceFieldRef:
+                  resource: limits.cpu
+                  divisor: "1"
+            {{- end }}
+            {{- if .Values.api.containers.resources.limits.memory }}
+            - name: GOMEMLIMIT
+              valueFrom:
+                resourceFieldRef:
+                  resource: limits.memory
+                  divisor: "1"
+            {{- end }}
+
+          {{- with .Values.api.containers.env }}
+          {{ toYaml . | nindent 12 }}
+          {{- end }}
+
+          {{- with .Values.api.containers.ports }}
+          ports:
+          {{ toYaml . | nindent 12 }}
+          {{- end }}
+
+          {{- with .Values.api.containers.volumeMounts }}
+          volumeMounts:
+          {{ toYaml . | nindent 12 }}
+          {{- end }}
+
+          {{- with .Values.app.security.containerSecurityContext }}
+          securityContext:
+          {{ toYaml . | nindent 12 }}
+          {{- end }}
+
+          {{- with .Values.api.containers.resources }}
+          resources:
+          {{ toYaml . | nindent 12 }}
+          {{- end }}
+
+      {{- with .Values.app.image.pullSecrets }}
+      imagePullSecrets:
+      {{- range . }}
+        - name: {{ . }}
+      {{- end }}
+      {{- end }}
+
+      automountServiceAccountToken: {{ .Values.api.automountServiceAccountToken }}
+
+      {{- with .Values.app.security.securityContext }}
+      securityContext:
+      {{ toYaml . | nindent 8 }}
+      {{- end }}
+
+      {{- with .Values.api.volumes }}
+      volumes:
+      {{ toYaml . | nindent 8 }}
+      {{- end }}
+
+      {{- with .Values.app.priorityClassName }}
+      priorityClassName: {{ . }}
+      {{- end }}
+
+      {{- if or .Values.api.nodeSelector .Values.app.scheduling.nodeSelector }}
+      nodeSelector:
+      {{- with .Values.api.nodeSelector }}
+      {{ toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.app.scheduling.nodeSelector }}
+      {{ toYaml . | nindent 8 }}
+      {{- end }}
+      {{- end }}
+
+      {{- with .Values.app.tolerations }}
+      tolerations:
+      {{ toYaml . | nindent 8 }}
+      {{- end }}
+
+      {{- with .Values.app.affinity }}
+      affinity:
+      {{ toYaml . | nindent 8 }}
+      {{- end }}
+
+      {{- if eq .Values.app.mode "dashboard" }}
+      serviceAccountName: {{ template "kubernetes-dashboard.fullname" . }}-{{ .Values.api.role }}
+      {{- end -}}

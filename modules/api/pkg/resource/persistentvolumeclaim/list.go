@@ -15,19 +15,19 @@
 package persistentvolumeclaim
 
 import (
-	"log"
-
 	v1 "k8s.io/api/core/v1"
 	"k8s.io/client-go/kubernetes"
-	"k8s.io/dashboard/api/pkg/api"
-	"k8s.io/dashboard/api/pkg/errors"
+	"k8s.io/klog/v2"
+
 	"k8s.io/dashboard/api/pkg/resource/common"
 	"k8s.io/dashboard/api/pkg/resource/dataselect"
+	"k8s.io/dashboard/errors"
+	"k8s.io/dashboard/types"
 )
 
 // PersistentVolumeClaimList contains a list of Persistent Volume Claims in the cluster.
 type PersistentVolumeClaimList struct {
-	ListMeta api.ListMeta `json:"listMeta"`
+	ListMeta types.ListMeta `json:"listMeta"`
 
 	// Unordered list of persistent volume claims
 	Items []PersistentVolumeClaim `json:"items"`
@@ -38,8 +38,8 @@ type PersistentVolumeClaimList struct {
 
 // PersistentVolumeClaim provides the simplified presentation layer view of Kubernetes Persistent Volume Claim resource.
 type PersistentVolumeClaim struct {
-	ObjectMeta   api.ObjectMeta                  `json:"objectMeta"`
-	TypeMeta     api.TypeMeta                    `json:"typeMeta"`
+	ObjectMeta   types.ObjectMeta                `json:"objectMeta"`
+	TypeMeta     types.TypeMeta                  `json:"typeMeta"`
 	Status       string                          `json:"status"`
 	Volume       string                          `json:"volume"`
 	Capacity     v1.ResourceList                 `json:"capacity"`
@@ -51,7 +51,7 @@ type PersistentVolumeClaim struct {
 func GetPersistentVolumeClaimList(client kubernetes.Interface, nsQuery *common.NamespaceQuery,
 	dsQuery *dataselect.DataSelectQuery) (*PersistentVolumeClaimList, error) {
 
-	log.Print("Getting list persistent volumes claims")
+	klog.V(4).Infof("Getting list persistent volumes claims")
 	channels := &common.ResourceChannels{
 		PersistentVolumeClaimList: common.GetPersistentVolumeClaimListChannel(client, nsQuery, 1),
 	}
@@ -66,7 +66,7 @@ func GetPersistentVolumeClaimListFromChannels(channels *common.ResourceChannels,
 
 	persistentVolumeClaims := <-channels.PersistentVolumeClaimList.List
 	err := <-channels.PersistentVolumeClaimList.Error
-	nonCriticalErrors, criticalError := errors.HandleError(err)
+	nonCriticalErrors, criticalError := errors.ExtractErrors(err)
 	if criticalError != nil {
 		return nil, criticalError
 	}
@@ -76,8 +76,8 @@ func GetPersistentVolumeClaimListFromChannels(channels *common.ResourceChannels,
 
 func toPersistentVolumeClaim(pvc v1.PersistentVolumeClaim) PersistentVolumeClaim {
 	return PersistentVolumeClaim{
-		ObjectMeta:   api.NewObjectMeta(pvc.ObjectMeta),
-		TypeMeta:     api.NewTypeMeta(api.ResourceKindPersistentVolumeClaim),
+		ObjectMeta:   types.NewObjectMeta(pvc.ObjectMeta),
+		TypeMeta:     types.NewTypeMeta(types.ResourceKindPersistentVolumeClaim),
 		Status:       string(pvc.Status.Phase),
 		Volume:       pvc.Spec.VolumeName,
 		Capacity:     pvc.Status.Capacity,
@@ -91,13 +91,13 @@ func toPersistentVolumeClaimList(persistentVolumeClaims []v1.PersistentVolumeCla
 
 	result := &PersistentVolumeClaimList{
 		Items:    make([]PersistentVolumeClaim, 0),
-		ListMeta: api.ListMeta{TotalItems: len(persistentVolumeClaims)},
+		ListMeta: types.ListMeta{TotalItems: len(persistentVolumeClaims)},
 		Errors:   nonCriticalErrors,
 	}
 
 	pvcCells, filteredTotal := dataselect.GenericDataSelectWithFilter(toCells(persistentVolumeClaims), dsQuery)
 	persistentVolumeClaims = fromCells(pvcCells)
-	result.ListMeta = api.ListMeta{TotalItems: filteredTotal}
+	result.ListMeta = types.ListMeta{TotalItems: filteredTotal}
 
 	for _, item := range persistentVolumeClaims {
 		result.Items = append(result.Items, toPersistentVolumeClaim(item))

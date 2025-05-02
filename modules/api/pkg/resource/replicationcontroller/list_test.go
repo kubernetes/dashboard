@@ -21,10 +21,11 @@ import (
 	v1 "k8s.io/api/core/v1"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/client-go/kubernetes/fake"
-	"k8s.io/dashboard/api/pkg/api"
+
 	metricapi "k8s.io/dashboard/api/pkg/integration/metric/api"
 	"k8s.io/dashboard/api/pkg/resource/common"
 	"k8s.io/dashboard/api/pkg/resource/dataselect"
+	"k8s.io/dashboard/types"
 )
 
 func TestToReplicationControllerList(t *testing.T) {
@@ -168,17 +169,17 @@ func TestToReplicationControllerList(t *testing.T) {
 			},
 			},
 			&ReplicationControllerList{
-				ListMeta:          api.ListMeta{TotalItems: 2},
+				ListMeta:          types.ListMeta{TotalItems: 2},
 				CumulativeMetrics: make([]metricapi.Metric, 0),
 				ReplicationControllers: []ReplicationController{
 					{
-						ObjectMeta: api.ObjectMeta{
+						ObjectMeta: types.ObjectMeta{
 							Name:      "my-app-1",
 							Namespace: "namespace-1",
 							UID:       "uid-1",
 						},
-						TypeMeta: api.TypeMeta{
-							Kind:     api.ResourceKindReplicationController,
+						TypeMeta: types.TypeMeta{
+							Kind:     types.ResourceKindReplicationController,
 							Scalable: true,
 						},
 						ContainerImages: []string{"my-container-image-1"},
@@ -191,13 +192,13 @@ func TestToReplicationControllerList(t *testing.T) {
 							Warnings:  []common.Event{},
 						},
 					}, {
-						ObjectMeta: api.ObjectMeta{
+						ObjectMeta: types.ObjectMeta{
 							Name:      "my-app-2",
 							Namespace: "namespace-2",
 							UID:       "uid-2",
 						},
-						TypeMeta: api.TypeMeta{
-							Kind:     api.ResourceKindReplicationController,
+						TypeMeta: types.TypeMeta{
+							Kind:     types.ResourceKindReplicationController,
 							Scalable: true,
 						},
 						ContainerImages: []string{"my-container-image-2"},
@@ -243,16 +244,16 @@ func TestGetReplicationControllerList(t *testing.T) {
 				}},
 			expectedActions: []string{"list", "list", "list"},
 			expected: &ReplicationControllerList{
-				ListMeta: api.ListMeta{TotalItems: 1},
+				ListMeta: types.ListMeta{TotalItems: 1},
 				Status:   common.ResourceStatus{Running: 1},
 				ReplicationControllers: []ReplicationController{
 					{
-						ObjectMeta: api.ObjectMeta{
+						ObjectMeta: types.ObjectMeta{
 							Name:   "rc-1",
 							Labels: map[string]string{},
 						},
-						TypeMeta: api.TypeMeta{
-							Kind:     api.ResourceKindReplicationController,
+						TypeMeta: types.TypeMeta{
+							Kind:     types.ResourceKindReplicationController,
 							Scalable: true,
 						},
 						Pods: common.PodInfo{

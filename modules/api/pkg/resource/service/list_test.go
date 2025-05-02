@@ -18,13 +18,14 @@ import (
 	"reflect"
 	"testing"
 
-	"k8s.io/dashboard/api/pkg/resource/endpoint"
-	"k8s.io/dashboard/api/pkg/resource/pod"
-
 	v1 "k8s.io/api/core/v1"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/client-go/kubernetes/fake"
-	"k8s.io/dashboard/api/pkg/api"
+
+	"k8s.io/dashboard/api/pkg/resource/endpoint"
+	"k8s.io/dashboard/api/pkg/resource/pod"
+	"k8s.io/dashboard/types"
+
 	"k8s.io/dashboard/api/pkg/resource/common"
 	"k8s.io/dashboard/api/pkg/resource/dataselect"
 )
@@ -45,15 +46,15 @@ func TestGetServiceList(t *testing.T) {
 				}},
 			expectedActions: []string{"list"},
 			expected: &ServiceList{
-				ListMeta: api.ListMeta{TotalItems: 1},
+				ListMeta: types.ListMeta{TotalItems: 1},
 				Services: []Service{
 					{
-						ObjectMeta: api.ObjectMeta{
+						ObjectMeta: types.ObjectMeta{
 							Name:      "svc-1",
 							Namespace: "ns-1",
 							Labels:    map[string]string{},
 						},
-						TypeMeta:          api.TypeMeta{Kind: api.ResourceKindService},
+						TypeMeta:          types.TypeMeta{Kind: types.ResourceKindService},
 						InternalEndpoint:  common.Endpoint{Host: "svc-1.ns-1"},
 						ExternalEndpoints: []common.Endpoint{},
 					},
@@ -102,7 +103,7 @@ func TestToServiceDetail(t *testing.T) {
 			endpointList: endpoint.EndpointList{},
 			expected: ServiceDetail{
 				Service: Service{
-					TypeMeta:          api.TypeMeta{Kind: api.ResourceKindService},
+					TypeMeta:          types.TypeMeta{Kind: types.ResourceKindService},
 					ExternalEndpoints: []common.Endpoint{},
 				},
 			},
@@ -113,11 +114,11 @@ func TestToServiceDetail(t *testing.T) {
 				}},
 			expected: ServiceDetail{
 				Service: Service{
-					ObjectMeta: api.ObjectMeta{
+					ObjectMeta: types.ObjectMeta{
 						Name:      "test-service",
 						Namespace: "test-namespace",
 					},
-					TypeMeta:          api.TypeMeta{Kind: api.ResourceKindService},
+					TypeMeta:          types.TypeMeta{Kind: types.ResourceKindService},
 					InternalEndpoint:  common.Endpoint{Host: "test-service.test-namespace"},
 					ExternalEndpoints: []common.Endpoint{},
 				},
@@ -142,7 +143,7 @@ func TestToService(t *testing.T) {
 	}{
 		{
 			service: &v1.Service{}, expected: Service{
-				TypeMeta:          api.TypeMeta{Kind: api.ResourceKindService},
+				TypeMeta:          types.TypeMeta{Kind: types.ResourceKindService},
 				ExternalEndpoints: []common.Endpoint{},
 			},
 		}, {
@@ -151,11 +152,11 @@ func TestToService(t *testing.T) {
 					Name: "test-service", Namespace: "test-namespace",
 				}},
 			expected: Service{
-				ObjectMeta: api.ObjectMeta{
+				ObjectMeta: types.ObjectMeta{
 					Name:      "test-service",
 					Namespace: "test-namespace",
 				},
-				TypeMeta:          api.TypeMeta{Kind: api.ResourceKindService},
+				TypeMeta:          types.TypeMeta{Kind: types.ResourceKindService},
 				InternalEndpoint:  common.Endpoint{Host: "test-service.test-namespace"},
 				ExternalEndpoints: []common.Endpoint{},
 			},

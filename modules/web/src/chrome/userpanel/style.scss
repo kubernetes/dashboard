@@ -29,11 +29,8 @@
 }
 
 .kd-cross-style {
-  bottom: 0;
-  left: 0;
+  inset: 0;
   position: absolute;
-  right: 0;
-  top: 0;
 }
 
 .kd-cross-line-primary {
@@ -45,8 +42,8 @@
 }
 
 .username {
-  font-size: $body-font-size-base;
-  margin-right: 2 * $baseline-grid;
+  font-size: $caption-font-size-base;
+  margin-top: 0.5 * $baseline-grid;
 }
 
 .method {

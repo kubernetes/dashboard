@@ -15,20 +15,21 @@
 package endpoint
 
 import (
-	"log"
-
 	v1 "k8s.io/api/core/v1"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/fields"
 	"k8s.io/apimachinery/pkg/labels"
 	k8sClient "k8s.io/client-go/kubernetes"
-	"k8s.io/dashboard/api/pkg/api"
+	"k8s.io/klog/v2"
+
+	"k8s.io/dashboard/api/pkg/args"
 	"k8s.io/dashboard/api/pkg/resource/common"
+	"k8s.io/dashboard/types"
 )
 
 type Endpoint struct {
-	ObjectMeta api.ObjectMeta `json:"objectMeta"`
-	TypeMeta   api.TypeMeta   `json:"typeMeta"`
+	ObjectMeta types.ObjectMeta `json:"objectMeta"`
+	TypeMeta   types.TypeMeta   `json:"typeMeta"`
 
 	// Hostname, either as a domain name or IP address.
 	Host string `json:"host"`
@@ -47,7 +48,7 @@ type Endpoint struct {
 func GetServiceEndpoints(client k8sClient.Interface, namespace, name string) (*EndpointList, error) {
 	endpointList := &EndpointList{
 		Endpoints: make([]Endpoint, 0),
-		ListMeta:  api.ListMeta{TotalItems: 0},
+		ListMeta:  types.ListMeta{TotalItems: 0},
 	}
 
 	serviceEndpoints, err := GetEndpoints(client, namespace, name)
@@ -56,7 +57,7 @@ func GetServiceEndpoints(client k8sClient.Interface, namespace, name string) (*E
 	}
 
 	endpointList = toEndpointList(serviceEndpoints)
-	log.Printf("Found %d endpoints related to %s service in %s namespace", len(endpointList.Endpoints), name, namespace)
+	klog.V(args.LogLevelVerbose).Infof("Found %d endpoints related to %s service in %s namespace", len(endpointList.Endpoints), name, namespace)
 	return endpointList, nil
 }
 
@@ -88,7 +89,7 @@ func GetEndpoints(client k8sClient.Interface, namespace, name string) ([]v1.Endp
 // toEndpoint converts endpoint api Endpoint to Endpoint model object.
 func toEndpoint(address v1.EndpointAddress, ports []v1.EndpointPort, ready bool) *Endpoint {
 	return &Endpoint{
-		TypeMeta: api.NewTypeMeta(api.ResourceKindEndpoint),
+		TypeMeta: types.NewTypeMeta(types.ResourceKindEndpoint),
 		Host:     address.IP,
 		Ports:    ports,
 		Ready:    ready,

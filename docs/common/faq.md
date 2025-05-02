@@ -2,10 +2,6 @@
 
 In case you did not find any answer here and in [closed issues](https://github.com/kubernetes/dashboard/issues?q=is%3Aissue+is%3Aclosed), [create new issue](https://github.com/kubernetes/dashboard/issues/new/choose).
 
-### I would like to use development environment on HTTPS, how to do it?
-
-Refer to our [Developer guide](../developer/getting-started.md).
-
 ### I cannot see any graphs in Dashboard, how to enable them?
 
 Make sure, that `metrics-server` and `dashboard-metrics-scraper` are up and running and Dashboard was able to connect with `dashboard-metrics-scraper`. You should check Dashboard logs and look for `metric` and `scraper` keywords. You can find more informations about Dashboard's Integrations [here](../user/integrations.md).
@@ -35,7 +31,7 @@ sudo mount --bind /var/lib/kubelet /var/lib/kubelet && sudo mount --make-shared 
 ```
 You can find more information [here](https://github.com/kubernetes/kubernetes/issues/4869#issuecomment-193640483).
 
-### I am seeing 404 errors when trying to access Dashbord. Dashboard resources can not be loaded.
+### I am seeing 404 errors when trying to access Dashboard. Dashboard resources can not be loaded.
 
 ```
 GET https://<IP>/api/v1/namespaces/kube-system/services/kubernetes-dashboard/static/vendor.9aa0b786.css

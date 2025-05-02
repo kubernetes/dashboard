@@ -23,11 +23,11 @@ import {
 } from '@angular/core';
 import {MatDialog, MatDialogConfig} from '@angular/material/dialog';
 import {StringMap} from '@api/root.shared';
-// @ts-ignore
+// @ts-expect-error as crop-url uses old style module declaration
 import cropUrl from 'crop-url';
 
 import {GlobalSettingsService} from '../../services/global/globalsettings';
-import {ChipDialog} from './chipdialog/dialog';
+import {ChipDialogComponent} from './chipdialog/dialog';
 import {KdStateService} from '@common/services/global/state';
 
 export interface Chip {
@@ -141,7 +141,7 @@ export class ChipsComponent implements OnInit, OnChanges {
         value,
       },
     };
-    this._matDialog.open(ChipDialog, dialogConfig);
+    this._matDialog.open(ChipDialogComponent, dialogConfig);
   }
 
   private processMap() {

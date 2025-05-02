@@ -18,11 +18,11 @@ import (
 	"context"
 	"encoding/base64"
 	"fmt"
-	"log"
 	"math"
 	"strconv"
 
 	"k8s.io/apimachinery/pkg/runtime/schema"
+	"k8s.io/klog/v2"
 
 	v1 "k8s.io/api/core/v1"
 	res "k8s.io/apimachinery/pkg/api/resource"
@@ -30,19 +30,19 @@ import (
 	"k8s.io/apimachinery/pkg/runtime"
 	"k8s.io/client-go/kubernetes"
 
-	"k8s.io/dashboard/api/pkg/api"
-	errorHandler "k8s.io/dashboard/api/pkg/errors"
 	metricapi "k8s.io/dashboard/api/pkg/integration/metric/api"
 	"k8s.io/dashboard/api/pkg/resource/common"
 	"k8s.io/dashboard/api/pkg/resource/controller"
 	"k8s.io/dashboard/api/pkg/resource/dataselect"
 	"k8s.io/dashboard/api/pkg/resource/persistentvolumeclaim"
+	"k8s.io/dashboard/errors"
+	"k8s.io/dashboard/types"
 )
 
 // PodDetail is a presentation layer view of Kubernetes Pod resource.
 type PodDetail struct {
-	ObjectMeta                api.ObjectMeta                                  `json:"objectMeta"`
-	TypeMeta                  api.TypeMeta                                    `json:"typeMeta"`
+	ObjectMeta                types.ObjectMeta                                `json:"objectMeta"`
+	TypeMeta                  types.TypeMeta                                  `json:"typeMeta"`
 	PodPhase                  string                                          `json:"podPhase"`
 	PodIP                     string                                          `json:"podIP"`
 	NodeName                  string                                          `json:"nodeName"`
@@ -89,12 +89,21 @@ type Container struct {
 	// Status of a pod container
 	Status *v1.ContainerStatus `json:"status"`
 
+	// State is a simplified status.
+	// One of:
+	// - Waiting
+	// - Running
+	// - Terminated
+	// - Failed
+	// - Unknown
+	State ContainerState `json:"state"`
+
 	// Probes
 	LivenessProbe  *v1.Probe `json:"livenessProbe"`
 	ReadinessProbe *v1.Probe `json:"readinessProbe"`
 	StartupProbe   *v1.Probe `json:"startupProbe"`
 
-	// Resource Requirments
+	// Resource Requirements
 	Resources v1.ResourceRequirements `json:"resources,omitempty"`
 }
 
@@ -132,7 +141,7 @@ type VolumeMount struct {
 // GetPodDetail returns the details of a named Pod from a particular namespace.
 func GetPodDetail(client kubernetes.Interface, metricClient metricapi.MetricClient, namespace, name string) (
 	*PodDetail, error) {
-	log.Printf("Getting details of %s pod in %s namespace", name, namespace)
+	klog.V(4).Infof("Getting details of %s pod in %s namespace", name, namespace)
 
 	channels := &common.ResourceChannels{
 		ConfigMapList: common.GetConfigMapListChannel(client, common.NewSameNamespaceQuery(namespace), 1),
@@ -145,7 +154,7 @@ func GetPodDetail(client kubernetes.Interface, metricClient metricapi.MetricClie
 	}
 
 	podController, err := getPodController(client, common.NewSameNamespaceQuery(namespace), pod)
-	nonCriticalErrors, criticalError := errorHandler.HandleError(err)
+	nonCriticalErrors, criticalError := errors.ExtractErrors(err)
 	if criticalError != nil {
 		return nil, criticalError
 	}
@@ -156,27 +165,27 @@ func GetPodDetail(client kubernetes.Interface, metricClient metricapi.MetricClie
 
 	configMapList := <-channels.ConfigMapList.List
 	err = <-channels.ConfigMapList.Error
-	nonCriticalErrors, criticalError = errorHandler.AppendError(err, nonCriticalErrors)
+	nonCriticalErrors, criticalError = errors.AppendError(err, nonCriticalErrors)
 	if criticalError != nil {
 		return nil, criticalError
 	}
 
 	secretList := <-channels.SecretList.List
 	err = <-channels.SecretList.Error
-	nonCriticalErrors, criticalError = errorHandler.AppendError(err, nonCriticalErrors)
+	nonCriticalErrors, criticalError = errors.AppendError(err, nonCriticalErrors)
 	if criticalError != nil {
 		return nil, criticalError
 	}
 
 	eventList, err := GetEventsForPod(client, dataselect.DefaultDataSelect, pod.Namespace, pod.Name)
-	nonCriticalErrors, criticalError = errorHandler.AppendError(err, nonCriticalErrors)
+	nonCriticalErrors, criticalError = errors.AppendError(err, nonCriticalErrors)
 	if criticalError != nil {
 		return nil, criticalError
 	}
 
 	persistentVolumeClaimList, err := persistentvolumeclaim.GetPodPersistentVolumeClaims(client,
 		namespace, name, dataselect.DefaultDataSelect)
-	nonCriticalErrors, criticalError = errorHandler.AppendError(err, nonCriticalErrors)
+	nonCriticalErrors, criticalError = errors.AppendError(err, nonCriticalErrors)
 	if criticalError != nil {
 		return nil, criticalError
 	}
@@ -259,7 +268,8 @@ func extractContainerInfo(containerList []v1.Container, pod *v1.Pod, configMaps 
 		}
 		vars = append(vars, evalEnvFrom(container, configMaps, secrets)...)
 
-		volume_mounts := extractContainerMounts(container, pod)
+		volumeMounts := extractContainerMounts(container, pod)
+		status, state := extractContainerStatus(pod, &container)
 
 		containers = append(containers, Container{
 			Name:            container.Name,
@@ -267,9 +277,10 @@ func extractContainerInfo(containerList []v1.Container, pod *v1.Pod, configMaps 
 			Env:             vars,
 			Commands:        container.Command,
 			Args:            container.Args,
-			VolumeMounts:    volume_mounts,
+			VolumeMounts:    volumeMounts,
 			SecurityContext: container.SecurityContext,
-			Status:          extractContainerStatus(pod, &container),
+			Status:          status,
+			State:           toContainerState(state),
 			LivenessProbe:   container.LivenessProbe,
 			ReadinessProbe:  container.ReadinessProbe,
 			StartupProbe:    container.StartupProbe,
@@ -283,8 +294,8 @@ func toPodDetail(pod *v1.Pod, metrics []metricapi.Metric, configMaps *v1.ConfigM
 	controller *controller.ResourceOwner, events *common.EventList,
 	persistentVolumeClaimList *persistentvolumeclaim.PersistentVolumeClaimList, nonCriticalErrors []error) PodDetail {
 	return PodDetail{
-		ObjectMeta:                api.NewObjectMeta(pod.ObjectMeta),
-		TypeMeta:                  api.NewTypeMeta(api.ResourceKindPod),
+		ObjectMeta:                types.NewObjectMeta(pod.ObjectMeta),
+		TypeMeta:                  types.NewTypeMeta(types.ResourceKindPod),
 		PodPhase:                  getPodStatus(*pod),
 		PodIP:                     pod.Status.PodIP,
 		RestartCount:              getRestartCount(*pod),
@@ -392,18 +403,18 @@ func evalValueFrom(src *v1.EnvVarSource, container *v1.Container, pod *v1.Pod,
 	case src.FieldRef != nil:
 		gv, err := schema.ParseGroupVersion(src.FieldRef.APIVersion)
 		if err != nil {
-			log.Println(err)
+			klog.Error(err)
 			return ""
 		}
 		gvk := gv.WithKind("Pod")
 		internalFieldPath, _, err := runtime.NewScheme().ConvertFieldLabel(gvk, src.FieldRef.FieldPath, "")
 		if err != nil {
-			log.Println(err)
+			klog.Error(err)
 			return ""
 		}
 		valueFrom, err := ExtractFieldPathAsString(pod, internalFieldPath)
 		if err != nil {
-			log.Println(err)
+			klog.Error(err)
 			return ""
 		}
 		return valueFrom
@@ -439,12 +450,14 @@ func extractContainerResourceValue(fs *v1.ResourceFieldSelector, container *v1.C
 	return "", fmt.Errorf("Unsupported container resource : %v", fs.Resource)
 }
 
-func extractContainerStatus(pod *v1.Pod, container *v1.Container) *v1.ContainerStatus {
-	for _, status := range pod.Status.ContainerStatuses {
+func extractContainerStatus(pod *v1.Pod, container *v1.Container) (*v1.ContainerStatus, v1.ContainerState) {
+	statuses := append(pod.Status.ContainerStatuses, pod.Status.InitContainerStatuses...)
+
+	for _, status := range statuses {
 		if status.Name == container.Name {
-			return &status
+			return &status, status.State
 		}
 	}
 
-	return nil
+	return nil, v1.ContainerState{}
 }

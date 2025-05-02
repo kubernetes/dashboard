@@ -31,7 +31,6 @@ export const BREADCRUMBS: IBreadcrumbMessage = {
   [IBreadcrumbMessageKey.Logs]: $localize`Logs`,
   [IBreadcrumbMessageKey.Error]: $localize`Error`,
   [IBreadcrumbMessageKey.Create]: $localize`Create`,
-  [IBreadcrumbMessageKey.Plugins]: $localize`Plugins`,
   [IBreadcrumbMessageKey.Shell]: $localize`Shell`,
   [IBreadcrumbMessageKey.Events]: $localize`Events`,
   [IBreadcrumbMessageKey.Overview]: $localize`Overview`,

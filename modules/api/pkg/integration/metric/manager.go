@@ -16,15 +16,15 @@ package metric
 
 import (
 	"fmt"
-	"log"
 	"time"
 
 	"k8s.io/apimachinery/pkg/util/wait"
+	"k8s.io/klog/v2"
 
-	clientapi "k8s.io/dashboard/api/pkg/client/api"
 	integrationapi "k8s.io/dashboard/api/pkg/integration/api"
 	metricapi "k8s.io/dashboard/api/pkg/integration/metric/api"
 	"k8s.io/dashboard/api/pkg/integration/metric/sidecar"
+	"k8s.io/dashboard/client"
 )
 
 // MetricManager is responsible for management of all integrated applications related to metrics.
@@ -47,7 +47,6 @@ type MetricManager interface {
 
 // Implements MetricManager interface.
 type metricManager struct {
-	manager clientapi.ClientManager
 	clients map[integrationapi.IntegrationID]metricapi.MetricClient
 	active  metricapi.MetricClient
 }
@@ -87,19 +86,19 @@ func (self *metricManager) EnableWithRetry(id integrationapi.IntegrationID, peri
 	go wait.Forever(func() {
 		metricClient, exists := self.clients[id]
 		if !exists {
-			log.Printf("Metric client with given id %s does not exist.", id)
+			klog.V(5).InfoS("Metric client does not exist", "clientID", id)
 			return
 		}
 
 		err := metricClient.HealthCheck()
 		if err != nil {
 			self.active = nil
-			log.Printf("Metric client health check failed: %s. Retrying in %d seconds.", err, period)
+			klog.Errorf("Metric client health check failed: %s. Retrying in %d seconds.", err, period)
 			return
 		}
 
 		if self.active == nil {
-			log.Printf("Successful request to %s", id)
+			klog.V(1).Infof("Successful request to %s", id)
 			self.active = metricClient
 		}
 	}, period*time.Second)
@@ -117,10 +116,10 @@ func (self *metricManager) List() []integrationapi.Integration {
 
 // ConfigureSidecar implements metric manager interface. See MetricManager for more information.
 func (self *metricManager) ConfigureSidecar(host string) MetricManager {
-	kubeClient := self.manager.InsecureClient()
-	metricClient, err := sidecar.CreateSidecarClient(host, kubeClient)
+	inClusterClient := client.InClusterClient()
+	metricClient, err := sidecar.CreateSidecarClient(host, inClusterClient)
 	if err != nil {
-		log.Printf("There was an error during sidecar client creation: %s", err.Error())
+		klog.Errorf("There was an error during sidecar client creation: %s", err.Error())
 		return self
 	}
 
@@ -129,9 +128,8 @@ func (self *metricManager) ConfigureSidecar(host string) MetricManager {
 }
 
 // NewMetricManager creates metric manager.
-func NewMetricManager(manager clientapi.ClientManager) MetricManager {
+func NewMetricManager() MetricManager {
 	return &metricManager{
-		manager: manager,
 		clients: make(map[integrationapi.IntegrationID]metricapi.MetricClient),
 	}
 }

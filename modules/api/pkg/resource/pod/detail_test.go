@@ -22,12 +22,13 @@ import (
 	v1 "k8s.io/api/core/v1"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/client-go/kubernetes/fake"
-	"k8s.io/dashboard/api/pkg/api"
+
 	metricapi "k8s.io/dashboard/api/pkg/integration/metric/api"
 	"k8s.io/dashboard/api/pkg/resource/common"
 	"k8s.io/dashboard/api/pkg/resource/controller"
 	"k8s.io/dashboard/api/pkg/resource/dataselect"
 	"k8s.io/dashboard/api/pkg/resource/persistentvolumeclaim"
+	"k8s.io/dashboard/types"
 )
 
 func TestGetPodDetail(t *testing.T) {
@@ -42,9 +43,8 @@ func TestGetPodDetail(t *testing.T) {
 					Labels: map[string]string{"app": "test"},
 				}}}},
 			expected: &PodDetail{
-				TypeMeta: api.TypeMeta{Kind: api.ResourceKindPod},
-				PodPhase: string(v1.PodUnknown),
-				ObjectMeta: api.ObjectMeta{
+				TypeMeta: types.TypeMeta{Kind: types.ResourceKindPod},
+				ObjectMeta: types.ObjectMeta{
 					Name:      "test-pod",
 					Namespace: "test-namespace",
 					Labels:    map[string]string{"app": "test"},
