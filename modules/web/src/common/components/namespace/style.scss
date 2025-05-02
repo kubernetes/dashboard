@@ -47,3 +47,7 @@
   outline: none;
   padding: (2 * $baseline-grid) 0 (2 * $baseline-grid) (2 * $baseline-grid);
 }
+
+::ng-deep .mat-select-panel {
+  max-height: 600px !important;
+}
