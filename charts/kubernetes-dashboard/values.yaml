@@ -319,7 +319,8 @@ metricsScraper:
     extraSpec: ~
   containers:
     ports:
-      - containerPort: 8000
+      - name: metrics
+        containerPort: 8000
         protocol: TCP
     args: []
     # Additional container environment variables
@@ -347,7 +348,7 @@ metricsScraper:
       httpGet:
         scheme: HTTP
         path: /
-        port: 8000
+        port: metrics
       initialDelaySeconds: 30
       timeoutSeconds: 30
   automountServiceAccountToken: true
