@@ -13909,10 +13909,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"jasmine-core@npm:5.6.0":
-  version: 5.6.0
-  resolution: "jasmine-core@npm:5.6.0"
-  checksum: 787d51e7b8fa38f0a36034161a3ba5a029a370263e4eb335619413629be364139e158d393e409e5c4ed87720dc6d0183aa3372bb27ec4b955459b6725daa7e2b
+"jasmine-core@npm:5.7.1":
+  version: 5.7.1
+  resolution: "jasmine-core@npm:5.7.1"
+  checksum: b066aaefb373ab5bde6c5b73f3ff8b88aebc079418729f847b580dd3b12b1b80606cca53e19fc4b25617aeb384236d8f9978de8e11d47dd8ddadab4eadd418bc
   languageName: node
   linkType: hard
 
@@ -14896,7 +14896,7 @@ __metadata:
     git-describe: 4.1.1
     graphql: 16.10.0
     husky: 9.1.7
-    jasmine-core: 5.6.0
+    jasmine-core: 5.7.1
     jasmine-spec-reporter: 7.0.0
     jest: 29.7.0
     jest-preset-angular: 14.5.3
