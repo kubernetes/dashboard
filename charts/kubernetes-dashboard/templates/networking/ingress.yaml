@@ -17,9 +17,14 @@
 
 
 # Determine the service port to use for the ingress configuration
-# If TLS is enabled in the ingress configuration, use the TLS service port.
+# If TLS is enabled in the kong proxy configuration, use the TLS service port.
 # Otherwise, fall back to the HTTP service port.
-{{- $servicePort := (ternary $.Values.kong.proxy.tls.servicePort $.Values.kong.proxy.http.servicePort $.Values.app.ingress.tls.enabled) }}
+{{- $servicePort := (ternary $.Values.kong.proxy.tls.servicePort $.Values.kong.proxy.http.servicePort $.Values.kong.proxy.tls.enabled) }}
+
+# Determine the backend protocol to use for the ingress configuration
+# If TLS is enabled in the kong proxy configuration, use HTTPS
+# Otherwise, fall back to the HTTP
+{{- $backendProtocol := (ternary "HTTPS" "HTTP" $.Values.kong.proxy.tls.enabled) }}
 
 kind: Ingress
 apiVersion: networking.k8s.io/v1
@@ -38,9 +43,13 @@ metadata:
     cert-manager.io/cluster-issuer: {{ .Values.app.ingress.issuer.name }}
     {{- end }}
     {{- if .Values.app.ingress.useDefaultAnnotations }}
-    nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
+    nginx.ingress.kubernetes.io/backend-protocol: "{{ $backendProtocol }}"
+    {{- if .Values.kong.proxy.tls.enabled }}
     nginx.ingress.kubernetes.io/ssl-passthrough: "true"
+    {{- end }}
+    {{- if .Values.app.ingress.tls.enabled }}
     nginx.ingress.kubernetes.io/ssl-redirect: "true"
+    {{- end }}
     {{- end }}
     {{- if not (eq .Values.app.ingress.path "/") }}
     nginx.ingress.kubernetes.io/rewrite-target: /$2
