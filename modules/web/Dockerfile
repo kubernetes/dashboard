@@ -14,7 +14,7 @@
 
 ARG WEB_BUILDER_ARCH=amd64
 
-FROM alpine:3.19 as user
+FROM alpine:3.21 AS user
 
 ENV USER=nonroot
 ENV UID=10001
@@ -29,7 +29,7 @@ RUN adduser \
     --uid "${UID}" \
     "${USER}"
 
-FROM --platform=linux/${WEB_BUILDER_ARCH} node:20.11.1-alpine3.19  as web-builder
+FROM --platform=linux/${WEB_BUILDER_ARCH} node:20-alpine3.21 AS web-builder
 
 RUN apk add --no-cache \
     make \
@@ -53,7 +53,7 @@ RUN SKIP_POSTINSTALL=true yarn workspaces focus
 # Build prod version of web app
 RUN make build-frontend
 
-FROM golang:1.23-alpine3.19 as go-builder
+FROM golang:1.23-alpine3.21 AS go-builder
 
 ARG TARGETARCH
 ARG TARGETOS
@@ -82,7 +82,7 @@ COPY /modules/web/main.go ./
 RUN CGO_ENABLED=0 GOOS=${TARGETOS} GOARCH=${TARGETARCH} go build -trimpath -ldflags="-s -w -X k8s.io/dashboard/web/pkg/environment.Version=${VERSION}" -o dashboard-web .
 
 # Scratch can be used as the base image because the binary is compiled to include all dependencies.
-FROM scratch as final
+FROM scratch AS final
 
 WORKDIR /web
 

@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-FROM alpine:3.19 as user
+FROM alpine:3.21 AS user
 
 ENV USER=nonroot
 ENV UID=10001
@@ -27,7 +27,7 @@ RUN adduser \
     --uid "${UID}" \
     "${USER}"
 
-FROM golang:1.23-alpine3.19 as builder
+FROM golang:1.23-alpine3.21 AS builder
 
 ARG TARGETARCH
 ARG TARGETOS
@@ -58,7 +58,7 @@ RUN CGO_ENABLED=0 GOOS=${TARGETOS} GOARCH=${TARGETARCH} go build -trimpath -ldfl
 
 # Scratch can be used as the base image because the backend is compiled to include all
 # its dependencies.
-FROM scratch as final
+FROM scratch AS final
 ARG TARGETARCH
 ARG TARGETOS
 
