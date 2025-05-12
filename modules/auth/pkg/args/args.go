@@ -31,6 +31,7 @@ var (
 	argKubeconfig             = pflag.String("kubeconfig", "", "path to kubeconfig file")
 	argApiServerHost          = pflag.String("apiserver-host", "", "address of the Kubernetes API server to connect to in the format of protocol://address:port, leave it empty if the binary runs inside cluster for local discovery attempt")
 	argApiServerSkipTLSVerify = pflag.Bool("apiserver-skip-tls-verify", false, "enable if connection with remote Kubernetes API server should skip TLS verify")
+	argApiServerCaBundle				 = pflag.String("apiserver-ca-bundle", "", "file containing the x509 certificates used for HTTPS connection to the API Server")
 )
 
 func init() {
@@ -57,6 +58,10 @@ func ApiServerHost() string {
 
 func ApiServerSkipTLSVerify() bool {
 	return *argApiServerSkipTLSVerify
+}
+
+func ApiServerCaBundle() string {
+	return *argApiServerCaBundle
 }
 
 func Address() string {
