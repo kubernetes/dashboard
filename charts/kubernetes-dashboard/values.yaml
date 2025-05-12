@@ -34,6 +34,7 @@ app:
     # To disable set the following configuration to null:
     # securityContext: null
     securityContext:
+      fsGroup: 2001
       runAsNonRoot: true
       seccompProfile:
         type: RuntimeDefault
@@ -416,6 +417,39 @@ nginx:
       controllerValue: k8s.io/internal-ingress-nginx
     service:
       type: ClusterIP
+
+## Optional Nginx pre-configured read-only instance
+## This will create a proxy using a pre-defined read-only user
+## This is similar to the "skip-login" functionality of older versions
+roProxy:
+  enabled: true
+  role: read-only-proxy
+  image:
+    repository: docker.io/nginx
+    tag: stable-alpine-slim
+  scaling:
+    replicas: 1
+    revisionHistoryLimit: 10
+  containers:
+    ports:
+      - name: http
+        containerPort: 8080
+        protocol: TCP
+    resources:
+      requests:
+        cpu: 100m
+        memory: 200Mi
+      limits:
+        cpu: 250m
+        memory: 400Mi
+    volumeMounts:
+      - name: tmp-volume             
+        mountPath: /tmp  
+  automountServiceAccountToken: false
+  volumes:
+    - name: tmp-volume
+      emptyDir:
+        sizeLimit: 5Mi
 
 ## Extra configurations:
 ## - manifests
