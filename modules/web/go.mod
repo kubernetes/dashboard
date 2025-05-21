@@ -5,7 +5,7 @@ go 1.23.0
 require (
 	dario.cat/mergo v1.0.2
 	github.com/gin-gonic/contrib v0.0.0-20241229022435-d12709533de6
-	github.com/gin-gonic/gin v1.10.0
+	github.com/gin-gonic/gin v1.10.1
 	github.com/samber/lo v1.50.0
 	github.com/spf13/pflag v1.0.6
 	golang.org/x/text v0.25.0
