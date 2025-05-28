@@ -35,9 +35,9 @@ func RestartDaemonSet(client client.Interface, namespace, name string) (*v1.Daem
 		return nil, err
 	}
 
-	if daemonSet.Spec.Template.ObjectMeta.Annotations == nil {
-		daemonSet.Spec.Template.ObjectMeta.Annotations = map[string]string{}
+	if daemonSet.Spec.Template.Annotations == nil {
+		daemonSet.Spec.Template.Annotations = map[string]string{}
 	}
-	daemonSet.Spec.Template.ObjectMeta.Annotations[RestartedAtAnnotationKey] = time.Now().Format(time.RFC3339)
+	daemonSet.Spec.Template.Annotations[RestartedAtAnnotationKey] = time.Now().Format(time.RFC3339)
 	return client.AppsV1().DaemonSets(namespace).Update(context.TODO(), daemonSet, metaV1.UpdateOptions{})
 }

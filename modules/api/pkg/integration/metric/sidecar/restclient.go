@@ -56,8 +56,8 @@ func (c inClusterSidecarClient) Get(path string) RequestInterface {
 
 // HealthCheck does a health check of the application.
 // Returns nil if connection to application can be established, error object otherwise.
-func (self inClusterSidecarClient) HealthCheck() error {
-	_, err := self.client.Get().
+func (in inClusterSidecarClient) HealthCheck() error {
+	_, err := in.client.Get().
 		Namespace(args.Namespace()).
 		Resource("services").
 		Name(args.MetricsScraperServiceName()).
@@ -80,7 +80,7 @@ func (c remoteSidecarClient) Get(path string) RequestInterface {
 
 // HealthCheck does a health check of the application.
 // Returns nil if connection to application can be established, error object otherwise.
-func (self remoteSidecarClient) HealthCheck() error {
-	_, err := self.Get("healthz").AbsPath("/").DoRaw(context.TODO())
+func (in remoteSidecarClient) HealthCheck() error {
+	_, err := in.Get("healthz").AbsPath("/").DoRaw(context.TODO())
 	return err
 }

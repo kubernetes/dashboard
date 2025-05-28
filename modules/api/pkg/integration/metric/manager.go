@@ -52,39 +52,39 @@ type metricManager struct {
 }
 
 // AddClient implements metric manager interface. See MetricManager for more information.
-func (self *metricManager) AddClient(client metricapi.MetricClient) MetricManager {
+func (in *metricManager) AddClient(client metricapi.MetricClient) MetricManager {
 	if client != nil {
-		self.clients[client.ID()] = client
+		in.clients[client.ID()] = client
 	}
 
-	return self
+	return in
 }
 
 // Client implements metric manager interface. See MetricManager for more information.
-func (self *metricManager) Client() metricapi.MetricClient {
-	return self.active
+func (in *metricManager) Client() metricapi.MetricClient {
+	return in.active
 }
 
 // Enable implements metric manager interface. See MetricManager for more information.
-func (self *metricManager) Enable(id integrationapi.IntegrationID) error {
-	metricClient, exists := self.clients[id]
+func (in *metricManager) Enable(id integrationapi.IntegrationID) error {
+	metricClient, exists := in.clients[id]
 	if !exists {
-		return fmt.Errorf("No metric client found for integration id: %s", id)
+		return fmt.Errorf("no metric client found for integration id: %s", id)
 	}
 
 	err := metricClient.HealthCheck()
 	if err != nil {
-		return fmt.Errorf("Health check failed: %s", err.Error())
+		return fmt.Errorf("health check failed: %s", err.Error())
 	}
 
-	self.active = metricClient
+	in.active = metricClient
 	return nil
 }
 
 // EnableWithRetry implements metric manager interface. See MetricManager for more information.
-func (self *metricManager) EnableWithRetry(id integrationapi.IntegrationID, period time.Duration) {
+func (in *metricManager) EnableWithRetry(id integrationapi.IntegrationID, period time.Duration) {
 	go wait.Forever(func() {
-		metricClient, exists := self.clients[id]
+		metricClient, exists := in.clients[id]
 		if !exists {
 			klog.V(5).InfoS("Metric client does not exist", "clientID", id)
 			return
@@ -92,22 +92,22 @@ func (self *metricManager) EnableWithRetry(id integrationapi.IntegrationID, peri
 
 		err := metricClient.HealthCheck()
 		if err != nil {
-			self.active = nil
+			in.active = nil
 			klog.Errorf("Metric client health check failed: %s. Retrying in %d seconds.", err, period)
 			return
 		}
 
-		if self.active == nil {
+		if in.active == nil {
 			klog.V(1).Infof("Successful request to %s", id)
-			self.active = metricClient
+			in.active = metricClient
 		}
 	}, period*time.Second)
 }
 
 // List implements metric manager interface. See MetricManager for more information.
-func (self *metricManager) List() []integrationapi.Integration {
+func (in *metricManager) List() []integrationapi.Integration {
 	result := make([]integrationapi.Integration, 0)
-	for _, c := range self.clients {
+	for _, c := range in.clients {
 		result = append(result, c.(integrationapi.Integration))
 	}
 
@@ -115,16 +115,16 @@ func (self *metricManager) List() []integrationapi.Integration {
 }
 
 // ConfigureSidecar implements metric manager interface. See MetricManager for more information.
-func (self *metricManager) ConfigureSidecar(host string) MetricManager {
+func (in *metricManager) ConfigureSidecar(host string) MetricManager {
 	inClusterClient := client.InClusterClient()
 	metricClient, err := sidecar.CreateSidecarClient(host, inClusterClient)
 	if err != nil {
 		klog.Errorf("There was an error during sidecar client creation: %s", err.Error())
-		return self
+		return in
 	}
 
-	self.clients[metricClient.ID()] = metricClient
-	return self
+	in.clients[metricClient.ID()] = metricClient
+	return in
 }
 
 // NewMetricManager creates metric manager.

@@ -23,7 +23,6 @@ import (
 	v1 "k8s.io/api/authorization/v1"
 	apiextensionsclientset "k8s.io/apiextensions-apiserver/pkg/client/clientset/clientset"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
-	"k8s.io/client-go/kubernetes"
 	client "k8s.io/client-go/kubernetes"
 	"k8s.io/client-go/rest"
 	"k8s.io/klog/v2"
@@ -120,7 +119,7 @@ func Config(request *http.Request) (*rest.Config, error) {
 
 func RestClientForHost(host string) (rest.Interface, error) {
 	config := setConfigRateLimitDefaults(&rest.Config{Host: host})
-	restClient, err := kubernetes.NewForConfig(config)
+	restClient, err := client.NewForConfig(config)
 	if err != nil {
 		return nil, err
 	}

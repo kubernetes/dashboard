@@ -40,10 +40,7 @@ type ProtocolValidity struct {
 func ValidateProtocol(spec *ProtocolValiditySpec) *ProtocolValidity {
 	klog.V(args.LogLevelVerbose).Infof("Validating %s protocol for service with external set to %v", spec.Protocol, spec.IsExternal)
 
-	isValid := true
-	if spec.Protocol == api.ProtocolUDP && spec.IsExternal {
-		isValid = false
-	}
+	isValid := spec.Protocol != api.ProtocolUDP || !spec.IsExternal
 
 	klog.V(args.LogLevelVerbose).Infof("Validation result for %s protocol is %v", spec.Protocol, isValid)
 	return &ProtocolValidity{Valid: isValid}

@@ -19,6 +19,7 @@ import (
 	"strings"
 
 	"github.com/emicklei/go-restful/v3"
+
 	metricapi "k8s.io/dashboard/api/pkg/integration/metric/api"
 	"k8s.io/dashboard/api/pkg/resource/dataselect"
 )

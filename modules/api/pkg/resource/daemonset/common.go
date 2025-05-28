@@ -67,26 +67,26 @@ func GetServicesForDSDeletion(client client.Interface, labelSelector labels.Sele
 
 type DaemonSetCell apps.DaemonSet
 
-func (self DaemonSetCell) GetProperty(name dataselect.PropertyName) dataselect.ComparableValue {
+func (in DaemonSetCell) GetProperty(name dataselect.PropertyName) dataselect.ComparableValue {
 	switch name {
 	case dataselect.NameProperty:
-		return dataselect.StdComparableString(self.ObjectMeta.Name)
+		return dataselect.StdComparableString(in.Name)
 	case dataselect.CreationTimestampProperty:
-		return dataselect.StdComparableTime(self.ObjectMeta.CreationTimestamp.Time)
+		return dataselect.StdComparableTime(in.CreationTimestamp.Time)
 	case dataselect.NamespaceProperty:
-		return dataselect.StdComparableString(self.ObjectMeta.Namespace)
+		return dataselect.StdComparableString(in.Namespace)
 	default:
 		// if name is not supported then just return a constant dummy value, sort will have no effect.
 		return nil
 	}
 }
 
-func (self DaemonSetCell) GetResourceSelector() *metricapi.ResourceSelector {
+func (in DaemonSetCell) GetResourceSelector() *metricapi.ResourceSelector {
 	return &metricapi.ResourceSelector{
-		Namespace:    self.ObjectMeta.Namespace,
+		Namespace:    in.Namespace,
 		ResourceType: types.ResourceKindDaemonSet,
-		ResourceName: self.ObjectMeta.Name,
-		UID:          self.UID,
+		ResourceName: in.Name,
+		UID:          in.UID,
 	}
 }
 

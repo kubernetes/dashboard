@@ -244,20 +244,20 @@ func CreateEventList(events []v1.Event, dsQuery *dataselect.DataSelectQuery) com
 
 type EventCell v1.Event
 
-func (self EventCell) GetProperty(name dataselect.PropertyName) dataselect.ComparableValue {
+func (in EventCell) GetProperty(name dataselect.PropertyName) dataselect.ComparableValue {
 	switch name {
 	case dataselect.NameProperty:
-		return dataselect.StdComparableString(self.ObjectMeta.Name)
+		return dataselect.StdComparableString(in.Name)
 	case dataselect.CreationTimestampProperty:
-		return dataselect.StdComparableTime(self.ObjectMeta.CreationTimestamp.Time)
+		return dataselect.StdComparableTime(in.CreationTimestamp.Time)
 	case dataselect.FirstSeenProperty:
-		return dataselect.StdComparableTime(self.FirstTimestamp.Time)
+		return dataselect.StdComparableTime(in.FirstTimestamp.Time)
 	case dataselect.LastSeenProperty:
-		return dataselect.StdComparableTime(self.LastTimestamp.Time)
+		return dataselect.StdComparableTime(in.LastTimestamp.Time)
 	case dataselect.NamespaceProperty:
-		return dataselect.StdComparableString(self.ObjectMeta.Namespace)
+		return dataselect.StdComparableString(in.Namespace)
 	case dataselect.ReasonProperty:
-		return dataselect.StdComparableString(self.Reason)
+		return dataselect.StdComparableString(in.Reason)
 	default:
 		// if name is not supported then just return a constant dummy value, sort will have no effect.
 		return nil

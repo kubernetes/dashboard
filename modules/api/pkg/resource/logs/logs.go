@@ -151,23 +151,23 @@ type LogTimestamp string
 
 // SelectLogs returns selected part of LogLines as required by logSelector, moreover it returns IDs of first and last
 // of returned lines and the information of the resulting logView.
-func (self LogLines) SelectLogs(logSelection *Selection) (LogLines, LogTimestamp, LogTimestamp, Selection, bool) {
+func (in LogLines) SelectLogs(logSelection *Selection) (LogLines, LogTimestamp, LogTimestamp, Selection, bool) {
 	requestedNumItems := logSelection.OffsetTo - logSelection.OffsetFrom
-	referenceLineIndex := self.getLineIndex(&logSelection.ReferencePoint)
-	if referenceLineIndex == LineIndexNotFound || requestedNumItems <= 0 || len(self) == 0 {
+	referenceLineIndex := in.getLineIndex(&logSelection.ReferencePoint)
+	if referenceLineIndex == LineIndexNotFound || requestedNumItems <= 0 || len(in) == 0 {
 		// Requested reference line could not be found, probably it's already gone or requested no logs. Return no logs.
 		return LogLines{}, "", "", Selection{}, false
 	}
 	fromIndex := referenceLineIndex + logSelection.OffsetFrom
 	toIndex := referenceLineIndex + logSelection.OffsetTo
 	lastPage := false
-	if requestedNumItems > len(self) {
+	if requestedNumItems > len(in) {
 		fromIndex = 0
-		toIndex = len(self)
+		toIndex = len(in)
 		lastPage = true
-	} else if toIndex > len(self) {
-		fromIndex -= toIndex - len(self)
-		toIndex = len(self)
+	} else if toIndex > len(in) {
+		fromIndex -= toIndex - len(in)
+		toIndex = len(in)
 		lastPage = logSelection.LogFilePosition == Beginning
 	} else if fromIndex < 0 {
 		toIndex += -fromIndex
@@ -177,32 +177,32 @@ func (self LogLines) SelectLogs(logSelection *Selection) (LogLines, LogTimestamp
 
 	// set the middle of log array as a reference point, this part of array should not be affected by log deletion/addition.
 	newSelection := Selection{
-		ReferencePoint:  *self.createLogLineId(len(self) / 2),
-		OffsetFrom:      fromIndex - len(self)/2,
-		OffsetTo:        toIndex - len(self)/2,
+		ReferencePoint:  *in.createLogLineId(len(in) / 2),
+		OffsetFrom:      fromIndex - len(in)/2,
+		OffsetTo:        toIndex - len(in)/2,
 		LogFilePosition: logSelection.LogFilePosition,
 	}
-	return self[fromIndex:toIndex], self[fromIndex].Timestamp, self[toIndex-1].Timestamp, newSelection, lastPage
+	return in[fromIndex:toIndex], in[fromIndex].Timestamp, in[toIndex-1].Timestamp, newSelection, lastPage
 }
 
 // getLineIndex returns the index of the line (referenced from beginning of log array) with provided logLineId.
-func (self LogLines) getLineIndex(logLineId *LogLineId) int {
-	if logLineId == nil || logLineId.LogTimestamp == NewestTimestamp || len(self) == 0 || logLineId.LogTimestamp == "" {
+func (in LogLines) getLineIndex(logLineId *LogLineId) int {
+	if logLineId == nil || logLineId.LogTimestamp == NewestTimestamp || len(in) == 0 || logLineId.LogTimestamp == "" {
 		// if no line id provided return index of last item.
-		return len(self) - 1
+		return len(in) - 1
 	} else if logLineId.LogTimestamp == OldestTimestamp {
 		return 0
 	}
 	logTimestamp := logLineId.LogTimestamp
 
 	matchingStartedAt := 0
-	matchingStartedAt = sort.Search(len(self), func(i int) bool {
-		return self[i].Timestamp >= logTimestamp
+	matchingStartedAt = sort.Search(len(in), func(i int) bool {
+		return in[i].Timestamp >= logTimestamp
 	})
 
 	linesMatched := 0
-	if matchingStartedAt < len(self) && self[matchingStartedAt].Timestamp == logTimestamp { // match found
-		for (matchingStartedAt+linesMatched) < len(self) && self[matchingStartedAt+linesMatched].Timestamp == logTimestamp {
+	if matchingStartedAt < len(in) && in[matchingStartedAt].Timestamp == logTimestamp { // match found
+		for (matchingStartedAt+linesMatched) < len(in) && in[matchingStartedAt+linesMatched].Timestamp == logTimestamp {
 			linesMatched += 1
 		}
 	}
@@ -220,22 +220,22 @@ func (self LogLines) getLineIndex(logLineId *LogLineId) int {
 }
 
 // createLogLineId returns ID of the line with provided lineIndex.
-func (self LogLines) createLogLineId(lineIndex int) *LogLineId {
-	logTimestamp := self[lineIndex].Timestamp
+func (in LogLines) createLogLineId(lineIndex int) *LogLineId {
+	logTimestamp := in[lineIndex].Timestamp
 	// determine whether to use negative or positive indexing
 	// check whether last line has the same index as requested line. If so, we can only use positive referencing
 	// as more lines may appear at the end.
 	// negative referencing is preferred as higher indices disappear later.
 	var step int
-	if self[len(self)-1].Timestamp == logTimestamp {
+	if in[len(in)-1].Timestamp == logTimestamp {
 		// use positive referencing
 		step = 1
 	} else {
 		step = -1
 	}
 	offset := step
-	for ; 0 <= lineIndex-offset && lineIndex-offset < len(self); offset += step {
-		if self[lineIndex-offset].Timestamp != logTimestamp {
+	for ; 0 <= lineIndex-offset && lineIndex-offset < len(in); offset += step {
+		if in[lineIndex-offset].Timestamp != logTimestamp {
 			break
 		}
 	}

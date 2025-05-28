@@ -44,9 +44,9 @@ type MetricDataCell interface {
 
 // ComparableValue hold any value that can be compared to its own kind.
 type ComparableValue interface {
-	// Compares self with other value. Returns 1 if other value is smaller, 0 if they are the same, -1 if other is larger.
+	// Compares in with other value. Returns 1 if other value is smaller, 0 if they are the same, -1 if other is larger.
 	Compare(ComparableValue) int
-	// Returns true if self value contains or is equal to other value, false otherwise.
+	// Returns true if in value contains or is equal to other value, false otherwise.
 	Contains(ComparableValue) bool
 }
 
@@ -72,18 +72,18 @@ type DataSelector struct {
 // Implementation of sort.Interface so that we can use built-in sort function (sort.Sort) for sorting SelectableData
 
 // Len returns the length of data inside SelectableData.
-func (self DataSelector) Len() int { return len(self.GenericDataList) }
+func (in DataSelector) Len() int { return len(in.GenericDataList) }
 
 // Swap swaps 2 indices inside SelectableData.
-func (self DataSelector) Swap(i, j int) {
-	self.GenericDataList[i], self.GenericDataList[j] = self.GenericDataList[j], self.GenericDataList[i]
+func (in DataSelector) Swap(i, j int) {
+	in.GenericDataList[i], in.GenericDataList[j] = in.GenericDataList[j], in.GenericDataList[i]
 }
 
 // Less compares 2 indices inside SelectableData and returns true if first index is larger.
-func (self DataSelector) Less(i, j int) bool {
-	for _, sortBy := range self.DataSelectQuery.SortQuery.SortByList {
-		a := self.GenericDataList[i].GetProperty(sortBy.Property)
-		b := self.GenericDataList[j].GetProperty(sortBy.Property)
+func (in DataSelector) Less(i, j int) bool {
+	for _, sortBy := range in.DataSelectQuery.SortQuery.SortByList {
+		a := in.GenericDataList[i].GetProperty(sortBy.Property)
+		b := in.GenericDataList[j].GetProperty(sortBy.Property)
 		// ignore sort completely if property name not found
 		if a == nil || b == nil {
 			break
@@ -98,19 +98,19 @@ func (self DataSelector) Less(i, j int) bool {
 	return false
 }
 
-// Sort sorts the data inside as instructed by DataSelectQuery and returns itself to allow method chaining.
-func (self *DataSelector) Sort() *DataSelector {
-	sort.Sort(*self)
-	return self
+// Sort sorts the data inside as instructed by DataSelectQuery and returns itin to allow method chaining.
+func (in *DataSelector) Sort() *DataSelector {
+	sort.Sort(*in)
+	return in
 }
 
-// Filter the data inside as instructed by DataSelectQuery and returns itself to allow method chaining.
-func (self *DataSelector) Filter() *DataSelector {
+// Filter the data inside as instructed by DataSelectQuery and returns itin to allow method chaining.
+func (in *DataSelector) Filter() *DataSelector {
 	filteredList := []DataCell{}
 
-	for _, c := range self.GenericDataList {
+	for _, c := range in.GenericDataList {
 		matches := true
-		for _, filterBy := range self.DataSelectQuery.FilterQuery.FilterByList {
+		for _, filterBy := range in.DataSelectQuery.FilterQuery.FilterByList {
 			v := c.GetProperty(filterBy.Property)
 			if v == nil || !v.Contains(filterBy.Value) {
 				matches = false
@@ -122,11 +122,11 @@ func (self *DataSelector) Filter() *DataSelector {
 		}
 	}
 
-	self.GenericDataList = filteredList
-	return self
+	in.GenericDataList = filteredList
+	return in
 }
 
-func (self *DataSelector) getMetrics(metricClient metricapi.MetricClient) (
+func (in *DataSelector) getMetrics(metricClient metricapi.MetricClient) (
 	[]metricapi.MetricPromises, error) {
 	metricPromises := make([]metricapi.MetricPromises, 0)
 
@@ -134,13 +134,13 @@ func (self *DataSelector) getMetrics(metricClient metricapi.MetricClient) (
 		return metricPromises, nil
 	}
 
-	metricNames := self.DataSelectQuery.MetricQuery.MetricNames
+	metricNames := in.DataSelectQuery.MetricQuery.MetricNames
 	if metricNames == nil {
 		return metricPromises, errors.NewInternal("No metrics specified. Skipping metrics.")
 	}
 
-	selectors := make([]metricapi.ResourceSelector, len(self.GenericDataList))
-	for i, dataCell := range self.GenericDataList {
+	selectors := make([]metricapi.ResourceSelector, len(in.GenericDataList))
+	for i, dataCell := range in.GenericDataList {
 		// make sure data cells support metrics
 		metricDataCell, ok := dataCell.(MetricDataCell)
 		if !ok {
@@ -152,24 +152,24 @@ func (self *DataSelector) getMetrics(metricClient metricapi.MetricClient) (
 	}
 
 	for _, metricName := range metricNames {
-		promises := metricClient.DownloadMetric(selectors, metricName, self.CachedResources)
+		promises := metricClient.DownloadMetric(selectors, metricName, in.CachedResources)
 		metricPromises = append(metricPromises, promises)
 	}
 
 	return metricPromises, nil
 }
 
-// GetMetrics downloads metrics for data cells currently present in self.GenericDataList as instructed
-// by MetricQuery and inserts resulting MetricPromises to self.MetricsPromises.
-func (self *DataSelector) GetMetrics(metricClient metricapi.MetricClient) *DataSelector {
-	metricPromisesList, err := self.getMetrics(metricClient)
+// GetMetrics downloads metrics for data cells currently present in in.GenericDataList as instructed
+// by MetricQuery and inserts resulting MetricPromises to in.MetricsPromises.
+func (in *DataSelector) GetMetrics(metricClient metricapi.MetricClient) *DataSelector {
+	metricPromisesList, err := in.getMetrics(metricClient)
 	if err != nil {
 		klog.ErrorS(err, "error during getting metrics")
-		return self
+		return in
 	}
 
 	if len(metricPromisesList) == 0 {
-		return self
+		return in
 	}
 
 	metricPromises := make(metricapi.MetricPromises, 0)
@@ -177,30 +177,30 @@ func (self *DataSelector) GetMetrics(metricClient metricapi.MetricClient) *DataS
 		metricPromises = append(metricPromises, promises...)
 	}
 
-	self.MetricsPromises = metricPromises
-	return self
+	in.MetricsPromises = metricPromises
+	return in
 }
 
-// GetCumulativeMetrics downloads and aggregates metrics for data cells currently present in self.GenericDataList as instructed
-// by MetricQuery and inserts resulting MetricPromises to self.CumulativeMetricsPromises.
-func (self *DataSelector) GetCumulativeMetrics(metricClient metricapi.MetricClient) *DataSelector {
-	metricPromisesList, err := self.getMetrics(metricClient)
+// GetCumulativeMetrics downloads and aggregates metrics for data cells currently present in in.GenericDataList as instructed
+// by MetricQuery and inserts resulting MetricPromises to in.CumulativeMetricsPromises.
+func (in *DataSelector) GetCumulativeMetrics(metricClient metricapi.MetricClient) *DataSelector {
+	metricPromisesList, err := in.getMetrics(metricClient)
 	if err != nil {
 		klog.ErrorS(err, "error during getting metrics")
-		return self
+		return in
 	}
 
 	if len(metricPromisesList) == 0 {
-		return self
+		return in
 	}
 
-	metricNames := self.DataSelectQuery.MetricQuery.MetricNames
+	metricNames := in.DataSelectQuery.MetricQuery.MetricNames
 	if metricNames == nil {
 		klog.V(args.LogLevelVerbose).Info("Metrics names not provided. Skipping.")
-		return self
+		return in
 	}
 
-	aggregations := self.DataSelectQuery.MetricQuery.Aggregations
+	aggregations := in.DataSelectQuery.MetricQuery.Aggregations
 	if aggregations == nil {
 		aggregations = metricapi.OnlyDefaultAggregation
 	}
@@ -211,28 +211,28 @@ func (self *DataSelector) GetCumulativeMetrics(metricClient metricapi.MetricClie
 		metricPromises = append(metricPromises, promises...)
 	}
 
-	self.CumulativeMetricsPromises = metricPromises
-	return self
+	in.CumulativeMetricsPromises = metricPromises
+	return in
 }
 
-// Paginates the data inside as instructed by DataSelectQuery and returns itself to allow method chaining.
-func (self *DataSelector) Paginate() *DataSelector {
-	pQuery := self.DataSelectQuery.PaginationQuery
-	dataList := self.GenericDataList
+// Paginates the data inside as instructed by DataSelectQuery and returns itin to allow method chaining.
+func (in *DataSelector) Paginate() *DataSelector {
+	pQuery := in.DataSelectQuery.PaginationQuery
+	dataList := in.GenericDataList
 	startIndex, endIndex := pQuery.GetPaginationSettings(len(dataList))
 
 	// Return all items if provided settings do not meet requirements
 	if !pQuery.IsValidPagination() {
-		return self
+		return in
 	}
 	// Return no items if requested page does not exist
-	if !pQuery.IsPageAvailable(len(self.GenericDataList), startIndex) {
-		self.GenericDataList = []DataCell{}
-		return self
+	if !pQuery.IsPageAvailable(len(in.GenericDataList), startIndex) {
+		in.GenericDataList = []DataCell{}
+		return in
 	}
 
-	self.GenericDataList = dataList[startIndex:endIndex]
-	return self
+	in.GenericDataList = dataList[startIndex:endIndex]
+	return in
 }
 
 // GenericDataSelect takes a list of GenericDataCells and DataSelectQuery and returns selected data as instructed by dsQuery.

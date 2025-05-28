@@ -67,7 +67,7 @@ func getSidecarSelector(selector metricapi.ResourceSelector,
 			selector.Namespace, podListToNameList(myPods), podListToUIDList(myPods))
 	}
 	// currently can only convert derived resource to pods. You can change it by implementing other methods
-	return sidecarSelector{}, fmt.Errorf(`Internal Error: Requested summing resources not supported. Requested "%s"`, summingResource)
+	return sidecarSelector{}, fmt.Errorf(`internal Error: Requested summing resources not supported. Requested "%s"`, summingResource)
 }
 
 // getMyPodsFromCache returns a full list of pods that belong to this resource.
@@ -76,11 +76,11 @@ func getSidecarSelector(selector metricapi.ResourceSelector,
 func getMyPodsFromCache(selector metricapi.ResourceSelector, cachedPods []v1.Pod) (matchingPods []v1.Pod, err error) {
 	switch {
 	case cachedPods == nil:
-		err = fmt.Errorf(`Pods were not available in cache. Required for resource type: "%s"`,
+		err = fmt.Errorf(`pods were not available in cache. Required for resource type: "%s"`,
 			selector.ResourceType)
 	case selector.ResourceType == types.ResourceKindDeployment:
 		for _, pod := range cachedPods {
-			if pod.ObjectMeta.Namespace == selector.Namespace && helpers.IsSelectorMatching(selector.Selector, pod.Labels) {
+			if pod.Namespace == selector.Namespace && helpers.IsSelectorMatching(selector.Selector, pod.Labels) {
 				matchingPods = append(matchingPods, pod)
 			}
 		}
@@ -104,22 +104,23 @@ func getMyPodsFromCache(selector metricapi.ResourceSelector, cachedPods []v1.Pod
 func newSidecarSelectorFromNativeResource(resourceType types.ResourceKind, namespace string,
 	resourceNames []string, resourceUIDs []apimachinery.UID) (sidecarSelector, error) {
 	// Here we have 2 possibilities because this module allows downloading Nodes and Pods from sidecar
-	if resourceType == types.ResourceKindPod {
+	switch resourceType {
+	case types.ResourceKindPod:
 		return sidecarSelector{
 			TargetResourceType: types.ResourceKindPod,
 			Path:               `namespaces/` + namespace + `/pod-list/`,
 			Resources:          resourceNames,
 			Label:              metricapi.Label{resourceType: resourceUIDs},
 		}, nil
-	} else if resourceType == types.ResourceKindNode {
+	case types.ResourceKindNode:
 		return sidecarSelector{
 			TargetResourceType: types.ResourceKindNode,
 			Path:               `nodes/`,
 			Resources:          resourceNames,
 			Label:              metricapi.Label{resourceType: resourceUIDs},
 		}, nil
-	} else {
-		return sidecarSelector{}, fmt.Errorf(`Resource "%s" is not a native sidecar resource type or is not supported`, resourceType)
+	default:
+		return sidecarSelector{}, fmt.Errorf(`resource "%s" is not a native sidecar resource type or is not supported`, resourceType)
 	}
 }
 

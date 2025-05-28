@@ -99,7 +99,7 @@ func TestCachedResourceLister_List(t *testing.T) {
 	auth := &authorizationv1fake.FakeAuthorizationV1{Fake: &k8stesting.Fake{}}
 
 	// Setup fake authorization that allows access
-	auth.Fake.AddReactor("create", "selfsubjectaccessreviews", func(action k8stesting.Action) (bool, runtime.Object, error) {
+	auth.AddReactor("create", "selfsubjectaccessreviews", func(action k8stesting.Action) (bool, runtime.Object, error) {
 		ssar := action.(k8stesting.CreateAction).GetObject().(*authorizationapiv1.SelfSubjectAccessReview)
 		ssar.Status.Allowed = true
 		return true, ssar, nil
@@ -180,7 +180,7 @@ func TestCachedResourceLister_List(t *testing.T) {
 
 		// Setup fake authorization that denies access
 		authDeny := &authorizationv1fake.FakeAuthorizationV1{Fake: &k8stesting.Fake{}}
-		authDeny.Fake.AddReactor("create", "selfsubjectaccessreviews", func(action k8stesting.Action) (bool, runtime.Object, error) {
+		authDeny.AddReactor("create", "selfsubjectaccessreviews", func(action k8stesting.Action) (bool, runtime.Object, error) {
 			ssar := action.(k8stesting.CreateAction).GetObject().(*authorizationapiv1.SelfSubjectAccessReview)
 			ssar.Status.Allowed = false
 			ssar.Status.Reason = "unauthorized"

@@ -37,10 +37,10 @@ func ingressMatchesServiceName(ingress networkingv1.Ingress, serviceName string)
 	}
 
 	for _, rule := range spec.Rules {
-		if rule.IngressRuleValue.HTTP == nil {
+		if rule.HTTP == nil {
 			continue
 		}
-		for _, path := range rule.IngressRuleValue.HTTP.Paths {
+		for _, path := range rule.HTTP.Paths {
 			if ingressBackendMatchesServiceName(&path.Backend, serviceName) {
 				return true
 			}

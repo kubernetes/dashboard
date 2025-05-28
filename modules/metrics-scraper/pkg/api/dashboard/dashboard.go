@@ -55,7 +55,7 @@ func nodeHandler(db *sql.DB) http.HandlerFunc {
 
 		if err != nil {
 			w.WriteHeader(http.StatusInternalServerError)
-			_, err := w.Write([]byte(fmt.Sprintf("Node Metrics Error - %v", err.Error())))
+			_, err := fmt.Fprintf(w, "Node Metrics Error - %v", err.Error())
 			if err != nil {
 				klog.Errorf("Error cannot write response: %v", err)
 			}
@@ -65,7 +65,7 @@ func nodeHandler(db *sql.DB) http.HandlerFunc {
 
 		if err != nil {
 			w.WriteHeader(http.StatusInternalServerError)
-			_, err := w.Write([]byte(fmt.Sprintf("JSON Error - %v", err.Error())))
+			_, err := fmt.Fprintf(w, "JSON Error - %v", err.Error())
 			if err != nil {
 				klog.Errorf("Error cannot write response: %v", err)
 			}
@@ -91,7 +91,7 @@ func podHandler(db *sql.DB) http.HandlerFunc {
 
 		if err != nil {
 			w.WriteHeader(http.StatusInternalServerError)
-			_, err := w.Write([]byte(fmt.Sprintf("Pod Metrics Error - %v", err.Error())))
+			_, err := fmt.Fprintf(w, "Pod Metrics Error - %v", err.Error())
 			if err != nil {
 				klog.Errorf("Error cannot write response: %v", err)
 			}
@@ -101,7 +101,7 @@ func podHandler(db *sql.DB) http.HandlerFunc {
 
 		if err != nil {
 			w.WriteHeader(http.StatusInternalServerError)
-			_, err := w.Write([]byte(fmt.Sprintf("JSON Error - %v", err.Error())))
+			_, err := fmt.Fprintf(w, "JSON Error - %v", err.Error())
 			if err != nil {
 				klog.Errorf("Error cannot write response: %v", err)
 			}

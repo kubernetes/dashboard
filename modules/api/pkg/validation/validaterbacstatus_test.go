@@ -39,10 +39,10 @@ type FakeClient struct {
 	fakeServerGroupsMethod
 }
 
-func (self *FakeClient) Discovery() discovery.DiscoveryInterface {
+func (in *FakeClient) Discovery() discovery.DiscoveryInterface {
 	return &FakeDiscovery{
-		FakeDiscovery:          fakediscovery.FakeDiscovery{Fake: &self.Fake},
-		fakeServerGroupsMethod: self.fakeServerGroupsMethod,
+		FakeDiscovery:          fakediscovery.FakeDiscovery{Fake: &in.Fake},
+		fakeServerGroupsMethod: in.fakeServerGroupsMethod,
 	}
 }
 
@@ -51,8 +51,8 @@ type FakeDiscovery struct {
 	fakeServerGroupsMethod
 }
 
-func (self *FakeDiscovery) ServerGroups() (*metav1.APIGroupList, error) {
-	return self.fakeServerGroupsMethod()
+func (in *FakeDiscovery) ServerGroups() (*metav1.APIGroupList, error) {
+	return in.fakeServerGroupsMethod()
 }
 
 func TestValidateRbacStatus(t *testing.T) {

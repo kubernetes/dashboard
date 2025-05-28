@@ -36,12 +36,12 @@ type TestDataCell struct {
 	Id   int
 }
 
-func (self TestDataCell) GetProperty(name PropertyName) ComparableValue {
+func (in TestDataCell) GetProperty(name PropertyName) ComparableValue {
 	switch name {
 	case NameProperty:
-		return StdComparableString(self.Name)
+		return StdComparableString(in.Name)
 	case CreationTimestampProperty:
-		return StdComparableInt(self.Id)
+		return StdComparableInt(in.Id)
 	default:
 		return nil
 	}

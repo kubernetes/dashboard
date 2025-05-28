@@ -33,25 +33,25 @@ func (FakeMetricClient) ID() integrationapi.IntegrationID {
 	return fakeMetricClientID
 }
 
-func (self FakeMetricClient) HealthCheck() error {
-	if self.healthOk {
+func (in FakeMetricClient) HealthCheck() error {
+	if in.healthOk {
 		return nil
 	}
 
 	return errors.NewInvalid("test-error")
 }
 
-func (self FakeMetricClient) DownloadMetric(selectors []api.ResourceSelector, metricName string,
+func (in FakeMetricClient) DownloadMetric(selectors []api.ResourceSelector, metricName string,
 	cachedResources *api.CachedResources) api.MetricPromises {
 	return nil
 }
 
-func (self FakeMetricClient) DownloadMetrics(selectors []api.ResourceSelector, metricNames []string,
+func (in FakeMetricClient) DownloadMetrics(selectors []api.ResourceSelector, metricNames []string,
 	cachedResources *api.CachedResources) api.MetricPromises {
 	return nil
 }
 
-func (self FakeMetricClient) AggregateMetrics(metrics api.MetricPromises, metricName string,
+func (in FakeMetricClient) AggregateMetrics(metrics api.MetricPromises, metricName string,
 	aggregations api.AggregationModes) api.MetricPromises {
 	return nil
 }

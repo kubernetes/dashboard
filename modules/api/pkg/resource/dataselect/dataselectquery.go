@@ -119,11 +119,12 @@ func NewSortQuery(sortByListRaw []string) *SortQuery {
 		// parse order option
 		var ascending bool
 		orderOption := sortByListRaw[i]
-		if orderOption == "a" {
+		switch orderOption {
+		case "a":
 			ascending = true
-		} else if orderOption == "d" {
+		case "d":
 			ascending = false
-		} else {
+		default:
 			//  Invalid order option. Only ascending (a), descending (d) options are supported
 			return NoSort
 		}

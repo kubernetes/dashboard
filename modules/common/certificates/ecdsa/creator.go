@@ -41,8 +41,8 @@ type ecdsaCreator struct {
 }
 
 // GenerateKey implements certificate Creator interface. See Creator for more information.
-func (self *ecdsaCreator) GenerateKey() interface{} {
-	key, err := ecdsa.GenerateKey(self.curve, rand.Reader)
+func (in *ecdsaCreator) GenerateKey() interface{} {
+	key, err := ecdsa.GenerateKey(in.curve, rand.Reader)
 	if err != nil {
 		log.Fatalf("[ECDSAManager] Failed to generate certificate key: %s", err)
 	}
@@ -51,16 +51,16 @@ func (self *ecdsaCreator) GenerateKey() interface{} {
 }
 
 // GenerateCertificate implements certificate Creator interface. See Creator for more information.
-func (self *ecdsaCreator) GenerateCertificate(key interface{}) []byte {
-	ecdsaKey := self.getKey(key)
-	pod := self.getDashboardPod()
+func (in *ecdsaCreator) GenerateCertificate(key interface{}) []byte {
+	ecdsaKey := in.getKey(key)
+	pod := in.getDashboardPod()
 
 	notBefore := time.Now()
 	validFor, _ := time.ParseDuration("8760h")
 	notAfter := notBefore.Add(validFor)
 
 	template := x509.Certificate{
-		SerialNumber: self.generateSerialNumber(),
+		SerialNumber: in.generateSerialNumber(),
 		NotAfter:     notAfter,
 		NotBefore:    notBefore,
 	}
@@ -88,26 +88,26 @@ func (self *ecdsaCreator) GenerateCertificate(key interface{}) []byte {
 }
 
 // StoreCertificates implements certificate Creator interface. See Creator for more information.
-func (self *ecdsaCreator) StoreCertificates(path string, key interface{}, certBytes []byte) (string, string) {
-	keyPEM, certPEM, err := self.KeyCertPEMBytes(key, certBytes)
+func (in *ecdsaCreator) StoreCertificates(path string, key interface{}, certBytes []byte) (string, string) {
+	keyPEM, certPEM, err := in.KeyCertPEMBytes(key, certBytes)
 	if err != nil {
 		log.Fatalf("[ECDSAManager] Failed to marshal cert/key pair: %v", err)
 	}
-	certPath := path + string(os.PathSeparator) + self.GetCertFileName()
+	certPath := path + string(os.PathSeparator) + in.GetCertFileName()
 	if err := os.WriteFile(certPath, certPEM, os.FileMode(0644)); err != nil {
-		log.Fatalf("[ECDSAManager] Failed to open %s for writing: %s", self.GetCertFileName(), err)
+		log.Fatalf("[ECDSAManager] Failed to open %s for writing: %s", in.GetCertFileName(), err)
 	}
 
-	keyPath := path + string(os.PathSeparator) + self.GetKeyFileName()
+	keyPath := path + string(os.PathSeparator) + in.GetKeyFileName()
 	if err := os.WriteFile(keyPath, keyPEM, os.FileMode(0600)); err != nil {
-		log.Fatalf("[ECDSAManager] Failed to open %s for writing: %s", self.GetKeyFileName(), err)
+		log.Fatalf("[ECDSAManager] Failed to open %s for writing: %s", in.GetKeyFileName(), err)
 	}
 
 	return certPath, keyPath
 }
 
-func (self *ecdsaCreator) KeyCertPEMBytes(key interface{}, certBytes []byte) ([]byte, []byte, error) {
-	marshaledKey, err := x509.MarshalECPrivateKey(self.getKey(key))
+func (in *ecdsaCreator) KeyCertPEMBytes(key interface{}, certBytes []byte) ([]byte, []byte, error) {
+	marshaledKey, err := x509.MarshalECPrivateKey(in.getKey(key))
 	if err != nil {
 		return nil, nil, err
 	}
@@ -117,16 +117,16 @@ func (self *ecdsaCreator) KeyCertPEMBytes(key interface{}, certBytes []byte) ([]
 }
 
 // GetKeyFileName implements certificate Creator interface. See Creator for more information.
-func (self *ecdsaCreator) GetKeyFileName() string {
-	return self.keyFile
+func (in *ecdsaCreator) GetKeyFileName() string {
+	return in.keyFile
 }
 
 // GetCertFileName implements certificate Creator interface. See Creator for more information.
-func (self *ecdsaCreator) GetCertFileName() string {
-	return self.certFile
+func (in *ecdsaCreator) GetCertFileName() string {
+	return in.certFile
 }
 
-func (self *ecdsaCreator) getKey(key interface{}) *ecdsa.PrivateKey {
+func (in *ecdsaCreator) getKey(key interface{}) *ecdsa.PrivateKey {
 	ecdsaKey, ok := key.(*ecdsa.PrivateKey)
 	if !ok {
 		log.Fatal("[ECDSAManager] Key should be an instance of *ecdsa.PrivateKey")
@@ -135,7 +135,7 @@ func (self *ecdsaCreator) getKey(key interface{}) *ecdsa.PrivateKey {
 	return ecdsaKey
 }
 
-func (self *ecdsaCreator) generateSerialNumber() *big.Int {
+func (in *ecdsaCreator) generateSerialNumber() *big.Int {
 	serialNumberLimit := new(big.Int).Lsh(big.NewInt(1), 128)
 	serialNumber, err := rand.Int(rand.Reader, serialNumberLimit)
 	if err != nil {
@@ -145,7 +145,7 @@ func (self *ecdsaCreator) generateSerialNumber() *big.Int {
 	return serialNumber
 }
 
-func (self *ecdsaCreator) getDashboardPod() *corev1.Pod {
+func (in *ecdsaCreator) getDashboardPod() *corev1.Pod {
 	// These variables might be populated by kubernetes downward API when running inside the cluster
 	podName := os.Getenv("POD_NAME")
 	podNamespace := os.Getenv("POD_NAMESPACE")
@@ -162,13 +162,13 @@ func (self *ecdsaCreator) getDashboardPod() *corev1.Pod {
 	}
 }
 
-func (self *ecdsaCreator) init() {
-	if len(self.certFile) == 0 {
-		self.certFile = certapi.DashboardCertName
+func (in *ecdsaCreator) init() {
+	if len(in.certFile) == 0 {
+		in.certFile = certapi.DashboardCertName
 	}
 
-	if len(self.keyFile) == 0 {
-		self.keyFile = certapi.DashboardKeyName
+	if len(in.keyFile) == 0 {
+		in.keyFile = certapi.DashboardKeyName
 	}
 }
 

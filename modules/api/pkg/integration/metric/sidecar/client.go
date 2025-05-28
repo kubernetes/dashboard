@@ -40,56 +40,56 @@ type sidecarClient struct {
 // Implement Integration interface.
 
 // HealthCheck implements integration app interface. See Integration interface for more information.
-func (self sidecarClient) HealthCheck() error {
-	if self.client == nil {
+func (in sidecarClient) HealthCheck() error {
+	if in.client == nil {
 		return errors.New("sidecar not configured")
 	}
 
-	return self.client.HealthCheck()
+	return in.client.HealthCheck()
 }
 
 // ID implements integration app interface. See Integration interface for more information.
-func (self sidecarClient) ID() integrationapi.IntegrationID {
+func (in sidecarClient) ID() integrationapi.IntegrationID {
 	return integrationapi.SidecarIntegrationID
 }
 
 // Implement MetricClient interface
 
 // DownloadMetrics implements metric client interface. See MetricClient for more information.
-func (self sidecarClient) DownloadMetrics(selectors []metricapi.ResourceSelector,
+func (in sidecarClient) DownloadMetrics(selectors []metricapi.ResourceSelector,
 	metricNames []string, cachedResources *metricapi.CachedResources) metricapi.MetricPromises {
 	result := metricapi.MetricPromises{}
 	for _, metricName := range metricNames {
-		collectedMetrics := self.DownloadMetric(selectors, metricName, cachedResources)
+		collectedMetrics := in.DownloadMetric(selectors, metricName, cachedResources)
 		result = append(result, collectedMetrics...)
 	}
 	return result
 }
 
 // DownloadMetric implements metric client interface. See MetricClient for more information.
-func (self sidecarClient) DownloadMetric(selectors []metricapi.ResourceSelector,
+func (in sidecarClient) DownloadMetric(selectors []metricapi.ResourceSelector,
 	metricName string, cachedResources *metricapi.CachedResources) metricapi.MetricPromises {
 	sidecarSelectors := getSidecarSelectors(selectors, cachedResources)
 
 	// Downloads metric in the fastest possible way by first compressing SidecarSelectors and later unpacking the result to separate boxes.
 	compressedSelectors, reverseMapping := compress(sidecarSelectors)
-	return self.downloadMetric(sidecarSelectors, compressedSelectors, reverseMapping, metricName)
+	return in.downloadMetric(sidecarSelectors, compressedSelectors, reverseMapping, metricName)
 }
 
 // AggregateMetrics implements metric client interface. See MetricClient for more information.
-func (self sidecarClient) AggregateMetrics(metrics metricapi.MetricPromises, metricName string,
+func (in sidecarClient) AggregateMetrics(metrics metricapi.MetricPromises, metricName string,
 	aggregations metricapi.AggregationModes) metricapi.MetricPromises {
 	return common.AggregateMetricPromises(metrics, metricName, aggregations, nil)
 }
 
-func (self sidecarClient) downloadMetric(sidecarSelectors []sidecarSelector,
+func (in sidecarClient) downloadMetric(sidecarSelectors []sidecarSelector,
 	compressedSelectors []sidecarSelector, reverseMapping map[string][]int,
 	metricName string) metricapi.MetricPromises {
 	// collect all the required data (as promises)
 	unassignedResourcePromisesList := make([]metricapi.MetricPromises, len(compressedSelectors))
 	for selectorId, compressedSelector := range compressedSelectors {
 		unassignedResourcePromisesList[selectorId] =
-			self.downloadMetricForEachTargetResource(compressedSelector, metricName)
+			in.downloadMetricForEachTargetResource(compressedSelector, metricName)
 	}
 	// prepare final result
 	result := metricapi.NewMetricPromises(len(sidecarSelectors))
@@ -134,28 +134,28 @@ func (self sidecarClient) downloadMetric(sidecarSelectors []sidecarSelector,
 }
 
 // downloadMetricForEachTargetResource downloads requested metric for each resource present in SidecarSelector
-// and returns the result as a list of promises - one promise for each resource. Order of promises returned is the same as order in self.Resources.
-func (self sidecarClient) downloadMetricForEachTargetResource(selector sidecarSelector, metricName string) metricapi.MetricPromises {
+// and returns the result as a list of promises - one promise for each resource. Order of promises returned is the same as order in in.Resources.
+func (in sidecarClient) downloadMetricForEachTargetResource(selector sidecarSelector, metricName string) metricapi.MetricPromises {
 	var notAggregatedMetrics metricapi.MetricPromises
 	if SidecarAllInOneDownloadConfig[selector.TargetResourceType] {
-		notAggregatedMetrics = self.allInOneDownload(selector, metricName)
+		notAggregatedMetrics = in.allInOneDownload(selector, metricName)
 	} else {
 		notAggregatedMetrics = metricapi.MetricPromises{}
 		for i := range selector.Resources {
-			notAggregatedMetrics = append(notAggregatedMetrics, self.ithResourceDownload(selector, metricName, i))
+			notAggregatedMetrics = append(notAggregatedMetrics, in.ithResourceDownload(selector, metricName, i))
 		}
 	}
 	return notAggregatedMetrics
 }
 
-// ithResourceDownload downloads metric for ith resource in self.Resources. Use only in case all in 1 download is not supported
+// ithResourceDownload downloads metric for ith resource in in.Resources. Use only in case all in 1 download is not supported
 // for this resource type.
-func (self sidecarClient) ithResourceDownload(selector sidecarSelector, metricName string,
+func (in sidecarClient) ithResourceDownload(selector sidecarSelector, metricName string,
 	i int) metricapi.MetricPromise {
 	result := metricapi.NewMetricPromise()
 	go func() {
 		rawResult := metricapi.SidecarMetricResultList{}
-		err := self.unmarshalType(selector.Path+selector.Resources[i]+"/metrics/"+metricName, &rawResult)
+		err := in.unmarshalType(selector.Path+selector.Resources[i]+"/metrics/"+metricName, &rawResult)
 		if err != nil {
 			result.Metric <- nil
 			result.Error <- err
@@ -185,9 +185,9 @@ func (self sidecarClient) ithResourceDownload(selector sidecarSelector, metricNa
 	return result
 }
 
-// allInOneDownload downloads metrics for all resources present in self.Resources in one request.
-// returns a list of metric promises - one promise for each resource. Order of self.Resources is preserved.
-func (self sidecarClient) allInOneDownload(selector sidecarSelector, metricName string) metricapi.MetricPromises {
+// allInOneDownload downloads metrics for all resources present in in.Resources in one request.
+// returns a list of metric promises - one promise for each resource. Order of in.Resources is preserved.
+func (in sidecarClient) allInOneDownload(selector sidecarSelector, metricName string) metricapi.MetricPromises {
 	result := metricapi.NewMetricPromises(len(selector.Resources))
 	go func() {
 		if len(selector.Resources) == 0 {
@@ -195,7 +195,7 @@ func (self sidecarClient) allInOneDownload(selector sidecarSelector, metricName 
 		}
 		rawResults := metricapi.SidecarMetricResultList{}
 
-		err := self.unmarshalType(selector.Path+strings.Join(selector.Resources, ",")+"/metrics/"+metricName, &rawResults)
+		err := in.unmarshalType(selector.Path+strings.Join(selector.Resources, ",")+"/metrics/"+metricName, &rawResults)
 
 		if err != nil {
 			result.PutMetrics(nil, err)
@@ -248,8 +248,8 @@ func (self sidecarClient) allInOneDownload(selector sidecarSelector, metricName 
 
 // unmarshalType performs sidecar GET request to the specifies path and transfers
 // the data to the interface provided.
-func (self sidecarClient) unmarshalType(path string, v interface{}) error {
-	rawData, err := self.client.Get("/api/v1/dashboard/" + path).DoRaw(context.TODO())
+func (in sidecarClient) unmarshalType(path string, v interface{}) error {
+	rawData, err := in.client.Get("/api/v1/dashboard/" + path).DoRaw(context.TODO())
 	if err != nil {
 		return err
 	}

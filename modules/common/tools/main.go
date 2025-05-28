@@ -17,9 +17,9 @@
 package tools
 
 import (
-	_ "github.com/apache/skywalking-eyes/cmd/license-eye"
 	_ "github.com/air-verse/air"
-	_ "github.com/golangci/golangci-lint/cmd/golangci-lint"
+	_ "github.com/apache/skywalking-eyes/cmd/license-eye"
+	_ "github.com/golangci/golangci-lint/v2/cmd/golangci-lint"
 	_ "k8s.io/code-generator"
 	_ "sigs.k8s.io/kind"
 )

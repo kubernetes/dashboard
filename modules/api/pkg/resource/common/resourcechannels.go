@@ -148,7 +148,7 @@ func GetServiceListChannel(client client.Interface, nsQuery *NamespaceQuery,
 		list, err := client.CoreV1().Services(nsQuery.ToRequestParam()).List(context.TODO(), helpers.ListEverything)
 		var filteredItems []v1.Service
 		for _, item := range list.Items {
-			if nsQuery.Matches(item.ObjectMeta.Namespace) {
+			if nsQuery.Matches(item.Namespace) {
 				filteredItems = append(filteredItems, item)
 			}
 		}
@@ -181,7 +181,7 @@ func GetIngressListChannel(client client.Interface, nsQuery *NamespaceQuery,
 		list, err := client.NetworkingV1().Ingresses(nsQuery.ToRequestParam()).List(context.TODO(), helpers.ListEverything)
 		var filteredItems []networkingv1.Ingress
 		for _, item := range list.Items {
-			if nsQuery.Matches(item.ObjectMeta.Namespace) {
+			if nsQuery.Matches(item.Namespace) {
 				filteredItems = append(filteredItems, item)
 			}
 		}
@@ -298,7 +298,7 @@ func GetEventListChannelWithOptions(client client.Interface,
 		list, err := client.CoreV1().Events(nsQuery.ToRequestParam()).List(context.TODO(), options)
 		var filteredItems []v1.Event
 		for _, item := range list.Items {
-			if nsQuery.Matches(item.ObjectMeta.Namespace) {
+			if nsQuery.Matches(item.Namespace) {
 				filteredItems = append(filteredItems, item)
 			}
 		}
@@ -368,7 +368,7 @@ func GetPodListChannelWithOptions(client client.Interface, nsQuery *NamespaceQue
 		list, err := client.CoreV1().Pods(nsQuery.ToRequestParam()).List(context.TODO(), options)
 		var filteredItems []v1.Pod
 		for _, item := range list.Items {
-			if nsQuery.Matches(item.ObjectMeta.Namespace) {
+			if nsQuery.Matches(item.Namespace) {
 				filteredItems = append(filteredItems, item)
 			}
 		}
@@ -404,7 +404,7 @@ func GetReplicationControllerListChannel(client client.Interface,
 			List(context.TODO(), helpers.ListEverything)
 		var filteredItems []v1.ReplicationController
 		for _, item := range list.Items {
-			if nsQuery.Matches(item.ObjectMeta.Namespace) {
+			if nsQuery.Matches(item.Namespace) {
 				filteredItems = append(filteredItems, item)
 			}
 		}
@@ -439,7 +439,7 @@ func GetDeploymentListChannel(client client.Interface,
 			List(context.TODO(), helpers.ListEverything)
 		var filteredItems []apps.Deployment
 		for _, item := range list.Items {
-			if nsQuery.Matches(item.ObjectMeta.Namespace) {
+			if nsQuery.Matches(item.Namespace) {
 				filteredItems = append(filteredItems, item)
 			}
 		}
@@ -480,7 +480,7 @@ func GetReplicaSetListChannelWithOptions(client client.Interface, nsQuery *Names
 			List(context.TODO(), options)
 		var filteredItems []apps.ReplicaSet
 		for _, item := range list.Items {
-			if nsQuery.Matches(item.ObjectMeta.Namespace) {
+			if nsQuery.Matches(item.Namespace) {
 				filteredItems = append(filteredItems, item)
 			}
 		}
@@ -512,7 +512,7 @@ func GetDaemonSetListChannel(client client.Interface, nsQuery *NamespaceQuery, n
 		list, err := client.AppsV1().DaemonSets(nsQuery.ToRequestParam()).List(context.TODO(), helpers.ListEverything)
 		var filteredItems []apps.DaemonSet
 		for _, item := range list.Items {
-			if nsQuery.Matches(item.ObjectMeta.Namespace) {
+			if nsQuery.Matches(item.Namespace) {
 				filteredItems = append(filteredItems, item)
 			}
 		}
@@ -544,7 +544,7 @@ func GetJobListChannel(client client.Interface,
 		list, err := client.BatchV1().Jobs(nsQuery.ToRequestParam()).List(context.TODO(), helpers.ListEverything)
 		var filteredItems []batch.Job
 		for _, item := range list.Items {
-			if nsQuery.Matches(item.ObjectMeta.Namespace) {
+			if nsQuery.Matches(item.Namespace) {
 				filteredItems = append(filteredItems, item)
 			}
 		}
@@ -575,7 +575,7 @@ func GetCronJobListChannel(client client.Interface, nsQuery *NamespaceQuery, num
 		list, err := client.BatchV1().CronJobs(nsQuery.ToRequestParam()).List(context.TODO(), helpers.ListEverything)
 		var filteredItems []batch.CronJob
 		for _, item := range list.Items {
-			if nsQuery.Matches(item.ObjectMeta.Namespace) {
+			if nsQuery.Matches(item.Namespace) {
 				filteredItems = append(filteredItems, item)
 			}
 		}
@@ -608,7 +608,7 @@ func GetStatefulSetListChannel(client client.Interface,
 		statefulSets, err := client.AppsV1().StatefulSets(nsQuery.ToRequestParam()).List(context.TODO(), helpers.ListEverything)
 		var filteredItems []apps.StatefulSet
 		for _, item := range statefulSets.Items {
-			if nsQuery.Matches(item.ObjectMeta.Namespace) {
+			if nsQuery.Matches(item.Namespace) {
 				filteredItems = append(filteredItems, item)
 			}
 		}
@@ -642,7 +642,7 @@ func GetConfigMapListChannel(client client.Interface, nsQuery *NamespaceQuery,
 		list, err := client.CoreV1().ConfigMaps(nsQuery.ToRequestParam()).List(context.TODO(), helpers.ListEverything)
 		var filteredItems []v1.ConfigMap
 		for _, item := range list.Items {
-			if nsQuery.Matches(item.ObjectMeta.Namespace) {
+			if nsQuery.Matches(item.Namespace) {
 				filteredItems = append(filteredItems, item)
 			}
 		}
@@ -676,7 +676,7 @@ func GetSecretListChannel(client client.Interface, nsQuery *NamespaceQuery,
 		list, err := client.CoreV1().Secrets(nsQuery.ToRequestParam()).List(context.TODO(), helpers.ListEverything)
 		var filteredItems []v1.Secret
 		for _, item := range list.Items {
-			if nsQuery.Matches(item.ObjectMeta.Namespace) {
+			if nsQuery.Matches(item.Namespace) {
 				filteredItems = append(filteredItems, item)
 			}
 		}
