@@ -95,7 +95,7 @@ func TestMetricManager_Enable(t *testing.T) {
 		client   api.MetricClient
 		expected error
 	}{
-		{&FakeMetricClient{healthOk: false}, errors.NewInvalid("Health check failed: test-error")},
+		{&FakeMetricClient{healthOk: false}, errors.NewInvalid("health check failed: test-error")},
 		{&FakeMetricClient{healthOk: true}, nil},
 	}
 

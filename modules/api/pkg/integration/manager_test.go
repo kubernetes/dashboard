@@ -82,6 +82,6 @@ func TestIntegrationManager_GetState(t *testing.T) {
 func TestIntegrationManager_Metric(t *testing.T) {
 	metricManager := integration.NewIntegrationManager().Metric()
 	if metricManager == nil {
-		t.Error("Failed to get metric manager.")
+		t.Error("failed to get metric manager.")
 	}
 }
