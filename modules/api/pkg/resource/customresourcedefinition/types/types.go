@@ -82,7 +82,7 @@ func (r *CustomResourceObject) UnmarshalJSON(data []byte) error {
 		return err
 	}
 
-	r.TypeMeta = types.NewTypeMeta(types.ResourceKind(tempStruct.TypeMeta.Kind))
+	r.TypeMeta = types.NewTypeMeta(types.ResourceKind(tempStruct.Kind))
 	r.ObjectMeta = types.NewObjectMeta(tempStruct.ObjectMeta)
 	return nil
 }

@@ -181,28 +181,28 @@ func getPodStatusPhase(pod v1.Pod, warnings []common.Event) v1.PodPhase {
 
 type PodCell v1.Pod
 
-func (self PodCell) GetProperty(name dataselect.PropertyName) dataselect.ComparableValue {
+func (in PodCell) GetProperty(name dataselect.PropertyName) dataselect.ComparableValue {
 	switch name {
 	case dataselect.NameProperty:
-		return dataselect.StdComparableString(self.ObjectMeta.Name)
+		return dataselect.StdComparableString(in.Name)
 	case dataselect.StatusProperty:
-		return dataselect.StdComparableString(getPodStatus(v1.Pod(self)))
+		return dataselect.StdComparableString(getPodStatus(v1.Pod(in)))
 	case dataselect.CreationTimestampProperty:
-		return dataselect.StdComparableTime(self.ObjectMeta.CreationTimestamp.Time)
+		return dataselect.StdComparableTime(in.CreationTimestamp.Time)
 	case dataselect.NamespaceProperty:
-		return dataselect.StdComparableString(self.ObjectMeta.Namespace)
+		return dataselect.StdComparableString(in.Namespace)
 	default:
 		// if name is not supported then just return a constant dummy value, sort will have no effect.
 		return nil
 	}
 }
 
-func (self PodCell) GetResourceSelector() *metricapi.ResourceSelector {
+func (in PodCell) GetResourceSelector() *metricapi.ResourceSelector {
 	return &metricapi.ResourceSelector{
-		Namespace:    self.ObjectMeta.Namespace,
+		Namespace:    in.Namespace,
 		ResourceType: types.ResourceKindPod,
-		ResourceName: self.ObjectMeta.Name,
-		UID:          self.ObjectMeta.UID,
+		ResourceName: in.Name,
+		UID:          in.UID,
 	}
 }
 

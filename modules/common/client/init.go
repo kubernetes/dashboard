@@ -73,7 +73,7 @@ func (in *configBuilder) setConfigDefaults(config *rest.Config) *rest.Config {
 
 	config.ContentType = DefaultContentType
 	config.UserAgent = DefaultUserAgent + "/" + in.userAgent
-	config.TLSClientConfig.Insecure = in.insecure
+	config.Insecure = in.insecure
 
 	return setConfigRateLimitDefaults(config)
 }
@@ -137,9 +137,9 @@ func buildConfigFromAuthInfo(authInfo *api.AuthInfo) (*rest.Config, error) {
 
 	cmdCfg.Clusters[DefaultCmdConfigName] = &api.Cluster{
 		Server:                   baseConfig.Host,
-		CertificateAuthority:     baseConfig.TLSClientConfig.CAFile,
-		CertificateAuthorityData: baseConfig.TLSClientConfig.CAData,
-		InsecureSkipTLSVerify:    baseConfig.TLSClientConfig.Insecure,
+		CertificateAuthority:     baseConfig.CAFile,
+		CertificateAuthorityData: baseConfig.CAData,
+		InsecureSkipTLSVerify:    baseConfig.Insecure,
 	}
 
 	cmdCfg.AuthInfos[DefaultCmdConfigName] = authInfo

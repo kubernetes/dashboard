@@ -208,7 +208,7 @@ func getNodeAllocatedResources(node v1.Node, podList *v1.PodList) (NodeAllocated
 	}
 
 	var podFraction float64 = 0
-	var podCapacity int64 = node.Status.Capacity.Pods().Value()
+	var podCapacity = node.Status.Capacity.Pods().Value()
 	if podCapacity > 0 {
 		podFraction = float64(len(podList.Items)) / float64(podCapacity) * 100
 	}

@@ -30,27 +30,27 @@ import (
 type DeploymentCell apps.Deployment
 
 // GetProperty is used to get property of the deployment
-func (self DeploymentCell) GetProperty(name dataselect.PropertyName) dataselect.ComparableValue {
+func (in DeploymentCell) GetProperty(name dataselect.PropertyName) dataselect.ComparableValue {
 	switch name {
 	case dataselect.NameProperty:
-		return dataselect.StdComparableString(self.ObjectMeta.Name)
+		return dataselect.StdComparableString(in.Name)
 	case dataselect.CreationTimestampProperty:
-		return dataselect.StdComparableTime(self.ObjectMeta.CreationTimestamp.Time)
+		return dataselect.StdComparableTime(in.CreationTimestamp.Time)
 	case dataselect.NamespaceProperty:
-		return dataselect.StdComparableString(self.ObjectMeta.Namespace)
+		return dataselect.StdComparableString(in.Namespace)
 	default:
 		// if name is not supported then just return a constant dummy value, sort will have no effect.
 		return nil
 	}
 }
 
-func (self DeploymentCell) GetResourceSelector() *metricapi.ResourceSelector {
+func (in DeploymentCell) GetResourceSelector() *metricapi.ResourceSelector {
 	return &metricapi.ResourceSelector{
-		Namespace:    self.ObjectMeta.Namespace,
+		Namespace:    in.Namespace,
 		ResourceType: types.ResourceKindDeployment,
-		ResourceName: self.ObjectMeta.Name,
-		Selector:     self.Spec.Selector.MatchLabels,
-		UID:          self.UID,
+		ResourceName: in.Name,
+		Selector:     in.Spec.Selector.MatchLabels,
+		UID:          in.UID,
 	}
 }
 

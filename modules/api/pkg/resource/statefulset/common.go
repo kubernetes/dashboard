@@ -29,26 +29,26 @@ import (
 
 type StatefulSetCell apps.StatefulSet
 
-func (self StatefulSetCell) GetProperty(name dataselect.PropertyName) dataselect.ComparableValue {
+func (in StatefulSetCell) GetProperty(name dataselect.PropertyName) dataselect.ComparableValue {
 	switch name {
 	case dataselect.NameProperty:
-		return dataselect.StdComparableString(self.ObjectMeta.Name)
+		return dataselect.StdComparableString(in.Name)
 	case dataselect.CreationTimestampProperty:
-		return dataselect.StdComparableTime(self.ObjectMeta.CreationTimestamp.Time)
+		return dataselect.StdComparableTime(in.CreationTimestamp.Time)
 	case dataselect.NamespaceProperty:
-		return dataselect.StdComparableString(self.ObjectMeta.Namespace)
+		return dataselect.StdComparableString(in.Namespace)
 	default:
 		// if name is not supported then just return a constant dummy value, sort will have no effect.
 		return nil
 	}
 }
 
-func (self StatefulSetCell) GetResourceSelector() *metricapi.ResourceSelector {
+func (in StatefulSetCell) GetResourceSelector() *metricapi.ResourceSelector {
 	return &metricapi.ResourceSelector{
-		Namespace:    self.ObjectMeta.Namespace,
+		Namespace:    in.Namespace,
 		ResourceType: types.ResourceKindStatefulSet,
-		ResourceName: self.ObjectMeta.Name,
-		UID:          self.UID,
+		ResourceName: in.Name,
+		UID:          in.UID,
 	}
 }
 

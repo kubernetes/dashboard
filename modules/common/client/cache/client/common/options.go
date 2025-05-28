@@ -11,15 +11,20 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-//
-//go:build tools
 
-package tools
+package common
 
 import (
-	_ "github.com/air-verse/air"
-	_ "github.com/apache/skywalking-eyes/cmd/license-eye"
-	_ "github.com/golangci/golangci-lint/v2/cmd/golangci-lint"
-	_ "k8s.io/code-generator"
-	_ "sigs.k8s.io/kind"
+	"net/http"
 )
+
+type RequestGetter func() *http.Request
+
+type CachedClientOptions struct {
+	// Token is the authentication token to use for the requests.
+	Token string
+
+	// RequestGetter is a function that returns an original HTTP request
+	// used to create the client.
+	RequestGetter RequestGetter
+}

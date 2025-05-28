@@ -43,7 +43,7 @@ func areErrorsEqual(err1, err2 error) bool {
 // Removes all quote signs that might have been added to the message.
 // Might depend on dependencies version how they are constructed.
 func normalize(msg string) string {
-	return strings.Replace(msg, "\"", "", -1)
+	return strings.ReplaceAll(msg, "\"", "")
 }
 
 type GlobalCounter int32
@@ -76,27 +76,27 @@ type FakeRequest struct {
 type PodData map[string][]metricapi.MetricPoint
 type NodeData map[string][]metricapi.MetricPoint
 
-func (self FakeSidecar) Get(path string) RequestInterface {
-	return FakeRequest{self.PodData, self.NodeData, path}
+func (in FakeSidecar) Get(path string) RequestInterface {
+	return FakeRequest{in.PodData, in.NodeData, path}
 }
 
-func (self FakeSidecar) GetNumberOfRequestsMade() int {
+func (in FakeSidecar) GetNumberOfRequestsMade() int {
 	num := int(_NumRequests.get())
 	_NumRequests.set(0)
 	return num
 }
 
-func (self FakeSidecar) HealthCheck() error {
+func (in FakeSidecar) HealthCheck() error {
 	return nil
 }
 
-func (self FakeSidecar) ID() integrationapi.IntegrationID {
+func (in FakeSidecar) ID() integrationapi.IntegrationID {
 	return "fakeSidecar"
 }
 
-func (self FakeRequest) DoRaw(ctx context.Context) ([]byte, error) {
+func (in FakeRequest) DoRaw(ctx context.Context) ([]byte, error) {
 	_NumRequests.increment()
-	path := self.Path
+	path := in.Path
 	time.Sleep(50 * time.Millisecond) // simulate response delay of 0.05 seconds
 	if strings.Contains(path, "/pod-list/") {
 		r, _ := regexp.Compile(`\/pod\-list\/(.+)\/metrics\/`)
@@ -115,7 +115,7 @@ func (self FakeRequest) DoRaw(ctx context.Context) ([]byte, error) {
 
 		items := metricapi.SidecarMetricResultList{}
 		for _, pod := range requestedPods {
-			items.Items = append(items.Items, metricapi.SidecarMetric{MetricPoints: self.PodData[pod+"/"+namespace], UIDs: []string{pod}})
+			items.Items = append(items.Items, metricapi.SidecarMetric{MetricPoints: in.PodData[pod+"/"+namespace], UIDs: []string{pod}})
 		}
 		x, err := json.Marshal(items)
 		return x, err
@@ -129,7 +129,7 @@ func (self FakeRequest) DoRaw(ctx context.Context) ([]byte, error) {
 		requestedNode := submatch[1]
 
 		items := metricapi.SidecarMetricResultList{}
-		items.Items = append(items.Items, metricapi.SidecarMetric{MetricPoints: self.NodeData[requestedNode], UIDs: []string{requestedNode}})
+		items.Items = append(items.Items, metricapi.SidecarMetric{MetricPoints: in.NodeData[requestedNode], UIDs: []string{requestedNode}})
 
 		x, err := json.Marshal(items)
 		return x, err
@@ -138,7 +138,7 @@ func (self FakeRequest) DoRaw(ctx context.Context) ([]byte, error) {
 	}
 }
 
-func (self FakeRequest) AbsPath(segments ...string) *rest.Request {
+func (in FakeRequest) AbsPath(segments ...string) *rest.Request {
 	return &rest.Request{}
 }
 

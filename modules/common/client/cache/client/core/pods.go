@@ -32,6 +32,7 @@ type pods struct {
 	authorizationV1 authorizationv1.AuthorizationV1Interface
 	namespace       string
 	token           string
+	requestGetter   common.RequestGetter
 }
 
 func (in *pods) List(ctx context.Context, opts metav1.ListOptions) (*corev1.PodList, error) {
@@ -42,9 +43,10 @@ func (in *pods) List(ctx context.Context, opts metav1.ListOptions) (*corev1.PodL
 		common.WithGroup[corev1.PodList](corev1.SchemeGroupVersion.Group),
 		common.WithVersion[corev1.PodList](corev1.SchemeGroupVersion.Version),
 		common.WithResourceKind[corev1.PodList](types.ResourceKindPod),
+		common.WithRequestGetter[corev1.PodList](in.requestGetter),
 	).List(ctx, in.PodInterface, opts)
 }
 
-func newPods(c *Client, namespace, token string) v1.PodInterface {
-	return &pods{c.CoreV1Client.Pods(namespace), c.authorizationV1, namespace, token}
+func newPods(c *Client, namespace, token string, getter common.RequestGetter) v1.PodInterface {
+	return &pods{c.CoreV1Client.Pods(namespace), c.authorizationV1, namespace, token, getter}
 }

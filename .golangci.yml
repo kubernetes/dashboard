@@ -11,27 +11,41 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-#
+
+version: "2"
 run:
   modules-download-mode: readonly
-  allow-parallel-runners: true
-  timeout: 30m
   issues-exit-code: 1
   tests: true
+  allow-parallel-runners: true
 linters:
-  disable-all: true
+  default: none
   enable:
-    # default linters
     - errcheck
-    - gosimple
+    - errorlint
+    - gocyclo
     - govet
     - ineffassign
-    - staticcheck
-    - typecheck
-    - unused
-    - gocyclo
-
-    # additional linters
-    - errorlint
-    - goimports
     - misspell
+    - staticcheck
+    - unused
+  exclusions:
+    generated: lax
+    presets:
+      - comments
+      - common-false-positives
+      - legacy
+      - std-error-handling
+    paths:
+      - third_party$
+      - builtin$
+      - examples$
+formatters:
+  enable:
+    - goimports
+  exclusions:
+    generated: lax
+    paths:
+      - third_party$
+      - builtin$
+      - examples$

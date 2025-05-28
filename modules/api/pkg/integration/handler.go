@@ -33,16 +33,16 @@ type Handler struct {
 //
 // By default, endpoint for checking state of the integrations is installed. It allows user
 // to check state of integration by accessing `<DASHBOARD_URL>/api/v1/integration/{name}/state`.
-func (self Handler) Install(ws *restful.WebService) {
+func (in Handler) Install(ws *restful.WebService) {
 	ws.Route(
 		ws.GET("/integration/{name}/state").
-			To(self.handleGetState).
+			To(in.handleGetState).
 			Writes(api.IntegrationState{}))
 }
 
-func (self Handler) handleGetState(request *restful.Request, response *restful.Response) {
+func (in Handler) handleGetState(request *restful.Request, response *restful.Response) {
 	integrationName := request.PathParameter("name")
-	state, err := self.manager.GetState(api.IntegrationID(integrationName))
+	state, err := in.manager.GetState(api.IntegrationID(integrationName))
 	if err != nil {
 		response.AddHeader("Content-Type", "text/plain")
 		_ = response.WriteErrorString(http.StatusInternalServerError, err.Error()+"\n")

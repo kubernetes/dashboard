@@ -32,6 +32,7 @@ type secrets struct {
 	authorizationV1 authorizationv1.AuthorizationV1Interface
 	namespace       string
 	token           string
+	requestGetter   common.RequestGetter
 }
 
 func (in *secrets) List(ctx context.Context, opts metav1.ListOptions) (*corev1.SecretList, error) {
@@ -42,9 +43,10 @@ func (in *secrets) List(ctx context.Context, opts metav1.ListOptions) (*corev1.S
 		common.WithGroup[corev1.SecretList](corev1.SchemeGroupVersion.Group),
 		common.WithVersion[corev1.SecretList](corev1.SchemeGroupVersion.Version),
 		common.WithResourceKind[corev1.SecretList](types.ResourceKindSecret),
+		common.WithRequestGetter[corev1.SecretList](in.requestGetter),
 	).List(ctx, in.SecretInterface, opts)
 }
 
-func newSecrets(c *Client, namespace, token string) v1.SecretInterface {
-	return &secrets{c.CoreV1Client.Secrets(namespace), c.authorizationV1, namespace, token}
+func newSecrets(c *Client, namespace, token string, getter common.RequestGetter) v1.SecretInterface {
+	return &secrets{c.CoreV1Client.Secrets(namespace), c.authorizationV1, namespace, token, getter}
 }

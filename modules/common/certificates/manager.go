@@ -30,13 +30,13 @@ type Manager struct {
 }
 
 // GetCertificates implements Manager interface. See Manager for more information.
-func (self *Manager) GetCertificates() ([]tls.Certificate, error) {
+func (in *Manager) GetCertificates() ([]tls.Certificate, error) {
 	// Make the autogenerate the top priority option.
-	if self.autogenerate {
-		key := self.creator.GenerateKey()
-		cert := self.creator.GenerateCertificate(key)
+	if in.autogenerate {
+		key := in.creator.GenerateKey()
+		cert := in.creator.GenerateCertificate(key)
 		log.Println("Successfully created certificates")
-		keyPEM, certPEM, err := self.creator.KeyCertPEMBytes(key, cert)
+		keyPEM, certPEM, err := in.creator.KeyCertPEMBytes(key, cert)
 		if err != nil {
 			return []tls.Certificate{}, err
 		}
@@ -45,11 +45,11 @@ func (self *Manager) GetCertificates() ([]tls.Certificate, error) {
 	}
 
 	// When autogenerate is disabled and provided cert files exist use them.
-	if self.keyFileExists() && self.certFileExists() && !self.autogenerate {
+	if in.keyFileExists() && in.certFileExists() && !in.autogenerate {
 		log.Println("Certificates already exist. Returning.")
 		certificate, err := tls.LoadX509KeyPair(
-			self.path(self.creator.GetCertFileName()),
-			self.path(self.creator.GetKeyFileName()),
+			in.path(in.creator.GetCertFileName()),
+			in.path(in.creator.GetKeyFileName()),
 		)
 
 		return []tls.Certificate{certificate}, err
@@ -58,43 +58,43 @@ func (self *Manager) GetCertificates() ([]tls.Certificate, error) {
 	return nil, nil
 }
 
-func (self *Manager) GetCertificatePaths() (string, string, error) {
+func (in *Manager) GetCertificatePaths() (string, string, error) {
 	// Make the autogenerate the top priority option.
-	if self.autogenerate {
-		key := self.creator.GenerateKey()
-		cert := self.creator.GenerateCertificate(key)
+	if in.autogenerate {
+		key := in.creator.GenerateKey()
+		cert := in.creator.GenerateCertificate(key)
 		log.Println("Successfully created certificates")
-		keyPEM, certPEM, err := self.creator.KeyCertPEMBytes(key, cert)
+		keyPEM, certPEM, err := in.creator.KeyCertPEMBytes(key, cert)
 		if err != nil {
 			return "", "", err
 		}
-		certPath, keyPath := self.creator.StoreCertificates(self.certDir, certPEM, keyPEM)
+		certPath, keyPath := in.creator.StoreCertificates(in.certDir, certPEM, keyPEM)
 		return certPath, keyPath, nil
 	}
 
 	// When autogenerate is disabled and provided cert files exist use them.
-	if self.keyFileExists() && self.certFileExists() && !self.autogenerate {
+	if in.keyFileExists() && in.certFileExists() && !in.autogenerate {
 		log.Println("Certificates already exist. Returning.")
 
-		return self.path(self.creator.GetCertFileName()), self.path(self.creator.GetKeyFileName()), nil
+		return in.path(in.creator.GetCertFileName()), in.path(in.creator.GetKeyFileName()), nil
 	}
 
 	return "", "", nil
 }
 
-func (self *Manager) keyFileExists() bool {
-	return self.exists(self.path(self.creator.GetKeyFileName()))
+func (in *Manager) keyFileExists() bool {
+	return in.exists(in.path(in.creator.GetKeyFileName()))
 }
 
-func (self *Manager) certFileExists() bool {
-	return self.exists(self.path(self.creator.GetCertFileName()))
+func (in *Manager) certFileExists() bool {
+	return in.exists(in.path(in.creator.GetCertFileName()))
 }
 
-func (self *Manager) path(certFile string) string {
-	return self.certDir + string(os.PathSeparator) + certFile
+func (in *Manager) path(certFile string) string {
+	return in.certDir + string(os.PathSeparator) + certFile
 }
 
-func (self *Manager) exists(file string) bool {
+func (in *Manager) exists(file string) bool {
 	_, err := os.Stat(file)
 	return !os.IsNotExist(err)
 }

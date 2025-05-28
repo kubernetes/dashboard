@@ -31,6 +31,7 @@ type customResourceDefinitions struct {
 
 	authorizationV1 authorizationv1.AuthorizationV1Interface
 	token           string
+	requestGetter   common.RequestGetter
 }
 
 func (in *customResourceDefinitions) List(ctx context.Context, opts metav1.ListOptions) (*extensionsv1.CustomResourceDefinitionList, error) {
@@ -40,13 +41,15 @@ func (in *customResourceDefinitions) List(ctx context.Context, opts metav1.ListO
 		common.WithGroup[extensionsv1.CustomResourceDefinitionList](extensionsv1.SchemeGroupVersion.Group),
 		common.WithVersion[extensionsv1.CustomResourceDefinitionList](extensionsv1.SchemeGroupVersion.Version),
 		common.WithResourceKind[extensionsv1.CustomResourceDefinitionList](types.ResourceKindCustomResourceDefinition),
+		common.WithRequestGetter[extensionsv1.CustomResourceDefinitionList](in.requestGetter),
 	).List(ctx, in.CustomResourceDefinitionInterface, opts)
 }
 
-func newCustomResourceDefinitions(c *Client, token string) v1.CustomResourceDefinitionInterface {
+func newCustomResourceDefinitions(c *Client, token string, getter common.RequestGetter) v1.CustomResourceDefinitionInterface {
 	return &customResourceDefinitions{
 		CustomResourceDefinitionInterface: c.ApiextensionsV1Client.CustomResourceDefinitions(),
 		authorizationV1:                   c.authorizationV1,
 		token:                             token,
+		requestGetter:                     getter,
 	}
 }

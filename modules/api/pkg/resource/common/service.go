@@ -27,7 +27,7 @@ func FilterNamespacedServicesBySelector(services []v1.Service, namespace string,
 
 	var matchingServices []v1.Service
 	for _, service := range services {
-		if service.ObjectMeta.Namespace == namespace &&
+		if service.Namespace == namespace &&
 			helpers.IsSelectorMatching(service.Spec.Selector, resourceSelector) {
 			matchingServices = append(matchingServices, service)
 		}

@@ -112,46 +112,46 @@ func NewResourceController(ref meta.OwnerReference, namespace string, client cli
 type JobController batch.Job
 
 // Get is an implementation of Get method from ResourceController interface.
-func (self JobController) Get(allPods []v1.Pod, allEvents []v1.Event) ResourceOwner {
-	matchingPods := common.FilterPodsForJob(batch.Job(self), allPods)
-	podInfo := common.GetPodInfo(self.Status.Active, self.Spec.Completions, matchingPods)
+func (in JobController) Get(allPods []v1.Pod, allEvents []v1.Event) ResourceOwner {
+	matchingPods := common.FilterPodsForJob(batch.Job(in), allPods)
+	podInfo := common.GetPodInfo(in.Status.Active, in.Spec.Completions, matchingPods)
 	podInfo.Warnings = event.GetPodsEventWarnings(allEvents, matchingPods)
 
 	return ResourceOwner{
 		TypeMeta:            types.NewTypeMeta(types.ResourceKindJob),
-		ObjectMeta:          types.NewObjectMeta(self.ObjectMeta),
+		ObjectMeta:          types.NewObjectMeta(in.ObjectMeta),
 		Pods:                podInfo,
-		ContainerImages:     common.GetContainerImages(&self.Spec.Template.Spec),
-		InitContainerImages: common.GetInitContainerImages(&self.Spec.Template.Spec),
+		ContainerImages:     common.GetContainerImages(&in.Spec.Template.Spec),
+		InitContainerImages: common.GetInitContainerImages(&in.Spec.Template.Spec),
 	}
 }
 
 // UID is an implementation of UID method from ResourceController interface.
-func (self JobController) UID() apimachinery.UID {
-	return batch.Job(self).UID
+func (in JobController) UID() apimachinery.UID {
+	return batch.Job(in).UID
 }
 
 // GetLogSources is an implementation of the GetLogSources method from ResourceController interface.
-func (self JobController) GetLogSources(allPods []v1.Pod) LogSources {
-	controlledPods := common.FilterPodsForJob(batch.Job(self), allPods)
+func (in JobController) GetLogSources(allPods []v1.Pod) LogSources {
+	controlledPods := common.FilterPodsForJob(batch.Job(in), allPods)
 	return LogSources{
 		PodNames:           getPodNames(controlledPods),
-		ContainerNames:     common.GetContainerNames(&self.Spec.Template.Spec),
-		InitContainerNames: common.GetInitContainerNames(&self.Spec.Template.Spec),
+		ContainerNames:     common.GetContainerNames(&in.Spec.Template.Spec),
+		InitContainerNames: common.GetInitContainerNames(&in.Spec.Template.Spec),
 	}
 }
 
 type PodController v1.Pod
 
 // Get is an implementation of Get method from ResourceController interface.
-func (self PodController) Get(allPods []v1.Pod, allEvents []v1.Event) ResourceOwner {
-	matchingPods := common.FilterPodsByControllerRef(&self, allPods)
+func (in PodController) Get(allPods []v1.Pod, allEvents []v1.Event) ResourceOwner {
+	matchingPods := common.FilterPodsByControllerRef(&in, allPods)
 	podInfo := common.GetPodInfo(int32(len(matchingPods)), nil, matchingPods) // Pods should not desire any Pods
 	podInfo.Warnings = event.GetPodsEventWarnings(allEvents, matchingPods)
 
 	return ResourceOwner{
 		TypeMeta:            types.NewTypeMeta(types.ResourceKindPod),
-		ObjectMeta:          types.NewObjectMeta(self.ObjectMeta),
+		ObjectMeta:          types.NewObjectMeta(in.ObjectMeta),
 		Pods:                podInfo,
 		ContainerImages:     common.GetNonduplicateContainerImages(matchingPods),
 		InitContainerImages: common.GetNonduplicateInitContainerImages(matchingPods),
@@ -159,13 +159,13 @@ func (self PodController) Get(allPods []v1.Pod, allEvents []v1.Event) ResourceOw
 }
 
 // UID is an implementation of UID method from ResourceController interface.
-func (self PodController) UID() apimachinery.UID {
-	return v1.Pod(self).UID
+func (in PodController) UID() apimachinery.UID {
+	return v1.Pod(in).UID
 }
 
 // GetLogSources is an implementation of the GetLogSources method from ResourceController interface.
-func (self PodController) GetLogSources(allPods []v1.Pod) LogSources {
-	controlledPods := common.FilterPodsByControllerRef(&self, allPods)
+func (in PodController) GetLogSources(allPods []v1.Pod) LogSources {
+	controlledPods := common.FilterPodsByControllerRef(&in, allPods)
 	return LogSources{
 		PodNames:           getPodNames(controlledPods),
 		ContainerNames:     common.GetNonduplicateContainerNames(controlledPods),
@@ -178,32 +178,32 @@ func (self PodController) GetLogSources(allPods []v1.Pod) LogSources {
 type ReplicaSetController apps.ReplicaSet
 
 // Get is an implementation of Get method from ResourceController interface.
-func (self ReplicaSetController) Get(allPods []v1.Pod, allEvents []v1.Event) ResourceOwner {
-	matchingPods := common.FilterPodsByControllerRef(&self, allPods)
-	podInfo := common.GetPodInfo(self.Status.Replicas, self.Spec.Replicas, matchingPods)
+func (in ReplicaSetController) Get(allPods []v1.Pod, allEvents []v1.Event) ResourceOwner {
+	matchingPods := common.FilterPodsByControllerRef(&in, allPods)
+	podInfo := common.GetPodInfo(in.Status.Replicas, in.Spec.Replicas, matchingPods)
 	podInfo.Warnings = event.GetPodsEventWarnings(allEvents, matchingPods)
 
 	return ResourceOwner{
 		TypeMeta:            types.NewTypeMeta(types.ResourceKindReplicaSet),
-		ObjectMeta:          types.NewObjectMeta(self.ObjectMeta),
+		ObjectMeta:          types.NewObjectMeta(in.ObjectMeta),
 		Pods:                podInfo,
-		ContainerImages:     common.GetContainerImages(&self.Spec.Template.Spec),
-		InitContainerImages: common.GetInitContainerImages(&self.Spec.Template.Spec),
+		ContainerImages:     common.GetContainerImages(&in.Spec.Template.Spec),
+		InitContainerImages: common.GetInitContainerImages(&in.Spec.Template.Spec),
 	}
 }
 
 // UID is an implementation of UID method from ResourceController interface.
-func (self ReplicaSetController) UID() apimachinery.UID {
-	return apps.ReplicaSet(self).UID
+func (in ReplicaSetController) UID() apimachinery.UID {
+	return apps.ReplicaSet(in).UID
 }
 
 // GetLogSources is an implementation of the GetLogSources method from ResourceController interface.
-func (self ReplicaSetController) GetLogSources(allPods []v1.Pod) LogSources {
-	controlledPods := common.FilterPodsByControllerRef(&self, allPods)
+func (in ReplicaSetController) GetLogSources(allPods []v1.Pod) LogSources {
+	controlledPods := common.FilterPodsByControllerRef(&in, allPods)
 	return LogSources{
 		PodNames:           getPodNames(controlledPods),
-		ContainerNames:     common.GetContainerNames(&self.Spec.Template.Spec),
-		InitContainerNames: common.GetInitContainerNames(&self.Spec.Template.Spec),
+		ContainerNames:     common.GetContainerNames(&in.Spec.Template.Spec),
+		InitContainerNames: common.GetInitContainerNames(&in.Spec.Template.Spec),
 	}
 }
 
@@ -212,33 +212,33 @@ func (self ReplicaSetController) GetLogSources(allPods []v1.Pod) LogSources {
 type ReplicationControllerController v1.ReplicationController
 
 // Get is an implementation of Get method from ResourceController interface.
-func (self ReplicationControllerController) Get(allPods []v1.Pod,
+func (in ReplicationControllerController) Get(allPods []v1.Pod,
 	allEvents []v1.Event) ResourceOwner {
-	matchingPods := common.FilterPodsByControllerRef(&self, allPods)
-	podInfo := common.GetPodInfo(self.Status.Replicas, self.Spec.Replicas, matchingPods)
+	matchingPods := common.FilterPodsByControllerRef(&in, allPods)
+	podInfo := common.GetPodInfo(in.Status.Replicas, in.Spec.Replicas, matchingPods)
 	podInfo.Warnings = event.GetPodsEventWarnings(allEvents, matchingPods)
 
 	return ResourceOwner{
 		TypeMeta:            types.NewTypeMeta(types.ResourceKindReplicationController),
-		ObjectMeta:          types.NewObjectMeta(self.ObjectMeta),
+		ObjectMeta:          types.NewObjectMeta(in.ObjectMeta),
 		Pods:                podInfo,
-		ContainerImages:     common.GetContainerImages(&self.Spec.Template.Spec),
-		InitContainerImages: common.GetInitContainerImages(&self.Spec.Template.Spec),
+		ContainerImages:     common.GetContainerImages(&in.Spec.Template.Spec),
+		InitContainerImages: common.GetInitContainerImages(&in.Spec.Template.Spec),
 	}
 }
 
 // UID is an implementation of UID method from ResourceController interface.
-func (self ReplicationControllerController) UID() apimachinery.UID {
-	return v1.ReplicationController(self).UID
+func (in ReplicationControllerController) UID() apimachinery.UID {
+	return v1.ReplicationController(in).UID
 }
 
 // GetLogSources is an implementation of the GetLogSources method from ResourceController interface.
-func (self ReplicationControllerController) GetLogSources(allPods []v1.Pod) LogSources {
-	controlledPods := common.FilterPodsByControllerRef(&self, allPods)
+func (in ReplicationControllerController) GetLogSources(allPods []v1.Pod) LogSources {
+	controlledPods := common.FilterPodsByControllerRef(&in, allPods)
 	return LogSources{
 		PodNames:           getPodNames(controlledPods),
-		ContainerNames:     common.GetContainerNames(&self.Spec.Template.Spec),
-		InitContainerNames: common.GetInitContainerNames(&self.Spec.Template.Spec),
+		ContainerNames:     common.GetContainerNames(&in.Spec.Template.Spec),
+		InitContainerNames: common.GetInitContainerNames(&in.Spec.Template.Spec),
 	}
 }
 
@@ -247,33 +247,33 @@ func (self ReplicationControllerController) GetLogSources(allPods []v1.Pod) LogS
 type DaemonSetController apps.DaemonSet
 
 // Get is an implementation of Get method from ResourceController interface.
-func (self DaemonSetController) Get(allPods []v1.Pod, allEvents []v1.Event) ResourceOwner {
-	matchingPods := common.FilterPodsByControllerRef(&self, allPods)
-	podInfo := common.GetPodInfo(self.Status.CurrentNumberScheduled,
-		&self.Status.DesiredNumberScheduled, matchingPods)
+func (in DaemonSetController) Get(allPods []v1.Pod, allEvents []v1.Event) ResourceOwner {
+	matchingPods := common.FilterPodsByControllerRef(&in, allPods)
+	podInfo := common.GetPodInfo(in.Status.CurrentNumberScheduled,
+		&in.Status.DesiredNumberScheduled, matchingPods)
 	podInfo.Warnings = event.GetPodsEventWarnings(allEvents, matchingPods)
 
 	return ResourceOwner{
 		TypeMeta:            types.NewTypeMeta(types.ResourceKindDaemonSet),
-		ObjectMeta:          types.NewObjectMeta(self.ObjectMeta),
+		ObjectMeta:          types.NewObjectMeta(in.ObjectMeta),
 		Pods:                podInfo,
-		ContainerImages:     common.GetContainerImages(&self.Spec.Template.Spec),
-		InitContainerImages: common.GetInitContainerImages(&self.Spec.Template.Spec),
+		ContainerImages:     common.GetContainerImages(&in.Spec.Template.Spec),
+		InitContainerImages: common.GetInitContainerImages(&in.Spec.Template.Spec),
 	}
 }
 
 // UID is an implementation of UID method from ResourceController interface.
-func (self DaemonSetController) UID() apimachinery.UID {
-	return apps.DaemonSet(self).UID
+func (in DaemonSetController) UID() apimachinery.UID {
+	return apps.DaemonSet(in).UID
 }
 
 // GetLogSources is an implementation of the GetLogSources method from ResourceController interface.
-func (self DaemonSetController) GetLogSources(allPods []v1.Pod) LogSources {
-	controlledPods := common.FilterPodsByControllerRef(&self, allPods)
+func (in DaemonSetController) GetLogSources(allPods []v1.Pod) LogSources {
+	controlledPods := common.FilterPodsByControllerRef(&in, allPods)
 	return LogSources{
 		PodNames:           getPodNames(controlledPods),
-		ContainerNames:     common.GetContainerNames(&self.Spec.Template.Spec),
-		InitContainerNames: common.GetInitContainerNames(&self.Spec.Template.Spec),
+		ContainerNames:     common.GetContainerNames(&in.Spec.Template.Spec),
+		InitContainerNames: common.GetInitContainerNames(&in.Spec.Template.Spec),
 	}
 }
 
@@ -282,32 +282,32 @@ func (self DaemonSetController) GetLogSources(allPods []v1.Pod) LogSources {
 type StatefulSetController apps.StatefulSet
 
 // Get is an implementation of Get method from ResourceController interface.
-func (self StatefulSetController) Get(allPods []v1.Pod, allEvents []v1.Event) ResourceOwner {
-	matchingPods := common.FilterPodsByControllerRef(&self, allPods)
-	podInfo := common.GetPodInfo(self.Status.Replicas, self.Spec.Replicas, matchingPods)
+func (in StatefulSetController) Get(allPods []v1.Pod, allEvents []v1.Event) ResourceOwner {
+	matchingPods := common.FilterPodsByControllerRef(&in, allPods)
+	podInfo := common.GetPodInfo(in.Status.Replicas, in.Spec.Replicas, matchingPods)
 	podInfo.Warnings = event.GetPodsEventWarnings(allEvents, matchingPods)
 
 	return ResourceOwner{
 		TypeMeta:            types.NewTypeMeta(types.ResourceKindStatefulSet),
-		ObjectMeta:          types.NewObjectMeta(self.ObjectMeta),
+		ObjectMeta:          types.NewObjectMeta(in.ObjectMeta),
 		Pods:                podInfo,
-		ContainerImages:     common.GetContainerImages(&self.Spec.Template.Spec),
-		InitContainerImages: common.GetInitContainerImages(&self.Spec.Template.Spec),
+		ContainerImages:     common.GetContainerImages(&in.Spec.Template.Spec),
+		InitContainerImages: common.GetInitContainerImages(&in.Spec.Template.Spec),
 	}
 }
 
 // UID is an implementation of UID method from ResourceController interface.
-func (self StatefulSetController) UID() apimachinery.UID {
-	return apps.StatefulSet(self).UID
+func (in StatefulSetController) UID() apimachinery.UID {
+	return apps.StatefulSet(in).UID
 }
 
 // GetLogSources is an implementation of the GetLogSources method from ResourceController interface.
-func (self StatefulSetController) GetLogSources(allPods []v1.Pod) LogSources {
-	controlledPods := common.FilterPodsByControllerRef(&self, allPods)
+func (in StatefulSetController) GetLogSources(allPods []v1.Pod) LogSources {
+	controlledPods := common.FilterPodsByControllerRef(&in, allPods)
 	return LogSources{
 		PodNames:           getPodNames(controlledPods),
-		ContainerNames:     common.GetContainerNames(&self.Spec.Template.Spec),
-		InitContainerNames: common.GetInitContainerNames(&self.Spec.Template.Spec),
+		ContainerNames:     common.GetContainerNames(&in.Spec.Template.Spec),
+		InitContainerNames: common.GetInitContainerNames(&in.Spec.Template.Spec),
 	}
 }
 

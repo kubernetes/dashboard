@@ -134,7 +134,7 @@ type VolumeMount struct {
 	// Path within the volume from which the container's volume should be mounted. Defaults to "" (volume's root).
 	SubPath string `json:"subPath"`
 
-	// Information about the Volume itself
+	// Information about the Volume itin
 	Volume v1.Volume `json:"volume"`
 }
 
@@ -320,9 +320,9 @@ func evalEnvFrom(container v1.Container, configMaps *v1.ConfigMapList, secrets *
 	for _, envFromVar := range container.EnvFrom {
 		switch {
 		case envFromVar.ConfigMapRef != nil:
-			name := envFromVar.ConfigMapRef.LocalObjectReference.Name
+			name := envFromVar.ConfigMapRef.Name
 			for _, configMap := range configMaps.Items {
-				if configMap.ObjectMeta.Name == name {
+				if configMap.Name == name {
 					for key, value := range configMap.Data {
 						valueFrom := &v1.EnvVarSource{
 							ConfigMapKeyRef: &v1.ConfigMapKeySelector{
@@ -343,9 +343,9 @@ func evalEnvFrom(container v1.Container, configMaps *v1.ConfigMapList, secrets *
 				}
 			}
 		case envFromVar.SecretRef != nil:
-			name := envFromVar.SecretRef.LocalObjectReference.Name
+			name := envFromVar.SecretRef.Name
 			for _, secret := range secrets.Items {
-				if secret.ObjectMeta.Name == name {
+				if secret.Name == name {
 					for key, value := range secret.Data {
 						valueFrom := &v1.EnvVarSource{
 							SecretKeyRef: &v1.SecretKeySelector{
@@ -376,16 +376,16 @@ func evalValueFrom(src *v1.EnvVarSource, container *v1.Container, pod *v1.Pod,
 	configMaps *v1.ConfigMapList, secrets *v1.SecretList) string {
 	switch {
 	case src.ConfigMapKeyRef != nil:
-		name := src.ConfigMapKeyRef.LocalObjectReference.Name
+		name := src.ConfigMapKeyRef.Name
 		for _, configMap := range configMaps.Items {
-			if configMap.ObjectMeta.Name == name {
+			if configMap.Name == name {
 				return configMap.Data[src.ConfigMapKeyRef.Key]
 			}
 		}
 	case src.SecretKeyRef != nil:
-		name := src.SecretKeyRef.LocalObjectReference.Name
+		name := src.SecretKeyRef.Name
 		for _, secret := range secrets.Items {
-			if secret.ObjectMeta.Name == name {
+			if secret.Name == name {
 				return base64.StdEncoding.EncodeToString([]byte(
 					secret.Data[src.SecretKeyRef.Key]))
 			}
@@ -447,7 +447,7 @@ func extractContainerResourceValue(fs *v1.ResourceFieldSelector, container *v1.C
 			Memory().Value())/float64(divisor.Value()))), 10), nil
 	}
 
-	return "", fmt.Errorf("Unsupported container resource : %v", fs.Resource)
+	return "", fmt.Errorf("unsupported container resource : %v", fs.Resource)
 }
 
 func extractContainerStatus(pod *v1.Pod, container *v1.Container) (*v1.ContainerStatus, v1.ContainerState) {

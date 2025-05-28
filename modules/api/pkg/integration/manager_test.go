@@ -31,7 +31,7 @@ func areErrorsEqual(err1, err2 error) bool {
 // Removes all quote signs that might have been added to the message.
 // Might depend on dependencies version how they are constructed.
 func normalize(msg string) string {
-	return strings.Replace(msg, "\"", "", -1)
+	return strings.ReplaceAll(msg, "\"", "")
 }
 
 func TestNewIntegrationManager(t *testing.T) {
@@ -82,6 +82,6 @@ func TestIntegrationManager_GetState(t *testing.T) {
 func TestIntegrationManager_Metric(t *testing.T) {
 	metricManager := integration.NewIntegrationManager().Metric()
 	if metricManager == nil {
-		t.Error("Failed to get metric manager.")
+		t.Error("failed to get metric manager.")
 	}
 }

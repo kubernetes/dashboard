@@ -47,7 +47,7 @@ func RollbackDeployment(client client.Interface, rolloutSpec *RolloutSpec, names
 	}
 	currRevision := deployment.Annotations[RevisionAnnotationKey]
 	if currRevision == FirstRevision {
-		return nil, errors.New("No revision for rolling back ")
+		return nil, errors.New("no revision for rolling back")
 	}
 	matchRS, err := GetReplicaSetFromDeployment(client, namespace, name)
 	if err != nil {
@@ -66,7 +66,7 @@ func RollbackDeployment(client client.Interface, rolloutSpec *RolloutSpec, names
 			}, nil
 		}
 	}
-	return nil, errors.New("There is no ReplicaSet that has the requested revision for the Deployment.")
+	return nil, errors.New("there is no ReplicaSet that has the requested revision for the Deployment")
 }
 
 // PauseDeployment is used to pause a deployment
@@ -83,7 +83,7 @@ func PauseDeployment(client client.Interface, namespace, name string) (*v1.Deplo
 		}
 		return deployment, nil
 	}
-	return nil, errors.New("The Deployment is already paused.")
+	return nil, errors.New("the Deployment is already paused")
 }
 
 // ResumeDeployment is used to resume a deployment
@@ -100,7 +100,7 @@ func ResumeDeployment(client client.Interface, namespace, name string) (*v1.Depl
 		}
 		return deployment, nil
 	}
-	return nil, errors.New("The deployment is already resumed.")
+	return nil, errors.New("the deployment is already resumed")
 }
 
 // RestartDeployment restarts a deployment in the manner of `kubectl rollout restart`.
@@ -110,10 +110,10 @@ func RestartDeployment(client client.Interface, namespace, name string) (*Rollou
 		return nil, err
 	}
 
-	if deployment.Spec.Template.ObjectMeta.Annotations == nil {
-		deployment.Spec.Template.ObjectMeta.Annotations = map[string]string{}
+	if deployment.Spec.Template.Annotations == nil {
+		deployment.Spec.Template.Annotations = map[string]string{}
 	}
-	deployment.Spec.Template.ObjectMeta.Annotations[RestartedAtAnnotationKey] = time.Now().Format(time.RFC3339)
+	deployment.Spec.Template.Annotations[RestartedAtAnnotationKey] = time.Now().Format(time.RFC3339)
 	res, err := client.AppsV1().Deployments(namespace).Update(context.TODO(), deployment, metaV1.UpdateOptions{})
 	if err != nil {
 		return nil, err

@@ -18,6 +18,8 @@ import (
 	authorizationv1 "k8s.io/client-go/kubernetes/typed/authorization/v1"
 	corev1 "k8s.io/client-go/kubernetes/typed/core/v1"
 	"k8s.io/client-go/rest"
+
+	"k8s.io/dashboard/client/cache/client/common"
 )
 
 type Client struct {
@@ -25,37 +27,38 @@ type Client struct {
 
 	authorizationV1 authorizationv1.AuthorizationV1Interface
 	token           string
+	requestGetter   common.RequestGetter
 }
 
 func (in *Client) Pods(namespace string) corev1.PodInterface {
-	return newPods(in, namespace, in.token)
+	return newPods(in, namespace, in.token, in.requestGetter)
 }
 
 func (in *Client) ConfigMaps(namespace string) corev1.ConfigMapInterface {
-	return newConfigMaps(in, namespace, in.token)
+	return newConfigMaps(in, namespace, in.token, in.requestGetter)
 }
 
 func (in *Client) Secrets(namespace string) corev1.SecretInterface {
-	return newSecrets(in, namespace, in.token)
+	return newSecrets(in, namespace, in.token, in.requestGetter)
 }
 
 func (in *Client) Namespaces() corev1.NamespaceInterface {
-	return newNamespaces(in, in.token)
+	return newNamespaces(in, in.token, in.requestGetter)
 }
 
 func (in *Client) Nodes() corev1.NodeInterface {
-	return newNodes(in, in.token)
+	return newNodes(in, in.token, in.requestGetter)
 }
 
 func (in *Client) PersistentVolumes() corev1.PersistentVolumeInterface {
-	return newPersistentVolumes(in, in.token)
+	return newPersistentVolumes(in, in.token, in.requestGetter)
 }
 
 func (in *Client) PersistentVolumeClaims(namespace string) corev1.PersistentVolumeClaimInterface {
-	return newPersistentVolumeClaims(in, namespace, in.token)
+	return newPersistentVolumeClaims(in, namespace, in.token, in.requestGetter)
 }
 
-func NewClient(c *rest.Config, authorizationV1 authorizationv1.AuthorizationV1Interface, token string) (corev1.CoreV1Interface, error) {
+func NewClient(c *rest.Config, authorizationV1 authorizationv1.AuthorizationV1Interface, opts common.CachedClientOptions) (corev1.CoreV1Interface, error) {
 	httpClient, err := rest.HTTPClientFor(c)
 	if err != nil {
 		return nil, err
@@ -69,6 +72,7 @@ func NewClient(c *rest.Config, authorizationV1 authorizationv1.AuthorizationV1In
 	return &Client{
 		client,
 		authorizationV1,
-		token,
+		opts.Token,
+		opts.RequestGetter,
 	}, nil
 }

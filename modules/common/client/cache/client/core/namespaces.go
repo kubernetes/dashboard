@@ -32,6 +32,7 @@ type namespaces struct {
 
 	authorizationV1 authorizationv1.AuthorizationV1Interface
 	token           string
+	requestGetter   common.RequestGetter
 }
 
 func (in *namespaces) List(ctx context.Context, opts metav1.ListOptions) (*corev1.NamespaceList, error) {
@@ -41,9 +42,10 @@ func (in *namespaces) List(ctx context.Context, opts metav1.ListOptions) (*corev
 		common.WithGroup[corev1.NamespaceList](corev1.SchemeGroupVersion.Group),
 		common.WithVersion[corev1.NamespaceList](corev1.SchemeGroupVersion.Version),
 		common.WithResourceKind[corev1.NamespaceList](types.ResourceKindNamespace),
+		common.WithRequestGetter[corev1.NamespaceList](in.requestGetter),
 	).List(ctx, in.NamespaceInterface, opts)
 }
 
-func newNamespaces(c *Client, token string) v1.NamespaceInterface {
-	return &namespaces{c.CoreV1Client.Namespaces(), c.authorizationV1, token}
+func newNamespaces(c *Client, token string, getter common.RequestGetter) v1.NamespaceInterface {
+	return &namespaces{c.CoreV1Client.Namespaces(), c.authorizationV1, token, getter}
 }

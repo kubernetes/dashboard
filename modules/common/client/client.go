@@ -23,13 +23,13 @@ import (
 	v1 "k8s.io/api/authorization/v1"
 	apiextensionsclientset "k8s.io/apiextensions-apiserver/pkg/client/clientset/clientset"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
-	"k8s.io/client-go/kubernetes"
 	client "k8s.io/client-go/kubernetes"
 	"k8s.io/client-go/rest"
 	"k8s.io/klog/v2"
 
 	"k8s.io/dashboard/client/args"
 	cacheclient "k8s.io/dashboard/client/cache/client"
+	"k8s.io/dashboard/client/cache/client/common"
 )
 
 func InClusterClient() client.Interface {
@@ -64,7 +64,15 @@ func Client(request *http.Request) (client.Interface, error) {
 	}
 
 	if args.CacheEnabled() {
-		return cacheclient.New(config, GetBearerToken(request))
+		return cacheclient.New(
+			config,
+			common.CachedClientOptions{
+				Token: GetBearerToken(request),
+				RequestGetter: func() *http.Request {
+					return request
+				},
+			},
+		)
 	}
 
 	return client.NewForConfig(config)
@@ -86,7 +94,16 @@ func APIExtensionsClient(request *http.Request) (apiextensionsclientset.Interfac
 	}
 
 	if args.CacheEnabled() {
-		return cacheclient.NewCachedExtensionsClient(config, kubeClient.AuthorizationV1(), GetBearerToken(request))
+		return cacheclient.NewCachedExtensionsClient(
+			config,
+			kubeClient.AuthorizationV1(),
+			common.CachedClientOptions{
+				Token: GetBearerToken(request),
+				RequestGetter: func() *http.Request {
+					return request
+				},
+			},
+		)
 	}
 
 	return apiextensionsclientset.NewForConfig(config)
@@ -102,7 +119,7 @@ func Config(request *http.Request) (*rest.Config, error) {
 
 func RestClientForHost(host string) (rest.Interface, error) {
 	config := setConfigRateLimitDefaults(&rest.Config{Host: host})
-	restClient, err := kubernetes.NewForConfig(config)
+	restClient, err := client.NewForConfig(config)
 	if err != nil {
 		return nil, err
 	}

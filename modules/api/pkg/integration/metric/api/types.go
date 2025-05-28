@@ -127,15 +127,15 @@ type MetricPoint struct {
 // Label stores information about identity of resources (UIDs) described by metric.
 type Label map[types.ResourceKind][]apimachinery.UID
 
-// AddMetricLabel returns a unique combined Label of self and other resource.
+// AddMetricLabel returns a unique combined Label of in and other resource.
 // New label describes both resources.
-func (self Label) AddMetricLabel(other Label) Label {
+func (in Label) AddMetricLabel(other Label) Label {
 	if other == nil {
-		return self
+		return in
 	}
 
 	uniqueMap := map[apimachinery.UID]bool{}
-	for _, v := range self {
+	for _, v := range in {
 		for _, t := range v {
 			uniqueMap[t] = true
 		}
@@ -144,11 +144,11 @@ func (self Label) AddMetricLabel(other Label) Label {
 	for k, v := range other {
 		for _, t := range v {
 			if _, exists := uniqueMap[t]; !exists {
-				self[k] = append(self[k], t)
+				in[k] = append(in[k], t)
 			}
 		}
 	}
-	return self
+	return in
 }
 
 // Metric is a format of data used in this module. This is also the format of data that is being sent by backend client.
@@ -190,18 +190,18 @@ func (metric *SidecarMetric) AddMetricPoint(item MetricPoint) []MetricPoint {
 	return metric.MetricPoints
 }
 
-func (metric *Metric) AddMetricPoint(item MetricPoint) []MetricPoint {
-	metric.MetricPoints = append(metric.MetricPoints, item)
-	return metric.MetricPoints
+func (in *Metric) AddMetricPoint(item MetricPoint) []MetricPoint {
+	in.MetricPoints = append(in.MetricPoints, item)
+	return in.MetricPoints
 }
 
 // String implements stringer interface to allow easy printing
-func (self Metric) String() string {
-	return "{\nDataPoints: " + fmt.Sprintf("%v", self.DataPoints) +
-		"\nMetricPoints: " + fmt.Sprintf("%v", self.MetricPoints) +
-		"\nMetricName: " + self.MetricName +
-		"\nLabel: " + fmt.Sprintf("%v", self.Label) +
-		"\nAggregate: " + fmt.Sprintf("%v", self.Aggregate)
+func (in Metric) String() string {
+	return "{\nDataPoints: " + fmt.Sprintf("%v", in.DataPoints) +
+		"\nMetricPoints: " + fmt.Sprintf("%v", in.MetricPoints) +
+		"\nMetricName: " + in.MetricName +
+		"\nLabel: " + fmt.Sprintf("%v", in.Label) +
+		"\nAggregate: " + fmt.Sprintf("%v", in.Aggregate)
 }
 
 // MetricPromise is used for parallel data extraction. Contains len 1 channels for Metric and Error.
@@ -211,12 +211,12 @@ type MetricPromise struct {
 }
 
 // GetMetric returns pointer to received Metrics and forwarded error (if any)
-func (self MetricPromise) GetMetric() (*Metric, error) {
-	err := <-self.Error
+func (in MetricPromise) GetMetric() (*Metric, error) {
+	err := <-in.Error
 	if err != nil {
 		return nil, err
 	}
-	return <-self.Metric, nil
+	return <-in.Metric, nil
 }
 
 // NewMetricPromise creates a MetricPromise structure with both channels of length 1.
@@ -231,10 +231,10 @@ type MetricPromises []MetricPromise
 
 // GetMetrics returns all metrics from MetricPromises.
 // In case of no metrics were downloaded it does not initialise []Metric and returns nil.
-func (self MetricPromises) GetMetrics() ([]Metric, error) {
+func (in MetricPromises) GetMetrics() ([]Metric, error) {
 	result := make([]Metric, 0)
 
-	for _, metricPromise := range self {
+	for _, metricPromise := range in {
 		metric, err := metricPromise.GetMetric()
 		if err != nil {
 			// Do not fail when cannot resolve one of the metrics promises and return what can be resolved.
@@ -252,8 +252,8 @@ func (self MetricPromises) GetMetrics() ([]Metric, error) {
 }
 
 // PutMetrics forwards provided list of metrics to all channels. If provided err is not nil, error will be forwarded.
-func (self MetricPromises) PutMetrics(metrics []Metric, err error) {
-	for i, metricPromise := range self {
+func (in MetricPromises) PutMetrics(metrics []Metric, err error) {
+	for i, metricPromise := range in {
 		if err != nil {
 			metricPromise.Metric <- nil
 		} else {
