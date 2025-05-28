@@ -1,0 +1,133 @@
+# Copyright 2017 The Kubernetes Authors.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+{{- if .Values.roProxy.enabled }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels: 
+    {{- include "kubernetes-dashboard.labels" . | nindent 4 }}
+    app.kubernetes.io/name: {{ template "kubernetes-dashboard.name" . }}-{{ .Values.roProxy.role }}
+    app.kubernetes.io/version: {{ .Values.api.image.tag }}
+    app.kubernetes.io/component: {{ .Values.roProxy.role }}
+  annotations:
+    {{- include "kubernetes-dashboard.annotations" . | nindent 4 }}
+    {{- with .Values.roProxy.annotations }}
+    {{- toYaml . | nindent 4 }}
+    {{- end }}
+  name: {{ template "kubernetes-dashboard.name" . }}-{{ .Values.roProxy.role }}
+spec:
+  replicas: {{ .Values.roProxy.scaling.replicas }}
+  revisionHistoryLimit: {{ .Values.roProxy.scaling.revisionHistoryLimit }}
+  selector:
+    matchLabels:
+      {{- include "kubernetes-dashboard.matchLabels" . | nindent 6 }}
+      app.kubernetes.io/name: {{ template "kubernetes-dashboard.name" . }}-{{ .Values.roProxy.role }}
+  template:
+    metadata:
+      labels:
+        {{- include "kubernetes-dashboard.labels" . | nindent 8 }}
+        {{- with .Values.roProxy.labels }}
+        {{ toYaml . | nindent 8 }}
+        {{- end }}
+        app.kubernetes.io/name: {{ template "kubernetes-dashboard.name" . }}-{{ .Values.roProxy.role }}
+        app.kubernetes.io/version: {{ .Values.roProxy.image.tag }}
+        app.kubernetes.io/component: {{ .Values.roProxy.role }}
+      annotations:
+        {{- with .Values.roProxy.annotations }}
+        {{ toYaml . | nindent 8 }}
+        {{- end }}
+    spec:
+      serviceAccountName: {{ template "kubernetes-dashboard.name" . }}-{{ .Values.roProxy.role }}
+      containers:
+        - name: {{ template "kubernetes-dashboard.name" . }}-{{ .Values.roProxy.role }}
+          image: "{{ .Values.roProxy.image.repository }}:{{ .Values.roProxy.image.tag }}"
+          imagePullPolicy: {{ .Values.app.image.pullPolicy }}
+          {{- with .Values.roProxy.containers.ports }}
+          ports:
+          {{ toYaml . | nindent 12 }}
+          {{- end }}
+          env:
+          - name: DASHBOARD_SERVICE_TOKEN
+            valueFrom:
+              secretKeyRef:
+                name: {{ template "kubernetes-dashboard.name" . }}-{{ .Values.roProxy.role }}-token
+                key: token
+          volumeMounts:
+            - name: nginx-rendered-templates
+              mountPath: /etc/nginx/conf.d
+            - name: nginx-templates
+              mountPath: /etc/nginx/templates
+              readOnly: true
+            - name: nginx-conf
+              mountPath: /etc/nginx/nginx.conf
+              subPath: nginx.conf
+              readOnly: true
+            {{- with .Values.roProxy.containers.volumeMounts }}
+            {{ toYaml . | nindent 12 }}
+            {{- end }}
+          {{- with .Values.app.security.containerSecurityContext }}
+          securityContext:
+          {{ toYaml . | nindent 12 }}
+          {{- end }}
+          {{- with .Values.roProxy.containers.resources }}
+          resources:
+          {{ toYaml . | nindent 12 }}
+          {{- end }}
+     {{- with .Values.app.image.pullSecrets }}
+      imagePullSecrets:
+      {{- range . }}
+        - name: {{ . }}
+      {{- end }}
+      {{- end }}
+      automountServiceAccountToken: {{ .Values.roProxy.automountServiceAccountToken }}
+
+      {{- with .Values.app.security.securityContext }}
+      securityContext:
+      {{ toYaml . | nindent 8 }}
+      {{- end }}
+
+      volumes:
+        - name: nginx-conf
+          configMap:
+            name: {{ template "kubernetes-dashboard.name" . }}-{{ .Values.roProxy.role }}-nginx-conf
+        - name: nginx-templates
+          configMap:
+            name: {{ template "kubernetes-dashboard.name" . }}-{{ .Values.roProxy.role }}-nginx-templates
+        - name: nginx-rendered-templates
+          emptyDir:
+            sizeLimit: 5Mi
+        {{- with .Values.roProxy.volumes }}
+        {{ toYaml . | nindent 8 }}
+        {{- end }}
+
+      {{- with .Values.app.priorityClassName }}
+      priorityClassName: {{ . }}
+      {{- end }}
+
+      {{- if or .Values.roProxy.nodeSelector .Values.app.scheduling.nodeSelector }}
+      nodeSelector:
+      {{- with .Values.roProxy.nodeSelector }}
+      {{ toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.app.scheduling.nodeSelector }}
+      {{ toYaml . | nindent 8 }}
+      {{- end }}
+      {{- end }}
+
+      {{- with .Values.app.tolerations }}
+      tolerations:
+      {{ toYaml . | nindent 8 }}
+      {{- end }}
+{{ end }}
