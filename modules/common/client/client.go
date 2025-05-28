@@ -30,6 +30,7 @@ import (
 
 	"k8s.io/dashboard/client/args"
 	cacheclient "k8s.io/dashboard/client/cache/client"
+	"k8s.io/dashboard/client/cache/client/common"
 )
 
 func InClusterClient() client.Interface {
@@ -64,7 +65,15 @@ func Client(request *http.Request) (client.Interface, error) {
 	}
 
 	if args.CacheEnabled() {
-		return cacheclient.New(config, GetBearerToken(request))
+		return cacheclient.New(
+			config,
+			common.CachedClientOptions{
+				Token: GetBearerToken(request),
+				RequestGetter: func() *http.Request {
+					return request
+				},
+			},
+		)
 	}
 
 	return client.NewForConfig(config)
@@ -86,7 +95,16 @@ func APIExtensionsClient(request *http.Request) (apiextensionsclientset.Interfac
 	}
 
 	if args.CacheEnabled() {
-		return cacheclient.NewCachedExtensionsClient(config, kubeClient.AuthorizationV1(), GetBearerToken(request))
+		return cacheclient.NewCachedExtensionsClient(
+			config,
+			kubeClient.AuthorizationV1(),
+			common.CachedClientOptions{
+				Token: GetBearerToken(request),
+				RequestGetter: func() *http.Request {
+					return request
+				},
+			},
+		)
 	}
 
 	return apiextensionsclientset.NewForConfig(config)

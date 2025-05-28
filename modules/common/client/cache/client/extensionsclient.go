@@ -20,6 +20,7 @@ import (
 	authorizationv1 "k8s.io/client-go/kubernetes/typed/authorization/v1"
 	"k8s.io/client-go/rest"
 
+	"k8s.io/dashboard/client/cache/client/common"
 	"k8s.io/dashboard/client/cache/client/extensions"
 )
 
@@ -41,7 +42,7 @@ func (in *cachedExtensionsClientset) ApiextensionsV1() v1.ApiextensionsV1Interfa
 	return in.apiextensionsV1
 }
 
-func NewCachedExtensionsClient(config *rest.Config, authorizationV1 authorizationv1.AuthorizationV1Interface, token string) (CachedExtensionsInterface, error) {
+func NewCachedExtensionsClient(config *rest.Config, authorizationV1 authorizationv1.AuthorizationV1Interface, opts common.CachedClientOptions) (CachedExtensionsInterface, error) {
 	var cs cachedExtensionsClientset
 	var err error
 
@@ -55,7 +56,7 @@ func NewCachedExtensionsClient(config *rest.Config, authorizationV1 authorizatio
 		return nil, err
 	}
 
-	cs.apiextensionsV1, err = extensions.NewClient(&configShallowCopy, authorizationV1, token)
+	cs.apiextensionsV1, err = extensions.NewClient(&configShallowCopy, authorizationV1, opts)
 	if err != nil {
 		return nil, err
 	}

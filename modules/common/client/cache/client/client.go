@@ -19,6 +19,7 @@ import (
 	v1 "k8s.io/client-go/kubernetes/typed/core/v1"
 	"k8s.io/client-go/rest"
 
+	"k8s.io/dashboard/client/cache/client/common"
 	"k8s.io/dashboard/client/cache/client/core"
 )
 
@@ -40,7 +41,7 @@ func (in *cachedClientset) CoreV1() v1.CoreV1Interface {
 	return in.coreV1
 }
 
-func New(config *rest.Config, token string) (CachedInterface, error) {
+func New(config *rest.Config, opts common.CachedClientOptions) (CachedInterface, error) {
 	var cs cachedClientset
 	var err error
 
@@ -54,7 +55,7 @@ func New(config *rest.Config, token string) (CachedInterface, error) {
 		return nil, err
 	}
 
-	cs.coreV1, err = core.NewClient(&configShallowCopy, clientset.AuthorizationV1(), token)
+	cs.coreV1, err = core.NewClient(&configShallowCopy, clientset.AuthorizationV1(), opts)
 	if err != nil {
 		return nil, err
 	}

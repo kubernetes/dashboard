@@ -32,6 +32,7 @@ type configmaps struct {
 	authorizationV1 authorizationv1.AuthorizationV1Interface
 	namespace       string
 	token           string
+	requestGetter   common.RequestGetter
 }
 
 func (in *configmaps) List(ctx context.Context, opts metav1.ListOptions) (*corev1.ConfigMapList, error) {
@@ -42,9 +43,10 @@ func (in *configmaps) List(ctx context.Context, opts metav1.ListOptions) (*corev
 		common.WithGroup[corev1.ConfigMapList](corev1.SchemeGroupVersion.Group),
 		common.WithVersion[corev1.ConfigMapList](corev1.SchemeGroupVersion.Version),
 		common.WithResourceKind[corev1.ConfigMapList](types.ResourceKindConfigMap),
+		common.WithRequestGetter[corev1.ConfigMapList](in.requestGetter),
 	).List(ctx, in.ConfigMapInterface, opts)
 }
 
-func newConfigMaps(c *Client, namespace, token string) v1.ConfigMapInterface {
-	return &configmaps{c.CoreV1Client.ConfigMaps(namespace), c.authorizationV1, namespace, token}
+func newConfigMaps(c *Client, namespace, token string, getter common.RequestGetter) v1.ConfigMapInterface {
+	return &configmaps{c.CoreV1Client.ConfigMaps(namespace), c.authorizationV1, namespace, token, getter}
 }

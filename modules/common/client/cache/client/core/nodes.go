@@ -31,6 +31,7 @@ type nodes struct {
 
 	authorizationV1 authorizationv1.AuthorizationV1Interface
 	token           string
+	requestGetter   common.RequestGetter
 }
 
 func (in *nodes) List(ctx context.Context, opts metav1.ListOptions) (*corev1.NodeList, error) {
@@ -40,9 +41,10 @@ func (in *nodes) List(ctx context.Context, opts metav1.ListOptions) (*corev1.Nod
 		common.WithGroup[corev1.NodeList](corev1.SchemeGroupVersion.Group),
 		common.WithVersion[corev1.NodeList](corev1.SchemeGroupVersion.Version),
 		common.WithResourceKind[corev1.NodeList](types.ResourceKindNode),
+		common.WithRequestGetter[corev1.NodeList](in.requestGetter),
 	).List(ctx, in.NodeInterface, opts)
 }
 
-func newNodes(c *Client, token string) v1.NodeInterface {
-	return &nodes{c.CoreV1Client.Nodes(), c.authorizationV1, token}
+func newNodes(c *Client, token string, getter common.RequestGetter) v1.NodeInterface {
+	return &nodes{c.CoreV1Client.Nodes(), c.authorizationV1, token, getter}
 }

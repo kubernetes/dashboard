@@ -85,6 +85,25 @@ func set[T any](key string, value T) bool {
 	return cache.SetWithTTL(key, value, 1, args.CacheTTL())
 }
 
+func Delete[_ any](key Key) error {
+	cacheKey, err := key.SHA()
+	if err != nil {
+		klog.ErrorS(err, "failed deleting cache key", "key", cacheKey)
+		return err
+	}
+
+	cache.Delete(cacheKey)
+	return nil
+}
+
+func Clear[_ any]() {
+	var err error
+
+	if cache, err = theine.NewBuilder[string, any](int64(args.CacheSize())).Build(); err != nil {
+		panic(err)
+	}
+}
+
 // DeferredLoad updates cache in the background with the data fetched using the loadFunc.
 func DeferredLoad[T any](key Key, loadFunc func() (T, error)) {
 	go func() {

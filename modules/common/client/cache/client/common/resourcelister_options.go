@@ -53,3 +53,9 @@ func WithToken[T any](token string) Option[T] {
 		lister.token = token
 	}
 }
+
+func WithRequestGetter[T any](getter RequestGetter) Option[T] {
+	return func(lister *CachedResourceLister[T]) {
+		lister.requestGetter = getter
+	}
+}

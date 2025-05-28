@@ -32,6 +32,7 @@ type persistentVolumeClaims struct {
 	authorizationV1 authorizationv1.AuthorizationV1Interface
 	namespace       string
 	token           string
+	requestGetter   common.RequestGetter
 }
 
 func (in *persistentVolumeClaims) List(ctx context.Context, opts metav1.ListOptions) (*corev1.PersistentVolumeClaimList, error) {
@@ -42,9 +43,10 @@ func (in *persistentVolumeClaims) List(ctx context.Context, opts metav1.ListOpti
 		common.WithGroup[corev1.PersistentVolumeClaimList](corev1.SchemeGroupVersion.Group),
 		common.WithVersion[corev1.PersistentVolumeClaimList](corev1.SchemeGroupVersion.Version),
 		common.WithResourceKind[corev1.PersistentVolumeClaimList](types.ResourceKindPersistentVolumeClaim),
+		common.WithRequestGetter[corev1.PersistentVolumeClaimList](in.requestGetter),
 	).List(ctx, in.PersistentVolumeClaimInterface, opts)
 }
 
-func newPersistentVolumeClaims(c *Client, namespace, token string) v1.PersistentVolumeClaimInterface {
-	return &persistentVolumeClaims{c.CoreV1Client.PersistentVolumeClaims(namespace), c.authorizationV1, namespace, token}
+func newPersistentVolumeClaims(c *Client, namespace, token string, getter common.RequestGetter) v1.PersistentVolumeClaimInterface {
+	return &persistentVolumeClaims{c.CoreV1Client.PersistentVolumeClaims(namespace), c.authorizationV1, namespace, token, getter}
 }

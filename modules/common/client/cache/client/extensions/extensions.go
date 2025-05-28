@@ -18,6 +18,8 @@ import (
 	v1 "k8s.io/apiextensions-apiserver/pkg/client/clientset/clientset/typed/apiextensions/v1"
 	authorizationv1 "k8s.io/client-go/kubernetes/typed/authorization/v1"
 	"k8s.io/client-go/rest"
+
+	"k8s.io/dashboard/client/cache/client/common"
 )
 
 type Client struct {
@@ -25,13 +27,14 @@ type Client struct {
 
 	authorizationV1 authorizationv1.AuthorizationV1Interface
 	token           string
+	requestGetter   common.RequestGetter
 }
 
 func (in *Client) CustomResourceDefinitions() v1.CustomResourceDefinitionInterface {
-	return newCustomResourceDefinitions(in, in.token)
+	return newCustomResourceDefinitions(in, in.token, in.requestGetter)
 }
 
-func NewClient(c *rest.Config, authorizationV1 authorizationv1.AuthorizationV1Interface, token string) (v1.ApiextensionsV1Interface, error) {
+func NewClient(c *rest.Config, authorizationV1 authorizationv1.AuthorizationV1Interface, opts common.CachedClientOptions) (v1.ApiextensionsV1Interface, error) {
 	httpClient, err := rest.HTTPClientFor(c)
 	if err != nil {
 		return nil, err
@@ -45,6 +48,7 @@ func NewClient(c *rest.Config, authorizationV1 authorizationv1.AuthorizationV1In
 	return &Client{
 		client,
 		authorizationV1,
-		token,
+		opts.Token,
+		opts.RequestGetter,
 	}, nil
 }

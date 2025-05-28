@@ -37,10 +37,18 @@ type CachedResourceLister[T any] struct {
 	authorizationV1 authorizationv1.AuthorizationV1Interface
 	token           string
 	ssar            *authorizationapiv1.SelfSubjectAccessReview
+	requestGetter   RequestGetter
 }
 
 func (in CachedResourceLister[T]) List(ctx context.Context, lister ResourceListerInterface[T], opts metav1.ListOptions) (*T, error) {
 	cacheKey := in.cacheKey(opts)
+	if in.shouldInvalidateCache() {
+		klog.V(3).InfoS("Cache-Control header set to no-cache, invalidating cache", "kind", in.kind(), "namespace", in.namespace())
+		if err := cache.Delete[T](cacheKey); err != nil {
+			return new(T), fmt.Errorf("failed to delete cache for %s: %w", in.kind(), err)
+		}
+	}
+
 	cachedList, found, err := cache.Get[T](cacheKey)
 	if err != nil {
 		return new(T), err
@@ -69,6 +77,20 @@ func (in CachedResourceLister[T]) List(ctx context.Context, lister ResourceListe
 		errors.MsgForbiddenError,
 		fmt.Errorf("%s: %s", review.Status.Reason, review.Status.EvaluationError),
 	)
+}
+
+// shouldInvalidateCache checks if the request used to create client has a "Cache-Control" header set to "no-cache".
+func (in CachedResourceLister[_]) shouldInvalidateCache() bool {
+	if in.requestGetter == nil {
+		return false
+	}
+
+	request := in.requestGetter()
+	if request == nil {
+		return false
+	}
+
+	return request.Header.Get("Cache-Control") == "no-cache"
 }
 
 func (in CachedResourceLister[_]) selfSubjectAccessReview(verb types.Verb) *authorizationapiv1.SelfSubjectAccessReview {
