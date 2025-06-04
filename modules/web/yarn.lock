@@ -4576,7 +4576,33 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@graphql-mesh/runtime@npm:0.106.1, @graphql-mesh/runtime@npm:^0.106.1":
+"@graphql-mesh/runtime@npm:0.106.4":
+  version: 0.106.4
+  resolution: "@graphql-mesh/runtime@npm:0.106.4"
+  dependencies:
+    "@envelop/core": ^5.1.0
+    "@envelop/extended-validation": ^5.0.0
+    "@envelop/graphql-jit": ^9.0.0
+    "@graphql-mesh/cross-helpers": ^0.4.10
+    "@graphql-mesh/string-interpolation": ^0.5.8
+    "@graphql-mesh/types": ^0.104.4
+    "@graphql-mesh/utils": ^0.104.4
+    "@graphql-tools/batch-delegate": ^9.0.9
+    "@graphql-tools/delegate": ^10.0.28
+    "@graphql-tools/executor": ^1.3.2
+    "@graphql-tools/utils": ^10.8.0
+    "@graphql-tools/wrap": ^10.0.28
+    "@whatwg-node/fetch": ^0.10.6
+    "@whatwg-node/promise-helpers": ^1.0.0
+    graphql-jit: ^0.8.7
+    tslib: ^2.4.0
+  peerDependencies:
+    graphql: "*"
+  checksum: 8251ce8a60b9af6d0df2a4be3d7e96e20153425f90c93128e0800800fb59ba1f8b2938c36a2ed72b7d52afecf08465f6841a1decce3478163d785e9271c6fe59
+  languageName: node
+  linkType: hard
+
+"@graphql-mesh/runtime@npm:^0.106.1":
   version: 0.106.1
   resolution: "@graphql-mesh/runtime@npm:0.106.1"
   dependencies:
@@ -4631,6 +4657,22 @@ __metadata:
   peerDependencies:
     graphql: "*"
   checksum: 951ee79b42110e385ac81dbd27c3f96293860f1dc3fa861fe1361f193e821fd0f8f6b08cef32c113a828e3e1b5657b8c2d116aa0846ac6027463d24dbd2b6d5e
+  languageName: node
+  linkType: hard
+
+"@graphql-mesh/store@npm:^0.104.4":
+  version: 0.104.4
+  resolution: "@graphql-mesh/store@npm:0.104.4"
+  dependencies:
+    "@graphql-inspector/core": 6.2.1
+    "@graphql-mesh/cross-helpers": ^0.4.10
+    "@graphql-mesh/types": ^0.104.4
+    "@graphql-mesh/utils": ^0.104.4
+    "@graphql-tools/utils": ^10.8.0
+    tslib: ^2.4.0
+  peerDependencies:
+    graphql: "*"
+  checksum: 7b33b58f898800b85c3e2fe0cc820a1a3bc376b544d380d1f17ae92f14a8d0a256a5d300fc1934096201e4c1101466c4a81d0a4a60909c797c8f4fe24806752d
   languageName: node
   linkType: hard
 
@@ -4735,6 +4777,22 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@graphql-mesh/types@npm:^0.104.4":
+  version: 0.104.4
+  resolution: "@graphql-mesh/types@npm:0.104.4"
+  dependencies:
+    "@graphql-mesh/store": ^0.104.4
+    "@graphql-tools/batch-delegate": ^9.0.10
+    "@graphql-tools/delegate": ^10.0.28
+    "@graphql-tools/utils": ^10.8.0
+    "@graphql-typed-document-node/core": ^3.2.0
+    tslib: ^2.4.0
+  peerDependencies:
+    graphql: "*"
+  checksum: a6961afba844163495cdf87fc405392c65f4187c81aa87a07cd5f1db1b8be7c653fdfe5bdd90d6982e7dd51af892afba44932cab30398f7834c447b2ae07f380
+  languageName: node
+  linkType: hard
+
 "@graphql-mesh/utils@npm:^0.104.1":
   version: 0.104.1
   resolution: "@graphql-mesh/utils@npm:0.104.1"
@@ -4786,6 +4844,33 @@ __metadata:
   peerDependencies:
     graphql: "*"
   checksum: 59c4456e60f0fac9ea4a2eadd88984a4460e0b9589705ff41353f3956a09205e6938a3089cabcb71df53992dd0aff1700c135d276e38a0a8748da5ca5b246028
+  languageName: node
+  linkType: hard
+
+"@graphql-mesh/utils@npm:^0.104.4":
+  version: 0.104.4
+  resolution: "@graphql-mesh/utils@npm:0.104.4"
+  dependencies:
+    "@envelop/instrumentation": ^1.0.0
+    "@graphql-mesh/cross-helpers": ^0.4.10
+    "@graphql-mesh/string-interpolation": ^0.5.8
+    "@graphql-mesh/types": ^0.104.4
+    "@graphql-tools/batch-delegate": ^9.0.16
+    "@graphql-tools/delegate": ^10.0.28
+    "@graphql-tools/utils": ^10.8.0
+    "@graphql-tools/wrap": ^10.0.28
+    "@whatwg-node/disposablestack": ^0.0.6
+    "@whatwg-node/fetch": ^0.10.6
+    "@whatwg-node/promise-helpers": ^1.2.0
+    dset: ^3.1.2
+    js-yaml: ^4.1.0
+    lodash.get: ^4.4.2
+    lodash.topath: ^4.5.2
+    tiny-lru: ^11.0.0
+    tslib: ^2.4.0
+  peerDependencies:
+    graphql: "*"
+  checksum: 09b7b2c013259677acc60ea828c030ac7e86477b8df8b74299331e24ea98719deb07e488c27daafed31ec401e7ac11261b97a9baff2c923cfef2fb72b1eb4089
   languageName: node
   linkType: hard
 
@@ -14986,7 +15071,7 @@ __metadata:
     "@cypress/webpack-preprocessor": 6.0.2
     "@graphql-mesh/cli": 0.100.1
     "@graphql-mesh/openapi": 0.109.2
-    "@graphql-mesh/runtime": 0.106.1
+    "@graphql-mesh/runtime": 0.106.4
     "@graphql-mesh/transform-replace-field": 0.105.4
     "@swimlane/ngx-charts": 21.1.3
     "@types/d3": 7.4.3
