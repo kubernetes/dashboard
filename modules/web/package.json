@@ -153,7 +153,7 @@
     "typescript": "5.1.6",
     "wait-on": "8.0.3",
     "webpack-bundle-analyzer": "4.10.2",
-    "webpack-dev-server": "5.2.0"
+    "webpack-dev-server": "5.2.2"
   },
   "overrides": {
     "colors": "1.4.0"
