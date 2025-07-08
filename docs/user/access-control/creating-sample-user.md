@@ -1,12 +1,18 @@
-# Creating sample user
+# Creating a Sample User
 
-In this guide, we will find out how to create a new user using the Service Account mechanism of Kubernetes, grant this user admin permissions and login to Dashboard using a bearer token tied to this user.
+This guide explains how to create a new user in Kubernetes using a Service Account, grant that user admin privileges, and log in to the Dashboard using a bearer token.
 
-For each of the following snippets for `ServiceAccount` and `ClusterRoleBinding`, you should copy them to new manifest files like `dashboard-adminuser.yaml` and use `kubectl apply -f dashboard-adminuser.yaml` to create them.
+For each of the following `ServiceAccount` and `ClusterRoleBinding` configurations, copy the content into a manifest file (e.g., `dashboard-adminuser.yaml`) and apply it using:
+
+```bash
+kubectl apply -f dashboard-adminuser.yaml
+````
+
+---
 
 ## Creating a Service Account
 
-We are creating Service Account with the name `admin-user` in namespace `kubernetes-dashboard` first.
+First, create a Service Account named `admin-user` in the `kubernetes-dashboard` namespace:
 
 ```yaml
 apiVersion: v1
@@ -15,11 +21,13 @@ metadata:
   name: admin-user
   namespace: kubernetes-dashboard
 ```
+```
+
+---
 
 ## Creating a ClusterRoleBinding
 
-In most cases after provisioning the cluster using `kops`, `kubeadm` or any other popular tool, the `ClusterRole` `cluster-admin` already exists in the cluster. We can use it and create only a `ClusterRoleBinding` for our `ServiceAccount`.
-If it does not exist then you need to create this role first and grant required privileges manually.
+In most cases, when provisioning the cluster using tools like `kops`, `kubeadm`, or others, the `cluster-admin` ClusterRole already exists. You can bind it to the Service Account by creating the following `ClusterRoleBinding`:
 
 ```yaml
 apiVersion: rbac.authorization.k8s.io/v1
@@ -36,25 +44,32 @@ subjects:
   namespace: kubernetes-dashboard
 ```
 
-## Getting a Bearer Token for ServiceAccount
 
-Now we need to find the token we can use to log in. Execute the following command:
+> 📝 If the `cluster-admin` role does not exist in your cluster, you must create it manually and assign the required privileges.
 
-```shell
+---
+
+## Getting a Bearer Token for the Service Account
+
+To retrieve the token associated with the `admin-user` Service Account for logging in to the Dashboard, run the following command:
+
+```bash
 kubectl -n kubernetes-dashboard create token admin-user
 ```
 
-It should print something like:
+This will output a token similar to:
 
 ```
-eyJhbGciOiJSUzI1NiIsImtpZCI6IiJ9.eyJpc3MiOiJrdWJlcm5ldGVzL3NlcnZpY2VhY2NvdW50Iiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9uYW1lc3BhY2UiOiJrdWJlcm5ldGVzLWRhc2hib2FyZCIsImt1YmVybmV0ZXMuaW8vc2VydmljZWFjY291bnQvc2VjcmV0Lm5hbWUiOiJhZG1pbi11c2VyLXRva2VuLXY1N253Iiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9zZXJ2aWNlLWFjY291bnQubmFtZSI6ImFkbWluLXVzZXIiLCJrdWJlcm5ldGVzLmlvL3NlcnZpY2VhY2NvdW50L3NlcnZpY2UtYWNjb3VudC51aWQiOiIwMzAzMjQzYy00MDQwLTRhNTgtOGE0Ny04NDllZTliYTc5YzEiLCJzdWIiOiJzeXN0ZW06c2VydmljZWFjY291bnQ6a3ViZXJuZXRlcy1kYXNoYm9hcmQ6YWRtaW4tdXNlciJ9.Z2JrQlitASVwWbc-s6deLRFVk5DWD3P_vjUFXsqVSY10pbjFLG4njoZwh8p3tLxnX_VBsr7_6bwxhWSYChp9hwxznemD5x5HLtjb16kI9Z7yFWLtohzkTwuFbqmQaMoget_nYcQBUC5fDmBHRfFvNKePh_vSSb2h_aYXa8GV5AcfPQpY7r461itme1EXHQJqv-SN-zUnguDguCTjD80pFZ_CmnSE1z9QdMHPB8hoB4V68gtswR1VLa6mSYdgPwCHauuOobojALSaMc3RH7MmFUumAgguhqAkX3Omqd3rJbYOMRuMjhANqd08piDC3aIabINX6gP5-Tuuw2svnV6NYQ
+eyJhbGciOiJSUzI1NiIsImtpZCI6IiJ9...
 ```
 
-Check [Kubernetes docs](https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/#manually-create-an-api-token-for-a-serviceaccount) for more information about API tokens for a ServiceAccount.
+Refer to the [Kubernetes documentation](https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/#manually-create-an-api-token-for-a-serviceaccount) for more information about ServiceAccount tokens.
 
-## Getting a long-lived Bearer Token for ServiceAccount 
+---
 
-We can also create a token with the secret which bound the service account and the token will be saved in the Secret:
+## Creating a Long-Lived Bearer Token
+
+Alternatively, you can manually create a long-lived token by defining a `Secret` bound to the Service Account. This ensures the token persists for a longer duration.
 
 ```yaml
 apiVersion: v1
@@ -63,40 +78,54 @@ metadata:
   name: admin-user
   namespace: kubernetes-dashboard
   annotations:
-    kubernetes.io/service-account.name: "admin-user"   
-type: kubernetes.io/service-account-token  
+    kubernetes.io/service-account.name: "admin-user"
+type: kubernetes.io/service-account-token
 ```
 
-After Secret is created, we can execute the following command to get the token which is saved in the Secret:
+After creating the secret, run the following command to extract the token:
 
-```shell
+```bash
 kubectl get secret admin-user -n kubernetes-dashboard -o jsonpath="{.data.token}" | base64 -d
 ```
 
-Check [Kubernetes docs](https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/#manually-create-a-long-lived-api-token-for-a-serviceaccount) for more information about long-lived API tokens for a ServiceAccount.
+Refer to the [Kubernetes documentation](https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/#manually-create-a-long-lived-api-token-for-a-serviceaccount) for more details on long-lived tokens.
 
-## Accessing Dashboard
+---
 
-Now copy the token and paste it into the `Enter token` field on the login screen.
+## Logging in to the Kubernetes Dashboard
 
-![Sing in](../../images/signin.png)
+Copy the token and paste it into the `Enter token` field on the login screen:
 
-Click the `Sign in` button and that's it. You are now logged in as an admin.
+![Sign in](../../images/signin.png)
 
-**Note** Token login is ONLY allowed when the browser is accessing the UI over https.  If your networking path to the UI is via http, the login will fail with an invalid token error.
+Click the `Sign in` button, and you’ll be logged in as an admin user.
+
+> ⚠️ **Note:** Token login is only allowed when accessing the Dashboard via **HTTPS**. If accessed through **HTTP**, login will fail with an "invalid token" error.
 
 ![Overview](../../images/overview.png)
 
-## Clean up and next steps
+---
 
-Remove the admin `ServiceAccount` and `ClusterRoleBinding`.
+## Clean Up
 
-```shell
+Once you're done, you can delete the admin user and role binding:
+
+```bash
 kubectl -n kubernetes-dashboard delete serviceaccount admin-user
 kubectl -n kubernetes-dashboard delete clusterrolebinding admin-user
 ```
 
-In order to find out more about how to grant/deny permissions in Kubernetes read the official [authentication](https://kubernetes.io/docs/reference/access-authn-authz/authentication/) & [authorization](https://kubernetes.io/docs/reference/access-authn-authz/authorization/) documentation.
+---
 
-----
-_Copyright 2020 [The Kubernetes Dashboard Authors](https://github.com/kubernetes/dashboard/graphs/contributors)_
+## Further Reading
+
+For more information on authentication and authorization in Kubernetes, check out the official documentation:
+
+* [Authentication](https://kubernetes.io/docs/reference/access-authn-authz/authentication/)
+* [Authorization](https://kubernetes.io/docs/reference/access-authn-authz/authorization/)
+
+---
+
+© 2020 [The Kubernetes Dashboard Authors](https://github.com/kubernetes/dashboard/graphs/contributors)
+
+```
