@@ -17,9 +17,9 @@
 
 
 # Determine the service port to use for the ingress configuration
-# If TLS is enabled in the ingress configuration, use the TLS service port.
-# Otherwise, fall back to the HTTP service port.
-{{- $servicePort := (ternary $.Values.kong.proxy.tls.servicePort $.Values.kong.proxy.http.servicePort $.Values.app.ingress.tls.enabled) }}
+# If HTTP is enabled in the kong proxy configuration, use the HTTP service port.
+# Otherwise, use the TLS service port.
+{{- $servicePort := (ternary $.Values.kong.proxy.http.servicePort $.Values.kong.proxy.tls.servicePort $.Values.kong.proxy.http.enabled) }}
 
 kind: Ingress
 apiVersion: networking.k8s.io/v1
