@@ -16,6 +16,7 @@ export enum Status {
   Active = 'Active',
   Available = 'Available',
   Bound = 'Bound',
+  Complete = 'Complete',
   Completed = 'Completed',
   ContainerCreating = 'ContainerCreating',
   Error = 'Error',
