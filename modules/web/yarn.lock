@@ -6980,6 +6980,18 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/express-serve-static-core@npm:^4.17.21":
+  version: 4.19.6
+  resolution: "@types/express-serve-static-core@npm:4.19.6"
+  dependencies:
+    "@types/node": "*"
+    "@types/qs": "*"
+    "@types/range-parser": "*"
+    "@types/send": "*"
+  checksum: b0576eddc2d25ccdf10e68ba09598b87a4d7b2ad04a81dc847cb39fe56beb0b6a5cc017b1e00aa0060cb3b38e700384ce96d291a116a0f1e54895564a104aae9
+  languageName: node
+  linkType: hard
+
 "@types/express@npm:*, @types/express@npm:^4.17.13, @types/express@npm:^4.17.21":
   version: 4.17.21
   resolution: "@types/express@npm:4.17.21"
@@ -13211,7 +13223,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"http-proxy-middleware@npm:^2.0.3, http-proxy-middleware@npm:^2.0.7":
+"http-proxy-middleware@npm:^2.0.3, http-proxy-middleware@npm:^2.0.9":
   version: 2.0.9
   resolution: "http-proxy-middleware@npm:2.0.9"
   dependencies:
@@ -15066,7 +15078,7 @@ __metadata:
     wait-on: 8.0.3
     web-animations-js: 2.3.2
     webpack-bundle-analyzer: 4.10.2
-    webpack-dev-server: 5.2.0
+    webpack-dev-server: 5.2.2
     xterm: 5.3.0
     xterm-addon-fit: 0.8.0
     zone.js: 0.13.3
@@ -20964,13 +20976,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"webpack-dev-server@npm:5.2.0":
-  version: 5.2.0
-  resolution: "webpack-dev-server@npm:5.2.0"
+"webpack-dev-server@npm:5.2.2":
+  version: 5.2.2
+  resolution: "webpack-dev-server@npm:5.2.2"
   dependencies:
     "@types/bonjour": ^3.5.13
     "@types/connect-history-api-fallback": ^1.5.4
     "@types/express": ^4.17.21
+    "@types/express-serve-static-core": ^4.17.21
     "@types/serve-index": ^1.9.4
     "@types/serve-static": ^1.15.5
     "@types/sockjs": ^0.3.36
@@ -20983,7 +20996,7 @@ __metadata:
     connect-history-api-fallback: ^2.0.0
     express: ^4.21.2
     graceful-fs: ^4.2.6
-    http-proxy-middleware: ^2.0.7
+    http-proxy-middleware: ^2.0.9
     ipaddr.js: ^2.1.0
     launch-editor: ^2.6.1
     open: ^10.0.3
@@ -21004,7 +21017,7 @@ __metadata:
       optional: true
   bin:
     webpack-dev-server: bin/webpack-dev-server.js
-  checksum: 87b7acc194cfa3e5c95cd797bf1f0c2ffc8718bbc02e8f47777b9a861a6b7691f27c5138162ba2a9ac2c337d122e14f220342789c290027a3f9db44b4af104c9
+  checksum: 96994d684563cfee76dcb031c7c18a1fa10aee2df0520a0f327c8d72d4692c0dcdd7e455adeed4f8da9695f2e9f8f5481053c7e6e27d7e35085e45357fc9f697
   languageName: node
   linkType: hard
 
