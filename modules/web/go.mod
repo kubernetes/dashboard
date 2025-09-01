@@ -7,7 +7,7 @@ require (
 	github.com/gin-gonic/contrib v0.0.0-20241229022435-d12709533de6
 	github.com/gin-gonic/gin v1.10.0
 	github.com/samber/lo v1.50.0
-	github.com/spf13/pflag v1.0.6
+	github.com/spf13/pflag v1.0.9
 	golang.org/x/text v0.27.0
 	k8s.io/api v0.32.0
 	k8s.io/apimachinery v0.32.0
