@@ -1,11 +1,11 @@
 module k8s.io/dashboard/tools
 
-go 1.20
+go 1.24.0
 
 require (
 	github.com/apache/skywalking-eyes v0.5.0
 	github.com/cosmtrek/air v1.44.0
-	github.com/golangci/golangci-lint v1.54.2
+	github.com/golangci/golangci-lint v1.56.0
 	k8s.io/code-generator v0.28.1
 )
 

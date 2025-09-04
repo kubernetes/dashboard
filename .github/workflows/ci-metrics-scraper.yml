@@ -58,7 +58,7 @@ jobs:
       - name: Lint
         uses: golangci/golangci-lint-action@v3
         with:
-          version: v1.52.2
+          version: v1.56.0
           working-directory: modules/metrics-scraper
           skip-cache: true
 

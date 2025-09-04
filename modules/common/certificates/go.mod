@@ -1,6 +1,6 @@
 module k8s.io/dashboard/certificates
 
-go 1.20
+go 1.24.0
 
 require (
 	k8s.io/api v0.28.1

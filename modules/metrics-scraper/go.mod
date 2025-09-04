@@ -1,6 +1,6 @@
 module k8s.io/dashboard/metrics-scraper
 
-go 1.20
+go 1.24.0
 
 require (
 	github.com/gorilla/handlers v1.5.1
