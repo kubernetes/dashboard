@@ -44,6 +44,7 @@ func main() {
 		client.WithKubeconfig(args.KubeconfigPath()),
 		client.WithMasterUrl(args.ApiServerHost()),
 		client.WithInsecureTLSSkipVerify(args.ApiServerSkipTLSVerify()),
+		client.WithCaBundle(args.ApiServerCaBundle()),
 	)
 
 	if !args.IsProxyEnabled() {

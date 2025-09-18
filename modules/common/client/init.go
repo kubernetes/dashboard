@@ -41,6 +41,7 @@ type configBuilder struct {
 	kubeconfigPath string
 	masterUrl      string
 	insecure       bool
+	caBundlePath   string
 }
 
 func (in *configBuilder) buildBaseConfig() (config *rest.Config, err error) {
@@ -59,6 +60,12 @@ func (in *configBuilder) buildBaseConfig() (config *rest.Config, err error) {
 	}
 
 	config, err = clientcmd.BuildConfigFromFlags(in.masterUrl, in.kubeconfigPath)
+
+	if len(in.caBundlePath) > 0 {
+		klog.InfoS("Using custom CA Bundle", "caBundle", in.caBundlePath)
+		config.TLSClientConfig.CAFile = in.caBundlePath
+	}
+
 	if err != nil {
 		return nil, err
 	}
@@ -120,6 +127,12 @@ func WithMasterUrl(url string) Option {
 func WithInsecureTLSSkipVerify(insecure bool) Option {
 	return func(c *configBuilder) {
 		c.insecure = insecure
+	}
+}
+
+func WithCaBundle(caBundlePath string) Option {
+	return func(c *configBuilder) {
+		c.caBundlePath = caBundlePath
 	}
 }
 
