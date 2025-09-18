@@ -15249,7 +15249,7 @@ __metadata:
     webpack-dev-server: 5.2.2
     xterm: 5.3.0
     xterm-addon-fit: 0.8.0
-    zone.js: 0.13.3
+    zone.js: 0.15.1
   languageName: unknown
   linkType: soft
 
@@ -21801,12 +21801,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"zone.js@npm:0.13.3":
-  version: 0.13.3
-  resolution: "zone.js@npm:0.13.3"
-  dependencies:
-    tslib: ^2.3.0
-  checksum: 73888a51b0299b4b56c56b97c71fe4a3548a9bdb9e4b4c49dd0e110a4487fbe7f141c08d3e3acff875a6fbb6d581750209ac767ae5d82dca0636ede41aebd436
+"zone.js@npm:0.15.1":
+  version: 0.15.1
+  resolution: "zone.js@npm:0.15.1"
+  checksum: 573736b1a58fed460d17bfcb8f5f2a96604c1d514d52b2065950fe62b52ed569adb71f4cd976ce4ffe43c3680d7556a09e42ea31af09dfb4f2868e6ab5525c1d
   languageName: node
   linkType: hard
 
