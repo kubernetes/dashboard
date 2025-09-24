@@ -1,0 +1,63 @@
+# Copyright 2017 The Kubernetes Authors.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+{{- if .Values.roProxy.enabled }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  labels: 
+    {{- include "kubernetes-dashboard.labels" . | nindent 4 }}
+  annotations:
+    {{- include "kubernetes-dashboard.annotations" . | nindent 4 }}
+  name: {{ template "kubernetes-dashboard.name" . }}-{{ .Values.roProxy.role }}-nginx-conf
+data:
+  nginx.conf: |
+    pid /tmp/nginx.pid;
+    error_log /dev/stderr info;
+    events {
+      worker_connections 1024;
+    }
+    include /etc/nginx/conf.d/*.conf;
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  labels: 
+    {{- include "kubernetes-dashboard.labels" . | nindent 4 }}
+  annotations:
+    {{- include "kubernetes-dashboard.annotations" . | nindent 4 }}
+  name: {{ template "kubernetes-dashboard.name" . }}-{{ .Values.roProxy.role }}-nginx-templates
+data:
+  proxy.conf.template: |
+    http {
+        client_body_temp_path /tmp/client_temp;
+        proxy_temp_path       /tmp/proxy_temp_path;
+        fastcgi_temp_path     /tmp/fastcgi_temp;
+        uwsgi_temp_path       /tmp/uwsgi_temp;
+        scgi_temp_path        /tmp/scgi_temp;
+        server {
+            listen 8080;
+            access_log /dev/stdout;
+            location / {
+                proxy_pass https://{{ template "kong.fullname" (index $.Subcharts "kong") }}-proxy.{{ .Release.Namespace }}.svc;
+                proxy_ssl_verify off;
+                proxy_set_header Host $host;
+                proxy_set_header X-Real-IP $remote_addr;
+                proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+                proxy_ssl_session_reuse on;
+                proxy_set_header Authorization "Bearer ${DASHBOARD_SERVICE_TOKEN}";
+            }
+        }
+    }
+{{ end }}
