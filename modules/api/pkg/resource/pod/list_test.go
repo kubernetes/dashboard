@@ -139,3 +139,23 @@ func TestGetPodListFromChannels(t *testing.T) {
 		}
 	}
 }
+
+func TestToGPU(t *testing.T) {
+	cases := []struct {
+		in  string
+		out pod.GPU
+	}{
+		{"nvidia.com/gpu", pod.NvidiaGPU},
+		{"amd.com/gpu", pod.AMDGPU},
+		{"gpu.intel.com/xe", pod.IntelGPU},
+		{"gpu.intel.com/iris", pod.IntelGPU},
+		{"unknown.gpu.type", pod.UnknownGPU},
+		{"", pod.NoGPU},
+	}
+
+	for _, c := range cases {
+		if gpuType := pod.ToGPU(c.in); gpuType != c.out {
+			t.Errorf("ToGPU(%q) == %q, expected %q", c.in, gpuType, c.out)
+		}
+	}
+}

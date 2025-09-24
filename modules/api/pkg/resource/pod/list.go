@@ -15,6 +15,8 @@
 package pod
 
 import (
+	"strings"
+
 	v1 "k8s.io/api/core/v1"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	k8sClient "k8s.io/client-go/kubernetes"
@@ -91,6 +93,55 @@ type PodAllocatedResources struct {
 
 	// MemoryLimits is defined memory limit.
 	MemoryLimits int64 `json:"memoryLimits"`
+
+	// GPURequests is a number and type of requested GPUs.
+	GPURequests []GPUAllocation `json:"gpuRequests"`
+
+	// GPULimits is a limit number and type of requested GPUs.
+	GPULimits []GPUAllocation `json:"gpuLimits"`
+}
+
+type GPU string
+
+const (
+	NoGPU      GPU = ""
+	UnknownGPU GPU = "unknown"
+	NvidiaGPU  GPU = "nvidia"
+	AMDGPU     GPU = "amd"
+	IntelGPU   GPU = "intel"
+
+	NvidiaLabel = "nvidia.com/gpu"
+	AMDLabel    = "amd.com/gpu"
+	// IntelLabel is for a partial match only, and it should be checked if it starts with this prefix.
+	IntelLabel = "gpu.intel.com"
+)
+
+func ToGPU(gpuType string) GPU {
+	switch gpuType {
+	case NvidiaLabel:
+		return NvidiaGPU
+	case AMDLabel:
+		return AMDGPU
+	}
+
+	if strings.HasPrefix(gpuType, IntelLabel) {
+		return IntelGPU
+	}
+
+	if strings.Contains(gpuType, "gpu") {
+		return UnknownGPU
+	}
+
+	return NoGPU
+}
+
+// GPUAllocation describes GPU allocation.
+type GPUAllocation struct {
+	// Quantity is a number of requested GPUs.
+	Quantity int64 `json:"quantity"`
+
+	// Type of GPU.
+	Type GPU `json:"type"`
 }
 
 var EmptyPodList = &PodList{

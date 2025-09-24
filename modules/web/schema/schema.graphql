@@ -2463,8 +2463,15 @@ type pod_Pod {
 type pod_PodAllocatedResources {
   cpuLimits: BigInt!
   cpuRequests: BigInt!
+  gpuLimits: [pod_GPUAllocation]!
+  gpuRequests: [pod_GPUAllocation]!
   memoryLimits: BigInt!
   memoryRequests: BigInt!
+}
+
+type pod_GPUAllocation {
+  quantity: BigInt!
+  type: String!
 }
 
 type pod_ContainerStatus {
