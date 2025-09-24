@@ -122,6 +122,11 @@ app:
     # It allows serving Kubernetes Dashboard on a sub-path. Make sure that the configured path
     # does not conflict with gateway route configuration.
     path: /
+    # Explicitly set the backend service port for Kong to use when routing traffic.
+    # This is useful when TLS termination happens outside the cluster (e.g., at a load balancer)
+    # but backend services still listen on HTTPS ports.
+    # If not set, the port is determined based on TLS settings (443 for HTTPS, 80 for HTTP).
+    backendServicePort:
     issuer:
       name: selfsigned
       # Scope determines what kind of issuer annotation will be used on ingress resource
