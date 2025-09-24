@@ -170,7 +170,7 @@ func getNodeAllocatedResources(node v1.Node, podList *v1.PodList) (NodeAllocated
 	reqs, limits := map[v1.ResourceName]resource.Quantity{}, map[v1.ResourceName]resource.Quantity{}
 
 	for _, p := range podList.Items {
-		podReqs, podLimits, err := pod.PodRequestsAndLimits(&p)
+		podReqs, podLimits, err := pod.RequestsAndLimits(&p)
 		if err != nil {
 			return NodeAllocatedResources{}, err
 		}
