@@ -85,7 +85,7 @@ jobs:
         with:
           go-version-file: modules/api/go.mod
           check-latest: true
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v5
         with:
           node-version: 18.14.0
       - working-directory: modules/web
@@ -184,7 +184,7 @@ jobs:
         with:
           go-version-file: modules/go.work
           check-latest: true
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v5
         with:
           node-version: 18.14.0
       - working-directory: modules/web
@@ -213,7 +213,7 @@ jobs:
 #          cache-dependency-path: modules/api/go.sum
 #      - working-directory: modules/api
 #        run: go mod download
-#      - uses: actions/setup-node@v4
+#      - uses: actions/setup-node@v5
 #        with:
 #          node-version: 18.14.0
 #      - working-directory: modules/web
