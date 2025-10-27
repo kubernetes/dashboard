@@ -9,7 +9,7 @@ require (
 	github.com/go-openapi/spec v0.21.0
 	github.com/prometheus/client_golang v1.23.0
 	github.com/samber/lo v1.51.0
-	github.com/spf13/pflag v1.0.7
+	github.com/spf13/pflag v1.0.10
 	golang.org/x/net v0.40.0
 	gopkg.in/igm/sockjs-go.v2 v2.1.0
 	k8s.io/api v0.32.0
