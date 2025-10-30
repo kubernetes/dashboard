@@ -61,6 +61,10 @@ func TestGetServicePods(t *testing.T) {
 						TypeMeta:          types.TypeMeta{Kind: types.ResourceKindPod},
 						Warnings:          []common.Event{},
 						ContainerStatuses: make([]pod.ContainerStatus, 0),
+						AllocatedResources: pod.PodAllocatedResources{
+							GPURequests: []pod.GPUAllocation{},
+							GPULimits:   []pod.GPUAllocation{},
+						},
 					},
 				},
 				Errors: []error{},
@@ -68,7 +72,7 @@ func TestGetServicePods(t *testing.T) {
 		},
 	}
 	for _, c := range cases {
-		fakeClient := fake.NewSimpleClientset(c.service, c.podList)
+		fakeClient := fake.NewClientset(c.service, c.podList)
 
 		actual, _ := GetServicePods(fakeClient, nil, c.namespace, c.name, dataselect.NoDataSelect)
 		if !reflect.DeepEqual(actual, c.expected) {
