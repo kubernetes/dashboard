@@ -4,7 +4,7 @@ go 1.24.0
 
 require (
 	github.com/air-verse/air v1.61.7
-	github.com/apache/skywalking-eyes v0.7.0
+	github.com/apache/skywalking-eyes v0.8.0
 	github.com/golangci/golangci-lint/v2 v2.6.0
 	k8s.io/code-generator v0.32.0
 	sigs.k8s.io/kind v0.29.0
