@@ -1,15 +1,15 @@
 dependencies:
 - name: ingress-nginx
   repository: https://kubernetes.github.io/ingress-nginx
-  version: 4.12.0
+  version: 4.13.3
 - name: cert-manager
   repository: https://charts.jetstack.io
-  version: v1.16.2
+  version: v1.19.1
 - name: metrics-server
   repository: https://kubernetes-sigs.github.io/metrics-server/
-  version: 3.12.2
+  version: 3.13.0
 - name: kong
   repository: https://charts.konghq.com
-  version: 2.46.0
-digest: sha256:fa0fa7ff7e237c3db88016a57704d0f2c9f7dae9ac9b041a32112b6df35f8e23
-generated: "2025-01-10T12:28:39.253786876+01:00"
+  version: 2.52.0
+digest: sha256:0fef614778e161890da3c3d80f4f709f4ada77c724bd9bf2a173ccac9300852d
+generated: "2025-10-30T10:43:34.473207542+01:00"
