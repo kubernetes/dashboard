@@ -164,7 +164,7 @@
       </trans-unit>
       <trans-unit id="1622528103709985950" datatype="html">
         <source> Local settings are stored in the browser cookies, so they are not synchronized between multiple devices. Changes are applied automatically on every change. </source>
-        <target state="new">Lokale Einstellungen werden in Cookies innerhalb des Browsers gespeichert und werden folglich nicht zwischen verschiedenen Geräten synchronisiert. Änderungen werden automatisch angewendet.</target>
+        <target state="new">Locale Einstellungen werden in Cookies innerhalb des Browsers gespeichert und werden folglich nicht zwischen verschiedenen Geräten synchronisiert. Änderungen werden automatisch angewendet.</target>
       </trans-unit>
       <trans-unit id="826139858915012735" datatype="html">
         <source> Volume Attributes </source>
@@ -172,11 +172,11 @@
       </trans-unit>
       <trans-unit id="1636259016604132537" datatype="html">
         <source> Select YAML or JSON file specifying the resources to deploy to the namespace specified in the file. </source>
-        <target state="new">Geben Sie den YAML- oder JSON-Datei an, welche die Ressource beschreibt, die im Namespace, welcher in der Datei referenziert wird, erzeugt werden soll.</target>
+        <target state="new">Geben Sie den YAML- oder JSON-Datei an, welche die Resource beschreibt, die im Namespace, welcher in der Datei referenziert wird, erzeugt werden soll.</target>
       </trans-unit>
       <trans-unit id="1678478837387802521" datatype="html">
         <source>You do not have required permissions to access this resource.</source>
-        <target>Sie verfügen nicht über die notwendigen Berechtigungen, um auf dieses Ressource zuzugreifen.</target>
+        <target>Sie verfügen nicht über die notwendigen Berechtigungen, um auf dieses Resource zuzugreifen.</target>
       </trans-unit>
       <trans-unit id="9158113520637954278" datatype="html">
         <source> Reclaim policy </source>
@@ -184,7 +184,7 @@
       </trans-unit>
       <trans-unit id="1695738375031661256" datatype="html">
         <source>Cluster name appears in the browser window title if it is set.</source>
-        <target>Der Name des Clusters taucht im Titel des Browser-Fensters auf, wenn er festgelegt wurde.</target>
+        <target>Der Name des Clusters taucht im Title des Browser-Fensters auf, wenn er festgelegt wurde.</target>
       </trans-unit>
       <trans-unit id="1707219526222951180" datatype="html">
         <source>Stateful Sets </source>
@@ -216,7 +216,7 @@
       </trans-unit>
       <trans-unit id="1766424618785981510" datatype="html">
         <source>Edit resource</source>
-        <target>Ressource bearbeiten</target>
+        <target>Resource bearbeiten</target>
       </trans-unit>
       <trans-unit id="8527472045454909617" datatype="html">
         <source> Rolling update strategy </source>
@@ -272,7 +272,7 @@
       </trans-unit>
       <trans-unit id="1946523853590147981" datatype="html">
         <source> The description will be added as an annotation to the Deployment and displayed in the application&apos;s details. </source>
-        <target state="new">Die Beschreibung wird als Annotation an das Deployment angefügt und in den Applikationsdetails angezeigt.</target>
+        <target state="new">Die Beschreibung wird also Annotation an das Deployment angefügt und in den Applikationsdetails angezeigt.</target>
       </trans-unit>
       <trans-unit id="3639083393563809058" datatype="html">
         <source> Volume ID </source>
@@ -284,7 +284,7 @@
       </trans-unit>
       <trans-unit id="2004327614711496973" datatype="html">
         <source> Memory requirement must be given as a valid number. </source>
-        <target state="new">Speicheranforderung muss als gültige Zahl angegeben werden.</target>
+        <target state="new">Speicheranforderung muss also gültige Zahl angegeben werden.</target>
       </trans-unit>
       <trans-unit id="7558116223792582160" datatype="html">
         <source> Exec Commands </source>
@@ -300,7 +300,7 @@
       </trans-unit>
       <trans-unit id="2054443489193005989" datatype="html">
         <source>Environment variables available for use in the container. Values can reference other variables using $(VAR_NAME) syntax.</source>
-        <target>Umgebungsvariablen zur Verwendung im Container. Werte können mithilfe der Syntax $(VAR_NAME) auf andere Variablen verweisen.</target>
+        <target>Umgebungsvariablen zur Verwendung im Container. Werte können mithilfe der Syntax $(VAR_NAME) auf andere Variable verweisen.</target>
       </trans-unit>
       <trans-unit id="2079136285643456368" datatype="html">
         <source><x id="START_LINK" ctype="x-a" equiv-text="&quot;\uFFFD#16\uFFFD&quot;"/>Slack<x id="CLOSE_LINK" ctype="x-a" equiv-text="&quot;\uFFFD/#16\uFFFD&quot;"/></source>
@@ -416,7 +416,7 @@
       </trans-unit>
       <trans-unit id="8686495004015695740" datatype="html">
         <source> Delete a resource </source>
-        <target state="new">Ressource löschen</target>
+        <target state="new">Resource löschen</target>
       </trans-unit>
       <trans-unit id="5247817575145637200" datatype="html">
         <source> Resource Requests </source>
@@ -488,7 +488,7 @@
       </trans-unit>
       <trans-unit id="1907282194427875955" datatype="html">
         <source> Selected namespace is different than namespace of currently selected resource. </source>
-        <target state="new">Der ausgewählte Namespace unterscheidet sich vom Namespace der aktuell angewählten Ressource.</target>
+        <target state="new">Der ausgewählte Namespace unterscheidet sich vom Namespace der aktuell angewählten Resource.</target>
       </trans-unit>
       <trans-unit id="2776781342795162475" datatype="html">
         <source>Namespaces let you partition resources into logically named groups.</source>
@@ -508,7 +508,7 @@
       </trans-unit>
       <trans-unit id="8056023144164880134" datatype="html">
         <source> Label Selector </source>
-        <target state="new">Label Selektor</target>
+        <target state="new">Label Selector</target>
       </trans-unit>
       <trans-unit id="2803293796008679153" datatype="html">
         <source>Ingress Classes</source>
@@ -572,7 +572,7 @@
       </trans-unit>
       <trans-unit id="3012870639723698090" datatype="html">
         <source> Port must be greater than 0. </source>
-        <target state="new">Port muss größer als 0 sein.</target>
+        <target state="new">Port muss größer also 0 sein.</target>
       </trans-unit>
       <trans-unit id="3026305820283888836" datatype="html">
         <source>Reclaim Policy</source>
@@ -600,7 +600,7 @@
       </trans-unit>
       <trans-unit id="3139808086382723160" datatype="html">
         <source>Number of seconds between every auto-refresh of every resource. Set 0 to disable.</source>
-        <target>Anzahl Sekunden zwischen der automatischen Aktualisierung jeder Ressource. Ein Wert von 0 deaktiviert die automatische Aktualisierung.</target>
+        <target>Anzahl Sekunden zwischen der automatischen Aktualisierung jeder Resource. Ein Wert von 0 deaktiviert die automatische Aktualisierung.</target>
       </trans-unit>
       <trans-unit id="3145624232792843463" datatype="html">
         <source>You can specify minimum CPU and memory requirements for the container.</source>
@@ -608,7 +608,7 @@
       </trans-unit>
       <trans-unit id="3147371091697922238" datatype="html">
         <source>Reference</source>
-        <target>Referenz</target>
+        <target>Reference</target>
       </trans-unit>
       <trans-unit id="315761510234903605" datatype="html">
         <source>Exec into pod</source>
@@ -616,7 +616,7 @@
       </trans-unit>
       <trans-unit id="3175667526023915046" datatype="html">
         <source> Label Value must not exceed 253 characters. </source>
-        <target state="new">Der Label Wert sollte nicht länger als 254 Zeichen sein.</target>
+        <target state="new">Der Label Wert sollte nicht länger also 254 Zeichen sein.</target>
       </trans-unit>
       <trans-unit id="3193976279273491157" datatype="html">
         <source>Actions</source>
@@ -652,7 +652,7 @@
       </trans-unit>
       <trans-unit id="3298085247516944059" datatype="html">
         <source>Resource auto-refresh time interval</source>
-        <target>Intervall der automatischen Aktualisierung von Ressourcen</target>
+        <target>Interval der automatischen Aktualisierung von Ressourcen</target>
       </trans-unit>
       <trans-unit id="8296538888762890291" datatype="html">
         <source> Accepted Names </source>
@@ -708,7 +708,7 @@
       </trans-unit>
       <trans-unit id="3381412717703555378" datatype="html">
         <source>Object</source>
-        <target>Objekt</target>
+        <target>Object</target>
       </trans-unit>
       <trans-unit id="3394717374488548686" datatype="html">
         <source>Config Maps</source>
@@ -736,7 +736,7 @@
       </trans-unit>
       <trans-unit id="3482104516399089245" datatype="html">
         <source>Active Jobs</source>
-        <target>Aktive Jobs</target>
+        <target>Active Jobs</target>
       </trans-unit>
       <trans-unit id="3501167321553405640" datatype="html">
         <source>CPU requests (cores)</source>
@@ -760,7 +760,7 @@
       </trans-unit>
       <trans-unit id="3529792493382301280" datatype="html">
         <source>Run as privileged</source>
-        <target>Als priviligiert ausführen</target>
+        <target>Also priviligiert ausführen</target>
       </trans-unit>
       <trans-unit id="3534088723520522114" datatype="html">
         <source> Variable name must be a valid C identifier. </source>
@@ -768,7 +768,7 @@
       </trans-unit>
       <trans-unit id="7493868697410114420" datatype="html">
         <source> Local settings </source>
-        <target state="new">Lokale Einstellungen</target>
+        <target state="new">Locale Einstellungen</target>
       </trans-unit>
       <trans-unit id="3551329346991932579" datatype="html">
         <source> Protocol is required. </source>
@@ -788,7 +788,7 @@
       </trans-unit>
       <trans-unit id="3609669829589519658" datatype="html">
         <source> CPU requirement must be given as a valid number. </source>
-        <target state="new">CPU-Anforderung muss als gültive Zahl angegeben werden.</target>
+        <target state="new">CPU-Anforderung muss also gültive Zahl angegeben werden.</target>
       </trans-unit>
       <trans-unit id="6172383046759827946" datatype="html">
         <source> Service Port Number </source>
@@ -804,7 +804,7 @@
       </trans-unit>
       <trans-unit id="3758898250164236993" datatype="html">
         <source>This action is equivalent to: </source>
-        <target state="new">Diese Aktion ist äquivalent zu:</target>
+        <target state="new">Diese Action ist äquivalent zu:</target>
       </trans-unit>
       <trans-unit id="376256424703415146" datatype="html">
         <source>Change the language of the dashboard</source>
@@ -884,11 +884,11 @@
       </trans-unit>
       <trans-unit id="4083589482228710450" datatype="html">
         <source>Scale resource</source>
-        <target>Ressource skalieren</target>
+        <target>Resource skalieren</target>
       </trans-unit>
       <trans-unit id="4105691782196566273" datatype="html">
         <source> Port must be less than 65536. </source>
-        <target state="new">Port muss kleiner als 65536 sein.</target>
+        <target state="new">Port muss kleiner also 65536 sein.</target>
       </trans-unit>
       <trans-unit id="714388357956850761" datatype="html">
         <source> Readiness Probe </source>
@@ -924,7 +924,7 @@
       </trans-unit>
       <trans-unit id="4285755342959217630" datatype="html">
         <source>Pin resource</source>
-        <target>Ressource fixieren</target>
+        <target>Resource fixieren</target>
       </trans-unit>
       <trans-unit id="4287392502726135197" datatype="html">
         <source>Config Maps </source>
@@ -936,7 +936,7 @@
       </trans-unit>
       <trans-unit id="4296726543175330378" datatype="html">
         <source> Enter YAML or JSON content specifying the resources to create to the currently selected namespace. </source>
-        <target state="new">Geben Sie den YAML- oder JSON-Inhalt an, der die Ressource beschreibt, die im aktuell angewählten Namespace erzeugt werden soll.</target>
+        <target state="new">Geben Sie den YAML- oder JSON-Inhalt an, der die Resource beschreibt, die im aktuell angewählten Namespace erzeugt werden soll.</target>
       </trans-unit>
       <trans-unit id="43228639508046926" datatype="html">
         <source>Completions: </source>
@@ -960,7 +960,7 @@
       </trans-unit>
       <trans-unit id="444174825108794574" datatype="html">
         <source>Create new resource</source>
-        <target>Neue Ressource erstellen</target>
+        <target>Neue Resource erstellen</target>
       </trans-unit>
       <trans-unit id="4467323362722952678" datatype="html">
         <source>Unknown</source>
@@ -972,7 +972,7 @@
       </trans-unit>
       <trans-unit id="4482184335435539588" datatype="html">
         <source>This action is equivalent to:</source>
-        <target>Diese Aktion ist äquivalent zu:</target>
+        <target>Diese Action ist äquivalent zu:</target>
       </trans-unit>
       <trans-unit id="4482298116905997082" datatype="html">
         <source>Age: </source>
@@ -980,7 +980,7 @@
       </trans-unit>
       <trans-unit id="4039719374513219491" datatype="html">
         <source> Edit a resource </source>
-        <target state="new">Ressource bearbeiten</target>
+        <target state="new">Resource bearbeiten</target>
       </trans-unit>
       <trans-unit id="4499651527836994743" datatype="html">
         <source>Roles </source>
@@ -1040,7 +1040,7 @@
       </trans-unit>
       <trans-unit id="4749936818577754995" datatype="html">
         <source>Delete resource</source>
-        <target>Ressource löschen</target>
+        <target>Resource löschen</target>
       </trans-unit>
       <trans-unit id="3192064686378185385" datatype="html">
         <source> Architecture </source>
@@ -1048,7 +1048,7 @@
       </trans-unit>
       <trans-unit id="4773463022110715023" datatype="html">
         <source> Enter YAML or JSON content specifying the resources to create to the namespace specified in the file. </source>
-        <target state="new">Geben Sie den YAML- oder JSON-Inhalt an, der die Ressource beschreibt, die im Namespace, der in der Datei referenziert wird, erstellt werden soll.</target>
+        <target state="new">Geben Sie den YAML- oder JSON-Inhalt an, der die Resource beschreibt, die im Namespace, der in der Datei referenziert wird, erstellt werden soll.</target>
       </trans-unit>
       <trans-unit id="4775550080689015987" datatype="html">
         <source>Reason</source>
@@ -1076,7 +1076,7 @@
       </trans-unit>
       <trans-unit id="4981765412875094921" datatype="html">
         <source>Trigger resource</source>
-        <target>Ressource triggern</target>
+        <target>Resource triggern</target>
       </trans-unit>
       <trans-unit id="1913475751060945920" datatype="html">
         <source> Workload Status </source>
@@ -1116,7 +1116,7 @@
       </trans-unit>
       <trans-unit id="1788882133182474939" datatype="html">
         <source> Waiting for more data to display chart... </source>
-        <target state="new">Warte auf mehr Daten zur Anzeige des Diagramms...</target>
+        <target state="new">Warte auf mehr Daten zur Anzeige des Diagrams...</target>
       </trans-unit>
       <trans-unit id="5257636795023365764" datatype="html">
         <source> Upload </source>
@@ -1128,7 +1128,7 @@
       </trans-unit>
       <trans-unit id="528589796437229259" datatype="html">
         <source> Memory requirement must be given as a positive number. </source>
-        <target state="new">Speicheranforderung muss als postive Zahl angegeben werden.</target>
+        <target state="new">Speicheranforderung muss also positive Zahl angegeben werden.</target>
       </trans-unit>
       <trans-unit id="1967113972469122007" datatype="html">
         <source> CPU capacity </source>
@@ -1172,7 +1172,7 @@
       </trans-unit>
       <trans-unit id="5509177505397229412" datatype="html">
         <source> Target port must be less than 65536. </source>
-        <target state="new">Ziel-Port muss kleiner als 65536 sein.</target>
+        <target state="new">Ziel-Port muss kleiner also 65536 sein.</target>
       </trans-unit>
       <trans-unit id="5519023941949331063" datatype="html">
         <source>Invert colors</source>
@@ -1188,7 +1188,7 @@
       </trans-unit>
       <trans-unit id="5603542439272909460" datatype="html">
         <source>Processes in privileged containers are equivalent to processes running as root on the host.</source>
-        <target>Prozesse in privilegierten Containern entsprechen Prozessen, die als root auf dem Host ausgeführt werden.</target>
+        <target>Prozesse in privilegierten Containern entsprechen Prozessen, die also root auf dem Host ausgeführt werden.</target>
       </trans-unit>
       <trans-unit id="5607669932062416162" datatype="html">
         <source>Default</source>
@@ -1314,7 +1314,7 @@
       </trans-unit>
       <trans-unit id="1100494527237439076" datatype="html">
         <source> Create a new image pull secret </source>
-        <target state="new">Neues Image Pull Secert erstellen</target>
+        <target state="new">Neues Image Pull Secret erstellen</target>
       </trans-unit>
       <trans-unit id="6390881799109478972" datatype="html">
         <source> Policy Types </source>
@@ -1342,7 +1342,7 @@
       </trans-unit>
       <trans-unit id="6112370555453604229" datatype="html">
         <source>Unpin resource</source>
-        <target>Ressource lösen</target>
+        <target>Resource lösen</target>
       </trans-unit>
       <trans-unit id="6117946241126833991" datatype="html">
         <source>Port</source>
@@ -1542,7 +1542,7 @@
       </trans-unit>
       <trans-unit id="650508661617996769" datatype="html">
         <source> Scale a resource </source>
-        <target state="new">Ressource skalieren</target>
+        <target state="new">Resource skalieren</target>
       </trans-unit>
       <trans-unit id="6945090506337625182" datatype="html">
         <source>Resource name</source>
@@ -1586,7 +1586,7 @@
       </trans-unit>
       <trans-unit id="7076883018082745028" datatype="html">
         <source> Label key name must be alphanumeric separated by &apos;-&apos;, &apos;_&apos; or &apos;.&apos;, optionally prefixed by a DNS subdomain and &apos;/&apos;. </source>
-        <target state="new">Label Key Namen dürfen ausschließlich aus alphanumerischen Zeichen, getrennt durch &apos;-&apos;, &apos;_&apos; oder &apos;.&apos; enthalten, wahlweise mit einem DNS Subdomain Namen und &apos;/&apos; als Präfix.</target>
+        <target state="new">Label Key Namen dürfen ausschließlich aus alphanumerischen Zeichen, getrennt durch &apos;-&apos;, &apos;_&apos; oder &apos;.&apos; enthalten, wahlweise mit einem DNS Subdomain Namen und &apos;/&apos; also Präfix.</target>
       </trans-unit>
       <trans-unit id="7103588127254721505" datatype="html">
         <source>Theme</source>
@@ -1666,7 +1666,7 @@
       </trans-unit>
       <trans-unit id="7409958205893937925" datatype="html">
         <source>Active Jobs: </source>
-        <target state="new">Aktive Jobs :</target>
+        <target state="new">Active Jobs :</target>
       </trans-unit>
       <trans-unit id="7425524211157837406" datatype="html">
         <source>Unpin</source>
@@ -1682,7 +1682,7 @@
       </trans-unit>
       <trans-unit id="7494553487547465000" datatype="html">
         <source>Logs auto-refresh time interval</source>
-        <target>Intervall der automatischen Aktualisierung der Logs</target>
+        <target>Interval der automatischen Aktualisierung der Logs</target>
       </trans-unit>
       <trans-unit id="4422377286667589368" datatype="html">
         <source> kube-proxy version </source>
@@ -1762,7 +1762,7 @@
       </trans-unit>
       <trans-unit id="7747200628816231618" datatype="html">
         <source> Label Key name should not exceed 63 characters. </source>
-        <target state="new">Der Label Key Name sollte nicht länger als 63 Zeichen sein.</target>
+        <target state="new">Der Label Key Name sollte nicht länger also 63 Zeichen sein.</target>
       </trans-unit>
       <trans-unit id="7332440051142263449" datatype="html">
         <source> Run as Group </source>
@@ -1898,7 +1898,7 @@
       </trans-unit>
       <trans-unit id="1957380833667165487" datatype="html">
         <source> Restart a resource </source>
-        <target state="new">Ressource neu starten</target>
+        <target state="new">Resource neu starten</target>
       </trans-unit>
       <trans-unit id="4133031559995911697" datatype="html">
         <source> Max surge </source>
@@ -2030,7 +2030,7 @@
       </trans-unit>
       <trans-unit id="8713955401469120119" datatype="html">
         <source> Select YAML or JSON file specifying the resources to deploy to the currently selected namespace. </source>
-        <target state="new">YAML- oder JSON-Datei auswählen, welche die Ressource beschreibt, die im aktuell angewählten Namespace erzeugt werden soll.</target>
+        <target state="new">YAML- oder JSON-Datei auswählen, welche die Resource beschreibt, die im aktuell angewählten Namespace erzeugt werden soll.</target>
       </trans-unit>
       <trans-unit id="8716879065476971568" datatype="html">
         <source>Status: </source>
@@ -2038,7 +2038,7 @@
       </trans-unit>
       <trans-unit id="8764790219135296178" datatype="html">
         <source> Target port must be greater than 0. </source>
-        <target state="new">Ziel-Port muss größer als 0 sein.</target>
+        <target state="new">Ziel-Port muss größer also 0 sein.</target>
       </trans-unit>
       <trans-unit id="8773342478342887379" datatype="html">
         <source>Nodes</source>
@@ -2106,7 +2106,7 @@
       </trans-unit>
       <trans-unit id="9044448882574381355" datatype="html">
         <source> CPU requirement must be given as a positive number. </source>
-        <target state="new">CPU-Anforderung muss als postive Ganzzahl angegeben werden.</target>
+        <target state="new">CPU-Anforderung muss also positive Ganzzahl angegeben werden.</target>
       </trans-unit>
       <trans-unit id="9045596623183360040" datatype="html">
         <source>Enter the URL of a public image on any registry, or a private image hosted on Docker Hub or Google Container Registry.</source>
@@ -2138,7 +2138,7 @@
       </trans-unit>
       <trans-unit id="9169828761871989299" datatype="html">
         <source> Prefix should not exceed 253 characters. </source>
-        <target state="new">Das Präfix sollte nicht länger als 253 Zeichen sein.</target>
+        <target state="new">Das Präfix sollte nicht länger also 253 Zeichen sein.</target>
       </trans-unit>
       <trans-unit id="9182918211699394982" datatype="html">
         <source>Failed: <x id="PH" equiv-text="&apos;&apos;"/></source>
