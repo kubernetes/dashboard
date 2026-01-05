@@ -15070,13 +15070,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"jwt-decode@npm:4.0.0":
-  version: 4.0.0
-  resolution: "jwt-decode@npm:4.0.0"
-  checksum: 390e2edcb31a92e86c8cbdd1edeea4c0d62acd371f8a8f0a8878e499390c0ecf4c658b365c4e941e4ef37d0170e4ca650aaa49f99a45c0b9695a235b210154b0
-  languageName: node
-  linkType: hard
-
 "karma-source-map-support@npm:1.4.0":
   version: 1.4.0
   resolution: "karma-source-map-support@npm:1.4.0"
@@ -15205,7 +15198,6 @@ __metadata:
     jest-preset-angular: 14.5.3
     js-base64: 3.7.7
     js-yaml: 4.1.0
-    jwt-decode: 4.0.0
     license-check-and-add: 4.0.5
     lint-staged: 15.5.2
     lodash-es: 4.17.21
@@ -15216,14 +15208,12 @@ __metadata:
     ngx-cookie-service: 19.1.2
     ngx-pipes: 3.2.2
     node-gyp: 11.2.0
-    normalize.css: 8.0.1
     prettier: 3.5.3
     q: 1.5.1
     raw-loader: 4.0.2
     roboto-fontface: 0.10.0
     run-node: 2.0.0
     rxjs: 7.8.2
-    rxjs-compat: 6.6.7
     sass: 1.90.0
     sass-loader: 16.0.5
     semver: 7.7.1
@@ -16664,13 +16654,6 @@ __metadata:
   version: 0.1.2
   resolution: "normalize-range@npm:0.1.2"
   checksum: 9b2f14f093593f367a7a0834267c24f3cb3e887a2d9809c77d8a7e5fd08738bcd15af46f0ab01cc3a3d660386f015816b5c922cea8bf2ee79777f40874063184
-  languageName: node
-  linkType: hard
-
-"normalize.css@npm:8.0.1":
-  version: 8.0.1
-  resolution: "normalize.css@npm:8.0.1"
-  checksum: 4698cae88ec35e3f3e82f9f9402e6ffb906c27ccd6373cad88e6b3f5634fc7a043cb38702472299e5edb73825cf8b18d5fd9283f58829eddda79ea97453049a2
   languageName: node
   linkType: hard
 
@@ -18474,13 +18457,6 @@ __metadata:
   dependencies:
     queue-microtask: ^1.2.2
   checksum: cb4f97ad25a75ebc11a8ef4e33bb962f8af8516bb2001082ceabd8902e15b98f4b84b4f8a9b222e5d57fc3bd1379c483886ed4619367a7680dad65316993021d
-  languageName: node
-  linkType: hard
-
-"rxjs-compat@npm:6.6.7":
-  version: 6.6.7
-  resolution: "rxjs-compat@npm:6.6.7"
-  checksum: a47339680d8da5ad8d00693ff75653deff99206ca9a12fc21c48d5dc88b972d0aed2dbcdf34b8f7ae52fe8817931f70a0e25a053ea75eb24802f2daf6c8a47b7
   languageName: node
   linkType: hard
 
