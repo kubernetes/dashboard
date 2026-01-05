@@ -1,0 +1,9 @@
+{
+    "recommendations": [
+        "ayushsinghal.code-mate",
+        "mbari.lcm-syntax-highlighting",
+        "ms-vscode.remote-server",
+        "redhat.vscode-yaml",
+        "ms-vscode.remote-explorer"
+    ]
+}
