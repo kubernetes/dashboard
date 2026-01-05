@@ -338,6 +338,7 @@ export interface Job extends Resource {
   containerImages: string[];
   initContainerImages: string[];
   parallelism: number;
+  jobStatus: JobStatus;
 }
 
 export interface Namespace extends Resource {
