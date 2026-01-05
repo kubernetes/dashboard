@@ -63,7 +63,7 @@ func (in *configBuilder) buildBaseConfig() (config *rest.Config, err error) {
 
 	if len(in.caBundlePath) > 0 {
 		klog.InfoS("Using custom CA Bundle", "caBundle", in.caBundlePath)
-		config.TLSClientConfig.CAFile = in.caBundlePath
+		config.CAFile = in.caBundlePath
 	}
 
 	if err != nil {
