@@ -387,6 +387,10 @@ kong:
     dns_order: LAST,A,CNAME,AAAA,SRV
     plugins: 'off'
     nginx_worker_processes: 1
+    # Ports: 8000 (HTTP), 8443 (HTTPS) when IPv6 is disabled
+    proxy_listen: "0.0.0.0:8000, 0.0.0.0:8443 ssl"
+    # Ports: 8001 (admin HTTP), 8444 (admin HTTPS) when IPv6 is disabled
+    admin_listen: "0.0.0.0:8001, 0.0.0.0:8444 ssl"
   ingressController:
     enabled: false
   manager:
