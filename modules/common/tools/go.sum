@@ -69,8 +69,8 @@ github.com/alingse/nilnesserr v0.2.0 h1:raLem5KG7EFVb4UIDAXgrv3N2JIaffeKNtcEXkEW
 github.com/alingse/nilnesserr v0.2.0/go.mod h1:1xJPrXonEtX7wyTq8Dytns5P2hNzoWymVUIaKm4HNFg=
 github.com/anmitsu/go-shlex v0.0.0-20200514113438-38f4b401e2be h1:9AeTilPcZAjCFIImctFaOjnTIavg87rW78vTPkQqLI8=
 github.com/anmitsu/go-shlex v0.0.0-20200514113438-38f4b401e2be/go.mod h1:ySMOLuWl6zY27l47sB3qLNK6tF2fkHG55UZxx8oIVo4=
-github.com/apache/skywalking-eyes v0.7.0 h1:VMBZ9bWKEw4QXfWhh9g4265Sz8GzD2LCxXfi/MSDTUg=
-github.com/apache/skywalking-eyes v0.7.0/go.mod h1:nEH67H0DoyuI9GQylxpj7H3NZWSkwk8Q0h5UMbO0L0c=
+github.com/apache/skywalking-eyes v0.8.0 h1:zvqGIxVV+bm3Y/7SUMUkrTqzqBrQKOeww7CvzilTOdE=
+github.com/apache/skywalking-eyes v0.8.0/go.mod h1:LcVQprCeg/csB6gQJr3tSiHQOezetAwko2jTBa9zD0U=
 github.com/armon/go-radix v1.0.1-0.20221118154546-54df44f2176c h1:651/eoCRnQ7YtSjAnSzRucrJz+3iGEFt+ysraELS81M=
 github.com/armon/go-radix v1.0.1-0.20221118154546-54df44f2176c/go.mod h1:ufUuZ+zHj4x4TnLV4JWEpy2hxWSpsRywHrMgIH9cCH8=
 github.com/armon/go-socks5 v0.0.0-20160902184237-e75332964ef5 h1:0CwZNZbxp69SHPdPJAN/hZIm0C4OItdklCFmMRWYpio=
