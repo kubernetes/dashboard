@@ -397,6 +397,11 @@ kong:
     type: ClusterIP
     http:
       enabled: false
+  # Enable inbound mesh proxying for Kuma and Istio, which is disabled by default in Kong chart
+  # ref: https://github.com/Kong/charts/tree/main/charts/kong#general-parameters
+  podAnnotations:
+    kuma.io/gateway: disabled
+    traffic.sidecar.istio.io/includeInboundPorts: "*"
 
 ## Optional Cert Manager sub-chart configuration
 ## Enable this if you don't already have cert-manager enabled on your cluster.
