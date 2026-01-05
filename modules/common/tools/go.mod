@@ -5,7 +5,7 @@ go 1.24.0
 require (
 	github.com/air-verse/air v1.61.7
 	github.com/apache/skywalking-eyes v0.7.0
-	github.com/golangci/golangci-lint/v2 v2.6.0
+	github.com/golangci/golangci-lint/v2 v2.6.1
 	k8s.io/code-generator v0.32.0
 	sigs.k8s.io/kind v0.29.0
 )
@@ -86,7 +86,7 @@ require (
 	github.com/fsnotify/fsnotify v1.8.0 // indirect
 	github.com/fzipp/gocyclo v0.6.0 // indirect
 	github.com/ghostiam/protogetter v0.3.17 // indirect
-	github.com/go-critic/go-critic v0.14.0 // indirect
+	github.com/go-critic/go-critic v0.14.2 // indirect
 	github.com/go-git/gcfg v1.5.1-0.20230307220236-3a3c6141e376 // indirect
 	github.com/go-git/go-billy/v5 v5.6.1 // indirect
 	github.com/go-git/go-git/v5 v5.13.1 // indirect
@@ -143,7 +143,7 @@ require (
 	github.com/jjti/go-spancheck v0.6.5 // indirect
 	github.com/josharian/intern v1.0.0 // indirect
 	github.com/julz/importas v0.2.0 // indirect
-	github.com/karamaru-alpha/copyloopvar v1.2.1 // indirect
+	github.com/karamaru-alpha/copyloopvar v1.2.2 // indirect
 	github.com/kevinburke/ssh_config v1.2.0 // indirect
 	github.com/kisielk/errcheck v1.9.0 // indirect
 	github.com/kkHAIKE/contextcheck v1.1.6 // indirect
@@ -191,7 +191,7 @@ require (
 	github.com/prometheus/client_model v0.6.1 // indirect
 	github.com/prometheus/common v0.61.0 // indirect
 	github.com/prometheus/procfs v0.15.1 // indirect
-	github.com/quasilyte/go-ruleguard v0.4.4 // indirect
+	github.com/quasilyte/go-ruleguard v0.4.5 // indirect
 	github.com/quasilyte/go-ruleguard/dsl v0.3.23 // indirect
 	github.com/quasilyte/gogrep v0.5.0 // indirect
 	github.com/quasilyte/regex/syntax v0.0.0-20210819130434-b3f0c404a727 // indirect
@@ -252,7 +252,7 @@ require (
 	go.uber.org/zap v1.27.0 // indirect
 	golang.org/x/crypto v0.43.0 // indirect
 	golang.org/x/exp v0.0.0-20250106191152-7588d65b2ba8 // indirect
-	golang.org/x/exp/typeparams v0.0.0-20251002181428-27f1f14c8bb9 // indirect
+	golang.org/x/exp/typeparams v0.0.0-20251023183803-a4bb9ffd2546 // indirect
 	golang.org/x/mod v0.29.0 // indirect
 	golang.org/x/net v0.46.0 // indirect
 	golang.org/x/oauth2 v0.28.0 // indirect
