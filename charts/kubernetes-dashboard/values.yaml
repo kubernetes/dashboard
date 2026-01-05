@@ -135,6 +135,43 @@ app:
       secretName: ""
     labels: {}
     annotations: {}
+
+  # Gateway API HTTPRoute configuration
+  # NOTE: Requires Gateway API CRDs (v1) installed in cluster
+  # https://gateway-api.sigs.k8s.io/guides/getting-started/
+  httproute:
+    # Enable HTTPRoute resource (alternative to Ingress)
+    enabled: false
+    # Additional HTTPRoute labels
+    labels: {}
+    # Additional HTTPRoute annotations
+    annotations: {}
+    # Gateway references
+    # Must reference an existing Gateway resource
+    parentRefs: []
+      # - name: example-gateway
+      #   namespace: gateway-system
+      #   sectionName: https
+    # List of hostnames
+    hostnames: []
+      # - dashboard.example.com
+    # HTTPRoute rules
+    rules:
+      - matches:
+          - path:
+              type: PathPrefix
+              value: /
+        # Optional filters:
+        # filters:
+        #   - type: RequestHeaderModifier
+        #     requestHeaderModifier:
+        #       add:
+        #         - name: X-Custom-Header
+        #           value: value
+    # TLS configuration (determines Kong proxy port: 443 for TLS, 80 for HTTP)
+    tls:
+      enabled: true
+
   # Use the following toleration if Dashboard can be deployed on a tainted control-plane nodes
   # - key: node-role.kubernetes.io/control-plane
   #   effect: NoSchedule
