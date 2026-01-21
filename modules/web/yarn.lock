@@ -15236,7 +15236,7 @@ __metadata:
     stylelint-order: 6.0.4
     stylelint-prettier: 5.0.3
     systemjs: 6.15.1
-    tar: 7.4.3
+    tar: 7.5.4
     through2: 4.0.2
     ts-jest: 29.3.2
     ts-loader: 9.5.2
@@ -16240,6 +16240,15 @@ __metadata:
     minipass: ^7.0.4
     rimraf: ^5.0.5
   checksum: da0a53899252380475240c587e52c824f8998d9720982ba5c4693c68e89230718884a209858c156c6e08d51aad35700a3589987e540593c36f6713fe30cd7338
+  languageName: node
+  linkType: hard
+
+"minizlib@npm:^3.1.0":
+  version: 3.1.0
+  resolution: "minizlib@npm:3.1.0"
+  dependencies:
+    minipass: ^7.1.2
+  checksum: a15e6f0128f514b7d41a1c68ce531155447f4669e32d279bba1c1c071ef6c2abd7e4d4579bb59ccc2ed1531346749665968fdd7be8d83eb6b6ae2fe1f3d370a7
   languageName: node
   linkType: hard
 
@@ -19850,17 +19859,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tar@npm:7.4.3, tar@npm:^7.4.3":
-  version: 7.4.3
-  resolution: "tar@npm:7.4.3"
+"tar@npm:7.5.4":
+  version: 7.5.4
+  resolution: "tar@npm:7.5.4"
   dependencies:
     "@isaacs/fs-minipass": ^4.0.0
     chownr: ^3.0.0
     minipass: ^7.1.2
-    minizlib: ^3.0.1
-    mkdirp: ^3.0.1
+    minizlib: ^3.1.0
     yallist: ^5.0.0
-  checksum: 8485350c0688331c94493031f417df069b778aadb25598abdad51862e007c39d1dd5310702c7be4a6784731a174799d8885d2fde0484269aea205b724d7b2ffa
+  checksum: 81ac84a0df655890a4acd6d216a10a3b8f1d391949b2cba4fef4e9c5c77d10ee68188eef3c7a1f019f6e0cbbcdada091008359519c2ec824fa0a9c8fe2126a95
   languageName: node
   linkType: hard
 
@@ -19875,6 +19883,20 @@ __metadata:
     mkdirp: ^1.0.3
     yallist: ^4.0.0
   checksum: db4d9fe74a2082c3a5016630092c54c8375ff3b280186938cfd104f2e089c4fd9bad58688ef6be9cf186a889671bf355c7cda38f09bbf60604b281715ca57f5c
+  languageName: node
+  linkType: hard
+
+"tar@npm:^7.4.3":
+  version: 7.4.3
+  resolution: "tar@npm:7.4.3"
+  dependencies:
+    "@isaacs/fs-minipass": ^4.0.0
+    chownr: ^3.0.0
+    minipass: ^7.1.2
+    minizlib: ^3.0.1
+    mkdirp: ^3.0.1
+    yallist: ^5.0.0
+  checksum: 8485350c0688331c94493031f417df069b778aadb25598abdad51862e007c39d1dd5310702c7be4a6784731a174799d8885d2fde0484269aea205b724d7b2ffa
   languageName: node
   linkType: hard
 
